@@ -205,7 +205,7 @@ vector.ph203:                                     ; preds = %vector.main.loop.it
   %n.vec204 = and i64 %i.ar, 48                   ; 4 uses
   br label %vector.body205
 
-vector.body205:                                   ; preds = %vector.body205, %vector.ph203
+vector.body205:                                   ; preds = %vector.ph203, %vector.body205
   %index206 = phi i64 [ 0, %vector.ph203 ], [ %index.next209, %vector.body205 ] ; 4 uses
   %i.tg = getelementptr inbounds nuw i8, ptr %i.av, i64 %index206
   %wide.load207 = load <16 x i8>, ptr %i.tg, align 1, !noalias !4334

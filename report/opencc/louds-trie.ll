@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dw = getelementptr i8, ptr %i.ch, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.dx = sub i64 0, %index
   %next.gep = getelementptr i8, ptr %.sroa.0.08.i.i, i64 %i.dx
@@ -257,7 +257,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n86 = icmp eq i64 %i.db, %n.vec77
   br i1 %cmp.n86, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit, label %.lr.ph.i.i.preheader
 
-.lr.ph.i.i.preheader:                             ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.preheader:                             ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.i.i.ph = phi ptr [ %.sroa.0.08.i.i, %iter.check ], [ %.sroa.0.08.i.i, %vector.memcheck ], [ %i.dv, %vec.epilog.iter.check ], [ %i.eb, %vec.epilog.middle.block ]
   %.sroa.05.09.i.i.ph = phi ptr [ %i.ch, %iter.check ], [ %i.ch, %vector.memcheck ], [ %i.dw, %vec.epilog.iter.check ], [ %i.ec, %vec.epilog.middle.block ]
   br label %.lr.ph.i.i
@@ -401,7 +401,7 @@ vector.ph102:                                     ; preds = %vector.main.loop.it
   %i.gk = getelementptr i8, ptr %i.fi, i64 %n.vec103
   br label %vector.body104
 
-vector.body104:                                   ; preds = %vector.body104, %vector.ph102
+vector.body104:                                   ; preds = %vector.ph102, %vector.body104
   %index105 = phi i64 [ 0, %vector.ph102 ], [ %index.next112, %vector.body104 ] ; 3 uses
   %i.gl = sub i64 0, %index105
   %next.gep106 = getelementptr i8, ptr %.sroa.0.08.i.i39, i64 %i.gl
@@ -453,7 +453,7 @@ vec.epilog.middle.block132:                       ; preds = %vec.epilog.vector.b
   %cmp.n133 = icmp eq i64 %i.fw, %n.vec122
   br i1 %cmp.n133, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit45.loopexit, label %.lr.ph.i.i41.preheader
 
-.lr.ph.i.i41.preheader:                           ; preds = %vector.memcheck89, %iter.check117, %vec.epilog.iter.check119, %vec.epilog.middle.block132
+.lr.ph.i.i41.preheader:                           ; preds = %iter.check117, %vector.memcheck89, %vec.epilog.iter.check119, %vec.epilog.middle.block132
   %.sroa.0.010.i.i42.ph = phi ptr [ %.sroa.0.08.i.i39, %iter.check117 ], [ %.sroa.0.08.i.i39, %vector.memcheck89 ], [ %i.gj, %vec.epilog.iter.check119 ], [ %i.gp, %vec.epilog.middle.block132 ]
   %.sroa.05.09.i.i43.ph = phi ptr [ %i.fi, %iter.check117 ], [ %i.fi, %vector.memcheck89 ], [ %i.gk, %vec.epilog.iter.check119 ], [ %i.gq, %vec.epilog.middle.block132 ]
   br label %.lr.ph.i.i41

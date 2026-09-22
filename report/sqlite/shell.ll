@@ -206,7 +206,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.be = or disjoint i64 %n.vec, 1
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bf = or disjoint i64 %index, 1               ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.0, i64 %i.bf ; 2 uses
@@ -255,7 +255,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n102 = icmp eq i64 %i.ba, %n.vec98
   br i1 %cmp.n102, label %._crit_edge, label %.lr.ph74.preheader
 
-.lr.ph74.preheader:                               ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph74.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv79.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck ], [ %i.be, %vec.epilog.iter.check ], [ %i.bo, %vec.epilog.middle.block ] ; 4 uses
   %i.bv = sub nsw i64 %wide.trip.count82, %indvars.iv79.ph
   %xtraiter = and i64 %i.bv, 3                    ; 2 uses
@@ -658,7 +658,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.li = or disjoint i32 %i.lh, 1
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.lj = shl nuw i64 %index, 1
   %i.lk = add nuw i64 %i.la, %i.lj                ; 2 uses
@@ -1061,7 +1061,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ai = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.z
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aj = shl nuw i64 %index, 1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aj ; 2 uses

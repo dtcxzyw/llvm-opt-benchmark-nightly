@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.du = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.dv = getelementptr i8, ptr %next.gep, i64 16
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.du = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.dv = getelementptr i8, ptr %next.gep, i64 16
@@ -1011,7 +1011,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.du = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.dv = getelementptr i8, ptr %next.gep, i64 16
@@ -1414,7 +1414,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ex = getelementptr i8, ptr %.sroa.062.0150.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.062.0150.i, i64 %index ; 2 uses
   %i.ey = getelementptr i8, ptr %next.gep, i64 16
@@ -1817,7 +1817,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.db = getelementptr i8, ptr %.sroa.048.0119, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.048.0119, i64 %index ; 2 uses
   %i.dc = getelementptr i8, ptr %next.gep, i64 16
@@ -2220,7 +2220,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.db = getelementptr i8, ptr %.sroa.048.0119, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.048.0119, i64 %index ; 2 uses
   %i.dc = getelementptr i8, ptr %next.gep, i64 16
@@ -2623,7 +2623,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.g = and i64 %3, 31
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %next.gep16 = getelementptr i8, ptr %2, i64 %index ; 2 uses
@@ -3026,7 +3026,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.h = and i64 %3, 15
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.i = shl i64 %index, 1                        ; 2 uses
   %next.gep = getelementptr i8, ptr %1, i64 %i.i  ; 2 uses
@@ -3429,7 +3429,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.g = and i64 %3, 31
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %next.gep16 = getelementptr i8, ptr %2, i64 %index ; 2 uses
@@ -3832,7 +3832,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.h = and i64 %3, 15
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.i = shl i64 %index, 1                        ; 2 uses
   %next.gep = getelementptr i8, ptr %1, i64 %i.i  ; 2 uses
@@ -4235,11 +4235,12 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = load i32, ptr %4, align 4, !tbaa !188, !noalias !13094 ; 3 uses
   %i.b = and i32 %i.a, -65536
-  %isneg.i = icmp slt i32 %i.a, 0
-  %.sroa.6.6.insert.insert.i = select i1 %isneg.i, i64 -4294967296, i64 0
+  %.lobit.i = ashr i32 %i.a, 31
   %8 = load i64, ptr %3, align 2, !noalias !13094
+  %9 = zext i32 %.lobit.i to i64
+  %10 = shl nuw i64 %9, 32
   %i.c = zext i32 %i.b to i64
-  %i.d = or disjoint i64 %.sroa.6.6.insert.insert.i, %i.c
+  %i.d = or disjoint i64 %10, %i.c
   %i.e = and i32 %i.a, 65535
   %i.f = zext nneg i32 %i.e to i64
   %i.g = or disjoint i64 %i.d, %i.f
@@ -4642,7 +4643,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dt = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.du = getelementptr i8, ptr %next.gep, i64 16
@@ -5045,7 +5046,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dk = getelementptr i8, ptr %.sroa.058.0134.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.058.0134.i, i64 %index ; 2 uses
   %i.dl = getelementptr i8, ptr %next.gep, i64 16
@@ -5448,7 +5449,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dt = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.du = getelementptr i8, ptr %next.gep, i64 16
@@ -5851,7 +5852,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dt = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.du = getelementptr i8, ptr %next.gep, i64 16
@@ -6254,7 +6255,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dt = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.du = getelementptr i8, ptr %next.gep, i64 16
@@ -6657,7 +6658,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.g = and i64 %3, 31
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %next.gep16 = getelementptr i8, ptr %2, i64 %index ; 2 uses
@@ -7060,7 +7061,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dt = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.du = getelementptr i8, ptr %next.gep, i64 16
@@ -7463,7 +7464,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dt = getelementptr i8, ptr %.sroa.051.0122.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.051.0122.i, i64 %index ; 2 uses
   %i.du = getelementptr i8, ptr %next.gep, i64 16

@@ -205,7 +205,7 @@ bb.dp:                                            ; preds = %bb.il, %.lr.ph226.i
   %.sroa.31.96.131139.i = phi i64 [ %.sroa.647.sroa.12.0.copyload.i, %.lr.ph226.i.i ], [ %i.xs, %bb.il ]
   %.sroa.11.24.137.i = phi i64 [ %.sroa.647.sroa.0.0.copyload.i, %.lr.ph226.i.i ], [ %.sroa.11.24.138.i, %bb.il ] ; 2 uses
   %.sroa.9127.16.load135.i = phi i64 [ %i.hb, %.lr.ph226.i.i ], [ %.sroa.9127.16.load136.i, %bb.il ]
-  %i.rn = phi i64 [ %i.pz, %.lr.ph226.i.i ], [ %i.adv, %bb.il ] ; 3 uses
+  %i.rn = phi i64 [ %i.pz, %.lr.ph226.i.i ], [ %i.adv, %bb.il ] ; 2 uses
   %i.ro = phi i64 [ %i.py, %.lr.ph226.i.i ], [ %i.adu, %bb.il ] ; 6 uses
   %.sroa.01.0225.i.i = phi i1 [ false, %.lr.ph226.i.i ], [ %.sroa.01.1.i.i, %bb.il ]
   %i.rp = load ptr, ptr %i.pp, align 8, !alias.scope !11603, !noalias !11600, !nonnull !12, !align !23, !noundef !12 ; 9 uses
@@ -366,7 +366,7 @@ _RNvXs0_NtCsdit6BuOJVAc_5uu_od11peek_readerINtB5_10PeekReaderINtNtNtNtCs7tKScEop
   br i1 %i.tp, label %bb.eh, label %bb.ea
 
 bb.ea:                                            ; preds = %_RNvXs0_NtCsdit6BuOJVAc_5uu_od11peek_readerINtB5_10PeekReaderINtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader9BufReaderINtNtB7_14partial_reader13PartialReaderNtNtB7_16multifile_reader15MultifileReaderEEENtNtB13_4read4Read4readCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i
-  %i.tq = sub i64 %i.ro, %i.to                    ; 3 uses
+  %i.tq = sub i64 %i.ro, %i.to                    ; 2 uses
   %.not6.i.i.i.i = icmp ugt i64 %i.rn, %i.tq
   br i1 %.not6.i.i.i.i, label %bb.eb, label %bb.fc
 
@@ -388,7 +388,7 @@ bb.ed:                                            ; preds = %bb.eb
   %i.tw = icmp sgt i64 %i.tv, -1
   call void @llvm.assume(i1 %i.tw)
   store i64 0, ptr %i.rt, align 8, !alias.scope !11635, !noalias !11636
-  %i.tx = load ptr, ptr %i.rr, align 8, !alias.scope !11635, !noalias !11636, !nonnull !12, !noundef !12 ; 3 uses
+  %i.tx = load ptr, ptr %i.rr, align 8, !alias.scope !11635, !noalias !11636, !nonnull !12, !noundef !12 ; 2 uses
   %i.ty = icmp eq i64 %i.tv, 0                    ; 2 uses
   br i1 %i.ty, label %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i, label %bb.ee
 
@@ -409,9 +409,9 @@ bb.ef:                                            ; preds = %bb.ee
 _RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i, %bb.ed
   %.sroa.10.0.i15.i.i.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.ed ], [ %i.tz, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11640)
-  %i.ub = load i64, ptr %i.tu, align 8, !range !19, !alias.scope !11641, !noalias !11642, !noundef !12 ; 3 uses
+  %i.ub = load i64, ptr %i.tu, align 8, !range !19, !alias.scope !11641, !noalias !11642, !noundef !12 ; 2 uses
   %i.uc = icmp samesign ugt i64 %i.tr, %i.ub
-  br i1 %i.uc, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i, !prof !18
+  br i1 %i.uc, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i, !prof !18
 
 _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i: ; preds = %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i
   call fastcc void @_RINvNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsl8pJiQOn4hA_9coreutils(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.tu, i64 noundef 0, i64 noundef range(i64 0, -9223372036854775808) %i.tr, i64 noundef 1, i64 noundef 1) #45, !noalias !11643
@@ -420,29 +420,19 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.ex
   call void @llvm.assume(i1 %i.ue)
   %.pre.i.i.i.i.i = load ptr, ptr %i.rr, align 8, !alias.scope !11644, !noalias !11642
   %.pre9.pre.i.i.i.i.i = load i64, ptr %i.tu, align 8, !range !19, !alias.scope !11645, !noalias !11646
-  br label %1
-
-_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i: ; preds = %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i
-  %.not.i.i8.i.i.i.i = icmp eq i64 %i.rn, %i.tq
-  br i1 %.not.i.i8.i.i.i.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i, label %1
-
-1:                                                ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i
-  %.pre9.i.i.i.i.i = phi i64 [ %.pre9.pre.i.i.i.i.i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i ], [ %i.ub, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ]
-  %2 = phi ptr [ %.pre.i.i.i.i.i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i ], [ %i.tx, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ] ; 2 uses
-  %3 = phi i64 [ %i.ud, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i ], [ 0, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 %3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %4, ptr nonnull readonly align 1 %i.tt, i64 range(i64 0, -9223372036854775808) %i.tr, i1 false), !noalias !11647
   br label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i
 
-_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i: ; preds = %1, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i
-  %i.uf = phi ptr [ %2, %1 ], [ %i.tx, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ]
-  %i.ug = phi i64 [ %.pre9.i.i.i.i.i, %1 ], [ %i.ub, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ]
-  %5 = phi i64 [ %3, %1 ], [ 0, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ]
-  %i.uh = add nuw i64 %5, %i.tr                   ; 5 uses
+_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i: ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i, %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i
+  %.pre9.i.i.i.i.i = phi i64 [ %.pre9.pre.i.i.i.i.i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i ], [ %i.ub, %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i ]
+  %i.uf = phi ptr [ %.pre.i.i.i.i.i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i ], [ %i.tx, %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i ] ; 2 uses
+  %i.ug = phi i64 [ %i.ud, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i ], [ 0, %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtB6_5drain5DrainhEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i ] ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.uf, i64 %i.ug
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull readonly align 1 %i.tt, i64 range(i64 0, -9223372036854775808) %i.tr, i1 false), !noalias !11647
+  %i.uh = add nuw i64 %i.ug, %i.tr                ; 5 uses
   store i64 %i.uh, ptr %i.rt, align 8, !alias.scope !11644, !noalias !11642
   call void @llvm.experimental.noalias.scope.decl(metadata !11648)
   call void @llvm.experimental.noalias.scope.decl(metadata !11649)
-  %i.ui = sub i64 %i.ug, %i.uh
+  %i.ui = sub i64 %.pre9.i.i.i.i.i, %i.uh
   %i.uj = icmp ugt i64 %i.tv, %i.ui
   br i1 %i.uj, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread.i.i.i.i.i.i.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i.i, !prof !18
 

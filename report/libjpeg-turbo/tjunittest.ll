@@ -205,7 +205,7 @@ vector.ph209:                                     ; preds = %vector.main.loop.it
   %broadcast.splat212 = shufflevector <8 x i16> %broadcast.splatinsert211, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body213
 
-vector.body213:                                   ; preds = %vector.body213, %vector.ph209
+vector.body213:                                   ; preds = %vector.ph209, %vector.body213
   %index214 = phi i64 [ 0, %vector.ph209 ], [ %index.next215, %vector.body213 ] ; 2 uses
   %i.dd = getelementptr inbounds nuw [2 x i8], ptr %i.cv, i64 %index214 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 16

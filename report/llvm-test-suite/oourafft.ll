@@ -203,14 +203,14 @@ begin_hunk_0_@cftmdl:bb.a
   %.idx = shl nuw nsw i64 %indvars.iv.next430, 4
   %i.jz = getelementptr inbounds nuw i8, ptr %3, i64 %.idx ; 2 uses
   %i.ka = load <2 x double>, ptr %i.jz, align 8, !tbaa !11 ; 6 uses
-  %4 = shufflevector <2 x double> %i.ka, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.kb = fmul double %i.jx, 2.000000e+00         ; 2 uses
   %i.kc = fneg double %i.kb
-  %i.kd = insertelement <2 x double> poison, double %i.kc, i64 0
-  %i.ke = insertelement <2 x double> %i.kd, double %i.kb, i64 1
-  %i.kf = fneg <2 x double> %4
-  %5 = shufflevector <2 x double> %i.ka, <2 x double> %i.kf, <2 x i32> <i32 0, i32 2>
-  %i.kg = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ke, <2 x double> %4, <2 x double> %5) ; 4 uses
+  %i.kd = insertelement <2 x double> poison, double %i.kb, i64 0
+  %i.ke = insertelement <2 x double> %i.kd, double %i.kc, i64 1
+  %4 = shufflevector <2 x double> %i.ka, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.kf = fneg <2 x double> %i.ka
+  %5 = shufflevector <2 x double> %i.kf, <2 x double> %i.ka, <2 x i32> <i32 1, i32 2>
+  %i.kg = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ke, <2 x double> %i.ka, <2 x double> %5) ; 4 uses
   %i.kh = add i64 %indvars.iv419, %i.gf           ; 2 uses
   br i1 %i.b, label %.lr.ph404.preheader, label %._crit_edge409
 
@@ -370,9 +370,8 @@ vector.ph1052:                                    ; preds = %vector.memcheck917
   %broadcast.splatinsert1056 = insertelement <2 x double> poison, double %i.jy, i64 0
   %broadcast.splat1057 = shufflevector <2 x double> %broadcast.splatinsert1056, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splat1059 = shufflevector <2 x double> %i.ka, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %broadcast.splat1061 = shufflevector <2 x double> %i.ka, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat1061 = shufflevector <2 x double> %i.kg, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splat1063 = shufflevector <2 x double> %i.kg, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %broadcast.splat1065 = shufflevector <2 x double> %i.kg, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body1066
 
 vector.body1066:                                  ; preds = %vector.body1066, %vector.ph1052
@@ -422,18 +421,18 @@ vector.body1066:                                  ; preds = %vector.body1066, %v
   %i.mi = fadd <2 x double> %i.lr, %i.lw          ; 2 uses
   %i.mj = fneg <2 x double> %i.mi
   %i.mk = fmul <2 x double> %broadcast.splat1059, %i.mj
-  %i.ml = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat1061, <2 x double> %i.mh, <2 x double> %i.mk)
+  %i.ml = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %i.mh, <2 x double> %i.mk)
   %i.mm = fmul <2 x double> %broadcast.splat1059, %i.mh
-  %i.mn = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat1061, <2 x double> %i.mi, <2 x double> %i.mm)
+  %i.mn = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %i.mi, <2 x double> %i.mm)
   %interleaved.vec1082 = shufflevector <2 x double> %i.ml, <2 x double> %i.mn, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec1082, ptr %i.ln, align 8, !tbaa !11
   %i.mo = fadd <2 x double> %i.lq, %i.lx          ; 2 uses
   %i.mp = fsub <2 x double> %i.lr, %i.lw          ; 2 uses
   %i.mq = fneg <2 x double> %i.mp
-  %i.mr = fmul <2 x double> %broadcast.splat1063, %i.mq
-  %i.ms = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat1065, <2 x double> %i.mo, <2 x double> %i.mr)
-  %i.mt = fmul <2 x double> %broadcast.splat1063, %i.mo
-  %i.mu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat1065, <2 x double> %i.mp, <2 x double> %i.mt)
+  %i.mr = fmul <2 x double> %broadcast.splat1061, %i.mq
+  %i.ms = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat1063, <2 x double> %i.mo, <2 x double> %i.mr)
+  %i.mt = fmul <2 x double> %broadcast.splat1061, %i.mo
+  %i.mu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat1063, <2 x double> %i.mp, <2 x double> %i.mt)
   %interleaved.vec1083 = shufflevector <2 x double> %i.ms, <2 x double> %i.mu, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec1083, ptr %i.lt, align 8, !tbaa !11
   %index.next1084 = add nuw i64 %index1067, 2     ; 2 uses
@@ -451,9 +450,8 @@ middle.block1085:                                 ; preds = %vector.body1066
   %i.my = insertelement <2 x double> poison, double %i.jy, i64 0
   %i.mz = shufflevector <2 x double> %i.my, <2 x double> poison, <2 x i32> zeroinitializer
   %i.na = shufflevector <2 x double> %i.ka, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.nb = shufflevector <2 x double> %i.ka, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.nb = shufflevector <2 x double> %i.kg, <2 x double> poison, <2 x i32> zeroinitializer
   %i.nc = shufflevector <2 x double> %i.kg, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %6 = shufflevector <2 x double> %i.kg, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph404
 
 .lr.ph404:                                        ; preds = %.lr.ph404.preheader1091, %.lr.ph404
@@ -487,13 +485,13 @@ middle.block1085:                                 ; preds = %vector.body1066
   store <2 x double> %i.oa, ptr %i.nh, align 8, !tbaa !11
   %i.ob = shufflevector <2 x double> %i.nx, <2 x double> %i.nt, <2 x i32> <i32 1, i32 2>
   %i.oc = fmul <2 x double> %i.na, %i.ob
-  %i.od = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nb, <2 x double> %i.nv, <2 x double> %i.oc)
+  %i.od = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %i.nv, <2 x double> %i.oc)
   store <2 x double> %i.od, ptr %i.ng, align 8, !tbaa !11
   %i.oe = shufflevector <2 x double> %i.nu, <2 x double> %i.nt, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.of = fneg <2 x double> %i.oe
   %i.og = shufflevector <2 x double> %i.of, <2 x double> %i.nu, <2 x i32> <i32 1, i32 2>
-  %i.oh = fmul <2 x double> %i.nc, %i.og
-  %i.oi = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %i.oe, <2 x double> %i.oh)
+  %i.oh = fmul <2 x double> %i.nb, %i.og
+  %i.oi = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nc, <2 x double> %i.oe, <2 x double> %i.oh)
   store <2 x double> %i.oi, ptr %gep441, align 8, !tbaa !11
   %indvars.iv.next422 = add nsw i64 %indvars.iv421, 2 ; 2 uses
   %i.oj = icmp slt i64 %indvars.iv.next422, %i.kh
@@ -502,14 +500,14 @@ middle.block1085:                                 ; preds = %vector.body1066
 ._crit_edge405:                                   ; preds = %.lr.ph404, %middle.block1085
   %i.ok = getelementptr inbounds nuw i8, ptr %i.jz, i64 16
   %i.ol = load <2 x double>, ptr %i.ok, align 8, !tbaa !11 ; 6 uses
-  %7 = shufflevector <2 x double> %i.ol, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.om = fmul double %i.jy, 2.000000e+00         ; 2 uses
   %i.on = fneg double %i.om
-  %i.oo = insertelement <2 x double> poison, double %i.on, i64 0
-  %i.op = insertelement <2 x double> %i.oo, double %i.om, i64 1
-  %i.oq = fneg <2 x double> %7
-  %8 = shufflevector <2 x double> %i.ol, <2 x double> %i.oq, <2 x i32> <i32 0, i32 2>
-  %i.or = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.op, <2 x double> %7, <2 x double> %8) ; 4 uses
+  %i.oo = insertelement <2 x double> poison, double %i.om, i64 0
+  %i.op = insertelement <2 x double> %i.oo, double %i.on, i64 1
+  %6 = shufflevector <2 x double> %i.ol, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.oq = fneg <2 x double> %i.ol
+  %7 = shufflevector <2 x double> %i.oq, <2 x double> %i.ol, <2 x i32> <i32 1, i32 2>
+  %i.or = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.op, <2 x double> %i.ol, <2 x double> %7) ; 4 uses
   %.reass = add i64 %indvars.iv419, %invariant.op ; 2 uses
   %i.os = fneg double %i.jx                       ; 2 uses
   %i.ot = or disjoint i64 %i.jt, 2
@@ -644,9 +642,8 @@ vector.ph875:                                     ; preds = %vector.memcheck731
   %broadcast.splatinsert879 = insertelement <2 x double> poison, double %i.jy, i64 0
   %broadcast.splat880 = shufflevector <2 x double> %broadcast.splatinsert879, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splat882 = shufflevector <2 x double> %i.ol, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %broadcast.splat884 = shufflevector <2 x double> %i.ol, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat884 = shufflevector <2 x double> %i.or, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splat886 = shufflevector <2 x double> %i.or, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %broadcast.splat888 = shufflevector <2 x double> %i.or, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body889
 
 vector.body889:                                   ; preds = %vector.body889, %vector.ph875
@@ -696,18 +693,18 @@ vector.body889:                                   ; preds = %vector.body889, %ve
   %i.qb = fadd <2 x double> %i.pk, %i.pp          ; 2 uses
   %i.qc = fneg <2 x double> %i.qb
   %i.qd = fmul <2 x double> %broadcast.splat882, %i.qc
-  %i.qe = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat884, <2 x double> %i.qa, <2 x double> %i.qd)
+  %i.qe = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %i.qa, <2 x double> %i.qd)
   %i.qf = fmul <2 x double> %broadcast.splat882, %i.qa
-  %i.qg = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat884, <2 x double> %i.qb, <2 x double> %i.qf)
+  %i.qg = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %i.qb, <2 x double> %i.qf)
   %interleaved.vec905 = shufflevector <2 x double> %i.qe, <2 x double> %i.qg, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec905, ptr %i.pg, align 8, !tbaa !11
   %i.qh = fadd <2 x double> %i.pj, %i.pq          ; 2 uses
   %i.qi = fsub <2 x double> %i.pk, %i.pp          ; 2 uses
   %i.qj = fneg <2 x double> %i.qi
-  %i.qk = fmul <2 x double> %broadcast.splat886, %i.qj
-  %i.ql = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat888, <2 x double> %i.qh, <2 x double> %i.qk)
-  %i.qm = fmul <2 x double> %broadcast.splat886, %i.qh
-  %i.qn = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat888, <2 x double> %i.qi, <2 x double> %i.qm)
+  %i.qk = fmul <2 x double> %broadcast.splat884, %i.qj
+  %i.ql = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat886, <2 x double> %i.qh, <2 x double> %i.qk)
+  %i.qm = fmul <2 x double> %broadcast.splat884, %i.qh
+  %i.qn = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat886, <2 x double> %i.qi, <2 x double> %i.qm)
   %interleaved.vec906 = shufflevector <2 x double> %i.ql, <2 x double> %i.qn, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec906, ptr %i.pm, align 8, !tbaa !11
   %index.next907 = add nuw i64 %index890, 2       ; 2 uses
@@ -725,9 +722,8 @@ scalar.ph873.preheader:                           ; preds = %vector.memcheck731,
   %i.qr = insertelement <2 x double> poison, double %i.os, i64 0
   %i.qs = shufflevector <2 x double> %i.qr, <2 x double> poison, <2 x i32> zeroinitializer
   %i.qt = shufflevector <2 x double> %i.ol, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.qu = shufflevector <2 x double> %i.ol, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.qu = shufflevector <2 x double> %i.or, <2 x double> poison, <2 x i32> zeroinitializer
   %i.qv = shufflevector <2 x double> %i.or, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %9 = shufflevector <2 x double> %i.or, <2 x double> poison, <2 x i32> zeroinitializer
   br label %scalar.ph873
 
 scalar.ph873:                                     ; preds = %scalar.ph873.preheader, %scalar.ph873
@@ -761,13 +757,13 @@ scalar.ph873:                                     ; preds = %scalar.ph873.prehea
   store <2 x double> %i.rt, ptr %i.ra, align 8, !tbaa !11
   %i.ru = shufflevector <2 x double> %i.rq, <2 x double> %i.rm, <2 x i32> <i32 1, i32 2>
   %i.rv = fmul <2 x double> %i.qt, %i.ru
-  %i.rw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qu, <2 x double> %i.ro, <2 x double> %i.rv)
+  %i.rw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %i.ro, <2 x double> %i.rv)
   store <2 x double> %i.rw, ptr %i.qz, align 8, !tbaa !11
   %i.rx = shufflevector <2 x double> %i.rn, <2 x double> %i.rm, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.ry = fneg <2 x double> %i.rx
   %i.rz = shufflevector <2 x double> %i.ry, <2 x double> %i.rn, <2 x i32> <i32 1, i32 2>
-  %i.sa = fmul <2 x double> %i.qv, %i.rz
-  %i.sb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %i.rx, <2 x double> %i.sa)
+  %i.sa = fmul <2 x double> %i.qu, %i.rz
+  %i.sb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qv, <2 x double> %i.rx, <2 x double> %i.sa)
   store <2 x double> %i.sb, ptr %gep443, align 8, !tbaa !11
   %indvars.iv.next427 = add nsw i64 %indvars.iv426, 2 ; 2 uses
   %i.sc = icmp slt i64 %indvars.iv.next427, %.reass

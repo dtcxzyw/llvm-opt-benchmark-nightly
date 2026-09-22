@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bu = getelementptr i8, ptr %i.bg, i64 %i.bs
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bv = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.bc, i64 %i.bv ; 2 uses
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bu = getelementptr i8, ptr %i.bg, i64 %i.bs
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bv = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.bc, i64 %i.bv ; 2 uses
@@ -1011,7 +1011,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ae = getelementptr i8, ptr %i.i, i64 %i.ac
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.t, i64 %i.af ; 2 uses
@@ -1414,7 +1414,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ae = getelementptr i8, ptr %i.i, i64 %i.ac
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.t, i64 %i.af ; 2 uses

@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bh = getelementptr i8, ptr %i.ax, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %i.aw, i64 %index
   %next.gep175 = getelementptr i8, ptr %i.ax, i64 %index
@@ -440,7 +440,7 @@ vector.ph193:                                     ; preds = %vector.main.loop.it
   %i.do = getelementptr i8, ptr %.3.i, i64 %n.vec194
   br label %vector.body195
 
-vector.body195:                                   ; preds = %vector.body195, %vector.ph193
+vector.body195:                                   ; preds = %vector.ph193, %vector.body195
   %index196 = phi i64 [ 0, %vector.ph193 ], [ %index.next200, %vector.body195 ] ; 3 uses
   %next.gep197 = getelementptr i8, ptr %.155.i, i64 %index196
   %next.gep198 = getelementptr i8, ptr %.3.i, i64 %index196
@@ -594,7 +594,7 @@ vector.ph147:                                     ; preds = %vector.main.loop.it
   %i.p = getelementptr i8, ptr %1, i64 %n.vec148
   br label %vector.body149
 
-vector.body149:                                   ; preds = %vector.body149, %vector.ph147
+vector.body149:                                   ; preds = %vector.ph147, %vector.body149
   %index150 = phi i64 [ 0, %vector.ph147 ], [ %index.next154, %vector.body149 ] ; 3 uses
   %next.gep151 = getelementptr i8, ptr %0, i64 %index150
   %next.gep152 = getelementptr i8, ptr %1, i64 %index150
@@ -810,7 +810,7 @@ vector.ph120:                                     ; preds = %vector.main.loop.it
   %i.br = getelementptr i8, ptr %.3, i64 %n.vec121
   br label %vector.body122
 
-vector.body122:                                   ; preds = %vector.body122, %vector.ph120
+vector.body122:                                   ; preds = %vector.ph120, %vector.body122
   %index123 = phi i64 [ 0, %vector.ph120 ], [ %index.next127, %vector.body122 ] ; 3 uses
   %next.gep124 = getelementptr i8, ptr %.155, i64 %index123
   %next.gep125 = getelementptr i8, ptr %.3, i64 %index123

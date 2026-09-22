@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.k, -32                      ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue109, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue109
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue109 ] ; 33 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
@@ -607,7 +607,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ai = or disjoint i64 %n.vec, 8
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue117, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue117
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue117 ] ; 33 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.c, i64 %index ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
@@ -1010,11 +1010,11 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.z
   %i.bj = getelementptr i8, ptr %i.z, i64 -64
-  %6 = getelementptr i8, ptr %i.z, i64 -56
-  %7 = load double, ptr %6, align 8, !tbaa !67    ; 8 uses
-  %i.bk = load double, ptr %i.bj, align 8, !tbaa !68 ; 6 uses
-  %i.bl = fcmp oeq double %i.bk, 1.000000e+00
-  %i.bm = fcmp oeq double %7, 0.000000e+00
+  %6 = load double, ptr %i.bj, align 8, !tbaa !67 ; 7 uses
+  %7 = getelementptr i8, ptr %i.z, i64 -56
+  %i.bk = load double, ptr %7, align 8, !tbaa !68 ; 9 uses
+  %i.bl = fcmp oeq double %6, 1.000000e+00
+  %i.bm = fcmp oeq double %i.bk, 0.000000e+00
   %or.cond = select i1 %i.bl, i1 %i.bm, i1 false
   br i1 %or.cond, label %bb.ac, label %bb.ad
 
@@ -1045,33 +1045,26 @@ switch.lookup:                                    ; preds = %bb.ad
   %i.bv = zext nneg i32 %i.br to i64
   %switch.gep160 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ffeqtyll.1, i64 %i.bv
   %switch.load161 = load double, ptr %switch.gep160, align 8
-  %i.bw = fcmp ult double %i.bk, 0.000000e+00     ; 2 uses
-  %8 = insertelement <2 x double> poison, double %i.bk, i64 0
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
-  %10 = insertelement <2 x double> poison, double %switch.load, i64 0
-  %11 = insertelement <2 x double> %10, double %switch.load161, i64 1
-  %12 = insertelement <2 x double> poison, double %7, i64 0
-  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
-  %14 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %11, <2 x double> %13) ; 2 uses
-  %15 = extractelement <2 x double> %14, i64 0    ; 3 uses
-  %i.bx = call double @llvm.fmuladd.f64(double %i.bk, double %15, double %7)
-  %.1112 = select i1 %i.bw, double %i.bx, double %15 ; 5 uses
-  %16 = extractelement <2 x double> %14, i64 1
-  %.1 = select i1 %i.bw, double %15, double %16   ; 7 uses
-  %i.by = fcmp une double %7, f0x41E0000000000000
-  %i.bz = fcmp une double %7, f0x43E0000000000000
+  %i.bw = fcmp ult double %6, 0.000000e+00        ; 2 uses
+  %8 = call double @llvm.fmuladd.f64(double %6, double %switch.load, double %i.bk) ; 3 uses
+  %9 = call double @llvm.fmuladd.f64(double %6, double %switch.load161, double %i.bk)
+  %i.bx = call double @llvm.fmuladd.f64(double %6, double %8, double %i.bk)
+  %.1112 = select i1 %i.bw, double %i.bx, double %8 ; 5 uses
+  %.1 = select i1 %i.bw, double %8, double %9     ; 7 uses
+  %i.by = fcmp une double %i.bk, f0x41E0000000000000
+  %i.bz = fcmp une double %i.bk, f0x43E0000000000000
   %or.cond3 = and i1 %i.by, %i.bz
   br i1 %or.cond3, label %bb.af, label %bb.ah
 
 bb.af:                                            ; preds = %switch.lookup
-  %i.ca = fptosi double %i.bk to i64
-  %i.cb = fcmp olt double %7, f0x41E0000000000000
-  %i.cc = fptosi double %7 to i64
+  %i.ca = fptosi double %6 to i64
+  %i.cb = fcmp olt double %i.bk, f0x41E0000000000000
+  %i.cc = fptosi double %i.bk to i64
   %i.cd = sitofp i64 %i.cc to double
   %.0 = select i1 %i.cb, double %i.cd, double 0.000000e+00
-  %i.ce = fcmp une double %.0, %7
+  %i.ce = fcmp une double %.0, %i.bk
   %i.cf = sitofp i64 %i.ca to double
-  %i.cg = fcmp une double %i.bk, %i.cf
+  %i.cg = fcmp une double %6, %i.cf
   %or.cond135 = select i1 %i.ce, i1 true, i1 %i.cg
   br i1 %or.cond135, label %bb.ag, label %bb.ah
 
@@ -1418,7 +1411,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %i.ai = getelementptr i8, ptr %i.aa, i64 -64
-  %i.aj = load double, ptr %i.ai, align 8, !tbaa !68
+  %i.aj = load double, ptr %i.ai, align 8, !tbaa !67
   store double %i.aj, ptr %6, align 8, !tbaa !57
   br label %bb.r
 
@@ -1428,7 +1421,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.ak = getelementptr i8, ptr %i.aa, i64 -56
-  %i.al = load double, ptr %i.ak, align 8, !tbaa !67
+  %i.al = load double, ptr %i.ak, align 8, !tbaa !68
   store double %i.al, ptr %7, align 8, !tbaa !57
   br label %bb.t
 
@@ -1676,7 +1669,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ak = getelementptr i8, ptr %i.aa, i64 -64
-  %i.al = load double, ptr %i.ak, align 8, !tbaa !68
+  %i.al = load double, ptr %i.ak, align 8, !tbaa !67
   store double %i.al, ptr %6, align 8, !tbaa !57
   br label %bb.ae
 
@@ -1686,7 +1679,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 
 bb.af:                                            ; preds = %bb.ae
   %i.am = getelementptr i8, ptr %i.aa, i64 -56
-  %i.an = load double, ptr %i.am, align 8, !tbaa !67
+  %i.an = load double, ptr %i.am, align 8, !tbaa !68
   store double %i.an, ptr %7, align 8, !tbaa !57
   br label %bb.ag
 
@@ -2089,7 +2082,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hb, i64 88
   store i64 %i.hi, ptr %i.hj, align 8, !tbaa !66
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hb, i64 96
-  store double 1.000000e+00, ptr %i.hk, align 8, !tbaa !68
+  store double 1.000000e+00, ptr %i.hk, align 8, !tbaa !67
   %i.hl = load i64, ptr %i.k, align 8, !tbaa !43  ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hb, i64 112
   store i64 %i.hl, ptr %i.hm, align 8, !tbaa !70
@@ -2104,10 +2097,10 @@ bb.ae:                                            ; preds = %bb.ac
   store i64 %.2, ptr %i.hr, align 8, !tbaa !66
   %i.hs = load double, ptr %i.l, align 8, !tbaa !57
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hb, i64 256
-  store double %i.hs, ptr %i.ht, align 8, !tbaa !68
+  store double %i.hs, ptr %i.ht, align 8, !tbaa !67
   %i.hu = load double, ptr %i.m, align 8, !tbaa !57
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hb, i64 264
-  store double %i.hu, ptr %i.hv, align 8, !tbaa !67
+  store double %i.hu, ptr %i.hv, align 8, !tbaa !68
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hb, i64 272
   store i64 %i.hl, ptr %i.hw, align 8, !tbaa !70
   br label %bb.af
@@ -2510,7 +2503,7 @@ bb.ap:                                            ; preds = %bb.an
   %i.ev = getelementptr inbounds nuw [160 x i8], ptr %i.er, i64 %i.ee
   %i.ew = load double, ptr %i.u, align 8, !tbaa !57
   %i.ex = getelementptr inbounds i8, ptr %i.ev, i64 -64
-  store double %i.ew, ptr %i.ex, align 8, !tbaa !68
+  store double %i.ew, ptr %i.ex, align 8, !tbaa !67
   br label %.sink.split
 
 bb.aq:                                            ; preds = %bb.d
@@ -2582,7 +2575,7 @@ bb.ax:                                            ; preds = %bb.av
   %i.fs = getelementptr inbounds nuw [160 x i8], ptr %i.fo, i64 %i.fb
   %i.ft = load double, ptr %i.u, align 8, !tbaa !57
   %i.fu = getelementptr inbounds i8, ptr %i.fs, i64 -56
-  store double %i.ft, ptr %i.fu, align 8, !tbaa !67
+  store double %i.ft, ptr %i.fu, align 8, !tbaa !68
   br label %.sink.split
 
 bb.ay:                                            ; preds = %bb.d
@@ -2985,10 +2978,10 @@ bb.w:                                             ; preds = %bb.u
   %i.bm = zext nneg i32 %1 to i64
   %i.bn = getelementptr [160 x i8], ptr %i.bl, i64 %i.bm ; 9 uses
   %i.bo = getelementptr i8, ptr %i.bn, i64 -64
-  %i.bp = load double, ptr %i.bo, align 8, !tbaa !68
+  %i.bp = load double, ptr %i.bo, align 8, !tbaa !67
   store double %i.bp, ptr %6, align 8, !tbaa !57
   %i.bq = getelementptr i8, ptr %i.bn, i64 -56
-  %i.br = load double, ptr %i.bq, align 8, !tbaa !67
+  %i.br = load double, ptr %i.bq, align 8, !tbaa !68
   store double %i.br, ptr %7, align 8, !tbaa !57
   %i.bs = getelementptr i8, ptr %i.bn, i64 -48
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !70
@@ -3391,7 +3384,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %smax, 1152921504606846944     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bi = getelementptr i8, ptr %invariant.gep.us, i64 %index ; 3 uses
   %i.bj = getelementptr i8, ptr %i.bi, i64 16     ; 2 uses
@@ -3466,7 +3459,7 @@ vector.ph154:                                     ; preds = %vector.main.loop.it
   %n.vec155 = and i64 %i.bs, 9223372036854775776  ; 4 uses
   br label %vector.body156
 
-vector.body156:                                   ; preds = %vector.body156, %vector.ph154
+vector.body156:                                   ; preds = %vector.ph154, %vector.body156
   %index157 = phi i64 [ 0, %vector.ph154 ], [ %index.next160, %vector.body156 ] ; 2 uses
   %i.bz = getelementptr i8, ptr %invariant.gep, i64 %index157 ; 3 uses
   %i.ca = getelementptr i8, ptr %i.bz, i64 16     ; 2 uses
@@ -3869,10 +3862,10 @@ declare i32 @llvm.smax.i32(i32, i32) #18
 declare void @llvm.assume(i1 noundef) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #18
+declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #18
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #18
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -3980,8 +3973,8 @@ attributes #33 = { nounwind allocsize(0) }
 !64 = !{!63, !10, i64 80}
 !65 = !{!63, !21, i64 152}
 !66 = !{!63, !19, i64 88}
-!67 = !{!63, !22, i64 104}
-!68 = !{!63, !22, i64 96}
+!67 = !{!63, !22, i64 96}
+!68 = !{!63, !22, i64 104}
 !69 = !{!63, !19, i64 72}
 !70 = !{!63, !19, i64 112}
 !71 = !{!26, !10, i64 56}

@@ -202,8 +202,8 @@ bb.a:
   %i.m = load float, ptr %i.l, align 4, !tbaa !13
   %i.n = load <4 x float>, ptr %.01020, align 4, !tbaa !47
   %i.o = fmul <4 x float> %i.b, %i.n
-  %i.p = fadd <4 x float> %i.d, %i.o              ; 4 uses
-  %i.q = bitcast <4 x float> %i.p to <4 x i32>    ; 2 uses
+  %i.p = fadd <4 x float> %i.d, %i.o              ; 3 uses
+  %i.q = bitcast <4 x float> %i.p to <4 x i32>    ; 3 uses
   %i.r = fcmp olt <4 x float> %i.p, zeroinitializer
   %i.s = and <4 x i32> %i.q, splat (i32 -2139095041)
   %i.t = or disjoint <4 x i32> %i.s, splat (i32 1065353216)
@@ -245,16 +245,18 @@ bb.a:
   %i.bd = fcmp uge <4 x float> %i.ak, splat (float -1.260000e+02)
   %i.be = fcmp oge <4 x float> %i.ak, splat (float 1.280000e+02)
   %i.bf = fcmp ogt <4 x float> %i.p, zeroinitializer
-  %4 = select <4 x i1> %i.bd, <4 x float> %i.bc, <4 x float> zeroinitializer
-  %5 = select <4 x i1> %i.be, <4 x float> splat (float +inf), <4 x float> %4
-  %6 = select <4 x i1> %i.bf, <4 x float> %5, <4 x float> zeroinitializer
-  %7 = select <4 x i1> %i.r, <4 x float> %i.p, <4 x float> %6 ; 2 uses
-  %i.bg = fmul <4 x float> %7, <float 2.126000e-01, float 7.152000e-01, float 7.220000e-02, float 0.000000e+00> ; 2 uses
+  %4 = bitcast <4 x float> %i.bc to <4 x i32>
+  %5 = select <4 x i1> %i.bd, <4 x i32> %4, <4 x i32> zeroinitializer
+  %6 = select <4 x i1> %i.be, <4 x i32> splat (i32 2139095040), <4 x i32> %5
+  %7 = select <4 x i1> %i.r, <4 x i32> %i.q, <4 x i32> zeroinitializer
+  %8 = select <4 x i1> %i.bf, <4 x i32> %6, <4 x i32> %7
+  %9 = bitcast <4 x i32> %8 to <4 x float>        ; 2 uses
+  %i.bg = fmul <4 x float> %9, <float 2.126000e-01, float 7.152000e-01, float 7.220000e-02, float 0.000000e+00> ; 2 uses
   %i.bh = shufflevector <4 x float> %i.bg, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
   %i.bi = fadd <4 x float> %i.bg, %i.bh           ; 2 uses
   %i.bj = shufflevector <4 x float> %i.bi, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.bk = fadd <4 x float> %i.bi, %i.bj           ; 2 uses
-  %i.bl = fsub <4 x float> %7, %i.bk
+  %i.bl = fsub <4 x float> %9, %i.bk
   %i.bm = fmul <4 x float> %i.j, %i.bl
   %i.bn = fadd <4 x float> %i.bk, %i.bm
   store <4 x float> %i.bn, ptr %.0921, align 1, !tbaa !47
@@ -657,8 +659,8 @@ bb.a:
   %i.s = fadd <4 x float> %i.q, %i.r              ; 2 uses
   %i.t = fsub <4 x float> %i.n, %i.s
   %i.u = fmul <4 x float> %i.j, %i.t
-  %i.v = fadd <4 x float> %i.s, %i.u              ; 4 uses
-  %i.w = bitcast <4 x float> %i.v to <4 x i32>    ; 2 uses
+  %i.v = fadd <4 x float> %i.s, %i.u              ; 3 uses
+  %i.w = bitcast <4 x float> %i.v to <4 x i32>    ; 3 uses
   %i.x = fcmp olt <4 x float> %i.v, zeroinitializer
   %i.y = and <4 x i32> %i.w, splat (i32 -2139095041)
   %i.z = or disjoint <4 x i32> %i.y, splat (i32 1065353216)
@@ -700,11 +702,13 @@ bb.a:
   %i.bj = fcmp uge <4 x float> %i.aq, splat (float -1.260000e+02)
   %i.bk = fcmp oge <4 x float> %i.aq, splat (float 1.280000e+02)
   %i.bl = fcmp ogt <4 x float> %i.v, zeroinitializer
-  %4 = select <4 x i1> %i.bj, <4 x float> %i.bi, <4 x float> zeroinitializer
-  %5 = select <4 x i1> %i.bk, <4 x float> splat (float +inf), <4 x float> %4
-  %6 = select <4 x i1> %i.bl, <4 x float> %5, <4 x float> zeroinitializer
-  %7 = select <4 x i1> %i.x, <4 x float> %i.v, <4 x float> %6
-  %i.bm = fadd <4 x float> %i.d, %7
+  %4 = bitcast <4 x float> %i.bi to <4 x i32>
+  %5 = select <4 x i1> %i.bj, <4 x i32> %4, <4 x i32> zeroinitializer
+  %6 = select <4 x i1> %i.bk, <4 x i32> splat (i32 2139095040), <4 x i32> %5
+  %7 = select <4 x i1> %i.x, <4 x i32> %i.w, <4 x i32> zeroinitializer
+  %8 = select <4 x i1> %i.bl, <4 x i32> %6, <4 x i32> %7
+  %9 = bitcast <4 x i32> %8 to <4 x float>
+  %i.bm = fadd <4 x float> %i.d, %9
   %i.bn = fmul <4 x float> %i.b, %i.bm
   store <4 x float> %i.bn, ptr %.0922, align 1, !tbaa !47
   %i.bo = getelementptr inbounds nuw i8, ptr %.0922, i64 12

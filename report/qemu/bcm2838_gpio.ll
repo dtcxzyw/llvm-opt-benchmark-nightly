@@ -145,28 +145,22 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.a = lshr i64 %1, 2                           ; 2 uses
   %i.b = mul nuw nsw i64 %i.a, 10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1224
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.b ; 4 uses
-  %4 = load <4 x i8>, ptr %3, align 1
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %5 = load <4 x i8>, ptr %i.d, align 1
-  %6 = and <4 x i8> %4, splat (i8 7)
-  %7 = zext nneg <4 x i8> %6 to <4 x i32>
-  %8 = shl nuw nsw <4 x i32> %7, <i32 0, i32 3, i32 6, i32 9>
-  %9 = and <4 x i8> %5, splat (i8 7)
-  %10 = zext nneg <4 x i8> %9 to <4 x i32>
-  %11 = shl <4 x i32> %10, <i32 12, i32 15, i32 18, i32 21>
-  %rdx.op = or <4 x i32> %8, %11
-  %i.e = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %rdx.op) ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.b ; 3 uses
+  %3 = load <8 x i8>, ptr %i.d, align 1
+  %4 = and <8 x i8> %3, splat (i8 7)
+  %5 = zext nneg <8 x i8> %4 to <8 x i32>
+  %6 = shl <8 x i32> %5, <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
+  %i.e = tail call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %6) ; 2 uses
   %.not.i = icmp eq i64 %i.a, 5
   br i1 %.not.i, label %gpfsel_get.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.g = load i8, ptr %i.f, align 1
   %i.h = and i8 %i.g, 7
   %i.i = zext nneg i8 %i.h to i32
   %i.j = shl nuw nsw i32 %i.i, 24
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 9
+  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 9
   %i.l = load i8, ptr %i.k, align 1
   %i.m = and i8 %i.l, 7
   %i.n = zext nneg i8 %i.m to i32
@@ -569,7 +563,7 @@ declare ptr @object_class_dynamic_cast_assert(ptr noundef, ptr noundef, ptr noun
 declare ptr @object_property_get_link(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #2
+declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3

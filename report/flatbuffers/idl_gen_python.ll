@@ -202,7 +202,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.do = getelementptr i8, ptr %i.dk, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue157, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue157
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue157 ] ; 33 uses
   %next.gep = getelementptr i8, ptr %i.dk, i64 %index ; 3 uses
   %i.dp = getelementptr i8, ptr %i.dk, i64 %index
@@ -605,7 +605,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.do = getelementptr i8, ptr %i.dk, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue157, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue157
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue157 ] ; 33 uses
   %next.gep = getelementptr i8, ptr %i.dk, i64 %index ; 3 uses
   %i.dp = getelementptr i8, ptr %i.dk, i64 %index
@@ -1008,7 +1008,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bm = getelementptr i8, ptr %i.bi, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue138, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue138
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue138 ] ; 33 uses
   %next.gep = getelementptr i8, ptr %i.bi, i64 %index ; 3 uses
   %i.bn = getelementptr i8, ptr %i.bi, i64 %index

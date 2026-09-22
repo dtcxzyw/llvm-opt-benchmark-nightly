@@ -205,7 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n122 = icmp eq i32 %storemerge.i.i, %n.vec118
   br i1 %cmp.n122, label %.loopexit.i.outer.backedge, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.preheader:                               ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.235129.i.ph = phi i32 [ %.033.i.ph, %iter.check ], [ %.033.i.ph, %vector.scevcheck ], [ %i.di, %vec.epilog.iter.check ], [ %i.fs, %vec.epilog.middle.block ] ; 4 uses
   %.073128.i.ph = phi i32 [ %.012.i.i, %iter.check ], [ %.012.i.i, %vector.scevcheck ], [ %i.dj, %vec.epilog.iter.check ], [ %i.ft, %vec.epilog.middle.block ] ; 2 uses
   %i.gb = sub i32 %.033.i.ph, %.235129.i.ph

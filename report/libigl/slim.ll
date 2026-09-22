@@ -205,7 +205,9 @@ bb.b:                                             ; preds = %.lr.ph786, %_ZN5Eig
   %i.af = load double, ptr %i.ae, align 8, !tbaa !40
   store double %i.af, ptr %i.k, align 8, !tbaa !40
   call void @_ZN3igl9polar_svdIN5Eigen6MatrixIdLi2ELi2ELi0ELi2ELi2EEES3_S3_S3_NS2_IdLi2ELi1ELi0ELi2ELi1EEES3_EEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EERNSA_IT1_EERNSA_IT2_EERNSA_IT3_EERNSA_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1) %20, ptr noundef nonnull align 16 dereferenceable(32) %21, ptr noundef nonnull align 16 dereferenceable(32) %22, ptr noundef nonnull align 16 dereferenceable(32) %23, ptr noundef nonnull align 16 dereferenceable(16) %25, ptr noundef nonnull align 16 dereferenceable(32) %24)
-  %i.ag = load <2 x double>, ptr %25, align 16, !tbaa !40 ; 22 uses
+  %i.ag = load <2 x double>, ptr %25, align 16, !tbaa !40 ; 14 uses
+  %34 = extractelement <2 x double> %i.ag, i64 1  ; 14 uses
+  %35 = extractelement <2 x double> %i.ag, i64 0  ; 11 uses
   switch i32 %1, label %bb.k [
     i32 5, label %bb.j
     i32 2, label %bb.c
@@ -215,13 +217,11 @@ bb.b:                                             ; preds = %.lr.ph786, %_ZN5Eig
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %34 = extractelement <2 x double> %i.ag, i64 0  ; 2 uses
-  %i.ah = call double @pow(double noundef %34, double noundef -3.000000e+00) #28
-  %35 = extractelement <2 x double> %i.ag, i64 1  ; 4 uses
-  %i.ai = call double @pow(double noundef %35, double noundef -3.000000e+00) #28
-  %i.aj = fsub double %35, %i.ai
+  %i.ah = call double @pow(double noundef %35, double noundef -3.000000e+00) #28
+  %i.ai = call double @pow(double noundef %34, double noundef -3.000000e+00) #28
+  %i.aj = fsub double %34, %i.ai
   %i.ak = fmul double %i.aj, 2.000000e+00
-  %i.al = fcmp oeq double %34, 1.000000e+00
+  %i.al = fcmp oeq double %35, 1.000000e+00
   br i1 %i.al, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -237,27 +237,25 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.au = phi double [ %i.at, %bb.d ], [ 4.000000e+00, %bb.c ] ; 2 uses
-  %i.av = fcmp oeq double %35, 1.000000e+00
+  %i.av = fcmp oeq double %34, 1.000000e+00
   br i1 %i.av, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.aw = fadd double %35, -1.000000e+00
+  %i.aw = fadd double %34, -1.000000e+00
   %i.ax = fmul double %i.aw, 2.000000e+00
   %i.ay = fdiv double %i.ak, %i.ax
   %i.az = call double @sqrt(double noundef %i.ay) #28
   br label %bb.k
 
 bb.g:                                             ; preds = %bb.b
-  %36 = extractelement <2 x double> %i.ag, i64 0
-  %i.ba = call double @log(double noundef %36) #28
-  %37 = extractelement <2 x double> %i.ag, i64 1
-  %38 = call double @log(double noundef %37) #28
+  %i.ba = call double @log(double noundef %35) #28
+  %36 = call double @log(double noundef %34) #28
+  %37 = fadd <2 x double> %i.ag, splat (double -1.000000e+00)
   %i.bb = insertelement <2 x double> poison, double %i.ba, i64 0
-  %i.bc = insertelement <2 x double> %i.bb, double %38, i64 1
+  %i.bc = insertelement <2 x double> %i.bb, double %36, i64 1
   %i.bd = fdiv <2 x double> %i.bc, %i.ag
   %i.be = fmul <2 x double> %i.bd, splat (double 2.000000e+00)
-  %39 = fadd <2 x double> %i.ag, splat (double -1.000000e+00)
-  %i.bf = fmul <2 x double> %39, splat (double 2.000000e+00)
+  %i.bf = fmul <2 x double> %37, splat (double 2.000000e+00)
   %i.bg = fdiv <2 x double> %i.be, %i.bf          ; 2 uses
   %i.bh = extractelement <2 x double> %i.bg, i64 0
   %i.bi = call double @sqrt(double noundef %i.bh) #28
@@ -266,20 +264,18 @@ bb.g:                                             ; preds = %bb.b
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.b
-  %40 = extractelement <2 x double> %i.ag, i64 0  ; 2 uses
-  %i.bl = call double @pow(double noundef %40, double noundef 2.000000e+00) #28
-  %41 = shufflevector <2 x double> %i.ag, <2 x double> poison, <2 x i32> <i32 1, i32 poison> ; 2 uses
-  %i.bm = insertelement <2 x double> %41, double %i.bl, i64 1
+  %i.bl = call double @pow(double noundef %35, double noundef 2.000000e+00) #28
+  %38 = insertelement <2 x double> poison, double %34, i64 0
+  %i.bm = insertelement <2 x double> %38, double %i.bl, i64 1
   %i.bn = fmul <2 x double> %i.bm, splat (double 2.000000e+00)
-  %42 = shufflevector <2 x double> %41, <2 x double> <double 1.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
-  %i.bo = fdiv <2 x double> %42, %i.bn            ; 2 uses
-  %43 = extractelement <2 x double> %i.ag, i64 1  ; 2 uses
-  %i.bp = call double @pow(double noundef %43, double noundef 2.000000e+00) #28
+  %39 = insertelement <2 x double> %i.ag, double 1.000000e+00, i64 0
+  %i.bo = fdiv <2 x double> %39, %i.bn            ; 2 uses
+  %i.bp = call double @pow(double noundef %34, double noundef 2.000000e+00) #28
   %i.bq = insertelement <2 x double> %i.ag, double %i.bp, i64 1
   %i.br = fmul <2 x double> %i.bq, splat (double 2.000000e+00)
   %i.bs = shufflevector <2 x double> %i.ag, <2 x double> <double 1.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
   %i.bt = fdiv <2 x double> %i.bs, %i.br          ; 2 uses
-  %i.bu = fmul double %40, %43
+  %i.bu = fmul double %35, %34
   %i.bv = call double @sqrt(double noundef %i.bu) #28
   %i.bw = shufflevector <2 x double> %i.bo, <2 x double> %i.bt, <2 x i32> <i32 0, i32 2>
   %i.bx = shufflevector <2 x double> %i.bo, <2 x double> %i.bt, <2 x i32> <i32 1, i32 3>
@@ -315,15 +311,13 @@ bb.h:                                             ; preds = %bb.b
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.b
-  %44 = extractelement <2 x double> %i.ag, i64 0  ; 3 uses
-  %i.cy = call double @pow(double noundef %44, double noundef -3.000000e+00) #28
-  %45 = extractelement <2 x double> %i.ag, i64 1  ; 3 uses
-  %i.cz = call double @pow(double noundef %45, double noundef -3.000000e+00) #28
-  %i.da = call double @pow(double noundef %44, double noundef 2.000000e+00) #28
-  %i.db = call double @pow(double noundef %45, double noundef 2.000000e+00) #28
+  %i.cy = call double @pow(double noundef %35, double noundef -3.000000e+00) #28
+  %i.cz = call double @pow(double noundef %34, double noundef -3.000000e+00) #28
+  %i.da = call double @pow(double noundef %35, double noundef 2.000000e+00) #28
+  %i.db = call double @pow(double noundef %34, double noundef 2.000000e+00) #28
   %i.dc = fadd double %i.da, %i.db
-  %i.dd = fmul double %44, 2.000000e+00
-  %i.de = fmul double %i.dd, %45
+  %i.dd = fmul double %35, 2.000000e+00
+  %i.de = fmul double %i.dd, %34
   %i.df = fdiv double %i.dc, %i.de
   %i.dg = fmul double %2, %i.df
   %i.dh = call double @exp(double noundef %i.dg) #28
@@ -349,16 +343,14 @@ bb.i:                                             ; preds = %bb.b
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.b
-  %46 = extractelement <2 x double> %i.ag, i64 0  ; 3 uses
-  %i.eb = call double @pow(double noundef %46, double noundef -3.000000e+00) #28
-  %47 = extractelement <2 x double> %i.ag, i64 1  ; 3 uses
-  %i.ec = call double @pow(double noundef %47, double noundef -3.000000e+00) #28
-  %i.ed = call double @pow(double noundef %46, double noundef 2.000000e+00) #28
-  %i.ee = call double @pow(double noundef %46, double noundef -2.000000e+00) #28
+  %i.eb = call double @pow(double noundef %35, double noundef -3.000000e+00) #28
+  %i.ec = call double @pow(double noundef %34, double noundef -3.000000e+00) #28
+  %i.ed = call double @pow(double noundef %35, double noundef 2.000000e+00) #28
+  %i.ee = call double @pow(double noundef %35, double noundef -2.000000e+00) #28
   %i.ef = fadd double %i.ed, %i.ee
-  %i.eg = call double @pow(double noundef %47, double noundef 2.000000e+00) #28
+  %i.eg = call double @pow(double noundef %34, double noundef 2.000000e+00) #28
   %i.eh = fadd double %i.ef, %i.eg
-  %i.ei = call double @pow(double noundef %47, double noundef -2.000000e+00) #28
+  %i.ei = call double @pow(double noundef %34, double noundef -2.000000e+00) #28
   %i.ej = fadd double %i.eh, %i.ei
   %i.ek = fmul double %2, %i.ej
   %i.el = call double @exp(double noundef %i.ek) #28
@@ -387,26 +379,26 @@ bb.k:                                             ; preds = %bb.e, %bb.f, %bb.b,
   %.sroa.10796.0 = phi double [ 4.000000e+00, %bb.e ], [ %i.fe, %bb.j ], [ 1.000000e+00, %bb.b ], [ %i.bk, %bb.g ], [ %i.ch, %bb.h ], [ %i.ea, %bb.i ], [ %i.az, %bb.f ]
   %.sroa.0795.0 = phi double [ %i.au, %bb.e ], [ %i.fc, %bb.j ], [ 1.000000e+00, %bb.b ], [ %i.bi, %bb.g ], [ %i.cf, %bb.h ], [ %i.dy, %bb.i ], [ %i.au, %bb.f ]
   %i.ff = fadd <2 x double> %i.ag, splat (double -1.000000e+00)
+  %40 = load <2 x double>, ptr %23, align 16, !tbaa !40 ; 4 uses
+  %41 = load <2 x double>, ptr %i.l, align 16, !tbaa !40 ; 4 uses
   %i.fg = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ff)
   %i.fh = fcmp olt <2 x double> %i.fg, splat (double 1.000000e-08)
   %i.fi = insertelement <2 x double> poison, double %.sroa.0795.0, i64 0
   %i.fj = insertelement <2 x double> %i.fi, double %.sroa.10796.0, i64 1
   %i.fk = select <2 x i1> %i.fh, <2 x double> splat (double 1.000000e+00), <2 x double> %i.fj ; 2 uses
-  %48 = load <2 x double>, ptr %23, align 16, !tbaa !40 ; 4 uses
-  %49 = load <2 x double>, ptr %i.l, align 16, !tbaa !40 ; 4 uses
-  %i.fl = shufflevector <2 x double> %48, <2 x double> %49, <2 x i32> <i32 0, i32 2>
+  %i.fl = shufflevector <2 x double> %40, <2 x double> %41, <2 x i32> <i32 0, i32 2>
   %i.fm = fmul <2 x double> %i.fl, %i.fk          ; 2 uses
   %i.fn = shufflevector <2 x double> %i.fm, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.fo = fmul <2 x double> %48, %i.fn
+  %i.fo = fmul <2 x double> %40, %i.fn
   %i.fp = shufflevector <2 x double> %i.fm, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.fq = fmul <2 x double> %49, %i.fp
+  %i.fq = fmul <2 x double> %41, %i.fp
   %i.fr = fadd <2 x double> %i.fo, %i.fq
-  %i.fs = shufflevector <2 x double> %48, <2 x double> %49, <2 x i32> <i32 1, i32 3>
+  %i.fs = shufflevector <2 x double> %40, <2 x double> %41, <2 x i32> <i32 1, i32 3>
   %i.ft = fmul <2 x double> %i.fk, %i.fs          ; 2 uses
   %i.fu = shufflevector <2 x double> %i.ft, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.fv = fmul <2 x double> %48, %i.fu
+  %i.fv = fmul <2 x double> %40, %i.fu
   %i.fw = shufflevector <2 x double> %i.ft, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.fx = fmul <2 x double> %49, %i.fw
+  %i.fx = fmul <2 x double> %41, %i.fw
   %i.fy = fadd <2 x double> %i.fv, %i.fx
   store <2 x double> %i.fr, ptr %26, align 16, !tbaa !47
   store <2 x double> %i.fy, ptr %i.p, align 16, !tbaa !47

@@ -204,7 +204,7 @@ vector.ph313:                                     ; preds = %vector.main.loop.it
   %n.vec314 = and i64 %i.dg, -16                  ; 4 uses
   br label %vector.body315, !dbg !4397
 
-vector.body315:                                   ; preds = %vector.body315, %vector.ph313
+vector.body315:                                   ; preds = %vector.ph313, %vector.body315
   %index316 = phi i64 [ 0, %vector.ph313 ], [ %index.next321, %vector.body315 ], !dbg !4398 ; 3 uses
   %i.dj = xor i64 %index316, -1, !dbg !4399
   %i.dk = getelementptr [2 x i8], ptr %i.ap, i64 %i.dj, !dbg !4400 ; 2 uses
@@ -607,7 +607,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.gw, -16                     ; 4 uses
   br label %vector.body, !dbg !4480
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ], !dbg !4481 ; 3 uses
   %i.gz = xor i64 %index, -1, !dbg !4482
   %i.ha = getelementptr [2 x i8], ptr %i.ee, i64 %i.gz, !dbg !4483 ; 2 uses

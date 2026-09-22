@@ -204,7 +204,7 @@ vector.ph588:                                     ; preds = %vector.main.loop.it
   %i.jv = getelementptr i8, ptr %.368.i, i64 %n.vec589 ; 2 uses
   br label %vector.body590
 
-vector.body590:                                   ; preds = %vector.body590, %vector.ph588
+vector.body590:                                   ; preds = %vector.ph588, %vector.body590
   %index591 = phi i64 [ 0, %vector.ph588 ], [ %index.next598, %vector.body590 ] ; 3 uses
   %next.gep592 = getelementptr i8, ptr %.364.i, i64 %index591 ; 4 uses
   %next.gep593 = getelementptr i8, ptr %.368.i, i64 %index591 ; 4 uses
@@ -480,7 +480,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.nk = getelementptr i8, ptr %.368.i279, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.364.i280, i64 %index ; 4 uses
   %next.gep565 = getelementptr i8, ptr %.368.i279, i64 %index ; 4 uses

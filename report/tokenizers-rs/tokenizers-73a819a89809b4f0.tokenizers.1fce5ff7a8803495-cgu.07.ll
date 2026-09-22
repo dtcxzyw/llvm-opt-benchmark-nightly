@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.j = getelementptr i8, ptr %.sroa.6.0.copyload.i, i64 %.sroa.4.0.copyload.i
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.promoted.i.i, i64 %index ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !795)
@@ -251,7 +251,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n16 = icmp eq i64 %i.d, %n.vec11
   br i1 %cmp.n16, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
-.lr.ph.i.i.preheader:                             ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.preheader:                             ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ %.sroa.4.0.copyload.i, %iter.check ], [ %.sroa.4.0.copyload.i, %vector.memcheck ], [ %i.h, %vec.epilog.iter.check ], [ %i.o, %vec.epilog.middle.block ] ; 2 uses
   %.ph19 = phi ptr [ %.promoted.i.i, %iter.check ], [ %.promoted.i.i, %vector.memcheck ], [ %i.i, %vec.epilog.iter.check ], [ %i.p, %vec.epilog.middle.block ] ; 3 uses
   %.ph1922 = ptrtoaddr ptr %.ph19 to i64          ; 2 uses
@@ -654,7 +654,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.j, -32                      ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 %index ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses

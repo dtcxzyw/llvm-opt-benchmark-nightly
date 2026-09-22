@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.m, -16                      ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue38, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue38
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue38 ] ; 17 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.q, align 1, !tbaa !69 ; 17 uses
@@ -585,7 +585,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.m, %i.p                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue38, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue38
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue38 ] ; 17 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.q, align 16, !tbaa !69 ; 17 uses
@@ -966,7 +966,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.m, %i.p                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue38, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue38
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue38 ] ; 17 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.q, align 16, !tbaa !69 ; 17 uses
@@ -1347,7 +1347,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.m, %i.p                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue38, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue38
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue38 ] ; 17 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.q, align 16, !tbaa !69 ; 17 uses
@@ -1728,7 +1728,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.m, %i.p                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue38, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue38
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue38 ] ; 17 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.q, align 16, !tbaa !69 ; 17 uses
@@ -2107,7 +2107,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.k, -16                      ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue37, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue37
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue37 ] ; 17 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.o, align 1, !tbaa !69 ; 17 uses
@@ -2485,7 +2485,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.k, %i.n                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue37, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue37
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue37 ] ; 17 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.o, align 16, !tbaa !69 ; 17 uses
@@ -2864,7 +2864,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.k, %i.n                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue37, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue37
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue37 ] ; 17 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.o, align 16, !tbaa !69 ; 17 uses
@@ -3243,7 +3243,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.k, %i.n                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue37, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue37
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue37 ] ; 17 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.o, align 16, !tbaa !69 ; 17 uses
@@ -3622,7 +3622,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nuw i64 %i.k, %i.n                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue37, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue37
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue37 ] ; 17 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.o, align 16, !tbaa !69 ; 17 uses

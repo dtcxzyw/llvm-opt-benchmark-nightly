@@ -204,7 +204,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n1421, label %.critedge, label %.lr.ph792.preheader
 
-.lr.ph792.preheader:                              ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph792.preheader:                              ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv993.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec1417, %vec.epilog.middle.block ] ; 3 uses
   br i1 %lcmp.mod1782.not, label %.lr.ph792.prol.loopexit, label %.lr.ph792.prol
 
@@ -607,7 +607,7 @@ vector.ph1527:                                    ; preds = %vector.main.loop.it
   %n.vec1528 = and i64 %wide.trip.count710.i, 2147483632 ; 4 uses
   br label %vector.body1531
 
-vector.body1531:                                  ; preds = %vector.body1531, %vector.ph1527
+vector.body1531:                                  ; preds = %vector.ph1527, %vector.body1531
   %index1532 = phi i64 [ 0, %vector.ph1527 ], [ %index.next1536, %vector.body1531 ] ; 2 uses
   %vec.phi = phi <8 x i1> [ zeroinitializer, %vector.ph1527 ], [ %i.zw, %vector.body1531 ]
   %vec.phi1533 = phi <8 x i1> [ zeroinitializer, %vector.ph1527 ], [ %i.zx, %vector.body1531 ]
@@ -874,7 +874,7 @@ vector.ph1453:                                    ; preds = %vector.main.loop.it
   %n.vec1454 = and i64 %wide.trip.count725.i, 2147483632 ; 4 uses
   br label %vector.body1455
 
-vector.body1455:                                  ; preds = %pred.store.continue1488, %vector.ph1453
+vector.body1455:                                  ; preds = %vector.ph1453, %pred.store.continue1488
   %index1456 = phi i64 [ 0, %vector.ph1453 ], [ %index.next1489, %pred.store.continue1488 ] ; 17 uses
   %i.adh = getelementptr inbounds nuw [2 x i8], ptr %i.acz, i64 %index1456 ; 3 uses
   %i.adi = getelementptr inbounds nuw i8, ptr %i.adh, i64 16
@@ -1277,7 +1277,7 @@ vec.epilog.vector.body1443:                       ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block1447:                      ; preds = %vec.epilog.vector.body1443
   br i1 %cmp.n1448, label %.critedge418.i, label %vec.epilog.scalar.ph1438.preheader
 
-vec.epilog.scalar.ph1438.preheader:               ; preds = %vector.memcheck1422, %iter.check1437, %vec.epilog.iter.check1439, %vec.epilog.middle.block1447
+vec.epilog.scalar.ph1438.preheader:               ; preds = %iter.check1437, %vector.memcheck1422, %vec.epilog.iter.check1439, %vec.epilog.middle.block1447
   %indvars.iv764.i.ph = phi i64 [ 0, %iter.check1437 ], [ 0, %vector.memcheck1422 ], [ %n.vec1428, %vec.epilog.iter.check1439 ], [ %n.vec1442, %vec.epilog.middle.block1447 ] ; 3 uses
   br i1 %lcmp.mod1799.not, label %vec.epilog.scalar.ph1438.prol.loopexit, label %vec.epilog.scalar.ph1438.prol
 
@@ -1680,7 +1680,7 @@ vector.ph358:                                     ; preds = %vector.main.loop.it
   %i.jf = add nsw i64 %n.vec359, %i.ix
   br label %vector.body366
 
-vector.body366:                                   ; preds = %pred.store.continue401, %vector.ph358
+vector.body366:                                   ; preds = %vector.ph358, %pred.store.continue401
   %index367 = phi i64 [ 0, %vector.ph358 ], [ %index.next402, %pred.store.continue401 ] ; 2 uses
   %i.jg = add nuw i64 %index367, %i.ix            ; 17 uses
   %i.jh = getelementptr inbounds [2 x i8], ptr %i.hs, i64 %i.jg ; 2 uses
@@ -1703,16 +1703,14 @@ vector.body366:                                   ; preds = %pred.store.continue
   %i.jw = and <8 x i1> %i.jk, %i.jq
   %i.jx = and <8 x i1> %i.jj, %i.jr
   %i.jy = and <8 x i1> %i.jk, %i.js
-  %i.jz = select <8 x i1> %i.jx, <8 x i1> %broadcast.splat361, <8 x i1> zeroinitializer
-  %i.ka = select <8 x i1> %i.jy, <8 x i1> %broadcast.splat361, <8 x i1> zeroinitializer
-  %i.kb = select <8 x i1> %i.jv, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
-  %i.kc = select <8 x i1> %i.jw, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
-  %4 = or <8 x i1> %i.jz, %i.kb
-  %5 = or <8 x i1> %i.ka, %i.kc
+  %i.jz = select <8 x i1> %i.jv, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
+  %i.ka = select <8 x i1> %i.jw, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
+  %i.kb = select <8 x i1> %i.jx, <8 x i1> %broadcast.splat361, <8 x i1> %i.jz
+  %i.kc = select <8 x i1> %i.jy, <8 x i1> %broadcast.splat361, <8 x i1> %i.ka
   %i.kd = select <8 x i1> %i.jt, <8 x i1> %broadcast.splat365, <8 x i1> zeroinitializer
   %i.ke = select <8 x i1> %i.ju, <8 x i1> %broadcast.splat365, <8 x i1> zeroinitializer
-  %i.kf = or <8 x i1> %4, %i.kd                   ; 8 uses
-  %i.kg = or <8 x i1> %5, %i.ke                   ; 8 uses
+  %i.kf = or <8 x i1> %i.kb, %i.kd                ; 8 uses
+  %i.kg = or <8 x i1> %i.kc, %i.ke                ; 8 uses
   %i.kh = extractelement <8 x i1> %i.kf, i64 0
   br i1 %i.kh, label %pred.store.if370, label %pred.store.continue371
 
@@ -1919,11 +1917,10 @@ vec.epilog.vector.body:                           ; preds = %pred.store.continue
   %i.nb = and <8 x i1> %i.mw, %i.my
   %i.nc = and <8 x i1> %i.mw, %i.mz
   %i.nd = and <8 x i1> %i.mw, %i.na
-  %i.ne = select <8 x i1> %i.nd, <8 x i1> %broadcast.splat408, <8 x i1> zeroinitializer
-  %i.nf = select <8 x i1> %i.nc, <8 x i1> %broadcast.splat410, <8 x i1> zeroinitializer
-  %6 = or <8 x i1> %i.ne, %i.nf
+  %i.ne = select <8 x i1> %i.nc, <8 x i1> %broadcast.splat410, <8 x i1> zeroinitializer
+  %i.nf = select <8 x i1> %i.nd, <8 x i1> %broadcast.splat408, <8 x i1> %i.ne
   %i.ng = select <8 x i1> %i.nb, <8 x i1> %broadcast.splat412, <8 x i1> zeroinitializer
-  %i.nh = or <8 x i1> %6, %i.ng                   ; 8 uses
+  %i.nh = or <8 x i1> %i.nf, %i.ng                ; 8 uses
   %i.ni = extractelement <8 x i1> %i.nh, i64 0
   br i1 %i.ni, label %pred.store.if415, label %pred.store.continue416
 
@@ -2019,7 +2016,7 @@ vec.epilog.middle.block:                          ; preds = %pred.store.continue
   %cmp.n432 = icmp eq i64 %i.iy, %n.vec406
   br i1 %cmp.n432, label %.loopexit, label %.lr.ph264.split.preheader
 
-.lr.ph264.split.preheader:                        ; preds = %vector.memcheck353, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph264.split.preheader:                        ; preds = %iter.check, %vector.memcheck353, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv289.ph = phi i64 [ %i.ix, %iter.check ], [ %i.ix, %vector.memcheck353 ], [ %i.jf, %vec.epilog.iter.check ], [ %i.mt, %vec.epilog.middle.block ] ; 6 uses
   %xtraiter = and i64 %indvars.iv289.ph, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -2095,11 +2092,10 @@ vector.body:                                      ; preds = %pred.store.continue
   %i.pj = and <8 x i1> %i.pc, %i.pf
   %i.pk = and <8 x i1> %i.pc, %i.pg
   %i.pl = and <8 x i1> %i.pc, %i.ph
-  %i.pm = select <8 x i1> %i.pi, <8 x i1> %broadcast.splat338, <8 x i1> zeroinitializer
-  %i.pn = select <8 x i1> %i.pj, <8 x i1> %broadcast.splat336, <8 x i1> zeroinitializer
-  %7 = or <8 x i1> %i.pm, %i.pn
+  %i.pm = select <8 x i1> %i.pj, <8 x i1> %broadcast.splat336, <8 x i1> zeroinitializer
+  %i.pn = select <8 x i1> %i.pi, <8 x i1> %broadcast.splat338, <8 x i1> %i.pm
   %i.po = select <8 x i1> %i.pk, <8 x i1> %broadcast.splat, <8 x i1> zeroinitializer
-  %i.pp = or <8 x i1> %7, %i.po
+  %i.pp = or <8 x i1> %i.pn, %i.po
   %i.pq = or <8 x i1> %i.pp, %i.pl                ; 8 uses
   %i.pr = extractelement <8 x i1> %i.pq, i64 0
   br i1 %i.pr, label %pred.store.if, label %pred.store.continue

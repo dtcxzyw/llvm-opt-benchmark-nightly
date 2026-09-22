@@ -202,7 +202,7 @@ vector.ph48:                                      ; preds = %vector.main.loop.it
   %i.ci = getelementptr i8, ptr %i.ce, i64 %n.vec49
   br label %vector.body50
 
-vector.body50:                                    ; preds = %vector.body50, %vector.ph48
+vector.body50:                                    ; preds = %vector.ph48, %vector.body50
   %index51 = phi i64 [ 0, %vector.ph48 ], [ %index.next61, %vector.body50 ] ; 2 uses
   %vec.phi52 = phi <8 x i64> [ zeroinitializer, %vector.ph48 ], [ %i.cu, %vector.body50 ]
   %vec.phi53 = phi <8 x i64> [ zeroinitializer, %vector.ph48 ], [ %i.cv, %vector.body50 ]
@@ -300,7 +300,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dm = getelementptr i8, ptr %i.ce, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <8 x i64> [ zeroinitializer, %vector.ph ], [ %i.dy, %vector.body ]
   %vec.phi28 = phi <8 x i64> [ zeroinitializer, %vector.ph ], [ %i.dz, %vector.body ]

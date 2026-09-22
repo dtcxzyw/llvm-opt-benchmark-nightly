@@ -205,7 +205,7 @@ vector.ph128:                                     ; preds = %vector.main.loop.it
   %n.vec129 = and i64 %i.bd, 8589934560           ; 4 uses
   br label %vector.body130
 
-vector.body130:                                   ; preds = %vector.body130, %vector.ph128
+vector.body130:                                   ; preds = %vector.ph128, %vector.body130
   %index131 = phi i64 [ 0, %vector.ph128 ], [ %index.next132, %vector.body130 ] ; 2 uses
   %vec.ind = phi <16 x i8> [ <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, %vector.ph128 ], [ %vec.ind.next, %vector.body130 ] ; 3 uses
   %step.add = add <16 x i8> %vec.ind, splat (i8 16)

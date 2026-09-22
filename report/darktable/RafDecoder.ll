@@ -204,7 +204,7 @@ vector.ph254:                                     ; preds = %vector.main.loop.it
   %i.gq = getelementptr i8, ptr %.sroa.0.0.copyload.i.i105, i64 %i.gp
   br label %vector.body255
 
-vector.body255:                                   ; preds = %vector.body255, %vector.ph254
+vector.body255:                                   ; preds = %vector.ph254, %vector.body255
   %index = phi i64 [ 0, %vector.ph254 ], [ %index.next, %vector.body255 ] ; 2 uses
   %vec.phi = phi <8 x i32> [ zeroinitializer, %vector.ph254 ], [ %i.gv, %vector.body255 ]
   %vec.phi256 = phi <8 x i32> [ zeroinitializer, %vector.ph254 ], [ %i.gw, %vector.body255 ]

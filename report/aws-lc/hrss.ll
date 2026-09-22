@@ -205,7 +205,7 @@ iter.check:
   store i16 %i.j, ptr %i.k, align 4, !tbaa !24
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %iter.check
+vector.body:                                      ; preds = %iter.check, %vector.body
   %index = phi i64 [ 0, %iter.check ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %iter.check ], [ %i.dw, %vector.body ]
   %vec.phi77 = phi <8 x i16> [ zeroinitializer, %iter.check ], [ %i.dx, %vector.body ]

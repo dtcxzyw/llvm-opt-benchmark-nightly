@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.j = insertelement <16 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i8 %.promoted, i64 0
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i8> [ %i.j, %vector.ph ], [ %i.m, %vector.body ]
   %vec.phi243 = phi <16 x i8> [ zeroinitializer, %vector.ph ], [ %i.n, %vector.body ]
@@ -253,7 +253,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n250 = icmp eq i64 %i.f, %n.vec245
   br i1 %cmp.n250, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i8 [ %.promoted, %iter.check ], [ %.promoted, %vector.memcheck ], [ %i.p, %vec.epilog.iter.check ], [ %i.u, %vec.epilog.middle.block ] ; 2 uses
   %.029129.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec245, %vec.epilog.middle.block ] ; 3 uses
   %xtraiter = and i64 %i.f, 3                     ; 2 uses
@@ -656,7 +656,7 @@ vector.ph:                                        ; preds = %iter.check
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <16 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
   %i.w = ashr <16 x i32> %broadcast.splat, %vec.ind
@@ -1059,8 +1059,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8              ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.k = load i8, ptr %i.j, align 1, !tbaa !16
-  %3 = and i8 %i.k, 1                             ; 6 uses
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !16    ; 2 uses
   br i1 %i.e, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.a
@@ -1100,6 +1099,7 @@ bb.a:
   br label %.split47
 
 .split.us:                                        ; preds = %bb.a
+  %3 = and i8 %i.k, 1                             ; 5 uses
   %i.an = shl nuw nsw i8 %3, 1
   %i.ao = shl nuw nsw i8 %3, 2
   %i.ap = or disjoint i8 %i.an, %i.ao
@@ -1119,50 +1119,29 @@ bb.a:
   %.sink.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink.idx.i
   %i.ay = getelementptr inbounds nuw i8, ptr %.sink.i, i64 8
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !16
-  %4 = shl i8 %i.az, 6
-  %5 = and i8 %4, 64
-  %6 = or i8 %.pn, %5
   %i.ba = shl i64 %i.i, 3
   %.sink.idx.i33 = select i1 %i.aw, i64 0, i64 %i.ba
-  %.sink.i34 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink.idx.i33 ; 5 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 8
-  %7 = load i8, ptr %i.bb, align 1, !tbaa !16
-  %8 = shl i8 %7, 7
-  %9 = or i8 %6, %8
-  %10 = or i8 %9, %3
-  %11 = zext i8 %10 to i16
-  %i.bc = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 7
-  %12 = load i8, ptr %i.bc, align 1, !tbaa !16
-  %13 = and i8 %12, 1
-  %14 = zext nneg i8 %13 to i16
-  %15 = shl nuw nsw i16 %14, 8
-  %16 = or disjoint i16 %15, %11
-  %i.bd = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 4
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink.idx.i33 ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 7
+  %4 = load <2 x i8>, ptr %i.bc, align 1, !tbaa !16
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 4
   %i.be = load <2 x i8>, ptr %i.bd, align 1, !tbaa !16
-  %17 = and <2 x i8> %i.be, splat (i8 1)
-  %18 = zext nneg <2 x i8> %17 to <2 x i16>
-  %19 = shl nuw nsw <2 x i16> %18, <i16 10, i16 9> ; 2 uses
-  %20 = extractelement <2 x i16> %19, i64 1
-  %21 = or disjoint i16 %16, %20
-  %22 = extractelement <2 x i16> %19, i64 0
-  %23 = or disjoint i16 %21, %22
-  %24 = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 2
-  %25 = load <2 x i8>, ptr %24, align 1, !tbaa !16
-  %26 = and <2 x i8> %25, splat (i8 1)
-  %27 = zext nneg <2 x i8> %26 to <2 x i16>
-  %28 = shl nuw nsw <2 x i16> %27, <i16 12, i16 11> ; 2 uses
-  %29 = extractelement <2 x i16> %28, i64 1
-  %30 = or i16 %23, %29
-  %31 = extractelement <2 x i16> %28, i64 0
-  %i.bf = or i16 %30, %31
-  %32 = load <2 x i8>, ptr %.sink.i34, align 1, !tbaa !16
-  %33 = and <2 x i8> %32, splat (i8 1)
-  %34 = zext nneg <2 x i8> %33 to <2 x i16>
-  %35 = shl nuw nsw <2 x i16> %34, <i16 14, i16 13> ; 2 uses
-  %36 = extractelement <2 x i16> %35, i64 1
-  %37 = or i16 %i.bf, %36
-  %38 = extractelement <2 x i16> %35, i64 0
-  %i.bg = or i16 %37, %38
+  %5 = load <4 x i8>, ptr %i.bb, align 1, !tbaa !16
+  %6 = shufflevector <2 x i8> %4, <2 x i8> %i.be, <8 x i32> <i32 0, i32 1, i32 3, i32 2, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = shufflevector <4 x i8> %5, <4 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
+  %8 = shufflevector <8 x i8> %6, <8 x i8> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %9 = and <8 x i8> %8, splat (i8 1)
+  %10 = zext nneg <8 x i8> %9 to <8 x i16>
+  %11 = shl nuw <8 x i16> %10, <i16 8, i16 7, i16 9, i16 10, i16 11, i16 12, i16 13, i16 14>
+  %12 = tail call i16 @llvm.vector.reduce.or.v8i16(<8 x i16> %11)
+  %13 = shl i8 %i.az, 6
+  %14 = and i8 %13, 64
+  %15 = zext nneg i8 %14 to i16
+  %i.bf = or i16 %12, %15
+  %16 = and i8 %i.k, 1
+  %op.rdx7678 = or i8 %16, %.pn
+  %op.rdx76 = zext i8 %op.rdx7678 to i16
+  %i.bg = or i16 %i.bf, %op.rdx76
   store i16 %i.bg, ptr %i.a, align 2, !tbaa !93
   %i.bh = call noundef zeroext i1 @_ZN2cv17QRCodeDecoderImpl17correctFormatInfoERt(ptr nonnull align 8 poison, ptr noundef nonnull align 2 dereferenceable(2) %i.a) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
@@ -1564,6 +1543,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.or.v4i16(<4 x i16>) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.or.v8i16(<8 x i16>) #23
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

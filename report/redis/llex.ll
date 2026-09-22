@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bw = and i64 %.val.val33, 15
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue91, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue91
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue91 ] ; 2 uses
   %i.bx = sub i64 %.val.val33, %index             ; 16 uses
   %i.by = getelementptr i8, ptr %.val.val, i64 %i.bx ; 2 uses
@@ -552,7 +552,7 @@ vector.ph118:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
   br label %vector.body120
 
-vector.body120:                                   ; preds = %pred.store.continue155, %vector.ph118
+vector.body120:                                   ; preds = %vector.ph118, %pred.store.continue155
   %index121 = phi i64 [ 0, %vector.ph118 ], [ %index.next156, %pred.store.continue155 ] ; 2 uses
   %i.fo = sub i64 %.val12.val13.i, %index121      ; 16 uses
   %i.fp = getelementptr i8, ptr %.val12.val.i, i64 %i.fo ; 2 uses
@@ -890,7 +890,7 @@ vector.ph195:                                     ; preds = %vector.main.loop.it
   %broadcast.splat198 = shufflevector <16 x i8> %broadcast.splatinsert197, <16 x i8> poison, <16 x i32> zeroinitializer
   br label %vector.body199
 
-vector.body199:                                   ; preds = %pred.store.continue234, %vector.ph195
+vector.body199:                                   ; preds = %vector.ph195, %pred.store.continue234
   %index200 = phi i64 [ 0, %vector.ph195 ], [ %index.next235, %pred.store.continue234 ] ; 2 uses
   %i.jb = sub i64 %.val.val14.i, %index200        ; 16 uses
   %i.jc = getelementptr i8, ptr %.val.val.i, i64 %i.jb ; 2 uses

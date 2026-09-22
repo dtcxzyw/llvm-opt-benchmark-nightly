@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.f = getelementptr i8, ptr %0, i64 %i.d
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.g = shl i64 %index, 1                        ; 2 uses
   %next.gep = getelementptr i8, ptr %1, i64 %i.g  ; 3 uses
@@ -259,7 +259,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n29 = icmp eq i64 %i.a, %n.vec22
   br i1 %cmp.n29, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.013.ph = phi i64 [ %i.a, %iter.check ], [ %i.a, %vector.memcheck ], [ %i.c, %vec.epilog.iter.check ], [ %i.l, %vec.epilog.middle.block ] ; 4 uses
   %.0812.ph = phi ptr [ %1, %iter.check ], [ %1, %vector.memcheck ], [ %i.e, %vec.epilog.iter.check ], [ %i.n, %vec.epilog.middle.block ] ; 2 uses
   %.0911.ph = phi ptr [ %0, %iter.check ], [ %0, %vector.memcheck ], [ %i.f, %vec.epilog.iter.check ], [ %i.o, %vec.epilog.middle.block ] ; 2 uses
@@ -357,7 +357,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.d = getelementptr i8, ptr %0, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %1, i64 %index ; 3 uses
   %next.gep15 = getelementptr i8, ptr %0, i64 %index ; 3 uses
@@ -407,7 +407,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n28 = icmp eq i64 %2, %n.vec21
   br i1 %cmp.n28, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.012.ph = phi i64 [ %2, %iter.check ], [ %2, %vector.memcheck ], [ %i.b, %vec.epilog.iter.check ], [ %i.h, %vec.epilog.middle.block ] ; 4 uses
   %.0711.ph = phi ptr [ %1, %iter.check ], [ %1, %vector.memcheck ], [ %i.c, %vec.epilog.iter.check ], [ %i.i, %vec.epilog.middle.block ] ; 2 uses
   %.0810.ph = phi ptr [ %0, %iter.check ], [ %0, %vector.memcheck ], [ %i.d, %vec.epilog.iter.check ], [ %i.j, %vec.epilog.middle.block ] ; 2 uses

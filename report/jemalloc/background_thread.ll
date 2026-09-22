@@ -202,7 +202,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.m = or disjoint i32 %i.l, 1
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 %index ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 1
@@ -242,7 +242,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n80 = icmp eq i64 %i.d, %n.vec77
   br i1 %cmp.n80, label %.outer.split.us.lr.ph, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.scevcheck ], [ %i.k, %vec.epilog.iter.check ], [ %i.r, %vec.epilog.middle.block ]
   %.044.ph = phi i32 [ 1, %iter.check ], [ 1, %vector.scevcheck ], [ %i.m, %vec.epilog.iter.check ], [ %i.t, %vec.epilog.middle.block ]
   br label %.lr.ph

@@ -205,7 +205,7 @@ vector.ph326:                                     ; preds = %vector.main.loop.it
   %i.bl = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.bk
   br label %vector.body328
 
-vector.body328:                                   ; preds = %pred.store.continue379, %vector.ph326
+vector.body328:                                   ; preds = %vector.ph326, %pred.store.continue379
   %index329 = phi i64 [ 0, %vector.ph326 ], [ %index.next380, %pred.store.continue379 ] ; 2 uses
   %i.bm = shl i64 %index329, 1                    ; 16 uses
   %next.gep330 = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.bm ; 3 uses
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.fz = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.fy
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue96, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue96
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue96 ] ; 2 uses
   %i.ga = shl i64 %index, 1                       ; 16 uses
   %next.gep = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.ga ; 3 uses
@@ -975,7 +975,7 @@ vector.ph228:                                     ; preds = %vector.main.loop.it
   %i.kl = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.kk
   br label %vector.body230
 
-vector.body230:                                   ; preds = %pred.store.continue281, %vector.ph228
+vector.body230:                                   ; preds = %vector.ph228, %pred.store.continue281
   %index231 = phi i64 [ 0, %vector.ph228 ], [ %index.next282, %pred.store.continue281 ] ; 2 uses
   %i.km = shl i64 %index231, 1                    ; 16 uses
   %next.gep232 = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.km ; 3 uses
@@ -1378,7 +1378,7 @@ vector.ph130:                                     ; preds = %vector.main.loop.it
   %i.qs = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.qr
   br label %vector.body132
 
-vector.body132:                                   ; preds = %pred.store.continue183, %vector.ph130
+vector.body132:                                   ; preds = %vector.ph130, %pred.store.continue183
   %index133 = phi i64 [ 0, %vector.ph130 ], [ %index.next184, %pred.store.continue183 ] ; 2 uses
   %i.qt = shl i64 %index133, 1                    ; 16 uses
   %next.gep134 = getelementptr i8, ptr %.sroa.29.0.copyload, i64 %i.qt ; 3 uses
@@ -1781,7 +1781,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.as = getelementptr [2 x i8], ptr %i.aj, i64 %i.ah
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %index ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
@@ -1824,7 +1824,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n69 = icmp eq i64 %i.ac, %n.vec65
   br i1 %cmp.n69, label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VectE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtNtB17_5slice4iter4ItertEEECsjjpCCFGI3ul_14lance_encoding.exit, label %.preheader.i.preheader
 
-.preheader.i.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.preheader.i.preheader:                           ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ %i.ah, %iter.check ], [ %i.ah, %vector.memcheck ], [ %i.ar, %vec.epilog.iter.check ], [ %i.ay, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.i.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec65, %vec.epilog.middle.block ] ; 3 uses
   %i.bd = sub i64 %1, %0
@@ -2227,7 +2227,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.dd = shl i64 %index, 1
   %next.gep = getelementptr i8, ptr %i.cx, i64 %i.dd ; 2 uses
@@ -2630,7 +2630,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.adb = shl i64 %index, 1
   %next.gep = getelementptr i8, ptr %i.acv, i64 %i.adb ; 2 uses
@@ -3033,7 +3033,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.s, 288230376151711728       ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.db, %vector.body ]
   %vec.phi453 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.dc, %vector.body ]
@@ -3436,7 +3436,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.u = shl i64 %index, 1
   %next.gep = getelementptr i8, ptr %i.m, i64 %i.u ; 2 uses
@@ -3839,7 +3839,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.p = getelementptr i8, ptr %.sroa.24.0.copyload, i64 %i.o
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue59, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue59
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue59 ] ; 2 uses
   %i.q = shl i64 %index, 1                        ; 16 uses
   %next.gep = getelementptr i8, ptr %.sroa.24.0.copyload, i64 %i.q ; 3 uses
@@ -4242,7 +4242,7 @@ vector.ph47:                                      ; preds = %vector.main.loop.it
   %i.bc = getelementptr [2 x i8], ptr %i.as, i64 %i.at
   br label %vector.body49
 
-vector.body49:                                    ; preds = %vector.body49, %vector.ph47
+vector.body49:                                    ; preds = %vector.ph47, %vector.body49
   %index50 = phi i64 [ 0, %vector.ph47 ], [ %index.next52, %vector.body49 ] ; 3 uses
   %i.bd = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %index50 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
@@ -4285,7 +4285,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n60 = icmp eq i64 %i.ao, %n.vec56
   br i1 %cmp.n60, label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VectE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtNtB17_5slice4iter4ItertEEECsjjpCCFGI3ul_14lance_encoding.exit.i, label %.preheader.i.i.preheader
 
-.preheader.i.i.preheader:                         ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.preheader.i.i.preheader:                         ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ %i.at, %iter.check ], [ %i.at, %vector.memcheck ], [ %i.bb, %vec.epilog.iter.check ], [ %i.bi, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.i.i.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec48, %vec.epilog.iter.check ], [ %n.vec56, %vec.epilog.middle.block ] ; 3 uses
   %i.bn = sub i64 %i.al, %i.aj
@@ -4688,7 +4688,7 @@ bb.ac:                                            ; preds = %bb.ab
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef range(i24 0, 65794) i24 @_RNvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB5_17ControlWordParser10parse_desc(ptr noalias noundef readonly align 4 captures(none) dereferenceable(8) %0, ptr noalias noundef nonnull readonly captures(none) %1, i64 noundef range(i64 0, -9223372036854775808) %2, i16 noundef %3, i16 noundef %4) unnamed_addr #0 {
+define noundef range(i24 0, 130818) i24 @_RNvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB5_17ControlWordParser10parse_desc(ptr noalias noundef readonly align 4 captures(none) dereferenceable(8) %0, ptr noalias noundef nonnull readonly captures(none) %1, i64 noundef range(i64 0, -9223372036854775808) %2, i16 noundef %3, i16 noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = load i8, ptr %0, align 4, !range !198, !noundef !75
   switch i8 %i.a, label %default.unreachable91 [
@@ -4701,7 +4701,7 @@ bb.a:
     i8 6, label %bb.ab
     i8 7, label %bb.ad
     i8 8, label %bb.ag
-    i8 9, label %.split.thread
+    i8 9, label %bb.ao
   ]
 
 default.unreachable91:                            ; preds = %bb.a
@@ -4727,11 +4727,13 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_
   %i.i = trunc i32 %i.e to i8
   %i.j = and i8 %i.f, %i.i                        ; 2 uses
   %i.k = zext i8 %i.j to i16
-  %.not1.i = icmp uge i16 %4, %i.k                ; 2 uses
+  %.not1.i = icmp uge i16 %4, %i.k
   %i.l = zext i8 %i.h to i16
-  %i.m = icmp eq i16 %3, %i.l                     ; 2 uses
+  %i.m = icmp eq i16 %3, %i.l
   %i.n = icmp eq i8 %i.j, 0
-  br i1 %i.n, label %.split, label %14
+  %.sroa.041.1.extract.trunc = zext i1 %.not1.i to i8
+  %.sroa.041.2.extract.trunc = zext i1 %i.n to i8
+  br label %bb.ao
 
 bb.d:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -4739,7 +4741,7 @@ bb.d:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.r = load i32, ptr %i.q, align 4, !noundef !75
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46615)
-  switch i64 %2, label %bb.ao [
+  switch i64 %2, label %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit [
     i64 0, label %bb.e
     i64 1, label %bb.f
   ]
@@ -4751,6 +4753,24 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   tail call void @_RNvNtCscI6d9CVNmLh_4core9panicking18panic_bounds_check(i64 noundef 1, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @258) #66, !noalias !46615
   unreachable
+
+_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit: ; preds = %bb.d
+  %5 = load i16, ptr %1, align 1, !alias.scope !46615 ; 2 uses
+  %6 = and i8 %i.p, 15
+  %7 = zext nneg i8 %6 to i16
+  %8 = lshr i16 %5, %7
+  %9 = trunc i32 %i.r to i16
+  %10 = and i16 %5, %9                            ; 2 uses
+  %.not3.i = icmp ugt i16 %10, %4
+  %11 = icmp eq i16 %8, %3
+  %12 = icmp eq i16 %10, 0
+  %.sroa.2.0.insert.shift.i58 = select i1 %.not3.i, i24 0, i24 256
+  %.sroa.2.0.insert.insert.i59 = select i1 %12, i24 65792, i24 %.sroa.2.0.insert.shift.i58 ; 2 uses
+  %.sroa.042.1.extract.shift = lshr exact i24 %.sroa.2.0.insert.insert.i59, 8
+  %.sroa.042.1.extract.trunc = trunc i24 %.sroa.042.1.extract.shift to i8
+  %.sroa.042.2.extract.shift = lshr i24 %.sroa.2.0.insert.insert.i59, 16
+  %.sroa.042.2.extract.trunc = trunc nuw nsw i24 %.sroa.042.2.extract.shift to i8
+  br label %bb.ao
 
 bb.g:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -4801,18 +4821,19 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_
   %.sroa.4.0.insert.shift.i = shl nuw nsw i32 %.sroa.4.0.insert.ext.i, 8
   %.sroa.01.0.insert.ext.i = zext i8 %i.w to i32
   %.sroa.4.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.shift.i, %.sroa.01.0.insert.ext.i
-  %.sroa.01.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.insert.i, %i.ad
-  %.sroa.01.0.insert.insert.i.fr = freeze i32 %.sroa.01.0.insert.insert.i ; 2 uses
+  %.sroa.01.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.insert.i, %i.ad ; 2 uses
   %i.ae = and i8 %i.t, 31
   %i.af = zext nneg i8 %i.ae to i32
-  %i.ag = lshr i32 %.sroa.01.0.insert.insert.i.fr, %i.af
-  %i.ah = and i32 %.sroa.01.0.insert.insert.i.fr, %i.v ; 2 uses
+  %i.ag = lshr i32 %.sroa.01.0.insert.insert.i, %i.af
+  %i.ah = and i32 %.sroa.01.0.insert.insert.i, %i.v ; 2 uses
   %i.ai = trunc i32 %i.ah to i16
-  %.not4.i = icmp uge i16 %4, %i.ai               ; 2 uses
+  %.not4.i = icmp uge i16 %4, %i.ai
   %i.aj = trunc i32 %i.ag to i16
-  %i.ak = icmp eq i16 %3, %i.aj                   ; 2 uses
+  %i.ak = icmp eq i16 %3, %i.aj
   %i.al = icmp eq i32 %i.ah, 0
-  br i1 %i.al, label %.split, label %14
+  %.sroa.044.1.extract.trunc = zext i1 %.not4.i to i8
+  %.sroa.044.2.extract.trunc = zext i1 %i.al to i8
+  br label %bb.ao
 
 bb.o:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46617)
@@ -4827,7 +4848,7 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_
   %i.am = load i8, ptr %1, align 1, !alias.scope !46617, !noundef !75
   %i.an = zext i8 %i.am to i16
   %i.ao = icmp eq i16 %3, %i.an
-  br label %.split.thread
+  br label %bb.ao
 
 bb.q:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46618)
@@ -4847,7 +4868,7 @@ bb.s:                                             ; preds = %bb.q
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit: ; preds = %bb.q
   %i.ap = load i16, ptr %1, align 1, !alias.scope !46618
   %i.aq = icmp eq i16 %i.ap, %3
-  br label %.split.thread
+  br label %bb.ao
 
 bb.t:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46619)
@@ -4891,7 +4912,7 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_
   %.sroa.01.0.insert.ext.i80 = zext i8 %i.ar to i16
   %.sroa.01.0.insert.insert.i81 = or disjoint i16 %.sroa.4.0.insert.shift.i79, %.sroa.01.0.insert.ext.i80
   %i.av = icmp eq i16 %.sroa.01.0.insert.insert.i81, %3
-  br label %.split.thread
+  br label %bb.ao
 
 bb.ab:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46620)
@@ -4905,7 +4926,8 @@ bb.ac:                                            ; preds = %bb.ab
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit: ; preds = %bb.ab
   %i.aw = load i8, ptr %1, align 1, !alias.scope !46620, !noundef !75
   %i.ax = icmp eq i8 %i.aw, 0
-  br i1 %i.ax, label %.split.thread, label %.thread104
+  %.sroa.052.2.extract.trunc = zext i1 %i.ax to i8
+  br label %bb.ao
 
 bb.ad:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46621)
@@ -4924,9 +4946,9 @@ bb.af:                                            ; preds = %bb.ad
 
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit: ; preds = %bb.ad
   %i.ay = load i16, ptr %1, align 1, !alias.scope !46621
-  %.fr = freeze i16 %i.ay
-  %5 = icmp eq i16 %.fr, 0
-  br i1 %5, label %.split.thread, label %.thread104
+  %13 = icmp eq i16 %i.ay, 0
+  %.sroa.054.2.extract.trunc = zext i1 %13 to i8
+  br label %bb.ao
 
 bb.ag:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46622)
@@ -4967,44 +4989,19 @@ bb.an:                                            ; preds = %bb.al
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit: ; preds = %bb.al
   %i.bd = or i8 %i.bb, %i.az
   %i.be = icmp eq i8 %i.bd, 0
-  br i1 %i.be, label %.split.thread, label %.thread104
+  %.sroa.056.2.extract.trunc = zext i1 %i.be to i8
+  br label %bb.ao
 
-bb.ao:                                            ; preds = %bb.d
-  %6 = load i16, ptr %1, align 1, !alias.scope !46615
-  %.fr116 = freeze i16 %6                         ; 2 uses
-  %7 = and i8 %i.p, 15
-  %8 = zext nneg i8 %7 to i16
-  %9 = lshr i16 %.fr116, %8
-  %10 = trunc i32 %i.r to i16
-  %11 = and i16 %.fr116, %10                      ; 2 uses
-  %.not3.i = icmp ule i16 %11, %4                 ; 2 uses
-  %12 = icmp eq i16 %9, %3                        ; 2 uses
-  %13 = icmp eq i16 %11, 0
-  br i1 %13, label %.split, label %14
-
-.split.thread:                                    ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit, %bb.a
-  %.sroa.0.0.shrunk99.ph = phi i1 [ %i.ao, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ %i.aq, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ %i.av, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ true, %bb.a ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ]
-  br label %.thread104
-
-.split:                                           ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit, %bb.ao
-  %.sroa.0.0.shrunk99 = phi i1 [ %i.ak, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %12, %bb.ao ], [ %i.m, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ] ; 2 uses
-  %.sroa.11.0.shrunk97 = phi i1 [ %.not4.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %.not3.i, %bb.ao ], [ %.not1.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ]
-  br i1 %.sroa.11.0.shrunk97, label %.thread104, label %16
-
-14:                                               ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit, %bb.ao
-  %.sroa.0.0.shrunk98 = phi i1 [ %i.ak, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %12, %bb.ao ], [ %i.m, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ] ; 2 uses
-  %.sroa.11.0.shrunk96 = phi i1 [ %.not4.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %.not3.i, %bb.ao ], [ %.not1.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ]
-  br i1 %.sroa.11.0.shrunk96, label %.thread104, label %16
-
-.thread104:                                       ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit, %.split.thread, %.split, %14
-  %15 = phi i24 [ 65792, %.split.thread ], [ 256, %14 ], [ 65792, %.split ], [ 256, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ 256, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ 256, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ]
-  %.sroa.0.0.shrunk98109 = phi i1 [ %.sroa.0.0.shrunk99.ph, %.split.thread ], [ %.sroa.0.0.shrunk98, %14 ], [ %.sroa.0.0.shrunk99, %.split ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ]
-  br label %16
-
-16:                                               ; preds = %.split, %14, %.thread104
-  %.sroa.0.0.shrunk98108 = phi i1 [ %.sroa.0.0.shrunk98109, %.thread104 ], [ %.sroa.0.0.shrunk98, %14 ], [ %.sroa.0.0.shrunk99, %.split ]
-  %.sroa.11.0.insert.insert = phi i24 [ %15, %.thread104 ], [ 0, %14 ], [ 65536, %.split ]
-  %.sroa.0.0.insert.ext = zext i1 %.sroa.0.0.shrunk98108 to i24
+bb.ao:                                            ; preds = %bb.a, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit
+  %.sroa.12.0 = phi i8 [ %.sroa.041.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ], [ %.sroa.042.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit ], [ %.sroa.044.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ %.sroa.052.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ %.sroa.054.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ %.sroa.056.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ 1, %bb.a ]
+  %.sroa.11.0 = phi i8 [ %.sroa.041.1.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ], [ %.sroa.042.1.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit ], [ %.sroa.044.1.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ 1, %bb.a ]
+  %.sroa.0.0.shrunk = phi i1 [ %i.m, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ], [ %11, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit ], [ %i.ak, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %i.ao, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ %i.aq, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ %i.av, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ true, %bb.a ]
+  %.sroa.12.0.insert.ext = zext nneg i8 %.sroa.12.0 to i24
+  %.sroa.12.0.insert.shift = shl nuw nsw i24 %.sroa.12.0.insert.ext, 16
+  %.sroa.11.0.insert.ext = zext i8 %.sroa.11.0 to i24
+  %.sroa.11.0.insert.shift = shl nuw nsw i24 %.sroa.11.0.insert.ext, 8
+  %.sroa.11.0.insert.insert = or disjoint i24 %.sroa.11.0.insert.shift, %.sroa.12.0.insert.shift
+  %.sroa.0.0.insert.ext = zext i1 %.sroa.0.0.shrunk to i24
   %.sroa.0.0.insert.insert = or disjoint i24 %.sroa.11.0.insert.insert, %.sroa.0.0.insert.ext
   ret i24 %.sroa.0.0.insert.insert
 }
@@ -5407,7 +5404,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ct = shl i64 %index, 1
   %next.gep = getelementptr i8, ptr %i.cl, i64 %i.ct ; 2 uses
@@ -5810,7 +5807,7 @@ vector.ph283:                                     ; preds = %vector.main.loop.it
   %n.vec284 = and i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i, 2016 ; 4 uses
   br label %vector.body285
 
-vector.body285:                                   ; preds = %vector.body285, %vector.ph283
+vector.body285:                                   ; preds = %vector.ph283, %vector.body285
   %index286 = phi i64 [ 0, %vector.ph283 ], [ %index.next291, %vector.body285 ] ; 2 uses
   %vec.phi287 = phi <16 x i8> [ zeroinitializer, %vector.ph283 ], [ %i.dm, %vector.body285 ]
   %vec.phi288 = phi <16 x i8> [ zeroinitializer, %vector.ph283 ], [ %i.dn, %vector.body285 ]
@@ -5945,7 +5942,7 @@ vector.ph258:                                     ; preds = %vector.main.loop.it
   %n.vec259 = and i64 %.sroa.0.0.i.i.i.i.i.i.i.i64.i, 2032 ; 4 uses
   br label %vector.body260
 
-vector.body260:                                   ; preds = %vector.body260, %vector.ph258
+vector.body260:                                   ; preds = %vector.ph258, %vector.body260
   %index261 = phi i64 [ 0, %vector.ph258 ], [ %index.next266, %vector.body260 ] ; 2 uses
   %vec.phi262 = phi <8 x i16> [ zeroinitializer, %vector.ph258 ], [ %i.fa, %vector.body260 ]
   %vec.phi263 = phi <8 x i16> [ zeroinitializer, %vector.ph258 ], [ %i.fb, %vector.body260 ]
@@ -6348,7 +6345,7 @@ vector.ph485:                                     ; preds = %vector.main.loop.it
   %induction = add <16 x i8> %broadcast.splat, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>
   br label %vector.body487
 
-vector.body487:                                   ; preds = %vector.body487, %vector.ph485
+vector.body487:                                   ; preds = %vector.ph485, %vector.body487
   %index488 = phi i64 [ 0, %vector.ph485 ], [ %index.next490, %vector.body487 ]
   %vec.phi = phi <16 x i8> [ %i.dx, %vector.ph485 ], [ %i.eb, %vector.body487 ]
   %vec.phi489 = phi <16 x i8> [ zeroinitializer, %vector.ph485 ], [ %i.ec, %vector.body487 ]
@@ -6529,7 +6526,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.gi = sub i64 %i.ao, %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %next.gep = getelementptr i8, ptr %.sroa.0113.0466, i64 %index ; 2 uses
   %i.gj = getelementptr i8, ptr %next.gep, i64 16
@@ -6932,7 +6929,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.k = getelementptr i8, ptr %.val5, i64 %i.j
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.l = sub i64 0, %index
   %next.gep = getelementptr i8, ptr %.val5, i64 %i.l ; 2 uses
@@ -6982,7 +6979,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n34 = icmp eq i64 %i.e, %n.vec28
   br i1 %cmp.n34, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.preheader:                       ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.i.i.i.preheader:                       ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec28, %vec.epilog.middle.block ] ; 2 uses
   %.ph37 = phi ptr [ %.val5, %iter.check ], [ %.val5, %vector.memcheck ], [ %i.k, %vec.epilog.iter.check ], [ %i.s, %vec.epilog.middle.block ] ; 3 uses
   %.ph3738 = ptrtoaddr ptr %.ph37 to i64          ; 2 uses
@@ -7385,7 +7382,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.p = or disjoint i64 %n.vec, 1
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.q = shl i64 %index, 1
   %next.gep = getelementptr i8, ptr %.sroa.10.0.i.i, i64 %i.q ; 2 uses

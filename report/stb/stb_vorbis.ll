@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count601, 2147483632 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue773, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue773
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue773 ] ; 18 uses
   %i.se = getelementptr inbounds nuw i8, ptr %i.c, i64 %index ; 2 uses
   %i.sf = getelementptr inbounds nuw i8, ptr %i.se, i64 8

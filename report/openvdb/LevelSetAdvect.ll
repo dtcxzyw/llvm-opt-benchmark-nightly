@@ -205,28 +205,36 @@ bb.m:                                             ; preds = %bb.j
 define linkonce_odr { <2 x float>, float } @_ZN7openvdb5v13_05tools10BoxSampler6sampleINS0_4tree17ValueAccessorImplIKNS4_4TreeINS4_8RootNodeINS4_12InternalNodeINS8_INS4_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEEEENT_9ValueTypeERKSM_RKNSB_IdEE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #22 comdat align 2 {
 bb.a:
   %2 = alloca %"class.openvdb::v13_0::math::Coord", align 8 ; 15 uses
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 4 uses
-  %3 = load <3 x double>, ptr %1, align 8, !tbaa !524
-  %4 = shufflevector <3 x double> %3, <3 x double> poison, <3 x i32> <i32 2, i32 1, i32 0> ; 2 uses
-  %5 = tail call <3 x double> @llvm.floor.v3f64(<3 x double> %4)
-  %6 = fptosi <3 x double> %5 to <3 x i32>        ; 4 uses
-  %7 = extractelement <3 x i32> %6, i64 1
-  %.sroa.2.0.insert.ext.i = zext i32 %7 to i64
+  %5 = load double, ptr %1, align 8, !tbaa !524   ; 2 uses
+  %6 = load double, ptr %3, align 8, !tbaa !524   ; 2 uses
+  %7 = load double, ptr %4, align 8, !tbaa !524   ; 2 uses
+  %8 = tail call double @llvm.floor.f64(double %5)
+  %9 = tail call double @llvm.floor.f64(double %6)
+  %10 = tail call double @llvm.floor.f64(double %7)
+  %11 = fptosi double %8 to i32                   ; 2 uses
+  %12 = fptosi double %9 to i32                   ; 2 uses
+  %13 = fptosi double %10 to i32                  ; 2 uses
+  %.sroa.2.0.insert.ext.i = zext i32 %12 to i64
   %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
-  %8 = sitofp <3 x i32> %6 to <3 x double>
-  %9 = fsub <3 x double> %4, %8                   ; 4 uses
-  %10 = extractelement <3 x i32> %6, i64 2
-  %.sroa.0.0.insert.ext = zext i32 %10 to i64
+  %14 = sitofp i32 %11 to double
+  %15 = sitofp i32 %12 to double
+  %16 = sitofp i32 %13 to double
+  %17 = fsub double %5, %14                       ; 2 uses
+  %18 = fsub double %6, %15                       ; 3 uses
+  %19 = fsub double %7, %16                       ; 5 uses
+  %.sroa.0.0.insert.ext = zext i32 %11 to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext
   store i64 %.sroa.0.0.insert.insert, ptr %2, align 8
-  %11 = extractelement <3 x i32> %6, i64 0
-  store i32 %11, ptr %.sroa.2.0..sroa_idx.i, align 8
+  store i32 %13, ptr %.sroa.2.0..sroa_idx.i, align 8
   %i.b = call noundef nonnull align 4 dereferenceable(12) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS7_5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 4 dereferenceable(12) %2) ; 2 uses
   %.sroa.013.0.copyload = load <2 x float>, ptr %i.b, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4
+  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4 ; 2 uses
   %i.c = load i32, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !258
   %i.d = add nsw i32 %i.c, 1
   store i32 %i.d, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !258
@@ -247,14 +255,14 @@ bb.a:
   %i.k = call noundef nonnull align 4 dereferenceable(12) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS7_5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 4 dereferenceable(12) %2) ; 2 uses
   %.sroa.10.24.copyload = load <2 x float>, ptr %i.k, align 4 ; 2 uses
   %.sroa.14.24..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %.sroa.14.24.copyload = load float, ptr %.sroa.14.24..sroa_idx, align 4
+  %.sroa.14.24.copyload = load float, ptr %.sroa.14.24..sroa_idx, align 4 ; 2 uses
   %i.l = load <2 x i32>, ptr %2, align 8, !tbaa !258
   %i.m = add nsw <2 x i32> %i.l, <i32 1, i32 -1>
   store <2 x i32> %i.m, ptr %2, align 8, !tbaa !258
   %i.n = call noundef nonnull align 4 dereferenceable(12) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS7_5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 4 dereferenceable(12) %2) ; 2 uses
   %.sroa.18.48.copyload = load <2 x float>, ptr %i.n, align 4 ; 2 uses
   %.sroa.22.48..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %.sroa.22.48.copyload = load float, ptr %.sroa.22.48..sroa_idx, align 4
+  %.sroa.22.48.copyload = load float, ptr %.sroa.22.48..sroa_idx, align 4 ; 2 uses
   %i.o = load i32, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !258
   %i.p = add nsw i32 %i.o, 1
   store i32 %i.p, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !258
@@ -275,81 +283,91 @@ bb.a:
   %i.w = call noundef nonnull align 4 dereferenceable(12) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS7_5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 4 dereferenceable(12) %2) ; 2 uses
   %.sroa.26.72.copyload = load <2 x float>, ptr %i.w, align 4 ; 2 uses
   %.sroa.30.72..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %.sroa.30.72.copyload = load float, ptr %.sroa.30.72..sroa_idx, align 4
+  %.sroa.30.72.copyload = load float, ptr %.sroa.30.72..sroa_idx, align 4 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.x = fsub <2 x float> %.sroa.7.12.copyload, %.sroa.013.0.copyload
+  %20 = fsub float %.sroa.9.12.copyload, %.sroa.6.0.copyload
   %i.y = fpext <2 x float> %i.x to <2 x double>
-  %12 = shufflevector <3 x double> %9, <3 x double> poison, <2 x i32> zeroinitializer ; 6 uses
-  %13 = fmul <2 x double> %12, %i.y
-  %14 = fptrunc <2 x double> %13 to <2 x float>
-  %15 = fadd <2 x float> %.sroa.013.0.copyload, %14 ; 2 uses
-  %16 = fsub <2 x float> %.sroa.15.36.copyload, %.sroa.10.24.copyload
-  %17 = fpext <2 x float> %16 to <2 x double>
-  %18 = fmul <2 x double> %12, %17
-  %19 = fptrunc <2 x double> %18 to <2 x float>
-  %20 = fadd <2 x float> %.sroa.10.24.copyload, %19
-  %i.z = fsub <2 x float> %20, %15
-  %21 = fpext <2 x float> %i.z to <2 x double>
-  %22 = shufflevector <3 x double> %9, <3 x double> poison, <2 x i32> <i32 1, i32 1> ; 3 uses
-  %23 = fmul <2 x double> %22, %21
-  %24 = fptrunc <2 x double> %23 to <2 x float>
-  %25 = fadd <2 x float> %15, %24                 ; 2 uses
-  %26 = fsub <2 x float> %.sroa.23.60.copyload, %.sroa.18.48.copyload
-  %27 = fpext <2 x float> %26 to <2 x double>
-  %28 = fmul <2 x double> %12, %27
-  %29 = fptrunc <2 x double> %28 to <2 x float>
-  %30 = fadd <2 x float> %.sroa.18.48.copyload, %29 ; 2 uses
-  %31 = fsub <2 x float> %.sroa.31.84.copyload, %.sroa.26.72.copyload
-  %i.aa = fpext <2 x float> %31 to <2 x double>
-  %32 = fmul <2 x double> %12, %i.aa
-  %33 = fptrunc <2 x double> %32 to <2 x float>
-  %34 = fadd <2 x float> %.sroa.26.72.copyload, %33
-  %35 = fsub <2 x float> %34, %30
-  %36 = fpext <2 x float> %35 to <2 x double>
-  %37 = fmul <2 x double> %22, %36
-  %38 = fptrunc <2 x double> %37 to <2 x float>
-  %i.ab = fadd <2 x float> %30, %38
-  %39 = insertelement <2 x float> poison, float %.sroa.25.60.copyload, i64 0
-  %40 = insertelement <2 x float> %39, float %.sroa.9.12.copyload, i64 1
-  %41 = insertelement <2 x float> poison, float %.sroa.22.48.copyload, i64 0
-  %42 = insertelement <2 x float> %41, float %.sroa.6.0.copyload, i64 1 ; 2 uses
-  %43 = fsub <2 x float> %40, %42
-  %44 = fpext <2 x float> %43 to <2 x double>
-  %45 = fmul <2 x double> %12, %44
-  %i.ac = fptrunc <2 x double> %45 to <2 x float>
-  %i.ad = fadd <2 x float> %42, %i.ac             ; 2 uses
-  %46 = insertelement <2 x float> poison, float %.sroa.33.84.copyload, i64 0
-  %47 = insertelement <2 x float> %46, float %.sroa.17.36.copyload, i64 1
-  %48 = insertelement <2 x float> poison, float %.sroa.30.72.copyload, i64 0
-  %49 = insertelement <2 x float> %48, float %.sroa.14.24.copyload, i64 1 ; 2 uses
-  %50 = fsub <2 x float> %47, %49
-  %51 = fpext <2 x float> %50 to <2 x double>
-  %52 = fmul <2 x double> %12, %51
-  %i.ae = fptrunc <2 x double> %52 to <2 x float>
-  %i.af = fadd <2 x float> %49, %i.ae
+  %21 = fpext float %20 to double
+  %22 = insertelement <2 x double> poison, double %19, i64 0
+  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
+  %24 = fmul <2 x double> %23, %i.y
+  %25 = fmul double %19, %21
+  %26 = fptrunc <2 x double> %24 to <2 x float>
+  %27 = fptrunc double %25 to float
+  %28 = fadd <2 x float> %.sroa.013.0.copyload, %26 ; 2 uses
+  %29 = fadd float %.sroa.6.0.copyload, %27       ; 2 uses
+  %i.z = fsub <2 x float> %.sroa.15.36.copyload, %.sroa.10.24.copyload
+  %30 = fsub float %.sroa.17.36.copyload, %.sroa.14.24.copyload
+  %31 = fpext <2 x float> %i.z to <2 x double>
+  %32 = fpext float %30 to double
+  %33 = fmul <2 x double> %23, %31
+  %34 = fmul double %19, %32
+  %35 = fptrunc <2 x double> %33 to <2 x float>
+  %36 = fptrunc double %34 to float
+  %37 = fadd <2 x float> %.sroa.10.24.copyload, %35
+  %38 = fadd float %.sroa.14.24.copyload, %36
+  %39 = fsub <2 x float> %37, %28
+  %40 = fsub float %38, %29
+  %i.aa = fpext <2 x float> %39 to <2 x double>
+  %41 = fpext float %40 to double
+  %42 = insertelement <2 x double> poison, double %18, i64 0
+  %43 = shufflevector <2 x double> %42, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %44 = fmul <2 x double> %43, %i.aa
+  %45 = fmul double %18, %41
+  %46 = fptrunc <2 x double> %44 to <2 x float>
+  %47 = fptrunc double %45 to float
+  %i.ab = fadd <2 x float> %28, %46               ; 2 uses
+  %48 = fadd float %29, %47                       ; 2 uses
+  %49 = fsub <2 x float> %.sroa.23.60.copyload, %.sroa.18.48.copyload
+  %50 = fsub float %.sroa.25.60.copyload, %.sroa.22.48.copyload
+  %51 = fpext <2 x float> %49 to <2 x double>
+  %52 = fpext float %50 to double
+  %53 = fmul <2 x double> %23, %51
+  %54 = fmul double %19, %52
+  %i.ac = fptrunc <2 x double> %53 to <2 x float>
+  %55 = fptrunc double %54 to float
+  %i.ad = fadd <2 x float> %.sroa.18.48.copyload, %i.ac ; 2 uses
+  %56 = fadd float %.sroa.22.48.copyload, %55     ; 2 uses
+  %57 = fsub <2 x float> %.sroa.31.84.copyload, %.sroa.26.72.copyload
+  %58 = fsub float %.sroa.33.84.copyload, %.sroa.30.72.copyload
+  %59 = fpext <2 x float> %57 to <2 x double>
+  %60 = fpext float %58 to double
+  %61 = fmul <2 x double> %23, %59
+  %62 = fmul double %19, %60
+  %i.ae = fptrunc <2 x double> %61 to <2 x float>
+  %63 = fptrunc double %62 to float
+  %i.af = fadd <2 x float> %.sroa.26.72.copyload, %i.ae
+  %64 = fadd float %.sroa.30.72.copyload, %63
   %i.ag = fsub <2 x float> %i.af, %i.ad
+  %65 = fsub float %64, %56
   %i.ah = fpext <2 x float> %i.ag to <2 x double>
-  %i.ai = fmul <2 x double> %22, %i.ah
+  %66 = fpext float %65 to double
+  %i.ai = fmul <2 x double> %43, %i.ah
+  %67 = fmul double %18, %66
   %i.aj = fptrunc <2 x double> %i.ai to <2 x float>
-  %53 = fadd <2 x float> %i.ad, %i.aj             ; 2 uses
-  %54 = fsub <2 x float> %i.ab, %25
-  %55 = extractelement <2 x float> %53, i64 0
-  %56 = extractelement <2 x float> %53, i64 1     ; 2 uses
-  %i.ak = fsub float %55, %56
-  %i.al = fpext <2 x float> %54 to <2 x double>
+  %68 = fptrunc double %67 to float
+  %69 = fadd <2 x float> %i.ad, %i.aj
+  %70 = fadd float %56, %68
+  %71 = fsub <2 x float> %69, %i.ab
+  %i.ak = fsub float %70, %48
+  %i.al = fpext <2 x float> %71 to <2 x double>
   %i.am = fpext float %i.ak to double
-  %57 = shufflevector <3 x double> %9, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %58 = fmul <2 x double> %57, %i.al
-  %59 = extractelement <3 x double> %9, i64 2
-  %i.an = fmul double %59, %i.am
-  %i.ao = fptrunc <2 x double> %58 to <2 x float>
+  %72 = insertelement <2 x double> poison, double %17, i64 0
+  %73 = shufflevector <2 x double> %72, <2 x double> poison, <2 x i32> zeroinitializer
+  %74 = fmul <2 x double> %73, %i.al
+  %i.an = fmul double %17, %i.am
+  %i.ao = fptrunc <2 x double> %74 to <2 x float>
   %i.ap = fptrunc double %i.an to float
-  %i.aq = fadd <2 x float> %25, %i.ao
-  %i.ar = fadd float %56, %i.ap
+  %i.aq = fadd <2 x float> %i.ab, %i.ao
+  %i.ar = fadd float %48, %i.ap
   %.fca.0.insert.i19.i113.i = insertvalue { <2 x float>, float } poison, <2 x float> %i.aq, 0
   %.fca.1.insert.i20.i114.i = insertvalue { <2 x float>, float } %.fca.0.insert.i19.i113.i, float %i.ar, 1
   ret { <2 x float>, float } %.fca.1.insert.i20.i114.i
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.floor.f64(double) #9
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt17_Function_handlerIFvPN7openvdb5v13_05tools17LevelSetAdvectionINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS2_13DiscreteFieldINS4_INS6_INS7_INS8_INS8_INS9_INS1_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEEEENS2_10BoxSamplerEEENS1_4util15NullInterrupterEE6AdvectINSH_15UniformScaleMapELNSH_20BiasedGradientSchemeE0ELNSH_25TemporalIntegrationSchemeE0EEERKNS5_11LeafManagerISE_E9LeafRangeEESt5_BindIFMSZ_FvS15_ffESt12_PlaceholderILi1EES1A_ILi2EEffEEE9_M_invokeERKSt9_Any_dataOS10_S15_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) #4 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -751,9 +769,6 @@ declare <8 x i64> @llvm.ctpop.v8i64(<8 x i64>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v8i64(<8 x i64>) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <3 x double> @llvm.floor.v3f64(<3 x double>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #9

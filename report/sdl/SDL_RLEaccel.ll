@@ -204,7 +204,7 @@ vector.ph265:                                     ; preds = %vector.main.loop.it
   %i.cr = getelementptr i8, ptr %.1161, i64 %i.cq ; 2 uses
   br label %vector.body267
 
-vector.body267:                                   ; preds = %vector.body267, %vector.ph265
+vector.body267:                                   ; preds = %vector.ph265, %vector.body267
   %index268 = phi i64 [ 0, %vector.ph265 ], [ %index.next271, %vector.body267 ] ; 2 uses
   %i.cs = shl i64 %index268, 1                    ; 2 uses
   %next.gep269 = getelementptr i8, ptr %.1161, i64 %i.cs

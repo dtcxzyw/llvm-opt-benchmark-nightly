@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %invariant.gep255 = getelementptr i8, ptr %i.dz, i64 %i.fs
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %gep256 = getelementptr i8, ptr %invariant.gep255, i64 %index ; 3 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %gep256, i64 16 ; 2 uses
@@ -368,7 +368,7 @@ vector.ph225:                                     ; preds = %vector.main.loop.it
   %invariant.gep = getelementptr i8, ptr %i.dz, i64 %i.hv
   br label %vector.body227
 
-vector.body227:                                   ; preds = %vector.body227, %vector.ph225
+vector.body227:                                   ; preds = %vector.ph225, %vector.body227
   %index228 = phi i64 [ 0, %vector.ph225 ], [ %index.next231, %vector.body227 ] ; 2 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %index228 ; 3 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %gep, i64 16 ; 2 uses

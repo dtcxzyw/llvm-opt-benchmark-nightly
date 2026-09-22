@@ -204,7 +204,7 @@ bb.dw:                                            ; preds = %dev_name.exit49.i, 
   %i.rp = shl i32 %i.ro, 11
   %i.rq = add i32 %i.rp, 2048
   %i.rr = and i32 %i.rq, 2095104
-  %i.rs = or disjoint i32 %i.rn, %i.rr
+  %i.rs = or disjoint i32 %i.rr, %i.rn
   %i.rt = or i32 %i.rs, -2147483646
   br label %psr2_man_trk_ctl_calc.exit
 

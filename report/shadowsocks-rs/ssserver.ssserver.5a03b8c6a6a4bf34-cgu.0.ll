@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ahd = getelementptr i8, ptr %.val.i.i.i.i16, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.aho, %vector.body ]
   %vec.phi435 = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.ahq, %vector.body ]
@@ -608,7 +608,7 @@ vector.ph449:                                     ; preds = %vector.main.loop.it
   %i.ajq = getelementptr i8, ptr %.sroa.6204.0.copyload.i, i64 %n.vec450
   br label %vector.body451
 
-vector.body451:                                   ; preds = %vector.body451, %vector.ph449
+vector.body451:                                   ; preds = %vector.ph449, %vector.body451
   %index452 = phi i64 [ 0, %vector.ph449 ], [ %index.next458, %vector.body451 ] ; 2 uses
   %vec.phi453 = phi <16 x i1> [ zeroinitializer, %vector.ph449 ], [ %i.akb, %vector.body451 ]
   %vec.phi454 = phi <16 x i1> [ zeroinitializer, %vector.ph449 ], [ %i.akd, %vector.body451 ]
@@ -1011,7 +1011,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %.sroa.8.0.copyload.i.i.i.i, -32 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %.sroa.42.0.copyload.i.i.i.i, i64 %index ; 3 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 16 ; 2 uses

@@ -28,24 +28,19 @@ module asm
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden range(i32 0, 262144) i32 @_ZN2v88internal4wasm19WasmEnabledFeatures9FromFlagsEv() local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64, !range !5, !noundef !6
-  %i.b = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 840), align 8, !range !5, !noundef !6
-  %0 = load <4 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 844), align 4
-  %1 = zext <4 x i8> %0 to <4 x i32>
-  %2 = shl nuw nsw <4 x i32> %1, <i32 12, i32 13, i32 14, i32 15>
-  %i.c = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %2)
-  %i.d = zext nneg i8 %i.b to i32
-  %i.e = shl nuw nsw i32 %i.d, 8
-  %3 = zext nneg i8 %i.a to i32
-  %4 = load <17 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 833), align 1
-  %5 = shufflevector <17 x i8> %4, <17 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 8, i32 9, i32 10, i32 15, i32 16>
-  %6 = and <12 x i8> %5, <i8 127, i8 63, i8 31, i8 15, i8 7, i8 3, i8 1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>
-  %7 = zext <12 x i8> %6 to <12 x i32>
-  %8 = shl <12 x i32> %7, <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 9, i32 10, i32 11, i32 16, i32 17>
-  %9 = tail call i32 @llvm.vector.reduce.or.v12i32(<12 x i32> %8)
-  %op.rdx39 = or i32 %9, %i.e
-  %op.rdx40 = or disjoint i32 %i.c, %3
-  %op.rdx41 = or i32 %op.rdx39, %op.rdx40
+  %0 = load <16 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64
+  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 848), align 16, !range !5, !noundef !6
+  %i.b = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 849), align 1, !range !5, !noundef !6
+  %1 = and <16 x i8> %0, <i8 -1, i8 127, i8 63, i8 31, i8 15, i8 7, i8 3, i8 1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>
+  %2 = zext <16 x i8> %1 to <16 x i32>
+  %3 = shl nuw nsw <16 x i32> %2, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.c = tail call i32 @llvm.vector.reduce.or.v16i32(<16 x i32> %3)
+  %i.d = zext nneg i8 %i.a to i32
+  %i.e = shl nuw nsw i32 %i.d, 16
+  %op.rdx = or i32 %i.c, %i.e
+  %4 = zext nneg i8 %i.b to i32
+  %5 = shl nuw nsw i32 %4, 17
+  %op.rdx41 = or i32 %op.rdx, %5
   ret i32 %op.rdx41
 }
 
@@ -85,24 +80,19 @@ _ZN2v88internal7Isolate14native_contextEv.exit:   ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden range(i32 0, 262144) i32 @_ZN2v88internal4wasm19WasmEnabledFeatures11FromContextEPNS0_7IsolateENS0_12DirectHandleINS0_13NativeContextEEE(ptr noundef nonnull %0, ptr %1) local_unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64, !range !5, !noundef !6
-  %i.b = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 840), align 8, !range !5, !noundef !6
-  %2 = load <4 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 844), align 4
-  %3 = zext <4 x i8> %2 to <4 x i32>
-  %4 = shl nuw nsw <4 x i32> %3, <i32 12, i32 13, i32 14, i32 15>
-  %i.c = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %4)
-  %i.d = zext nneg i8 %i.b to i32
-  %i.e = shl nuw nsw i32 %i.d, 8
-  %5 = zext nneg i8 %i.a to i32
-  %6 = load <17 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 833), align 1
-  %7 = shufflevector <17 x i8> %6, <17 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 8, i32 9, i32 10, i32 15, i32 16>
-  %8 = and <12 x i8> %7, <i8 127, i8 63, i8 31, i8 15, i8 7, i8 3, i8 1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>
-  %9 = zext <12 x i8> %8 to <12 x i32>
-  %10 = shl <12 x i32> %9, <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 9, i32 10, i32 11, i32 16, i32 17>
-  %11 = tail call i32 @llvm.vector.reduce.or.v12i32(<12 x i32> %10)
-  %op.rdx25 = or i32 %11, %i.e
-  %op.rdx26 = or disjoint i32 %i.c, %5
-  %op.rdx27 = or i32 %op.rdx25, %op.rdx26         ; 2 uses
+  %2 = load <16 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64
+  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 848), align 16, !range !5, !noundef !6
+  %i.b = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 849), align 1, !range !5, !noundef !6
+  %3 = and <16 x i8> %2, <i8 -1, i8 127, i8 63, i8 31, i8 15, i8 7, i8 3, i8 1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>
+  %4 = zext <16 x i8> %3 to <16 x i32>
+  %5 = shl nuw nsw <16 x i32> %4, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.c = tail call i32 @llvm.vector.reduce.or.v16i32(<16 x i32> %5)
+  %i.d = zext nneg i8 %i.a to i32
+  %i.e = shl nuw nsw i32 %i.d, 16
+  %op.rdx = or i32 %i.c, %i.e
+  %6 = zext nneg i8 %i.b to i32
+  %7 = shl nuw nsw i32 %6, 17
+  %op.rdx27 = or i32 %op.rdx, %7                  ; 2 uses
   %i.f = tail call noundef zeroext i1 @_ZN2v88internal7Isolate22IsWasmStringRefEnabledENS0_12DirectHandleINS0_13NativeContextEEE(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr %1) #4
   %i.g = or i32 %op.rdx27, 1024
   %spec.select = select i1 %i.f, i32 %i.g, i32 %op.rdx27 ; 2 uses
@@ -129,10 +119,7 @@ declare noundef zeroext i1 @_ZN2v88internal7Isolate30IsWasmCustomDescriptorsEnab
 declare noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v12i32(<12 x i32>) #3
+declare i32 @llvm.vector.reduce.or.v16i32(<16 x i32>) #3
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

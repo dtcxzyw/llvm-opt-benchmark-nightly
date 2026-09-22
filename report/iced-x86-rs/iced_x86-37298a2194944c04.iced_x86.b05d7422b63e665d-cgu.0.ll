@@ -205,7 +205,7 @@ vector.ph97:                                      ; preds = %vector.main.loop.it
   %i.r = getelementptr i8, ptr %i.e, i64 %i.q
   br label %vector.body99
 
-vector.body99:                                    ; preds = %pred.store.continue148, %vector.ph97
+vector.body99:                                    ; preds = %vector.ph97, %pred.store.continue148
   %index100 = phi i64 [ 0, %vector.ph97 ], [ %index.next149, %pred.store.continue148 ] ; 2 uses
   %i.s = shl i64 %index100, 1                     ; 16 uses
   %next.gep101 = getelementptr i8, ptr %i.e, i64 %i.s
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.gl = getelementptr i8, ptr %i.fy, i64 %i.gk
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue65, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue65
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue65 ] ; 2 uses
   %i.gm = shl i64 %index, 1                       ; 16 uses
   %next.gep = getelementptr i8, ptr %i.fy, i64 %i.gm

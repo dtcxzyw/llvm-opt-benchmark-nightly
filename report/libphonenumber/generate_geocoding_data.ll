@@ -205,7 +205,7 @@ vector.ph280:                                     ; preds = %vector.main.loop.it
   %i.db = getelementptr i8, ptr %.sroa.0119.0.lcssa, i64 %n.vec281
   br label %vector.body282
 
-vector.body282:                                   ; preds = %vector.body282, %vector.ph280
+vector.body282:                                   ; preds = %vector.ph280, %vector.body282
   %index283 = phi i64 [ 0, %vector.ph280 ], [ %index.next288, %vector.body282 ] ; 3 uses
   %next.gep284 = getelementptr i8, ptr %i.cw, i64 %index283 ; 2 uses
   %next.gep285 = getelementptr i8, ptr %.sroa.0119.0.lcssa, i64 %index283 ; 2 uses
@@ -466,7 +466,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.fw = getelementptr i8, ptr %i.fj, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %i.fq, i64 %index ; 2 uses
   %next.gep263 = getelementptr i8, ptr %i.fj, i64 %index ; 2 uses
@@ -509,7 +509,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n272 = icmp eq i64 %i.fl, %n.vec266
   br i1 %cmp.n272, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcS3_EEEEEvT_SC_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i58, label %.lr.ph.i.i.i54.preheader
 
-.lr.ph.i.i.i54.preheader:                         ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.i54.preheader:                         ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.07.i.i.i55.ph = phi ptr [ %i.fq, %iter.check ], [ %i.fq, %vector.memcheck ], [ %i.fv, %vec.epilog.iter.check ], [ %i.ga, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.02.06.i.i.i56.ph = phi ptr [ %i.fj, %iter.check ], [ %i.fj, %vector.memcheck ], [ %i.fw, %vec.epilog.iter.check ], [ %i.gb, %vec.epilog.middle.block ] ; 3 uses
   %.sroa.02.06.i.i.i56.ph315 = ptrtoaddr ptr %.sroa.02.06.i.i.i56.ph to i64 ; 2 uses
@@ -912,7 +912,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bs = getelementptr i8, ptr %i.bo, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue257, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue257
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue257 ] ; 33 uses
   %next.gep = getelementptr i8, ptr %i.bo, i64 %index ; 3 uses
   %i.bt = getelementptr i8, ptr %i.bo, i64 %index
