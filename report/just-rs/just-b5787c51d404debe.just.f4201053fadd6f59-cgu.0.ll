@@ -205,8 +205,8 @@ bb.ef:                                            ; preds = %bb.ee
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_RINvXs6_NtNtCsfxuqquxiU4q_10serde_core3ser5implsShNtB8_9Serialize9serializeQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutEECskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i, label %_RINvXNvNtCskXtk6F4WjxZ_4just7requests0_1__NtB5_8ResponseNtNtCsfxuqquxiU4q_10serde_core3ser9Serialize9serializeQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutEEB7_.exit.sink.split.i.i, !prof !29
 
 _RINvYNtNtCshTCYgcDtIbU_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutECskXtk6F4WjxZ_4just.exit.thread.i.i.i.peel.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.ee
-  %i.mm = getelementptr inbounds nuw i8, ptr %i.ag, i64 2 ; 2 uses
-  %i.mn = getelementptr inbounds nuw i8, ptr %i.ag, i64 1 ; 2 uses
+  %i.mm = getelementptr inbounds nuw i8, ptr %i.ag, i64 1 ; 2 uses
+  %i.mn = getelementptr inbounds nuw i8, ptr %i.ag, i64 2 ; 2 uses
   %.val7.peel.i.i.i.i.i.i.i.i.i.i.i.i = load i8, ptr %.sroa.18.0.i, align 1, !alias.scope !68577, !noalias !68578 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag), !noalias !68579
   call void @llvm.experimental.noalias.scope.decl(metadata !68580)
@@ -226,10 +226,10 @@ bb.eg:                                            ; preds = %_RINvYNtNtCshTCYgcD
   call void @llvm.assume(i1 %i.mw)
   %i.mx = getelementptr inbounds nuw i8, ptr @_RNvCsb7keUx5WSfn_4itoa13DECIMAL_PAIRS, i64 %i.mv ; 2 uses
   %i.my = load i8, ptr %i.mx, align 1, !noalias !68581, !noundef !28
-  store i8 %i.my, ptr %i.mn, align 1, !alias.scope !68580, !noalias !68579
+  store i8 %i.my, ptr %i.mm, align 1, !alias.scope !68580, !noalias !68579
   %i.mz = getelementptr inbounds nuw i8, ptr %i.mx, i64 1
   %i.na = load i8, ptr %i.mz, align 1, !noalias !68581, !noundef !28
-  store i8 %i.na, ptr %i.mm, align 1, !alias.scope !68580, !noalias !68579
+  store i8 %i.na, ptr %i.mn, align 1, !alias.scope !68580, !noalias !68579
   br label %bb.eh
 
 bb.eh:                                            ; preds = %bb.eg, %_RINvYNtNtCshTCYgcDtIbU_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutECskXtk6F4WjxZ_4just.exit.thread.i.i.i.peel.i.i.i.i.i.i.i.i.i.i.i.i
@@ -301,10 +301,10 @@ bb.ej:                                            ; preds = %_RINvYNtNtCshTCYgcD
   call void @llvm.assume(i1 %i.nx)
   %i.ny = getelementptr inbounds nuw i8, ptr @_RNvCsb7keUx5WSfn_4itoa13DECIMAL_PAIRS, i64 %i.nw ; 2 uses
   %i.nz = load i8, ptr %i.ny, align 1, !noalias !68585, !noundef !28
-  store i8 %i.nz, ptr %i.mn, align 1, !alias.scope !68584, !noalias !68583
+  store i8 %i.nz, ptr %i.mm, align 1, !alias.scope !68584, !noalias !68583
   %i.oa = getelementptr inbounds nuw i8, ptr %i.ny, i64 1
   %i.ob = load i8, ptr %i.oa, align 1, !noalias !68585, !noundef !28
-  store i8 %i.ob, ptr %i.mm, align 1, !alias.scope !68584, !noalias !68583
+  store i8 %i.ob, ptr %i.mn, align 1, !alias.scope !68584, !noalias !68583
   br label %bb.ek
 
 bb.ek:                                            ; preds = %bb.ej, %_RINvYNtNtCshTCYgcDtIbU_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutECskXtk6F4WjxZ_4just.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i

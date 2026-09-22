@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 noundef %i.k, i64 noundef 0, ptr noundef %i.c, i64 noundef %i.g)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i: ; preds = %bb.g, %bb.f, %bb.e
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i: ; preds = %bb.e, %bb.f, %bb.g
   store i64 %i.n, ptr %i.j, align 8, !tbaa !114
   %i.w = load ptr, ptr %i.i, align 8, !tbaa !71
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.n
