@@ -204,9 +204,8 @@ _RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mem7replaceINtNtB4_4node6Hand
     #dbg_value(ptr %i.r, !12456, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12288)
   %i.s = extractvalue { ptr, ptr } %i.p, 0, !dbg !12525 ; 2 uses
     #dbg_value(ptr %i.s, !12456, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12288)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.r) ], !dbg !12526
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !12523, !noalias !12484
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ], !dbg !12526
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ], !dbg !12526
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !dbg !12527
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !12528, !noalias !12426
   br label %bb.i, !dbg !12529
@@ -609,8 +608,8 @@ bb.l:                                             ; preds = %bb.a
   %i.by = extractvalue { i64, ptr } %i.bw, 1, !dbg !29954 ; 3 uses
     #dbg_value(i64 %i.bx, !30366, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !30408)
     #dbg_value(ptr %i.by, !30366, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !30408)
-  %3 = trunc nuw i64 %i.bx to i1, !dbg !30488
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.by) ]
+  %3 = trunc nuw i64 %i.bx to i1, !dbg !30488
   br i1 %3, label %bb.cf, label %bb.cg, !dbg !30488
 
 bb.m:                                             ; preds = %bb.a
@@ -1013,8 +1012,8 @@ bb.dg:                                            ; preds = %bb.ai
   %i.fc = extractvalue { i64, ptr } %i.cw, 1, !dbg !33840 ; 3 uses
     #dbg_value(i64 %i.fb, !33481, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !33693)
     #dbg_value(ptr %i.fc, !33481, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !33693)
-  %2 = trunc nuw i64 %i.fb to i1, !dbg !33959
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fc) ]
+  %2 = trunc nuw i64 %i.fb to i1, !dbg !33959
   br i1 %2, label %bb.dh, label %bb.di, !dbg !33959
 
 bb.dh:                                            ; preds = %bb.dg

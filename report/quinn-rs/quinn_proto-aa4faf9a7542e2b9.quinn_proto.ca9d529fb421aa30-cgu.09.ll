@@ -205,10 +205,10 @@ bb.i:                                             ; preds = %bb.a
 bb.j:                                             ; preds = %bb.i
   %i.bf = extractvalue { ptr, i64 } %i.bb, 0, !dbg !13530
     #dbg_value(!DIArgList(ptr %i.bf, i64 %i.bc), !13283, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13302)
+    #dbg_value(ptr %i.bf, !13285, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13404)
     #dbg_value(ptr %i.bf, !13283, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13302)
     #dbg_value(ptr %i.bf, !13261, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13296)
     #dbg_value(ptr %i.bf, !13267, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13299)
-    #dbg_value(ptr %i.bf, !13285, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13404)
     #dbg_value(ptr %i.bf, !13353, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13102)
     #dbg_value(ptr %i.bf, !13357, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13104)
     #dbg_value(ptr %i.bf, !13369, !DIExpression(), !13111)
@@ -611,7 +611,7 @@ _RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6Buf
   %.sroa.8.0.copyload = phi ptr [ %i.ac, %_RNvMNtCsdIYt8sV98we_5bytes9bytes_mutNtB2_8BytesMut13with_capacity.exit ], [ %.sroa.8.0.copyload.pre, %_RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorBC_EEECshovLROGBtMy_11quinn_proto.exit.loopexit ], !dbg !27108 ; 2 uses
   %.sroa.7.0.copyload = phi i64 [ %i.s, %_RNvMNtCsdIYt8sV98we_5bytes9bytes_mutNtB2_8BytesMut13with_capacity.exit ], [ %i.aq, %_RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorBC_EEECshovLROGBtMy_11quinn_proto.exit.loopexit ], !dbg !27108
   %.sroa.5.0.copyload = phi i64 [ 0, %_RNvMNtCsdIYt8sV98we_5bytes9bytes_mutNtB2_8BytesMut13with_capacity.exit ], [ %i.au, %_RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorBC_EEECshovLROGBtMy_11quinn_proto.exit.loopexit ], !dbg !27108 ; 2 uses
-  %.sroa.0.0.copyload = phi ptr [ %i.v, %_RNvMNtCsdIYt8sV98we_5bytes9bytes_mutNtB2_8BytesMut13with_capacity.exit ], [ %.sroa.0.0.copyload.pre, %_RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorBC_EEECshovLROGBtMy_11quinn_proto.exit.loopexit ], !dbg !27108 ; 4 uses
+  %.sroa.0.0.copyload = phi ptr [ %i.v, %_RNvMNtCsdIYt8sV98we_5bytes9bytes_mutNtB2_8BytesMut13with_capacity.exit ], [ %.sroa.0.0.copyload.pre, %_RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorBC_EEECshovLROGBtMy_11quinn_proto.exit.loopexit ], !dbg !27108 ; 3 uses
     #dbg_value(ptr %.sroa.0.0.copyload, !2853, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !27035)
     #dbg_value(ptr %.sroa.0.0.copyload, !2857, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !27036)
     #dbg_value(i64 %.sroa.5.0.copyload, !2853, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !27035)
@@ -620,6 +620,7 @@ _RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6Buf
     #dbg_value(i64 %.sroa.7.0.copyload, !2857, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !27036)
     #dbg_value(ptr %.sroa.8.0.copyload, !2853, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !27035)
     #dbg_value(ptr %.sroa.8.0.copyload, !2857, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !27036)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !27037), !dbg !27109
     #dbg_declare(ptr %i.g, !2859, !DIExpression(), !26901)
     #dbg_declare(ptr %i.g, !2877, !DIExpression(), !26903)
@@ -640,7 +641,6 @@ _RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6Buf
     #dbg_value(i64 %i.bd, !2904, !DIExpression(), !26914)
     #dbg_value(i64 %i.bd, !2936, !DIExpression(), !26916)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !27113, !noalias !27038
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
     #dbg_value(ptr %.sroa.0.0.copyload, !2901, !DIExpression(), !26914)
     #dbg_value(ptr %.sroa.0.0.copyload, !2939, !DIExpression(), !26916)
     #dbg_value(i64 %.sroa.5.0.copyload, !2902, !DIExpression(), !26914)
@@ -714,7 +714,6 @@ bb.j:                                             ; preds = %.noexc11
   unreachable, !dbg !27128
 
 bb.k:                                             ; preds = %_RINvXs1_NtCsdIYt8sV98we_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorBC_EEECshovLROGBtMy_11quinn_proto.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
     #dbg_value(ptr %.sroa.0.0.copyload, !2866, !DIExpression(), !26940)
     #dbg_value(i64 %.sroa.5.0.copyload, !2867, !DIExpression(), !26941)
     #dbg_value(i64 %.sroa.5.0.copyload, !2922, !DIExpression(), !26912)

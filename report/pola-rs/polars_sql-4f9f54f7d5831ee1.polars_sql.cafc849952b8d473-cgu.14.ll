@@ -202,9 +202,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.m, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgjwxzEoLG5s_12polars_error6python9PyErrWrapECshquuC4dCYVj_10polars_sql.exit, label %bb.g, !dbg !2598
 
 bb.g:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i.i) ]
   %i.n = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.i, i64 16, !dbg !2597
   %i.o = load i64, ptr %i.n, align 8, !dbg !2599, !range !394, !invariant.load !261, !noalias !2563
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i.i) ]
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.l, i64 noundef range(i64 1, 536870913) %i.o) #34, !dbg !2600, !noalias !2563
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgjwxzEoLG5s_12polars_error6python9PyErrWrapECshquuC4dCYVj_10polars_sql.exit, !dbg !2601
 
@@ -607,9 +607,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.ab, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcNtNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes8temporal9time_zone8TimeZoneEEECshquuC4dCYVj_10polars_sql.exit, label %bb.p, !dbg !2986
 
 bb.p:                                             ; preds = %bb.o
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ac = getelementptr inbounds nuw i8, ptr %.val1, i64 16, !dbg !2985
   %i.ad = load i64, ptr %i.ac, align 8, !dbg !2987, !range !394, !invariant.load !261
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, -9223372036854775808) %i.aa, i64 noundef range(i64 1, 536870913) %i.ad) #34, !dbg !2988
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcNtNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes8temporal9time_zone8TimeZoneEEECshquuC4dCYVj_10polars_sql.exit, !dbg !2989
 
@@ -706,9 +706,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9extension17ExtensionTypeImplEL_EECshquuC4dCYVj_10polars_sql.exit, label %bb.d, !dbg !3032
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !3031
   %i.f = load i64, ptr %i.e, align 8, !dbg !3033, !range !394, !invariant.load !261
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #34, !dbg !3034
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9extension17ExtensionTypeImplEL_EECshquuC4dCYVj_10polars_sql.exit, !dbg !3035
 
@@ -1111,8 +1111,7 @@ bb.w:                                             ; preds = %bb.l
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind optsize willreturn memory(read, inaccessiblemem: readwrite, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRNtNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes8temporal9time_zone8TimeZoneNtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql(ptr nofree readonly captures(none) %.0.val, ptr nofree readonly captures(none) %.0.val1) unnamed_addr #15 personality ptr @rust_eh_personality !dbg !27717 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.0.val1) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27752), !dbg !27757
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27753), !dbg !27757
   %i.a = getelementptr inbounds nuw i8, ptr %.0.val, i64 23, !dbg !27758
@@ -1515,10 +1514,9 @@ bb.aw:                                            ; preds = %bb.ag
           to label %common.resume unwind label %bb.ay, !dbg !34010
 
 bb.ax:                                            ; preds = %.noexc
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aj), "nonnull"(ptr %i.ak) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.al, ptr noundef nonnull align 16 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !34011, !noalias !33918
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !34012, !noalias !33918
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aj) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !34013
   store ptr %i.aj, ptr %i.be, align 8, !dbg !34013
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !34013

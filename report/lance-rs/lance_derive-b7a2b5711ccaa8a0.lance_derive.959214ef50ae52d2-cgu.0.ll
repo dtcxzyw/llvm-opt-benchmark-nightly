@@ -202,8 +202,8 @@ bb.li:                                            ; preds = %bb.lf, %_RNvMs3_NtN
 
 bb.lj:                                            ; preds = %.body
   %i.ty = extractvalue { ptr, ptr } %i.tw, 0      ; 2 uses
-  %2 = extractvalue { ptr, ptr } %i.tw, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ty) ]
+  %2 = extractvalue { ptr, ptr } %i.tw, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cl)
   invoke void @_RNvXse_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcNtB5_12PanicMessageINtNtCscI6d9CVNmLh_4core7convert4FromINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB18_3any3AnyNtNtB18_6marker4SendEL_EE4from(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.cl, ptr noundef nonnull %i.ty, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %2)
@@ -547,8 +547,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %3 = mul nuw i64 %2, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %3 = mul nuw i64 %2, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %3
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %3, i64 noundef 8, i64 noundef range(i64 0, 9223372036854775801) %i.b) #26
@@ -619,8 +619,7 @@ bb.a:
   %i.y = alloca [24 x i8], align 8                ; 7 uses
   %i.z = alloca [32 x i8], align 8                ; 10 uses
   %i.aa = alloca [32 x i8], align 8               ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.8.val, i64 24
   %i.ac = load ptr, ptr %i.ab, align 8, !invariant.load !40, !nonnull !40
   %i.ad = tail call noundef align 8 ptr %i.ac(ptr noundef nonnull %.0.val), !inline_history !3877 ; 8 uses
@@ -979,8 +978,8 @@ bb.t:                                             ; preds = %bb.x, %bb.v
   br i1 %i.dh, label %common.resume.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %1 = shl nuw i64 %.sroa.01.0.i, 3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.i) ]
+  %1 = shl nuw i64 %.sroa.01.0.i, 3
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.0.i, i64 noundef %1, i64 noundef range(i64 1, -9223372036854775807) 8) #26, !noalias !3976
   br label %common.resume.i
 
@@ -1123,8 +1122,8 @@ bb.aj:                                            ; preds = %bb.ai
           to label %.preheader.i unwind label %.loopexit.split-lp.i, !noalias !3976
 
 .preheader.i:                                     ; preds = %bb.aj
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !4001
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !4001
   br i1 %i.dk, label %._crit_edge38.i, label %.lr.ph37.i
 
 .lr.ph37.i:                                       ; preds = %.preheader.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCsj1iVQvtAHZj_5quote9___private9RepInterpNtCs7xemmV0rX3c_11proc_macro211TokenStreamEECscQ9YKgepC2A_12lance_derive.exit34.i

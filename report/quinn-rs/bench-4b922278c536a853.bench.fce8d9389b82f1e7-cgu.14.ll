@@ -204,14 +204,13 @@ _RNvMNtNtNtNtCsG258MDvU3F_3std3sys4sync6rwlock5futexNtB2_6RwLock4read.exit: ; pr
   %i.af = load i64, ptr %i.b, align 8, !dbg !4647, !range !2109, !noundef !856
   %i.ag = trunc nuw i64 %i.af to i1, !dbg !4648
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !4648
-  %i.ai = load ptr, ptr %i.ah, align 8, !dbg !4648 ; 8 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !dbg !4648, !nonnull !856, !noundef !856 ; 6 uses
     #dbg_value(ptr poison, !4350, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4354)
     #dbg_value(ptr poison, !4350, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4354)
   br i1 %i.ag, label %bb.j, label %bb.k, !dbg !4649
 
 bb.j:                                             ; preds = %_RNvMNtNtNtNtCsG258MDvU3F_3std3sys4sync6rwlock5futexNtB2_6RwLock4read.exit
     #dbg_value(ptr poison, !2534, !DIExpression(), !4229)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   %i.aj = atomicrmw sub ptr %i.ai, i32 1 release, align 4, !dbg !4650
   %i.ak = add i32 %i.aj, -1, !dbg !4650           ; 2 uses
   %i.al = and i32 %i.ak, -1073741825, !dbg !4650
@@ -232,7 +231,6 @@ bb.k:                                             ; preds = %_RNvMNtNtNtNtCsG258
   %i.an = load ptr, ptr %i.am, align 8, !dbg !4648, !nonnull !856
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !4651
     #dbg_value(ptr undef, !4331, !DIExpression(), !4354)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
     #dbg_value(ptr poison, !4351, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4578)
     #dbg_value(ptr poison, !4351, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4578)
     #dbg_value(ptr undef, !4291, !DIExpression(DW_OP_deref), !4370)

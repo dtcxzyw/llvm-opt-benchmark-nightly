@@ -202,8 +202,7 @@ dav1d_picture_copy_props.exit:                    ; preds = %bb.g, %bb.f, %bb.a
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define dso_local void @dav1d_picture_ref(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %1) ]
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 256
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !70   ; 2 uses
   %.not = icmp eq ptr %i.b, null
@@ -291,8 +290,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
 define dso_local void @dav1d_picture_move_ref(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #6 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %1) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(272) %0, ptr noundef nonnull align 8 dereferenceable(272) %1, i64 272, i1 false), !tbaa.struct !68
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(272) %1, i8 0, i64 272, i1 false)
   ret void
@@ -304,8 +302,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define dso_local void @dav1d_thread_picture_ref(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %1) ]
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 256
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !70   ; 2 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -402,8 +399,7 @@ dav1d_picture_ref.exit:                           ; preds = %bb.m, %bb.n
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
 define dso_local void @dav1d_thread_picture_move_ref(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #6 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %1) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(272) %0, ptr noundef nonnull align 8 dereferenceable(272) %1, i64 272, i1 false), !tbaa.struct !68
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(272) %1, i8 0, i64 272, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 272

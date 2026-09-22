@@ -202,8 +202,7 @@ _RNvMs5_NtNtNtCseHTIzroA4w0_6object4read2pe6exportNtB5_11ExportTable9name_iter.e
   br i1 %i.br, label %.lr.ph117, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterINtNtCseHTIzroA4w0_6object6endian3U32NtB1F_12LittleEndianEENCNvMs5_NtNtNtB1H_4read2pe6exportNtB2H_11ExportTable9name_iter0EIBX_IB1d_INtB1F_3U16B2d_NtB2H_18ExportAddressIndexEENCB2B_s_0EEINtB5_7ZipImplBW_B3B_E4nextB1H_.exit
 
 .lr.ph117:                                        ; preds = %_RNvMs5_NtNtNtCseHTIzroA4w0_6object4read2pe6exportNtB5_11ExportTable9name_iter.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.062.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.564.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.062.0.copyload), "nonnull"(ptr %.sroa.564.0.copyload) ]
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bt = load i32, ptr %i.bs, align 8, !alias.scope !108, !noalias !109, !noundef !5
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -606,8 +605,8 @@ bb.z:                                             ; preds = %bb.y
   ]
 
 bb.aa:                                            ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !180
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !180
   %i.bb = ptrtoint ptr %.val3.i.i to i64          ; 2 uses
   %i.bc = and i64 %i.bb, 3
   switch i64 %i.bc, label %default.unreachable56 [
@@ -639,8 +638,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECseHTIzroA4w0_6
   br label %bb.cd
 
 bb.ad:                                            ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !180
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !180
   %i.bi = ptrtoint ptr %.val3.i.i to i64          ; 2 uses
   %i.bj = and i64 %i.bi, 3
   switch i64 %i.bj, label %default.unreachable56 [
@@ -672,8 +671,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECseHTIzroA4w0_6
   br label %bb.cd
 
 bb.ag:                                            ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !180
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !180
   %i.bp = ptrtoint ptr %.val3.i.i to i64          ; 2 uses
   %i.bq = and i64 %i.bp, 3
   switch i64 %i.bq, label %default.unreachable56 [
@@ -705,8 +704,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECseHTIzroA4w0_6
   br label %bb.cd
 
 bb.aj:                                            ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !180
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !180
   %i.bw = ptrtoint ptr %.val3.i.i to i64          ; 2 uses
   %i.bx = and i64 %i.bw, 3
   switch i64 %i.bx, label %default.unreachable56 [
@@ -738,8 +737,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECseHTIzroA4w0_6
   br label %bb.cd
 
 bb.am:                                            ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !180
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !180
   %i.cd = ptrtoint ptr %.val3.i.i to i64          ; 2 uses
   %i.ce = and i64 %i.cd, 3
   switch i64 %i.ce, label %default.unreachable56 [
@@ -843,8 +842,8 @@ bb.az:                                            ; preds = %bb.y
   br i1 %i.dc, label %bb.ba, label %bb.cd
 
 bb.ba:                                            ; preds = %bb.az
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !180
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !180
   %i.dd = ptrtoint ptr %.val5.i.i to i64          ; 2 uses
   %i.de = and i64 %i.dd, 3
   switch i64 %i.de, label %default.unreachable56 [

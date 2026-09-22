@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core3any3AnyEL_ENtNtNtBM_3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !8, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #26
   br label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core3any3AnyEL_ENtNtNtBM_3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime.exit
 
@@ -607,8 +607,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsar
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsarFSTFZzLuM_11xet_runtime(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -1011,7 +1011,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
 
 .noexc101:                                        ; preds = %.noexc100
   %i.ec = extractvalue { i64, ptr } %i.eb, 0
-  %i.ed = extractvalue { i64, ptr } %i.eb, 1      ; 5 uses
+  %i.ed = extractvalue { i64, ptr } %i.eb, 1      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ed) ]
   %i.ee = trunc nuw i64 %i.ec to i1
   %i.ef = ptrtoint ptr %i.ed to i64               ; 3 uses
   br i1 %i.ee, label %bb.ay, label %bb.ax
@@ -1027,14 +1028,12 @@ bb.aw:                                            ; preds = %.body.i
           to label %.body102 unwind label %bb.av
 
 bb.ax:                                            ; preds = %.noexc101
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ed) ]
   %i.eh = call i64 @llvm.umax.i64(i64 %i.ef, i64 2)
   %i.ei = call range(i64 2, 33) i64 @llvm.umin.i64(i64 %i.eh, i64 32)
   br label %bb.bb
 
 bb.ay:                                            ; preds = %.noexc101
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ed) ]
   %i.ej = and i64 %i.ef, 3
   switch i64 %i.ej, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsarFSTFZzLuM_11xet_runtime.exit.i

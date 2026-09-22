@@ -202,7 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !noalias !190, !noundef !8
   %i.l = tail call { ptr, ptr } %i.i(ptr noundef %i.k), !noalias !190, !inline_history !188 ; 2 uses
-  %i.m = extractvalue { ptr, ptr } %i.l, 0        ; 5 uses
+  %i.m = extractvalue { ptr, ptr } %i.l, 0        ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
   %i.n = extractvalue { ptr, ptr } %i.l, 1        ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.p = atomicrmw xchg ptr %i.o, i8 1 seq_cst, align 1, !noalias !190
@@ -212,7 +213,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !190
   store ptr %i.d, ptr %i.b, align 8, !noalias !190
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
   %.val10.i = load ptr, ptr %i.d, align 8, !noalias !190, !align !9, !noundef !8 ; 2 uses
   %i.q = getelementptr i8, ptr %i.c, i64 24       ; 3 uses
   %i.r = icmp eq ptr %.val10.i, null
@@ -234,7 +234,6 @@ bb.e:                                             ; preds = %bb.d
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsgV0iE8Xkxiy_15futures_channel4lock7TryLockINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEEECsbUGvHzNpYtH_18webtransport_tests.exit.i unwind label %bb.g, !noalias !190
 
 bb.f:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   %i.w = load ptr, ptr %i.v, align 8, !noalias !190, !nonnull !8, !noundef !8
   tail call void %i.w(ptr noundef %i.n), !noalias !190, !inline_history !189

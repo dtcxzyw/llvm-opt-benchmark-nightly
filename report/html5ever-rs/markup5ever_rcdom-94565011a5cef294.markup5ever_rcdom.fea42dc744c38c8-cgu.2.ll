@@ -204,6 +204,7 @@ _RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingNtNtCsjqcU1oJFK
   br i1 %i.bi, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECs1mImOlsSUsK_17markup5ever_rcdom.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingNtNtCsjqcU1oJFKXj_9hashbrown3raw13RawTableInnerECs1mImOlsSUsK_17markup5ever_rcdom.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %.val.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !68
   %i.bj = add i64 %.val3.i.i, 1
   %i.bk = mul nuw i64 %.val.i.i, %i.bj            ; 2 uses
@@ -222,7 +223,6 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   call void @llvm.assume(i1 %i.bu)
   %i.bv = icmp ne i64 %.val1.i.i, 0
   call void @llvm.assume(i1 %i.bv)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %i.bw = icmp eq i64 %i.br, 0
   br i1 %i.bw, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECs1mImOlsSUsK_17markup5ever_rcdom.exit, label %bb.o
 
@@ -325,12 +325,11 @@ common.resume:                                    ; preds = %bb.t, %bb.m
 
 bb.q:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74)
-  %.val13.i = load ptr, ptr %0, align 8, !alias.scope !74 ; 7 uses
+  %.val13.i = load ptr, ptr %0, align 8, !alias.scope !74, !nonnull !4, !noundef !4 ; 5 uses
   %.not6.i.i = icmp eq i64 %i.k, 0
   br i1 %.not6.i.i, label %_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread, label %.lr.ph.i.i
 
 _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread: ; preds = %bb.q
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !74
   br label %bb.ab
 
@@ -340,7 +339,6 @@ _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %.not10.i.i.i.i = icmp ne i64 %i.ds, 0
   %i.dt = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dr, %i.dt ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.du = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.du, label %.epil.preheader, label %.lr.ph.i.i.new
@@ -629,6 +627,7 @@ bb.a:
   br i1 %i.d, label %_RNvXs1_NtCsjqcU1oJFKXj_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs1mImOlsSUsK_17markup5ever_rcdom.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val.i = load i64, ptr %i.e, align 8, !alias.scope !86
   %i.f = add i64 %.val3.i, 1
@@ -648,7 +647,6 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %i.q)
   %i.r = icmp ne i64 %.val1.i, 0
   tail call void @llvm.assume(i1 %i.r)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.s = icmp eq i64 %i.n, 0
   br i1 %i.s, label %_RNvXs1_NtCsjqcU1oJFKXj_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs1mImOlsSUsK_17markup5ever_rcdom.exit, label %bb.b
 
@@ -1021,10 +1019,10 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXs1i_NtCsjqcU1oJFKXj_9hashbrown3mapINtB7_7HashMapNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateEINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect6ExtendTBP_uEE6extendINtNtNtB2y_8adapters3map3MapIB3z_INtNtNtB2A_5slice4iter4IterNtBR_9AttributeENCNvXs1_Cs1mImOlsSUsK_17markup5ever_rcdomNtB4U_5RcDomNtNtBR_12tree_builder8TreeSink20add_attrs_if_missing0ENCINvXs8_NtB9_3setINtB6E_7HashSetBP_B1E_EIB2s_BP_E6extendB40_E0EEB4U_(ptr noalias nofree noundef align 8 dereferenceable(48) %0, ptr noundef nonnull %1, ptr noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !noundef !4
   %i.c = icmp eq i64 %i.b, 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.d = ptrtoint ptr %2 to i64
   %i.e = ptrtoint ptr %1 to i64
   %i.f = sub nuw i64 %i.d, %i.e
@@ -1415,9 +1413,9 @@ switch.lookup:
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !4, !align !7, !noundef !4 ; 2 uses
-  %.val = load ptr, ptr %1, align 8               ; 2 uses
+  %.val = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.e, align 8            ; 2 uses
+  %.val1 = load ptr, ptr %i.e, align 8, !nonnull !4, !noundef !4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !133)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.d, ptr %i.c, align 8, !noalias !133
@@ -1441,8 +1439,6 @@ switch.lookup:
   store ptr %i.b, ptr %i.j, align 8, !noalias !133
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCs1mImOlsSUsK_17markup5ever_rcdom, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !133
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.k = call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @12, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !133
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !133
@@ -1457,9 +1453,9 @@ switch.lookup:
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !4, !align !7, !noundef !4 ; 2 uses
-  %.val = load ptr, ptr %1, align 8               ; 2 uses
+  %.val = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.e, align 8            ; 2 uses
+  %.val1 = load ptr, ptr %i.e, align 8, !nonnull !4, !noundef !4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.d, ptr %i.c, align 8, !noalias !136
@@ -1483,8 +1479,6 @@ switch.lookup:
   store ptr %i.b, ptr %i.j, align 8, !noalias !136
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCs1mImOlsSUsK_17markup5ever_rcdom, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !136
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.k = call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @12, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !136
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !136

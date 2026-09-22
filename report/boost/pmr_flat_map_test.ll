@@ -167,7 +167,7 @@ bb.a:
   %3 = alloca %"class.boost::container::vec_iterator", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !25, !noalias !56 ; 8 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !25, !noalias !56 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !27, !noalias !57 ; 7 uses
   %.idx.i = shl nsw i64 %i.e, 3
@@ -226,7 +226,6 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.z = load i32, ptr %2, align 4, !tbaa !28, !noalias !63
   store i32 %i.z, ptr %i.p, align 4, !tbaa !28, !noalias !63
   %i.aa = getelementptr inbounds nuw i8, ptr %i.p, i64 4
@@ -243,7 +242,6 @@ bb.f:                                             ; preds = %bb.d
   %i.ag = ashr exact i64 %i.af, 3                 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.x, i64 -8 ; 2 uses
   %i.ai = getelementptr inbounds i8, ptr %i.x, i64 -4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.aj = load i32, ptr %i.ah, align 4, !tbaa !28, !noalias !63
   store i32 %i.aj, ptr %i.x, align 4, !tbaa !28, !noalias !63
   %i.ak = getelementptr inbounds nuw i8, ptr %i.x, i64 4
@@ -363,8 +361,8 @@ bb.g:                                             ; preds = %_ZN5boost9container
 
 _ZN5boost9container24uninitialized_move_allocINS0_3pmr21polymorphic_allocatorISt4pairIifEEEPS5_S7_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SB_E4typeERT_SA_SA_SB_.exit.i.i: ; preds = %bb.g, %_ZN5boost9container19vector_alloc_holderINS0_3pmr21polymorphic_allocatorISt4pairIifEEEmNS_11move_detail17integral_constantIjLj1EEEE8allocateEm.exit
   %.0.i.i.i.i = phi ptr [ %i.ag, %bb.g ], [ %i.v, %_ZN5boost9container19vector_alloc_holderINS0_3pmr21polymorphic_allocatorISt4pairIifEEEmNS_11move_detail17integral_constantIjLj1EEEE8allocateEm.exit ] ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.i.i.i.i) ]
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.ah = load i32, ptr %4, align 4, !tbaa !28
   store i32 %i.ah, ptr %.0.i.i.i.i, align 4, !tbaa !28
   %i.ai = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 4

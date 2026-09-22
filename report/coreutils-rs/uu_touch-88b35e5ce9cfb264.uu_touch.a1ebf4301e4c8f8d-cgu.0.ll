@@ -204,9 +204,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.t, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueECsdTU8hOCbdCr_8uu_touch.exit, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %.val5.i, i64 16
   %i.v = load i64, ptr %i.u, align 8, !range !10, !invariant.load !4, !noalias !257
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   tail call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val4.i, i64 noundef %i.s, i64 noundef range(i64 1, -9223372036854775807) %i.v) #27, !noalias !257
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueECsdTU8hOCbdCr_8uu_touch.exit
 
@@ -242,15 +242,13 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCs7tKScEop1B6_5alloc3ffi5c_str8Nul
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCs7tKScEop1B6_5alloc3ffi5c_str7CStringECsdTU8hOCbdCr_8uu_touch.exit
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.5.0.copyload), "nonnull"(ptr %.sroa.6.0.copyload) ]
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.f = load i64, ptr %i.e, align 8, !noundef !4 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   %.val.i = load i32, ptr %.sroa.0.0.copyload, align 4, !range !11, !noalias !265, !noundef !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload) ]
   %i.g = load i32, ptr %.sroa.6.0.copyload, align 4, !noalias !265, !noundef !4
   %i.h = zext i32 %.val.i to i64
   %i.i = inttoptr i64 %i.h to ptr
@@ -653,9 +651,9 @@ bb.jo:                                            ; preds = %bb.jn, %_RINvNtCs6J
   br i1 %i.akh, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EECsdTU8hOCbdCr_8uu_touch.exit.i, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.jo
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val46.i) ]
   %i.aki = getelementptr inbounds nuw i8, ptr %.val47.i, i64 16
   %i.akj = load i64, ptr %i.aki, align 8, !range !10, !invariant.load !4, !noalias !1157
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val46.i) ]
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val46.i, i64 noundef %i.akg, i64 noundef range(i64 1, -9223372036854775807) %i.akj) #27, !noalias !1157
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EECsdTU8hOCbdCr_8uu_touch.exit.i
 
@@ -1058,8 +1056,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjSVV5GABoor_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #27
@@ -1462,8 +1460,8 @@ bb.bt:                                            ; preds = %_RINvNtCs6JMX4GRUq9
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCsh036I4OHgIr_6uucore4mods5error8UIoErrorECsdTU8hOCbdCr_8uu_touch.exit
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCsh036I4OHgIr_6uucore4mods5error8UIoErrorECsdTU8hOCbdCr_8uu_touch.exit: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7tKScEop1B6_5alloc6string6StringEECsdTU8hOCbdCr_8uu_touch.exit.i, %bb.bt
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5314.0.copyload316) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   switch i64 %.sroa.8318.0.copyload320, label %thread-pre-split.i224 [
     i64 0, label %.loopexit386
     i64 1, label %bb.bu

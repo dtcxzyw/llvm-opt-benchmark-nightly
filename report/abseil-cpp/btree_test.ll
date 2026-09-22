@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph73, %_ZNSt6ve
   %i.n = load i64, ptr %5, align 8, !noalias !3129 ; 6 uses
   %i.o = and i64 %i.n, 254
   %i.p = icmp eq i64 %i.o, 0
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.g, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.g, align 8 ; 3 uses
   %i.q = and i64 %i.n, 255
   %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.q
   %i.r = lshr i64 %i.n, 8
@@ -255,8 +255,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicy
   %i.aj = invoke noundef i64 @_ZN4absl12lts_2026052618container_internal42GrowSooTableToNextCapacityAndPrepareInsertILm8ELb1EEEmRNS1_12CommonFieldsERKNS1_15PolicyFunctionsENS0_11FunctionRefIFmmEEEb(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE18GetPolicyFunctionsEvE5value, ptr nonnull %4, ptr nonnull @_ZN4absl12lts_2026052619functional_internal12InvokeObjectIRNS0_18container_internal7HashKeyINS0_13hash_internal4HashIiEEiLb1EEEmJmEEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE, i1 noundef zeroext false)
           to label %.noexc unwind label %bb.l
 
-.split:                                           ; preds = %bb.c, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE22find_or_prepare_insertIiEESt4pairINS5_8iteratorEbERKT_.exit.i.i.i.i.i.i
-  %.sroa.018.1 = phi i64 [ %i.al, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE22find_or_prepare_insertIiEESt4pairINS5_8iteratorEbERKT_.exit.i.i.i.i.i.i ], [ %.sroa.018.071, %bb.c ]
+.split:                                           ; preds = %.lr.ph.i, %bb.c
+  %.sroa.018.1 = phi i64 [ %.sroa.018.071, %bb.c ], [ %i.al, %.lr.ph.i ]
   %i.ak = mul nuw nsw i64 %.sroa.018.1, 16807
   %i.al = urem i64 %i.ak, 2147483647              ; 3 uses
   %i.am = trunc nuw nsw i64 %i.al to i32
@@ -306,7 +306,7 @@ bb.d:                                             ; preds = %bb.f, %.split
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.copyload.i.i.i3.i, i64 %i.bk
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !802, !noalias !3132
   %i.bn = icmp eq i32 %i.bm, %i.an
-  br i1 %i.bn, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE22find_or_prepare_insertIiEESt4pairINS5_8iteratorEbERKT_.exit.i.i.i.i.i.i, label %.critedge.i.i, !prof !871
+  br i1 %i.bn, label %.split, label %.critedge.i.i, !prof !871
 
 .critedge.i.i:                                    ; preds = %.lr.ph.i
   %i.bo = add i32 %.sroa.024.068.i, -1
@@ -335,10 +335,6 @@ bb.f:                                             ; preds = %._crit_edge.i
   %i.bw = add i64 %.sroa.14.0.i, 16               ; 2 uses
   %i.bx = add i64 %i.bw, %.sroa.639.0.i
   br label %bb.d
-
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE22find_or_prepare_insertIiEESt4pairINS5_8iteratorEbERKT_.exit.i.i.i.i.i.i: ; preds = %.lr.ph.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
-  br label %.split
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE22find_or_prepare_insertIiEESt4pairINS5_8iteratorEbERKT_.exit.i.i.i.i.i.i.thread: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE17should_sample_sooEv.exit.i.i.i.i.i.i.i.i.i.split.us, %.noexc, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE22find_or_prepare_insertIiEESt4pairINS5_8iteratorEbERKT_.exit.i.i.i.i.i.i.thread27
   %i.by = phi i64 [ %i.al, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE22find_or_prepare_insertIiEESt4pairINS5_8iteratorEbERKT_.exit.i.i.i.i.i.i.thread27 ], [ %i.y, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE17should_sample_sooEv.exit.i.i.i.i.i.i.i.i.i.split.us ], [ %.lcssa47.us, %.noexc ]

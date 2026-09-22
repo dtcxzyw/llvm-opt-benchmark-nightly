@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %"class.(anonymous namespace)::ConstructedObjectKey", align 8 ; 7 uses
   %8 = alloca %"class.(anonymous namespace)::ConstructedObjectKey", align 8 ; 7 uses
   %9 = alloca %"class.clang::CFGTemporaryDtor", align 8 ; 3 uses
-  %10 = alloca %"class.std::optional.576", align 8 ; 8 uses
+  %10 = alloca %"class.std::optional.576", align 8 ; 7 uses
   %11 = alloca %"class.llvm::IntrusiveRefCntPtr.508", align 8 ; 2 uses
   %12 = alloca %"class.clang::ConstructionContextItem", align 8 ; 6 uses
   %13 = alloca %"class.llvm::IntrusiveRefCntPtr.508", align 8 ; 3 uses
@@ -263,11 +263,7 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit.thread: ; pr
   %i.n = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.o = load i8, ptr %i.n, align 8, !tbaa !761, !range !70, !noundef !71
   %i.p = trunc nuw i8 %i.o to i1
-  br i1 %i.p, label %bb.c, label %.thread93
-
-.thread93:                                        ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
-  br label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit50
+  br i1 %i.p, label %bb.c, label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit50
 
 bb.c:                                             ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit.thread
   tail call void @_ZN5clang4ento18ProgramStateRetainEPKNS0_12ProgramStateE(ptr noundef nonnull %i.f) #22
@@ -294,13 +290,13 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit48: ; preds =
 bb.d:                                             ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit48, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit
   %.sroa.081.0 = phi ptr [ %i.q, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit48 ], [ null, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit ] ; 2 uses
   %.0 = phi ptr [ %i.r, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit48 ], [ null, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.081.0) ]
   br label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit50
 
-_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit50: ; preds = %bb.d, %.thread93
-  %.099 = phi ptr [ null, %.thread93 ], [ %.0, %bb.d ] ; 2 uses
-  %.sroa.081.097 = phi ptr [ %i.f, %.thread93 ], [ %.sroa.081.0, %bb.d ] ; 14 uses
+_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit50: ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit.thread, %bb.d
+  %.099 = phi ptr [ %.0, %bb.d ], [ null, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit.thread ] ; 2 uses
+  %.sroa.081.097 = phi ptr [ %.sroa.081.0, %bb.d ], [ %i.f, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit.thread ] ; 14 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
   call void @_ZN5clang4ento18ProgramStateRetainEPKNS0_12ProgramStateE(ptr noundef nonnull %.sroa.081.097) #22
   %i.s = call noundef ptr @_ZNK5clang4ento12ProgramState7FindGDMEPKv(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.081.097, ptr noundef nonnull @_ZZN5clang4ento17ProgramStateTraitIN12_GLOBAL__N_124ObjectsUnderConstructionEE8GDMIndexEvE5Index) #22 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.s, null

@@ -204,12 +204,11 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyISt17basic_string_viewIcSt11char_traitsIcEEEEJEE28find_or_prepare_insert_largeIS7_EESt4pairINS9_8iteratorEbERKT_ENKUlvE_clEv.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i, %bb.d, %bb.e
   %.sroa.0.0.copyload.i.i.i2.i = phi ptr [ %.sroa.0.0.copyload.i.i.i2.i.pre, %bb.e ], [ %.sroa.0.0.copyload.i.i.i3, %bb.d ], [ %.sroa.0.0.copyload.i.i.i3, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i ]
-  %.sroa.0.0.copyload.i.i.i.i8 = phi ptr [ %.sroa.0.0.copyload.i.i.i.i8.pre, %bb.e ], [ %.sroa.0.0.copyload.i.i.i, %bb.d ], [ %.sroa.0.0.copyload.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i8 = phi ptr [ %.sroa.0.0.copyload.i.i.i.i8.pre, %bb.e ], [ %.sroa.0.0.copyload.i.i.i, %bb.d ], [ %.sroa.0.0.copyload.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i ]
   %.350.ph = phi i64 [ %i.ai, %bb.e ], [ %i.y, %bb.d ], [ %i.y, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i ] ; 2 uses
   %.3.ph = phi i8 [ 1, %bb.e ], [ 0, %bb.d ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i ]
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i8, i64 %.350.ph
   %i.am = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i2.i, i64 %.350.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i8) ]
   store ptr %i.al, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.am, ptr %.sroa.4.0..sroa_idx, align 8
@@ -612,7 +611,7 @@ bb.e:                                             ; preds = %bb.a
   %i.t = xor i64 %notmask.i.i.i.i.i.i.i, -1       ; 4 uses
   %i.u = lshr i64 %i.q, 57
   %i.v = trunc nuw nsw i64 %i.u to i8
-  %.sroa.0.0.copyload.i.i.i.i6 = load ptr, ptr %i.k, align 8, !tbaa !47 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i6 = load ptr, ptr %i.k, align 8, !tbaa !47 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i14.i = load ptr, ptr %i.w, align 8, !tbaa !47 ; 4 uses
   %i.x = insertelement <16 x i8> poison, i8 %i.v, i64 0
@@ -705,7 +704,6 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i11: ; preds = %.lr.ph.
   %.us-phi = phi i64 [ %i.am, %.lr.ph.i.us.us ], [ %i.bh, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i11 ]
   %.us-phi17 = phi ptr [ %i.an, %.lr.ph.i.us.us ], [ %i.bi, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i11 ]
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i6, i64 %.us-phi
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i6) ]
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyISt17basic_string_viewIcSt11char_traitsIcEEEEJEE10find_largeINSt7__cxx1112basic_stringIcS6_SaIcEEEEENS9_8iteratorERKT_m.exit
 
 bb.h:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i11, %.lr.ph.i

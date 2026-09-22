@@ -205,9 +205,9 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %i.ew, label %upb_Arena_Malloc.exit.i.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i.i, !prof !112
 
 upb_Arena_Malloc.exit.thread.i.i.i.i:             ; preds = %bb.bb
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.es) ]
   %i.ex = getelementptr inbounds nuw i8, ptr %i.es, i64 %i.en
   store ptr %i.ex, ptr %i.dz, align 8, !tbaa !524, !noalias !1103
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.es) ]
   br label %bb.bc
 
 upb_Arena_Malloc.exit.i.i.i.i:                    ; preds = %bb.bb
@@ -610,7 +610,7 @@ _ZN9grpc_core5SliceD2Ev.exit.i.i.i.i.i.i:         ; preds = %bb.p, %bb.o, %_ZNSt
   call void @llvm.assume(i1 %i.bn)
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !523
-  %i.bq = load ptr, ptr %i.bj, align 8, !tbaa !524 ; 3 uses
+  %i.bq = load ptr, ptr %i.bj, align 8, !tbaa !524 ; 4 uses
   %i.br = ptrtoint ptr %i.bp to i64
   %i.bs = ptrtoint ptr %i.bq to i64
   %i.bt = sub i64 %i.br, %i.bs
@@ -618,17 +618,21 @@ _ZN9grpc_core5SliceD2Ev.exit.i.i.i.i.i.i:         ; preds = %bb.p, %bb.o, %_ZNSt
   br i1 %i.bu, label %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i, !prof !112
 
 upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i:   ; preds = %_ZN9grpc_core5SliceD2Ev.exit.i.i.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bq) ]
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bl
   store ptr %i.bv, ptr %i.bj, align 8, !tbaa !524
   br label %.noexc.i.i.i.i.i.i.i.a
 
 upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i:          ; preds = %_ZN9grpc_core5SliceD2Ev.exit.i.i.i.i.i.i
   %i.bw = invoke ptr @_upb_Arena_SlowMalloc_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %i.bj, i64 noundef %i.bl)
-          to label %.noexc.i.i.i.i.i.i.i.a unwind label %bb.r
+          to label %.noexc.i.i.i.i.i.i.i unwind label %bb.r ; 2 uses
 
-.noexc.i.i.i.i.i.i.i.a:                           ; preds = %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i
-  %.sink.i.i.i.i.i.i.i = phi ptr [ %i.bq, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i ], [ %i.bw, %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i ] ; 9 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.i.i.i.i.i.i) ]
+.noexc.i.i.i.i.i.i.i:                             ; preds = %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
+  br label %.noexc.i.i.i.i.i.i.i.a
+
+.noexc.i.i.i.i.i.i.i.a:                           ; preds = %.noexc.i.i.i.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i
+  %.sink.i.i.i.i.i.i.i = phi ptr [ %i.bq, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i ], [ %i.bw, %.noexc.i.i.i.i.i.i.i ] ; 8 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.sink.i.i.i.i.i.i.i, i8 0, i64 %i.bl, i1 false)
   %i.bx = getelementptr inbounds nuw i8, ptr %.sink.i.i.i.i.i.i.i, i64 16
   store ptr @_ZN9grpc_core12_GLOBAL__N_15kGrpcE, ptr %i.bx, align 1
@@ -980,9 +984,9 @@ upb_Arena_Malloc.exit.i.i:                        ; preds = %_upb_Message_GetOrC
   br label %bb.c
 
 bb.b:                                             ; preds = %_upb_Message_GetOrCreateMutableMap.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store ptr %i.o, ptr %5, align 8, !tbaa !524
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %3, ptr %i.h, align 8, !tbaa !75
   %.sroa.310.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store i64 %4, ptr %.sroa.310.0..sroa_idx, align 8, !tbaa !74

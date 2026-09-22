@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %spec.select, i64 %i.g, i1 false), !dbg !1106
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 %i.g, !dbg !1107 ; 3 uses
   %.val = load ptr, ptr %5, align 8, !dbg !1108, !nonnull !118, !noundef !118
-  %.val.i.i = load ptr, ptr %.val, align 8, !noalias !118 ; 12 uses
+  %.val.i.i = load ptr, ptr %.val, align 8, !noalias !118 ; 10 uses
   br i1 %.not, label %.preheader, label %.lr.ph.i, !dbg !1109
 
 .preheader:                                       ; preds = %.critedge, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsG258MDvU3F_3std4time10SystemTimeEE7sort_byNCINvMNtNtBD_5flags6hiargsNtB2G_6HiArgs4sortINtNtNtNtB1h_4iter8adapters10filter_map9FilterMapNtNtCsc0anycpf6TS_6ignore4walk4WalkNCNvBD_5files0EEs2_0E0BD_.exit.i
@@ -225,6 +225,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %bb.d, label %bb.c, !dbg !1115
 
 bb.c:                                             ; preds = %.preheader
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br i1 %.not19.i.i.i, label %bb.g, label %bb.f, !dbg !1115
 
 bb.d:                                             ; preds = %.preheader
@@ -242,7 +243,6 @@ bb.f:                                             ; preds = %bb.c
   %i.u = icmp eq i64 %.val12.i, %.val14.i, !dbg !1118
   %i.v = tail call i8 @llvm.ucmp.i8.i32(i32 %.val13.i, i32 %.val15.i), !dbg !1118
   %.sroa.0.0.i.i.i = select i1 %i.u, i8 %i.v, i8 %i.t, !dbg !1118 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.w = load i8, ptr %.val.i.i, align 1, !dbg !1116, !range !161, !noalias !1095, !noundef !118
   %i.x = trunc nuw i8 %i.w to i1, !dbg !1116
   %switch.offset.i.i.i = sub nsw i8 0, %.sroa.0.0.i.i.i
@@ -250,7 +250,6 @@ bb.f:                                             ; preds = %bb.c
   br label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsG258MDvU3F_3std4time10SystemTimeEE7sort_byNCINvMNtNtBD_5flags6hiargsNtB2G_6HiArgs4sortINtNtNtNtB1h_4iter8adapters10filter_map9FilterMapNtNtCsc0anycpf6TS_6ignore4walk4WalkNCNvBD_5files0EEs2_0E0BD_.exit.i, !dbg !1116
 
 bb.g:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.y = load i8, ptr %.val.i.i, align 1, !dbg !1116, !range !161, !noalias !1095, !noundef !118
   %i.z = trunc nuw i8 %i.y to i1, !dbg !1116
   %spec.select5.i.i.i = select i1 %i.z, i8 1, i8 -1, !dbg !1116
@@ -288,6 +287,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINt
   br i1 %.not.i.i.i21, label %bb.i, label %bb.h, !dbg !1130
 
 bb.h:                                             ; preds = %.lr.ph.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br i1 %.not19.i.i.i22, label %bb.l, label %bb.k, !dbg !1130
 
 bb.i:                                             ; preds = %.lr.ph.i
@@ -305,7 +305,6 @@ bb.k:                                             ; preds = %bb.h
   %i.ar = icmp eq i64 %.sroa.0.0.val.i, %.val7.i, !dbg !1133
   %i.as = tail call i8 @llvm.ucmp.i8.i32(i32 %.sroa.0.0.val6.i, i32 %.val8.i), !dbg !1133
   %.sroa.0.0.i.i.i23 = select i1 %i.ar, i8 %i.as, i8 %i.aq, !dbg !1133 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.at = load i8, ptr %.val.i.i, align 1, !dbg !1131, !range !161, !noalias !1096, !noundef !118
   %i.au = trunc nuw i8 %i.at to i1, !dbg !1131
   %switch.offset.i.i.i24 = sub nsw i8 0, %.sroa.0.0.i.i.i23
@@ -313,7 +312,6 @@ bb.k:                                             ; preds = %bb.h
   br label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsG258MDvU3F_3std4time10SystemTimeEE7sort_byNCINvMNtNtBD_5flags6hiargsNtB2G_6HiArgs4sortINtNtNtNtB1h_4iter8adapters10filter_map9FilterMapNtNtCsc0anycpf6TS_6ignore4walk4WalkNCNvBD_5files0EEs2_0E0BD_.exit.i26, !dbg !1131
 
 bb.l:                                             ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.av = load i8, ptr %.val.i.i, align 1, !dbg !1131, !range !161, !noalias !1096, !noundef !118
   %i.aw = trunc nuw i8 %i.av to i1, !dbg !1131
   %spec.select5.i.i.i29 = select i1 %i.aw, i8 1, i8 -1, !dbg !1131
@@ -372,7 +370,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %spec.select, i64 %i.g, i1 false), !dbg !1248
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 %i.g, !dbg !1249 ; 3 uses
   %.val = load ptr, ptr %5, align 8, !dbg !1250, !nonnull !118, !noundef !118
-  %.val.i.i = load ptr, ptr %.val, align 8, !noalias !118 ; 12 uses
+  %.val.i.i = load ptr, ptr %.val, align 8, !noalias !118 ; 10 uses
   br i1 %.not, label %.preheader, label %.lr.ph.i, !dbg !1251
 
 .preheader:                                       ; preds = %.critedge, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsG258MDvU3F_3std4time10SystemTimeEE7sort_byNCINvMNtNtBD_5flags6hiargsNtB2G_6HiArgs4sortINtNtNtNtB1h_4iter8adapters10filter_map9FilterMapNtNtCsc0anycpf6TS_6ignore4walk4WalkNCNvBD_6search0EEs2_0E0BD_.exit.i
@@ -395,6 +393,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %bb.d, label %bb.c, !dbg !1257
 
 bb.c:                                             ; preds = %.preheader
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br i1 %.not19.i.i.i, label %bb.g, label %bb.f, !dbg !1257
 
 bb.d:                                             ; preds = %.preheader
@@ -412,7 +411,6 @@ bb.f:                                             ; preds = %bb.c
   %i.u = icmp eq i64 %.val12.i, %.val14.i, !dbg !1260
   %i.v = tail call i8 @llvm.ucmp.i8.i32(i32 %.val13.i, i32 %.val15.i), !dbg !1260
   %.sroa.0.0.i.i.i = select i1 %i.u, i8 %i.v, i8 %i.t, !dbg !1260 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.w = load i8, ptr %.val.i.i, align 1, !dbg !1258, !range !161, !noalias !1237, !noundef !118
   %i.x = trunc nuw i8 %i.w to i1, !dbg !1258
   %switch.offset.i.i.i = sub nsw i8 0, %.sroa.0.0.i.i.i
@@ -420,7 +418,6 @@ bb.f:                                             ; preds = %bb.c
   br label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsG258MDvU3F_3std4time10SystemTimeEE7sort_byNCINvMNtNtBD_5flags6hiargsNtB2G_6HiArgs4sortINtNtNtNtB1h_4iter8adapters10filter_map9FilterMapNtNtCsc0anycpf6TS_6ignore4walk4WalkNCNvBD_6search0EEs2_0E0BD_.exit.i, !dbg !1258
 
 bb.g:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.y = load i8, ptr %.val.i.i, align 1, !dbg !1258, !range !161, !noalias !1237, !noundef !118
   %i.z = trunc nuw i8 %i.y to i1, !dbg !1258
   %spec.select5.i.i.i = select i1 %i.z, i8 1, i8 -1, !dbg !1258
@@ -458,6 +455,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINt
   br i1 %.not.i.i.i21, label %bb.i, label %bb.h, !dbg !1272
 
 bb.h:                                             ; preds = %.lr.ph.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br i1 %.not19.i.i.i22, label %bb.l, label %bb.k, !dbg !1272
 
 bb.i:                                             ; preds = %.lr.ph.i
@@ -475,7 +473,6 @@ bb.k:                                             ; preds = %bb.h
   %i.ar = icmp eq i64 %.sroa.0.0.val.i, %.val7.i, !dbg !1275
   %i.as = tail call i8 @llvm.ucmp.i8.i32(i32 %.sroa.0.0.val6.i, i32 %.val8.i), !dbg !1275
   %.sroa.0.0.i.i.i23 = select i1 %i.ar, i8 %i.as, i8 %i.aq, !dbg !1275 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.at = load i8, ptr %.val.i.i, align 1, !dbg !1273, !range !161, !noalias !1238, !noundef !118
   %i.au = trunc nuw i8 %i.at to i1, !dbg !1273
   %switch.offset.i.i.i24 = sub nsw i8 0, %.sroa.0.0.i.i.i23
@@ -483,7 +480,6 @@ bb.k:                                             ; preds = %bb.h
   br label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTNtNtCs2NzvFoTxuAy_2rg8haystack8HaystackINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsG258MDvU3F_3std4time10SystemTimeEE7sort_byNCINvMNtNtBD_5flags6hiargsNtB2G_6HiArgs4sortINtNtNtNtB1h_4iter8adapters10filter_map9FilterMapNtNtCsc0anycpf6TS_6ignore4walk4WalkNCNvBD_6search0EEs2_0E0BD_.exit.i26, !dbg !1273
 
 bb.l:                                             ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.av = load i8, ptr %.val.i.i, align 1, !dbg !1273, !range !161, !noalias !1238, !noundef !118
   %i.aw = trunc nuw i8 %i.av to i1, !dbg !1273
   %spec.select5.i.i.i29 = select i1 %i.aw, i8 1, i8 -1, !dbg !1273

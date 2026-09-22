@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.i, %bb.g, %bb.e,
 
 bb.k:                                             ; preds = %bb.j, %bb.a
   %.sroa.7.0.ph = phi ptr [ %i.z, %bb.a ], [ %.sink.i, %bb.j ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !300
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.ph) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !300
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.7.0.ph, ptr %i.af, align 8
   store i64 -1, ptr %0, align 8
@@ -608,9 +608,9 @@ bb.bd:                                            ; preds = %bb.ad
 
 .loopexit158:                                     ; preds = %.noexc, %bb.ab
   %.sroa.7128.0.ph = phi ptr [ %.sink.i100, %bb.ab ], [ %i.ay, %.noexc ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7128.0.ph) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !302
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.2.i98)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7128.0.ph) ]
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.7128.0.ph, ptr %i.cj, align 8
   store i64 -1, ptr %0, align 8
@@ -1013,8 +1013,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtC
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsQbU2fm3lSD_3xet(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -1417,8 +1417,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not42, label %bb.z, label %bb.y, !prof !6
 
 bb.d:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload), "nonnull"(ptr %.sroa.3.0.copyload) ]
   store i64 -2, ptr %0, align 8
   %.sroa.435.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.2.0.copyload, ptr %.sroa.435.0..sroa_idx, align 8
@@ -1821,7 +1820,7 @@ _RNvXs3_NtCslc8SwK8fohf_5bytes5bytesNtB5_5BytesNtNtNtB7_3buf8buf_impl3Buf7advanc
   br label %.body.thread
 
 _RINvXs1_NtCslc8SwK8fohf_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtCs5jFM9WxmFav_14http_body_util4util7BufListNtNtB8_5bytes5BytesEEECsQbU2fm3lSD_3xet.exit: ; preds = %.noexc23, %.noexc41, %bb.as, %.noexc34, %bb.v, %.noexc
-  %.sroa.0.0.copyload = load ptr, ptr %i.ae, align 8 ; 4 uses
+  %.sroa.0.0.copyload = load ptr, ptr %i.ae, align 8, !nonnull !7, !noundef !7 ; 2 uses
   %.sroa.5.0.copyload = load i64, ptr %i.bi, align 8 ; 2 uses
   %.sroa.7.0.copyload = load i64, ptr %i.bj, align 8
   %.sroa.8.0.copyload = load ptr, ptr %i.bk, align 8 ; 2 uses
@@ -1834,7 +1833,6 @@ _RINvXs1_NtCslc8SwK8fohf_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6Buf
 .noexc48:                                         ; preds = %_RINvXs1_NtCslc8SwK8fohf_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtCs5jFM9WxmFav_14http_body_util4util7BufListNtNtB8_5bytes5BytesEEECsQbU2fm3lSD_3xet.exit
   %i.ix = lshr i64 %i.iv, 5                       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !873
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   %i.iy = sub nsw i64 0, %i.ix
   %i.iz = getelementptr inbounds i8, ptr %.sroa.0.0.copyload, i64 %i.iy
   %i.ja = add i64 %i.ix, %.sroa.5.0.copyload
@@ -1874,7 +1872,6 @@ bb.bd:                                            ; preds = %.noexc48
   unreachable
 
 bb.be:                                            ; preds = %_RINvXs1_NtCslc8SwK8fohf_5bytes9bytes_mutNtB6_8BytesMutNtNtNtB8_3buf7buf_mut6BufMut3putINtNtBU_4take4TakeQINtNtCs5jFM9WxmFav_14http_body_util4util7BufListNtNtB8_5bytes5BytesEEECsQbU2fm3lSD_3xet.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   %i.ji = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0.copyload, ptr %i.ji, align 8, !alias.scope !872, !noalias !876
   %i.jj = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2277,8 +2274,8 @@ bb.i:                                             ; preds = %.split27.i
 
 bb.j:                                             ; preds = %.split.i
   %i.af = getelementptr i8, ptr %i.f, i64 -1      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !893
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !893
   store ptr %i.af, ptr %i.c, align 8, !alias.scope !894, !noalias !893
   store i8 3, ptr %i.a, align 8, !alias.scope !894, !noalias !893
   call void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c)

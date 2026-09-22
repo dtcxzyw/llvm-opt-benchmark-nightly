@@ -180,8 +180,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgOCJwUSa4vG_5tonic6status6StatusEC
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultzNtNtNtB4_2io5error5ErrorEECs5QaNqjAn6vc_5shard(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -584,11 +584,12 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.05.0.copyload.i.i = load ptr, ptr %i.g, align 8, !noalias !274 ; 2 uses
   %.sroa.56.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.56.0.copyload.i.i = load ptr, ptr %.sroa.56.0..sroa_idx.i.i, align 8, !noalias !274 ; 3 uses
+  %.sroa.56.0.copyload.i.i = load ptr, ptr %.sroa.56.0..sroa_idx.i.i, align 8, !noalias !274 ; 4 uses
   %i.h = icmp eq ptr %.sroa.05.0.copyload.i.i, null
   br i1 %i.h, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.56.0.copyload.i.i) ]
   %.val.i.i.i = load ptr, ptr %i.d, align 8, !alias.scope !271, !noalias !275, !noundef !5 ; 4 uses
   %i.i = icmp eq ptr %.val.i.i.i, null
   br i1 %i.i, label %bb.h, label %bb.d

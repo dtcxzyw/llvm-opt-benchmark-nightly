@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %_RNvMNtCsgxBkk5gSRh
   br i1 %i.aa, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsbNM6vbj4kjf_9usernames.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsbNM6vbj4kjf_9usernames.exit.thread.i
 
 _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsbNM6vbj4kjf_9usernames.exit.lr.ph.i: ; preds = %.noexc
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.411.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i), "nonnull"(ptr %.sroa.411.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsbNM6vbj4kjf_9usernames.exit.i
 
 _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsbNM6vbj4kjf_9usernames.exit.i: ; preds = %.noexc52, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsbNM6vbj4kjf_9usernames.exit.lr.ph.i
@@ -608,7 +607,7 @@ bb.d:                                             ; preds = %bb.a
   unreachable
 
 bb.e:                                             ; preds = %_RNvMNtCs17cqnTMcAHA_5bytes9bytes_mutNtB2_8BytesMut13with_capacity.exit
-  %.sroa.0.0.copyload = load ptr, ptr %i.g, align 8 ; 4 uses
+  %.sroa.0.0.copyload = load ptr, ptr %i.g, align 8, !nonnull !4, !noundef !4 ; 2 uses
   %.sroa.5.0.copyload = load i64, ptr %i.y, align 8 ; 3 uses
   %.sroa.7.0.copyload = load i64, ptr %i.z, align 8 ; 2 uses
   %.sroa.8.0.copyload = load ptr, ptr %i.aa, align 8 ; 2 uses
@@ -621,7 +620,6 @@ bb.e:                                             ; preds = %_RNvMNtCs17cqnTMcAH
 bb.f:                                             ; preds = %bb.e
   %i.ae = lshr i64 %i.ac, 5                       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !345
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   %i.af = sub nsw i64 0, %i.ae
   %i.ag = getelementptr inbounds i8, ptr %.sroa.0.0.copyload, i64 %i.af
   %i.ah = add i64 %i.ae, %.sroa.5.0.copyload      ; 2 uses
@@ -629,7 +627,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ai, label %.noexc, label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0.copyload, ptr %i.aj, align 8, !alias.scope !344, !noalias !346
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16

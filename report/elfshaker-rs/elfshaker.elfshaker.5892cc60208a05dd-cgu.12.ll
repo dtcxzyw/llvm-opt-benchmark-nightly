@@ -202,8 +202,7 @@ _RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs1xwejQucwHj_5alloc6string6
   br i1 %i.y, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs1xwejQucwHj_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_INtNtCskuiImRAV2ip_9elfshaker7packidx9ChangeSetNtB2c_10FileHandleEEECs7BtpbLEd5q3_9elfshaker.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.014.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.516.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.014.0.copyload), "nonnull"(ptr %.sroa.516.0.copyload) ]
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.ab = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -583,8 +582,7 @@ _RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs1xwejQucwHj_5alloc6string6
   br i1 %i.ak, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs1xwejQucwHj_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_INtNtCskuiImRAV2ip_9elfshaker7packidx9ChangeSetNtB2c_10FileHandleEEECs7BtpbLEd5q3_9elfshaker.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.020.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.522.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.020.0.copyload), "nonnull"(ptr %.sroa.522.0.copyload) ]
   %i.al = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.an = getelementptr inbounds nuw i8, ptr %i.s, i64 8
@@ -987,8 +985,7 @@ bb.a:
   br i1 %i.m, label %_RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs1xwejQucwHj_5alloc6string6StringEIBX_INtNtCskuiImRAV2ip_9elfshaker7packidx9ChangeSetNtB26_10FileHandleEEEINtB5_7ZipImplBW_B1Z_E4nextCs7BtpbLEd5q3_9elfshaker.exit.lr.ph, label %_RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs1xwejQucwHj_5alloc6string6StringEIBX_INtNtCskuiImRAV2ip_9elfshaker7packidx9ChangeSetNtB26_10FileHandleEEEINtB5_7ZipImplBW_B1Z_E4nextCs7BtpbLEd5q3_9elfshaker.exit.thread
 
 _RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs1xwejQucwHj_5alloc6string6StringEIBX_INtNtCskuiImRAV2ip_9elfshaker7packidx9ChangeSetNtB26_10FileHandleEEEINtB5_7ZipImplBW_B1Z_E4nextCs7BtpbLEd5q3_9elfshaker.exit.lr.ph: ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.49.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.copyload), "nonnull"(ptr %.sroa.49.0.copyload) ]
   %i.n = load ptr, ptr %2, align 8, !noalias !271, !nonnull !5, !align !6, !noundef !5 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !noalias !271, !nonnull !5, !align !6, !noundef !5 ; 2 uses

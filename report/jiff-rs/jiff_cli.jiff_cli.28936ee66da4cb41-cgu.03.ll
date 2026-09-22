@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %i.p, label %bb.d, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.0.val19) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.val17) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.0.val19), "nonnull"(ptr %.sroa.0.0.val17) ]
   %i.r = tail call i32 @memcmp(ptr nonnull readonly %.sroa.0.0.val17, ptr nonnull readonly %.sroa.04.0.val19, i64 %.sroa.0.0.val18)
   %i.s = icmp sgt i32 %i.r, 0
   br label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit
@@ -220,8 +219,7 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_
   br i1 %i.u, label %bb.e, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit22
 
 bb.e:                                             ; preds = %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.val15) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.val17) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.val15), "nonnull"(ptr %.sroa.0.0.val17) ]
   %i.w = tail call i32 @memcmp(ptr nonnull readonly %.sroa.0.0.val17, ptr nonnull readonly %.sroa.08.0.val15, i64 %.sroa.0.0.val18)
   %i.x = icmp sgt i32 %i.w, 0
   br label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit22
@@ -237,8 +235,7 @@ bb.f:                                             ; preds = %_RNCINvMNtCs1xwejQu
   br i1 %i.z, label %bb.g, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit24
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.val15) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.0.val19) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.val15), "nonnull"(ptr %.sroa.04.0.val19) ]
   %i.ab = tail call i32 @memcmp(ptr nonnull readonly %.sroa.04.0.val19, ptr nonnull readonly %.sroa.08.0.val15, i64 %.sroa.04.0.val20)
   %i.ac = icmp sgt i32 %i.ab, 0
   br label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit24
@@ -331,13 +328,13 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs3tZ2SXJA1qv_8jiff_c
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(write, argmem: readwrite, target_mem: none) uwtable
 define hidden void @_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterhENCNvMs_NtCs1xwejQucwHj_5alloc5sliceSh18to_ascii_lowercase0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB2m_8for_each4callhNCINvMsk_NtB1y_3vecINtB3z_3VechE14extend_trustedBN_E0E0ECs3tZ2SXJA1qv_8jiff_cli(ptr noundef nonnull %0, ptr noundef %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #4 personality ptr @rust_eh_personality {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 8 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 6 uses
   %.sroa.7.0.copyload2 = ptrtoaddr ptr %.sroa.7.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvMs_NtCs1xwejQucwHj_5alloc5sliceSh18to_ascii_lowercase0NCINvNvBS_8for_each4callhNCINvMsk_NtB2o_3vecINtB3J_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs3tZ2SXJA1qv_8jiff_cli.exit, label %iter.check
 

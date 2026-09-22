@@ -128,8 +128,8 @@ bb.a:
   %5 = alloca %struct._zval_struct, align 8       ; 5 uses
   %6 = alloca %struct._zval_struct, align 8       ; 5 uses
   %7 = alloca %struct._zval_struct, align 8       ; 5 uses
-  %8 = load ptr, ptr %0, align 8, !tbaa !16, !nonnull !27, !noundef !27 ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  %8 = load ptr, ptr %0, align 8, !tbaa !16, !nonnull !27, !noundef !27 ; 4 uses
   %i.a = icmp eq ptr %3, null
   %spec.store.select = select i1 %i.a, ptr @.str.2, ptr %3 ; 3 uses
   %i.b = load i32, ptr %8, align 4, !tbaa !26     ; 2 uses
@@ -532,19 +532,15 @@ bb.bp:                                            ; preds = %dom_xml_str_equals_
   br i1 %.not98.i, label %dom_prefix_in_candidate_list.exit.thread129.i, label %dom_xml_local_prefix_map_find.exit108.thread.i
 
 dom_xml_local_prefix_map_find.exit108.thread.i:   ; preds = %bb.bp, %dom_xml_str_equals_treat_nulls_as_empty.exit.thread.thread179.i
-  %i.io = load ptr, ptr %i.ii, align 8, !tbaa !45 ; 5 uses
+  %i.io = load ptr, ptr %i.ii, align 8, !tbaa !45 ; 4 uses
   %i.ip = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i.i81) #9
   %i.iq = call ptr @zend_hash_str_find(ptr noundef nonnull %.val.i75, ptr noundef nonnull %.0.i.i81, i64 noundef %i.ip) #8 ; 2 uses
-  %.not.i.i.i83 = icmp eq ptr %i.iq, null
-  br i1 %.not.i.i.i83, label %dom_get_candidates_list.exit.thread.i, label %bb.bq
-
-dom_get_candidates_list.exit.thread.i:            ; preds = %dom_xml_local_prefix_map_find.exit108.thread.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.io) ]
-  br label %dom_prefix_in_candidate_list.exit.thread129.i
+  %.not.i.i.i83 = icmp eq ptr %i.iq, null
+  br i1 %.not.i.i.i83, label %dom_prefix_in_candidate_list.exit.thread129.i, label %bb.bq
 
 bb.bq:                                            ; preds = %dom_xml_local_prefix_map_find.exit108.thread.i
   %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !28, !nonnull !27, !noundef !27 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.io) ]
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 16
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !28 ; 2 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %i.ir, i64 24
@@ -586,7 +582,7 @@ bb.bt:                                            ; preds = %dom_xml_str_equals_
   %.not.i103.not.i = icmp eq ptr %i.ji, %i.ix
   br i1 %.not.i103.not.i, label %dom_prefix_in_candidate_list.exit.thread129.i, label %.lr.ph.i84, !llvm.loop !50
 
-dom_prefix_in_candidate_list.exit.thread129.i:    ; preds = %bb.bt, %bb.bq, %dom_get_candidates_list.exit.thread.i, %bb.bp, %dom_xml_str_equals_treat_nulls_as_empty.exit.thread.i, %dom_xml_str_equals_treat_nulls_as_empty.exit.i, %.split.i87, %bb.bn
+dom_prefix_in_candidate_list.exit.thread129.i:    ; preds = %bb.bt, %bb.bq, %dom_xml_local_prefix_map_find.exit108.thread.i, %bb.bp, %dom_xml_str_equals_treat_nulls_as_empty.exit.thread.i, %dom_xml_str_equals_treat_nulls_as_empty.exit.i, %.split.i87, %bb.bn
   %i.jj = load ptr, ptr %i.hd, align 8, !tbaa !95
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 24
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !97 ; 2 uses
@@ -989,9 +985,9 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @dom_retrieve_a_preferred_prefix_string(ptr %.0.val, ptr noundef nonnull %0, ptr nofree noundef readonly captures(address) %1, ptr noundef %2, i64 noundef %3) unnamed_addr #0 {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.a = icmp eq ptr %2, null
   %spec.store.select = select i1 %i.a, ptr @.str.2, ptr %2 ; 5 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.b = tail call ptr @zend_hash_str_find(ptr noundef nonnull %.0.val, ptr noundef nonnull %spec.store.select, i64 noundef %3) #8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.b, null
   br i1 %.not.i.i, label %dom_get_candidates_list.exit.thread, label %bb.b

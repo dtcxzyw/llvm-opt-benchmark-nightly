@@ -205,7 +205,7 @@ _ZN9seq_split8mk_emptyEv.exit357:                 ; preds = %bb.ei, %_ZN11ast_ma
   %i.abz = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
   %i.aca = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.acb = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.acc = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 3 uses
+  %i.acc = getelementptr inbounds nuw i8, ptr %23, i64 8
   %i.acd = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.ace = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.acf = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 3 uses
@@ -424,8 +424,7 @@ bb.fd:                                            ; preds = %_ZNK9seq_split11is_
   call void @llvm.experimental.noalias.scope.decl(metadata !237)
   %i.aev = load ptr, ptr %i.abm, align 8, !tbaa !41, !noalias !238, !nonnull !31, !noundef !31 ; 2 uses
   store ptr %i.aev, ptr %23, align 8, !tbaa !41, !alias.scope !238
-  %i.aew = load ptr, ptr %i.abo, align 8, !tbaa !59, !noalias !238, !nonnull !31, !align !32 ; 2 uses
-  store ptr %i.aew, ptr %i.acc, align 8, !tbaa !33, !alias.scope !238
+  %i.aew = load ptr, ptr %i.abo, align 8, !tbaa !59, !noalias !238, !nonnull !31, !align !32
   br label %_ZN9seq_split8mk_emptyEv.exit.sink.split.i378
 
 _ZNK9seq_split11is_empty_ssEP4expr.exit.thread.i377: ; preds = %_ZNK9seq_split11is_empty_ssEP4expr.exit.i380, %bb.fc
@@ -435,12 +434,11 @@ _ZNK9seq_split11is_empty_ssEP4expr.exit.thread.i377: ; preds = %_ZNK9seq_split11
           to label %.noexc382 unwind label %bb.fz
 
 .noexc382:                                        ; preds = %_ZNK9seq_split11is_empty_ssEP4expr.exit.thread.i377
-  %i.afa = load ptr, ptr %1, align 8, !tbaa !55, !noalias !236, !nonnull !31, !align !32 ; 3 uses
+  %i.afa = load ptr, ptr %1, align 8, !tbaa !55, !noalias !236, !nonnull !31, !align !32 ; 2 uses
   br i1 %i.aez, label %_ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.i, label %bb.fe
 
 _ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.i: ; preds = %.noexc382
   store ptr %i.ael, ptr %23, align 8, !tbaa !41, !alias.scope !236
-  store ptr %i.afa, ptr %i.acc, align 8, !tbaa !33, !alias.scope !236
   br label %_ZN9seq_split8mk_emptyEv.exit.sink.split.i378
 
 bb.fe:                                            ; preds = %.noexc382
@@ -452,16 +450,16 @@ bb.fe:                                            ; preds = %.noexc382
           to label %.noexc383 unwind label %bb.fz ; 3 uses
 
 .noexc383:                                        ; preds = %bb.fe
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20, !noalias !236
-  %i.afd = load ptr, ptr %1, align 8, !tbaa !55, !noalias !236, !nonnull !31, !align !32 ; 2 uses
-  store ptr %i.afc, ptr %23, align 8, !tbaa !41, !alias.scope !236
-  store ptr %i.afd, ptr %i.acc, align 8, !tbaa !33, !alias.scope !236
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.afc) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20, !noalias !236
+  %i.afd = load ptr, ptr %1, align 8, !tbaa !55, !noalias !236, !nonnull !31, !align !32
+  store ptr %i.afc, ptr %23, align 8, !tbaa !41, !alias.scope !236
   br label %_ZN9seq_split8mk_emptyEv.exit.sink.split.i378
 
 _ZN9seq_split8mk_emptyEv.exit.sink.split.i378:    ; preds = %bb.fd, %.noexc383, %_ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.i
-  %i.afe = phi ptr [ %i.aew, %bb.fd ], [ %i.afa, %_ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.i ], [ %i.afd, %.noexc383 ]
-  %.sink12.i379 = phi ptr [ %i.aev, %bb.fd ], [ %i.ael, %_ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.i ], [ %i.afc, %.noexc383 ] ; 8 uses
+  %i.afe = phi ptr [ %i.aew, %bb.fd ], [ %i.afd, %.noexc383 ], [ %i.afa, %_ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.i ] ; 2 uses
+  %.sink12.i379 = phi ptr [ %i.aev, %bb.fd ], [ %i.afc, %.noexc383 ], [ %i.ael, %_ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.i ] ; 8 uses
+  store ptr %i.afe, ptr %i.acc, align 8, !tbaa !33, !alias.scope !236
   %i.aff = getelementptr inbounds nuw i8, ptr %.sink12.i379, i64 8 ; 2 uses
   %i.afg = load i32, ptr %i.aff, align 4, !tbaa !57, !noalias !236
   %i.afh = add i32 %i.afg, 1

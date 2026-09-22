@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 _ZN5boost9container13stable_vectorIiNS0_3pmr21polymorphic_allocatorIiEEE18push_back_rollbackD2Ev.exit: ; preds = %bb.c, %.thread.i
   %i.t = phi i64 [ %.pre19, %bb.c ], [ %i.c, %.thread.i ]
   %i.u = phi i64 [ %.pre18, %bb.c ], [ %i.e, %.thread.i ] ; 3 uses
-  %i.v = phi ptr [ %.pre, %bb.c ], [ %i.l, %.thread.i ] ; 2 uses
+  %i.v = phi ptr [ %.pre, %bb.c ], [ %i.l, %.thread.i ]
   store ptr null, ptr %i.q, align 8, !tbaa !48
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.x = load i32, ptr %1, align 4, !tbaa !19
@@ -219,7 +219,6 @@ _ZN5boost9container13stable_vectorIiNS0_3pmr21polymorphic_allocatorIiEEE18push_b
 
 _ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_3pmr21polymorphic_allocatorIS6_EEvE40priv_insert_forward_range_expand_forwardINS0_3dtl20insert_emplace_proxyIS9_JS6_EEEEEvPS6_mT_NS_11move_detail17integral_constantIbLb1EEE.exit.i.i: ; preds = %_ZN5boost9container13stable_vectorIiNS0_3pmr21polymorphic_allocatorIiEEE18push_back_rollbackD2Ev.exit
   %i.aa = getelementptr inbounds i8, ptr %i.y, i64 -8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !28, !noalias !115
   store ptr %i.ab, ptr %i.y, align 8, !tbaa !28, !noalias !115
   %i.ac = add i64 %i.u, 1
@@ -622,8 +621,8 @@ middle.block56:                                   ; preds = %vector.body49
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i
   %.017.i.i.i.i.i.i.i = phi i64 [ %5, %.lr.ph.i.i.i.i.i.i.i ], [ %.017.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ]
   %.01416.i.i.i.i.i.i.i = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.i.i.i ], [ %.01416.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 3 uses
-  %5 = add i64 %.017.i.i.i.i.i.i.i, -1            ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01416.i.i.i.i.i.i.i) ]
+  %5 = add i64 %.017.i.i.i.i.i.i.i, -1            ; 2 uses
   store ptr null, ptr %.01416.i.i.i.i.i.i.i, align 8, !tbaa !28, !noalias !155
   %i.ay = getelementptr inbounds nuw i8, ptr %.01416.i.i.i.i.i.i.i, i64 8
   %.not.i.i45.i.i.i.i.i = icmp eq i64 %5, 0
@@ -1026,8 +1025,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i
   %.017.i.i.i.i = phi i64 [ %5, %.lr.ph.i.i.i.i ], [ %.017.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader ]
   %.01416.i.i.i.i = phi ptr [ %i.an, %.lr.ph.i.i.i.i ], [ %.01416.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader ] ; 3 uses
-  %5 = add i64 %.017.i.i.i.i, -1                  ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01416.i.i.i.i) ]
+  %5 = add i64 %.017.i.i.i.i, -1                  ; 2 uses
   store ptr %.pre.i.i.i.i, ptr %.01416.i.i.i.i, align 8, !tbaa !28
   %i.an = getelementptr inbounds nuw i8, ptr %.01416.i.i.i.i, i64 8
   %.not.i.i.i.i = icmp eq i64 %5, 0

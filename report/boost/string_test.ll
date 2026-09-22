@@ -205,8 +205,8 @@ _ZN5boost9container16allocator_traitsINS0_13new_allocatorINS0_12basic_stringIcSt
 
 _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_12basic_stringIcSt11char_traitsIcEvvEEEEPS6_S8_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit: ; preds = %_ZN5boost9container16allocator_traitsINS0_13new_allocatorINS0_12basic_stringIcSt11char_traitsIcEvvEEEEE9constructIS6_JS6_EEEvRS7_PT_DpOT0_.exit.i, %bb.a
   %.015.lcssa.i = phi ptr [ %4, %bb.a ], [ %i.q, %_ZN5boost9container16allocator_traitsINS0_13new_allocatorINS0_12basic_stringIcSt11char_traitsIcEvvEEEEE9constructIS6_JS6_EEEvRS7_PT_DpOT0_.exit.i ] ; 15 uses
-  store ptr %.015.lcssa.i, ptr %i.b, align 8, !tbaa !200
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.015.lcssa.i) ]
+  store ptr %.015.lcssa.i, ptr %i.b, align 8, !tbaa !200
   store i8 1, ptr %.015.lcssa.i, align 1
   %i.r = getelementptr inbounds nuw i8, ptr %.015.lcssa.i, i64 1 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.015.lcssa.i, i64 16 ; 2 uses
@@ -574,8 +574,8 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPS8_SA_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SE_E4typeERT_SD_SD_SE_.exit: ; preds = %bb.c, %bb.a
   %.015.lcssa.i = phi ptr [ %4, %bb.a ], [ %i.r, %bb.c ] ; 9 uses
-  store ptr %.015.lcssa.i, ptr %i.c, align 8, !tbaa !204
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.015.lcssa.i) ]
+  store ptr %.015.lcssa.i, ptr %i.c, align 8, !tbaa !204
   %i.s = getelementptr inbounds nuw i8, ptr %.015.lcssa.i, i64 16 ; 3 uses
   store ptr %i.s, ptr %.015.lcssa.i, align 8, !tbaa !64
   %i.t = load ptr, ptr %i.b, align 8, !tbaa !66   ; 2 uses
@@ -953,7 +953,7 @@ define linkonce_odr hidden void @_ZN5boost9container6vectorINS0_12basic_stringIc
 bb.a:
   %.sroa.0.i.i.i.i = alloca [24 x i8], align 8    ; 4 uses
   %4 = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<char>, void>::short_t", align 1 ; 4 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !107    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !107, !nonnull !85, !noundef !85
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !109
   %i.d = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %i.c ; 23 uses
@@ -961,7 +961,6 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store i8 1, ptr %i.d, align 1
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
@@ -1054,7 +1053,6 @@ bb.g:                                             ; preds = %bb.a
   %i.bb = sub i64 %i.az, %i.ba
   %i.bc = sdiv exact i64 %i.bb, 24
   %i.bd = getelementptr inbounds i8, ptr %i.d, i64 -24 ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store i8 1, ptr %i.d, align 1
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !51
   %i.bf = trunc i8 %i.be to i1
@@ -1195,7 +1193,7 @@ _ZNK5boost9container3dtl17insert_copy_proxyINS0_13new_allocatorINS0_12basic_stri
 define linkonce_odr hidden void @_ZN5boost9container6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvE40priv_insert_forward_range_expand_forwardINS0_3dtl20insert_emplace_proxyINS0_13new_allocatorIS7_EEJRKS7_EEEEEvPS7_mT_NS_11move_detail17integral_constantIbLb1EEE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2, ptr %3) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !104    ; 3 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !104, !nonnull !85, !noundef !85
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !102
   %i.e = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %i.d ; 18 uses
@@ -1203,7 +1201,6 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
   store ptr %i.f, ptr %i.e, align 8, !tbaa !64
   %i.g = load ptr, ptr %3, align 8, !tbaa !66     ; 2 uses
@@ -1256,7 +1253,6 @@ bb.e:                                             ; preds = %bb.a
   %i.w = sub i64 %i.v, %i.u
   %i.x = ashr exact i64 %i.w, 5
   %i.y = getelementptr inbounds i8, ptr %i.e, i64 -32 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
   store ptr %i.z, ptr %i.e, align 8, !tbaa !64
   %i.aa = load ptr, ptr %i.y, align 8, !tbaa !66  ; 2 uses
@@ -1400,7 +1396,7 @@ bb.a:
   %4 = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<char>, void>::short_t", align 1 ; 4 uses
   %.sroa.0.i.i.i.i.i = alloca [24 x i8], align 8  ; 4 uses
   %5 = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<char>, void>::short_t", align 1 ; 4 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !107    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !107, !nonnull !85, !noundef !85
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !109
   %i.d = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %i.c ; 20 uses
@@ -1408,7 +1404,6 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store i8 1, ptr %i.d, align 1
   %i.e = load i8, ptr %3, align 1, !tbaa !51
   %i.f = trunc i8 %i.e to i1
@@ -1455,7 +1450,6 @@ bb.e:                                             ; preds = %bb.a
   %i.u = sub i64 %i.s, %i.t
   %i.v = sdiv exact i64 %i.u, 24
   %i.w = getelementptr inbounds i8, ptr %i.d, i64 -24 ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store i8 1, ptr %i.d, align 1
   %i.x = load i8, ptr %i.w, align 1, !tbaa !51
   %i.y = trunc i8 %i.x to i1
@@ -1858,8 +1852,8 @@ _ZN5boost9container16allocator_traitsINS0_13new_allocatorINS0_12basic_stringIwSt
 
 _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_12basic_stringIwSt11char_traitsIwEvvEEEEPS6_S8_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit: ; preds = %_ZN5boost9container16allocator_traitsINS0_13new_allocatorINS0_12basic_stringIwSt11char_traitsIwEvvEEEEE9constructIS6_JS6_EEEvRS7_PT_DpOT0_.exit.i, %bb.a
   %.015.lcssa.i = phi ptr [ %4, %bb.a ], [ %i.q, %_ZN5boost9container16allocator_traitsINS0_13new_allocatorINS0_12basic_stringIwSt11char_traitsIwEvvEEEEE9constructIS6_JS6_EEEvRS7_PT_DpOT0_.exit.i ] ; 4 uses
-  store ptr %.015.lcssa.i, ptr %i.b, align 8, !tbaa !210
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.015.lcssa.i) ]
+  store ptr %.015.lcssa.i, ptr %i.b, align 8, !tbaa !210
   invoke void @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEC2ERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %.015.lcssa.i, ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %_ZNK5boost9container3dtl17insert_copy_proxyINS0_13new_allocatorINS0_12basic_stringIwSt11char_traitsIwEvvEEEEE31uninitialized_copy_n_and_updateIPS7_EEvRS8_T_m.exit unwind label %bb.f
 
@@ -2157,8 +2151,8 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEEEPS8_SA_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SE_E4typeERT_SD_SD_SE_.exit: ; preds = %bb.c, %bb.a
   %.015.lcssa.i = phi ptr [ %4, %bb.a ], [ %i.s, %bb.c ] ; 9 uses
-  store ptr %.015.lcssa.i, ptr %i.c, align 8, !tbaa !214
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.015.lcssa.i) ]
+  store ptr %.015.lcssa.i, ptr %i.c, align 8, !tbaa !214
   %i.t = getelementptr inbounds nuw i8, ptr %.015.lcssa.i, i64 16 ; 3 uses
   store ptr %i.t, ptr %.015.lcssa.i, align 8, !tbaa !122
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !137  ; 2 uses
@@ -2540,7 +2534,7 @@ define linkonce_odr hidden void @_ZN5boost9container6vectorINS0_12basic_stringIw
 bb.a:
   %.sroa.0.i.i.i.i = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<wchar_t>, void>::short_t", align 8 ; 4 uses
   %4 = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<wchar_t>, void>::short_t", align 4 ; 4 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !130    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !130, !nonnull !85, !noundef !85
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !128
   %i.d = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %i.c ; 12 uses
@@ -2548,7 +2542,6 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   tail call void @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEC2ERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %3)
   %i.e = load i64, ptr %i.b, align 8, !tbaa !128
   %i.f = add i64 %i.e, 1
@@ -2561,7 +2554,6 @@ bb.c:                                             ; preds = %bb.a
   %i.i = sub i64 %i.g, %i.h
   %i.j = sdiv exact i64 %i.i, 24
   %i.k = getelementptr inbounds i8, ptr %i.d, i64 -24 ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store i8 1, ptr %i.d, align 4
   %i.l = load i8, ptr %i.k, align 4, !tbaa !51
   %i.m = trunc i8 %i.l to i1
@@ -2703,7 +2695,7 @@ _ZNK5boost9container3dtl17insert_copy_proxyINS0_13new_allocatorINS0_12basic_stri
 define linkonce_odr hidden void @_ZN5boost9container6vectorINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEvvE40priv_insert_forward_range_expand_forwardINS0_3dtl20insert_emplace_proxyINS0_13new_allocatorIS7_EEJRKS7_EEEEEvPS7_mT_NS_11move_detail17integral_constantIbLb1EEE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2, ptr %3) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !136    ; 3 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !136, !nonnull !85, !noundef !85
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !134
   %i.e = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %i.d ; 17 uses
@@ -2711,7 +2703,6 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
   store ptr %i.f, ptr %i.e, align 8, !tbaa !122
   %i.g = load ptr, ptr %3, align 8, !tbaa !137    ; 2 uses
@@ -2767,7 +2758,6 @@ bb.e:                                             ; preds = %bb.a
   %i.y = sub i64 %i.x, %i.w
   %i.z = ashr exact i64 %i.y, 5
   %i.aa = getelementptr inbounds i8, ptr %i.e, i64 -32 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
   store ptr %i.ab, ptr %i.e, align 8, !tbaa !122
   %i.ac = load ptr, ptr %i.aa, align 8, !tbaa !137 ; 2 uses
@@ -2914,7 +2904,7 @@ bb.a:
   %4 = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<wchar_t>, void>::short_t", align 4 ; 4 uses
   %.sroa.0.i.i.i.i.i = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<wchar_t>, void>::short_t", align 8 ; 4 uses
   %5 = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<wchar_t>, void>::short_t", align 4 ; 4 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !130    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !130, !nonnull !85, !noundef !85
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !128
   %i.d = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %i.c ; 20 uses
@@ -2922,7 +2912,6 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store i8 1, ptr %i.d, align 4
   %i.e = load i8, ptr %3, align 1, !tbaa !51
   %i.f = trunc i8 %i.e to i1
@@ -2969,7 +2958,6 @@ bb.e:                                             ; preds = %bb.a
   %i.u = sub i64 %i.s, %i.t
   %i.v = sdiv exact i64 %i.u, 24
   %i.w = getelementptr inbounds i8, ptr %i.d, i64 -24 ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store i8 1, ptr %i.d, align 4
   %i.x = load i8, ptr %i.w, align 4, !tbaa !51
   %i.y = trunc i8 %i.x to i1

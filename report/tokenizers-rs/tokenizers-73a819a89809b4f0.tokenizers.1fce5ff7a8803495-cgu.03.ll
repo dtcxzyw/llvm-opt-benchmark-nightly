@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not.i.i, label %bb.d, label %switch.lookup.i.i
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.val17) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.0.val19) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.val17), "nonnull"(ptr %.sroa.04.0.val19) ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val17, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !3, !noundef !3
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val17, i64 16
@@ -238,8 +237,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %.not.i.i21, label %bb.e, label %switch.lookup.i.i22
 
 bb.e:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.val17) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.val15) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.val17), "nonnull"(ptr %.sroa.08.0.val15) ]
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val17, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8, !nonnull !3, !noundef !3
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val17, i64 16
@@ -271,8 +269,7 @@ bb.f:                                             ; preds = %_RNCINvMNtCscdodAO9
   br i1 %.not.i.i27, label %bb.g, label %switch.lookup.i.i28
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.0.val19) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.val15) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.0.val19), "nonnull"(ptr %.sroa.08.0.val15) ]
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val19, i64 8
   %i.ax = load ptr, ptr %i.aw, align 8, !nonnull !3, !noundef !3
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val19, i64 16
@@ -675,8 +672,8 @@ bb.a:
   br i1 %.not.i.i, label %.split, label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit
 
 .split:                                           ; preds = %bb.a
-  %.val13 = load ptr, ptr %i.a, align 8, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %.val13 = load ptr, ptr %i.a, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.val11, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !3, !noundef !3
   %i.h = getelementptr inbounds nuw i8, ptr %.val11, i64 16
@@ -1079,8 +1076,8 @@ bb.al:                                            ; preds = %bb.ak
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCscdodAO9FK5_5alloc6string6StringdE12split_at_mutCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.ak
-  %7 = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.ph140, i64 %.sroa.11.1.lcssa.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph140) ]
+  %7 = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.ph140, i64 %.sroa.11.1.lcssa.i
   call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTNtNtCscdodAO9FK5_5alloc6string6StringdENCINvMNtB1a_5sliceSB15_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2l_14UnigramTrainer8finalizes_0E0EB2r_(ptr noalias noundef nonnull align 8 %7, i64 noundef %i.cu, ptr noalias noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.bp, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(8) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.dj = icmp ult i64 %.sroa.11.1.lcssa.i, 33
@@ -1335,8 +1332,8 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %i.ak, label %bb.k, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB1e_5sliceSB18_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2q_16WordLevelTrainer8do_train0E0EB2w_.exit.1.i
 
 .split.i.1.i:                                     ; preds = %.lr.ph.1.i
-  %.val13.i.1.i = load ptr, ptr %i.af, align 8, !alias.scope !823, !noalias !822, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.i.1.i) ]
+  %.val13.i.1.i = load ptr, ptr %i.af, align 8, !alias.scope !823, !noalias !822, !nonnull !3, !noundef !3 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.val11.i.1.i, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !noalias !824, !nonnull !3, !noundef !3
   %i.an = getelementptr inbounds nuw i8, ptr %.val11.i.1.i, i64 16
@@ -1440,8 +1437,8 @@ bb.m:                                             ; preds = %.loopexit.1.i
   br i1 %.not.i.i.i.i, label %.split.i.i, label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit.i.i
 
 .split.i.i:                                       ; preds = %.lr.ph.i
-  %.val13.i.i = load ptr, ptr %i.bw, align 8, !alias.scope !823, !noalias !822, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.i.i) ]
+  %.val13.i.i = load ptr, ptr %i.bw, align 8, !alias.scope !823, !noalias !822, !nonnull !3, !noundef !3 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.val11.i.i, i64 8
   %i.cc = load ptr, ptr %i.cb, align 8, !noalias !824, !nonnull !3, !noundef !3
   %i.cd = getelementptr inbounds nuw i8, ptr %.val11.i.i, i64 16
@@ -1554,8 +1551,7 @@ bb.q:                                             ; preds = %.lr.ph350
   br i1 %.not.i.i.i, label %bb.r, label %switch.lookup.i.i.i
 
 bb.r:                                             ; preds = %bb.q
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10.i), "nonnull"(ptr %.val12.i) ]
   %i.ds = getelementptr inbounds nuw i8, ptr %.val10.i, i64 8
   %i.dt = load ptr, ptr %i.ds, align 8, !noalias !827, !nonnull !3, !noundef !3
   %i.du = getelementptr inbounds nuw i8, ptr %.val10.i, i64 16
@@ -1587,8 +1583,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %.not.i.i14.i, label %bb.s, label %switch.lookup.i.i15.i
 
 bb.s:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10.i), "nonnull"(ptr %.val8.i) ]
   %i.ei = getelementptr inbounds nuw i8, ptr %.val10.i, i64 8
   %i.ej = load ptr, ptr %i.ei, align 8, !noalias !827, !nonnull !3, !noundef !3
   %i.ek = getelementptr inbounds nuw i8, ptr %.val10.i, i64 16
@@ -1620,8 +1615,7 @@ bb.t:                                             ; preds = %_RNCINvMNtCscdodAO9
   br i1 %.not.i.i20.i, label %bb.u, label %switch.lookup.i.i21.i
 
 bb.u:                                             ; preds = %bb.t
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12.i), "nonnull"(ptr %.val8.i) ]
   %i.ex = getelementptr inbounds nuw i8, ptr %.val12.i, i64 8
   %i.ey = load ptr, ptr %i.ex, align 8, !noalias !827, !nonnull !3, !noundef !3
   %i.ez = getelementptr inbounds nuw i8, ptr %.val12.i, i64 16
@@ -1669,16 +1663,16 @@ bb.v:                                             ; preds = %_RNCINvMNtCscdodAO9
   br i1 %.not, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %.sroa.028.0.val37 = load ptr, ptr %i.f, align 8, !nonnull !3, !align !5, !noundef !3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fs) ]
+  %.sroa.028.0.val37 = load ptr, ptr %i.f, align 8, !nonnull !3, !align !5, !noundef !3
   %i.ft = load i64, ptr %.sroa.028.0.val37, align 8, !noundef !3 ; 2 uses
   %i.fu = load i64, ptr %i.fs, align 8, !noundef !3 ; 2 uses
   %.not.i.i = icmp eq i64 %i.ft, %i.fu
   br i1 %.not.i.i, label %.split, label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit
 
 .split:                                           ; preds = %bb.w
-  %.sroa.028.0.val = load ptr, ptr %.sroa.028.0.ph141, align 8, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fq) ]
+  %.sroa.028.0.val = load ptr, ptr %.sroa.028.0.ph141, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.sroa.028.0.val, i64 8
   %i.fw = load ptr, ptr %i.fv, align 8, !nonnull !3, !noundef !3
   %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.028.0.val, i64 16
@@ -1743,8 +1737,8 @@ bb.ab:                                            ; preds = %_RNCINvMNtCscdodAO9
   br i1 %.not.i.i.i44, label %bb.ac, label %switch.lookup.i.i.i45
 
 bb.ac:                                            ; preds = %bb.ab
-  %.val30.i = load ptr, ptr %.sroa.9.131.i, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i) ]
+  %.val30.i = load ptr, ptr %.sroa.9.131.i, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %.val30.i, i64 8
   %i.gt = load ptr, ptr %i.gs, align 8, !noalias !830, !nonnull !3, !noundef !3
   %i.gu = getelementptr inbounds nuw i8, ptr %.val30.i, i64 16
@@ -1780,8 +1774,8 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %.not.i.i34.i, label %bb.ad, label %switch.lookup.i.i35.i
 
 bb.ad:                                            ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit.i46
-  %.val26.i = load ptr, ptr %i.hi, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i) ]
+  %.val26.i = load ptr, ptr %i.hi, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %.val26.i, i64 8
   %i.hm = load ptr, ptr %i.hl, align 8, !noalias !830, !nonnull !3, !noundef !3
   %i.hn = getelementptr inbounds nuw i8, ptr %.val26.i, i64 16
@@ -1817,8 +1811,8 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %.not.i.i41.i, label %bb.ae, label %switch.lookup.i.i42.i
 
 bb.ae:                                            ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit39.i
-  %.val22.i = load ptr, ptr %i.ib, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i) ]
+  %.val22.i = load ptr, ptr %i.ib, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %.val22.i, i64 8
   %i.if = load ptr, ptr %i.ie, align 8, !noalias !830, !nonnull !3, !noundef !3
   %i.ig = getelementptr inbounds nuw i8, ptr %.val22.i, i64 16
@@ -1854,8 +1848,8 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %.not.i.i48.i, label %bb.af, label %switch.lookup.i.i49.i
 
 bb.af:                                            ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit46.i
-  %.val18.i = load ptr, ptr %i.iu, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i) ]
+  %.val18.i = load ptr, ptr %i.iu, align 8, !alias.scope !828, !noalias !829, !nonnull !3, !noundef !3 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %.val18.i, i64 8
   %i.iy = load ptr, ptr %i.ix, align 8, !noalias !830, !nonnull !3, !noundef !3
   %i.iz = getelementptr inbounds nuw i8, ptr %.val18.i, i64 16
@@ -2019,8 +2013,8 @@ bb.al:                                            ; preds = %bb.ak
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSTRNtNtCscdodAO9FK5_5alloc6string6StringRyE12split_at_mutCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.ak
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph144, i64 %.sroa.27.2.lcssa.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph144) ]
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph144, i64 %.sroa.27.2.lcssa.i
   call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB1b_5sliceSB15_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2n_16WordLevelTrainer8do_train0E0EB2t_(ptr noalias noundef nonnull align 8 %7, i64 noundef %i.kt, ptr noalias noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.dj, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(8) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.li = icmp ult i64 %.sroa.27.2.lcssa.i, 33
@@ -2069,8 +2063,8 @@ bb.ap:                                            ; preds = %_RNCINvNtNtNtNtCs4N
   br i1 %.not.i.i.i.i85, label %bb.aq, label %switch.lookup.i.i.i.i
 
 bb.aq:                                            ; preds = %bb.ap
-  %.val30.i96 = load ptr, ptr %.sroa.9.131.i80, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i79) ]
+  %.val30.i96 = load ptr, ptr %.sroa.9.131.i80, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   %i.ls = load ptr, ptr %i.ln, align 8, !noalias !840, !nonnull !3, !noundef !3
   %i.lt = load i64, ptr %i.lo, align 8, !noalias !840, !noundef !3 ; 2 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %.val30.i96, i64 8
@@ -2107,8 +2101,8 @@ _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTRNtNtCs
   br i1 %.not.i.i.i34.i, label %bb.ar, label %switch.lookup.i.i.i35.i
 
 bb.ar:                                            ; preds = %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB1d_5sliceSB17_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2p_16WordLevelTrainer8do_train0E0E0B2v_.exit.i
-  %.val26.i95 = load ptr, ptr %i.mj, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i79) ]
+  %.val26.i95 = load ptr, ptr %i.mj, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   %i.mm = load ptr, ptr %i.ln, align 8, !noalias !840, !nonnull !3, !noundef !3
   %i.mn = load i64, ptr %i.lo, align 8, !noalias !840, !noundef !3 ; 2 uses
   %i.mo = getelementptr inbounds nuw i8, ptr %.val26.i95, i64 8
@@ -2145,8 +2139,8 @@ _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTRNtNtCs
   br i1 %.not.i.i.i41.i, label %bb.as, label %switch.lookup.i.i.i42.i
 
 bb.as:                                            ; preds = %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB1d_5sliceSB17_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2p_16WordLevelTrainer8do_train0E0E0B2v_.exit39.i
-  %.val22.i94 = load ptr, ptr %i.nd, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i79) ]
+  %.val22.i94 = load ptr, ptr %i.nd, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   %i.ng = load ptr, ptr %i.ln, align 8, !noalias !840, !nonnull !3, !noundef !3
   %i.nh = load i64, ptr %i.lo, align 8, !noalias !840, !noundef !3 ; 2 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %.val22.i94, i64 8
@@ -2183,8 +2177,8 @@ _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTRNtNtCs
   br i1 %.not.i.i.i48.i, label %bb.at, label %switch.lookup.i.i.i49.i
 
 bb.at:                                            ; preds = %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB1d_5sliceSB17_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2p_16WordLevelTrainer8do_train0E0E0B2v_.exit46.i
-  %.val18.i93 = load ptr, ptr %i.nx, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i79) ]
+  %.val18.i93 = load ptr, ptr %i.nx, align 8, !alias.scope !838, !noalias !839, !nonnull !3, !noundef !3 ; 2 uses
   %i.oa = load ptr, ptr %i.ln, align 8, !noalias !840, !nonnull !3, !noundef !3
   %i.ob = load i64, ptr %i.lo, align 8, !noalias !840, !noundef !3 ; 2 uses
   %i.oc = getelementptr inbounds nuw i8, ptr %.val18.i93, i64 8
@@ -2587,8 +2581,8 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSThciE12split_at_mutCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.ac
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph127, i64 %.sroa.27.2.lcssa.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph127) ]
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph127, i64 %.sroa.27.2.lcssa.i
   call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortThciENCINvMNtCscdodAO9FK5_5alloc5sliceSB15_11sort_by_keyhNCNvMNtCs3U8yzCisM5Z_32unicode_normalization_alignments9decomposeINtB25_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 %7, i64 noundef %i.hn, ptr noalias noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.ex, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(8) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ic = icmp ult i64 %.sroa.27.2.lcssa.i, 33
@@ -2991,8 +2985,8 @@ bb.ar:                                            ; preds = %bb.aq
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSTjdE12split_at_mutCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.aq
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph194, i64 %.sroa.27.2.lcssa.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph194) ]
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph194, i64 %.sroa.27.2.lcssa.i
   call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTjdENCINvMNtCscdodAO9FK5_5alloc5sliceSB15_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB20_14UnigramTrainer21prune_sentence_piecess1_0E0EB26_(ptr noalias noundef nonnull align 8 %7, i64 noundef %i.eh, ptr noalias noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.bz, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(8) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ew = icmp ult i64 %.sroa.27.2.lcssa.i, 33
@@ -3395,8 +3389,8 @@ bb.ar:                                            ; preds = %bb.aq
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSTmRScE12split_at_mutCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.aq
-  %7 = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph128, i64 %.sroa.11.1.lcssa.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph128) ]
+  %7 = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph128, i64 %.sroa.11.1.lcssa.i
   call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB15_11sort_by_keyINtNtBa_3cmp7ReverseB15_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2w_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2C_(ptr noalias noundef nonnull align 8 %7, i64 noundef %i.dx, ptr noalias noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.cd, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(8) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.em = icmp ult i64 %.sroa.11.1.lcssa.i, 33
@@ -3799,8 +3793,8 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSTmcE12split_at_mutCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.z
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph143, i64 %.sroa.27.2.lcssa.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph143) ]
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph143, i64 %.sroa.27.2.lcssa.i
   call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortTmcENCINvMNtCscdodAO9FK5_5alloc5sliceSB15_11sort_by_keyINtNtBa_3cmp7ReverseB15_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2u_14UnigramTrainer25make_seed_sentence_piecess0_0E0EB2A_(ptr noalias noundef nonnull align 4 %7, i64 noundef %i.kx, ptr noalias noundef nonnull align 4 %2, i64 noundef %3, i32 noundef %i.hj, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable_or_null(8) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(8) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.lm = icmp ult i64 %.sroa.27.2.lcssa.i, 33

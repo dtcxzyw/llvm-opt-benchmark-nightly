@@ -204,7 +204,7 @@ define internal fastcc void @_ZL29getTypeDeduplicationCandidateN4llvm12dwarf_lin
 bb.a:
   %3 = alloca %"struct.llvm::dwarf_linker::parallel::UnitEntryPairTy", align 8 ; 5 uses
   %4 = alloca %"class.std::optional.74", align 8  ; 4 uses
-  %5 = alloca %"class.std::optional.74", align 8  ; 4 uses
+  %5 = alloca %"class.std::optional.74", align 8  ; 3 uses
   store ptr %1, ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store ptr %2, ptr %i.a, align 8
@@ -236,25 +236,21 @@ bb.b:                                             ; preds = %_ZNK4llvm19DWARFDeb
   %i.j = load i8, ptr %i.g, align 8, !tbaa !180, !range !150, !alias.scope !313, !noundef !151
   %i.k = trunc nuw i8 %i.j to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
-  br i1 %i.k, label %bb.c, label %.thread
-
-.thread:                                          ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
-  br label %_ZNK4llvm12dwarf_linker8parallel11CompileUnit4findEPKNS_19DWARFDebugInfoEntryENS_8ArrayRefINS_5dwarf9AttributeEEE.exit7
+  br i1 %i.k, label %bb.c, label %_ZNK4llvm12dwarf_linker8parallel11CompileUnit4findEPKNS_19DWARFDebugInfoEntryENS_8ArrayRefINS_5dwarf9AttributeEEE.exit7
 
 bb.c:                                             ; preds = %bb.b
   %i.l = call { ptr, ptr } @_ZN4llvm12dwarf_linker8parallel15UnitEntryPairTy18getNamespaceOriginEv(ptr noundef nonnull align 8 dereferenceable(16) %3) #21 ; 2 uses
   %i.m = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.l, 1        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   store ptr %i.m, ptr %3, align 8, !tbaa !157
   store ptr %i.n, ptr %i.a, align 8, !tbaa !158
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   br label %_ZNK4llvm12dwarf_linker8parallel11CompileUnit4findEPKNS_19DWARFDebugInfoEntryENS_8ArrayRefINS_5dwarf9AttributeEEE.exit7
 
-_ZNK4llvm12dwarf_linker8parallel11CompileUnit4findEPKNS_19DWARFDebugInfoEntryENS_8ArrayRefINS_5dwarf9AttributeEEE.exit7: ; preds = %bb.c, %.thread
-  %i.o = phi ptr [ %2, %.thread ], [ %i.n, %bb.c ] ; 2 uses
-  %i.p = phi ptr [ %1, %.thread ], [ %i.m, %bb.c ]
+_ZNK4llvm12dwarf_linker8parallel11CompileUnit4findEPKNS_19DWARFDebugInfoEntryENS_8ArrayRefINS_5dwarf9AttributeEEE.exit7: ; preds = %bb.b, %bb.c
+  %i.o = phi ptr [ %i.n, %bb.c ], [ %2, %bb.b ]   ; 2 uses
+  %i.p = phi ptr [ %i.m, %bb.c ], [ %1, %bb.b ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !166, !noalias !314, !nonnull !151, !noundef !151
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 408

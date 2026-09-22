@@ -202,9 +202,9 @@ switch.lookup:
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !4, !align !7, !noundef !4 ; 2 uses
-  %.val = load ptr, ptr %1, align 8               ; 2 uses
+  %.val = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.e, align 8            ; 2 uses
+  %.val1 = load ptr, ptr %i.e, align 8, !nonnull !4, !noundef !4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.d, ptr %i.c, align 8, !noalias !19
@@ -228,8 +228,6 @@ switch.lookup:
   store ptr %i.b, ptr %i.j, align 8, !noalias !19
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !19
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.k = call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @11, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !19
@@ -244,9 +242,9 @@ switch.lookup:
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !4, !align !7, !noundef !4 ; 2 uses
-  %.val = load ptr, ptr %1, align 8               ; 2 uses
+  %.val = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.e, align 8            ; 2 uses
+  %.val1 = load ptr, ptr %i.e, align 8, !nonnull !4, !noundef !4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.d, ptr %i.c, align 8, !noalias !22
@@ -270,8 +268,6 @@ switch.lookup:
   store ptr %i.b, ptr %i.j, align 8, !noalias !22
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.k = call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @11, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !22

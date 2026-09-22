@@ -202,9 +202,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.q, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsfaKIfeYzQZw_7reqwest10async_impl4body4BodyECs1YANDSn9Kib_7git_xet.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i: ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.r = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 16
   %i.s = load i64, ptr %i.r, align 8, !range !10, !invariant.load !7, !noalias !167
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef %i.p, i64 noundef range(i64 1, -9223372036854775807) %i.s) #22, !noalias !167
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsfaKIfeYzQZw_7reqwest10async_impl4body4BodyECs1YANDSn9Kib_7git_xet.exit
 
@@ -351,9 +351,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.af, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsfaKIfeYzQZw_7reqwest10async_impl4body4BodyEECs1YANDSn9Kib_7git_xet.exit.i, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i: ; preds = %bb.o
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i7.i) ]
   %i.ag = getelementptr inbounds nuw i8, ptr %.val1.i.i.i8.i, i64 16
   %i.ah = load i64, ptr %i.ag, align 8, !range !10, !invariant.load !7, !noalias !218
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i7.i) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i7.i, i64 noundef %i.ae, i64 noundef range(i64 1, -9223372036854775807) %i.ah) #22, !noalias !218
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsfaKIfeYzQZw_7reqwest10async_impl4body4BodyEECs1YANDSn9Kib_7git_xet.exit.i
 
@@ -693,9 +693,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtBM_6marker4SendNtB1j_4SyncEL_ENtNtNtBM_3ops4drop4Drop4dropCs1YANDSn9Kib_7git_xet.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !10, !invariant.load !7
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) %i.f) #22
   br label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtBM_6marker4SendNtB1j_4SyncEL_ENtNtNtBM_3ops4drop4Drop4dropCs1YANDSn9Kib_7git_xet.exit
 
@@ -1098,12 +1098,11 @@ bb.du:                                            ; preds = %bb.dt
 
 bb.dv:                                            ; preds = %bb.dp, %bb.dq, %.thread81.i.i
   %.sroa.053.0 = phi i64 [ %.sroa.053.0.copyload, %.thread81.i.i ], [ 2, %bb.dq ], [ 2, %bb.dp ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.649.0.copyload), "nonnull"(ptr %.sroa.1051.0.copyload) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !972
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !972
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.3, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.555, i64 40, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %.sroa.4.sroa.0, ptr noundef nonnull align 8 dereferenceable(224) %.sroa.656, i64 224, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.649.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1051.0.copyload) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.555)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.656)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
@@ -1506,8 +1505,8 @@ bb.a:
   br i1 %or.cond.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
+  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   %i.d = icmp eq i64 %1, 0
   br i1 %i.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator6shrink.exit
 
@@ -1559,8 +1558,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #22

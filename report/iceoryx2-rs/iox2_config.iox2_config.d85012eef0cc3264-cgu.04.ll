@@ -202,7 +202,7 @@ begin_hunk_0_@_RNvNtNtCsizqwQrikMeu_11iox2_config7command7explain7explain:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cv)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37)
   tail call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #7, !noalias !38
-  %i.ds = tail call noundef align 8 dereferenceable_or_null(280) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 144, 1225) 280, i64 noundef 8) #7, !noalias !38 ; 40 uses
+  %i.ds = tail call noundef align 8 dereferenceable_or_null(280) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 144, 1225) 280, i64 noundef 8) #7, !noalias !38 ; 41 uses
   %i.dt = icmp eq ptr %i.ds, null
   br i1 %i.dt, label %bb.b, label %_RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i, !prof !39
 
@@ -605,6 +605,7 @@ bb.ej:                                            ; preds = %bb.ei
   br label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.lr.ph
 
 _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.lr.ph: ; preds = %bb.ej, %bb.ei
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ds) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !40
   store i64 %i.yn, ptr %i.ye, align 8, !noalias !38
   %.sroa.0434.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ye, i64 8

@@ -205,9 +205,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.t, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueECs6EuPS8vUgp3_9uu_mktemp.exit, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %.val5.i, i64 16
   %i.v = load i64, ptr %i.u, align 8, !range !9, !invariant.load !6, !noalias !289
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   tail call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val4.i, i64 noundef %i.s, i64 noundef range(i64 1, -9223372036854775807) %i.v) #23, !noalias !289
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueECs6EuPS8vUgp3_9uu_mktemp.exit
 
@@ -610,8 +610,8 @@ bb.dj:                                            ; preds = %_RNvCs6EuPS8vUgp3_9
   %.sroa.10.0.in = phi ptr [ %.sroa.526.0.copyload, %bb.dm ], [ %.sroa.10.i.sroa.7.0.copyload133, %_RNvCs6EuPS8vUgp3_9uu_mktemp14make_temp_file.exit ]
   %.sroa.6.0 = phi ptr [ %.sroa.425.0.copyload, %bb.dm ], [ %.sroa.10.i.sroa.6.0.copyload130, %_RNvCs6EuPS8vUgp3_9uu_mktemp14make_temp_file.exit ] ; 3 uses
   %.sroa.0.0 = phi i64 [ %.pr.pre, %bb.dm ], [ %.sroa.10.i.sroa.0.0.copyload127, %_RNvCs6EuPS8vUgp3_9uu_mktemp14make_temp_file.exit ] ; 2 uses
-  %.sroa.10.0 = ptrtoint ptr %.sroa.10.0.in to i64
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0) ]
+  %.sroa.10.0 = ptrtoint ptr %.sroa.10.0.in to i64
   %i.or = call { ptr, i64 } @_RNvMs16_NtCs2vKOLqTMYjT_3std4pathNtB6_4Path9file_name(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.6.0, i64 noundef %.sroa.10.0) #23 ; 2 uses
   %i.os = extractvalue { ptr, i64 } %i.or, 0      ; 2 uses
   %.not = icmp eq ptr %i.os, null
@@ -852,6 +852,7 @@ _RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.j
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs2vKOLqTMYjT_3std4path7PathBufECs6EuPS8vUgp3_9uu_mktemp.exit
 
 bb.l:                                             ; preds = %_RNvXs6_Cs6EuPS8vUgp3_9uu_mktempNtB5_7OptionsNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.041.0.copyload), "nonnull"(ptr %.sroa.543.sroa.4.0.copyload) ]
   %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %.sroa.4.sroa.7.sroa.0.0.copyload = load ptr, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 8, !nonnull !6, !noundef !6 ; 3 uses
   %.sroa.4.sroa.7.sroa.4.0..sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 64
@@ -860,8 +861,6 @@ bb.l:                                             ; preds = %_RNvXs6_Cs6EuPS8vUg
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.aq = trunc nuw i8 %i.f to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.041.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.543.sroa.4.0.copyload) ]
   br i1 %i.aq, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -1264,9 +1263,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.bf, label %_RINvMs_NtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB5_3Arg12value_parserNtNtB7_12value_parser11ValueParserECs6EuPS8vUgp3_9uu_mktemp.exit326, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i244
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i244: ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6936.0.copyload) ]
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.8939.0.copyload, i64 16
   %i.bh = load i64, ptr %i.bg, align 8, !range !9, !invariant.load !6, !noalias !891
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6936.0.copyload) ]
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6936.0.copyload, i64 noundef %i.be, i64 noundef range(i64 1, -9223372036854775807) %i.bh) #23, !noalias !891
   br label %_RINvMs_NtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB5_3Arg12value_parserNtNtB7_12value_parser11ValueParserECs6EuPS8vUgp3_9uu_mktemp.exit326
 
@@ -1669,10 +1668,10 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc6borrow3CoweEEC
   br i1 %.not135, label %_RNCNvMs0_Cs6EuPS8vUgp3_9uu_mktempNtB7_6Params4from0B7_.exit, label %bb.az
 
 bb.az:                                            ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc6borrow3CoweEECs6EuPS8vUgp3_9uu_mktemp.exit210
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.sroa.0.0.copyload) ]
   %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.sroa.6.sroa.5.0.copyload = load i64, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1150
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.sroa.0.0.copyload) ]
   call void @_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String15from_utf8_lossy(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.6.sroa.0.0.copyload, i64 noundef %.sroa.6.sroa.5.0.copyload) #23, !noalias !1150
   %i.eq = load i64, ptr %i.b, align 8, !range !12, !noalias !1150, !noundef !6 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -2075,8 +2074,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjSVV5GABoor_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #23

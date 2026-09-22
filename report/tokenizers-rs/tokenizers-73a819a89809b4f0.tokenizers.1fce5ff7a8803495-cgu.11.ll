@@ -205,10 +205,9 @@ _RNCNvXs0_NtNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers15unicode_scripts13pre
   br i1 %i.cb, label %bb.ad, label %bb.ah
 
 bb.ad:                                            ; preds = %_RNCNvXs0_NtNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers15unicode_scripts13pre_tokenizerNtB7_14UnicodeScriptsNtNtBd_9tokenizer12PreTokenizer12pre_tokenize0Bd_.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.538.0.copyload), "nonnull"(ptr %.sroa.739.0.copyload) ]
   store ptr %i.at, ptr %i.m, align 8
   store i64 %i.au, ptr %.sroa.2.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.538.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.739.0.copyload) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   %i.cc = load i64, ptr %i.ah, align 8, !range !11, !alias.scope !286, !noundef !5
   %i.cd = icmp eq i64 %i.cc, -1
@@ -235,8 +234,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCs2J
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenEEEB1x_.exit unwind label %.loopexit.split-lp
 
 bb.ah:                                            ; preds = %_RNCNvXs0_NtNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers15unicode_scripts13pre_tokenizerNtB7_14UnicodeScriptsNtNtBd_9tokenizer12PreTokenizer12pre_tokenize0Bd_.exit
-  %1 = ptrtoint ptr %.sroa.739.0.copyload to i64
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.538.0.copyload) ]
+  %1 = ptrtoint ptr %.sroa.739.0.copyload to i64
   %i.cg = icmp ult ptr %.sroa.739.0.copyload, inttoptr (i64 115292150460684698 to ptr)
   call void @llvm.assume(i1 %i.cg)
   %i.ch = getelementptr inbounds nuw [80 x i8], ptr %.sroa.538.0.copyload, i64 %1
@@ -639,8 +638,7 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   br label %.lr.ph.preheader.i
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterdEIB1o_TNtNtCscdodAO9FK5_5alloc6string6StringdEEEENtNtNtB8_6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.lr.ph.lr.ph.i: ; preds = %_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterdENtNtNtNtBa_4iter6traits8iterator8Iterator3zipRSTNtNtCscdodAO9FK5_5alloc6string6StringdEECs2JiOgHzbbc7_10tokenizers.exit.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.sroa.3.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.sroa.0.0.copyload.i), "nonnull"(ptr %.sroa.07.sroa.3.0.copyload.i) ]
   br label %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterdEIB1o_TNtNtCscdodAO9FK5_5alloc6string6StringdEEEENtNtNtB8_6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.lr.ph.i
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterdEIB1o_TNtNtCscdodAO9FK5_5alloc6string6StringdEEEENtNtNtB8_6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.lr.ph.i: ; preds = %.outer.i, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterdEIB1o_TNtNtCscdodAO9FK5_5alloc6string6StringdEEEENtNtNtB8_6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.lr.ph.lr.ph.i
@@ -1043,8 +1041,8 @@ bb.i:                                             ; preds = %bb.g
   unreachable
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2JiOgHzbbc7_10tokenizers.exit.i: ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !2372
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !2372
   %i.av = load ptr, ptr %.val1, align 8, !noalias !2372, !nonnull !5, !align !12, !noundef !5 ; 2 uses
   %i.aw = load ptr, ptr %i.av, align 8, !noalias !2375, !noundef !5
   %.not7.i = icmp eq ptr %i.aw, null
@@ -1443,8 +1441,8 @@ bb.n:                                             ; preds = %bb.l
   unreachable
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecINtNtBG_2rc2RcINtNtB4_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEEEB1O_.exit.i: ; preds = %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2394
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2394
   %i.at = load i32, ptr %.val1, align 4, !noalias !2394, !noundef !5
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice7LatticeEBJ_(ptr noalias noundef align 8 dereferenceable(112) %i.c)
           to label %bb.o unwind label %bb.e, !noalias !2394

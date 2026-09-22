@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   ]
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %7) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6), "nonnull"(ptr %7) ]
   %i.m = add i32 %.0156, 1
   %i.n = zext i32 %.0156 to i64
   %i.o = getelementptr inbounds nuw [48 x i8], ptr %2, i64 %i.n ; 3 uses

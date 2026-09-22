@@ -202,8 +202,8 @@ bb.ap:                                            ; preds = %bb.ac, %bb.ad
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant11VectorInputEECsl8OoimOLbh_6qdrant.exit unwind label %bb.y
 
 bb.aq:                                            ; preds = %.noexc
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !825
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bj) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !825
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.bj, ptr %i.dt, align 8
   store i64 -1, ptr %0, align 8
@@ -606,7 +606,7 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 656
   %.sroa.0.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 664
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !nonnull !6, !noundef !6 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 672
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
@@ -634,7 +634,6 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
   %i.aj = icmp ult i64 %.sroa.6.0.copyload, 10113346531639009
   tail call void @llvm.assume(i1 %i.aj)
   %i.ak = getelementptr inbounds nuw [912 x i8], ptr %.sroa.5.0.copyload, i64 %.sroa.6.0.copyload

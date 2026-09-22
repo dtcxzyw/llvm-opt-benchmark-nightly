@@ -202,8 +202,7 @@ bb.a:
   %i.b = tail call { ptr, ptr } @_RNvXsn_Csa3bo7ChGFM8_8thin_vecRINtB5_7ThinVecTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBM_2id2IdEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %1) ; 2 uses
   %i.c = extractvalue { ptr, ptr } %i.b, 0        ; 3 uses
   %i.d = extractvalue { ptr, ptr } %i.b, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c), "nonnull"(ptr %i.d) ]
   %i.e = icmp eq ptr %i.c, %i.d
   br i1 %i.e, label %._crit_edge, label %.lr.ph
 
@@ -325,10 +324,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @14) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -360,10 +359,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -395,10 +394,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @16) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -430,10 +429,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @10, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @17) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -465,10 +464,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @10, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @18) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -871,8 +870,7 @@ bb.a:
   br i1 %i.k, label %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsC8CapfvpQ1_5salsa5table4memo13MemoEntryTypeEINtBZ_7IterMutNtB1o_9MemoEntryEEINtB5_7ZipImplBW_B2c_E4nextB1s_.exit.lr.ph.i, label %_RNvMs6_NtNtCsC8CapfvpQ1_5salsa5table4memoNtB5_21MemoTableWithTypesMut4drop.exit
 
 _RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsC8CapfvpQ1_5salsa5table4memo13MemoEntryTypeEINtBZ_7IterMutNtB1o_9MemoEntryEEINtB5_7ZipImplBW_B2c_E4nextB1s_.exit.lr.ph.i: ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.41.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i), "nonnull"(ptr %.sroa.41.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsC8CapfvpQ1_5salsa5table4memo13MemoEntryTypeEINtBZ_7IterMutNtB1o_9MemoEntryEEINtB5_7ZipImplBW_B2c_E4nextB1s_.exit.i
 
 _RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsC8CapfvpQ1_5salsa5table4memo13MemoEntryTypeEINtBZ_7IterMutNtB1o_9MemoEntryEEINtB5_7ZipImplBW_B2c_E4nextB1s_.exit.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtCsC8CapfvpQ1_5salsa5table4memo4MemoEL_EEEB1C_.exit.i, %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsC8CapfvpQ1_5salsa5table4memo13MemoEntryTypeEINtBZ_7IterMutNtB1o_9MemoEntryEEINtB5_7ZipImplBW_B2c_E4nextB1s_.exit.lr.ph.i
@@ -891,8 +889,8 @@ bb.b:                                             ; preds = %_RNvXs3_NtNtNtCs4NR
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.q = call { ptr, ptr } %.val4.i(ptr noundef nonnull %i.o), !noalias !276, !inline_history !275 ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.q, 0        ; 4 uses
-  %1 = extractvalue { ptr, ptr } %i.q, 1          ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  %1 = extractvalue { ptr, ptr } %i.q, 1          ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.s = load ptr, ptr %1, align 8, !invariant.load !3 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.s, null

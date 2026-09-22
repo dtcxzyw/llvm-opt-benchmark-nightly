@@ -205,8 +205,8 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs40k4W9msRzi_
   br i1 %i.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VeclEECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit, label %bb.f
 
 bb.f:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs40k4W9msRzi_5alloc6string6StringEECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit
-  %4 = shl nuw i64 %.sroa.010.0.copyload, 2
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.512.0.copyload) ]
+  %4 = shl nuw i64 %.sroa.010.0.copyload, 2
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.512.0.copyload, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) 4) #25
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VeclEECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit
 
@@ -609,8 +609,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCs9hJ03s5DiqP_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #25
@@ -659,7 +659,7 @@ bb.g:                                             ; preds = %bb.a, %bb.e, %bb.f
 define internal fastcc void @_RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place(ptr noalias noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %1, ptr nofree readonly captures(none) %.40.val, i64 noundef range(i64 48, 121) %2, ptr noundef %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
-  %.val16 = load ptr, ptr %0, align 8             ; 9 uses
+  %.val16 = load ptr, ptr %0, align 8, !nonnull !3, !noundef !3 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %.val17 = load i64, ptr %i.b, align 8, !noundef !3 ; 2 uses
   %i.c = add i64 %.val17, 1                       ; 6 uses
@@ -667,7 +667,6 @@ bb.a:
   br i1 %.not6.i, label %_RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19, label %.lr.ph.i
 
 _RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19: ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16) ]
   %i.d = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.d, ptr nonnull align 1 %.val16, i64 %i.c, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -679,7 +678,6 @@ _RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   %.not10.i.i.i = icmp ne i64 %i.f, 0
   %i.g = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
@@ -1082,6 +1080,7 @@ bb.j:                                             ; preds = %bb.f
 .loopexit194:                                     ; preds = %.prol.loopexit, %.new, %bb.h
   %.sroa.78.0.i.i.i = phi i64 [ %i.ca, %bb.h ], [ 0, %.new ], [ 0, %.prol.loopexit ]
   %.sroa.07.0.i.i.i = phi ptr [ %.sroa.06.0.ph.i.i.i, %bb.h ], [ %.sroa.017.0.i.i.i.i.lcssa.unr, %.prol.loopexit ], [ %.sroa.017.0.i.i.i.i.7, %.new ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.0.ph.i.i.i) ]
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.06.0.ph.i.i.i, i64 360
   %i.cr = icmp samesign ult i64 %.sroa.10.0.ph.i.i.i, 11
   call void @llvm.assume(i1 %i.cr)
@@ -1089,7 +1088,6 @@ bb.j:                                             ; preds = %bb.f
   %i.ct = getelementptr inbounds nuw [32 x i8], ptr %.sroa.06.0.ph.i.i.i, i64 %.sroa.10.0.ph.i.i.i ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   store ptr %i.cs, ptr %i.r, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.0.ph.i.i.i) ]
   %i.cu = load i8, ptr %i.ct, align 8, !range !742, !noundef !3
   switch i8 %i.cu, label %bb.k [
     i8 3, label %bb.l

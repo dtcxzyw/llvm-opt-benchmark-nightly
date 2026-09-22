@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.s, label %bb.c, label %_RNCINvNtCsbbt5GHOb4oK_8indexmap5inner10equivalentNtNtNtCsi68uqYEhoRA_5gimli5write3loc12LocationListuBL_E0BR_.exit
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i), "nonnull"(ptr %.val.i) ]
   %i.t = icmp eq i64 %.val2.i, 0
   br i1 %i.t, label %_RNCINvNtCsbbt5GHOb4oK_8indexmap5inner10equivalentNtNtNtCsi68uqYEhoRA_5gimli5write3loc12LocationListuBL_E0BR_.exit, label %.lr.ph.i.i.i.i.i
 
@@ -608,8 +607,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #25

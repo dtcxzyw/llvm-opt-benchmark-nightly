@@ -58,8 +58,8 @@ _RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtNtB7_2io5error5ErrorINtB5_4IntoINtNtCse
   %i.b = alloca [72 x i8], align 8                ; 12 uses
   %i.c = tail call { ptr, ptr } @_RNvXse_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtB7_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtBW_6marker4SendNtB1t_4SyncEL_EINtNtBW_7convert4FromNtNtNtBW_2io5error5ErrorE4fromCs2JPny71o0qX_14pingora_rustls(ptr noundef nonnull %3) ; 2 uses
   %i.d = extractvalue { ptr, ptr } %i.c, 0        ; 5 uses
-  %4 = extractvalue { ptr, ptr } %i.c, 1          ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
+  %4 = extractvalue { ptr, ptr } %i.c, 1          ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !22
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 56
@@ -462,8 +462,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #17
@@ -866,9 +866,8 @@ bb.a:
   br i1 %i.h, label %_RNvXs9_NtNtCs67xrmJ0qrwH_6rustls4msgs4baseNtB5_10PayloadU16NtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2JPny71o0qX_14pingora_rustls.exit, label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.lr.ph.i.i
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.lr.ph.i.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2), "nonnull"(ptr %.val3) ]
   %.sroa.46.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   br label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.i.i
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.i.i: ; preds = %bb.c, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.lr.ph.i.i
@@ -1042,9 +1041,8 @@ bb.a:
   br i1 %i.g, label %_RINvNtNtCs67xrmJ0qrwH_6rustls4msgs4base3hexRINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs2JPny71o0qX_14pingora_rustls.exit, label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.lr.ph.i
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.lr.ph.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   br label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.i
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.i: ; preds = %bb.c, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JPny71o0qX_14pingora_rustls.exit.lr.ph.i

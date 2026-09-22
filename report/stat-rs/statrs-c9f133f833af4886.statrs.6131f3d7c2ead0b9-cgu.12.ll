@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %i.e, align 8, !alias.scope !44, !noalias !43, !nonnull !4, !noundef !4 ; 3 uses
   %i.q = tail call { ptr, i64 } @_RINvMs8_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker5OwnedINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_4LeafE8new_leafNtNtBc_5alloc6GlobalEB1B_(), !noalias !45 ; 2 uses
   %i.r = extractvalue { ptr, i64 } %i.q, 0        ; 3 uses
-  %2 = extractvalue { ptr, i64 } %i.q, 1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  %2 = extractvalue { ptr, i64 } %i.q, 1          ; 2 uses
   store ptr %i.r, ptr %i.p, align 8, !noalias !45
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i64 %2, ptr %i.s, align 8, !noalias !45
@@ -608,8 +608,7 @@ bb.g:                                             ; preds = %.noexc2.i.i, %bb.f,
 _RINvNtNtNtCs1xwejQucwHj_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1y_4LeafENtB1y_4EdgeEINtNtCs3oUPovFnLWP_4core6option6OptionTRB1R_RyEENCINvMs3_NtB4_8navigateINtB4k_9LeafRangeB1w_B1R_yE20perform_next_checkedNCNvMs1_B4k_B4y_12next_checked0B41_E0EB20_.exit.i: ; preds = %.noexc2.i.i
   %i.r = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.r) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !146
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !146
@@ -922,8 +921,8 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = ptrtoint ptr %2 to i64
   %i.e = ptrtoint ptr %1 to i64
   %i.f = sub nuw i64 %i.d, %i.e

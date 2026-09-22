@@ -202,8 +202,8 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _RNvMNtCskKLDkoKarTP_4core5sliceSj12split_at_mutCsfF8zpZz1lvn_13yara_x_parser.exit: ; preds = %bb.m
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph120, i64 %.sroa.27.2.lcssa.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph120) ]
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph120, i64 %.sroa.27.2.lcssa.i
   call void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortjNvYjNtNtBa_3cmp10PartialOrd2ltECsfF8zpZz1lvn_13yara_x_parser(ptr noalias nofree noundef nonnull align 8 %7, i64 noundef %i.bo, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(8) %i.a, ptr noalias nofree noundef nonnull %6) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.cd = icmp ult i64 %.sroa.27.2.lcssa.i, 33
@@ -606,8 +606,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #24
@@ -1010,7 +1010,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %i.e ; 5 uses
   %.sroa.019.0.copyload = load i64, ptr %i.k, align 8
   %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
-  %.sroa.420.0.copyload = load ptr, ptr %.sroa.420.0..sroa_idx, align 8 ; 83 uses
+  %.sroa.420.0.copyload = load ptr, ptr %.sroa.420.0..sroa_idx, align 8, !nonnull !9, !noundef !9 ; 81 uses
   %.sroa.521.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %.sroa.521.0.copyload = load i64, ptr %.sroa.521.0..sroa_idx, align 8 ; 3 uses
   %.sroa.622.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
@@ -1031,11 +1031,9 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.521.0.copyload, ptr %0, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.622.0.copyload, ptr %i.p, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.420.0.copyload) ]
   br label %_RNvNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs9dfs_enter.exit
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit: ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.420.0.copyload) ]
   store i64 -1, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !366)
   store i64 1, ptr %i.k, align 8, !noalias !366

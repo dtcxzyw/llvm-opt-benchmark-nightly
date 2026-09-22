@@ -205,9 +205,9 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = tail call noundef nonnull ptr @_RNvMNtNtNtCs5Xr050g3D4S_3std4sync4mpmc7contextNtB2_7Context3new() ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   store ptr %i.c, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %.sroa.0.0.copyload = load ptr, ptr %.0.val, align 8 ; 2 uses
   store ptr null, ptr %.0.val, align 8
   %.not = icmp eq ptr %.sroa.0.0.copyload, null
@@ -281,7 +281,7 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
-  %i.f = alloca [24 x i8], align 8                ; 8 uses
+  %i.f = alloca [24 x i8], align 8                ; 6 uses
   %.sroa.5 = alloca [16 x i8], align 8            ; 4 uses
   %i.g = alloca [24 x i8], align 8                ; 5 uses
   %i.h = load ptr, ptr %0, align 8, !nonnull !5, !align !12, !noundef !5
@@ -294,13 +294,13 @@ bb.a:
   call void @llvm.experimental.noalias.scope.decl(metadata !372)
   %i.m = load i64, ptr %i.f, align 8, !range !8, !alias.scope !372, !noalias !373, !noundef !5
   %i.n = trunc nuw i64 %i.m to i1
+  %1 = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   br i1 %i.n, label %bb.b, label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardNtNtNtBO_4mpmc5waker5WakerEINtBM_11PoisonErrorBH_EE6unwrapCsbNLsQi0JuJ4_5tgrep.exit.i, !prof !6
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !374
-  %1 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.o = load ptr, ptr %1, align 8, !alias.scope !372, !noalias !373, !nonnull !5, !align !12, !noundef !5
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.p = load i8, ptr %2, align 8, !range !9, !alias.scope !372, !noalias !373, !noundef !5
   store ptr %i.o, ptr %i.d, align 8, !noalias !374
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -328,14 +328,12 @@ common.resume:                                    ; preds = %bb.ad, %bb.ai, %bb.
   resume { ptr, i32 } %common.resume.op
 
 _RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardNtNtNtBO_4mpmc5waker5WakerEINtBM_11PoisonErrorBH_EE6unwrapCsbNLsQi0JuJ4_5tgrep.exit.i: ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.t = load ptr, ptr %3, align 8, !alias.scope !372, !noalias !373, !nonnull !5, !align !12, !noundef !5 ; 8 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.u = load i8, ptr %4, align 8, !range !9, !alias.scope !372, !noalias !373, !noundef !5 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  %i.t = load ptr, ptr %1, align 8, !alias.scope !372, !noalias !373, !nonnull !5, !align !12, !noundef !5 ; 8 uses
+  %i.u = load i8, ptr %2, align 8, !range !9, !alias.scope !372, !noalias !373, !noundef !5 ; 2 uses
   %i.v = trunc nuw i8 %i.u to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.w = atomicrmw add ptr %.0.val, i64 1 monotonic, align 8
   %i.x = icmp slt i64 %i.w, 0
   br i1 %i.x, label %bb.k, label %bb.f
@@ -738,8 +736,8 @@ _RNvMs1_NtNtNtCs5Xr050g3D4S_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
   br i1 %i.al, label %.lr.ph.i31.i, label %_RNvMs_NtNtNtCs5Xr050g3D4S_3std4sync4mpmc4listINtB4_5BlockNtNtCs6mHKL3HfXZM_12notify_types5event5EventE9wait_nextCsbNLsQi0JuJ4_5tgrep.exit.i
 
 _RNvMs_NtNtNtCs5Xr050g3D4S_3std4sync4mpmc4listINtB4_5BlockNtNtCs6mHKL3HfXZM_12notify_types5event5EventE9wait_nextCsbNLsQi0JuJ4_5tgrep.exit.i: ; preds = %_RNvMs1_NtNtNtCs5Xr050g3D4S_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.f
-  %1 = load atomic ptr, ptr %i.ad acquire, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.011.160.i) ]
+  %1 = load atomic ptr, ptr %i.ad acquire, align 8
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.011.160.i, i64 noundef 1496, i64 noundef 8) #25
   br label %bb.p
 
@@ -1142,9 +1140,9 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   ret void
 
 bb.d:                                             ; preds = %.lr.ph
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.015) ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 1984
   %i.l = load atomic ptr, ptr %i.k monotonic, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.015) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.06.015, i64 noundef 1992, i64 noundef 8) #25
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultbNtNtCsaNF60lbdjjq_6notify5error5ErrorEECsbNLsQi0JuJ4_5tgrep.exit
 
@@ -1199,9 +1197,9 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   ret void
 
 bb.d:                                             ; preds = %.lr.ph
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.015) ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 1984
   %i.l = load atomic ptr, ptr %i.k monotonic, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.015) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.06.015, i64 noundef 1992, i64 noundef 8) #25
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsaNF60lbdjjq_6notify5error5ErrorEECsbNLsQi0JuJ4_5tgrep.exit
 
@@ -1256,9 +1254,9 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   ret void
 
 bb.d:                                             ; preds = %.lr.ph
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.018) ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.06.018, i64 1488
   %i.l = load atomic ptr, ptr %i.k monotonic, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.018) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.06.018, i64 noundef 1496, i64 noundef 8) #25
   br label %bb.l
 

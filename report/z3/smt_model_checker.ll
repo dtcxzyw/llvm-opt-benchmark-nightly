@@ -205,7 +205,7 @@ bb.a:
   %7 = alloca %class.obj_ref, align 8             ; 7 uses
   %8 = alloca %class.obj_ref, align 8             ; 16 uses
   %i.a = alloca i32, align 4                      ; 7 uses
-  %9 = alloca %class.obj_ref, align 8             ; 13 uses
+  %9 = alloca %class.obj_ref, align 8             ; 11 uses
   %10 = alloca %class.obj_ref, align 8            ; 15 uses
   %11 = alloca %class.ptr_vector.331, align 8     ; 9 uses
   %12 = alloca %class.svector.11, align 8         ; 11 uses
@@ -279,7 +279,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6resizeEj.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 172 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
@@ -570,7 +570,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.t
   br label %.body
 
 _ZN3smt13model_checker17get_term_from_ctxEP4expr.exit.thread: ; preds = %bb.v, %bb.z, %bb.y, %.preheader.i.i.i.i, %bb.s, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit109, %_ZN3smt13model_checker17get_term_from_ctxEP4expr.exit
-  %i.ee = phi ptr [ %i.cm, %bb.s ], [ %.pr282, %_ZN3smt13model_checker17get_term_from_ctxEP4expr.exit ], [ %i.dw, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit109 ], [ %.pr282, %.preheader.i.i.i.i ], [ %.pr282, %bb.z ], [ %.pr282, %bb.y ], [ %.pr282, %bb.v ] ; 7 uses
+  %i.ee = phi ptr [ %i.cm, %bb.s ], [ %.pr282, %_ZN3smt13model_checker17get_term_from_ctxEP4expr.exit ], [ %i.dw, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit109 ], [ %.pr282, %.preheader.i.i.i.i ], [ %.pr282, %bb.z ], [ %.pr282, %bb.y ], [ %.pr282, %bb.v ] ; 6 uses
   %.1 = phi i32 [ %.sroa.speculated257, %bb.s ], [ %.0263387, %_ZN3smt13model_checker17get_term_from_ctxEP4expr.exit ], [ %.0263387, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit109 ], [ %.0263387, %.preheader.i.i.i.i ], [ %.0263387, %bb.z ], [ %.0263387, %bb.y ], [ %.0263387, %bb.v ] ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 4
   %i.eg = load i32, ptr %i.ef, align 4
@@ -599,14 +599,7 @@ _ZNK11ast_manager14is_model_valueEPK4expr.exit.i: ; preds = %bb.ad
   %i.et = getelementptr inbounds nuw i8, ptr %i.ee, i64 24
   %i.eu = load i32, ptr %i.et, align 8, !tbaa !94
   %i.ev = icmp eq i32 %i.eu, 0
-  br i1 %i.ev, label %_ZN3smt13model_checker20contains_model_valueEP4expr.exit.thread, label %bb.ae
-
-_ZN3smt13model_checker20contains_model_valueEP4expr.exit.thread: ; preds = %.thread9.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
-  %14 = load ptr, ptr %0, align 8, !tbaa !89, !nonnull !65, !align !66
-  store ptr %i.ee, ptr %9, align 8, !tbaa !137
-  store ptr %14, ptr %i.ah, align 8, !tbaa !20
-  br label %_ZN11ast_manager7inc_refEP3ast.exit.i.i119
+  br i1 %i.ev, label %_ZN11ast_manager7inc_refEP3ast.exit.i.i119, label %bb.ae
 
 bb.ae:                                            ; preds = %.thread9.i, %_ZN3smt13model_checker17get_term_from_ctxEP4expr.exit.thread
   %i.ew = load ptr, ptr %i.ae, align 8, !tbaa !73 ; 2 uses
@@ -687,16 +680,16 @@ _ZN7obj_refI4expr11ast_managerEaSEPS0_.exit117:   ; preds = %bb.am, %bb.ak, %bb.
   br label %_ZN3smt13model_checker20contains_model_valueEP4expr.exit
 
 _ZN3smt13model_checker20contains_model_valueEP4expr.exit: ; preds = %_ZN8obj_markI4expr10bit_vector14default_t2uintIS0_EE5resetEv.exit.i._ZN3smt13model_checker20contains_model_valueEP4expr.exitthread-pre-split_crit_edge, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit117
-  %i.fr = phi ptr [ %i.fh, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit117 ], [ %.pr.pre, %_ZN8obj_markI4expr10bit_vector14default_t2uintIS0_EE5resetEv.exit.i._ZN3smt13model_checker20contains_model_valueEP4expr.exitthread-pre-split_crit_edge ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
-  %15 = load ptr, ptr %0, align 8, !tbaa !89, !nonnull !65, !align !66
-  store ptr %i.fr, ptr %9, align 8, !tbaa !137
-  store ptr %15, ptr %i.ah, align 8, !tbaa !20
+  %i.fr = phi ptr [ %i.fh, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit117 ], [ %.pr.pre, %_ZN8obj_markI4expr10bit_vector14default_t2uintIS0_EE5resetEv.exit.i._ZN3smt13model_checker20contains_model_valueEP4expr.exitthread-pre-split_crit_edge ] ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fr) ]
   br label %_ZN11ast_manager7inc_refEP3ast.exit.i.i119
 
-_ZN11ast_manager7inc_refEP3ast.exit.i.i119:       ; preds = %_ZN3smt13model_checker20contains_model_valueEP4expr.exit, %_ZN3smt13model_checker20contains_model_valueEP4expr.exit.thread
-  %i.fs = phi ptr [ %i.ee, %_ZN3smt13model_checker20contains_model_valueEP4expr.exit.thread ], [ %i.fr, %_ZN3smt13model_checker20contains_model_valueEP4expr.exit ] ; 4 uses
+_ZN11ast_manager7inc_refEP3ast.exit.i.i119:       ; preds = %.thread9.i, %_ZN3smt13model_checker20contains_model_valueEP4expr.exit
+  %i.fs = phi ptr [ %i.fr, %_ZN3smt13model_checker20contains_model_valueEP4expr.exit ], [ %i.ee, %.thread9.i ] ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
+  %storemerge = load ptr, ptr %0, align 8, !tbaa !89, !nonnull !65, !align !66
+  store ptr %i.fs, ptr %9, align 8, !tbaa !137
+  store ptr %storemerge, ptr %i.ah, align 8, !tbaa !20
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 8 ; 2 uses
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !68
   %i.fv = add i32 %i.fu, 1

@@ -204,8 +204,7 @@ bb.a:
   br i1 %exitcond.not.i.us18.not, label %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs9h7Hq22ZyhR_15influxdb3_types.exit.i.us.preheader, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6
 
 _RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs9h7Hq22ZyhR_15influxdb3_types.exit.i.us.preheader: ; preds = %.preheader.split.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.522.0.copyload.i.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.us), "nonnull"(ptr %.sroa.522.0.copyload.i.us) ]
   br label %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs9h7Hq22ZyhR_15influxdb3_types.exit.i.us
 
 bb.b:                                             ; preds = %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs9h7Hq22ZyhR_15influxdb3_types.exit.i.us
@@ -608,8 +607,8 @@ bb.i:                                             ; preds = %bb.ad, %bb.j, %bb.f
 
 bb.j:                                             ; preds = %bb.f
   %i.as = extractvalue { ptr, i64 } %i.an, 0      ; 2 uses
-  %3 = extractvalue { ptr, i64 } %i.an, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as) ]
+  %3 = extractvalue { ptr, i64 } %i.an, 1         ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 16 ; 2 uses
   %i.au = invoke noundef i64 @_RINvNtCscdodAO9FK5_5alloc4sync11data_offseteECs9h7Hq22ZyhR_15influxdb3_types(ptr noundef nonnull %i.at, i64 noundef %3)
           to label %bb.k unwind label %bb.i
@@ -663,8 +662,8 @@ bb.o:                                             ; preds = %bb.p, %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.bk = extractvalue { ptr, i64 } %i.bi, 0      ; 2 uses
-  %4 = extractvalue { ptr, i64 } %i.bi, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
+  %4 = extractvalue { ptr, i64 } %i.bi, 1         ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 2 uses
   %i.bm = invoke noundef i64 @_RINvNtCscdodAO9FK5_5alloc4sync11data_offseteECs9h7Hq22ZyhR_15influxdb3_types(ptr noundef nonnull %i.bl, i64 noundef %4)
           to label %bb.q unwind label %bb.o, !noalias !70

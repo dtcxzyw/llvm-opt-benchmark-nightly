@@ -204,7 +204,7 @@ _RNvXs4_NtNtCsjXdHNeFfodD_13hickory_proto2op7messageNtB5_7MessageNtNtCsj6eKBz9Db
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.sroa.4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.sroa.4.0..sroa_idx, i64 16, i1 false)
   %i.qp = load i64, ptr %i.q, align 8, !noalias !597 ; 2 uses
   %.sroa.5.24..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %.sroa.5.24.copyload.i = load ptr, ptr %.sroa.5.24..sroa_idx.i, align 8, !noalias !597 ; 5 uses
+  %.sroa.5.24.copyload.i = load ptr, ptr %.sroa.5.24..sroa_idx.i, align 8, !noalias !597, !nonnull !4, !noundef !4 ; 4 uses
   %.sroa.6.24..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %.sroa.6.24.copyload.i = load i64, ptr %.sroa.6.24..sroa_idx.i, align 8, !noalias !597 ; 4 uses
   %.sroa.7.48.copyload.i = load i64, ptr %i.p, align 8, !noalias !597 ; 2 uses
@@ -223,7 +223,6 @@ _RNvXs4_NtNtCsjXdHNeFfodD_13hickory_proto2op7messageNtB5_7MessageNtNtCsj6eKBz9Db
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !573
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   %i.qq = load i32, ptr %i.az, align 4, !noalias !495 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.24.copyload.i) ]
   %.idx.i = mul nuw nsw i64 %.sroa.6.24.copyload.i, 272
   %i.qr = getelementptr inbounds nuw i8, ptr %.sroa.5.24.copyload.i, i64 %.idx.i
   %i.qs = icmp eq i64 %.sroa.6.24.copyload.i, 0
@@ -437,10 +436,10 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc4sync3ArcSNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6record6RecordEEECs9RFwvXNxPyg_16hickory_resolver.exit.i unwind label %bb.hf, !noalias !495
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc4sync3ArcSNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6record6RecordEEECs9RFwvXNxPyg_16hickory_resolver.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6record6RecordRNtNtBG_5alloc6GlobalEECs9RFwvXNxPyg_16hickory_resolver.exit.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.sj) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !603
   %i.so = extractvalue { ptr, i64 } %i.si, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw), !noalias !495
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.sj) ]
   store ptr %i.sj, ptr %.sroa.7.sroa.7.0..sroa.7.0..sroa_idx6.sroa_idx.i.i, align 8, !noalias !495
   store i64 %i.so, ptr %.sroa.7.sroa.8.0..sroa.7.0..sroa_idx6.sroa_idx.i.i, align 8, !noalias !495
   %.pre.i = load ptr, ptr %i.ax, align 8, !alias.scope !604, !noalias !495
@@ -556,10 +555,10 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs5
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc4sync3ArcSNtNtCs5MfxasYgTEl_11hickory_net5error13ForwardNSDataEEECs9RFwvXNxPyg_16hickory_resolver.exit.i unwind label %bb.hn, !noalias !495
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc4sync3ArcSNtNtCs5MfxasYgTEl_11hickory_net5error13ForwardNSDataEEECs9RFwvXNxPyg_16hickory_resolver.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs5MfxasYgTEl_11hickory_net5error13ForwardNSDataRNtNtBG_5alloc6GlobalEECs9RFwvXNxPyg_16hickory_resolver.exit.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.te) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !613
   %i.tj = extractvalue { ptr, i64 } %i.td, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !495
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.te) ]
   store ptr %i.te, ptr %.sroa.7.sroa.5.0..sroa.7.0..sroa_idx6.sroa_idx.i.i, align 8, !noalias !495
   store i64 %i.tj, ptr %.sroa.7.sroa.6.0..sroa.7.0..sroa_idx6.sroa_idx.i.i, align 8, !noalias !495
   %.pre111.i = load ptr, ptr %i.au, align 8, !alias.scope !614, !noalias !495

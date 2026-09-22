@@ -193,10 +193,10 @@ bb.b:                                             ; preds = %_RNCINvMs_NtCs1xwej
   %i.i = tail call { ptr, ptr } @_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job5flags(ptr noundef nonnull align 8 %i.h), !noalias !62 ; 2 uses
   %i.j = extractvalue { ptr, ptr } %i.i, 0
   %i.k = extractvalue { ptr, ptr } %i.i, 1        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 3
   %i.m = load i8, ptr %i.l, align 1, !range !17, !noalias !62, !noundef !16
   %i.n = trunc nuw i8 %i.m to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.o = load i64, ptr %i.k, align 8, !noalias !62, !noundef !16
   %i.p = add i64 %i.o, -1
   store i64 %i.p, ptr %i.k, align 8, !noalias !62
@@ -248,10 +248,10 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtCs8fr
 .noexc11.i:                                       ; preds = %.lr.ph.i
   %i.ad = extractvalue { ptr, ptr } %i.ac, 0
   %i.ae = extractvalue { ptr, ptr } %i.ac, 1      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 3
   %i.ag = load i8, ptr %i.af, align 1, !range !17, !noalias !62, !noundef !16
   %i.ah = trunc nuw i8 %i.ag to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   %i.ai = load i64, ptr %i.ae, align 8, !noalias !62, !noundef !16
   %i.aj = add i64 %i.ai, -1
   store i64 %i.aj, ptr %i.ae, align 8, !noalias !62
@@ -654,9 +654,9 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNt
   ret void
 
 _RNCNvMs5_NtCs1xwejQucwHj_5alloc3vecINtB7_3VecINtNtB9_6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEE5dedup0Cs8frGy5WneL6_4fish.exit23: ; preds = %.lr.ph
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.y = getelementptr i8, ptr %i.t, i64 -16
   %.val11 = load ptr, ptr %i.y, align 8, !nonnull !16, !noundef !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.z = shl nuw nsw i64 %.val10, 2
   %bcmp.i.i.i.i.i22 = tail call i32 @bcmp(ptr nonnull readonly align 4 %.val, ptr nonnull readonly align 4 %.val11, i64 %i.z), !alias.scope !151, !noalias !152
   %i.aa = icmp eq i32 %bcmp.i.i.i.i.i22, 0
@@ -1059,9 +1059,9 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring
   ret void
 
 _RNCNvMs5_NtCs1xwejQucwHj_5alloc3vecINtB7_3VecNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE5dedup0Cs8frGy5WneL6_4fish.exit23: ; preds = %.lr.ph
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13) ]
   %i.y = getelementptr i8, ptr %i.t, i64 -16
   %.val15 = load ptr, ptr %i.y, align 8, !nonnull !16, !noundef !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13) ]
   %i.z = shl nuw i64 %.val14, 2
   %bcmp.i.i.i.i22 = tail call i32 @bcmp(ptr nonnull readonly %.val13, ptr nonnull readonly %.val15, i64 %i.z)
   %i.aa = icmp eq i32 %bcmp.i.i.i.i22, 0
@@ -1464,9 +1464,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDINtNtNtCs3oUPovFnLWP_4core3ops8function5FnMutuEp6OutputINtNtBP_6result6ResultuNtNtNtBP_2io5error5ErrorENtNtBP_6marker4SendNtB2p_4SyncEL_ENtNtBN_4drop4Drop4dropCs8frGy5WneL6_4fish.exit, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !35, !invariant.load !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) %i.f) #31
   br label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDINtNtNtCs3oUPovFnLWP_4core3ops8function5FnMutuEp6OutputINtNtBP_6result6ResultuNtNtNtBP_2io5error5ErrorENtNtBP_6marker4SendNtB2p_4SyncEL_ENtNtBN_4drop4Drop4dropCs8frGy5WneL6_4fish.exit
 
@@ -1511,9 +1511,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDINtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuEp6OutputuNtNtBP_6marker4SendEL_ENtNtBN_4drop4Drop4dropCs8frGy5WneL6_4fish.exit, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !35, !invariant.load !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) %i.f) #31
   br label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDINtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuEp6OutputuNtNtBP_6marker4SendEL_ENtNtBN_4drop4Drop4dropCs8frGy5WneL6_4fish.exit
 
@@ -1558,9 +1558,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBQ_.exit, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !35, !invariant.load !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) %i.f) #31
   br label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBQ_.exit
 
@@ -1963,9 +1963,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnuEp6OutputINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB1O_15CodeUnitWidth32ENtNtB4_6marker4SendNtNtNtB4_5panic11unwind_safe13RefUnwindSafeNtB37_10UnwindSafeNtB2O_4SyncEL_EECs8frGy5WneL6_4fish.exit.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val2.i.i, i64 16
   %i.h = load i64, ptr %i.g, align 8, !range !35, !invariant.load !16, !noalias !1329
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef %i.e, i64 noundef range(i64 1, -9223372036854775807) %i.h) #31, !noalias !1329
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnuEp6OutputINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB1O_15CodeUnitWidth32ENtNtB4_6marker4SendNtNtNtB4_5panic11unwind_safe13RefUnwindSafeNtB37_10UnwindSafeNtB2O_4SyncEL_EECs8frGy5WneL6_4fish.exit.i.i
 
@@ -2368,9 +2368,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.q, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CoweEECs8frGy5WneL6_4fish.exit, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i: ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
   %i.r = getelementptr inbounds nuw i8, ptr %.val5, i64 16
   %i.s = load i64, ptr %i.r, align 8, !range !35, !invariant.load !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val4, i64 noundef %i.p, i64 noundef range(i64 1, -9223372036854775807) %i.s) #31
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CoweEECs8frGy5WneL6_4fish.exit
 
@@ -2773,10 +2773,9 @@ define internal fastcc noundef zeroext i1 @_RNCINvMs_NtCs1xwejQucwHj_5alloc3vecI
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.0.val1) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2529)
   %i.c = load ptr, ptr %.0.val, align 8, !alias.scope !2529, !nonnull !16, !align !24, !noundef !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val1) ]
   %i.d = getelementptr inbounds nuw i8, ptr %.0.val1, i64 16 ; 5 uses
   %i.e = tail call noundef zeroext i1 @_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job14is_constructed(ptr noundef nonnull align 8 %i.d), !noalias !2529
   br i1 %i.e, label %bb.b, label %_RNCNvNtCs8frGy5WneL6_4fish4proc27process_clean_after_markings0_0B5_.exit
@@ -3179,8 +3178,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #31
@@ -3583,8 +3582,8 @@ bb.kg:                                            ; preds = %_RNvMsG_NtCs1xwejQu
 
 .noexc77:                                         ; preds = %bb.kg
   %i.zh = extractvalue { ptr, i64 } %i.zg, 0      ; 2 uses
-  %4 = extractvalue { ptr, i64 } %i.zg, 1         ; 5 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.zh) ]
+  %4 = extractvalue { ptr, i64 } %i.zg, 1         ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3959)
   %i.zi = load i64, ptr %.sroa.424.0..sroa_idx, align 8, !alias.scope !3960, !noalias !3961, !noundef !16 ; 5 uses
   %i.zj = load i64, ptr %i.cl, align 8, !range !27, !alias.scope !3960, !noalias !3961, !noundef !16
@@ -3757,10 +3756,10 @@ bb.i:                                             ; preds = %.lr.ph, %bb.am
   %.sroa.0.142 = phi i1 [ false, %.lr.ph ], [ %.sroa.0.5, %bb.am ] ; 2 uses
   %.sroa.012.041 = phi i64 [ %i.g, %.lr.ph ], [ %i.au, %bb.am ]
   %.sroa.015.040 = phi ptr [ %i.l, %.lr.ph ], [ %i.aw, %bb.am ] ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.015.040) ]
   %i.au = add i64 %.sroa.012.041, -1              ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.015.040, i64 16
   %i.aw = load ptr, ptr %i.av, align 8, !noundef !16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.015.040) ]
   %i.ax = load ptr, ptr %.sroa.015.040, align 8, !nonnull !16, !noundef !16 ; 4 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
   %i.az = load i64, ptr %i.ay, align 8, !noundef !16
@@ -4163,8 +4162,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
 define hidden void @_RNvXNtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtCs8frGy5WneL6_4fish3key3KeyEINtB2_18SpecFromIterNestedB11_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapNtNtNtB2a_3str4iter5CharsNvMs0_B13_B11_8from_rawEE9from_iterB15_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %.not.i.i = icmp eq ptr %1, %2
   br i1 %.not.i.i, label %_RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapNtNtNtBb_3str4iter5CharsNvMs0_NtCs8frGy5WneL6_4fish3keyNtB1q_3Key8from_rawENtNtNtB9_6traits8iterator8Iterator4nextB1s_.exit.thread, label %bb.b
 
@@ -4567,8 +4566,8 @@ bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 3 uses
   %i.b = alloca [4 x i8], align 4                 ; 3 uses
   %i.c = alloca [24 x i8], align 8                ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %.not = icmp eq ptr %1, %2
   br i1 %.not, label %bb.j, label %bb.b
 
@@ -4971,8 +4970,8 @@ bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 3 uses
   %i.b = alloca [4 x i8], align 4                 ; 3 uses
   %i.c = alloca [24 x i8], align 8                ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = icmp eq ptr %1, %2
   br i1 %i.d, label %bb.h, label %bb.b
 
@@ -5375,8 +5374,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -5437,8 +5436,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -5841,8 +5840,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -5903,8 +5902,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -5965,8 +5964,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6027,8 +6026,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6089,8 +6088,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6151,8 +6150,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6329,8 +6328,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6391,8 +6390,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6453,8 +6452,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6525,8 +6524,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6597,8 +6596,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6669,8 +6668,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -6741,8 +6740,8 @@ define hidden void @_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedIN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
@@ -7145,9 +7144,9 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   %i.o = add nuw nsw i64 %.sroa.7.027.i, 1
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.014.028.i, i64 16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %.sroa.7.027.i ; 2 uses
   store ptr %.val12.i, ptr %i.q, align 8, !noalias !6748
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
@@ -7550,9 +7549,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   br i1 %i.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtNtB4_3ops8function5FnMutuEp6OutputINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorENtNtB4_6marker4SendNtB2C_4SyncEL_EECs8frGy5WneL6_4fish.exit.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !35, !invariant.load !16, !noalias !7241
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) %i.n) #31, !noalias !7241
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtNtB4_3ops8function5FnMutuEp6OutputINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorENtNtB4_6marker4SendNtB2C_4SyncEL_EECs8frGy5WneL6_4fish.exit.i
 
@@ -7639,9 +7638,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   br i1 %i.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtNtB4_3ops8function6FnOnceuEp6OutputuNtNtB4_6marker4SendEL_EECs8frGy5WneL6_4fish.exit.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !35, !invariant.load !16, !noalias !7244
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) %i.n) #31, !noalias !7244
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtNtB4_3ops8function6FnOnceuEp6OutputuNtNtB4_6marker4SendEL_EECs8frGy5WneL6_4fish.exit.i
 
@@ -7728,9 +7727,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   br i1 %i.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_EEB1j_.exit.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !35, !invariant.load !16, !noalias !7247
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) %i.n) #31, !noalias !7247
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_EEB1j_.exit.i
 

@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.p, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringB1u_EEINtNtB12_5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB2B_4SyncEL_EEECs2JiOgHzbbc7_10tokenizers.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.q = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 16
   %i.r = load i64, ptr %i.q, align 8, !range !7, !invariant.load !3, !noalias !59
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef range(i64 1, 0) %i.o, i64 noundef range(i64 1, 536870913) %i.r) #26, !noalias !59
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringB1u_EEINtNtB12_5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB2B_4SyncEL_EEECs2JiOgHzbbc7_10tokenizers.exit.i
 
@@ -609,9 +609,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.k, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECs2JiOgHzbbc7_10tokenizers.exit.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i, i64 16
   %i.m = load i64, ptr %i.l, align 8, !range !7, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i, i64 noundef range(i64 1, 0) %i.j, i64 noundef range(i64 1, 536870913) %i.m) #26
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECs2JiOgHzbbc7_10tokenizers.exit.i.i.i
 
@@ -1014,10 +1014,10 @@ bb.aq:                                            ; preds = %bb.ac
   br label %bb.ah
 
 bb.ar:                                            ; preds = %bb.ac
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !619 ; 8 uses
   %i.dj = trunc nuw i64 %i.ch to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   br i1 %i.dj, label %bb.as, label %bb.av
 
 bb.as:                                            ; preds = %bb.ar
@@ -1420,8 +1420,8 @@ bb.j:                                             ; preds = %bb.i
   br label %_RINvXs6_NtCs5PtHgSLqj5O_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsboAIIHEtPkY_10serde_core3ser12SerializeMap13serialize_keyNtNtBX_6string6StringECs2JiOgHzbbc7_10tokenizers.exit.peel
 
 _RINvXs6_NtCs5PtHgSLqj5O_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsboAIIHEtPkY_10serde_core3ser12SerializeMap13serialize_keyNtNtBX_6string6StringECs2JiOgHzbbc7_10tokenizers.exit.peel: ; preds = %bb.j, %bb.i
-  %.val10.i53.peel = load ptr, ptr %1, align 8, !noalias !760, !nonnull !3, !align !5, !noundef !3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i46.peel) ], !noalias !761
+  %.val10.i53.peel = load ptr, ptr %1, align 8, !noalias !760, !nonnull !3, !align !5, !noundef !3
   call fastcc void @_RNvXs1_NtCs5PtHgSLqj5O_10serde_json3serQINtB5_10SerializerQINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtCsboAIIHEtPkY_10serde_core3ser10Serializer13serialize_strCs2JiOgHzbbc7_10tokenizers(ptr %.val10.i53.peel, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val.i46.peel, i64 noundef %.val3.i.peel)
   %.val.i49.peel = load ptr, ptr %1, align 8, !noalias !762, !nonnull !3, !align !5, !noundef !3
   call void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE17extend_from_sliceCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i49.peel, ptr noalias noundef nonnull readonly captures(address, read_provenance) @109, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !762, !inline_history !745
@@ -1449,8 +1449,8 @@ _RINvXs6_NtCs5PtHgSLqj5O_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5allo
   %.val3.i = load i64, ptr %i.ai, align 8, !alias.scope !764, !noalias !759
   %.val.i52 = load ptr, ptr %1, align 8, !noalias !765, !nonnull !3, !noundef !3
   call void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE17extend_from_sliceCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i52, ptr noalias noundef nonnull readonly captures(address, read_provenance) @108, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !765
-  %.val10.i53 = load ptr, ptr %1, align 8, !noalias !765, !nonnull !3, !align !5, !noundef !3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i46) ], !noalias !766
+  %.val10.i53 = load ptr, ptr %1, align 8, !noalias !765, !nonnull !3, !align !5, !noundef !3
   call fastcc void @_RNvXs1_NtCs5PtHgSLqj5O_10serde_json3serQINtB5_10SerializerQINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtCsboAIIHEtPkY_10serde_core3ser10Serializer13serialize_strCs2JiOgHzbbc7_10tokenizers(ptr %.val10.i53, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val.i46, i64 noundef %.val3.i)
   %.val.i49 = load ptr, ptr %1, align 8, !noalias !767, !nonnull !3, !align !5, !noundef !3
   call void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE17extend_from_sliceCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i49, ptr noalias noundef nonnull readonly captures(address, read_provenance) @109, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !767, !inline_history !745
@@ -1853,9 +1853,9 @@ _RINvXs3_NtCsboAIIHEtPkY_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11Phantom
   br label %_RINvXs3_NtCsboAIIHEtPkY_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataNtNvXNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer16added_vocabularys1_1__NtB1q_16AddedTokenWithIdNtB6_11Deserialize11deserialize7___FieldENtB6_15DeserializeSeed11deserializeINtNtCs5PtHgSLqj5O_10serde_json2de6MapKeyNtNtB49_4read7StrReadEEB1u_.exit._crit_edge.i.i.i
 
 bb.l:                                             ; preds = %.noexc76.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bj) ]
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1203 ; 3 uses
   %i.bk = trunc nuw i64 %i.bh to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bj) ]
   br i1 %i.bk, label %_RINvXs3_NtCsboAIIHEtPkY_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataNtNvXNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer16added_vocabularys1_1__NtB1q_16AddedTokenWithIdNtB6_11Deserialize11deserialize7___FieldENtB6_15DeserializeSeed11deserializeINtNtCs5PtHgSLqj5O_10serde_json2de6MapKeyNtNtB49_4read7StrReadEEB1u_.exit.i.i.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -2258,10 +2258,10 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
   %i.z = trunc nuw i64 %i.t to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   br i1 %i.z, label %bb.h, label %.thread
 
 .thread:                                          ; preds = %bb.g
@@ -2664,12 +2664,11 @@ bb.ai:                                            ; preds = %bb.ah
 .noexc23.i:                                       ; preds = %bb.ai
   %i.co = load i64, ptr %i.d, align 8, !range !10, !noalias !1481, !noundef !3
   %i.cp = icmp eq i64 %i.co, 2
-  %i.cq = load ptr, ptr %i.cb, align 8, !noalias !1481 ; 5 uses
+  %i.cq = load ptr, ptr %i.cb, align 8, !noalias !1481, !nonnull !3, !noundef !3 ; 3 uses
   br i1 %i.cp, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %.noexc23.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1481
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cq) ]
   %i.cr = icmp eq i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, 20
   br i1 %i.cr, label %_RINvYINtNtCs5PtHgSLqj5O_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCsboAIIHEtPkY_10serde_core2de9MapAccess8next_keyNtNvXNvCsblNeYnuIT2i_15spm_precompileds0_1__NtB23_23PrecompiledDeserializerNtB18_11Deserialize11deserialize7___FieldECs2JiOgHzbbc7_10tokenizers.exit.i, label %_RINvYINtNtCs5PtHgSLqj5O_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCsboAIIHEtPkY_10serde_core2de9MapAccess8next_keyNtNvXNvCsblNeYnuIT2i_15spm_precompileds0_1__NtB23_23PrecompiledDeserializerNtB18_11Deserialize11deserialize7___FieldECs2JiOgHzbbc7_10tokenizers.exit.thread37.i
 
@@ -2679,7 +2678,6 @@ _RINvYINtNtCs5PtHgSLqj5O_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCsboA
 
 bb.ak:                                            ; preds = %.noexc23.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1481
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cq) ]
   br label %.loopexit40.i
 
 bb.al:                                            ; preds = %.body.i, %.loopexit.split-lp.i, %.loopexit.i40
@@ -3082,13 +3080,12 @@ bb.ao:                                            ; preds = %bb.an
   call void @_RNvXs8_NtCs5PtHgSLqj5O_10serde_json4readNtB5_7StrReadNtB5_4Read9parse_str(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.j, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ed, ptr noalias noundef nonnull align 8 dereferenceable(56) %i.ec), !noalias !1709
   %i.ei = load i64, ptr %i.j, align 8, !range !10, !noalias !1711, !noundef !3 ; 2 uses
   %i.ej = icmp eq i64 %i.ei, 2
-  %i.ek = load ptr, ptr %i.dt, align 8, !noalias !1711 ; 17 uses
+  %i.ek = load ptr, ptr %i.dt, align 8, !noalias !1711, !nonnull !3, !noundef !3 ; 15 uses
   br i1 %i.ej, label %bb.ba, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1711 ; 2 uses
   %i.el = trunc nuw i64 %i.ei to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ek) ]
   br i1 %i.el, label %bb.aq, label %bb.av
 
 bb.aq:                                            ; preds = %bb.ap
@@ -3201,7 +3198,6 @@ bb.az:                                            ; preds = %bb.av
 
 bb.ba:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !1711
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ek) ]
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %._crit_edge.i
@@ -3604,10 +3600,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvXsh_NtCs5PtHgSLqj5O_10serde_json2deINtB6_6MapKeyNtNtB8_4read7StrReadENtNtCsboAIIHEtPkY_10serde_core2de12Deserializer15deserialize_anyNtNtNtNtCsctIyQp3ax5j_5serde7private2de7content14ContentVisitorECs2JiOgHzbbc7_10tokenizers.exit
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !2884 ; 2 uses
   %i.l = trunc nuw i64 %i.g to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -4010,11 +4006,11 @@ _RINvXs6_NtCs5PtHgSLqj5O_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5allo
   %.val4 = load i64, ptr %i.n, align 8            ; 2 uses
   %.val.i5 = load ptr, ptr %i.b, align 8, !nonnull !3, !align !5, !noundef !3
   tail call void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE17extend_from_sliceCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i5, ptr noalias noundef nonnull readonly captures(address, read_provenance) @98, i64 noundef range(i64 0, -9223372036854775808) 2)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3198)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3199)
   %.idx.i.i.i = shl nuw nsw i64 %.val4, 5
   %i.o = getelementptr inbounds nuw i8, ptr %.val3, i64 %.idx.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3200)
   %.val.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !3201, !noalias !3202, !nonnull !3, !align !5, !noundef !3 ; 19 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3203)
@@ -4225,9 +4221,9 @@ _RINvXs6_NtCs5PtHgSLqj5O_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5allo
 bb.c:                                             ; preds = %_RINvXs6_NtCs5PtHgSLqj5O_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsboAIIHEtPkY_10serde_core3ser12SerializeMap13serialize_keyeECs2JiOgHzbbc7_10tokenizers.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.o = call noundef i64 @_RNvXsu_CscOYT7KBnvIh_4itoayNtB5_8Unsigned3fmt(i64 noundef %.val4, ptr noalias noundef nonnull dereferenceable(20) %i.a) ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10.i) ]
   %4 = sub nuw i64 20, %i.o
   %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.o
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10.i) ]
   call void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE17extend_from_sliceCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val10.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) %5, i64 noundef range(i64 0, -9223372036854775808) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvXs6_NtCs5PtHgSLqj5O_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsboAIIHEtPkY_10serde_core3ser12SerializeMap15serialize_valueINtNtCs4NRVxsYgnAr_4core6option6OptionjEECs2JiOgHzbbc7_10tokenizers.exit
@@ -4630,10 +4626,10 @@ bb.al:                                            ; preds = %bb.ac
   br label %bb.ah
 
 bb.am:                                            ; preds = %bb.ac
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !3422 ; 2 uses
   %i.cr = trunc nuw i64 %i.by to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
   br i1 %i.cr, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am

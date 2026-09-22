@@ -204,8 +204,7 @@ define internal fastcc void @_RNCNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7print
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !57)
@@ -331,9 +330,9 @@ bb.j:                                             ; preds = %_RNvMs0_NtNtCsa9sSW
 bb.k:                                             ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit4.i.i
   %i.an = getelementptr i8, ptr %i.w, i64 -4      ; 3 uses
   %i.ao = tail call noundef i64 @_RINvNtCs1xwejQucwHj_5alloc4sync11data_offsetNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneECsa9sSWSfjDbm_4jiff(ptr noundef %i.an), !noalias !73
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
   %1 = sub nsw i64 0, %i.ao
   %2 = getelementptr inbounds i8, ptr %i.an, i64 %1 ; 7 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 248
   %i.aq = load i8, ptr %i.ap, align 8, !range !11, !noalias !73, !noundef !6
   switch i8 %i.aq, label %default.unreachable [
@@ -468,8 +467,7 @@ define internal fastcc void @_RNCNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7print
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [12 x i8], align 8                ; 5 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %.val = load i64, ptr %.8.val, align 8, !noundef !6
   %i.c = getelementptr i8, ptr %.8.val, i64 8
   %.val1 = load i32, ptr %i.c, align 8, !noundef !6
@@ -569,8 +567,7 @@ _RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter19print
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RNCNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB4_15DateTimePrinter19print_iso_week_date0Ba_(ptr nofree readonly captures(none) %.0.val, ptr nofree readonly captures(none) %.8.val, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0) unnamed_addr #1 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %.val = load i8, ptr %.0.val, align 1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !141)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !142)
@@ -973,9 +970,9 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.a
   %i.o = getelementptr i8, ptr %.val, i64 -4      ; 3 uses
   %i.p = tail call noundef i64 @_RINvNtCs1xwejQucwHj_5alloc4sync11data_offsetNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneECsa9sSWSfjDbm_4jiff(ptr noundef %i.o)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %4 = sub nsw i64 0, %i.p
   %5 = getelementptr inbounds i8, ptr %i.o, i64 %4 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 248
   %i.r = load i8, ptr %i.q, align 8, !range !11, !noundef !6
   switch i8 %i.r, label %default.unreachable [
@@ -1203,9 +1200,9 @@ bb.aa:                                            ; preds = %.thread.i.i
 bb.ab:                                            ; preds = %.thread.i.i
   %i.de = getelementptr i8, ptr %.val, i64 -4     ; 3 uses
   %i.df = call noundef i64 @_RINvNtCs1xwejQucwHj_5alloc4sync11data_offsetNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneECsa9sSWSfjDbm_4jiff(ptr noundef %i.de), !noalias !286
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.de) ]
   %6 = sub nsw i64 0, %i.df
   %7 = getelementptr inbounds i8, ptr %i.de, i64 %6 ; 7 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.de) ]
   %i.dg = getelementptr inbounds nuw i8, ptr %7, i64 248
   %i.dh = load i8, ptr %i.dg, align 8, !range !11, !noalias !301, !noundef !6
   switch i8 %i.dh, label %default.unreachable [
@@ -1608,9 +1605,9 @@ bb.d:                                             ; preds = %_RNvMs4_NtNtCsa9sSW
 bb.e:                                             ; preds = %_RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter3new.exit
   %i.p = getelementptr i8, ptr %.val.i, i64 -4    ; 4 uses
   %i.q = call noundef i64 @_RINvNtCs1xwejQucwHj_5alloc4sync11data_offsetNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneECsa9sSWSfjDbm_4jiff(ptr noundef %i.p), !noalias !593
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
   %4 = sub nsw i64 0, %i.q
   %5 = getelementptr inbounds i8, ptr %i.p, i64 %4 ; 7 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 248
   %i.s = load i8, ptr %i.r, align 8, !range !11, !noalias !593, !noundef !6
   switch i8 %i.s, label %default.unreachable [
@@ -1910,9 +1907,9 @@ bb.ad:                                            ; preds = %bb.ab
 bb.ae:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsa9sSWSfjDbm_4jiff2tz6offset6OffsetNtNtB13_5error5ErrorEEB13_.exit.i
   %i.ej = getelementptr i8, ptr %.val.i, i64 -5   ; 3 uses
   %i.ek = call noundef i64 @_RINvNtCs1xwejQucwHj_5alloc4sync11data_offsetNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneECsa9sSWSfjDbm_4jiff(ptr noundef %i.ej), !noalias !611
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ej) ]
   %6 = sub nsw i64 0, %i.ek
   %7 = getelementptr inbounds i8, ptr %i.ej, i64 %6
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ej) ]
   %i.el = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.em = call { i64, ptr } @_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter21print_posix_time_zone(ptr noalias nofree nonnull readonly captures(address, read_provenance) poison, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.el, ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @24)
   br label %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter19print_time_zone_wtr.exit
@@ -2315,6 +2312,7 @@ _RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_cha
   br i1 %.not16.i, label %bb.ab, label %bb.ac
 
 _RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit71.i: ; preds = %bb.z
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.fb = zext nneg i16 %.sroa.9.3 to i64
   %i.fc = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.fb
   store i8 84, ptr %i.fc, align 1, !noalias !1204
@@ -2322,7 +2320,6 @@ _RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_cha
   %i.fe = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.fd ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 1
   store i8 48, ptr %i.ff, align 1, !noalias !1205
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.fg = getelementptr inbounds nuw i8, ptr %.val, i64 3
   %i.fh = load i8, ptr %i.fg, align 1, !noalias !1192, !noundef !6 ; 2 uses
   %i.fi = icmp sgt i8 %i.fh, -1
@@ -2471,9 +2468,9 @@ bb.ao:                                            ; preds = %_RNvNtNtCsa9sSWSfjD
   br i1 %.not8.i54.i, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit55.i, label %.preheader15.i
 
 _RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit55.i: ; preds = %.preheader15.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.hj = zext nneg i8 %.sroa.0.0.i86.i to i16
   %i.hk = add nuw nsw i16 %.sroa.9.4, %i.hj       ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.hl = getelementptr inbounds nuw i8, ptr %.val, i64 4
   %i.hm = load i8, ptr %i.hl, align 1, !noalias !1192, !noundef !6 ; 2 uses
   %i.hn = icmp sgt i8 %i.hm, -1
@@ -2575,9 +2572,9 @@ bb.ba:                                            ; preds = %_RNvNtNtCsa9sSWSfjD
   br i1 %.not8.i49.i, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit50.i, label %.preheader14.i
 
 _RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit50.i: ; preds = %.preheader14.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ja = zext nneg i8 %.sroa.0.0.i87.i to i16
   %i.jb = add nuw nsw i16 %.sroa.9.5, %i.ja       ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.jc = getelementptr inbounds nuw i8, ptr %.val, i64 3
   %i.jd = load i8, ptr %i.jc, align 1, !noalias !1192, !noundef !6 ; 2 uses
   %i.je = icmp sgt i8 %i.jd, -1
@@ -2980,10 +2977,10 @@ bb.l:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
   br i1 %.not8.i13, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit14, label %.preheader7
 
 _RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit14: ; preds = %.preheader7
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.bb = zext nneg i8 %.sroa.0.0.i33 to i16
   %i.bc = add i16 %i.l, %i.bb                     ; 3 uses
   store i16 %i.bc, ptr %i.d, align 8, !alias.scope !1250
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.bd = getelementptr inbounds nuw i8, ptr %.0.val, i64 5
   %i.be = load i8, ptr %i.bd, align 1, !noundef !6 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1251)
@@ -3045,10 +3042,10 @@ bb.q:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
   br i1 %.not8.i, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit, label %.preheader6
 
 _RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit: ; preds = %.preheader6
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.bw = zext nneg i8 %spec.select to i16
   %i.bx = add i16 %i.ah, %i.bw                    ; 3 uses
   store i16 %i.bx, ptr %i.d, align 8, !alias.scope !1252
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.by = getelementptr inbounds nuw i8, ptr %.0.val, i64 4
   %i.bz = load i8, ptr %i.by, align 1, !noundef !6 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1253)

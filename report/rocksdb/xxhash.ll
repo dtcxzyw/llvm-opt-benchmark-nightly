@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %bb.d, !prof !30
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %2) ]
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24
   %.val48 = load i64, ptr %i.d, align 1, !tbaa !27
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -245,8 +244,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.ac, label %bb.e, label %bb.f, !prof !30
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %2) ]
   %.val8 = load i32, ptr %0, align 1, !tbaa !17
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.ae = getelementptr inbounds i8, ptr %i.ad, i64 -4
@@ -279,8 +277,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %2) ]
   %i.ay = load i8, ptr %0, align 1, !tbaa !21
   %i.az = lshr i64 %1, 1
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %i.az
@@ -683,8 +680,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not12, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.j = insertelement <8 x i64> poison, i64 %1, i64 0
   %i.k = shufflevector <8 x i64> %i.j, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
   %i.l = sub <8 x i64> <i64 poison, i64 0, i64 poison, i64 0, i64 poison, i64 0, i64 poison, i64 0>, %i.k
@@ -811,6 +808,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.w = sub nuw nsw i32 256, %i.m
   %i.x = zext nneg i32 %i.w to i64                ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 4 uses
@@ -831,7 +829,6 @@ bb.f:                                             ; preds = %bb.e
   %.not.i8 = icmp ugt i64 %i.aj, 4
   %i.ak = shl i64 %i.ah, 3
   %i.al = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ak ; 8 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %.promoted21 = load <8 x i64>, ptr %0, align 64, !tbaa !21 ; 2 uses
   br i1 %.not.i8, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit.i15, label %.preheader85
 
@@ -906,9 +903,9 @@ bb.f:                                             ; preds = %bb.e
 
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i10:  ; preds = %.preheader85.3, %.preheader85.2, %.preheader85.1, %.preheader85
   %.lcssa102 = phi <8 x i64> [ %i.av, %.preheader85 ], [ %i.bh, %.preheader85.1 ], [ %i.bt, %.preheader85.2 ], [ %i.cf, %.preheader85.3 ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.cg = sub nsw i64 4, %i.aj                    ; 5 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.af
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.ci = lshr <8 x i64> %.lcssa102, splat (i64 47)
   %i.cj = load <16 x i32>, ptr %i.ch, align 1, !tbaa !21
   %i.ck = bitcast <8 x i64> %.lcssa102 to <16 x i32>
@@ -1183,10 +1180,10 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5.loopexit.unr-lcssa: ; preds = %bb.j
 
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5.loopexit.unr-lcssa, %bb.i
   %i.iy = phi <8 x i64> [ %.pre60, %bb.i ], [ %i.ii, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5.loopexit.unr-lcssa ], [ %i.ix, %.epil.preheader112 ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.iz = getelementptr inbounds nuw i8, ptr %0, i64 544
   %i.ja = load i64, ptr %i.iz, align 32, !tbaa !36
   %i.jb = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ja ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.jc = lshr <8 x i64> %i.iy, splat (i64 47)
   %i.jd = load <16 x i32>, ptr %i.jb, align 1, !tbaa !21
   %i.je = bitcast <8 x i64> %i.iy to <16 x i32>
@@ -1208,8 +1205,8 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   br i1 %.not133.i38, label %.preheader, label %.preheader17.lr.ph
 
 .preheader17.lr.ph:                               ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5
-  %.not47 = icmp eq i64 %i.gm, 0
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
+  %.not47 = icmp eq i64 %i.gm, 0
   %xtraiter122 = and i64 %i.gm, 1
   %i.jr = icmp eq i64 %i.gm, 1
   %unroll_iter128 = and i64 %i.gm, -2
@@ -1514,8 +1511,8 @@ bb.n:                                             ; preds = %_ZL19XXH3_consumeSt
 
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i:    ; preds = %.preheader84.3, %.preheader84.2, %.preheader84.1, %.preheader84
   %.lcssa100 = phi <8 x i64> [ %i.ow, %.preheader84 ], [ %i.pi, %.preheader84.1 ], [ %i.pu, %.preheader84.2 ], [ %i.qg, %.preheader84.3 ] ; 2 uses
-  %3 = sub nsw i64 4, %i.ok                       ; 5 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
+  %3 = sub nsw i64 4, %i.ok                       ; 5 uses
   %i.qh = lshr <8 x i64> %.lcssa100, splat (i64 47)
   %i.qi = load <16 x i32>, ptr %i.oi, align 1, !tbaa !21
   %i.qj = bitcast <8 x i64> %.lcssa100 to <16 x i32>
@@ -1918,8 +1915,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %2) ]
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.val79 = load i64, ptr %i.d, align 1, !tbaa !27
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 40
@@ -1977,8 +1973,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.at, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %2) ]
   %.val23 = load i32, ptr %0, align 1, !tbaa !17
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.av = getelementptr inbounds i8, ptr %i.au, i64 -4
@@ -2024,8 +2019,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %2) ]
   %i.ca = load i8, ptr %0, align 1, !tbaa !21
   %i.cb = lshr i64 %1, 1
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 %i.cb
@@ -2428,8 +2422,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not12.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.j = insertelement <8 x i64> poison, i64 %1, i64 0
   %i.k = shufflevector <8 x i64> %i.j, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
   %i.l = sub <8 x i64> <i64 poison, i64 0, i64 poison, i64 0, i64 poison, i64 0, i64 poison, i64 0>, %i.k
@@ -2556,6 +2550,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.w = sub nuw nsw i32 256, %i.m
   %i.x = zext nneg i32 %i.w to i64                ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 4 uses
@@ -2576,7 +2571,6 @@ bb.f:                                             ; preds = %bb.e
   %.not.i8 = icmp ugt i64 %i.aj, 4
   %i.ak = shl i64 %i.ah, 3
   %i.al = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ak ; 8 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %.promoted21 = load <8 x i64>, ptr %0, align 64, !tbaa !21 ; 2 uses
   br i1 %.not.i8, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit.i15, label %.preheader85
 
@@ -2651,9 +2645,9 @@ bb.f:                                             ; preds = %bb.e
 
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i10:  ; preds = %.preheader85.3, %.preheader85.2, %.preheader85.1, %.preheader85
   %.lcssa102 = phi <8 x i64> [ %i.av, %.preheader85 ], [ %i.bh, %.preheader85.1 ], [ %i.bt, %.preheader85.2 ], [ %i.cf, %.preheader85.3 ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.cg = sub nsw i64 4, %i.aj                    ; 5 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.af
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.ci = lshr <8 x i64> %.lcssa102, splat (i64 47)
   %i.cj = load <16 x i32>, ptr %i.ch, align 1, !tbaa !21
   %i.ck = bitcast <8 x i64> %.lcssa102 to <16 x i32>
@@ -2928,10 +2922,10 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5.loopexit.unr-lcssa: ; preds = %bb.j
 
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5.loopexit.unr-lcssa, %bb.i
   %i.iy = phi <8 x i64> [ %.pre60, %bb.i ], [ %i.ii, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5.loopexit.unr-lcssa ], [ %i.ix, %.epil.preheader112 ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.iz = getelementptr inbounds nuw i8, ptr %0, i64 544
   %i.ja = load i64, ptr %i.iz, align 32, !tbaa !36
   %i.jb = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ja ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %i.jc = lshr <8 x i64> %i.iy, splat (i64 47)
   %i.jd = load <16 x i32>, ptr %i.jb, align 1, !tbaa !21
   %i.je = bitcast <8 x i64> %i.iy to <16 x i32>
@@ -2953,8 +2947,8 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   br i1 %.not133.i38, label %.preheader, label %.preheader17.lr.ph
 
 .preheader17.lr.ph:                               ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5
-  %.not47 = icmp eq i64 %i.gm, 0
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
+  %.not47 = icmp eq i64 %i.gm, 0
   %xtraiter122 = and i64 %i.gm, 1
   %i.jr = icmp eq i64 %i.gm, 1
   %unroll_iter128 = and i64 %i.gm, -2
@@ -3259,8 +3253,8 @@ bb.n:                                             ; preds = %_ZL19XXH3_consumeSt
 
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i:    ; preds = %.preheader84.3, %.preheader84.2, %.preheader84.1, %.preheader84
   %.lcssa100 = phi <8 x i64> [ %i.ow, %.preheader84 ], [ %i.pi, %.preheader84.1 ], [ %i.pu, %.preheader84.2 ], [ %i.qg, %.preheader84.3 ] ; 2 uses
-  %3 = sub nsw i64 4, %i.ok                       ; 5 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
+  %3 = sub nsw i64 4, %i.ok                       ; 5 uses
   %i.qh = lshr <8 x i64> %.lcssa100, splat (i64 47)
   %i.qi = load <16 x i32>, ptr %i.oi, align 1, !tbaa !21
   %i.qj = bitcast <8 x i64> %.lcssa100 to <16 x i32>
@@ -3663,6 +3657,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a, %._cri
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write, inaccessiblemem: write) uwtable
 define void @ROCKSDB_XXH3_generateSecret_fromSeed(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1) local_unnamed_addr #23 {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.a = insertelement <8 x i64> poison, i64 %1, i64 0
   %i.b = shufflevector <8 x i64> %i.a, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
   %i.c = sub <8 x i64> <i64 poison, i64 0, i64 poison, i64 0, i64 poison, i64 0, i64 poison, i64 0>, %i.b
@@ -3670,7 +3665,6 @@ bb.a:
   %i.e = add <8 x i64> %i.d, <i64 -4734510112055689544, i64 2066345149520216444, i64 -2623469361688619810, i64 2262974939099578482, i64 8711581037947681227, i64 2410270004345854594, i64 -8204357891075471176, i64 5487137525590930912>
   %i.f = add <8 x i64> %i.d, <i64 -3818837453329782724, i64 -6688317018830679928, i64 5690594596133299313, i64 -2833645246901970632, i64 4554437623014685352, i64 2111919702937427193, i64 3556072174620004746, i64 7238261902898274248>
   %i.g = add <8 x i64> %i.d, <i64 -4329134394285701654, i64 -1485321483350670907, i64 5321830579834785047, i64 -7032137544937171245, i64 -242834301215959509, i64 -3588858202114426737, i64 2883454493032893253, i64 9097354517224871855>
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   store <8 x i64> %i.e, ptr %0, align 1
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store <8 x i64> %i.f, ptr %.sroa.4.0..sroa_idx, align 1
