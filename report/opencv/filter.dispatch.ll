@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph1179, %bb.ha
   call void @_ZNK2cv3Mat9locateROIERNS_5Size_IiEERNS_6Point_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %i.eq, ptr noundef nonnull align 4 dereferenceable(8) %18, ptr noundef nonnull align 4 dereferenceable(8) %19)
   %i.er = load i32, ptr %19, align 4, !tbaa !13   ; 21 uses
   %i.es = add i32 %i.er, %i.eh                    ; 2 uses
-  %.neg214 = sub i32 %i.d, %i.es                  ; 22 uses
+  %.neg214 = sub i32 %i.d, %i.es                  ; 27 uses
   %i.et = load i32, ptr %i.ah, align 4, !tbaa !14
   %i.eu = add i32 %i.et, %i.ei                    ; 2 uses
   %.neg = sub i32 %i.h, %i.eu                     ; 28 uses
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %.lr.ph1179, %bb.ha
   %i.fa = icmp sgt i32 %i.ez, 0                   ; 26 uses
   %.sroa.speculated1052 = call i32 @llvm.smax.i32(i32 %i.ez, i32 0)
   %i.fb = icmp sgt i32 %.neg214, 0                ; 24 uses
-  %.sroa.speculated1047 = call i32 @llvm.smax.i32(i32 %.neg214, i32 0) ; 58 uses
+  %.sroa.speculated1047 = call i32 @llvm.smax.i32(i32 %.neg214, i32 0) ; 53 uses
   %i.fc = load i32, ptr %18, align 4, !tbaa !16   ; 21 uses
   %i.fd = add i32 %.sroa.speculated1066, %i.l
   %i.fe = add i32 %i.fd, %i.es
@@ -515,8 +515,7 @@ bb.aa:                                            ; preds = %bb.z
   %smax1807 = call i32 @llvm.smax.i32(i32 %i.ij, i32 0) ; 2 uses
   %i.ik = zext nneg i32 %smax1807 to i64          ; 2 uses
   %xtraiter1801 = and i64 %i.id, 3                ; 3 uses
-  %31 = add nsw i32 %.sroa.speculated1047, -1
-  %32 = icmp ult i32 %31, 3
+  %31 = icmp slt i32 %.neg214, 4
   %unroll_iter1805 = and i64 %i.id, 2147483644
   %lcmp.mod1803.not = icmp eq i64 %xtraiter1801, 0
   %lcmp.mod1804 = icmp ne i64 %xtraiter1801, 0
@@ -649,7 +648,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.fb, label %.lr.ph183.i.preheader, label %.preheader172.i
 
 .lr.ph183.i.preheader:                            ; preds = %.preheader174.i
-  br i1 %32, label %.lr.ph183.i.epil.preheader, label %.lr.ph183.i
+  br i1 %31, label %.lr.ph183.i.epil.preheader, label %.lr.ph183.i
 
 .preheader172.i.loopexit.unr-lcssa:               ; preds = %.lr.ph183.i
   br i1 %lcmp.mod1803.not, label %.preheader172.i, label %.lr.ph183.i.epil.preheader
@@ -1052,8 +1051,7 @@ bb.au:                                            ; preds = %bb.at
   %smax1775 = call i32 @llvm.smax.i32(i32 %i.rm, i32 0) ; 2 uses
   %i.rn = zext nneg i32 %smax1775 to i64          ; 2 uses
   %xtraiter1769 = and i64 %wide.trip.count232.i303, 3 ; 3 uses
-  %33 = add nsw i32 %.sroa.speculated1047, -1
-  %34 = icmp ult i32 %33, 3
+  %32 = icmp slt i32 %.neg214, 4
   %unroll_iter1773 = and i64 %wide.trip.count232.i303, 2147483644
   %lcmp.mod1771.not = icmp eq i64 %xtraiter1769, 0
   %lcmp.mod1772 = icmp ne i64 %xtraiter1769, 0
@@ -1289,8 +1287,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph198.split.us.i279.preheader:                ; preds = %.lr.ph198.i273
   %xtraiter1789 = and i64 %wide.trip.count248.i274, 3 ; 3 uses
-  %35 = add nsw i32 %.neg, -1
-  %i.tz = icmp ult i32 %35, 3
+  %i.tz = icmp ult i32 %.neg, 4
   br i1 %i.tz, label %.lr.ph198.split.us.i279.epil.preheader, label %.lr.ph198.split.us.i279.preheader.new
 
 .lr.ph198.split.us.i279.preheader.new:            ; preds = %.lr.ph198.split.us.i279.preheader
@@ -1329,7 +1326,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.fb, label %.lr.ph183.i299.preheader, label %.preheader172.i292
 
 .lr.ph183.i299.preheader:                         ; preds = %.preheader174.i288
-  br i1 %34, label %.lr.ph183.i299.epil.preheader, label %.lr.ph183.i299
+  br i1 %32, label %.lr.ph183.i299.epil.preheader, label %.lr.ph183.i299
 
 .preheader172.i292.loopexit.unr-lcssa:            ; preds = %.lr.ph183.i299
   br i1 %lcmp.mod1771.not, label %.preheader172.i292, label %.lr.ph183.i299.epil.preheader
@@ -1732,8 +1729,7 @@ bb.bn:                                            ; preds = %bb.bm
   %smax1750 = call i32 @llvm.smax.i32(i32 %i.aax, i32 0) ; 2 uses
   %i.aay = zext nneg i32 %smax1750 to i64         ; 2 uses
   %xtraiter1744 = and i64 %wide.trip.count232.i417, 3 ; 3 uses
-  %36 = add nsw i32 %.sroa.speculated1047, -1
-  %37 = icmp ult i32 %36, 3
+  %33 = icmp slt i32 %.neg214, 4
   %unroll_iter1748 = and i64 %wide.trip.count232.i417, 2147483644
   %lcmp.mod1746.not = icmp eq i64 %xtraiter1744, 0
   %lcmp.mod1747 = icmp ne i64 %xtraiter1744, 0
@@ -1773,7 +1769,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.fb, label %.lr.ph187.us.i430.preheader, label %.preheader170.us.i423
 
 .lr.ph187.us.i430.preheader:                      ; preds = %.preheader171.us.i419
-  br i1 %37, label %.lr.ph187.us.i430.epil.preheader, label %.lr.ph187.us.i430
+  br i1 %33, label %.lr.ph187.us.i430.epil.preheader, label %.lr.ph187.us.i430
 
 .lr.ph187.us.i430:                                ; preds = %.lr.ph187.us.i430.preheader, %.lr.ph187.us.i430
   %indvars.iv229.i431 = phi i64 [ %indvars.iv.next230.i432.3, %.lr.ph187.us.i430 ], [ 0, %.lr.ph187.us.i430.preheader ] ; 5 uses
@@ -1870,8 +1866,7 @@ bb.bn:                                            ; preds = %bb.bm
 
 .lr.ph198.split.us.i389.preheader:                ; preds = %.lr.ph198.i383
   %xtraiter1757 = and i64 %wide.trip.count248.i384, 3 ; 3 uses
-  %38 = add nsw i32 %.neg, -1
-  %i.acj = icmp ult i32 %38, 3
+  %i.acj = icmp ult i32 %.neg, 4
   br i1 %i.acj, label %.lr.ph198.split.us.i389.epil.preheader, label %.lr.ph198.split.us.i389.preheader.new
 
 .lr.ph198.split.us.i389.preheader.new:            ; preds = %.lr.ph198.split.us.i389.preheader
@@ -2274,8 +2269,7 @@ bb.cg:                                            ; preds = %bb.cf
   %smax1700 = call i32 @llvm.smax.i32(i32 %i.ajj, i32 0) ; 2 uses
   %i.ajk = zext nneg i32 %smax1700 to i64         ; 2 uses
   %xtraiter1694 = and i64 %wide.trip.count232.i530, 3 ; 3 uses
-  %39 = add nsw i32 %.sroa.speculated1047, -1
-  %40 = icmp ult i32 %39, 3
+  %34 = icmp slt i32 %.neg214, 4
   %unroll_iter1698 = and i64 %wide.trip.count232.i530, 2147483644
   %lcmp.mod1696.not = icmp eq i64 %xtraiter1694, 0
   %lcmp.mod1697 = icmp ne i64 %xtraiter1694, 0
@@ -2460,8 +2454,7 @@ middle.block1431:                                 ; preds = %vector.body1426
 
 .lr.ph198.split.us.i502.preheader:                ; preds = %.lr.ph198.i496
   %xtraiter1713 = and i64 %wide.trip.count248.i497, 3 ; 3 uses
-  %41 = add nsw i32 %.neg, -1
-  %i.aln = icmp ult i32 %41, 3
+  %i.aln = icmp ult i32 %.neg, 4
   br i1 %i.aln, label %.lr.ph198.split.us.i502.epil.preheader, label %.lr.ph198.split.us.i502.preheader.new
 
 .lr.ph198.split.us.i502.preheader.new:            ; preds = %.lr.ph198.split.us.i502.preheader
@@ -2500,7 +2493,7 @@ middle.block1431:                                 ; preds = %vector.body1426
   br i1 %i.fb, label %.lr.ph183.i525.preheader, label %.preheader172.i517
 
 .lr.ph183.i525.preheader:                         ; preds = %.preheader174.i513
-  br i1 %40, label %.lr.ph183.i525.epil.preheader, label %.lr.ph183.i525
+  br i1 %34, label %.lr.ph183.i525.epil.preheader, label %.lr.ph183.i525
 
 .preheader172.i517.loopexit.unr-lcssa:            ; preds = %.lr.ph183.i525
   br i1 %lcmp.mod1696.not, label %.preheader172.i517, label %.lr.ph183.i525.epil.preheader
@@ -2903,8 +2896,7 @@ bb.cz:                                            ; preds = %bb.cy
   %smax1675 = call i32 @llvm.smax.i32(i32 %i.asl, i32 0) ; 2 uses
   %i.asm = zext nneg i32 %smax1675 to i64         ; 2 uses
   %xtraiter1669 = and i64 %wide.trip.count232.i644, 3 ; 3 uses
-  %42 = add nsw i32 %.sroa.speculated1047, -1
-  %43 = icmp ult i32 %42, 3
+  %35 = icmp slt i32 %.neg214, 4
   %unroll_iter1673 = and i64 %wide.trip.count232.i644, 2147483644
   %lcmp.mod1671.not = icmp eq i64 %xtraiter1669, 0
   %lcmp.mod1672 = icmp ne i64 %xtraiter1669, 0
@@ -2944,7 +2936,7 @@ bb.cz:                                            ; preds = %bb.cy
   br i1 %i.fb, label %.lr.ph187.us.i657.preheader, label %.preheader170.us.i650
 
 .lr.ph187.us.i657.preheader:                      ; preds = %.preheader171.us.i646
-  br i1 %43, label %.lr.ph187.us.i657.epil.preheader, label %.lr.ph187.us.i657
+  br i1 %35, label %.lr.ph187.us.i657.epil.preheader, label %.lr.ph187.us.i657
 
 .lr.ph187.us.i657:                                ; preds = %.lr.ph187.us.i657.preheader, %.lr.ph187.us.i657
   %indvars.iv229.i658 = phi i64 [ %indvars.iv.next230.i659.3, %.lr.ph187.us.i657 ], [ 0, %.lr.ph187.us.i657.preheader ] ; 5 uses
@@ -3041,8 +3033,7 @@ bb.cz:                                            ; preds = %bb.cy
 
 .lr.ph198.split.us.i616.preheader:                ; preds = %.lr.ph198.i610
   %xtraiter1682 = and i64 %wide.trip.count248.i611, 3 ; 3 uses
-  %44 = add nsw i32 %.neg, -1
-  %i.atx = icmp ult i32 %44, 3
+  %i.atx = icmp ult i32 %.neg, 4
   br i1 %i.atx, label %.lr.ph198.split.us.i616.epil.preheader, label %.lr.ph198.split.us.i616.preheader.new
 
 .lr.ph198.split.us.i616.preheader.new:            ; preds = %.lr.ph198.split.us.i616.preheader
@@ -3445,8 +3436,7 @@ middle.block1483:                                 ; preds = %vector.body1478
 
 .lr.ph198.split.us.i729.preheader:                ; preds = %.lr.ph198.i723
   %xtraiter1638 = and i64 %wide.trip.count248.i724, 3 ; 3 uses
-  %45 = add nsw i32 %.neg, -1
-  %i.bdc = icmp ult i32 %45, 3
+  %i.bdc = icmp ult i32 %.neg, 4
   br i1 %i.bdc, label %.lr.ph198.split.us.i729.epil.preheader, label %.lr.ph198.split.us.i729.preheader.new
 
 .lr.ph198.split.us.i729.preheader.new:            ; preds = %.lr.ph198.split.us.i729.preheader
@@ -3849,8 +3839,7 @@ begin_hunk_6_@_ZNK2cv12cpu_baseline18TiledFilterInvokerclERKNS_5RangeE:bb.a
 
 .lr.ph198.split.us.i843.preheader:                ; preds = %.lr.ph198.i837
   %xtraiter1608 = and i64 %wide.trip.count248.i838, 3 ; 3 uses
-  %46 = add nsw i32 %.neg, -1
-  %i.bln = icmp ult i32 %46, 3
+  %i.bln = icmp ult i32 %.neg, 4
   br i1 %i.bln, label %.lr.ph198.split.us.i843.epil.preheader, label %.lr.ph198.split.us.i843.preheader.new
 
 .lr.ph198.split.us.i843.preheader.new:            ; preds = %.lr.ph198.split.us.i843.preheader

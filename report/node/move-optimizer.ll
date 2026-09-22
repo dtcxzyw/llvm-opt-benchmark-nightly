@@ -178,9 +178,9 @@ _ZN2v88internal8compiler13MoveOptimizer13CompressBlockEPNS1_16InstructionBlockE.
   %.04767 = phi ptr [ %i.bk, %.critedge ], [ %.pre79, %._crit_edge60 ] ; 2 uses
   %i.am = load ptr, ptr %.04767, align 8          ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 48
-  %i.ao = load ptr, ptr %i.an, align 8            ; 3 uses
+  %i.ao = load ptr, ptr %i.an, align 8            ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 40
-  %i.aq = load ptr, ptr %i.ap, align 8            ; 3 uses
+  %i.aq = load ptr, ptr %i.ap, align 8            ; 2 uses
   %i.ar = ptrtoint ptr %i.ao to i64
   %i.as = ptrtoint ptr %i.aq to i64
   %i.at = sub i64 %i.ar, %i.as
@@ -191,13 +191,9 @@ bb.b:                                             ; preds = %.lr.ph69
   %i.av = getelementptr inbounds nuw i8, ptr %i.am, i64 124
   %i.aw = load i16, ptr %i.av, align 4
   %i.ax = trunc i16 %i.aw to i1
-  br i1 %i.ax, label %.loopexit, label %1
+  br i1 %i.ax, label %.loopexit, label %.lr.ph65
 
-1:                                                ; preds = %bb.b
-  %.not5261 = icmp eq ptr %i.aq, %i.ao
-  br i1 %.not5261, label %.critedge, label %.lr.ph65
-
-.lr.ph65:                                         ; preds = %1
+.lr.ph65:                                         ; preds = %bb.b
   %i.ay = load ptr, ptr %i.a, align 8
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %i.ba = load ptr, ptr %i.az, align 8
@@ -225,7 +221,7 @@ bb.d:                                             ; preds = %.lr.ph65, %bb.c
   tail call void @_ZN2v88internal8compiler13MoveOptimizer13OptimizeMergeEPNS1_16InstructionBlockE(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull %i.am)
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.c, %1, %.lr.ph69, %.loopexit
+.critedge:                                        ; preds = %bb.c, %.lr.ph69, %.loopexit
   %i.bk = getelementptr inbounds nuw i8, ptr %.04767, i64 8 ; 2 uses
   %.not50 = icmp eq ptr %i.bk, %.pre81
   br i1 %.not50, label %._crit_edge70.loopexit, label %.lr.ph69

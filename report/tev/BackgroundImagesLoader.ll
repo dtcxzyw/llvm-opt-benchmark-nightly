@@ -205,7 +205,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer.outer", %bb.gw
-  %.024.ph = phi ptr [ %.119.lcssa.i, %bb.gw ], [ %.024.ph.ph, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer.outer" ] ; 69 uses
+  %.024.ph = phi ptr [ %.119.lcssa.i, %bb.gw ], [ %.024.ph.ph, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer.outer" ] ; 68 uses
   %.021.ph = phi ptr [ %.021, %bb.gw ], [ %.021.ph.ph, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer.outer" ]
   %.046.ph = phi i64 [ %i.qb, %bb.gw ], [ %.046.ph.ph, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer.outer" ]
   %i.al = ptrtoint ptr %.024.ph to i64            ; 2 uses
@@ -219,7 +219,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer", %bb.gv
-  %.021 = phi ptr [ %i.ack, %bb.gv ], [ %.021.ph, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer" ] ; 29 uses
+  %.021 = phi ptr [ %i.ack, %bb.gv ], [ %.021.ph, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer" ] ; 28 uses
   %.046 = phi i64 [ %i.qb, %bb.gv ], [ %.046.ph, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer" ] ; 2 uses
   %i.as = ptrtoint ptr %.021 to i64
   %i.at = sub i64 %i.as, %i.al                    ; 4 uses
@@ -296,7 +296,7 @@ bb.g:                                             ; preds = %"_ZNSt3__116__inser
 
 bb.h:                                             ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit"
   %i.bq = icmp slt i64 %i.at, 1920
-  br i1 %i.bq, label %bb.i, label %25
+  br i1 %i.bq, label %bb.i, label %bb.az
 
 bb.i:                                             ; preds = %bb.h
   %i.br = icmp eq ptr %.024.ph, %.021             ; 2 uses
@@ -699,13 +699,9 @@ bb.ay:                                            ; preds = %_ZNSt3__14__fs10fil
   %.not.i62 = icmp eq ptr %storemerge.i61, %.021
   br i1 %.not.i62, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.thread", label %bb.af, !llvm.loop !540
 
-25:                                               ; preds = %bb.h
-  %26 = icmp eq i64 %.046, 0
-  br i1 %26, label %bb.az, label %bb.df
-
-bb.az:                                            ; preds = %25
-  %i.he = icmp eq ptr %.024.ph, %.021
-  br i1 %i.he, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.thread", label %bb.ba
+bb.az:                                            ; preds = %bb.h
+  %i.he = icmp eq i64 %.046, 0
+  br i1 %i.he, label %bb.ba, label %bb.df
 
 bb.ba:                                            ; preds = %bb.az
   %i.hf = add nsw i64 %i.au, -2
@@ -1108,7 +1104,7 @@ _ZNSt3__14__fs10filesystem15directory_entryD2B8ne180100Ev.exit13.i.i.i.i.i: ; pr
   %i.qa = icmp sgt i64 %.063.i.i.i, 2
   br i1 %i.qa, label %bb.bq, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.thread", !llvm.loop !551
 
-bb.df:                                            ; preds = %25
+bb.df:                                            ; preds = %bb.az
   %i.qb = add nsw i64 %.046, -1                   ; 4 uses
   %i.qc = lshr i64 %i.au, 1
   %i.qd = icmp samesign ugt i64 %i.at, 10240
@@ -1511,7 +1507,7 @@ bb.gw:                                            ; preds = %bb.gu
   call fastcc void @"_ZNSt3__111__introsortINS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryELb0EEEvT1_SM_T0_NS_15iterator_traitsISM_E15difference_typeEb"(ptr noundef %.024.ph, ptr noundef nonnull %i.ack, i64 noundef %i.qb, i1 noundef zeroext %.048.ph.ph)
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.outer.outer.backedge"
 
-"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.thread": ; preds = %bb.gv, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit", %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SL_RT0_NS_15iterator_traitsISL_E15difference_typeE.exit.i.i.i", %bb.ay, %bb.ad, %bb.az, %.preheader.i55, %bb.ae, %.preheader.i, %bb.j, %_ZNSt3__18_IterOpsINS_17_ClassicAlgPolicyEE9iter_swapB8ne180100IRPNS_4__fs10filesystem15directory_entryES8_EEvOT_OT0_.exit, %bb.f, %bb.e, %bb.g, %bb.b
+"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit.thread": ; preds = %bb.gv, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SM_T0_.exit", %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZN3tev22BackgroundImagesLoader7enqueueERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcNS_11char_traitsIcEEEEbRKNS_10shared_ptrINS2_5ImageEEEE3$_0PNS5_15directory_entryEEEvT1_SL_RT0_NS_15iterator_traitsISL_E15difference_typeE.exit.i.i.i", %bb.ay, %bb.ad, %.preheader.i55, %bb.ae, %.preheader.i, %bb.j, %_ZNSt3__18_IterOpsINS_17_ClassicAlgPolicyEE9iter_swapB8ne180100IRPNS_4__fs10filesystem15directory_entryES8_EEvOT_OT0_.exit, %bb.f, %bb.e, %bb.g, %bb.b
   ret void
 }
 

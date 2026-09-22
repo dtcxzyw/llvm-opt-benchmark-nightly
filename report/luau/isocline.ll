@@ -205,8 +205,7 @@ ic_strlen.exit:                                   ; preds = %.preheader, %bb.h
   %i.t = phi ptr [ %i.z, %bb.h ], [ %i.s, %.preheader ] ; 2 uses
   %.028 = phi ptr [ %i.y, %bb.h ], [ %3, %.preheader ]
   %i.u = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.t) #29
-  %4 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %i.u, i64 0)
-  %i.v = icmp eq i64 %i.o, %4
+  %i.v = icmp eq i64 %i.u, %i.o
   br i1 %i.v, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %ic_strlen.exit

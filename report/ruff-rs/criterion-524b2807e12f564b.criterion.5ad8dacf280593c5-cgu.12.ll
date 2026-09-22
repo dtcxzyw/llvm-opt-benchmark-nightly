@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.l
   br i1 %i.em, label %.lr.ph.i.split.us.i.preheader, label %.lr.ph.i.split.i, !prof !5
 
 .lr.ph.i.split.us.i.preheader:                    ; preds = %.lr.ph.i.i
-  %.idx98 = shl nuw nsw i64 %2, 3                 ; 2 uses
+  %.idx98 = shl nuw nsw i64 %2, 3
   %i.en = extractelement <2 x double> %i.x, i64 0
   %xtraiter124 = and i64 %2, 3                    ; 3 uses
   %i.eo = icmp ult i64 %2, 4
@@ -250,10 +250,9 @@ bb.s:                                             ; preds = %.lr.ph94, %bb.r
   br i1 %i.ez, label %bb.t, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB1G_6SampledE3new0EB1M_.exit.i.i.invoke.i.i.i, !prof !5
 
 bb.t:                                             ; preds = %._crit_edge95
-  %.idx99 = shl nuw nsw i64 %i.es, 3              ; 2 uses
+  %.idx99 = shl nuw nsw i64 %i.es, 3
   %i.fa = getelementptr inbounds nuw i8, ptr %i.er, i64 %.idx99 ; 2 uses
-  %6 = icmp samesign eq i64 %.idx98, %.idx99
-  br i1 %6, label %_RNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB2_6SampledE3newB8_.exit6.i.i.i.us.i, label %.lr.ph97
+  br label %.lr.ph97
 
 bb.u:                                             ; preds = %.lr.ph97
   %i.fb = getelementptr inbounds nuw i8, ptr %i.fd, i64 8 ; 2 uses
@@ -261,12 +260,12 @@ bb.u:                                             ; preds = %.lr.ph97
   br i1 %i.fc, label %_RNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB2_6SampledE3newB8_.exit6.i.i.i.us.i, label %.lr.ph97
 
 .lr.ph97:                                         ; preds = %bb.t, %bb.u
-  %i.fd = phi ptr [ %i.fb, %bb.u ], [ %i.et, %bb.t ] ; 2 uses
+  %i.fd = phi ptr [ %i.et, %bb.t ], [ %i.fb, %bb.u ] ; 2 uses
   %.val.i.i5.i.i.i.us.i = load double, ptr %i.fd, align 8, !alias.scope !713, !noalias !714, !noundef !4
   %i.fe = fcmp ord double %.val.i.i5.i.i.i.us.i, 0.000000e+00
   br i1 %i.fe, label %bb.u, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB1G_6SampledE3new0EB1M_.exit.i.i.invoke.i.i.i
 
-_RNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB2_6SampledE3newB8_.exit6.i.i.i.us.i: ; preds = %bb.u, %bb.t
+_RNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB2_6SampledE3newB8_.exit6.i.i.i.us.i: ; preds = %bb.u
   call void @llvm.experimental.noalias.scope.decl(metadata !715)
   call void @llvm.experimental.noalias.scope.decl(metadata !716)
   call void @llvm.experimental.noalias.scope.decl(metadata !717)
@@ -310,7 +309,7 @@ _RNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB2_6SampledE3newB
   %i.fz = fmul double %i.fy, %i.fy
   %i.ga = fadd double %i.fv, %i.fz                ; 3 uses
   %i.gb = add nuw nsw i64 %.sroa.04.0.i.i.i.i.i.i.i.us.i, 4 ; 2 uses
-  %niter130.next.3 = add nuw i64 %niter130, 4     ; 2 uses
+  %niter130.next.3 = add i64 %niter130, 4         ; 2 uses
   %niter130.ncmp.3 = icmp eq i64 %niter130.next.3, %unroll_iter129
   br i1 %niter130.ncmp.3, label %.preheader.i1.i.preheader.i.i.i.i.us.i.unr-lcssa, label %.preheader.i.i.i.i.i.i.us.i
 

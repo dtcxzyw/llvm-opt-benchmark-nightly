@@ -205,20 +205,17 @@ bb.by:                                            ; preds = %._crit_edge506
   br label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108
 
 _ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108: ; preds = %._crit_edge506, %bb.by
-  %i.xt = phi ptr [ %.sroa.0340.8.lcssa, %._crit_edge506 ], [ %.pre575, %bb.by ] ; 5 uses
+  %i.xt = phi ptr [ %.sroa.0340.8.lcssa, %._crit_edge506 ], [ %.pre575, %bb.by ] ; 4 uses
   %i.xu = phi ptr [ %.sroa.25.8.lcssa, %._crit_edge506 ], [ %.pre574.a, %bb.by ] ; 4 uses
   %i.xv = ptrtoint ptr %i.xu to i64
   %i.xw = ptrtoint ptr %i.xt to i64
   %i.xx = sub i64 %i.xv, %i.xw
   %i.xy = icmp ult i64 %i.xx, 9
-  %.not416526 = icmp eq ptr %i.xt, %i.xu          ; 2 uses
-  br i1 %i.xy, label %.preheader, label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader
-
-_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader: ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108
-  br i1 %.not416526, label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge, label %.lr.ph522
+  br i1 %i.xy, label %.preheader, label %.lr.ph522
 
 .preheader:                                       ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108
-  br i1 %.not416526, label %_ZNK4llvm15InstructionCostgeERKS0_.exit104.thread, label %.lr.ph528
+  %.not416521 = icmp eq ptr %i.xt, %i.xu
+  br i1 %.not416521, label %_ZNK4llvm15InstructionCostgeERKS0_.exit104.thread, label %.lr.ph528
 
 .lr.ph505:                                        ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit106, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE9push_backERKS2_.exit116
   %.sroa.0300.0504 = phi ptr [ %i.yt, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE9push_backERKS2_.exit116 ], [ %i.xm, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit106 ] ; 2 uses
@@ -301,19 +298,12 @@ _ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE9push_backERKS2_.exit116: ; preds
   %.not416 = icmp eq ptr %i.yv, %i.xu
   br i1 %.not416, label %_ZNK4llvm15InstructionCostgeERKS0_.exit104.thread, label %.lr.ph528
 
-_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge.loopexit: ; preds = %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149
-  %.pre578 = load ptr, ptr %i.vv, align 8, !tbaa !476
-  br label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge
-
-_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge: ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge.loopexit, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader
-  %24 = phi ptr [ %i.xt, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ], [ %.pre578, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge.loopexit ] ; 3 uses
-  %.sroa.50.10.lcssa = phi ptr [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ], [ %.sroa.50.11, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge.loopexit ]
-  %.sroa.25.10.lcssa = phi ptr [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ], [ %.sroa.25.11, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge.loopexit ] ; 2 uses
-  %.sroa.0340.10.lcssa = phi ptr [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ], [ %.sroa.0340.11, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge.loopexit ] ; 2 uses
+_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge: ; preds = %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149
+  %24 = load ptr, ptr %i.vv, align 8, !tbaa !476  ; 3 uses
   %i.yw = load ptr, ptr %i.wx, align 8, !tbaa !533
-  store ptr %.sroa.0340.10.lcssa, ptr %i.vv, align 8, !tbaa !476
-  store ptr %.sroa.25.10.lcssa, ptr %i.vx, align 8, !tbaa !512
-  store ptr %.sroa.50.10.lcssa, ptr %i.wx, align 8, !tbaa !533
+  store ptr %.sroa.0340.11, ptr %i.vv, align 8, !tbaa !476
+  store ptr %.sroa.25.11, ptr %i.vx, align 8, !tbaa !512
+  store ptr %.sroa.50.11, ptr %i.wx, align 8, !tbaa !533
   %.not.i.i.i.i.i119 = icmp eq ptr %24, null
   br i1 %.not.i.i.i.i.i119, label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit120, label %bb.cf
 
@@ -327,16 +317,16 @@ bb.cf:                                            ; preds = %_ZNSt6vectorIPN4llv
   br label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit120
 
 _ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit120: ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge, %bb.cf
-  %i.za = phi ptr [ %.sroa.25.10.lcssa, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge ], [ %.pre580, %bb.cf ]
-  %i.zb = phi ptr [ %.sroa.0340.10.lcssa, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge ], [ %.pre579, %bb.cf ] ; 2 uses
+  %i.za = phi ptr [ %.sroa.25.11, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge ], [ %.pre580, %bb.cf ]
+  %i.zb = phi ptr [ %.sroa.0340.11, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge ], [ %.pre579, %bb.cf ] ; 2 uses
   %i.zc = icmp eq ptr %i.zb, %i.za
   br i1 %i.zc, label %_ZNK4llvm15InstructionCostgeERKS0_.exit104.thread, label %bb.da
 
-.lr.ph522:                                        ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149
-  %.sroa.0289.0521 = phi ptr [ %i.ahw, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ %i.xt, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ] ; 2 uses
-  %.sroa.0340.10520 = phi ptr [ %.sroa.0340.11, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ] ; 6 uses
-  %.sroa.25.10519 = phi ptr [ %.sroa.25.11, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ] ; 5 uses
-  %.sroa.50.10518 = phi ptr [ %.sroa.50.11, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118.preheader ] ; 3 uses
+.lr.ph522:                                        ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149
+  %.sroa.0289.0521 = phi ptr [ %i.ahw, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ %i.xt, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108 ] ; 2 uses
+  %.sroa.0340.10520 = phi ptr [ %.sroa.0340.11, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108 ] ; 6 uses
+  %.sroa.25.10519 = phi ptr [ %.sroa.25.11, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108 ] ; 5 uses
+  %.sroa.50.10518 = phi ptr [ %.sroa.50.11, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149 ], [ null, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit108 ] ; 3 uses
   %i.zd = load ptr, ptr %.sroa.0289.0521, align 8, !tbaa !217 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #26
   store ptr %i.uj, ptr %20, align 8, !tbaa !72
@@ -739,8 +729,8 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIjNS_6detail13DenseSetEmptyENS_12DenseMapInfo
 
 _ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE9push_backERKS2_.exit147: ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i146, %bb.cp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139
   %.sroa.50.11 = phi ptr [ %.sroa.50.10518, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139 ], [ %i.aem, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i146 ], [ %.sroa.50.10518, %bb.cp ] ; 2 uses
-  %.sroa.25.11 = phi ptr [ %.sroa.25.10519, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139 ], [ %i.ael, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i146 ], [ %i.adx, %bb.cp ] ; 2 uses
-  %.sroa.0340.11 = phi ptr [ %.sroa.0340.10520, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139 ], [ %i.aei, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i146 ], [ %.sroa.0340.10520, %bb.cp ] ; 2 uses
+  %.sroa.25.11 = phi ptr [ %.sroa.25.10519, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139 ], [ %i.ael, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i146 ], [ %i.adx, %bb.cp ] ; 3 uses
+  %.sroa.0340.11 = phi ptr [ %.sroa.0340.10520, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139 ], [ %i.aei, %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i146 ], [ %.sroa.0340.10520, %bb.cp ] ; 3 uses
   %i.ahl = load i32, ptr %i.un, align 4, !tbaa !201 ; 2 uses
   %i.ahm = icmp eq i32 %i.ahl, 0
   br i1 %i.ahm, label %_ZN4llvm6detail12DenseSetImplIPNS_10BasicBlockENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit148, label %bb.cy
@@ -770,7 +760,7 @@ _ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EED2Ev.exit149: ; preds = %_ZN4llvm6de
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #26
   %i.ahw = getelementptr inbounds nuw i8, ptr %.sroa.0289.0521, i64 8 ; 2 uses
   %.not415 = icmp eq ptr %i.ahw, %i.xu
-  br i1 %.not415, label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge.loopexit, label %.lr.ph522
+  br i1 %.not415, label %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EE5clearEv.exit118._crit_edge, label %.lr.ph522
 
 bb.da:                                            ; preds = %_ZNSt6vectorIPN4llvm16OutlinableRegionESaIS2_EEaSEOS4_.exit120
   %i.ahx = load ptr, ptr %i.zb, align 8, !tbaa !217

@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %.loopexit.i, %.lr.p
   %i.ar = load ptr, ptr %i.ai, align 8, !tbaa !252
   %i.as = getelementptr inbounds nuw [24 x i8], ptr %i.ar, i64 %.02344.i ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  %i.au = load ptr, ptr %i.at, align 8, !tbaa !253 ; 3 uses
-  %i.av = load ptr, ptr %i.as, align 8, !tbaa !220 ; 3 uses
+  %i.au = load ptr, ptr %i.at, align 8, !tbaa !253 ; 2 uses
+  %i.av = load ptr, ptr %i.as, align 8, !tbaa !220 ; 2 uses
   %i.aw = ptrtoint ptr %i.au to i64
   %i.ax = ptrtoint ptr %i.av to i64
   %i.ay = sub i64 %i.aw, %i.ax
@@ -216,19 +216,15 @@ bb.f:                                             ; preds = %.loopexit.i, %.lr.p
 bb.g:                                             ; preds = %bb.f
   %i.ba = load i8, ptr %i.aq, align 1, !tbaa !219, !range !247, !noundef !248
   %i.bb = trunc nuw i8 %i.ba to i1
-  br i1 %i.bb, label %.critedge30.sink.split.i, label %.preheader.i
-
-.preheader.i:                                     ; preds = %bb.g
-  %.not3541.i = icmp eq ptr %i.av, %i.au
-  br i1 %.not3541.i, label %.loopexit.i, label %.critedge.i
+  br i1 %i.bb, label %.critedge30.sink.split.i, label %.critedge.i
 
 bb.h:                                             ; preds = %.noexc29
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.031.042.i, i64 8 ; 2 uses
   %.not35.i = icmp eq ptr %i.bc, %i.au
   br i1 %.not35.i, label %.loopexit.i, label %.critedge.i
 
-.critedge.i:                                      ; preds = %.preheader.i, %bb.h
-  %.sroa.031.042.i = phi ptr [ %i.bc, %bb.h ], [ %i.av, %.preheader.i ] ; 2 uses
+.critedge.i:                                      ; preds = %bb.g, %bb.h
+  %.sroa.031.042.i = phi ptr [ %i.bc, %bb.h ], [ %i.av, %bb.g ] ; 2 uses
   %i.bd = load i64, ptr %.sroa.031.042.i, align 8, !tbaa !214
   %i.be = load ptr, ptr %i.b, align 8, !tbaa !222
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.bd
@@ -240,7 +236,7 @@ bb.h:                                             ; preds = %.noexc29
   %.not.i28 = icmp eq i32 %i.bh, 1
   br i1 %.not.i28, label %bb.h, label %.critedge30.sink.split.i
 
-.loopexit.i:                                      ; preds = %bb.h, %.preheader.i, %bb.f
+.loopexit.i:                                      ; preds = %bb.h, %bb.f
   %i.bi = add nuw i64 %.02344.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bi, %i.ap
   br i1 %exitcond.not.i, label %.loopexit90, label %bb.f, !llvm.loop !4
@@ -416,8 +412,8 @@ bb.u:                                             ; preds = %.loopexit.i62, %.lr
   %i.cx = load ptr, ptr %i.co, align 8, !tbaa !252
   %i.cy = getelementptr inbounds nuw [24 x i8], ptr %i.cx, i64 %.02344.i53 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
-  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !253 ; 3 uses
-  %i.db = load ptr, ptr %i.cy, align 8, !tbaa !220 ; 3 uses
+  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !253 ; 2 uses
+  %i.db = load ptr, ptr %i.cy, align 8, !tbaa !220 ; 2 uses
   %i.dc = ptrtoint ptr %i.da to i64
   %i.dd = ptrtoint ptr %i.db to i64
   %i.de = sub i64 %i.dc, %i.dd
@@ -427,19 +423,15 @@ bb.u:                                             ; preds = %.loopexit.i62, %.lr
 bb.v:                                             ; preds = %bb.u
   %i.dg = load i8, ptr %i.cw, align 1, !tbaa !219, !range !247, !noundef !248
   %i.dh = trunc nuw i8 %i.dg to i1
-  br i1 %i.dh, label %.critedge30.sink.split.i59, label %.preheader.i54
-
-.preheader.i54:                                   ; preds = %bb.v
-  %.not3541.i55 = icmp eq ptr %i.db, %i.da
-  br i1 %.not3541.i55, label %.loopexit.i62, label %.critedge.i56
+  br i1 %i.dh, label %.critedge30.sink.split.i59, label %.critedge.i56
 
 bb.w:                                             ; preds = %.noexc64
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.031.042.i57, i64 8 ; 2 uses
   %.not35.i61 = icmp eq ptr %i.di, %i.da
   br i1 %.not35.i61, label %.loopexit.i62, label %.critedge.i56
 
-.critedge.i56:                                    ; preds = %.preheader.i54, %bb.w
-  %.sroa.031.042.i57 = phi ptr [ %i.di, %bb.w ], [ %i.db, %.preheader.i54 ] ; 2 uses
+.critedge.i56:                                    ; preds = %bb.v, %bb.w
+  %.sroa.031.042.i57 = phi ptr [ %i.di, %bb.w ], [ %i.db, %bb.v ] ; 2 uses
   %i.dj = load i64, ptr %.sroa.031.042.i57, align 8, !tbaa !214
   %i.dk = load ptr, ptr %i.b, align 8, !tbaa !222
   %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %i.dj
@@ -451,7 +443,7 @@ bb.w:                                             ; preds = %.noexc64
   %.not.i58 = icmp eq i32 %i.dn, 1
   br i1 %.not.i58, label %bb.w, label %.critedge30.sink.split.i59
 
-.loopexit.i62:                                    ; preds = %bb.w, %.preheader.i54, %bb.u
+.loopexit.i62:                                    ; preds = %bb.w, %bb.u
   %i.do = add nuw i64 %.02344.i53, 1              ; 2 uses
   %exitcond.not.i63 = icmp eq i64 %i.do, %i.cv
   br i1 %exitcond.not.i63, label %.loopexit83, label %bb.u, !llvm.loop !4
@@ -854,8 +846,8 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !252
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.02344 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !253  ; 3 uses
-  %i.o = load ptr, ptr %i.l, align 8, !tbaa !220  ; 3 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !253  ; 2 uses
+  %i.o = load ptr, ptr %i.l, align 8, !tbaa !220  ; 2 uses
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = sub i64 %i.p, %i.q
@@ -865,19 +857,15 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit
 bb.c:                                             ; preds = %bb.b
   %i.t = load i8, ptr %i.i, align 1, !tbaa !219, !range !247, !noundef !248
   %i.u = trunc nuw i8 %i.t to i1
-  br i1 %i.u, label %.critedge30.sink.split, label %.preheader
-
-.preheader:                                       ; preds = %bb.c
-  %.not3541 = icmp eq ptr %i.o, %i.n
-  br i1 %.not3541, label %.loopexit, label %.critedge
+  br i1 %i.u, label %.critedge30.sink.split, label %.critedge
 
 bb.d:                                             ; preds = %.critedge
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.031.042, i64 8 ; 2 uses
   %.not35 = icmp eq ptr %i.v, %i.n
   br i1 %.not35, label %.loopexit, label %.critedge
 
-.critedge:                                        ; preds = %.preheader, %bb.d
-  %.sroa.031.042 = phi ptr [ %i.v, %bb.d ], [ %i.o, %.preheader ] ; 2 uses
+.critedge:                                        ; preds = %bb.c, %bb.d
+  %.sroa.031.042 = phi ptr [ %i.v, %bb.d ], [ %i.o, %bb.c ] ; 2 uses
   %i.w = load i64, ptr %.sroa.031.042, align 8, !tbaa !214
   %i.x = load ptr, ptr %i.j, align 8, !tbaa !222
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.w
@@ -886,7 +874,7 @@ bb.d:                                             ; preds = %.critedge
   %.not = icmp eq i32 %i.aa, 1
   br i1 %.not, label %bb.d, label %.critedge30.sink.split
 
-.loopexit:                                        ; preds = %bb.d, %.preheader, %bb.b
+.loopexit:                                        ; preds = %bb.d, %bb.b
   %i.ab = add nuw i64 %.02344, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.h
   br i1 %exitcond.not, label %.critedge30, label %bb.b, !llvm.loop !4

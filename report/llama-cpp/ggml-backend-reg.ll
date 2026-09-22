@@ -202,8 +202,8 @@ _ZNSt6vectorIcSaIcEED2Ev.exit54.i.thread:         ; preds = %bb.n
   %i.cw = phi i64 [ %i.gh, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ 1024, %.lr.ph.preheader.i ] ; 12 uses
   %i.cx = phi i64 [ %i.gg, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ %i.cs, %.lr.ph.preheader.i ]
   %i.cy = phi i64 [ %i.gf, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ %i.ct, %.lr.ph.preheader.i ]
-  %.sroa.059.0103.i = phi ptr [ %.sroa.059.1.i, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ %i.co, %.lr.ph.preheader.i ] ; 16 uses
-  %.sroa.14.0102.i = phi ptr [ %.sroa.14.1.i, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ %i.cp, %.lr.ph.preheader.i ] ; 7 uses
+  %.sroa.059.0103.i = phi ptr [ %.sroa.059.1.i, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ %i.co, %.lr.ph.preheader.i ] ; 15 uses
+  %.sroa.14.0102.i = phi ptr [ %.sroa.14.1.i, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ %i.cp, %.lr.ph.preheader.i ] ; 6 uses
   %.sroa.22.0101.i = phi ptr [ %.sroa.22.1.i, %_ZNSt6vectorIcSaIcEE6resizeEm.exit.i ], [ %i.cp, %.lr.ph.preheader.i ] ; 11 uses
   %i.cz = icmp slt i64 %i.cv, %i.cw
   br i1 %i.cz, label %bb.p, label %bb.aj
@@ -519,22 +519,15 @@ _ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.an
   store i8 0, ptr %i.fw, align 1, !tbaa !42, !noalias !174
   %i.fx = add nsw i64 %i.cw, -1                   ; 2 uses
   %i.fy = icmp eq i64 %i.fx, 0
-  br i1 %i.fy, label %_ZSt27__uninitialized_default_n_aIPcmcET_S1_T0_RSaIT1_E.exit31.i.i.i, label %bb.ap
+  br i1 %i.fy, label %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i.i, label %bb.ap
 
 bb.ap:                                            ; preds = %.noexc39.i
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fw, i64 1
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.fz, i8 0, i64 %i.fx, i1 false), !noalias !174
-  br label %_ZSt27__uninitialized_default_n_aIPcmcET_S1_T0_RSaIT1_E.exit31.i.i.i
-
-_ZSt27__uninitialized_default_n_aIPcmcET_S1_T0_RSaIT1_E.exit31.i.i.i: ; preds = %bb.ap, %.noexc39.i
-  %.not35.i.i.i = icmp eq ptr %.sroa.14.0102.i, %.sroa.059.0103.i
-  br i1 %.not35.i.i.i, label %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i.i, label %41
-
-41:                                               ; preds = %_ZSt27__uninitialized_default_n_aIPcmcET_S1_T0_RSaIT1_E.exit31.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.fv, ptr align 1 %.sroa.059.0103.i, i64 %i.cw, i1 false), !noalias !174
   br label %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i.i
 
-_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i.i: ; preds = %41, %_ZSt27__uninitialized_default_n_aIPcmcET_S1_T0_RSaIT1_E.exit31.i.i.i
+_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i.i: ; preds = %bb.ap, %.noexc39.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.fv, ptr align 1 %.sroa.059.0103.i, i64 %i.cw, i1 false), !noalias !174
   %i.ga = sub i64 %i.fl, %i.cx
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.059.0103.i, i64 noundef %i.ga) #25, !noalias !174
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.fj

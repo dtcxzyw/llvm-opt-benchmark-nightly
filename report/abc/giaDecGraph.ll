@@ -205,8 +205,8 @@ bb.dp:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.alb = load i32, ptr %i.bc, align 4, !tbaa !122
   %i.alc = add nsw i32 %i.alb, 2
   %i.ald = sext i32 %i.alc to i64
-  %i.ale = load ptr, ptr %i.bd, align 8, !tbaa !123 ; 8 uses
-  %i.alf = load ptr, ptr %i.s, align 8, !tbaa !124 ; 7 uses
+  %i.ale = load ptr, ptr %i.bd, align 8, !tbaa !123 ; 7 uses
+  %i.alf = load ptr, ptr %i.s, align 8, !tbaa !124 ; 6 uses
   %i.alg = ptrtoint ptr %i.ale to i64             ; 2 uses
   %i.alh = ptrtoint ptr %i.alf to i64             ; 2 uses
   %i.ali = sub i64 %i.alg, %i.alh                 ; 7 uses
@@ -404,8 +404,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit.i: ; pre
   br i1 %.not.i.i.i32.i.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i, label %.lr.ph.i.i.i29.i, !llvm.loop !17
 
 _ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i: ; preds = %.lr.ph.i.i.i29.i, %.lr.ph.i.i.i29.i.prol.loopexit
-  %.not9.i.i.i.i.i.i = icmp eq ptr %i.alf, %i.ale
-  br i1 %.not9.i.i.i.i.i.i, label %_ZNSt12_Destroy_auxILb0EE9__destroyIPN8DecGraph12DecisionNodeEEEvT_S5_.exit, label %.lr.ph.i.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i, %_ZSt10_ConstructIN8DecGraph12DecisionNodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i
   %.011.i.i.i.i.i.i = phi ptr [ %i.aov, %_ZSt10_ConstructIN8DecGraph12DecisionNodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i ], [ %i.amz, %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i ] ; 6 uses
@@ -519,7 +518,7 @@ _ZSt8_DestroyIN8DecGraph12DecisionNodeEEvPT_.exit.i: ; preds = %_ZN8DecGraph14Tr
   %.not.i448 = icmp eq ptr %i.apz, %i.ale
   br i1 %.not.i448, label %_ZNSt12_Destroy_auxILb0EE9__destroyIPN8DecGraph12DecisionNodeEEEvT_S5_.exit, label %.lr.ph.i446, !llvm.loop !19
 
-_ZNSt12_Destroy_auxILb0EE9__destroyIPN8DecGraph12DecisionNodeEEEvT_S5_.exit: ; preds = %_ZSt8_DestroyIN8DecGraph12DecisionNodeEEvPT_.exit.i, %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i
+_ZNSt12_Destroy_auxILb0EE9__destroyIPN8DecGraph12DecisionNodeEEEvT_S5_.exit: ; preds = %_ZSt8_DestroyIN8DecGraph12DecisionNodeEEvPT_.exit.i
   %.not.i35.i = icmp eq ptr %i.alf, null
   br i1 %.not.i35.i, label %_ZNSt12_Vector_baseIN8DecGraph12DecisionNodeESaIS1_EE13_M_deallocateEPS1_m.exit.i, label %bb.eb
 
@@ -922,8 +921,8 @@ _ZNSt6vectorIfSaIfEED2Ev.exit235:                 ; preds = %_ZNSt6vectorIiSaIiE
   %i.xn = load i32, ptr %i.aj, align 4, !tbaa !122
   %i.xo = add nsw i32 %i.xn, 2
   %i.xp = sext i32 %i.xo to i64
-  %i.xq = load ptr, ptr %i.ak, align 8, !tbaa !123 ; 8 uses
-  %i.xr = load ptr, ptr %i.d, align 8, !tbaa !124 ; 7 uses
+  %i.xq = load ptr, ptr %i.ak, align 8, !tbaa !123 ; 7 uses
+  %i.xr = load ptr, ptr %i.d, align 8, !tbaa !124 ; 6 uses
   %i.xs = ptrtoint ptr %i.xq to i64               ; 2 uses
   %i.xt = ptrtoint ptr %i.xr to i64               ; 2 uses
   %i.xu = sub i64 %i.xs, %i.xt                    ; 7 uses
@@ -1121,8 +1120,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit.i: ; pre
   br i1 %.not.i.i.i32.i.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i, label %.lr.ph.i.i.i29.i, !llvm.loop !17
 
 _ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i: ; preds = %.lr.ph.i.i.i29.i, %.lr.ph.i.i.i29.i.prol.loopexit
-  %.not9.i.i.i.i.i.i = icmp eq ptr %i.xr, %i.xq
-  br i1 %.not9.i.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN8DecGraph12DecisionNodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit.i, label %.lr.ph.i.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i, %_ZSt10_ConstructIN8DecGraph12DecisionNodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i
   %.011.i.i.i.i.i.i = phi ptr [ %i.abh, %_ZSt10_ConstructIN8DecGraph12DecisionNodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i ], [ %i.zl, %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i ] ; 6 uses
@@ -1162,7 +1160,7 @@ _ZSt10_ConstructIN8DecGraph12DecisionNodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i: ;
   %.not.i.i.i.i.i.i312 = icmp eq ptr %i.abg, %i.xq
   br i1 %.not.i.i.i.i.i.i312, label %_ZSt34__uninitialized_move_if_noexcept_aIPN8DecGraph12DecisionNodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !18
 
-_ZSt34__uninitialized_move_if_noexcept_aIPN8DecGraph12DecisionNodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit.i: ; preds = %_ZSt10_ConstructIN8DecGraph12DecisionNodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i
+_ZSt34__uninitialized_move_if_noexcept_aIPN8DecGraph12DecisionNodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit.i: ; preds = %_ZSt10_ConstructIN8DecGraph12DecisionNodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i
   call void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN8DecGraph12DecisionNodeEEEvT_S5_(ptr noundef %i.xr, ptr noundef %i.xq)
   %.not.i35.i = icmp eq ptr %i.xr, null
   br i1 %.not.i35.i, label %_ZNSt12_Vector_baseIN8DecGraph12DecisionNodeESaIS1_EE13_M_deallocateEPS1_m.exit.i, label %bb.bu

@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.c
   br label %_ZN5ErrorD2Ev.exit125
 
 bb.g:                                             ; preds = %bb.d
-  %i.bh = load i64, ptr %i.d, align 8, !tbaa !802 ; 3 uses
+  %i.bh = load i64, ptr %i.d, align 8, !tbaa !802 ; 2 uses
   %i.bi = load i32, ptr %i.e, align 8, !tbaa !803
-  %i.bj = zext i32 %i.bi to i64                   ; 3 uses
+  %i.bj = zext i32 %i.bi to i64                   ; 2 uses
   %i.bk = icmp ult i64 %i.bh, %i.bj
   br i1 %i.bk, label %.thread.i.i, label %bb.m
 
@@ -545,8 +545,7 @@ bb.ap:                                            ; preds = %bb.s
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, i8 0, i64 24, i1 false)
   %i.eq = load i32, ptr %i.h, align 8, !tbaa !809
   store i32 %i.eq, ptr %10, align 8, !tbaa !244
-  %.not55180 = icmp eq i64 %i.bh, %i.bj
-  br i1 %.not55180, label %._crit_edge, label %.lr.ph
+  br label %.lr.ph
 
 bb.aq:                                            ; preds = %bb.ca
   %i.er = landingpad { ptr, i32 }
@@ -556,8 +555,8 @@ bb.aq:                                            ; preds = %bb.ca
 .lr.ph:                                           ; preds = %bb.ap, %bb.bu
   %.025181 = phi i64 [ %i.im, %bb.bu ], [ 0, %bb.ap ] ; 2 uses
   %i.es = load i64, ptr %i.a, align 8, !tbaa !72
-  %13 = icmp eq i64 %i.es, 0
-  br i1 %13, label %bb.ar, label %bb.bn
+  %.not242.not.not = icmp ne i64 %i.es, 0         ; 2 uses
+  br i1 %.not242.not.not, label %bb.bn, label %bb.ar
 
 bb.ar:                                            ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
@@ -920,7 +919,7 @@ bb.bu:                                            ; preds = %bb.bt, %_ZNSt3__114
           cleanup
   br label %.body
 
-._crit_edge:                                      ; preds = %bb.bu, %bb.ap
+._crit_edge:                                      ; preds = %bb.bu
   %i.in = load ptr, ptr %i.ac, align 8, !tbaa !249 ; 7 uses
   %i.io = load ptr, ptr %i.ad, align 8, !tbaa !250
   %i.ip = icmp ult ptr %i.in, %i.io
@@ -1009,7 +1008,6 @@ _ZNSt3__16vectorIN8Box_tref9ReferenceENS_9allocatorIS2_EEE9push_backB8ne180100ER
   br label %bb.cb
 
 bb.cb:                                            ; preds = %.thread, %_ZNSt3__16vectorIN8Box_tref9ReferenceENS_9allocatorIS2_EEE9push_backB8ne180100ERKS2_.exit
-  %.not55152 = phi i1 [ false, %.thread ], [ true, %_ZNSt3__16vectorIN8Box_tref9ReferenceENS_9allocatorIS2_EEE9push_backB8ne180100ERKS2_.exit ]
   %i.jj = load ptr, ptr %i.g, align 8, !tbaa !152 ; 4 uses
   %.not.i.i.i121 = icmp eq ptr %i.jj, null
   br i1 %.not.i.i.i121, label %_ZN8Box_tref9ReferenceD2Ev.exit, label %bb.cc
@@ -1028,7 +1026,7 @@ _ZN8Box_tref9ReferenceD2Ev.exit:                  ; preds = %bb.cb, %bb.cc
   br label %bb.cd
 
 bb.cd:                                            ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit81, %_ZN8Box_tref9ReferenceD2Ev.exit, %_ZNSt3__118basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev.exit, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit, %bb.e
-  %.4 = phi i1 [ false, %bb.e ], [ false, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit ], [ false, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit81 ], [ false, %_ZNSt3__118basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev.exit ], [ %.not55152, %_ZN8Box_tref9ReferenceD2Ev.exit ]
+  %.4 = phi i1 [ false, %bb.e ], [ false, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit ], [ false, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit81 ], [ false, %_ZNSt3__118basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev.exit ], [ %.not242.not.not, %_ZN8Box_tref9ReferenceD2Ev.exit ]
   %i.jo = load i8, ptr %i.c, align 8
   %i.jp = trunc i8 %i.jo to i1
   br i1 %i.jp, label %bb.ce, label %_ZN5ErrorD2Ev.exit

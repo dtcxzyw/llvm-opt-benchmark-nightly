@@ -205,7 +205,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer"
 
 "_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer": ; preds = %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer.outer", %bb.cb
-  %.020.ph = phi ptr [ %.118.lcssa.i, %bb.cb ], [ %.020.ph.ph, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer.outer" ] ; 70 uses
+  %.020.ph = phi ptr [ %.118.lcssa.i, %bb.cb ], [ %.020.ph.ph, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer.outer" ] ; 69 uses
   %.017.ph = phi ptr [ %.017, %bb.cb ], [ %.017.ph.ph, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer.outer" ]
   %.046.ph = phi i64 [ %i.jc, %bb.cb ], [ %.046.ph.ph, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer.outer" ]
   %i.a = ptrtoint ptr %.020.ph to i64             ; 2 uses
@@ -225,7 +225,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit"
 
 "_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit": ; preds = %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer", %bb.ca
-  %.017 = phi ptr [ %i.np, %bb.ca ], [ %.017.ph, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer" ] ; 29 uses
+  %.017 = phi ptr [ %i.np, %bb.ca ], [ %.017.ph, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer" ] ; 28 uses
   %.046 = phi i64 [ %i.jc, %bb.ca ], [ %.046.ph, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer" ] ; 2 uses
   %i.m = ptrtoint ptr %.017 to i64
   %i.n = sub i64 %i.m, %i.a                       ; 4 uses
@@ -313,7 +313,7 @@ bb.g:                                             ; preds = %"_ZNSt3__116__inser
 
 bb.h:                                             ; preds = %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit"
   %i.ar = icmp slt i64 %i.n, 2112
-  br i1 %i.ar, label %bb.i, label %4
+  br i1 %i.ar, label %bb.i, label %bb.x
 
 bb.i:                                             ; preds = %bb.h
   %i.as = icmp eq ptr %.020.ph, %.017
@@ -525,13 +525,9 @@ bb.w:                                             ; preds = %_ZN3jxl12_GLOBAL__N
   %.not.i72 = icmp eq ptr %storemerge.i71, %.017
   br i1 %.not.i72, label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.thread", label %.lr.ph.i66, !llvm.loop !382
 
-4:                                                ; preds = %bb.h
-  %5 = icmp eq i64 %.046, 0
-  br i1 %5, label %bb.x, label %bb.bb
-
-bb.x:                                             ; preds = %4
-  %i.dg = icmp eq ptr %.020.ph, %.017
-  br i1 %i.dg, label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.thread", label %bb.y
+bb.x:                                             ; preds = %bb.h
+  %i.dg = icmp eq i64 %.046, 0
+  br i1 %i.dg, label %bb.y, label %bb.bb
 
 bb.y:                                             ; preds = %bb.x
   %i.dh = add nsw i64 %i.o, -2
@@ -934,7 +930,7 @@ _ZN3jxl12_GLOBAL__N_118ConnectedComponentD2Ev.exit.i.i.i.i.i: ; preds = %bb.ba, 
   %i.jb = icmp sgt i64 %.014.i.i.i, 2
   br i1 %i.jb, label %bb.ak, label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.thread", !llvm.loop !387
 
-bb.bb:                                            ; preds = %4
+bb.bb:                                            ; preds = %bb.x
   %i.jc = add nsw i64 %.046, -1                   ; 4 uses
   %i.jd = lshr i64 %i.o, 1
   %i.je = icmp samesign ugt i64 %i.n, 11264
@@ -1337,7 +1333,7 @@ bb.cb:                                            ; preds = %bb.bz
   tail call fastcc void @"_ZNSt3__111__introsortINS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentELb0EEEvT1_SO_T0_NS_15iterator_traitsISO_E15difference_typeEb"(ptr noundef %.020.ph, ptr noundef nonnull %i.np, i64 noundef %i.jc, i1 noundef zeroext %.048.ph.ph) #27
   br label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.outer.outer.backedge"
 
-"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.thread": ; preds = %bb.ca, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit", %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit", %"_ZNSt3__110__pop_heapB8nn180100INS_17_ClassicAlgPolicyEZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SN_RT0_NS_15iterator_traitsISN_E15difference_typeE.exit.i.i.i", %bb.w, %bb.p, %bb.x, %bb.q, %bb.j, %_ZNSt3__18_IterOpsINS_17_ClassicAlgPolicyEE9iter_swapB8nn180100IRPN3jxl12_GLOBAL__N_118ConnectedComponentES8_EEvOT_OT0_.exit, %bb.f, %bb.e, %bb.g, %bb.b
+"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit.thread": ; preds = %bb.ca, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit", %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SO_T0_.exit", %"_ZNSt3__110__pop_heapB8nn180100INS_17_ClassicAlgPolicyEZN3jxl22DetectGaussianEllipsesERKNS2_6Image3IfEERKNS2_5RectTImEERKNS2_20GaussianDetectParamsERKNS2_18EllipseQuantParamsEPNS2_10ThreadPoolEE3$_0PNS2_12_GLOBAL__N_118ConnectedComponentEEEvT1_SN_RT0_NS_15iterator_traitsISN_E15difference_typeE.exit.i.i.i", %bb.w, %bb.p, %bb.q, %bb.j, %_ZNSt3__18_IterOpsINS_17_ClassicAlgPolicyEE9iter_swapB8nn180100IRPN3jxl12_GLOBAL__N_118ConnectedComponentES8_EEvOT_OT0_.exit, %bb.f, %bb.e, %bb.g, %bb.b
   ret void
 }
 

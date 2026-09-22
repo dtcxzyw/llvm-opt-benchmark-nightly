@@ -202,8 +202,8 @@ _ZNK17QArrayDataPointerI10QByteArrayE14freeSpaceAtEndEv.exit.i241: ; preds = %bb
   %i.hd = load ptr, ptr %i.hc, align 8            ; 5 uses
   %i.he = ptrtoint ptr %i.gl to i64
   %i.hf = add i64 %i.he, 23
-  %i.hg = and i64 %i.hf, -8                       ; 2 uses
-  %i.hh = ptrtoint ptr %i.hd to i64               ; 2 uses
+  %i.hg = and i64 %i.hf, -8
+  %i.hh = ptrtoint ptr %i.hd to i64
   %i.hi = sub i64 %i.hh, %i.hg                    ; 3 uses
   %.neg4.i.i = sdiv exact i64 %i.hi, -24
   %.neg3.i.i242 = sub i64 %i.hb, %i.gm
@@ -228,11 +228,9 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %i.ho, label %_ZN9QtPrivate20q_relocate_overlap_nI10QByteArrayxEEvPT_T0_S3_.exit.i.i.i, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %18 = icmp eq i64 %i.hg, %i.hh
   %i.hp = icmp eq ptr %i.hd, null
-  %or.cond.i.i.i.i = or i1 %i.hp, %18
   %i.hq = icmp eq ptr %i.hn, null
-  %or.cond3.i.i.i.i = or i1 %or.cond.i.i.i.i, %i.hq
+  %or.cond3.i.i.i.i = or i1 %i.hp, %i.hq
   br i1 %or.cond3.i.i.i.i, label %_ZN9QtPrivate20q_relocate_overlap_nI10QByteArrayxEEvPT_T0_S3_.exit.i.i.i, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
@@ -635,8 +633,8 @@ _ZNK17QArrayDataPointerI10QByteArrayE14freeSpaceAtEndEv.exit.i91: ; preds = %bb.
   %i.dq = load ptr, ptr %i.dp, align 8            ; 5 uses
   %i.dr = ptrtoint ptr %i.cy to i64
   %i.ds = add i64 %i.dr, 23
-  %i.dt = and i64 %i.ds, -8                       ; 2 uses
-  %i.du = ptrtoint ptr %i.dq to i64               ; 2 uses
+  %i.dt = and i64 %i.ds, -8
+  %i.du = ptrtoint ptr %i.dq to i64
   %i.dv = sub i64 %i.du, %i.dt                    ; 3 uses
   %.neg4.i.i = sdiv exact i64 %i.dv, -24
   %.neg3.i.i92 = sub i64 %i.do, %i.cz
@@ -661,11 +659,9 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.eb, label %_ZN9QtPrivate20q_relocate_overlap_nI10QByteArrayxEEvPT_T0_S3_.exit.i.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %8 = icmp eq i64 %i.dt, %i.du
   %i.ec = icmp eq ptr %i.dq, null
-  %or.cond.i.i.i.i = or i1 %i.ec, %8
   %i.ed = icmp eq ptr %i.ea, null
-  %or.cond3.i.i.i.i = or i1 %or.cond.i.i.i.i, %i.ed
+  %or.cond3.i.i.i.i = or i1 %i.ec, %i.ed
   br i1 %or.cond3.i.i.i.i, label %_ZN9QtPrivate20q_relocate_overlap_nI10QByteArrayxEEvPT_T0_S3_.exit.i.i.i, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak

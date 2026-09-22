@@ -204,13 +204,13 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
   %i.r = phi ptr [ %i.f, %.lr.ph.lr.ph ], [ %i.jk, %.outer ]
   %.0119.ph743 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %i.ae, %.outer ]
-  %.sroa.0489.0.ph742 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.0489.2, %.outer ] ; 13 uses
-  %.sroa.17.0.ph741 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.17.2, %.outer ] ; 5 uses
-  %.0512.ph740 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.1513, %.outer ] ; 4 uses
-  %.sroa.32.0.ph739 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.32.2, %.outer ] ; 17 uses
-  %.sroa.18.0.ph738 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.18.1, %.outer ] ; 7 uses
-  %.sroa.0464.0.ph737 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.0464.2, %.outer ] ; 19 uses
-  %.sroa.27.0.ph736 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.27.2, %.outer ] ; 12 uses
+  %.sroa.0489.0.ph742 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.0489.2, %.outer ] ; 12 uses
+  %.sroa.17.0.ph741 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.17.2, %.outer ] ; 4 uses
+  %.0512.ph740 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.1513, %.outer ] ; 3 uses
+  %.sroa.32.0.ph739 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.32.2, %.outer ] ; 16 uses
+  %.sroa.18.0.ph738 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.18.1, %.outer ] ; 6 uses
+  %.sroa.0464.0.ph737 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.0464.2, %.outer ] ; 18 uses
+  %.sroa.27.0.ph736 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.27.2, %.outer ] ; 11 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.backedge
@@ -610,21 +610,17 @@ bb.ab:                                            ; preds = %_ZN11StringUtils10S
   br i1 %i.dq, label %bb.b, label %.outer._crit_edge.loopexit, !llvm.loop !80
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dr = load ptr, ptr %i.q, align 8, !tbaa !111 ; 3 uses
-  %i.ds = load ptr, ptr %6, align 8, !tbaa !112   ; 7 uses
+  %i.dr = load ptr, ptr %i.q, align 8, !tbaa !111 ; 2 uses
+  %i.ds = load ptr, ptr %6, align 8, !tbaa !112   ; 5 uses
   %i.dt = ptrtoint ptr %i.dr to i64
   %i.du = ptrtoint ptr %i.ds to i64
   %i.dv = sub i64 %i.dt, %i.du                    ; 2 uses
   %i.dw = icmp ugt i64 %i.dv, 12
-  br i1 %i.dw, label %24, label %bb.at
+  br i1 %i.dw, label %.preheader546, label %bb.at
 
-24:                                               ; preds = %bb.ac
-  %25 = icmp eq ptr %.sroa.0489.0.ph742, %.sroa.17.0.ph741
-  br i1 %25, label %.preheader546, label %bb.ai
-
-.preheader546:                                    ; preds = %24
-  %.not = icmp eq ptr %i.dr, %i.ds
-  br i1 %.not, label %.outer, label %.lr.ph732
+.preheader546:                                    ; preds = %bb.ac
+  %.not = icmp eq ptr %.sroa.0489.0.ph742, %.sroa.17.0.ph741
+  br i1 %.not, label %.lr.ph732, label %bb.ai
 
 .lr.ph732:                                        ; preds = %.preheader546, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
   %i.dx = phi ptr [ %i.er, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ %i.ds, %.preheader546 ] ; 2 uses
@@ -721,7 +717,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZNSt6vectorIiSaIiE
           cleanup
   br label %.loopexit548
 
-bb.ai:                                            ; preds = %24
+bb.ai:                                            ; preds = %.preheader546
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
   invoke void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(112) %12)
           to label %bb.aj unwind label %bb.an
@@ -1124,15 +1120,15 @@ bb.cf:                                            ; preds = %bb.ce, %bb.ca
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #23
   br label %.loopexit548
 
-.outer:                                           ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, %.preheader546, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274
-  %26 = phi ptr [ %i.ik, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %i.ds, %.preheader546 ], [ %i.er, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
-  %.sroa.27.2 = phi ptr [ %.sroa.27.0.ph736, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.27.0.ph736, %.preheader546 ], [ %.sroa.27.5, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
-  %.sroa.0464.2 = phi ptr [ %.sroa.0464.7, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.0464.0.ph737, %.preheader546 ], [ %.sroa.0464.0.ph737, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
-  %.sroa.18.1 = phi ptr [ %.sroa.18.4, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.18.0.ph738, %.preheader546 ], [ %.sroa.18.0.ph738, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
-  %.sroa.32.2 = phi ptr [ %.sroa.32.7, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.32.0.ph739, %.preheader546 ], [ %.sroa.32.0.ph739, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
-  %.1513 = phi i32 [ %.sroa.speculated448, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.0512.ph740, %.preheader546 ], [ %.0512.ph740, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
-  %.sroa.17.2 = phi ptr [ %.sroa.17.0.ph741, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.17.0.ph741, %.preheader546 ], [ %.sroa.17.3, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
-  %.sroa.0489.2 = phi ptr [ %.sroa.0489.0.ph742, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.0489.0.ph742, %.preheader546 ], [ %.sroa.0489.5, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
+.outer:                                           ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274
+  %24 = phi ptr [ %i.ik, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %i.er, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
+  %.sroa.27.2 = phi ptr [ %.sroa.27.0.ph736, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.27.5, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
+  %.sroa.0464.2 = phi ptr [ %.sroa.0464.7, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.0464.0.ph737, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
+  %.sroa.18.1 = phi ptr [ %.sroa.18.4, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.18.0.ph738, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
+  %.sroa.32.2 = phi ptr [ %.sroa.32.7, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.32.0.ph739, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
+  %.1513 = phi i32 [ %.sroa.speculated448, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.0512.ph740, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
+  %.sroa.17.2 = phi ptr [ %.sroa.17.0.ph741, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.17.3, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
+  %.sroa.0489.2 = phi ptr [ %.sroa.0489.0.ph742, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit274 ], [ %.sroa.0489.5, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 2 uses
   %i.jh = load ptr, ptr %2, align 8, !tbaa !13
   %i.ji = getelementptr i8, ptr %i.jh, i64 -24
   %i.jj = load i64, ptr %i.ji, align 8
@@ -1147,7 +1143,7 @@ bb.cf:                                            ; preds = %bb.ce, %bb.ca
   br label %.outer._crit_edge
 
 .outer._crit_edge:                                ; preds = %.outer, %.outer._crit_edge.loopexit
-  %i.jo = phi ptr [ %.pre911, %.outer._crit_edge.loopexit ], [ %26, %.outer ] ; 3 uses
+  %i.jo = phi ptr [ %.pre911, %.outer._crit_edge.loopexit ], [ %24, %.outer ] ; 3 uses
   %.sroa.27.0.ph.lcssa707 = phi ptr [ %.sroa.27.0.ph736, %.outer._crit_edge.loopexit ], [ %.sroa.27.2, %.outer ] ; 2 uses
   %.sroa.0464.0.ph.lcssa688 = phi ptr [ %.sroa.0464.0.ph737, %.outer._crit_edge.loopexit ], [ %.sroa.0464.2, %.outer ] ; 2 uses
   %.sroa.18.0.ph.lcssa673 = phi ptr [ %.sroa.18.0.ph738, %.outer._crit_edge.loopexit ], [ %.sroa.18.1, %.outer ] ; 2 uses

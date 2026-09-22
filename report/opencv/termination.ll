@@ -205,8 +205,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.e(ptr noundef nonnull align 8 dereferenceable(8) %i.b) ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !126  ; 4 uses
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !127  ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !126  ; 3 uses
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !127  ; 2 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
@@ -248,34 +248,25 @@ bb.c:                                             ; preds = %bb.a
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.an = load i32, ptr %i.am, align 4, !tbaa !39
   %i.ao = sitofp i32 %i.an to double              ; 3 uses
-  %i.ap = tail call noundef double @pow(double noundef %i.al, double noundef %i.ao) #16 ; 3 uses
-  %.not53 = icmp eq ptr %i.i, %i.h
-  br i1 %.not53, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.c
+  %i.ap = tail call noundef double @pow(double noundef %i.al, double noundef %i.ao) #16 ; 2 uses
   %3 = fsub double 1.000000e+00, %i.al            ; 3 uses
   %4 = fdiv double 1.000000e+00, %3
-  %5 = fneg double %i.ap
+  %5 = fneg double %i.ap                          ; 2 uses
   br label %bb.d
 
-._crit_edge.loopexit:                             ; preds = %bb.f
-  %6 = sitofp i32 %.1 to double
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
-  %.033.lcssa = phi double [ 0.000000e+00, %bb.c ], [ %.134, %._crit_edge.loopexit ]
-  %.0.lcssa = phi double [ 0.000000e+00, %bb.c ], [ %6, %._crit_edge.loopexit ] ; 2 uses
-  %7 = fsub double 1.000000e+00, %i.ap
-  %i.aq = tail call noundef double @pow(double noundef %7, double noundef %.0.lcssa) #16
+._crit_edge:                                      ; preds = %bb.f
+  %6 = fsub double 1.000000e+00, %i.ap
+  %7 = sitofp i32 %.1 to double                   ; 2 uses
+  %i.aq = tail call noundef double @pow(double noundef %6, double noundef %7) #16
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.as = load double, ptr %i.ar, align 8, !tbaa !37 ; 4 uses
   %i.at = fcmp olt double %i.aq, %i.as
   br i1 %i.at, label %bb.g, label %bb.h
 
-bb.d:                                             ; preds = %.lr.ph, %bb.f
-  %.056 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.f ]  ; 2 uses
-  %.03355 = phi double [ 0.000000e+00, %.lr.ph ], [ %.134, %bb.f ] ; 2 uses
-  %.sroa.049.054 = phi ptr [ %i.i, %.lr.ph ], [ %i.cl, %bb.f ] ; 4 uses
+bb.d:                                             ; preds = %bb.c, %bb.f
+  %.056 = phi i32 [ 0, %bb.c ], [ %.1, %bb.f ]    ; 2 uses
+  %.03355 = phi double [ 0.000000e+00, %bb.c ], [ %.134, %bb.f ] ; 2 uses
+  %.sroa.049.054 = phi ptr [ %i.i, %bb.c ], [ %i.cl, %bb.f ] ; 4 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.049.054, i64 24
   %i.av = load i32, ptr %i.au, align 8, !tbaa !129 ; 3 uses
   %i.aw = icmp eq i32 %i.av, 0
@@ -331,7 +322,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %.1 = phi i32 [ %i.ck, %bb.e ], [ %.056, %bb.d ] ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.049.054, i64 32 ; 2 uses
   %.not = icmp eq ptr %i.cl, %i.h
-  br i1 %.not, label %._crit_edge.loopexit, label %bb.d
+  br i1 %.not, label %._crit_edge, label %bb.d
 
 bb.g:                                             ; preds = %._crit_edge
   %i.cm = tail call noundef double @pow(double noundef %i.al, double noundef %i.ao) #16
@@ -350,16 +341,15 @@ bb.g:                                             ; preds = %._crit_edge
   br label %bb.n
 
 bb.h:                                             ; preds = %._crit_edge
-  %i.cw = fsub double %i.as, %.033.lcssa
+  %i.cw = fsub double %i.as, %.134
   %i.cx = getelementptr inbounds i8, ptr %i.h, i64 -16
   %i.cy = load double, ptr %i.cx, align 8, !tbaa !130
   %i.cz = fdiv double 1.000000e+00, %i.cy
   %i.da = fsub double 1.000000e+00, %i.cz
-  %8 = fneg double %i.ap
-  %i.db = tail call double @llvm.fmuladd.f64(double %8, double %i.da, double 1.000000e+00)
+  %i.db = tail call double @llvm.fmuladd.f64(double %5, double %i.da, double 1.000000e+00)
   %i.dc = tail call double @log(double noundef %i.db) #16
   %i.dd = fdiv double %i.cw, %i.dc
-  %i.de = fadd double %i.dd, %.0.lcssa            ; 4 uses
+  %i.de = fadd double %i.dd, %7                   ; 4 uses
   %i.df = tail call double @llvm.fabs.f64(double %i.de)
   %or.cond = fcmp ueq double %i.df, +inf
   br i1 %or.cond, label %bb.i, label %bb.j

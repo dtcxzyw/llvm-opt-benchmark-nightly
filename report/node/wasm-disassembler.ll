@@ -205,47 +205,37 @@ bb.aj:                                            ; preds = %._crit_edge
 bb.ak:                                            ; preds = %bb.aj
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gh, i64 344 ; 2 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gh, i64 352 ; 2 uses
-  %i.gn = load ptr, ptr %i.gm, align 8            ; 3 uses
-  %i.go = load ptr, ptr %i.gl, align 8            ; 3 uses
+  %i.gn = load ptr, ptr %i.gm, align 8
+  %i.go = load ptr, ptr %i.gl, align 8
   %i.gp = ptrtoint ptr %i.gn to i64
   %i.gq = ptrtoint ptr %i.go to i64
   %i.gr = sub i64 %i.gp, %i.gq                    ; 4 uses
   %i.gs = icmp ugt i64 %i.gr, 16
-  br i1 %i.gs, label %2, label %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EED2Ev.exit
+  br i1 %i.gs, label %bb.al, label %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EED2Ev.exit
 
-2:                                                ; preds = %bb.ak
-  %.not.i.i.i.i47 = icmp eq ptr %i.gn, %i.go
-  br i1 %.not.i.i.i.i47, label %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i, label %bb.al
-
-bb.al:                                            ; preds = %2
+bb.al:                                            ; preds = %bb.ak
   %i.gt = icmp ugt i64 %i.gr, 9223372036854775792
-  br i1 %i.gt, label %bb.am, label %_ZNSt15__new_allocatorIN2v88internal4wasm10WasmExportEE8allocateEmPKv.exit.i.i.i.i, !prof !37
+  br i1 %i.gt, label %bb.am, label %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i, !prof !37
 
 bb.am:                                            ; preds = %bb.al
   call void @_ZSt28__throw_bad_array_new_lengthv() #23
   unreachable
 
-_ZNSt15__new_allocatorIN2v88internal4wasm10WasmExportEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.al
-  %3 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gr) #21
-  %.pre95 = load ptr, ptr %i.gl, align 8
-  %.pre96 = load ptr, ptr %i.gm, align 8
-  br label %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i
-
-_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i: ; preds = %_ZNSt15__new_allocatorIN2v88internal4wasm10WasmExportEE8allocateEmPKv.exit.i.i.i.i, %2
-  %4 = phi ptr [ %.pre96, %_ZNSt15__new_allocatorIN2v88internal4wasm10WasmExportEE8allocateEmPKv.exit.i.i.i.i ], [ %i.gn, %2 ] ; 2 uses
-  %5 = phi ptr [ %.pre95, %_ZNSt15__new_allocatorIN2v88internal4wasm10WasmExportEE8allocateEmPKv.exit.i.i.i.i ], [ %i.go, %2 ] ; 2 uses
-  %6 = phi ptr [ %3, %_ZNSt15__new_allocatorIN2v88internal4wasm10WasmExportEE8allocateEmPKv.exit.i.i.i.i ], [ null, %2 ] ; 10 uses
-  %i.gu = icmp eq ptr %5, %4
+_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i: ; preds = %bb.al
+  %2 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gr) #21 ; 9 uses
+  %3 = load ptr, ptr %i.gl, align 8               ; 2 uses
+  %4 = load ptr, ptr %i.gm, align 8               ; 2 uses
+  %i.gu = icmp eq ptr %3, %4
   br i1 %i.gu, label %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit.thread, label %.lr.ph.i.i.i.i.i
 
 _ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit.thread: ; preds = %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i
-  call void @_ZSt13__stable_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm10WasmExportESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_17ModuleDecoderImpl19DecodeExportSectionEvEUlRKS5_SF_E_EEEvT_SI_T0_(ptr %6, ptr %6, ptr nonnull %0)
+  call void @_ZSt13__stable_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm10WasmExportESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_17ModuleDecoderImpl19DecodeExportSectionEvEUlRKS5_SF_E_EEEvT_SI_T0_(ptr nonnull %2, ptr nonnull %2, ptr nonnull %0)
   br label %.lr.ph88
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i, %.lr.ph.i.i.i.i.i
   %.08.i.i.i.i.i.idx = phi i64 [ %.08.i.i.i.i.i.add, %.lr.ph.i.i.i.i.i ], [ 0, %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i ] ; 3 uses
-  %.sroa.04.07.i.i.i.i.i = phi ptr [ %i.gv, %.lr.ph.i.i.i.i.i ], [ %5, %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
-  %.08.i.i.i.i.i.ptr = getelementptr inbounds nuw i8, ptr %6, i64 %.08.i.i.i.i.i.idx
+  %.sroa.04.07.i.i.i.i.i = phi ptr [ %i.gv, %.lr.ph.i.i.i.i.i ], [ %3, %_ZNSt12_Vector_baseIN2v88internal4wasm10WasmExportESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
+  %.08.i.i.i.i.i.ptr = getelementptr inbounds nuw i8, ptr %2, i64 %.08.i.i.i.i.i.idx
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.08.i.i.i.i.i.ptr, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.04.07.i.i.i.i.i, i64 16, i1 false)
   %i.gv = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i, i64 16 ; 2 uses
   %.08.i.i.i.i.i.add = add nuw nsw i64 %.08.i.i.i.i.i.idx, 16 ; 2 uses
@@ -253,21 +243,21 @@ _ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit.thread: ; pred
   br i1 %i.gw, label %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !210
 
 _ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit: ; preds = %.lr.ph.i.i.i.i.i
-  %.0.lcssa.i.i.i.i.i.ptr = getelementptr inbounds nuw i8, ptr %6, i64 %.08.i.i.i.i.i.add ; 2 uses
-  call void @_ZSt13__stable_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm10WasmExportESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_17ModuleDecoderImpl19DecodeExportSectionEvEUlRKS5_SF_E_EEEvT_SI_T0_(ptr nonnull %6, ptr nonnull %.0.lcssa.i.i.i.i.i.ptr, ptr nonnull %0)
+  %.0.lcssa.i.i.i.i.i.ptr = getelementptr inbounds nuw i8, ptr %2, i64 %.08.i.i.i.i.i.add ; 2 uses
+  call void @_ZSt13__stable_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm10WasmExportESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_17ModuleDecoderImpl19DecodeExportSectionEvEUlRKS5_SF_E_EEEvT_SI_T0_(ptr nonnull %2, ptr nonnull %.0.lcssa.i.i.i.i.i.ptr, ptr nonnull %0)
   %i.gx = icmp eq i64 %.08.i.i.i.i.i.idx, 0
   br i1 %i.gx, label %.loopexit.thread, label %.lr.ph88
 
 .lr.ph88:                                         ; preds = %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit.thread, %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit
-  %.0.lcssa.i.i.i.i.i.ptr133 = phi ptr [ %6, %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit.thread ], [ %.0.lcssa.i.i.i.i.i.ptr, %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit ]
-  %.sroa.056.085 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %.0.lcssa.i.i.i.i.i.ptr133 = phi ptr [ %2, %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit.thread ], [ %.0.lcssa.i.i.i.i.i.ptr, %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit ]
+  %.sroa.056.085 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph88, %bb.ap
   %.sroa.056.087 = phi ptr [ %.sroa.056.085, %.lr.ph88 ], [ %.sroa.056.0, %bb.ap ] ; 4 uses
-  %.086 = phi ptr [ %6, %.lr.ph88 ], [ %.sroa.056.087, %bb.ap ] ; 7 uses
+  %.086 = phi ptr [ %2, %.lr.ph88 ], [ %.sroa.056.087, %bb.ap ] ; 7 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %.086, i64 4
   %i.hb = load i32, ptr %i.ha, align 4            ; 4 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %.086, i64 20
@@ -358,22 +348,18 @@ _ZN2v88internal4wasm16ExternalKindNameENS1_20ImportExportKindCodeE.exit53: ; pre
   %i.ik = load i32, ptr %i.ij, align 4
   call preserve_mostcc void @_ZN2v88internal4wasm7Decoder6errorfIJiPKcS5_jS5_jEEEvPKhS5_DpT_(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef %i.ht, ptr noundef nonnull @.str.1057, i32 noundef %.sroa.speculated.i.i, ptr noundef %i.hy, ptr noundef nonnull %.0.i50, i32 noundef %i.ie, ptr noundef nonnull %.0.i52, i32 noundef %i.ik)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
-  br label %.loopexit
+  br label %.loopexit.thread
 
 bb.ap:                                            ; preds = %.split, %_ZZN2v88internal4wasm17ModuleDecoderImpl19DecodeExportSectionEvENKUlRKNS1_10WasmExportES5_E_clES5_S5_.exit
   %.sroa.056.0 = getelementptr inbounds nuw i8, ptr %.sroa.056.087, i64 16 ; 2 uses
   %i.il = icmp eq ptr %.sroa.056.0, %.0.lcssa.i.i.i.i.i.ptr133
-  br i1 %i.il, label %.loopexit, label %bb.an, !llvm.loop !211
+  br i1 %i.il, label %.loopexit.thread, label %bb.an, !llvm.loop !211
 
-.loopexit:                                        ; preds = %bb.ap, %_ZN2v88internal4wasm16ExternalKindNameENS1_20ImportExportKindCodeE.exit53
-  %.not.i.i.i = icmp eq ptr %6, null
-  br i1 %.not.i.i.i, label %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EED2Ev.exit, label %.loopexit.thread
-
-.loopexit.thread:                                 ; preds = %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit, %.loopexit
-  call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef %i.gr) #22
+.loopexit.thread:                                 ; preds = %bb.ap, %_ZN2v88internal4wasm16ExternalKindNameENS1_20ImportExportKindCodeE.exit53, %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EEC2ERKS5_.exit
+  call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef %i.gr) #22
   br label %_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EED2Ev.exit
 
-_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EED2Ev.exit: ; preds = %.loopexit.thread, %.loopexit, %bb.ak, %bb.aj, %._crit_edge
+_ZNSt6vectorIN2v88internal4wasm10WasmExportESaIS3_EED2Ev.exit: ; preds = %.loopexit.thread, %bb.ak, %bb.aj, %._crit_edge
   ret void
 }
 

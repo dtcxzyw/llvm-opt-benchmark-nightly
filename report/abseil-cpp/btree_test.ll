@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %_ZNK4absl12lts_2026
   store i64 0, ptr %i.al, align 8, !tbaa !864
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #37
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !867 ; 3 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !867 ; 2 uses
   %i.ao = load ptr, ptr %1, align 8, !tbaa !868   ; 3 uses
   %i.ap = ptrtoint ptr %i.an to i64               ; 2 uses
   %i.aq = ptrtoint ptr %i.ao to i64               ; 2 uses
@@ -229,17 +229,18 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %bb.n
           to label %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i unwind label %bb.ab
 
 _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i: ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i
-  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !869 ; 2 uses
+  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !869 ; 3 uses
   %.pre23.i.i = load ptr, ptr %i.am, align 8, !tbaa !869 ; 2 uses
   %.pre24.i.i = ptrtoint ptr %.pre23.i.i to i64
   %.pre25.i.i = ptrtoint ptr %.pre.i.i to i64
+  %7 = icmp eq ptr %.pre23.i.i, %.pre.i.i
   br label %.noexc13.i.i
 
 .noexc13.i.i:                                     ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i, %bb.m
   %.pre-phi26.i.i = phi i64 [ %.pre25.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i ], [ %i.aq, %bb.m ]
   %.pre-phi.i.i = phi i64 [ %.pre24.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i ], [ %i.ap, %bb.m ]
-  %7 = phi ptr [ %.pre23.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i ], [ %i.an, %bb.m ] ; 2 uses
-  %i.au = phi ptr [ %.pre.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i ], [ %i.ao, %bb.m ] ; 4 uses
+  %.not.i.i.i.i = phi i1 [ %7, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i ], [ true, %bb.m ]
+  %i.au = phi ptr [ %.pre.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i ], [ %i.ao, %bb.m ] ; 2 uses
   %i.av = phi ptr [ %i.at, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc13_crit_edge.i.i ], [ null, %bb.m ] ; 12 uses
   store ptr %i.av, ptr %3, align 8, !tbaa !868
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -266,7 +267,6 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %i.bd = getelementptr inbounds i8, ptr %i.av, i64 %i.az ; 4 uses
   store ptr %i.bd, ptr %i.aw, align 8, !tbaa !867
-  %.not.i.i.i.i = icmp eq ptr %7, %i.au
   br i1 %.not.i.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -286,9 +286,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i: 
           to label %bb.t unwind label %bb.ac
 
 bb.t:                                             ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i
-  %8 = icmp ne ptr %7, %i.au
-  %or.cond.i.i.i.i = and i1 %i.ba, %8
-  br i1 %or.cond.i.i.i.i, label %.lr.ph.i.i.preheader.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i
+  br i1 %i.ba, label %.lr.ph.i.i.preheader.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i
 
 .lr.ph.i.i.preheader.i.i:                         ; preds = %bb.t
   %.sroa.0.08.i.i.i.i = getelementptr inbounds i8, ptr %i.bd, i64 -4
@@ -691,7 +689,7 @@ bb.m:                                             ; preds = %_ZNK4absl12lts_2026
   store i64 0, ptr %i.al, align 8, !tbaa !864
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #37
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !867 ; 3 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !867 ; 2 uses
   %i.ao = load ptr, ptr %1, align 8, !tbaa !868   ; 3 uses
   %i.ap = ptrtoint ptr %i.an to i64               ; 2 uses
   %i.aq = ptrtoint ptr %i.ao to i64               ; 2 uses
@@ -715,17 +713,18 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %bb.n
           to label %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i unwind label %bb.aj
 
 _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i: ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i
-  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !869 ; 2 uses
+  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !869 ; 3 uses
   %.pre58.i.i = load ptr, ptr %i.am, align 8, !tbaa !869 ; 2 uses
   %.pre61.i.i = ptrtoint ptr %.pre58.i.i to i64
   %.pre62.i.i = ptrtoint ptr %.pre.i.i to i64
+  %9 = icmp eq ptr %.pre58.i.i, %.pre.i.i
   br label %.noexc28.i.i
 
 .noexc28.i.i:                                     ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i, %bb.m
   %.pre-phi63.i.i = phi i64 [ %.pre62.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i ], [ %i.aq, %bb.m ]
   %.pre-phi.i.i = phi i64 [ %.pre61.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i ], [ %i.ap, %bb.m ]
-  %9 = phi ptr [ %.pre58.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i ], [ %i.an, %bb.m ] ; 2 uses
-  %i.au = phi ptr [ %.pre.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i ], [ %i.ao, %bb.m ] ; 4 uses
+  %.not.i.i.i.i = phi i1 [ %9, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i ], [ true, %bb.m ]
+  %i.au = phi ptr [ %.pre.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i ], [ %i.ao, %bb.m ] ; 2 uses
   %i.av = phi ptr [ %i.at, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc28_crit_edge.i.i ], [ null, %bb.m ] ; 12 uses
   store ptr %i.av, ptr %3, align 8, !tbaa !868
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -752,7 +751,6 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %i.bd = getelementptr inbounds i8, ptr %i.av, i64 %i.az ; 4 uses
   store ptr %i.bd, ptr %i.aw, align 8, !tbaa !867
-  %.not.i.i.i.i = icmp eq ptr %9, %i.au
   br i1 %.not.i.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -772,9 +770,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i: 
           to label %bb.t unwind label %bb.ak
 
 bb.t:                                             ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i
-  %10 = icmp ne ptr %9, %i.au
-  %or.cond.i.i.i.i = and i1 %i.ba, %10
-  br i1 %or.cond.i.i.i.i, label %.lr.ph.i.i.preheader.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i
+  br i1 %i.ba, label %.lr.ph.i.i.preheader.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit.i.i
 
 .lr.ph.i.i.preheader.i.i:                         ; preds = %bb.t
   %.sroa.0.08.i.i.i.i = getelementptr inbounds i8, ptr %i.bd, i64 -4

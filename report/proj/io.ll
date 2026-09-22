@@ -206,24 +206,20 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !247  ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 8 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 5 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !252  ; 3 uses
-  %i.m = load ptr, ptr %i.j, align 8, !tbaa !251  ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !252  ; 2 uses
+  %i.m = load ptr, ptr %i.j, align 8, !tbaa !251  ; 2 uses
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = sub i64 %i.n, %i.o
   %i.q = icmp ult i64 %i.p, 9
-  br i1 %i.q, label %bb.b, label %29
+  br i1 %i.q, label %bb.b, label %.lr.ph.i
 
 bb.b:                                             ; preds = %bb.a
   tail call fastcc void @_ZN5osgeo4proj2ioL22ThrowNotEnoughChildrenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %i.i) #42
   unreachable
 
-29:                                               ; preds = %bb.a
-  %.not18.i = icmp eq ptr %i.m, %i.l
-  br i1 %.not18.i, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %29, %bb.c
-  %.sroa.013.019.i = phi ptr [ %i.u, %bb.c ], [ %i.m, %29 ] ; 4 uses
+.lr.ph.i:                                         ; preds = %bb.a, %bb.c
+  %.sroa.013.019.i = phi ptr [ %i.u, %bb.c ], [ %i.m, %bb.a ] ; 4 uses
   %i.r = load ptr, ptr %.sroa.013.019.i, align 8, !tbaa !245
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !247
   %i.t = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.s, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants5ORDERB5cxx11E) #41
@@ -437,7 +433,7 @@ bb.z:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.bj) #41
   br label %bb.gn
 
-_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %bb.c, %29, %bb.o, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %bb.c, %bb.o, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #41
   %i.br = load ptr, ptr %i.j, align 8, !tbaa !251
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !245, !noalias !1063
@@ -840,21 +836,18 @@ bb.a:
   %i.aa = getelementptr inbounds nuw [64 x i8], ptr %i.z, i64 %i.y ; 122 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #41
   call void @_ZN5osgeo4proj9operation23getMappingsFromPROJNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.785") align 8 %10, ptr noundef nonnull align 8 dereferenceable(32) %i.aa)
-  %i.ab = load ptr, ptr %10, align 8, !tbaa !599  ; 5 uses
+  %i.ab = load ptr, ptr %10, align 8, !tbaa !599  ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !599 ; 4 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !599 ; 3 uses
   %i.ae = icmp eq ptr %i.ab, %i.ad
-  br i1 %i.ae, label %bb.b, label %.thread.a
+  br i1 %i.ae, label %.thread.a, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %94 = ptrtoint ptr %i.ad to i64
-  %95 = ptrtoint ptr %i.ab to i64
-  %96 = sub i64 %94, %95
-  %97 = icmp ugt i64 %96, 8
-  br i1 %97, label %.loopexit1710, label %.thread2421
+  %94 = load ptr, ptr %i.ab, align 8, !tbaa !2198
+  br label %.thread.a
 
-.thread.a:                                        ; preds = %bb.a
-  %98 = load ptr, ptr %i.ab, align 8, !tbaa !2198 ; 2 uses
+.thread.a:                                        ; preds = %bb.a, %bb.b
+  %95 = phi ptr [ %94, %bb.b ], [ null, %bb.a ]   ; 2 uses
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ab to i64
   %i.ah = sub i64 %i.af, %i.ag
@@ -877,13 +870,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.a, %.thread1569
   %.04351867 = phi i1 [ true, %.lr.ph.a ], [ %spec.select, %.thread1569 ]
   %.04381866 = phi i1 [ false, %.lr.ph.a ], [ %.34411575, %.thread1569 ] ; 8 uses
-  %.04441865 = phi ptr [ %98, %.lr.ph.a ], [ %.34471574, %.thread1569 ] ; 8 uses
+  %.04441865 = phi ptr [ %95, %.lr.ph.a ], [ %.34471574, %.thread1569 ] ; 8 uses
   %.sroa.01545.01864 = phi ptr [ %i.ab, %.lr.ph.a ], [ %i.em, %.thread1569 ] ; 2 uses
   %i.at = load ptr, ptr %.sroa.01545.01864, align 8, !tbaa !2198 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 32 ; 2 uses
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !2199 ; 4 uses
   %i.aw = icmp ne ptr %i.av, null                 ; 2 uses
-  %spec.select = select i1 %i.aw, i1 %.04351867, i1 false ; 4 uses
+  %spec.select = select i1 %i.aw, i1 %.04351867, i1 false ; 2 uses
   br i1 %i.aw, label %bb.d, label %.thread1569
 
 bb.d:                                             ; preds = %bb.c
@@ -1228,17 +1221,16 @@ bb.x:                                             ; preds = %bb.w, %_ZNSt7__cxx1
   %.not1651 = icmp eq ptr %i.em, %i.ad
   br i1 %.not1651, label %.loopexit1710, label %bb.c
 
-.loopexit1710:                                    ; preds = %.thread1569, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, %bb.b, %.thread1576
-  %.4448 = phi ptr [ %i.at, %.thread1576 ], [ null, %bb.b ], [ %.34471574, %.thread1569 ], [ %i.dr, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ]
-  %.4442 = phi i1 [ true, %.thread1576 ], [ false, %bb.b ], [ %.34411575, %.thread1569 ], [ %i.dq, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ] ; 2 uses
-  %.2437 = phi i1 [ %spec.select, %.thread1576 ], [ true, %bb.b ], [ %spec.select, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ %spec.select, %.thread1569 ]
-  %.not = xor i1 %.2437, true
+.loopexit1710:                                    ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, %.thread1569, %.thread1576
+  %.4448 = phi ptr [ %i.at, %.thread1576 ], [ %.34471574, %.thread1569 ], [ %i.dr, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ]
+  %.4442 = phi i1 [ true, %.thread1576 ], [ %.34411575, %.thread1569 ], [ %i.dq, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ] ; 2 uses
+  %.not = xor i1 %spec.select, true
   %or.cond = select i1 %.not, i1 true, i1 %.4442
   %spec.select610 = select i1 %or.cond, ptr %.4448, ptr null
   br label %bb.y
 
-bb.y:                                             ; preds = %.thread.a, %.loopexit1710
-  %.6450 = phi ptr [ %spec.select610, %.loopexit1710 ], [ %98, %.thread.a ] ; 3 uses
+bb.y:                                             ; preds = %.loopexit1710, %.thread.a
+  %.6450 = phi ptr [ %spec.select610, %.loopexit1710 ], [ %95, %.thread.a ] ; 3 uses
   %.5443 = phi i1 [ %.4442, %.loopexit1710 ], [ false, %.thread.a ]
   %i.en = icmp eq ptr %.6450, null
   %or.cond8 = select i1 %i.en, i1 true, i1 %.5443
@@ -1249,8 +1241,8 @@ bb.z:                                             ; preds = %bb.y
   %i.eo = call fastcc noundef ptr @_ZN5osgeo4proj2ioL28selectSphericalOrEllipsoidalEPKNS0_9operation13MethodMappingERKN7dropbox6oxygen2nnISt10shared_ptrINS0_3crs11GeodeticCRSEEEE(ptr noundef nonnull %.6450, ptr %.val633)
   br label %.thread2421
 
-.thread2421:                                      ; preds = %bb.b, %bb.z, %bb.y
-  %.7451 = phi ptr [ %.6450, %bb.y ], [ %i.eo, %bb.z ], [ null, %bb.b ] ; 6 uses
+.thread2421:                                      ; preds = %bb.z, %bb.y
+  %.7451 = phi ptr [ %.6450, %bb.y ], [ %i.eo, %bb.z ] ; 6 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %1, i64 136
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #41
   invoke void @_ZN5osgeo4proj2io16PROJStringParser7Private18buildPrimeMeridianERNS1_4StepE(ptr dead_on_unwind nonnull writable sret(%"class.dropbox::oxygen::nn.190") align 8 %14, ptr noundef nonnull align 8 dereferenceable(169) %1, ptr noundef nonnull align 8 dereferenceable(64) %i.aa)

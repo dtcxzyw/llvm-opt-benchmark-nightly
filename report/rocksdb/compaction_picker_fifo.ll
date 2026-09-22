@@ -205,7 +205,7 @@ define noundef ptr @_ZN7rocksdb20FIFOCompactionPicker31PickRatioBasedIntraL0Comp
 bb.a:
   %6 = alloca %"struct.rocksdb::CompactionInputFiles", align 8 ; 9 uses
   %7 = alloca %"class.std::vector.154", align 8   ; 10 uses
-  %8 = alloca [1 x %"struct.rocksdb::CompactionInputFiles"], align 8 ; 16 uses
+  %8 = alloca [1 x %"struct.rocksdb::CompactionInputFiles"], align 8 ; 14 uses
   %9 = alloca %"class.std::vector.59", align 8    ; 6 uses
   %10 = alloca %"class.std::optional", align 8    ; 2 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -608,14 +608,14 @@ _ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit: ; preds = %
   br i1 %.not133, label %.critedge, label %.preheader, !llvm.loop !379
 
 .critedge:                                        ; preds = %bb.w, %.preheader, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit, %bb.v
-  %i.fm = phi ptr [ %.sroa.0207.0317, %.preheader ], [ %.sroa.0207.3, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ], [ %.sroa.0207.0317, %bb.w ], [ %.sroa.0207.0317, %bb.v ] ; 8 uses
-  %i.fn = phi ptr [ %.sroa.11.0318, %.preheader ], [ %.sroa.11.1, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ], [ %.sroa.11.0318, %bb.w ], [ %.sroa.11.0318, %bb.v ] ; 3 uses
+  %i.fm = phi ptr [ %.sroa.0207.0317, %.preheader ], [ %.sroa.0207.3, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ], [ %.sroa.0207.0317, %bb.w ], [ %.sroa.0207.0317, %bb.v ] ; 7 uses
+  %i.fn = phi ptr [ %.sroa.11.0318, %.preheader ], [ %.sroa.11.1, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ], [ %.sroa.11.0318, %bb.w ], [ %.sroa.11.0318, %bb.v ] ; 2 uses
   %i.fo = phi ptr [ %.sroa.16.0319, %.preheader ], [ %.sroa.16.3, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ], [ %.sroa.16.0319, %bb.w ], [ %.sroa.16.0319, %bb.v ] ; 3 uses
   %.0100.lcssa = phi i64 [ %.0100320, %.preheader ], [ %i.fl, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ], [ %.0100320, %bb.w ], [ %.0100320, %bb.v ] ; 2 uses
   %.099.lcssa = phi i64 [ %.099321, %.preheader ], [ 0, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ], [ %.099321, %bb.w ], [ %.099321, %bb.v ] ; 2 uses
   %i.fp = ptrtoint ptr %i.fn to i64
   %i.fq = ptrtoint ptr %i.fm to i64               ; 3 uses
-  %i.fr = sub i64 %i.fp, %i.fq                    ; 7 uses
+  %i.fr = sub i64 %i.fp, %i.fq                    ; 6 uses
   %i.fs = icmp ult i64 %i.fr, 9
   %.not135 = icmp ult i64 %.0100.lcssa, %i.do
   %or.cond = select i1 %i.fs, i1 true, i1 %.not135
@@ -646,23 +646,19 @@ bb.ae:                                            ; preds = %bb.ad
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !143, !nonnull !144, !align !145
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   store i32 0, ptr %8, align 8, !tbaa !224
-  %i.gc = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
+  %i.gc = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gc, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i.i169 = icmp eq ptr %i.fn, %i.fm
-  br i1 %.not.i.i.i.i.i169, label %14, label %12
+  %12 = icmp ugt i64 %i.fr, 9223372036854775800
+  br i1 %12, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIPN7rocksdb12FileMetaDataEE8allocateEmPKv.exit.i.i.i.i.i, !prof !16
 
-12:                                               ; preds = %bb.ae
-  %13 = icmp ugt i64 %i.fr, 9223372036854775800
-  br i1 %13, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIPN7rocksdb12FileMetaDataEE8allocateEmPKv.exit.i.i.i.i.i, !prof !16
-
-.noexc.i.i.i:                                     ; preds = %12
+.noexc.i.i.i:                                     ; preds = %bb.ae
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #24
           to label %.noexc170 unwind label %bb.ax
 
 .noexc170:                                        ; preds = %.noexc.i.i.i
   unreachable
 
-_ZNSt15__new_allocatorIPN7rocksdb12FileMetaDataEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %12
+_ZNSt15__new_allocatorIPN7rocksdb12FileMetaDataEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.ae
   %i.gd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fr) #26
           to label %bb.af unwind label %bb.ax     ; 4 uses
 
@@ -674,32 +670,19 @@ bb.af:                                            ; preds = %_ZNSt15__new_alloca
   %i.gg = getelementptr inbounds nuw i8, ptr %8, i64 24
   store ptr %i.gf, ptr %i.gg, align 8, !tbaa !267
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gd, ptr align 8 %i.fm, i64 %i.fr, i1 false)
-  br label %.loopexit
-
-14:                                               ; preds = %bb.ae
-  %15 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %16 = getelementptr inbounds i8, ptr null, i64 %i.fr ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gc, i8 0, i64 16, i1 false)
-  store ptr %16, ptr %17, align 8, !tbaa !267
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %14, %bb.af
-  %18 = phi ptr [ %16, %14 ], [ %i.gf, %bb.af ]
-  %19 = phi ptr [ %15, %14 ], [ %i.ge, %bb.af ]
-  store ptr %18, ptr %19, align 8, !tbaa !266
-  %20 = getelementptr inbounds nuw i8, ptr %8, i64 32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %20, i8 0, i64 24, i1 false)
+  store ptr %i.gf, ptr %i.ge, align 8, !tbaa !266
+  %13 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, i8 0, i64 24, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
-  %21 = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #26
+  %14 = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #26
           to label %.noexc203 unwind label %bb.al ; 5 uses
 
-.noexc203:                                        ; preds = %.loopexit
-  store ptr %21, ptr %7, align 8, !tbaa !213
-  %i.gh = getelementptr inbounds nuw i8, ptr %21, i64 56 ; 2 uses
+.noexc203:                                        ; preds = %bb.af
+  store ptr %14, ptr %7, align 8, !tbaa !213
+  %i.gh = getelementptr inbounds nuw i8, ptr %14, i64 56 ; 2 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   store ptr %i.gh, ptr %i.gi, align 8, !tbaa !281
-  invoke void @_ZN7rocksdb20CompactionInputFilesC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(56) %21, ptr noundef nonnull align 8 dereferenceable(56) %8)
+  invoke void @_ZN7rocksdb20CompactionInputFilesC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(56) %14, ptr noundef nonnull align 8 dereferenceable(56) %8)
           to label %_ZSt10_ConstructIN7rocksdb20CompactionInputFilesEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i unwind label %bb.ag
 
 _ZSt10_ConstructIN7rocksdb20CompactionInputFilesEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i: ; preds = %.noexc203
@@ -728,7 +711,7 @@ bb.ag:                                            ; preds = %.noexc203
           catch ptr null
   %i.gu = extractvalue { ptr, i32 } %i.gt, 0
   %i.gv = call ptr @__cxa_begin_catch(ptr %i.gu) #25 ; 0 uses
-  invoke void @_ZSt8_DestroyIPN7rocksdb20CompactionInputFilesEEvT_S3_(ptr noundef nonnull %21, ptr noundef nonnull %21)
+  invoke void @_ZSt8_DestroyIPN7rocksdb20CompactionInputFilesEEvT_S3_(ptr noundef nonnull %14, ptr noundef nonnull %14)
           to label %bb.ah unwind label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
@@ -751,7 +734,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.ah
   unreachable
 
-bb.al:                                            ; preds = %.loopexit
+bb.al:                                            ; preds = %bb.af
   %i.gz = landingpad { ptr, i32 }
           cleanup
   br label %.body204

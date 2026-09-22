@@ -204,7 +204,7 @@ bb.a:
   br label %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.outer
 
 _ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.outer: ; preds = %bb.cw, %bb.a
-  %.020.ph = phi ptr [ %i.ex, %bb.cw ], [ %1, %bb.a ] ; 22 uses
+  %.020.ph = phi ptr [ %i.ex, %bb.cw ], [ %1, %bb.a ] ; 21 uses
   %.017.ph = phi ptr [ %.017, %bb.cw ], [ %0, %bb.a ]
   %.048.ph = phi i8 [ %.048.ph275, %bb.cw ], [ %i.a, %bb.a ]
   %.046.ph = phi i64 [ %i.cp, %bb.cw ], [ %2, %bb.a ]
@@ -223,7 +223,7 @@ _ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__less
   br label %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit
 
 _ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit: ; preds = %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.outer273, %bb.cx
-  %.017 = phi ptr [ %.115.lcssa.i, %bb.cx ], [ %.017.ph274, %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.outer273 ] ; 80 uses
+  %.017 = phi ptr [ %.115.lcssa.i, %bb.cx ], [ %.017.ph274, %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.outer273 ] ; 79 uses
   %.046 = phi i64 [ %i.cp, %bb.cx ], [ %.046.ph276, %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.outer273 ] ; 2 uses
   %i.h = ptrtoint ptr %.017 to i64                ; 2 uses
   %i.i = sub i64 %i.b, %i.h                       ; 4 uses
@@ -375,7 +375,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit
   %i.ad = icmp slt i64 %i.i, 576
-  br i1 %i.ad, label %bb.s, label %43
+  br i1 %i.ad, label %bb.s, label %bb.ac
 
 bb.s:                                             ; preds = %bb.r
   %i.ae = trunc nuw i8 %.048.ph275 to i1
@@ -466,13 +466,9 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i68
   %.not.i74 = icmp eq ptr %storemerge.i73, %.020.ph
   br i1 %.not.i74, label %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.thread, label %.lr.ph.i68, !llvm.loop !283
 
-43:                                               ; preds = %bb.r
-  %44 = icmp eq i64 %.046, 0
-  br i1 %44, label %bb.ac, label %bb.aw
-
-bb.ac:                                            ; preds = %43
-  %i.am = icmp eq ptr %.017, %.020.ph
-  br i1 %i.am, label %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.thread, label %bb.ad
+bb.ac:                                            ; preds = %bb.r
+  %i.am = icmp eq i64 %.046, 0
+  br i1 %i.am, label %bb.ad, label %bb.aw
 
 bb.ad:                                            ; preds = %bb.ac
   %i.an = add nsw i64 %i.j, -2
@@ -665,7 +661,7 @@ _ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyENS_6__lessIvvEEPN7Imf_3_4
   %i.co = icmp sgt i64 %.02.i.i.i, 2
   br i1 %i.co, label %.lr.ph.i.i.i, label %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.thread, !llvm.loop !288
 
-bb.aw:                                            ; preds = %43
+bb.aw:                                            ; preds = %bb.ac
   %i.cp = add nsw i64 %.046, -1                   ; 4 uses
   %i.cq = lshr i64 %i.j, 1
   %i.cr = icmp samesign ugt i64 %i.i, 3072
@@ -1068,7 +1064,7 @@ _ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__less
   %.017.ph274.be = phi ptr [ %.318.lcssa.i, %_ZNSt3__131__partition_with_equals_on_leftB8ne180100INS_17_ClassicAlgPolicyEPN7Imf_3_412_GLOBAL__N_17tileposERNS_6__lessIvvEEEET0_S9_S9_T1_.exit ], [ %.115.lcssa.i, %bb.cy ]
   br label %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.outer273, !llvm.loop !301
 
-_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.thread: ; preds = %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit, %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit, %bb.cw, %_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyENS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposEEEvT1_S8_RT0_NS_15iterator_traitsIS8_E15difference_typeE.exit.i.i.i, %bb.ab, %bb.w, %bb.ac, %bb.x, %bb.t, %bb.p, %bb.o, %bb.n, %bb.m, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e, %bb.c, %bb.l, %bb.k, %bb.q, %bb.b
+_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit.thread: ; preds = %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit, %_ZNSt3__124__sort3_maybe_branchlessB8ne180100INS_17_ClassicAlgPolicyERNS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposETnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSB_SB_SB_SA_.exit, %bb.cw, %_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyENS_6__lessIvvEEPN7Imf_3_412_GLOBAL__N_17tileposEEEvT1_S8_RT0_NS_15iterator_traitsIS8_E15difference_typeE.exit.i.i.i, %bb.ab, %bb.w, %bb.x, %bb.t, %bb.p, %bb.o, %bb.n, %bb.m, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e, %bb.c, %bb.l, %bb.k, %bb.q, %bb.b
   ret void
 }
 

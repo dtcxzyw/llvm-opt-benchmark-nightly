@@ -204,49 +204,45 @@ bb.i:                                             ; preds = %_ZNK6google8protobu
   %.pre96 = add nsw i32 %.pre88, %i.y
   br label %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55
 
-_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55: ; preds = %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54, %bb.i
+_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55: ; preds = %bb.i, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54
   %.pre-phi97 = phi i32 [ %i.ad, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54 ], [ %.pre96, %bb.i ]
   %.pre-phi95 = phi i32 [ %i.af, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54 ], [ %.pre94, %bb.i ]
   %i.am = phi i32 [ %i.ac, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54 ], [ %.pre88, %bb.i ]
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ao = load ptr, ptr %i.an, align 8
   store i32 %.pre-phi97, ptr %i.ab, align 4, !tbaa !141
-  %.not5279 = icmp eq ptr %0, %1
-  br i1 %.not5279, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit, label %iter.check
-
-iter.check:                                       ; preds = %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55
-  %4 = icmp eq i32 %.pre-phi95, 0
-  %.0.v.i.i.i57 = select i1 %4, ptr %3, ptr %i.ao ; 2 uses
+  %.not5279 = icmp eq i32 %.pre-phi95, 0
+  %.0.v.i.i.i57 = select i1 %.not5279, ptr %3, ptr %i.ao ; 2 uses
   %.0.i.i.i58 = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i57, i64 8
-  %5 = sext i32 %i.am to i64                      ; 2 uses
-  %6 = getelementptr inbounds i8, ptr %.0.i.i.i58, i64 %5 ; 6 uses
-  %7 = sub i64 %i.a, %i.b                         ; 7 uses
-  %min.iters.check = icmp ult i64 %7, 8
+  %4 = sext i32 %i.am to i64                      ; 2 uses
+  %5 = getelementptr inbounds i8, ptr %.0.i.i.i58, i64 %4 ; 6 uses
+  %6 = sub i64 %i.a, %i.b                         ; 7 uses
+  %min.iters.check = icmp ult i64 %6, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %iter.check
+vector.memcheck:                                  ; preds = %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55
   %.0.v.i.i.i57129 = ptrtoaddr ptr %.0.v.i.i.i57 to i64
-  %i.ap = add i64 %.0.v.i.i.i57129, %5
+  %i.ap = add i64 %.0.v.i.i.i57129, %4
   %i.aq = sub i64 %i.ap, %i.b
   %i.ar = add i64 %i.aq, 7
   %diff.check = icmp ult i64 %i.ar, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check130 = icmp ult i64 %7, 32
+  %min.iters.check130 = icmp ult i64 %6, 32
   br i1 %min.iters.check130, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.as = and i64 %7, 24
-  %n.vec = and i64 %7, -32                        ; 5 uses
+  %i.as = and i64 %6, 24
+  %n.vec = and i64 %6, -32                        ; 5 uses
   %i.at = getelementptr i8, ptr %0, i64 %n.vec    ; 2 uses
-  %i.au = getelementptr i8, ptr %6, i64 %n.vec
+  %i.au = getelementptr i8, ptr %5, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %0, i64 %index ; 2 uses
-  %next.gep131 = getelementptr i8, ptr %6, i64 %index ; 2 uses
+  %next.gep131 = getelementptr i8, ptr %5, i64 %index ; 2 uses
   %i.av = getelementptr i8, ptr %next.gep, i64 16
   %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !55
   %wide.load132 = load <16 x i8>, ptr %i.av, align 1, !tbaa !55
@@ -262,7 +258,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !542
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -271,15 +267,15 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec134 = and i64 %7, -8                      ; 4 uses
+  %n.vec134 = and i64 %6, -8                      ; 4 uses
   %i.bc = getelementptr i8, ptr %0, i64 %n.vec134 ; 2 uses
-  %i.bd = getelementptr i8, ptr %6, i64 %n.vec134
+  %i.bd = getelementptr i8, ptr %5, i64 %n.vec134
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index135 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next139, %vec.epilog.vector.body ] ; 3 uses
   %next.gep136.a = getelementptr i8, ptr %0, i64 %index135
-  %next.gep137 = getelementptr i8, ptr %6, i64 %index135
+  %next.gep137 = getelementptr i8, ptr %5, i64 %index135
   %wide.load138 = load <8 x i8>, ptr %next.gep136.a, align 1, !tbaa !55
   %i.be = icmp ne <8 x i8> %wide.load138, zeroinitializer
   %i.bf = zext <8 x i1> %i.be to <8 x i8>
@@ -289,12 +285,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.bg, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !543
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n140 = icmp eq i64 %7, %n.vec134
+  %cmp.n140 = icmp eq i64 %6, %n.vec134
   br i1 %cmp.n140, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.04881.ph = phi ptr [ %0, %iter.check ], [ %0, %vector.memcheck ], [ %i.at, %vec.epilog.iter.check ], [ %i.bc, %vec.epilog.middle.block ] ; 3 uses
-  %.05080.ph = phi ptr [ %6, %iter.check ], [ %6, %vector.memcheck ], [ %i.au, %vec.epilog.iter.check ], [ %i.bd, %vec.epilog.middle.block ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %vector.memcheck, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.04881.ph = phi ptr [ %0, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55 ], [ %0, %vector.memcheck ], [ %i.at, %vec.epilog.iter.check ], [ %i.bc, %vec.epilog.middle.block ] ; 3 uses
+  %.05080.ph = phi ptr [ %5, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55 ], [ %5, %vector.memcheck ], [ %i.au, %vec.epilog.iter.check ], [ %i.bd, %vec.epilog.middle.block ] ; 2 uses
   %.04881.ph150 = ptrtoaddr ptr %.04881.ph to i64 ; 2 uses
   %i.bh = sub i64 %i.a, %.04881.ph150
   %xtraiter = and i64 %i.bh, 3                    ; 2 uses
@@ -536,8 +532,8 @@ bb.q:                                             ; preds = %.thread52.i.i.i, %.
   %i.fb = icmp ult ptr %.0.i11.i68, %1
   br i1 %i.fb, label %.lr.ph.i65, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit: ; preds = %bb.q, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55, %bb.o, %bb.n, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
-  %.0 = phi ptr [ %1, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.2.i, %bb.n ], [ %i.ci, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.o ], [ %0, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55 ], [ %i.bc, %vec.epilog.middle.block ], [ %i.at, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67 ], [ %.0.i11.i68, %bb.q ]
+_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit: ; preds = %bb.q, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.o, %bb.n, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  %.0 = phi ptr [ %1, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.2.i, %bb.n ], [ %i.ci, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.o ], [ %i.bc, %vec.epilog.middle.block ], [ %i.at, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67 ], [ %.0.i11.i68, %bb.q ]
   ret ptr %.0
 }
 
@@ -832,49 +828,45 @@ bb.i:                                             ; preds = %_ZNK6google8protobu
   %.pre96 = add nsw i32 %.pre88, %i.y
   br label %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55
 
-_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55: ; preds = %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54, %bb.i
+_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55: ; preds = %bb.i, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54
   %.pre-phi97 = phi i32 [ %i.ad, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54 ], [ %.pre96, %bb.i ]
   %.pre-phi95 = phi i32 [ %i.af, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54 ], [ %.pre94, %bb.i ]
   %i.am = phi i32 [ %i.ac, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.i54 ], [ %.pre88, %bb.i ]
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ao = load ptr, ptr %i.an, align 8
   store i32 %.pre-phi97, ptr %i.ab, align 4, !tbaa !141
-  %.not5279 = icmp eq ptr %0, %1
-  br i1 %.not5279, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit, label %iter.check
-
-iter.check:                                       ; preds = %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55
-  %4 = icmp eq i32 %.pre-phi95, 0
-  %.0.v.i.i.i57 = select i1 %4, ptr %3, ptr %i.ao ; 2 uses
+  %.not5279 = icmp eq i32 %.pre-phi95, 0
+  %.0.v.i.i.i57 = select i1 %.not5279, ptr %3, ptr %i.ao ; 2 uses
   %.0.i.i.i58 = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i57, i64 8
-  %5 = sext i32 %i.am to i64                      ; 2 uses
-  %6 = getelementptr inbounds i8, ptr %.0.i.i.i58, i64 %5 ; 6 uses
-  %7 = sub i64 %i.a, %i.b                         ; 7 uses
-  %min.iters.check = icmp ult i64 %7, 8
+  %4 = sext i32 %i.am to i64                      ; 2 uses
+  %5 = getelementptr inbounds i8, ptr %.0.i.i.i58, i64 %4 ; 6 uses
+  %6 = sub i64 %i.a, %i.b                         ; 7 uses
+  %min.iters.check = icmp ult i64 %6, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %iter.check
+vector.memcheck:                                  ; preds = %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55
   %.0.v.i.i.i57129 = ptrtoaddr ptr %.0.v.i.i.i57 to i64
-  %i.ap = add i64 %.0.v.i.i.i57129, %5
+  %i.ap = add i64 %.0.v.i.i.i57129, %4
   %i.aq = sub i64 %i.ap, %i.b
   %i.ar = add i64 %i.aq, 7
   %diff.check = icmp ult i64 %i.ar, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check130 = icmp ult i64 %7, 32
+  %min.iters.check130 = icmp ult i64 %6, 32
   br i1 %min.iters.check130, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.as = and i64 %7, 24
-  %n.vec = and i64 %7, -32                        ; 5 uses
+  %i.as = and i64 %6, 24
+  %n.vec = and i64 %6, -32                        ; 5 uses
   %i.at = getelementptr i8, ptr %0, i64 %n.vec    ; 2 uses
-  %i.au = getelementptr i8, ptr %6, i64 %n.vec
+  %i.au = getelementptr i8, ptr %5, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %0, i64 %index ; 2 uses
-  %next.gep131 = getelementptr i8, ptr %6, i64 %index ; 2 uses
+  %next.gep131 = getelementptr i8, ptr %5, i64 %index ; 2 uses
   %i.av = getelementptr i8, ptr %next.gep, i64 16
   %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !55
   %wide.load132 = load <16 x i8>, ptr %i.av, align 1, !tbaa !55
@@ -890,7 +882,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !547
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -899,15 +891,15 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec134 = and i64 %7, -8                      ; 4 uses
+  %n.vec134 = and i64 %6, -8                      ; 4 uses
   %i.bc = getelementptr i8, ptr %0, i64 %n.vec134 ; 2 uses
-  %i.bd = getelementptr i8, ptr %6, i64 %n.vec134
+  %i.bd = getelementptr i8, ptr %5, i64 %n.vec134
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index135 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next139, %vec.epilog.vector.body ] ; 3 uses
   %next.gep136.a = getelementptr i8, ptr %0, i64 %index135
-  %next.gep137 = getelementptr i8, ptr %6, i64 %index135
+  %next.gep137 = getelementptr i8, ptr %5, i64 %index135
   %wide.load138 = load <8 x i8>, ptr %next.gep136.a, align 1, !tbaa !55
   %i.be = icmp ne <8 x i8> %wide.load138, zeroinitializer
   %i.bf = zext <8 x i1> %i.be to <8 x i8>
@@ -917,12 +909,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.bg, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !548
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n140 = icmp eq i64 %7, %n.vec134
+  %cmp.n140 = icmp eq i64 %6, %n.vec134
   br i1 %cmp.n140, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.04881.ph = phi ptr [ %0, %iter.check ], [ %0, %vector.memcheck ], [ %i.at, %vec.epilog.iter.check ], [ %i.bc, %vec.epilog.middle.block ] ; 3 uses
-  %.05080.ph = phi ptr [ %6, %iter.check ], [ %6, %vector.memcheck ], [ %i.au, %vec.epilog.iter.check ], [ %i.bd, %vec.epilog.middle.block ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %vector.memcheck, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.04881.ph = phi ptr [ %0, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55 ], [ %0, %vector.memcheck ], [ %i.at, %vec.epilog.iter.check ], [ %i.bc, %vec.epilog.middle.block ] ; 3 uses
+  %.05080.ph = phi ptr [ %5, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55 ], [ %5, %vector.memcheck ], [ %i.au, %vec.epilog.iter.check ], [ %i.bd, %vec.epilog.middle.block ] ; 2 uses
   %.04881.ph150 = ptrtoaddr ptr %.04881.ph to i64 ; 2 uses
   %i.bh = sub i64 %i.a, %.04881.ph150
   %xtraiter = and i64 %i.bh, 3                    ; 2 uses
@@ -1164,8 +1156,8 @@ bb.q:                                             ; preds = %.thread52.i.i.i, %.
   %i.fb = icmp ult ptr %.0.i11.i68, %1
   br i1 %i.fb, label %.lr.ph.i65, label %_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit: ; preds = %bb.q, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55, %bb.o, %bb.n, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
-  %.0 = phi ptr [ %1, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.2.i, %bb.n ], [ %i.ci, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.o ], [ %0, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit55 ], [ %i.bc, %vec.epilog.middle.block ], [ %i.at, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67 ], [ %.0.i11.i68, %bb.q ]
+_ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit: ; preds = %bb.q, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.o, %bb.n, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  %.0 = phi ptr [ %1, %_ZN6google8protobuf13RepeatedFieldIbE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.2.i, %bb.n ], [ %i.ci, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.o ], [ %i.bc, %vec.epilog.middle.block ], [ %i.at, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i67 ], [ %.0.i11.i68, %bb.q ]
   ret ptr %.0
 }
 
@@ -1411,50 +1403,46 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre72 = add nsw i32 %.pre70, %i.e
   br label %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
 
-_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i, %bb.e
+_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i
   %.pre-phi73 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i ], [ %.pre72, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %i.s = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.u = load ptr, ptr %i.t, align 8
   store i32 %.pre-phi73, ptr %i.h, align 4, !tbaa !141
-  %.not3961 = icmp eq ptr %0, %1
-  br i1 %.not3961, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
-  %4 = icmp eq i32 %.pre-phi, 0
-  %.0.v.i.i.i = select i1 %4, ptr %3, ptr %i.u    ; 2 uses
+  %.not3961 = icmp eq i32 %.pre-phi, 0
+  %.0.v.i.i.i = select i1 %.not3961, ptr %3, ptr %i.u ; 2 uses
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
-  %5 = sext i32 %i.s to i64                       ; 2 uses
-  %6 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %5 ; 5 uses
-  %7 = sub i64 %i.a, %i.b                         ; 3 uses
-  %min.iters.check = icmp ult i64 %7, 32
+  %4 = sext i32 %i.s to i64                       ; 2 uses
+  %5 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %4 ; 5 uses
+  %6 = sub i64 %i.a, %i.b                         ; 3 uses
+  %min.iters.check = icmp ult i64 %6, 32
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.v = add i64 %i.a, %5
+vector.memcheck:                                  ; preds = %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  %i.v = add i64 %i.a, %4
   %i.w = shl i64 %i.v, 2
   %i.x = add i64 %i.w, 8
   %i.y = shl i64 %i.b, 2
   %i.z = sub i64 %i.x, %i.y
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.z
-  %bound0 = icmp ult ptr %6, %1
+  %bound0 = icmp ult ptr %5, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader108, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %7, -8                         ; 4 uses
+  %n.vec = and i64 %6, -8                         ; 4 uses
   %i.aa = getelementptr i8, ptr %0, i64 %n.vec    ; 2 uses
   %i.ab = shl i64 %n.vec, 2
-  %i.ac = getelementptr i8, ptr %6, i64 %i.ab
+  %i.ac = getelementptr i8, ptr %5, i64 %i.ab
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %0, i64 %index ; 2 uses
   %i.ad = shl i64 %index, 2
-  %next.gep104 = getelementptr i8, ptr %6, i64 %i.ad ; 2 uses
+  %next.gep104 = getelementptr i8, ptr %5, i64 %i.ad ; 2 uses
   %i.ae = getelementptr i8, ptr %next.gep, i64 4
   %wide.load = load <4 x i8>, ptr %next.gep, align 1, !tbaa !55, !alias.scope !558
   %wide.load105 = load <4 x i8>, ptr %i.ae, align 1, !tbaa !55, !alias.scope !558
@@ -1468,12 +1456,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !555
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit, label %.lr.ph.preheader108
 
-.lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.aa, %middle.block ] ; 3 uses
-  %.03762.ph = phi ptr [ %6, %vector.memcheck ], [ %6, %.lr.ph.preheader ], [ %i.ac, %middle.block ] ; 2 uses
+.lr.ph.preheader108:                              ; preds = %vector.memcheck, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %middle.block
+  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ] ; 3 uses
+  %.03762.ph = phi ptr [ %5, %vector.memcheck ], [ %5, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.ac, %middle.block ] ; 2 uses
   %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
   %i.aj = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.aj, 7                    ; 2 uses
@@ -1735,8 +1723,8 @@ bb.o:                                             ; preds = %_ZNK6google8protobu
   %i.eq = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.eq, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bv, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
+_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bv, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
   ret ptr %.0
 }
 
@@ -1982,50 +1970,46 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre72 = add nsw i32 %.pre70, %i.e
   br label %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
 
-_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i, %bb.e
+_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i
   %.pre-phi73 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i ], [ %.pre72, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %i.s = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.u = load ptr, ptr %i.t, align 8
   store i32 %.pre-phi73, ptr %i.h, align 4, !tbaa !141
-  %.not3961 = icmp eq ptr %0, %1
-  br i1 %.not3961, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
-  %4 = icmp eq i32 %.pre-phi, 0
-  %.0.v.i.i.i = select i1 %4, ptr %3, ptr %i.u    ; 2 uses
+  %.not3961 = icmp eq i32 %.pre-phi, 0
+  %.0.v.i.i.i = select i1 %.not3961, ptr %3, ptr %i.u ; 2 uses
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
-  %5 = sext i32 %i.s to i64                       ; 2 uses
-  %6 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %5 ; 5 uses
-  %7 = sub i64 %i.a, %i.b                         ; 3 uses
-  %min.iters.check = icmp ult i64 %7, 32
+  %4 = sext i32 %i.s to i64                       ; 2 uses
+  %5 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %4 ; 5 uses
+  %6 = sub i64 %i.a, %i.b                         ; 3 uses
+  %min.iters.check = icmp ult i64 %6, 32
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.v = add i64 %i.a, %5
+vector.memcheck:                                  ; preds = %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  %i.v = add i64 %i.a, %4
   %i.w = shl i64 %i.v, 2
   %i.x = add i64 %i.w, 8
   %i.y = shl i64 %i.b, 2
   %i.z = sub i64 %i.x, %i.y
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.z
-  %bound0 = icmp ult ptr %6, %1
+  %bound0 = icmp ult ptr %5, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader108, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %7, -8                         ; 4 uses
+  %n.vec = and i64 %6, -8                         ; 4 uses
   %i.aa = getelementptr i8, ptr %0, i64 %n.vec    ; 2 uses
   %i.ab = shl i64 %n.vec, 2
-  %i.ac = getelementptr i8, ptr %6, i64 %i.ab
+  %i.ac = getelementptr i8, ptr %5, i64 %i.ab
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %0, i64 %index ; 2 uses
   %i.ad = shl i64 %index, 2
-  %next.gep104 = getelementptr i8, ptr %6, i64 %i.ad ; 2 uses
+  %next.gep104 = getelementptr i8, ptr %5, i64 %i.ad ; 2 uses
   %i.ae = getelementptr i8, ptr %next.gep, i64 4
   %wide.load = load <4 x i8>, ptr %next.gep, align 1, !tbaa !55, !alias.scope !567
   %wide.load105 = load <4 x i8>, ptr %i.ae, align 1, !tbaa !55, !alias.scope !567
@@ -2039,12 +2023,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !564
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit, label %.lr.ph.preheader108
 
-.lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.aa, %middle.block ] ; 3 uses
-  %.03762.ph = phi ptr [ %6, %vector.memcheck ], [ %6, %.lr.ph.preheader ], [ %i.ac, %middle.block ] ; 2 uses
+.lr.ph.preheader108:                              ; preds = %vector.memcheck, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %middle.block
+  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ] ; 3 uses
+  %.03762.ph = phi ptr [ %5, %vector.memcheck ], [ %5, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.ac, %middle.block ] ; 2 uses
   %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
   %i.aj = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.aj, 7                    ; 2 uses
@@ -2306,8 +2290,8 @@ bb.o:                                             ; preds = %_ZNK6google8protobu
   %i.eq = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.eq, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bv, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
+_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bv, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
   ret ptr %.0
 }
 
@@ -2536,7 +2520,7 @@ bb.d:                                             ; preds = %bb.c
 _ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i: ; preds = %bb.d, %bb.c
   %i.q = phi i32 [ %i.p, %bb.d ], [ 1, %bb.c ]
   %i.r = icmp sgt i32 %i.j, %i.q
-  br i1 %i.r, label %bb.e, label %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, !prof !23
+  br i1 %i.r, label %bb.e, label %.lr.ph.preheader, !prof !23
 
 bb.e:                                             ; preds = %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i
   tail call void @_ZN6google8protobuf13RepeatedFieldImE4GrowIPNS0_5ArenaEEEvT_bii(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %2, i1 noundef zeroext %i.m, i32 noundef %i.i, i32 noundef %i.j)
@@ -2544,19 +2528,15 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre69 = load i32, ptr %i.h, align 4, !tbaa !141 ; 2 uses
   %.pre70 = and i32 %.pre68, 1
   %.pre71 = add nsw i32 %.pre69, %i.e
-  br label %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  br label %.lr.ph.preheader
 
-_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i, %bb.e
+.lr.ph.preheader:                                 ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i
   %.pre-phi72 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %4 = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i ], [ %.pre69, %bb.e ]
   %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %6 = load ptr, ptr %5, align 8
   store i32 %.pre-phi72, ptr %i.h, align 4, !tbaa !141
-  %.not3960 = icmp eq ptr %0, %1
-  br i1 %.not3960, label %_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
   %i.s = icmp eq i32 %.pre-phi, 0
   %.0.v.i.i.i = select i1 %i.s, ptr %3, ptr %6
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i, i64 8
@@ -2814,8 +2794,8 @@ bb.m:                                             ; preds = %.thread52.i.i.i, %.
   %i.dx = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.dx, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bh, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
+_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bh, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImhLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
   ret ptr %.0
 }
 
@@ -3044,7 +3024,7 @@ bb.d:                                             ; preds = %bb.c
 _ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i: ; preds = %bb.d, %bb.c
   %i.q = phi i32 [ %i.p, %bb.d ], [ 1, %bb.c ]
   %i.r = icmp sgt i32 %i.j, %i.q
-  br i1 %i.r, label %bb.e, label %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, !prof !23
+  br i1 %i.r, label %bb.e, label %.lr.ph.preheader, !prof !23
 
 bb.e:                                             ; preds = %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i
   tail call void @_ZN6google8protobuf13RepeatedFieldImE4GrowIPNS0_5ArenaEEEvT_bii(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %2, i1 noundef zeroext %i.m, i32 noundef %i.i, i32 noundef %i.j)
@@ -3052,19 +3032,15 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre69 = load i32, ptr %i.h, align 4, !tbaa !141 ; 2 uses
   %.pre70 = and i32 %.pre68, 1
   %.pre71 = add nsw i32 %.pre69, %i.e
-  br label %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  br label %.lr.ph.preheader
 
-_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i, %bb.e
+.lr.ph.preheader:                                 ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i
   %.pre-phi72 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %4 = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.i ], [ %.pre69, %bb.e ]
   %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %6 = load ptr, ptr %5, align 8
   store i32 %.pre-phi72, ptr %i.h, align 4, !tbaa !141
-  %.not3960 = icmp eq ptr %0, %1
-  br i1 %.not3960, label %_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
   %i.s = icmp eq i32 %.pre-phi, 0
   %.0.v.i.i.i = select i1 %i.s, ptr %3, ptr %6
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i, i64 8
@@ -3322,8 +3298,8 @@ bb.m:                                             ; preds = %.thread52.i.i.i, %.
   %i.dx = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.dx, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bh, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
+_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bh, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImtLb0EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
   ret ptr %.0
 }
 
@@ -3573,50 +3549,46 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre72 = add nsw i32 %.pre70, %i.e
   br label %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
 
-_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i, %bb.e
+_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i
   %.pre-phi73 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i ], [ %.pre72, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %i.s = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.u = load ptr, ptr %i.t, align 8
   store i32 %.pre-phi73, ptr %i.h, align 4, !tbaa !141
-  %.not3961 = icmp eq ptr %0, %1
-  br i1 %.not3961, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
-  %4 = icmp eq i32 %.pre-phi, 0
-  %.0.v.i.i.i = select i1 %4, ptr %3, ptr %i.u    ; 2 uses
+  %.not3961 = icmp eq i32 %.pre-phi, 0
+  %.0.v.i.i.i = select i1 %.not3961, ptr %3, ptr %i.u ; 2 uses
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
-  %5 = sext i32 %i.s to i64                       ; 2 uses
-  %6 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %5 ; 5 uses
-  %7 = sub i64 %i.a, %i.b                         ; 3 uses
-  %min.iters.check = icmp ult i64 %7, 16
+  %4 = sext i32 %i.s to i64                       ; 2 uses
+  %5 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %4 ; 5 uses
+  %6 = sub i64 %i.a, %i.b                         ; 3 uses
+  %min.iters.check = icmp ult i64 %6, 16
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.v = add i64 %i.a, %5
+vector.memcheck:                                  ; preds = %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  %i.v = add i64 %i.a, %4
   %i.w = shl i64 %i.v, 2
   %i.x = add i64 %i.w, 8
   %i.y = shl i64 %i.b, 2
   %i.z = sub i64 %i.x, %i.y
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.z
-  %bound0 = icmp ult ptr %6, %1
+  %bound0 = icmp ult ptr %5, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader108, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %7, -8                         ; 4 uses
+  %n.vec = and i64 %6, -8                         ; 4 uses
   %i.aa = getelementptr i8, ptr %0, i64 %n.vec    ; 2 uses
   %i.ab = shl i64 %n.vec, 2
-  %i.ac = getelementptr i8, ptr %6, i64 %i.ab
+  %i.ac = getelementptr i8, ptr %5, i64 %i.ab
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %0, i64 %index ; 2 uses
   %i.ad = shl i64 %index, 2
-  %next.gep104 = getelementptr i8, ptr %6, i64 %i.ad ; 2 uses
+  %next.gep104 = getelementptr i8, ptr %5, i64 %i.ad ; 2 uses
   %i.ae = getelementptr i8, ptr %next.gep, i64 4
   %wide.load = load <4 x i8>, ptr %next.gep, align 1, !tbaa !55, !alias.scope !582
   %wide.load105 = load <4 x i8>, ptr %i.ae, align 1, !tbaa !55, !alias.scope !582
@@ -3638,12 +3610,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !579
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit, label %.lr.ph.preheader108
 
-.lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.aa, %middle.block ] ; 3 uses
-  %.03762.ph = phi ptr [ %6, %vector.memcheck ], [ %6, %.lr.ph.preheader ], [ %i.ac, %middle.block ] ; 2 uses
+.lr.ph.preheader108:                              ; preds = %vector.memcheck, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %middle.block
+  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ] ; 3 uses
+  %.03762.ph = phi ptr [ %5, %vector.memcheck ], [ %5, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.ac, %middle.block ] ; 2 uses
   %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
   %i.ar = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.ar, 3                    ; 2 uses
@@ -3913,8 +3885,8 @@ bb.o:                                             ; preds = %_ZNK6google8protobu
   %i.fk = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.fk, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIihLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.ch, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIihLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
+_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIihLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.ch, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIihLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
   ret ptr %.0
 }
 
@@ -4317,50 +4289,46 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre72 = add nsw i32 %.pre70, %i.e
   br label %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
 
-_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i, %bb.e
+_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i
   %.pre-phi73 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i ], [ %.pre72, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %i.s = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.u = load ptr, ptr %i.t, align 8
   store i32 %.pre-phi73, ptr %i.h, align 4, !tbaa !141
-  %.not3961 = icmp eq ptr %0, %1
-  br i1 %.not3961, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
-  %4 = icmp eq i32 %.pre-phi, 0
-  %.0.v.i.i.i = select i1 %4, ptr %3, ptr %i.u    ; 2 uses
+  %.not3961 = icmp eq i32 %.pre-phi, 0
+  %.0.v.i.i.i = select i1 %.not3961, ptr %3, ptr %i.u ; 2 uses
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
-  %5 = sext i32 %i.s to i64                       ; 2 uses
-  %6 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %5 ; 5 uses
-  %7 = sub i64 %i.a, %i.b                         ; 3 uses
-  %min.iters.check = icmp ult i64 %7, 16
+  %4 = sext i32 %i.s to i64                       ; 2 uses
+  %5 = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %4 ; 5 uses
+  %6 = sub i64 %i.a, %i.b                         ; 3 uses
+  %min.iters.check = icmp ult i64 %6, 16
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.v = add i64 %i.a, %5
+vector.memcheck:                                  ; preds = %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  %i.v = add i64 %i.a, %4
   %i.w = shl i64 %i.v, 2
   %i.x = add i64 %i.w, 8
   %i.y = shl i64 %i.b, 2
   %i.z = sub i64 %i.x, %i.y
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.z
-  %bound0 = icmp ult ptr %6, %1
+  %bound0 = icmp ult ptr %5, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader108, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %7, -8                         ; 4 uses
+  %n.vec = and i64 %6, -8                         ; 4 uses
   %i.aa = getelementptr i8, ptr %0, i64 %n.vec    ; 2 uses
   %i.ab = shl i64 %n.vec, 2
-  %i.ac = getelementptr i8, ptr %6, i64 %i.ab
+  %i.ac = getelementptr i8, ptr %5, i64 %i.ab
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %0, i64 %index ; 2 uses
   %i.ad = shl i64 %index, 2
-  %next.gep104 = getelementptr i8, ptr %6, i64 %i.ad ; 2 uses
+  %next.gep104 = getelementptr i8, ptr %5, i64 %i.ad ; 2 uses
   %i.ae = getelementptr i8, ptr %next.gep, i64 4
   %wide.load = load <4 x i8>, ptr %next.gep, align 1, !tbaa !55, !alias.scope !591
   %wide.load105 = load <4 x i8>, ptr %i.ae, align 1, !tbaa !55, !alias.scope !591
@@ -4382,12 +4350,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !588
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit, label %.lr.ph.preheader108
 
-.lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.aa, %middle.block ] ; 3 uses
-  %.03762.ph = phi ptr [ %6, %vector.memcheck ], [ %6, %.lr.ph.preheader ], [ %i.ac, %middle.block ] ; 2 uses
+.lr.ph.preheader108:                              ; preds = %vector.memcheck, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %middle.block
+  %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ] ; 3 uses
+  %.03762.ph = phi ptr [ %5, %vector.memcheck ], [ %5, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.ac, %middle.block ] ; 2 uses
   %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
   %i.ar = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.ar, 3                    ; 2 uses
@@ -4657,8 +4625,8 @@ bb.o:                                             ; preds = %_ZNK6google8protobu
   %i.fk = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.fk, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIitLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.ch, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIitLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
+_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit: ; preds = %.thread.i.i.i, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIitLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.ch, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIitLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %.thread.i.i.i ]
   ret ptr %.0
 }
 
@@ -4891,7 +4859,7 @@ bb.d:                                             ; preds = %bb.c
 _ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i: ; preds = %bb.d, %bb.c
   %i.q = phi i32 [ %i.p, %bb.d ], [ 1, %bb.c ]
   %i.r = icmp sgt i32 %i.j, %i.q
-  br i1 %i.r, label %bb.e, label %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, !prof !23
+  br i1 %i.r, label %bb.e, label %.lr.ph.preheader, !prof !23
 
 bb.e:                                             ; preds = %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i
   tail call void @_ZN6google8protobuf13RepeatedFieldIlE4GrowIPNS0_5ArenaEEEvT_bii(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %2, i1 noundef zeroext %i.m, i32 noundef %i.i, i32 noundef %i.j)
@@ -4899,19 +4867,15 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre69 = load i32, ptr %i.h, align 4, !tbaa !141 ; 2 uses
   %.pre70 = and i32 %.pre68, 1
   %.pre71 = add nsw i32 %.pre69, %i.e
-  br label %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  br label %.lr.ph.preheader
 
-_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i, %bb.e
+.lr.ph.preheader:                                 ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i
   %.pre-phi72 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %4 = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i ], [ %.pre69, %bb.e ]
   %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %6 = load ptr, ptr %5, align 8
   store i32 %.pre-phi72, ptr %i.h, align 4, !tbaa !141
-  %.not3960 = icmp eq ptr %0, %1
-  br i1 %.not3960, label %_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
   %i.s = icmp eq i32 %.pre-phi, 0
   %.0.v.i.i.i = select i1 %i.s, ptr %3, ptr %6
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i, i64 8
@@ -5177,8 +5141,8 @@ bb.m:                                             ; preds = %.thread52.i.i.i, %.
   %i.ej = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.ej, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIlhLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bl, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIlhLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
+_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIlhLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bl, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIlhLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
   ret ptr %.0
 }
 
@@ -5581,7 +5545,7 @@ bb.d:                                             ; preds = %bb.c
 _ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i: ; preds = %bb.d, %bb.c
   %i.q = phi i32 [ %i.p, %bb.d ], [ 1, %bb.c ]
   %i.r = icmp sgt i32 %i.j, %i.q
-  br i1 %i.r, label %bb.e, label %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, !prof !23
+  br i1 %i.r, label %bb.e, label %.lr.ph.preheader, !prof !23
 
 bb.e:                                             ; preds = %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i
   tail call void @_ZN6google8protobuf13RepeatedFieldIlE4GrowIPNS0_5ArenaEEEvT_bii(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %2, i1 noundef zeroext %i.m, i32 noundef %i.i, i32 noundef %i.j)
@@ -5589,19 +5553,15 @@ bb.e:                                             ; preds = %_ZNK6google8protobu
   %.pre69 = load i32, ptr %i.h, align 4, !tbaa !141 ; 2 uses
   %.pre70 = and i32 %.pre68, 1
   %.pre71 = add nsw i32 %.pre69, %i.e
-  br label %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
+  br label %.lr.ph.preheader
 
-_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i, %bb.e
+.lr.ph.preheader:                                 ; preds = %bb.e, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i
   %.pre-phi72 = phi i32 [ %i.j, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i ], [ %.pre71, %bb.e ]
   %.pre-phi = phi i32 [ %i.l, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i ], [ %.pre70, %bb.e ]
   %4 = phi i32 [ %i.i, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.i ], [ %.pre69, %bb.e ]
   %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %6 = load ptr, ptr %5, align 8
   store i32 %.pre-phi72, ptr %i.h, align 4, !tbaa !141
-  %.not3960 = icmp eq ptr %0, %1
-  br i1 %.not3960, label %_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit
   %i.s = icmp eq i32 %.pre-phi, 0
   %.0.v.i.i.i = select i1 %i.s, ptr %3, ptr %6
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i, i64 8
@@ -5867,8 +5827,8 @@ bb.m:                                             ; preds = %.thread52.i.i.i, %.
   %i.ej = icmp ult ptr %.0.i11.i50, %1
   br i1 %i.ej, label %.lr.ph.i47, label %_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit
 
-_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIltLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
-  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bl, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIltLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %0, %_ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaIPNS0_5ArenaEEEvT_i.exit ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
+_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit: ; preds = %bb.m, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49, %.lr.ph.prol.loopexit, %.lr.ph, %bb.k, %bb.j, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIltLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit
+  %.0 = phi ptr [ %.2.i, %bb.j ], [ %i.bl, %.lr.ph ], [ %.2.i, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIltLb1EEEPKcPNS0_11MessageLiteES8_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES8_S8_S8_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EEEUlmE_EES8_S8_S8_SK_.exit ], [ %0, %bb.k ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ null, %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i49 ], [ %.0.i11.i50, %bb.m ]
   ret ptr %.0
 }
 

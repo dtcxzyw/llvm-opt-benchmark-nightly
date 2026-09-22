@@ -204,8 +204,7 @@ bb.t:                                             ; preds = %.lr.ph513
   %.val425.val = load ptr, ptr %i.hk, align 8, !tbaa !37 ; 5 uses
   %wide.trip.count598 = zext nneg i32 %i.hi to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count598, 3      ; 3 uses
-  %5 = add nsw i32 %i.hi, -1
-  %i.hl = icmp ult i32 %5, 3
+  %i.hl = icmp ult i32 %i.hi, 4
   br i1 %i.hl, label %.lr.ph517.split.epil.preheader, label %.lr.ph517.split.preheader.new
 
 .lr.ph517.split.preheader.new:                    ; preds = %.lr.ph517.split.preheader
@@ -608,8 +607,7 @@ Abc_UtilStrsav.exit:                              ; preds = %._crit_edge, %bb.o
   %.val276.val = load ptr, ptr %i.gg, align 8, !tbaa !37 ; 5 uses
   %wide.trip.count = zext nneg i32 %i.ge to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %5 = add nsw i32 %i.ge, -1
-  %i.gh = icmp ult i32 %5, 3
+  %i.gh = icmp ult i32 %i.ge, 4
   br i1 %i.gh, label %.lr.ph342.split.epil.preheader, label %.lr.ph342.split.preheader.new
 
 .lr.ph342.split.preheader.new:                    ; preds = %.lr.ph342.split.preheader

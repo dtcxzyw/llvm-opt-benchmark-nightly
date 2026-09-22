@@ -205,19 +205,17 @@ bb.v:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %sext = shl i64 %i.fa, 32                       ; 2 uses
   %i.fg = ashr exact i64 %sext, 32
   %.idx = mul nsw i64 %i.fg, 40
-  %i.fh = getelementptr inbounds i8, ptr %i.ff, i64 %.idx ; 3 uses
+  %i.fh = getelementptr inbounds i8, ptr %i.ff, i64 %.idx ; 2 uses
   %.not.i.i27 = icmp eq i64 %sext, 0
   br i1 %.not.i.i27, label %_ZNSt6vectorI5INodeILi3EESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit, label %bb.w
 
 bb.w:                                             ; preds = %._crit_edge
   %i.fi = ptrtoint ptr %i.fh to i64
-  %i.fj = load ptr, ptr %i.eu, align 8, !tbaa !716 ; 3 uses
-  %.not11.i.i = icmp ne ptr %i.fh, %i.fj
+  %i.fj = load ptr, ptr %i.eu, align 8, !tbaa !716 ; 2 uses
   %.pre.i.i = ptrtoint ptr %i.fj to i64
   %.pre14.i.i = sub i64 %.pre.i.i, %i.fi          ; 3 uses
   %i.fk = icmp sgt i64 %.pre14.i.i, 0
-  %or.cond.i.i = and i1 %.not11.i.i, %i.fk
-  br i1 %or.cond.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP5INodeILi3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i
+  br i1 %i.fk, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP5INodeILi3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i
 
 .lr.ph.preheader.i.i.i.i.i.i.i:                   ; preds = %bb.w
   %i.fl = udiv exact i64 %.pre14.i.i, 40

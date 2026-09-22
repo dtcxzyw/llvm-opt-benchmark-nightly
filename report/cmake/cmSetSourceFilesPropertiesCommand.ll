@@ -102,13 +102,13 @@ bb.a:
   %9 = alloca %"class.std::vector", align 8       ; 12 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !14   ; 6 uses
-  %i.h = load ptr, ptr %0, align 8, !tbaa !15     ; 3 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !14   ; 4 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !15     ; 2 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = icmp ult i64 %i.k, 33
-  br i1 %i.l, label %.noexc.i, label %11
+  br i1 %i.l, label %.noexc.i, label %.preheader.i
 
 .noexc.i:                                         ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
@@ -171,12 +171,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   br label %bb.bl
 
-11:                                               ; preds = %bb.a
-  %.not1724.i = icmp eq ptr %i.h, %i.g
-  br i1 %.not1724.i, label %_ZSt13find_first_ofIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPKSt17basic_string_viewIcS5_EET_SI_SI_T0_SJ_.exit, label %.preheader.i
-
-.preheader.i:                                     ; preds = %11, %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i
-  %.sroa.010.025.i = phi ptr [ %i.cu, %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i ], [ %i.h, %11 ] ; 11 uses
+.preheader.i:                                     ; preds = %bb.a, %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i
+  %.sroa.010.025.i = phi ptr [ %i.cu, %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i ], [ %i.h, %bb.a ] ; 11 uses
   %i.ac = load ptr, ptr %.sroa.010.025.i, align 8, !tbaa !22 ; 14 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.010.025.i, i64 8
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !24
@@ -290,8 +286,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.7: ; preds = %.preheader.i, %.l
   %.not17.i = icmp eq ptr %i.cu, %i.g
   br i1 %.not17.i, label %_ZSt13find_first_ofIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPKSt17basic_string_viewIcS5_EET_SI_SI_T0_SJ_.exit, label %.preheader.i, !llvm.loop !27
 
-_ZSt13find_first_ofIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPKSt17basic_string_viewIcS5_EET_SI_SI_T0_SJ_.exit: ; preds = %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.2, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.3, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.4, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.5, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.6, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.7, %11
-  %.sroa.07.2.i = phi ptr [ %i.g, %11 ], [ %i.g, %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.2 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.3 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.4 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.5 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.6 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.7 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ] ; 4 uses
+_ZSt13find_first_ofIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPKSt17basic_string_viewIcS5_EET_SI_SI_T0_SJ_.exit: ; preds = %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.2, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.3, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.4, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.5, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.6, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.7
+  %.sroa.07.2.i = phi ptr [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.7 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.6 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.5 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.4 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.3 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.2 ], [ %.sroa.010.025.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1 ], [ %i.g, %._ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit_crit_edge.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18

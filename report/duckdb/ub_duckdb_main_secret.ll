@@ -204,8 +204,8 @@ _ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EED2Ev.exit82:
   br label %bb.bo
 
 _ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit: ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EED2Ev.exit
-  %i.cb = phi ptr [ %.pre, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EED2Ev.exit ], [ %i.l, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 5 uses
-  %i.cc = phi ptr [ %i.w, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EED2Ev.exit ], [ %i.p, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 4 uses
+  %i.cb = phi ptr [ %.pre, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EED2Ev.exit ], [ %i.l, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 4 uses
+  %i.cc = phi ptr [ %i.w, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EED2Ev.exit ], [ %i.p, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 3 uses
   %i.cd = ptrtoint ptr %i.cc to i64
   %i.ce = ptrtoint ptr %i.cb to i64
   %i.cf = sub i64 %i.cd, %i.ce
@@ -219,15 +219,11 @@ bb.ai:                                            ; preds = %_ZNSt6vectorISt17re
   %i.ci = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   store i64 0, ptr %i.ci, align 8, !tbaa !59
   store i8 0, ptr %i.ch, align 8, !tbaa !63
-  %.not142165 = icmp eq ptr %i.cb, %i.cc
-  br i1 %.not142165, label %._crit_edge169, label %.lr.ph168
-
-.lr.ph168:                                        ; preds = %bb.ai
   %20 = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 5 uses
   %21 = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 4 uses
   br label %bb.aj
 
-._crit_edge169:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87, %bb.ai
+._crit_edge169:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8pop_backEv(ptr noundef nonnull align 8 dereferenceable(32) %11) #30
   %i.cj = call ptr @__cxa_allocate_exception(i64 16) #30 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #30
@@ -235,8 +231,8 @@ bb.ai:                                            ; preds = %_ZNSt6vectorISt17re
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %13, ptr noundef nonnull @.str.56, ptr noundef nonnull align 1 dereferenceable(1) %14)
           to label %bb.aq unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit93.thread
 
-bb.aj:                                            ; preds = %.lr.ph168, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87
-  %.sroa.0117.0166 = phi ptr [ %i.cb, %.lr.ph168 ], [ %i.dk, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87 ] ; 2 uses
+bb.aj:                                            ; preds = %bb.ai, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87
+  %.sroa.0117.0166 = phi ptr [ %i.cb, %bb.ai ], [ %i.dk, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #30
   %i.ck = load ptr, ptr %.sroa.0117.0166, align 8, !tbaa !169 ; 2 uses
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !65

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.q
   %i.n = load i8, ptr %i.i, align 4, !tbaa !88    ; 2 uses
   %i.o = zext i8 %i.n to i32                      ; 2 uses
   %i.p = add i32 %i.m, %i.o
-  %i.q = sub i32 0, %i.p                          ; 4 uses
+  %i.q = sub i32 0, %i.p                          ; 5 uses
   %i.r = zext nneg i8 %i.k to i32
   %i.s = ashr i32 %i.f, %i.r
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 1
@@ -224,7 +224,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.q
 
 .split.us:                                        ; preds = %bb.c
-  %i.ab = tail call i32 @llvm.umin.i32(i32 %i.q, i32 8) ; 5 uses
+  %i.ab = tail call i32 @llvm.umin.i32(i32 %i.q, i32 8) ; 4 uses
   %i.ac = tail call i32 @llvm.umin.i32(i32 %i.x, i32 8) ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.i, i64 2
   %i.ae = load i8, ptr %i.ad, align 2, !tbaa !90
@@ -262,8 +262,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ax = zext i32 %i.aw to i64
   %i.ay = sub nsw i64 %i.ax, %wide.trip.count110  ; 7 uses
   %xtraiter138 = and i64 %wide.trip.count110, 3   ; 3 uses
-  %5 = add nsw i32 %i.ab, -1
-  %i.az = icmp ult i32 %5, 3
+  %i.az = icmp ult i32 %i.q, 4
   %unroll_iter143 = and i64 %wide.trip.count110, 4
   %lcmp.mod140.not = icmp eq i64 %xtraiter138, 0
   %lcmp.mod142 = icmp ne i64 %xtraiter138, 0

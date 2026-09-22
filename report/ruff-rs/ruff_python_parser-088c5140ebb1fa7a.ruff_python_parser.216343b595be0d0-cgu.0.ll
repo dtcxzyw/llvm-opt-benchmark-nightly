@@ -205,7 +205,9 @@ bb.ih:                                            ; preds = %_RNCNvNtCsiVHPhtDv1
   %i.zx = extractvalue { i64, ptr } %i.zu, 1
   %i.zy = ptrtoint ptr %i.zx to i64
   %i.zz = ptrtoint ptr %i.zr to i64
-  %i.aaa = sub i64 %i.zy, %i.zz
+  %i.aaa = sub i64 %i.zy, %i.zz                   ; 2 uses
+  %3 = icmp sgt i64 %i.aaa, -1
+  call void @llvm.assume(i1 %3), !noalias !623
   %.not.i.i = icmp samesign ult i64 %i.aaa, %i.sw
   call void @llvm.assume(i1 %.not.i.i), !noalias !623
   %.not115.i = icmp eq i32 %.sroa.0.0.i266.i, -1
@@ -608,8 +610,8 @@ _RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit.si
   br label %.thread
 
 _RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit42: ; preds = %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread163, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i41, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33, %bb.c, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit
-  %.val3.i = phi ptr [ %.pre146, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread ], [ %.val.i29, %bb.c ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33 ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i41 ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread163 ] ; 7 uses
-  %.val.i43.pre = phi ptr [ %.pre, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread ], [ %.val.i29, %bb.c ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33 ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i41 ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread163 ] ; 7 uses
+  %.val3.i = phi ptr [ %.pre146, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread ], [ %.val.i29, %bb.c ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33 ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i41 ], [ %.val1.i30, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread163 ] ; 6 uses
+  %.val.i43.pre = phi ptr [ %.pre, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread ], [ %.val.i29, %bb.c ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33 ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i41 ], [ %.val.i29, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread163 ] ; 9 uses
   %.sroa.02.0121 = phi i1 [ %.sroa.02.0122, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit ], [ %i.au, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread ], [ %i.au, %bb.c ], [ %i.au, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33 ], [ %i.au, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i41 ], [ %i.au, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread163 ]
   %.sroa.04.0 = phi i1 [ true, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit ], [ false, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread ], [ false, %bb.c ], [ false, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33 ], [ false, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i41 ], [ false, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i33.thread163 ]
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 5 uses
@@ -641,7 +643,7 @@ bb.e:                                             ; preds = %bb.l, %bb.k, %bb.j,
   br i1 %.not23, label %bb.n, label %bb.u
 
 bb.f:                                             ; preds = %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor8eat_char.exit42
-  %i.cx = getelementptr inbounds nuw i8, ptr %.val.i43.pre, i64 1 ; 3 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %.val.i43.pre, i64 1 ; 5 uses
   %i.cy = load i8, ptr %i.cx, align 1, !noundef !15 ; 2 uses
   %i.cz = add i8 %i.cy, -48
   %or.cond27 = icmp ult i8 %i.cz, 10
@@ -654,31 +656,23 @@ bb.g:                                             ; preds = %bb.h, %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.da = load i8, ptr %.val.i43.pre, align 1, !noundef !15
   switch i8 %i.da, label %bb.g [
-    i8 101, label %2
-    i8 69, label %2
+    i8 101, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit
+    i8 69, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit
   ]
 
-2:                                                ; preds = %bb.l, %bb.l, %bb.h, %bb.h
-  %.not.i = icmp eq ptr %.val.i43.pre, %.val3.i
-  br i1 %.not.i, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit, label %3
-
-3:                                                ; preds = %2
+_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit: ; preds = %bb.l, %bb.l, %bb.h, %bb.h
   store ptr %i.cx, ptr %i.cm, align 8, !alias.scope !5213
-  br label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit
-
-_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit: ; preds = %3, %2
-  %.val.i43 = phi ptr [ %.val.i43.pre, %2 ], [ %i.cx, %3 ] ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5214)
-  %.not.i.i44 = icmp eq ptr %.val.i43, %.val3.i
+  %.not.i.i44 = icmp eq ptr %i.cx, %.val3.i
   br i1 %.not.i.i44, label %_RINvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB3_6Cursor6eat_ifNCNvMB5_NtB5_5Lexer18lex_decimal_number0EB7_.exit, label %bb.i
 
 bb.i:                                             ; preds = %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit
-  %i.db = load i8, ptr %.val.i43, align 1, !noalias !5215, !noundef !15 ; 5 uses
+  %i.db = load i8, ptr %i.cx, align 1, !noalias !5215, !noundef !15 ; 5 uses
   %i.dc = icmp sgt i8 %i.db, -1
   br i1 %i.dc, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i50, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit12.i.i.i45
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit12.i.i.i45: ; preds = %bb.i
-  %i.dd = getelementptr inbounds nuw i8, ptr %.val.i43, i64 1 ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %.val.i43.pre, i64 2 ; 2 uses
   %i.de = and i8 %i.db, 31
   %i.df = zext nneg i8 %i.de to i32               ; 3 uses
   %i.dg = icmp ne ptr %i.dd, %.val3.i
@@ -690,7 +684,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br i1 %i.dk, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit14.i.i.i48, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46.thread
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit14.i.i.i48: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit12.i.i.i45
-  %i.dl = getelementptr inbounds nuw i8, ptr %.val.i43, i64 2 ; 2 uses
+  %i.dl = getelementptr inbounds nuw i8, ptr %.val.i43.pre, i64 3 ; 2 uses
   %i.dm = icmp ne ptr %i.dl, %.val3.i
   tail call void @llvm.assume(i1 %i.dm)
   %i.dn = load i8, ptr %i.dl, align 1, !noalias !5215, !noundef !15
@@ -702,7 +696,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br i1 %i.ds, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46.thread165
 
 _RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit14.i.i.i48
-  %i.dt = getelementptr inbounds nuw i8, ptr %.val.i43, i64 3 ; 2 uses
+  %i.dt = getelementptr inbounds nuw i8, ptr %.val.i43.pre, i64 4 ; 2 uses
   %i.du = icmp ne ptr %i.dt, %.val3.i
   tail call void @llvm.assume(i1 %i.du)
   %i.dv = load i8, ptr %i.dt, align 1, !noalias !5215, !noundef !15
@@ -742,14 +736,14 @@ _RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.t
   br i1 %switch.selectcmp.i14.i, label %_RINvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB3_6Cursor6eat_ifNCNvMB5_NtB5_5Lexer18lex_decimal_number0EB7_.exit.sink.split, label %_RINvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB3_6Cursor6eat_ifNCNvMB5_NtB5_5Lexer18lex_decimal_number0EB7_.exit
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit16.i.i8.i: ; preds = %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46
-  %i.em = getelementptr inbounds nuw i8, ptr %.val.i43, i64 3
+  %i.em = getelementptr inbounds nuw i8, ptr %.val.i43.pre, i64 4
   %i.en = icmp ne ptr %i.em, %.val3.i
   tail call void @llvm.assume(i1 %i.en)
   br label %_RINvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB3_6Cursor6eat_ifNCNvMB5_NtB5_5Lexer18lex_decimal_number0EB7_.exit.sink.split
 
 _RINvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB3_6Cursor6eat_ifNCNvMB5_NtB5_5Lexer18lex_decimal_number0EB7_.exit.sink.split: ; preds = %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i50, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46.thread, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46.thread165, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit16.i.i8.i
   %.sink170 = phi i64 [ 4, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit16.i.i8.i ], [ 3, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46.thread165 ], [ 2, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.i46.thread ], [ 1, %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor5first.exit.thread.i50 ]
-  %i.eo = getelementptr inbounds nuw i8, ptr %.val.i43, i64 %.sink170
+  %i.eo = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.sink170
   store ptr %i.eo, ptr %i.cm, align 8, !alias.scope !5216
   br label %_RINvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB3_6Cursor6eat_ifNCNvMB5_NtB5_5Lexer18lex_decimal_number0EB7_.exit
 
@@ -775,8 +769,8 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.k
   switch i8 %i.cy, label %bb.e [
-    i8 45, label %2
-    i8 43, label %2
+    i8 45, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit
+    i8 43, label %_RNvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB2_6Cursor4bump.exit
   ]
 
 bb.m:                                             ; preds = %_RINvMNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer6cursorNtB3_6Cursor6eat_ifNCNvMB5_NtB5_5Lexer18lex_decimal_number0EB7_.exit, %bb.n

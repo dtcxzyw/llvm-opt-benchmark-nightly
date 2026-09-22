@@ -205,7 +205,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.outer"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.outer": ; preds = %bb.dw, %bb.a
-  %.024.ph = phi ptr [ %i.aoq, %bb.dw ], [ %1, %bb.a ] ; 29 uses
+  %.024.ph = phi ptr [ %i.aoq, %bb.dw ], [ %1, %bb.a ] ; 28 uses
   %.021.ph = phi ptr [ %.021, %bb.dw ], [ %0, %bb.a ]
   %.048.ph = phi i8 [ %.048.ph428, %bb.dw ], [ %i.a, %bb.a ]
   %.046.ph = phi i64 [ %i.add, %bb.dw ], [ %2, %bb.a ]
@@ -227,7 +227,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.outer426", %bb.dx
-  %.021 = phi ptr [ %.119.lcssa.i, %bb.dx ], [ %.021.ph427, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.outer426" ] ; 80 uses
+  %.021 = phi ptr [ %.119.lcssa.i, %bb.dx ], [ %.021.ph427, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.outer426" ] ; 79 uses
   %.046 = phi i64 [ %i.add, %bb.dx ], [ %.046.ph429, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.outer426" ] ; 2 uses
   %i.ad = ptrtoint ptr %.021 to i64               ; 2 uses
   %i.ae = sub i64 %i.u, %i.ad                     ; 4 uses
@@ -305,7 +305,7 @@ bb.f:                                             ; preds = %"_ZNSt3__116__inser
 
 bb.g:                                             ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit"
   %i.bq = icmp slt i64 %i.ae, 2304
-  br i1 %i.bq, label %bb.h, label %10
+  br i1 %i.bq, label %bb.h, label %bb.aj
 
 bb.h:                                             ; preds = %bb.g
   %i.br = trunc nuw i8 %.048.ph428 to i1
@@ -708,13 +708,9 @@ _ZN3tev13AttributeNodeD2Ev.exit.i69:              ; preds = %bb.ai, %_ZNSt3__112
   %.not.i60 = icmp eq ptr %storemerge.i59, %.024.ph
   br i1 %.not.i60, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.thread", label %bb.x, !llvm.loop !3034
 
-10:                                               ; preds = %bb.g
-  %11 = icmp eq i64 %.046, 0
-  br i1 %11, label %bb.aj, label %bb.ce
-
-bb.aj:                                            ; preds = %10
-  %i.ly = icmp eq ptr %.021, %.024.ph
-  br i1 %i.ly, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.thread", label %bb.ak
+bb.aj:                                            ; preds = %bb.g
+  %i.ly = icmp eq i64 %.046, 0
+  br i1 %i.ly, label %bb.ak, label %bb.ce
 
 bb.ak:                                            ; preds = %bb.aj
   %i.lz = add nsw i64 %i.af, -2
@@ -1117,7 +1113,7 @@ _ZN3tev13AttributeNodeD2Ev.exit.i.i.i.i.i:        ; preds = %bb.cd, %_ZNSt3__112
   %i.adc = icmp sgt i64 %.042.i.i.i, 2
   br i1 %i.adc, label %bb.az, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.thread", !llvm.loop !3039
 
-bb.ce:                                            ; preds = %10
+bb.ce:                                            ; preds = %bb.aj
   %i.add = add nsw i64 %.046, -1                  ; 4 uses
   %i.ade = lshr i64 %i.af, 1
   %i.adf = icmp samesign ugt i64 %i.ae, 12288
@@ -1520,7 +1516,7 @@ bb.dy:                                            ; preds = %bb.dx, %"_ZNSt3__13
   %.021.ph427.be = phi ptr [ %.321.lcssa.i, %"_ZNSt3__131__partition_with_equals_on_leftB8ne180100INS_17_ClassicAlgPolicyEPN3tev13AttributeNodeERZNS2_9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0EET0_SC_SC_T1_.exit" ], [ %.119.lcssa.i, %bb.dy ]
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.outer426", !llvm.loop !3052
 
-"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit", %bb.dw, %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SB_RT0_NS_15iterator_traitsISB_E15difference_typeE.exit.i.i.i", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i58", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i", %bb.c, %bb.aj, %.preheader.i54, %bb.w, %.preheader.i, %bb.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread29", %bb.e, %bb.d, %bb.f, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit"
+"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SC_T0_.exit", %bb.dw, %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZN3tev9ImageData11ensureValidENS_17basic_string_viewIcNS_11char_traitsIcEEEEiE3$_0PNS2_13AttributeNodeEEEvT1_SB_RT0_NS_15iterator_traitsISB_E15difference_typeE.exit.i.i.i", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i58", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i", %bb.c, %.preheader.i54, %bb.w, %.preheader.i, %bb.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread29", %bb.e, %bb.d, %bb.f, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit"
   ret void
 }
 

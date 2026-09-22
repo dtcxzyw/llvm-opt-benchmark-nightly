@@ -205,7 +205,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.outer"
 
 "_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.outer": ; preds = %bb.bs, %bb.a
-  %.039.ph = phi ptr [ %i.ly, %bb.bs ], [ %1, %bb.a ] ; 35 uses
+  %.039.ph = phi ptr [ %i.ly, %bb.bs ], [ %1, %bb.a ] ; 34 uses
   %.036.ph = phi ptr [ %.036, %bb.bs ], [ %0, %bb.a ]
   %.048.ph = phi i8 [ %.048.ph333, %bb.bs ], [ %i.a, %bb.a ]
   %.046.ph = phi i64 [ %i.ga, %bb.bs ], [ %2, %bb.a ]
@@ -230,7 +230,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit"
 
 "_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit": ; preds = %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.outer331", %bb.bt
-  %.036 = phi ptr [ %.1.lcssa.i, %bb.bt ], [ %.036.ph332, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.outer331" ] ; 67 uses
+  %.036 = phi ptr [ %.1.lcssa.i, %bb.bt ], [ %.036.ph332, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.outer331" ] ; 66 uses
   %.046 = phi i64 [ %i.ga, %bb.bt ], [ %.046.ph334, %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.outer331" ] ; 2 uses
   %i.j = ptrtoint ptr %.036 to i64                ; 2 uses
   %i.k = sub i64 %i.b, %i.j                       ; 4 uses
@@ -328,7 +328,7 @@ bb.g:                                             ; preds = %"_ZNSt3__116__inser
 
 bb.h:                                             ; preds = %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit"
   %i.af = icmp slt i64 %i.k, 480
-  br i1 %i.af, label %bb.i, label %9
+  br i1 %i.af, label %bb.i, label %bb.t
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = trunc nuw i8 %.048.ph333 to i1
@@ -595,13 +595,9 @@ _ZNSt3__1ltB8nn180100INS_5arrayIjLm2EEELm2EEEbRKNS1_IT_XT0_EEES6_.exit18.i.i.i32
   %.not.i68 = icmp eq ptr %storemerge.i67, %.039.ph
   br i1 %.not.i68, label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.thread", label %.lr.ph.i60, !llvm.loop !1237
 
-9:                                                ; preds = %bb.h
-  %10 = icmp eq i64 %.046, 0
-  br i1 %10, label %bb.t, label %bb.ar
-
-bb.t:                                             ; preds = %9
-  %i.bu = icmp eq ptr %.036, %.039.ph
-  br i1 %i.bu, label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.thread", label %bb.u
+bb.t:                                             ; preds = %bb.h
+  %i.bu = icmp eq i64 %.046, 0
+  br i1 %i.bu, label %bb.u, label %bb.ar
 
 bb.u:                                             ; preds = %bb.t
   %i.bv = add nsw i64 %i.l, -2
@@ -1004,7 +1000,7 @@ _ZNSt3__1ltB8nn180100INS_5arrayIjLm2EEELm2EEEbRKNS1_IT_XT0_EEES6_.exit18.i.i.i28
   %i.fz = icmp sgt i64 %.02.i.i.i, 2
   br i1 %i.fz, label %.lr.ph.i.i.i, label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.thread", !llvm.loop !1242
 
-bb.ar:                                            ; preds = %9
+bb.ar:                                            ; preds = %bb.t
   %i.ga = add nsw i64 %.046, -1                   ; 4 uses
   %i.gb = lshr i64 %i.l, 1
   %i.gc = icmp samesign ugt i64 %i.k, 2560
@@ -1407,7 +1403,7 @@ bb.bu:                                            ; preds = %bb.bt, %"_ZNSt3__13
   %.036.ph332.be = phi ptr [ %.3.lcssa.i, %"_ZNSt3__131__partition_with_equals_on_leftB8nn180100INS_17_ClassicAlgPolicyEPN3jxl21ModularMultiplierInfoERZNS2_19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0EET0_SA_SA_T1_.exit" ], [ %.1.lcssa.i, %bb.bu ]
   br label %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.outer331", !llvm.loop !1255
 
-"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit", %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit", %bb.bs, %"_ZNSt3__110__pop_heapB8nn180100INS_17_ClassicAlgPolicyEZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_S9_RT0_NS_15iterator_traitsIS9_E15difference_typeE.exit.i.i.i", %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit.thread30.i", %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit.thread31.i", %_ZNKSt3__16__lessIvvEclB8nn180100INS_5arrayIjLm2EEES4_EEbRKT_RKT0_.exit19.i.i.i.i.i.i.i, %bb.c, %bb.d, %bb.t, %bb.o, %bb.j, %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit.thread", %bb.f, %bb.e, %bb.g, %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit"
+"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit", %"_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_SA_T0_.exit", %bb.bs, %"_ZNSt3__110__pop_heapB8nn180100INS_17_ClassicAlgPolicyEZN3jxl19ModularFrameEncoder11ComputeTreeEPNS2_10ThreadPoolEE3$_0PNS2_21ModularMultiplierInfoEEEvT1_S9_RT0_NS_15iterator_traitsIS9_E15difference_typeE.exit.i.i.i", %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit.thread30.i", %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit.thread31.i", %_ZNKSt3__16__lessIvvEclB8nn180100INS_5arrayIjLm2EEES4_EEbRKT_RKT0_.exit19.i.i.i.i.i.i.i, %bb.c, %bb.d, %bb.o, %bb.j, %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit.thread", %bb.f, %bb.e, %bb.g, %"_ZZN3jxl19ModularFrameEncoder11ComputeTreeEPNS_10ThreadPoolEENK3$_0clENS_21ModularMultiplierInfoES4_.exit"
   ret void
 }
 

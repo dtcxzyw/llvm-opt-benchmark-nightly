@@ -205,19 +205,15 @@ _ZL19handleCompareActionRKN12_GLOBAL__N_17ContextE.exit: ; preds = %_ZNSt10uniqu
 bb.ca:                                            ; preds = %bb.bd
   call void @llvm.lifetime.start.p0(ptr nonnull %23)
   %i.rg = getelementptr inbounds nuw i8, ptr %44, i64 8
-  %i.rh = load ptr, ptr %i.rg, align 8, !tbaa !68 ; 3 uses
-  %i.ri = load ptr, ptr %44, align 8, !tbaa !92   ; 3 uses
+  %i.rh = load ptr, ptr %i.rg, align 8, !tbaa !68 ; 2 uses
+  %i.ri = load ptr, ptr %44, align 8, !tbaa !92   ; 2 uses
   %i.rj = ptrtoint ptr %i.rh to i64
   %i.rk = ptrtoint ptr %i.ri to i64
   %i.rl = sub i64 %i.rj, %i.rk
   %i.rm = icmp ult i64 %i.rl, 33
-  br i1 %i.rm, label %bb.cb, label %.preheader.i
+  br i1 %i.rm, label %bb.cb, label %.lr.ph.i144
 
-.preheader.i:                                     ; preds = %bb.ca
-  %.not36.i = icmp eq ptr %i.ri, %i.rh
-  br i1 %.not36.i, label %._crit_edge.i149, label %.lr.ph.i144
-
-.lr.ph.i144:                                      ; preds = %.preheader.i
+.lr.ph.i144:                                      ; preds = %bb.ca
   %i.rn = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 2 uses
   br label %bb.cc
 
@@ -238,13 +234,9 @@ bb.cb:                                            ; preds = %bb.ca
   call void @exit(i32 noundef 1) #30
   unreachable
 
-._crit_edge.loopexit.i:                           ; preds = %_ZNSt10unique_ptrIN4llvm5MachO13InterfaceFileESt14default_deleteIS2_EED2Ev.exit16.i
+._crit_edge.i149:                                 ; preds = %_ZNSt10unique_ptrIN4llvm5MachO13InterfaceFileESt14default_deleteIS2_EED2Ev.exit16.i
   %63 = ptrtoint ptr %.sroa.023.133.i to i64
-  br label %._crit_edge.i149
-
-._crit_edge.i149:                                 ; preds = %._crit_edge.loopexit.i, %.preheader.i
-  %.sroa.023.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %63, %._crit_edge.loopexit.i ]
-  store i64 %.sroa.023.0.lcssa.i, ptr %23, align 8, !tbaa !82
+  store i64 %63, ptr %23, align 8, !tbaa !82
   call fastcc void @_ZL17handleWriteActionRKN12_GLOBAL__N_17ContextESt10unique_ptrIN4llvm5MachO13InterfaceFileESt14default_deleteIS6_EE(ptr noundef nonnull readonly align 8 dereferenceable(46) %44, ptr nofree noundef align 8 dereferenceable(8) %23)
   %i.ru = load ptr, ptr %23, align 8, !tbaa !82   ; 3 uses
   %.not.i.i150 = icmp eq ptr %i.ru, null
@@ -382,7 +374,7 @@ _ZNSt10unique_ptrIN4llvm5MachO13InterfaceFileESt14default_deleteIS2_EED2Ev.exit1
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #25
   %i.sy = getelementptr inbounds nuw i8, ptr %.sroa.020.038.i, i64 32 ; 2 uses
   %.not.i148 = icmp eq ptr %i.sy, %i.rh
-  br i1 %.not.i148, label %._crit_edge.loopexit.i, label %bb.cc
+  br i1 %.not.i148, label %._crit_edge.i149, label %bb.cc
 
 _ZL17handleMergeActionRKN12_GLOBAL__N_17ContextE.exit: ; preds = %._crit_edge.i149, %_ZNKSt14default_deleteIN4llvm5MachO13InterfaceFileEEclEPS2_.exit.i.i151
   call void @llvm.lifetime.end.p0(ptr nonnull %23)

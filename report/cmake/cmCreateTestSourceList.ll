@@ -138,8 +138,8 @@ bb.a:
   %49 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %50 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !13   ; 3 uses
-  %i.o = load ptr, ptr %0, align 8, !tbaa !14     ; 3 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !13   ; 2 uses
+  %i.o = load ptr, ptr %0, align 8, !tbaa !14     ; 2 uses
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = sub i64 %i.p, %i.q
@@ -222,8 +222,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit131: ; preds = %bb
   store i8 0, ptr %i.al, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
-  %.not580663 = icmp ne ptr %i.o, %i.n
-  call void @llvm.assume(i1 %.not580663)
   %.sroa.4.0..sroa_idx.i.i162 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.an = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %9, i64 24

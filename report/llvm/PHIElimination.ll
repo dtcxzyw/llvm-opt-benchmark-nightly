@@ -205,11 +205,11 @@ _ZNK4llvm15SparseBitVectorILj128EE23SparseBitVectorIteratorneERKS2_.exit: ; pred
   %i.fm = ptrtoint ptr %i.fk to i64
   %i.fn = sub i64 %i.fl, %i.fm
   %i.fo = icmp ugt i64 %i.fn, 8
-  %.not467555.old = icmp eq ptr %i.fk, %i.fj      ; 2 uses
-  br i1 %i.fo, label %12, label %bb.y
+  br i1 %i.fo, label %.lr.ph, label %bb.y
 
 bb.y:                                             ; preds = %_ZNK4llvm15SparseBitVectorILj128EE23SparseBitVectorIteratorneERKS2_.exit
-  br i1 %.not467555.old, label %.loopexit495, label %bb.z
+  %12 = icmp eq ptr %i.fk, %i.fj
+  br i1 %12, label %.loopexit495, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.fp = load ptr, ptr %i.fk, align 8, !tbaa !118
@@ -218,10 +218,7 @@ bb.z:                                             ; preds = %bb.y
   %.not61 = icmp eq ptr %i.fr, %i.fg
   br i1 %.not61, label %.loopexit495, label %.lr.ph
 
-12:                                               ; preds = %_ZNK4llvm15SparseBitVectorILj128EE23SparseBitVectorIteratorneERKS2_.exit
-  br i1 %.not467555.old, label %.loopexit495, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.z, %12
+.lr.ph:                                           ; preds = %_ZNK4llvm15SparseBitVectorILj128EE23SparseBitVectorIteratorneERKS2_.exit, %bb.z
   %i.fs = lshr i32 %.052558, 7                    ; 7 uses
   %i.ft = and i32 %.052558, 63
   %i.fu = zext nneg i32 %i.ft to i64
@@ -358,7 +355,7 @@ _ZN4llvm15SparseBitVectorILj128EE3setEj.exit90:   ; preds = %bb.ah, %.sink.split
   %.not467 = icmp eq ptr %i.hu, %i.fj
   br i1 %.not467, label %.loopexit495, label %bb.aa
 
-.loopexit495:                                     ; preds = %_ZN4llvm15SparseBitVectorILj128EE3setEj.exit90, %12, %bb.y, %bb.z, %.lr.ph560
+.loopexit495:                                     ; preds = %_ZN4llvm15SparseBitVectorILj128EE3setEj.exit90, %bb.y, %bb.z, %.lr.ph560
   %i.hv = add nuw i32 %.052558, 1                 ; 2 uses
   %.not58 = icmp eq i32 %i.hv, %i.ah
   br i1 %.not58, label %.loopexit496, label %.lr.ph560, !llvm.loop !233

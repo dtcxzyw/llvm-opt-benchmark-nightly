@@ -204,21 +204,19 @@ bb.cr:                                            ; preds = %.noexc182
   %i.ma = load i8, ptr %i.lz, align 8, !tbaa !69, !range !70, !noundef !71
   %i.mb = getelementptr inbounds nuw i8, ptr %.sroa.0353.0427, i64 104
   store i8 %i.ma, ptr %i.mb, align 8, !tbaa !69
-  %i.mc = load ptr, ptr %i.ep, align 8, !tbaa !52 ; 4 uses
+  %i.mc = load ptr, ptr %i.ep, align 8, !tbaa !52 ; 3 uses
   %i.md = getelementptr inbounds i8, ptr %i.mc, i64 -112
   %i.me = load ptr, ptr %i.en, align 8, !tbaa !52 ; 2 uses
   %i.mf = ptrtoint ptr %i.md to i64
   %i.mg = ptrtoint ptr %i.me to i64
   %i.mh = sub i64 %i.mf, %i.mg
   %i.mi = getelementptr inbounds i8, ptr %i.me, i64 %i.mh ; 11 uses
-  %i.mj = getelementptr inbounds nuw i8, ptr %i.mi, i64 112 ; 4 uses
-  %.not.i.i = icmp ne ptr %i.mj, %i.mc
+  %i.mj = getelementptr inbounds nuw i8, ptr %i.mi, i64 112 ; 3 uses
   %i.mk = ptrtoint ptr %i.mc to i64
   %i.ml = ptrtoint ptr %i.mj to i64
   %i.mm = sub i64 %i.mk, %i.ml
   %i.mn = icmp sgt i64 %i.mm, 0
-  %or.cond = and i1 %.not.i.i, %i.mn
-  br i1 %or.cond, label %.lr.ph.preheader.i, label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIP17InteractionOfTypeS4_EET0_T_S6_S5_.exit
+  br i1 %i.mn, label %.lr.ph.preheader.i, label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIP17InteractionOfTypeS4_EET0_T_S6_S5_.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.cr
   %i.mo = load ptr, ptr %i.mi, align 8, !tbaa !20 ; 3 uses

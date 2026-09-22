@@ -205,7 +205,7 @@ bb.a:
   br label %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.outer"
 
 "_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.outer": ; preds = %bb.cm, %bb.a
-  %.0149.ph = phi ptr [ %i.rq, %bb.cm ], [ %1, %bb.a ] ; 25 uses
+  %.0149.ph = phi ptr [ %i.rq, %bb.cm ], [ %1, %bb.a ] ; 24 uses
   %.0146.ph = phi ptr [ %.0146, %bb.cm ], [ %0, %bb.a ]
   %.048.ph = phi i8 [ %.048.ph413, %bb.cm ], [ %i.a, %bb.a ]
   %.046.ph = phi i64 [ %i.id, %bb.cm ], [ %3, %bb.a ]
@@ -224,7 +224,7 @@ bb.a:
   br label %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit"
 
 "_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit": ; preds = %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.outer411", %bb.cn
-  %.0146 = phi ptr [ %i.rt, %bb.cn ], [ %.0146.ph412, %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.outer411" ] ; 63 uses
+  %.0146 = phi ptr [ %i.rt, %bb.cn ], [ %.0146.ph412, %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.outer411" ] ; 62 uses
   %.046 = phi i64 [ %i.id, %bb.cn ], [ %.046.ph414, %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.outer411" ] ; 2 uses
   %i.h = ptrtoint ptr %.0146 to i64               ; 2 uses
   %i.i = sub i64 %i.b, %i.h                       ; 8 uses
@@ -406,7 +406,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit"
   %i.cm = icmp slt i64 %i.i, 24
-  br i1 %i.cm, label %bb.s, label %5
+  br i1 %i.cm, label %bb.s, label %bb.y
 
 bb.s:                                             ; preds = %bb.r
   %i.cn = trunc nuw i8 %.048.ph413 to i1
@@ -529,13 +529,9 @@ bb.x:                                             ; preds = %bb.w, %.lr.ph.i58
   %.not.i60 = icmp eq ptr %storemerge.i59, %.0149.ph
   br i1 %.not.i60, label %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.thread", label %.lr.ph.i58, !llvm.loop !807
 
-5:                                                ; preds = %bb.r
-  %6 = icmp eq i64 %.046, 0
-  br i1 %6, label %bb.y, label %bb.ao
-
-bb.y:                                             ; preds = %5
-  %i.dy = icmp eq ptr %.0146, %.0149.ph
-  br i1 %i.dy, label %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.thread", label %bb.z
+bb.y:                                             ; preds = %bb.r
+  %i.dy = icmp eq i64 %.046, 0
+  br i1 %i.dy, label %bb.z, label %bb.ao
 
 bb.z:                                             ; preds = %bb.y
   %i.dz = add nsw i64 %i.i, -2
@@ -770,7 +766,7 @@ bb.an:                                            ; preds = %bb.am, %.preheader.
   %i.ic = icmp sgt i64 %.015.i.i.i, 2
   br i1 %i.ic, label %.lr.ph.i.i.i, label %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.thread", !llvm.loop !812
 
-bb.ao:                                            ; preds = %5
+bb.ao:                                            ; preds = %bb.y
   %i.id = add nsw i64 %.046, -1                   ; 4 uses
   %i.ie = lshr i64 %i.i, 1
   %i.if = icmp samesign ugt i64 %i.i, 128
@@ -1173,7 +1169,7 @@ bb.co:                                            ; preds = %bb.cn, %"_ZNSt3__13
   %.0146.ph412.be = phi ptr [ %.340.lcssa.i, %"_ZNSt3__131__partition_with_equals_on_leftB8nn180100INS_17_ClassicAlgPolicyEPhRZN3jxl25FindBestBlockEntropyModelERKNS3_14CompressParamsERKNS3_5PlaneIiEERKNS3_15AcStrategyImageEPNS3_11BlockCtxMapEE3$_0EET0_SI_SI_T1_.exit" ], [ %i.rv, %bb.co ]
   br label %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.outer411", !llvm.loop !825
 
-"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.thread": ; preds = %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit", %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit", %bb.cm, %"_ZNSt3__110__pop_heapB8nn180100INS_17_ClassicAlgPolicyEZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhEEvT1_SH_RT0_NS_15iterator_traitsISH_E15difference_typeE.exit.i.i.i", %bb.x, %bb.u, %bb.y, %bb.v, %bb.t, %bb.p, %bb.o, %bb.n, %bb.m, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e, %bb.c, %bb.l, %bb.k, %bb.q, %bb.b
+"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit.thread": ; preds = %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit", %"_ZNSt3__124__sort3_maybe_branchlessB8nn180100INS_17_ClassicAlgPolicyERZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhTnNS_9enable_ifIXntsr21__use_branchless_sortIT0_T1_EE5valueEiE4typeELi0EEEvSK_SK_SK_SJ_.exit", %bb.cm, %"_ZNSt3__110__pop_heapB8nn180100INS_17_ClassicAlgPolicyEZN3jxl25FindBestBlockEntropyModelERKNS2_14CompressParamsERKNS2_5PlaneIiEERKNS2_15AcStrategyImageEPNS2_11BlockCtxMapEE3$_0PhEEvT1_SH_RT0_NS_15iterator_traitsISH_E15difference_typeE.exit.i.i.i", %bb.x, %bb.u, %bb.v, %bb.t, %bb.p, %bb.o, %bb.n, %bb.m, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e, %bb.c, %bb.l, %bb.k, %bb.q, %bb.b
   ret void
 }
 

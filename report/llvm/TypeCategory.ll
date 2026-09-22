@@ -204,25 +204,21 @@ _ZN12lldb_private16TypeCategoryImpl18GetLanguageAtIndexEm.exit.thread.peel: ; pr
   %.0.i813.peel = phi i32 [ %i.o, %_ZN12lldb_private16TypeCategoryImpl18GetLanguageAtIndexEm.exit.peel ], [ 0, %.lr.ph.preheader ]
   %i.p = phi i1 [ %.not.peel, %_ZN12lldb_private16TypeCategoryImpl18GetLanguageAtIndexEm.exit.peel ], [ false, %.lr.ph.preheader ] ; 2 uses
   %i.q = call noundef ptr @_ZN12lldb_private8Language22GetNameForLanguageTypeEN4lldb12LanguageTypeE(i32 noundef %.0.i813.peel) #18
-  %i.r = load ptr, ptr %i.j, align 8, !tbaa !97   ; 2 uses
-  %i.s = load ptr, ptr %i.k, align 8, !tbaa !97   ; 2 uses
-  %4 = icmp ne ptr %i.r, %i.s
+  %i.r = load ptr, ptr %i.j, align 8, !tbaa !97
+  %i.s = load ptr, ptr %i.k, align 8, !tbaa !97
   %i.t = ptrtoint ptr %i.s to i64
   %i.u = ptrtoint ptr %i.r to i64
   %i.v = sub i64 %i.t, %i.u
   %i.w = icmp ugt i64 %i.v, 4
-  %5 = and i1 %4, %i.w
-  %i.x = select i1 %5, ptr @.str.5, ptr @.str.6
+  %i.x = select i1 %i.w, ptr @.str.5, ptr @.str.6
   %i.y = call noundef i64 (ptr, ptr, ...) @_ZN12lldb_private6Stream6PrintfEPKcz(ptr noundef nonnull align 8 dereferenceable(88) %3, ptr noundef nonnull @.str.4, ptr noundef %i.q, ptr noundef nonnull %i.x) #18 ; 0 uses
-  %i.z = load ptr, ptr %i.j, align 8, !tbaa !97   ; 3 uses
-  %i.aa = load ptr, ptr %i.k, align 8, !tbaa !97  ; 2 uses
-  %6 = icmp eq ptr %i.z, %i.aa
+  %i.z = load ptr, ptr %i.j, align 8, !tbaa !97   ; 2 uses
+  %i.aa = load ptr, ptr %i.k, align 8, !tbaa !97
   %i.ab = ptrtoint ptr %i.aa to i64
   %i.ac = ptrtoint ptr %i.z to i64
   %i.ad = sub i64 %i.ab, %i.ac
   %i.ae = icmp ult i64 %i.ad, 5
-  %.not22.peel = or i1 %6, %i.ae
-  br i1 %.not22.peel, label %._crit_edge, label %.lr.ph
+  br i1 %i.ae, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %_ZN12lldb_private16TypeCategoryImpl18GetLanguageAtIndexEm.exit.thread.peel
   %.lcssa = phi i1 [ %i.p, %_ZN12lldb_private16TypeCategoryImpl18GetLanguageAtIndexEm.exit.thread.peel ], [ %spec.select15, %.lr.ph ]

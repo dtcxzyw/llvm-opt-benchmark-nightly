@@ -204,29 +204,21 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = icmp ugt i32 %i.al, 1073741822
   %i.ap = select i1 %i.ao, i32 2147483647, i32 %i.an ; 3 uses
   %.not269 = icmp eq i32 %i.ap, 0
-  br i1 %.not269, label %5, label %bb.m
+  br i1 %.not269, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.aq = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ap)
-  br label %5
-
-5:                                                ; preds = %bb.l, %bb.m
-  %.0 = phi i32 [ %i.aq, %bb.m ], [ 0, %bb.l ]    ; 3 uses
-  %6 = add i32 %.0, %i.ak                         ; 2 uses
-  %.not270 = icmp eq i32 %3, %4
-  br i1 %.not270, label %bb.n, label %7
-
-7:                                                ; preds = %5
-  %8 = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef nonnull %0, i32 noundef %6, i32 noundef %3, i32 noundef %i.a) #13
-  %9 = add i32 %8, %i.a
   br label %bb.n
 
-bb.n:                                             ; preds = %7, %5
-  %.1 = phi i32 [ %9, %7 ], [ %6, %5 ]
-  %i.ar = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.0, i32 noundef %.0.copyload.i286, i32 noundef %i.ak) #13
+bb.n:                                             ; preds = %bb.m, %bb.l
+  %.1 = phi i32 [ %i.aq, %bb.m ], [ 0, %bb.l ]    ; 3 uses
+  %5 = add i32 %.1, %i.ak
+  %6 = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef nonnull %0, i32 noundef %5, i32 noundef %3, i32 noundef %i.a) #13
+  %7 = add i32 %6, %i.a
+  %i.ar = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1, i32 noundef %.0.copyload.i286, i32 noundef %i.ak) #13
   %i.as = sub i32 %.0.copyload.i284.a, %2         ; 2 uses
-  %i.at = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1, i32 noundef %2, i32 noundef %i.as) #13
-  %i.au = add i32 %.0, %i.ap
+  %i.at = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %7, i32 noundef %2, i32 noundef %i.as) #13
+  %i.au = add i32 %.1, %i.ap
   %.val279 = load ptr, ptr %i.c, align 8, !tbaa !13
   %i.av = getelementptr inbounds nuw i8, ptr %.val279, i64 %i.e
   store i32 %i.au, ptr %i.av, align 1
@@ -381,29 +373,21 @@ bb.j:                                             ; preds = %bb.i
   %i.ar = icmp ugt i32 %i.ao, 1073741822
   %i.as = select i1 %i.ar, i32 2147483647, i32 %i.aq ; 3 uses
   %.not281 = icmp eq i32 %i.as, 0
-  br i1 %.not281, label %5, label %bb.k
+  br i1 %.not281, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.at = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.as)
-  br label %5
-
-5:                                                ; preds = %bb.j, %bb.k
-  %.0 = phi i32 [ %i.at, %bb.k ], [ 0, %bb.j ]    ; 3 uses
-  %6 = add i32 %.0, %i.an                         ; 2 uses
-  %.not282 = icmp eq i32 %3, %4
-  br i1 %.not282, label %bb.l, label %7
-
-7:                                                ; preds = %5
-  %8 = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef nonnull %0, i32 noundef %6, i32 noundef %3, i32 noundef %i.a) #13
-  %9 = add i32 %8, %i.a
   br label %bb.l
 
-bb.l:                                             ; preds = %7, %5
-  %.1 = phi i32 [ %9, %7 ], [ %6, %5 ]
-  %i.au = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.0, i32 noundef %.0.copyload.i302, i32 noundef %i.an) #13
+bb.l:                                             ; preds = %bb.k, %bb.j
+  %.1 = phi i32 [ %i.at, %bb.k ], [ 0, %bb.j ]    ; 3 uses
+  %5 = add i32 %.1, %i.an
+  %6 = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef nonnull %0, i32 noundef %5, i32 noundef %3, i32 noundef %i.a) #13
+  %7 = add i32 %6, %i.a
+  %i.au = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1, i32 noundef %.0.copyload.i302, i32 noundef %i.an) #13
   %i.av = sub i32 %.0.copyload.i299.a, %2         ; 2 uses
-  %i.aw = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1, i32 noundef %2, i32 noundef %i.av) #13
-  %i.ax = add i32 %.0, %i.as
+  %i.aw = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %7, i32 noundef %2, i32 noundef %i.av) #13
+  %i.ax = add i32 %.1, %i.as
   %.val292 = load ptr, ptr %i.c, align 8, !tbaa !13
   %i.ay = getelementptr inbounds nuw i8, ptr %.val292, i64 %i.e
   store i32 %i.ax, ptr %i.ay, align 1
@@ -806,7 +790,7 @@ bb.a:
 
 .backedge2467:                                    ; preds = %.backedge2467.backedge, %bb.a
   %.01944 = phi i32 [ %1, %bb.a ], [ %.01926, %.backedge2467.backedge ]
-  %.01942 = phi i32 [ %2, %bb.a ], [ %.12, %.backedge2467.backedge ] ; 12 uses
+  %.01942 = phi i32 [ %2, %bb.a ], [ %.12, %.backedge2467.backedge ] ; 11 uses
   %.01935 = phi i32 [ %3, %bb.a ], [ %i.mm, %.backedge2467.backedge ]
   %i.g = add i32 %.01942, -4
   %i.h = add i32 %.01942, -8
@@ -820,7 +804,7 @@ bb.a:
 
 .loopexit2456:                                    ; preds = %.loopexit2456.backedge, %.backedge2467
   %.21937 = phi i32 [ %.01935, %.backedge2467 ], [ %i.mm, %.loopexit2456.backedge ] ; 2 uses
-  %.01926 = phi i32 [ %.01944, %.backedge2467 ], [ %.01926.be, %.loopexit2456.backedge ] ; 42 uses
+  %.01926 = phi i32 [ %.01944, %.backedge2467 ], [ %.01926.be, %.loopexit2456.backedge ] ; 41 uses
   %i.o = sub i32 %.01942, %.01926                 ; 4 uses
   %i.p = sdiv i32 %i.o, 12                        ; 6 uses
   switch i32 %i.p, label %bb.j [
@@ -944,7 +928,7 @@ bb.i:                                             ; preds = %.loopexit2456
 
 bb.j:                                             ; preds = %.loopexit2456
   %i.bb = icmp slt i32 %i.o, 372
-  br i1 %i.bb, label %bb.k, label %4
+  br i1 %i.bb, label %bb.k, label %bb.w
 
 bb.k:                                             ; preds = %bb.j
   %i.bc = add i32 %.01926, 12
@@ -1109,13 +1093,9 @@ bb.v:                                             ; preds = %bb.o, %bb.n, %bb.l,
   %.not2078 = icmp eq i32 %i.dg, %.01942
   br i1 %.not2078, label %.loopexit2445, label %.preheader2444
 
-4:                                                ; preds = %bb.j
-  %.not2049 = icmp eq i32 %.21937, 0
-  br i1 %.not2049, label %bb.w, label %bb.bx
-
-bb.w:                                             ; preds = %4
-  %i.dh = icmp eq i32 %.01942, %.01926
-  br i1 %i.dh, label %.loopexit2445, label %bb.x
+bb.w:                                             ; preds = %bb.j
+  %i.dh = icmp eq i32 %.21937, 0
+  br i1 %i.dh, label %bb.x, label %bb.bx
 
 bb.x:                                             ; preds = %bb.w
   %i.di = add nsw i32 %i.p, -2                    ; 2 uses
@@ -1518,7 +1498,7 @@ bb.bw:                                            ; preds = %bb.bp, %bb.bo, %bb.
   %i.mb = icmp sgt i32 %.7, 2
   br i1 %i.mb, label %bb.az, label %.loopexit2445
 
-bb.bx:                                            ; preds = %4
+bb.bx:                                            ; preds = %bb.w
   %i.mc = lshr i32 %i.p, 1
   %i.md = mul nuw nsw i32 %i.mc, 12
   %i.me = add i32 %i.md, %.01926                  ; 6 uses
@@ -1921,7 +1901,7 @@ bb.ef:                                            ; preds = %bb.ee
   %i.vw = add i32 %.141958, 12
   br label %.preheader2455
 
-.loopexit2445:                                    ; preds = %bb.df, %bb.dw, %bb.dp, %.loopexit2456, %.loopexit2456, %bb.dv, %bb.bw, %bb.v, %bb.w, %bb.k, %bb.f, %bb.e, %bb.c, %bb.dk, %bb.i, %bb.h, %bb.g
+.loopexit2445:                                    ; preds = %bb.df, %bb.dw, %bb.dp, %.loopexit2456, %.loopexit2456, %bb.dv, %bb.bw, %bb.v, %bb.k, %bb.f, %bb.e, %bb.c, %bb.dk, %bb.i, %bb.h, %bb.g
   store i32 %i.b, ptr %i.a, align 8, !tbaa !32
   ret void
 }
@@ -2324,7 +2304,7 @@ bb.a:
 
 .backedge2790:                                    ; preds = %.backedge2790.backedge, %bb.a
   %.02311 = phi i32 [ %1, %bb.a ], [ %.02294, %.backedge2790.backedge ]
-  %.02309 = phi i32 [ %2, %bb.a ], [ %.14, %.backedge2790.backedge ] ; 12 uses
+  %.02309 = phi i32 [ %2, %bb.a ], [ %.14, %.backedge2790.backedge ] ; 11 uses
   %.02306 = phi i32 [ %3, %bb.a ], [ %i.nq, %.backedge2790.backedge ]
   %i.g = add i32 %.02309, -4
   %i.h = add i32 %.02309, -12
@@ -2338,7 +2318,7 @@ bb.a:
 
 .loopexit2781:                                    ; preds = %.loopexit2781.backedge, %.backedge2790
   %.22308 = phi i32 [ %.02306, %.backedge2790 ], [ %i.nq, %.loopexit2781.backedge ] ; 2 uses
-  %.02294 = phi i32 [ %.02311, %.backedge2790 ], [ %.02294.be, %.loopexit2781.backedge ] ; 46 uses
+  %.02294 = phi i32 [ %.02311, %.backedge2790 ], [ %.02294.be, %.loopexit2781.backedge ] ; 45 uses
   %i.o = sub i32 %.02309, %.02294                 ; 4 uses
   %i.p = ashr i32 %i.o, 4                         ; 6 uses
   switch i32 %i.p, label %bb.k [
@@ -2465,7 +2445,7 @@ bb.j:                                             ; preds = %.loopexit2781
 
 bb.k:                                             ; preds = %.loopexit2781
   %i.bf = icmp slt i32 %i.o, 496
-  br i1 %i.bf, label %bb.l, label %4
+  br i1 %i.bf, label %bb.l, label %bb.ab
 
 bb.l:                                             ; preds = %bb.k
   %i.bg = add i32 %.02294, 16
@@ -2643,13 +2623,9 @@ bb.aa:                                            ; preds = %bb.q, %bb.p, %bb.m,
   %.not2460 = icmp eq i32 %i.dr, %.02309
   br i1 %.not2460, label %.loopexit2772, label %.preheader
 
-4:                                                ; preds = %bb.k
-  %.not2395 = icmp eq i32 %.22308, 0
-  br i1 %.not2395, label %bb.ab, label %bb.cn
-
-bb.ab:                                            ; preds = %4
-  %i.ds = icmp eq i32 %.02309, %.02294
-  br i1 %i.ds, label %.loopexit2772, label %bb.ac
+bb.ab:                                            ; preds = %bb.k
+  %i.ds = icmp eq i32 %.22308, 0
+  br i1 %i.ds, label %bb.ac, label %bb.cn
 
 bb.ac:                                            ; preds = %bb.ab
   %i.dt = add nsw i32 %i.p, -2                    ; 2 uses
@@ -3052,7 +3028,7 @@ bb.cm:                                            ; preds = %bb.cc, %bb.cb, %bb.
   %i.nf = icmp sgt i32 %.7, 2
   br i1 %i.nf, label %bb.bk, label %.loopexit2772
 
-bb.cn:                                            ; preds = %4
+bb.cn:                                            ; preds = %bb.ab
   %i.ng = shl nuw nsw i32 %i.p, 3
   %i.nh = and i32 %i.ng, 1073741808
   %i.ni = add i32 %i.nh, %.02294                  ; 6 uses
@@ -3455,7 +3431,7 @@ bb.fk:                                            ; preds = %bb.fi
 .backedge2790.backedge:                           ; preds = %bb.fk, %bb.fg
   br label %.backedge2790
 
-.loopexit2772:                                    ; preds = %bb.fg, %bb.dv, %bb.dl, %.loopexit2781, %.loopexit2781, %bb.du, %bb.cm, %bb.aa, %bb.ab, %bb.l, %bb.g, %bb.f, %bb.c, %bb.df, %bb.j, %bb.i, %bb.h
+.loopexit2772:                                    ; preds = %bb.fg, %bb.dv, %bb.dl, %.loopexit2781, %.loopexit2781, %bb.du, %bb.cm, %bb.aa, %bb.l, %bb.g, %bb.f, %bb.c, %bb.df, %bb.j, %bb.i, %bb.h
   store i32 %i.b, ptr %i.a, align 8, !tbaa !32
   ret void
 }
@@ -3858,7 +3834,7 @@ bb.a:
 
 .backedge.outer:                                  ; preds = %.backedge.outer.backedge, %bb.a
   %.11554.ph = phi i32 [ %1, %bb.a ], [ %.21555, %.backedge.outer.backedge ]
-  %.11549.ph = phi i32 [ %2, %bb.a ], [ %.11549.ph.be, %.backedge.outer.backedge ] ; 11 uses
+  %.11549.ph = phi i32 [ %2, %bb.a ], [ %.11549.ph.be, %.backedge.outer.backedge ] ; 10 uses
   %.11544.ph = phi i32 [ %4, %bb.a ], [ %i.mq, %.backedge.outer.backedge ]
   %.01535.ph = phi i32 [ %1, %bb.a ], [ %.01535.ph.be, %.backedge.outer.backedge ]
   %i.k = add i32 %.11549.ph, -4                   ; 12 uses
@@ -3874,7 +3850,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.br, %.backedge
   %.21555 = phi i32 [ %.11554, %.backedge ], [ %.0.copyload.i2034, %bb.br ] ; 4 uses
   %.21545 = phi i32 [ %.11544, %.backedge ], [ %i.mq, %bb.br ] ; 2 uses
-  %.11536 = phi i32 [ %.01535, %.backedge ], [ %.0.copyload.i2034, %bb.br ] ; 38 uses
+  %.11536 = phi i32 [ %.01535, %.backedge ], [ %.0.copyload.i2034, %bb.br ] ; 37 uses
   %i.m = sub i32 %.11549.ph, %.11536              ; 3 uses
   %i.n = ashr i32 %i.m, 2                         ; 5 uses
   switch i32 %i.n, label %bb.g [
@@ -3945,7 +3921,7 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.b
   %i.ag = icmp slt i32 %i.m, 124
-  br i1 %i.ag, label %bb.h, label %5
+  br i1 %i.ag, label %bb.h, label %bb.n
 
 bb.h:                                             ; preds = %bb.g
   %i.ah = load i32, ptr %i.a, align 8, !tbaa !32
@@ -4163,13 +4139,9 @@ bb.m:                                             ; preds = %split, %bb.i
   %i.dl = icmp eq i32 %i.dj, %.11549.ph
   br i1 %i.dl, label %.loopexit2045, label %bb.i
 
-5:                                                ; preds = %bb.g
-  %.not1573 = icmp eq i32 %.21545, 0
-  br i1 %.not1573, label %bb.n, label %bb.ac
-
-bb.n:                                             ; preds = %5
-  %i.dm = icmp eq i32 %.11549.ph, %.11536
-  br i1 %i.dm, label %.loopexit2045, label %bb.o
+bb.n:                                             ; preds = %bb.g
+  %i.dm = icmp eq i32 %.21545, 0
+  br i1 %i.dm, label %bb.o, label %bb.ac
 
 bb.o:                                             ; preds = %bb.n
   %i.dn = load i32, ptr %i.a, align 8, !tbaa !32
@@ -4475,7 +4447,7 @@ bb.ab:                                            ; preds = %.sink.split, %bb.v,
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1894) #13, !srcloc !14
   br label %.loopexit2045
 
-bb.ac:                                            ; preds = %5
+bb.ac:                                            ; preds = %bb.n
   %i.hu = shl nuw nsw i32 %i.n, 1
   %i.hv = and i32 %i.hu, 1073741820
   %i.hw = add i32 %i.hv, %.11536                  ; 7 uses
@@ -4878,7 +4850,7 @@ bb.bs:                                            ; preds = %.preheader2043, %bb
   store i32 %i.uj, ptr %i.uk, align 1
   br label %.preheader2043
 
-.loopexit2045:                                    ; preds = %bb.bh, %bb.bo, %bb.b, %bb.b, %.preheader2044, %bb.aw, %bb.m, %bb.h, %bb.n, %bb.c, %bb.bm, %._crit_edge2155, %bb.f, %bb.e, %bb.d
+.loopexit2045:                                    ; preds = %bb.bh, %bb.bo, %bb.b, %bb.b, %.preheader2044, %bb.aw, %bb.m, %bb.h, %bb.c, %bb.bm, %._crit_edge2155, %bb.f, %bb.e, %bb.d
   store i32 %i.b, ptr %i.a, align 8, !tbaa !32
   ret void
 }
@@ -5281,7 +5253,7 @@ bb.a:
 
 .backedge1903:                                    ; preds = %.backedge1903.backedge, %bb.a
   %.01536 = phi i32 [ %1, %bb.a ], [ %.01517, %.backedge1903.backedge ]
-  %.01533 = phi i32 [ %2, %bb.a ], [ %.6, %.backedge1903.backedge ] ; 11 uses
+  %.01533 = phi i32 [ %2, %bb.a ], [ %.6, %.backedge1903.backedge ] ; 10 uses
   %.01524 = phi i32 [ %4, %bb.a ], [ %i.iw, %.backedge1903.backedge ]
   %i.b = add i32 %.01533, -4
   %i.c = add i32 %.01533, -16                     ; 2 uses
@@ -5292,7 +5264,7 @@ bb.a:
 
 .loopexit1892:                                    ; preds = %.loopexit1892.backedge, %.backedge1903
   %.21526 = phi i32 [ %.01524, %.backedge1903 ], [ %i.iw, %.loopexit1892.backedge ] ; 2 uses
-  %.01517 = phi i32 [ %.01536, %.backedge1903 ], [ %.01517.be, %.loopexit1892.backedge ] ; 41 uses
+  %.01517 = phi i32 [ %.01536, %.backedge1903 ], [ %.01517.be, %.loopexit1892.backedge ] ; 40 uses
   %i.g = sub i32 %.01533, %.01517                 ; 4 uses
   %i.h = ashr i32 %i.g, 3                         ; 7 uses
   switch i32 %i.h, label %bb.h [
@@ -5373,7 +5345,7 @@ bb.g:                                             ; preds = %.loopexit1892
 
 bb.h:                                             ; preds = %.loopexit1892
   %i.ad = icmp sgt i32 %i.g, 55
-  br i1 %i.ad, label %5, label %bb.i
+  br i1 %i.ad, label %bb.s, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ae = add i32 %.01517, 8
@@ -5509,13 +5481,9 @@ bb.r:                                             ; preds = %.loopexit1892
   %i.bx = tail call i32 @w2c_hermes_unsigned0x20int0x20std0x3A0x3A_0x5F20x3A0x3A_0x5Fsort30x3Cstd0x3A0x3A_0x5F20x3A0x3A_ClassicAlgPolicy0x2C0x20std0x3A0x3A_0x5F20x3A0x3A_0x5Fless0x3Cstd0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x2C0x20std0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x3E0x260x2C0x20std0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x2A0x3E0x28std0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x2A0x2C0x20std0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x2A0x2C0x20std0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x2A0x2C0x20std0x3A0x3A_0x5F20x3A0x3A_0x5Fless0x3Cstd0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x2C0x20std0x3A0x3A_0x5F20x3A0x3Apair0x3Cunsigned0x20int0x2C0x20unsigned0x20int0x3E0x3E0x260x29(ptr noundef %0, i32 noundef %.01517, i32 noundef %i.bw, i32 noundef %i.d) ; 0 uses
   br label %.thread
 
-5:                                                ; preds = %bb.h
-  %.not1610 = icmp eq i32 %.21526, 0
-  br i1 %.not1610, label %bb.s, label %bb.bg
-
-bb.s:                                             ; preds = %5
-  %i.by = icmp eq i32 %.01533, %.01517
-  br i1 %i.by, label %.thread, label %bb.t
+bb.s:                                             ; preds = %bb.h
+  %i.by = icmp eq i32 %.21526, 0
+  br i1 %i.by, label %bb.t, label %bb.bg
 
 bb.t:                                             ; preds = %bb.s
   %i.bz = add nsw i32 %i.h, -2                    ; 2 uses
@@ -5918,7 +5886,7 @@ bb.bf:                                            ; preds = %.sink.split, %bb.az
   %i.il = add nsw i32 %.21520, -1
   br i1 %.not1880, label %.thread, label %bb.am
 
-bb.bg:                                            ; preds = %5
+bb.bg:                                            ; preds = %bb.s
   %i.im = shl nuw nsw i32 %i.h, 2
   %i.in = and i32 %i.im, 1073741816
   %i.io = add i32 %i.in, %.01517                  ; 6 uses
@@ -6321,7 +6289,7 @@ bb.cw:                                            ; preds = %bb.cv
   %i.ot = add i32 %.5, 8
   br label %.preheader1891
 
-.thread:                                          ; preds = %bb.cl, %.loopexit1892, %.loopexit1892, %bb.bs, %bb.cq, %bb.bw, %bb.q, %bb.am, %bb.bf, %bb.r, %bb.c, %bb.d, %bb.i, %bb.s, %bb.g, %bb.f, %bb.e
+.thread:                                          ; preds = %bb.cl, %.loopexit1892, %.loopexit1892, %bb.bs, %bb.cq, %bb.bw, %bb.q, %bb.am, %bb.bf, %bb.r, %bb.c, %bb.d, %bb.i, %bb.g, %bb.f, %bb.e
   ret void
 }
 
@@ -6724,7 +6692,7 @@ bb.a:
 
 .backedge4401:                                    ; preds = %.backedge4401.backedge, %bb.a
   %.03519 = phi i32 [ %1, %bb.a ], [ %.03501, %.backedge4401.backedge ]
-  %.03514 = phi i32 [ %2, %bb.a ], [ %.8, %.backedge4401.backedge ] ; 14 uses
+  %.03514 = phi i32 [ %2, %bb.a ], [ %.8, %.backedge4401.backedge ] ; 13 uses
   %.03506 = phi i32 [ %4, %bb.a ], [ %i.rs, %.backedge4401.backedge ]
   %i.h = add i32 %.03514, -8
   %i.i = add i32 %.03514, -1
@@ -6741,7 +6709,7 @@ bb.a:
 
 .loopexit4392:                                    ; preds = %.loopexit4392.backedge, %.backedge4401
   %.23508 = phi i32 [ %.03506, %.backedge4401 ], [ %i.rs, %.loopexit4392.backedge ] ; 2 uses
-  %.03501 = phi i32 [ %.03519, %.backedge4401 ], [ %.03501.be, %.loopexit4392.backedge ] ; 45 uses
+  %.03501 = phi i32 [ %.03519, %.backedge4401 ], [ %.03501.be, %.loopexit4392.backedge ] ; 44 uses
   %i.s = sub i32 %.03514, %.03501                 ; 4 uses
   %i.t = sdiv i32 %i.s, 20                        ; 5 uses
   switch i32 %i.t, label %bb.m [
@@ -6944,7 +6912,7 @@ bb.l:                                             ; preds = %.loopexit4392
 
 bb.m:                                             ; preds = %.loopexit4392
   %i.ci = icmp slt i32 %i.s, 140
-  br i1 %i.ci, label %bb.n, label %5
+  br i1 %i.ci, label %bb.n, label %bb.ah
 
 bb.n:                                             ; preds = %bb.m
   %i.cj = load i32, ptr %i.a, align 8, !tbaa !32  ; 2 uses
@@ -7296,13 +7264,9 @@ bb.ag:                                            ; preds = %bb.w, %bb.v, %bb.s,
   %.not3760 = icmp eq i32 %i.hi, %.03514
   br i1 %.not3760, label %.loopexit4393, label %bb.p
 
-5:                                                ; preds = %bb.m
-  %.not3647 = icmp eq i32 %.23508, 0
-  br i1 %.not3647, label %bb.ah, label %bb.cb
-
-bb.ah:                                            ; preds = %5
-  %i.hj = icmp eq i32 %.03514, %.03501
-  br i1 %i.hj, label %.loopexit4393, label %bb.ai
+bb.ah:                                            ; preds = %bb.m
+  %i.hj = icmp eq i32 %.23508, 0
+  br i1 %i.hj, label %bb.ai, label %bb.cb
 
 bb.ai:                                            ; preds = %bb.ah
   %i.hk = load i32, ptr %i.a, align 8, !tbaa !32
@@ -7705,7 +7669,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.bc
   %i.rh = add nsw i32 %.03502, -1
   br i1 %i.rg, label %bb.al, label %.loopexit4393
 
-bb.cb:                                            ; preds = %5
+bb.cb:                                            ; preds = %bb.ah
   %i.ri = lshr i32 %i.t, 1
   %i.rj = mul nuw nsw i32 %i.ri, 20
   %i.rk = add i32 %i.rj, %.03501                  ; 8 uses
@@ -8108,7 +8072,7 @@ bb.fu:                                            ; preds = %bb.fs
 .backedge4401.backedge:                           ; preds = %bb.fu, %bb.fq
   br label %.backedge4401
 
-.loopexit4393:                                    ; preds = %bb.fq, %bb.dr, %bb.df, %.loopexit4392, %.loopexit4392, %bb.dq, %bb.ca, %bb.ag, %bb.n, %bb.ah, %bb.i, %bb.h, %bb.e, %bb.c, %bb.cx, %bb.l, %bb.k, %bb.j
+.loopexit4393:                                    ; preds = %bb.fq, %bb.dr, %bb.df, %.loopexit4392, %.loopexit4392, %bb.dq, %bb.ca, %bb.ag, %bb.n, %bb.i, %bb.h, %bb.e, %bb.c, %bb.cx, %bb.l, %bb.k, %bb.j
   store i32 %i.b, ptr %i.a, align 8, !tbaa !32
   ret void
 }
@@ -8511,7 +8475,7 @@ bb.a:
 
 .backedge2370:                                    ; preds = %.backedge2370.backedge, %bb.a
   %.01817 = phi i32 [ %1, %bb.a ], [ %.01804, %.backedge2370.backedge ]
-  %.01813 = phi i32 [ %2, %bb.a ], [ %.41801, %.backedge2370.backedge ] ; 11 uses
+  %.01813 = phi i32 [ %2, %bb.a ], [ %.41801, %.backedge2370.backedge ] ; 10 uses
   %.01805 = phi i32 [ %4, %bb.a ], [ %i.ma, %.backedge2370.backedge ]
   %i.g = add i32 %.01813, -4
   %i.h = add i32 %.01813, -32                     ; 2 uses
@@ -8523,7 +8487,7 @@ bb.a:
 
 .loopexit2359:                                    ; preds = %.loopexit2359.backedge, %.backedge2370
   %.21807 = phi i32 [ %.01805, %.backedge2370 ], [ %i.ma, %.loopexit2359.backedge ] ; 2 uses
-  %.01804 = phi i32 [ %.01817, %.backedge2370 ], [ %.01804.be, %.loopexit2359.backedge ] ; 42 uses
+  %.01804 = phi i32 [ %.01817, %.backedge2370 ], [ %.01804.be, %.loopexit2359.backedge ] ; 41 uses
   %i.m = sub i32 %.01813, %.01804                 ; 4 uses
   %i.n = ashr i32 %i.m, 4                         ; 7 uses
   switch i32 %i.n, label %bb.q [
@@ -8849,7 +8813,7 @@ bb.p:                                             ; preds = %.loopexit2359
 
 bb.q:                                             ; preds = %.loopexit2359
   %i.cx = icmp slt i32 %i.m, 496
-  br i1 %i.cx, label %bb.r, label %5
+  br i1 %i.cx, label %bb.r, label %bb.aa
 
 bb.r:                                             ; preds = %bb.q
   %i.cy = add i32 %.01804, 16
@@ -8992,13 +8956,9 @@ bb.z:                                             ; preds = %bb.u, %bb.t, %.loop
   %.not1940 = icmp eq i32 %i.eq, %.01813
   br i1 %.not1940, label %.loopexit2348, label %.preheader2347
 
-5:                                                ; preds = %bb.q
-  %.not1897 = icmp eq i32 %.21807, 0
-  br i1 %.not1897, label %bb.aa, label %bb.bn
-
-bb.aa:                                            ; preds = %5
-  %i.er = icmp eq i32 %.01813, %.01804
-  br i1 %i.er, label %.loopexit2348, label %bb.ab
+bb.aa:                                            ; preds = %bb.q
+  %i.er = icmp eq i32 %.21807, 0
+  br i1 %i.er, label %bb.ab, label %bb.bn
 
 bb.ab:                                            ; preds = %bb.aa
   %i.es = add nsw i32 %i.n, -2                    ; 2 uses
@@ -9401,7 +9361,7 @@ bb.bm:                                            ; preds = %bb.bh, %bb.bg, %bb.
   %i.lp = icmp sgt i32 %.7, 2
   br i1 %i.lp, label %bb.au, label %.loopexit2348
 
-bb.bn:                                            ; preds = %5
+bb.bn:                                            ; preds = %bb.aa
   %i.lq = shl nuw nsw i32 %i.n, 3
   %i.lr = and i32 %i.lq, 1073741808
   %i.ls = add i32 %i.lr, %.01804                  ; 6 uses
@@ -9804,7 +9764,7 @@ bb.de:                                            ; preds = %bb.dd
   %i.sw = add i32 %.6, 16
   br label %.preheader2358
 
-.loopexit2348:                                    ; preds = %bb.cl, %bb.cy, %bb.ct, %.loopexit2359, %.loopexit2359, %bb.cx, %bb.bm, %bb.z, %bb.aa, %bb.r, %bb.n, %bb.m, %bb.k, %bb.j, %bb.h, %bb.g, %bb.d, %bb.c, %bb.cq, %bb.p, %bb.o, %bb.e
+.loopexit2348:                                    ; preds = %bb.cl, %bb.cy, %bb.ct, %.loopexit2359, %.loopexit2359, %bb.cx, %bb.bm, %bb.z, %bb.r, %bb.n, %bb.m, %bb.k, %bb.j, %bb.h, %bb.g, %bb.d, %bb.c, %bb.cq, %bb.p, %bb.o, %bb.e
   store i32 %i.b, ptr %i.a, align 8, !tbaa !32
   ret void
 }
@@ -10207,7 +10167,7 @@ bb.a:
 
 .backedge2205:                                    ; preds = %.backedge2205.backedge, %bb.a
   %.01765 = phi i32 [ %1, %bb.a ], [ %.01747, %.backedge2205.backedge ]
-  %.01763 = phi i32 [ %2, %bb.a ], [ %.10, %.backedge2205.backedge ] ; 13 uses
+  %.01763 = phi i32 [ %2, %bb.a ], [ %.10, %.backedge2205.backedge ] ; 12 uses
   %.01758 = phi i32 [ %3, %bb.a ], [ %i.ne, %.backedge2205.backedge ]
   %i.b = add i32 %.01763, -4
   %i.c = add i32 %.01763, -8
@@ -10223,7 +10183,7 @@ bb.a:
 
 .loopexit2196:                                    ; preds = %.loopexit2196.backedge, %.backedge2205
   %.21760 = phi i32 [ %.01758, %.backedge2205 ], [ %i.ne, %.loopexit2196.backedge ] ; 2 uses
-  %.01747 = phi i32 [ %.01765, %.backedge2205 ], [ %.01747.be, %.loopexit2196.backedge ] ; 45 uses
+  %.01747 = phi i32 [ %.01765, %.backedge2205 ], [ %.01747.be, %.loopexit2196.backedge ] ; 44 uses
   %i.l = sub i32 %.01763, %.01747                 ; 4 uses
   %i.m = sdiv i32 %i.l, 24                        ; 6 uses
   switch i32 %i.m, label %bb.f [
@@ -10348,7 +10308,7 @@ bb.e:                                             ; preds = %.loopexit2196
 
 bb.f:                                             ; preds = %.loopexit2196
   %i.be = icmp slt i32 %i.l, 168
-  br i1 %i.be, label %bb.g, label %4
+  br i1 %i.be, label %bb.g, label %bb.m
 
 bb.g:                                             ; preds = %bb.f
   %i.bf = add i32 %.01747, 24
@@ -10510,13 +10470,9 @@ bb.l:                                             ; preds = %split, %bb.h
   %.not1812 = icmp eq i32 %i.dt, %.01763
   br i1 %.not1812, label %.loopexit, label %bb.h
 
-4:                                                ; preds = %bb.f
-  %.not1794 = icmp eq i32 %.21760, 0
-  br i1 %.not1794, label %bb.m, label %bb.am
-
-bb.m:                                             ; preds = %4
-  %i.du = icmp eq i32 %.01763, %.01747
-  br i1 %i.du, label %.loopexit, label %bb.n
+bb.m:                                             ; preds = %bb.f
+  %i.du = icmp eq i32 %.21760, 0
+  br i1 %i.du, label %bb.n, label %bb.am
 
 bb.n:                                             ; preds = %bb.m
   %i.dv = add nsw i32 %i.m, -2                    ; 2 uses
@@ -10919,7 +10875,7 @@ bb.al:                                            ; preds = %bb.ag, %bb.af, %bb.
   %i.mt = icmp sgt i32 %.51770, 2
   br i1 %i.mt, label %bb.z, label %.loopexit
 
-bb.am:                                            ; preds = %4
+bb.am:                                            ; preds = %bb.m
   %i.mu = lshr i32 %i.m, 1
   %i.mv = mul nuw nsw i32 %i.mu, 24
   %i.mw = add i32 %i.mv, %.01747                  ; 6 uses
@@ -11322,7 +11278,7 @@ bb.bn:                                            ; preds = %bb.bm
   store i64 %.0.copyload.i2184, ptr %i.wv, align 1
   br label %bb.bk
 
-.loopexit:                                        ; preds = %bb.be, %.loopexit2196, %.loopexit2196, %bb.ar, %bb.bj, %bb.at, %bb.al, %bb.l, %bb.az, %bb.b, %bb.g, %bb.m, %bb.e, %bb.d, %bb.c
+.loopexit:                                        ; preds = %bb.be, %.loopexit2196, %.loopexit2196, %bb.ar, %bb.bj, %bb.at, %bb.al, %bb.l, %bb.az, %bb.b, %bb.g, %bb.e, %bb.d, %bb.c
   ret void
 }
 
@@ -11725,7 +11681,7 @@ bb.a:
 
 .backedge5674:                                    ; preds = %.backedge5674.backedge, %bb.a
   %.04298 = phi i32 [ %1, %bb.a ], [ %.04275, %.backedge5674.backedge ]
-  %.04296 = phi i32 [ %2, %bb.a ], [ %.64286, %.backedge5674.backedge ] ; 15 uses
+  %.04296 = phi i32 [ %2, %bb.a ], [ %.64286, %.backedge5674.backedge ] ; 14 uses
   %.04287 = phi i32 [ %3, %bb.a ], [ %i.afb, %.backedge5674.backedge ]
   %i.j = add i32 %.04296, -16
   %i.k = add i32 %.04296, -8
@@ -11745,7 +11701,7 @@ bb.a:
 
 .loopexit5664:                                    ; preds = %.loopexit5664.backedge, %.backedge5674
   %.24289 = phi i32 [ %.04287, %.backedge5674 ], [ %i.afb, %.loopexit5664.backedge ] ; 2 uses
-  %.04275 = phi i32 [ %.04298, %.backedge5674 ], [ %.04275.be, %.loopexit5664.backedge ] ; 46 uses
+  %.04275 = phi i32 [ %.04298, %.backedge5674 ], [ %.04275.be, %.loopexit5664.backedge ] ; 45 uses
   %i.x = sub i32 %.04296, %.04275                 ; 4 uses
   %i.y = sdiv i32 %i.x, 36                        ; 6 uses
   switch i32 %i.y, label %bb.o [
@@ -12022,7 +11978,7 @@ bb.n:                                             ; preds = %.loopexit5664
 
 bb.o:                                             ; preds = %.loopexit5664
   %i.dg = icmp slt i32 %i.x, 252
-  br i1 %i.dg, label %bb.p, label %4
+  br i1 %i.dg, label %bb.p, label %bb.al
 
 bb.p:                                             ; preds = %bb.o
   %i.dh = add i32 %.04275, 36
@@ -12421,13 +12377,9 @@ bb.ak:                                            ; preds = %bb.x, %bb.w, %bb.t,
   %.not4584 = icmp eq i32 %i.il, %.04296
   br i1 %.not4584, label %.loopexit, label %bb.r
 
-4:                                                ; preds = %bb.o
-  %.not4343 = icmp eq i32 %.24289, 0
-  br i1 %.not4343, label %bb.al, label %bb.ec
-
-bb.al:                                            ; preds = %4
-  %i.im = icmp eq i32 %.04296, %.04275
-  br i1 %i.im, label %.loopexit, label %bb.am
+bb.al:                                            ; preds = %bb.o
+  %i.im = icmp eq i32 %.24289, 0
+  br i1 %i.im, label %bb.am, label %bb.ec
 
 bb.am:                                            ; preds = %bb.al
   %i.in = add i32 %i.b, -24                       ; 3 uses
@@ -12830,7 +12782,7 @@ bb.eb:                                            ; preds = %bb.dd, %bb.dc, %bb.
   %i.aeq = icmp sgt i32 %.74305, 2
   br i1 %i.aeq, label %bb.cb, label %.loopexit
 
-bb.ec:                                            ; preds = %4
+bb.ec:                                            ; preds = %bb.al
   %i.aer = lshr i32 %i.y, 1
   %i.aes = mul nuw nsw i32 %i.aer, 36
   %i.aet = add i32 %i.aes, %.04275                ; 9 uses
@@ -13233,7 +13185,7 @@ bb.hx:                                            ; preds = %bb.hv
 .backedge5674.backedge:                           ; preds = %bb.hx, %bb.ht
   br label %.backedge5674
 
-.loopexit:                                        ; preds = %bb.ht, %bb.fq, %bb.fd, %.loopexit5664, %.loopexit5664, %bb.fp, %bb.eb, %bb.ak, %bb.al, %bb.p, %bb.h, %bb.g, %bb.d, %bb.ew, %bb.n, %bb.m, %bb.l
+.loopexit:                                        ; preds = %bb.ht, %bb.fq, %bb.fd, %.loopexit5664, %.loopexit5664, %bb.fp, %bb.eb, %bb.ak, %bb.p, %bb.h, %bb.g, %bb.d, %bb.ew, %bb.n, %bb.m, %bb.l
   store i32 %i.b, ptr %i.a, align 8, !tbaa !32
   ret void
 }
@@ -13636,7 +13588,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   %.val482 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.x = getelementptr inbounds nuw i8, ptr %.val482, i64 %i.e
-  %.0.copyload.i505 = load i32, ptr %i.x, align 1 ; 5 uses
+  %.0.copyload.i505 = load i32, ptr %i.x, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i505) #13, !srcloc !14
   %i.y = sub i32 %.0.copyload.i503, %.0.copyload.i505
   %i.z = ashr i32 %i.y, 2
@@ -13665,26 +13617,22 @@ bb.h:                                             ; preds = %bb.g
 ._crit_edge:                                      ; preds = %bb.f, %bb.h
   %.pre-phi533 = phi i32 [ %i.ai, %bb.h ], [ 0, %bb.f ]
   %.0 = phi i32 [ %i.aj, %bb.h ], [ 0, %bb.f ]    ; 2 uses
-  %i.ak = sub i32 %2, %.0.copyload.i505           ; 2 uses
-  %i.al = and i32 %i.ak, -4
-  %i.am = add i32 %.0, %i.al                      ; 5 uses
-  %i.an = add i32 %.0, %.pre-phi533
-  %i.ao = icmp eq i32 %3, %4
-  br i1 %i.ao, label %bb.i, label %5
+  %i.ak = sub i32 %2, %.0.copyload.i505
+  %5 = and i32 %i.ak, -4
+  %6 = add i32 %.0, %5                            ; 4 uses
+  %7 = add i32 %.0, %.pre-phi533
+  %i.al = and i32 %i.a, 2147483644
+  %i.am = add nsw i32 %i.a, -4                    ; 2 uses
+  %8 = lshr i32 %i.am, 2
+  %i.an = add nuw nsw i32 %8, 1
+  %9 = and i32 %i.an, 7                           ; 2 uses
+  %i.ao = icmp eq i32 %9, 0
+  br i1 %i.ao, label %.loopexit519, label %.preheader518
 
-5:                                                ; preds = %._crit_edge
-  %6 = and i32 %i.a, 2147483644
-  %7 = add nsw i32 %i.a, -4                       ; 2 uses
-  %8 = lshr i32 %7, 2
-  %9 = add nuw nsw i32 %8, 1
-  %10 = and i32 %9, 7                             ; 2 uses
-  %.not462 = icmp eq i32 %10, 0
-  br i1 %.not462, label %.loopexit519, label %.preheader518
-
-.preheader518:                                    ; preds = %5, %.preheader518
-  %.0445 = phi i32 [ %i.ap, %.preheader518 ], [ %3, %5 ]
-  %.0442 = phi i32 [ %i.av, %.preheader518 ], [ 0, %5 ]
-  %.1440 = phi i32 [ %i.au, %.preheader518 ], [ %i.am, %5 ] ; 2 uses
+.preheader518:                                    ; preds = %._crit_edge, %.preheader518
+  %.0445 = phi i32 [ %i.ap, %.preheader518 ], [ %3, %._crit_edge ]
+  %.0442 = phi i32 [ %i.av, %.preheader518 ], [ 0, %._crit_edge ]
+  %.1440 = phi i32 [ %i.au, %.preheader518 ], [ %6, %._crit_edge ] ; 2 uses
   %i.ap = add i32 %.0445, -4                      ; 3 uses
   %i.aq = zext i32 %i.ap to i64
   %.val481 = load ptr, ptr %i.d, align 8, !tbaa !13
@@ -13697,15 +13645,15 @@ bb.h:                                             ; preds = %bb.g
   store i32 %.0.copyload.i506, ptr %i.at, align 1
   %i.au = add i32 %.1440, 4                       ; 2 uses
   %i.av = add nuw nsw i32 %.0442, 1               ; 2 uses
-  %.not463 = icmp eq i32 %i.av, %10
+  %.not463 = icmp eq i32 %i.av, %9
   br i1 %.not463, label %.loopexit519, label %.preheader518
 
-.loopexit519:                                     ; preds = %.preheader518, %5
-  %.1446 = phi i32 [ %3, %5 ], [ %i.ap, %.preheader518 ]
-  %.2441 = phi i32 [ %i.am, %5 ], [ %i.au, %.preheader518 ]
-  %i.aw = add i32 %i.am, %6                       ; 2 uses
-  %i.ax = icmp ugt i32 %7, 27
-  br i1 %i.ax, label %.preheader, label %.loopexit
+.loopexit519:                                     ; preds = %.preheader518, %._crit_edge
+  %.1446 = phi i32 [ %3, %._crit_edge ], [ %i.ap, %.preheader518 ]
+  %.2441 = phi i32 [ %6, %._crit_edge ], [ %i.au, %.preheader518 ]
+  %i.aw = add i32 %6, %i.al                       ; 2 uses
+  %i.ax = icmp ugt i32 %i.am, 27
+  br i1 %i.ax, label %.preheader, label %bb.i
 
 .preheader:                                       ; preds = %.loopexit519, %.preheader
   %.2447 = phi i32 [ %i.ch, %.preheader ], [ %.1446, %.loopexit519 ] ; 8 uses
@@ -13792,27 +13740,21 @@ bb.h:                                             ; preds = %bb.g
   store i32 %.0.copyload.i514, ptr %i.cl, align 1
   %i.cm = add i32 %.3, 32                         ; 2 uses
   %.not464 = icmp eq i32 %i.cm, %i.aw
-  br i1 %.not464, label %.loopexit, label %.preheader
+  br i1 %.not464, label %bb.i, label %.preheader
 
-.loopexit:                                        ; preds = %.preheader, %.loopexit519
+bb.i:                                             ; preds = %.preheader, %.loopexit519
   %.val472 = load ptr, ptr %i.d, align 8, !tbaa !13
-  %11 = getelementptr inbounds nuw i8, ptr %.val472, i64 %i.e
-  %.0.copyload.i515 = load i32, ptr %11, align 1  ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.val472, i64 %i.e
+  %.0.copyload.i515 = load i32, ptr %10, align 1  ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i515) #13, !srcloc !14
-  %.pre = sub i32 %2, %.0.copyload.i515
-  br label %bb.i
-
-bb.i:                                             ; preds = %._crit_edge, %.loopexit
-  %.pre-phi = phi i32 [ %i.ak, %._crit_edge ], [ %.pre, %.loopexit ] ; 2 uses
-  %.1443 = phi i32 [ %i.am, %._crit_edge ], [ %i.aw, %.loopexit ]
-  %.4 = phi i32 [ %.0.copyload.i505, %._crit_edge ], [ %.0.copyload.i515, %.loopexit ] ; 3 uses
-  %i.cn = sub i32 %i.am, %.pre-phi
-  %i.co = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %i.cn, i32 noundef %.4, i32 noundef %.pre-phi) #13
+  %11 = sub i32 %2, %.0.copyload.i515             ; 2 uses
+  %i.cn = sub i32 %6, %11
+  %i.co = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %i.cn, i32 noundef %.0.copyload.i515, i32 noundef %11) #13
   %i.cp = sub i32 %.0.copyload.i503, %2           ; 2 uses
-  %i.cq = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1443, i32 noundef %2, i32 noundef %i.cp) #13
+  %i.cq = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %i.aw, i32 noundef %2, i32 noundef %i.cp) #13
   %.val491 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.cr = getelementptr inbounds nuw i8, ptr %.val491, i64 %i.f
-  store i32 %i.an, ptr %i.cr, align 1
+  store i32 %7, ptr %i.cr, align 1
   %i.cs = add i32 %i.cq, %i.cp
   %.val490 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.ct = getelementptr inbounds nuw i8, ptr %.val490, i64 %i.h
@@ -13820,11 +13762,11 @@ bb.i:                                             ; preds = %._crit_edge, %.loop
   %.val489 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.cu = getelementptr inbounds nuw i8, ptr %.val489, i64 %i.e
   store i32 %i.co, ptr %i.cu, align 1
-  %.not465 = icmp eq i32 %.4, 0
+  %.not465 = icmp eq i32 %.0.copyload.i515, 0
   br i1 %.not465, label %.loopexit521, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.4) #13
+  tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.0.copyload.i515) #13
   br label %.loopexit521
 
 bb.k:                                             ; preds = %bb.e
@@ -14018,50 +13960,42 @@ bb.l:                                             ; preds = %bb.k
   %i.as = sub i32 %.0.copyload.i, %.0.copyload.i318 ; 2 uses
   %i.at = tail call i32 @llvm.umax.i32(i32 %i.aq, i32 %i.as)
   %i.au = icmp ugt i32 %i.as, 2147483645
-  %i.av = select i1 %i.au, i32 2147483647, i32 %i.at ; 4 uses
+  %i.av = select i1 %i.au, i32 2147483647, i32 %i.at ; 3 uses
   %.not301 = icmp eq i32 %i.av, 0
-  br i1 %.not301, label %5, label %bb.m
+  br i1 %.not301, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.aw = icmp slt i32 %i.av, 0
   br i1 %i.aw, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ax = shl nuw i32 %i.av, 1
+  %i.ax = shl nuw i32 %i.av, 1                    ; 2 uses
   %i.ay = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ax)
-  br label %5
-
-5:                                                ; preds = %bb.l, %bb.n
-  %.0 = phi i32 [ %i.ay, %bb.n ], [ 0, %bb.l ]    ; 3 uses
-  %6 = sub i32 %2, %.0.copyload.i318              ; 2 uses
-  %7 = and i32 %6, -2
-  %8 = add i32 %.0, %7                            ; 2 uses
-  %.not302 = icmp eq i32 %3, %4
-  br i1 %.not302, label %bb.o, label %9
-
-9:                                                ; preds = %5
-  %10 = and i32 %i.a, 2147483646                  ; 2 uses
-  %11 = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef nonnull %0, i32 noundef %8, i32 noundef %3, i32 noundef %10) #13
-  %12 = add i32 %11, %10
   br label %bb.o
 
-bb.o:                                             ; preds = %9, %5
-  %.1 = phi i32 [ %12, %9 ], [ %8, %5 ]
-  %i.az = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.0, i32 noundef %.0.copyload.i318, i32 noundef %6) #13
-  %13 = sub i32 %.0.copyload.i316.a, %2           ; 2 uses
-  %i.ba = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1, i32 noundef %2, i32 noundef %13) #13
-  %14 = shl nuw i32 %i.av, 1
-  %i.bb = add i32 %.0, %14
+bb.o:                                             ; preds = %bb.l, %bb.n
+  %.pre-phi = phi i32 [ %i.ax, %bb.n ], [ 0, %bb.l ]
+  %.1 = phi i32 [ %i.ay, %bb.n ], [ 0, %bb.l ]    ; 3 uses
+  %5 = sub i32 %2, %.0.copyload.i318              ; 2 uses
+  %6 = and i32 %5, -2
+  %7 = add i32 %.1, %6
+  %8 = and i32 %i.a, 2147483646                   ; 2 uses
+  %i.az = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef nonnull %0, i32 noundef %7, i32 noundef %3, i32 noundef %8) #13
+  %9 = add i32 %i.az, %8
+  %i.ba = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1, i32 noundef %.0.copyload.i318, i32 noundef %5) #13
+  %10 = sub i32 %.0.copyload.i316.a, %2           ; 2 uses
+  %11 = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %9, i32 noundef %2, i32 noundef %10) #13
+  %i.bb = add i32 %.1, %.pre-phi
   %.val311 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.bc = getelementptr inbounds nuw i8, ptr %.val311, i64 %i.f
   store i32 %i.bb, ptr %i.bc, align 1
-  %i.bd = add i32 %i.ba, %13
+  %i.bd = add i32 %11, %10
   %.val310 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.be = getelementptr inbounds nuw i8, ptr %.val310, i64 %i.h
   store i32 %i.bd, ptr %i.be, align 1
   %.val309 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.bf = getelementptr inbounds nuw i8, ptr %.val309, i64 %i.e
-  store i32 %i.az, ptr %i.bf, align 1
+  store i32 %i.ba, ptr %i.bf, align 1
   %.not303 = icmp eq i32 %.0.copyload.i318, 0
   br i1 %.not303, label %bb.s, label %bb.p
 
