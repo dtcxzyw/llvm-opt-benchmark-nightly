@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/pdivmod?download=true
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -16,8 +18,8 @@ bb.a:
   %i.d = alloca ptr, align 8                      ; 10 uses
   store ptr %0, ptr %i.a, align 8, !tbaa !17
   store ptr %1, ptr %i.b, align 8, !tbaa !17
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #4
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.f = load i16, ptr %i.e, align 2, !tbaa !20   ; 6 uses
   %.not = icmp eq ptr %0, null
@@ -43,9 +45,9 @@ bb.d:                                             ; preds = %bb.c
   store ptr null, ptr %i.c, align 8, !tbaa !17
   store ptr null, ptr %i.d, align 8, !tbaa !17
   %i.o = load ptr, ptr @pzero, align 8, !tbaa !17
-  %i.p = call ptr @psetq(ptr noundef nonnull %i.c, ptr noundef %i.o) #3 ; 0 uses
+  %i.p = call ptr @psetq(ptr noundef nonnull %i.c, ptr noundef %i.o) #4 ; 0 uses
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.r = call ptr @psetq(ptr noundef nonnull %i.d, ptr noundef %i.q) #3 ; 0 uses
+  %i.r = call ptr @psetq(ptr noundef nonnull %i.d, ptr noundef %i.q) #4 ; 0 uses
   br label %bb.ao
 
 bb.e:                                             ; preds = %bb.c
@@ -54,12 +56,12 @@ bb.e:                                             ; preds = %bb.c
   %i.t = zext i16 %narrow to i64                  ; 4 uses
   %i.u = zext i16 %i.f to i64                     ; 7 uses
   %i.v = zext i16 %i.l to i64
-  %i.w = shl nuw nsw i64 %i.v, 1
-  %.add279 = add nuw nsw i64 %i.w, 8
+  %i.w = shl nuw nsw i64 %i.v, 1                  ; 2 uses
+  %.add279 = add nuw nsw i64 %i.w, 8              ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.y = getelementptr inbounds nuw [2 x i8], ptr %i.x, i64 %i.u ; 2 uses
   %i.z = add nuw nsw i32 %i.s, 1
-  %i.aa = tail call ptr (i32, ...) @palloc(i32 noundef %i.z) #3 ; 9 uses
+  %i.aa = tail call ptr (i32, ...) @palloc(i32 noundef %i.z) #4 ; 9 uses
   store ptr %i.aa, ptr %i.c, align 8, !tbaa !17
   %i.ab = icmp eq ptr %i.aa, null
   br i1 %i.ab, label %bb.br, label %bb.f
@@ -73,7 +75,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ah = zext i1 %i.ag to i8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.aa, i64 6
   store i8 %i.ah, ptr %i.ai, align 2, !tbaa !22
-  %i.aj = tail call ptr (i32, ...) @palloc(i32 noundef %i.m) #3 ; 6 uses
+  %i.aj = tail call ptr (i32, ...) @palloc(i32 noundef %i.m) #4 ; 6 uses
   store ptr %i.aj, ptr %i.d, align 8, !tbaa !17
   %i.ak = icmp eq ptr %i.aj, null
   br i1 %i.ak, label %bb.g, label %bb.i
@@ -86,7 +88,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.an, label %bb.h, label %bb.br
 
 bb.h:                                             ; preds = %bb.g
-  %i.ao = tail call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.aa) #3 ; 0 uses
+  %i.ao = tail call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.aa) #4 ; 0 uses
   br label %bb.br
 
 bb.i:                                             ; preds = %bb.f
@@ -94,50 +96,100 @@ bb.i:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 6
   store i8 %i.ap, ptr %i.aq, align 2, !tbaa !22
   %i.ar = getelementptr inbounds nuw [2 x i8], ptr %i.aa, i64 %i.t
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 10 ; 3 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 10 ; 4 uses
   %i.at = icmp eq i16 %i.f, 1
   %i.au = getelementptr inbounds i8, ptr %i.y, i64 -2
   %i.av = load i16, ptr %i.au, align 2, !tbaa !21 ; 3 uses
   br i1 %i.at, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
-  %i.aw = zext i16 %i.av to i32                   ; 2 uses
+  %i.aw = zext i16 %i.av to i32                   ; 6 uses
   %i.ax = icmp eq i16 %i.av, 0
-  br i1 %i.ax, label %bb.k, label %.preheader292
+  br i1 %i.ax, label %bb.k, label %.preheader292.preheader
+
+.preheader292.preheader:                          ; preds = %bb.j
+  %4 = add nsw i64 %i.w, -2                       ; 3 uses
+  %5 = lshr exact i64 %4, 1
+  %6 = add nuw i64 %5, 1                          ; 2 uses
+  %7 = icmp eq i64 %4, 0
+  br i1 %7, label %.preheader292.epil.preheader, label %.preheader292.preheader.new
+
+.preheader292.preheader.new:                      ; preds = %.preheader292.preheader
+  %unroll_iter = and i64 %6, -2
+  br label %.preheader292
 
 bb.k:                                             ; preds = %bb.j
-  %i.ay = tail call ptr @errorp(i32 noundef 4, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #3
-  %i.az = tail call ptr @pnew(ptr noundef %i.ay) #3 ; 2 uses
+  %i.ay = tail call ptr @errorp(i32 noundef 4, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #4
+  %i.az = tail call ptr @pnew(ptr noundef %i.ay) #4 ; 2 uses
   store ptr %i.az, ptr %i.c, align 8, !tbaa !17
   br label %bb.ai
 
-.preheader292:                                    ; preds = %bb.j, %.preheader292
-  %.0176.idx = phi i64 [ %.0176.add, %.preheader292 ], [ %.add279, %bb.j ] ; 2 uses
-  %.0168 = phi ptr [ %i.bg, %.preheader292 ], [ %i.as, %bb.j ]
-  %.0160 = phi i32 [ %i.bh, %.preheader292 ], [ 0, %bb.j ]
-  %i.ba = shl nuw i32 %.0160, 16
-  %.0176.add = add nsw i64 %.0176.idx, -2         ; 2 uses
+.preheader292:                                    ; preds = %.preheader292, %.preheader292.preheader.new
+  %.0176.idx = phi i64 [ %.add279, %.preheader292.preheader.new ], [ %.0176.add, %.preheader292 ] ; 2 uses
+  %.0168 = phi ptr [ %i.as, %.preheader292.preheader.new ], [ %i.bg, %.preheader292 ] ; 2 uses
+  %.0160 = phi i32 [ 0, %.preheader292.preheader.new ], [ %i.bh, %.preheader292 ]
+  %niter = phi i64 [ 0, %.preheader292.preheader.new ], [ %niter.next.1, %.preheader292 ]
+  %8 = shl nuw i32 %.0160, 16
+  %9 = getelementptr i8, ptr %0, i64 %.0176.idx
+  %.ptr280 = getelementptr i8, ptr %9, i64 -2
+  %10 = load i16, ptr %.ptr280, align 2, !tbaa !21
+  %11 = zext i16 %10 to i32
+  %12 = or disjoint i32 %8, %11                   ; 2 uses
+  %13 = udiv i32 %12, %i.aw
+  %14 = trunc i32 %13 to i16
+  %15 = getelementptr inbounds i8, ptr %.0168, i64 -2
+  store i16 %14, ptr %15, align 2, !tbaa !21
+  %16 = urem i32 %12, %i.aw
+  %i.ba = shl nuw i32 %16, 16
+  %.0176.add = add nsw i64 %.0176.idx, -4         ; 3 uses
   %.ptr280.a = getelementptr inbounds i8, ptr %0, i64 %.0176.add
   %i.bb = load i16, ptr %.ptr280.a, align 2, !tbaa !21
   %i.bc = zext i16 %i.bb to i32
   %i.bd = or disjoint i32 %i.ba, %i.bc            ; 2 uses
   %i.be = udiv i32 %i.bd, %i.aw
   %i.bf = trunc i32 %i.be to i16
-  %i.bg = getelementptr inbounds i8, ptr %.0168, i64 -2 ; 3 uses
+  %i.bg = getelementptr inbounds i8, ptr %.0168, i64 -4 ; 4 uses
   store i16 %i.bf, ptr %i.bg, align 2, !tbaa !21
-  %i.bh = urem i32 %i.bd, %i.aw                   ; 2 uses
-  %4 = icmp samesign ugt i64 %.0176.idx, 10
-  br i1 %4, label %.preheader292, label %bb.l, !llvm.loop !8
+  %i.bh = urem i32 %i.bd, %i.aw                   ; 3 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %.unr-lcssa, label %.preheader292, !llvm.loop !8
 
-bb.l:                                             ; preds = %.preheader292
+.unr-lcssa:                                       ; preds = %.preheader292
+  %17 = and i64 %4, 2
+  %lcmp.mod.not.not = icmp eq i64 %17, 0
+  br i1 %lcmp.mod.not.not, label %.preheader292.epil.preheader, label %bb.l
+
+.preheader292.epil.preheader:                     ; preds = %.unr-lcssa, %.preheader292.preheader
+  %.0176.idx.epil.init = phi i64 [ %.add279, %.preheader292.preheader ], [ %.0176.add, %.unr-lcssa ]
+  %.0168.epil.init = phi ptr [ %i.as, %.preheader292.preheader ], [ %i.bg, %.unr-lcssa ]
+  %.0160.epil.init = phi i32 [ 0, %.preheader292.preheader ], [ %i.bh, %.unr-lcssa ]
+  %lcmp.mod311 = trunc i64 %6 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod311)
+  %18 = shl nuw i32 %.0160.epil.init, 16
+  %19 = getelementptr i8, ptr %0, i64 %.0176.idx.epil.init
+  %.ptr280.epil = getelementptr i8, ptr %19, i64 -2
+  %20 = load i16, ptr %.ptr280.epil, align 2, !tbaa !21
+  %21 = zext i16 %20 to i32
+  %22 = or disjoint i32 %18, %21                  ; 2 uses
+  %23 = udiv i32 %22, %i.aw
+  %24 = trunc i32 %23 to i16
+  %25 = getelementptr inbounds i8, ptr %.0168.epil.init, i64 -2 ; 2 uses
+  store i16 %24, ptr %25, align 2, !tbaa !21
+  %26 = urem i32 %22, %i.aw
+  br label %bb.l
+
+bb.l:                                             ; preds = %.unr-lcssa, %.preheader292.epil.preheader
+  %.lcssa301 = phi ptr [ %i.bg, %.unr-lcssa ], [ %25, %.preheader292.epil.preheader ]
+  %.lcssa = phi i32 [ %i.bh, %.unr-lcssa ], [ %26, %.preheader292.epil.preheader ]
   %i.bi = getelementptr inbounds nuw [2 x i8], ptr %i.aj, i64 %i.u
-  %i.bj = trunc nuw i32 %i.bh to i16
+  %i.bj = trunc nuw i32 %.lcssa to i16
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 6
   store i16 %i.bj, ptr %i.bk, align 2, !tbaa !21
   br label %bb.ai
 
 bb.m:                                             ; preds = %bb.i
-  %i.bl = tail call ptr (i32, ...) @palloc(i32 noundef %i.m) #3 ; 6 uses
+  %i.bl = tail call ptr (i32, ...) @palloc(i32 noundef %i.m) #4 ; 6 uses
   %i.bm = icmp eq ptr %i.bl, null
   br i1 %i.bm, label %bb.br, label %bb.n
 
@@ -166,7 +218,7 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   br i1 %i.ca, label %bb.o, label %bb.p, !llvm.loop !9
 
 bb.p:                                             ; preds = %bb.o
-  %i.cb = call ptr @psetq(ptr noundef nonnull %i.b, ptr noundef nonnull %i.bl) #3 ; 0 uses
+  %i.cb = call ptr @psetq(ptr noundef nonnull %i.b, ptr noundef nonnull %i.bl) #4 ; 0 uses
   %i.cc = load i16, ptr %i.bl, align 2, !tbaa !21
   %i.cd = add i16 %i.cc, -1                       ; 2 uses
   store i16 %i.cd, ptr %i.bl, align 2, !tbaa !21
@@ -174,13 +226,13 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ce, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.cf = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.bl) #3 ; 0 uses
+  %i.cf = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.bl) #4 ; 0 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.cg = zext i16 %i.l to i32
   %i.ch = add nuw nsw i32 %i.cg, 1
-  %i.ci = call ptr (i32, ...) @palloc(i32 noundef %i.ch) #3 ; 6 uses
+  %i.ci = call ptr (i32, ...) @palloc(i32 noundef %i.ch) #4 ; 6 uses
   %i.cj = icmp eq ptr %i.ci, null
   br i1 %i.cj, label %bb.br, label %bb.s
 
@@ -211,7 +263,7 @@ bb.t:                                             ; preds = %bb.t, %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.cy = trunc nuw i32 %i.cu to i16
   store i16 %i.cy, ptr %i.cw, align 2, !tbaa !21
-  %i.cz = call ptr @psetq(ptr noundef nonnull %i.a, ptr noundef nonnull %i.ci) #3 ; 0 uses
+  %i.cz = call ptr @psetq(ptr noundef nonnull %i.a, ptr noundef nonnull %i.ci) #4 ; 0 uses
   %i.da = load i16, ptr %i.ci, align 2, !tbaa !21
   %i.db = add i16 %i.da, -1                       ; 2 uses
   store i16 %i.db, ptr %i.ci, align 2, !tbaa !21
@@ -219,7 +271,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.dc, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.dd = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.ci) #3 ; 0 uses
+  %i.dd = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.ci) #4 ; 0 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
@@ -386,12 +438,12 @@ bb.ag:                                            ; preds = %bb.ag, %bb.af
   br i1 %i.gi, label %bb.ag, label %bb.ah, !llvm.loop !15
 
 bb.ah:                                            ; preds = %bb.ag
-  call void (ptr, ...) @pnorm(ptr noundef nonnull %i.aj) #3
+  call void (ptr, ...) @pnorm(ptr noundef nonnull %i.aj) #4
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.k, %bb.l, %bb.ah
   %i.gj = phi ptr [ %i.az, %bb.k ], [ %i.aa, %bb.l ], [ %i.aa, %bb.ah ] ; 3 uses
-  %.2170 = phi ptr [ %i.as, %bb.k ], [ %i.bg, %bb.l ], [ %i.fw, %bb.ah ] ; 2 uses
+  %.2170 = phi ptr [ %i.as, %bb.k ], [ %.lcssa301, %bb.l ], [ %i.fw, %bb.ah ] ; 2 uses
   %.not211 = icmp eq i16 %i.l, %i.f
   br i1 %.not211, label %bb.al, label %bb.aj
 
@@ -437,7 +489,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.gz, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.ha = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.gw) #3 ; 0 uses
+  %i.ha = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.gw) #4 ; 0 uses
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.ao
@@ -453,7 +505,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.he, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
-  %i.hf = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.hb) #3 ; 0 uses
+  %i.hf = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.hb) #4 ; 0 uses
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as, %bb.ar
@@ -466,7 +518,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not221, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.hh = call ptr @psetq(ptr noundef nonnull %2, ptr noundef %.pre258) #3 ; 0 uses
+  %i.hh = call ptr @psetq(ptr noundef nonnull %2, ptr noundef %.pre258) #4 ; 0 uses
   %.pre257 = load ptr, ptr %i.c, align 8, !tbaa !17
   br label %bb.ax
 
@@ -483,12 +535,12 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %i.hl, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ay
-  %i.hm = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.hi) #3 ; 0 uses
+  %i.hm = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.hi) #4 ; 0 uses
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.ax
   %i.hn = load ptr, ptr %i.d, align 8, !tbaa !17
-  %i.ho = call ptr @presult(ptr noundef %i.hn) #3
+  %i.ho = call ptr @presult(ptr noundef %i.hn) #4
   br label %bb.br
 
 bb.bb:                                            ; preds = %bb.au
@@ -504,7 +556,7 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %.not219, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.hp = call ptr @psetq(ptr noundef nonnull %3, ptr noundef %.pre256) #3 ; 0 uses
+  %i.hp = call ptr @psetq(ptr noundef nonnull %3, ptr noundef %.pre256) #4 ; 0 uses
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !17
   br label %bb.be
 
@@ -521,17 +573,17 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.ht, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.hu = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.hq) #3 ; 0 uses
+  %i.hu = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.hq) #4 ; 0 uses
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf, %bb.be
   %i.hv = load ptr, ptr %i.c, align 8, !tbaa !17
-  %i.hw = call ptr @presult(ptr noundef %i.hv) #3
+  %i.hw = call ptr @presult(ptr noundef %i.hv) #4
   br label %bb.br
 
 bb.bi:                                            ; preds = %bb.bb
   %i.hx = load ptr, ptr %i.c, align 8, !tbaa !17
-  %i.hy = call ptr @psetq(ptr noundef nonnull %2, ptr noundef %i.hx) #3 ; 0 uses
+  %i.hy = call ptr @psetq(ptr noundef nonnull %2, ptr noundef %i.hx) #4 ; 0 uses
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bb, %bb.bi
@@ -540,7 +592,7 @@ bb.bj:                                            ; preds = %bb.bb, %bb.bi
 
 bb.bk:                                            ; preds = %bb.bj
   %i.hz = load ptr, ptr %i.d, align 8, !tbaa !17
-  %i.ia = call ptr @psetq(ptr noundef nonnull %3, ptr noundef %i.hz) #3 ; 0 uses
+  %i.ia = call ptr @psetq(ptr noundef nonnull %3, ptr noundef %i.hz) #4 ; 0 uses
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj
@@ -556,7 +608,7 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %i.ie, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.if = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.ib) #3 ; 0 uses
+  %i.if = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.ib) #4 ; 0 uses
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.bl
@@ -572,13 +624,13 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %i.ij, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.ik = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.ig) #3 ; 0 uses
+  %i.ik = call i32 (ptr, ...) @pfree(ptr noundef nonnull %i.ig) #4 ; 0 uses
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.g, %bb.h, %bb.bo, %bb.bp, %bb.bq, %bb.r, %bb.m, %bb.e, %bb.bh, %bb.ba
   %.0181 = phi ptr [ %i.ho, %bb.ba ], [ %i.hw, %bb.bh ], [ null, %bb.r ], [ null, %bb.m ], [ null, %bb.bo ], [ null, %bb.e ], [ null, %bb.bq ], [ null, %bb.bp ], [ null, %bb.h ], [ null, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   ret ptr %.0181
 }
 
@@ -602,10 +654,14 @@ declare ptr @presult(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
