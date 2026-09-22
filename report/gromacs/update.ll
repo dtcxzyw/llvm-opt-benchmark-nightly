@@ -206,8 +206,9 @@ vector.ph490:                                     ; preds = %.lr.ph.i.i.i.i.i.i.
   %broadcast.splat495 = shufflevector <2 x float> %i.xx, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %broadcast.splatinsert496 = insertelement <8 x float> poison, float %i.xz, i64 0
   %broadcast.splat497 = shufflevector <8 x float> %broadcast.splatinsert496, <8 x float> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert498 = insertelement <8 x float> poison, float %i.cz, i64 0
-  %broadcast.splat499 = shufflevector <8 x float> %broadcast.splatinsert498, <8 x float> poison, <8 x i32> zeroinitializer ; 6 uses
+  %broadcast.splatinsert498 = insertelement <8 x float> poison, float %i.cz, i64 0 ; 2 uses
+  %broadcast.splat499 = shufflevector <8 x float> %broadcast.splatinsert498, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
+  %31 = shufflevector <8 x float> %broadcast.splatinsert498, <8 x float> poison, <16 x i32> zeroinitializer
   br label %vector.body500
 
 vector.body500:                                   ; preds = %vector.body500, %vector.ph490
@@ -239,27 +240,24 @@ vector.body500:                                   ; preds = %vector.body500, %ve
   %i.yl = fmul <8 x float> %strided.vec511, %strided.vec515
   %i.ym = fmul <8 x float> %broadcast.splat499, %i.yl
   %i.yn = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather505, <8 x float> %strided.vec507, <8 x float> %i.ym)
-  %i.yo = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat493, <8 x float> %strided.vec507, <8 x float> %i.yn) ; 2 uses
-  %wide.vec518 = load <24 x float>, ptr %i.yj, align 4, !tbaa !179, !alias.scope !811, !noalias !812 ; 3 uses
-  %strided.vec519 = shufflevector <24 x float> %wide.vec518, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec520 = shufflevector <24 x float> %wide.vec518, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %i.yo = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat493, <8 x float> %strided.vec507, <8 x float> %i.yn)
+  %wide.vec518 = load <24 x float>, ptr %i.yj, align 4, !tbaa !179, !alias.scope !811, !noalias !812 ; 2 uses
   %strided.vec521 = shufflevector <24 x float> %wide.vec518, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %31 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.yo, <8 x float> %broadcast.splat499, <8 x float> %strided.vec519)
   %i.yp = fmul <8 x float> %strided.vec512, %strided.vec516
   %i.yq = fmul <8 x float> %broadcast.splat499, %i.yp
-  %32 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather505, <8 x float> %strided.vec508, <8 x float> %i.yq)
-  %i.yr = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat495, <8 x float> %strided.vec508, <8 x float> %32) ; 2 uses
-  %i.ys = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.yr, <8 x float> %broadcast.splat499, <8 x float> %strided.vec520)
+  %i.yr = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather505, <8 x float> %strided.vec508, <8 x float> %i.yq)
+  %i.ys = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat495, <8 x float> %strided.vec508, <8 x float> %i.yr)
   %i.yt = fmul <8 x float> %strided.vec513, %strided.vec517
   %i.yu = fmul <8 x float> %broadcast.splat499, %i.yt
   %i.yv = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather505, <8 x float> %strided.vec509, <8 x float> %i.yu)
   %i.yw = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat497, <8 x float> %strided.vec509, <8 x float> %i.yv) ; 2 uses
-  %i.yx = shufflevector <8 x float> %i.yo, <8 x float> %i.yr, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.yx = shufflevector <8 x float> %i.yo, <8 x float> %i.ys, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.yy = shufflevector <8 x float> %i.yw, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec522 = shufflevector <16 x float> %i.yx, <16 x float> %i.yy, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec522, ptr %i.yg, align 4, !tbaa !179, !alias.scope !806, !noalias !807
   %i.yz = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.yw, <8 x float> %broadcast.splat499, <8 x float> %strided.vec521)
-  %33 = shufflevector <8 x float> %31, <8 x float> %i.ys, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %32 = shufflevector <24 x float> %wide.vec518, <24 x float> poison, <16 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %33 = call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.yx, <16 x float> %31, <16 x float> %32)
   %i.za = shufflevector <8 x float> %i.yz, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec523 = shufflevector <16 x float> %33, <16 x float> %i.za, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec523, ptr %i.yk, align 4, !tbaa !179, !alias.scope !813, !noalias !814
@@ -358,10 +356,11 @@ vector.ph530:                                     ; preds = %.preheader.preheade
   %broadcast.splat535 = shufflevector <2 x float> %i.aay, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %broadcast.splatinsert536 = insertelement <8 x float> poison, float %i.aba, i64 0
   %broadcast.splat537 = shufflevector <8 x float> %broadcast.splatinsert536, <8 x float> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert538 = insertelement <8 x float> poison, float %i.cz, i64 0
-  %broadcast.splat539 = shufflevector <8 x float> %broadcast.splatinsert538, <8 x float> poison, <8 x i32> zeroinitializer ; 6 uses
+  %broadcast.splatinsert538 = insertelement <8 x float> poison, float %i.cz, i64 0 ; 2 uses
+  %broadcast.splat539 = shufflevector <8 x float> %broadcast.splatinsert538, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert540 = insertelement <8 x float> poison, float %i.aaq, i64 0
   %broadcast.splat541 = shufflevector <8 x float> %broadcast.splatinsert540, <8 x float> poison, <8 x i32> zeroinitializer ; 3 uses
+  %34 = shufflevector <8 x float> %broadcast.splatinsert538, <8 x float> poison, <16 x i32> zeroinitializer
   br label %vector.body542
 
 vector.body542:                                   ; preds = %vector.body542, %vector.ph530
@@ -387,27 +386,24 @@ vector.body542:                                   ; preds = %vector.body542, %ve
   %i.abk = fmul <8 x float> %strided.vec549, %strided.vec553
   %i.abl = fmul <8 x float> %broadcast.splat539, %i.abk
   %i.abm = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat541, <8 x float> %strided.vec545, <8 x float> %i.abl)
-  %i.abn = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat533, <8 x float> %strided.vec545, <8 x float> %i.abm) ; 2 uses
-  %wide.vec556 = load <24 x float>, ptr %i.abi, align 4, !tbaa !179, !alias.scope !826, !noalias !827 ; 3 uses
-  %strided.vec557 = shufflevector <24 x float> %wide.vec556, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec558 = shufflevector <24 x float> %wide.vec556, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %i.abn = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat533, <8 x float> %strided.vec545, <8 x float> %i.abm)
+  %wide.vec556 = load <24 x float>, ptr %i.abi, align 4, !tbaa !179, !alias.scope !826, !noalias !827 ; 2 uses
   %strided.vec559 = shufflevector <24 x float> %wide.vec556, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %34 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.abn, <8 x float> %broadcast.splat539, <8 x float> %strided.vec557)
   %i.abo = fmul <8 x float> %strided.vec550, %strided.vec554
   %i.abp = fmul <8 x float> %broadcast.splat539, %i.abo
-  %35 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat541, <8 x float> %strided.vec546, <8 x float> %i.abp)
-  %i.abq = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat535, <8 x float> %strided.vec546, <8 x float> %35) ; 2 uses
-  %i.abr = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.abq, <8 x float> %broadcast.splat539, <8 x float> %strided.vec558)
+  %i.abq = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat541, <8 x float> %strided.vec546, <8 x float> %i.abp)
+  %i.abr = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat535, <8 x float> %strided.vec546, <8 x float> %i.abq)
   %i.abs = fmul <8 x float> %strided.vec551, %strided.vec555
   %i.abt = fmul <8 x float> %broadcast.splat539, %i.abs
   %i.abu = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat541, <8 x float> %strided.vec547, <8 x float> %i.abt)
   %i.abv = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat537, <8 x float> %strided.vec547, <8 x float> %i.abu) ; 2 uses
-  %i.abw = shufflevector <8 x float> %i.abn, <8 x float> %i.abq, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.abw = shufflevector <8 x float> %i.abn, <8 x float> %i.abr, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.abx = shufflevector <8 x float> %i.abv, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec560 = shufflevector <16 x float> %i.abw, <16 x float> %i.abx, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec560, ptr %i.abf, align 4, !tbaa !179, !alias.scope !821, !noalias !822
   %i.aby = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.abv, <8 x float> %broadcast.splat539, <8 x float> %strided.vec559)
-  %36 = shufflevector <8 x float> %34, <8 x float> %i.abr, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %35 = shufflevector <24 x float> %wide.vec556, <24 x float> poison, <16 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %36 = call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.abw, <16 x float> %34, <16 x float> %35)
   %i.abz = shufflevector <8 x float> %i.aby, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec561 = shufflevector <16 x float> %36, <16 x float> %i.abz, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec561, ptr %i.abj, align 4, !tbaa !179, !alias.scope !828, !noalias !829
@@ -498,8 +494,9 @@ vector.ph454:                                     ; preds = %.preheader.preheade
   %broadcast.splat459 = shufflevector <2 x float> %i.adp, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %broadcast.splatinsert460 = insertelement <8 x float> poison, float %i.adr, i64 0
   %broadcast.splat461 = shufflevector <8 x float> %broadcast.splatinsert460, <8 x float> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert462 = insertelement <8 x float> poison, float %i.cz, i64 0
-  %broadcast.splat463 = shufflevector <8 x float> %broadcast.splatinsert462, <8 x float> poison, <8 x i32> zeroinitializer ; 6 uses
+  %broadcast.splatinsert462 = insertelement <8 x float> poison, float %i.cz, i64 0 ; 2 uses
+  %broadcast.splat463 = shufflevector <8 x float> %broadcast.splatinsert462, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
+  %37 = shufflevector <8 x float> %broadcast.splatinsert462, <8 x float> poison, <16 x i32> zeroinitializer
   br label %vector.body464
 
 vector.body464:                                   ; preds = %vector.body464, %vector.ph454
@@ -525,27 +522,24 @@ vector.body464:                                   ; preds = %vector.body464, %ve
   %i.aeb = fmul <8 x float> %strided.vec471, %strided.vec475
   %i.aec = fmul <8 x float> %broadcast.splat463, %i.aeb
   %i.aed = fadd <8 x float> %strided.vec467, %i.aec
-  %i.aee = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat457, <8 x float> %strided.vec467, <8 x float> %i.aed) ; 2 uses
-  %wide.vec478 = load <24 x float>, ptr %i.adz, align 4, !tbaa !179, !alias.scope !840, !noalias !841 ; 3 uses
-  %strided.vec479 = shufflevector <24 x float> %wide.vec478, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec480 = shufflevector <24 x float> %wide.vec478, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %i.aee = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat457, <8 x float> %strided.vec467, <8 x float> %i.aed)
+  %wide.vec478 = load <24 x float>, ptr %i.adz, align 4, !tbaa !179, !alias.scope !840, !noalias !841 ; 2 uses
   %strided.vec481 = shufflevector <24 x float> %wide.vec478, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %37 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.aee, <8 x float> %broadcast.splat463, <8 x float> %strided.vec479)
   %i.aef = fmul <8 x float> %strided.vec472, %strided.vec476
   %i.aeg = fmul <8 x float> %broadcast.splat463, %i.aef
   %i.aeh = fadd <8 x float> %strided.vec468, %i.aeg
-  %38 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat459, <8 x float> %strided.vec468, <8 x float> %i.aeh) ; 2 uses
-  %i.aei = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %38, <8 x float> %broadcast.splat463, <8 x float> %strided.vec480)
+  %i.aei = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat459, <8 x float> %strided.vec468, <8 x float> %i.aeh)
   %i.aej = fmul <8 x float> %strided.vec473, %strided.vec477
   %i.aek = fmul <8 x float> %broadcast.splat463, %i.aej
   %i.ael = fadd <8 x float> %strided.vec469, %i.aek
   %i.aem = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat461, <8 x float> %strided.vec469, <8 x float> %i.ael) ; 2 uses
-  %i.aen = shufflevector <8 x float> %i.aee, <8 x float> %38, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.aen = shufflevector <8 x float> %i.aee, <8 x float> %i.aei, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.aeo = shufflevector <8 x float> %i.aem, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec482 = shufflevector <16 x float> %i.aen, <16 x float> %i.aeo, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec482, ptr %i.adw, align 4, !tbaa !179, !alias.scope !835, !noalias !836
   %i.aep = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.aem, <8 x float> %broadcast.splat463, <8 x float> %strided.vec481)
-  %39 = shufflevector <8 x float> %37, <8 x float> %i.aei, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %38 = shufflevector <24 x float> %wide.vec478, <24 x float> poison, <16 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %39 = call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.aen, <16 x float> %37, <16 x float> %38)
   %i.aeq = shufflevector <8 x float> %i.aep, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec483 = shufflevector <16 x float> %39, <16 x float> %i.aeq, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec483, ptr %i.aea, align 4, !tbaa !179, !alias.scope !842, !noalias !843
@@ -766,8 +760,9 @@ vector.ph391:                                     ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.air = and i64 %wide.trip.count.i.i.i.i.i.i.i114.i, 7
   %n.vec392 = sub nuw nsw i64 %i.aiq, %i.air      ; 2 uses
   %i.ais = add nsw i64 %n.vec392, %i.aip
-  %broadcast.splatinsert393 = insertelement <8 x float> poison, float %i.cz, i64 0
-  %broadcast.splat394 = shufflevector <8 x float> %broadcast.splatinsert393, <8 x float> poison, <8 x i32> zeroinitializer ; 6 uses
+  %broadcast.splatinsert393 = insertelement <8 x float> poison, float %i.cz, i64 0 ; 2 uses
+  %broadcast.splat394 = shufflevector <8 x float> %broadcast.splatinsert393, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
+  %40 = shufflevector <8 x float> %broadcast.splatinsert393, <8 x float> poison, <16 x i32> zeroinitializer
   br label %vector.body395
 
 vector.body395:                                   ; preds = %vector.body395, %vector.ph391
@@ -798,25 +793,22 @@ vector.body395:                                   ; preds = %vector.body395, %ve
   %strided.vec409 = shufflevector <24 x float> %wide.vec406, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
   %i.ajb = fmul <8 x float> %strided.vec403, %strided.vec407
   %i.ajc = fmul <8 x float> %broadcast.splat394, %i.ajb
-  %i.ajd = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather, <8 x float> %strided.vec399, <8 x float> %i.ajc) ; 2 uses
-  %wide.vec410 = load <24 x float>, ptr %i.aiz, align 4, !tbaa !179, !alias.scope !883, !noalias !884 ; 3 uses
-  %strided.vec411 = shufflevector <24 x float> %wide.vec410, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec412 = shufflevector <24 x float> %wide.vec410, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %i.ajd = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather, <8 x float> %strided.vec399, <8 x float> %i.ajc)
+  %wide.vec410 = load <24 x float>, ptr %i.aiz, align 4, !tbaa !179, !alias.scope !883, !noalias !884 ; 2 uses
   %strided.vec413 = shufflevector <24 x float> %wide.vec410, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %40 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.ajd, <8 x float> %broadcast.splat394, <8 x float> %strided.vec411)
   %i.aje = fmul <8 x float> %strided.vec404, %strided.vec408
   %i.ajf = fmul <8 x float> %broadcast.splat394, %i.aje
-  %41 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather, <8 x float> %strided.vec400, <8 x float> %i.ajf) ; 2 uses
-  %i.ajg = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %41, <8 x float> %broadcast.splat394, <8 x float> %strided.vec412)
+  %i.ajg = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather, <8 x float> %strided.vec400, <8 x float> %i.ajf)
   %i.ajh = fmul <8 x float> %strided.vec405, %strided.vec409
   %i.aji = fmul <8 x float> %broadcast.splat394, %i.ajh
   %i.ajj = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather, <8 x float> %strided.vec401, <8 x float> %i.aji) ; 2 uses
-  %i.ajk = shufflevector <8 x float> %i.ajd, <8 x float> %41, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.ajk = shufflevector <8 x float> %i.ajd, <8 x float> %i.ajg, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.ajl = shufflevector <8 x float> %i.ajj, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec414 = shufflevector <16 x float> %i.ajk, <16 x float> %i.ajl, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec414, ptr %i.aiw, align 4, !tbaa !179, !alias.scope !878, !noalias !879
   %i.ajm = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.ajj, <8 x float> %broadcast.splat394, <8 x float> %strided.vec413)
-  %42 = shufflevector <8 x float> %40, <8 x float> %i.ajg, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %41 = shufflevector <24 x float> %wide.vec410, <24 x float> poison, <16 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %42 = call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.ajk, <16 x float> %40, <16 x float> %41)
   %i.ajn = shufflevector <8 x float> %i.ajm, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec415 = shufflevector <16 x float> %42, <16 x float> %i.ajn, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec415, ptr %i.aja, align 4, !tbaa !179, !alias.scope !885, !noalias !886
@@ -901,10 +893,11 @@ vector.ph422:                                     ; preds = %.preheader.preheade
   %i.alf = and i64 %wide.trip.count.i.i.i.i.i.i.i.i109.i, 7
   %n.vec423 = sub nuw nsw i64 %i.ale, %i.alf      ; 2 uses
   %i.alg = add nsw i64 %n.vec423, %i.ald
-  %broadcast.splatinsert424 = insertelement <8 x float> poison, float %i.cz, i64 0
-  %broadcast.splat425 = shufflevector <8 x float> %broadcast.splatinsert424, <8 x float> poison, <8 x i32> zeroinitializer ; 6 uses
+  %broadcast.splatinsert424 = insertelement <8 x float> poison, float %i.cz, i64 0 ; 2 uses
+  %broadcast.splat425 = shufflevector <8 x float> %broadcast.splatinsert424, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert426 = insertelement <8 x float> poison, float %i.alb, i64 0
   %broadcast.splat427 = shufflevector <8 x float> %broadcast.splatinsert426, <8 x float> poison, <8 x i32> zeroinitializer ; 3 uses
+  %43 = shufflevector <8 x float> %broadcast.splatinsert424, <8 x float> poison, <16 x i32> zeroinitializer
   br label %vector.body428
 
 vector.body428:                                   ; preds = %vector.body428, %vector.ph422
@@ -929,25 +922,22 @@ vector.body428:                                   ; preds = %vector.body428, %ve
   %strided.vec441 = shufflevector <24 x float> %wide.vec438, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
   %i.aln = fmul <8 x float> %strided.vec435, %strided.vec439
   %i.alo = fmul <8 x float> %broadcast.splat425, %i.aln
-  %i.alp = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat427, <8 x float> %strided.vec431, <8 x float> %i.alo) ; 2 uses
-  %wide.vec442 = load <24 x float>, ptr %i.all, align 4, !tbaa !179, !alias.scope !898, !noalias !899 ; 3 uses
-  %strided.vec443 = shufflevector <24 x float> %wide.vec442, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec444 = shufflevector <24 x float> %wide.vec442, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %i.alp = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat427, <8 x float> %strided.vec431, <8 x float> %i.alo)
+  %wide.vec442 = load <24 x float>, ptr %i.all, align 4, !tbaa !179, !alias.scope !898, !noalias !899 ; 2 uses
   %strided.vec445 = shufflevector <24 x float> %wide.vec442, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %43 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.alp, <8 x float> %broadcast.splat425, <8 x float> %strided.vec443)
   %i.alq = fmul <8 x float> %strided.vec436, %strided.vec440
   %i.alr = fmul <8 x float> %broadcast.splat425, %i.alq
-  %44 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat427, <8 x float> %strided.vec432, <8 x float> %i.alr) ; 2 uses
-  %i.als = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %44, <8 x float> %broadcast.splat425, <8 x float> %strided.vec444)
+  %i.als = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat427, <8 x float> %strided.vec432, <8 x float> %i.alr)
   %i.alt = fmul <8 x float> %strided.vec437, %strided.vec441
   %i.alu = fmul <8 x float> %broadcast.splat425, %i.alt
   %i.alv = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat427, <8 x float> %strided.vec433, <8 x float> %i.alu) ; 2 uses
-  %i.alw = shufflevector <8 x float> %i.alp, <8 x float> %44, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.alw = shufflevector <8 x float> %i.alp, <8 x float> %i.als, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.alx = shufflevector <8 x float> %i.alv, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec446 = shufflevector <16 x float> %i.alw, <16 x float> %i.alx, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec446, ptr %i.ali, align 4, !tbaa !179, !alias.scope !893, !noalias !894
   %i.aly = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.alv, <8 x float> %broadcast.splat425, <8 x float> %strided.vec445)
-  %45 = shufflevector <8 x float> %43, <8 x float> %i.als, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %44 = shufflevector <24 x float> %wide.vec442, <24 x float> poison, <16 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %45 = call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.alw, <16 x float> %43, <16 x float> %44)
   %i.alz = shufflevector <8 x float> %i.aly, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec447 = shufflevector <16 x float> %45, <16 x float> %i.alz, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec447, ptr %i.alm, align 4, !tbaa !179, !alias.scope !900, !noalias !901
@@ -1024,8 +1014,9 @@ vector.ph:                                        ; preds = %.preheader.preheade
   %i.anj = and i64 %wide.trip.count.i.i.i.i.i.i.i.i.i118.i, 7
   %n.vec = sub nuw nsw i64 %i.ani, %i.anj         ; 2 uses
   %i.ank = add nsw i64 %n.vec, %i.anh
-  %broadcast.splatinsert = insertelement <8 x float> poison, float %i.cz, i64 0
-  %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer ; 6 uses
+  %broadcast.splatinsert = insertelement <8 x float> poison, float %i.cz, i64 0 ; 2 uses
+  %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
+  %46 = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <16 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1050,25 +1041,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %strided.vec383 = shufflevector <24 x float> %wide.vec380, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
   %i.anr = fmul <8 x float> %strided.vec377, %strided.vec381
   %i.ans = fmul <8 x float> %broadcast.splat, %i.anr
-  %i.ant = fadd <8 x float> %strided.vec, %i.ans  ; 2 uses
-  %wide.vec384 = load <24 x float>, ptr %i.anp, align 4, !tbaa !179, !alias.scope !912, !noalias !913 ; 3 uses
-  %strided.vec385 = shufflevector <24 x float> %wide.vec384, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec386 = shufflevector <24 x float> %wide.vec384, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %i.ant = fadd <8 x float> %strided.vec, %i.ans
+  %wide.vec384 = load <24 x float>, ptr %i.anp, align 4, !tbaa !179, !alias.scope !912, !noalias !913 ; 2 uses
   %strided.vec387 = shufflevector <24 x float> %wide.vec384, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %46 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.ant, <8 x float> %broadcast.splat, <8 x float> %strided.vec385)
   %i.anu = fmul <8 x float> %strided.vec378, %strided.vec382
   %i.anv = fmul <8 x float> %broadcast.splat, %i.anu
-  %i.anw = fadd <8 x float> %strided.vec374, %i.anv ; 2 uses
-  %47 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.anw, <8 x float> %broadcast.splat, <8 x float> %strided.vec386)
+  %i.anw = fadd <8 x float> %strided.vec374, %i.anv
   %i.anx = fmul <8 x float> %strided.vec379, %strided.vec383
   %i.any = fmul <8 x float> %broadcast.splat, %i.anx
   %i.anz = fadd <8 x float> %strided.vec375, %i.any ; 2 uses
-  %i.aoa = shufflevector <8 x float> %i.ant, <8 x float> %i.anw, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.aoa = shufflevector <8 x float> %i.ant, <8 x float> %i.anw, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.aob = shufflevector <8 x float> %i.anz, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <16 x float> %i.aoa, <16 x float> %i.aob, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec, ptr %i.anm, align 4, !tbaa !179, !alias.scope !907, !noalias !908
   %i.aoc = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.anz, <8 x float> %broadcast.splat, <8 x float> %strided.vec387)
-  %48 = shufflevector <8 x float> %46, <8 x float> %47, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %47 = shufflevector <24 x float> %wide.vec384, <24 x float> poison, <16 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
+  %48 = call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.aoa, <16 x float> %46, <16 x float> %47)
   %i.aod = shufflevector <8 x float> %i.aoc, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec388 = shufflevector <16 x float> %48, <16 x float> %i.aod, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec388, ptr %i.anq, align 4, !tbaa !179, !alias.scope !914, !noalias !915
@@ -1469,6 +1457,9 @@ declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x flo
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x float> @llvm.fmuladd.v16f32(<16 x float>, <16 x float>, <16 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <24 x float> @llvm.fmuladd.v24f32(<24 x float>, <24 x float>, <24 x float>) #15

@@ -205,8 +205,7 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyT
   %i.vi = fmul <4 x float> %i.vg, splat (float f0x3F0A8BD4) ; 2 uses
   %i.vj = fmul <4 x float> %i.vh, splat (float f0x3FA73D75) ; 2 uses
   %i.vk = fadd <4 x float> %i.vj, %i.vi
-  %i.vl = fsub <4 x float> %i.vi, %i.vj           ; 2 uses
-  %99 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.vk, <4 x float> splat (float f0x3FB504F3), <4 x float> %i.vl)
+  %i.vl = fsub <4 x float> %i.vi, %i.vj
   %gep743.1 = getelementptr inbounds nuw i8, ptr %3, i64 64
   %gep743.2 = getelementptr inbounds nuw i8, ptr %3, i64 128
   %gep743.3 = getelementptr inbounds nuw i8, ptr %3, i64 192
@@ -264,19 +263,19 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyT
   %i.xh = fmul <4 x float> %i.xf, splat (float f0x3F0A8BD4) ; 2 uses
   %i.xi = fmul <4 x float> %i.xg, splat (float f0x3FA73D75) ; 2 uses
   %i.xj = fadd <4 x float> %i.xi, %i.xh
-  %i.xk = fsub <4 x float> %i.xh, %i.xi           ; 2 uses
-  %100 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.xj, <4 x float> splat (float f0x3FB504F3), <4 x float> %i.xk)
+  %i.xk = fsub <4 x float> %i.xh, %i.xi
   %i.xl = shufflevector <4 x float> %i.ve, <4 x float> %i.xd, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %i.xm = fmul <8 x float> %i.xl, splat (float 2.500000e-01)
   store <8 x float> %i.xm, ptr %3, align 4, !tbaa !69
-  %i.xn = shufflevector <4 x float> %99, <4 x float> %100, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %i.xo = fmul <8 x float> %i.xn, splat (float 2.500000e-01)
+  %99 = shufflevector <4 x float> %i.vk, <4 x float> %i.xj, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %i.xn = shufflevector <4 x float> %i.vl, <4 x float> %i.xk, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %100 = tail call <8 x float> @llvm.fma.v8f32(<8 x float> %99, <8 x float> splat (float f0x3FB504F3), <8 x float> %i.xn)
+  %i.xo = fmul <8 x float> %100, splat (float 2.500000e-01)
   store <8 x float> %i.xo, ptr %gep743.1, align 4, !tbaa !69
   %i.xp = shufflevector <4 x float> %i.vf, <4 x float> %i.xe, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %i.xq = fmul <8 x float> %i.xp, splat (float 2.500000e-01)
   store <8 x float> %i.xq, ptr %gep743.2, align 4, !tbaa !69
-  %101 = shufflevector <4 x float> %i.vl, <4 x float> %i.xk, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %i.xr = fmul <8 x float> %101, splat (float 2.500000e-01)
+  %i.xr = fmul <8 x float> %i.xn, splat (float 2.500000e-01)
   store <8 x float> %i.xr, ptr %gep743.3, align 4, !tbaa !69
   %.idx1110 = shl i64 %2, 4
   %i.xs = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1110 ; 5 uses
@@ -334,8 +333,7 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyT
   %i.zn = fmul <4 x float> %i.zl, splat (float f0x3F0A8BD4) ; 2 uses
   %i.zo = fmul <4 x float> %i.zm, splat (float f0x3FA73D75) ; 2 uses
   %i.zp = fadd <4 x float> %i.zo, %i.zn
-  %i.zq = fsub <4 x float> %i.zn, %i.zo           ; 2 uses
-  %102 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.zp, <4 x float> splat (float f0x3FB504F3), <4 x float> %i.zq)
+  %i.zq = fsub <4 x float> %i.zn, %i.zo
   %gep743.1.1 = getelementptr inbounds nuw i8, ptr %3, i64 96
   %gep743.2.1 = getelementptr inbounds nuw i8, ptr %3, i64 160
   %gep743.3.1 = getelementptr inbounds nuw i8, ptr %3, i64 224
@@ -392,21 +390,22 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyT
   %i.abl = fsub <4 x float> %i.abe, %i.abf
   %i.abm = fmul <4 x float> %i.abk, splat (float f0x3F0A8BD4) ; 2 uses
   %i.abn = fmul <4 x float> %i.abl, splat (float f0x3FA73D75) ; 2 uses
-  %i.abo = fadd <4 x float> %i.abn, %i.abm
+  %i.abo = fadd <4 x float> %i.abn, %i.abm        ; 2 uses
   %i.abp = fsub <4 x float> %i.abm, %i.abn        ; 4 uses
-  %103 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.abo, <4 x float> splat (float f0x3FB504F3), <4 x float> %i.abp) ; 3 uses
   %i.abq = shufflevector <4 x float> %i.zj, <4 x float> %i.abi, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %i.abr = fmul <8 x float> %i.abq, splat (float 2.500000e-01)
   store <8 x float> %i.abr, ptr %invariant.gep740.1, align 4, !tbaa !69
-  %i.abs = shufflevector <4 x float> %102, <4 x float> %103, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %i.abt = fmul <8 x float> %i.abs, splat (float 2.500000e-01)
+  %101 = shufflevector <4 x float> %i.zp, <4 x float> %i.abo, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %i.abs = shufflevector <4 x float> %i.zq, <4 x float> %i.abp, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %102 = tail call <8 x float> @llvm.fma.v8f32(<8 x float> %101, <8 x float> splat (float f0x3FB504F3), <8 x float> %i.abs)
+  %i.abt = fmul <8 x float> %102, splat (float 2.500000e-01)
   store <8 x float> %i.abt, ptr %gep743.1.1, align 4, !tbaa !69
   %i.abu = shufflevector <4 x float> %i.zk, <4 x float> %i.abj, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %i.abv = fmul <8 x float> %i.abu, splat (float 2.500000e-01)
   store <8 x float> %i.abv, ptr %gep743.2.1, align 4, !tbaa !69
-  %104 = shufflevector <4 x float> %i.zq, <4 x float> %i.abp, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %105 = fmul <8 x float> %104, splat (float 2.500000e-01)
-  store <8 x float> %105, ptr %gep743.3.1, align 4, !tbaa !69
+  %103 = fmul <8 x float> %i.abs, splat (float 2.500000e-01)
+  store <8 x float> %103, ptr %gep743.3.1, align 4, !tbaa !69
+  %104 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.abo, <4 x float> splat (float f0x3FB504F3), <4 x float> %i.abp) ; 2 uses
   %i.abw = getelementptr inbounds nuw i8, ptr %4, i64 64
   %i.abx = getelementptr inbounds nuw i8, ptr %4, i64 80
   %i.aby = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -418,10 +417,10 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyT
   store <4 x float> %i.abi, ptr %i.aca, align 16, !tbaa !66, !alias.scope !1467, !noalias !1454
   store <4 x float> %i.abj, ptr %i.acb, align 16, !tbaa !66, !alias.scope !1467, !noalias !1454
   store <4 x float> %i.abp, ptr %i.acd, align 16, !tbaa !66, !alias.scope !1468, !noalias !1454
-  store <4 x float> %103, ptr %i.acc, align 16, !tbaa !66, !alias.scope !1469, !noalias !1454
+  store <4 x float> %104, ptr %i.acc, align 16, !tbaa !66, !alias.scope !1469, !noalias !1454
   store <4 x float> %i.abi, ptr %i.abw, align 16, !tbaa !66, !alias.scope !1470, !noalias !1471
   store <4 x float> %i.abj, ptr %i.aby, align 16, !tbaa !66, !alias.scope !1470, !noalias !1471
-  store <4 x float> %103, ptr %i.abx, align 16, !tbaa !66, !alias.scope !1470, !noalias !1471
+  store <4 x float> %104, ptr %i.abx, align 16, !tbaa !66, !alias.scope !1470, !noalias !1471
   store <4 x float> %i.abp, ptr %i.abz, align 16, !tbaa !66, !alias.scope !1470, !noalias !1471
   %i.ace = load float, ptr %3, align 4, !tbaa !69 ; 2 uses
   %i.acf = getelementptr inbounds nuw i8, ptr %3, i64 4

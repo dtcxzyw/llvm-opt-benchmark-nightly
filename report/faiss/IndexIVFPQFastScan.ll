@@ -205,9 +205,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.ca = getelementptr i8, ptr %4, i64 %i.bz
   %i.cb = getelementptr i8, ptr %3, i64 %i.bz
   %i.cc = getelementptr i8, ptr %1, i64 %i.bz
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %2, i64 0 ; 2 uses
-  %9 = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <16 x i32> zeroinitializer
-  %i.cd = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <16 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <4 x float> poison, float %2, i64 0
+  %i.cd = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -419,7 +418,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.jr = shufflevector <4 x float> %i.fj, <4 x float> %i.fv, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.js = shufflevector <8 x float> %i.jk, <8 x float> %i.jm, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.jt = shufflevector <8 x float> %i.jl, <8 x float> %i.jn, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.ju = tail call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %9, <16 x float> %i.js, <16 x float> %i.jt)
+  %i.ju = tail call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.cd, <16 x float> %i.js, <16 x float> %i.jt)
   %i.jv = shufflevector <8 x float> %i.jo, <8 x float> %i.jq, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.jw = shufflevector <8 x float> %i.jp, <8 x float> %i.jr, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.jx = tail call <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.cd, <16 x float> %i.jv, <16 x float> %i.jw)
