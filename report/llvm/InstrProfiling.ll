@@ -205,11 +205,13 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZN12_GLOBAL__N_131getSampledInstrumentationConfigEv.exit.i: ; preds = %bb.j
-  %i.jn = icmp ne i32 %i.jj, 1                    ; 3 uses
-  %i.jo = icmp eq i32 %i.jk, 65536
-  %i.jp = and i1 %i.jn, %i.jo                     ; 2 uses
+  %i.jn = icmp ne i32 %i.jj, 1                    ; 2 uses
+  %i.jo = icmp eq i32 %i.jk, 65536                ; 2 uses
+  %i.jp = and i1 %i.jn, %i.jo
   %i.jq = icmp ult i32 %i.jk, 65536
   %i.jr = or i1 %i.jq, %i.jp                      ; 6 uses
+  %.sroa.12.8.insert.shift.i.i = select i1 %i.jo, i32 65536, i32 0
+  %.sroa.12.8.insert.insert.i.i = select i1 %i.jn, i32 %.sroa.12.8.insert.shift.i.i, i32 256 ; 2 uses
   %i.js = load ptr, ptr %0, align 8, !tbaa !132, !nonnull !40, !align !133
   %i.jt = load ptr, ptr %i.js, align 8, !tbaa !263, !nonnull !40, !align !133 ; 2 uses
   br i1 %i.jr, label %bb.l, label %bb.m
@@ -275,7 +277,9 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %72)
   call void @llvm.lifetime.end.p0(ptr nonnull %77) #22
-  br i1 %i.jn, label %bb.s, label %bb.o
+  %87 = and i32 %.sroa.12.8.insert.insert.i.i, 256
+  %.not.i65 = icmp eq i32 %87, 0                  ; 2 uses
+  br i1 %.not.i65, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %78) #22
@@ -366,7 +370,7 @@ bb.r:                                             ; preds = %"_ZZN12_GLOBAL__N_1
   call void @_ZN4llvm24IRBuilderDefaultInserterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.ap) #22
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.ao) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %78) #22
-  br label %bb.z
+  br label %88
 
 bb.s:                                             ; preds = %bb.n
   %i.lq = add i32 %i.jj, -1                       ; 2 uses
@@ -484,15 +488,19 @@ bb.y:                                             ; preds = %bb.x, %"_ZZN12_GLOB
   call void @_ZN4llvm24IRBuilderDefaultInserterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bh) #22
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bg) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %81) #22
-  br i1 %i.jp, label %bb.ag, label %bb.z
+  br label %88
 
-bb.z:                                             ; preds = %bb.y, %.thread.i
-  %.055137.i = phi ptr [ %i.ll, %.thread.i ], [ %i.mx, %bb.y ] ; 5 uses
-  %.056136.i = phi ptr [ %.1.i.i, %.thread.i ], [ %.1.i77.i, %bb.y ]
+88:                                               ; preds = %bb.y, %.thread.i
+  %.056.i = phi ptr [ %.1.i.i, %.thread.i ], [ %.1.i77.i, %bb.y ]
+  %.055.i = phi ptr [ %i.ll, %.thread.i ], [ %i.mx, %bb.y ] ; 5 uses
+  %.not129.i = icmp samesign ult i32 %.sroa.12.8.insert.insert.i.i, 65536
+  br i1 %.not129.i, label %bb.z, label %bb.ag
+
+bb.z:                                             ; preds = %88
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %83) #22
-  %i.nd = getelementptr inbounds nuw i8, ptr %.055137.i, i64 8
+  %i.nd = getelementptr inbounds nuw i8, ptr %.055.i, i64 8
   %i.ne = load ptr, ptr %i.nd, align 8, !tbaa !267
   %i.nf = load ptr, ptr %i.ne, align 8, !tbaa !271, !nonnull !40, !align !133
   store ptr null, ptr %83, align 8, !tbaa !305
@@ -506,13 +514,13 @@ bb.z:                                             ; preds = %bb.y, %.thread.i
   store i8 7, ptr %i.cg, align 2, !tbaa !325
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ch, i8 0, i64 16, i1 false)
   store <2 x ptr> <ptr getelementptr inbounds nuw inrange(-16, 160) (i8, ptr @_ZTVN4llvm14ConstantFolderE, i64 16), ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvm24IRBuilderDefaultInserterE, i64 16)>, ptr %i.bx, align 8, !tbaa !28
-  %i.ng = getelementptr inbounds nuw i8, ptr %.055137.i, i64 24 ; 2 uses
-  %i.nh = getelementptr inbounds nuw i8, ptr %.055137.i, i64 40
+  %i.ng = getelementptr inbounds nuw i8, ptr %.055.i, i64 24 ; 2 uses
+  %i.nh = getelementptr inbounds nuw i8, ptr %.055.i, i64 40
   %i.ni = load ptr, ptr %i.nh, align 8, !tbaa !345
   store ptr %i.ni, ptr %i.ci, align 8, !tbaa !326
   store ptr %i.ng, ptr %i.cj, align 8
   store i16 0, ptr %.sroa.4.0..sroa_idx.i.i85.i, align 8
-  %i.nj = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4llvm11Instruction17getStableDebugLocEv(ptr noundef nonnull align 8 dereferenceable(72) %.055137.i) #22
+  %i.nj = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4llvm11Instruction17getStableDebugLocEv(ptr noundef nonnull align 8 dereferenceable(72) %.055.i) #22
   %i.nk = load i64, ptr %i.nj, align 8, !tbaa !365
   store i64 %i.nk, ptr %83, align 8, !tbaa !365
   %.val60.i = load ptr, ptr %i.bz, align 8        ; 2 uses
@@ -534,12 +542,12 @@ bb.ab:                                            ; preds = %bb.z
   %i.np = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_11IntegerTypeEmbb(ptr noundef %.sink.i87.i, i64 noundef %i.no, i1 noundef zeroext false, i1 noundef zeroext false) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %84) #22
   store i16 257, ptr %i.ck, align 8
-  %i.nq = call noundef ptr @_ZN4llvm13IRBuilderBase10CreateICmpENS_7CmpInst9PredicateEPNS_5ValueES4_RKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(88) %83, i32 noundef 35, ptr noundef nonnull %.056136.i, ptr noundef %i.np, ptr noundef nonnull align 8 dereferenceable(34) %84)
+  %i.nq = call noundef ptr @_ZN4llvm13IRBuilderBase10CreateICmpENS_7CmpInst9PredicateEPNS_5ValueES4_RKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(88) %83, i32 noundef 35, ptr noundef nonnull %.056.i, ptr noundef %i.np, ptr noundef nonnull align 8 dereferenceable(34) %84)
   call void @llvm.lifetime.end.p0(ptr nonnull %84) #22
   %i.nr = add i32 %i.jk, -1
   %i.ns = call noundef ptr @_ZN4llvm9MDBuilder19createBranchWeightsEjjb(ptr noundef nonnull align 8 dereferenceable(8) %75, i32 noundef 1, i32 noundef %i.nr, i1 noundef zeroext false) #22
   call void @_ZN4llvm29SplitBlockAndInsertIfThenElseEPNS_5ValueENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEPPS5_SA_PNS_6MDNodeEPNS_14DomTreeUpdaterEPNS_8LoopInfoE(ptr noundef %i.nq, ptr nonnull %i.ng, i64 0, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef %i.ns, ptr noundef null, ptr noundef null) #22
-  br i1 %i.jn, label %bb.ad, label %bb.ac
+  br i1 %.not.i65, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %"_ZZN12_GLOBAL__N_112InstrLowerer10doSamplingEPN4llvm11InstructionEENK3$_0clERNS1_9IRBuilderINS1_14ConstantFolderENS1_24IRBuilderDefaultInserterEEEj.exit88.i"
   %i.nt = load ptr, ptr %i.k, align 8, !tbaa !368
@@ -610,7 +618,7 @@ bb.af:                                            ; preds = %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %65)
   %i.or = load ptr, ptr %i.l, align 8, !tbaa !368
   %i.os = getelementptr inbounds nuw i8, ptr %i.or, i64 24
-  call void @_ZN4llvm11Instruction10moveBeforeENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsIS0_Lb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEE(ptr noundef nonnull align 8 dereferenceable(72) %.055137.i, ptr nonnull %i.os, i64 0) #22
+  call void @_ZN4llvm11Instruction10moveBeforeENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsIS0_Lb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEE(ptr noundef nonnull align 8 dereferenceable(72) %.055.i, ptr nonnull %i.os, i64 0) #22
   call void @_ZN4llvm24IRBuilderDefaultInserterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.cm) #22
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.cl) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %85) #22
@@ -621,7 +629,7 @@ bb.af:                                            ; preds = %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #22
   br label %bb.ag
 
-bb.ag:                                            ; preds = %"_ZZN12_GLOBAL__N_112InstrLowerer10doSamplingEPN4llvm11InstructionEENK3$_0clERNS1_9IRBuilderINS1_14ConstantFolderENS1_24IRBuilderDefaultInserterEEEj.exit95.i", %bb.y
+bb.ag:                                            ; preds = %"_ZZN12_GLOBAL__N_112InstrLowerer10doSamplingEPN4llvm11InstructionEENK3$_0clERNS1_9IRBuilderINS1_14ConstantFolderENS1_24IRBuilderDefaultInserterEEEj.exit95.i", %88
   call void @_ZN4llvm24IRBuilderDefaultInserterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.z) #22
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.y) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %76) #22

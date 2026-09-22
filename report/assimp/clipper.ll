@@ -205,31 +205,39 @@ bb.a:
 define hidden noundef double @_ZN10ClipperLib20DistanceFromLineSqrdERKNS_8IntPointES2_S2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8              ; 2 uses
   %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.c = load i64, ptr %3, align 8
-  %i.d = sub nsw i64 %i.b, %i.c
-  %i.e = sitofp i64 %i.d to double                ; 4 uses
-  %i.f = load i64, ptr %2, align 8
-  %i.g = load i64, ptr %1, align 8                ; 2 uses
-  %4 = sub nsw i64 %i.f, %i.g
-  %i.h = sitofp i64 %4 to double                  ; 4 uses
-  %i.i = sitofp i64 %i.g to double
-  %i.j = sitofp i64 %i.b to double
-  %5 = fmul nnan double %i.j, %i.h
-  %6 = tail call double @llvm.fmuladd.f64(double %i.e, double %i.i, double %5)
-  %7 = load i64, ptr %0, align 8
-  %8 = sitofp i64 %7 to double
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %10 = load i64, ptr %9, align 8
-  %11 = sitofp i64 %10 to double
-  %12 = fmul nnan double %i.h, %11
-  %13 = tail call double @llvm.fmuladd.f64(double %i.e, double %8, double %12)
-  %14 = fsub double %13, %6                       ; 2 uses
-  %15 = fmul double %14, %14
-  %i.k = fmul nnan double %i.h, %i.h
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = load i64, ptr %3, align 8
+  %i.b = load i64, ptr %2, align 8
+  %6 = load i64, ptr %i.a, align 8                ; 2 uses
+  %i.c = load i64, ptr %1, align 8                ; 2 uses
+  %7 = sub nsw i64 %i.b, %i.c
+  %i.d = sub nsw i64 %6, %5
+  %8 = sitofp i64 %7 to double                    ; 3 uses
+  %i.e = sitofp i64 %i.d to double                ; 3 uses
+  %i.f = load i64, ptr %4, align 8
+  %i.g = load i64, ptr %0, align 8
+  %9 = sitofp i64 %i.c to double
+  %i.h = sitofp i64 %i.g to double
+  %i.i = sitofp i64 %6 to double
+  %i.j = sitofp i64 %i.f to double
+  %10 = insertelement <2 x double> poison, double %i.j, i64 0
+  %11 = insertelement <2 x double> %10, double %i.i, i64 1
+  %12 = insertelement <2 x double> poison, double %8, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = fmul nnan <2 x double> %11, %13
+  %15 = insertelement <2 x double> poison, double %i.e, i64 0
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
+  %17 = insertelement <2 x double> poison, double %i.h, i64 0
+  %18 = insertelement <2 x double> %17, double %9, i64 1
+  %19 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %16, <2 x double> %18, <2 x double> %14) ; 2 uses
+  %shift = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %19, %shift ; 2 uses
+  %foldExtExtBinop20 = fmul <2 x double> %foldExtExtBinop, %foldExtExtBinop
+  %20 = extractelement <2 x double> %foldExtExtBinop20, i64 0
+  %i.k = fmul nnan double %8, %8
   %i.l = tail call double @llvm.fmuladd.f64(double %i.e, double %i.e, double %i.k)
-  %i.m = fdiv double %15, %i.l
+  %i.m = fdiv double %20, %i.l
   ret double %i.m
 }
 

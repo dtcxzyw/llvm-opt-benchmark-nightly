@@ -205,7 +205,7 @@ vector.ph61:                                      ; preds = %vector.main.loop.it
   %n.vec62 = and i64 %wide.trip.count47, 4294967280 ; 4 uses
   br label %vector.body63
 
-vector.body63:                                    ; preds = %vector.body63, %vector.ph61
+vector.body63:                                    ; preds = %vector.ph61, %vector.body63
   %index64 = phi i64 [ 0, %vector.ph61 ], [ %index.next67, %vector.body63 ] ; 3 uses
   %i.z = trunc nuw i64 %index64 to i32
   %i.aa = add i32 %i.l, %i.z
@@ -252,7 +252,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n74 = icmp eq i64 %n.vec70, %wide.trip.count47
   br i1 %cmp.n74, label %.loopexit, label %.lr.ph40.preheader
 
-.lr.ph40.preheader:                               ; preds = %vector.memcheck56, %vector.scevcheck55, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph40.preheader:                               ; preds = %iter.check, %vector.scevcheck55, %vector.memcheck56, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv44.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck55 ], [ 0, %vector.memcheck56 ], [ %n.vec62, %vec.epilog.iter.check ], [ %n.vec70, %vec.epilog.middle.block ] ; 3 uses
   %xtraiter78 = and i64 %wide.trip.count47, 3     ; 2 uses
   %lcmp.mod79.not = icmp eq i64 %xtraiter78, 0
@@ -655,9 +655,14 @@ bb.a:
   %i.v = select <2 x i1> %i.s, <2 x float> zeroinitializer, <2 x float> %i.u ; 3 uses
   %i.w = load <2 x i32>, ptr %i.d, align 8, !tbaa !21
   %i.x = uitofp <2 x i32> %i.w to <2 x float>
-  %i.y = fmul <2 x float> %i.v, %i.x              ; 2 uses
-  %3 = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.y)
-  %i.z = fptosi <2 x float> %3 to <2 x i32>       ; 3 uses
+  %i.y = fmul <2 x float> %i.v, %i.x              ; 3 uses
+  %3 = extractelement <2 x float> %i.y, i64 1
+  %4 = tail call float @llvm.floor.f32(float %3)
+  %5 = extractelement <2 x float> %i.y, i64 0
+  %6 = tail call float @llvm.floor.f32(float %5)
+  %7 = insertelement <2 x float> poison, float %6, i64 0
+  %8 = insertelement <2 x float> %7, float %4, i64 1
+  %i.z = fptosi <2 x float> %8 to <2 x i32>       ; 3 uses
   %i.aa = sitofp <2 x i32> %i.z to <2 x float>
   %i.ab = fsub <2 x float> %i.y, %i.aa            ; 4 uses
   %i.ac = tail call float @llvm.floor.f32(float %i.o)
@@ -1059,9 +1064,6 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.floor.v2f32(<2 x float>) #5
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

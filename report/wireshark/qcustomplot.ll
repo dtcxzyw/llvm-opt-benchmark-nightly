@@ -204,10 +204,11 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %.sroa.0106.4.extract.shift143 = lshr i64 %.sroa.0106.1, 32
-  %6 = insertelement <2 x i64> poison, i64 %.sroa.24.1, i64 0
-  %7 = insertelement <2 x i64> %6, i64 %.sroa.0106.4.extract.shift143, i64 1
-  %8 = trunc <2 x i64> %7 to <2 x i32>
-  %i.y = sitofp <2 x i32> %8 to <2 x double>
+  %.sroa.096.0.extract.trunc = trunc i64 %.sroa.24.1 to i32
+  %.sroa.0106.4.extract.trunc144 = trunc nuw i64 %.sroa.0106.4.extract.shift143 to i32
+  %6 = insertelement <2 x i32> poison, i32 %.sroa.096.0.extract.trunc, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %.sroa.0106.4.extract.trunc144, i64 1
+  %i.y = sitofp <2 x i32> %7 to <2 x double>
   br label %bb.y
 
 bb.h:                                             ; preds = %bb.e

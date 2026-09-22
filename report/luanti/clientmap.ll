@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN12_GL
 
 .preheader:                                       ; preds = %..preheader_crit_edge, %.preheader.loopexit
   %.pre-phi1084 = phi i16 [ %.pre1083, %..preheader_crit_edge ], [ %i.cj, %.preheader.loopexit ] ; 2 uses
-  %.pre-phi1082 = phi i32 [ %.pre1081, %..preheader_crit_edge ], [ %i.ci, %.preheader.loopexit ] ; 2 uses
+  %.pre-phi1082 = phi i32 [ %.pre1081, %..preheader_crit_edge ], [ %i.ci, %.preheader.loopexit ] ; 3 uses
   %.pre-phi = phi i32 [ %.pre1080, %..preheader_crit_edge ], [ %i.ch, %.preheader.loopexit ] ; 2 uses
   %.0173.lcssa = phi float [ 0.000000e+00, %..preheader_crit_edge ], [ %i.cs, %.preheader.loopexit ]
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 6 uses
@@ -222,8 +222,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN12_GL
   %i.de = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.df = insertelement <2 x i16> poison, i16 %.pre-phi1084, i64 0
   %i.dg = shufflevector <2 x i16> %i.df, <2 x i16> poison, <2 x i32> zeroinitializer
-  %24 = insertelement <2 x i32> poison, i32 %.pre-phi1082, i64 0
-  %25 = shufflevector <2 x i32> %24, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.dh = insertelement <2 x i32> poison, i32 %.pre-phi, i64 0
   %i.di = shufflevector <2 x i32> %i.dh, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %bb.ah
@@ -626,15 +624,20 @@ bb.ax:                                            ; preds = %_ZNSt6vectorISt4pai
   %i.pn = load i16, ptr %i.cx, align 8, !tbaa !159
   %i.po = sub i16 %i.pm, %i.pn
   %i.pp = sitofp nsz i16 %i.po to float
-  %i.pq = trunc i48 %.sroa.024.0.copyload.i to i16
-  %26 = insertelement <2 x i16> poison, i16 %i.pq, i64 0
-  %27 = trunc i48 %.sroa.2.0.extract.shift.i.i.i to i16
-  %28 = insertelement <2 x i16> %26, i16 %27, i64 1 ; 2 uses
-  %29 = sext <2 x i16> %28 to <2 x i32>
-  %30 = lshr <2 x i16> %28, splat (i16 15)
-  %31 = zext nneg <2 x i16> %30 to <2 x i32>
-  %32 = mul nuw nsw <2 x i32> %25, %31
-  %33 = sub nsw <2 x i32> %29, %32
+  %.sroa.2.0.extract.trunc.i.i.i = trunc i48 %.sroa.2.0.extract.shift.i.i.i to i16 ; 2 uses
+  %i.pq = trunc i48 %.sroa.024.0.copyload.i to i16 ; 2 uses
+  %24 = sext i16 %.sroa.2.0.extract.trunc.i.i.i to i32
+  %25 = sext i16 %i.pq to i32
+  %.lobit.i.i1.i.i.i = lshr i16 %.sroa.2.0.extract.trunc.i.i.i, 15
+  %.lobit.i.i.i.i.i = lshr i16 %i.pq, 15
+  %26 = zext nneg i16 %.lobit.i.i1.i.i.i to i32
+  %27 = zext nneg i16 %.lobit.i.i.i.i.i to i32
+  %28 = mul nuw nsw i32 %.pre-phi1082, %26
+  %29 = mul nuw nsw i32 %.pre-phi1082, %27
+  %30 = sub nsw i32 %24, %28
+  %31 = sub nsw i32 %25, %29
+  %32 = insertelement <2 x i32> poison, i32 %31, i64 0
+  %33 = insertelement <2 x i32> %32, i32 %30, i64 1
   %i.pr = sdiv <2 x i32> %33, %i.di
   %i.ps = trunc <2 x i32> %i.pr to <2 x i16>
   %i.pt = mul <2 x i16> %i.dg, %i.ps
@@ -1037,7 +1040,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ann = getelementptr inbounds nuw i8, ptr %i.and, i64 %i.akc
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ano = getelementptr inbounds nuw [2 x i8], ptr %i.ann, i64 %index ; 3 uses
   %i.anp = getelementptr inbounds nuw i8, ptr %i.ano, i64 16 ; 2 uses
@@ -1440,9 +1443,8 @@ bb.dg:                                            ; preds = %bb.df
   %i.ahi = icmp samesign ugt i16 %i.ahb, %i.agt
   %i.ahj = icmp samesign ugt i16 %i.ahb, %i.agz
   %i.ahk = select i1 %i.ahi, i1 %i.ahj, i1 false
-  %i.ahl = select i1 %i.ahk, i8 4, i8 0
-  %22 = or disjoint i8 %i.ahl, %i.ahh
-  %i.ahm = or disjoint i8 %22, %i.ahd
+  %i.ahl = select i1 %i.ahk, i8 4, i8 %i.ahh
+  %i.ahm = or disjoint i8 %i.ahl, %i.ahd
   store i8 %i.ahm, ptr %i.o, align 1, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #2
   store i16 0, ptr %i.p, align 2, !tbaa !162
@@ -1845,7 +1847,7 @@ _ZNSt6vectorIN12_GLOBAL__N_114DrawDescriptorESaIS1_EE12emplace_backIJN4core8vect
 
 ._crit_edge:                                      ; preds = %.loopexit408, %bb.i, %bb.h, %bb.e, %.._crit_edge_crit_edge
   %.pre-phi702 = phi i16 [ %.pre701, %.._crit_edge_crit_edge ], [ %i.bj, %bb.h ], [ %i.bj, %bb.e ], [ %i.az, %bb.i ], [ %i.az, %.loopexit408 ] ; 2 uses
-  %.pre-phi700 = phi i32 [ %.pre699, %.._crit_edge_crit_edge ], [ %i.bi, %bb.h ], [ %i.bi, %bb.e ], [ %i.ay, %bb.i ], [ %i.ay, %.loopexit408 ] ; 2 uses
+  %.pre-phi700 = phi i32 [ %.pre699, %.._crit_edge_crit_edge ], [ %i.bi, %bb.h ], [ %i.bi, %bb.e ], [ %i.ay, %bb.i ], [ %i.ay, %.loopexit408 ] ; 3 uses
   %.pre-phi = phi i32 [ %.pre698, %.._crit_edge_crit_edge ], [ %i.bh, %bb.h ], [ %i.bh, %bb.e ], [ %i.ax, %bb.i ], [ %i.ax, %.loopexit408 ] ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 4 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
@@ -1865,8 +1867,6 @@ _ZNSt6vectorIN12_GLOBAL__N_114DrawDescriptorESaIS1_EE12emplace_backIJN4core8vect
   %i.fd = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.fe = insertelement <2 x i16> poison, i16 %.pre-phi702, i64 0
   %i.ff = shufflevector <2 x i16> %i.fe, <2 x i16> poison, <2 x i32> zeroinitializer
-  %23 = insertelement <2 x i32> poison, i32 %.pre-phi700, i64 0
-  %24 = shufflevector <2 x i32> %23, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.fg = insertelement <2 x i32> poison, i32 %.pre-phi, i64 0
   %i.fh = shufflevector <2 x i32> %i.fg, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %bb.q
@@ -2269,15 +2269,20 @@ bb.ag:                                            ; preds = %_ZNSt6vectorIN12_GL
   %i.le = load i16, ptr %i.es, align 8, !tbaa !159
   %i.lf = sub i16 %i.ld, %i.le
   %i.lg = sitofp nsz i16 %i.lf to float
-  %i.lh = trunc i48 %.sroa.024.0.copyload.i to i16
-  %25 = insertelement <2 x i16> poison, i16 %i.lh, i64 0
-  %26 = trunc i48 %.sroa.2.0.extract.shift.i.i.i to i16
-  %27 = insertelement <2 x i16> %25, i16 %26, i64 1 ; 2 uses
-  %28 = sext <2 x i16> %27 to <2 x i32>
-  %29 = lshr <2 x i16> %27, splat (i16 15)
-  %30 = zext nneg <2 x i16> %29 to <2 x i32>
-  %31 = mul nuw nsw <2 x i32> %24, %30
-  %32 = sub nsw <2 x i32> %28, %31
+  %.sroa.2.0.extract.trunc.i.i.i = trunc i48 %.sroa.2.0.extract.shift.i.i.i to i16 ; 2 uses
+  %i.lh = trunc i48 %.sroa.024.0.copyload.i to i16 ; 2 uses
+  %23 = sext i16 %.sroa.2.0.extract.trunc.i.i.i to i32
+  %24 = sext i16 %i.lh to i32
+  %.lobit.i.i1.i.i.i = lshr i16 %.sroa.2.0.extract.trunc.i.i.i, 15
+  %.lobit.i.i.i.i.i = lshr i16 %i.lh, 15
+  %25 = zext nneg i16 %.lobit.i.i1.i.i.i to i32
+  %26 = zext nneg i16 %.lobit.i.i.i.i.i to i32
+  %27 = mul nuw nsw i32 %.pre-phi700, %25
+  %28 = mul nuw nsw i32 %.pre-phi700, %26
+  %29 = sub nsw i32 %23, %27
+  %30 = sub nsw i32 %24, %28
+  %31 = insertelement <2 x i32> poison, i32 %30, i64 0
+  %32 = insertelement <2 x i32> %31, i32 %29, i64 1
   %i.li = sdiv <2 x i32> %32, %i.fh
   %i.lj = trunc <2 x i32> %i.li to <2 x i16>
   %i.lk = mul <2 x i16> %i.ff, %i.lj
@@ -2680,7 +2685,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.aej = getelementptr inbounds nuw i8, ptr %i.adz, i64 %i.aay
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aek = getelementptr inbounds nuw [2 x i8], ptr %i.aej, i64 %index ; 3 uses
   %i.ael = getelementptr inbounds nuw i8, ptr %i.aek, i64 16 ; 2 uses

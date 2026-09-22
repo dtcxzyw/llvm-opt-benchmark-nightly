@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.n, %bb.m
   br i1 %.not180, label %._crit_edge311, label %bb.m
 
 .lr.ph305:                                        ; preds = %bb.p, %_ZNSt5arrayISt6vectorIiSaIiEELm3EED2Ev.exit
-  %.sroa.0171.0303 = phi ptr [ %i.mp, %_ZNSt5arrayISt6vectorIiSaIiEELm3EED2Ev.exit ], [ %i.dm, %bb.p ] ; 5 uses
+  %.sroa.0171.0303 = phi ptr [ %i.mp, %_ZNSt5arrayISt6vectorIiSaIiEELm3EED2Ev.exit ], [ %i.dm, %bb.p ] ; 4 uses
   %i.dr = phi <2 x double> [ %i.kv, %_ZNSt5arrayISt6vectorIiSaIiEELm3EED2Ev.exit ], [ %i.de, %bb.p ]
   %i.ds = getelementptr inbounds nuw i8, ptr %.sroa.0171.0303, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
@@ -608,8 +608,8 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.bo
-  %i.jz = phi double [ %i.jt, %bb.bo ], [ %i.jt, %bb.bp ], [ %i.jx, %bb.bq ] ; 3 uses
-  %i.ka = phi double [ %i.js, %bb.bo ], [ %i.js, %bb.bp ], [ %i.jy, %bb.bq ] ; 3 uses
+  %i.jz = phi double [ %i.jt, %bb.bo ], [ %i.jt, %bb.bp ], [ %i.jx, %bb.bq ] ; 2 uses
+  %i.ka = phi double [ %i.js, %bb.bo ], [ %i.js, %bb.bp ], [ %i.jy, %bb.bq ] ; 2 uses
   %i.kb = load ptr, ptr %16, align 8, !tbaa !18   ; 3 uses
   %.not.i.i.i122 = icmp eq ptr %i.kb, null
   br i1 %.not.i.i.i122, label %_ZNSt6vectorIiSaIiEED2Ev.exit123, label %bb.bs
@@ -649,34 +649,39 @@ bb.bu:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit127
 
 _ZNSt6vectorIiSaIiEED2Ev.exit127:                 ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit125, %bb.bu
-  %.sroa.4.0..sroa_idx.i129 = getelementptr inbounds nuw i8, ptr %.sroa.0171.0303, i64 8
-  %.sroa.4.0.copyload.i130 = load double, ptr %.sroa.4.0..sroa_idx.i129, align 8, !tbaa !81 ; 3 uses
-  %.sroa.0.0.copyload.i128 = load double, ptr %.sroa.0171.0303, align 8 ; 3 uses
-  %17 = fmul double %i.ka, %.sroa.0.0.copyload.i128
-  %18 = fmul double %i.ka, %.sroa.4.0.copyload.i130
-  %19 = fmul double %i.jz, %.sroa.4.0.copyload.i130
-  %20 = fmul double %i.jz, %.sroa.0.0.copyload.i128
-  %21 = fadd double %17, %19                      ; 3 uses
-  %22 = fsub double %20, %18                      ; 3 uses
-  %i.kq = fcmp uno double %22, 0.000000e+00
+  %17 = load <2 x double>, ptr %.sroa.0171.0303, align 8 ; 4 uses
+  %18 = insertelement <2 x double> poison, double %i.ka, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %21 = fmul <2 x double> %19, %20                ; 2 uses
+  %22 = insertelement <2 x double> poison, double %i.jz, i64 0
+  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
+  %24 = fmul <2 x double> %23, %17                ; 2 uses
+  %25 = fsub <2 x double> %24, %21                ; 2 uses
+  %26 = fadd <2 x double> %24, %21                ; 2 uses
+  %27 = shufflevector <2 x double> %25, <2 x double> %26, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %28 = extractelement <2 x double> %25, i64 0
+  %i.kq = fcmp uno double %28, 0.000000e+00
   br i1 %i.kq, label %bb.bv, label %bb.bx, !prof !93
 
 bb.bv:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit127
-  %i.kr = fcmp uno double %21, 0.000000e+00
+  %29 = extractelement <2 x double> %26, i64 1
+  %i.kr = fcmp uno double %29, 0.000000e+00
   br i1 %i.kr, label %bb.bw, label %bb.bx, !prof !93
 
 bb.bw:                                            ; preds = %bb.bv
-  %i.ks = call noundef { double, double } @__muldc3(double noundef %.sroa.0.0.copyload.i128, double noundef %.sroa.4.0.copyload.i130, double noundef %i.jz, double noundef %i.ka) #17 ; 2 uses
+  %30 = extractelement <2 x double> %17, i64 0
+  %31 = extractelement <2 x double> %17, i64 1
+  %i.ks = call noundef { double, double } @__muldc3(double noundef %30, double noundef %31, double noundef %i.jz, double noundef %i.ka) #17 ; 2 uses
   %i.kt = extractvalue { double, double } %i.ks, 0
   %i.ku = extractvalue { double, double } %i.ks, 1
+  %32 = insertelement <2 x double> poison, double %i.kt, i64 0
+  %33 = insertelement <2 x double> %32, double %i.ku, i64 1
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %bb.bv, %_ZNSt6vectorIiSaIiEED2Ev.exit127
-  %23 = phi double [ %22, %_ZNSt6vectorIiSaIiEED2Ev.exit127 ], [ %22, %bb.bv ], [ %i.kt, %bb.bw ]
-  %24 = phi double [ %21, %_ZNSt6vectorIiSaIiEED2Ev.exit127 ], [ %21, %bb.bv ], [ %i.ku, %bb.bw ]
-  %25 = insertelement <2 x double> poison, double %23, i64 0
-  %26 = insertelement <2 x double> %25, double %24, i64 1
-  %i.kv = fadd <2 x double> %26, %i.dr            ; 3 uses
+  %34 = phi <2 x double> [ %27, %_ZNSt6vectorIiSaIiEED2Ev.exit127 ], [ %27, %bb.bv ], [ %33, %bb.bw ]
+  %i.kv = fadd <2 x double> %34, %i.dr            ; 3 uses
   store <2 x double> %i.kv, ptr %3, align 16
   %i.kw = load ptr, ptr %i.ad, align 8, !tbaa !18 ; 3 uses
   %.not.i.i.i.i134 = icmp eq ptr %i.kw, null

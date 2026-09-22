@@ -204,7 +204,7 @@ bb.a:
   %i.r = add nsw i32 %i.q, 1
   %i.s = select i1 %.not318, i32 %i.r, i32 %i.e   ; 7 uses
   %i.t = sitofp <3 x i32> %i.j to <3 x float>
-  %i.u = fsub nsz <3 x float> %i.i, %i.t          ; 18 uses
+  %i.u = fsub nsz <3 x float> %i.i, %i.t          ; 14 uses
   %i.v = mul nsw i32 %i.b, %i.k                   ; 3 uses
   %i.w = mul nsw i32 %i.d, %i.n                   ; 4 uses
   %i.x = add nsw i32 %i.w, %i.v                   ; 3 uses
@@ -223,13 +223,13 @@ bb.a:
   %i.ai = load <2 x float>, ptr %i.ah, align 4, !tbaa !32 ; 6 uses
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %.sroa.15.0.copyload = load float, ptr %.sroa.15.0..sroa_idx, align 4, !tbaa !32 ; 6 uses
-  %i.aj = extractelement <3 x float> %i.u, i64 1  ; 8 uses
-  %i.ak = extractelement <3 x float> %i.u, i64 2  ; 8 uses
+  %i.aj = extractelement <3 x float> %i.u, i64 1  ; 11 uses
+  %i.ak = extractelement <3 x float> %i.u, i64 2  ; 11 uses
   %i.al = fcmp nsz ogt float %i.aj, %i.ak
   br i1 %i.al, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.am = extractelement <3 x float> %i.u, i64 0  ; 5 uses
+  %i.am = extractelement <3 x float> %i.u, i64 0  ; 7 uses
   %i.an = fcmp nsz ogt float %i.ak, %i.am
   br i1 %i.an, label %bb.c, label %bb.d
 
@@ -318,27 +318,28 @@ bb.f:                                             ; preds = %bb.d
   %.sroa.519.0.copyload = load float, ptr %.sroa.519.0..sroa_idx, align 4, !tbaa !32
   %i.cx = load <2 x float>, ptr %i.cs, align 4, !tbaa !32
   %i.cy = load <2 x float>, ptr %i.cw, align 4, !tbaa !32
-  %2 = shufflevector <3 x float> %i.u, <3 x float> <float 1.000000e+00, float poison, float poison>, <3 x i32> <i32 3, i32 0, i32 1>
-  %3 = fsub nsz <3 x float> %2, %i.u              ; 6 uses
-  %4 = shufflevector <3 x float> %3, <3 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.cz = fmul nsz <2 x float> %4, %i.cx
-  %i.da = shufflevector <3 x float> %3, <3 x float> poison, <2 x i32> zeroinitializer
+  %2 = fsub nsz float %i.am, %i.aj                ; 2 uses
+  %3 = fsub nsz float 1.000000e+00, %i.am         ; 2 uses
+  %4 = fsub nsz float %i.aj, %i.ak                ; 2 uses
+  %5 = insertelement <2 x float> poison, float %2, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cz = fmul nsz <2 x float> %6, %i.cx
+  %7 = insertelement <2 x float> poison, float %3, i64 0
+  %i.da = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
   %i.db = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.da, <2 x float> %i.ab, <2 x float> %i.cz)
-  %5 = shufflevector <3 x float> %3, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.dc = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %5, <2 x float> %i.cy, <2 x float> %i.db)
+  %8 = insertelement <2 x float> poison, float %4, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dc = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> %i.cy, <2 x float> %i.db)
   %i.dd = shufflevector <3 x float> %i.u, <3 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.de = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dd, <2 x float> %i.ai, <2 x float> %i.dc)
-  %6 = extractelement <3 x float> %3, i64 1
-  %i.df = fmul nsz float %6, %.sroa.522.0.copyload
-  %7 = extractelement <3 x float> %3, i64 0
-  %i.dg = tail call nsz float @llvm.fmuladd.f32(float %7, float %.sroa.1563.0.copyload, float %i.df)
-  %8 = extractelement <3 x float> %3, i64 2
-  %i.dh = tail call nsz float @llvm.fmuladd.f32(float %8, float %.sroa.519.0.copyload, float %i.dg)
+  %i.df = fmul nsz float %2, %.sroa.522.0.copyload
+  %i.dg = tail call nsz float @llvm.fmuladd.f32(float %3, float %.sroa.1563.0.copyload, float %i.df)
+  %i.dh = tail call nsz float @llvm.fmuladd.f32(float %4, float %.sroa.519.0.copyload, float %i.dg)
   %i.di = tail call nsz float @llvm.fmuladd.f32(float %i.ak, float %.sroa.15.0.copyload, float %i.dh)
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.a
-  %i.dj = extractelement <3 x float> %i.u, i64 0  ; 5 uses
+  %i.dj = extractelement <3 x float> %i.u, i64 0  ; 7 uses
   %i.dk = fcmp nsz ogt float %i.dj, %i.ak
   br i1 %i.dk, label %bb.h, label %bb.i
 
@@ -356,22 +357,23 @@ bb.h:                                             ; preds = %bb.g
   %.sroa.513.0.copyload = load float, ptr %.sroa.513.0..sroa_idx, align 4, !tbaa !32
   %i.ds = load <2 x float>, ptr %i.dn, align 4, !tbaa !32
   %i.dt = load <2 x float>, ptr %i.dr, align 4, !tbaa !32
-  %9 = shufflevector <3 x float> %i.u, <3 x float> <float 1.000000e+00, float poison, float poison>, <3 x i32> <i32 3, i32 2, i32 0>
-  %10 = fsub nsz <3 x float> %9, %i.u             ; 6 uses
-  %11 = shufflevector <3 x float> %10, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.du = fmul nsz <2 x float> %11, %i.ds
-  %i.dv = shufflevector <3 x float> %10, <3 x float> poison, <2 x i32> zeroinitializer
+  %10 = fsub nsz float %i.dj, %i.ak               ; 2 uses
+  %11 = fsub nsz float 1.000000e+00, %i.dj        ; 2 uses
+  %12 = fsub nsz float %i.ak, %i.aj               ; 2 uses
+  %13 = insertelement <2 x float> poison, float %10, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.du = fmul nsz <2 x float> %14, %i.ds
+  %15 = insertelement <2 x float> poison, float %11, i64 0
+  %i.dv = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dw = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dv, <2 x float> %i.ab, <2 x float> %i.du)
-  %12 = shufflevector <3 x float> %10, <3 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.dx = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %i.dt, <2 x float> %i.dw)
+  %16 = insertelement <2 x float> poison, float %12, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dx = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %17, <2 x float> %i.dt, <2 x float> %i.dw)
   %i.dy = shufflevector <3 x float> %i.u, <3 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.dz = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dy, <2 x float> %i.ai, <2 x float> %i.dx)
-  %13 = extractelement <3 x float> %10, i64 2
-  %i.ea = fmul nsz float %13, %.sroa.516.0.copyload
-  %14 = extractelement <3 x float> %10, i64 0
-  %i.eb = tail call nsz float @llvm.fmuladd.f32(float %14, float %.sroa.1563.0.copyload, float %i.ea)
-  %15 = extractelement <3 x float> %10, i64 1
-  %i.ec = tail call nsz float @llvm.fmuladd.f32(float %15, float %.sroa.513.0.copyload, float %i.eb)
+  %i.ea = fmul nsz float %10, %.sroa.516.0.copyload
+  %i.eb = tail call nsz float @llvm.fmuladd.f32(float %11, float %.sroa.1563.0.copyload, float %i.ea)
+  %i.ec = tail call nsz float @llvm.fmuladd.f32(float %12, float %.sroa.513.0.copyload, float %i.eb)
   %i.ed = tail call nsz float @llvm.fmuladd.f32(float %i.aj, float %.sroa.15.0.copyload, float %i.ec)
   br label %bb.l
 

@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.q = getelementptr [2 x i8], ptr %invariant.gep, i64 %index ; 2 uses
   %i.r = getelementptr i8, ptr %i.q, i64 16
@@ -305,7 +305,7 @@ vector.ph35:                                      ; preds = %vector.main.loop.it
   %broadcast.splat38 = shufflevector <8 x i16> %broadcast.splatinsert37, <8 x i16> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body39
 
-vector.body39:                                    ; preds = %vector.body39, %vector.ph35
+vector.body39:                                    ; preds = %vector.ph35, %vector.body39
   %index40 = phi i64 [ 0, %vector.ph35 ], [ %index.next41, %vector.body39 ] ; 3 uses
   %i.an = getelementptr [2 x i8], ptr %i.ai, i64 %index40 ; 2 uses
   %i.ao = getelementptr i8, ptr %i.an, i64 2
@@ -708,7 +708,7 @@ bb.g:                                             ; preds = %.lr.ph335, %bb.bn
   %.0248331 = phi i32 [ 0, %.lr.ph335 ], [ %.3251, %bb.bn ] ; 8 uses
   %i.bt = load ptr, ptr %i.bo, align 8, !tbaa !237
   %i.bu = sext i32 %.0244332 to i64               ; 2 uses
-  %i.bv = getelementptr inbounds [152 x i8], ptr %i.bt, i64 %i.bu ; 14 uses
+  %i.bv = getelementptr inbounds [152 x i8], ptr %i.bt, i64 %i.bu ; 13 uses
   %i.bw = load <2 x double>, ptr %i.bv, align 8, !tbaa !46 ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
   %i.by = load double, ptr %i.bx, align 8, !tbaa !248 ; 3 uses
@@ -788,7 +788,6 @@ bb.o:                                             ; preds = %_ZN2cv8ximgproc15Ed
   %i.di = getelementptr inbounds nuw i8, ptr %i.bv, i64 72
   %i.dj = getelementptr inbounds nuw i8, ptr %i.bv, i64 80
   %i.dk = getelementptr inbounds nuw i8, ptr %i.bv, i64 96
-  %3 = getelementptr inbounds nuw i8, ptr %i.bv, i64 88
   %i.dl = getelementptr inbounds nuw i8, ptr %i.bv, i64 104
   %wide.trip.count = zext nneg i32 %.0294 to i64
   %i.dm = extractelement <2 x double> %i.bw, i64 0 ; 3 uses
@@ -1157,21 +1156,24 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.ls, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %.thread
-  %i.lt = load double, ptr %i.di, align 8, !tbaa !46
-  %4 = fmul double %i.lt, 2.000000e+00
-  %5 = uitofp nneg i32 %.1 to double              ; 2 uses
-  %6 = load double, ptr %i.dj, align 8, !tbaa !46 ; 2 uses
-  %7 = uitofp nneg i32 %.1227 to double           ; 2 uses
-  %8 = fmul double %6, %7
-  %9 = tail call double @llvm.fmuladd.f64(double %4, double %5, double %8)
-  %10 = load double, ptr %i.dk, align 8, !tbaa !46
-  %11 = fadd double %10, %9
-  %12 = load double, ptr %3, align 8, !tbaa !46
-  %13 = fmul double %12, 2.000000e+00
-  %14 = fmul double %13, %7
-  %15 = tail call double @llvm.fmuladd.f64(double %6, double %5, double %14)
+  %3 = uitofp nneg i32 %.1 to double
+  %4 = uitofp nneg i32 %.1227 to double
+  %i.lt = load double, ptr %i.dk, align 8, !tbaa !46
+  %5 = load <2 x double>, ptr %i.di, align 8, !tbaa !46
+  %6 = load <2 x double>, ptr %i.dj, align 8, !tbaa !46
+  %7 = fmul <2 x double> %5, <double 2.000000e+00, double 1.000000e+00>
+  %8 = fmul <2 x double> %6, <double 1.000000e+00, double 2.000000e+00>
+  %9 = insertelement <2 x double> poison, double %4, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fmul <2 x double> %8, %10
+  %12 = insertelement <2 x double> poison, double %3, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %13, <2 x double> %11) ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %16 = fadd double %i.lt, %15
   %i.lu = load double, ptr %i.dl, align 8, !tbaa !46
-  %i.lv = fadd double %i.lu, %15
+  %17 = extractelement <2 x double> %14, i64 1
+  %i.lv = fadd double %i.lu, %17
   br label %bb.bf
 
 bb.be:                                            ; preds = %.thread
@@ -1182,7 +1184,7 @@ bb.be:                                            ; preds = %.thread
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %bb.bd
-  %.0222 = phi double [ %11, %bb.bd ], [ %i.lx, %bb.be ]
+  %.0222 = phi double [ %16, %bb.bd ], [ %i.lx, %bb.be ]
   %.0221 = phi double [ %i.lv, %bb.bd ], [ %i.lz, %bb.be ]
   %i.ma = fptrunc double %.0222 to float
   %i.mb = fptrunc double %.0221 to float

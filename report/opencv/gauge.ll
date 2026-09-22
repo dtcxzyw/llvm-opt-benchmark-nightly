@@ -115,7 +115,7 @@ define hidden noundef range(i32 0, 2) i32 @main(i32 noundef %0, ptr noundef %1) 
   %36 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %37 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %38 = alloca %"class.cv::Mat", align 8          ; 8 uses
-  %39 = alloca %struct.GaugeCalibration, align 8  ; 13 uses
+  %39 = alloca %struct.GaugeCalibration, align 8  ; 14 uses
   %40 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %41 = alloca %"class.cv::Mat", align 8          ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #17
@@ -518,8 +518,9 @@ bb.ag:                                            ; preds = %bb.ab
   %i.fn = fptrunc <2 x double> %i.fm to <2 x float>
   %i.fo = fptosi <2 x float> %i.fn to <2 x i32>   ; 4 uses
   %i.fp = fptosi float %i.fh to i32               ; 3 uses
-  %i.fq = getelementptr inbounds nuw i8, ptr %39, i64 64 ; 2 uses
-  store <2 x i32> %i.fo, ptr %i.fq, align 8, !tbaa !11, !alias.scope !67
+  %42 = getelementptr inbounds nuw i8, ptr %39, i64 64 ; 2 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %39, i64 68
+  store <2 x i32> %i.fo, ptr %42, align 8, !tbaa !11, !alias.scope !67
   %i.fr = getelementptr inbounds nuw i8, ptr %39, i64 72 ; 2 uses
   store i32 %i.fp, ptr %i.fr, align 8, !tbaa !88, !alias.scope !67
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #17, !noalias !67
@@ -922,17 +923,21 @@ bb.bz:                                            ; preds = %.noexc156.i, %_ZNKS
 .lr.ph.i:                                         ; preds = %bb.br
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false)
-  %42 = load <2 x i32>, ptr %i.fq, align 8, !tbaa !11 ; 3 uses
+  %43 = load i32, ptr %i.fq, align 4, !tbaa !99   ; 3 uses
+  %44 = load i32, ptr %42, align 8, !tbaa !100    ; 3 uses
   %i.ow = load i32, ptr %i.fr, align 8, !tbaa !88
-  %43 = sitofp <2 x i32> %42 to <2 x double>      ; 2 uses
+  %45 = sitofp i32 %44 to double
+  %46 = sitofp i32 %43 to double
   %i.ox = sitofp i32 %i.ow to double              ; 4 uses
   %i.oy = fmul nnan double %i.ox, 2.500000e-01
   %i.oz = fmul nnan double %i.ox, 1.500000e-01
   %i.pa = fmul nnan double %i.ox, 5.000000e-01
   %i.pb = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.pc = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 3 uses
-  %i.pd = shufflevector <2 x double> %43, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %44 = shufflevector <2 x double> %43, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %47 = insertelement <2 x double> poison, double %45, i64 0
+  %i.pd = shufflevector <2 x double> %47, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %48 = insertelement <2 x double> poison, double %46, i64 0
+  %49 = shufflevector <2 x double> %48, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %bb.ca
 
 ._crit_edge.i:                                    ; preds = %_ZNSt6vectorIN2cv3VecIiLi4EEESaIS2_EE9push_backERKS2_.exit.i
@@ -955,7 +960,7 @@ bb.ca:                                            ; preds = %_ZNSt6vectorIN2cv3V
   %i.po = shufflevector <4 x i32> %i.pk, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
   %i.pp = sitofp <2 x i32> %i.po to <2 x double>
   %i.pq = fsub <2 x double> %i.pn, %i.pd          ; 2 uses
-  %i.pr = fsub <2 x double> %i.pp, %44            ; 2 uses
+  %i.pr = fsub <2 x double> %i.pp, %49            ; 2 uses
   %i.ps = fmul <2 x double> %i.pr, %i.pr
   %i.pt = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.pq, <2 x double> %i.pq, <2 x double> %i.ps)
   %i.pu = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.pt) ; 2 uses
@@ -1099,7 +1104,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.rv = sitofp <2 x i32> %i.rt to <2 x double>
   %i.rw = sitofp <2 x i32> %i.ru to <2 x double>
   %i.rx = fsub <2 x double> %i.rv, %i.pd          ; 2 uses
-  %i.ry = fsub <2 x double> %i.rw, %44            ; 2 uses
+  %i.ry = fsub <2 x double> %i.rw, %49            ; 2 uses
   %i.rz = fmul <2 x double> %i.ry, %i.ry
   %i.sa = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.rx, <2 x double> %i.rx, <2 x double> %i.rz)
   %i.sb = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.sa) ; 2 uses
@@ -1111,11 +1116,9 @@ bb.cm:                                            ; preds = %bb.cl
   %i.sf = extractelement <2 x i32> %i.ru, i64 0
   %i.sg = extractelement <2 x i32> %i.ru, i64 1
   %.138.i = select i1 %i.se, i32 %i.sf, i32 %i.sg ; 2 uses
-  %45 = extractelement <2 x i32> %42, i64 1       ; 2 uses
-  %.0110.in.i = sub nsw i32 %45, %.138.i          ; 3 uses
-  %46 = extractelement <2 x i32> %42, i64 0       ; 2 uses
-  %.0111.in.i = sub nsw i32 %..i, %46             ; 3 uses
-  %.not.i = icmp eq i32 %46, %..i
+  %.0110.in.i = sub nsw i32 %43, %.138.i          ; 3 uses
+  %.0111.in.i = sub nsw i32 %..i, %44             ; 3 uses
+  %.not.i = icmp eq i32 %44, %..i
   br i1 %.not.i, label %bb.cp, label %bb.co
 
 bb.cn:                                            ; preds = %bb.cl
@@ -1144,15 +1147,15 @@ bb.cp:                                            ; preds = %bb.co, %bb.cm
   %i.sp = icmp slt i32 %.0111.in.i, 0
   %i.sq = fsub double 9.000000e+01, %.0109.i
   %i.sr = icmp slt i32 %.0110.in.i, 0
-  %i.ss = icmp ne i32 %45, %.138.i
+  %i.ss = icmp ne i32 %43, %.138.i
   %i.st = select i1 %i.sp, i1 %i.ss, i1 false
   %.2107.i = select i1 %i.st, double %i.sq, double %.0105.i
   %or.cond7.i = select i1 %i.sm, i1 %i.sr, i1 false
   %.3108.i = select i1 %or.cond7.i, double %i.so, double %.2107.i
-  %i.su = load double, ptr %39, align 8, !tbaa !99 ; 2 uses
-  %i.sv = load double, ptr %i.lq, align 8, !tbaa !100
-  %i.sw = load double, ptr %i.lt, align 8, !tbaa !101 ; 2 uses
-  %i.sx = load double, ptr %i.lw, align 8, !tbaa !102
+  %i.su = load double, ptr %39, align 8, !tbaa !101 ; 2 uses
+  %i.sv = load double, ptr %i.lq, align 8, !tbaa !102
+  %i.sw = load double, ptr %i.lt, align 8, !tbaa !103 ; 2 uses
+  %i.sx = load double, ptr %i.lw, align 8, !tbaa !104
   %i.sy = fsub double %i.sv, %i.su
   %i.sz = fsub double %i.sx, %i.sw
   %i.ta = fsub double %.3108.i, %i.su
@@ -1555,7 +1558,7 @@ _ZNKSt6vectorIN2cv3VecIiLi4EEESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.ac = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ac, %1
-  br i1 %.not.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !103
+  br i1 %.not.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !105
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN2cv3VecIiLi4EEESaIS2_EE12_M_check_lenEmPKc.exit
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorIN2cv3VecIiLi4EEESaIS2_EE12_M_check_lenEmPKc.exit ], [ %i.ad, %.lr.ph.i.i.i.i.i ]
@@ -1571,7 +1574,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_
   %i.ag = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i31, i64 16 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i30, i64 16 ; 2 uses
   %.not.i.i.i.i.i32 = icmp eq ptr %i.ag, %i.b
-  br i1 %.not.i.i.i.i.i32, label %_ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit34, label %.lr.ph.i.i.i.i.i29, !llvm.loop !103
+  br i1 %.not.i.i.i.i.i32, label %_ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit34, label %.lr.ph.i.i.i.i.i29, !llvm.loop !105
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit34: ; preds = %.lr.ph.i.i.i.i.i29, %_ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit
   %.0.lcssa.i.i.i.i.i33 = phi ptr [ %i.ae, %_ZSt34__uninitialized_move_if_noexcept_aIPN2cv3VecIiLi4EEES3_SaIS2_EET0_T_S6_S5_RT1_.exit ], [ %i.ah, %.lr.ph.i.i.i.i.i29 ]
@@ -1756,9 +1759,11 @@ attributes #22 = { noreturn nounwind }
 !96 = !{!95, !81, i64 0}
 !97 = !{!95, !81, i64 16}
 !98 = !{!12, !12, i64 0}
-!99 = !{!87, !86, i64 0}
-!100 = !{!87, !86, i64 8}
-!101 = !{!87, !86, i64 16}
-!102 = !{!87, !86, i64 24}
-!103 = distinct !{!103, !10}
+!99 = !{!87, !6, i64 68}
+!100 = !{!87, !6, i64 64}
+!101 = !{!87, !86, i64 0}
+!102 = !{!87, !86, i64 8}
+!103 = !{!87, !86, i64 16}
+!104 = !{!87, !86, i64 24}
+!105 = distinct !{!105, !10}
 end_hunk_3
