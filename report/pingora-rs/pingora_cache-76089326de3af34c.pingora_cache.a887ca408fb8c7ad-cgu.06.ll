@@ -203,9 +203,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCset5b41vfmiv_13pingora_cache7storage9HandleHitNtNtCskKLDkoKarTP_4core6marker4SendNtB1z_4SyncEL_ENtNtNtB1B_3ops4drop4Drop4dropBM_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !7, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #24
   br label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCset5b41vfmiv_13pingora_cache7storage9HandleHitNtNtCskKLDkoKarTP_4core6marker4SendNtB1z_4SyncEL_ENtNtNtB1B_3ops4drop4Drop4dropBM_.exit
 
@@ -608,10 +608,14 @@ bb.f:                                             ; preds = %bb.e, %bb.c, %bb.a
   store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
   %i.s = call noundef align 8 ptr @_RNvXsD_NtNtCs84JG9zk80ZV_4http6header3mapINtB5_9ValueIterNtNtB7_5value11HeaderValueENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.d) ; 2 uses
   %.not.i2 = icmp eq ptr %i.s, null
-  br i1 %.not.i2, label %._crit_edge, label %.lr.ph
+  br i1 %.not.i2, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.f, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEE6expectCset5b41vfmiv_13pingora_cache.exit
-  %i.t = phi ptr [ %i.ag, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEE6expectCset5b41vfmiv_13pingora_cache.exit ], [ %i.s, %bb.f ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEE6expectCset5b41vfmiv_13pingora_cache.exit
+  %i.t = phi ptr [ %i.ag, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEE6expectCset5b41vfmiv_13pingora_cache.exit ], [ %i.s, %.lr.ph.preheader ] ; 2 uses
   %i.u = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !428, !noundef !5 ; 2 uses
   %i.v = add i64 %i.u, 1
   store i64 %i.v, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !428
@@ -624,7 +628,6 @@ bb.f:                                             ; preds = %bb.e, %bb.c, %bb.a
   ret void
 
 bb.g:                                             ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.x = call noundef align 8 ptr @_RINvMsc_CskspKcFIsYcD_12pingora_httpNtB6_14ResponseHeader13insert_headerReRNtNtNtCs84JG9zk80ZV_4http6header5value11HeaderValueECset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.8.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noundef nonnull align 8 %i.t) ; 2 uses
   %.not.i12 = icmp eq ptr %i.x, null
   br i1 %.not.i12, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEE6expectCset5b41vfmiv_13pingora_cache.exit, label %bb.h, !prof !16
@@ -656,7 +659,6 @@ common.resume:                                    ; preds = %bb.n, %bb.i
 
 bb.l:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   call void @_RINvMsc_CskspKcFIsYcD_12pingora_httpNtB6_14ResponseHeader13append_headerReRNtNtNtCs84JG9zk80ZV_4http6header5value11HeaderValueECset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.8.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noundef nonnull align 8 %i.t)
   call void @llvm.experimental.noalias.scope.decl(metadata !430)
   %i.aa = load i8, ptr %i.c, align 8, !range !21, !alias.scope !430, !noundef !5
@@ -1059,8 +1061,8 @@ bb.p:                                             ; preds = %bb.o
 
 _RINvMs2_CsfsXztIhCltD_13pingora_errorNtB6_5Error7becauseNtNtCsexYYUdYSQU6_5alloc6string6StringNtCs1ll6eLl40nD_8httparse5ErrorECset5b41vfmiv_13pingora_cache.exit.i: ; preds = %.noexc29
   %i.eg = extractvalue { ptr, ptr } %i.dy, 0      ; 2 uses
-  %4 = extractvalue { ptr, ptr } %i.dy, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eg) ]
+  %4 = extractvalue { ptr, ptr } %i.dy, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   %i.eh = invoke fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.ag, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.t, ptr noundef nonnull %i.eg, ptr nonnull %4)
           to label %.noexc32 unwind label %.loopexit.split-lp

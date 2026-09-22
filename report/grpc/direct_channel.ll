@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.assume(i1 %i.q)
   %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !246, !noalias !241
-  %i.t = load ptr, ptr %i.l, align 8, !tbaa !247, !noalias !241 ; 3 uses
+  %i.t = load ptr, ptr %i.l, align 8, !tbaa !247, !noalias !241 ; 4 uses
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = sub i64 %i.u, %i.v
@@ -210,13 +210,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.x, label %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i, !prof !22
 
 upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.noexc.i.i.i.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.o
   store ptr %i.y, ptr %i.l, align 8, !tbaa !247, !noalias !241
   br label %bb.e
 
 upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i.i.i.i:    ; preds = %.noexc.i.i.i.i.i.i.i
   %i.z = invoke ptr @_upb_Arena_SlowMalloc_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %i.l, i64 noundef %i.o)
-          to label %bb.e unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN9grpc_core8channelz20property_list_detail20PromisePropertyValueESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit11.i.i.i.i.i.i.i, !noalias !241
+          to label %.noexc9.i.i.i.i.i.i.i unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN9grpc_core8channelz20property_list_detail20PromisePropertyValueESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit11.i.i.i.i.i.i.i, !noalias !241 ; 2 uses
+
+.noexc9.i.i.i.i.i.i.i:                            ; preds = %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
+  br label %bb.e
 
 _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN9grpc_core8channelz20property_list_detail20PromisePropertyValueESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit11.i.i.i.i.i.i.i: ; preds = %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i.i.i.i, %.noexc.i
   %i.aa = landingpad { ptr, i32 }
@@ -224,9 +229,8 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN9grpc_core8channelz20prop
   call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 40) #28, !noalias !241
   br label %.body.i
 
-bb.e:                                             ; preds = %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i
-  %.sink.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.t, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.z, %upb_Arena_Malloc.exit.i.i.i.i.i.i.i.i.i.i.i.i ] ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.i.i.i.i.i.i.i.i.i) ]
+bb.e:                                             ; preds = %.noexc9.i.i.i.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i
+  %.sink.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.t, %upb_Arena_Malloc.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.z, %.noexc9.i.i.i.i.i.i.i ] ; 5 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.sink.i.i.i.i.i.i.i.i.i.i, i8 0, i64 %i.o, i1 false), !noalias !241
   %i.ab = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   store ptr %.sink.i.i.i.i.i.i.i.i.i.i, ptr %i.ab, align 8, !tbaa !106, !noalias !241

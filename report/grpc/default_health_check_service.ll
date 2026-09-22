@@ -202,9 +202,9 @@ _ZN3upb5ArenaC2Ev.exit:                           ; preds = %bb.d
   br i1 %i.aj, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !84
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %_ZN3upb5ArenaC2Ev.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
   %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.aa
   store ptr %i.ak, ptr %i.y, align 8, !tbaa !156
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
   br label %bb.e
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %_ZN3upb5ArenaC2Ev.exit
@@ -510,7 +510,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.g)
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !155
-  %i.j = load ptr, ptr %i.c, align 8, !tbaa !156  ; 3 uses
+  %i.j = load ptr, ptr %i.c, align 8, !tbaa !156  ; 4 uses
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l
@@ -518,17 +518,21 @@ bb.a:
   br i1 %i.n, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !84
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.e
   store ptr %i.o, ptr %i.c, align 8, !tbaa !156
   br label %.noexc.a
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
   %i.p = invoke ptr @_upb_Arena_SlowMalloc_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %i.c, i64 noundef %i.e)
-          to label %.noexc.a unwind label %bb.c
+          to label %.noexc unwind label %bb.c     ; 2 uses
 
-.noexc.a:                                         ; preds = %upb_Arena_Malloc.exit.i.i, %upb_Arena_Malloc.exit.thread.i.i
-  %.sink = phi ptr [ %i.j, %upb_Arena_Malloc.exit.thread.i.i ], [ %i.p, %upb_Arena_Malloc.exit.i.i ] ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink) ]
+.noexc:                                           ; preds = %upb_Arena_Malloc.exit.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  br label %.noexc.a
+
+.noexc.a:                                         ; preds = %.noexc, %upb_Arena_Malloc.exit.thread.i.i
+  %.sink = phi ptr [ %i.j, %upb_Arena_Malloc.exit.thread.i.i ], [ %i.p, %.noexc ] ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %.sink, i8 0, i64 %i.e, i1 false)
   %i.q = icmp eq i32 %0, 0
   %i.r = icmp eq i32 %0, 1
