@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 33
 inline.NumDeleted: 11
 loop-unroll.NumCompletelyUnrolled: 10
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 17
+loop-unroll.NumRuntimeUnrolled: 8
+loop-unroll.NumUnrolled: 18
 begin_hunk_0_@_ZL8sendintsP10DataBufferiiPjS1_:bb.a
   %i.jj = add i64 %i.ji, 1
   store i64 %i.jj, ptr %0, align 8, !tbaa !23
@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define internal fastcc void @_ZL11receiveintsP10DataBufferiiPKjPi(ptr nofree noundef nonnull captures(none) %0, i32 noundef %1, ptr nofree noundef nonnull readonly captures(none) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #10 {
 bb.a:
-  %i.a = alloca [32 x i32], align 16              ; 13 uses
+  %i.a = alloca [32 x i32], align 16              ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.b = icmp sgt i32 %1, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
@@ -308,7 +308,7 @@ _ZL11receivebitsP10DataBufferi.exit.epil.preheader: ; preds = %._crit_edge.threa
   br i1 %i.ar, label %bb.b, label %.split.preheader
 
 bb.b:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %.030.lcssa98 = phi i32 [ %i.aq, %._crit_edge.thread ], [ 0, %._crit_edge ] ; 3 uses
+  %.030.lcssa98 = phi i32 [ %i.aq, %._crit_edge.thread ], [ 0, %._crit_edge ] ; 4 uses
   %.033.lcssa97 = phi i32 [ %.lcssa4, %._crit_edge.thread ], [ %1, %._crit_edge ] ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.at = load i32, ptr %i.as, align 8, !tbaa !21 ; 5 uses
@@ -378,16 +378,81 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i._ZL
   br i1 %i.ca, label %.split75.us, label %.preheader
 
 .split.us.preheader:                              ; preds = %bb.e
-  %i.cb = add nuw i32 %.030.lcssa98, 1
-  %i.cc = zext nneg i32 %i.cb to i64              ; 2 uses
+  %i.cb = add nuw nsw i32 %.030.lcssa98, 1
+  %i.cc = zext nneg i32 %i.cb to i64              ; 5 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ce = load i32, ptr %i.cd, align 4, !tbaa !14 ; 4 uses
+  %i.ce = load i32, ptr %i.cd, align 4, !tbaa !14 ; 16 uses
   %i.cf = icmp eq i32 %i.ce, 0
-  br i1 %i.cf, label %.split75.us, label %.preheader.us.a
+  br i1 %i.cf, label %.split75.us, label %.preheader.us.preheader
 
-.preheader.us.a:                                  ; preds = %.split.us.preheader, %.preheader.us.a
-  %indvars.iv83.a = phi i64 [ %indvars.iv.next84, %.preheader.us.a ], [ %i.cc, %.split.us.preheader ] ; 2 uses
-  %.069.us.a = phi i32 [ %.recomposed.a, %.preheader.us.a ], [ 0, %.split.us.preheader ]
+.preheader.us.preheader:                          ; preds = %.split.us.preheader
+  %xtraiter8 = and i64 %i.cc, 3                   ; 3 uses
+  %4 = icmp ult i32 %.030.lcssa98, 3
+  br i1 %4, label %.preheader.us.epil.preheader, label %.preheader.us.preheader.new
+
+.preheader.us.preheader.new:                      ; preds = %.preheader.us.preheader
+  %unroll_iter12 = and i64 %i.cc, 2147483644
+  br label %.preheader.us
+
+.preheader.us:                                    ; preds = %.preheader.us, %.preheader.us.preheader.new
+  %indvars.iv83 = phi i64 [ %i.cc, %.preheader.us.preheader.new ], [ %indvars.iv.next84.3, %.preheader.us ] ; 4 uses
+  %.069.us = phi i32 [ 0, %.preheader.us.preheader.new ], [ %.recomposed25, %.preheader.us ]
+  %niter13 = phi i64 [ 0, %.preheader.us.preheader.new ], [ %niter13.next.3, %.preheader.us ]
+  %5 = shl i32 %.069.us, 8
+  %6 = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv83
+  %7 = getelementptr i8, ptr %6, i64 -4           ; 2 uses
+  %8 = load i32, ptr %7, align 4, !tbaa !14
+  %9 = or i32 %8, %5                              ; 2 uses
+  %10 = udiv i32 %9, %i.ce                        ; 2 uses
+  store i32 %10, ptr %7, align 4, !tbaa !14
+  %11 = mul i32 %10, %i.ce                        ; 0 uses
+  %.recomposed = urem i32 %9, %i.ce
+  %12 = shl i32 %.recomposed, 8
+  %13 = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv83
+  %14 = getelementptr i8, ptr %13, i64 -8         ; 2 uses
+  %15 = load i32, ptr %14, align 4, !tbaa !14
+  %16 = or i32 %15, %12                           ; 2 uses
+  %17 = udiv i32 %16, %i.ce                       ; 2 uses
+  store i32 %17, ptr %14, align 4, !tbaa !14
+  %18 = mul i32 %17, %i.ce                        ; 0 uses
+  %.recomposed23 = urem i32 %16, %i.ce
+  %19 = shl i32 %.recomposed23, 8
+  %20 = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv83
+  %21 = getelementptr i8, ptr %20, i64 -12        ; 2 uses
+  %22 = load i32, ptr %21, align 4, !tbaa !14
+  %23 = or i32 %22, %19                           ; 2 uses
+  %24 = udiv i32 %23, %i.ce                       ; 2 uses
+  store i32 %24, ptr %21, align 4, !tbaa !14
+  %25 = mul i32 %24, %i.ce                        ; 0 uses
+  %.recomposed24 = urem i32 %23, %i.ce
+  %indvars.iv.next84.3 = add nsw i64 %indvars.iv83, -4 ; 3 uses
+  %26 = shl i32 %.recomposed24, 8
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next84.3 ; 2 uses
+  %28 = load i32, ptr %27, align 4, !tbaa !14
+  %29 = or i32 %28, %26                           ; 2 uses
+  %30 = udiv i32 %29, %i.ce                       ; 2 uses
+  store i32 %30, ptr %27, align 4, !tbaa !14
+  %31 = mul i32 %30, %i.ce                        ; 0 uses
+  %.recomposed25 = urem i32 %29, %i.ce            ; 3 uses
+  %niter13.next.3 = add i64 %niter13, 4           ; 2 uses
+  %niter13.ncmp.3.not = icmp eq i64 %niter13.next.3, %unroll_iter12
+  br i1 %niter13.ncmp.3.not, label %._crit_edge71.us.unr-lcssa, label %.preheader.us, !llvm.loop !59
+
+._crit_edge71.us.unr-lcssa:                       ; preds = %.preheader.us
+  %lcmp.mod9.not = icmp eq i64 %xtraiter8, 0
+  br i1 %lcmp.mod9.not, label %._crit_edge71.us, label %.preheader.us.epil.preheader
+
+.preheader.us.epil.preheader:                     ; preds = %._crit_edge71.us.unr-lcssa, %.preheader.us.preheader
+  %indvars.iv83.epil.init = phi i64 [ %i.cc, %.preheader.us.preheader ], [ %indvars.iv.next84.3, %._crit_edge71.us.unr-lcssa ]
+  %.069.us.epil.init = phi i32 [ 0, %.preheader.us.preheader ], [ %.recomposed25, %._crit_edge71.us.unr-lcssa ]
+  %lcmp.mod11 = icmp ne i64 %xtraiter8, 0
+  tail call void @llvm.assume(i1 %lcmp.mod11)
+  br label %.preheader.us.a
+
+.preheader.us.a:                                  ; preds = %.preheader.us.a, %.preheader.us.epil.preheader
+  %indvars.iv83.a = phi i64 [ %indvars.iv.next84, %.preheader.us.a ], [ %indvars.iv83.epil.init, %.preheader.us.epil.preheader ]
+  %.069.us.a = phi i32 [ %.recomposed.a, %.preheader.us.a ], [ %.069.us.epil.init, %.preheader.us.epil.preheader ]
+  %epil.iter = phi i64 [ %epil.iter.next, %.preheader.us.a ], [ 0, %.preheader.us.epil.preheader ]
   %indvars.iv.next84 = add nsw i64 %indvars.iv83.a, -1 ; 2 uses
   %i.cg = shl i32 %.069.us.a, 8
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next84 ; 2 uses
@@ -397,12 +462,14 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i._ZL
   store i32 %i.ck, ptr %i.ch, align 4, !tbaa !14
   %i.cl = mul i32 %i.ck, %i.ce                    ; 0 uses
   %.recomposed.a = urem i32 %i.cj, %i.ce          ; 2 uses
-  %4 = icmp samesign ugt i64 %indvars.iv83.a, 1
-  br i1 %4, label %.preheader.us.a, label %._crit_edge71.us, !llvm.loop !59
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter8
+  br i1 %epil.iter.cmp.not, label %._crit_edge71.us, label %.preheader.us.a, !llvm.loop !60
 
-._crit_edge71.us:                                 ; preds = %.preheader.us.a
+._crit_edge71.us:                                 ; preds = %.preheader.us.a, %._crit_edge71.us.unr-lcssa
+  %.lcssa3 = phi i32 [ %.recomposed25, %._crit_edge71.us.unr-lcssa ], [ %.recomposed.a, %.preheader.us.a ]
   %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %.recomposed.a, ptr %i.cm, align 4, !tbaa !14
+  store i32 %.lcssa3, ptr %i.cm, align 4, !tbaa !14
   %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !14 ; 4 uses
   %i.cp = icmp eq i32 %i.co, 0
@@ -520,7 +587,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not.i, label %.backedge, label %_ZL25xtc_get_next_frame_numberP8_IO_FILEP3XDRi.exit.thread
 
 .backedge:                                        ; preds = %bb.g, %bb.e
-  br label %bb.e, !llvm.loop !60
+  br label %bb.e, !llvm.loop !61
 
 _ZL25xtc_get_next_frame_numberP8_IO_FILEP3XDRi.exit.thread: ; preds = %bb.f, %.preheader, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
@@ -552,7 +619,7 @@ bb.j:                                             ; preds = %bb.i
   %i.x = and i64 %i.w, 9223372036854775804        ; 2 uses
   %i.y = call noundef i32 @_Z9gmx_fseekP8_IO_FILEli(ptr noundef %1, i64 noundef %i.x, i32 noundef 0)
   %.not45 = icmp eq i32 %i.y, 0
-  br i1 %.not45, label %.preheader, label %.loopexit, !llvm.loop !61
+  br i1 %.not45, label %.preheader, label %.loopexit, !llvm.loop !62
 
 bb.k:                                             ; preds = %bb.h, %bb.i
   %i.z = icmp samesign ult i64 %.0, 17
@@ -955,7 +1022,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.w
   %i.bj = call fastcc noundef float @_ZL19xdr_xtc_estimate_dtP8_IO_FILEP3XDRiPb(ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %i.c)
   %i.bk = load i8, ptr %i.c, align 1, !tbaa !27, !range !28, !noundef !29
   %i.bl = trunc nuw i8 %i.bk to i1
-  br i1 %i.bl, label %.lr.ph, label %.loopexit, !llvm.loop !62
+  br i1 %i.bl, label %.lr.ph, label %.loopexit, !llvm.loop !63
 
 bb.ac:                                            ; preds = %bb.aa, %bb.x
   %i.bm = icmp slt i64 %.088113, 17
@@ -1096,7 +1163,7 @@ bb.e:                                             ; preds = %.preheader
 bb.f:                                             ; preds = %.preheader
   %i.i = tail call noundef i32 @_Z9gmx_fseekP8_IO_FILEli(ptr noundef %0, i64 noundef -8, i32 noundef 1)
   %.not = icmp eq i32 %i.i, 0
-  br i1 %.not, label %.preheader, label %.loopexit, !llvm.loop !63
+  br i1 %.not, label %.preheader, label %.loopexit, !llvm.loop !64
 
 .loopexit:                                        ; preds = %bb.f, %bb.a, %bb.e, %bb.d, %bb.c
   %.0 = phi float [ -1.000000e+00, %bb.a ], [ -1.000000e+00, %bb.c ], [ %i.g, %bb.d ], [ -1.000000e+00, %bb.e ], [ -1.000000e+00, %bb.f ]
@@ -1190,7 +1257,7 @@ bb.g:                                             ; preds = %.preheader.i
 bb.h:                                             ; preds = %.preheader.i
   %i.l = tail call noundef i32 @_Z9gmx_fseekP8_IO_FILEli(ptr noundef %0, i64 noundef -8, i32 noundef 1)
   %.not.i = icmp eq i32 %i.l, 0
-  br i1 %.not.i, label %.preheader.i, label %_ZL28xtc_get_current_frame_numberP8_IO_FILEP3XDRiPb.exit, !llvm.loop !64
+  br i1 %.not.i, label %.preheader.i, label %_ZL28xtc_get_current_frame_numberP8_IO_FILEP3XDRiPb.exit, !llvm.loop !65
 
 default.unreachable:                              ; preds = %.preheader.i
   unreachable
@@ -1321,9 +1388,10 @@ attributes #20 = { cold }
 !57 = distinct !{!57, !25}
 !58 = distinct !{!58, !20}
 !59 = distinct !{!59, !20}
-!60 = distinct !{!60, !20}
+!60 = distinct !{!60, !25}
 !61 = distinct !{!61, !20}
 !62 = distinct !{!62, !20}
 !63 = distinct !{!63, !20}
 !64 = distinct !{!64, !20}
+!65 = distinct !{!65, !20}
 end_hunk_1

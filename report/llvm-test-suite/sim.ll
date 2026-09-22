@@ -204,7 +204,7 @@ bb.a:
   %i.c = sub nsw i32 0, %.pre760.pre              ; 4 uses
   %i.d = icmp eq i32 %2, 2
   %i.e = add nsw i32 %.pre, 1                     ; 5 uses
-  %i.f = sext i32 %i.a to i64                     ; 10 uses
+  %i.f = sext i32 %i.a to i64                     ; 12 uses
   %i.g = sub i32 %i.a, %i.b
   %i.h = zext i32 %i.g to i64                     ; 2 uses
   %i.i = shl nuw nsw i64 %i.h, 2
@@ -218,8 +218,9 @@ bb.a:
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.m = sext i32 %.pre to i64                    ; 2 uses
   %i.n = sext i32 %i.b to i64                     ; 2 uses
+  %3 = tail call i64 @llvm.smin.i64(i64 %i.f, i64 %i.n)
   %i.o = add nsw i64 %i.f, 1
-  %i.p = sub nsw i64 %i.o, %i.n                   ; 3 uses
+  %i.p = sub i64 %i.o, %3                         ; 3 uses
   %min.iters.check = icmp ult i64 %i.p, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader922, label %vector.ph
 
@@ -227,7 +228,7 @@ vector.ph:                                        ; preds = %.lr.ph.split.prehea
   %n.vec = and i64 %i.p, -4                       ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.c, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.q = sub nsw i64 %i.f, %n.vec
+  %i.q = sub i64 %i.f, %n.vec
   %broadcast.splatinsert873 = insertelement <4 x i64> poison, i64 %i.m, i64 0
   %broadcast.splat874 = shufflevector <4 x i64> %broadcast.splatinsert873, <4 x i64> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert875 = insertelement <4 x i32> poison, i32 %i.e, i64 0
@@ -280,8 +281,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.ah = sext i32 %i.b to i64                    ; 2 uses
+  %4 = tail call i64 @llvm.smin.i64(i64 %i.f, i64 %i.ah)
   %i.ai = add nsw i64 %i.f, 1
-  %i.aj = sub nsw i64 %i.ai, %i.ah                ; 3 uses
+  %i.aj = sub i64 %i.ai, %4                       ; 3 uses
   %min.iters.check886 = icmp ult i64 %i.aj, 8
   br i1 %min.iters.check886, label %.lr.ph.split.us.preheader921, label %vector.ph887
 
@@ -291,7 +293,7 @@ vector.ph887:                                     ; preds = %.lr.ph.split.us.pre
   %broadcast.splat890 = shufflevector <4 x i32> %broadcast.splatinsert889, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert891 = insertelement <4 x i32> poison, i32 %i.c, i64 0
   %broadcast.splat892 = shufflevector <4 x i32> %broadcast.splatinsert891, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.ak = sub nsw i64 %i.f, %n.vec888
+  %i.ak = sub i64 %i.f, %n.vec888
   %broadcast.splatinsert895 = insertelement <4 x i32> poison, i32 %i.a, i64 0
   %broadcast.splat896 = shufflevector <4 x i32> %broadcast.splatinsert895, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.al = add <4 x i32> %broadcast.splat896, <i32 0, i32 -1, i32 -2, i32 -3>
@@ -693,6 +695,9 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #6
 
 attributes #0 = { noreturn nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -206,13 +206,13 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.ew, label %bb.ae, label %skipNonB85.exit.i, !llvm.loop !768
 
 skipNonB85.exit.i:                                ; preds = %bb.ag, %bb.af, %bb.ae
-  %.07.lcssa.i.i = phi ptr [ %.079.i.i, %bb.ae ], [ %scevgep.i.i, %bb.ag ], [ %.079.i.i, %bb.af ] ; 8 uses
+  %.07.lcssa.i.i = phi ptr [ %.079.i.i, %bb.ae ], [ %scevgep.i.i, %bb.ag ], [ %.079.i.i, %bb.af ] ; 9 uses
   %i.ex = ptrtoint ptr %.07.lcssa.i.i to i64
   %i.ey = ptrtoint ptr %.05381.i to i64
   %.neg.i53 = sub i64 %i.ey, %i.ex
   %i.ez = trunc i64 %.neg.i53 to i32
   %i.fa = add i32 %.14982.i, %i.ez                ; 12 uses
-  %i.fb = tail call i32 @llvm.smin.i32(i32 %i.fa, i32 5) ; 7 uses
+  %i.fb = tail call i32 @llvm.smin.i32(i32 %i.fa, i32 5) ; 8 uses
   %i.fc = sext i32 %i.fb to i64
   %i.fd = getelementptr inbounds i8, ptr @fromBase85.nboi, i64 %i.fc
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !52
@@ -225,6 +225,10 @@ skipNonB85.exit.i:                                ; preds = %bb.ag, %bb.af, %bb.
   br i1 %i.fh, label %.lr.ph.i55, label %.thread.i
 
 .lr.ph.i55:                                       ; preds = %.preheader.i
+  %scevgep.i = getelementptr i8, ptr %.07.lcssa.i.i, i64 1
+  %3 = add nsw i32 %i.fb, -1
+  %4 = zext i32 %3 to i64
+  %scevgep88.i = getelementptr i8, ptr %scevgep.i, i64 %4 ; 4 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 1 ; 2 uses
   %i.fj = load i8, ptr %.07.lcssa.i.i, align 1, !tbaa !52 ; 5 uses
   %i.fk = icmp sgt i8 %i.fj, 34
@@ -249,7 +253,7 @@ skipNonB85.exit.i:                                ; preds = %bb.ag, %bb.af, %bb.
   %i.ga = sext i8 %i.fj to i64
   %i.gb = sub nsw i64 %i.ga, %i.fz                ; 2 uses
   %i.gc = add nsw i32 %i.fb, -1
-  %i.gd = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 2 ; 3 uses
+  %i.gd = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 2 ; 2 uses
   %i.ge = load i8, ptr %i.fi, align 1, !tbaa !52  ; 5 uses
   %i.gf = icmp sgt i8 %i.ge, 34
   %i.gg = zext i1 %i.gf to i64
@@ -279,7 +283,7 @@ bb.ah:                                            ; preds = %.lr.ph.i55.1
 
 .lr.ph.i55.2:                                     ; preds = %bb.ah
   %i.ha = add nsw i32 %i.fb, -2
-  %i.hb = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 3 ; 3 uses
+  %i.hb = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 3 ; 2 uses
   %i.hc = load i8, ptr %i.gd, align 1, !tbaa !52  ; 5 uses
   %i.hd = icmp sgt i8 %i.hc, 34
   %i.he = zext i1 %i.hd to i64
@@ -309,7 +313,7 @@ bb.ai:                                            ; preds = %.lr.ph.i55.2
 
 .lr.ph.i55.3:                                     ; preds = %bb.ai
   %i.hx = add nsw i32 %i.fb, -3
-  %i.hy = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 4 ; 3 uses
+  %i.hy = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 4 ; 2 uses
   %i.hz = load i8, ptr %i.hb, align 1, !tbaa !52  ; 5 uses
   %i.ia = icmp sgt i8 %i.hz, 34
   %i.ib = zext i1 %i.ia to i64
@@ -339,7 +343,7 @@ bb.aj:                                            ; preds = %.lr.ph.i55.3
 
 .lr.ph.i55.4:                                     ; preds = %bb.aj
   %i.iv = add nsw i32 %i.fb, -4
-  %i.iw = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 5 ; 2 uses
+  %i.iw = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 5
   %i.ix = load i8, ptr %i.hy, align 1, !tbaa !52  ; 5 uses
   %i.iy = icmp sgt i8 %i.ix, 34
   %i.iz = zext i1 %i.iy to i64
@@ -369,7 +373,7 @@ bb.ak:                                            ; preds = %.lr.ph.i55.4
 .thread.i:                                        ; preds = %.lr.ph.i55, %.lr.ph.i55.1, %bb.ah, %.lr.ph.i55.2, %bb.ai, %.lr.ph.i55.3, %bb.aj, %.lr.ph.i55.4, %bb.ak, %.preheader.i
   %.042.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.lr.ph.i55 ], [ %i.jr, %bb.ak ], [ %i.gb, %.lr.ph.i55.1 ], [ %i.gy, %bb.ah ], [ %i.gy, %.lr.ph.i55.2 ], [ %i.hw, %bb.ai ], [ %i.hw, %.lr.ph.i55.3 ], [ %i.it, %bb.aj ], [ %i.it, %.lr.ph.i55.4 ] ; 4 uses
   %.040.lcssa.i = phi i32 [ %i.fb, %.preheader.i ], [ %i.fb, %.lr.ph.i55 ], [ 0, %bb.ak ], [ %i.gc, %.lr.ph.i55.1 ], [ 0, %bb.ah ], [ %i.ha, %.lr.ph.i55.2 ], [ 0, %bb.ai ], [ %i.hx, %.lr.ph.i55.3 ], [ 0, %bb.aj ], [ %i.iv, %.lr.ph.i55.4 ]
-  %.255.i = phi ptr [ %.07.lcssa.i.i, %.preheader.i ], [ %i.fi, %.lr.ph.i55 ], [ %i.iw, %bb.ak ], [ %i.gd, %.lr.ph.i55.1 ], [ %i.gd, %bb.ah ], [ %i.hb, %.lr.ph.i55.2 ], [ %i.hb, %bb.ai ], [ %i.hy, %.lr.ph.i55.3 ], [ %i.hy, %bb.aj ], [ %i.iw, %.lr.ph.i55.4 ]
+  %.255.i = phi ptr [ %.07.lcssa.i.i, %.preheader.i ], [ %i.fi, %.lr.ph.i55 ], [ %scevgep88.i, %bb.ak ], [ %i.gd, %.lr.ph.i55.1 ], [ %scevgep88.i, %bb.ah ], [ %i.hb, %.lr.ph.i55.2 ], [ %scevgep88.i, %bb.ai ], [ %i.hy, %.lr.ph.i55.3 ], [ %scevgep88.i, %bb.aj ], [ %i.iw, %.lr.ph.i55.4 ]
   %.351.i = phi i32 [ %i.fa, %.preheader.i ], [ %i.fx, %.lr.ph.i55 ], [ %i.jl, %bb.ak ], [ %i.gs, %.lr.ph.i55.1 ], [ %i.gs, %bb.ah ], [ %i.hq, %.lr.ph.i55.2 ], [ %i.hq, %bb.ai ], [ %i.in, %.lr.ph.i55.3 ], [ %i.in, %bb.aj ], [ %i.jl, %.lr.ph.i55.4 ] ; 2 uses
   %i.js = sub nsw i32 %i.ff, %.040.lcssa.i
   switch i32 %i.js, label %bb.ap [
