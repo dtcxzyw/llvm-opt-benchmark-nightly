@@ -205,10 +205,11 @@ bb.ac:                                            ; preds = %"_ZN135_$LT$clap_bu
   br i1 %i.bl, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4find17hda9a5c293dd9196aE.exit", label %bb.ad
 
 "_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4find17hda9a5c293dd9196aE.exit": ; preds = %"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h734f4dddf6aa5ab8E.exit.i.1", %"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h734f4dddf6aa5ab8E.exit.i"
-  %.ptr.lcssa19 = phi ptr [ @1090, %"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h734f4dddf6aa5ab8E.exit.i" ], [ getelementptr inbounds nuw (i8, ptr @1090, i64 1), %"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h734f4dddf6aa5ab8E.exit.i.1" ]
-  %.val = load i8, ptr %.ptr.lcssa19, align 1, !range !44, !noundef !34
+  %.idx.lcssa20 = phi i8 [ 0, %"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h734f4dddf6aa5ab8E.exit.i" ], [ 1, %"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h734f4dddf6aa5ab8E.exit.i.1" ]
+  %notmask = shl nsw i8 -1, %.idx.lcssa20
+  %5 = xor i8 %notmask, -1
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.val, ptr %i.bm, align 1
+  store i8 %5, ptr %i.bm, align 1
   br label %bb.ax
 
 bb.ad:                                            ; preds = %"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h734f4dddf6aa5ab8E.exit.i.1"
