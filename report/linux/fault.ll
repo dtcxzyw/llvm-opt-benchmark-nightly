@@ -202,8 +202,8 @@ fault_signal_pending.exit206.thread221.thread.peel: ; preds = %fatal_signal_pend
   tail call fastcc void @bad_area_nosemaphore(ptr noundef %0, i64 noundef %1, i64 noundef %2) #19, !srcloc !74
   br label %.loopexit
 
-bb.ap:                                            ; preds = %.thread223, %.peel.next
-  %i.dt = phi ptr [ %i.dr, %.peel.next ], [ %i.ex, %.thread223 ] ; 9 uses
+bb.ap:                                            ; preds = %.peel.next, %.thread223
+  %i.dt = phi ptr [ %i.ex, %.thread223 ], [ %i.dr, %.peel.next ] ; 9 uses
   br i1 %.not127, label %bb.aq, label %arch_vma_access_permitted.exit.i167
 
 bb.aq:                                            ; preds = %bb.ap
@@ -262,8 +262,8 @@ access_error.exit190:                             ; preds = %arch_vma_access_per
   %.not33.i172.not = icmp eq i64 %i.eg, 0
   br i1 %.not33.i172.not, label %access_error.exit190.thread, label %bb.av, !prof !68
 
-access_error.exit190.thread:                      ; preds = %bb.au, %arch_vma_access_permitted.exit.thread23.i188, %read_pkru.exit.i.i.i180, %access_error.exit190, %arch_vma_access_permitted.exit.i167, %access_error.exit190.peel, %bb.an, %arch_vma_access_permitted.exit.i167.peel, %arch_vma_access_permitted.exit.thread23.i188.peel, %bb.am, %read_pkru.exit.i.i.i180.peel, %.lr.ph
-  %.lcssa = phi ptr [ %i.cl, %.lr.ph ], [ %i.cl, %read_pkru.exit.i.i.i180.peel ], [ %i.cl, %bb.am ], [ %i.cl, %arch_vma_access_permitted.exit.thread23.i188.peel ], [ %i.cl, %arch_vma_access_permitted.exit.i167.peel ], [ %i.cl, %bb.an ], [ %i.cl, %access_error.exit190.peel ], [ %i.dt, %arch_vma_access_permitted.exit.i167 ], [ %i.dt, %access_error.exit190 ], [ %i.dt, %read_pkru.exit.i.i.i180 ], [ %i.dt, %arch_vma_access_permitted.exit.thread23.i188 ], [ %i.dt, %bb.au ]
+access_error.exit190.thread:                      ; preds = %access_error.exit190, %read_pkru.exit.i.i.i180, %arch_vma_access_permitted.exit.thread23.i188, %bb.au, %arch_vma_access_permitted.exit.i167, %read_pkru.exit.i.i.i180.peel, %bb.am, %arch_vma_access_permitted.exit.thread23.i188.peel, %arch_vma_access_permitted.exit.i167.peel, %bb.an, %access_error.exit190.peel, %.lr.ph
+  %.lcssa = phi ptr [ %i.cl, %.lr.ph ], [ %i.cl, %read_pkru.exit.i.i.i180.peel ], [ %i.cl, %bb.am ], [ %i.cl, %arch_vma_access_permitted.exit.thread23.i188.peel ], [ %i.cl, %arch_vma_access_permitted.exit.i167.peel ], [ %i.cl, %bb.an ], [ %i.cl, %access_error.exit190.peel ], [ %i.dt, %arch_vma_access_permitted.exit.i167 ], [ %i.dt, %bb.au ], [ %i.dt, %arch_vma_access_permitted.exit.thread23.i188 ], [ %i.dt, %read_pkru.exit.i.i.i180 ], [ %i.dt, %access_error.exit190 ]
   tail call fastcc void @bad_area_access_error(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef nonnull %i.d, ptr noundef nonnull %.lcssa) #19, !srcloc !76
   br label %.loopexit
 

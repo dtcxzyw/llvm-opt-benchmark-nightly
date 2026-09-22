@@ -204,16 +204,21 @@ bb.bk:                                            ; preds = %bb.bj
   %.not.i128.i.i.i = icmp eq i16 %i.ex, 0
   br i1 %.not.i128.i.i.i, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i, label %.thread.i.i.i
 
-.thread.i.i.i:                                    ; preds = %.preheader.i.i.i, %.outer.split.us.i.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.outer.split.us.i.i.i ], [ %i.gr, %.preheader.i.i.i ] ; 5 uses
-  %.promoted127136.i.i.i = phi i64 [ %.promoted127135.i.i.i, %.outer.split.us.i.i.i ], [ %.promoted132.i.i.i, %.preheader.i.i.i ] ; 3 uses
-  %.sroa.015.0130.i.i.i = phi i64 [ %.sroa.015.1.ph.lcssa.i.i.i, %.outer.split.us.i.i.i ], [ 573, %.preheader.i.i.i ] ; 2 uses
+.loopexit.i.i.i:                                  ; preds = %.outer.i.i.i, %.thread.i.i.i
+  %.promoted124132.i.i.i = phi i64 [ %.promoted127136.i.i.i, %.thread.i.i.i ], [ %.promoted127133.i.i.i, %.outer.i.i.i ]
+  %.sroa.015.1.lcssa.i.i.i = phi i64 [ %.sroa.015.0130.i.i.i, %.thread.i.i.i ], [ %i.hq, %.outer.i.i.i ]
+  br i1 %i.hl, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i, label %.thread.i.i.i
+
+.thread.i.i.i:                                    ; preds = %.preheader.i.i.i, %.loopexit.i.i.i
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.loopexit.i.i.i ], [ %i.gr, %.preheader.i.i.i ] ; 5 uses
+  %.promoted127136.i.i.i = phi i64 [ %.promoted124132.i.i.i, %.loopexit.i.i.i ], [ %.promoted132.i.i.i, %.preheader.i.i.i ] ; 3 uses
+  %.sroa.015.0130.i.i.i = phi i64 [ %.sroa.015.1.lcssa.i.i.i, %.loopexit.i.i.i ], [ 573, %.preheader.i.i.i ] ; 2 uses
   %i.hl = icmp eq i64 %indvars.iv.i.i, 1
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   %i.hm = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %indvars.iv.i.i
   %i.hn = load i16, ptr %i.hm, align 2, !alias.scope !287, !noalias !294, !noundef !4 ; 2 uses
   %i.ho = icmp eq i16 %i.hn, 0
-  br i1 %i.ho, label %.outer.split.us.i.i.i, label %.outer.split.i.preheader.i.i
+  br i1 %i.ho, label %.loopexit.i.i.i, label %.outer.split.i.preheader.i.i
 
 .outer.split.i.preheader.i.i:                     ; preds = %.thread.i.i.i
   %i.hp = trunc nuw i64 %indvars.iv.i.i to i16    ; 2 uses
@@ -257,12 +262,7 @@ bb.bq:                                            ; preds = %bb.bo
   %i.ib = phi i64 [ %i.il, %bb.br ], [ %i.ie, %bb.bp ]
   %i.ic = add i16 %.sroa.024.0.ph124.i.i.i, -1    ; 2 uses
   %i.id = icmp eq i16 %i.ic, 0
-  br i1 %i.id, label %.outer.split.us.i.i.i, label %.outer.split.i.i.i
-
-.outer.split.us.i.i.i:                            ; preds = %.outer.i.i.i, %.thread.i.i.i
-  %.promoted127135.i.i.i = phi i64 [ %.promoted127136.i.i.i, %.thread.i.i.i ], [ %.promoted127133.i.i.i, %.outer.i.i.i ]
-  %.sroa.015.1.ph.lcssa.i.i.i = phi i64 [ %.sroa.015.0130.i.i.i, %.thread.i.i.i ], [ %i.hq, %.outer.i.i.i ]
-  br i1 %i.hl, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i, label %.thread.i.i.i
+  br i1 %i.id, label %.loopexit.i.i.i, label %.outer.split.i.i.i
 
 .outer.split.i.i.i:                               ; preds = %.outer.i.i.i, %.outer.split.i.preheader.i.i
   %.promoted127134.i.i.i = phi i64 [ %.promoted127133.i.i.i, %.outer.i.i.i ], [ %.promoted127136.i.i.i, %.outer.split.i.preheader.i.i ]
@@ -449,7 +449,7 @@ bb.cd:                                            ; preds = %bb.cc
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %.sroa.04.0.i.lcssa467.i, i64 noundef %i.cs, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #17, !noalias !278
   unreachable
 
-_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i: ; preds = %.outer.split.us.i.i.i, %.preheader.i.i.i, %._crit_edge.i.i.i, %bb.aw
+_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i: ; preds = %.loopexit.i.i.i, %.preheader.i.i.i, %._crit_edge.i.i.i, %bb.aw
   call fastcc void @_RNvNtCs7kNFBubu20U_7zlib_rs7deflate9gen_codes(ptr noalias noundef nonnull align 2 %i.co, i64 noundef 573, i64 noundef %.sroa.0.0.lcssa174.i.i, ptr noalias noundef nonnull readonly align 2 captures(address, read_provenance) %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !278
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !278
@@ -816,16 +816,21 @@ bb.dh:                                            ; preds = %bb.dg
   %.not.i128.i.i74.i = icmp eq i16 %i.nf, 0
   br i1 %.not.i128.i.i74.i, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i, label %.thread.i.i75.i
 
-.thread.i.i75.i:                                  ; preds = %.preheader.i.i73.i, %.outer.split.us.i.i89.i
-  %indvars.iv.i76.i = phi i64 [ %indvars.iv.next.i79.i, %.outer.split.us.i.i89.i ], [ %i.oz, %.preheader.i.i73.i ] ; 5 uses
-  %.promoted127136.i.i77.i = phi i64 [ %.promoted127135.i.i90.i, %.outer.split.us.i.i89.i ], [ %.promoted132.i.i59.i, %.preheader.i.i73.i ] ; 3 uses
-  %.sroa.015.0130.i.i78.i = phi i64 [ %.sroa.015.1.ph.lcssa.i.i91.i, %.outer.split.us.i.i89.i ], [ 573, %.preheader.i.i73.i ] ; 2 uses
+.loopexit.i.i89.i:                                ; preds = %.outer.i.i87.i, %.thread.i.i75.i
+  %.promoted124132.i.i90.i = phi i64 [ %.promoted127136.i.i77.i, %.thread.i.i75.i ], [ %.promoted127133.i.i88.i, %.outer.i.i87.i ]
+  %.sroa.015.1.lcssa.i.i91.i = phi i64 [ %.sroa.015.0130.i.i78.i, %.thread.i.i75.i ], [ %i.py, %.outer.i.i87.i ]
+  br i1 %i.pt, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i, label %.thread.i.i75.i
+
+.thread.i.i75.i:                                  ; preds = %.preheader.i.i73.i, %.loopexit.i.i89.i
+  %indvars.iv.i76.i = phi i64 [ %indvars.iv.next.i79.i, %.loopexit.i.i89.i ], [ %i.oz, %.preheader.i.i73.i ] ; 5 uses
+  %.promoted127136.i.i77.i = phi i64 [ %.promoted124132.i.i90.i, %.loopexit.i.i89.i ], [ %.promoted132.i.i59.i, %.preheader.i.i73.i ] ; 3 uses
+  %.sroa.015.0130.i.i78.i = phi i64 [ %.sroa.015.1.lcssa.i.i91.i, %.loopexit.i.i89.i ], [ 573, %.preheader.i.i73.i ] ; 2 uses
   %i.pt = icmp eq i64 %indvars.iv.i76.i, 1
   %indvars.iv.next.i79.i = add nsw i64 %indvars.iv.i76.i, -1
   %i.pu = getelementptr inbounds nuw [2 x i8], ptr %i.d, i64 %indvars.iv.i76.i
   %i.pv = load i16, ptr %i.pu, align 2, !alias.scope !309, !noalias !316, !noundef !4 ; 2 uses
   %i.pw = icmp eq i16 %i.pv, 0
-  br i1 %i.pw, label %.outer.split.us.i.i89.i, label %.outer.split.i.preheader.i80.i
+  br i1 %i.pw, label %.loopexit.i.i89.i, label %.outer.split.i.preheader.i80.i
 
 .outer.split.i.preheader.i80.i:                   ; preds = %.thread.i.i75.i
   %i.px = trunc nuw i64 %indvars.iv.i76.i to i16  ; 2 uses
@@ -869,12 +874,7 @@ bb.dn:                                            ; preds = %bb.dl
   %i.qj = phi i64 [ %i.qt, %bb.do ], [ %i.qm, %bb.dm ]
   %i.qk = add i16 %.sroa.024.0.ph124.i.i84.i, -1  ; 2 uses
   %i.ql = icmp eq i16 %i.qk, 0
-  br i1 %i.ql, label %.outer.split.us.i.i89.i, label %.outer.split.i.i81.i
-
-.outer.split.us.i.i89.i:                          ; preds = %.outer.i.i87.i, %.thread.i.i75.i
-  %.promoted127135.i.i90.i = phi i64 [ %.promoted127136.i.i77.i, %.thread.i.i75.i ], [ %.promoted127133.i.i88.i, %.outer.i.i87.i ]
-  %.sroa.015.1.ph.lcssa.i.i91.i = phi i64 [ %.sroa.015.0130.i.i78.i, %.thread.i.i75.i ], [ %i.py, %.outer.i.i87.i ]
-  br i1 %i.pt, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i, label %.thread.i.i75.i
+  br i1 %i.ql, label %.loopexit.i.i89.i, label %.outer.split.i.i81.i
 
 .outer.split.i.i81.i:                             ; preds = %.outer.i.i87.i, %.outer.split.i.preheader.i80.i
   %.promoted127134.i.i82.i = phi i64 [ %.promoted127133.i.i88.i, %.outer.i.i87.i ], [ %.promoted127136.i.i77.i, %.outer.split.i.preheader.i80.i ]
@@ -1061,7 +1061,7 @@ bb.ea:                                            ; preds = %bb.dz
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %.sroa.04.0.i108.lcssa416.i, i64 noundef %i.la, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #17, !noalias !301
   unreachable
 
-_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i: ; preds = %.outer.split.us.i.i89.i, %.preheader.i.i73.i, %._crit_edge.i.i58.i, %bb.ct
+_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i: ; preds = %.loopexit.i.i89.i, %.preheader.i.i73.i, %._crit_edge.i.i58.i, %bb.ct
   call fastcc void @_RNvNtCs7kNFBubu20U_7zlib_rs7deflate9gen_codes(ptr noalias noundef nonnull align 2 %i.kw, i64 noundef 61, i64 noundef %.sroa.0.0.lcssa174.i29.i, ptr noalias noundef nonnull readonly align 2 captures(address, read_provenance) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !301
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !301
@@ -1437,16 +1437,21 @@ bb.fe:                                            ; preds = %bb.fd
   %.not.i128.i.i.i.i = icmp eq i16 %i.vt, 0
   br i1 %.not.i128.i.i.i.i, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i, label %.thread.i.i.i.i
 
-.thread.i.i.i.i:                                  ; preds = %.preheader.i.i.i.i, %.outer.split.us.i.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.outer.split.us.i.i.i.i ], [ %i.xn, %.preheader.i.i.i.i ] ; 5 uses
-  %.promoted127136.i.i.i.i = phi i64 [ %.promoted127135.i.i.i.i, %.outer.split.us.i.i.i.i ], [ %.promoted132.i.i.i.i, %.preheader.i.i.i.i ] ; 3 uses
-  %.sroa.015.0130.i.i.i.i = phi i64 [ %.sroa.015.1.ph.lcssa.i.i.i.i, %.outer.split.us.i.i.i.i ], [ 573, %.preheader.i.i.i.i ] ; 2 uses
+.loopexit.i.i.i.i:                                ; preds = %.outer.i.i.i.i, %.thread.i.i.i.i
+  %.promoted124132.i.i.i.i = phi i64 [ %.promoted127136.i.i.i.i, %.thread.i.i.i.i ], [ %.promoted127133.i.i.i.i, %.outer.i.i.i.i ]
+  %.sroa.015.1.lcssa.i.i.i.i = phi i64 [ %.sroa.015.0130.i.i.i.i, %.thread.i.i.i.i ], [ %i.ym, %.outer.i.i.i.i ]
+  br i1 %i.yh, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i, label %.thread.i.i.i.i
+
+.thread.i.i.i.i:                                  ; preds = %.preheader.i.i.i.i, %.loopexit.i.i.i.i
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.loopexit.i.i.i.i ], [ %i.xn, %.preheader.i.i.i.i ] ; 5 uses
+  %.promoted127136.i.i.i.i = phi i64 [ %.promoted124132.i.i.i.i, %.loopexit.i.i.i.i ], [ %.promoted132.i.i.i.i, %.preheader.i.i.i.i ] ; 3 uses
+  %.sroa.015.0130.i.i.i.i = phi i64 [ %.sroa.015.1.lcssa.i.i.i.i, %.loopexit.i.i.i.i ], [ 573, %.preheader.i.i.i.i ] ; 2 uses
   %i.yh = icmp eq i64 %indvars.iv.i.i.i, 1
   %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i, -1
   %i.yi = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv.i.i.i
   %i.yj = load i16, ptr %i.yi, align 2, !alias.scope !336, !noalias !343, !noundef !4 ; 2 uses
   %i.yk = icmp eq i16 %i.yj, 0
-  br i1 %i.yk, label %.outer.split.us.i.i.i.i, label %.outer.split.i.preheader.i.i.i
+  br i1 %i.yk, label %.loopexit.i.i.i.i, label %.outer.split.i.preheader.i.i.i
 
 .outer.split.i.preheader.i.i.i:                   ; preds = %.thread.i.i.i.i
   %i.yl = trunc nuw i64 %indvars.iv.i.i.i to i16  ; 2 uses
@@ -1490,12 +1495,7 @@ bb.fk:                                            ; preds = %bb.fi
   %i.yx = phi i64 [ %i.zh, %bb.fl ], [ %i.za, %bb.fj ]
   %i.yy = add i16 %.sroa.024.0.ph124.i.i.i.i, -1  ; 2 uses
   %i.yz = icmp eq i16 %i.yy, 0
-  br i1 %i.yz, label %.outer.split.us.i.i.i.i, label %.outer.split.i.i.i.i
-
-.outer.split.us.i.i.i.i:                          ; preds = %.outer.i.i.i.i, %.thread.i.i.i.i
-  %.promoted127135.i.i.i.i = phi i64 [ %.promoted127136.i.i.i.i, %.thread.i.i.i.i ], [ %.promoted127133.i.i.i.i, %.outer.i.i.i.i ]
-  %.sroa.015.1.ph.lcssa.i.i.i.i = phi i64 [ %.sroa.015.0130.i.i.i.i, %.thread.i.i.i.i ], [ %i.ym, %.outer.i.i.i.i ]
-  br i1 %i.yh, label %_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i, label %.thread.i.i.i.i
+  br i1 %i.yz, label %.loopexit.i.i.i.i, label %.outer.split.i.i.i.i
 
 .outer.split.i.i.i.i:                             ; preds = %.outer.i.i.i.i, %.outer.split.i.preheader.i.i.i
   %.promoted127134.i.i.i.i = phi i64 [ %.promoted127133.i.i.i.i, %.outer.i.i.i.i ], [ %.promoted127136.i.i.i.i, %.outer.split.i.preheader.i.i.i ]
@@ -1682,7 +1682,7 @@ bb.fx:                                            ; preds = %bb.fw
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %.sroa.04.0.i.lcssa117.i.i, i64 noundef %i.to, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #17, !noalias !325
   unreachable
 
-_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i: ; preds = %.outer.split.us.i.i.i.i, %.preheader.i.i.i.i, %._crit_edge.i.i.i.i, %bb.eq
+_RINvNtCs7kNFBubu20U_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i: ; preds = %.loopexit.i.i.i.i, %.preheader.i.i.i.i, %._crit_edge.i.i.i.i, %bb.eq
   call fastcc void @_RNvNtCs7kNFBubu20U_7zlib_rs7deflate9gen_codes(ptr noalias noundef nonnull align 2 %i.tk, i64 noundef 39, i64 noundef %.sroa.0.0.lcssa174.i.i.i, ptr noalias noundef nonnull readonly align 2 captures(address, read_provenance) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !326
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !326

@@ -204,11 +204,7 @@ _ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE5beginEv.exit
 _ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE5beginEv.exit
   %i.dv = icmp eq ptr %i.dq, %i.du
   %.not.i114 = icmp eq ptr %i.bt, null            ; 4 uses
-  br i1 %i.dv, label %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.dq, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEED2Ev.exit105, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104
+  br i1 %i.dv, label %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a, label %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit181
   %.037 = phi i64 [ %i.qv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit181 ], [ 0, %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader ] ; 2 uses
@@ -217,13 +213,17 @@ _ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit: 
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 48
   %i.dy = load ptr, ptr %i.dx, align 8
   %i.dz = invoke noundef zeroext i1 %i.dy(ptr noundef nonnull align 8 dereferenceable(8) %i.dq, ptr noundef nonnull align 8 dereferenceable(8) %i.du)
-          to label %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a unwind label %bb.x, !inline_history !307
+          to label %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit unwind label %bb.x, !inline_history !307
 
-_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit
+_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit
   br i1 %i.dz, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104: ; preds = %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a, %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader.split.us
-  %.2477 = phi i1 [ %.1618, %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a ]
+_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.dq, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEED2Ev.exit105, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104: ; preds = %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit, %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a
+  %.2477 = phi i1 [ %.1618, %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit ]
   %i.ea = load ptr, ptr %i.du, align 8, !tbaa !23
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
@@ -234,8 +234,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_
   call void %i.ef(ptr noundef nonnull align 8 dereferenceable(8) %i.dq) #30, !inline_history !308
   br label %_ZN7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEED2Ev.exit105
 
-_ZN7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEED2Ev.exit105: ; preds = %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104
-  %.2478777 = phi i1 [ %.2477, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104 ], [ %.1618, %_ZNK7testing8internal14ParamGeneratorIN12_GLOBAL__N_110TestParamsEE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEED2Ev.exit105: ; preds = %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104
+  %.2478777 = phi i1 [ %.2477, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN12_GLOBAL__N_110TestParamsEEEEclEPS5_.exit.i.i104 ], [ %.1618, %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a ] ; 2 uses
   %i.eg = load ptr, ptr %i.q, align 8, !tbaa !328
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %8, ptr noundef %i.eg)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -328,7 +328,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.cn
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIN12_GLOBAL__N_110TestParamsEEneERKS4_.exit
   %i.fc = load ptr, ptr %i.dq, align 8, !tbaa !23
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 40
   %i.fe = load ptr, ptr %i.fd, align 8

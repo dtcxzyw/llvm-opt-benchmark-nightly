@@ -204,37 +204,22 @@ bb.c:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %.0625.ph897, i64 1 ; 15 uses
   %i.ab = load i8, ptr %.0625.ph897, align 1      ; 13 uses
   switch i16 %.pre, label %.loopexit842.split.us [
-    i16 239, label %2
-    i16 240, label %.split.us
-    i16 217, label %.split873.us
+    i16 239, label %bb.d
+    i16 240, label %.split877.us
+    i16 217, label %13
   ]
 
-.lr.ph.split.us.jt65534:                          ; preds = %bb.f
+.lr.ph.split.us.jt65534:                          ; preds = %.split873.us
   %i.ac = getelementptr inbounds nuw i8, ptr %.0625.ph897, i64 2
   %i.ad = load i8, ptr %i.aa, align 1
   br label %.loopexit842.split.us
 
-2:                                                ; preds = %.lr.ph.split.us
-  %3 = add i8 %i.ab, -66
-  %4 = icmp ult i8 %3, 10
-  br i1 %4, label %bb.e, label %5
+bb.d:                                             ; preds = %.lr.ph.split.us
+  %i.ae = add i8 %i.ab, -66
+  %or.cond.us = icmp ult i8 %i.ae, 10
+  br i1 %or.cond.us, label %bb.e, label %2
 
-5:                                                ; preds = %2
-  %6 = icmp eq i8 %i.ab, 64
-  br i1 %6, label %7, label %bb.d
-
-bb.d:                                             ; preds = %5
-  %i.ae = add i8 %i.ab, -33
-  %or.cond.us = icmp ult i8 %i.ae, 31
-  br i1 %or.cond.us, label %bb.f, label %.split877.us
-
-7:                                                ; preds = %5
-  %8 = load i16, ptr %i.s, align 4
-  store i16 %8, ptr %i.t, align 4
-  %9 = load i32, ptr %i.u, align 4
-  br label %.sink.split.a
-
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.d
   %i.af = and i8 %i.ab, 15
   %i.ag = zext nneg i8 %i.af to i64
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr @_ZL11lookupTable, i64 %i.ag ; 2 uses
@@ -244,39 +229,47 @@ bb.e:                                             ; preds = %2
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
   %i.al = load i16, ptr %i.ak, align 2
   %i.am = zext i16 %i.al to i32
-  br label %.sink.split.a
+  br label %.split.us
 
-.sink.split.a:                                    ; preds = %7, %bb.e
-  %.sink = phi i32 [ %i.am, %bb.e ], [ %9, %7 ]
-  store i32 %.sink, ptr %i.v, align 4
-  br label %bb.f
+2:                                                ; preds = %bb.d
+  %3 = icmp eq i8 %i.ab, 64
+  br i1 %3, label %.sink.split.a, label %bb.f
 
-bb.f:                                             ; preds = %.sink.split.a, %bb.d
-  store i16 -2, ptr %i.m, align 2
-  %10 = load i32, ptr %1, align 4                 ; 2 uses
-  %11 = icmp slt i32 %10, 1
-  %i.an = icmp ult ptr %i.aa, %i.d
-  %12 = select i1 %11, i1 %i.an, i1 false
-  br i1 %12, label %.lr.ph.split.us.jt65534, label %.loopexit841, !llvm.loop !6
+.sink.split.a:                                    ; preds = %2
+  %4 = load i16, ptr %i.s, align 4
+  store i16 %4, ptr %i.t, align 4
+  %5 = load i32, ptr %i.u, align 4
+  br label %.split.us
 
-.split.us:                                        ; preds = %.lr.ph.split.us
-  %13 = add i8 %i.ab, 95
-  %14 = icmp ult i8 %13, 78
-  br i1 %14, label %bb.g, label %bb.t
+bb.f:                                             ; preds = %2
+  %6 = add i8 %i.ab, -33
+  %i.an = icmp ult i8 %6, 31
+  br i1 %i.an, label %.split873.us, label %7
 
-.split873.us:                                     ; preds = %.lr.ph.split.us
-  %.not670 = icmp eq i8 %i.ab, -24
-  %i.ao = load i32, ptr %i.w, align 4             ; 2 uses
-  %.not = icmp eq i32 %i.ao, 0
-  %.pre933 = load ptr, ptr %i.e, align 8          ; 2 uses
-  br i1 %.not, label %bb.z, label %bb.u
-
-.split877.us:                                     ; preds = %bb.d
+7:                                                ; preds = %bb.f
   store i32 12, ptr %1, align 4
   store i16 -2, ptr %i.m, align 2
   br label %bb.dp
 
-bb.g:                                             ; preds = %.split.us
+.split.us:                                        ; preds = %bb.e, %.sink.split.a
+  %.sink = phi i32 [ %5, %.sink.split.a ], [ %i.am, %bb.e ]
+  store i32 %.sink, ptr %i.v, align 4
+  br label %.split873.us
+
+.split873.us:                                     ; preds = %.split.us, %bb.f
+  store i16 -2, ptr %i.m, align 2
+  %i.ao = load i32, ptr %1, align 4               ; 2 uses
+  %8 = icmp slt i32 %i.ao, 1
+  %9 = icmp ult ptr %i.aa, %i.d
+  %10 = select i1 %8, i1 %9, i1 false
+  br i1 %10, label %.lr.ph.split.us.jt65534, label %.loopexit841, !llvm.loop !6
+
+.split877.us:                                     ; preds = %.lr.ph.split.us
+  %11 = add i8 %i.ab, 95
+  %12 = icmp ult i8 %11, 78
+  br i1 %12, label %bb.g, label %bb.t
+
+bb.g:                                             ; preds = %.split877.us
   switch i8 %i.ab, label %bb.s [
     i8 -65, label %bb.h
     i8 -72, label %bb.h
@@ -398,14 +391,21 @@ bb.s:                                             ; preds = %bb.g, %bb.h
   store i32 10, ptr %1, align 4
   br label %bb.dp
 
-bb.t:                                             ; preds = %.split.us
+bb.t:                                             ; preds = %.split877.us
   store i16 -2, ptr %i.m, align 2
   store i32 12, ptr %1, align 4
   br label %bb.dp
 
-bb.u:                                             ; preds = %.split873.us
-  %i.cs = icmp ult ptr %.0607.ph898, %.pre933
-  %i.ct = trunc i32 %i.ao to i16                  ; 2 uses
+13:                                               ; preds = %.lr.ph.split.us
+  %.not670 = icmp eq i8 %i.ab, -24
+  %14 = load i32, ptr %i.w, align 4               ; 2 uses
+  %.not = icmp eq i32 %14, 0
+  %.pre907 = load ptr, ptr %i.e, align 8          ; 2 uses
+  br i1 %.not, label %bb.z, label %bb.u
+
+bb.u:                                             ; preds = %13
+  %i.cs = icmp ult ptr %.0607.ph898, %.pre907
+  %i.ct = trunc i32 %14 to i16                    ; 2 uses
   br i1 %i.cs, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
@@ -446,9 +446,9 @@ bb.y:                                             ; preds = %bb.v, %bb.w, %bb.x
   %.pre932 = load ptr, ptr %i.e, align 8
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.y, %.split873.us
-  %i.dk = phi ptr [ %.pre932, %bb.y ], [ %.pre933, %.split873.us ]
-  %.5612 = phi ptr [ %.4611, %bb.y ], [ %.0607.ph898, %.split873.us ] ; 4 uses
+bb.z:                                             ; preds = %bb.y, %13
+  %i.dk = phi ptr [ %.pre932, %bb.y ], [ %.pre907, %13 ]
+  %.5612 = phi ptr [ %.4611, %bb.y ], [ %.0607.ph898, %13 ] ; 4 uses
   %i.dl = icmp ult ptr %.5612, %i.dk
   %i.dm = select i1 %.not670, i16 32, i16 8205    ; 2 uses
   br i1 %i.dl, label %bb.aa, label %bb.ac
@@ -851,10 +851,10 @@ bb.do:                                            ; preds = %.thread813
   store i32 10, ptr %1, align 4
   br label %bb.dp
 
-bb.dp:                                            ; preds = %bb.s, %bb.t, %bb.do, %.split877.us
-  %i.si = phi i8 [ %i.ab, %bb.s ], [ %i.ab, %bb.t ], [ %i.ed, %bb.do ], [ %i.ab, %.split877.us ]
-  %i.sj = phi ptr [ %i.aa, %bb.s ], [ %i.aa, %bb.t ], [ %i.ee, %bb.do ], [ %i.aa, %.split877.us ]
-  %.26 = phi ptr [ %.0607.ph898, %bb.s ], [ %.0607.ph898, %bb.t ], [ %.25, %bb.do ], [ %.0607.ph898, %.split877.us ]
+bb.dp:                                            ; preds = %bb.s, %bb.t, %bb.do, %7
+  %i.si = phi i8 [ %i.ab, %bb.s ], [ %i.ab, %bb.t ], [ %i.ed, %bb.do ], [ %i.ab, %7 ]
+  %i.sj = phi ptr [ %i.aa, %bb.s ], [ %i.aa, %bb.t ], [ %i.ee, %bb.do ], [ %i.aa, %7 ]
+  %.26 = phi ptr [ %.0607.ph898, %bb.s ], [ %.0607.ph898, %bb.t ], [ %.25, %bb.do ], [ %.0607.ph898, %7 ]
   %i.sk = load ptr, ptr %i.g, align 8
   %i.sl = getelementptr inbounds nuw i8, ptr %i.sk, i64 65
   store i8 %i.si, ptr %i.sl, align 1
@@ -868,10 +868,10 @@ bb.dp:                                            ; preds = %bb.s, %bb.t, %bb.do
   store i32 15, ptr %1, align 4
   br label %bb.ec
 
-.loopexit841:                                     ; preds = %.outer.backedge, %bb.f, %bb.c, %bb.dp
-  %i.so = phi i32 [ %.pre941, %bb.dp ], [ %i.o, %bb.c ], [ %10, %bb.f ], [ %i.co, %.outer.backedge ]
-  %.1626 = phi ptr [ %i.sj, %bb.dp ], [ %i.k, %bb.c ], [ %i.aa, %bb.f ], [ %i.cn, %.outer.backedge ] ; 5 uses
-  %.27 = phi ptr [ %.26, %bb.dp ], [ %i.j, %bb.c ], [ %.0607.ph898, %bb.f ], [ %.0607.ph.be, %.outer.backedge ] ; 7 uses
+.loopexit841:                                     ; preds = %.outer.backedge, %.split873.us, %bb.c, %bb.dp
+  %i.so = phi i32 [ %.pre941, %bb.dp ], [ %i.o, %bb.c ], [ %i.ao, %.split873.us ], [ %i.co, %.outer.backedge ]
+  %.1626 = phi ptr [ %i.sj, %bb.dp ], [ %i.k, %bb.c ], [ %i.aa, %.split873.us ], [ %i.cn, %.outer.backedge ] ; 5 uses
+  %.27 = phi ptr [ %.26, %bb.dp ], [ %i.j, %bb.c ], [ %.0607.ph898, %.split873.us ], [ %.0607.ph.be, %.outer.backedge ] ; 7 uses
   %i.sp = icmp sgt i32 %i.so, 0
   br i1 %i.sp, label %bb.ec, label %bb.dq
 

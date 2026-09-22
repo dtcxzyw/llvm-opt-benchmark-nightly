@@ -204,17 +204,35 @@ bb.gc:                                            ; preds = %bb.fy
 
 .lr.ph84.split.i:                                 ; preds = %.lr.ph84.i
   %i.apm = icmp sgt i32 %i.akb, -1
-  br i1 %i.apm, label %.lr.ph84.split.split.us.i, label %.lr.ph.i, !prof !19
+  br i1 %i.apm, label %.lr.ph84.split.split.us.i, label %.lr.ph.split.i, !prof !19
 
 .lr.ph84.split.split.us.i:                        ; preds = %.lr.ph84.split.i
-  br i1 %i.api, label %.lr.ph.us.us.preheader.i, label %.lr.ph.us.i, !prof !19
+  br i1 %i.api, label %.lr.ph.us.us.preheader.i, label %.lr.ph.i, !prof !19
 
 .lr.ph.us.us.preheader.i:                         ; preds = %.lr.ph84.split.split.us.i
   %wide.trip.count.i = zext i32 %i.akh to i64
   br label %.lr.ph.us.us.i
 
-.lr.ph.us.us.i:                                   ; preds = %..loopexit32_crit_edge.split.us.split.us.us.us.i, %.lr.ph.us.us.preheader.i
-  %.sroa.016.083.us.us.i = phi i32 [ %i.apn, %..loopexit32_crit_edge.split.us.split.us.us.us.i ], [ 0, %.lr.ph.us.us.preheader.i ] ; 2 uses
+._crit_edge.split.i:                              ; preds = %.lr.ph.us.i, %.lr.ph84.i, %bb.gc
+  %4 = add i32 %i.akj, -1
+  %5 = add i32 %i.akl, -1
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.bb), !noalias !1416
+  store ptr %.sroa.410.0.copyload.i, ptr %i.bb, align 8, !noalias !1416
+  %6 = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
+  store i64 %.sroa.511.0.copyload.i, ptr %6, align 8, !noalias !1416
+  %7 = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
+  store <2 x i32> %i.aov, ptr %7, align 8, !noalias !1416
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.ba), !noalias !1416
+  store i64 13950255104, ptr %i.ba, align 8, !noalias !1416
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.az), !noalias !1416
+  store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.az, align 16, !noalias !1416
+  %8 = getelementptr inbounds nuw i8, ptr %i.az, i64 16
+  store <2 x float> zeroinitializer, ptr %8, align 16, !noalias !1416
+  invoke void @_RNvMs0_NtCsfVrisfeHJNS_9tiny_skia7painterNtNtB7_6pixmap6Pixmap11draw_pixmap(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %4, i32 noundef %5, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.bb, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.ba, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(24) %i.az, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.val62)
+          to label %bb.gg unwind label %bb.fz, !noalias !1415
+
+.lr.ph.us.us.i:                                   ; preds = %.lr.ph.us.i, %.lr.ph.us.us.preheader.i
+  %.sroa.016.083.us.us.i = phi i32 [ %i.apn, %.lr.ph.us.i ], [ 0, %.lr.ph.us.us.preheader.i ] ; 2 uses
   %i.apn = add nuw i32 %.sroa.016.083.us.us.i, 1  ; 3 uses
   br label %bb.gd
 
@@ -249,39 +267,17 @@ bb.gf:                                            ; preds = %bb.ge
   %i.aqh = getelementptr inbounds nuw [4 x i8], ptr %.sroa.410.0.copyload.i, i64 %i.apw
   store i32 %i.aqg, ptr %i.aqh, align 4, !noalias !1416
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %..loopexit32_crit_edge.split.us.split.us.us.us.i, label %bb.gd
+  br i1 %exitcond.not.i, label %.lr.ph.us.i, label %bb.gd
 
-..loopexit32_crit_edge.split.us.split.us.us.us.i: ; preds = %bb.gf
-  %exitcond156.not.i = icmp eq i32 %i.apn, %i.akf
-  br i1 %exitcond156.not.i, label %._crit_edge.split.i, label %.lr.ph.us.us.i
+.lr.ph.us.i:                                      ; preds = %bb.gf
+  %.not130.i = icmp eq i32 %i.apn, %i.akf
+  br i1 %.not130.i, label %._crit_edge.split.i, label %.lr.ph.us.us.i
 
-.lr.ph.us.i:                                      ; preds = %.lr.ph84.split.split.us.i
-  %.not130.i = icmp eq i64 %i.apf, 0
-  br i1 %.not130.i, label %.split54.us.invoke.i, label %.split52.us.i
-
-._crit_edge.split.i:                              ; preds = %..loopexit32_crit_edge.split.us.split.us.us.us.i, %.lr.ph84.i, %bb.gc
-  %4 = add i32 %i.akj, -1
-  %5 = add i32 %i.akl, -1
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.bb), !noalias !1416
-  store ptr %.sroa.410.0.copyload.i, ptr %i.bb, align 8, !noalias !1416
-  %6 = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  store i64 %.sroa.511.0.copyload.i, ptr %6, align 8, !noalias !1416
-  %7 = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
-  store <2 x i32> %i.aov, ptr %7, align 8, !noalias !1416
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.ba), !noalias !1416
-  store i64 13950255104, ptr %i.ba, align 8, !noalias !1416
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.az), !noalias !1416
-  store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.az, align 16, !noalias !1416
-  %8 = getelementptr inbounds nuw i8, ptr %i.az, i64 16
-  store <2 x float> zeroinitializer, ptr %8, align 16, !noalias !1416
-  invoke void @_RNvMs0_NtCsfVrisfeHJNS_9tiny_skia7painterNtNtB7_6pixmap6Pixmap11draw_pixmap(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %4, i32 noundef %5, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.bb, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.ba, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(24) %i.az, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.val62)
-          to label %bb.gg unwind label %bb.fz, !noalias !1415
-
-.lr.ph.i:                                         ; preds = %.lr.ph84.split.i
+.lr.ph.i:                                         ; preds = %.lr.ph84.split.split.us.i
   %.not129.i = icmp eq i64 %i.apf, 0
-  br i1 %.not129.i, label %.split54.us.invoke.i, label %bb.gi
+  br i1 %.not129.i, label %.split54.us.invoke.i, label %.split52.us.i
 
-.split52.us.i:                                    ; preds = %.lr.ph.us.i
+.split52.us.i:                                    ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap), !noalias !1419
   store i32 0, ptr %i.ap, align 4, !noalias !1419
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao), !noalias !1419
@@ -317,7 +313,11 @@ bb.gh:                                            ; preds = %bb.gg
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.410.0.copyload.i, i64 noundef %i.aky, i64 noundef range(i64 1, -9223372036854775807) 1) #26, !noalias !1415
   br label %.loopexit
 
-bb.gi:                                            ; preds = %.lr.ph.i
+.lr.ph.split.i:                                   ; preds = %.lr.ph84.split.i
+  %.not118.i = icmp eq i64 %i.apf, 0
+  br i1 %.not118.i, label %.split54.us.invoke.i, label %bb.gi
+
+bb.gi:                                            ; preds = %.lr.ph.split.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as), !noalias !1420
   store i32 0, ptr %i.as, align 4, !noalias !1420
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar), !noalias !1420
@@ -329,10 +329,10 @@ bb.gi:                                            ; preds = %.lr.ph.i
 bb.gj:                                            ; preds = %bb.gb
   unreachable
 
-.split54.us.invoke.i:                             ; preds = %bb.ge, %bb.gd, %.lr.ph.i, %.lr.ph.us.i
-  %i.aqk = phi i64 [ 0, %.lr.ph.i ], [ 0, %.lr.ph.us.i ], [ %i.apw, %bb.ge ], [ %i.apr, %bb.gd ]
-  %i.aql = phi i64 [ 0, %.lr.ph.i ], [ 0, %.lr.ph.us.i ], [ %i.apd, %bb.ge ], [ %i.apf, %bb.gd ]
-  %i.aqm = phi ptr [ @18, %.lr.ph.i ], [ @18, %.lr.ph.us.i ], [ @21, %bb.ge ], [ @18, %bb.gd ]
+.split54.us.invoke.i:                             ; preds = %bb.ge, %bb.gd, %.lr.ph.split.i, %.lr.ph.i
+  %i.aqk = phi i64 [ 0, %.lr.ph.split.i ], [ 0, %.lr.ph.i ], [ %i.apw, %bb.ge ], [ %i.apr, %bb.gd ]
+  %i.aql = phi i64 [ 0, %.lr.ph.split.i ], [ 0, %.lr.ph.i ], [ %i.apd, %bb.ge ], [ %i.apf, %bb.gd ]
+  %i.aqm = phi ptr [ @18, %.lr.ph.split.i ], [ @18, %.lr.ph.i ], [ @21, %bb.ge ], [ @18, %bb.gd ]
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.aqk, i64 noundef %i.aql, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aqm) #29
           to label %.split54.us.cont.i unwind label %bb.fz, !noalias !1416
 
@@ -622,10 +622,10 @@ bb.hg:                                            ; preds = %bb.hc
 
 .lr.ph97.split.i:                                 ; preds = %.lr.ph97.i
   %i.aup = icmp sgt i32 %i.aqw, -1
-  br i1 %i.aup, label %.lr.ph97.split.split.us.i, label %.lr.ph.i115, !prof !19
+  br i1 %i.aup, label %.lr.ph97.split.split.us.i, label %.lr.ph.split.i115, !prof !19
 
 .lr.ph97.split.split.us.i:                        ; preds = %.lr.ph97.split.i
-  br i1 %i.auo, label %.lr.ph.us.us.preheader.i117, label %.lr.ph.us.i116, !prof !19
+  br i1 %i.auo, label %.lr.ph.us.us.preheader.i117, label %.lr.ph.i115, !prof !19
 
 .lr.ph.us.us.preheader.i117:                      ; preds = %.lr.ph97.split.split.us.i
   %wide.trip.count.i118 = zext i32 %i.arc to i64
@@ -634,8 +634,26 @@ bb.hg:                                            ; preds = %bb.hc
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
   br label %.lr.ph.us.us.i119
 
-.lr.ph.us.us.i119:                                ; preds = %..loopexit34_crit_edge.split.us.split.us.us.us.i, %.lr.ph.us.us.preheader.i117
-  %.sroa.012.096.us.us.i = phi i32 [ %i.auq, %..loopexit34_crit_edge.split.us.split.us.us.us.i ], [ 0, %.lr.ph.us.us.preheader.i117 ] ; 3 uses
+._crit_edge.split.i123:                           ; preds = %.lr.ph.us.i116, %.lr.ph97.i, %bb.hg
+  %9 = add i32 %i.are, -1
+  %10 = add i32 %i.arg, -1
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.al), !noalias !1427
+  store ptr %.sroa.410.0.copyload.i106, ptr %i.al, align 8, !noalias !1427
+  %11 = getelementptr inbounds nuw i8, ptr %i.al, i64 8
+  store i64 %.sroa.511.0.copyload.i108, ptr %11, align 8, !noalias !1427
+  %12 = getelementptr inbounds nuw i8, ptr %i.al, i64 16
+  store <2 x i32> %i.auc, ptr %12, align 8, !noalias !1427
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !1427
+  store i64 13950255104, ptr %i.ak, align 8, !noalias !1427
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !noalias !1427
+  store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.aj, align 16, !noalias !1427
+  %13 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
+  store <2 x float> zeroinitializer, ptr %13, align 16, !noalias !1427
+  invoke void @_RNvMs0_NtCsfVrisfeHJNS_9tiny_skia7painterNtNtB7_6pixmap6Pixmap11draw_pixmap(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %9, i32 noundef %10, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.al, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.ak, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(24) %i.aj, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.val63)
+          to label %bb.hl unwind label %.loopexit.split-lp.i, !noalias !1425
+
+.lr.ph.us.us.i119:                                ; preds = %.lr.ph.us.i116, %.lr.ph.us.us.preheader.i117
+  %.sroa.012.096.us.us.i = phi i32 [ %i.auq, %.lr.ph.us.i116 ], [ 0, %.lr.ph.us.us.preheader.i117 ] ; 3 uses
   %i.auq = add nuw i32 %.sroa.012.096.us.us.i, 1  ; 3 uses
   %i.aur = add i32 %.sroa.012.096.us.us.i, %i.are ; 2 uses
   %i.aus = icmp slt i32 %i.aur, 0
@@ -691,44 +709,22 @@ bb.hk:                                            ; preds = %bb.hj
   %i.avs = getelementptr inbounds nuw [4 x i8], ptr %.sroa.410.0.copyload.i106, i64 %i.avg
   store i32 %i.avr, ptr %i.avs, align 4, !noalias !1427
   %exitcond.not.i122 = icmp eq i64 %indvars.iv.next.i121, %wide.trip.count.i118
-  br i1 %exitcond.not.i122, label %..loopexit34_crit_edge.split.us.split.us.us.us.i, label %bb.hh
-
-..loopexit34_crit_edge.split.us.split.us.us.us.i: ; preds = %bb.hk
-  %exitcond131.not.i = icmp eq i32 %i.auq, %i.ara
-  br i1 %exitcond131.not.i, label %._crit_edge.split.i123, label %.lr.ph.us.us.i119
+  br i1 %exitcond.not.i122, label %.lr.ph.us.i116, label %bb.hh
 
 .loopexit35.split.us.split.us.split.us.split.us.i: ; preds = %bb.hi
   %lpad.loopexit.us.us.us.us.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.hd
 
-.lr.ph.us.i116:                                   ; preds = %.lr.ph97.split.split.us.i
-  %.not118.i.a = icmp eq i64 %i.aul, 0
-  br i1 %.not118.i.a, label %.split.us.invoke.i, label %.split57.us.i
+.lr.ph.us.i116:                                   ; preds = %bb.hk
+  %.not118.i.a = icmp eq i32 %i.auq, %i.ara
+  br i1 %.not118.i.a, label %._crit_edge.split.i123, label %.lr.ph.us.us.i119
 
-._crit_edge.split.i123:                           ; preds = %..loopexit34_crit_edge.split.us.split.us.us.us.i, %.lr.ph97.i, %bb.hg
-  %9 = add i32 %i.are, -1
-  %10 = add i32 %i.arg, -1
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.al), !noalias !1427
-  store ptr %.sroa.410.0.copyload.i106, ptr %i.al, align 8, !noalias !1427
-  %11 = getelementptr inbounds nuw i8, ptr %i.al, i64 8
-  store i64 %.sroa.511.0.copyload.i108, ptr %11, align 8, !noalias !1427
-  %12 = getelementptr inbounds nuw i8, ptr %i.al, i64 16
-  store <2 x i32> %i.auc, ptr %12, align 8, !noalias !1427
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !1427
-  store i64 13950255104, ptr %i.ak, align 8, !noalias !1427
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !noalias !1427
-  store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.aj, align 16, !noalias !1427
-  %13 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
-  store <2 x float> zeroinitializer, ptr %13, align 16, !noalias !1427
-  invoke void @_RNvMs0_NtCsfVrisfeHJNS_9tiny_skia7painterNtNtB7_6pixmap6Pixmap11draw_pixmap(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %9, i32 noundef %10, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.al, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.ak, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(24) %i.aj, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.val63)
-          to label %bb.hl unwind label %.loopexit.split-lp.i, !noalias !1425
-
-.lr.ph.i115:                                      ; preds = %.lr.ph97.split.i
+.lr.ph.i115:                                      ; preds = %.lr.ph97.split.split.us.i
   %.not117.i = icmp eq i64 %i.aul, 0
-  br i1 %.not117.i, label %.split.us.invoke.i, label %bb.hn
+  br i1 %.not117.i, label %.split.us.invoke.i, label %.split57.us.i
 
-.split57.us.i:                                    ; preds = %.lr.ph.us.i116
+.split57.us.i:                                    ; preds = %.lr.ph.i115
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !1431
   store i32 0, ptr %i.x, align 4, !noalias !1431
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !1431
@@ -748,7 +744,11 @@ bb.hm:                                            ; preds = %bb.hl
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.410.0.copyload.i106, i64 noundef %i.art, i64 noundef range(i64 1, -9223372036854775807) 1) #26, !noalias !1425
   br label %.loopexit
 
-bb.hn:                                            ; preds = %.lr.ph.i115
+.lr.ph.split.i115:                                ; preds = %.lr.ph97.split.i
+  %.not104.i = icmp eq i64 %i.aul, 0
+  br i1 %.not104.i, label %.split.us.invoke.i, label %bb.hn
+
+bb.hn:                                            ; preds = %.lr.ph.split.i115
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !1432
   store i32 0, ptr %i.aa, align 4, !noalias !1432
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !1432
@@ -773,10 +773,10 @@ bb.hn:                                            ; preds = %.lr.ph.i115
 .cont.i:                                          ; preds = %.invoke.i
   unreachable
 
-.split.us.invoke.i:                               ; preds = %bb.hj, %bb.hh, %.lr.ph.i115, %.lr.ph.us.i116
-  %i.avv = phi i64 [ 0, %.lr.ph.i115 ], [ 0, %.lr.ph.us.i116 ], [ %i.avg, %bb.hj ], [ %i.auw, %bb.hh ]
-  %i.avw = phi i64 [ 0, %.lr.ph.i115 ], [ 0, %.lr.ph.us.i116 ], [ %i.auj, %bb.hj ], [ %i.aul, %bb.hh ]
-  %i.avx = phi ptr [ @18, %.lr.ph.i115 ], [ @18, %.lr.ph.us.i116 ], [ @21, %bb.hj ], [ @18, %bb.hh ]
+.split.us.invoke.i:                               ; preds = %bb.hj, %bb.hh, %.lr.ph.split.i115, %.lr.ph.i115
+  %i.avv = phi i64 [ 0, %.lr.ph.split.i115 ], [ 0, %.lr.ph.i115 ], [ %i.avg, %bb.hj ], [ %i.auw, %bb.hh ]
+  %i.avw = phi i64 [ 0, %.lr.ph.split.i115 ], [ 0, %.lr.ph.i115 ], [ %i.auj, %bb.hj ], [ %i.aul, %bb.hh ]
+  %i.avx = phi ptr [ @18, %.lr.ph.split.i115 ], [ @18, %.lr.ph.i115 ], [ @21, %bb.hj ], [ @18, %bb.hh ]
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.avv, i64 noundef %i.avw, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.avx) #29
           to label %.split.us.cont.i unwind label %.loopexit.split-lp.i, !noalias !1427
 
@@ -1152,7 +1152,7 @@ bb.ik:                                            ; preds = %bb.ij
   %i.bbn = icmp eq i64 %i.bbm, 0
   br i1 %i.bbn, label %bb.io, label %bb.in
 
-.loopexit.split-lp.i167:                          ; preds = %.split64.us.i, %.split.us.invoke.i179, %.invoke.i175, %._crit_edge.split.i196, %bb.in
+.loopexit.split-lp.i167:                          ; preds = %.split64.us.i, %.split.us.invoke.i179, %.invoke.i175, %._crit_edge.split.i194, %bb.in
   %lpad.loopexit.split-lp.i168 = landingpad { ptr, i32 }
           cleanup
   br label %bb.il
@@ -1174,7 +1174,7 @@ bb.in:                                            ; preds = %bb.ik, %bb.ij
 bb.io:                                            ; preds = %bb.ik
   %i.bbp = lshr exact i64 %.sroa.511.0.copyload.i161, 2 ; 2 uses
   %.not127.i171 = icmp eq i32 %i.axe, 0
-  br i1 %.not127.i171, label %._crit_edge.split.i196, label %.lr.ph109.i
+  br i1 %.not127.i171, label %._crit_edge.split.i194, label %.lr.ph109.i
 
 .lr.ph109.i:                                      ; preds = %bb.io
   %.not128.i172 = icmp eq i32 %i.axg, 0
@@ -1185,14 +1185,14 @@ bb.io:                                            ; preds = %bb.ik
   %i.bbu = icmp sgt i32 %i.axc, -1
   %i.bbv = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.bbw = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
-  br i1 %.not128.i172, label %._crit_edge.split.i196, label %.lr.ph109.split.i
+  br i1 %.not128.i172, label %._crit_edge.split.i194, label %.lr.ph109.split.i
 
 .lr.ph109.split.i:                                ; preds = %.lr.ph109.i
   %i.bbx = icmp sgt i32 %i.axa, -1
-  br i1 %i.bbx, label %.lr.ph109.split.split.us.i, label %.lr.ph.i173, !prof !19
+  br i1 %i.bbx, label %.lr.ph109.split.split.us.i, label %.lr.ph.split.i171, !prof !19
 
 .lr.ph109.split.split.us.i:                       ; preds = %.lr.ph109.split.i
-  br i1 %i.bbu, label %.lr.ph.us.us.preheader.i183, label %.lr.ph.us.i181, !prof !19
+  br i1 %i.bbu, label %.lr.ph.us.us.preheader.i183, label %.lr.ph.i173, !prof !19
 
 .lr.ph.us.us.preheader.i183:                      ; preds = %.lr.ph109.split.split.us.i
   %wide.trip.count.i184 = zext i32 %i.axg to i64
@@ -1206,8 +1206,26 @@ bb.io:                                            ; preds = %bb.ik
   %i.bcc = shufflevector <2 x float> %i.bcb, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.us.us.i185
 
-.lr.ph.us.us.i185:                                ; preds = %..loopexit34_crit_edge.split.us.split.us.us.us.i195, %.lr.ph.us.us.preheader.i183
-  %.sroa.012.0108.us.us.i = phi i32 [ %i.bcd, %..loopexit34_crit_edge.split.us.split.us.us.us.i195 ], [ 0, %.lr.ph.us.us.preheader.i183 ] ; 3 uses
+._crit_edge.split.i194:                           ; preds = %.lr.ph.us.i181, %.lr.ph109.i, %bb.io
+  %14 = add i32 %i.axi, -1
+  %15 = add i32 %i.axk, -1
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !1438
+  store ptr %.sroa.410.0.copyload.i159, ptr %i.s, align 8, !noalias !1438
+  %16 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  store i64 %.sroa.511.0.copyload.i161, ptr %16, align 8, !noalias !1438
+  %17 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  store <2 x i32> %i.bbi, ptr %17, align 8, !noalias !1438
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !1438
+  store i64 13950255104, ptr %i.r, align 8, !noalias !1438
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1438
+  store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.q, align 16, !noalias !1438
+  %18 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  store <2 x float> zeroinitializer, ptr %18, align 16, !noalias !1438
+  invoke void @_RNvMs0_NtCsfVrisfeHJNS_9tiny_skia7painterNtNtB7_6pixmap6Pixmap11draw_pixmap(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %14, i32 noundef %15, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.s, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.r, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(24) %i.q, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.val65)
+          to label %bb.it unwind label %.loopexit.split-lp.i167, !noalias !1436
+
+.lr.ph.us.us.i185:                                ; preds = %.lr.ph.us.i181, %.lr.ph.us.us.preheader.i183
+  %.sroa.012.0108.us.us.i = phi i32 [ %i.bcd, %.lr.ph.us.i181 ], [ 0, %.lr.ph.us.us.preheader.i183 ] ; 3 uses
   %i.bcd = add nuw i32 %.sroa.012.0108.us.us.i, 1 ; 3 uses
   %i.bce = add i32 %.sroa.012.0108.us.us.i, %i.axi ; 2 uses
   %i.bcf = icmp slt i32 %i.bce, 0
@@ -1292,44 +1310,22 @@ bb.is:                                            ; preds = %bb.ir
   %i.bdu = getelementptr inbounds nuw [4 x i8], ptr %.sroa.410.0.copyload.i159, i64 %i.bdi
   store i32 %i.bdt, ptr %i.bdu, align 4, !noalias !1438
   %exitcond.not.i194 = icmp eq i64 %indvars.iv.next.i189, %wide.trip.count.i184
-  br i1 %exitcond.not.i194, label %..loopexit34_crit_edge.split.us.split.us.us.us.i195, label %bb.ip
-
-..loopexit34_crit_edge.split.us.split.us.us.us.i195: ; preds = %bb.is
-  %exitcond145.not.i = icmp eq i32 %i.bcd, %i.axe
-  br i1 %exitcond145.not.i, label %._crit_edge.split.i196, label %.lr.ph.us.us.i185
+  br i1 %exitcond.not.i194, label %.lr.ph.us.i181, label %bb.ip
 
 .loopexit35.split.us.split.us.split.us.split.us.i192: ; preds = %.noexc81.us.us.us.us.i, %bb.iq
   %lpad.loopexit.us.us.us.us.i193 = landingpad { ptr, i32 }
           cleanup
   br label %bb.il
 
-.lr.ph.us.i181:                                   ; preds = %.lr.ph109.split.split.us.i
-  %.not130.i182 = icmp eq i64 %i.bbr, 0
-  br i1 %.not130.i182, label %.split.us.invoke.i179, label %.split61.us.i
+.lr.ph.us.i181:                                   ; preds = %bb.is
+  %.not130.i182 = icmp eq i32 %i.bcd, %i.axe
+  br i1 %.not130.i182, label %._crit_edge.split.i194, label %.lr.ph.us.us.i185
 
-._crit_edge.split.i196:                           ; preds = %..loopexit34_crit_edge.split.us.split.us.us.us.i195, %.lr.ph109.i, %bb.io
-  %14 = add i32 %i.axi, -1
-  %15 = add i32 %i.axk, -1
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !1438
-  store ptr %.sroa.410.0.copyload.i159, ptr %i.s, align 8, !noalias !1438
-  %16 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store i64 %.sroa.511.0.copyload.i161, ptr %16, align 8, !noalias !1438
-  %17 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store <2 x i32> %i.bbi, ptr %17, align 8, !noalias !1438
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !1438
-  store i64 13950255104, ptr %i.r, align 8, !noalias !1438
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1438
-  store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.q, align 16, !noalias !1438
-  %18 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  store <2 x float> zeroinitializer, ptr %18, align 16, !noalias !1438
-  invoke void @_RNvMs0_NtCsfVrisfeHJNS_9tiny_skia7painterNtNtB7_6pixmap6Pixmap11draw_pixmap(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %14, i32 noundef %15, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.s, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.r, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(24) %i.q, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.val65)
-          to label %bb.it unwind label %.loopexit.split-lp.i167, !noalias !1436
-
-.lr.ph.i173:                                      ; preds = %.lr.ph109.split.i
+.lr.ph.i173:                                      ; preds = %.lr.ph109.split.split.us.i
   %.not129.i174 = icmp eq i64 %i.bbr, 0
-  br i1 %.not129.i174, label %.split.us.invoke.i179, label %bb.iv
+  br i1 %.not129.i174, label %.split.us.invoke.i179, label %.split61.us.i
 
-.split61.us.i:                                    ; preds = %.lr.ph.us.i181
+.split61.us.i:                                    ; preds = %.lr.ph.i173
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1444
   store i32 0, ptr %i.d, align 4, !noalias !1444
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1444
@@ -1338,7 +1334,7 @@ bb.is:                                            ; preds = %bb.ir
   store ptr %i.d, ptr %i.b, align 8, !noalias !1444
   br label %.invoke.i175
 
-bb.it:                                            ; preds = %._crit_edge.split.i196
+bb.it:                                            ; preds = %._crit_edge.split.i194
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !1438
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !1438
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !1438
@@ -1349,7 +1345,11 @@ bb.iu:                                            ; preds = %bb.it
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.410.0.copyload.i159, i64 noundef %i.axx, i64 noundef range(i64 1, -9223372036854775807) 1) #26, !noalias !1436
   br label %.loopexit366
 
-bb.iv:                                            ; preds = %.lr.ph.i173
+.lr.ph.split.i171:                                ; preds = %.lr.ph109.split.i
+  %.not116.i172 = icmp eq i64 %i.bbr, 0
+  br i1 %.not116.i172, label %.split.us.invoke.i179, label %bb.iv
+
+bb.iv:                                            ; preds = %.lr.ph.split.i171
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !1445
   store i32 0, ptr %i.g, align 4, !noalias !1445
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !1445
@@ -1374,10 +1374,10 @@ bb.iv:                                            ; preds = %.lr.ph.i173
 .cont.i178:                                       ; preds = %.invoke.i175
   unreachable
 
-.split.us.invoke.i179:                            ; preds = %bb.ir, %bb.ip, %.lr.ph.i173, %.lr.ph.us.i181
-  %i.bdx = phi i64 [ 0, %.lr.ph.i173 ], [ 0, %.lr.ph.us.i181 ], [ %i.bdi, %bb.ir ], [ %i.bck, %bb.ip ]
-  %i.bdy = phi i64 [ 0, %.lr.ph.i173 ], [ 0, %.lr.ph.us.i181 ], [ %i.bbp, %bb.ir ], [ %i.bbr, %bb.ip ]
-  %i.bdz = phi ptr [ @18, %.lr.ph.i173 ], [ @18, %.lr.ph.us.i181 ], [ @21, %bb.ir ], [ @18, %bb.ip ]
+.split.us.invoke.i179:                            ; preds = %bb.ir, %bb.ip, %.lr.ph.split.i171, %.lr.ph.i173
+  %i.bdx = phi i64 [ 0, %.lr.ph.split.i171 ], [ 0, %.lr.ph.i173 ], [ %i.bdi, %bb.ir ], [ %i.bck, %bb.ip ]
+  %i.bdy = phi i64 [ 0, %.lr.ph.split.i171 ], [ 0, %.lr.ph.i173 ], [ %i.bbp, %bb.ir ], [ %i.bbr, %bb.ip ]
+  %i.bdz = phi ptr [ @18, %.lr.ph.split.i171 ], [ @18, %.lr.ph.i173 ], [ @21, %bb.ir ], [ @18, %bb.ip ]
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.bdx, i64 noundef %i.bdy, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bdz) #29
           to label %.split.us.cont.i180 unwind label %.loopexit.split-lp.i167, !noalias !1438
 

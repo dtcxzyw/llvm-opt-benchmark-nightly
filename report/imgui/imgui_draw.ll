@@ -205,16 +205,16 @@ bb.r:                                             ; preds = %.critedge.i362.us
   %spec.select.i366.us = getelementptr inbounds nuw i8, ptr %.3312438.us, i64 %spec.select.idx.i365.us
   br label %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us
 
-_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us: ; preds = %bb.r, %.critedge.i362.us
+_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us: ; preds = %.critedge.i362.us, %bb.r
   %.2.i364.us = phi ptr [ %.3312438.us, %.critedge.i362.us ], [ %spec.select.i366.us, %bb.r ] ; 2 uses
   %i.el = icmp ult ptr %.2.i364.us, %.2
   br i1 %i.el, label %.lr.ph440.split.us.split.peel.next, label %.loopexit, !llvm.loop !587
 
 .split.us:                                        ; preds = %.lr.ph440.split.us.split.peel.next, %bb.m, %bb.i, %.lr.ph440
-  %.us-phi451 = phi float [ %.1327436.us.us, %bb.m ], [ %.1327.ph471, %.lr.ph440 ], [ %.1327.ph471, %bb.i ], [ %.0326, %.lr.ph440.split.us.split.peel.next ] ; 4 uses
-  %.us-phi452 = phi float [ %.3324437.us.us, %bb.m ], [ %.3324.ph472, %.lr.ph440 ], [ %.3324.ph472, %bb.i ], [ %.3324437.us, %.lr.ph440.split.us.split.peel.next ] ; 5 uses
-  %.us-phi453 = phi ptr [ %.3312438.us.us, %bb.m ], [ %.3312.ph473, %.lr.ph440 ], [ %.3312.ph473, %bb.i ], [ %.3312438.us, %.lr.ph440.split.us.split.peel.next ] ; 4 uses
-  %.us-phi454 = phi ptr [ %.1285.us.us, %bb.m ], [ %.0284.ph480, %.lr.ph440 ], [ %.1285.us.peel, %bb.i ], [ %i.ee, %.lr.ph440.split.us.split.peel.next ]
+  %.us-phi451 = phi float [ %.1327.ph471, %.lr.ph440 ], [ %.1327436.us.us, %bb.m ], [ %.1327.ph471, %bb.i ], [ %.0326, %.lr.ph440.split.us.split.peel.next ] ; 4 uses
+  %.us-phi452 = phi float [ %.3324.ph472, %.lr.ph440 ], [ %.3324437.us.us, %bb.m ], [ %.3324.ph472, %bb.i ], [ %.3324437.us, %.lr.ph440.split.us.split.peel.next ] ; 5 uses
+  %.us-phi453 = phi ptr [ %.3312.ph473, %.lr.ph440 ], [ %.3312438.us.us, %bb.m ], [ %.3312.ph473, %bb.i ], [ %.3312438.us, %.lr.ph440.split.us.split.peel.next ] ; 4 uses
+  %.us-phi454 = phi ptr [ %.0284.ph480, %.lr.ph440 ], [ %.1285.us.us, %bb.m ], [ %.1285.us.peel, %bb.i ], [ %i.ee, %.lr.ph440.split.us.split.peel.next ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #38
   %i.em = load i8, ptr %.us-phi453, align 1, !tbaa !50 ; 2 uses
   %i.en = sext i8 %i.em to i32                    ; 2 uses
@@ -499,10 +499,10 @@ bb.aq:                                            ; preds = %bb.ao
   %i.jk = icmp ult ptr %.4313, %.2
   br i1 %i.jk, label %.lr.ph440, label %.loopexit
 
-.loopexit:                                        ; preds = %.outer, %bb.j, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel, %bb.q, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us, %bb.n, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us, %bb.g, %.thread395
-  %.0299.ph422 = phi ptr [ %.0299.ph474, %.thread395 ], [ %.0299.ph474, %bb.n ], [ %.0299.ph474, %bb.q ], [ %i.ct, %bb.g ], [ %.0299.ph474, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us ], [ %.0299.ph474, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us ], [ %.6305, %.outer ], [ %.0299.ph474, %bb.j ], [ %.0299.ph474, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel ] ; 2 uses
-  %.0291.ph420 = phi ptr [ %.0291.ph476, %.thread395 ], [ %.0291.ph476, %bb.n ], [ %.0291.ph476, %bb.q ], [ %i.cu, %bb.g ], [ %.0291.ph476, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us ], [ %.0291.ph476, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us ], [ %.6297, %.outer ], [ %.0291.ph476, %bb.j ], [ %.0291.ph476, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel ] ; 2 uses
-  %.0287.ph418 = phi i32 [ %.0287.ph478, %.thread395 ], [ %.0287.ph478, %bb.n ], [ %.0287.ph478, %bb.q ], [ %i.cv, %bb.g ], [ %.0287.ph478, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us ], [ %.0287.ph478, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us ], [ %.6, %.outer ], [ %.0287.ph478, %bb.j ], [ %.0287.ph478, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel ]
+.loopexit:                                        ; preds = %.outer, %bb.j, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us, %bb.q, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us, %bb.n, %bb.g, %.thread395
+  %.0299.ph422 = phi ptr [ %.0299.ph474, %.thread395 ], [ %.0299.ph474, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us ], [ %.0299.ph474, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us ], [ %i.ct, %bb.g ], [ %.0299.ph474, %bb.n ], [ %.0299.ph474, %bb.q ], [ %.6305, %.outer ], [ %.0299.ph474, %bb.j ], [ %.0299.ph474, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel ] ; 2 uses
+  %.0291.ph420 = phi ptr [ %.0291.ph476, %.thread395 ], [ %.0291.ph476, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us ], [ %.0291.ph476, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us ], [ %i.cu, %bb.g ], [ %.0291.ph476, %bb.n ], [ %.0291.ph476, %bb.q ], [ %.6297, %.outer ], [ %.0291.ph476, %bb.j ], [ %.0291.ph476, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel ] ; 2 uses
+  %.0287.ph418 = phi i32 [ %.0287.ph478, %.thread395 ], [ %.0287.ph478, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.us ], [ %.0287.ph478, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us ], [ %i.cv, %bb.g ], [ %.0287.ph478, %bb.n ], [ %.0287.ph478, %bb.q ], [ %.6, %.outer ], [ %.0287.ph478, %bb.j ], [ %.0287.ph478, %_Z31ImTextCalcWordWrapNextLineStartPKcS0_i.exit372.us.peel ]
   %i.jl = load i32, ptr %1, align 8, !tbaa !104   ; 3 uses
   %.not358 = icmp eq i32 %i.cw, %i.jl
   br i1 %.not358, label %bb.aw, label %bb.ar

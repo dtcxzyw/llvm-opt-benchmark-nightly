@@ -205,8 +205,8 @@ bb.ae:                                            ; preds = %._crit_edge137
   %i.gm = load ptr, ptr %i.gl, align 8, !tbaa !21
   br label %.lr.ph.i.us
 
-.lr.ph.i.us:                                      ; preds = %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.us, %.lr.ph141.split.us
-  %.2140.us = phi i32 [ 0, %.lr.ph141.split.us ], [ %3, %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.us ] ; 3 uses
+.lr.ph.i.us:                                      ; preds = %.lr.ph141.split.us, %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit
+  %.2140.us = phi i32 [ 0, %.lr.ph141.split.us ], [ %3, %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit ] ; 3 uses
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ag, %.lr.ph.i.us
@@ -214,17 +214,12 @@ bb.af:                                            ; preds = %bb.ag, %.lr.ph.i.us
   %i.gn = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %indvars.iv.i.us
   %i.go = load i32, ptr %i.gn, align 4, !tbaa !26
   %i.gp = icmp eq i32 %i.go, %.2140.us
-  br i1 %i.gp, label %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.us, label %bb.ag
+  br i1 %i.gp, label %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %wide.trip.count.i
   br i1 %exitcond.not.i.us, label %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.thread, label %bb.af, !llvm.loop !124
-
-_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.us: ; preds = %bb.af
-  %3 = add nuw i32 %.2140.us, 1                   ; 2 uses
-  %exitcond154.not = icmp eq i32 %3, %i.gb
-  br i1 %exitcond154.not, label %.loopexit, label %.lr.ph.i.us, !llvm.loop !125
 
 _ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.thread: ; preds = %bb.ag, %.lr.ph141
   %.298 = phi i32 [ 0, %.lr.ph141 ], [ %.2140.us, %bb.ag ]
@@ -241,7 +236,12 @@ _ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.thread: ; preds = %bb.
   store i32 %i.gx, ptr %i.gs, align 4, !tbaa !17
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.us, %.preheader, %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.thread
+_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit: ; preds = %bb.af
+  %3 = add nuw i32 %.2140.us, 1                   ; 2 uses
+  %exitcond154.not = icmp eq i32 %3, %i.gb
+  br i1 %exitcond154.not, label %.loopexit, label %.lr.ph.i.us, !llvm.loop !125
+
+.loopexit:                                        ; preds = %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit, %.preheader, %_ZNK8NArchive3N7z7CFolder23FindBindPairForInStreamEj.exit.thread
   %i.gy = getelementptr inbounds nuw i8, ptr %1, i64 76
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !17
   %.not = icmp eq i32 %i.gz, 1
@@ -644,8 +644,13 @@ _ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i: ; preds 
   %wide.trip.count.i.i = zext nneg i32 %i.hn to i64
   br i1 %i.ho, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i
 
-.lr.ph.i.us.i:                                    ; preds = %.lr.ph.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i
-  %.0615.us.i = phi i32 [ %.06.us.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i ], [ %.0614.i, %.lr.ph.i ] ; 4 uses
+_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i: ; preds = %bb.as
+  %.06.i = add nsw i32 %.0615.us.i, -1
+  %8 = icmp sgt i32 %.0615.us.i, 0
+  br i1 %8, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i, !llvm.loop !4
+
+.lr.ph.i.us.i:                                    ; preds = %.lr.ph.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i
+  %.0615.us.i = phi i32 [ %.06.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i ], [ %.0614.i, %.lr.ph.i ] ; 4 uses
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.at, %.lr.ph.i.us.i
@@ -654,17 +659,12 @@ bb.as:                                            ; preds = %bb.at, %.lr.ph.i.us
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hr, i64 4
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !29
   %i.hu = icmp eq i32 %i.ht, %.0615.us.i
-  br i1 %i.hu, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i, label %bb.at
+  br i1 %i.hu, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %indvars.iv.next.i.us.i = add nuw nsw i64 %indvars.iv.i.us.i, 1 ; 2 uses
   %exitcond.not.i.us.i = icmp eq i64 %indvars.iv.next.i.us.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i, label %bb.as, !llvm.loop !4
-
-_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i: ; preds = %bb.as
-  %.06.us.i = add nsw i32 %.0615.us.i, -1
-  %8 = icmp sgt i32 %.0615.us.i, 0
-  br i1 %8, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i, !llvm.loop !5
+  br i1 %exitcond.not.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i, label %bb.as, !llvm.loop !5
 
 _ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i: ; preds = %bb.at, %.lr.ph.i
   %.0613.i = phi i32 [ %.0614.i, %.lr.ph.i ], [ %.0615.us.i, %bb.at ]
@@ -675,7 +675,7 @@ _ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i: ; preds = %
   %i.hz = load i64, ptr %i.hy, align 8, !tbaa !55
   br label %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit
 
-_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i: ; preds = %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i
+_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i: ; preds = %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i
   %i.ia = tail call ptr @__cxa_allocate_exception(i64 4) #17 ; 2 uses
   store i32 1, ptr %i.ia, align 16, !tbaa !13
   tail call void @__cxa_throw(ptr nonnull %i.ia, ptr nonnull @_ZTIi, ptr null) #21
@@ -1078,8 +1078,13 @@ _ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i: ; preds 
   %wide.trip.count.i.i = zext nneg i32 %i.av to i64
   br i1 %i.aw, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit
 
-.lr.ph.i.us.i:                                    ; preds = %.lr.ph.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i
-  %.0615.us.i = phi i32 [ %.06.us.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i ], [ %.0614.i, %.lr.ph.i ] ; 4 uses
+_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i: ; preds = %bb.j
+  %.06.i = add nsw i32 %.0615.us.i, -1
+  %16 = icmp sgt i32 %.0615.us.i, 0
+  br i1 %16, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i, !llvm.loop !4
+
+.lr.ph.i.us.i:                                    ; preds = %.lr.ph.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i
+  %.0615.us.i = phi i32 [ %.06.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i ], [ %.0614.i, %.lr.ph.i ] ; 4 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %.lr.ph.i.us.i
@@ -1088,19 +1093,14 @@ bb.j:                                             ; preds = %bb.k, %.lr.ph.i.us.
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 4
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !29
   %i.bc = icmp eq i32 %i.bb, %.0615.us.i
-  br i1 %i.bc, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i, label %bb.k
+  br i1 %i.bc, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %indvars.iv.next.i.us.i = add nuw nsw i64 %indvars.iv.i.us.i, 1 ; 2 uses
   %exitcond.not.i.us.i = icmp eq i64 %indvars.iv.next.i.us.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.us.i, label %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit, label %bb.j, !llvm.loop !4
+  br i1 %exitcond.not.i.us.i, label %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit, label %bb.j, !llvm.loop !5
 
-_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i: ; preds = %bb.j
-  %.06.us.i = add nsw i32 %.0615.us.i, -1
-  %16 = icmp sgt i32 %.0615.us.i, 0
-  br i1 %16, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i, !llvm.loop !5
-
-_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i: ; preds = %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i
+_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i: ; preds = %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i
   %i.bd = call ptr @__cxa_allocate_exception(i64 4) #17 ; 2 uses
   store i32 1, ptr %i.bd, align 16, !tbaa !13
   invoke void @__cxa_throw(ptr nonnull %i.bd, ptr nonnull @_ZTIi, ptr null) #21
@@ -1503,8 +1503,13 @@ _ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i: ; preds 
   %wide.trip.count.i.i = zext nneg i32 %i.cd to i64
   br i1 %i.ce, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i
 
-.lr.ph.i.us.i:                                    ; preds = %.lr.ph.i208, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i
-  %.0615.us.i = phi i32 [ %.06.us.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i ], [ %.0614.i, %.lr.ph.i208 ] ; 4 uses
+_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i: ; preds = %bb.o
+  %.06.i = add nsw i32 %.0615.us.i, -1
+  %15 = icmp sgt i32 %.0615.us.i, 0
+  br i1 %15, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i, !llvm.loop !4
+
+.lr.ph.i.us.i:                                    ; preds = %.lr.ph.i208, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i
+  %.0615.us.i = phi i32 [ %.06.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i ], [ %.0614.i, %.lr.ph.i208 ] ; 4 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.p, %.lr.ph.i.us.i
@@ -1513,17 +1518,12 @@ bb.o:                                             ; preds = %bb.p, %.lr.ph.i.us.
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 4
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !29
   %i.ck = icmp eq i32 %i.cj, %.0615.us.i
-  br i1 %i.ck, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i, label %bb.p
+  br i1 %i.ck, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %indvars.iv.next.i.us.i = add nuw nsw i64 %indvars.iv.i.us.i, 1 ; 2 uses
   %exitcond.not.i.us.i = icmp eq i64 %indvars.iv.next.i.us.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i, label %bb.o, !llvm.loop !4
-
-_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i: ; preds = %bb.o
-  %.06.us.i = add nsw i32 %.0615.us.i, -1
-  %15 = icmp sgt i32 %.0615.us.i, 0
-  br i1 %15, label %.lr.ph.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i, !llvm.loop !5
+  br i1 %exitcond.not.i.us.i, label %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i, label %bb.o, !llvm.loop !5
 
 _ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i: ; preds = %bb.p, %.lr.ph.i208
   %.0613.i = phi i32 [ %.0614.i, %.lr.ph.i208 ], [ %.0615.us.i, %bb.p ]
@@ -1534,7 +1534,7 @@ _ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.thread.i: ; preds = %
   %i.cp = load i64, ptr %i.co, align 8, !tbaa !55
   br label %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit
 
-_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i: ; preds = %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.us.i
+_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit._crit_edge.i: ; preds = %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.preheader.i, %_ZNK8NArchive3N7z7CFolder24FindBindPairForOutStreamEj.exit.loopexit.i
   %i.cq = call ptr @__cxa_allocate_exception(i64 4) #17 ; 2 uses
   store i32 1, ptr %i.cq, align 16, !tbaa !13
   invoke void @__cxa_throw(ptr nonnull %i.cq, ptr nonnull @_ZTIi, ptr null) #21

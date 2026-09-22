@@ -204,14 +204,14 @@ bb.b:                                             ; preds = %.lr.ph
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @lexbor_str_data_ncasecmp_contain(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #9 {
-  %.not17.not = icmp ugt i64 %3, %1
-  br i1 %.not17.not, label %.loopexit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %4
-  %5 = icmp eq i64 %3, 0
-  br i1 %5, label %.loopexit, label %.lr.ph.i.preheader
+.lr.ph:
+  %.not17 = icmp ule i64 %3, %1                   ; 2 uses
+  %4 = add i64 %3, -1
+  %or.cond.not = icmp ult i64 %4, %1
+  br i1 %or.cond.not, label %.lr.ph.i.preheader, label %.loopexit
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph, %lexbor_str_data_ncasecmp.exit
+  %.not19 = phi i1 [ true, %lexbor_str_data_ncasecmp.exit ], [ %.not17, %.lr.ph ]
   %.0918 = phi i64 [ %i.m, %lexbor_str_data_ncasecmp.exit ], [ 0, %.lr.ph ] ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.0918
   br label %.lr.ph.i
@@ -242,8 +242,8 @@ lexbor_str_data_ncasecmp.exit:                    ; preds = %.lr.ph.i
   %.not.not = icmp ugt i64 %3, %i.n
   br i1 %.not.not, label %.loopexit, label %.lr.ph.i.preheader, !llvm.loop !33
 
-.loopexit:                                        ; preds = %lexbor_str_data_ncasecmp.exit, %bb.a, %.lr.ph, %4
-  %.not16 = phi i1 [ true, %.lr.ph ], [ true, %bb.a ], [ false, %4 ], [ false, %lexbor_str_data_ncasecmp.exit ]
+.loopexit:                                        ; preds = %lexbor_str_data_ncasecmp.exit, %bb.a, %.lr.ph
+  %.not16 = phi i1 [ %.not19, %bb.a ], [ %.not17, %.lr.ph ], [ false, %lexbor_str_data_ncasecmp.exit ]
   ret i1 %.not16
 }
 

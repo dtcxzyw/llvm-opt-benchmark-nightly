@@ -205,15 +205,19 @@ bb.a:
   %i.f = select i1 %i.c, i1 true, i1 %i.e
   br i1 %i.f, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i, label %.preheader.us.i.i.i
 
-.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.us.i.i.i
-  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.us.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
+.loopexit25.i.i.i:                                ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
+  %.not.i12.i.i = icmp eq i64 %.01534.us.i.i.i, 0
+  br i1 %.not.i12.i.i, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i, label %.preheader.us.i.i.i
+
+.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.i.i.i
+  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
   %.01534.us.i.i.i = add i64 %.01534.us.i.in.i.i, -1 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %.01534.us.i.i.i
   %i.h = load i8, ptr %i.g, align 1, !tbaa !87, !noalias !872
   switch i8 %i.h, label %.thread25.i.i [
-    i8 32, label %.loopexit25.us.i.i.i
-    i8 10, label %.loopexit25.us.i.i.i
-    i8 13, label %.loopexit25.us.i.i.i
+    i8 32, label %.loopexit25.i.i.i
+    i8 10, label %.loopexit25.i.i.i
+    i8 13, label %.loopexit25.i.i.i
   ]
 
 .thread25.i.i:                                    ; preds = %.preheader.us.i.i.i
@@ -221,12 +225,8 @@ bb.a:
   %i.i = select i1 %.not.i28.i.i, i64 %i.b, i64 %.01534.us.i.in.i.i
   br label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i
 
-.loopexit25.us.i.i.i:                             ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
-  %.not.us.i.i.i = icmp eq i64 %.01534.us.i.i.i, 0
-  br i1 %.not.us.i.i.i, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i, label %.preheader.us.i.i.i
-
-_ZNK2c415basic_substringIKcE5trimrES2_.exit.i:    ; preds = %.loopexit25.us.i.i.i, %.thread25.i.i, %bb.a
-  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.us.i.i.i ] ; 4 uses
+_ZNK2c415basic_substringIKcE5trimrES2_.exit.i:    ; preds = %.loopexit25.i.i.i, %.thread25.i.i, %bb.a
+  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.i.i.i ] ; 4 uses
   %i.j = icmp ne i64 %.sroa.3.1.i.i, 0
   %i.k = icmp ne i32 %3, 2
   %or.cond.not13.i = or i1 %i.k, %i.j
@@ -514,15 +514,19 @@ bb.a:
   %i.f = select i1 %i.c, i1 true, i1 %i.e
   br i1 %i.f, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i, label %.preheader.us.i.i.i
 
-.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.us.i.i.i
-  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.us.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
+.loopexit25.i.i.i:                                ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
+  %.not.i12.i.i = icmp eq i64 %.01534.us.i.i.i, 0
+  br i1 %.not.i12.i.i, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i, label %.preheader.us.i.i.i
+
+.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.i.i.i
+  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
   %.01534.us.i.i.i = add i64 %.01534.us.i.in.i.i, -1 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %.01534.us.i.i.i
   %i.h = load i8, ptr %i.g, align 1, !tbaa !87, !noalias !885
   switch i8 %i.h, label %.thread25.i.i [
-    i8 32, label %.loopexit25.us.i.i.i
-    i8 10, label %.loopexit25.us.i.i.i
-    i8 13, label %.loopexit25.us.i.i.i
+    i8 32, label %.loopexit25.i.i.i
+    i8 10, label %.loopexit25.i.i.i
+    i8 13, label %.loopexit25.i.i.i
   ]
 
 .thread25.i.i:                                    ; preds = %.preheader.us.i.i.i
@@ -530,12 +534,8 @@ bb.a:
   %i.i = select i1 %.not.i28.i.i, i64 %i.b, i64 %.01534.us.i.in.i.i
   br label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i
 
-.loopexit25.us.i.i.i:                             ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
-  %.not.us.i.i.i = icmp eq i64 %.01534.us.i.i.i, 0
-  br i1 %.not.us.i.i.i, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i, label %.preheader.us.i.i.i
-
-_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i: ; preds = %.loopexit25.us.i.i.i, %.thread25.i.i, %bb.a
-  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.us.i.i.i ] ; 4 uses
+_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i: ; preds = %.loopexit25.i.i.i, %.thread25.i.i, %bb.a
+  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.i.i.i ] ; 4 uses
   %i.j = icmp ne i64 %.sroa.3.1.i.i, 0
   %i.k = icmp ne i32 %3, 2
   %or.cond.not15.i = or i1 %i.k, %i.j
@@ -834,15 +834,19 @@ bb.a:
   %i.f = select i1 %i.c, i1 true, i1 %i.e
   br i1 %i.f, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i, label %.preheader.us.i.i.i
 
-.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.us.i.i.i
-  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.us.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
+.loopexit25.i.i.i:                                ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
+  %.not.i12.i.i = icmp eq i64 %.01534.us.i.i.i, 0
+  br i1 %.not.i12.i.i, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i, label %.preheader.us.i.i.i
+
+.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.i.i.i
+  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
   %.01534.us.i.i.i = add i64 %.01534.us.i.in.i.i, -1 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %.01534.us.i.i.i
   %i.h = load i8, ptr %i.g, align 1, !tbaa !87, !noalias !894
   switch i8 %i.h, label %.thread25.i.i [
-    i8 32, label %.loopexit25.us.i.i.i
-    i8 10, label %.loopexit25.us.i.i.i
-    i8 13, label %.loopexit25.us.i.i.i
+    i8 32, label %.loopexit25.i.i.i
+    i8 10, label %.loopexit25.i.i.i
+    i8 13, label %.loopexit25.i.i.i
   ]
 
 .thread25.i.i:                                    ; preds = %.preheader.us.i.i.i
@@ -850,12 +854,8 @@ bb.a:
   %i.i = select i1 %.not.i28.i.i, i64 %i.b, i64 %.01534.us.i.in.i.i
   br label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i
 
-.loopexit25.us.i.i.i:                             ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
-  %.not.us.i.i.i = icmp eq i64 %.01534.us.i.i.i, 0
-  br i1 %.not.us.i.i.i, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit.i, label %.preheader.us.i.i.i
-
-_ZNK2c415basic_substringIKcE5trimrES2_.exit.i:    ; preds = %.loopexit25.us.i.i.i, %.thread25.i.i, %bb.a
-  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.us.i.i.i ] ; 4 uses
+_ZNK2c415basic_substringIKcE5trimrES2_.exit.i:    ; preds = %.loopexit25.i.i.i, %.thread25.i.i, %bb.a
+  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.i.i.i ] ; 4 uses
   %i.j = icmp ne i64 %.sroa.3.1.i.i, 0
   %i.k = icmp ne i32 %3, 2
   %or.cond.not13.i = or i1 %i.k, %i.j
@@ -1078,15 +1078,19 @@ bb.a:
   %i.f = select i1 %i.c, i1 true, i1 %i.e
   br i1 %i.f, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i, label %.preheader.us.i.i.i
 
-.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.us.i.i.i
-  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.us.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
+.loopexit25.i.i.i:                                ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
+  %.not.i12.i.i = icmp eq i64 %.01534.us.i.i.i, 0
+  br i1 %.not.i12.i.i, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i, label %.preheader.us.i.i.i
+
+.preheader.us.i.i.i:                              ; preds = %bb.a, %.loopexit25.i.i.i
+  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
   %.01534.us.i.i.i = add i64 %.01534.us.i.in.i.i, -1 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %.01534.us.i.i.i
   %i.h = load i8, ptr %i.g, align 1, !tbaa !87, !noalias !901
   switch i8 %i.h, label %.thread25.i.i [
-    i8 32, label %.loopexit25.us.i.i.i
-    i8 10, label %.loopexit25.us.i.i.i
-    i8 13, label %.loopexit25.us.i.i.i
+    i8 32, label %.loopexit25.i.i.i
+    i8 10, label %.loopexit25.i.i.i
+    i8 13, label %.loopexit25.i.i.i
   ]
 
 .thread25.i.i:                                    ; preds = %.preheader.us.i.i.i
@@ -1094,12 +1098,8 @@ bb.a:
   %i.i = select i1 %.not.i28.i.i, i64 %i.b, i64 %.01534.us.i.in.i.i
   br label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i
 
-.loopexit25.us.i.i.i:                             ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
-  %.not.us.i.i.i = icmp eq i64 %.01534.us.i.i.i, 0
-  br i1 %.not.us.i.i.i, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i, label %.preheader.us.i.i.i
-
-_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i: ; preds = %.loopexit25.us.i.i.i, %.thread25.i.i, %bb.a
-  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.us.i.i.i ] ; 4 uses
+_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i: ; preds = %.loopexit25.i.i.i, %.thread25.i.i, %bb.a
+  %.sroa.3.1.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.thread25.i.i ], [ 0, %.loopexit25.i.i.i ] ; 4 uses
   %i.j = icmp ne i64 %.sroa.3.1.i.i, 0
   %i.k = icmp ne i32 %3, 2
   %or.cond.not15.i = or i1 %i.k, %i.j
@@ -1502,19 +1502,19 @@ bb.v:                                             ; preds = %bb.t, %bb.r, %.crit
   %i.dv = select i1 %i.dt, i1 true, i1 %i.du
   br i1 %i.dv, label %.thread169, label %.preheader.us.i.i
 
-.preheader.us.i.i:                                ; preds = %._crit_edge, %.loopexit25.us.i.i
-  %.01534.us.i.in.i = phi i64 [ %.01534.us.i.i, %.loopexit25.us.i.i ], [ %i.ds, %._crit_edge ] ; 3 uses
+.loopexit25.i.i:                                  ; preds = %.preheader.us.i.i, %.preheader.us.i.i
+  %.not.i12.i = icmp eq i64 %.01534.us.i.i, 0
+  br i1 %.not.i12.i, label %.thread169, label %.preheader.us.i.i
+
+.preheader.us.i.i:                                ; preds = %._crit_edge, %.loopexit25.i.i
+  %.01534.us.i.in.i = phi i64 [ %.01534.us.i.i, %.loopexit25.i.i ], [ %i.ds, %._crit_edge ] ; 3 uses
   %.01534.us.i.i = add i64 %.01534.us.i.in.i, -1  ; 3 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 %.01534.us.i.i
   %i.dx = load i8, ptr %i.dw, align 1, !tbaa !87
   switch i8 %i.dx, label %.lr.ph.i.preheader [
-    i8 10, label %.loopexit25.us.i.i
-    i8 13, label %.loopexit25.us.i.i
+    i8 10, label %.loopexit25.i.i
+    i8 13, label %.loopexit25.i.i
   ]
-
-.loopexit25.us.i.i:                               ; preds = %.preheader.us.i.i, %.preheader.us.i.i
-  %.not.us.i.i = icmp eq i64 %.01534.us.i.i, 0
-  br i1 %.not.us.i.i, label %.thread169, label %.preheader.us.i.i
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.us.i.i
   %.not.i28.i = icmp eq i64 %.01534.us.i.in.i, -1
@@ -1548,14 +1548,18 @@ bb.y:                                             ; preds = %bb.x
     i8 46, label %.preheader.us.i.i87
   ]
 
-.preheader.us.i.i73:                              ; preds = %bb.y, %.loopexit25.us.i.i83
-  %.01534.us.i.in.i74 = phi i64 [ %.01534.us.i.i75, %.loopexit25.us.i.i83 ], [ %i.dy, %bb.y ] ; 3 uses
+.loopexit25.i.i83:                                ; preds = %.preheader.us.i.i73, %.preheader.us.i.i73
+  %.not.i12.i84 = icmp eq i64 %.01534.us.i.i75, 0
+  br i1 %.not.i12.i84, label %.thread169, label %.preheader.us.i.i73
+
+.preheader.us.i.i73:                              ; preds = %bb.y, %.loopexit25.i.i83
+  %.01534.us.i.in.i74 = phi i64 [ %.01534.us.i.i75, %.loopexit25.i.i83 ], [ %i.dy, %bb.y ] ; 3 uses
   %.01534.us.i.i75 = add i64 %.01534.us.i.in.i74, -1 ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dr, i64 %.01534.us.i.i75
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !87
   switch i8 %i.eg, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit85 [
-    i8 10, label %.loopexit25.us.i.i83
-    i8 13, label %.loopexit25.us.i.i83
+    i8 10, label %.loopexit25.i.i83
+    i8 13, label %.loopexit25.i.i83
   ]
 
 _ZNK2c415basic_substringIKcE5trimrES2_.exit85:    ; preds = %.preheader.us.i.i73
@@ -1563,10 +1567,6 @@ _ZNK2c415basic_substringIKcE5trimrES2_.exit85:    ; preds = %.preheader.us.i.i73
   %i.eh = select i1 %.not.i28.i79, i64 %i.dy, i64 %.01534.us.i.in.i74 ; 2 uses
   %i.ei = icmp ugt i64 %i.eh, 2
   br i1 %i.ei, label %bb.z, label %.thread169
-
-.loopexit25.us.i.i83:                             ; preds = %.preheader.us.i.i73, %.preheader.us.i.i73
-  %.not.us.i.i84 = icmp eq i64 %.01534.us.i.i75, 0
-  br i1 %.not.us.i.i84, label %.thread169, label %.preheader.us.i.i73
 
 bb.z:                                             ; preds = %_ZNK2c415basic_substringIKcE5trimrES2_.exit85
   %i.ej = getelementptr inbounds nuw i8, ptr %i.dr, i64 1
@@ -1590,14 +1590,18 @@ _ZN2c43yml12_GLOBAL__N_119_is_doc_begin_tokenENS_15basic_substringIKcEE.exit: ; 
   %i.es = icmp eq i8 %i.er, 32
   br i1 %i.es, label %.thread158.loopexit211, label %.thread169
 
-.preheader.us.i.i87:                              ; preds = %bb.y, %.loopexit25.us.i.i97
-  %.01534.us.i.in.i88 = phi i64 [ %.01534.us.i.i89, %.loopexit25.us.i.i97 ], [ %i.dy, %bb.y ] ; 3 uses
+.loopexit25.i.i97:                                ; preds = %.preheader.us.i.i87, %.preheader.us.i.i87
+  %.not.i12.i98 = icmp eq i64 %.01534.us.i.i89, 0
+  br i1 %.not.i12.i98, label %.thread169, label %.preheader.us.i.i87
+
+.preheader.us.i.i87:                              ; preds = %bb.y, %.loopexit25.i.i97
+  %.01534.us.i.in.i88 = phi i64 [ %.01534.us.i.i89, %.loopexit25.i.i97 ], [ %i.dy, %bb.y ] ; 3 uses
   %.01534.us.i.i89 = add i64 %.01534.us.i.in.i88, -1 ; 3 uses
   %i.et = getelementptr inbounds nuw i8, ptr %i.dr, i64 %.01534.us.i.i89
   %i.eu = load i8, ptr %i.et, align 1, !tbaa !87
   switch i8 %i.eu, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit99 [
-    i8 10, label %.loopexit25.us.i.i97
-    i8 13, label %.loopexit25.us.i.i97
+    i8 10, label %.loopexit25.i.i97
+    i8 13, label %.loopexit25.i.i97
   ]
 
 _ZNK2c415basic_substringIKcE5trimrES2_.exit99:    ; preds = %.preheader.us.i.i87
@@ -1605,10 +1609,6 @@ _ZNK2c415basic_substringIKcE5trimrES2_.exit99:    ; preds = %.preheader.us.i.i87
   %i.ev = select i1 %.not.i28.i93, i64 %i.dy, i64 %.01534.us.i.in.i88 ; 2 uses
   %i.ew = icmp ugt i64 %i.ev, 2
   br i1 %i.ew, label %bb.ac, label %.thread169
-
-.loopexit25.us.i.i97:                             ; preds = %.preheader.us.i.i87, %.preheader.us.i.i87
-  %.not.us.i.i98 = icmp eq i64 %.01534.us.i.i89, 0
-  br i1 %.not.us.i.i98, label %.thread169, label %.preheader.us.i.i87
 
 bb.ac:                                            ; preds = %_ZNK2c415basic_substringIKcE5trimrES2_.exit99
   %i.ex = getelementptr inbounds nuw i8, ptr %i.dr, i64 1
@@ -1632,7 +1632,7 @@ _ZN2c43yml12_GLOBAL__N_117_is_doc_end_tokenENS_15basic_substringIKcEE.exit: ; pr
   %i.fg = icmp eq i8 %i.ff, 32
   br i1 %i.fg, label %.thread158.loopexit211, label %.thread169
 
-.thread169:                                       ; preds = %.loopexit25.us.i.i, %bb.w, %.loopexit25.us.i.i97, %.loopexit25.us.i.i83, %_ZNK2c415basic_substringIKcE5trimrES2_.exit99, %bb.ac, %bb.ad, %_ZNK2c415basic_substringIKcE5trimrES2_.exit85, %bb.z, %bb.aa, %._crit_edge, %_ZN2c43yml12_GLOBAL__N_117_is_doc_end_tokenENS_15basic_substringIKcEE.exit, %_ZN2c43yml12_GLOBAL__N_119_is_doc_begin_tokenENS_15basic_substringIKcEE.exit, %bb.y, %bb.x
+.thread169:                                       ; preds = %.loopexit25.i.i, %bb.w, %.loopexit25.i.i97, %.loopexit25.i.i83, %_ZNK2c415basic_substringIKcE5trimrES2_.exit99, %bb.ac, %bb.ad, %_ZNK2c415basic_substringIKcE5trimrES2_.exit85, %bb.z, %bb.aa, %._crit_edge, %_ZN2c43yml12_GLOBAL__N_117_is_doc_end_tokenENS_15basic_substringIKcEE.exit, %_ZN2c43yml12_GLOBAL__N_119_is_doc_begin_tokenENS_15basic_substringIKcEE.exit, %bb.y, %bb.x
   %i.fh = load ptr, ptr %i.a, align 8, !tbaa !169 ; 2 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 2488
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !206 ; 12 uses
@@ -1762,16 +1762,20 @@ bb.ak:                                            ; preds = %_ZN2c43yml12LineCon
   %i.hc = select i1 %i.ha, i1 true, i1 %i.hb
   br i1 %i.hc, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit, label %.preheader.us.i.i102
 
-.preheader.us.i.i102:                             ; preds = %.thread158, %.loopexit25.us.i.i113
-  %.01534.us.i.in.i103 = phi i64 [ %.01534.us.i.i104, %.loopexit25.us.i.i113 ], [ %i.gz, %.thread158 ] ; 3 uses
+.loopexit25.i.i113:                               ; preds = %.preheader.us.i.i102, %.preheader.us.i.i102, %.preheader.us.i.i102, %.preheader.us.i.i102
+  %.not.i12.i114 = icmp eq i64 %.01534.us.i.i104, 0
+  br i1 %.not.i12.i114, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit, label %.preheader.us.i.i102
+
+.preheader.us.i.i102:                             ; preds = %.thread158, %.loopexit25.i.i113
+  %.01534.us.i.in.i103 = phi i64 [ %.01534.us.i.i104, %.loopexit25.i.i113 ], [ %i.gz, %.thread158 ] ; 3 uses
   %.01534.us.i.i104 = add i64 %.01534.us.i.in.i103, -1 ; 3 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gy, i64 %.01534.us.i.i104
   %i.he = load i8, ptr %i.hd, align 1, !tbaa !87
   switch i8 %i.he, label %.thread25.i107 [
-    i8 32, label %.loopexit25.us.i.i113
-    i8 10, label %.loopexit25.us.i.i113
-    i8 13, label %.loopexit25.us.i.i113
-    i8 9, label %.loopexit25.us.i.i113
+    i8 32, label %.loopexit25.i.i113
+    i8 10, label %.loopexit25.i.i113
+    i8 13, label %.loopexit25.i.i113
+    i8 9, label %.loopexit25.i.i113
   ]
 
 .thread25.i107:                                   ; preds = %.preheader.us.i.i102
@@ -1779,12 +1783,8 @@ bb.ak:                                            ; preds = %_ZN2c43yml12LineCon
   %i.hf = select i1 %.not.i28.i108, i64 %i.gz, i64 %.01534.us.i.in.i103
   br label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit
 
-.loopexit25.us.i.i113:                            ; preds = %.preheader.us.i.i102, %.preheader.us.i.i102, %.preheader.us.i.i102, %.preheader.us.i.i102
-  %.not.us.i.i114 = icmp eq i64 %.01534.us.i.i104, 0
-  br i1 %.not.us.i.i114, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit, label %.preheader.us.i.i102
-
-_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit: ; preds = %.loopexit25.us.i.i113, %.thread158, %.thread25.i107
-  %.sroa.3.1.i110 = phi i64 [ 0, %.thread158 ], [ %i.hf, %.thread25.i107 ], [ 0, %.loopexit25.us.i.i113 ]
+_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit: ; preds = %.loopexit25.i.i113, %.thread158, %.thread25.i107
+  %.sroa.3.1.i110 = phi i64 [ 0, %.thread158 ], [ %i.hf, %.thread25.i107 ], [ 0, %.loopexit25.i.i113 ]
   store ptr %i.gy, ptr %1, align 8, !tbaa !101
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %.sroa.3.1.i110, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !102
@@ -2187,15 +2187,19 @@ _ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit: ; preds = %
   %i.ic = select i1 %i.ia, i1 true, i1 %i.ib
   br i1 %i.ic, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit, label %.preheader.us.i.i
 
-.preheader.us.i.i:                                ; preds = %.loopexit, %.loopexit25.us.i.i
-  %.01534.us.i.in.i = phi i64 [ %.01534.us.i.i, %.loopexit25.us.i.i ], [ %i.hz, %.loopexit ] ; 3 uses
+.loopexit25.i.i:                                  ; preds = %.preheader.us.i.i, %.preheader.us.i.i, %.preheader.us.i.i
+  %.not.i12.i = icmp eq i64 %.01534.us.i.i, 0
+  br i1 %.not.i12.i, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit, label %.preheader.us.i.i
+
+.preheader.us.i.i:                                ; preds = %.loopexit, %.loopexit25.i.i
+  %.01534.us.i.in.i = phi i64 [ %.01534.us.i.i, %.loopexit25.i.i ], [ %i.hz, %.loopexit ] ; 3 uses
   %.01534.us.i.i = add i64 %.01534.us.i.in.i, -1  ; 3 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.hy, i64 %.01534.us.i.i
   %i.ie = load i8, ptr %i.id, align 1, !tbaa !87
   switch i8 %i.ie, label %.thread25.i [
-    i8 32, label %.loopexit25.us.i.i
-    i8 10, label %.loopexit25.us.i.i
-    i8 13, label %.loopexit25.us.i.i
+    i8 32, label %.loopexit25.i.i
+    i8 10, label %.loopexit25.i.i
+    i8 13, label %.loopexit25.i.i
   ]
 
 .thread25.i:                                      ; preds = %.preheader.us.i.i
@@ -2203,12 +2207,8 @@ _ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit: ; preds = %
   %i.if = select i1 %.not.i28.i, i64 %i.hz, i64 %.01534.us.i.in.i
   br label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit
 
-.loopexit25.us.i.i:                               ; preds = %.preheader.us.i.i, %.preheader.us.i.i, %.preheader.us.i.i
-  %.not.us.i.i = icmp eq i64 %.01534.us.i.i, 0
-  br i1 %.not.us.i.i, label %_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit, label %.preheader.us.i.i
-
-_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit: ; preds = %.loopexit25.us.i.i, %.loopexit, %.thread25.i
-  %.sroa.3.1.i = phi i64 [ 0, %.loopexit ], [ %i.if, %.thread25.i ], [ 0, %.loopexit25.us.i.i ] ; 2 uses
+_ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit: ; preds = %.loopexit25.i.i, %.loopexit, %.thread25.i
+  %.sroa.3.1.i = phi i64 [ 0, %.loopexit ], [ %i.if, %.thread25.i ], [ 0, %.loopexit25.i.i ] ; 2 uses
   store ptr %i.hy, ptr %1, align 8, !tbaa !101
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %.sroa.3.1.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !102
@@ -2611,25 +2611,25 @@ bb.x:                                             ; preds = %.preheader.us.i.i.i
   %i.dw = sub nuw i64 %i.dh, %.01326.us.i.i.i
   br label %.preheader.us.i.i8.i
 
-.preheader.us.i.i8.i:                             ; preds = %.preheader.us.i.i8.i.preheader, %.loopexit25.us.i.i.i
-  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.us.i.i.i ], [ %i.dw, %.preheader.us.i.i8.i.preheader ]
+.loopexit25.i.i.i:                                ; preds = %.preheader.us.i.i8.i, %.preheader.us.i.i8.i
+  %.not.i12.i.i = icmp eq i64 %.01534.us.i.i.i, 0
+  br i1 %.not.i12.i.i, label %.critedge, label %.preheader.us.i.i8.i
+
+.preheader.us.i.i8.i:                             ; preds = %.preheader.us.i.i8.i.preheader, %.loopexit25.i.i.i
+  %.01534.us.i.in.i.i = phi i64 [ %.01534.us.i.i.i, %.loopexit25.i.i.i ], [ %i.dw, %.preheader.us.i.i8.i.preheader ]
   %.01534.us.i.i.i = add i64 %.01534.us.i.in.i.i, -1 ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.du, i64 %.01534.us.i.i.i
   %i.dy = load i8, ptr %i.dx, align 1, !tbaa !87
-  switch i8 %i.dy, label %_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit [
-    i8 32, label %.loopexit25.us.i.i.i
-    i8 9, label %.loopexit25.us.i.i.i
+  switch i8 %i.dy, label %.loopexit25.us.i.i.i [
+    i8 32, label %.loopexit25.i.i.i
+    i8 9, label %.loopexit25.i.i.i
   ]
 
-_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit:  ; preds = %.preheader.us.i.i8.i
-  %.not59 = icmp eq i64 %.sroa.4.0246, 0
-  br i1 %.not59, label %bb.y, label %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread189
+.loopexit25.us.i.i.i:                             ; preds = %.preheader.us.i.i8.i
+  %.not.us.i.i.i = icmp eq i64 %.sroa.4.0246, 0
+  br i1 %.not.us.i.i.i, label %bb.y, label %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread189
 
-.loopexit25.us.i.i.i:                             ; preds = %.preheader.us.i.i8.i, %.preheader.us.i.i8.i
-  %.not.us.i.i.i = icmp eq i64 %.01534.us.i.i.i, 0
-  br i1 %.not.us.i.i.i, label %.critedge, label %.preheader.us.i.i8.i
-
-bb.y:                                             ; preds = %_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit
+bb.y:                                             ; preds = %.loopexit25.us.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #58, !noalias !940
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #58, !noalias !940
   store ptr %i.a, ptr %3, align 8, !tbaa !101, !noalias !940
@@ -2676,7 +2676,7 @@ _ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_subs
   %.pre305 = load i64, ptr %i.b, align 8, !tbaa !102
   br label %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread189
 
-.critedge:                                        ; preds = %bb.x, %.loopexit25.us.i.i.i, %_ZNK2c415basic_substringIcE12first_not_ofENS0_IKcEE.exit.i.i, %bb.v
+.critedge:                                        ; preds = %bb.x, %.loopexit25.i.i.i, %_ZNK2c415basic_substringIcE12first_not_ofENS0_IKcEE.exit.i.i, %bb.v
   %i.es = icmp eq i64 %i.ct, 0
   %i.et = icmp ugt i64 %i.dh, 2
   %or.cond = and i1 %i.et, %i.es
@@ -2848,11 +2848,11 @@ _ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread: ;
   %.not214 = icmp ult i64 %i.gi, %i.gq
   br i1 %.not214, label %bb.q, label %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread189, !llvm.loop !939
 
-_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread189: ; preds = %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit, %bb.ap, %bb.an, %bb.ad, %bb.ag, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit, %bb.al, %bb.ak, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit, %_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit
-  %i.gr = phi i64 [ %i.cp, %_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit ], [ %.pre305, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ %i.cp, %bb.ak ], [ %i.cp, %bb.al ], [ %i.ar, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %i.gk, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %i.cp, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %i.cp, %bb.ap ], [ %i.cp, %bb.an ], [ %i.cp, %bb.ad ], [ %i.cp, %bb.ag ] ; 2 uses
-  %.sroa.4.0237 = phi i64 [ %.sroa.4.0246, %_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit ], [ 0, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ %.sroa.4.0246, %bb.ak ], [ 0, %bb.al ], [ 0, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %i.gm, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %.sroa.4.0246, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %.sroa.4.0246, %bb.ap ], [ %.sroa.4.0246, %bb.an ], [ %.sroa.4.0246, %bb.ad ], [ %.sroa.4.0246, %bb.ag ]
-  %.038234 = phi i64 [ %.038248, %_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit ], [ %.038248, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ %.038248, %bb.ak ], [ %.038248, %bb.al ], [ 0, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %i.gp, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %.038248, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %.038248, %bb.ap ], [ %.038248, %bb.an ], [ %.038248, %bb.ad ], [ %.038248, %bb.ag ]
-  %.5 = phi i64 [ %.035250, %_ZNK2c415basic_substringIcE4trimENS0_IKcEE.exit ], [ %.035250, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ -1, %bb.ak ], [ -1, %bb.al ], [ -1, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %.4, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %.035250, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %.035250, %bb.ap ], [ -1, %bb.an ], [ %.035250, %bb.ad ], [ %.035250, %bb.ag ]
+_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread189: ; preds = %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit, %bb.ap, %bb.an, %bb.ad, %bb.ag, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit, %bb.al, %bb.ak, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit, %.loopexit25.us.i.i.i
+  %i.gr = phi i64 [ %i.cp, %.loopexit25.us.i.i.i ], [ %.pre305, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ %i.cp, %bb.ak ], [ %i.cp, %bb.al ], [ %i.ar, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %i.gk, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %i.cp, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %i.cp, %bb.ap ], [ %i.cp, %bb.an ], [ %i.cp, %bb.ad ], [ %i.cp, %bb.ag ] ; 2 uses
+  %.sroa.4.0237 = phi i64 [ %.sroa.4.0246, %.loopexit25.us.i.i.i ], [ 0, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ %.sroa.4.0246, %bb.ak ], [ 0, %bb.al ], [ 0, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %i.gm, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %.sroa.4.0246, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %.sroa.4.0246, %bb.ap ], [ %.sroa.4.0246, %bb.an ], [ %.sroa.4.0246, %bb.ad ], [ %.sroa.4.0246, %bb.ag ]
+  %.038234 = phi i64 [ %.038248, %.loopexit25.us.i.i.i ], [ %.038248, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ %.038248, %bb.ak ], [ %.038248, %bb.al ], [ 0, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %i.gp, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %.038248, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %.038248, %bb.ap ], [ %.038248, %bb.an ], [ %.038248, %bb.ad ], [ %.038248, %bb.ag ]
+  %.5 = phi i64 [ %.035250, %.loopexit25.us.i.i.i ], [ %.035250, %_ZNK2c43yml11ParseEngineINS0_16EventHandlerTreeEE4_errIJA41_cEEEvNS_15basic_substringIKcEEDprRKT_.exit ], [ -1, %bb.ak ], [ -1, %bb.al ], [ -1, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE10_scan_lineEv.exit ], [ %.4, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit.thread ], [ %.035250, %_ZN2c43yml12_GLOBAL__N_113_is_doc_tokenENS_15basic_substringIKcEE.exit ], [ %.035250, %bb.ap ], [ -1, %bb.an ], [ %.035250, %bb.ad ], [ %.035250, %bb.ag ]
   %.not60 = icmp eq i64 %.038234, 0
   br i1 %.not60, label %bb.aw, label %bb.av
 
@@ -3255,22 +3255,22 @@ _ZNK2c415basic_substringIKcE4findEcm.exit.thread: ; preds = %bb.b, %_ZNK2c415bas
   store i64 %i.u, ptr %i.s, align 8, !tbaa !102
   br label %bb.d
 
-.preheader.us.i.i:                                ; preds = %_ZNK2c415basic_substringIKcE4findEcm.exit, %.loopexit25.us.i.i
-  %.01534.us.i.in.i = phi i64 [ %.01534.us.i.i, %.loopexit25.us.i.i ], [ %.0811.i.i, %_ZNK2c415basic_substringIKcE4findEcm.exit ] ; 2 uses
+.loopexit25.i.i:                                  ; preds = %.preheader.us.i.i, %.preheader.us.i.i
+  %.not.i12.i = icmp eq i64 %.01534.us.i.i, 0
+  br i1 %.not.i12.i, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit, label %.preheader.us.i.i
+
+.preheader.us.i.i:                                ; preds = %_ZNK2c415basic_substringIKcE4findEcm.exit, %.loopexit25.i.i
+  %.01534.us.i.in.i = phi i64 [ %.01534.us.i.i, %.loopexit25.i.i ], [ %.0811.i.i, %_ZNK2c415basic_substringIKcE4findEcm.exit ] ; 2 uses
   %.01534.us.i.i = add i64 %.01534.us.i.in.i, -1  ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %.01534.us.i.i
   %i.w = load i8, ptr %i.v, align 1, !tbaa !87
   switch i8 %i.w, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit [
-    i8 32, label %.loopexit25.us.i.i
-    i8 9, label %.loopexit25.us.i.i
+    i8 32, label %.loopexit25.i.i
+    i8 9, label %.loopexit25.i.i
   ]
 
-.loopexit25.us.i.i:                               ; preds = %.preheader.us.i.i, %.preheader.us.i.i
-  %.not.us.i.i = icmp eq i64 %.01534.us.i.i, 0
-  br i1 %.not.us.i.i, label %_ZNK2c415basic_substringIKcE5trimrES2_.exit, label %.preheader.us.i.i
-
-_ZNK2c415basic_substringIKcE5trimrES2_.exit:      ; preds = %.loopexit25.us.i.i, %.preheader.us.i.i, %_ZNK2c415basic_substringIKcE4findEcm.exit
-  %.sroa.3.1.i = phi i64 [ %.0811.i.i, %_ZNK2c415basic_substringIKcE4findEcm.exit ], [ 0, %.loopexit25.us.i.i ], [ %.01534.us.i.in.i, %.preheader.us.i.i ]
+_ZNK2c415basic_substringIKcE5trimrES2_.exit:      ; preds = %.loopexit25.i.i, %.preheader.us.i.i, %_ZNK2c415basic_substringIKcE4findEcm.exit
+  %.sroa.3.1.i = phi i64 [ %.0811.i.i, %_ZNK2c415basic_substringIKcE4findEcm.exit ], [ 0, %.loopexit25.i.i ], [ %.01534.us.i.in.i, %.preheader.us.i.i ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !169
   tail call void @_ZN2c43yml16EventHandlerTree13add_directiveENS_15basic_substringIKcEE(ptr noundef nonnull align 8 dereferenceable(2545) %i.y, ptr nonnull %1, i64 %.sroa.3.1.i)

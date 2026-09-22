@@ -205,7 +205,12 @@ define internal fastcc void @_ZN4AVX212_GLOBAL__N_19UpTo8Bits15EncodeChunkSimdEP
   %i.cr = add i64 %.sroa.0140.0.vec.extract, %i.cq ; 4 uses
   store i64 %i.cr, ptr %i.cg, align 8, !tbaa !86
   %i.cs = icmp ugt i64 %i.cr, 63
-  br i1 %i.cs, label %bb.a, label %.split._crit_edge
+  br i1 %i.cs, label %bb.a, label %._crit_edge
+
+._crit_edge:                                      ; preds = %.split
+  %.pre = load i64, ptr %i.ch, align 8, !tbaa !87
+  %.pre141 = load i64, ptr %i.ci, align 8, !tbaa !74
+  br label %bb.b
 
 bb.a:                                             ; preds = %.split
   %i.ct = sub i64 64, %i.cq                       ; 2 uses
@@ -219,10 +224,10 @@ bb.a:                                             ; preds = %.split
   store i64 %i.cy, ptr %i.ci, align 8, !tbaa !74
   br label %bb.b
 
-bb.b:                                             ; preds = %.split._crit_edge, %bb.a
-  %i.cz = phi i64 [ %i.cy, %bb.a ], [ %.pre141, %.split._crit_edge ]
-  %i.da = phi i64 [ %spec.select, %bb.a ], [ %.pre, %.split._crit_edge ]
-  %i.db = phi i64 [ %i.cw, %bb.a ], [ %i.cr, %.split._crit_edge ]
+bb.b:                                             ; preds = %._crit_edge, %bb.a
+  %i.cz = phi i64 [ %i.cy, %bb.a ], [ %.pre141, %._crit_edge ]
+  %i.da = phi i64 [ %spec.select, %bb.a ], [ %.pre, %._crit_edge ]
+  %i.db = phi i64 [ %i.cw, %bb.a ], [ %i.cr, %._crit_edge ]
   %.sroa.0.8.vec.extract = extractelement <4 x i64> %i.cf, i64 1 ; 2 uses
   %i.dc = shl i64 %.sroa.0.8.vec.extract, %i.db
   %i.dd = or i64 %i.da, %i.dc                     ; 2 uses
@@ -342,11 +347,6 @@ _ZN12_GLOBAL__N_19BitWriter13WriteMultipleEPKmS2_m.exit: ; preds = %._ZN12_GLOBA
   %i.ff = add i64 %i.fe, %i.ez
   store i64 %i.ff, ptr %i.ci, align 8, !tbaa !74
   ret void
-
-.split._crit_edge:                                ; preds = %.split
-  %.pre = load i64, ptr %i.ch, align 8, !tbaa !87
-  %.pre141 = load i64, ptr %i.ci, align 8, !tbaa !74
-  br label %bb.b
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
@@ -749,7 +749,12 @@ _ZN4AVX212_GLOBAL__N_112ChunkEncoderINS0_9UpTo8BitsEE9EncodeRleEmRKN12_GLOBAL__N
   %i.aee = add i64 %i.aed, %.sroa.0140.0.vec.extract.i91.i.i.i ; 4 uses
   store i64 %i.aee, ptr %i.adt, align 8, !tbaa !86
   %i.aef = icmp ugt i64 %i.aee, 63
-  br i1 %i.aef, label %bb.z, label %.split._crit_edge.i92.i.i.i
+  br i1 %i.aef, label %bb.z, label %._crit_edge.i92.i.i.i
+
+._crit_edge.i92.i.i.i:                            ; preds = %_ZN4AVX212_GLOBAL__N_112ChunkEncoderINS0_9UpTo8BitsEE9EncodeRleEmRKN12_GLOBAL__N_110PrefixCodeERNS4_9BitWriterE.exit.i.i.i.i.i
+  %.pre.i93.i.i.i = load i64, ptr %i.adu, align 8, !tbaa !87
+  %.pre141.i94.i.i.i = load i64, ptr %i.adv, align 8, !tbaa !74
+  br label %bb.aa
 
 bb.z:                                             ; preds = %_ZN4AVX212_GLOBAL__N_112ChunkEncoderINS0_9UpTo8BitsEE9EncodeRleEmRKN12_GLOBAL__N_110PrefixCodeERNS4_9BitWriterE.exit.i.i.i.i.i
   %i.aeg = sub i64 64, %i.aed                     ; 2 uses
@@ -763,10 +768,10 @@ bb.z:                                             ; preds = %_ZN4AVX212_GLOBAL__
   store i64 %i.ael, ptr %i.adv, align 8, !tbaa !74
   br label %bb.aa
 
-bb.aa:                                            ; preds = %.split._crit_edge.i92.i.i.i, %bb.z
-  %i.aem = phi i64 [ %i.ael, %bb.z ], [ %.pre141.i94.i.i.i, %.split._crit_edge.i92.i.i.i ]
-  %i.aen = phi i64 [ %spec.select.i113.i.i.i, %bb.z ], [ %.pre.i93.i.i.i, %.split._crit_edge.i92.i.i.i ]
-  %i.aeo = phi i64 [ %i.aej, %bb.z ], [ %i.aee, %.split._crit_edge.i92.i.i.i ]
+bb.aa:                                            ; preds = %bb.z, %._crit_edge.i92.i.i.i
+  %i.aem = phi i64 [ %i.ael, %bb.z ], [ %.pre141.i94.i.i.i, %._crit_edge.i92.i.i.i ]
+  %i.aen = phi i64 [ %spec.select.i113.i.i.i, %bb.z ], [ %.pre.i93.i.i.i, %._crit_edge.i92.i.i.i ]
+  %i.aeo = phi i64 [ %i.aej, %bb.z ], [ %i.aee, %._crit_edge.i92.i.i.i ]
   %.sroa.0.8.vec.extract.i95.i.i.i = extractelement <4 x i64> %i.ads, i64 1 ; 2 uses
   %i.aep = shl i64 %.sroa.0.8.vec.extract.i95.i.i.i, %i.aeo
   %i.aeq = or i64 %i.aep, %i.aen                  ; 2 uses
@@ -867,11 +872,6 @@ bb.af:                                            ; preds = %bb.ae
   %i.agg = add i64 %.pre147.i107.i.i.i, 8         ; 2 uses
   store i64 %i.agg, ptr %i.adv, align 8, !tbaa !74
   br label %_ZN4AVX212_GLOBAL__N_19UpTo8Bits15EncodeChunkSimdEPtmmPKhS4_RN12_GLOBAL__N_19BitWriterE.exit114.i.i.i
-
-.split._crit_edge.i92.i.i.i:                      ; preds = %_ZN4AVX212_GLOBAL__N_112ChunkEncoderINS0_9UpTo8BitsEE9EncodeRleEmRKN12_GLOBAL__N_110PrefixCodeERNS4_9BitWriterE.exit.i.i.i.i.i
-  %.pre.i93.i.i.i = load i64, ptr %i.adu, align 8, !tbaa !87
-  %.pre141.i94.i.i.i = load i64, ptr %i.adv, align 8, !tbaa !74
-  br label %bb.aa
 
 _ZN4AVX212_GLOBAL__N_19UpTo8Bits15EncodeChunkSimdEPtmmPKhS4_RN12_GLOBAL__N_19BitWriterE.exit114.i.i.i: ; preds = %bb.af, %._ZN12_GLOBAL__N_19BitWriter13WriteMultipleEPKmS2_m.exit_crit_edge.i108.i.i.i
   %i.agh = phi i64 [ %spec.select.3.i110.i.i.i, %bb.af ], [ %.pre148.i109.i.i.i, %._ZN12_GLOBAL__N_19BitWriter13WriteMultipleEPKmS2_m.exit_crit_edge.i108.i.i.i ]
@@ -992,7 +992,12 @@ bb.ag:                                            ; preds = %._crit_edge.i.i.i.i
   %i.akg = add i64 %i.akf, %.sroa.0140.0.vec.extract.i.i.i.i ; 4 uses
   store i64 %i.akg, ptr %i.ajv, align 8, !tbaa !86
   %i.akh = icmp ugt i64 %i.akg, 63
-  br i1 %i.akh, label %bb.ah, label %.split._crit_edge.i.i.i.i
+  br i1 %i.akh, label %bb.ah, label %._crit_edge.i.i.i.i
+
+._crit_edge.i.i.i.i:                              ; preds = %bb.ag
+  %.pre.i.i.i.i = load i64, ptr %i.ajw, align 8, !tbaa !87
+  %.pre141.i.i.i.i = load i64, ptr %i.ajx, align 8, !tbaa !74
+  br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   %i.aki = sub i64 64, %i.akf                     ; 2 uses
@@ -1006,10 +1011,10 @@ bb.ah:                                            ; preds = %bb.ag
   store i64 %i.akn, ptr %i.ajx, align 8, !tbaa !74
   br label %bb.ai
 
-bb.ai:                                            ; preds = %.split._crit_edge.i.i.i.i, %bb.ah
-  %i.ako = phi i64 [ %i.akn, %bb.ah ], [ %.pre141.i.i.i.i, %.split._crit_edge.i.i.i.i ]
-  %i.akp = phi i64 [ %spec.select.i.i.i.i, %bb.ah ], [ %.pre.i.i.i.i, %.split._crit_edge.i.i.i.i ]
-  %i.akq = phi i64 [ %i.akl, %bb.ah ], [ %i.akg, %.split._crit_edge.i.i.i.i ]
+bb.ai:                                            ; preds = %bb.ah, %._crit_edge.i.i.i.i
+  %i.ako = phi i64 [ %i.akn, %bb.ah ], [ %.pre141.i.i.i.i, %._crit_edge.i.i.i.i ]
+  %i.akp = phi i64 [ %spec.select.i.i.i.i, %bb.ah ], [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ]
+  %i.akq = phi i64 [ %i.akl, %bb.ah ], [ %i.akg, %._crit_edge.i.i.i.i ]
   %.sroa.0.8.vec.extract.i.i.i.i = extractelement <4 x i64> %i.aju, i64 1 ; 2 uses
   %i.akr = shl i64 %.sroa.0.8.vec.extract.i.i.i.i, %i.akq
   %i.aks = or i64 %i.akr, %i.akp                  ; 2 uses
@@ -1110,11 +1115,6 @@ bb.an:                                            ; preds = %bb.am
   %i.ami = add i64 %.pre147.i.i.i.i, 8            ; 2 uses
   store i64 %i.ami, ptr %i.ajx, align 8, !tbaa !74
   br label %_ZN4AVX212_GLOBAL__N_19UpTo8Bits15EncodeChunkSimdEPtmmPKhS4_RN12_GLOBAL__N_19BitWriterE.exit.i.i.i
-
-.split._crit_edge.i.i.i.i:                        ; preds = %bb.ag
-  %.pre.i.i.i.i = load i64, ptr %i.ajw, align 8, !tbaa !87
-  %.pre141.i.i.i.i = load i64, ptr %i.ajx, align 8, !tbaa !74
-  br label %bb.ai
 
 _ZN4AVX212_GLOBAL__N_19UpTo8Bits15EncodeChunkSimdEPtmmPKhS4_RN12_GLOBAL__N_19BitWriterE.exit.i.i.i: ; preds = %bb.an, %._ZN12_GLOBAL__N_19BitWriter13WriteMultipleEPKmS2_m.exit_crit_edge.i.i.i.i
   %i.amj = phi i64 [ %spec.select.3.i.i.i.i, %bb.an ], [ %.pre148.i.i.i.i, %._ZN12_GLOBAL__N_19BitWriter13WriteMultipleEPKmS2_m.exit_crit_edge.i.i.i.i ]
@@ -1518,7 +1518,12 @@ define internal fastcc void @_ZN4AVX212_GLOBAL__N_113From9To13Bits15EncodeChunkS
   %i.ed = add i64 %.sroa.0183.0.vec.extract, %i.ec ; 4 uses
   store i64 %i.ed, ptr %i.ds, align 8, !tbaa !86
   %i.ee = icmp ugt i64 %i.ed, 63
-  br i1 %i.ee, label %bb.a, label %.split._crit_edge
+  br i1 %i.ee, label %bb.a, label %._crit_edge
+
+._crit_edge:                                      ; preds = %.split
+  %.pre = load i64, ptr %i.dt, align 8, !tbaa !87
+  %.pre185 = load i64, ptr %i.du, align 8, !tbaa !74
+  br label %bb.b
 
 bb.a:                                             ; preds = %.split
   %i.ef = sub i64 64, %i.ec                       ; 2 uses
@@ -1532,10 +1537,10 @@ bb.a:                                             ; preds = %.split
   store i64 %i.ek, ptr %i.du, align 8, !tbaa !74
   br label %bb.b
 
-bb.b:                                             ; preds = %.split._crit_edge, %bb.a
-  %i.el = phi i64 [ %i.ek, %bb.a ], [ %.pre185, %.split._crit_edge ]
-  %i.em = phi i64 [ %spec.select, %bb.a ], [ %.pre, %.split._crit_edge ]
-  %i.en = phi i64 [ %i.ei, %bb.a ], [ %i.ed, %.split._crit_edge ]
+bb.b:                                             ; preds = %._crit_edge, %bb.a
+  %i.el = phi i64 [ %i.ek, %bb.a ], [ %.pre185, %._crit_edge ]
+  %i.em = phi i64 [ %spec.select, %bb.a ], [ %.pre, %._crit_edge ]
+  %i.en = phi i64 [ %i.ei, %bb.a ], [ %i.ed, %._crit_edge ]
   %.sroa.0181.8.vec.extract = extractelement <4 x i64> %i.dj, i64 1 ; 2 uses
   %i.eo = shl i64 %.sroa.0181.8.vec.extract, %i.en
   %i.ep = or i64 %i.em, %i.eo                     ; 2 uses
@@ -1795,11 +1800,6 @@ _ZN4AVX212_GLOBAL__N_113StoreToWriterILm2EEEvPKNS0_6Bits32ERN12_GLOBAL__N_19BitW
   %i.jd = add i64 %i.jc, %i.ix
   store i64 %i.jd, ptr %i.du, align 8, !tbaa !74
   ret void
-
-.split._crit_edge:                                ; preds = %.split
-  %.pre = load i64, ptr %i.dt, align 8, !tbaa !87
-  %.pre185 = load i64, ptr %i.du, align 8, !tbaa !74
-  br label %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
@@ -2202,7 +2202,12 @@ define internal fastcc void @_ZN4AVX212_GLOBAL__N_113Exactly14Bits15EncodeChunkS
   %i.ei = add i64 %.sroa.0200.0.vec.extract, %i.eh ; 4 uses
   store i64 %i.ei, ptr %i.dx, align 8, !tbaa !86
   %i.ej = icmp ugt i64 %i.ei, 63
-  br i1 %i.ej, label %bb.a, label %.split._crit_edge
+  br i1 %i.ej, label %bb.a, label %._crit_edge
+
+._crit_edge:                                      ; preds = %.split
+  %.pre = load i64, ptr %i.dy, align 8, !tbaa !87
+  %.pre202 = load i64, ptr %i.dz, align 8, !tbaa !74
+  br label %bb.b
 
 bb.a:                                             ; preds = %.split
   %i.ek = sub i64 64, %i.eh                       ; 2 uses
@@ -2216,10 +2221,10 @@ bb.a:                                             ; preds = %.split
   store i64 %i.ep, ptr %i.dz, align 8, !tbaa !74
   br label %bb.b
 
-bb.b:                                             ; preds = %.split._crit_edge, %bb.a
-  %i.eq = phi i64 [ %i.ep, %bb.a ], [ %.pre202, %.split._crit_edge ]
-  %i.er = phi i64 [ %spec.select, %bb.a ], [ %.pre, %.split._crit_edge ]
-  %i.es = phi i64 [ %i.en, %bb.a ], [ %i.ei, %.split._crit_edge ]
+bb.b:                                             ; preds = %._crit_edge, %bb.a
+  %i.eq = phi i64 [ %i.ep, %bb.a ], [ %.pre202, %._crit_edge ]
+  %i.er = phi i64 [ %spec.select, %bb.a ], [ %.pre, %._crit_edge ]
+  %i.es = phi i64 [ %i.en, %bb.a ], [ %i.ei, %._crit_edge ]
   %.sroa.0198.8.vec.extract = extractelement <4 x i64> %i.do, i64 1 ; 2 uses
   %i.et = shl i64 %.sroa.0198.8.vec.extract, %i.es
   %i.eu = or i64 %i.er, %i.et                     ; 2 uses
@@ -2479,11 +2484,6 @@ _ZN4AVX212_GLOBAL__N_113StoreToWriterILm2EEEvPKNS0_6Bits32ERN12_GLOBAL__N_19BitW
   %i.ji = add i64 %i.jh, %i.jc
   store i64 %i.ji, ptr %i.dz, align 8, !tbaa !74
   ret void
-
-.split._crit_edge:                                ; preds = %.split
-  %.pre = load i64, ptr %i.dy, align 8, !tbaa !87
-  %.pre202 = load i64, ptr %i.dz, align 8, !tbaa !74
-  br label %bb.b
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2886,7 +2886,12 @@ define internal fastcc void @_ZN4AVX212_GLOBAL__N_114MoreThan14Bits15EncodeChunk
   %i.dk = add i64 %.sroa.0247.0.vec.extract, %i.dj ; 4 uses
   store i64 %i.dk, ptr %i.cz, align 8, !tbaa !86
   %i.dl = icmp ugt i64 %i.dk, 63
-  br i1 %i.dl, label %bb.a, label %.split._crit_edge
+  br i1 %i.dl, label %bb.a, label %._crit_edge
+
+._crit_edge:                                      ; preds = %.split
+  %.pre = load i64, ptr %i.da, align 8, !tbaa !87
+  %.pre249 = load i64, ptr %i.db, align 8, !tbaa !74
+  br label %bb.b
 
 bb.a:                                             ; preds = %.split
   %i.dm = sub i64 64, %i.dj                       ; 2 uses
@@ -2900,10 +2905,10 @@ bb.a:                                             ; preds = %.split
   store i64 %i.dr, ptr %i.db, align 8, !tbaa !74
   br label %bb.b
 
-bb.b:                                             ; preds = %.split._crit_edge, %bb.a
-  %i.ds = phi i64 [ %i.dr, %bb.a ], [ %.pre249, %.split._crit_edge ]
-  %i.dt = phi i64 [ %spec.select, %bb.a ], [ %.pre, %.split._crit_edge ]
-  %i.du = phi i64 [ %i.dp, %bb.a ], [ %i.dk, %.split._crit_edge ]
+bb.b:                                             ; preds = %._crit_edge, %bb.a
+  %i.ds = phi i64 [ %i.dr, %bb.a ], [ %.pre249, %._crit_edge ]
+  %i.dt = phi i64 [ %spec.select, %bb.a ], [ %.pre, %._crit_edge ]
+  %i.du = phi i64 [ %i.dp, %bb.a ], [ %i.dk, %._crit_edge ]
   %.sroa.0246.8.vec.extract = extractelement <4 x i64> %i.cr, i64 1 ; 2 uses
   %i.dv = shl i64 %.sroa.0246.8.vec.extract, %i.du
   %i.dw = or i64 %i.dt, %i.dv                     ; 2 uses
@@ -3163,11 +3168,6 @@ _ZN4AVX212_GLOBAL__N_113StoreToWriterILm2EEEvPKNS0_6Bits32ERN12_GLOBAL__N_19BitW
   %i.ik = add i64 %i.ij, %i.ie
   store i64 %i.ik, ptr %i.db, align 8, !tbaa !74
   ret void
-
-.split._crit_edge:                                ; preds = %.split
-  %.pre = load i64, ptr %i.da, align 8, !tbaa !87
-  %.pre249 = load i64, ptr %i.db, align 8, !tbaa !74
-  br label %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable

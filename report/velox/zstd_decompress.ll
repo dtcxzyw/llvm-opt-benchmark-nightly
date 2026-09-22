@@ -204,24 +204,17 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
   %10 = alloca %struct.ZSTD_frameSizeInfo, align 8 ; 4 uses
   %.not = icmp eq ptr %7, null                    ; 2 uses
-  br i1 %.not, label %11, label %bb.b
+  br i1 %.not, label %.lr.ph.lr.ph.lr.ph, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call ptr @ZSTD_DDict_dictContent(ptr noundef nonnull %7) #17
   %i.c = tail call i64 @ZSTD_DDict_dictSize(ptr noundef nonnull %7) #17
-  br label %11
+  br label %.lr.ph.lr.ph.lr.ph
 
-11:                                               ; preds = %bb.b, %bb.a
+.lr.ph.lr.ph.lr.ph:                               ; preds = %bb.b, %bb.a
   %.085 = phi ptr [ %i.b, %bb.b ], [ %5, %bb.a ]  ; 3 uses
   %.084 = phi i64 [ %i.c, %bb.b ], [ %6, %bb.a ]  ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 30104 ; 5 uses
-  %13 = load i32, ptr %12, align 8, !tbaa !38
-  %14 = icmp ne i32 %13, 0                        ; 2 uses
-  %15 = select i1 %14, i64 1, i64 5               ; 2 uses
-  %.not97209256265 = icmp ult i64 %4, %15
-  br i1 %.not97209256265, label %.outer._crit_edge, label %.lr.ph.lr.ph.lr.ph
-
-.lr.ph.lr.ph.lr.ph:                               ; preds = %11
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 30104 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 30168
@@ -261,31 +254,38 @@ bb.b:                                             ; preds = %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.am = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.an = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %16 = insertelement <2 x ptr> poison, ptr %i.n, i64 0
-  %17 = insertelement <2 x ptr> %16, ptr %i.t, i64 1
-  %18 = insertelement <2 x ptr> poison, ptr %i.u, i64 0
-  %19 = insertelement <2 x ptr> %18, ptr %i.o, i64 1
+  %12 = load i32, ptr %11, align 8, !tbaa !38
+  %.fr215406417 = freeze i32 %12
+  %.not216407418 = icmp eq i32 %.fr215406417, 0   ; 2 uses
+  %13 = select i1 %.not216407418, i64 5, i64 1    ; 2 uses
+  %.not97209408419 = icmp ult i64 %4, %13
+  br i1 %.not97209408419, label %.outer._crit_edge, label %.lr.ph.lr.ph.preheader
+
+.lr.ph.lr.ph.preheader:                           ; preds = %.lr.ph.lr.ph.lr.ph
+  %14 = insertelement <2 x ptr> poison, ptr %i.n, i64 0
+  %15 = insertelement <2 x ptr> %14, ptr %i.t, i64 1
+  %16 = insertelement <2 x ptr> poison, ptr %i.u, i64 0
+  %17 = insertelement <2 x ptr> %16, ptr %i.o, i64 1
   br label %.lr.ph.lr.ph
 
-.lr.ph.lr.ph:                                     ; preds = %.lr.ph.lr.ph.lr.ph, %.outer.outer
-  %i.ao = phi i64 [ %15, %.lr.ph.lr.ph.lr.ph ], [ %i.gu, %.outer.outer ]
-  %i.ap = phi i1 [ %14, %.lr.ph.lr.ph.lr.ph ], [ %21, %.outer.outer ]
-  %i.aq = phi i1 [ false, %.lr.ph.lr.ph.lr.ph ], [ true, %.outer.outer ]
-  %.086.ph.ph269 = phi i64 [ %2, %.lr.ph.lr.ph.lr.ph ], [ %i.gs, %.outer.outer ]
-  %.089.ph.ph268 = phi ptr [ %1, %.lr.ph.lr.ph.lr.ph ], [ %i.gr, %.outer.outer ]
-  %.0.ph.ph267 = phi i64 [ %4, %.lr.ph.lr.ph.lr.ph ], [ %.4132, %.outer.outer ]
-  %.0133.ph.ph266 = phi ptr [ %3, %.lr.ph.lr.ph.lr.ph ], [ %.4137, %.outer.outer ]
+.lr.ph.lr.ph:                                     ; preds = %.lr.ph.lr.ph.preheader, %.outer.outer
+  %i.ao = phi i64 [ %i.gu, %.outer.outer ], [ %13, %.lr.ph.lr.ph.preheader ]
+  %i.ap = phi i1 [ %.not216407, %.outer.outer ], [ %.not216407418, %.lr.ph.lr.ph.preheader ]
+  %i.aq = phi i1 [ true, %.outer.outer ], [ false, %.lr.ph.lr.ph.preheader ]
+  %.086.ph.ph269 = phi i64 [ %i.gs, %.outer.outer ], [ %2, %.lr.ph.lr.ph.preheader ]
+  %.089.ph.ph268 = phi ptr [ %i.gr, %.outer.outer ], [ %1, %.lr.ph.lr.ph.preheader ]
+  %.0.ph.ph267 = phi i64 [ %.4132, %.outer.outer ], [ %4, %.lr.ph.lr.ph.preheader ]
+  %.0133.ph.ph266 = phi ptr [ %.4137, %.outer.outer ], [ %3, %.lr.ph.lr.ph.preheader ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
   %i.ar = phi i64 [ %i.ao, %.lr.ph.lr.ph ], [ %i.bz, %.outer ]
-  %i.as = phi i1 [ %i.ap, %.lr.ph.lr.ph ], [ %20, %.outer ]
+  %i.as = phi i1 [ %i.ap, %.lr.ph.lr.ph ], [ %.not216, %.outer ]
   %.086.ph260 = phi i64 [ %.086.ph.ph269, %.lr.ph.lr.ph ], [ %i.bv, %.outer ] ; 7 uses
   %.089.ph259 = phi ptr [ %.089.ph.ph268, %.lr.ph.lr.ph ], [ %i.bu, %.outer ] ; 9 uses
   %.0.ph258 = phi i64 [ %.0.ph.ph267, %.lr.ph.lr.ph ], [ %i.bx, %.outer ] ; 2 uses
   %.0133.ph257 = phi ptr [ %.0133.ph.ph266, %.lr.ph.lr.ph ], [ %i.bw, %.outer ] ; 2 uses
-  %.fr = freeze i1 %i.as
-  br i1 %.fr, label %.thread152, label %.lr.ph.split
+  br i1 %i.as, label %.lr.ph.split, label %.thread152
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.u
   %.0211 = phi i64 [ %i.ck, %bb.u ], [ %.0.ph258, %.lr.ph ] ; 12 uses
@@ -432,9 +432,10 @@ bb.r:                                             ; preds = %bb.q
   %i.bv = sub i64 %.086.ph260, %.3.i
   %i.bw = getelementptr inbounds nuw i8, ptr %.0133210, i64 %i.ba
   %i.bx = sub i64 %.0211, %i.ba                   ; 3 uses
-  %i.by = load i32, ptr %12, align 8, !tbaa !38
-  %20 = icmp ne i32 %i.by, 0                      ; 2 uses
-  %i.bz = select i1 %20, i64 1, i64 5             ; 2 uses
+  %i.by = load i32, ptr %11, align 8, !tbaa !38
+  %.fr215 = freeze i32 %i.by
+  %.not216 = icmp eq i32 %.fr215, 0               ; 2 uses
+  %i.bz = select i1 %.not216, i64 5, i64 1        ; 2 uses
   %.not97209 = icmp ult i64 %i.bx, %i.bz
   br i1 %.not97209, label %.outer._crit_edge, label %.lr.ph
 
@@ -489,7 +490,7 @@ bb.w:                                             ; preds = %bb.v
 ZSTD_decompressBegin_usingDDict.exit:             ; preds = %bb.w, %bb.v
   %i.cs = phi i64 [ %i.cr, %bb.w ], [ 0, %bb.v ]
   store i64 %i.cs, ptr %i.j, align 8, !tbaa !69
-  %i.ct = load i32, ptr %12, align 8, !tbaa !38
+  %i.ct = load i32, ptr %11, align 8, !tbaa !38
   %i.cu = icmp eq i32 %i.ct, 0
   %i.cv = select i1 %i.cu, i64 5, i64 1
   store i64 %i.cv, ptr %i.k, align 8, !tbaa !70
@@ -500,8 +501,8 @@ ZSTD_decompressBegin_usingDDict.exit:             ; preds = %bb.w, %bb.v
   store <4 x i32> <i32 3, i32 0, i32 0, i32 0>, ptr %i.q, align 8, !tbaa !52
   store i32 1, ptr %i.r, align 8, !tbaa !32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.s, ptr noundef nonnull align 4 dereferenceable(12) @repStartValue, i64 12, i1 false)
-  store <2 x ptr> %17, ptr %0, align 8, !tbaa !47
-  store <2 x ptr> %19, ptr %i.v, align 8, !tbaa !47
+  store <2 x ptr> %15, ptr %0, align 8, !tbaa !47
+  store <2 x ptr> %17, ptr %i.v, align 8, !tbaa !47
   call void @ZSTD_copyDDictParameters(ptr noundef nonnull %0, ptr noundef nonnull %7) #17
   br label %bb.y
 
@@ -513,7 +514,7 @@ bb.x:                                             ; preds = %.thread152
 bb.y:                                             ; preds = %ZSTD_decompressBegin_usingDDict.exit, %bb.x
   call void @ZSTD_checkContinuity(ptr noundef nonnull %0, ptr noundef %.089.ph259, i64 noundef %.086.ph260) #17
   %i.cy = getelementptr inbounds nuw i8, ptr %.089.ph259, i64 %.086.ph260 ; 3 uses
-  %i.cz = load i32, ptr %12, align 8, !tbaa !38
+  %i.cz = load i32, ptr %11, align 8, !tbaa !38
   %i.da = icmp eq i32 %i.cz, 0                    ; 2 uses
   %i.db = select i1 %i.da, i64 9, i64 5
   %i.dc = icmp ult i64 %.us-phi217, %i.db
@@ -774,15 +775,16 @@ bb.ba:                                            ; preds = %ZSTD_decompressFram
 .outer.outer:                                     ; preds = %bb.ba
   %i.gr = getelementptr inbounds nuw i8, ptr %.089.ph259, i64 %.6.i ; 2 uses
   %i.gs = sub i64 %.086.ph260, %.6.i
-  %i.gt = load i32, ptr %12, align 8, !tbaa !38
-  %21 = icmp ne i32 %i.gt, 0                      ; 2 uses
-  %i.gu = select i1 %21, i64 1, i64 5             ; 2 uses
+  %i.gt = load i32, ptr %11, align 8, !tbaa !38
+  %.fr215406 = freeze i32 %i.gt
+  %.not216407 = icmp eq i32 %.fr215406, 0         ; 2 uses
+  %i.gu = select i1 %.not216407, i64 5, i64 1     ; 2 uses
   %.not97209256 = icmp ult i64 %.4132, %i.gu
   br i1 %.not97209256, label %.outer._crit_edge, label %.lr.ph.lr.ph, !llvm.loop !131
 
-.outer._crit_edge:                                ; preds = %.outer.outer, %.outer, %bb.u, %11
-  %.089.ph.lcssa206 = phi ptr [ %i.bu, %.outer ], [ %.089.ph259, %bb.u ], [ %1, %11 ], [ %i.gr, %.outer.outer ]
-  %.0.lcssa = phi i64 [ %i.bx, %.outer ], [ %i.ck, %bb.u ], [ %4, %11 ], [ %.4132, %.outer.outer ]
+.outer._crit_edge:                                ; preds = %.outer.outer, %.outer, %bb.u, %.lr.ph.lr.ph.lr.ph
+  %.089.ph.lcssa206 = phi ptr [ %i.bu, %.outer ], [ %.089.ph259, %bb.u ], [ %1, %.lr.ph.lr.ph.lr.ph ], [ %i.gr, %.outer.outer ]
+  %.0.lcssa = phi i64 [ %i.bx, %.outer ], [ %i.ck, %bb.u ], [ %4, %.lr.ph.lr.ph.lr.ph ], [ %.4132, %.outer.outer ]
   %.not98 = icmp eq i64 %.0.lcssa, 0
   br i1 %.not98, label %bb.bb, label %.thread145
 

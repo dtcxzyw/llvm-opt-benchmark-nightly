@@ -202,21 +202,12 @@ bb.b:                                             ; preds = %bb.a
   %.not32 = icmp eq i32 %2, 0
   br i1 %.not32, label %.lr.ph.split.us, label %.split.us
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph, %select.unfold.us
-  %.048.us = phi ptr [ %5, %select.unfold.us ], [ %i.f, %.lr.ph ] ; 3 uses
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %select.unfold
+  %.048.us = phi ptr [ %5, %select.unfold ], [ %i.f, %.lr.ph ] ; 3 uses
   %i.g = getelementptr i8, ptr %.048.us, i64 44
   %i.h = load i32, ptr %i.g, align 4
   %i.i = icmp eq i32 %i.h, %1
-  br i1 %i.i, label %.split.us, label %select.unfold.us
-
-select.unfold.us:                                 ; preds = %.lr.ph.split.us
-  %3 = getelementptr i8, ptr %.048.us, i64 56
-  %4 = load ptr, ptr %3, align 8                  ; 2 uses
-  %.not33.us = icmp eq ptr %4, null
-  %5 = getelementptr i8, ptr %4, i64 -56          ; 2 uses
-  %.not31.us59 = icmp eq ptr %5, null
-  %.not31.us = or i1 %.not33.us, %.not31.us59
-  br i1 %.not31.us, label %select.unfold._crit_edge, label %.lr.ph.split.us
+  br i1 %i.i, label %.split.us, label %select.unfold
 
 .split.us:                                        ; preds = %.lr.ph.split.us, %.lr.ph
   %.us-phi = phi ptr [ %i.f, %.lr.ph ], [ %.048.us, %.lr.ph.split.us ] ; 4 uses
@@ -244,7 +235,16 @@ bb.d:                                             ; preds = %arch_static_branch.
   tail call void @refcount_warn_saturate(ptr noundef %i.j, i32 noundef %.sink.i.i.i.i) #6
   br label %.sink.split
 
-select.unfold._crit_edge:                         ; preds = %select.unfold.us, %bb.b
+select.unfold:                                    ; preds = %.lr.ph.split.us
+  %3 = getelementptr i8, ptr %.048.us, i64 56
+  %4 = load ptr, ptr %3, align 8                  ; 2 uses
+  %.not33 = icmp eq ptr %4, null
+  %5 = getelementptr i8, ptr %4, i64 -56          ; 2 uses
+  %.not3159 = icmp eq ptr %5, null
+  %.not31 = or i1 %.not33, %.not3159
+  br i1 %.not31, label %select.unfold._crit_edge, label %.lr.ph.split.us
+
+select.unfold._crit_edge:                         ; preds = %select.unfold, %bb.b
   tail call void @_raw_spin_unlock(ptr noundef %i.d) #6
   br label %.thread
 

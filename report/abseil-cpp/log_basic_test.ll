@@ -202,11 +202,7 @@ _ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE
 _ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE5beginEv.exit
   %i.cw = icmp eq ptr %i.cq, %i.cv
   %.not.i82 = icmp eq ptr %i.as, null             ; 4 uses
-  br i1 %i.cw, label %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.cq, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEED2Ev.exit73, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72
+  br i1 %i.cw, label %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a, label %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144
   %.034 = phi i64 [ %i.ny, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144 ], [ 0, %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader ] ; 2 uses
@@ -215,13 +211,17 @@ _ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 48
   %i.cz = load ptr, ptr %i.cy, align 8
   %i.da = invoke noundef zeroext i1 %i.cz(ptr noundef nonnull align 8 dereferenceable(8) %i.cq, ptr noundef nonnull align 8 dereferenceable(8) %i.cv)
-          to label %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a unwind label %bb.x, !inline_history !822
+          to label %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit unwind label %bb.x, !inline_history !822
 
-_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit
+_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit
   br i1 %i.da, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72: ; preds = %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a, %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader.split.us
-  %.2329 = phi i1 [ %.1450, %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a ]
+_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.cq, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEED2Ev.exit73, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72: ; preds = %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit, %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a
+  %.2329 = phi i1 [ %.1450, %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit ]
   %i.db = load ptr, ptr %i.cv, align 8, !tbaa !44
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 8
   %i.dd = load ptr, ptr %i.dc, align 8
@@ -232,8 +232,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_20
   call void %i.dg(ptr noundef nonnull align 8 dereferenceable(8) %i.cq) #35, !inline_history !823
   br label %_ZN7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEED2Ev.exit73
 
-_ZN7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEED2Ev.exit73: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72
-  %.2330598 = phi i1 [ %.2329, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72 ], [ %.1450, %_ZNK7testing8internal14ParamGeneratorIN4absl12lts_2026052618LogSeverityAtLeastEE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEED2Ev.exit73: ; preds = %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72
+  %.2330598 = phi i1 [ %.2329, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4absl12lts_2026052618LogSeverityAtLeastEEEEclEPS6_.exit.i.i72 ], [ %.1450, %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a ] ; 2 uses
   %i.dh = load ptr, ptr %i.s, align 8, !tbaa !836
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.dh)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -326,7 +326,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.ci
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIN4absl12lts_2026052618LogSeverityAtLeastEEneERKS5_.exit
   %i.ee = load ptr, ptr %i.cq, align 8, !tbaa !44
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 40
   %i.eg = load ptr, ptr %i.ef, align 8

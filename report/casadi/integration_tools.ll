@@ -205,8 +205,8 @@ bb.aq:                                            ; preds = %._crit_edge180
   %exitcond223.not = icmp eq i64 %i.ji, %i.h
   br i1 %exitcond223.not, label %.critedge96, label %.lr.ph204, !llvm.loop !345
 
-.critedge96:                                      ; preds = %bb.aq, %._crit_edge200, %.lr.ph196, %._crit_edge193, %.lr.ph212, %bb.a
-  %.not94157 = phi i1 [ false, %.lr.ph212 ], [ false, %.lr.ph196 ], [ false, %._crit_edge200 ], [ true, %bb.a ], [ false, %._crit_edge193 ], [ true, %bb.aq ]
+.critedge96:                                      ; preds = %bb.aq, %._crit_edge200, %.lr.ph196, %._crit_edge193, %bb.a, %.lr.ph212
+  %.not94157 = phi i1 [ false, %._crit_edge200 ], [ false, %.lr.ph196 ], [ false, %.lr.ph212 ], [ true, %bb.a ], [ false, %._crit_edge193 ], [ true, %bb.aq ]
   ret i1 %.not94157
 }
 

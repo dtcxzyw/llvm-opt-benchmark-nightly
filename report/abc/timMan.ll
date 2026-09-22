@@ -204,17 +204,12 @@ Tim_ManBoxNum.exit:                               ; preds = %Tim_ManPoNum.exit, 
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 20
   %i.af = load i32, ptr %i.j, align 8, !tbaa !14  ; 5 uses
-  %1 = icmp sgt i32 %i.af, 0
-  br i1 %1, label %.lr.ph, label %.critedge.thread361
-
-.lr.ph:                                           ; preds = %Tim_ManBoxNum.exit
+  %1 = icmp slt i32 %i.af, 1
   %.not = icmp eq ptr %i.ac, null
-  br i1 %.not, label %.lr.ph233.preheader, label %.lr.ph.split.preheader
+  %or.cond = select i1 %1, i1 true, i1 %.not
+  br i1 %or.cond, label %.critedge, label %.lr.ph.split.preheader
 
-.lr.ph233.preheader:                              ; preds = %.critedge, %.lr.ph
-  br label %.lr.ph233
-
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
+.lr.ph.split.preheader:                           ; preds = %Tim_ManBoxNum.exit
   %wide.trip.count = zext nneg i32 %i.af to i64
   br label %.lr.ph.split
 
@@ -231,30 +226,34 @@ bb.e:                                             ; preds = %.lr.ph.split
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.am = load float, ptr %i.al, align 4, !tbaa !50
   %i.an = fcmp une float %i.ak, %i.am
-  br i1 %i.an, label %.critedge, label %bb.f
+  br i1 %i.an, label %.critedge.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ao = load float, ptr %i.ae, align 4, !tbaa !23
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ag, i64 20
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !23
   %i.ar = fcmp une float %i.ao, %i.aq
-  br i1 %i.ar, label %.critedge, label %bb.g
+  br i1 %i.ar, label %.critedge.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.split, %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph.split, !llvm.loop !137
 
-.critedge:                                        ; preds = %bb.f, %bb.e
+.critedge.loopexit:                               ; preds = %bb.e, %bb.f
   %2 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.as = icmp eq i32 %i.af, %2
-  br i1 %i.as, label %.critedge.thread, label %.lr.ph233.preheader
+  br label %.critedge
 
-.critedge.thread361:                              ; preds = %Tim_ManBoxNum.exit
-  %3 = icmp eq i32 %i.af, 0
-  br i1 %3, label %.critedge.thread, label %.critedge2
+.critedge:                                        ; preds = %.critedge.loopexit, %Tim_ManBoxNum.exit
+  %.0167.lcssa = phi i32 [ 0, %Tim_ManBoxNum.exit ], [ %2, %.critedge.loopexit ]
+  %i.as = icmp eq i32 %.0167.lcssa, %i.af
+  br i1 %i.as, label %.critedge.thread, label %.critedge.thread361
 
-.critedge.thread:                                 ; preds = %bb.g, %.critedge.thread361, %.critedge
+.critedge.thread361:                              ; preds = %.critedge
+  %3 = icmp sgt i32 %i.af, 0
+  br i1 %3, label %.lr.ph233, label %.critedge2
+
+.critedge.thread:                                 ; preds = %bb.g, %.critedge
   %i.at = load <2 x float>, ptr %i.ad, align 4, !tbaa !35
   %i.au = fpext <2 x float> %i.at to <2 x double> ; 2 uses
   %i.av = extractelement <2 x double> %i.au, i64 0
@@ -262,9 +261,9 @@ bb.g:                                             ; preds = %.lr.ph.split, %bb.f
   %i.ax = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, double noundef %i.av, double noundef %i.aw) ; 0 uses
   br label %.critedge2
 
-.lr.ph233:                                        ; preds = %.lr.ph233.preheader, %bb.j
-  %i.ay = phi i32 [ %i.bl, %bb.j ], [ %i.af, %.lr.ph233.preheader ]
-  %indvars.iv291 = phi i64 [ %indvars.iv.next292, %bb.j ], [ 0, %.lr.ph233.preheader ] ; 3 uses
+.lr.ph233:                                        ; preds = %.critedge.thread361, %bb.j
+  %i.ay = phi i32 [ %i.bl, %bb.j ], [ %i.af, %.critedge.thread361 ]
+  %indvars.iv291 = phi i64 [ %indvars.iv.next292, %bb.j ], [ 0, %.critedge.thread361 ] ; 3 uses
   %i.az = load ptr, ptr %i.ab, align 8, !tbaa !16 ; 2 uses
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %i.az, i64 %indvars.iv291 ; 2 uses
   %.not184 = icmp eq ptr %i.az, null
@@ -300,17 +299,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 20
   %i.bs = load i32, ptr %i.x, align 4, !tbaa !15  ; 5 uses
-  %4 = icmp sgt i32 %i.bs, 0
-  br i1 %4, label %.lr.ph236, label %.critedge4.thread367
-
-.lr.ph236:                                        ; preds = %.critedge2
+  %4 = icmp slt i32 %i.bs, 1
   %.not185 = icmp eq ptr %i.bp, null
-  br i1 %.not185, label %.lr.ph251.preheader, label %.lr.ph236.split.preheader
+  %or.cond286 = select i1 %4, i1 true, i1 %.not185
+  br i1 %or.cond286, label %.critedge4, label %.lr.ph236.split.preheader
 
-.lr.ph251.preheader:                              ; preds = %.critedge4, %.lr.ph236
-  br label %.lr.ph251
-
-.lr.ph236.split.preheader:                        ; preds = %.lr.ph236
+.lr.ph236.split.preheader:                        ; preds = %.critedge2
   %wide.trip.count297 = zext nneg i32 %i.bs to i64
   br label %.lr.ph236.split
 
@@ -327,30 +321,34 @@ bb.k:                                             ; preds = %.lr.ph236.split
   %i.by = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
   %i.bz = load float, ptr %i.by, align 4, !tbaa !50
   %i.ca = fcmp une float %i.bx, %i.bz
-  br i1 %i.ca, label %.critedge4, label %bb.l
+  br i1 %i.ca, label %.critedge4.loopexit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.cb = load float, ptr %i.br, align 4, !tbaa !23
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bt, i64 20
   %i.cd = load float, ptr %i.cc, align 4, !tbaa !23
   %i.ce = fcmp une float %i.cb, %i.cd
-  br i1 %i.ce, label %.critedge4, label %bb.m
+  br i1 %i.ce, label %.critedge4.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph236.split, %bb.l
   %indvars.iv.next295 = add nuw nsw i64 %indvars.iv294, 1 ; 2 uses
   %exitcond298.not = icmp eq i64 %indvars.iv.next295, %wide.trip.count297
   br i1 %exitcond298.not, label %.critedge4.thread, label %.lr.ph236.split, !llvm.loop !139
 
-.critedge4:                                       ; preds = %bb.l, %bb.k
+.critedge4.loopexit:                              ; preds = %bb.k, %bb.l
   %5 = trunc nuw nsw i64 %indvars.iv294 to i32
-  %i.cf = icmp eq i32 %i.bs, %5
-  br i1 %i.cf, label %.critedge4.thread, label %.lr.ph251.preheader
+  br label %.critedge4
 
-.critedge4.thread367:                             ; preds = %.critedge2
-  %6 = icmp eq i32 %i.bs, 0
-  br i1 %6, label %.critedge4.thread, label %.critedge6
+.critedge4:                                       ; preds = %.critedge4.loopexit, %.critedge2
+  %.2169.lcssa = phi i32 [ 0, %.critedge2 ], [ %5, %.critedge4.loopexit ]
+  %i.cf = icmp eq i32 %.2169.lcssa, %i.bs
+  br i1 %i.cf, label %.critedge4.thread, label %.critedge4.thread367
 
-.critedge4.thread:                                ; preds = %bb.m, %.critedge4.thread367, %.critedge4
+.critedge4.thread367:                             ; preds = %.critedge4
+  %6 = icmp sgt i32 %i.bs, 0
+  br i1 %6, label %.lr.ph251, label %.critedge6
+
+.critedge4.thread:                                ; preds = %bb.m, %.critedge4
   %i.cg = load <2 x float>, ptr %i.bq, align 4, !tbaa !35
   %i.ch = fpext <2 x float> %i.cg to <2 x double> ; 2 uses
   %i.ci = extractelement <2 x double> %i.ch, i64 0
@@ -358,10 +356,10 @@ bb.m:                                             ; preds = %.lr.ph236.split, %b
   %i.ck = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.5, double noundef %i.ci, double noundef %i.cj) ; 0 uses
   br label %.critedge6
 
-.lr.ph251:                                        ; preds = %.lr.ph251.preheader, %bb.p
-  %i.cl = phi i32 [ %i.cy, %bb.p ], [ %i.bs, %.lr.ph251.preheader ]
-  %indvars.iv299 = phi i64 [ %indvars.iv.next300, %bb.p ], [ 0, %.lr.ph251.preheader ] ; 2 uses
-  %.0250 = phi i32 [ %.1, %bb.p ], [ 0, %.lr.ph251.preheader ] ; 3 uses
+.lr.ph251:                                        ; preds = %.critedge4.thread367, %bb.p
+  %i.cl = phi i32 [ %i.cy, %bb.p ], [ %i.bs, %.critedge4.thread367 ]
+  %indvars.iv299 = phi i64 [ %indvars.iv.next300, %bb.p ], [ 0, %.critedge4.thread367 ] ; 2 uses
+  %.0250 = phi i32 [ %.1, %bb.p ], [ 0, %.critedge4.thread367 ] ; 3 uses
   %i.cm = load ptr, ptr %i.bo, align 8, !tbaa !17 ; 2 uses
   %i.cn = getelementptr inbounds nuw [24 x i8], ptr %i.cm, i64 %indvars.iv299 ; 2 uses
   %.not186 = icmp eq ptr %i.cm, null

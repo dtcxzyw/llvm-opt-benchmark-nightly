@@ -202,24 +202,24 @@ _brin_parallel_heapscan.exit.i:                   ; preds = %SpinLockAcquire.exi
   %.048.ph83.i = phi i32 [ -1, %.lr.ph.lr.ph.i ], [ %i.lh, %brin_fill_empty_ranges.exit.i ] ; 3 uses
   %i.jb = icmp eq i32 %.048.ph83.i, -1
   %i.jc = getelementptr inbounds nuw i8, ptr %.0.ph84.i, i64 4 ; 2 uses
-  br i1 %i.jb, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  br i1 %i.jb, label %.lr.ph.split.i, label %.lr.ph.split.us.i
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  %5 = load ptr, ptr %i.bq, align 8
-  %6 = call ptr @brin_deform_tuple(ptr noundef %5, ptr noundef nonnull %i.ja, ptr noundef %.0.ph84.i) #9 ; 2 uses
-  %i.jd = load i32, ptr %i.ja, align 4            ; 2 uses
-  %.not71.i.a = icmp eq i32 %i.jd, 0
-  br i1 %.not71.i.a, label %brin_fill_empty_ranges.exit.i, label %.lr.ph.i.i64
+.lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %bb.al
+  %5 = phi ptr [ %i.jz, %bb.al ], [ %i.ja, %.lr.ph.i ] ; 6 uses
+  %6 = load i32, ptr %i.jc, align 4
+  %i.jd = load i32, ptr %5, align 4
+  %.not71.i.a = icmp eq i32 %6, %i.jd
+  br i1 %.not71.i.a, label %bb.al, label %bb.am
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.al
-  %7 = phi ptr [ %i.jz, %bb.al ], [ %i.ja, %.lr.ph.i ] ; 6 uses
-  %8 = load i32, ptr %i.jc, align 4
-  %i.je = load i32, ptr %7, align 4
-  %i.jf = icmp eq i32 %8, %i.je
-  br i1 %i.jf, label %bb.al, label %bb.am
+.lr.ph.split.i:                                   ; preds = %.lr.ph.i
+  %7 = load ptr, ptr %i.bq, align 8
+  %8 = call ptr @brin_deform_tuple(ptr noundef %7, ptr noundef nonnull %i.ja, ptr noundef %.0.ph84.i) #9 ; 2 uses
+  %i.je = load i32, ptr %i.ja, align 4            ; 2 uses
+  %i.jf = icmp eq i32 %i.je, 0
+  br i1 %i.jf, label %brin_fill_empty_ranges.exit.i, label %.lr.ph.i.i64
 
-.lr.ph.i.i64:                                     ; preds = %.lr.ph.split.us.i, %brin_build_empty_tuple.exit.i.i
-  %.016.i.i = phi i32 [ %i.jv, %brin_build_empty_tuple.exit.i.i ], [ 0, %.lr.ph.split.us.i ] ; 4 uses
+.lr.ph.i.i64:                                     ; preds = %.lr.ph.split.i, %brin_build_empty_tuple.exit.i.i
+  %.016.i.i = phi i32 [ %i.jv, %brin_build_empty_tuple.exit.i.i ], [ 0, %.lr.ph.split.i ] ; 4 uses
   %i.jg = load ptr, ptr %i.by, align 8            ; 2 uses
   %i.jh = icmp eq ptr %i.jg, null
   br i1 %i.jh, label %bb.aj, label %bb.ak
@@ -250,18 +250,18 @@ brin_build_empty_tuple.exit.i.i:                  ; preds = %bb.ak, %bb.aj
   %i.jt = call zeroext i16 @brin_doinsert(ptr noundef %i.jp, i32 noundef %i.jq, ptr noundef %i.jr, ptr noundef nonnull %i.iy, i32 noundef %.016.i.i, ptr noundef %i.jo, i64 noundef %i.js) #9 ; 0 uses
   %i.ju = load i32, ptr %i.bm, align 4
   %i.jv = add i32 %i.ju, %.016.i.i                ; 2 uses
-  %i.jw = icmp ult i32 %i.jv, %i.jd
+  %i.jw = icmp ult i32 %i.jv, %i.je
   br i1 %i.jw, label %.lr.ph.i.i64, label %brin_fill_empty_ranges.exit.i, !llvm.loop !13
 
-bb.al:                                            ; preds = %.lr.ph.split.i
+bb.al:                                            ; preds = %.lr.ph.split.us.i
   %i.jx = load ptr, ptr %i.bq, align 8
-  call fastcc void @union_tuples(ptr noundef %i.jx, ptr noundef nonnull %.0.ph84.i, ptr noundef nonnull %7)
+  call fastcc void @union_tuples(ptr noundef %i.jx, ptr noundef nonnull %.0.ph84.i, ptr noundef nonnull %5)
   %i.jy = load ptr, ptr %i.bv, align 8
   %i.jz = call ptr @tuplesort_getbrintuple(ptr noundef %i.jy, ptr noundef nonnull %i.b, i1 noundef zeroext true) #9 ; 2 uses
   %.not.i63 = icmp eq ptr %i.jz, null
-  br i1 %.not.i63, label %.outer._crit_edge.i, label %.lr.ph.split.i, !llvm.loop !14
+  br i1 %.not.i63, label %.outer._crit_edge.i, label %.lr.ph.split.us.i, !llvm.loop !14
 
-bb.am:                                            ; preds = %.lr.ph.split.i
+bb.am:                                            ; preds = %.lr.ph.split.us.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   %i.ka = load ptr, ptr %i.bq, align 8
   %i.kb = load i32, ptr %i.jc, align 4
@@ -274,9 +274,9 @@ bb.am:                                            ; preds = %.lr.ph.split.i
   %i.ki = call zeroext i16 @brin_doinsert(ptr noundef %i.kd, i32 noundef %i.ke, ptr noundef %i.kf, ptr noundef nonnull %i.iy, i32 noundef %i.kg, ptr noundef nonnull %i.kc, i64 noundef %i.kh) #9 ; 0 uses
   call void @MemoryContextReset(ptr noundef %i.it) #9
   %i.kj = load ptr, ptr %i.bq, align 8
-  %i.kk = call ptr @brin_deform_tuple(ptr noundef %i.kj, ptr noundef nonnull %7, ptr noundef nonnull %.0.ph84.i) #9 ; 2 uses
+  %i.kk = call ptr @brin_deform_tuple(ptr noundef %i.kj, ptr noundef nonnull %5, ptr noundef nonnull %.0.ph84.i) #9 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
-  %i.kl = load i32, ptr %7, align 4               ; 2 uses
+  %i.kl = load i32, ptr %5, align 4               ; 2 uses
   %i.km = load i32, ptr %i.bm, align 4
   %i.kn = add i32 %i.km, %.048.ph83.i             ; 2 uses
   %i.ko = icmp ult i32 %i.kn, %i.kl
@@ -317,9 +317,9 @@ brin_build_empty_tuple.exit.i59.i:                ; preds = %bb.ao, %bb.an
   %i.lf = icmp ult i32 %i.le, %i.kl
   br i1 %i.lf, label %.lr.ph.i56.i, label %brin_fill_empty_ranges.exit.i, !llvm.loop !13
 
-brin_fill_empty_ranges.exit.i:                    ; preds = %brin_build_empty_tuple.exit.i59.i, %brin_build_empty_tuple.exit.i.i, %bb.am, %.lr.ph.split.us.i
-  %i.lg = phi ptr [ %i.ja, %brin_build_empty_tuple.exit.i.i ], [ %i.ja, %.lr.ph.split.us.i ], [ %7, %bb.am ], [ %7, %brin_build_empty_tuple.exit.i59.i ]
-  %.1.i = phi ptr [ %6, %brin_build_empty_tuple.exit.i.i ], [ %6, %.lr.ph.split.us.i ], [ %i.kk, %bb.am ], [ %i.kk, %brin_build_empty_tuple.exit.i59.i ] ; 2 uses
+brin_fill_empty_ranges.exit.i:                    ; preds = %brin_build_empty_tuple.exit.i59.i, %brin_build_empty_tuple.exit.i.i, %bb.am, %.lr.ph.split.i
+  %i.lg = phi ptr [ %i.ja, %brin_build_empty_tuple.exit.i.i ], [ %i.ja, %.lr.ph.split.i ], [ %5, %bb.am ], [ %5, %brin_build_empty_tuple.exit.i59.i ]
+  %.1.i = phi ptr [ %8, %brin_build_empty_tuple.exit.i.i ], [ %8, %.lr.ph.split.i ], [ %i.kk, %bb.am ], [ %i.kk, %brin_build_empty_tuple.exit.i59.i ] ; 2 uses
   %i.lh = load i32, ptr %i.lg, align 4            ; 2 uses
   %i.li = load ptr, ptr %i.bv, align 8
   %i.lj = call ptr @tuplesort_getbrintuple(ptr noundef %i.li, ptr noundef nonnull %i.b, i1 noundef zeroext true) #9 ; 2 uses

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph.split.us.spl
   br i1 %i.y, label %.lr.ph.split.us.split.split, label %.critedge, !llvm.loop !408
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  br i1 %i.b, label %.lr.ph.split.split.us, label %.lr.ph.split.split
+  br i1 %i.b, label %.lr.ph.split.split.us, label %.critedge2.us55
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
   br i1 %i.e, label %.lr.ph.split.split.us.split.us, label %.lr.ph.split.split.us.split
@@ -237,19 +237,8 @@ bb.e:                                             ; preds = %.lr.ph.split.split.
   %i.af = icmp sgt i32 %.036.us43, 2
   br i1 %i.af, label %.lr.ph.split.split.us.split, label %.critedge, !llvm.loop !408
 
-.lr.ph.split.split:                               ; preds = %.lr.ph.split
-  br i1 %i.e, label %.lr.ph.split.split.split.us, label %.critedge
-
-.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split, %.critedge2.us55
-  %.036.us53 = phi i32 [ %7, %.critedge2.us55 ], [ %.3, %.lr.ph.split.split ] ; 4 uses
-  %6 = urem i32 %2, %.036.us53
-  %.not19.us54 = icmp eq i32 %6, 0
-  br i1 %.not19.us54, label %.critedge, label %.critedge2.us55
-
-.critedge2.us55:                                  ; preds = %.lr.ph.split.split.split.us
-  %7 = add nsw i32 %.036.us53, -1
-  %8 = icmp sgt i32 %.036.us53, 2
-  br i1 %8, label %.lr.ph.split.split.split.us, label %.critedge, !llvm.loop !408
+.critedge2.us55:                                  ; preds = %.lr.ph.split
+  br i1 %i.e, label %.lr.ph.split.split.split, label %.critedge
 
 bb.f:                                             ; preds = %_ZL8min_zeroPii.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
@@ -296,8 +285,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   resume { ptr, i32 } %.pn
 
-.critedge:                                        ; preds = %.lr.ph.split.split.split.us, %.critedge2.us55, %.lr.ph.split.split.us.split, %.critedge2.us46, %bb.e, %.critedge2.us46.us, %.lr.ph.split.us.split.split, %.critedge2.us, %bb.d, %.critedge2.us.us69, %bb.c, %.critedge2.us.us, %bb.b, %.critedge2.us.us.us, %.lr.ph.split.split, %.preheader
-  %.0.lcssa = phi i32 [ %.3, %.preheader ], [ 1, %.critedge2.us.us.us ], [ %spec.select, %.lr.ph.split.split ], [ 1, %.critedge2.us46 ], [ %.036.us43.us, %bb.e ], [ 1, %.critedge2.us ], [ 1, %.critedge2.us.us69 ], [ 1, %.critedge2.us.us ], [ %.036.us.us.us, %bb.b ], [ %.036.us.us, %bb.c ], [ %.036.us.us66, %bb.d ], [ %.036.us, %.lr.ph.split.us.split.split ], [ 1, %.critedge2.us46.us ], [ %.036.us43, %.lr.ph.split.split.us.split ], [ 1, %.critedge2.us55 ], [ %.036.us53, %.lr.ph.split.split.split.us ]
+.lr.ph.split.split.split:                         ; preds = %.critedge2.us55, %.critedge2
+  %.036 = phi i32 [ %7, %.critedge2 ], [ %.3, %.critedge2.us55 ] ; 4 uses
+  %6 = urem i32 %2, %.036
+  %.not19 = icmp eq i32 %6, 0
+  br i1 %.not19, label %.critedge, label %.critedge2
+
+.critedge2:                                       ; preds = %.lr.ph.split.split.split
+  %7 = add nsw i32 %.036, -1
+  %8 = icmp sgt i32 %.036, 2
+  br i1 %8, label %.lr.ph.split.split.split, label %.critedge, !llvm.loop !408
+
+.critedge:                                        ; preds = %.lr.ph.split.split.split, %.critedge2, %.lr.ph.split.split.us.split, %.critedge2.us46, %bb.e, %.critedge2.us46.us, %.lr.ph.split.us.split.split, %.critedge2.us, %bb.d, %.critedge2.us.us69, %bb.c, %.critedge2.us.us, %bb.b, %.critedge2.us.us.us, %.critedge2.us55, %.preheader
+  %.0.lcssa = phi i32 [ %.3, %.preheader ], [ 1, %.critedge2.us.us.us ], [ %spec.select, %.critedge2.us55 ], [ 1, %.critedge2.us46 ], [ %.036.us43.us, %bb.e ], [ 1, %.critedge2.us ], [ 1, %.critedge2.us.us69 ], [ 1, %.critedge2.us.us ], [ %.036.us.us.us, %bb.b ], [ %.036.us.us, %bb.c ], [ %.036.us.us66, %bb.d ], [ %.036.us, %.lr.ph.split.us.split.split ], [ 1, %.critedge2.us46.us ], [ %.036.us43, %.lr.ph.split.split.us.split ], [ 1, %.critedge2 ], [ %.036, %.lr.ph.split.split.split ]
   ret i32 %.0.lcssa
 }
 

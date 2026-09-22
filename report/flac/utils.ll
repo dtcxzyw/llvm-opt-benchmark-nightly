@@ -202,18 +202,19 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %.lr.ph81.i, label %local__find_closest_cue_.exit
 
 .lr.ph81.i:                                       ; preds = %bb.b
+  %5 = zext nneg i32 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !40
-  %5 = zext nneg i32 %i.i to i64
   br label %bb.c
 
 .loopexit.i:                                      ; preds = %bb.e, %.lr.ph70.split.i, %bb.c
-  %i.m = icmp sgt i64 %indvars.iv102.i, 1
+  %6 = trunc nuw i64 %indvars.iv.next103.i to i32
+  %i.m = icmp sgt i32 %6, 0
   br i1 %i.m, label %bb.c, label %local__find_closest_cue_.exit, !llvm.loop !31
 
-bb.c:                                             ; preds = %.loopexit.i, %.lr.ph81.i
-  %indvars.iv102.i = phi i64 [ %5, %.lr.ph81.i ], [ %indvars.iv.next103.i, %.loopexit.i ] ; 2 uses
-  %indvars.iv.next103.i = add nsw i64 %indvars.iv102.i, -1 ; 2 uses
+bb.c:                                             ; preds = %.lr.ph81.i, %.loopexit.i
+  %indvars.iv102.i = phi i64 [ %5, %.lr.ph81.i ], [ %indvars.iv.next103.i, %.loopexit.i ]
+  %indvars.iv.next103.i = add nsw i64 %indvars.iv102.i, -1 ; 3 uses
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %indvars.iv.next103.i ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 23
   %i.p = load i8, ptr %i.o, align 1, !tbaa !42    ; 2 uses
@@ -283,16 +284,17 @@ bb.f:                                             ; preds = %local__find_closest
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !50
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 148
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !39 ; 2 uses
-  %6 = icmp sgt i32 %i.ar, 0
-  br i1 %6, label %.preheader.lr.ph.i, label %local__find_closest_cue_.exit20
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.ar, i32 0)
+  %wide.trip.count83.i = zext nneg i32 %smax.i to i64
+  %exitcond84.not.i34 = icmp slt i32 %i.ar, 1
+  br i1 %exitcond84.not.i34, label %local__find_closest_cue_.exit20, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !40
-  %wide.trip.count100.i = zext nneg i32 %i.ar to i64
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %._crit_edge.split.i, %.preheader.lr.ph.i
+.preheader.i:                                     ; preds = %.preheader.lr.ph.i, %._crit_edge.split.i
   %indvars.iv97.i = phi i64 [ 0, %.preheader.lr.ph.i ], [ %indvars.iv.next98.i, %._crit_edge.split.i ] ; 2 uses
   %i.au = getelementptr inbounds nuw [32 x i8], ptr %i.at, i64 %indvars.iv97.i ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 23
@@ -346,7 +348,7 @@ bb.h:                                             ; preds = %bb.g
 
 ._crit_edge.split.i:                              ; preds = %bb.h, %.lr.ph.split.i, %.preheader.i
   %indvars.iv.next98.i = add nuw nsw i64 %indvars.iv97.i, 1 ; 2 uses
-  %exitcond101.not.i = icmp eq i64 %indvars.iv.next98.i, %wide.trip.count100.i
+  %exitcond101.not.i = icmp eq i64 %indvars.iv.next98.i, %wide.trip.count83.i
   br i1 %exitcond101.not.i, label %local__find_closest_cue_.exit20, label %.preheader.i, !llvm.loop !34
 
 local__find_closest_cue_.exit20:                  ; preds = %._crit_edge.split.i, %local__find_closest_cue_.exit, %.split.us.i, %bb.f
@@ -452,6 +454,9 @@ declare double @strtod(ptr noundef readonly, ptr noundef captures(none)) local_u
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

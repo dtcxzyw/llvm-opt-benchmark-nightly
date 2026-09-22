@@ -204,37 +204,12 @@ update_mergeclause_eclasses.exit:                 ; preds = %.lr.ph11.i, %.prehe
 .lr.ph199.us.preheader:                           ; preds = %.lr.ph206
   %wide.trip.count245 = zext nneg i32 %i.ai to i64
   %wide.trip.count238 = zext nneg i32 %.0134.lcssa to i64
-  br label %.lr.ph199.us
-
-.lr.ph199.us:                                     ; preds = %.lr.ph199.us.preheader, %12
-  %indvars.iv240 = phi i64 [ 0, %.lr.ph199.us.preheader ], [ %indvars.iv.next241, %12 ] ; 3 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %indvars.iv240
-  %4 = load ptr, ptr %3, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %6 = load ptr, ptr %5, align 8
-  br label %8
-
-7:                                                ; preds = %8
-  %indvars.iv.next236 = add nuw nsw i64 %indvars.iv235, 1 ; 2 uses
-  %exitcond239.not = icmp eq i64 %indvars.iv.next236, %wide.trip.count238
-  br i1 %exitcond239.not, label %._crit_edge201, label %8, !llvm.loop !17
-
-8:                                                ; preds = %.lr.ph199.us, %7
-  %indvars.iv235 = phi i64 [ 0, %.lr.ph199.us ], [ %indvars.iv.next236, %7 ] ; 2 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv235
-  %10 = load ptr, ptr %9, align 8
-  %11 = icmp eq ptr %10, %6
-  br i1 %11, label %12, label %7
-
-12:                                               ; preds = %8
-  %indvars.iv.next241 = add nuw nsw i64 %indvars.iv240, 1 ; 2 uses
-  %exitcond246.not = icmp eq i64 %indvars.iv.next241, %wide.trip.count245
-  br i1 %exitcond246.not, label %.thread172, label %.lr.ph199.us, !llvm.loop !18
+  br label %.lr.ph199
 
 bb.d:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge158, label %.lr.ph, !llvm.loop !19
+  br i1 %exitcond.not, label %.critedge158, label %.lr.ph, !llvm.loop !17
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 2 uses
@@ -303,7 +278,32 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph193
   %i.bo = load i32, ptr %i.a, align 4
   %i.bp = sext i32 %i.bo to i64
   %i.bq = icmp slt i64 %indvars.iv.next233, %i.bp
-  br i1 %i.bq, label %bb.c, label %.critedge, !llvm.loop !20
+  br i1 %i.bq, label %bb.c, label %.critedge, !llvm.loop !18
+
+.lr.ph199:                                        ; preds = %.lr.ph199.us.preheader, %12
+  %indvars.iv239 = phi i64 [ 0, %.lr.ph199.us.preheader ], [ %indvars.iv.next240, %12 ] ; 3 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %indvars.iv239
+  %4 = load ptr, ptr %3, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = load ptr, ptr %5, align 8
+  br label %8
+
+7:                                                ; preds = %8
+  %indvars.iv.next235 = add nuw nsw i64 %indvars.iv234, 1 ; 2 uses
+  %exitcond238.not = icmp eq i64 %indvars.iv.next235, %wide.trip.count238
+  br i1 %exitcond238.not, label %._crit_edge201, label %8, !llvm.loop !19
+
+8:                                                ; preds = %.lr.ph199, %7
+  %indvars.iv234 = phi i64 [ 0, %.lr.ph199 ], [ %indvars.iv.next235, %7 ] ; 2 uses
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv234
+  %10 = load ptr, ptr %9, align 8
+  %11 = icmp eq ptr %10, %6
+  br i1 %11, label %12, label %7
+
+12:                                               ; preds = %8
+  %indvars.iv.next240 = add nuw nsw i64 %indvars.iv239, 1 ; 2 uses
+  %exitcond245.not = icmp eq i64 %indvars.iv.next240, %wide.trip.count245
+  br i1 %exitcond245.not, label %.thread172, label %.lr.ph199, !llvm.loop !20
 
 .thread172:                                       ; preds = %12, %.preheader
   %i.br = tail call ptr @list_copy(ptr noundef nonnull %i.ag) #10 ; 4 uses
@@ -362,7 +362,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ck, label %.lr.ph210.us, label %.critedge162.thread
 
 ._crit_edge201:                                   ; preds = %7
-  %indvars244.le = trunc i64 %indvars.iv240 to i32
+  %indvars244.le = trunc i64 %indvars.iv239 to i32
   %i.cl = icmp eq i32 %i.b, %indvars244.le
   br i1 %i.cl, label %.critedge162, label %.critedge162.thread
 

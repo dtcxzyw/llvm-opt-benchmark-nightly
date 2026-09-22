@@ -204,7 +204,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 1              ; 2 uses
   %i.c = and i32 %i.b, 8
   %.not.i.not = icmp eq i32 %i.c, 0
-  br i1 %.not.i.not, label %skb_skip_tc_classify.exit.preheader, label %skb_skip_tc_classify.exit.thread.a
+  br i1 %.not.i.not, label %skb_skip_tc_classify.exit.preheader, label %skb_skip_tc_classify.exit.thread
 
 skb_skip_tc_classify.exit.preheader:              ; preds = %bb.a
   %i.d = icmp sgt i32 %2, 0
@@ -214,16 +214,21 @@ skb_skip_tc_classify.exit.us.preheader:           ; preds = %skb_skip_tc_classif
   %wide.trip.count = zext nneg i32 %2 to i64
   br label %skb_skip_tc_classify.exit.us
 
-skb_skip_tc_classify.exit.us:                     ; preds = %skb_skip_tc_classify.exit.us.preheader, %bb.i
-  %.041.us = phi i32 [ %i.n, %bb.i ], [ 0, %skb_skip_tc_classify.exit.us.preheader ]
-  %.035.us = phi i32 [ %13, %bb.i ], [ 32, %skb_skip_tc_classify.exit.us.preheader ]
-  %.032.us = phi i32 [ %11, %bb.i ], [ 0, %skb_skip_tc_classify.exit.us.preheader ]
+skb_skip_tc_classify.exit.thread:                 ; preds = %bb.a
+  %4 = and i32 %i.b, -9
+  store i32 %4, ptr %i.a, align 1
+  br label %.thread
+
+skb_skip_tc_classify.exit.us:                     ; preds = %skb_skip_tc_classify.exit.us.preheader, %select.unfold62.us
+  %.041.us = phi i32 [ %i.n, %select.unfold62.us ], [ 0, %skb_skip_tc_classify.exit.us.preheader ]
+  %.035.us = phi i32 [ %10, %select.unfold62.us ], [ 32, %skb_skip_tc_classify.exit.us.preheader ]
+  %.032.us = phi i32 [ %8, %select.unfold62.us ], [ 0, %skb_skip_tc_classify.exit.us.preheader ]
   br label %bb.b
 
-bb.b:                                             ; preds = %skb_skip_tc_classify.exit.us, %select.unfold62.us
-  %indvars.iv = phi i64 [ 0, %skb_skip_tc_classify.exit.us ], [ %indvars.iv.next, %select.unfold62.us ] ; 2 uses
-  %.13393.us = phi i32 [ %.032.us, %skb_skip_tc_classify.exit.us ], [ %.234.ph.us, %select.unfold62.us ] ; 2 uses
-  %.14291.us = phi i32 [ %.041.us, %skb_skip_tc_classify.exit.us ], [ %.243.ph.us, %select.unfold62.us ] ; 2 uses
+bb.b:                                             ; preds = %skb_skip_tc_classify.exit.us, %.split98.us
+  %indvars.iv = phi i64 [ 0, %skb_skip_tc_classify.exit.us ], [ %indvars.iv.next, %.split98.us ] ; 2 uses
+  %.13393.us = phi i32 [ %.032.us, %skb_skip_tc_classify.exit.us ], [ %.234.ph, %.split98.us ] ; 2 uses
+  %.14291.us = phi i32 [ %.041.us, %skb_skip_tc_classify.exit.us ], [ %.243.ph, %.split98.us ] ; 2 uses
   %i.e = getelementptr [8 x i8], ptr %1, i64 %indvars.iv
   %i.f = load ptr, ptr %i.e, align 8              ; 4 uses
   %.not.us = icmp eq i32 %.13393.us, 0
@@ -231,14 +236,14 @@ bb.b:                                             ; preds = %skb_skip_tc_classif
 
 bb.c:                                             ; preds = %bb.b
   %i.g = add nsw i32 %.13393.us, -1
-  br label %select.unfold62.us
+  br label %.split98.us
 
 bb.d:                                             ; preds = %bb.b
   %i.h = getelementptr i8, ptr %i.f, i64 176
   %i.i = load i32, ptr %i.h, align 16
   %i.j = and i32 %i.i, 4
   %.not87.us = icmp eq i32 %i.j, 0
-  br i1 %.not87.us, label %.preheader.us, label %select.unfold62.us
+  br i1 %.not87.us, label %.preheader.us, label %.split98.us
 
 .preheader.us:                                    ; preds = %bb.d, %bb.e
   %.039.us = phi i32 [ %i.p, %bb.e ], [ 32, %bb.d ]
@@ -251,74 +256,69 @@ tc_act.exit.us:                                   ; preds = %.preheader.us, %.pr
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = tail call i32 %i.m(ptr noundef %0, ptr noundef %i.f, ptr noundef %3) #16, !inline_history !58 ; 6 uses
   %i.o = icmp eq i32 %i.n, 6
-  br i1 %i.o, label %bb.e, label %4, !prof !16
+  br i1 %i.o, label %bb.e, label %bb.h, !prof !16
 
 bb.e:                                             ; preds = %tc_act.exit.us
   %i.p = add nsw i32 %.039.us, -1                 ; 2 uses
   %.not57.us = icmp eq i32 %i.p, 0
-  br i1 %.not57.us, label %.split.us, label %.preheader.us
+  br i1 %.not57.us, label %bb.f, label %.preheader.us
 
-4:                                                ; preds = %tc_act.exit.us
-  %5 = and i32 %i.n, -268435456
-  switch i32 %5, label %bb.h [
-    i32 268435456, label %bb.i
-    i32 536870912, label %bb.f
-  ]
-
-bb.f:                                             ; preds = %4
-  %6 = getelementptr i8, ptr %i.f, i64 168        ; 2 uses
-  %7 = load volatile ptr, ptr %6, align 8
-  %.not53.us = icmp eq ptr %7, null
-  br i1 %.not53.us, label %.split98.us, label %bb.g, !prof !16
+bb.f:                                             ; preds = %bb.e
+  %5 = tail call i32 @net_ratelimit() #16
+  %.not53.us = icmp eq i32 %5, 0
+  br i1 %.not53.us, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %8 = load volatile ptr, ptr %6, align 8
-  %9 = getelementptr i8, ptr %8, i64 24
-  %10 = load volatile ptr, ptr %9, align 8
-  store ptr %10, ptr %3, align 8
-  br label %bb.h
+  %6 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.5) #21 ; 0 uses
+  br label %.thread
 
-bb.h:                                             ; preds = %bb.g, %4
-  %.not54.us = icmp eq i32 %i.n, 3
-  br i1 %.not54.us, label %select.unfold62.us, label %.thread
+bb.h:                                             ; preds = %tc_act.exit.us
+  %7 = and i32 %i.n, -268435456
+  switch i32 %7, label %bb.j [
+    i32 268435456, label %select.unfold62.us
+    i32 536870912, label %bb.i
+  ]
 
-select.unfold62.us:                               ; preds = %bb.h, %bb.d, %bb.c
-  %.243.ph.us = phi i32 [ %.14291.us, %bb.c ], [ %.14291.us, %bb.d ], [ 3, %bb.h ] ; 2 uses
-  %.234.ph.us = phi i32 [ %i.g, %bb.c ], [ 0, %bb.d ], [ 0, %bb.h ]
+select.unfold62.us:                               ; preds = %bb.h
+  %8 = and i32 %i.n, 511                          ; 2 uses
+  %9 = add nsw i32 %8, -1
+  %or.cond = icmp uge i32 %9, %2
+  %10 = add nsw i32 %.035.us, -1                  ; 2 uses
+  %exitcond.not.a = icmp eq i32 %10, 0
+  %or.cond86 = select i1 %or.cond, i1 true, i1 %exitcond.not.a
+  br i1 %or.cond86, label %.thread, label %skb_skip_tc_classify.exit.us
+
+bb.i:                                             ; preds = %bb.h
+  %11 = getelementptr i8, ptr %i.f, i64 168       ; 2 uses
+  %12 = load volatile ptr, ptr %11, align 8
+  %.not56.us = icmp eq ptr %12, null
+  br i1 %.not56.us, label %skb_skip_tc_classify.exit.thread.a, label %.split.us, !prof !16
+
+skb_skip_tc_classify.exit.thread.a:               ; preds = %bb.i
+  %13 = getelementptr i8, ptr %0, i64 72
+  store i32 106, ptr %13, align 4
+  br label %.thread
+
+.split.us:                                        ; preds = %bb.i
+  %14 = load volatile ptr, ptr %11, align 8
+  %15 = getelementptr i8, ptr %14, i64 24
+  %16 = load volatile ptr, ptr %15, align 8
+  store ptr %16, ptr %3, align 8
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.h, %.split.us
+  %.not54 = icmp eq i32 %i.n, 3
+  br i1 %.not54, label %.split98.us, label %.thread
+
+.split98.us:                                      ; preds = %bb.j, %bb.c, %bb.d
+  %.243.ph = phi i32 [ %.14291.us, %bb.c ], [ %.14291.us, %bb.d ], [ 3, %bb.j ] ; 2 uses
+  %.234.ph = phi i32 [ %i.g, %bb.c ], [ 0, %bb.d ], [ 0, %bb.j ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.thread, label %bb.b, !llvm.loop !59
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.thread, label %bb.b, !llvm.loop !59
 
-bb.i:                                             ; preds = %4
-  %11 = and i32 %i.n, 511                         ; 2 uses
-  %12 = add nsw i32 %11, -1
-  %or.cond.us = icmp uge i32 %12, %2
-  %13 = add nsw i32 %.035.us, -1                  ; 2 uses
-  %.not56.us = icmp eq i32 %13, 0
-  %or.cond86.us = select i1 %or.cond.us, i1 true, i1 %.not56.us
-  br i1 %or.cond86.us, label %.thread, label %skb_skip_tc_classify.exit.us
-
-skb_skip_tc_classify.exit.thread.a:               ; preds = %bb.a
-  %14 = and i32 %i.b, -9
-  store i32 %14, ptr %i.a, align 1
-  br label %.thread
-
-.split.us:                                        ; preds = %bb.e
-  %15 = tail call i32 @net_ratelimit() #16
-  %.not58 = icmp eq i32 %15, 0
-  br i1 %.not58, label %.thread, label %bb.j
-
-bb.j:                                             ; preds = %.split.us
-  %16 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.5) #21 ; 0 uses
-  br label %.thread
-
-.split98.us:                                      ; preds = %bb.f
-  %17 = getelementptr i8, ptr %0, i64 72
-  store i32 106, ptr %17, align 4
-  br label %.thread
-
-.thread:                                          ; preds = %bb.i, %select.unfold62.us, %bb.h, %skb_skip_tc_classify.exit.preheader, %.split98.us, %.split.us, %bb.j, %skb_skip_tc_classify.exit.thread.a
-  %.3 = phi i32 [ 0, %skb_skip_tc_classify.exit.thread.a ], [ %i.n, %bb.h ], [ 0, %.split.us ], [ 0, %bb.j ], [ 2, %.split98.us ], [ 0, %skb_skip_tc_classify.exit.preheader ], [ %.243.ph.us, %select.unfold62.us ], [ 0, %bb.i ]
+.thread:                                          ; preds = %select.unfold62.us, %.split98.us, %bb.j, %skb_skip_tc_classify.exit.preheader, %skb_skip_tc_classify.exit.thread.a, %bb.f, %bb.g, %skb_skip_tc_classify.exit.thread
+  %.3 = phi i32 [ 0, %skb_skip_tc_classify.exit.thread ], [ %i.n, %bb.j ], [ 0, %bb.f ], [ 0, %bb.g ], [ 2, %skb_skip_tc_classify.exit.thread.a ], [ 0, %skb_skip_tc_classify.exit.preheader ], [ %.243.ph, %.split98.us ], [ 0, %select.unfold62.us ]
   ret i32 %.3
 }
 

@@ -205,7 +205,7 @@ _ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i: ; preds = %._crit_edge.i.i
   br label %_ZN4llvm15SmallPtrSetImplIPKNS_11InstructionEE6insertES3_.exit
 
 _ZN4llvm15SmallPtrSetImplIPKNS_11InstructionEE6insertES3_.exit: ; preds = %bb.f, %_ZN9__gnu_cxx5__ops12_Iter_negateIZN12_GLOBAL__N_121EphemeralValueTracker11isEphemeralEPKN4llvm11InstructionEEUlPKNS4_4UserEE_EclINS4_5Value18user_iterator_implIS9_EEEEbT_.exit.i.i.i.i.i.i, %bb.g, %bb.e, %.lr.ph.i.i, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i, %bb.i, %.lr.ph.split.us.i.i.i.i.i.i, %_ZN4llvm3isaIJNS_10AssumeInstEEPKNS_11InstructionEEEbRKT0_.exit.thread.i
-  %.0.i5 = phi i1 [ false, %bb.e ], [ true, %.lr.ph.i.i ], [ true, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ false, %_ZN4llvm3isaIJNS_10AssumeInstEEPKNS_11InstructionEEEbRKT0_.exit.thread.i ], [ false, %.lr.ph.split.us.i.i.i.i.i.i ], [ false, %bb.g ], [ true, %bb.i ], [ false, %_ZN9__gnu_cxx5__ops12_Iter_negateIZN12_GLOBAL__N_121EphemeralValueTracker11isEphemeralEPKN4llvm11InstructionEEUlPKNS4_4UserEE_EclINS4_5Value18user_iterator_implIS9_EEEEbT_.exit.i.i.i.i.i.i ], [ false, %bb.f ]
+  %.0.i5 = phi i1 [ false, %.lr.ph.split.us.i.i.i.i.i.i ], [ true, %.lr.ph.i.i ], [ true, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ false, %_ZN4llvm3isaIJNS_10AssumeInstEEPKNS_11InstructionEEEbRKT0_.exit.thread.i ], [ false, %bb.e ], [ false, %bb.g ], [ true, %bb.i ], [ false, %_ZN9__gnu_cxx5__ops12_Iter_negateIZN12_GLOBAL__N_121EphemeralValueTracker11isEphemeralEPKN4llvm11InstructionEEUlPKNS4_4UserEE_EclINS4_5Value18user_iterator_implIS9_EEEEbT_.exit.i.i.i.i.i.i ], [ false, %bb.f ]
   ret i1 %.0.i5
 }
 

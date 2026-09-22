@@ -205,19 +205,13 @@ bb.aa:                                            ; preds = %.lr.ph.i.us
   br i1 %i.cz, label %.loopexit.i, label %.lr.ph.i.us
 
 .lr.ph.preheader.i.split:                         ; preds = %.lr.ph.preheader.i
-  br i1 %.not.i285.i, label %.lr.ph.i.us364, label %.lr.ph.i.preheader
+  br i1 %.not.i285.i, label %.split, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i.split
   %scevgep = getelementptr i8, ptr %.val273.i, i64 -8
   %scevgep629 = getelementptr i8, ptr %scevgep, i64 %.idx.i
   %i.da = load i64, ptr %scevgep629, align 8, !noalias !3642, !noundef !10
   br label %.loopexit.i
-
-.lr.ph.i.us364:                                   ; preds = %.lr.ph.preheader.i.split
-  store i64 %.us-phi3611801, ptr %i.ad, align 8
-  store i64 %.us-phi3621824, ptr %i.aa, align 1
-  %7 = load i64, ptr %.val273.i, align 8, !noalias !3642, !noundef !10
-  br label %.split.us
 
 .lr.ph620.i:                                      ; preds = %bb.n
   %i.db = getelementptr inbounds nuw i8, ptr %i.ca, i64 3 ; 3 uses
@@ -272,13 +266,19 @@ bb.aa:                                            ; preds = %.lr.ph.i.us
   %i.dw = shl nuw nsw i64 %i.dv, %i.bi            ; 2 uses
   br label %bb.bn
 
+.split:                                           ; preds = %.lr.ph.preheader.i.split
+  store i64 %.us-phi3611801, ptr %i.ad, align 8
+  store i64 %.us-phi3621824, ptr %i.aa, align 1
+  %7 = load i64, ptr %.val273.i, align 8, !noalias !3642, !noundef !10
+  br label %.split.us
+
 .split.us.loopexit:                               ; preds = %bb.aa
   store i64 %.us-phi3611801, ptr %i.ad, align 8
   store i64 %.us-phi3621824, ptr %i.aa, align 1
   br label %.split.us
 
-.split.us:                                        ; preds = %.split.us.loopexit, %.lr.ph.i.us364
-  %.us-phi = phi i64 [ %7, %.lr.ph.i.us364 ], [ %i.cw, %.split.us.loopexit ]
+.split.us:                                        ; preds = %.split.us.loopexit, %.split
+  %.us-phi = phi i64 [ %7, %.split ], [ %i.cw, %.split.us.loopexit ]
   store i64 1, ptr %i.aa, align 8
   store i64 %.us-phi, ptr %i.ad, align 8
   call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE5clearB6_(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %i.ap) #41, !noalias !3642
