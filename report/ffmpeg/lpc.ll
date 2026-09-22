@@ -204,6 +204,7 @@ scalar.ph365:                                     ; preds = %scalar.ph365.prehea
   %i.es = sext i32 %4 to i64                      ; 2 uses
   %wide.trip.count271 = zext i32 %i.er to i64     ; 7 uses
   %wide.trip.count276 = zext i32 %i.er to i64
+  %wide.trip.count290 = sext i32 %2 to i64
   %wide.trip.count285 = zext i32 %i.er to i64
   %min.iters.check406 = icmp ult i32 %i.er, 4
   %n.vec408 = and i64 %wide.trip.count271, 4294967292 ; 3 uses
@@ -275,8 +276,8 @@ bb.i:                                             ; preds = %.lr.ph241, %._crit_
 
 vector.body381:                                   ; preds = %.preheader218.us, %vector.body381
   %index382 = phi i64 [ %index.next387, %vector.body381 ], [ 0, %.preheader218.us ] ; 3 uses
-  %i.fn = sub nsw i64 %indvars.iv287, %index382
-  %i.fo = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fn ; 2 uses
+  %i.fn = sub nuw nsw i64 %indvars.iv287, %index382
+  %i.fo = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.fn ; 2 uses
   %i.fp = getelementptr inbounds i8, ptr %i.fo, i64 -4
   %i.fq = getelementptr inbounds i8, ptr %i.fo, i64 -12
   %wide.load383 = load <2 x i32>, ptr %i.fp, align 4, !tbaa !25
@@ -302,8 +303,8 @@ scalar.ph377.preheader:                           ; preds = %.preheader218.us, %
 
 scalar.ph377:                                     ; preds = %scalar.ph377.preheader, %scalar.ph377
   %indvars.iv282 = phi i64 [ %indvars.iv.next283, %scalar.ph377 ], [ %indvars.iv282.ph, %scalar.ph377.preheader ] ; 3 uses
-  %i.fw = sub nsw i64 %indvars.iv287, %indvars.iv282
-  %i.fx = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fw
+  %i.fw = sub nuw nsw i64 %indvars.iv287, %indvars.iv282
+  %i.fx = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.fw
   %i.fy = load i32, ptr %i.fx, align 4, !tbaa !25
   %i.fz = sitofp nsz i32 %i.fy to double
   %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv282
@@ -317,8 +318,7 @@ scalar.ph377:                                     ; preds = %scalar.ph377.prehea
   %i.gb = load ptr, ptr %i.fk, align 8, !tbaa !77
   call void %i.gb(ptr noundef nonnull %i.fd, ptr noundef nonnull %i.d) #9
   %indvars.iv.next288 = add nuw nsw i64 %indvars.iv287, 1 ; 2 uses
-  %lftr.wideiv290 = trunc i64 %indvars.iv.next288 to i32
-  %exitcond291.not = icmp eq i32 %2, %lftr.wideiv290
+  %exitcond291.not = icmp eq i64 %indvars.iv.next288, %wide.trip.count290
   br i1 %exitcond291.not, label %._crit_edge237, label %.preheader218.us, !llvm.loop !48
 
 .preheader218:                                    ; preds = %.preheader218.lr.ph, %.loopexit
@@ -331,7 +331,7 @@ scalar.ph377:                                     ; preds = %scalar.ph377.prehea
 
 vector.body409:                                   ; preds = %.lr.ph229.preheader, %vector.body409
   %index410 = phi i64 [ %index.next415, %vector.body409 ], [ 0, %.lr.ph229.preheader ] ; 3 uses
-  %i.gc = sub nsw i64 %indvars.iv278, %index410
+  %i.gc = sub nuw nsw i64 %indvars.iv278, %index410
   %i.gd = getelementptr inbounds [4 x i8], ptr %1, i64 %i.gc ; 2 uses
   %i.ge = getelementptr inbounds i8, ptr %i.gd, i64 -4
   %i.gf = getelementptr inbounds i8, ptr %i.gd, i64 -12
@@ -358,7 +358,7 @@ middle.block416:                                  ; preds = %vector.body409
 
 .lr.ph229:                                        ; preds = %.lr.ph229.preheader478, %.lr.ph229
   %indvars.iv268 = phi i64 [ %indvars.iv.next269, %.lr.ph229 ], [ %indvars.iv268.ph, %.lr.ph229.preheader478 ] ; 3 uses
-  %i.gl = sub nsw i64 %indvars.iv278, %indvars.iv268
+  %i.gl = sub nuw nsw i64 %indvars.iv278, %indvars.iv268
   %i.gm = getelementptr inbounds [4 x i8], ptr %1, i64 %i.gl
   %i.gn = load i32, ptr %i.gm, align 4, !tbaa !25
   %i.go = sitofp nsz i32 %i.gn to double

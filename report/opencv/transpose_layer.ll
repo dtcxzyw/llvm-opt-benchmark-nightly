@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %_ZNSt6vectorIlSaIlE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #18
-  %i.ll = sub nsw i32 7, %i.z                     ; 8 uses
+  %i.ll = sub nuw nsw i32 7, %i.z                 ; 8 uses
   %i.lm = icmp slt i32 %i.z, 8
   br i1 %i.lm, label %bb.as, label %bb.an
 
@@ -381,7 +381,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit202.i: ; preds = %
   %i.nk = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 8 uses
   %i.nl = load i32, ptr %14, align 4              ; 6 uses
   %i.nm = getelementptr inbounds nuw i8, ptr %14, i64 12
-  %39 = sext i32 %i.ll to i64                     ; 9 uses
+  %39 = zext nneg i32 %i.ll to i64                ; 9 uses
   br i1 %i.ni, label %bb.be, label %bb.bf
 
 .preheader.loopexit.i:                            ; preds = %_ZN2cv8MatShapeixEm.exit232.i.6, %_ZN2cv8MatShapeixEm.exit232.i.5, %_ZN2cv8MatShapeixEm.exit232.i.4, %_ZN2cv8MatShapeixEm.exit232.i.3, %_ZN2cv8MatShapeixEm.exit232.i.2, %_ZN2cv8MatShapeixEm.exit232.i.1, %_ZN2cv8MatShapeixEm.exit232.i
@@ -482,7 +482,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i: ; preds = %
 
 bb.bm:                                            ; preds = %bb.bg
   %i.os = add nuw nsw i32 %.095.i, %i.ll
-  %i.ot = getelementptr inbounds [4 x i8], ptr %i.f, i64 %39
+  %i.ot = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %39
   store i32 %i.os, ptr %i.ot, align 4, !tbaa !66
   %i.ou = icmp ult i32 %.095.i, %narrow.i206.i
   br i1 %i.ou, label %_ZN2cv8MatShapeixEm.exit217.i, label %bb.bn
@@ -626,9 +626,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i224.i: ; preds =
 
 _ZN2cv8MatShapeixEm.exit232.i:                    ; preds = %_ZN2cv8MatShapeixEm.exit217.i
   %i.pz = load i32, ptr %i.nk, align 4, !tbaa !66
-  %i.qa = getelementptr inbounds [4 x i8], ptr %i.g, i64 %39
+  %i.qa = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %39
   store i32 %i.pz, ptr %i.qa, align 4, !tbaa !66
-  %i.qb = getelementptr inbounds [4 x i8], ptr %i.h, i64 %39
+  %i.qb = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %39
   store i32 %i.pj, ptr %i.qb, align 4, !tbaa !66
   %exitcond367.not.i = icmp eq i32 %i.z, 1
   br i1 %exitcond367.not.i, label %.preheader.loopexit.i, label %bb.cb
@@ -656,7 +656,7 @@ bb.ce:                                            ; preds = %bb.cd, %bb.cc
 bb.cf:                                            ; preds = %bb.ce
   %i.qi = add nuw nsw i32 %.095.i.1, %i.ll
   %i.qj = add nuw nsw i64 %39, 1                  ; 3 uses
-  %i.qk = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.qj
+  %i.qk = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.qj
   store i32 %i.qi, ptr %i.qk, align 4, !tbaa !66
   %i.ql = icmp ult i32 %.095.i.1, %narrow.i206.i
   br i1 %i.ql, label %_ZN2cv8MatShapeixEm.exit211.i.1, label %bb.bn
@@ -681,9 +681,9 @@ bb.cg:                                            ; preds = %_ZN2cv8MatShapeixEm
 _ZN2cv8MatShapeixEm.exit232.i.1:                  ; preds = %bb.cg
   %i.qs = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.qt = load i32, ptr %i.qs, align 4, !tbaa !66
-  %i.qu = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.qj
+  %i.qu = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.qj
   store i32 %i.qt, ptr %i.qu, align 4, !tbaa !66
-  %i.qv = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.qj
+  %i.qv = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.qj
   store i32 %i.qo, ptr %i.qv, align 4, !tbaa !66
   %exitcond367.not.i.1 = icmp eq i32 %i.z, 2
   br i1 %exitcond367.not.i.1, label %.preheader.loopexit.i, label %bb.ch
@@ -711,7 +711,7 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
 bb.cl:                                            ; preds = %bb.ck
   %i.rc = add nuw nsw i32 %.095.i.2, %i.ll
   %i.rd = add nuw nsw i64 %39, 2                  ; 3 uses
-  %i.re = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.rd
+  %i.re = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.rd
   store i32 %i.rc, ptr %i.re, align 4, !tbaa !66
   %i.rf = icmp ult i32 %.095.i.2, %narrow.i206.i
   br i1 %i.rf, label %_ZN2cv8MatShapeixEm.exit211.i.2, label %bb.bn
@@ -736,9 +736,9 @@ bb.cm:                                            ; preds = %_ZN2cv8MatShapeixEm
 _ZN2cv8MatShapeixEm.exit232.i.2:                  ; preds = %bb.cm
   %i.rm = getelementptr inbounds nuw i8, ptr %13, i64 20
   %i.rn = load i32, ptr %i.rm, align 4, !tbaa !66
-  %i.ro = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.rd
+  %i.ro = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.rd
   store i32 %i.rn, ptr %i.ro, align 4, !tbaa !66
-  %i.rp = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.rd
+  %i.rp = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.rd
   store i32 %i.ri, ptr %i.rp, align 4, !tbaa !66
   %exitcond367.not.i.2 = icmp eq i32 %i.z, 3
   br i1 %exitcond367.not.i.2, label %.preheader.loopexit.i, label %bb.cn
@@ -766,7 +766,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
 bb.cr:                                            ; preds = %bb.cq
   %i.rw = add nuw nsw i32 %.095.i.3, %i.ll
   %i.rx = add nuw nsw i64 %39, 3                  ; 3 uses
-  %i.ry = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.rx
+  %i.ry = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.rx
   store i32 %i.rw, ptr %i.ry, align 4, !tbaa !66
   %i.rz = icmp ult i32 %.095.i.3, %narrow.i206.i
   br i1 %i.rz, label %_ZN2cv8MatShapeixEm.exit211.i.3, label %bb.bn
@@ -791,9 +791,9 @@ bb.cs:                                            ; preds = %_ZN2cv8MatShapeixEm
 _ZN2cv8MatShapeixEm.exit232.i.3:                  ; preds = %bb.cs
   %i.sg = getelementptr inbounds nuw i8, ptr %13, i64 24
   %i.sh = load i32, ptr %i.sg, align 4, !tbaa !66
-  %i.si = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.rx
+  %i.si = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.rx
   store i32 %i.sh, ptr %i.si, align 4, !tbaa !66
-  %i.sj = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.rx
+  %i.sj = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.rx
   store i32 %i.sc, ptr %i.sj, align 4, !tbaa !66
   %exitcond367.not.i.3 = icmp eq i32 %i.z, 4
   br i1 %exitcond367.not.i.3, label %.preheader.loopexit.i, label %bb.ct
@@ -821,7 +821,7 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu
 bb.cx:                                            ; preds = %bb.cw
   %i.sq = add nuw nsw i32 %.095.i.4, %i.ll
   %i.sr = add nuw nsw i64 %39, 4                  ; 3 uses
-  %i.ss = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.sr
+  %i.ss = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.sr
   store i32 %i.sq, ptr %i.ss, align 4, !tbaa !66
   %i.st = icmp ult i32 %.095.i.4, %narrow.i206.i
   br i1 %i.st, label %_ZN2cv8MatShapeixEm.exit211.i.4, label %bb.bn
@@ -846,9 +846,9 @@ bb.cy:                                            ; preds = %_ZN2cv8MatShapeixEm
 _ZN2cv8MatShapeixEm.exit232.i.4:                  ; preds = %bb.cy
   %i.ta = getelementptr inbounds nuw i8, ptr %13, i64 28
   %i.tb = load i32, ptr %i.ta, align 4, !tbaa !66
-  %i.tc = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.sr
+  %i.tc = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.sr
   store i32 %i.tb, ptr %i.tc, align 4, !tbaa !66
-  %i.td = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.sr
+  %i.td = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.sr
   store i32 %i.sw, ptr %i.td, align 4, !tbaa !66
   %exitcond367.not.i.4 = icmp eq i32 %i.z, 5
   br i1 %exitcond367.not.i.4, label %.preheader.loopexit.i, label %bb.cz
@@ -876,7 +876,7 @@ bb.dc:                                            ; preds = %bb.db, %bb.da
 bb.dd:                                            ; preds = %bb.dc
   %i.tk = add nuw nsw i32 %.095.i.5, %i.ll
   %i.tl = add nuw nsw i64 %39, 5                  ; 3 uses
-  %i.tm = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.tl
+  %i.tm = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.tl
   store i32 %i.tk, ptr %i.tm, align 4, !tbaa !66
   %i.tn = icmp ult i32 %.095.i.5, %narrow.i206.i
   br i1 %i.tn, label %_ZN2cv8MatShapeixEm.exit211.i.5, label %bb.bn
@@ -901,9 +901,9 @@ bb.de:                                            ; preds = %_ZN2cv8MatShapeixEm
 _ZN2cv8MatShapeixEm.exit232.i.5:                  ; preds = %bb.de
   %i.tu = getelementptr inbounds nuw i8, ptr %13, i64 32
   %i.tv = load i32, ptr %i.tu, align 4, !tbaa !66
-  %i.tw = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.tl
+  %i.tw = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.tl
   store i32 %i.tv, ptr %i.tw, align 4, !tbaa !66
-  %i.tx = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.tl
+  %i.tx = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.tl
   store i32 %i.tq, ptr %i.tx, align 4, !tbaa !66
   %exitcond367.not.i.5 = icmp eq i32 %i.z, 6
   br i1 %exitcond367.not.i.5, label %.preheader.loopexit.i, label %bb.df
@@ -931,7 +931,7 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
 bb.dj:                                            ; preds = %bb.di
   %i.ue = add nuw nsw i32 %.095.i.6, %i.ll
   %i.uf = add nuw nsw i64 %39, 6                  ; 3 uses
-  %i.ug = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.uf
+  %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.uf
   store i32 %i.ue, ptr %i.ug, align 4, !tbaa !66
   %i.uh = icmp ult i32 %.095.i.6, %narrow.i206.i
   br i1 %i.uh, label %_ZN2cv8MatShapeixEm.exit211.i.6, label %bb.bn
@@ -956,9 +956,9 @@ bb.dk:                                            ; preds = %_ZN2cv8MatShapeixEm
 _ZN2cv8MatShapeixEm.exit232.i.6:                  ; preds = %bb.dk
   %i.uo = getelementptr inbounds nuw i8, ptr %13, i64 36
   %i.up = load i32, ptr %i.uo, align 4, !tbaa !66
-  %i.uq = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.uf
+  %i.uq = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.uf
   store i32 %i.up, ptr %i.uq, align 4, !tbaa !66
-  %i.ur = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.uf
+  %i.ur = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.uf
   store i32 %i.uk, ptr %i.ur, align 4, !tbaa !66
   br label %.preheader.loopexit.i
 

@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.f
 .lr.ph66.split.us.i.preheader.i.i.i:              ; preds = %.lr.ph.i75.i.i.i, %.lr.ph.i75.i.i.i.prol.loopexit
   %.lcssa42 = phi i64 [ %.lcssa42.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %i.cb, %.lr.ph.i75.i.i.i ] ; 2 uses
   %spec.select.i76.i.i.i.lcssa = phi i64 [ %spec.select.i76.i.i.i.lcssa.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %spec.select.i76.i.i.i.1, %.lr.ph.i75.i.i.i ]
-  %i.ao = sub nsw i64 %.val14.i, %.val13.i
+  %i.ao = sub nuw nsw i64 %.val14.i, %.val13.i
   br label %.lr.ph66.split.us.i.i.i.i
 
 .lr.ph66.split.us.i.i.i.i:                        ; preds = %bb.t, %.lr.ph66.split.us.i.preheader.i.i.i
@@ -608,7 +608,7 @@ bb.cj:                                            ; preds = %bb.av
   %.lcssa388 = phi i64 [ %.lcssa388.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %i.je, %.lr.ph.i75.i.i.i ] ; 2 uses
   %spec.select.i76.i.i.i.lcssa = phi i64 [ %spec.select.i76.i.i.i.lcssa.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %spec.select.i76.i.i.i.1, %.lr.ph.i75.i.i.i ]
   %i.hq = add nsw i64 %.in.i.i, -1
-  %i.hr = sub nsw i64 %.05157.i.i, %i.dr
+  %i.hr = sub nuw nsw i64 %.05157.i.i, %i.dr
   br label %.lr.ph66.split.us.i.i.i.i
 
 .lr.ph66.split.us.i.i.i.i:                        ; preds = %bb.cp, %.lr.ph66.split.us.i.preheader.i.i.i
@@ -1011,7 +1011,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i73.epil.preheader
   %.lcssa157 = phi i64 [ %i.du, %._crit_edge.i.unr-lcssa ], [ %i.bt, %.lr.ph.i73.epil.preheader ]
   %.171.i.lcssa = phi i64 [ %.171.i.1, %._crit_edge.i.unr-lcssa ], [ %.171.i.epil, %.lr.ph.i73.epil.preheader ]
-  %i.bx = sub nsw i64 %1, %3                      ; 3 uses
+  %i.bx = sub nuw nsw i64 %1, %3                  ; 3 uses
   %i.by = getelementptr i8, ptr %0, i64 %i.bk     ; 3 uses
   %i.bz = and i8 %i.bm, 63
   %i.ca = zext nneg i8 %i.bz to i64
@@ -1196,7 +1196,7 @@ bb.am:                                            ; preds = %bb.t
 .lr.ph66.split.us.i.preheader:                    ; preds = %.lr.ph.i75, %.lr.ph.i75.prol.loopexit
   %.lcssa154 = phi i64 [ %.lcssa154.unr, %.lr.ph.i75.prol.loopexit ], [ %i.gj, %.lr.ph.i75 ] ; 2 uses
   %spec.select.i76.lcssa = phi i64 [ %spec.select.i76.lcssa.unr, %.lr.ph.i75.prol.loopexit ], [ %spec.select.i76.1, %.lr.ph.i75 ]
-  %i.ew = sub nsw i64 %1, %3
+  %i.ew = sub nuw nsw i64 %1, %3
   br label %.lr.ph66.split.us.i
 
 .lr.ph66.split.us.i:                              ; preds = %.lr.ph66.split.us.i.preheader, %bb.as
@@ -1599,7 +1599,7 @@ bb.l:                                             ; preds = %stringlib__factoriz
   br i1 %.not, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %.lr.ph
-  %i.az = sub nsw i64 %i.ar, %.05559
+  %i.az = sub nuw nsw i64 %i.ar, %.05559
   store i64 %i.az, ptr %i.aq, align 8, !tbaa !84
   br label %.lr.ph62
 
