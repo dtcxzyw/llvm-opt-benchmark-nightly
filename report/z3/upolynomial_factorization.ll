@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/z3/original/upolynomial_factorization?download=true
 inline.NumInlined: 1056
 inline.NumDeleted: 216
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN11upolynomial18factor_square_freeERNS_12core_managerERK7svectorI3mpzjERNS0_7factorsEjRKN10polynomial13factor_paramsE:bb.a
 }
 
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit
 
 _ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit: ; preds = %bb.a, %bb.b
-  %.0.i.i = phi i32 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 6 uses
+  %.0.i.i = phi i32 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
@@ -217,33 +217,76 @@ _ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit: ; preds = %bb.
 
 bb.c:                                             ; preds = %._crit_edge85, %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit
   %.039 = phi i1 [ %1, %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit ], [ false, %._crit_edge85 ]
-  %i.m = load i32, ptr %i.g, align 8, !tbaa !86   ; 3 uses
+  %i.m = load i32, ptr %i.g, align 8, !tbaa !86   ; 4 uses
   %i.n = add i32 %i.m, -1                         ; 3 uses
   br i1 %.039, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
   %i.o = icmp sgt i32 %i.m, 1
-  %.pre = load ptr, ptr %i.i, align 8, !tbaa !65  ; 2 uses
-  %.pre102 = load ptr, ptr %i.j, align 8, !tbaa !89 ; 2 uses
-  br i1 %i.o, label %.lr.ph.a, label %._crit_edge
+  %.pre = load ptr, ptr %i.i, align 8, !tbaa !65  ; 6 uses
+  %.pre102 = load ptr, ptr %i.j, align 8, !tbaa !89 ; 6 uses
+  br i1 %i.o, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %.preheader
-  %i.p = zext nneg i32 %i.n to i64
-  br label %bb.d
+.lr.ph:                                           ; preds = %.preheader
+  %2 = zext i32 %i.n to i64                       ; 3 uses
+  %xtraiter = and i64 %2, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.lr.ph.a
 
-bb.d:                                             ; preds = %.lr.ph.a, %bb.d
-  %indvars.iv = phi i64 [ %i.p, %.lr.ph.a ], [ %indvars.iv.next, %bb.d ] ; 3 uses
-  %i.q = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %indvars.iv ; 2 uses
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !37
+.lr.ph.a:                                         ; preds = %.lr.ph, %.lr.ph.a
+  %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.lr.ph.a ], [ %2, %.lr.ph ] ; 2 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.a ], [ 0, %.lr.ph ]
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %indvars.iv.prol ; 2 uses
+  %4 = load i32, ptr %3, align 4, !tbaa !37
+  %i.p = zext i32 %4 to i64
+  %5 = getelementptr inbounds nuw i8, ptr %.pre102, i64 %i.p
+  store i8 0, ptr %5, align 1, !tbaa !90
+  store i32 %.0.i.i, ptr %3, align 4, !tbaa !37
+  %indvars.iv.next.prol = add nsw i64 %indvars.iv.prol, -1 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.lr.ph.a, !llvm.loop !139
+
+.prol.loopexit:                                   ; preds = %.lr.ph.a, %.lr.ph
+  %indvars.iv.unr = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next.prol, %.lr.ph.a ]
+  %6 = add nsw i32 %i.m, -2
+  %7 = icmp ult i32 %6, 3
+  br i1 %7, label %._crit_edge.loopexit, label %bb.d
+
+bb.d:                                             ; preds = %.prol.loopexit, %bb.d
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ %indvars.iv.unr, %.prol.loopexit ] ; 6 uses
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %indvars.iv ; 2 uses
+  %9 = load i32, ptr %8, align 4, !tbaa !37
+  %10 = zext i32 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %.pre102, i64 %10
+  store i8 0, ptr %11, align 1, !tbaa !90
+  store i32 %.0.i.i, ptr %8, align 4, !tbaa !37
+  %12 = getelementptr [4 x i8], ptr %.pre, i64 %indvars.iv
+  %13 = getelementptr i8, ptr %12, i64 -4         ; 2 uses
+  %14 = load i32, ptr %13, align 4, !tbaa !37
+  %15 = zext i32 %14 to i64
+  %16 = getelementptr inbounds nuw i8, ptr %.pre102, i64 %15
+  store i8 0, ptr %16, align 1, !tbaa !90
+  store i32 %.0.i.i, ptr %13, align 4, !tbaa !37
+  %17 = getelementptr [4 x i8], ptr %.pre, i64 %indvars.iv
+  %18 = getelementptr i8, ptr %17, i64 -8         ; 2 uses
+  %19 = load i32, ptr %18, align 4, !tbaa !37
+  %20 = zext i32 %19 to i64
+  %21 = getelementptr inbounds nuw i8, ptr %.pre102, i64 %20
+  store i8 0, ptr %21, align 1, !tbaa !90
+  store i32 %.0.i.i, ptr %18, align 4, !tbaa !37
+  %i.q = getelementptr [4 x i8], ptr %.pre, i64 %indvars.iv
+  %22 = getelementptr i8, ptr %i.q, i64 -12       ; 2 uses
+  %i.r = load i32, ptr %22, align 4, !tbaa !37
   %i.s = zext i32 %i.r to i64
   %i.t = getelementptr inbounds nuw i8, ptr %.pre102, i64 %i.s
   store i8 0, ptr %i.t, align 1, !tbaa !90
-  store i32 %.0.i.i, ptr %i.q, align 4, !tbaa !37
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %2 = icmp samesign ugt i64 %indvars.iv, 1
-  br i1 %2, label %bb.d, label %._crit_edge.loopexit, !llvm.loop !139
+  store i32 %.0.i.i, ptr %22, align 4, !tbaa !37
+  %indvars.iv.next = add nsw i64 %indvars.iv, -4
+  %23 = icmp sgt i64 %indvars.iv, 4
+  br i1 %23, label %bb.d, label %._crit_edge.loopexit, !llvm.loop !140
 
-._crit_edge.loopexit:                             ; preds = %bb.d
+._crit_edge.loopexit:                             ; preds = %bb.d, %.prol.loopexit
   %.pre103 = load i32, ptr %i.g, align 8, !tbaa !86
   br label %._crit_edge
 
@@ -286,7 +329,7 @@ bb.f:                                             ; preds = %.lr.ph77, %bb.i
 
 bb.g:                                             ; preds = %.lr.ph126
   %exitcond.not = icmp eq i32 %.0.i, %i.ak
-  br i1 %exitcond.not, label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit, label %.lr.ph126, !llvm.loop !140
+  br i1 %exitcond.not, label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit, label %.lr.ph126, !llvm.loop !141
 
 .lr.ph126:                                        ; preds = %bb.f, %bb.g
   %.0.in.i124 = phi i32 [ %.0.i, %bb.g ], [ %i.ai, %bb.f ]
@@ -295,10 +338,10 @@ bb.g:                                             ; preds = %.lr.ph126
   %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !tbaa !90, !range !47, !noundef !19
   %i.ao = trunc nuw i8 %i.an to i1
-  br i1 %i.ao, label %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit_crit_edge127, label %bb.g, !llvm.loop !140
+  br i1 %i.ao, label %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit_crit_edge127, label %bb.g, !llvm.loop !141
 
 ._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit_crit_edge127: ; preds = %.lr.ph126
-  br label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit, !llvm.loop !140
+  br label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit, !llvm.loop !141
 
 _ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit: ; preds = %bb.g, %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit_crit_edge127, %bb.f
   %.0.lcssa.i = phi i32 [ %smax.i, %bb.f ], [ %.0.i, %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit_crit_edge127 ], [ %smax.i, %bb.g ] ; 3 uses
@@ -315,7 +358,7 @@ bb.h:                                             ; preds = %_ZN11upolynomial39f
 bb.i:                                             ; preds = %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit
   %indvars.iv.next98 = add nsw i64 %indvars.iv97, -1
   %i.as = icmp sgt i64 %indvars.iv97, 0
-  br i1 %i.as, label %bb.f, label %.loopexit, !llvm.loop !141
+  br i1 %i.as, label %bb.f, label %.loopexit, !llvm.loop !142
 
 .loopexit:                                        ; preds = %bb.i, %bb.e, %bb.h
   %.23569 = phi i32 [ %i.ar, %bb.h ], [ %.134, %bb.e ], [ -1, %bb.i ]
@@ -344,7 +387,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %.lr.ph132
   %exitcond100.not = icmp eq i32 %.0.in.i51130, %i.l
-  br i1 %exitcond100.not, label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55, label %.lr.ph132, !llvm.loop !140
+  br i1 %exitcond100.not, label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55, label %.lr.ph132, !llvm.loop !141
 
 .lr.ph132:                                        ; preds = %bb.l, %bb.m
   %.0.in.i51130 = phi i32 [ %.0.i52, %bb.m ], [ -1, %bb.l ] ; 2 uses
@@ -353,10 +396,10 @@ bb.m:                                             ; preds = %.lr.ph132
   %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.ay
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !90, !range !47, !noundef !19
   %i.bb = trunc nuw i8 %i.ba to i1
-  br i1 %i.bb, label %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55_crit_edge134, label %bb.m, !llvm.loop !140
+  br i1 %i.bb, label %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55_crit_edge134, label %bb.m, !llvm.loop !141
 
 ._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55_crit_edge134: ; preds = %.lr.ph132
-  br label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55, !llvm.loop !140
+  br label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55, !llvm.loop !141
 
 _ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55: ; preds = %bb.m, %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55_crit_edge134, %bb.l
   %.0.lcssa.i53 = phi i32 [ %smax.i50, %bb.l ], [ %.0.i52, %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55_crit_edge134 ], [ %smax.i50, %bb.m ] ; 3 uses
@@ -399,7 +442,7 @@ bb.p:                                             ; preds = %.lr.ph84, %bb.r
 
 bb.q:                                             ; preds = %.lr.ph139
   %exitcond101.not = icmp eq i32 %.0.i58, %i.bn
-  br i1 %exitcond101.not, label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61, label %.lr.ph139, !llvm.loop !140
+  br i1 %exitcond101.not, label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61, label %.lr.ph139, !llvm.loop !141
 
 .lr.ph139:                                        ; preds = %bb.p, %bb.q
   %.0.in.i57137 = phi i32 [ %.0.i58, %bb.q ], [ %i.bi, %bb.p ]
@@ -408,10 +451,10 @@ bb.q:                                             ; preds = %.lr.ph139
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !90, !range !47, !noundef !19
   %i.br = trunc nuw i8 %i.bq to i1
-  br i1 %i.br, label %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61_crit_edge141, label %bb.q, !llvm.loop !140
+  br i1 %i.br, label %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61_crit_edge141, label %bb.q, !llvm.loop !141
 
 ._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61_crit_edge141: ; preds = %.lr.ph139
-  br label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61, !llvm.loop !140
+  br label %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61, !llvm.loop !141
 
 _ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61: ; preds = %bb.q, %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61_crit_edge141, %bb.p
   %.0.lcssa.i59 = phi i32 [ %smax.i56, %bb.p ], [ %.0.i58, %._ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61_crit_edge141 ], [ %smax.i56, %bb.q ] ; 4 uses
@@ -425,18 +468,18 @@ bb.r:                                             ; preds = %_ZN11upolynomial39f
   %.538 = add nsw i32 %.53882, 1                  ; 2 uses
   %i.bv = load i32, ptr %i.g, align 8, !tbaa !86
   %i.bw = icmp slt i32 %.538, %i.bv
-  br i1 %i.bw, label %bb.p, label %._crit_edge85, !llvm.loop !142
+  br i1 %i.bw, label %bb.p, label %._crit_edge85, !llvm.loop !143
 
 bb.s:                                             ; preds = %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit61
   store i32 -1, ptr %i.bh, align 4, !tbaa !37
-  br label %bb.j, !llvm.loop !143
+  br label %bb.j, !llvm.loop !144
 
 ._crit_edge85:                                    ; preds = %bb.o, %bb.r
   %i.bx = load ptr, ptr %0, align 8, !tbaa !31
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   %i.bz = load ptr, ptr %i.by, align 8
   %i.ca = tail call noundef zeroext i1 %i.bz(ptr noundef nonnull align 8 dereferenceable(48) %0)
-  br i1 %i.ca, label %bb.c, label %.thread63, !llvm.loop !144
+  br i1 %i.ca, label %bb.c, label %.thread63, !llvm.loop !145
 
 .thread63:                                        ; preds = %._crit_edge85, %bb.k, %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55
   %cond65 = phi i1 [ false, %bb.k ], [ false, %_ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7factorsEE4findEii.exit55 ], [ true, %._crit_edge85 ]
@@ -519,7 +562,7 @@ _ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit:        ; preds = %bb.e, %bb.f
   %i.ag = load i32, ptr %i.r, align 8, !tbaa !86
   %i.ah = sext i32 %i.ag to i64
   %i.ai = icmp slt i64 %indvars.iv.next, %i.ah
-  br i1 %i.ai, label %bb.e, label %._crit_edge, !llvm.loop !145
+  br i1 %i.ai, label %bb.e, label %._crit_edge, !llvm.loop !147
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -630,7 +673,7 @@ _ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit:        ; preds = %bb.h, %.critedge18,
   %i.av = load ptr, ptr %i.a, align 8, !tbaa !87, !nonnull !19, !align !20
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !52 ; 2 uses
   %i.ax = icmp eq ptr %i.aw, null
-  br i1 %i.ax, label %.critedge, label %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit, !llvm.loop !146
+  br i1 %i.ax, label %.critedge, label %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit, !llvm.loop !148
 
 .critedge:                                        ; preds = %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit, %_ZN13mpzzp_manager3setER3mpzRKS0_.exit
   ret void
@@ -743,7 +786,7 @@ bb.h:                                             ; preds = %_ZNK6vectorI3mpzLb0
   %i.as = load ptr, ptr %i.a, align 8, !tbaa !87, !nonnull !19, !align !20
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !52 ; 2 uses
   %i.au = icmp eq ptr %i.at, null
-  br i1 %i.au, label %.critedge, label %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit, !llvm.loop !147
+  br i1 %i.au, label %.critedge, label %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit, !llvm.loop !149
 
 .critedge:                                        ; preds = %_ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit, %bb.h, %bb.a
   ret void
@@ -1146,7 +1189,7 @@ _ZNK6vectorI3mpzLb0EjE4sizeEv.exit:               ; preds = %bb.j
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 16
   %i.bi = icmp eq ptr %i.bg, %i.as
-  br i1 %i.bi, label %_ZSt20uninitialized_move_nIP3mpzjS1_ESt4pairIT_T1_ES3_T0_S4_.exit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !148
+  br i1 %i.bi, label %_ZSt20uninitialized_move_nIP3mpzjS1_ESt4pairIT_T1_ES3_T0_S4_.exit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !150
 
 _ZSt20uninitialized_move_nIP3mpzjS1_ESt4pairIT_T1_ES3_T0_S4_.exit: ; preds = %.lr.ph.i.i.i.i.i.i
   %.pre40 = load ptr, ptr %0, align 8, !tbaa !34  ; 2 uses
@@ -1322,7 +1365,7 @@ _ZNK11upolynomial12core_manager7factors16distinct_factorsEv.exit14.thread: ; pre
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 0, ptr %i.d, align 4, !tbaa !92
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %1, ptr %i.e, align 8, !tbaa !152
+  store ptr %1, ptr %i.e, align 8, !tbaa !154
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr null, ptr %i.f, align 8, !tbaa !89
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -1337,7 +1380,7 @@ _ZNK6vectorIbLb0EjE4sizeEv.exit.i:                ; preds = %bb.a
   %i.k = lshr i32 %i.i, 1
   store i32 %i.k, ptr %i.j, align 4, !tbaa !92
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store ptr %1, ptr %i.l, align 8, !tbaa !152
+  store ptr %1, ptr %i.l, align 8, !tbaa !154
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
   store ptr null, ptr %i.m, align 8, !tbaa !89
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
@@ -1432,7 +1475,7 @@ _ZNK6vectorIiLb0EjE8capacityEv.exit.thread.i:     ; preds = %_ZNK6vectorIiLb0EjE
 
 .noexc28:                                         ; preds = %_ZNK6vectorIiLb0EjE8capacityEv.exit.thread.i
   %.pr.pre.i26 = load ptr, ptr %.ph59, align 8, !tbaa !65
-  br label %thread-pre-split.i16, !llvm.loop !149
+  br label %thread-pre-split.i16, !llvm.loop !151
 
 bb.c:                                             ; preds = %_ZNK6vectorIiLb0EjE8capacityEv.exit.i
   %i.am = getelementptr inbounds i8, ptr %i.ah, i64 -4
@@ -1471,7 +1514,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %broadcast.splat, ptr %i.ba, align 4, !tbaa !37
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !150
+  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !152
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.aw, %n.vec
@@ -1486,7 +1529,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %.0.i.i1354.ph, ptr %.020.i24, align 4, !tbaa !37
   %i.bc = getelementptr inbounds nuw i8, ptr %.020.i24, i64 4 ; 2 uses
   %.not13.i25 = icmp eq ptr %i.bc, %i.ao
-  br i1 %.not13.i25, label %_ZN6vectorIiLb0EjE6resizeIjEEvjRKT_.exit, label %.lr.ph.i23, !llvm.loop !151
+  br i1 %.not13.i25, label %_ZN6vectorIiLb0EjE6resizeIjEEvjRKT_.exit, label %.lr.ph.i23, !llvm.loop !153
 
 _ZN6vectorIiLb0EjE6resizeIjEEvjRKT_.exit:         ; preds = %.lr.ph.i23, %middle.block, %bb.c, %bb.b, %_ZNK6vectorIiLb0EjE4sizeEv.exit.i
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -1560,7 +1603,7 @@ _ZN11upolynomial39factorization_combination_iterator_baseINS_12core_manager7fact
 define linkonce_odr hidden noundef zeroext i1 @_ZNK11upolynomial35ufactorization_combination_iterator14filter_currentEv(ptr noundef nonnull align 8 dereferenceable(56) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !156, !nonnull !19, !align !20
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !158, !nonnull !19, !align !20
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i32, ptr %i.c, align 8, !tbaa !86   ; 4 uses
   %.not.i = icmp eq i32 %i.d, 0
@@ -1963,22 +2006,24 @@ attributes #22 = { builtin nounwind }
 !136 = distinct !{!136, !40}
 !137 = distinct !{!137, !40}
 !138 = !{!77, !9, i64 4}
-!139 = distinct !{!139, !40}
+!139 = distinct !{!139, !146}
 !140 = distinct !{!140, !40}
 !141 = distinct !{!141, !40}
 !142 = distinct !{!142, !40}
 !143 = distinct !{!143, !40}
 !144 = distinct !{!144, !40}
 !145 = distinct !{!145, !40}
-!146 = distinct !{!146, !40}
+!146 = !{!"llvm.loop.unroll.disable"}
 !147 = distinct !{!147, !40}
 !148 = distinct !{!148, !40}
 !149 = distinct !{!149, !40}
-!150 = distinct !{!150, !40, !153, !154}
-!151 = distinct !{!151, !40, !154, !153}
-!152 = !{!81, !81, i64 0}
-!153 = !{!"llvm.loop.isvectorized", i32 1}
-!154 = !{!"llvm.loop.unroll.runtime.disable"}
-!155 = !{!"_ZTSN11upolynomial35ufactorization_combination_iteratorE", !85, i64 0, !80, i64 48}
-!156 = !{!155, !80, i64 48}
+!150 = distinct !{!150, !40}
+!151 = distinct !{!151, !40}
+!152 = distinct !{!152, !40, !155, !156}
+!153 = distinct !{!153, !40, !156, !155}
+!154 = !{!81, !81, i64 0}
+!155 = !{!"llvm.loop.isvectorized", i32 1}
+!156 = !{!"llvm.loop.unroll.runtime.disable"}
+!157 = !{!"_ZTSN11upolynomial35ufactorization_combination_iteratorE", !85, i64 0, !80, i64 48}
+!158 = !{!157, !80, i64 48}
 end_hunk_2
