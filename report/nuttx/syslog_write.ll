@@ -89,7 +89,7 @@ bb.h:                                             ; preds = %.loopexit94
   %i.x = sub nuw i64 %1, %.269
   %i.y = tail call i64 %i.i(ptr noundef nonnull %i.a, ptr noundef %i.w, i64 noundef %i.x) #5 ; 2 uses
   %i.z = icmp slt i64 %i.y, 0
-  br i1 %i.z, label %.thread88, label %bb.i, !llvm.loop !8
+  br i1 %i.z, label %.thread88, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.aa = add nsw i64 %i.y, %.269
@@ -103,7 +103,7 @@ bb.j:                                             ; preds = %bb.c
   %.in77 = phi ptr [ %i.ab, %bb.j ], [ %i.d, %.thread84 ]
   %i.ac = load ptr, ptr %.in77, align 8           ; 4 uses
   %i.ad = icmp eq ptr %i.ac, null
-  br i1 %i.ad, label %.thread88, label %bb.k, !llvm.loop !8
+  br i1 %i.ad, label %.thread88, label %bb.k
 
 bb.k:                                             ; preds = %.thread87
   %i.ae = load i8, ptr %i.c, align 8
@@ -125,7 +125,7 @@ bb.k:                                             ; preds = %.thread87
   %i.aj = tail call i32 %i.ac(ptr noundef nonnull %i.a, i32 noundef %i.ai) #5 ; 0 uses
   %i.ak = add nuw i64 %.37097, 1                  ; 2 uses
   %exitcond110.not = icmp eq i64 %i.ak, %1
-  br i1 %exitcond110.not, label %.loopexit, label %.lr.ph98, !llvm.loop !9
+  br i1 %exitcond110.not, label %.loopexit, label %.lr.ph98, !llvm.loop !8
 
 .lr.ph101:                                        ; preds = %.preheader, %bb.m
   %.4100 = phi i64 [ %i.as, %bb.m ], [ 0, %.preheader ] ; 2 uses
@@ -145,14 +145,14 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph101
   %i.ar = tail call i32 %i.ac(ptr noundef nonnull %i.a, i32 noundef %i.aq) #5 ; 0 uses
   %i.as = add nuw i64 %.4100, 1                   ; 2 uses
   %exitcond111.not = icmp eq i64 %i.as, %1
-  br i1 %exitcond111.not, label %.loopexit, label %.lr.ph101, !llvm.loop !10
+  br i1 %exitcond111.not, label %.loopexit, label %.lr.ph101, !llvm.loop !9
 
 .loopexit:                                        ; preds = %.lr.ph98, %bb.m, %.preheader91, %.preheader, %.loopexit94, %bb.i
   %.5 = phi i64 [ %i.aa, %bb.i ], [ %.269, %.loopexit94 ], [ %1, %bb.m ], [ 0, %.preheader ], [ 0, %.preheader91 ], [ %1, %.lr.ph98 ]
   %spec.select81 = tail call i64 @llvm.smax.i64(i64 %.5, i64 -5)
-  br label %.thread88, !llvm.loop !8
+  br label %.thread88
 
-.thread88:                                        ; preds = %.loopexit, %bb.h, %.thread87, %bb.a
+.thread88:                                        ; preds = %.thread87, %bb.h, %.loopexit, %bb.a
   %.066.lcssa = phi i64 [ -5, %bb.a ], [ -5, %bb.h ], [ -5, %.thread87 ], [ %spec.select81, %.loopexit ]
   ret i64 %.066.lcssa
 }
@@ -160,7 +160,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph101
 ; Function Attrs: noredzone nounwind optsize uwtable
 define dso_local range(i64 -5, -9223372036854775808) i64 @syslog_write(ptr noundef %0, i64 noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i8 asm sideeffect "movb %gs:(${1:c}), $0", "=qr,i,~{dirflag},~{fpsr},~{flags}"(i64 6) #6, !srcloc !12
+  %i.a = tail call i8 asm sideeffect "movb %gs:(${1:c}), $0", "=qr,i,~{dirflag},~{fpsr},~{flags}"(i64 6) #6, !srcloc !11
   %i.b = trunc i8 %i.a to i1
   br i1 %i.b, label %syslog_safe_to_block.exit, label %bb.b
 
@@ -209,10 +209,9 @@ attributes #7 = { noredzone optsize }
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
 !6 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
-!7 = distinct !{!7, !11}
-!8 = distinct !{!8, !11}
-!9 = distinct !{!9, !11}
-!10 = distinct !{!10, !11}
-!11 = !{!"llvm.loop.mustprogress"}
-!12 = !{i64 555362}
+!7 = distinct !{!7, !10}
+!8 = distinct !{!8, !10}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = !{i64 555362}
 end_hunk_0
