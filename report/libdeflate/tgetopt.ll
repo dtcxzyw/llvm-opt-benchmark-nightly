@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libdeflate/original/tgetopt?download=true
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -200,32 +202,71 @@ bb.x:                                             ; preds = %bb.w, %.thread82
   br i1 %i.bd, label %.lr.ph54.preheader, label %._crit_edge
 
 .lr.ph54.preheader:                               ; preds = %.critedge
-  %i.be = zext nneg i32 %0 to i64
-  br label %.lr.ph54
+  %i.be = zext nneg i32 %0 to i64                 ; 3 uses
+  %3 = and i64 %i.be, 1
+  %lcmp.mod.not.not = icmp eq i64 %3, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph54.prol, label %.lr.ph54.prol.loopexit
 
-.lr.ph54:                                         ; preds = %.lr.ph54.preheader, %bb.z
-  %indvars.iv66 = phi i64 [ %i.be, %.lr.ph54.preheader ], [ %indvars.iv.next67, %bb.z ] ; 2 uses
-  %i.bf = phi i32 [ %0, %.lr.ph54.preheader ], [ %i.bk, %bb.z ] ; 2 uses
-  %indvars.iv.next67 = add nsw i64 %indvars.iv66, -1 ; 2 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next67
-  %i.bg = load ptr, ptr %3, align 8, !tbaa !13    ; 2 uses
+.lr.ph54.prol:                                    ; preds = %.lr.ph54.preheader
+  %indvars.iv.next67.prol = add nsw i64 %i.be, -1 ; 3 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next67.prol
+  %5 = load ptr, ptr %4, align 8, !tbaa !13       ; 2 uses
+  %.not46.prol = icmp eq ptr %5, null
+  br i1 %.not46.prol, label %.lr.ph54.prol.loopexit, label %6
+
+6:                                                ; preds = %.lr.ph54.prol
+  %7 = add nsw i32 %0, -1                         ; 3 uses
+  store i32 %7, ptr @toptind, align 4, !tbaa !10
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds [8 x i8], ptr %1, i64 %8
+  store ptr %5, ptr %9, align 8, !tbaa !13
+  br label %.lr.ph54.prol.loopexit
+
+.lr.ph54.prol.loopexit:                           ; preds = %.lr.ph54.prol, %6, %.lr.ph54.preheader
+  %indvars.iv66.unr = phi i64 [ %i.be, %.lr.ph54.preheader ], [ %indvars.iv.next67.prol, %6 ], [ %indvars.iv.next67.prol, %.lr.ph54.prol ]
+  %.unr = phi i32 [ %0, %.lr.ph54.preheader ], [ %7, %6 ], [ %0, %.lr.ph54.prol ]
+  %10 = icmp eq i32 %0, 2
+  br i1 %10, label %._crit_edge, label %.lr.ph54
+
+.lr.ph54:                                         ; preds = %.lr.ph54.prol.loopexit, %bb.z
+  %indvars.iv66 = phi i64 [ %indvars.iv.next67.1, %bb.z ], [ %indvars.iv66.unr, %.lr.ph54.prol.loopexit ] ; 3 uses
+  %i.bf = phi i32 [ %i.bk, %bb.z ], [ %.unr, %.lr.ph54.prol.loopexit ] ; 2 uses
+  %11 = getelementptr [8 x i8], ptr %1, i64 %indvars.iv66
+  %12 = getelementptr i8, ptr %11, i64 -8
+  %i.bg = load ptr, ptr %12, align 8, !tbaa !13   ; 2 uses
   %.not46 = icmp eq ptr %i.bg, null
-  br i1 %.not46, label %bb.z, label %bb.y
+  br i1 %.not46, label %.lr.ph54.1, label %13
 
-bb.y:                                             ; preds = %.lr.ph54
-  %i.bh = add nsw i32 %i.bf, -1                   ; 3 uses
+13:                                               ; preds = %.lr.ph54
+  %14 = add nsw i32 %i.bf, -1                     ; 3 uses
+  store i32 %14, ptr @toptind, align 4, !tbaa !10
+  %15 = sext i32 %14 to i64
+  %16 = getelementptr inbounds [8 x i8], ptr %1, i64 %15
+  store ptr %i.bg, ptr %16, align 8, !tbaa !13
+  br label %.lr.ph54.1
+
+.lr.ph54.1:                                       ; preds = %13, %.lr.ph54
+  %17 = phi i32 [ %14, %13 ], [ %i.bf, %.lr.ph54 ] ; 2 uses
+  %indvars.iv.next67.1 = add nsw i64 %indvars.iv66, -2 ; 2 uses
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next67.1
+  %19 = load ptr, ptr %18, align 8, !tbaa !13     ; 2 uses
+  %.not46.1 = icmp eq ptr %19, null
+  br i1 %.not46.1, label %bb.z, label %bb.y
+
+bb.y:                                             ; preds = %.lr.ph54.1
+  %i.bh = add nsw i32 %17, -1                     ; 3 uses
   store i32 %i.bh, ptr @toptind, align 4, !tbaa !10
   %i.bi = sext i32 %i.bh to i64
   %i.bj = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bi
-  store ptr %i.bg, ptr %i.bj, align 8, !tbaa !13
+  store ptr %19, ptr %i.bj, align 8, !tbaa !13
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.y, %.lr.ph54
-  %i.bk = phi i32 [ %i.bh, %bb.y ], [ %i.bf, %.lr.ph54 ]
-  %4 = icmp samesign ugt i64 %indvars.iv66, 2
-  br i1 %4, label %.lr.ph54, label %._crit_edge, !llvm.loop !9
+bb.z:                                             ; preds = %bb.y, %.lr.ph54.1
+  %i.bk = phi i32 [ %i.bh, %bb.y ], [ %17, %.lr.ph54.1 ]
+  %20 = icmp sgt i64 %indvars.iv66, 3
+  br i1 %20, label %.lr.ph54, label %._crit_edge, !llvm.loop !9
 
-._crit_edge:                                      ; preds = %bb.z, %.critedge
+._crit_edge:                                      ; preds = %.lr.ph54.prol.loopexit, %bb.z, %.critedge
   store i1 true, ptr @tgetopt.done, align 1
   br label %bb.aa
 
