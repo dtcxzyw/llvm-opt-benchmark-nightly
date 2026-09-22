@@ -205,21 +205,21 @@ bb.cz:                                            ; preds = %.loopexit.us.us.i.i
   %i.sf = getelementptr inbounds [4 x i8], ptr %.0239427.i.i.i, i64 %i.se
   %.idx3.i.i.a = shl nuw nsw i64 %indvars.iv473.i.i.i, 5
   %i.sg = getelementptr inbounds nuw i8, ptr %.2238401.us.i.i.i, i64 %.idx3.i.i.a ; 9 uses
-  %28 = getelementptr inbounds nuw i8, ptr %i.sg, i64 4 ; 2 uses
-  %i.sh = getelementptr inbounds nuw i8, ptr %i.sg, i64 8 ; 2 uses
-  %i.si = getelementptr inbounds nuw i8, ptr %i.sg, i64 12 ; 2 uses
-  %i.sj = getelementptr inbounds nuw i8, ptr %i.sg, i64 16 ; 2 uses
-  %i.sk = getelementptr inbounds nuw i8, ptr %i.sg, i64 20 ; 2 uses
-  %i.sl = getelementptr inbounds nuw i8, ptr %i.sg, i64 24 ; 2 uses
-  %i.sm = getelementptr inbounds nuw i8, ptr %i.sg, i64 28 ; 2 uses
-  %.promoted.i.i.i = load float, ptr %i.sg, align 4, !tbaa !67
-  %.promoted588.i.i.i = load float, ptr %28, align 4, !tbaa !67
-  %.promoted589.i.i.i = load float, ptr %i.sh, align 4, !tbaa !67
-  %.promoted590.i.i.i = load float, ptr %i.si, align 4, !tbaa !67
-  %.promoted591.i.i.i = load float, ptr %i.sj, align 4, !tbaa !67
-  %.promoted592.i.i.i = load float, ptr %i.sk, align 4, !tbaa !67
-  %.promoted593.i.i.i = load float, ptr %i.sl, align 4, !tbaa !67
-  %.promoted594.i.i.i = load float, ptr %i.sm, align 4, !tbaa !67
+  %.pre497.i.i.i = load float, ptr %i.sg, align 4, !tbaa !67
+  %i.sh = getelementptr inbounds nuw i8, ptr %i.sg, i64 4 ; 2 uses
+  %i.si = getelementptr inbounds nuw i8, ptr %i.sg, i64 8 ; 2 uses
+  %i.sj = getelementptr inbounds nuw i8, ptr %i.sg, i64 12 ; 2 uses
+  %i.sk = getelementptr inbounds nuw i8, ptr %i.sg, i64 16 ; 2 uses
+  %i.sl = getelementptr inbounds nuw i8, ptr %i.sg, i64 20 ; 2 uses
+  %i.sm = getelementptr inbounds nuw i8, ptr %i.sg, i64 24 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %i.sg, i64 28 ; 2 uses
+  %.promoted588.i.i.i = load float, ptr %i.sh, align 4, !tbaa !67
+  %.promoted589.i.i.i = load float, ptr %i.si, align 4, !tbaa !67
+  %.promoted590.i.i.i = load float, ptr %i.sj, align 4, !tbaa !67
+  %.promoted591.i.i.i = load float, ptr %i.sk, align 4, !tbaa !67
+  %.promoted592.i.i.i = load float, ptr %i.sl, align 4, !tbaa !67
+  %.promoted593.i.i.i = load float, ptr %i.sm, align 4, !tbaa !67
+  %.promoted594.i.i.i = load float, ptr %28, align 4, !tbaa !67
   br label %bb.da
 
 bb.da:                                            ; preds = %bb.da, %.lr.ph391.us.us.i.i.i
@@ -230,7 +230,7 @@ bb.da:                                            ; preds = %bb.da, %.lr.ph391.u
   %i.sr = phi float [ %i.tr, %bb.da ], [ %.promoted590.i.i.i, %.lr.ph391.us.us.i.i.i ]
   %i.ss = phi float [ %i.tm, %bb.da ], [ %.promoted589.i.i.i, %.lr.ph391.us.us.i.i.i ]
   %i.st = phi float [ %i.th, %bb.da ], [ %.promoted588.i.i.i, %.lr.ph391.us.us.i.i.i ]
-  %i.su = phi float [ %i.tc, %bb.da ], [ %.promoted.i.i.i, %.lr.ph391.us.us.i.i.i ]
+  %i.su = phi float [ %i.tc, %bb.da ], [ %.pre497.i.i.i, %.lr.ph391.us.us.i.i.i ]
   %indvars.iv468.i.i.i = phi i64 [ %indvars.iv.next469.i.i.i, %bb.da ], [ 0, %.lr.ph391.us.us.i.i.i ] ; 3 uses
   %i.sv = getelementptr inbounds nuw [4 x i8], ptr %i.fa, i64 %indvars.iv468.i.i.i
   %i.sw = load i32, ptr %i.sv, align 4, !tbaa !21
@@ -247,43 +247,43 @@ bb.da:                                            ; preds = %bb.da, %.lr.ph391.u
   %i.tf = getelementptr inbounds nuw i8, ptr %i.ta, i64 4
   %i.tg = load float, ptr %i.tf, align 4, !tbaa !67
   %i.th = tail call float @llvm.fmuladd.f32(float %i.te, float %i.tg, float %i.st) ; 2 uses
-  store float %i.th, ptr %28, align 4, !tbaa !67
+  store float %i.th, ptr %i.sh, align 4, !tbaa !67
   %i.ti = getelementptr inbounds nuw i8, ptr %i.sy, i64 8
   %i.tj = load float, ptr %i.ti, align 4, !tbaa !67
   %i.tk = getelementptr inbounds nuw i8, ptr %i.ta, i64 8
   %i.tl = load float, ptr %i.tk, align 4, !tbaa !67
   %i.tm = tail call float @llvm.fmuladd.f32(float %i.tj, float %i.tl, float %i.ss) ; 2 uses
-  store float %i.tm, ptr %i.sh, align 4, !tbaa !67
+  store float %i.tm, ptr %i.si, align 4, !tbaa !67
   %i.tn = getelementptr inbounds nuw i8, ptr %i.sy, i64 12
   %i.to = load float, ptr %i.tn, align 4, !tbaa !67
   %i.tp = getelementptr inbounds nuw i8, ptr %i.ta, i64 12
   %i.tq = load float, ptr %i.tp, align 4, !tbaa !67
   %i.tr = tail call float @llvm.fmuladd.f32(float %i.to, float %i.tq, float %i.sr) ; 2 uses
-  store float %i.tr, ptr %i.si, align 4, !tbaa !67
+  store float %i.tr, ptr %i.sj, align 4, !tbaa !67
   %i.ts = getelementptr inbounds nuw i8, ptr %i.sy, i64 16
   %i.tt = load float, ptr %i.ts, align 4, !tbaa !67
   %i.tu = getelementptr inbounds nuw i8, ptr %i.ta, i64 16
   %i.tv = load float, ptr %i.tu, align 4, !tbaa !67
   %i.tw = tail call float @llvm.fmuladd.f32(float %i.tt, float %i.tv, float %i.sq) ; 2 uses
-  store float %i.tw, ptr %i.sj, align 4, !tbaa !67
+  store float %i.tw, ptr %i.sk, align 4, !tbaa !67
   %i.tx = getelementptr inbounds nuw i8, ptr %i.sy, i64 20
   %i.ty = load float, ptr %i.tx, align 4, !tbaa !67
   %i.tz = getelementptr inbounds nuw i8, ptr %i.ta, i64 20
   %i.ua = load float, ptr %i.tz, align 4, !tbaa !67
   %i.ub = tail call float @llvm.fmuladd.f32(float %i.ty, float %i.ua, float %i.sp) ; 2 uses
-  store float %i.ub, ptr %i.sk, align 4, !tbaa !67
+  store float %i.ub, ptr %i.sl, align 4, !tbaa !67
   %i.uc = getelementptr inbounds nuw i8, ptr %i.sy, i64 24
   %i.ud = load float, ptr %i.uc, align 4, !tbaa !67
   %i.ue = getelementptr inbounds nuw i8, ptr %i.ta, i64 24
   %i.uf = load float, ptr %i.ue, align 4, !tbaa !67
   %i.ug = tail call float @llvm.fmuladd.f32(float %i.ud, float %i.uf, float %i.so) ; 2 uses
-  store float %i.ug, ptr %i.sl, align 4, !tbaa !67
+  store float %i.ug, ptr %i.sm, align 4, !tbaa !67
   %i.uh = getelementptr inbounds nuw i8, ptr %i.sy, i64 28
   %i.ui = load float, ptr %i.uh, align 4, !tbaa !67
   %i.uj = getelementptr inbounds nuw i8, ptr %i.ta, i64 28
   %i.uk = load float, ptr %i.uj, align 4, !tbaa !67
   %i.ul = tail call float @llvm.fmuladd.f32(float %i.ui, float %i.uk, float %i.sn) ; 2 uses
-  store float %i.ul, ptr %i.sm, align 4, !tbaa !67
+  store float %i.ul, ptr %28, align 4, !tbaa !67
   %indvars.iv.next469.i.i.i = add nuw nsw i64 %indvars.iv468.i.i.i, 1 ; 2 uses
   %exitcond472.not.i.i.i = icmp eq i64 %indvars.iv.next469.i.i.i, %wide.trip.count457.i.i.i
   br i1 %exitcond472.not.i.i.i, label %._crit_edge.us395.us.i.i.i, label %bb.da, !llvm.loop !82

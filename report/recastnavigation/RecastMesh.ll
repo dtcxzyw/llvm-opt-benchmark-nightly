@@ -204,9 +204,9 @@ bb.cj:                                            ; preds = %._crit_edge643.i, %
   %i.aiv = sext i32 %i.aiu to i64
   %i.aiw = getelementptr [4 x i8], ptr %i.xe, i64 %i.aiv ; 5 uses
   %i.aix = load i32, ptr %i.aiw, align 4, !tbaa !76 ; 2 uses
-  %i.aiy = getelementptr i8, ptr %i.aiw, i64 4    ; 2 uses
+  %i.aiy = getelementptr i8, ptr %i.aiw, i64 4
   %i.aiz = load i32, ptr %i.aiy, align 4, !tbaa !76 ; 2 uses
-  %i.aja = getelementptr i8, ptr %i.aiw, i64 8
+  %i.aja = getelementptr i8, ptr %i.aiw, i64 8    ; 2 uses
   %i.ajb = load i32, ptr %i.aja, align 4, !tbaa !76 ; 2 uses
   %i.ajc = getelementptr i8, ptr %i.aiw, i64 12   ; 2 uses
   %i.ajd = load i32, ptr %i.ajc, align 4, !tbaa !76 ; 2 uses
@@ -300,13 +300,13 @@ bb.cm:                                            ; preds = %bb.cl
   %i.akr = add i32 %i.akq, -4
   %i.aks = sext i32 %i.akr to i64
   %i.akt = getelementptr inbounds [4 x i8], ptr %i.xe, i64 %i.aks
-  %4 = load i32, ptr %i.akt, align 4, !tbaa !76
-  store i32 %4, ptr %i.aiw, align 4, !tbaa !76
-  %i.aku = add i32 %i.akq, -3
+  %4 = load <2 x i32>, ptr %i.akt, align 4, !tbaa !76
+  store <2 x i32> %4, ptr %i.aiw, align 4, !tbaa !76
+  %i.aku = add i32 %i.akq, -2
   %i.akv = sext i32 %i.aku to i64
   %i.akw = getelementptr inbounds [4 x i8], ptr %i.xe, i64 %i.akv
-  %5 = load <2 x i32>, ptr %i.akw, align 4, !tbaa !76
-  store <2 x i32> %5, ptr %i.aiy, align 4, !tbaa !76
+  %5 = load i32, ptr %i.akw, align 4, !tbaa !76
+  store i32 %5, ptr %i.aja, align 4, !tbaa !76
   %i.akx = add i32 %i.akq, -1
   %i.aky = sext i32 %i.akx to i64
   %i.akz = getelementptr inbounds [4 x i8], ptr %i.xe, i64 %i.aky

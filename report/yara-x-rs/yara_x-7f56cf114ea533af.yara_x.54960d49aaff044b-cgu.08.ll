@@ -205,10 +205,10 @@ bb.a:
   br label %.split93
 
 .split93:                                         ; preds = %bb.a, %.split93.fold.split418, %.split93.fold.split417, %.split93.fold.split
-  %.lcssa330.ph.ph.a = phi i8 [ 1, %.split93.fold.split417 ], [ 0, %.split93.fold.split ], [ 0, %bb.a ], [ 1, %.split93.fold.split418 ]
-  %.lcssa328.ph.ph = phi i64 [ 64, %.split93.fold.split417 ], [ 32, %.split93.fold.split ], [ 32, %bb.a ], [ 64, %.split93.fold.split418 ]
-  %.lcssa323.ph.ph = phi i8 [ 0, %.split93.fold.split417 ], [ 1, %.split93.fold.split ], [ 0, %bb.a ], [ 1, %.split93.fold.split418 ]
-  %.sroa.576.0.lcssa.ph.ph.a = phi i64 [ 0, %.split93.fold.split417 ], [ 2, %.split93.fold.split ], [ 0, %bb.a ], [ 2, %.split93.fold.split418 ]
+  %.lcssa330.ph.ph.a = phi i8 [ 0, %.split93.fold.split ], [ 1, %.split93.fold.split417 ], [ 0, %bb.a ], [ 1, %.split93.fold.split418 ]
+  %.lcssa328.ph.ph = phi i64 [ 32, %.split93.fold.split ], [ 64, %.split93.fold.split417 ], [ 32, %bb.a ], [ 64, %.split93.fold.split418 ]
+  %.lcssa323.ph.ph = phi i8 [ 1, %.split93.fold.split ], [ 0, %.split93.fold.split417 ], [ 0, %bb.a ], [ 1, %.split93.fold.split418 ]
+  %.sroa.576.0.lcssa.ph.ph.a = phi i64 [ 2, %.split93.fold.split ], [ 0, %.split93.fold.split417 ], [ 0, %bb.a ], [ 2, %.split93.fold.split418 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !6509
   call void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, i64 noundef 3, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1), !noalias !6509
@@ -239,10 +239,10 @@ _RINvXs1_NtNtCsexYYUdYSQU6_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   br label %.split
 
 .split:                                           ; preds = %bb.a, %.split.fold.split419, %.split.fold.split416, %.split.fold.split
-  %.lcssa330.ph = phi i8 [ 1, %.split.fold.split416 ], [ 0, %bb.a ], [ 1, %.split.fold.split ], [ 0, %.split.fold.split419 ]
-  %.lcssa328.ph = phi i64 [ 64, %.split.fold.split416 ], [ 32, %bb.a ], [ 64, %.split.fold.split ], [ 32, %.split.fold.split419 ]
-  %.lcssa323.ph = phi i8 [ 1, %.split.fold.split416 ], [ 0, %bb.a ], [ 0, %.split.fold.split ], [ 1, %.split.fold.split419 ]
-  %.sroa.576.0.lcssa.ph = phi i64 [ 2, %.split.fold.split416 ], [ 0, %bb.a ], [ 0, %.split.fold.split ], [ 2, %.split.fold.split419 ]
+  %.lcssa330.ph = phi i8 [ 1, %.split.fold.split ], [ 1, %.split.fold.split416 ], [ 0, %bb.a ], [ 0, %.split.fold.split419 ]
+  %.lcssa328.ph = phi i64 [ 64, %.split.fold.split ], [ 64, %.split.fold.split416 ], [ 32, %bb.a ], [ 32, %.split.fold.split419 ]
+  %.lcssa323.ph = phi i8 [ 0, %.split.fold.split ], [ 1, %.split.fold.split416 ], [ 0, %bb.a ], [ 1, %.split.fold.split419 ]
+  %.sroa.576.0.lcssa.ph = phi i64 [ 0, %.split.fold.split ], [ 2, %.split.fold.split416 ], [ 0, %bb.a ], [ 2, %.split.fold.split419 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6510
   call void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef 1, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1), !noalias !6510

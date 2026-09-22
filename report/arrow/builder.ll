@@ -205,7 +205,6 @@ begin_hunk_0
 @_ZTVN5arrow8ListTypeE = external unnamed_addr constant { [12 x ptr] }, align 8
 @_ZTSSt19_Sp_make_shared_tag = linkonce_odr constant [24 x i8] c"St19_Sp_make_shared_tag\00", comdat, align 1
 @_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = linkonce_odr constant [16 x i8] zeroinitializer, comdat, align 8
-@_ZN5arrow8bit_utilL17kPrecedingBitmaskE = internal unnamed_addr constant [8 x i8] c"\00\01\03\07\0F\1F?\7F", align 1
 @_ZTVN5arrow16LargeListBuilderE = linkonce_odr unnamed_addr constant { [19 x ptr] } { [19 x ptr] [ptr null, ptr @_ZTIN5arrow16LargeListBuilderE, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEED2Ev, ptr @_ZN5arrow16LargeListBuilderD0Ev, ptr @_ZNK5arrow12ArrayBuilder6lengthEv, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE6ResizeEl, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE5ResetEv, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE10AppendNullEv, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE11AppendNullsEl, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE16AppendEmptyValueEv, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE17AppendEmptyValuesEl, ptr @_ZN5arrow12ArrayBuilder12AppendScalarERKNS_6ScalarEl, ptr @_ZN5arrow12ArrayBuilder13AppendScalarsERKSt6vectorISt10shared_ptrINS_6ScalarEESaIS4_EE, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE16AppendArraySliceERKNS_9ArraySpanEll, ptr @_ZN5arrow15BaseListBuilderINS_13LargeListTypeEE14FinishInternalEPSt10shared_ptrINS_9ArrayDataEE, ptr @_ZNK5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE4typeEv, ptr @_ZN5arrow15BaseListBuilderINS_13LargeListTypeEE12AppendValuesEPKlS4_lPKh, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE27UnsafeAppendEmptyDimensionsEl, ptr @_ZN5arrow24VarLengthListLikeBuilderINS_13LargeListTypeEE22UnsafeAppendDimensionsEll] }, comdat, align 8
 @_ZTIN5arrow16LargeListBuilderE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5arrow16LargeListBuilderE, ptr @_ZTIN5arrow15BaseListBuilderINS_13LargeListTypeEEE }, comdat, align 8
 @_ZTSN5arrow16LargeListBuilderE = linkonce_odr constant [27 x i8] c"N5arrow16LargeListBuilderE\00", comdat, align 1
@@ -608,9 +607,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !217
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !217
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
