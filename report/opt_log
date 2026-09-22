@@ -1,0 +1,50 @@
+node/sqlite3.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/sqlite3.bc?download=true
+sqlite/sqlite3.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sqlite/original/sqlite3.bc?download=true
+wasmi-rs/wasmi-f4c56b525af24363.wasmi.a5f598a5e97a06b2-cgu.03.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wasmi-rs/original/wasmi-f4c56b525af24363.wasmi.a5f598a5e97a06b2-cgu.03.bc?download=true
+
+Reproduce first opt error with backtrace: node/sqlite3.bc: failed to run opt
+Command: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/node/original/sqlite3.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/node-s-sqlite3.bc
+Exit code: -6
+Stderr:
+opt: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-project/llvm/lib/Analysis/ValueTracking.cpp:2559: void computeKnownBits(const Value *, const APInt &, KnownBits &, const SimplifyQuery &, unsigned int): Assertion `V && "No Value?"' failed.
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and instructions to reproduce the bug.
+Stack dump:
+0.	Program arguments: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/node/original/sqlite3.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/node-s-sqlite3.bc
+1.	Running pass "function<eager-inv>(drop-unnecessary-assumes,float2int,lower-constant-intrinsics,chr,loop(loop-rotate<header-duplication;no-prepare-for-lto;check-exit-count>,loop-deletion,loop-interchange),loop-distribute,inject-tli-mappings,loop-vectorize<no-interleave-forced-only;no-vectorize-forced-only;>,drop-unnecessary-assumes<drop-deref>,infer-alignment,loop-load-elim,instcombine<max-iterations=1;no-verify-fixpoint>,simplifycfg<bonus-inst-threshold=1;forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;switch-to-lookup;no-keep-loops;hoist-common-insts;no-hoist-loads-stores-with-cond-faulting;sink-common-insts;speculate-blocks;simplify-cond-branch;no-speculate-unpredictables>,slp-vectorizer,vector-combine,instcombine<max-iterations=1;no-verify-fixpoint>,loop-unroll<O3>,transform-warning,sroa<preserve-cfg;aggregate-to-vector>,infer-alignment,instcombine<max-iterations=1;no-verify-fixpoint>,loop-mssa(licm<allowspeculation>),alignment-from-assumptions,loop-sink,instsimplify,div-rem-pairs,mergeicmps,expand-memcmp,tailcallelim,simplifycfg<bonus-inst-threshold=1;no-forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;no-switch-to-lookup;keep-loops;no-hoist-common-insts;hoist-loads-stores-with-cond-faulting;no-sink-common-insts;speculate-blocks;simplify-cond-branch;speculate-unpredictables>)" on module "/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/node/original/sqlite3.bc"
+2.	Running pass "slp-vectorizer" on function "unistrFunc"
+ #0 0x000055555596257b llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x40e57b)
+ #1 0x000055555595f351 llvm::sys::RunSignalHandlers() (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x40b351)
+ #2 0x00005555559632db SignalHandler(int, siginfo_t*, void*) Signals.cpp:0:0
+ #3 0x00007ffff7a3a330 (/lib/x86_64-linux-gnu/libc.so.6+0x45330)
+ #4 0x00007ffff7a93c0c pthread_kill (/lib/x86_64-linux-gnu/libc.so.6+0x9ec0c)
+ #5 0x00007ffff7a3a27e raise (/lib/x86_64-linux-gnu/libc.so.6+0x4527e)
+ #6 0x00007ffff7a1d8ff abort (/lib/x86_64-linux-gnu/libc.so.6+0x288ff)
+ #7 0x00007ffff7a1d81b (/lib/x86_64-linux-gnu/libc.so.6+0x2881b)
+ #8 0x00007ffff7a30517 (/lib/x86_64-linux-gnu/libc.so.6+0x3b517)
+ #9 0x0000555557ccc316 computeKnownBits(llvm::Value const*, llvm::APInt const&, llvm::KnownBits&, llvm::SimplifyQuery const&, unsigned int) ValueTracking.cpp:0:0
+#10 0x0000555557cf5ff1 computeKnownBitsAddSub(bool, llvm::Value const*, llvm::Value const*, bool, bool, llvm::APInt const&, llvm::KnownBits&, llvm::KnownBits&, llvm::SimplifyQuery const&, unsigned int) ValueTracking.cpp:0:0
+#11 0x0000555557cf1db0 computeKnownBitsFromOperator(llvm::Operator const*, llvm::APInt const&, llvm::KnownBits&, llvm::SimplifyQuery const&, unsigned int) ValueTracking.cpp:0:0
+#12 0x0000555557ccbd02 computeKnownBits(llvm::Value const*, llvm::APInt const&, llvm::KnownBits&, llvm::SimplifyQuery const&, unsigned int) ValueTracking.cpp:0:0
+#13 0x0000555557ccb5cf llvm::computeKnownBits(llvm::Value const*, llvm::KnownBits&, llvm::SimplifyQuery const&, unsigned int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x27775cf)
+#14 0x0000555557ccc665 llvm::computeKnownBits(llvm::Value const*, llvm::DataLayout const&, llvm::AssumptionCache*, llvm::Instruction const*, llvm::DominatorTree const*, bool, unsigned int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2778665)
+#15 0x00005555568174ba llvm::slpvectorizer::isBoolBitmaskRdx(llvm::RecurKind, llvm::SmallDenseMap<llvm::Value*, llvm::slpvectorizer::NarrowedLeafInfo, 4u, llvm::DenseMapInfo<llvm::Value*, void>, llvm::detail::DenseMapPair<llvm::Value*, llvm::slpvectorizer::NarrowedLeafInfo>> const&, llvm::DataLayout const&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x12c34ba)
+#16 0x000055555662027a (anonymous namespace)::HorizontalReduction::tryToReduce(llvm::slpvectorizer::BoUpSLP&, llvm::DataLayout const&, llvm::TargetTransformInfo*, llvm::TargetLibraryInfo const&, llvm::AssumptionCache*, llvm::DominatorTree&, llvm::LoopInfo&, bool) SLPVectorizer.cpp:0:0
+#17 0x00005555565c4d32 llvm::SLPVectorizerPass::vectorizeHorReduction(llvm::PHINode*, llvm::Instruction*, llvm::BasicBlock*, llvm::slpvectorizer::BoUpSLP&, llvm::SmallVectorImpl<llvm::WeakTrackingVH>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x1070d32)
+#18 0x0000555556646cf8 bool llvm::SLPVectorizerPass::vectorizeCmpInsts<std::reverse_iterator<llvm::CmpInst* const*>>(llvm::iterator_range<std::reverse_iterator<llvm::CmpInst* const*>>, llvm::BasicBlock*, llvm::slpvectorizer::BoUpSLP&, llvm::SmallSetVector<llvm::Instruction*, 8u>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x10f2cf8)
+#19 0x00005555565c8dbe llvm::SLPVectorizerPass::vectorizeChainsInBlock(llvm::BasicBlock*, llvm::slpvectorizer::BoUpSLP&)::$_4::operator()(bool) const SLPVectorizer.cpp:0:0
+#20 0x00005555565b9ada llvm::SLPVectorizerPass::vectorizeChainsInBlock(llvm::BasicBlock*, llvm::slpvectorizer::BoUpSLP&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x1065ada)
+#21 0x00005555565b6608 llvm::SLPVectorizerPass::runImpl(llvm::Function&, llvm::ScalarEvolution*, llvm::TargetTransformInfo*, llvm::TargetLibraryInfo*, llvm::AAResults*, llvm::LoopInfo*, llvm::DominatorTree*, llvm::AssumptionCache*, llvm::DemandedBits*, llvm::OptimizationRemarkEmitter*) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x1062608)
+#22 0x00005555565b5ee5 llvm::SLPVectorizerPass::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x1061ee5)
+#23 0x00005555582d8b43 llvm::PassManager<llvm::Function, llvm::AnalysisManager<llvm::Function>>::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d84b43)
+#24 0x00005555582dc33d llvm::ModuleToFunctionPassAdaptor::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d8833d)
+#25 0x00005555582d7ebd llvm::PassManager<llvm::Module, llvm::AnalysisManager<llvm::Module>>::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d83ebd)
+#26 0x0000555555a0ec13 llvm::runPassPipeline(llvm::StringRef, llvm::Module&, llvm::TargetMachine*, llvm::TargetLibraryInfoImpl*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::StringRef, llvm::ArrayRef<llvm::PassPlugin>, llvm::ArrayRef<std::function<void (llvm::PassBuilder&)>>, llvm::opt_tool::OutputKind, llvm::opt_tool::VerifierKind, bool, bool, bool, bool, bool, bool, bool, bool) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4bac13)
+#27 0x0000555555a054d5 optMain (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4b14d5)
+#28 0x00005555559486e3 main (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3f46e3)
+#29 0x00007ffff7a1f1ca (/lib/x86_64-linux-gnu/libc.so.6+0x2a1ca)
+#30 0x00007ffff7a1f28b __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28b)
+#31 0x00005555559485d5 _start (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3f45d5)
+
