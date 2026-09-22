@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %.critedge
 bb.z:                                             ; preds = %.lr.ph64, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread
   %.06862 = phi i64 [ 0, %.lr.ph64 ], [ %.3, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread ] ; 7 uses
   %.06961 = phi i32 [ 0, %.lr.ph64 ], [ %.372, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread ] ; 6 uses
-  %.07360 = phi i1 [ false, %.lr.ph64 ], [ %.376, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread ] ; 7 uses
+  %.07359 = phi i8 [ 0, %.lr.ph64 ], [ %.376, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread ] ; 7 uses
   %.07759 = phi i1 [ false, %.lr.ph64 ], [ %.380, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread ] ; 5 uses
   %.sroa.011.058 = phi ptr [ %i.ci, %.lr.ph64 ], [ %i.is, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread ] ; 13 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.011.058, i64 8 ; 2 uses
@@ -508,7 +508,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148: ; preds = %_Z
   br label %.critedge118
 
 .critedge118:                                     ; preds = %._crit_edge56, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148
-  %i.hn = phi i1 [ %i.he, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148 ], [ false, %._crit_edge56 ] ; 3 uses
+  %i.hn = phi i1 [ %i.he, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148 ], [ false, %._crit_edge56 ] ; 2 uses
+  %11 = zext i1 %i.hn to i8                       ; 2 uses
   %i.ho = icmp ule i64 %i.fd, %.06862
   %or.cond120.not = select i1 %.07759, i1 %i.ho, i1 false
   br i1 %or.cond120.not, label %bb.aq, label %bb.as
@@ -517,13 +518,13 @@ bb.aq:                                            ; preds = %.critedge118
   %i.hp = icmp eq i64 %i.fd, %.06862              ; 2 uses
   %or.cond = and i1 %i.hp, %i.hn
   %or.cond.not = xor i1 %or.cond, true
-  %or.cond3 = select i1 %or.cond.not, i1 true, i1 %.07360
+  %12 = trunc nuw i8 %.07359 to i1
+  %or.cond3 = select i1 %or.cond.not, i1 true, i1 %12
   br i1 %or.cond3, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
-  %11 = xor i1 %.07360, %i.hn
-  %.not25 = xor i1 %11, true
-  %or.cond123.not = select i1 %i.hp, i1 %.not25, i1 false
+  %13 = icmp eq i8 %.07359, %11
+  %or.cond123.not = select i1 %i.hp, i1 %13, i1 false
   %i.hq = icmp slt i32 %i.fg, %.06961
   %or.cond124 = select i1 %or.cond123.not, i1 %i.hq, i1 false
   br i1 %or.cond124, label %bb.as, label %_ZN8hf_cache7hf_fileaSERKS0_.exit
@@ -593,7 +594,7 @@ bb.au:                                            ; preds = %.noexc153, %.noexc1
   br label %bb.ax
 
 _ZN8hf_cache7hf_fileaSERKS0_.exit:                ; preds = %.noexc153, %bb.ar
-  %.174 = phi i1 [ %.07360, %bb.ar ], [ %i.hn, %.noexc153 ]
+  %.174 = phi i8 [ %.07359, %bb.ar ], [ %11, %.noexc153 ]
   %.170 = phi i32 [ %.06961, %bb.ar ], [ %i.fg, %.noexc153 ]
   %.1 = phi i64 [ %.06862, %bb.ar ], [ %i.fd, %.noexc153 ]
   %i.ib = load ptr, ptr %8, align 8, !tbaa !59    ; 2 uses
@@ -616,7 +617,7 @@ bb.av:                                            ; preds = %.loopexit, %_ZNSt7_
   %i.if = phi ptr [ %.pre67, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160 ], [ %i.eg, %.loopexit ] ; 2 uses
   %i.ig = phi ptr [ %.pre66.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160 ], [ %i.ej, %.loopexit ] ; 3 uses
   %.279 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160 ], [ %.07759, %.loopexit ]
-  %.275 = phi i1 [ %.174, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160 ], [ %.07360, %.loopexit ]
+  %.275 = phi i8 [ %.174, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160 ], [ %.07359, %.loopexit ]
   %.271 = phi i32 [ %.170, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160 ], [ %.06961, %.loopexit ]
   %.2 = phi i64 [ %.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160 ], [ %.06862, %.loopexit ]
   %.not4.i.i.i161 = icmp eq ptr %i.ig, %i.if
@@ -663,7 +664,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
 
 _Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit.thread: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %bb.z, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit172
   %.380 = phi i1 [ %.279, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit172 ], [ %.07759, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit ], [ %.07759, %bb.z ], [ %.07759, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ]
-  %.376 = phi i1 [ %.275, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit172 ], [ %.07360, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit ], [ %.07360, %bb.z ], [ %.07360, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ]
+  %.376 = phi i8 [ %.275, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit172 ], [ %.07359, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit ], [ %.07359, %bb.z ], [ %.07359, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ]
   %.372 = phi i32 [ %.271, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit172 ], [ %.06961, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit ], [ %.06961, %bb.z ], [ %.06961, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ]
   %.3 = phi i64 [ %.2, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit172 ], [ %.06862, %_Z16string_ends_withSt17basic_string_viewIcSt11char_traitsIcEES2_.exit ], [ %.06862, %bb.z ], [ %.06862, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ]
   %i.is = getelementptr inbounds nuw i8, ptr %.sroa.011.058, i64 192 ; 2 uses

@@ -202,13 +202,11 @@ bb.c:                                             ; preds = %bb.a
   %i.j = trunc i64 %i.i to i16
   %i.k = sext i16 %i.j to i32
   %i.l = srem i32 %i.k, %i.g
-  %1 = zext i32 %i.l to i64
-  %sext = shl i64 %1, 48
-  %2 = ashr exact i64 %sext, 48
+  %1 = sext i32 %i.l to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c
-  %.0 = phi i64 [ %2, %bb.c ], [ 0, %bb.a ]
+  %.0 = phi i64 [ %1, %bb.c ], [ 0, %bb.a ]
   ret i64 %.0
 }
 
@@ -611,10 +609,8 @@ bb.a:
   %i.f = trunc i64 %i.e to i32
   %i.g = sext i16 %i.c to i32
   %i.h = ashr i32 %i.g, %i.f
-  %1 = zext i32 %i.h to i64
-  %sext = shl i64 %1, 48
-  %2 = ashr exact i64 %sext, 48
-  ret i64 %2
+  %1 = sext i32 %i.h to i64
+  ret i64 %1
 }
 
 ; Function Attrs: nounwind uwtable

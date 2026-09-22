@@ -202,8 +202,8 @@ bb.a:
   %61 = alloca %struct.cbs_st, align 8            ; 7 uses
   %62 = alloca %struct.cbs_st, align 8            ; 6 uses
   %i.x = alloca i16, align 2                      ; 4 uses
-  %63 = alloca %struct.cbs_st, align 8            ; 8 uses
-  %64 = alloca %struct.cbs_st, align 8            ; 6 uses
+  %63 = alloca %struct.cbs_st, align 8            ; 9 uses
+  %64 = alloca %struct.cbs_st, align 8            ; 7 uses
   %65 = alloca %struct.cbs_st, align 8            ; 6 uses
   %i.y = alloca i16, align 2                      ; 6 uses
   %66 = alloca %struct.cbs_st, align 8            ; 8 uses
@@ -606,7 +606,12 @@ bb.bt:                                            ; preds = %.preheader.i.i
 
 bb.bu:                                            ; preds = %.preheader.i.i
   %.not.i.i.i.i.i.i = icmp eq i64 %.sroa.554.3.ph.i.i, %.sroa.5.3.ph.i.i
-  br i1 %.not.i.i.i.i.i.i, label %bb.bv, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread42.i
+  br i1 %.not.i.i.i.i.i.i, label %bb.bv, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread44.i
+
+_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread44.i: ; preds = %bb.bu
+  call void @llvm.lifetime.end.p0(ptr nonnull %64) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %63) #13
+  br label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i
 
 bb.bv:                                            ; preds = %bb.bu
   %.not.not.i.i.i.i.i.i.i.i.i.i = icmp samesign eq i64 %.sroa.554.3.ph.i.i, 0
@@ -615,18 +620,20 @@ bb.bv:                                            ; preds = %bb.bu
 _ZN4bssl8internalneENS_4SpanIKhEES3_.exit.i.i:    ; preds = %bb.bv
   %bcmp.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr %.sroa.053.3.ph.i.i, ptr %.sroa.0.3.ph.i.i, i64 %.sroa.554.3.ph.i.i)
   %.not9.i.i.i.i.i.i.i.i.not.i.i = icmp eq i32 %bcmp.i.i.i.i.i.i.i.i.i.i, 0
-  br i1 %.not9.i.i.i.i.i.i.i.i.not.i.i, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.i, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread42.i
+  br label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.i
 
-_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread42.i: ; preds = %bb.bt, %_ZN4bssl8internalneENS_4SpanIKhEES3_.exit.i.i, %bb.bu, %bb.bs, %.loopexit.i.i.a
+_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread42.i: ; preds = %bb.bt, %bb.bs, %.loopexit.i.i.a
   call void @llvm.lifetime.end.p0(ptr nonnull %64) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %63) #13
   br label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i
 
 _ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.i: ; preds = %_ZN4bssl8internalneENS_4SpanIKhEES3_.exit.i.i, %bb.bv
+  %.0.i.i.i.i.i.i = phi i1 [ true, %bb.bv ], [ %.not9.i.i.i.i.i.i.i.i.not.i.i, %_ZN4bssl8internalneENS_4SpanIKhEES3_.exit.i.i ]
   %.not48.i.i = icmp eq i8 %.431.ph.i.i, %.437.ph.i.i
+  %or.cond.i.i = select i1 %.0.i.i.i.i.i.i, i1 %.not48.i.i, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %64) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %63) #13
-  br i1 %.not48.i.i, label %bb.bw, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i
+  br i1 %or.cond.i.i, label %bb.bw, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i
 
 bb.bw:                                            ; preds = %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.i
   %i.im = load i32, ptr %i.ad, align 8
@@ -634,7 +641,7 @@ bb.bw:                                            ; preds = %_ZN4bsslL28is_proba
   store i32 %i.in, ptr %i.ad, align 8
   br label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i
 
-_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i: ; preds = %bb.bw, %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.i, %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread42.i, %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i.i, %bb.bd
+_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i: ; preds = %bb.bw, %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.i, %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread42.i, %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread44.i, %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i.i, %bb.bd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa) #13
   store i8 50, ptr %i.aa, align 1, !tbaa !175
   %i.io = load ptr, ptr %0, align 8, !tbaa !145   ; 3 uses

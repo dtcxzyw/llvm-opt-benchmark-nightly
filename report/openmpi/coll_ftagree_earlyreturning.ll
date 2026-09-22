@@ -204,16 +204,14 @@ bb.r:                                             ; preds = %._crit_edge
   br i1 %.not.i, label %era_collect_passed_agreements.exit, label %bb.s
 
 bb.s:                                             ; preds = %.loopexit
-  %2 = zext i16 %i.en to i32
-  %3 = zext i16 %i.el to i32
+  %2 = zext i16 %i.en to i64
   %.sroa.5.0.insert.insert.i = and i64 %i.eo, -65536
+  %3 = zext i16 %i.el to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.y, %bb.s
-  %.027.i = phi i32 [ %3, %bb.s ], [ %5, %bb.y ]  ; 3 uses
-  %4 = and i32 %.027.i, 65535
-  %.sroa.0.0.insert.ext.i = zext nneg i32 %4 to i64
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.5.0.insert.insert.i, %.sroa.0.0.insert.ext.i ; 2 uses
+  %indvars.iv.i = phi i64 [ %3, %bb.s ], [ %indvars.iv.next.i, %bb.y ] ; 3 uses
+  %.sroa.0.0.insert.insert.i = or i64 %indvars.iv.i, %.sroa.5.0.insert.insert.i ; 2 uses
   %i.ep = call i32 @opal_hash_table_get_value_uint64(ptr noundef nonnull @era_passed_agreements, i64 noundef %.sroa.0.0.insert.insert.i, ptr noundef nonnull %i.a) #20
   %i.eq = icmp eq i32 %i.ep, 0
   br i1 %i.eq, label %bb.u, label %bb.y
@@ -265,8 +263,8 @@ opal_obj_run_destructors.exit.i:                  ; preds = %.lr.ph.i.i, %bb.x
   br label %bb.y
 
 bb.y:                                             ; preds = %opal_obj_run_destructors.exit.i, %opal_thread_add_fetch_32.exit.i, %bb.t
-  %5 = add nuw nsw i32 %.027.i, 1
-  %exitcond.not.i = icmp eq i32 %.027.i, %2
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %exitcond.not.i = icmp eq i64 %indvars.iv.i, %2
   br i1 %exitcond.not.i, label %era_collect_passed_agreements.exit, label %bb.t, !llvm.loop !322
 
 era_collect_passed_agreements.exit:               ; preds = %bb.y, %.loopexit

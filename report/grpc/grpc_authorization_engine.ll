@@ -202,17 +202,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %b
   br i1 %.not.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.thread, label %.lr.ph
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.thread: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit, %bb.a, %bb.c
-  %.not43 = phi i1 [ true, %bb.c ], [ false, %bb.a ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ]
+  %.2 = phi i8 [ 1, %bb.c ], [ 0, %bb.a ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ]
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.p = load i32, ptr %i.o, align 8, !tbaa !42
   %i.q = icmp eq i32 %i.p, 0
-  %not. = xor i1 %.not43, %i.q                    ; 2 uses
-  %i.r = zext i1 %not. to i32
+  %4 = zext i1 %i.q to i8
+  %5 = icmp ne i8 %.2, %4                         ; 2 uses
+  %i.r = zext i1 %5 to i32
   store i32 %i.r, ptr %0, align 8, !tbaa !115
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 80
   %.val21 = load i32, ptr %i.s, align 8, !tbaa !116 ; 2 uses
   %i.t = icmp eq i32 %.val21, 3
-  %or.cond.v = select i1 %not., i32 1, i32 2
+  %or.cond.v = select i1 %5, i32 1, i32 2
   %or.cond = icmp eq i32 %.val21, %or.cond.v
   %or.cond39 = select i1 %i.t, i1 true, i1 %or.cond
   br i1 %or.cond39, label %_ZN9grpc_core12_GLOBAL__N_19ShouldLogERKNS_19AuthorizationEngine8DecisionERKNS_4Rbac14AuditConditionE.exit.thread, label %.loopexit

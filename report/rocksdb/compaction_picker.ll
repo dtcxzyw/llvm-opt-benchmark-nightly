@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph417, %.thread
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129
   %i.cj = phi ptr [ %i.fi, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129 ], [ %i.cc, %.lr.ph.preheader ]
-  %.1393 = phi i8 [ %.3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129 ], [ %.082415, %.lr.ph.preheader ] ; 6 uses
+  %.1393 = phi i8 [ %.3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129 ], [ %.082415, %.lr.ph.preheader ] ; 5 uses
   %.099392 = phi i64 [ %i.fg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129 ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %.0311391 = phi i32 [ %.1312, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129 ], [ %i.ch, %.lr.ph.preheader ] ; 5 uses
   %.0314390 = phi i32 [ %.1315, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129 ], [ -1, %.lr.ph.preheader ] ; 5 uses
@@ -462,7 +462,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i226: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit129: ; preds = %.lr.ph.i.i.i.i, %.preheader424, %bb.e, %..loopexit_crit_edge21.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit, %.split.i227, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i226, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit
   %.1315 = phi i32 [ %.sroa.speculated272, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ], [ %.sroa.speculated272, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit ], [ %.sroa.speculated272, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i226 ], [ %.sroa.speculated272, %.split.i227 ], [ %.0314390, %..loopexit_crit_edge21.i.i.i.i ], [ %.0314390, %.preheader424 ], [ %.0314390, %bb.e ], [ %.0314390, %.lr.ph.i.i.i.i ] ; 4 uses
   %.1312 = phi i32 [ %.sroa.speculated276, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ], [ %.sroa.speculated276, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit ], [ %.sroa.speculated276, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i226 ], [ %.sroa.speculated276, %.split.i227 ], [ %.0311391, %..loopexit_crit_edge21.i.i.i.i ], [ %.0311391, %.preheader424 ], [ %.0311391, %bb.e ], [ %.0311391, %.lr.ph.i.i.i.i ] ; 7 uses
-  %.3 = phi i8 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ], [ %.1393, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i226 ], [ 1, %.split.i227 ], [ %.1393, %..loopexit_crit_edge21.i.i.i.i ], [ %.1393, %.preheader424 ], [ %.1393, %bb.e ], [ %.1393, %.lr.ph.i.i.i.i ] ; 3 uses
+  %.3 = phi i8 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ], [ 1, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i226 ], [ 1, %.split.i227 ], [ %.1393, %..loopexit_crit_edge21.i.i.i.i ], [ %.1393, %.preheader424 ], [ %.1393, %bb.e ], [ %.1393, %.lr.ph.i.i.i.i ] ; 3 uses
   %i.fg = add nuw i64 %.099392, 1                 ; 2 uses
   %i.fh = load ptr, ptr %i.ca, align 8, !tbaa !410
   %i.fi = load ptr, ptr %i.bz, align 8, !tbaa !411 ; 2 uses

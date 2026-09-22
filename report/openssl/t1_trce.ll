@@ -204,16 +204,16 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = zext i8 %i.ac to i32
   %i.ae = shl nuw nsw i32 %i.ad, 8
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.ag = load i8, ptr %i.af, align 1, !tbaa !84  ; 2 uses
+  %i.ag = load i8, ptr %i.af, align 1, !tbaa !84
   %i.ah = zext i8 %i.ag to i32
-  %i.ai = or disjoint i32 %i.ae, %i.ah            ; 2 uses
+  %i.ai = or disjoint i32 %i.ae, %i.ah            ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ak = tail call i32 @BIO_indent(ptr noundef %0, i32 noundef 6, i32 noundef 80) #5 ; 0 uses
   %i.al = icmp samesign ult i32 %i.ai, 4
   br i1 %i.al, label %switch.lookup, label %do_ssl_trace_str.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %trunc = zext i8 %i.ag to i64
+  %trunc = zext nneg i32 %i.ai to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ssl_print_extensions, i64 %trunc
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %switch.load, i64 8
@@ -616,15 +616,15 @@ bb.m:                                             ; preds = %bb.l
   %i.bf = zext i8 %i.be to i32
   %i.bg = shl nuw nsw i32 %i.bf, 8
   %i.bh = getelementptr inbounds nuw i8, ptr %.01925.us.i.i, i64 1
-  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !84  ; 2 uses
+  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !84
   %i.bj = zext i8 %i.bi to i32
-  %i.bk = or disjoint i32 %i.bg, %i.bj            ; 2 uses
+  %i.bk = or disjoint i32 %i.bg, %i.bj            ; 3 uses
   %i.bl = tail call i32 @BIO_indent(ptr noundef %0, i32 noundef range(i32 6, 13) %i.u, i32 noundef 80) #5 ; 0 uses
   %i.bm = icmp samesign ult i32 %i.bk, 4
   br i1 %i.bm, label %switch.lookup, label %do_ssl_trace_str.exit.us.i.i
 
 switch.lookup:                                    ; preds = %.lr.ph.split.us.i.i
-  %trunc635.i = zext i8 %i.bi to i64
+  %trunc635.i = zext nneg i32 %i.bk to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ssl_print_extensions, i64 %trunc635.i
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %switch.load, i64 8

@@ -204,18 +204,16 @@ get_cabac.exit37.i:                               ; preds = %bb.dn, %get_cabac.e
 decode_cabac_b_mb_sub_type.exit:                  ; preds = %get_cabac.exit.i, %get_cabac.exit27.i, %get_cabac.exit33.i, %get_cabac.exit37.i
   %i.azo = phi i32 [ %i.avl, %get_cabac.exit33.i ], [ %i.azl, %get_cabac.exit37.i ], [ %i.apu, %get_cabac.exit27.i ], [ %i.aly, %get_cabac.exit.i ]
   %i.azp = phi i32 [ %i.aun, %get_cabac.exit33.i ], [ %i.ayn, %get_cabac.exit37.i ], [ %i.aow, %get_cabac.exit27.i ], [ %i.ala, %get_cabac.exit.i ]
-  %.020.i = phi i32 [ %i.avn, %get_cabac.exit33.i ], [ %i.azn, %get_cabac.exit37.i ], [ %i.apw, %get_cabac.exit27.i ], [ 0, %get_cabac.exit.i ] ; 2 uses
+  %.020.i = phi i32 [ %i.avn, %get_cabac.exit33.i ], [ %i.azn, %get_cabac.exit37.i ], [ %i.apw, %get_cabac.exit27.i ], [ 0, %get_cabac.exit.i ]
   %i.azq = getelementptr inbounds nuw [2 x i8], ptr %i.ajs, i64 %indvars.iv1663
   %i.azr = zext nneg i32 %.020.i to i64
-  %i.azs = getelementptr inbounds nuw [4 x i8], ptr @ff_h264_b_sub_mb_type_info, i64 %i.azr
+  %i.azs = getelementptr inbounds nuw [4 x i8], ptr @ff_h264_b_sub_mb_type_info, i64 %i.azr ; 2 uses
   %i.azt = getelementptr inbounds nuw i8, ptr %i.azs, i64 2
   %i.azu = load i8, ptr %i.azt, align 2, !tbaa !170
   %i.azv = zext i8 %i.azu to i32
   %i.azw = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv1663
   store i32 %i.azv, ptr %i.azw, align 4, !tbaa !93
-  %2 = zext nneg i32 %.020.i to i64
-  %3 = getelementptr inbounds nuw [4 x i8], ptr @ff_h264_b_sub_mb_type_info, i64 %2
-  %i.azx = load i16, ptr %3, align 4, !tbaa !179
+  %i.azx = load i16, ptr %i.azs, align 4, !tbaa !179
   store i16 %i.azx, ptr %i.azq, align 2, !tbaa !96
   %indvars.iv.next1664 = add nuw nsw i64 %indvars.iv1663, 1 ; 2 uses
   %exitcond1666.not = icmp eq i64 %indvars.iv.next1664, 4
@@ -462,16 +460,15 @@ get_cabac.exit11.i:                               ; preds = %bb.du, %bb.dt
 decode_cabac_p_mb_sub_type.exit:                  ; preds = %get_cabac.exit.i1215, %get_cabac.exit9.i, %get_cabac.exit11.i
   %i.bgp = phi i32 [ %i.bcq, %get_cabac.exit.i1215 ], [ %i.bgm, %get_cabac.exit11.i ], [ %i.beo, %get_cabac.exit9.i ]
   %i.bgq = phi i32 [ %i.bbs, %get_cabac.exit.i1215 ], [ %i.bfo, %get_cabac.exit11.i ], [ %i.bdq, %get_cabac.exit9.i ]
-  %.0.i1217 = phi i64 [ 0, %get_cabac.exit.i1215 ], [ %i.bgo, %get_cabac.exit11.i ], [ 1, %get_cabac.exit9.i ] ; 2 uses
+  %.0.i1217 = phi i64 [ 0, %get_cabac.exit.i1215 ], [ %i.bgo, %get_cabac.exit11.i ], [ 1, %get_cabac.exit9.i ]
   %i.bgr = getelementptr inbounds nuw [2 x i8], ptr %i.ajs, i64 %indvars.iv1660
-  %i.bgs = getelementptr inbounds nuw [4 x i8], ptr @ff_h264_p_sub_mb_type_info, i64 %.0.i1217
+  %i.bgs = getelementptr inbounds nuw [4 x i8], ptr @ff_h264_p_sub_mb_type_info, i64 %.0.i1217 ; 2 uses
   %i.bgt = getelementptr inbounds nuw i8, ptr %i.bgs, i64 2
   %i.bgu = load i8, ptr %i.bgt, align 2, !tbaa !170
   %i.bgv = zext i8 %i.bgu to i32
   %i.bgw = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv1660
   store i32 %i.bgv, ptr %i.bgw, align 4, !tbaa !93
-  %4 = getelementptr inbounds nuw [4 x i8], ptr @ff_h264_p_sub_mb_type_info, i64 %.0.i1217
-  %i.bgx = load i16, ptr %4, align 4, !tbaa !179
+  %i.bgx = load i16, ptr %i.bgs, align 4, !tbaa !179
   store i16 %i.bgx, ptr %i.bgr, align 2, !tbaa !96
   %indvars.iv.next1661 = add nuw nsw i64 %indvars.iv1660, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next1661, 4

@@ -204,7 +204,6 @@ bb.a:
   %i.gg = add nuw nsw i128 %i.ds, %i.gf
   %i.gh = add nuw nsw i128 %i.gg, %i.ge           ; 2 uses
   %i.gi = lshr i128 %i.gh, 64
-  %3 = trunc nuw nsw i128 %i.gi to i64
   %i.gj = and i128 %i.fe, 18446744073709551615
   %i.gk = trunc i128 %i.fe to i64
   %i.gl = mul i64 %i.gk, 4294967297
@@ -266,8 +265,9 @@ bb.a:
   %i.io = add nuw nsw i128 %i.im, %i.in
   %i.ip = add nuw nsw i128 %i.io, %i.il           ; 2 uses
   %i.iq = lshr i128 %i.ip, 64
-  %i.ir = trunc nuw nsw i128 %i.iq to i64
-  %i.is = add nuw nsw i64 %i.ir, %3
+  %3 = trunc nuw nsw i128 %i.iq to i64
+  %i.ir = trunc nuw nsw i128 %i.gi to i64
+  %i.is = add nuw nsw i64 %3, %i.ir
   %i.it = zext i64 %i.d to i128                   ; 6 uses
   %i.iu = mul nuw i128 %i.o, %i.it                ; 2 uses
   %i.iv = lshr i128 %i.iu, 64
@@ -337,7 +337,6 @@ bb.a:
   %i.lh = add nuw nsw i128 %i.lf, %i.lg
   %i.li = add nuw nsw i128 %i.lh, %i.le           ; 2 uses
   %i.lj = lshr i128 %i.li, 64
-  %4 = trunc nuw nsw i128 %i.lj to i64
   %i.lk = and i128 %i.ke, 18446744073709551615
   %i.ll = trunc i128 %i.ke to i64
   %i.lm = mul i64 %i.ll, 4294967297
@@ -399,8 +398,9 @@ bb.a:
   %i.np = add nuw nsw i128 %i.nn, %i.no
   %i.nq = add nuw nsw i128 %i.np, %i.nm           ; 2 uses
   %i.nr = lshr i128 %i.nq, 64
-  %i.ns = trunc nuw nsw i128 %i.nr to i64
-  %i.nt = add nuw nsw i64 %i.ns, %4
+  %4 = trunc nuw nsw i128 %i.nr to i64
+  %i.ns = trunc nuw nsw i128 %i.lj to i64
+  %i.nt = add nuw nsw i64 %4, %i.ns
   %i.nu = zext i64 %i.f to i128                   ; 6 uses
   %i.nv = mul nuw i128 %i.o, %i.nu                ; 2 uses
   %i.nw = lshr i128 %i.nv, 64
@@ -470,7 +470,6 @@ bb.a:
   %i.qi = add nuw nsw i128 %i.qg, %i.qh
   %i.qj = add nuw nsw i128 %i.qi, %i.qf           ; 2 uses
   %i.qk = lshr i128 %i.qj, 64
-  %5 = trunc nuw nsw i128 %i.qk to i64
   %i.ql = and i128 %i.pf, 18446744073709551615
   %i.qm = trunc i128 %i.pf to i64
   %i.qn = mul i64 %i.qm, 4294967297
@@ -532,8 +531,9 @@ bb.a:
   %i.sq = add nuw nsw i128 %i.so, %i.sp
   %i.sr = add nuw nsw i128 %i.sq, %i.sn           ; 2 uses
   %i.ss = lshr i128 %i.sr, 64
-  %i.st = trunc nuw nsw i128 %i.ss to i64
-  %i.su = add nuw nsw i64 %i.st, %5
+  %5 = trunc nuw nsw i128 %i.ss to i64
+  %i.st = trunc nuw nsw i128 %i.qk to i64
+  %i.su = add nuw nsw i64 %5, %i.st
   %i.sv = zext i64 %i.h to i128                   ; 6 uses
   %i.sw = mul nuw i128 %i.o, %i.sv                ; 2 uses
   %i.sx = lshr i128 %i.sw, 64
@@ -603,7 +603,6 @@ bb.a:
   %i.vj = add nuw nsw i128 %i.vh, %i.vi
   %i.vk = add nuw nsw i128 %i.vj, %i.vg           ; 2 uses
   %i.vl = lshr i128 %i.vk, 64
-  %6 = trunc nuw nsw i128 %i.vl to i64
   %i.vm = and i128 %i.ug, 18446744073709551615
   %i.vn = trunc i128 %i.ug to i64
   %i.vo = mul i64 %i.vn, 4294967297
@@ -665,8 +664,9 @@ bb.a:
   %i.xr = add nuw nsw i128 %i.xp, %i.xq
   %i.xs = add nuw nsw i128 %i.xr, %i.xo           ; 2 uses
   %i.xt = lshr i128 %i.xs, 64
-  %i.xu = trunc nuw nsw i128 %i.xt to i64
-  %i.xv = add nuw nsw i64 %i.xu, %6
+  %6 = trunc nuw nsw i128 %i.xt to i64
+  %i.xu = trunc nuw nsw i128 %i.vl to i64
+  %i.xv = add nuw nsw i64 %6, %i.xu
   %i.xw = zext i64 %i.j to i128                   ; 6 uses
   %i.xx = mul nuw i128 %i.o, %i.xw                ; 2 uses
   %i.xy = lshr i128 %i.xx, 64
@@ -736,7 +736,6 @@ bb.a:
   %i.aak = add nuw nsw i128 %i.aai, %i.aaj
   %i.aal = add nuw nsw i128 %i.aak, %i.aah        ; 2 uses
   %i.aam = lshr i128 %i.aal, 64
-  %7 = trunc nuw nsw i128 %i.aam to i64
   %i.aan = and i128 %i.zh, 18446744073709551615
   %i.aao = trunc i128 %i.zh to i64
   %i.aap = mul i64 %i.aao, 4294967297
@@ -798,8 +797,9 @@ bb.a:
   %i.acs = add nuw nsw i128 %i.acq, %i.acr
   %i.act = add nuw nsw i128 %i.acs, %i.acp        ; 3 uses
   %i.acu = lshr i128 %i.act, 64
-  %i.acv = trunc nuw nsw i128 %i.acu to i64
-  %i.acw = add nuw nsw i64 %i.acv, %7
+  %7 = trunc nuw nsw i128 %i.acu to i64
+  %i.acv = trunc nuw nsw i128 %i.aam to i64
+  %i.acw = add nuw nsw i64 %7, %i.acv
   %i.acx = and i128 %i.abu, 18446744073709551615
   %i.acy = add nsw i128 %i.acx, -4294967295       ; 2 uses
   %i.acz = lshr i128 %i.acy, 64

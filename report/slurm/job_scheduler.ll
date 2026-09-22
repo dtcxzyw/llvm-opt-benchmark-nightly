@@ -202,6 +202,8 @@ bb.h:                                             ; preds = %bb.f
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
   store i16 %i.an, ptr %i.ao, align 8
   %i.ap = or i8 %.0170, %i.ak
+  %4 = icmp ne i8 %i.ap, 0
+  %5 = zext i1 %4 to i8
   %.not210 = icmp eq i32 %.0181, 0
   br i1 %.not210, label %bb.i, label %bb.j
 
@@ -264,6 +266,8 @@ bb.q:                                             ; preds = %bb.o
   %i.bk = getelementptr inbounds nuw i8, ptr %i.az, i64 32
   store i16 %i.bj, ptr %i.bk, align 8
   %i.bl = or i8 %.0170, %i.ay
+  %6 = icmp ne i8 %i.bl, 0
+  %7 = zext i1 %6 to i8
   %.not208 = icmp eq i32 %.0181, 0
   br i1 %.not208, label %bb.s, label %bb.r
 
@@ -379,6 +383,8 @@ bb.ag:                                            ; preds = %bb.af
   tail call void @list_append(ptr noundef %i.da, ptr noundef nonnull %i.co) #15
   %i.db = load i8, ptr %i.ct, align 2, !range !8, !noundef !9
   %i.dc = or i8 %i.db, %.0170
+  %8 = icmp ne i8 %i.dc, 0
+  %9 = zext i1 %8 to i8
   br label %.thread254
 
 bb.ah:                                            ; preds = %bb.b
@@ -404,7 +410,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.dj = phi ptr [ %i.e, %bb.ab ], [ %i.e, %bb.z ], [ %i.e, %bb.ai ], [ %i.e, %bb.x ], [ %i.e, %bb.n ], [ %i.i, %bb.e ], [ %i.e, %bb.ah ], [ %i.e, %bb.aj ], [ %i.e, %bb.u ], [ %i.e, %bb.ad ]
   %.3251 = phi i1 [ %.0164, %bb.ab ], [ %.0164, %bb.z ], [ %.0164, %bb.ai ], [ %.0164, %bb.x ], [ %.0164, %bb.n ], [ %spec.select, %bb.e ], [ %.0164, %bb.ah ], [ %.0164, %bb.aj ], [ %.0164, %bb.u ], [ %.0164, %bb.ad ]
   %.3169250 = phi i8 [ %.0166, %bb.ab ], [ %.0166, %bb.z ], [ %.0166, %bb.ai ], [ %.0166, %bb.x ], [ %.0166, %bb.n ], [ %.0166, %bb.e ], [ %.0166, %bb.ah ], [ %.0166, %bb.aj ], [ 1, %bb.u ], [ %.0166, %bb.ad ]
-  %.4249 = phi i8 [ %.0170, %bb.ab ], [ %.0170, %bb.z ], [ %.0170, %bb.ai ], [ %.0170, %bb.x ], [ %i.ap, %bb.n ], [ %.0170, %bb.e ], [ %.0170, %bb.ah ], [ %.0170, %bb.aj ], [ %i.bl, %bb.u ], [ %.0170, %bb.ad ]
+  %.4249 = phi i8 [ %.0170, %bb.ab ], [ %.0170, %bb.z ], [ %.0170, %bb.ai ], [ %.0170, %bb.x ], [ %5, %bb.n ], [ %.0170, %bb.e ], [ %.0170, %bb.ah ], [ %.0170, %bb.aj ], [ %7, %bb.u ], [ %.0170, %bb.ad ]
   %.3177248 = phi ptr [ null, %bb.ab ], [ %.0174, %bb.z ], [ %.0174, %bb.ai ], [ null, %bb.x ], [ null, %bb.n ], [ %.0174, %bb.e ], [ %i.g, %bb.ah ], [ %.0174, %bb.aj ], [ null, %bb.u ], [ %.0174, %bb.ad ]
   %.2180247 = phi i32 [ %.0178, %bb.ab ], [ %.0178, %bb.z ], [ %.0178, %bb.ai ], [ %i.bx, %bb.x ], [ %.0178, %bb.n ], [ %.0178, %bb.e ], [ %.0178, %bb.ah ], [ %.0178, %bb.aj ], [ %.0178, %bb.u ], [ %.0178, %bb.ad ]
   %.2183246 = phi i32 [ 1, %bb.ab ], [ 0, %bb.z ], [ %.0181, %bb.ai ], [ 0, %bb.x ], [ %.0181, %bb.n ], [ 0, %bb.e ], [ %.0181, %bb.ah ], [ %.0181, %bb.aj ], [ %.0181, %bb.u ], [ 0, %bb.ad ]
@@ -415,7 +421,7 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.b, !llvm.loop !35
 
 .thread254:                                       ; preds = %bb.ag, %bb.af
-  %.4269 = phi i8 [ %.0170, %bb.af ], [ %i.dc, %bb.ag ]
+  %.4269 = phi i8 [ %.0170, %bb.af ], [ %9, %bb.ag ]
   %.not213 = icmp eq i32 %.0191, 0
   br i1 %.not213, label %bb.am, label %bb.al
 

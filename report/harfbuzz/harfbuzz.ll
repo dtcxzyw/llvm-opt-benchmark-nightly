@@ -205,8 +205,12 @@ _ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit: ; preds = %_ZN11
   %wide.trip.count118 = zext i16 %i.ay to i64
   br label %bb.g
 
-._crit_edge:                                      ; preds = %bb.x, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit
-  %.060.lcssa = phi i1 [ false, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit ], [ %.161, %bb.x ]
+._crit_edge.loopexit:                             ; preds = %bb.x
+  %7 = trunc nuw i8 %.161 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit
+  %.060.lcssa = phi i1 [ false, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit ], [ %7, %._crit_edge.loopexit ]
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 140 ; 3 uses
   %i.bo = load i8, ptr %i.bn, align 4, !tbaa !1676, !range !380, !noundef !293
   %i.bp = trunc nuw i8 %i.bo to i1
@@ -216,7 +220,7 @@ bb.g:                                             ; preds = %.lr.ph109, %bb.x
   %indvars.iv116 = phi i64 [ 0, %.lr.ph109 ], [ %indvars.iv.next117, %bb.x ] ; 4 uses
   %.058106 = phi ptr [ %i.ba, %.lr.ph109 ], [ %i.iw, %bb.x ] ; 6 uses
   %.059105 = phi i1 [ false, %.lr.ph109 ], [ %.2, %bb.x ] ; 4 uses
-  %.060104 = phi i1 [ false, %.lr.ph109 ], [ %.161, %bb.x ] ; 4 uses
+  %.060104 = phi i8 [ 0, %.lr.ph109 ], [ %.161, %bb.x ] ; 4 uses
   %i.bq = load i32, ptr %i.bb, align 4, !tbaa !1679
   %i.br = zext i32 %i.bq to i64
   %.not.i65 = icmp samesign ult i64 %indvars.iv116, %i.br
@@ -599,7 +603,10 @@ bb.v:                                             ; preds = %bb.u
 
 _ZN25hb_sanitize_with_object_tC2IPKN2OT12KernSubTableINS1_20KernOTSubTableHeaderEEEEEP21hb_sanitize_context_tRKT_.exit: ; preds = %_ZN21hb_sanitize_context_t12reset_objectEv.exit.i.i, %.critedge.i.i, %bb.v
   %i.ia = tail call noundef zeroext i1 @_ZNK2OT12KernSubTableINS_20KernOTSubTableHeaderEE8dispatchIN3AAT22hb_aat_apply_context_tEJEEENT_8return_tEPS6_DpOT0_(ptr noundef nonnull align 1 dereferenceable(20) %.058106, ptr noundef nonnull %1)
-  %7 = or i1 %.060104, %i.ia
+  %8 = zext i1 %i.ia to i8
+  %9 = or i8 %.060104, %8
+  %10 = icmp ne i8 %9, 0
+  %11 = zext i1 %10 to i8
   %i.ib = load ptr, ptr %i.bj, align 8, !tbaa !496 ; 3 uses
   %.not.i.i71 = icmp eq ptr %i.ib, null
   br i1 %.not.i.i71, label %._crit_edge.i.i, label %bb.w
@@ -635,7 +642,7 @@ _ZN25hb_sanitize_with_object_tD2Ev.exit:          ; preds = %._crit_edge.i.i, %b
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96, %bb.g, %_ZN25hb_sanitize_with_object_tD2Ev.exit, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread
-  %.161 = phi i1 [ %.060104, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ], [ %.060104, %bb.g ], [ %7, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.060104, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96 ] ; 2 uses
+  %.161 = phi i8 [ %.060104, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ], [ %.060104, %bb.g ], [ %11, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.060104, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96 ] ; 2 uses
   %.2 = phi i1 [ %.059105, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ], [ %.059105, %bb.g ], [ %.1, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.059105, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96 ]
   %i.is = getelementptr inbounds nuw i8, ptr %.058106, i64 2
   %i.it = load i16, ptr %i.is, align 1, !tbaa !283
@@ -647,7 +654,7 @@ bb.x:                                             ; preds = %_ZNK3AAT22hb_aat_ap
   store i32 %i.iy, ptr %i.av, align 8, !tbaa !593
   %indvars.iv.next117 = add nuw nsw i64 %indvars.iv116, 1 ; 2 uses
   %exitcond119.not = icmp eq i64 %indvars.iv.next117, %wide.trip.count118
-  br i1 %exitcond119.not, label %._crit_edge, label %bb.g, !llvm.loop !3689
+  br i1 %exitcond119.not, label %._crit_edge.loopexit, label %bb.g, !llvm.loop !3689
 
 bb.y:                                             ; preds = %._crit_edge
   %i.iz = load ptr, ptr %i.a, align 8, !tbaa !494 ; 4 uses
@@ -1050,8 +1057,12 @@ _ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit: ; preds = %_ZN11
   %wide.trip.count121 = zext i32 %i.ay to i64
   br label %bb.g
 
-._crit_edge:                                      ; preds = %bb.y, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit
-  %.060.lcssa = phi i1 [ false, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit ], [ %.161, %bb.y ]
+._crit_edge.loopexit:                             ; preds = %bb.y
+  %7 = trunc nuw i8 %.161 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit
+  %.060.lcssa = phi i1 [ false, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit ], [ %7, %._crit_edge.loopexit ]
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 140 ; 3 uses
   %i.bn = load i8, ptr %i.bm, align 4, !tbaa !1676, !range !380, !noundef !293
   %i.bo = trunc nuw i8 %i.bn to i1
@@ -1061,7 +1072,7 @@ bb.g:                                             ; preds = %.lr.ph112, %bb.y
   %indvars.iv119 = phi i64 [ 0, %.lr.ph112 ], [ %indvars.iv.next120, %bb.y ] ; 4 uses
   %.058109 = phi ptr [ %i.az, %.lr.ph112 ], [ %i.ir, %bb.y ] ; 10 uses
   %.059108 = phi i1 [ false, %.lr.ph112 ], [ %.2, %bb.y ] ; 5 uses
-  %.060107 = phi i1 [ false, %.lr.ph112 ], [ %.161, %bb.y ] ; 5 uses
+  %.060107 = phi i8 [ 0, %.lr.ph112 ], [ %.161, %bb.y ] ; 5 uses
   %i.bp = load i32, ptr %i.ba, align 4, !tbaa !1679
   %i.bq = zext i32 %i.bp to i64
   %.not.i66 = icmp samesign ult i64 %indvars.iv119, %i.bq
@@ -1446,7 +1457,10 @@ bb.w:                                             ; preds = %bb.v
 
 _ZN25hb_sanitize_with_object_tC2IPKN2OT12KernSubTableINS1_21KernAATSubTableHeaderEEEEEP21hb_sanitize_context_tRKT_.exit: ; preds = %_ZN21hb_sanitize_context_t12reset_objectEv.exit.i.i, %.critedge.i.i, %bb.w
   %i.hw = tail call noundef zeroext i1 @_ZNK2OT12KernSubTableINS_21KernAATSubTableHeaderEE8dispatchIN3AAT22hb_aat_apply_context_tEJEEENT_8return_tEPS6_DpOT0_(ptr noundef nonnull align 1 dereferenceable(22) %.058109, ptr noundef nonnull %1)
-  %7 = or i1 %.060107, %i.hw
+  %8 = zext i1 %i.hw to i8
+  %9 = or i8 %.060107, %8
+  %10 = icmp ne i8 %9, 0
+  %11 = zext i1 %10 to i8
   %i.hx = load ptr, ptr %i.bi, align 8, !tbaa !496 ; 3 uses
   %.not.i.i73 = icmp eq ptr %i.hx, null
   br i1 %.not.i.i73, label %._crit_edge.i.i, label %bb.x
@@ -1482,7 +1496,7 @@ _ZN25hb_sanitize_with_object_tD2Ev.exit:          ; preds = %._crit_edge.i.i, %b
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread98, %bb.h, %bb.g, %_ZN25hb_sanitize_with_object_tD2Ev.exit, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread
-  %.161 = phi i1 [ %.060107, %bb.g ], [ %.060107, %bb.h ], [ %7, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.060107, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread98 ], [ %.060107, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ] ; 2 uses
+  %.161 = phi i8 [ %.060107, %bb.g ], [ %.060107, %bb.h ], [ %11, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.060107, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread98 ], [ %.060107, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ] ; 2 uses
   %.2 = phi i1 [ %.059108, %bb.g ], [ %.059108, %bb.h ], [ %.1, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.059108, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread98 ], [ %.059108, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ]
   %i.io = load i32, ptr %.058109, align 1, !tbaa !278
   %i.ip = tail call noundef i32 @llvm.bswap.i32(i32 %i.io)
@@ -1493,7 +1507,7 @@ bb.y:                                             ; preds = %_ZNK3AAT22hb_aat_ap
   store i32 %i.it, ptr %i.av, align 8, !tbaa !593
   %indvars.iv.next120 = add nuw nsw i64 %indvars.iv119, 1 ; 2 uses
   %exitcond122.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count121
-  br i1 %exitcond122.not, label %._crit_edge, label %bb.g, !llvm.loop !3745
+  br i1 %exitcond122.not, label %._crit_edge.loopexit, label %bb.g, !llvm.loop !3745
 
 bb.z:                                             ; preds = %._crit_edge
   %i.iu = load ptr, ptr %i.a, align 8, !tbaa !494 ; 4 uses
@@ -1896,8 +1910,12 @@ _ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit: ; preds = %_ZN11
   %wide.trip.count119 = zext i32 %i.ay to i64
   br label %bb.g
 
-._crit_edge:                                      ; preds = %bb.x, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit
-  %.059.lcssa = phi i1 [ false, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit ], [ %.160, %bb.x ]
+._crit_edge.loopexit:                             ; preds = %bb.x
+  %7 = trunc nuw i8 %.160 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit
+  %.059.lcssa = phi i1 [ false, %_ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit ], [ %7, %._crit_edge.loopexit ]
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 140 ; 3 uses
   %i.bn = load i8, ptr %i.bm, align 4, !tbaa !1676, !range !380, !noundef !293
   %i.bo = trunc nuw i8 %i.bn to i1
@@ -1907,7 +1925,7 @@ bb.g:                                             ; preds = %.lr.ph110, %bb.x
   %indvars.iv117 = phi i64 [ 0, %.lr.ph110 ], [ %indvars.iv.next118, %bb.x ] ; 4 uses
   %.057107 = phi ptr [ %i.az, %.lr.ph110 ], [ %i.iu, %bb.x ] ; 10 uses
   %.058106 = phi i1 [ false, %.lr.ph110 ], [ %.2, %bb.x ] ; 4 uses
-  %.059105 = phi i1 [ false, %.lr.ph110 ], [ %.160, %bb.x ] ; 4 uses
+  %.059105 = phi i8 [ 0, %.lr.ph110 ], [ %.160, %bb.x ] ; 4 uses
   %i.bp = load i32, ptr %i.ba, align 4, !tbaa !1679
   %i.bq = zext i32 %i.bp to i64
   %.not.i64 = icmp samesign ult i64 %indvars.iv117, %i.bq
@@ -2292,7 +2310,10 @@ bb.v:                                             ; preds = %bb.u
 
 _ZN25hb_sanitize_with_object_tC2IPKN3AAT12KerxSubTableEEEP21hb_sanitize_context_tRKT_.exit: ; preds = %_ZN21hb_sanitize_context_t12reset_objectEv.exit.i.i, %.critedge.i.i, %bb.v
   %i.hz = tail call noundef zeroext i1 @_ZNK3AAT12KerxSubTable8dispatchINS_22hb_aat_apply_context_tEJEEENT_8return_tEPS3_DpOT0_(ptr noundef nonnull align 1 dereferenceable(36) %.057107, ptr noundef nonnull %1)
-  %7 = or i1 %.059105, %i.hz
+  %8 = zext i1 %i.hz to i8
+  %9 = or i8 %.059105, %8
+  %10 = icmp ne i8 %9, 0
+  %11 = zext i1 %10 to i8
   %i.ia = load ptr, ptr %i.bi, align 8, !tbaa !496 ; 3 uses
   %.not.i.i71 = icmp eq ptr %i.ia, null
   br i1 %.not.i.i71, label %._crit_edge.i.i, label %bb.w
@@ -2328,7 +2349,7 @@ _ZN25hb_sanitize_with_object_tD2Ev.exit:          ; preds = %._crit_edge.i.i, %b
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96, %bb.g, %_ZN25hb_sanitize_with_object_tD2Ev.exit, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread
-  %.160 = phi i1 [ %.059105, %bb.g ], [ %7, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.059105, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96 ], [ %.059105, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ] ; 2 uses
+  %.160 = phi i8 [ %.059105, %bb.g ], [ %11, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.059105, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96 ], [ %.059105, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ] ; 2 uses
   %.2 = phi i1 [ %.058106, %bb.g ], [ %.1, %_ZN25hb_sanitize_with_object_tD2Ev.exit ], [ %.058106, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread96 ], [ %.058106, %_ZNK3AAT22hb_aat_apply_context_t25buffer_intersects_machineEv.exit.thread ]
   %i.ir = load i32, ptr %.057107, align 1, !tbaa !278
   %i.is = tail call noundef i32 @llvm.bswap.i32(i32 %i.ir)
@@ -2339,7 +2360,7 @@ bb.x:                                             ; preds = %_ZNK3AAT22hb_aat_ap
   store i32 %i.iw, ptr %i.av, align 8, !tbaa !593
   %indvars.iv.next118 = add nuw nsw i64 %indvars.iv117, 1 ; 2 uses
   %exitcond120.not = icmp eq i64 %indvars.iv.next118, %wide.trip.count119
-  br i1 %exitcond120.not, label %._crit_edge, label %bb.g, !llvm.loop !5736
+  br i1 %exitcond120.not, label %._crit_edge.loopexit, label %bb.g, !llvm.loop !5736
 
 bb.y:                                             ; preds = %._crit_edge
   %i.ix = load ptr, ptr %i.a, align 8, !tbaa !494 ; 4 uses
@@ -2742,7 +2763,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZNK15hb_set_digest_t8may_haveEj.exit21, %bb.a
   %i.n = phi i32 [ %.pre, %bb.a ], [ %i.dv, %_ZNK15hb_set_digest_t8may_haveEj.exit21 ]
-  %.0 = phi i1 [ false, %bb.a ], [ %.1, %_ZNK15hb_set_digest_t8may_haveEj.exit21 ] ; 13 uses
+  %.0 = phi i8 [ 0, %bb.a ], [ %.1, %_ZNK15hb_set_digest_t8may_haveEj.exit21 ] ; 13 uses
   %i.o = load ptr, ptr %i.c, align 8, !tbaa !589
   %i.p = zext i32 %i.n to i64
   %i.q = getelementptr inbounds nuw [20 x i8], ptr %i.o, i64 %i.p ; 3 uses
@@ -2897,7 +2918,7 @@ _ZNK2OT21hb_ot_apply_context_t20check_glyph_propertyEPK15hb_glyph_info_tj.exit.t
   store ptr %1, ptr %i.i, align 8, !tbaa !1714
   %i.cj = load i32, ptr %i.k, align 8, !tbaa !1402 ; 2 uses
   %.not5.not.i.i = icmp eq i32 %i.cj, 0
-  br i1 %.not5.not.i.i, label %_ZNK15hb_set_digest_t8may_haveEj.exit21, label %.lr.ph.i.i
+  br i1 %.not5.not.i.i, label %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit", label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNK2OT21hb_ot_apply_context_t20check_glyph_propertyEPK15hb_glyph_info_tj.exit.thread43, %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i
   %.sroa.0.07.i.i = phi ptr [ %i.dt, %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i ], [ %i.j, %_ZNK2OT21hb_ot_apply_context_t20check_glyph_propertyEPK15hb_glyph_info_tj.exit.thread43 ] ; 7 uses
@@ -2948,16 +2969,27 @@ _ZN9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_contex
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i, i64 32
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !1404
   %i.dr = tail call noundef zeroext i1 %i.dn(ptr noundef %i.do, ptr noundef nonnull %0, ptr noundef %i.dq) #63, !inline_history !216
-  br i1 %i.dr, label %_ZNK15hb_set_digest_t8may_haveEj.exit21, label %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i
+  br i1 %i.dr, label %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit.loopexit", label %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i
 
 _ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i: ; preds = %_ZN9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEdeEv.exit.i.i, %bb.s, %bb.r, %.lr.ph.i.i
   %i.ds = add i32 %.sroa.6.06.i.i, -1             ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i, i64 64
   %.not.not.i.i = icmp eq i32 %i.ds, 0
-  br i1 %.not.not.i.i, label %_ZNK15hb_set_digest_t8may_haveEj.exit21, label %.lr.ph.i.i, !llvm.loop !217
+  br i1 %.not.not.i.i, label %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit.loopexit", label %.lr.ph.i.i, !llvm.loop !217
 
-_ZNK15hb_set_digest_t8may_haveEj.exit21:          ; preds = %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i, %_ZN9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEdeEv.exit.i.i, %bb.b, %bb.c, %bb.d, %bb.i, %bb.j, %bb.k, %_ZNK2OT21hb_ot_apply_context_t20check_glyph_propertyEPK15hb_glyph_info_tj.exit.thread43, %bb.q, %_ZNK2OT4GDEF19get_mark_glyph_setsEv.exit.i, %bb.f, %_ZNK2OT20MarkGlyphSetsFormat16coversEjj.exit.i.i, %bb.e
-  %.1 = phi i1 [ %.0, %bb.i ], [ %.0, %bb.q ], [ %.0, %bb.e ], [ %.0, %bb.c ], [ %.0, %_ZNK2OT20MarkGlyphSetsFormat16coversEjj.exit.i.i ], [ %.0, %bb.f ], [ %.0, %_ZNK2OT4GDEF19get_mark_glyph_setsEv.exit.i ], [ %.0, %_ZNK2OT21hb_ot_apply_context_t20check_glyph_propertyEPK15hb_glyph_info_tj.exit.thread43 ], [ %.0, %bb.b ], [ %.0, %bb.k ], [ %.0, %bb.j ], [ %.0, %bb.d ], [ true, %_ZN9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEdeEv.exit.i.i ], [ %.0, %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i ] ; 2 uses
+"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit.loopexit": ; preds = %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i, %_ZN9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEdeEv.exit.i.i
+  %.not.lcssa.i.i.ph = phi i8 [ 1, %_ZN9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEdeEv.exit.i.i ], [ 0, %_ZNR9hb_iter_tI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EEbEppEv.exit.i.i ]
+  %2 = or i8 %.not.lcssa.i.i.ph, %.0
+  br label %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit"
+
+"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit": ; preds = %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit.loopexit", %_ZNK2OT21hb_ot_apply_context_t20check_glyph_propertyEPK15hb_glyph_info_tj.exit.thread43
+  %.not.lcssa.i.i = phi i8 [ %.0, %_ZNK2OT21hb_ot_apply_context_t20check_glyph_propertyEPK15hb_glyph_info_tj.exit.thread43 ], [ %2, %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit.loopexit" ]
+  %3 = icmp ne i8 %.not.lcssa.i.i, 0
+  %4 = zext i1 %3 to i8
+  br label %_ZNK15hb_set_digest_t8may_haveEj.exit21
+
+_ZNK15hb_set_digest_t8may_haveEj.exit21:          ; preds = %bb.b, %bb.c, %bb.d, %bb.i, %bb.j, %bb.k, %bb.q, %_ZNK2OT4GDEF19get_mark_glyph_setsEv.exit.i, %bb.f, %_ZNK2OT20MarkGlyphSetsFormat16coversEjj.exit.i.i, %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit", %bb.e
+  %.1 = phi i8 [ %4, %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT33hb_accelerate_subtables_context_t15hb_applicable_tEEZNKS2_33hb_ot_layout_lookup_accelerator_t5applyEPNS2_21hb_ot_apply_context_tEbEUlRS5_E0_L24hb_function_sortedness_t0ELPv0EERK4$_44TnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSJ_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISJ_Efp_EEEOSJ_OSO_.exit" ], [ %.0, %bb.q ], [ %.0, %bb.e ], [ %.0, %bb.i ], [ %.0, %_ZNK2OT20MarkGlyphSetsFormat16coversEjj.exit.i.i ], [ %.0, %bb.f ], [ %.0, %_ZNK2OT4GDEF19get_mark_glyph_setsEv.exit.i ], [ %.0, %bb.k ], [ %.0, %bb.j ], [ %.0, %bb.d ], [ %.0, %bb.c ], [ %.0, %bb.b ] ; 2 uses
   %i.du = load i32, ptr %i.d, align 4, !tbaa !653
   %i.dv = add i32 %i.du, -1                       ; 3 uses
   store i32 %i.dv, ptr %i.d, align 4, !tbaa !653
@@ -2965,7 +2997,8 @@ _ZNK15hb_set_digest_t8may_haveEj.exit21:          ; preds = %_ZNR9hb_iter_tI13hb
   br i1 %i.dw, label %bb.b, label %bb.t, !llvm.loop !5982
 
 bb.t:                                             ; preds = %_ZNK15hb_set_digest_t8may_haveEj.exit21
-  ret i1 %.1
+  %5 = trunc nuw i8 %.1 to i1
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

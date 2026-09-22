@@ -204,10 +204,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.0.i33 = phi i64 [ %i.ax, %bb.g ], [ 1, %bb.f ] ; 2 uses
-  %5 = trunc nuw i64 %.0.i33 to i32
   %i.ay = or i64 %.036.i, 7                       ; 2 uses
-  %6 = and i32 %5, 65535
-  %i.az = add nsw i32 %6, -1
+  %5 = trunc nuw i64 %.0.i33 to i32
+  %i.az = add nsw i32 %5, -1
   %i.ba = or i32 %i.az, %i.ah                     ; 2 uses
   tail call void asm sideeffect ".byte 0x0f, 0x01, 0xfe", "{ax},{cx},{dx},~{dirflag},~{fpsr},~{flags}"(i64 %i.ay, i32 %i.ba, i32 %i.ai) #10, !srcloc !47
   callbr void asm sideeffect "# ALT: oldinstr\0A771:\0A\09# ALT: oldinstr\0A771:\0A\09jmp 6f\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 3*32+21)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09jmp ${4:l}\0A775:\0A.popsection\0A\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ${0:c}\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09\0A775:\0A.popsection\0A.pushsection .altinstr_aux,\22ax\22\0A6:\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A testb $1, ${2:a}\0A jnz ${3:l}\0A jmp ${4:l}\0A.popsection\0A", "i,i,i,!i,!i,~{dirflag},~{fpsr},~{flags}"(i16 235, i32 8, ptr nonnull getelementptr inbounds nuw (i8, ptr @boot_cpu_data, i64 77)) #10
@@ -610,10 +609,9 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   %i.ad = icmp ult i64 %i.ab, 8192
   %i.ae = select i1 %i.ad, i64 1, i64 %i.ac
   %i.af = select i1 %.not.i.i, i64 %i.ae, i64 %i.aa ; 2 uses
-  %2 = trunc nuw i64 %i.af to i32
   %i.ag = or i64 %.026.i.i, 12
-  %3 = and i32 %2, 65535
-  %i.ah = add nsw i32 %3, -1
+  %2 = trunc nuw i64 %i.af to i32
+  %i.ah = add nsw i32 %2, -1
   tail call void asm sideeffect ".byte 0x0f, 0x01, 0xfe", "{ax},{cx},{dx},~{dirflag},~{fpsr},~{flags}"(i64 %i.ag, i32 %i.ah, i32 0) #10, !srcloc !47
   %i.ai = shl nuw nsw i64 %i.af, 12
   %i.aj = add i64 %i.ai, %.026.i.i                ; 2 uses

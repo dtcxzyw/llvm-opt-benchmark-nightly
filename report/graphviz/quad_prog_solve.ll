@@ -204,8 +204,8 @@ bb.bb:                                            ; preds = %bb.az
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %.1385.us = phi float [ %i.ny, %bb.bb ], [ %i.np, %bb.ba ]
-  br i1 %.not415475.us, label %._crit_edge543.us.a, label %.lr.ph542.us.preheader
+  %.1385.us = phi float [ %i.ny, %bb.bb ], [ %i.np, %bb.ba ] ; 2 uses
+  br i1 %.not415475.us, label %._crit_edge543.us, label %.lr.ph542.us.preheader
 
 .lr.ph542.us.preheader:                           ; preds = %bb.bc
   %i.nz = add i32 %.0382.in.lcssa.us, 1
@@ -223,17 +223,19 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %indvars.iv.next601 = add nsw i64 %indvars.iv600, 1 ; 2 uses
   %lftr.wideiv603 = trunc i64 %indvars.iv.next601 to i32
   %exitcond604.not = icmp eq i32 %i.nz, %lftr.wideiv603
-  br i1 %exitcond604.not, label %._crit_edge543.us.a, label %.lr.ph542.us, !llvm.loop !48
+  br i1 %exitcond604.not, label %._crit_edge543.us, label %.lr.ph542.us, !llvm.loop !48
 
-._crit_edge543.us.a:                              ; preds = %.lr.ph542.us, %bb.bc
+._crit_edge543.us:                                ; preds = %.lr.ph542.us, %bb.bc
   %7 = fsub float %.3.us, %i.ct
   %8 = call float @llvm.fabs.f32(float %7)
   %9 = fcmp olt float %8, f0x3C23D70A
+  br i1 %9, label %._crit_edge543.us.a, label %bb.bg
+
+._crit_edge543.us.a:                              ; preds = %._crit_edge543.us
   %i.og = fsub float %.1362.us, %i.ct
   %i.oh = call float @llvm.fabs.f32(float %i.og)
   %i.oi = fcmp olt float %i.oh, f0x3C23D70A
-  %i.oj = select i1 %9, i1 %i.oi, i1 false
-  %10 = and i1 %.1389544.us, %i.oj
+  %i.oj = select i1 %i.oi, i1 %.1389544.us, i1 false
   br label %bb.bg
 
 ._crit_edge528.us.thread:                         ; preds = %bb.ak, %._crit_edge528.us
@@ -278,9 +280,9 @@ bb.bf:                                            ; preds = %bb.bd
   %i.pn = fadd float %5, %i.pm
   br label %bb.bg
 
-bb.bg:                                            ; preds = %bb.bf, %bb.be, %._crit_edge543.us.a
-  %.2390.us = phi i1 [ %10, %._crit_edge543.us.a ], [ %.1389544.us, %bb.bf ], [ %.1389544.us, %bb.be ] ; 2 uses
-  %.2386.us = phi float [ %.1385.us, %._crit_edge543.us.a ], [ %i.pn, %bb.bf ], [ %i.pe, %bb.be ]
+bb.bg:                                            ; preds = %bb.bf, %bb.be, %._crit_edge543.us.a, %._crit_edge543.us
+  %.2390.us = phi i1 [ %.1389544.us, %bb.be ], [ %.1389544.us, %bb.bf ], [ false, %._crit_edge543.us ], [ %i.oj, %._crit_edge543.us.a ] ; 2 uses
+  %.2386.us = phi float [ %i.pe, %bb.be ], [ %i.pn, %bb.bf ], [ %.1385.us, %._crit_edge543.us ], [ %.1385.us, %._crit_edge543.us.a ]
   %i.po = icmp slt i32 %.0382.lcssa.us, %i.e
   br i1 %i.po, label %bb.r, label %._crit_edge548.us, !llvm.loop !49
 

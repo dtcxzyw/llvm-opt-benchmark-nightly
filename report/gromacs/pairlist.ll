@@ -205,8 +205,7 @@ _ZN3gmxL19get_nsubpair_targetERKNS_7GridSetENS_19InteractionLocalityEfiPiPf.exit
   %i.gv = trunc nuw i8 %.sroa.3.0.copyload to i1  ; 2 uses
   %brmerge = or i1 %i.ai, %i.gv
   %.mux = select i1 %i.gv, i32 2, i32 1
-  %.mask = and i8 %.sroa.3.0.copyload, 1
-  %.mux261 = zext nneg i8 %.mask to i32
+  %.mux261 = zext i8 %.sroa.3.0.copyload to i32
   br i1 %brmerge, label %_ZN3gmxL13getIZoneRangeERKNS_7GridSet11DomainSetupENS_19InteractionLocalityE.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge
@@ -221,7 +220,6 @@ bb.ab:                                            ; preds = %bb.aa
 
 _ZN3gmxL13getIZoneRangeERKNS_7GridSet11DomainSetupENS_19InteractionLocalityE.exit: ; preds = %._crit_edge, %bb.aa
   %.sroa.4.0.i = phi i32 [ %i.gx, %bb.aa ], [ %.mux, %._crit_edge ]
-  %.sroa.0.0.i = phi i32 [ 0, %bb.aa ], [ %.mux261, %._crit_edge ]
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ac, %_ZN3gmxL13getIZoneRangeERKNS_7GridSet11DomainSetupENS_19InteractionLocalityE.exit
@@ -230,7 +228,7 @@ bb.ac:                                            ; preds = %bb.ac, %_ZN3gmxL13g
   %i.gy = getelementptr inbounds nuw [376 x i8], ptr %i.gr, i64 %indvars.iv.i ; 3 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 24
   %i.ha = load i32, ptr %i.gz, align 8, !tbaa !491
-  %i.hb = icmp slt i32 %i.ha, %.sroa.0.0.i
+  %i.hb = icmp slt i32 %i.ha, %.mux261
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %indvars.iv.next10.i = add nuw i64 %indvars.iv9.i, 1
   br i1 %i.hb, label %bb.ac, label %.preheader.i, !llvm.loop !444

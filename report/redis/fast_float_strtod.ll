@@ -205,11 +205,11 @@ _ZN10fast_float10digit_compIdcEENS_17adjusted_mantissaERNS_22parsed_number_strin
   %.sroa.0122.1 = phi i64 [ %.fca.0.extract, %_ZN10fast_float10digit_compIdcEENS_17adjusted_mantissaERNS_22parsed_number_string_tIT0_EES1_.exit ], [ %i.gu, %bb.ae ], [ %.sroa.0136.2, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit ], [ %.sroa.0136.2, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit89 ] ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.hv = load i8, ptr %i.hu, align 8, !tbaa !49, !range !45, !noundef !50
-  %i.hw = zext nneg i8 %i.hv to i64
-  %3 = zext i32 %.sroa.9.1 to i64
-  %4 = shl i64 %3, 52
-  %i.hx = shl nuw i64 %i.hw, 63
-  %i.hy = or i64 %4, %i.hx
+  %i.hw = zext i32 %.sroa.9.1 to i64
+  %3 = shl i64 %i.hw, 52
+  %4 = zext nneg i8 %i.hv to i64
+  %i.hx = shl nuw i64 %4, 63
+  %i.hy = or i64 %3, %i.hx
   %i.hz = or i64 %i.hy, %.sroa.0122.1
   store i64 %i.hz, ptr %1, align 8
   %i.ia = load i64, ptr %i.at, align 8, !tbaa !48

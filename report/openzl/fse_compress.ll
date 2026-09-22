@@ -205,27 +205,24 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.ad = mul i64 %i.o, %i.x                      ; 2 uses
   %i.ae = lshr i64 %i.ad, %i.m                    ; 4 uses
-  %i.af = trunc nuw nsw i64 %i.ae to i16
-  %6 = trunc nuw nsw i64 %i.ae to i32             ; 2 uses
-  %7 = and i32 %6, 65528
-  %8 = icmp eq i32 %7, 0
-  br i1 %8, label %bb.k, label %bb.l
+  %i.af = trunc nuw nsw i64 %i.ae to i16          ; 2 uses
+  %6 = icmp slt i64 %i.ae, 8
+  br i1 %6, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr @FSE_normalizeCount.rtbTable, i64 %i.ae
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !20
   %i.ai = zext i32 %i.ah to i64
   %i.aj = shl i64 %i.ai, %i.p
-  %i.ak = shl i64 %i.ae, %i.m
+  %i.ak = shl nuw nsw i64 %i.ae, %i.m
   %i.al = sub i64 %i.ad, %i.ak
   %i.am = icmp ugt i64 %i.al, %i.aj
-  %9 = zext i1 %i.am to i32
-  %10 = add nuw nsw i32 %9, %6
-  %11 = trunc nuw nsw i32 %10 to i16
+  %7 = zext i1 %i.am to i16
+  %8 = add nuw nsw i16 %7, %i.af
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.070 = phi i16 [ %11, %bb.k ], [ %i.af, %bb.j ] ; 4 uses
+  %.070 = phi i16 [ %8, %bb.k ], [ %i.af, %bb.j ] ; 4 uses
   %i.an = zext nneg i16 %.070 to i32
   %i.ao = icmp ugt i16 %.070, %.073104
   %spec.select = select i1 %i.ao, i32 %.079102, i32 %.076103

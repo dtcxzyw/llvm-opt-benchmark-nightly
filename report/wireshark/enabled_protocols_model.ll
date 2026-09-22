@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph36, %._crit_e
   %indvars.iv39 = phi i64 [ 0, %.lr.ph36 ], [ %indvars.iv.next40, %._crit_edge ] ; 3 uses
   %i.k = phi ptr [ %i.d, %.lr.ph36 ], [ %i.aj, %._crit_edge ]
   %i.l = phi ptr [ %i.c, %.lr.ph36 ], [ %i.ai, %._crit_edge ]
-  %.034 = phi i1 [ false, %.lr.ph36 ], [ %.1.lcssa, %._crit_edge ]
+  %.034 = phi i8 [ 0, %.lr.ph36 ], [ %.1, %._crit_edge ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26, !noalias !52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, i8 0, i64 24, i1 false), !noalias !52
@@ -267,7 +267,9 @@ bb.g:                                             ; preds = %_ZN19ModelHelperTre
   br label %_ZN19EnabledProtocolItem10applyValueEv.exit
 
 _ZN19EnabledProtocolItem10applyValueEv.exit:      ; preds = %_ZN19ModelHelperTreeItemI19EnabledProtocolItemE5childEi.exit, %bb.g
-  %8 = or i1 %.034, %.not.i                       ; 2 uses
+  %8 = zext i1 %.not.i to i8
+  %9 = or i8 %.034, %8
+  %10 = icmp ne i8 %9, 0                          ; 2 uses
   %i.ad = getelementptr i8, ptr %i.t, i64 32      ; 3 uses
   %i.ae = load i64, ptr %i.ad, align 8
   %i.af = trunc i64 %i.ae to i32
@@ -279,7 +281,8 @@ _ZN19EnabledProtocolItem10applyValueEv.exit:      ; preds = %_ZN19ModelHelperTre
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %_ZN19EnabledProtocolItem10applyValueEv.exit21, %_ZN19EnabledProtocolItem10applyValueEv.exit
-  %.1.lcssa = phi i1 [ %8, %_ZN19EnabledProtocolItem10applyValueEv.exit ], [ %i.by, %_ZN19EnabledProtocolItem10applyValueEv.exit21 ] ; 2 uses
+  %.1.lcssa = phi i1 [ %10, %_ZN19EnabledProtocolItem10applyValueEv.exit ], [ %i.by, %_ZN19EnabledProtocolItem10applyValueEv.exit21 ] ; 2 uses
+  %.1 = zext i1 %.1.lcssa to i8
   %indvars.iv.next40 = add nuw nsw i64 %indvars.iv39, 1 ; 2 uses
   %i.ai = load ptr, ptr %i.b, align 8             ; 2 uses
   %i.aj = getelementptr i8, ptr %i.ai, i64 32     ; 2 uses
@@ -291,7 +294,7 @@ _ZN19EnabledProtocolItem10applyValueEv.exit:      ; preds = %_ZN19ModelHelperTre
 
 bb.h:                                             ; preds = %.lr.ph, %_ZN19EnabledProtocolItem10applyValueEv.exit21
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN19EnabledProtocolItem10applyValueEv.exit21 ] ; 3 uses
-  %.132 = phi i1 [ %8, %.lr.ph ], [ %i.by, %_ZN19EnabledProtocolItem10applyValueEv.exit21 ]
+  %.132 = phi i1 [ %10, %.lr.ph ], [ %i.by, %_ZN19EnabledProtocolItem10applyValueEv.exit21 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26, !noalias !54
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 24, i1 false), !noalias !54

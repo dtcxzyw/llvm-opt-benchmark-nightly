@@ -205,6 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.h
   %i.d = xor i64 %i.q, -1
   %i.e = add i64 %3, %i.d
+  %4 = zext nneg i32 %i.i to i64
   %i.f = udiv i64 %i.e, %4
   %i.g = add i64 %i.f, %i.r                       ; 2 uses
   %.not77.i = icmp ugt i64 %i.g, %spec.select76.i
@@ -220,8 +221,7 @@ bb.d:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.08.0.copyload.i = load i32, ptr %i.h, align 4, !alias.scope !56 ; 8 uses
   %.sroa.9.16.extract.trunc.mask.i = and i32 %.sroa.08.0.copyload.i, 255 ; 4 uses
-  %i.i = lshr i32 %.sroa.08.0.copyload.i, 24      ; 4 uses
-  %4 = zext nneg i32 %i.i to i64                  ; 4 uses
+  %i.i = lshr i32 %.sroa.08.0.copyload.i, 24      ; 5 uses
   %i.j = zext nneg i32 %.sroa.9.16.extract.trunc.mask.i to i64 ; 3 uses
   %.not35.i = icmp ugt i64 %3, %i.j
   br i1 %.not35.i, label %bb.e, label %_RNvMNtCs1HV6ixfL8cZ_11fish_printf6localeNtB2_6Locale15separator_count.exit
@@ -323,8 +323,9 @@ _RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs1HV6i
   %.sroa.8.18.extract.shift.i = lshr i32 %.sroa.08.0.copyload.i, 16
   %i.ag = and i32 %.sroa.8.18.extract.shift.i, 255
   %narrow54.i = add nuw nsw i32 %narrow.i21, %i.ag
-  %i.ah = zext nneg i32 %narrow54.i to i64        ; 3 uses
-  %i.ai = add nuw nsw i64 %i.ah, %4               ; 3 uses
+  %5 = zext nneg i32 %narrow54.i to i64           ; 3 uses
+  %i.ah = zext nneg i32 %i.i to i64               ; 3 uses
+  %i.ai = add nuw nsw i64 %5, %i.ah               ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ak = load i8, ptr %i.aj, align 4, !range !9
   %i.al = trunc nuw i8 %i.ak to i1
@@ -364,20 +365,20 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not35.1.i22, label %bb.q, label %_RNvMNtCs1HV6ixfL8cZ_11fish_printf6localeNtB2_6Locale15next_group_size.exit
 
 bb.q:                                             ; preds = %bb.p
-  %.not35.2.i23 = icmp ugt i64 %.sroa.9.054, %i.ah
+  %.not35.2.i23 = icmp ugt i64 %.sroa.9.054, %5
   br i1 %.not35.2.i23, label %bb.r, label %_RNvMNtCs1HV6ixfL8cZ_11fish_printf6localeNtB2_6Locale15next_group_size.exit
 
 bb.r:                                             ; preds = %bb.q
   %.not35.3.i24 = icmp ugt i64 %.sroa.9.054, %i.ai ; 2 uses
   %brmerge.not = select i1 %.not35.3.i24, i1 %or.cond.not.i, i1 false
-  %.mux = select i1 %.not35.3.i24, i64 %i.ai, i64 %i.ah
+  %.mux = select i1 %.not35.3.i24, i64 %i.ai, i64 %5
   br i1 %brmerge.not, label %_RNvMNtCs1HV6ixfL8cZ_11fish_printf6localeNtB2_6Locale15next_group_size.exit.thread, label %_RNvMNtCs1HV6ixfL8cZ_11fish_printf6localeNtB2_6Locale15next_group_size.exit
 
 _RNvMNtCs1HV6ixfL8cZ_11fish_printf6localeNtB2_6Locale15next_group_size.exit.thread: ; preds = %bb.r
   %i.bg = sub nuw i64 %.sroa.9.054, %i.ai
-  %i.bh = urem i64 %i.bg, %4                      ; 2 uses
+  %i.bh = urem i64 %i.bg, %i.ah                   ; 2 uses
   %.not.i25 = icmp eq i64 %i.bh, 0
-  %spec.select = select i1 %.not.i25, i64 %4, i64 %i.bh
+  %spec.select = select i1 %.not.i25, i64 %i.ah, i64 %i.bh
   br label %bb.t
 
 ._crit_edge:                                      ; preds = %bb.x, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs1HV6ixfL8cZ_11fish_printf.exit
@@ -537,6 +538,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.h
   %i.c = xor i64 %i.q, -1
   %i.d = add i64 %1, %i.c
+  %2 = zext nneg i32 %i.h to i64
   %i.e = udiv i64 %i.d, %2
   %i.f = add i64 %i.e, %i.r                       ; 2 uses
   %.not77 = icmp ugt i64 %i.f, %spec.select76
@@ -555,7 +557,6 @@ bb.d:                                             ; preds = %bb.a
   %.sroa.08.0.copyload = load i32, ptr %i.g, align 4 ; 7 uses
   %.sroa.9.16.extract.trunc.mask = and i32 %.sroa.08.0.copyload, 255 ; 2 uses
   %i.h = lshr i32 %.sroa.08.0.copyload, 24        ; 3 uses
-  %2 = zext nneg i32 %i.h to i64
   %i.i = zext nneg i32 %.sroa.9.16.extract.trunc.mask to i64
   %.not35 = icmp ugt i64 %1, %i.i
   br i1 %.not35, label %bb.e, label %.thread

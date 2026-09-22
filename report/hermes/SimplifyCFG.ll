@@ -96,13 +96,13 @@ bb.a:
 
 .preheader138.i:                                  ; preds = %.preheader138.loopexit.i, %.backedge
   %.sroa.0112.0159.i = phi ptr [ %.sroa.0116.0154.i, %.backedge ], [ %.sroa.0112.0159.pre.i, %.preheader138.loopexit.i ] ; 2 uses
-  %.065.lcssa.i = phi i1 [ false, %.backedge ], [ %.570.i, %.preheader138.loopexit.i ] ; 2 uses
+  %.065.lcssa.i = phi i8 [ 0, %.backedge ], [ %.570.i, %.preheader138.loopexit.i ] ; 2 uses
   %.not132160.i = icmp eq ptr %.sroa.0112.0159.i, %i.d
   br i1 %.not132160.i, label %_ZL22optimizeStaticBranchesPN6hermes8FunctionE.exit, label %.lr.ph164.i
 
 .lr.ph.i:                                         ; preds = %.backedge, %.thread121.i
   %.sroa.0116.0157.i = phi ptr [ %.sroa.0116.0.i, %.thread121.i ], [ %.sroa.0116.0154.i, %.backedge ] ; 3 uses
-  %.065156.i = phi i1 [ %.570.i, %.thread121.i ], [ false, %.backedge ] ; 4 uses
+  %.065156.i = phi i8 [ %.570.i, %.thread121.i ], [ 0, %.backedge ] ; 4 uses
   %i.ab = call noundef ptr @_ZN6hermes10BasicBlock13getTerminatorEv(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0116.0157.i) #8 ; 10 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !61
@@ -208,7 +208,10 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph44.i.i
 
 bb.i:                                             ; preds = %._crit_edge.i.i, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
-  %9 = or i1 %.065156.i, %i.ao
+  %9 = zext i1 %i.ao to i8
+  %10 = or i8 %.065156.i, %9
+  %11 = icmp ne i8 %10, 0
+  %12 = zext i1 %11 to i8
   br label %.thread121.i
 
 bb.j:                                             ; preds = %.lr.ph.i
@@ -255,7 +258,7 @@ bb.o:                                             ; preds = %bb.n
   br label %.thread121.i
 
 .thread121.i:                                     ; preds = %bb.o, %bb.n, %bb.m, %bb.l, %bb.j, %bb.i
-  %.570.i = phi i1 [ %9, %bb.i ], [ %.065156.i, %bb.j ], [ true, %bb.l ], [ true, %bb.o ], [ %.065156.i, %bb.n ], [ %.065156.i, %bb.m ] ; 2 uses
+  %.570.i = phi i8 [ %12, %bb.i ], [ %.065156.i, %bb.j ], [ 1, %bb.l ], [ 1, %bb.o ], [ %.065156.i, %bb.n ], [ %.065156.i, %bb.m ] ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.0116.0157.i, i64 8
   %.sroa.0116.0.i = load ptr, ptr %i.ch, align 8, !tbaa !60 ; 2 uses
   %.not131.i = icmp eq ptr %.sroa.0116.0.i, %i.d
@@ -263,7 +266,7 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph164.i:                                      ; preds = %.preheader138.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i
   %.sroa.0112.0162.i = phi ptr [ %.sroa.0112.0.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i ], [ %.sroa.0112.0159.i, %.preheader138.i ] ; 14 uses
-  %.671161.i = phi i1 [ %.9.ph.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i ], [ %.065.lcssa.i, %.preheader138.i ] ; 10 uses
+  %.671161.i = phi i8 [ %.9.ph.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i ], [ %.065.lcssa.i, %.preheader138.i ] ; 10 uses
   %i.ci = call noundef ptr @_ZN6hermes10BasicBlock13getTerminatorEv(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0112.0162.i) #8 ; 6 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
   %i.ck = load i8, ptr %i.cj, align 8, !tbaa !61
@@ -666,7 +669,7 @@ _ZN6hermes10pred_countEPKNS_10BasicBlockE.exit.i: ; preds = %_ZN6hermes12PredIte
   br label %_ZL22optimizeStaticBranchesPN6hermes8FunctionE.exit.thread
 
 _ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i: ; preds = %_ZN6hermes10pred_countEPKNS_10BasicBlockE.exit.i, %_ZN6hermes10pred_beginEPKNS_10BasicBlockE.exit.i.i, %bb.az, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.i, %bb.t, %_ZL15isUsedInPhiNodePN6hermes10BasicBlockE.exit.i, %bb.q, %bb.q, %bb.q, %bb.p, %.lr.ph164.i
-  %.9.ph.i = phi i1 [ %.671161.i, %_ZL15isUsedInPhiNodePN6hermes10BasicBlockE.exit.i ], [ %.671161.i, %.lr.ph164.i ], [ %.671161.i, %_ZN6hermes10pred_countEPKNS_10BasicBlockE.exit.i ], [ true, %bb.az ], [ %.671161.i, %bb.q ], [ %.671161.i, %bb.p ], [ %.671161.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.i ], [ %.671161.i, %bb.t ], [ %.671161.i, %_ZN6hermes10pred_beginEPKNS_10BasicBlockE.exit.i.i ], [ %.671161.i, %bb.q ], [ %.671161.i, %bb.q ] ; 2 uses
+  %.9.ph.i = phi i8 [ %.671161.i, %_ZL15isUsedInPhiNodePN6hermes10BasicBlockE.exit.i ], [ %.671161.i, %.lr.ph164.i ], [ %.671161.i, %_ZN6hermes10pred_countEPKNS_10BasicBlockE.exit.i ], [ 1, %bb.az ], [ %.671161.i, %bb.q ], [ %.671161.i, %bb.p ], [ %.671161.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.i ], [ %.671161.i, %bb.t ], [ %.671161.i, %_ZN6hermes10pred_beginEPKNS_10BasicBlockE.exit.i.i ], [ %.671161.i, %bb.q ], [ %.671161.i, %bb.q ] ; 2 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %.sroa.0112.0162.i, i64 8
   %.sroa.0112.0.i = load ptr, ptr %i.ma, align 8, !tbaa !60 ; 2 uses
   %.not132.i = icmp eq ptr %.sroa.0112.0.i, %i.d
@@ -677,9 +680,10 @@ _ZL22optimizeStaticBranchesPN6hermes8FunctionE.exit.thread: ; preds = %_ZL32atte
   br label %.backedge.backedge
 
 _ZL22optimizeStaticBranchesPN6hermes8FunctionE.exit: ; preds = %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i, %.preheader138.i
-  %.10.i = phi i1 [ %.065.lcssa.i, %.preheader138.i ], [ %.9.ph.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i ]
+  %.10.i = phi i8 [ %.065.lcssa.i, %.preheader138.i ], [ %.9.ph.i, %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i ]
+  %13 = trunc nuw i8 %.10.i to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #8
-  br i1 %.10.i, label %.backedge.backedge, label %bb.bd
+  br i1 %13, label %.backedge.backedge, label %bb.bd
 
 .backedge.backedge:                               ; preds = %_ZL22optimizeStaticBranchesPN6hermes8FunctionE.exit, %_ZL22optimizeStaticBranchesPN6hermes8FunctionE.exit.thread, %_ZL26removeUnreachedBasicBlocksPN6hermes8FunctionE.exit
   br label %.backedge, !llvm.loop !96

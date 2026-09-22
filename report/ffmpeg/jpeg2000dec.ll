@@ -205,8 +205,7 @@ bb.ep:                                            ; preds = %bb.em
 
 bytestream2_get_byte.exit30.i.i:                  ; preds = %bb.ep, %bb.eo, %bb.en
   %i.wu = phi ptr [ %i.wn, %bb.eo ], [ %i.wq, %bb.ep ], [ %i.nu, %bb.en ] ; 3 uses
-  %i.wv = phi i32 [ %i.wp, %bb.eo ], [ %i.wt, %bb.ep ], [ 0, %bb.en ] ; 2 uses
-  %7 = zext nneg i32 %i.wv to i64                 ; 2 uses
+  %i.wv = phi i32 [ %i.wp, %bb.eo ], [ %i.wt, %bb.ep ], [ 0, %bb.en ] ; 3 uses
   %i.ww = ptrtoint ptr %i.wu to i64
   %i.wx = sub i64 %i.rm, %i.ww
   %i.wy = icmp slt i64 %i.wx, 1
@@ -257,6 +256,7 @@ bytestream2_get_byte.exit26.i.i:                  ; preds = %bb.et
 
 bb.eu:                                            ; preds = %bytestream2_get_byte.exit26.i.i, %bytestream2_get_byte.exit26.thread.i.i
   %.0.i2534.i.i = phi i8 [ 0, %bytestream2_get_byte.exit26.thread.i.i ], [ %i.xk, %bytestream2_get_byte.exit26.i.i ]
+  %7 = zext nneg i32 %i.wv to i64
   %i.xm = getelementptr inbounds nuw i8, ptr %i.ni, i64 %7
   store i8 %.0.i2534.i.i, ptr %i.xm, align 1, !tbaa !43
   br label %get_rgn.exit.i
@@ -290,7 +290,8 @@ bytestream2_get_byte.exit.i.i:                    ; preds = %bb.ew
 bb.ex:                                            ; preds = %bytestream2_get_byte.exit.i.i, %bytestream2_get_byte.exit.thread.i.i
   %.0.i36.i.i = phi i8 [ 0, %bytestream2_get_byte.exit.thread.i.i ], [ %i.xw, %bytestream2_get_byte.exit.i.i ]
   %i.xy = load ptr, ptr %i.xp, align 8, !tbaa !65
-  %i.xz = getelementptr inbounds nuw [408 x i8], ptr %i.xy, i64 %7
+  %8 = zext nneg i32 %i.wv to i64
+  %i.xz = getelementptr inbounds nuw [408 x i8], ptr %i.xy, i64 %8
   %i.ya = getelementptr inbounds nuw i8, ptr %i.xz, i64 400
   store i8 %.0.i36.i.i, ptr %i.ya, align 8, !tbaa !70
   br label %get_rgn.exit.i

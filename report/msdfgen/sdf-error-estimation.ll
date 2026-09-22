@@ -204,8 +204,8 @@ bb.ao:                                            ; preds = %.lr.ph, %_ZNSt6vect
   %i.ky = fcmp olt float %i.kw, %i.kx
   %i.kz = select i1 %i.ky, float %i.kx, float %i.kw ; 2 uses
   %i.la = fcmp ogt float %i.kz, 5.000000e-01
-  %8 = trunc nuw i8 %.1101.lcssa to i1
-  %9 = xor i1 %i.la, %8
+  %8 = zext i1 %i.la to i8
+  %9 = icmp ne i8 %.1101.lcssa, %8
   %i.lb = fcmp une float %i.kz, 5.000000e-01
   %or.cond3 = and i1 %i.lb, %9
   br i1 %or.cond3, label %bb.ap, label %bb.ar
@@ -608,8 +608,8 @@ bb.ao:                                            ; preds = %.lr.ph, %_ZNSt6vect
   %i.ky = fcmp olt float %i.kw, %i.kx
   %i.kz = select i1 %i.ky, float %i.kx, float %i.kw ; 2 uses
   %i.la = fcmp ogt float %i.kz, 5.000000e-01
-  %8 = trunc nuw i8 %.1101.lcssa to i1
-  %9 = xor i1 %i.la, %8
+  %8 = zext i1 %i.la to i8
+  %9 = icmp ne i8 %.1101.lcssa, %8
   %i.lb = fcmp une float %i.kz, 5.000000e-01
   %or.cond3 = and i1 %i.lb, %9
   br i1 %or.cond3, label %bb.ap, label %bb.ar

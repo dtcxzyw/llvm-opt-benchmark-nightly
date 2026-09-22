@@ -205,14 +205,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %i.ah = shl nuw nsw i64 %i.ag, 48
   %i.ai = trunc nuw i8 %.191 to i1
   %i.aj = and i64 %.2101, 9151594822576898047
-  %i.ak = trunc i64 %indvars.iv.next to i32
-  %8 = and i32 %i.ak, 255
+  %i.ak = trunc nuw nsw i64 %indvars.iv.next to i32
   %.not116 = icmp eq i8 %.289, 0
   %spec.select181 = select i1 %.not116, i8 %i.ad, i8 %.289
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %._crit_edge, %bb.a
-  %i.al = phi i32 [ %8, %._crit_edge ], [ 0, %bb.a ]
+  %i.al = phi i32 [ %i.ak, %._crit_edge ], [ 0, %bb.a ]
   %.0.lcssa179 = phi i64 [ %i.ah, %._crit_edge ], [ 0, %bb.a ]
   %.090.lcssa177 = phi i1 [ %i.ai, %._crit_edge ], [ false, %bb.a ] ; 2 uses
   %.092.lcssa175 = phi i1 [ %i.af, %._crit_edge ], [ false, %bb.a ]

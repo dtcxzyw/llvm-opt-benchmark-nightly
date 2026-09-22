@@ -204,8 +204,8 @@ _ZNK10aiVector3tIfEeqERKS0_.exit.thread:          ; preds = %_ZNK10aiVector3tIfE
   %.sroa.0.4 = phi <4 x float> [ %.sroa.0.3, %_ZNK10aiVector3tIfEeqERKS0_.exit ], [ %.sroa.0.2, %._crit_edge ] ; 2 uses
   %.sroa.18.0.lcssa191 = phi i1 [ %.sroa.18.0.lcssa192198, %_ZNK10aiVector3tIfEeqERKS0_.exit ], [ %.sroa.18.0.lcssa, %._crit_edge ]
   %.sroa.14.0.lcssa189 = phi i1 [ %.sroa.14.0.lcssa190199, %_ZNK10aiVector3tIfEeqERKS0_.exit ], [ %.sroa.14.0.lcssa, %._crit_edge ]
-  %.sroa.0.0.lcssa186 = phi i8 [ %.sroa.0.0.lcssa187201, %_ZNK10aiVector3tIfEeqERKS0_.exit ], [ %.sroa.0.0.lcssa, %._crit_edge ] ; 3 uses
-  %i.fg = phi i8 [ %spec.select, %_ZNK10aiVector3tIfEeqERKS0_.exit ], [ %.sroa.8.0.lcssa, %._crit_edge ] ; 3 uses
+  %.sroa.0.0.lcssa186 = phi i8 [ %.sroa.0.0.lcssa187201, %_ZNK10aiVector3tIfEeqERKS0_.exit ], [ %.sroa.0.0.lcssa, %._crit_edge ] ; 2 uses
+  %i.fg = phi i8 [ %spec.select, %_ZNK10aiVector3tIfEeqERKS0_.exit ], [ %.sroa.8.0.lcssa, %._crit_edge ] ; 2 uses
   %i.fh = trunc nuw i8 %i.fg to i1
   %.not = xor i1 %i.fh, true
   %i.fi = trunc nuw i8 %.sroa.0.0.lcssa186 to i1
@@ -272,9 +272,10 @@ bb.ak:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt6vectorISt10shared_ptrIN6Assimp3DXF8PolyLineEESaIS4_EE8pop_backEv.exit
 
 bb.al:                                            ; preds = %_ZNK10aiVector3tIfEeqERKS0_.exit.thread
-  %5 = or disjoint i8 %.sroa.0.0.lcssa186, 2
-  %narrow = add nuw nsw i8 %5, %i.fg
-  %i.gf = zext nneg i8 %narrow to i32             ; 2 uses
+  %5 = zext nneg i8 %.sroa.0.0.lcssa186 to i32
+  %6 = add nuw nsw i32 %5, 2
+  %i.gf = zext nneg i8 %i.fg to i32
+  %7 = add nuw nsw i32 %6, %i.gf                  ; 3 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %i.bj, i64 72 ; 2 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.bj, i64 80 ; 4 uses
   %i.gi = load ptr, ptr %i.gh, align 8            ; 3 uses
@@ -284,7 +285,7 @@ bb.al:                                            ; preds = %_ZNK10aiVector3tIfE
   br i1 %.not.i, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  store i32 %i.gf, ptr %i.gi, align 4
+  store i32 %7, ptr %i.gi, align 4
   %i.gl = load ptr, ptr %i.gh, align 8
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 4
   store ptr %i.gm, ptr %i.gh, align 8
@@ -314,7 +315,7 @@ _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.an
   %i.gx = shl nuw nsw i64 %i.gw, 2
   %i.gy = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gx) #27 ; 4 uses
   %i.gz = getelementptr inbounds i8, ptr %i.gy, i64 %i.gq ; 2 uses
-  store i32 %i.gf, ptr %i.gz, align 4
+  store i32 %7, ptr %i.gz, align 4
   %i.ha = icmp sgt i64 %i.gq, 0
   br i1 %i.ha, label %bb.ap, label %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
 
@@ -350,9 +351,7 @@ _ZNSt6vectorIjSaIjEE9push_backERKj.exit:          ; preds = %bb.am, %_ZNSt6vecto
   %i.hl = getelementptr inbounds nuw i8, ptr %i.bj, i64 24 ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.bj, i64 32 ; 4 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.bj, i64 40 ; 3 uses
-  %6 = add nuw nsw i8 %.sroa.0.0.lcssa186, %i.fg
-  %7 = add nuw nsw i8 %6, 2
-  %wide.trip.count = zext i8 %7 to i64
+  %wide.trip.count = zext nneg i32 %7 to i64
   br label %bb.ar
 
 bb.ar:                                            ; preds = %_ZNSt6vectorIjSaIjEE9push_backERKj.exit, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit

@@ -204,8 +204,7 @@ bb.l:                                             ; preds = %.critedge.i
   br i1 %.not, label %____bpf_skb_adjust_room.exit, label %.thread59
 
 .thread59:                                        ; preds = %bb.l
-  %i.aw = lshr i64 %3, 56                         ; 2 uses
-  %5 = trunc nuw nsw i64 %i.aw to i16
+  %i.aw = lshr i64 %3, 56
   %i.ax = and i64 %3, 6                           ; 2 uses
   %.not.i1762 = icmp eq i64 %i.ax, 0
   %i.ay = getelementptr i8, ptr %i.a, i64 192
@@ -344,8 +343,7 @@ skb_increase_gso_size.exit.i:                     ; preds = %.critedge.i.i, %bb.
   br label %bpf_skb_net_shrink.exit
 
 bb.x:                                             ; preds = %.critedge.i
-  %i.cr = lshr i64 %3, 56                         ; 3 uses
-  %6 = trunc nuw nsw i64 %i.cr to i16             ; 2 uses
+  %i.cr = lshr i64 %3, 56                         ; 2 uses
   %i.cs = and i64 %3, 6                           ; 3 uses
   %.not.i17 = icmp eq i64 %i.cs, 0                ; 2 uses
   %i.ct = getelementptr i8, ptr %i.a, i64 192     ; 2 uses
@@ -360,7 +358,6 @@ bb.y:                                             ; preds = %.thread59, %bb.x
   %i.cz = phi ptr [ %i.ay, %.thread59 ], [ %i.ct, %bb.x ] ; 2 uses
   %.not.i1763 = phi i1 [ %.not.i1762, %.thread59 ], [ %.not.i17, %bb.x ] ; 2 uses
   %i.da = phi i64 [ %i.ax, %.thread59 ], [ %i.cs, %bb.x ] ; 2 uses
-  %7 = phi i16 [ %5, %.thread59 ], [ %6, %bb.x ]  ; 2 uses
   %i.db = phi i64 [ %i.aw, %.thread59 ], [ %i.cr, %bb.x ] ; 2 uses
   %i.dc = getelementptr i8, ptr %.val2.i, i64 %i.as
   %i.dd = getelementptr i8, ptr %i.dc, i64 24
@@ -383,8 +380,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x
   %i.dk = phi ptr [ %i.cz, %bb.z ], [ %i.cz, %bb.y ], [ %i.ct, %bb.x ]
   %.not.i1764 = phi i1 [ %.not.i1763, %bb.z ], [ %.not.i1763, %bb.y ], [ %.not.i17, %bb.x ]
   %i.dl = phi i64 [ %i.da, %bb.z ], [ %i.da, %bb.y ], [ %i.cs, %bb.x ]
-  %8 = phi i16 [ %7, %bb.z ], [ %7, %bb.y ], [ %6, %bb.x ]
-  %i.dm = phi i64 [ %i.db, %bb.z ], [ %i.db, %bb.y ], [ %i.cr, %bb.x ]
+  %i.dm = phi i64 [ %i.db, %bb.z ], [ %i.db, %bb.y ], [ %i.cr, %bb.x ] ; 2 uses
   %i.dn = zext i8 %i.di to i32
   %i.do = add nuw nsw i32 %i.e, %i.dn
   %i.dp = getelementptr i8, ptr %i.a, i64 126
@@ -471,7 +467,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.ex = getelementptr i8, ptr %i.a, i64 182     ; 2 uses
   %i.ey = load i16, ptr %i.ex, align 2
   tail call fastcc void @bpf_skb_net_hdr_push(ptr noundef %i.a, i32 noundef range(i32 -65536, 65576) %.0.i, i32 noundef range(i32 0, 4096) %i.e) #42
-  %i.ez = sub i16 %i.ev, %8
+  %5 = trunc nuw nsw i64 %i.dm to i16
+  %i.ez = sub i16 %i.ev, %5
   %i.fa = getelementptr i8, ptr %i.a, i64 178
   store i16 %i.ez, ptr %i.fa, align 2
   %i.fb = getelementptr i8, ptr %i.a, i64 176

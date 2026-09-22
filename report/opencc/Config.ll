@@ -205,7 +205,6 @@ _ZN9rapidjson8internal6HasherINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAlloc
   %.sroa.0.6.extract.shift = lshr i64 %i.l, 48
   %.sroa.0.5.extract.shift = lshr i64 %i.l, 40
   %i.m = lshr i32 %1, 24
-  %.sroa.0.3.extract.trunc = zext nneg i32 %i.m to i64
   %i.n = lshr i32 %1, 16
   %i.o = lshr i32 %1, 8
   %i.p = and i32 %1, 255
@@ -220,7 +219,8 @@ _ZN9rapidjson8internal6HasherINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAlloc
   %i.w = zext nneg i32 %i.v to i64
   %i.x = xor i64 %.09.i.1.i, %i.w
   %.09.i.2.i = mul i64 %i.x, 1099511628211
-  %i.y = xor i64 %.09.i.2.i, %.sroa.0.3.extract.trunc
+  %2 = zext nneg i32 %i.m to i64
+  %i.y = xor i64 %.09.i.2.i, %2
   %.09.i.3.i = mul i64 %i.y, 1099511628211
   %isneg = icmp slt i32 %1, 0
   %i.z = select i1 %isneg, i64 255, i64 0
@@ -623,7 +623,6 @@ _ZN9rapidjson8internal6HasherINS_4UTF8IcEENS_12CrtAllocatorEE11WriteNumberERKNS5
   %.sroa.0.6.extract.shift = lshr i64 %i.l, 48
   %.sroa.0.5.extract.shift = lshr i64 %i.l, 40
   %i.m = lshr i32 %1, 24
-  %.sroa.0.3.extract.trunc = zext nneg i32 %i.m to i64
   %i.n = lshr i32 %1, 16
   %i.o = lshr i32 %1, 8
   %i.p = and i32 %1, 255
@@ -638,7 +637,8 @@ _ZN9rapidjson8internal6HasherINS_4UTF8IcEENS_12CrtAllocatorEE11WriteNumberERKNS5
   %i.w = zext nneg i32 %i.v to i64
   %i.x = xor i64 %.09.i.1.i, %i.w
   %.09.i.2.i = mul i64 %i.x, 1099511628211
-  %i.y = xor i64 %.09.i.2.i, %.sroa.0.3.extract.trunc
+  %2 = zext nneg i32 %i.m to i64
+  %i.y = xor i64 %.09.i.2.i, %2
   %.09.i.3.i = mul i64 %i.y, 1099511628211
   %isneg = icmp slt i32 %1, 0
   %i.z = select i1 %isneg, i64 255, i64 0

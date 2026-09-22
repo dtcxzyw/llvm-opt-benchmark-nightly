@@ -205,12 +205,11 @@ bb.iq:                                            ; preds = %bb.ip
   %i.tp = extractvalue { i64, double } %i.tm, 1, !dbg !106393
   %i.tq = fptrunc double %i.tp to float, !dbg !106393
   %.sroa.39.0.i = select i1 %i.to, float %i.tq, float undef, !dbg !106393
-  %i.tr = trunc i64 %i.tn to i32, !dbg !106393
-  %.sroa.08.0.i = and i32 %i.tr, 1, !dbg !106393
+  %i.tr = trunc nuw i64 %i.tn to i32, !dbg !106393
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !dbg !106394, !noalias !105719
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i64 24, i1 false), !dbg !106394, !noalias !105719
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !106395, !noalias !105719
-  store i32 %.sroa.08.0.i, ptr %i.ai, align 4, !dbg !106395, !noalias !105719
+  store i32 %i.tr, ptr %i.ai, align 4, !dbg !106395, !noalias !105719
   %i.ts = getelementptr inbounds nuw i8, ptr %i.ai, i64 4, !dbg !106395
   store float %.sroa.39.0.i, ptr %i.ts, align 4, !dbg !106395, !noalias !105719
   %i.tt = call { ptr, ptr } @_RNvXs1M_NtCs1LHh8CLbVkQ_11polars_core10named_fromNtNtB8_6series6SeriesINtB6_9NamedFromRAINtNtCscgRAwXFJnXP_4core6option6OptionfEj1_SB1o_E3newCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.aj, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.ai), !dbg !106396, !noalias !105719 ; 2 uses
@@ -613,12 +612,11 @@ bb.ci:                                            ; preds = %bb.ch
   %i.fy = extractvalue { i64, double } %i.fv, 1, !dbg !116991
   %i.fz = fptrunc double %i.fy to float, !dbg !116991
   %.sroa.310.0 = select i1 %i.fx, float %i.fz, float undef, !dbg !116991
-  %i.ga = trunc i64 %i.fw to i32, !dbg !116991
-  %.sroa.09.0 = and i32 %i.ga, 1, !dbg !116991
+  %i.ga = trunc nuw i64 %i.fw to i32, !dbg !116991
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !dbg !116992
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.af, ptr noundef nonnull align 8 dereferenceable(24) %i.am, i64 24, i1 false), !dbg !116992
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !dbg !116993
-  store i32 %.sroa.09.0, ptr %i.ae, align 4, !dbg !116993
+  store i32 %i.ga, ptr %i.ae, align 4, !dbg !116993
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ae, i64 4, !dbg !116993
   store float %.sroa.310.0, ptr %i.gb, align 4, !dbg !116993
   %i.gc = call { ptr, ptr } @_RNvXs1M_NtCs1LHh8CLbVkQ_11polars_core10named_fromNtNtB8_6series6SeriesINtB6_9NamedFromRAINtNtCscgRAwXFJnXP_4core6option6OptionfEj1_SB1o_E3newCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.af, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.ae), !dbg !116994 ; 2 uses

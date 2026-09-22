@@ -202,8 +202,9 @@ _ZNSt13unordered_mapIPN3ade4NodeEN12_GLOBAL__N_16Cycles13TraverseStateESt4hashIS
 
 bb.u:                                             ; preds = %_ZNSt13unordered_mapIPN3ade4NodeEN12_GLOBAL__N_16Cycles13TraverseStateESt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S5_EEE4findERSB_.exit.thread.i
   %i.bb = zext i1 %i.ba to i8
-  %i.bc = or i8 %.01347.i, %i.bb                  ; 2 uses
-  %.not.i = icmp ne i8 %i.bc, 0
+  %i.bc = or i8 %.01347.i, %i.bb
+  %.not.i = icmp ne i8 %i.bc, 0                   ; 2 uses
+  %4 = zext i1 %.not.i to i8
   br label %_ZNSt13unordered_mapIPN3ade4NodeEN12_GLOBAL__N_16Cycles13TraverseStateESt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S5_EEE4findERSB_.exit.i
 
 bb.v:                                             ; preds = %_ZNSt13unordered_mapIPN3ade4NodeEN12_GLOBAL__N_16Cycles13TraverseStateESt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S5_EEE4findERSB_.exit.thread.i
@@ -212,7 +213,7 @@ bb.v:                                             ; preds = %_ZNSt13unordered_ma
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZN3ade6HandleINS_4NodeEED2Ev.exit32.i, label %bb.aa
 
 _ZNSt13unordered_mapIPN3ade4NodeEN12_GLOBAL__N_16Cycles13TraverseStateESt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S5_EEE4findERSB_.exit.i: ; preds = %bb.s, %bb.p, %bb.u, %bb.r
-  %.215.i = phi i8 [ %i.bc, %bb.u ], [ %.01347.i, %bb.p ], [ %.01347.i, %bb.r ], [ %.01347.i, %bb.s ] ; 2 uses
+  %.215.i = phi i8 [ %4, %bb.u ], [ %.01347.i, %bb.p ], [ %.01347.i, %bb.r ], [ %.01347.i, %bb.s ] ; 2 uses
   %cond.i = phi i1 [ %.not.i, %bb.u ], [ false, %bb.p ], [ false, %bb.r ], [ false, %bb.s ]
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZN3ade6HandleINS_4NodeEED2Ev.exit.i, label %bb.w
 

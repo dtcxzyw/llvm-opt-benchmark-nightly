@@ -108,6 +108,9 @@ bb.c:                                             ; preds = %bb.a
   %i.q = icmp ugt i8 %i.i, 1
   br i1 %i.q, label %.lr.ph, label %.preheader.preheader
 
+.preheader.preheader:                             ; preds = %bb.e, %.preheader72
+  br label %.preheader
+
 bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr i8, ptr %i.k, i64 -5
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %3, ptr noundef nonnull align 1 dereferenceable(3) %i.r, i64 3, i1 false)
@@ -119,7 +122,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.g
 
 .lr.ph:                                           ; preds = %.preheader72, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 1, %.preheader72 ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 1, %.preheader72 ] ; 3 uses
   %i.x = getelementptr inbounds nuw [5 x i8], ptr %0, i64 %indvars.iv
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4
   %i.z = load i8, ptr %i.y, align 1, !tbaa !19
@@ -127,27 +130,15 @@ bb.d:                                             ; preds = %bb.c
   %i.ab = mul nsw i32 %1, %i.aa
   %i.ac = ashr i32 %i.ab, 8
   %.not69 = icmp sgt i32 %2, %i.ac
-  br i1 %.not69, label %bb.e, label %.split.loop.exit
+  br i1 %.not69, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.j
   br i1 %exitcond.not, label %.preheader.preheader, label %.lr.ph, !llvm.loop !16
 
-.split.loop.exit:                                 ; preds = %.lr.ph
-  %5 = and i64 %indvars.iv, 255
-  %.not70 = icmp eq i64 %5, 0
-  br i1 %.not70, label %.preheader.preheader, label %bb.f
-
-.preheader.preheader:                             ; preds = %bb.e, %.preheader72, %.split.loop.exit
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  br label %.preheader
-
-bb.f:                                             ; preds = %.split.loop.exit
-  %6 = and i64 %indvars.iv, 255
-  %i.ad = getelementptr [5 x i8], ptr %0, i64 %6  ; 10 uses
+bb.f:                                             ; preds = %.lr.ph
+  %i.ad = getelementptr [5 x i8], ptr %0, i64 %indvars.iv ; 10 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 -5
   %.sroa.010.0.copyload = load i8, ptr %i.ae, align 1, !tbaa !23
   %.sroa.411.0..sroa_idx = getelementptr i8, ptr %i.ad, i64 -4
@@ -214,6 +205,9 @@ bb.f:                                             ; preds = %.split.loop.exit
   %i.ce = lshr i32 %i.cd, 23
   %i.cf = trunc i32 %i.ce to i8
   br label %bb.g
+
+.preheader:                                       ; preds = %.preheader.preheader, %.preheader
+  br label %.preheader
 
 bb.g:                                             ; preds = %bb.d, %bb.f, %bb.b
   %storemerge71 = phi i8 [ %i.g, %bb.b ], [ %i.cf, %bb.f ], [ %i.w, %bb.d ]

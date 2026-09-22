@@ -204,8 +204,7 @@ _RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   unreachable
 
 .loopexit69:                                      ; preds = %bb.d
-  %.mask = and i8 %.promoted52.i, 1
-  %spec.select104 = zext nneg i8 %.mask to i64
+  %spec.select104 = zext nneg i8 %.promoted52.i to i64
   br label %_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 bb.q:                                             ; preds = %bb.k
@@ -608,10 +607,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %.thre
   %.sroa.06.0566471 = phi i32 [ %i.e, %bb.g ], [ %i.k, %.thread ]
   %.lhs.trunc = trunc nuw nsw i32 %i.r to i16     ; 2 uses
   %i.t = udiv i16 %.lhs.trunc, 60
-  %4 = zext nneg i16 %i.t to i64
   %i.u = urem i16 %.lhs.trunc, 60
   %i.v = zext nneg i16 %i.u to i64
   %i.w = shl nuw nsw i64 %i.v, 48
+  %4 = zext nneg i16 %i.t to i64
   %i.x = shl nuw nsw i64 %4, 40
   %i.y = or disjoint i64 %i.w, %i.x
   br label %bb.h

@@ -204,8 +204,9 @@ bb.k:                                             ; preds = %bb.c
   %i.ef = fsub float %i.ea, %i.eb
   %i.eg = fadd float %i.ef, %i.ec
   %i.eh = tail call float @sqrtf(float noundef %i.eg) #12
-  %i.ei = trunc nuw nsw i32 %i.du to i16
-  %.sroa.0.0.insert.insert.i = mul nuw nsw i16 %i.ei, 257
+  %i.ei = trunc nuw nsw i32 %i.du to i16          ; 2 uses
+  %.sroa.2.0.insert.shift.i = shl nuw nsw i16 %i.ei, 8
+  %.sroa.0.0.insert.insert.i = or i16 %.sroa.2.0.insert.shift.i, %i.ei
   store i16 %.sroa.0.0.insert.insert.i, ptr %13, align 4
   %i.ej = getelementptr inbounds nuw i8, ptr %13, i64 4
   %i.ek = getelementptr inbounds nuw i8, ptr %13, i64 8
@@ -444,8 +445,9 @@ bb.a:
   %i.bp = tail call float @sqrtf(float noundef %i.bo) #12
   %i.bq = fsub float 1.000000e+00, %2
   %i.br = fsub float %i.bq, %3                    ; 2 uses
-  %i.bs = trunc nuw nsw i32 %i.bc to i16
-  %.sroa.0.0.insert.insert = mul nuw nsw i16 %i.bs, 257
+  %i.bs = trunc nuw nsw i32 %i.bc to i16          ; 2 uses
+  %.sroa.2.0.insert.shift = shl nuw nsw i16 %i.bs, 8
+  %.sroa.0.0.insert.insert = or i16 %.sroa.2.0.insert.shift, %i.bs
   store i16 %.sroa.0.0.insert.insert, ptr %1, align 4
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 4
   store float %2, ptr %i.bt, align 4, !tbaa !31
@@ -848,13 +850,13 @@ bb.d:                                             ; preds = %bb.c
   %i.ad = load ptr, ptr %i.ac, align 8
   %i.ae = tail call i16 %i.ad(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 2 uses
   %.sroa.5.0.extract.shift = lshr i16 %i.ae, 8
-  %.sroa.5.0.extract.trunc = zext nneg i16 %.sroa.5.0.extract.shift to i32 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) %3, ptr noundef nonnull align 4 dereferenceable(60) %1, i64 60, i1 false), !tbaa.struct !73
   %i.af = and i16 %i.ae, 255
   %i.ag = zext nneg i16 %i.af to i32              ; 2 uses
   %i.ah = shl nuw i32 1, %i.ag                    ; 6 uses
-  %i.ai = shl nuw i32 1, %.sroa.5.0.extract.trunc ; 3 uses
+  %4 = zext nneg i16 %.sroa.5.0.extract.shift to i32 ; 2 uses
+  %i.ai = shl nuw i32 1, %4                       ; 3 uses
   store i32 %i.ah, ptr %3, align 4, !tbaa !48
   %i.aj = load i32, ptr %1, align 4, !tbaa !48    ; 2 uses
   %i.ak = sdiv i32 %i.aj, %i.ah
@@ -898,7 +900,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph82, %._crit_edge
   %.05980 = phi i32 [ %i.an, %.lr.ph82 ], [ %i.ce, %._crit_edge ] ; 4 uses
-  %i.bn = shl i32 %.05980, %.sroa.5.0.extract.trunc ; 4 uses
+  %i.bn = shl i32 %.05980, %4                     ; 4 uses
   %i.bo = load float, ptr %i.as, align 4, !tbaa !76
   %i.bp = sitofp i32 %i.bn to float
   %i.bq = fsub float %i.bo, %i.bp

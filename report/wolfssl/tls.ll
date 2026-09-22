@@ -204,11 +204,10 @@ bb.e:                                             ; preds = %bb.d
 
 .split.loop.exit14.i:                             ; preds = %bb.d
   %i.o = trunc nuw i64 %indvars.iv.i to i32
-  %2 = and i32 %i.o, 255
   br label %TLSX_KeyShare_GroupRank.exit
 
 TLSX_KeyShare_GroupRank.exit:                     ; preds = %bb.e, %.split.loop.exit14.i
-  %.012.i = phi i32 [ %2, %.split.loop.exit14.i ], [ -1, %bb.e ] ; 3 uses
+  %.012.i = phi i32 [ %i.o, %.split.loop.exit14.i ], [ -1, %bb.e ] ; 3 uses
   %i.p = icmp ne i32 %.012.i, -1
   %i.q = icmp slt i32 %.012.i, %.046103
   %or.cond = select i1 %i.p, i1 %i.q, i1 false    ; 2 uses
@@ -248,7 +247,7 @@ bb.f:                                             ; preds = %.lr.ph107, %TLSX_Ke
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f
-  %indvars.iv.i72 = phi i64 [ 0, %bb.f ], [ %indvars.iv.next.i73, %bb.h ] ; 3 uses
+  %indvars.iv.i72 = phi i64 [ 0, %bb.f ], [ %indvars.iv.next.i73, %bb.h ] ; 4 uses
   %i.z = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %indvars.iv.i72
   %i.aa = load i16, ptr %i.z, align 2, !tbaa !74
   %i.ab = icmp eq i16 %i.y, %i.aa
@@ -260,11 +259,12 @@ bb.h:                                             ; preds = %bb.g
   br i1 %exitcond.not.i74, label %TLSX_KeyShare_GroupRank.exit77.thread, label %bb.g, !llvm.loop !10
 
 TLSX_KeyShare_GroupRank.exit77:                   ; preds = %bb.g
-  %i.ac = trunc nuw i64 %indvars.iv.i72 to i32
-  %3 = and i32 %i.ac, 255                         ; 2 uses
-  %4 = icmp slt i32 %3, %.2105
-  %spec.select92 = select i1 %4, i16 %i.y, i16 %.047104
-  %spec.select93 = tail call i32 @llvm.smin.i32(i32 %3, i32 %.2105)
+  %i.ac = trunc nuw i64 %indvars.iv.i72 to i32    ; 2 uses
+  %2 = icmp ne i64 %indvars.iv.i72, 4294967295
+  %3 = icmp sgt i32 %.2105, %i.ac
+  %or.cond67 = select i1 %2, i1 %3, i1 false      ; 2 uses
+  %spec.select92 = select i1 %or.cond67, i16 %i.y, i16 %.047104
+  %spec.select93 = select i1 %or.cond67, i32 %i.ac, i32 %.2105
   br label %TLSX_KeyShare_GroupRank.exit77.thread
 
 TLSX_KeyShare_GroupRank.exit77.thread:            ; preds = %bb.h, %TLSX_KeyShare_GroupRank.exit77
@@ -518,11 +518,10 @@ bb.o:                                             ; preds = %bb.n
 
 .split.loop.exit14.i:                             ; preds = %bb.n
   %i.ap = trunc nuw i64 %indvars.iv.i to i32
-  %6 = and i32 %i.ap, 255
   br label %TLSX_KeyShare_GroupRank.exit
 
 TLSX_KeyShare_GroupRank.exit:                     ; preds = %bb.o, %.split.loop.exit14.i
-  %.012.i = phi i32 [ %6, %.split.loop.exit14.i ], [ -1, %bb.o ] ; 3 uses
+  %.012.i = phi i32 [ %i.ap, %.split.loop.exit14.i ], [ -1, %bb.o ] ; 3 uses
   %i.aq = icmp ne i32 %.012.i, -1
   %i.ar = icmp slt i32 %.012.i, %.03579
   %or.cond52 = select i1 %i.aq, i1 %i.ar, i1 false ; 2 uses
@@ -923,9 +922,6 @@ TLSX_SNI_Find.exit.thread:                        ; preds = %bb.b, %bb.d, %bb.a,
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #14

@@ -204,12 +204,11 @@ bb.p:                                             ; preds = %_ZNK4ojph5local9par
   %i.cn = and i8 %i.cm, 127
   %narrow.i149 = add nuw i8 %i.cn, 1
   %i.co = zext i8 %narrow.i149 to i32
-  %3 = icmp ne i32 %.0115218, %i.co
-  %4 = icmp slt i8 %i.cm, 0
-  %5 = trunc nuw i8 %.0112219 to i1
-  %6 = xor i1 %4, %5
-  %or.cond.a = select i1 %3, i1 true, i1 %6
-  br i1 %or.cond.a, label %_ZN4ojph5local9param_qcd7get_qccEj.exit.thread, label %bb.q
+  %3 = icmp eq i32 %.0115218, %i.co
+  %.lobit = lshr i8 %i.cm, 7
+  %4 = icmp eq i8 %.0112219, %.lobit
+  %or.cond.a = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond.a, label %bb.q, label %_ZN4ojph5local9param_qcd7get_qccEj.exit.thread
 
 bb.q:                                             ; preds = %bb.p
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
@@ -612,9 +611,9 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ag, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %bb.l
-  %2 = icmp sgt i8 %i.ad, -1
+  %.lobit = lshr i8 %i.ad, 7
+  %2 = icmp eq i8 %.069118, %.lobit
   %3 = zext i1 %2 to i8
-  %4 = xor i8 %.069118, %3
   br label %.critedge
 
 bb.n:                                             ; preds = %_ZN4ojph5local9param_nlt14get_nlt_objectEj.exit.thread
@@ -636,7 +635,7 @@ bb.o:                                             ; preds = %_ZN4ojph5local9para
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.l, %bb.m, %bb.k, %bb.n, %bb.o
-  %.173 = phi i8 [ %.072116, %bb.o ], [ %.072116, %bb.n ], [ 0, %bb.l ], [ %4, %bb.m ], [ 0, %bb.k ] ; 2 uses
+  %.173 = phi i8 [ %.072116, %bb.o ], [ %.072116, %bb.n ], [ 0, %bb.l ], [ %3, %bb.m ], [ 0, %bb.k ] ; 2 uses
   %.171 = phi i32 [ %.070117, %bb.o ], [ %i.al, %bb.n ], [ %.070117, %bb.l ], [ %.070117, %bb.m ], [ %.070117, %bb.k ] ; 3 uses
   %.1 = phi i8 [ %.069118, %bb.o ], [ %.lobit.a, %bb.n ], [ %.069118, %bb.l ], [ %.069118, %bb.m ], [ %.069118, %bb.k ] ; 2 uses
   %indvars.iv.next132 = add nuw nsw i64 %indvars.iv131, 1 ; 2 uses

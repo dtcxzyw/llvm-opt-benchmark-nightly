@@ -205,16 +205,15 @@ bb.ge:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   store i16 %.sroa.0563.0.copyload564.i.i.i, ptr %i.aao, align 8, !noalias !19918
   %.sroa.12565.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 634
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12565.0..sroa_idx.i.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12565.i.i.i, i64 30, i1 false), !noalias !19918
-  %3 = trunc nuw i16 %.sroa.0563.0.copyload564.i.i.i to i8
   %i.aap = getelementptr inbounds nuw i8, ptr %1, i64 984
   %i.aaq = load ptr, ptr %i.aap, align 8, !noalias !19918, !nonnull !80, !align !86, !noundef !80
-  %4 = and i8 %3, 1
+  %3 = trunc nuw i16 %.sroa.0563.0.copyload564.i.i.i to i8
   %.sroa.7586.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1208
   store ptr %i.aaq, ptr %.sroa.7586.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.8587.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1216
   store i8 0, ptr %.sroa.8587.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.9588.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1217
-  store i8 %4, ptr %.sroa.9588.0..sroa_idx.i.i.i, align 1, !noalias !19918
+  store i8 %3, ptr %.sroa.9588.0..sroa_idx.i.i.i, align 1, !noalias !19918
   br label %bb.fh
 
 bb.gf:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsa7TLgTh0CeG_9ssmanager.exit463.i.i.i, %_RNvMNtCsf3Ta7LF998c_4core6optionINtB2_6OptionINtNtB4_6result6ResultTNtNtNtB4_3net11socket_addr10SocketAddrNtNtNtCsczhfDQ1qNkX_5tokio3net3udp9UdpSocketENtNtNtB4_2io5error5ErrorEE6expectCsa7TLgTh0CeG_9ssmanager.exit398.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsa7TLgTh0CeG_9ssmanager.exit.i.i.i, %_RNvMNtCsf3Ta7LF998c_4core6optionINtB2_6OptionINtNtB4_6result6ResultTNtNtNtB4_3net11socket_addr10SocketAddrNtNtNtCsczhfDQ1qNkX_5tokio3net3udp9UdpSocketENtNtNtB4_2io5error5ErrorEE6expectCsa7TLgTh0CeG_9ssmanager.exit275.i.i.i, %_RNvMNtCsf3Ta7LF998c_4core6optionINtB2_6OptionINtNtB4_6result6ResultTNtNtNtB4_3net11socket_addr10SocketAddrNtNtNtCsczhfDQ1qNkX_5tokio3net3udp9UdpSocketENtNtNtB4_2io5error5ErrorEE6expectCsa7TLgTh0CeG_9ssmanager.exit219.i.i.i, %_RNvMNtCsf3Ta7LF998c_4core6optionINtB2_6OptionINtNtB4_6result6ResultTNtNtNtB4_3net11socket_addr10SocketAddrNtNtNtCsczhfDQ1qNkX_5tokio3net3udp9UdpSocketENtNtNtB4_2io5error5ErrorEE6expectCsa7TLgTh0CeG_9ssmanager.exit.i.i.i
@@ -617,16 +616,15 @@ bb.hs:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   store i16 %.sroa.0634.0.copyload635.i.i.i, ptr %i.aex, align 8, !noalias !19918
   %.sroa.12636.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 698
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12636.0..sroa_idx.i.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12636.i.i.i, i64 30, i1 false), !noalias !19918
-  %5 = trunc nuw i16 %.sroa.0634.0.copyload635.i.i.i to i8
   %i.aey = getelementptr inbounds nuw i8, ptr %1, i64 984
   %i.aez = load ptr, ptr %i.aey, align 8, !noalias !19918, !nonnull !80, !align !86, !noundef !80
-  %6 = and i8 %5, 1
+  %4 = trunc nuw i16 %.sroa.0634.0.copyload635.i.i.i to i8
   %.sroa.7658.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1208
   store ptr %i.aez, ptr %.sroa.7658.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.8659.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1216
   store i8 0, ptr %.sroa.8659.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.9660.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1217
-  store i8 %6, ptr %.sroa.9660.0..sroa_idx.i.i.i, align 1, !noalias !19918
+  store i8 %4, ptr %.sroa.9660.0..sroa_idx.i.i.i, align 1, !noalias !19918
   br label %bb.gv
 
 bb.ht:                                            ; preds = %bb.gv
@@ -1029,16 +1027,15 @@ bb.jf:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   store i16 %.sroa.0706.0.copyload707.i.i.i, ptr %i.aiz, align 8, !noalias !19918
   %.sroa.12708.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 762
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12708.0..sroa_idx.i.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12708.i.i.i, i64 30, i1 false), !noalias !19918
-  %7 = trunc nuw i16 %.sroa.0706.0.copyload707.i.i.i to i8
   %i.aja = getelementptr inbounds nuw i8, ptr %1, i64 984
   %i.ajb = load ptr, ptr %i.aja, align 8, !noalias !19918, !nonnull !80, !align !86, !noundef !80
-  %8 = and i8 %7, 1
+  %5 = trunc nuw i16 %.sroa.0706.0.copyload707.i.i.i to i8
   %.sroa.7730.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1208
   store ptr %i.ajb, ptr %.sroa.7730.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.8731.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1216
   store i8 0, ptr %.sroa.8731.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.9732.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1217
-  store i8 %8, ptr %.sroa.9732.0..sroa_idx.i.i.i, align 1, !noalias !19918
+  store i8 %5, ptr %.sroa.9732.0..sroa_idx.i.i.i, align 1, !noalias !19918
   br label %bb.ii
 
 bb.jg:                                            ; preds = %_RNvMNtCsf3Ta7LF998c_4core6optionINtB2_6OptionINtNtB4_6result6ResultTNtNtNtB4_3net11socket_addr10SocketAddrNtNtNtCsczhfDQ1qNkX_5tokio3net3udp9UdpSocketENtNtNtB4_2io5error5ErrorEE6expectCsa7TLgTh0CeG_9ssmanager.exit275.i.i.i
@@ -1441,16 +1438,15 @@ bb.kw:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   store i16 %.sroa.0778.0.copyload779.i.i.i, ptr %i.aoa, align 8, !noalias !19918
   %.sroa.12780.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 826
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12780.0..sroa_idx.i.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12780.i.i.i, i64 30, i1 false), !noalias !19918
-  %9 = trunc nuw i16 %.sroa.0778.0.copyload779.i.i.i to i8
   %i.aob = getelementptr inbounds nuw i8, ptr %1, i64 984
   %i.aoc = load ptr, ptr %i.aob, align 8, !noalias !19918, !nonnull !80, !align !86, !noundef !80
-  %10 = and i8 %9, 1
+  %6 = trunc nuw i16 %.sroa.0778.0.copyload779.i.i.i to i8
   %.sroa.7802.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1208
   store ptr %i.aoc, ptr %.sroa.7802.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.8803.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1216
   store i8 0, ptr %.sroa.8803.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.9804.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1217
-  store i8 %10, ptr %.sroa.9804.0..sroa_idx.i.i.i, align 1, !noalias !19918
+  store i8 %6, ptr %.sroa.9804.0..sroa_idx.i.i.i, align 1, !noalias !19918
   br label %bb.jx
 
 bb.kx:                                            ; preds = %bb.jx
@@ -1853,16 +1849,15 @@ bb.ml:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   store i16 %.sroa.0866.0.copyload867.i.i.i, ptr %i.ask, align 8, !noalias !19918
   %.sroa.12868.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 890
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12868.0..sroa_idx.i.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12868.i.i.i, i64 30, i1 false), !noalias !19918
-  %11 = trunc nuw i16 %.sroa.0866.0.copyload867.i.i.i to i8
   %i.asl = getelementptr inbounds nuw i8, ptr %1, i64 984
   %i.asm = load ptr, ptr %i.asl, align 8, !noalias !19918, !nonnull !80, !align !86, !noundef !80
-  %12 = and i8 %11, 1
+  %7 = trunc nuw i16 %.sroa.0866.0.copyload867.i.i.i to i8
   %.sroa.7890.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1208
   store ptr %i.asm, ptr %.sroa.7890.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.8891.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1216
   store i8 0, ptr %.sroa.8891.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.9892.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1217
-  store i8 %12, ptr %.sroa.9892.0..sroa_idx.i.i.i, align 1, !noalias !19918
+  store i8 %7, ptr %.sroa.9892.0..sroa_idx.i.i.i, align 1, !noalias !19918
   br label %bb.lo
 
 bb.mm:                                            ; preds = %_RNvMNtCsf3Ta7LF998c_4core6optionINtB2_6OptionINtNtB4_6result6ResultTNtNtNtB4_3net11socket_addr10SocketAddrNtNtNtCsczhfDQ1qNkX_5tokio3net3udp9UdpSocketENtNtNtB4_2io5error5ErrorEE6expectCsa7TLgTh0CeG_9ssmanager.exit398.i.i.i
@@ -2265,16 +2260,15 @@ bb.oc:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   store i16 %.sroa.0936.0.copyload937.i.i.i, ptr %i.axl, align 8, !noalias !19918
   %.sroa.12938.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 954
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12938.0..sroa_idx.i.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.12938.i.i.i, i64 30, i1 false), !noalias !19918
-  %13 = trunc nuw i16 %.sroa.0936.0.copyload937.i.i.i to i8
   %i.axm = getelementptr inbounds nuw i8, ptr %1, i64 984
   %i.axn = load ptr, ptr %i.axm, align 8, !noalias !19918, !nonnull !80, !align !86, !noundef !80
-  %14 = and i8 %13, 1
+  %8 = trunc nuw i16 %.sroa.0936.0.copyload937.i.i.i to i8
   %.sroa.7960.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1208
   store ptr %i.axn, ptr %.sroa.7960.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.8961.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1216
   store i8 0, ptr %.sroa.8961.0..sroa_idx.i.i.i, align 8, !noalias !19918
   %.sroa.9962.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1217
-  store i8 %14, ptr %.sroa.9962.0..sroa_idx.i.i.i, align 1, !noalias !19918
+  store i8 %8, ptr %.sroa.9962.0..sroa_idx.i.i.i, align 1, !noalias !19918
   br label %bb.nd
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtB4_3net11socket_addr10SocketAddrEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i: ; preds = %bb.oe, %bb.od, %bb.gf
@@ -2677,9 +2671,9 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = load ptr, ptr %i.z, align 8, !nonnull !80, !align !86, !noundef !80
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 21033
   %i.ac = load i8, ptr %i.ab, align 1, !range !93, !noundef !80
-  %. = zext nneg i8 %i.ac to i32
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 36
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.ad, ptr noundef nonnull align 16 dereferenceable(32) %1, i64 32, i1 false)
+  %. = zext nneg i8 %i.ac to i32
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   store i32 %., ptr %i.ae, align 16
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 2792

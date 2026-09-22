@@ -204,7 +204,6 @@ bb.a:
   %.sroa.0.sroa.8.0.extract.shift = lshr i64 %0, 48
   %.sroa.0.sroa.8.0.extract.trunc = trunc nuw nsw i64 %.sroa.0.sroa.8.0.extract.shift to i32
   %.sroa.0.sroa.9.0.extract.shift = lshr i64 %0, 56
-  %.sroa.0.sroa.9.0.extract.trunc = trunc nuw nsw i64 %.sroa.0.sroa.9.0.extract.shift to i32
   %i.g = and i32 %.sroa.0.sroa.0.0.extract.trunc, 255
   %i.h = and i32 %i.b, 255
   %i.i = add nuw nsw i32 %i.g, %i.h
@@ -217,7 +216,8 @@ bb.a:
   %i.p = add nuw nsw i32 %i.n, %i.o
   %i.q = and i32 %.sroa.0.sroa.8.0.extract.trunc, 255
   %i.r = add nuw nsw i32 %i.p, %i.q
-  %i.s = add nuw nsw i32 %i.r, %.sroa.0.sroa.9.0.extract.trunc
+  %2 = trunc nuw nsw i64 %.sroa.0.sroa.9.0.extract.shift to i32
+  %i.s = add nuw nsw i32 %i.r, %2
   %.sroa.10.8.extract.trunc = trunc i64 %1 to i32
   %i.t = and i32 %.sroa.10.8.extract.trunc, 255
   %i.u = add nuw nsw i32 %i.s, %i.t

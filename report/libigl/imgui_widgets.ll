@@ -205,11 +205,13 @@ _ZN5ImGui7SpacingEv.exit:                         ; preds = %bb.bc, %bb.bb, %bb.
   %i.ia = call noundef zeroext i1 @_ZN5ImGui12ColorPicker4EPKcPfiPKf(ptr noundef nonnull @.str.58, ptr noundef nonnull %1, i32 noundef %i.hx, ptr noundef nonnull %i.hz)
   %i.ib = zext i1 %i.ia to i8
   %i.ic = or i8 %.3204, %i.ib
+  %10 = icmp ne i8 %i.ic, 0
+  %11 = zext i1 %10 to i8
   call void @_ZN5ImGui8EndPopupEv()
   br label %bb.bd
 
 bb.bd:                                            ; preds = %_ZN5ImGui7SpacingEv.exit, %bb.az
-  %.4205 = phi i8 [ %i.ic, %_ZN5ImGui7SpacingEv.exit ], [ %.3204, %bb.az ]
+  %.4205 = phi i8 [ %11, %_ZN5ImGui7SpacingEv.exit ], [ %.3204, %bb.az ]
   %.0194 = phi ptr [ %i.ho, %_ZN5ImGui7SpacingEv.exit ], [ null, %bb.az ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #36
   br label %bb.be
@@ -612,10 +614,12 @@ bb.ce:                                            ; preds = %bb.cd
   %i.ne = call noundef zeroext i1 @_ZN5ImGui10ColorEdit4EPKcPfi(ptr noundef nonnull @.str.70, ptr noundef nonnull %1, i32 noundef %i.nd)
   %i.nf = zext i1 %i.ne to i8
   %i.ng = or i8 %.9, %i.nf
+  %39 = icmp ne i8 %i.ng, 0
+  %40 = zext i1 %39 to i8
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.cd, %bb.ce
-  %.10 = phi i8 [ %i.ng, %bb.ce ], [ %.9, %bb.cd ] ; 2 uses
+  %.10 = phi i8 [ %40, %bb.ce ], [ %.9, %bb.cd ]  ; 2 uses
   %i.nh = and i32 %.3, 4194304
   %.not427 = icmp ne i32 %i.nh, 0
   %i.ni = and i32 %.3, 3145728
@@ -628,10 +632,12 @@ bb.cg:                                            ; preds = %bb.cf
   %i.nl = call noundef zeroext i1 @_ZN5ImGui10ColorEdit4EPKcPfi(ptr noundef nonnull @.str.71, ptr noundef nonnull %1, i32 noundef %i.nk)
   %i.nm = zext i1 %i.nl to i8
   %i.nn = or i8 %.10, %i.nm
+  %41 = icmp ne i8 %i.nn, 0
+  %42 = zext i1 %41 to i8
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cf
-  %.11 = phi i8 [ %i.nn, %bb.cg ], [ %.10, %bb.cf ] ; 2 uses
+  %.11 = phi i8 [ %42, %bb.cg ], [ %.10, %bb.cf ] ; 2 uses
   call void @_ZN5ImGui12PopItemWidthEv()
   br i1 %.1385.not, label %.thread, label %bb.ci
 

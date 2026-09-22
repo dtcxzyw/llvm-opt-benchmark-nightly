@@ -205,7 +205,7 @@ _ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph: ; preds = %_ZNK4pbrt10In
   %.0104.ph1143 = phi float [ undef, %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %i.pe, %.outer ] ; 4 uses
   %.0107.ph1142 = phi float [ 1.000000e+00, %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %.1108, %.outer ] ; 2 uses
   %.0111.ph1141 = phi i1 [ false, %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %i.pi, %.outer ]
-  %.0115.ph1140 = phi i1 [ false, %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %35, %.outer ] ; 2 uses
+  %.0115.ph1140 = phi i8 [ 0, %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %37, %.outer ] ; 2 uses
   %.sroa.23.0.ph1139 = phi <2 x float> [ zeroinitializer, %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %.sroa.23.4, %.outer ] ; 4 uses
   %.sroa.0482.0.ph1138 = phi <2 x float> [ zeroinitializer, %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %.sroa.0482.4, %.outer ] ; 4 uses
   %i.bd = phi <2 x float> [ splat (float 1.000000e+00), %_ZNK4pbrt10Integrator9IntersectERKNS_3RayEf.exit.lr.ph.lr.ph ], [ %.sroa.19.4, %.outer ] ; 9 uses
@@ -608,8 +608,9 @@ bb.y:                                             ; preds = %bb.w, %bb.x
 
 bb.z:                                             ; preds = %bb.v, %.loopexit1328
   %i.km = load i8, ptr %i.z, align 8, !tbaa !432, !range !136, !noundef !137
-  %i.kn = trunc nuw i8 %i.km to i1
-  %or.cond7 = select i1 %i.kn, i1 %.0115.ph1140, i1 false
+  %35 = trunc nuw i8 %i.km to i1
+  %i.kn = trunc nuw i8 %.0115.ph1140 to i1
+  %or.cond7 = select i1 %35, i1 %i.kn, i1 false
   br i1 %or.cond7, label %_ZN4pbrt4BSDF10RegularizeEv.exit, label %bb.aa
 
 _ZN4pbrt4BSDF10RegularizeEv.exit:                 ; preds = %bb.z
@@ -868,7 +869,8 @@ _ZNK4pbrt4BSDF3PDFENS_7Vector3IfEES2_NS_13TransportModeENS_18BxDFReflTransFlagsE
   %.not604 = icmp eq i32 %i.pg, 0
   %i.ph = and i32 %i.pf, 16
   %i.pi = icmp ne i32 %i.ph, 0                    ; 3 uses
-  %35 = or i1 %.0115.ph1140, %.not604
+  %36 = zext i1 %.not604 to i8
+  %37 = or i8 %.0115.ph1140, %36
   %i.pj = and i32 %i.pf, 2
   %.not605 = icmp eq i32 %i.pj, 0
   %i.pk = load float, ptr %i.ao, align 4          ; 3 uses

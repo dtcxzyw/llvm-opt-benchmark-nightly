@@ -205,9 +205,9 @@ bb.lx:                                            ; preds = %.thread1153, %bb.lw
   %.8501.i = phi ptr [ %i.cok, %.thread1153 ], [ %.0493.i, %bb.lw ]
   %.4488.i = phi i64 [ %i.coa, %.thread1153 ], [ %.0484.i, %bb.lw ]
   %i.coo = getelementptr inbounds i8, ptr %.8501.i, i64 -8 ; 2 uses
-  %6 = zext nneg i8 %.01040.ph to i64
-  %7 = shl i64 %.01041, 1
-  %i.cop = or disjoint i64 %7, %6
+  %6 = shl i64 %.01041, 1
+  %7 = zext nneg i8 %.01040.ph to i64
+  %i.cop = or disjoint i64 %6, %7
   store i64 %i.cop, ptr %i.coo, align 8, !tbaa !398
   %i.coq = zext i1 %i.cme to i64
   %i.cor = shl nuw nsw i64 %i.cmd, %i.coq
@@ -610,9 +610,9 @@ bb.su:                                            ; preds = %bb.st
 bb.sv:                                            ; preds = %bb.st
   %i.eqw = zext i1 %i.epv to i8
   %i.eqx = getelementptr inbounds i8, ptr %.6369.i, i64 -8 ; 2 uses
-  %8 = zext nneg i8 %.01042.ph to i64
-  %9 = shl i64 %.01044, 1
-  %i.eqy = or disjoint i64 %9, %8
+  %8 = shl i64 %.01044, 1
+  %9 = zext nneg i8 %.01042.ph to i64
+  %i.eqy = or disjoint i64 %8, %9
   store i64 %i.eqy, ptr %i.eqx, align 8, !tbaa !398
   %i.eqz = zext i1 %i.epv to i64
   %i.era = shl nuw nsw i64 %i.epu, %i.eqz
@@ -1015,9 +1015,9 @@ bb.md:                                            ; preds = %.thread804, %bb.mb
   %.8506.i = phi ptr [ %i.col, %.thread804 ], [ %.0498.i, %bb.mb ] ; 2 uses
   %.4493.i = phi i64 [ %i.cob, %.thread804 ], [ %.0489.i, %bb.mb ]
   %i.cop = getelementptr inbounds i8, ptr %.8506.i, i64 -16 ; 2 uses
-  %7 = zext nneg i8 %.0687.ph to i64
-  %8 = shl i64 %.0688, 1
-  %i.coq = or disjoint i64 %8, %7
+  %7 = shl i64 %.0688, 1
+  %8 = zext nneg i8 %.0687.ph to i64
+  %i.coq = or disjoint i64 %7, %8
   store i64 %i.coq, ptr %i.cop, align 8, !tbaa !436
   %i.cor = getelementptr inbounds i8, ptr %.8506.i, i64 -8
   store ptr %.0689.ph, ptr %i.cor, align 8, !tbaa !437
@@ -1420,9 +1420,9 @@ bb.tn:                                            ; preds = %bb.tm
 
 bb.to:                                            ; preds = %bb.tm
   %i.erh = getelementptr inbounds i8, ptr %.6374.i, i64 -16 ; 3 uses
-  %9 = zext nneg i8 %.0691.ph to i64
-  %10 = shl i64 %.0693, 1
-  %i.eri = or disjoint i64 %10, %9
+  %9 = shl i64 %.0693, 1
+  %10 = zext nneg i8 %.0691.ph to i64
+  %i.eri = or disjoint i64 %9, %10
   store i64 %i.eri, ptr %i.erh, align 8, !tbaa !436
   %i.erj = getelementptr inbounds i8, ptr %.6374.i, i64 -8
   store ptr %.0694.ph, ptr %i.erj, align 8, !tbaa !437

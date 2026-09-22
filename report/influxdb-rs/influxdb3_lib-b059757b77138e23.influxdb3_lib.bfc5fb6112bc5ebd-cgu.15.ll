@@ -204,7 +204,7 @@ bb.nw:                                            ; preds = %.thread91, %bb.nu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !noalias !7972
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.sroa.13.0..sroa_idx.i, i64 24, i1 false), !noalias !7972
   %.sroa.0.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 464
-  %.sroa.0.sroa.14.0.copyload.i = load i8, ptr %.sroa.0.sroa.14.0..sroa_idx.i, align 16, !noalias !7972
+  %.sroa.0.sroa.14.0.copyload.i = load i8, ptr %.sroa.0.sroa.14.0..sroa_idx.i, align 16, !noalias !7972 ; 3 uses
   %.sroa.0.sroa.16.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 466
   %.sroa.0.sroa.16.0.copyload.i = load i8, ptr %.sroa.0.sroa.16.0..sroa_idx.i, align 2, !noalias !7972
   %.sroa.0.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 472
@@ -222,11 +222,13 @@ bb.nw:                                            ; preds = %.thread91, %bb.nu
   store i8 %.sroa.0.sroa.16.0.copyload.i, ptr %i.aql, align 2, !noalias !7972
   store <4 x i8> <i8 1, i8 1, i8 1, i8 0>, ptr %i.apx, align 1, !noalias !7972
   %i.aqm = getelementptr inbounds nuw i8, ptr %1, i64 608 ; 2 uses
+  %.not.i105.i = icmp eq i8 %.sroa.0.sroa.14.0.copyload.i, 2
   %i.aqn = trunc nuw i64 %.sroa.0.sroa.8.0.copyload.i to i1
   %.sroa.01.0.i.i.i = select i1 %i.aqn, i64 %.sroa.0.sroa.9.0.copyload.i, i64 10000
-  %.mask.i.i = and i8 %.sroa.0.sroa.14.0.copyload.i, 1 ; 2 uses
-  %.sroa.0.0.i.i.i = zext nneg i8 %.mask.i.i to i64
-  %i.aqo = icmp eq i8 %.mask.i.i, 0
+  %narrow.i.i = select i1 %.not.i105.i, i8 0, i8 %.sroa.0.sroa.14.0.copyload.i
+  %.sroa.0.0.i.i.i = zext nneg i8 %narrow.i.i to i64
+  %3 = and i8 %.sroa.0.sroa.14.0.copyload.i, 1
+  %i.aqo = icmp eq i8 %3, 0
   %.sroa.3.0.i.i = select i1 %i.aqo, i64 undef, i64 %.sroa.01.0.i.i.i
   store i64 %.sroa.0.0.i.i.i, ptr %i.aqm, align 16, !noalias !7972
   %i.aqp = getelementptr inbounds nuw i8, ptr %1, i64 616 ; 2 uses

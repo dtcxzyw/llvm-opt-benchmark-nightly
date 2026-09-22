@@ -205,18 +205,23 @@ bb.a:
   br i1 %i.e, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
-  %.016.lcssa = phi i1 [ true, %bb.a ], [ %.117, %bb.f ] ; 2 uses
+  %.016.lcssa = phi i8 [ 1, %bb.a ], [ %.117, %bb.f ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !143  ; 2 uses
   %.not = icmp eq ptr %i.g, null
   br i1 %.not, label %bb.k, label %bb.j
 
 .lr.ph:                                           ; preds = %bb.a, %bb.f
-  %.01630 = phi i1 [ %.117, %bb.f ], [ true, %bb.a ]
+  %.01630 = phi i8 [ %.117, %bb.f ], [ 1, %bb.a ]
   %.sroa.021.029 = phi ptr [ %i.s, %bb.f ], [ %i.b, %bb.a ] ; 2 uses
   %i.h = load ptr, ptr %.sroa.021.029, align 8, !tbaa !281
   %i.i = invoke noundef zeroext i1 @_ZN8facebook5velox5cache10CacheShard17removeFileEntriesERKN5folly10F14FastSetImNS3_23HeterogeneousAccessHashImvEENS3_26HeterogeneousAccessEqualToImvEESaImEEERSA_(ptr noundef nonnull align 8 dereferenceable(312) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2)
-          to label %bb.f unwind label %bb.b       ; 0 uses
+          to label %4 unwind label %bb.b          ; 0 uses
+
+4:                                                ; preds = %.lr.ph
+  %5 = icmp ne i8 %.01630, 0
+  %6 = zext i1 %5 to i8
+  br label %bb.f
 
 bb.b:                                             ; preds = %.lr.ph
   %i.j = landingpad { ptr, i32 }
@@ -252,8 +257,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit20: ; preds = %_ZStl
   call void @__cxa_end_catch()
   br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit20
-  %.117 = phi i1 [ false, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit20 ], [ %.01630, %.lr.ph ] ; 2 uses
+bb.f:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit20, %4
+  %.117 = phi i8 [ %6, %4 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit20 ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.021.029, i64 8 ; 2 uses
   %i.t = icmp eq ptr %i.s, %i.d
   br i1 %i.t, label %._crit_edge, label %.lr.ph
@@ -281,12 +286,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %._crit_edge
   %i.w = call noundef zeroext i1 @_ZN8facebook5velox5cache8SsdCache17removeFileEntriesERKN5folly10F14FastSetImNS3_23HeterogeneousAccessHashImvEENS3_26HeterogeneousAccessEqualToImvEESaImEEERSA_(ptr noundef nonnull align 8 dereferenceable(133) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2)
-  %4 = select i1 %i.w, i1 %.016.lcssa, i1 false
+  %7 = select i1 %i.w, i8 %.016.lcssa, i8 0
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge
-  %.2 = phi i1 [ %4, %bb.j ], [ %.016.lcssa, %._crit_edge ]
-  ret i1 %.2
+  %.2 = phi i8 [ %7, %bb.j ], [ %.016.lcssa, %._crit_edge ]
+  %8 = trunc nuw i8 %.2 to i1
+  ret i1 %8
 
 bb.l:                                             ; preds = %bb.i
   %i.x = landingpad { ptr, i32 }

@@ -204,12 +204,13 @@ bb.c:                                             ; preds = %bb.a
 ._crit_edge:                                      ; preds = %bb.z
   %.2168320.le = ptrtoaddr ptr %.2168 to i64      ; 2 uses
   %.2165322.le = ptrtoaddr ptr %.2165 to i64      ; 2 uses
+  %2 = trunc nuw i8 %.1160 to i1                  ; 4 uses
   br i1 %.1, label %bb.aa, label %bb.ac
 
 bb.d:                                             ; preds = %.lr.ph, %bb.z
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.z ] ; 3 uses
   %.0158239 = phi i1 [ false, %.lr.ph ], [ %.1, %bb.z ]
-  %.0159238 = phi i1 [ false, %.lr.ph ], [ %.1160, %bb.z ] ; 3 uses
+  %.0159238 = phi i8 [ 0, %.lr.ph ], [ %.1160, %bb.z ] ; 3 uses
   %.0161237 = phi i1 [ true, %.lr.ph ], [ %.2, %bb.z ] ; 3 uses
   %.0163236 = phi ptr [ null, %.lr.ph ], [ %.2165, %bb.z ] ; 4 uses
   %.0166235 = phi ptr [ null, %.lr.ph ], [ %.2168, %bb.z ] ; 4 uses
@@ -383,8 +384,11 @@ bb.y:                                             ; preds = %bb.w
   %i.dh = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %i.ci
   store i32 %i.dg, ptr %i.dh, align 4
   %i.di = load i32, ptr %i.bz, align 4
-  %i.dj = icmp ne i32 %i.di, 0
-  %2 = or i1 %.0159238, %i.dj
+  %3 = icmp ne i32 %i.di, 0
+  %4 = zext i1 %3 to i8
+  %5 = or i8 %.0159238, %4
+  %i.dj = icmp ne i8 %5, 0
+  %6 = zext i1 %i.dj to i8
   %i.dk = add i32 %.0172233, 1
   br label %bb.z
 
@@ -396,7 +400,7 @@ bb.z:                                             ; preds = %bb.g, %bb.d, %bb.y
   %.2168 = phi ptr [ %.1167, %bb.y ], [ %.0166235, %bb.d ], [ %.0166235, %bb.g ] ; 6 uses
   %.2165 = phi ptr [ %.1164, %bb.y ], [ %.0163236, %bb.d ], [ %.0163236, %bb.g ] ; 6 uses
   %.2 = phi i1 [ false, %bb.y ], [ %.0161237, %bb.d ], [ %.0161237, %bb.g ]
-  %.1160 = phi i1 [ %2, %bb.y ], [ %.0159238, %bb.d ], [ %.0159238, %bb.g ] ; 5 uses
+  %.1160 = phi i8 [ %6, %bb.y ], [ %.0159238, %bb.d ], [ %.0159238, %bb.g ] ; 2 uses
   %.1 = phi i1 [ %.0158239, %bb.y ], [ true, %bb.d ], [ true, %bb.g ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -510,7 +514,7 @@ middle.block:                                     ; preds = %vector.body
   %.0179.lcssa289305 = phi i32 [ 0, %.thread295 ], [ %.2181, %bb.ac ], [ %.2181, %middle.block ], [ %.2181, %.lr.ph249 ], [ %.2181, %.lr.ph249.prol.loopexit ] ; 6 uses
   %.0174.lcssa290304 = phi i32 [ 0, %.thread295 ], [ %.1175, %bb.ac ], [ %.1175, %middle.block ], [ %.1175, %.lr.ph249 ], [ %.1175, %.lr.ph249.prol.loopexit ]
   %.0172.lcssa291303 = phi i32 [ 0, %.thread295 ], [ %.1173, %bb.ac ], [ %.1173, %middle.block ], [ %.1173, %.lr.ph249 ], [ %.1173, %.lr.ph249.prol.loopexit ] ; 4 uses
-  %.0159.lcssa294302 = phi i1 [ false, %.thread295 ], [ %.1160, %bb.ac ], [ %.1160, %middle.block ], [ %.1160, %.lr.ph249 ], [ %.1160, %.lr.ph249.prol.loopexit ] ; 2 uses
+  %.0159.lcssa294302 = phi i1 [ false, %.thread295 ], [ %2, %bb.ac ], [ %2, %middle.block ], [ %2, %.lr.ph249 ], [ %2, %.lr.ph249.prol.loopexit ] ; 2 uses
   %i.eu = call i32 @ArrayGetNItems(i32 noundef %.0179.lcssa289305, ptr noundef nonnull %i.a) #16
   call void @ArrayCheckBounds(i32 noundef %.0179.lcssa289305, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c) #16
   %i.ev = shl i32 %.0179.lcssa289305, 3           ; 2 uses

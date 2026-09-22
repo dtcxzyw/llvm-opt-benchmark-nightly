@@ -205,17 +205,16 @@ bb.m:                                             ; preds = %.lr.ph188
 bb.n:                                             ; preds = %.split.us
   %i.bc = getelementptr inbounds nuw i8, ptr %2, i64 %i.ba
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !30
-  %i.be = icmp eq i8 %i.bd, 33                    ; 4 uses
+  %i.be = icmp eq i8 %i.bd, 33                    ; 3 uses
   %i.bf = add i64 %.us-phi170, 2
   %spec.select = select i1 %i.be, i64 %i.bf, i64 %i.ba ; 3 uses
+  %5 = zext i1 %i.be to i8                        ; 2 uses
   %i.bg = icmp ult i64 %spec.select, %3
   br i1 %i.bg, label %.lr.ph183, label %.thread
 
 .lr.ph183:                                        ; preds = %bb.n
-  %5 = zext i1 %i.be to i8
   %i.bh = xor i1 %i.be, true
   %i.bi = zext i1 %i.bh to i8
-  %invariant.op = xor i1 %i.be, true
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph183, %bb.u
@@ -260,9 +259,8 @@ bb.t:                                             ; preds = %bb.q
 bb.u:                                             ; preds = %bb.s, %bb.t
   %.8 = phi i64 [ %i.bz, %bb.s ], [ %i.bn, %bb.t ] ; 2 uses
   %.097.in = phi i1 [ %i.by, %bb.s ], [ %i.ca, %bb.t ]
-  %6 = trunc nuw i8 %.099182 to i1
-  %.reass.reass.reass = xor i1 %6, %invariant.op
-  %or.cond = select i1 %.reass.reass.reass, i1 %.097.in, i1 false
+  %6 = icmp eq i8 %.099182, %5
+  %or.cond = select i1 %6, i1 %.097.in, i1 false
   %.1100 = select i1 %or.cond, i8 %i.bi, i8 %.099182
   %i.cb = icmp ult i64 %.8, %3
   br i1 %i.cb, label %bb.o, label %.thread

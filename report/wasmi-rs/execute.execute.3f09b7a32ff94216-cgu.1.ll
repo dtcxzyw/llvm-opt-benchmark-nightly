@@ -202,9 +202,9 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
-  %i.cf = and i16 %.sroa.0.0.copyload, 256
-  %.not157 = icmp eq i16 %i.cf, 0
-  br i1 %.not157, label %bb.ad, label %bb.z
+  %i.cf = and i16 %.sroa.0.0.copyload, -256
+  %.not157 = icmp eq i16 %i.cf, 256
+  br i1 %.not157, label %bb.z, label %bb.ad
 
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)

@@ -204,9 +204,9 @@ bb.bt:                                            ; preds = %bb.bs
 
 bb.bu:                                            ; preds = %bb.bn, %bb.bv
   %.sroa.4113.0 = phi i32 [ %.sroa.4113.1, %bb.bv ], [ undef, %bb.bn ], !dbg !40458
-  %.sroa.0112.0 = phi i32 [ %.sroa.0112.1, %bb.bv ], [ 0, %bb.bn ], !dbg !40458
+  %.sroa.0112.0 = phi i32 [ %i.yp, %bb.bv ], [ 0, %bb.bn ], !dbg !40458
   %.sroa.4108.0 = phi i32 [ %spec.select, %bb.bv ], [ undef, %bb.bn ], !dbg !40458
-  %.sroa.0107.0 = phi i32 [ %spec.select6085, %bb.bv ], [ 0, %bb.bn ], !dbg !40458
+  %.sroa.0107.0 = phi i32 [ %i.ym, %bb.bv ], [ 0, %bb.bn ], !dbg !40458
   %.sroa.0106.0 = phi i8 [ %.sroa.84191.0.copyload, %bb.bv ], [ 2, %bb.bn ], !dbg !40458
   %.sroa.095.0 = phi i8 [ %.sroa.94192.0.copyload, %bb.bv ], [ 2, %bb.bn ], !dbg !40458
   invoke fastcc void @_RNvMs1_NtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean7mutableNtB5_19MutableBooleanArray4push(ptr noalias noundef align 8 dereferenceable(96) %i.tc, i8 noundef %.sroa.095.0)
@@ -221,13 +221,11 @@ bb.bv:                                            ; preds = %bb.bq
   %i.yk = trunc nuw i64 %.sroa.04187.0.copyload to i1, !dbg !40460
   %i.yl = trunc i64 %.sroa.54188.0.copyload to i32
   %spec.select = select i1 %i.yk, i32 %i.yl, i32 undef, !dbg !40460
-  %i.ym = trunc i64 %.sroa.04187.0.copyload to i32, !dbg !40460
-  %spec.select6085 = and i32 %i.ym, 1, !dbg !40460
+  %i.ym = trunc nuw i64 %.sroa.04187.0.copyload to i32, !dbg !40460
   %i.yn = trunc nuw i64 %.sroa.64189.0.copyload to i1, !dbg !40461
   %i.yo = trunc i64 %.sroa.74190.0.copyload to i32, !dbg !40461
   %.sroa.4113.1 = select i1 %i.yn, i32 %i.yo, i32 undef, !dbg !40461
-  %i.yp = trunc i64 %.sroa.64189.0.copyload to i32, !dbg !40461
-  %.sroa.0112.1 = and i32 %i.yp, 1, !dbg !40461
+  %i.yp = trunc nuw i64 %.sroa.64189.0.copyload to i32, !dbg !40461
   br label %bb.bu, !dbg !40462
 
 bb.bw:                                            ; preds = %bb.bu

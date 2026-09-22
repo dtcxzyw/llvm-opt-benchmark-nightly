@@ -205,12 +205,13 @@ bb.ao:                                            ; preds = %.noexc58
   %i.ew = add nuw nsw i32 %i.er, %i.ev
   %i.ex = lshr i32 %i.ew, %i.ep                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !607
-  %narrow246.i.i = mul nuw nsw i32 %i.et, %i.ex
-  %i.ey = zext nneg i32 %narrow246.i.i to i64
-  %4 = shl nuw nsw i64 %i.ey, 2                   ; 3 uses
+  %4 = zext nneg i32 %i.et to i64
+  %5 = shl nuw nsw i32 %i.ex, 2
+  %i.ey = zext nneg i32 %5 to i64
+  %6 = mul nuw nsw i64 %i.ey, %4                  ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !634)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !635
-  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.e, i64 noundef %4, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
+  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.e, i64 noundef %6, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
           to label %.noexc60 unwind label %.loopexit.split-lp150.loopexit
 
 .noexc60:                                         ; preds = %.thread226.i.i
@@ -230,9 +231,9 @@ _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !635
   store i64 %i.fb, ptr %i.q, align 8, !alias.scope !634, !noalias !607
   store ptr %i.fd, ptr %i.ci, align 8, !alias.scope !634, !noalias !607
-  store i64 %4, ptr %i.cj, align 8, !alias.scope !634, !noalias !607
+  store i64 %6, ptr %i.cj, align 8, !alias.scope !634, !noalias !607
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !607
-  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderQINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB16_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.p, ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %i.ab, i16 noundef %.sroa.5.0.extract.trunc.i173.i.i, i16 noundef %.sroa.5.0.extract.trunc.i168.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.fd, i64 noundef %4)
+  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderQINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB16_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.p, ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %i.ab, i16 noundef %.sroa.5.0.extract.trunc.i173.i.i, i16 noundef %.sroa.5.0.extract.trunc.i168.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.fd, i64 noundef %6)
           to label %bb.ar unwind label %bb.aq, !noalias !615
 
 bb.aq:                                            ; preds = %_RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECsa5QsYiPB8Gl_5image.exit.i.i
@@ -317,12 +318,13 @@ bb.ax:                                            ; preds = %bb.bg, %bb.az, %bb.
   %i.fx = add nuw nsw i32 %i.fs, %i.fw
   %i.fy = lshr i32 %i.fx, %i.fq                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !607
-  %narrow.i.i = mul nuw nsw i32 %i.fu, %i.fy
-  %i.fz = zext nneg i32 %narrow.i.i to i64
-  %5 = shl nuw nsw i64 %i.fz, 2                   ; 3 uses
+  %7 = zext nneg i32 %i.fu to i64
+  %8 = shl nuw nsw i32 %i.fy, 2
+  %i.fz = zext nneg i32 %8 to i64
+  %9 = mul nuw nsw i64 %i.fz, %7                  ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !637)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !638
-  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.d, i64 noundef %5, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
+  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.d, i64 noundef %9, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
           to label %.noexc63 unwind label %.loopexit.split-lp150.loopexit
 
 .noexc63:                                         ; preds = %.thread232.i.i
@@ -342,9 +344,9 @@ _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !638
   store i64 %i.gc, ptr %i.o, align 8, !alias.scope !637, !noalias !607
   store ptr %i.ge, ptr %i.ce, align 8, !alias.scope !637, !noalias !607
-  store i64 %5, ptr %i.cf, align 8, !alias.scope !637, !noalias !607
+  store i64 %9, ptr %i.cf, align 8, !alias.scope !637, !noalias !607
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !607
-  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderQINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB16_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.n, ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %i.ab, i16 noundef %.sroa.5.0.extract.trunc.i163.i.i, i16 noundef %.sroa.5.0.extract.trunc.i158.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.ge, i64 noundef %5)
+  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderQINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB16_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.n, ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %i.ab, i16 noundef %.sroa.5.0.extract.trunc.i163.i.i, i16 noundef %.sroa.5.0.extract.trunc.i158.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.ge, i64 noundef %9)
           to label %bb.ba unwind label %bb.az, !noalias !615
 
 bb.az:                                            ; preds = %_RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECsa5QsYiPB8Gl_5image.exit188.i.i
@@ -747,12 +749,13 @@ bb.y:                                             ; preds = %bb.w
   %i.cx = add nuw nsw i32 %i.cs, %i.cw
   %i.cy = lshr i32 %i.cx, %i.cq                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
-  %narrow246 = mul nuw nsw i32 %i.cu, %i.cy
-  %i.cz = zext nneg i32 %narrow246 to i64
-  %2 = shl nuw nsw i64 %i.cz, 2                   ; 3 uses
+  %2 = zext nneg i32 %i.cu to i64
+  %3 = shl nuw nsw i32 %i.cy, 2
+  %i.cz = zext nneg i32 %3 to i64
+  %4 = mul nuw nsw i64 %i.cz, %2                  ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !818)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !818
-  call void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, i64 noundef %2, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1), !noalias !818
+  call void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, i64 noundef %4, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1), !noalias !818
   %i.da = load i64, ptr %i.c, align 8, !range !13, !noalias !818, !noundef !6
   %i.db = trunc nuw i64 %i.da to i1
   %i.dc = load i64, ptr %i.ag, align 8, !range !14, !noalias !818, !noundef !6 ; 2 uses
@@ -770,9 +773,9 @@ _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !818
   store i64 %i.dc, ptr %i.o, align 8, !alias.scope !818
   store ptr %i.de, ptr %i.ai, align 8, !alias.scope !818
-  store i64 %2, ptr %i.aj, align 8, !alias.scope !818
+  store i64 %4, ptr %i.aj, align 8, !alias.scope !818
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB15_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.n, ptr noalias nofree noundef align 8 dereferenceable(200) %1, i16 noundef %.sroa.5.0.extract.trunc.i173, i16 noundef %.sroa.5.0.extract.trunc.i168, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.de, i64 noundef %2)
+  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB15_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.n, ptr noalias nofree noundef align 8 dereferenceable(200) %1, i16 noundef %.sroa.5.0.extract.trunc.i173, i16 noundef %.sroa.5.0.extract.trunc.i168, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.de, i64 noundef %4)
           to label %bb.ab unwind label %bb.aa
 
 bb.aa:                                            ; preds = %_RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECsa5QsYiPB8Gl_5image.exit
@@ -863,12 +866,13 @@ bb.ah:                                            ; preds = %bb.aq, %bb.aj, %bb.
   %i.dy = add nuw nsw i32 %i.dt, %i.dx
   %i.dz = lshr i32 %i.dy, %i.dr                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  %narrow = mul nuw nsw i32 %i.dv, %i.dz
-  %i.ea = zext nneg i32 %narrow to i64
-  %3 = shl nuw nsw i64 %i.ea, 2                   ; 3 uses
+  %5 = zext nneg i32 %i.dv to i64
+  %6 = shl nuw nsw i32 %i.dz, 2
+  %i.ea = zext nneg i32 %6 to i64
+  %7 = mul nuw nsw i64 %i.ea, %5                  ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !819)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !819
-  call void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %3, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1), !noalias !819
+  call void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %7, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1), !noalias !819
   %i.eb = load i64, ptr %i.b, align 8, !range !13, !noalias !819, !noundef !6
   %i.ec = trunc nuw i64 %i.eb to i1
   %i.ed = load i64, ptr %i.ac, align 8, !range !14, !noalias !819, !noundef !6 ; 2 uses
@@ -886,9 +890,9 @@ _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !819
   store i64 %i.ed, ptr %i.m, align 8, !alias.scope !819
   store ptr %i.ef, ptr %i.ae, align 8, !alias.scope !819
-  store i64 %3, ptr %i.af, align 8, !alias.scope !819
+  store i64 %7, ptr %i.af, align 8, !alias.scope !819
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB15_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.l, ptr noalias nofree noundef align 8 dereferenceable(200) %1, i16 noundef %.sroa.5.0.extract.trunc.i163, i16 noundef %.sroa.5.0.extract.trunc.i158, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.ef, i64 noundef %3)
+  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB15_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.l, ptr noalias nofree noundef align 8 dereferenceable(200) %1, i16 noundef %.sroa.5.0.extract.trunc.i163, i16 noundef %.sroa.5.0.extract.trunc.i158, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.ef, i64 noundef %7)
           to label %bb.ak unwind label %bb.aj
 
 bb.aj:                                            ; preds = %_RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECsa5QsYiPB8Gl_5image.exit188
@@ -1291,12 +1295,13 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.ed = lshr i32 %i.ec, %i.dw                   ; 2 uses
   %.sroa.5.0.extract.trunc.i.i = trunc nuw nsw i32 %i.ed to i16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !942
-  %narrow = mul nuw nsw i32 %i.ea, %i.ed
-  %i.ee = zext nneg i32 %narrow to i64
-  %7 = shl nuw nsw i64 %i.ee, 2                   ; 3 uses
+  %7 = zext nneg i32 %i.ea to i64
+  %8 = shl nuw nsw i32 %i.ed, 2
+  %i.ee = zext nneg i32 %8 to i64
+  %9 = mul nuw nsw i64 %i.ee, %7                  ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !952)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !953
-  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %7, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
+  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %9, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
           to label %.noexc807 unwind label %bb.s
 
 .noexc807:                                        ; preds = %.thread198
@@ -1322,9 +1327,9 @@ bb.aa:                                            ; preds = %.noexc807
   %i.em = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 2 uses
   store ptr %i.el, ptr %i.em, align 8, !alias.scope !952, !noalias !947
   %i.en = getelementptr inbounds nuw i8, ptr %i.aw, i64 16 ; 2 uses
-  store i64 %7, ptr %i.en, align 8, !alias.scope !952, !noalias !947
+  store i64 %9, ptr %i.en, align 8, !alias.scope !952, !noalias !947
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !942
-  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB15_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.av, ptr noalias nofree noundef nonnull align 8 dereferenceable(200) %1, i16 noundef %.sroa.5.0.extract.trunc.i99.i, i16 noundef %.sroa.5.0.extract.trunc.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.el, i64 noundef %7)
+  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB15_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.av, ptr noalias nofree noundef nonnull align 8 dereferenceable(200) %1, i16 noundef %.sroa.5.0.extract.trunc.i99.i, i16 noundef %.sroa.5.0.extract.trunc.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.el, i64 noundef %9)
           to label %bb.ad unwind label %bb.ac, !noalias !947, !inline_history !839
 
 bb.ab:                                            ; preds = %bb.ak, %bb.ac
@@ -1727,12 +1732,13 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.ed = lshr i32 %i.ec, %i.dw                   ; 2 uses
   %.sroa.5.0.extract.trunc.i.i = trunc nuw nsw i32 %i.ed to i16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !1185
-  %narrow = mul nuw nsw i32 %i.ea, %i.ed
-  %i.ee = zext nneg i32 %narrow to i64
-  %7 = shl nuw nsw i64 %i.ee, 2                   ; 3 uses
+  %7 = zext nneg i32 %i.ea to i64
+  %8 = shl nuw nsw i32 %i.ed, 2
+  %i.ee = zext nneg i32 %8 to i64
+  %9 = mul nuw nsw i64 %i.ee, %7                  ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1195)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1196
-  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %7, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
+  invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %9, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
           to label %.noexc807 unwind label %bb.s
 
 .noexc807:                                        ; preds = %.thread198
@@ -1758,9 +1764,9 @@ bb.aa:                                            ; preds = %.noexc807
   %i.em = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 2 uses
   store ptr %i.el, ptr %i.em, align 8, !alias.scope !1195, !noalias !1190
   %i.en = getelementptr inbounds nuw i8, ptr %i.aw, i64 16 ; 2 uses
-  store i64 %7, ptr %i.en, align 8, !alias.scope !1195, !noalias !1190
+  store i64 %9, ptr %i.en, align 8, !alias.scope !1195, !noalias !1190
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !1185
-  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderQINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB16_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.av, ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %1, i16 noundef %.sroa.5.0.extract.trunc.i99.i, i16 noundef %.sroa.5.0.extract.trunc.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.el, i64 noundef %7)
+  invoke fastcc void @_RNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2_15LosslessDecoderQINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB16_6cursor6CursorRShEEE19decode_image_streamCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.av, ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %1, i16 noundef %.sroa.5.0.extract.trunc.i99.i, i16 noundef %.sroa.5.0.extract.trunc.i.i, i1 noundef zeroext false, ptr noalias nofree noundef nonnull %i.el, i64 noundef %9)
           to label %bb.ad unwind label %bb.ac, !noalias !1190, !inline_history !1082
 
 bb.ab:                                            ; preds = %bb.ak, %bb.ac

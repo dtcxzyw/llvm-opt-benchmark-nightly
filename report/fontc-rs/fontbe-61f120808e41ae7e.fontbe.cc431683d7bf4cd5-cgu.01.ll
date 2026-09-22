@@ -204,10 +204,10 @@ _RNvXNtNtCsgCecv3eZDcN_5alloc3vec21spec_from_iter_nestedINtB4_3VecTNtNtCsbZq13AS
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCsgCecv3eZDcN_5alloc3vec14spec_from_iterINtB4_3VecTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEEINtB2_12SpecFromIterBU_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters6filter6FilterINtNtB2d_10filter_map9FilterMapINtNtNtNtB6_11collections5btree3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB61_22FeatureCompilationWorkINtNtB4f_13orchestration4WorkNtNtB63_13orchestration7ContextNtB7w_9AnyWorkIdNtNtB63_5error5ErrorE4exec0ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB8Q_19ClassDefBuilderImplINtNtNtB2f_6traits7collect12FromIteratorBU_E9from_iterB32_E0EE9from_iterB63_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(80) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [4 x i8], align 2                 ; 5 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
   %i.b = alloca [16 x i8], align 16               ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %i.d = alloca [4 x i8], align 2                 ; 5 uses
+  %i.d = alloca [4 x i8], align 4                 ; 4 uses
   %i.e = alloca [16 x i8], align 8                ; 6 uses
   %i.f = alloca [80 x i8], align 8                ; 8 uses
   %i.g = alloca [24 x i8], align 8                ; 9 uses
@@ -219,7 +219,6 @@ bb.a:
   store ptr %i.i, ptr %i.e, align 8, !noalias !7828
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
   store ptr %i.h, ptr %i.j, align 8, !noalias !7828
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
   %i.k = tail call { ptr, ptr } @_RNvXsk_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %1), !noalias !7825 ; 2 uses
   %i.l = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
   %.not.i.i.i.i27.i = icmp eq ptr %i.l, null
@@ -239,23 +238,31 @@ _RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6filterINtB5_6FilterINtNtB7_10fil
   %i.p = phi { ptr, ptr } [ %i.z, %.critedge.backedge.i ], [ %i.k, %bb.a ]
   %i.q = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  %.val.i.i.i.i.i = load i16, ptr %i.q, align 2, !noalias !7825 ; 2 uses
+  %.val.i.i.i.i.i = load i16, ptr %i.q, align 2, !noalias !7825
   call void @llvm.experimental.noalias.scope.decl(metadata !7830)
   %i.r = load ptr, ptr %i.e, align 8, !alias.scope !7830, !noalias !7831, !nonnull !4, !align !6, !noundef !4
   %.val.i.i.i.i.i.i = load ptr, ptr %i.r, align 8, !noalias !7832, !nonnull !4, !align !6, !noundef !4
   %i.s = load ptr, ptr %.val.i.i.i.i.i.i, align 8, !noalias !7833, !nonnull !4, !noundef !4
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.u = call { i64, i64 } @_RINvMs3_NtCsbeZck1VjBmm_8indexmap3mapINtB6_8IndexMapNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameuE12get_index_ofBO_ECshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.t, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.o), !noalias !7834 ; 2 uses
-  %i.v = extractvalue { i64, i64 } %i.u, 0
+  %i.v = extractvalue { i64, i64 } %i.u, 0        ; 2 uses
   %i.w = trunc i64 %i.v to i1
   br i1 %i.w, label %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters10filter_map19filter_map_try_foldTRNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameRNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefETNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEuINtNtNtBa_3ops12control_flow11ControlFlowB2Z_ENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB4I_22FeatureCompilationWorkINtNtB1k_13orchestration4WorkNtNtB4K_13orchestration7ContextNtB6d_9AnyWorkIdNtNtB4K_5error5ErrorE4exec0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB2Z_QNCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB8r_19ClassDefBuilderImplINtNtB7y_7collect12FromIteratorB2Z_E9from_iterINtB4_9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterB1g_B21_EB4A_EE0E0E0B4K_.exit.i.i.i.i.i, label %.critedge.backedge.i
 
 _RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters10filter_map19filter_map_try_foldTRNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameRNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefETNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEuINtNtNtBa_3ops12control_flow11ControlFlowB2Z_ENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB4I_22FeatureCompilationWorkINtNtB1k_13orchestration4WorkNtNtB4K_13orchestration7ContextNtB6d_9AnyWorkIdNtNtB4K_5error5ErrorE4exec0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB2Z_QNCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB8r_19ClassDefBuilderImplINtNtB7y_7collect12FromIteratorB2Z_E9from_iterINtB4_9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterB1g_B21_EB4A_EE0E0E0B4K_.exit.i.i.i.i.i: ; preds = %.lr.ph.i
+  %.sroa.0.0.insert.ext.i.i.i.i.i.i.i = trunc nuw i64 %i.v to i48
   %i.x = extractvalue { i64, i64 } %i.u, 1
-  %3 = trunc i64 %i.x to i16                      ; 2 uses
+  %2 = trunc i64 %i.x to i48
+  %3 = shl i48 %2, 16
+  %4 = and i48 %3, 4294901760
+  %5 = zext i16 %.val.i.i.i.i.i to i48
+  %6 = shl nuw i48 %5, 32
+  %7 = add nuw nsw i48 %6, %.sroa.0.0.insert.ext.i.i.i.i.i.i.i
+  %.sroa.0.0.insert.insert.i.i.i.i.i.i.i = add nuw nsw i48 %7, %4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !7835
-  store i16 %3, ptr %i.d, align 2, !noalias !7836
-  store i16 %.val.i.i.i.i.i, ptr %2, align 2, !noalias !7836
+  %8 = lshr i48 %.sroa.0.0.insert.insert.i.i.i.i.i.i.i, 16
+  %9 = trunc nuw i48 %8 to i32                    ; 2 uses
+  store i32 %9, ptr %i.d, align 4, !noalias !7836
   %i.y = call noundef zeroext i1 @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtBX_19ClassDefBuilderImplINtNtNtNtBb_4iter6traits7collect12FromIteratorTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEE9from_iterINtNtNtB2o_8adapters10filter_map9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB7t_22FeatureCompilationWorkINtNtB5H_13orchestration4WorkNtNtB7v_13orchestration7ContextNtB8Y_9AnyWorkIdNtNtB7v_5error5ErrorE4exec0EE0INtB7_5FnMutTRB31_EE8call_mutB7v_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.j, ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(4) %i.d), !noalias !7825
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !7835
   br i1 %i.y, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6filterINtB5_6FilterINtNtB7_10filter_map9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB4h_22FeatureCompilationWorkINtNtB2v_13orchestration4WorkNtNtB4j_13orchestration7ContextNtB5M_9AnyWorkIdNtNtB4j_5error5ErrorE4exec0ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB76_19ClassDefBuilderImplINtNtNtB9_6traits7collect12FromIteratorTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEE9from_iterB12_E0ENtNtB8w_8iterator8Iterator4nextB4j_.exit.i, label %.critedge.backedge.i
@@ -283,13 +290,11 @@ bb.b:                                             ; preds = %_RNvXs1_NtNtNtCsf3T
   unreachable
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshxhuDJfZv4T_6fontbe.exit.i: ; preds = %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6filterINtB5_6FilterINtNtB7_10filter_map9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB4h_22FeatureCompilationWorkINtNtB2v_13orchestration4WorkNtNtB4j_13orchestration7ContextNtB5M_9AnyWorkIdNtNtB4j_5error5ErrorE4exec0ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB76_19ClassDefBuilderImplINtNtNtB9_6traits7collect12FromIteratorTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEE9from_iterB12_E0ENtNtB8w_8iterator8Iterator4nextB4j_.exit.i
-  %i.ah = load ptr, ptr %i.af, align 8, !noalias !7826, !nonnull !4, !noundef !4 ; 3 uses
+  %i.ah = load ptr, ptr %i.af, align 8, !noalias !7826, !nonnull !4, !noundef !4 ; 2 uses
   %i.ai = icmp ugt i64 %i.ae, 3
   call void @llvm.assume(i1 %i.ai)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !7826
-  store i16 %3, ptr %i.ah, align 2, !noalias !7825
-  %4 = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
-  store i16 %.val.i.i.i.i.i, ptr %4, align 2, !noalias !7825
+  store i32 %9, ptr %i.ah, align 2, !noalias !7825
   store i64 %i.ae, ptr %i.g, align 8, !noalias !7826
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   store ptr %i.ah, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !7826
@@ -302,7 +307,6 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshxhu
   %i.aj = getelementptr inbounds nuw i8, ptr %i.f, i64 80 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.f, i64 72 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !7839
   store ptr %i.ak, ptr %i.b, align 16, !noalias !7840
   store ptr %i.aj, ptr %i.al, align 8, !noalias !7840
@@ -324,7 +328,7 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshxhu
   %i.ar = phi { ptr, ptr } [ %i.am, %.lr.ph.i.i.i.preheader ], [ %.be26, %.lr.ph.i.i.i.backedge ]
   %i.as = extractvalue { ptr, ptr } %i.ar, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as) ]
-  %.val.i.i.i.i.i.i.i = load i16, ptr %i.as, align 2, !noalias !7825 ; 2 uses
+  %.val.i.i.i.i.i.i.i = load i16, ptr %i.as, align 2, !noalias !7825
   call void @llvm.experimental.noalias.scope.decl(metadata !7841)
   %i.at = load ptr, ptr %i.b, align 16, !alias.scope !7841, !noalias !7842, !nonnull !4, !align !6, !noundef !4
   %.val.i.i.i.i.i.i.i.i = load ptr, ptr %i.at, align 8, !noalias !7843, !nonnull !4, !align !6, !noundef !4
@@ -334,16 +338,24 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshxhu
           to label %.noexc9.i unwind label %.loopexit.i, !noalias !7825 ; 2 uses
 
 .noexc9.i:                                        ; preds = %.lr.ph.i.i.i
-  %i.ax = extractvalue { i64, i64 } %i.aw, 0
+  %i.ax = extractvalue { i64, i64 } %i.aw, 0      ; 2 uses
   %i.ay = trunc i64 %i.ax to i1
   br i1 %i.ay, label %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters10filter_map19filter_map_try_foldTRNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameRNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefETNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEuINtNtNtBa_3ops12control_flow11ControlFlowB2Z_ENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB4I_22FeatureCompilationWorkINtNtB1k_13orchestration4WorkNtNtB4K_13orchestration7ContextNtB6d_9AnyWorkIdNtNtB4K_5error5ErrorE4exec0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB2Z_QNCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB8r_19ClassDefBuilderImplINtNtB7y_7collect12FromIteratorB2Z_E9from_iterINtB4_9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterB1g_B21_EB4A_EE0E0E0B4K_.exit.i.i.i.i.i.i.i, label %.critedge.backedge.i.i.i
 
 _RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters10filter_map19filter_map_try_foldTRNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameRNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefETNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEuINtNtNtBa_3ops12control_flow11ControlFlowB2Z_ENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB4I_22FeatureCompilationWorkINtNtB1k_13orchestration4WorkNtNtB4K_13orchestration7ContextNtB6d_9AnyWorkIdNtNtB4K_5error5ErrorE4exec0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB2Z_QNCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB8r_19ClassDefBuilderImplINtNtB7y_7collect12FromIteratorB2Z_E9from_iterINtB4_9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterB1g_B21_EB4A_EE0E0E0B4K_.exit.i.i.i.i.i.i.i: ; preds = %.noexc9.i
+  %.sroa.0.0.insert.ext.i.i.i.i.i.i.i.i.i = trunc nuw i64 %i.ax to i48
   %i.az = extractvalue { i64, i64 } %i.aw, 1
-  %6 = trunc i64 %i.az to i16                     ; 2 uses
+  %10 = trunc i64 %i.az to i48
+  %11 = shl i48 %10, 16
+  %12 = and i48 %11, 4294901760
+  %13 = zext i16 %.val.i.i.i.i.i.i.i to i48
+  %14 = shl nuw i48 %13, 32
+  %15 = add nuw nsw i48 %14, %.sroa.0.0.insert.ext.i.i.i.i.i.i.i.i.i
+  %.sroa.0.0.insert.insert.i.i.i.i.i.i.i.i.i = add nuw nsw i48 %15, %12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !7845
-  store i16 %6, ptr %i.a, align 2, !noalias !7846
-  store i16 %.val.i.i.i.i.i.i.i, ptr %5, align 2, !noalias !7846
+  %16 = lshr i48 %.sroa.0.0.insert.insert.i.i.i.i.i.i.i.i.i, 16
+  %17 = trunc nuw i48 %16 to i32                  ; 2 uses
+  store i32 %17, ptr %i.a, align 4, !noalias !7846
   %i.ba = invoke noundef zeroext i1 @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtBX_19ClassDefBuilderImplINtNtNtNtBb_4iter6traits7collect12FromIteratorTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEE9from_iterINtNtNtB2o_8adapters10filter_map9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB7t_22FeatureCompilationWorkINtNtB5H_13orchestration4WorkNtNtB7v_13orchestration7ContextNtB8Y_9AnyWorkIdNtNtB7v_5error5ErrorE4exec0EE0INtB7_5FnMutTRB31_EE8call_mutB7v_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.al, ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(4) %i.a)
           to label %.noexc10.i unwind label %.loopexit.i, !noalias !7825
 
@@ -380,10 +392,8 @@ _RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecTNtNtCsbZq13ASDQ8l_10font_types8glyph
 
 .noexc12.i:                                       ; preds = %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEE7reserveCshxhuDJfZv4T_6fontbe.exit.i.i.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6filterINtB5_6FilterINtNtB7_10filter_map9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNvXsa_NtCshxhuDJfZv4T_6fontbe8featuresNtB4h_22FeatureCompilationWorkINtNtB2v_13orchestration4WorkNtNtB4j_13orchestration7ContextNtB5M_9AnyWorkIdNtNtB4j_5error5ErrorE4exec0ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB76_19ClassDefBuilderImplINtNtNtB9_6traits7collect12FromIteratorTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tEE9from_iterB12_E0ENtNtB8w_8iterator8Iterator4nextB4j_.exit.i.i.i
   %i.bh = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !7847, !noalias !7848, !nonnull !4, !noundef !4
-  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.bd ; 2 uses
-  store i16 %6, ptr %i.bi, align 2, !noalias !7825
-  %7 = getelementptr inbounds nuw i8, ptr %i.bi, i64 2
-  store i16 %.val.i.i.i.i.i.i.i, ptr %7, align 2, !noalias !7825
+  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.bd
+  store i32 %17, ptr %i.bi, align 2, !noalias !7825
   %i.bj = add nuw nsw i64 %i.bd, 1
   store i64 %i.bj, ptr %.sroa.62.0..sroa_idx.i, align 8, !alias.scope !7847, !noalias !7848
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !7839

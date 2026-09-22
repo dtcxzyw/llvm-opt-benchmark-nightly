@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %2, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %bdrv_parent_drained_poll_single.exit.us.i.a
-  %.013.us.i = phi i1 [ %.1.us.i, %bdrv_parent_drained_poll_single.exit.us.i.a ], [ false, %.lr.ph.i ] ; 4 uses
+  %.013.us.i = phi i8 [ %.1.us.i, %bdrv_parent_drained_poll_single.exit.us.i.a ], [ 0, %.lr.ph.i ] ; 4 uses
   %.01012.us.i = phi ptr [ %i.e, %bdrv_parent_drained_poll_single.exit.us.i.a ], [ %i.c, %.lr.ph.i ] ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.01012.us.i, i64 80
   %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
@@ -221,20 +221,27 @@ bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 80
   %i.m = load ptr, ptr %i.l, align 8              ; 2 uses
   %.not.i.us.i = icmp eq ptr %i.m, null
-  br i1 %.not.i.us.i, label %bdrv_parent_drained_poll_single.exit.us.i.a, label %bb.f
+  br i1 %.not.i.us.i, label %bdrv_parent_drained_poll_single.exit.us.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.n = tail call zeroext i1 %i.m(ptr noundef nonnull %.01012.us.i) #14, !inline_history !22
-  %3 = or i1 %.013.us.i, %i.n
+  %3 = zext i1 %i.n to i8
+  %4 = or i8 %.013.us.i, %3
+  br label %bdrv_parent_drained_poll_single.exit.us.i
+
+bdrv_parent_drained_poll_single.exit.us.i:        ; preds = %bb.f, %bb.e
+  %.0.i.us.i = phi i8 [ %4, %bb.f ], [ %.013.us.i, %bb.e ]
+  %5 = icmp ne i8 %.0.i.us.i, 0
+  %6 = zext i1 %5 to i8
   br label %bdrv_parent_drained_poll_single.exit.us.i.a
 
-bdrv_parent_drained_poll_single.exit.us.i.a:      ; preds = %bb.f, %bb.e, %bb.d, %.lr.ph.split.us.i
-  %.1.us.i = phi i1 [ %.013.us.i, %.lr.ph.split.us.i ], [ %.013.us.i, %bb.d ], [ %3, %bb.f ], [ %.013.us.i, %bb.e ] ; 2 uses
+bdrv_parent_drained_poll_single.exit.us.i.a:      ; preds = %bdrv_parent_drained_poll_single.exit.us.i, %bb.d, %.lr.ph.split.us.i
+  %.1.us.i = phi i8 [ %.013.us.i, %.lr.ph.split.us.i ], [ %.013.us.i, %bb.d ], [ %6, %bdrv_parent_drained_poll_single.exit.us.i ] ; 2 uses
   %.not.us.i = icmp eq ptr %i.e, null
   br i1 %.not.us.i, label %bdrv_parent_drained_poll.exit, label %.lr.ph.split.us.i, !llvm.loop !0
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bdrv_parent_drained_poll_single.exit.i.a
-  %.013.i = phi i1 [ %.1.i, %bdrv_parent_drained_poll_single.exit.i.a ], [ false, %.lr.ph.i ] ; 3 uses
+  %.013.i = phi i8 [ %.1.i, %bdrv_parent_drained_poll_single.exit.i.a ], [ 0, %.lr.ph.i ] ; 3 uses
   %.01012.i = phi ptr [ %i.p, %bdrv_parent_drained_poll_single.exit.i.a ], [ %i.c, %.lr.ph.i ] ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.01012.i, i64 80
   %i.p = load ptr, ptr %i.o, align 8              ; 2 uses
@@ -247,21 +254,29 @@ bb.g:                                             ; preds = %.lr.ph.split.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 80
   %i.u = load ptr, ptr %i.t, align 8              ; 2 uses
   %.not.i.i = icmp eq ptr %i.u, null
-  br i1 %.not.i.i, label %bdrv_parent_drained_poll_single.exit.i.a, label %bb.h
+  br i1 %.not.i.i, label %bdrv_parent_drained_poll_single.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.v = tail call zeroext i1 %i.u(ptr noundef nonnull %.01012.i) #14, !inline_history !22
-  %4 = or i1 %.013.i, %i.v
+  %7 = zext i1 %i.v to i8
+  %8 = or i8 %.013.i, %7
+  br label %bdrv_parent_drained_poll_single.exit.i
+
+bdrv_parent_drained_poll_single.exit.i:           ; preds = %bb.h, %bb.g
+  %.0.i.i = phi i8 [ %8, %bb.h ], [ %.013.i, %bb.g ]
+  %9 = icmp ne i8 %.0.i.i, 0
+  %10 = zext i1 %9 to i8
   br label %bdrv_parent_drained_poll_single.exit.i.a
 
-bdrv_parent_drained_poll_single.exit.i.a:         ; preds = %bb.h, %bb.g, %.lr.ph.split.i
-  %.1.i = phi i1 [ %.013.i, %.lr.ph.split.i ], [ %4, %bb.h ], [ %.013.i, %bb.g ] ; 2 uses
+bdrv_parent_drained_poll_single.exit.i.a:         ; preds = %bdrv_parent_drained_poll_single.exit.i, %.lr.ph.split.i
+  %.1.i = phi i8 [ %.013.i, %.lr.ph.split.i ], [ %10, %bdrv_parent_drained_poll_single.exit.i ] ; 2 uses
   %.not.i = icmp eq ptr %i.p, null
   br i1 %.not.i, label %bdrv_parent_drained_poll.exit, label %.lr.ph.split.i, !llvm.loop !0
 
 bdrv_parent_drained_poll.exit:                    ; preds = %bdrv_parent_drained_poll_single.exit.i.a, %bdrv_parent_drained_poll_single.exit.us.i.a
-  %.0.lcssa.i = phi i1 [ %.1.us.i, %bdrv_parent_drained_poll_single.exit.us.i.a ], [ %.1.i, %bdrv_parent_drained_poll_single.exit.i.a ]
-  br i1 %.0.lcssa.i, label %bb.i, label %bdrv_parent_drained_poll.exit.thread
+  %.0.lcssa.i = phi i8 [ %.1.us.i, %bdrv_parent_drained_poll_single.exit.us.i.a ], [ %.1.i, %bdrv_parent_drained_poll_single.exit.i.a ]
+  %11 = trunc nuw i8 %.0.lcssa.i to i1
+  br i1 %11, label %bb.i, label %bdrv_parent_drained_poll.exit.thread
 
 bdrv_parent_drained_poll.exit.thread:             ; preds = %bb.c, %bdrv_parent_drained_poll.exit
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16964
@@ -664,7 +679,7 @@ bb.g:                                             ; preds = %.lr.ph.i
   br i1 %.not11.i.i.i, label %bdrv_parent_drained_poll.exit.thread.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.g, %bdrv_parent_drained_poll_single.exit.us.i.i.i.a
-  %.013.us.i.i.i = phi i1 [ %.1.us.i.i.i, %bdrv_parent_drained_poll_single.exit.us.i.i.i.a ], [ false, %bb.g ] ; 3 uses
+  %.013.us.i.i.i = phi i8 [ %.1.us.i.i.i, %bdrv_parent_drained_poll_single.exit.us.i.i.i.a ], [ 0, %bb.g ] ; 3 uses
   %.01012.us.i.i.i = phi ptr [ %i.n, %bdrv_parent_drained_poll_single.exit.us.i.i.i.a ], [ %i.l, %bb.g ] ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.01012.us.i.i.i, i64 80
   %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
@@ -679,20 +694,28 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 80
   %i.u = load ptr, ptr %i.t, align 8              ; 2 uses
   %.not.i.us.i.i.i = icmp eq ptr %i.u, null
-  br i1 %.not.i.us.i.i.i, label %bdrv_parent_drained_poll_single.exit.us.i.i.i.a, label %bb.i
+  br i1 %.not.i.us.i.i.i, label %bdrv_parent_drained_poll_single.exit.us.i.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.v = tail call zeroext i1 %i.u(ptr noundef nonnull %.01012.us.i.i.i) #14, !inline_history !30
-  %0 = or i1 %.013.us.i.i.i, %i.v
+  %0 = zext i1 %i.v to i8
+  %1 = or i8 %.013.us.i.i.i, %0
+  br label %bdrv_parent_drained_poll_single.exit.us.i.i.i
+
+bdrv_parent_drained_poll_single.exit.us.i.i.i:    ; preds = %bb.i, %bb.h
+  %.0.i.us.i.i.i = phi i8 [ %1, %bb.i ], [ %.013.us.i.i.i, %bb.h ]
+  %2 = icmp ne i8 %.0.i.us.i.i.i, 0
+  %3 = zext i1 %2 to i8
   br label %bdrv_parent_drained_poll_single.exit.us.i.i.i.a
 
-bdrv_parent_drained_poll_single.exit.us.i.i.i.a:  ; preds = %bb.i, %bb.h, %.lr.ph.i.i.i
-  %.1.us.i.i.i = phi i1 [ %.013.us.i.i.i, %bb.h ], [ %.013.us.i.i.i, %.lr.ph.i.i.i ], [ %0, %bb.i ] ; 2 uses
+bdrv_parent_drained_poll_single.exit.us.i.i.i.a:  ; preds = %bdrv_parent_drained_poll_single.exit.us.i.i.i, %.lr.ph.i.i.i
+  %.1.us.i.i.i = phi i8 [ %3, %bdrv_parent_drained_poll_single.exit.us.i.i.i ], [ %.013.us.i.i.i, %.lr.ph.i.i.i ] ; 2 uses
   %.not.us.i.i.i = icmp eq ptr %i.n, null
   br i1 %.not.us.i.i.i, label %bdrv_parent_drained_poll.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !0
 
 bdrv_parent_drained_poll.exit.i.i:                ; preds = %bdrv_parent_drained_poll_single.exit.us.i.i.i.a
-  br i1 %.1.us.i.i.i, label %bdrv_drain_poll.exit.i, label %bdrv_parent_drained_poll.exit.thread.i.i
+  %4 = trunc nuw i8 %.1.us.i.i.i to i1
+  br i1 %4, label %bdrv_drain_poll.exit.i, label %bdrv_parent_drained_poll.exit.thread.i.i
 
 bdrv_parent_drained_poll.exit.thread.i.i:         ; preds = %bdrv_parent_drained_poll.exit.i.i, %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 16964
@@ -1095,7 +1118,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not11.i.i, label %bdrv_parent_drained_poll.exit.thread.i, label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %bb.e, %bdrv_parent_drained_poll_single.exit.i.i.a
-  %.013.i.i = phi i1 [ %.1.i.i, %bdrv_parent_drained_poll_single.exit.i.i.a ], [ false, %bb.e ] ; 3 uses
+  %.013.i.i = phi i8 [ %.1.i.i, %bdrv_parent_drained_poll_single.exit.i.i.a ], [ 0, %bb.e ] ; 3 uses
   %.01012.i.i = phi ptr [ %i.f, %bdrv_parent_drained_poll_single.exit.i.i.a ], [ %i.d, %bb.e ] ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.01012.i.i, i64 80
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
@@ -1108,20 +1131,28 @@ bb.f:                                             ; preds = %.lr.ph.split.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 80
   %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.k, null
-  br i1 %.not.i.i.i, label %bdrv_parent_drained_poll_single.exit.i.i.a, label %bb.g
+  br i1 %.not.i.i.i, label %bdrv_parent_drained_poll_single.exit.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.l = tail call zeroext i1 %i.k(ptr noundef nonnull %.01012.i.i) #14, !inline_history !52
-  %2 = or i1 %.013.i.i, %i.l
+  %2 = zext i1 %i.l to i8
+  %3 = or i8 %.013.i.i, %2
+  br label %bdrv_parent_drained_poll_single.exit.i.i
+
+bdrv_parent_drained_poll_single.exit.i.i:         ; preds = %bb.g, %bb.f
+  %.0.i.i.i = phi i8 [ %3, %bb.g ], [ %.013.i.i, %bb.f ]
+  %4 = icmp ne i8 %.0.i.i.i, 0
+  %5 = zext i1 %4 to i8
   br label %bdrv_parent_drained_poll_single.exit.i.i.a
 
-bdrv_parent_drained_poll_single.exit.i.i.a:       ; preds = %bb.g, %bb.f, %.lr.ph.split.i.i
-  %.1.i.i = phi i1 [ %.013.i.i, %.lr.ph.split.i.i ], [ %2, %bb.g ], [ %.013.i.i, %bb.f ] ; 2 uses
+bdrv_parent_drained_poll_single.exit.i.i.a:       ; preds = %bdrv_parent_drained_poll_single.exit.i.i, %.lr.ph.split.i.i
+  %.1.i.i = phi i8 [ %.013.i.i, %.lr.ph.split.i.i ], [ %5, %bdrv_parent_drained_poll_single.exit.i.i ] ; 2 uses
   %.not.i.i = icmp eq ptr %i.f, null
   br i1 %.not.i.i, label %bdrv_parent_drained_poll.exit.i, label %.lr.ph.split.i.i, !llvm.loop !0
 
 bdrv_parent_drained_poll.exit.i:                  ; preds = %bdrv_parent_drained_poll_single.exit.i.i.a
-  br i1 %.1.i.i, label %glib_autoptr_cleanup_GraphLockableMainloop.exit, label %bdrv_parent_drained_poll.exit.thread.i
+  %6 = trunc nuw i8 %.1.i.i to i1
+  br i1 %6, label %glib_autoptr_cleanup_GraphLockableMainloop.exit, label %bdrv_parent_drained_poll.exit.thread.i
 
 bdrv_parent_drained_poll.exit.thread.i:           ; preds = %bdrv_parent_drained_poll.exit.i, %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16964

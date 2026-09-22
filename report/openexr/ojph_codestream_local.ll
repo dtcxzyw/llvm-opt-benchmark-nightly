@@ -204,41 +204,36 @@ bb.a:
 
 .preheader29:                                     ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 6 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
   %i.f = load i32, ptr %i.a, align 8, !tbaa !89   ; 2 uses
   %.not34 = icmp eq i32 %i.f, 0
-  br i1 %.not34, label %.preheader29.split.us, label %.preheader
+  br i1 %.not34, label %.preheader29.split.us, label %.lr.ph
 
 .preheader29.split.us:                            ; preds = %.preheader29
   %i.g = load i32, ptr %i.e, align 4, !tbaa !90
   %.promoted = load i32, ptr %i.b, align 8        ; 2 uses
   %.not27.us = icmp ult i32 %.promoted, %i.g
   %spec.store.select.us = select i1 %.not27.us, i32 %.promoted, i32 0
-  store i32 %spec.store.select.us, ptr %i.b, align 8
   br label %.split
 
-.preheaderthread-pre-split:                       ; preds = %._crit_edge
-  %.pr = load i32, ptr %i.a, align 8, !tbaa !89
-  br label %.preheader
+.preheader:                                       ; preds = %.lr.ph
+  %3 = add nuw i32 %.01530, 1                     ; 2 uses
+  %4 = load i32, ptr %i.a, align 8, !tbaa !89     ; 2 uses
+  %5 = icmp ult i32 %3, %4
+  br i1 %5, label %bb.b, label %.split.critedge
 
-.preheader:                                       ; preds = %.preheader29, %.preheaderthread-pre-split
-  %3 = phi i32 [ %.pr, %.preheaderthread-pre-split ], [ %i.f, %.preheader29 ] ; 2 uses
-  %.not35 = icmp eq i32 %3, 0
-  br i1 %.not35, label %._crit_edge, label %.lr.ph
+bb.b:                                             ; preds = %.preheader, %._crit_edge
+  %.be = phi i32 [ %4, %.preheader ], [ %.pre, %._crit_edge ]
+  %.01530.be = phi i32 [ %3, %.preheader ], [ 0, %._crit_edge ]
+  br label %.lr.ph, !llvm.loop !218
 
-bb.b:                                             ; preds = %.lr.ph
-  %4 = add nuw i32 %.01530, 1                     ; 2 uses
-  %5 = load i32, ptr %i.a, align 8, !tbaa !89     ; 2 uses
-  %6 = icmp ult i32 %4, %5
-  br i1 %6, label %.lr.ph, label %._crit_edge, !llvm.loop !218
-
-.lr.ph:                                           ; preds = %.preheader, %bb.b
-  %i.h = phi i32 [ %5, %bb.b ], [ %3, %.preheader ]
-  %.01530 = phi i32 [ %4, %bb.b ], [ 0, %.preheader ] ; 2 uses
-  %i.i = load i32, ptr %i.b, align 8, !tbaa !133
+.lr.ph:                                           ; preds = %.preheader29, %bb.b
+  %i.h = phi i32 [ %.be, %bb.b ], [ %i.f, %.preheader29 ]
+  %.01530 = phi i32 [ %.01530.be, %bb.b ], [ 0, %.preheader29 ] ; 2 uses
+  %i.i = load i32, ptr %i.b, align 8, !tbaa !134
   %i.j = mul i32 %i.i, %i.h
   %i.k = add i32 %i.j, %.01530
   %i.l = load ptr, ptr %i.c, align 8, !tbaa !106
@@ -246,22 +241,29 @@ bb.b:                                             ; preds = %.lr.ph
   %i.n = getelementptr inbounds nuw [168 x i8], ptr %i.l, i64 %i.m
   %i.o = load i32, ptr %i.d, align 4, !tbaa !112
   %i.p = tail call noundef zeroext i1 @_ZN4ojph5local4tile4pushEPNS_8line_bufEj(ptr noundef nonnull align 8 dereferenceable(164) %i.n, ptr noundef nonnull %1, i32 noundef %i.o)
-  br i1 %i.p, label %bb.b, label %._crit_edge
+  br i1 %i.p, label %.preheader, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %.preheader
-  %.2 = phi i8 [ 1, %.preheader ], [ 1, %bb.b ], [ 0, %.lr.ph ] ; 2 uses
-  %7 = xor i8 %.2, 1
-  %8 = zext nneg i8 %7 to i32
-  %i.q = load i32, ptr %i.b, align 8, !tbaa !133
-  %i.r = add i32 %i.q, %8                         ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph
+  %i.q = load i32, ptr %i.b, align 8, !tbaa !134
+  %i.r = add i32 %i.q, 1                          ; 2 uses
   %i.s = load i32, ptr %i.e, align 4, !tbaa !90
   %.not27 = icmp ult i32 %i.r, %i.s
   %spec.store.select = select i1 %.not27, i32 %i.r, i32 0
   store i32 %spec.store.select, ptr %i.b, align 8
-  %9 = trunc nuw i8 %.2 to i1
-  br i1 %9, label %.split, label %.preheaderthread-pre-split, !llvm.loop !219
+  %.pre = load i32, ptr %i.a, align 8, !tbaa !89  ; 2 uses
+  %.not37 = icmp eq i32 %.pre, 0
+  br i1 %.not37, label %.split.critedge, label %bb.b
 
-.split:                                           ; preds = %._crit_edge, %.preheader29.split.us
+.split.critedge:                                  ; preds = %._crit_edge, %.preheader
+  %6 = load i32, ptr %i.b, align 8, !tbaa !134    ; 2 uses
+  %7 = load i32, ptr %i.e, align 4, !tbaa !90
+  %.not27.c = icmp ult i32 %6, %7
+  %spec.store.select.c = select i1 %.not27.c, i32 %6, i32 0
+  br label %.split
+
+.split:                                           ; preds = %.preheader29.split.us, %.split.critedge
+  %storemerge = phi i32 [ %spec.store.select.us, %.preheader29.split.us ], [ %spec.store.select.c, %.split.critedge ]
+  store i32 %storemerge, ptr %i.b, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 92
   %i.u = load i32, ptr %i.t, align 4, !tbaa !78
   %.not22 = icmp eq i32 %i.u, 0
@@ -284,7 +286,7 @@ bb.c:                                             ; preds = %.split
 
 bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.v, align 8, !tbaa !113
-  store i32 0, ptr %i.b, align 8, !tbaa !133
+  store i32 0, ptr %i.b, align 8, !tbaa !134
   %i.af = add i32 %i.aa, 1                        ; 3 uses
   store i32 %i.af, ptr %i.d, align 4, !tbaa !112
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -344,42 +346,37 @@ declare noundef zeroext i1 @_ZN4ojph5local4tile4pushEPNS_8line_bufEj(ptr noundef
 define hidden noundef ptr @_ZN4ojph5local10codestream4pullERj(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(832) %0, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 5 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
   %i.g = load i32, ptr %i.a, align 8, !tbaa !89   ; 2 uses
   %.not28 = icmp eq i32 %i.g, 0
-  br i1 %.not28, label %.split.us, label %.preheader
+  br i1 %.not28, label %.split.us, label %.lr.ph
 
 .split.us:                                        ; preds = %bb.a
   %i.h = load i32, ptr %i.f, align 4, !tbaa !90
   %.promoted = load i32, ptr %i.b, align 8        ; 2 uses
   %.not21.us = icmp ult i32 %.promoted, %i.h
   %spec.store.select.us = select i1 %.not21.us, i32 %.promoted, i32 0
-  store i32 %spec.store.select.us, ptr %i.b, align 8
   br label %.split26
 
-.preheaderthread-pre-split:                       ; preds = %._crit_edge
-  %.pr = load i32, ptr %i.a, align 8, !tbaa !89
-  br label %.preheader
+.preheader:                                       ; preds = %.lr.ph
+  %2 = add nuw i32 %.01322, 1                     ; 2 uses
+  %3 = load i32, ptr %i.a, align 8, !tbaa !89     ; 2 uses
+  %4 = icmp ult i32 %2, %3
+  br i1 %4, label %bb.b, label %.split28.critedge
 
-.preheader:                                       ; preds = %bb.a, %.preheaderthread-pre-split
-  %2 = phi i32 [ %.pr, %.preheaderthread-pre-split ], [ %i.g, %bb.a ] ; 2 uses
-  %.not29 = icmp eq i32 %2, 0
-  br i1 %.not29, label %._crit_edge, label %.lr.ph
+bb.b:                                             ; preds = %.preheader, %._crit_edge
+  %.be = phi i32 [ %3, %.preheader ], [ %.pre, %._crit_edge ]
+  %.01322.be = phi i32 [ %2, %.preheader ], [ 0, %._crit_edge ]
+  br label %.lr.ph, !llvm.loop !219
 
-bb.b:                                             ; preds = %.lr.ph
-  %3 = add nuw i32 %.01322, 1                     ; 2 uses
-  %4 = load i32, ptr %i.a, align 8, !tbaa !89     ; 2 uses
-  %5 = icmp ult i32 %3, %4
-  br i1 %5, label %.lr.ph, label %._crit_edge, !llvm.loop !220
-
-.lr.ph:                                           ; preds = %.preheader, %bb.b
-  %i.i = phi i32 [ %4, %bb.b ], [ %2, %.preheader ]
-  %.01322 = phi i32 [ %3, %bb.b ], [ 0, %.preheader ] ; 2 uses
-  %i.j = load i32, ptr %i.b, align 8, !tbaa !133
+.lr.ph:                                           ; preds = %bb.a, %bb.b
+  %i.i = phi i32 [ %.be, %bb.b ], [ %i.g, %bb.a ]
+  %.01322 = phi i32 [ %.01322.be, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %i.j = load i32, ptr %i.b, align 8, !tbaa !134
   %i.k = mul i32 %i.j, %i.i
   %i.l = add i32 %i.k, %.01322
   %i.m = load ptr, ptr %i.c, align 8, !tbaa !106
@@ -390,22 +387,29 @@ bb.b:                                             ; preds = %.lr.ph
   %i.r = zext i32 %i.q to i64
   %i.s = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.r
   %i.t = tail call noundef zeroext i1 @_ZN4ojph5local4tile4pullEPNS_8line_bufEj(ptr noundef nonnull align 8 dereferenceable(164) %i.o, ptr noundef %i.s, i32 noundef %i.q)
-  br i1 %i.t, label %bb.b, label %._crit_edge
+  br i1 %i.t, label %.preheader, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %.preheader
-  %.2 = phi i8 [ 1, %.preheader ], [ 1, %bb.b ], [ 0, %.lr.ph ] ; 2 uses
-  %6 = xor i8 %.2, 1
-  %7 = zext nneg i8 %6 to i32
-  %i.u = load i32, ptr %i.b, align 8, !tbaa !133
-  %i.v = add i32 %i.u, %7                         ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph
+  %i.u = load i32, ptr %i.b, align 8, !tbaa !134
+  %i.v = add i32 %i.u, 1                          ; 2 uses
   %i.w = load i32, ptr %i.f, align 4, !tbaa !90
   %.not21 = icmp ult i32 %i.v, %i.w
   %spec.store.select = select i1 %.not21, i32 %i.v, i32 0
   store i32 %spec.store.select, ptr %i.b, align 8
-  %8 = trunc nuw i8 %.2 to i1
-  br i1 %8, label %.split26, label %.preheaderthread-pre-split, !llvm.loop !221
+  %.pre = load i32, ptr %i.a, align 8, !tbaa !89  ; 2 uses
+  %.not31 = icmp eq i32 %.pre, 0
+  br i1 %.not31, label %.split28.critedge, label %bb.b
 
-.split26:                                         ; preds = %._crit_edge, %.split.us
+.split28.critedge:                                ; preds = %._crit_edge, %.preheader
+  %5 = load i32, ptr %i.b, align 8, !tbaa !134    ; 2 uses
+  %6 = load i32, ptr %i.f, align 4, !tbaa !90
+  %.not21.c = icmp ult i32 %5, %6
+  %spec.store.select.c = select i1 %.not21.c, i32 %5, i32 0
+  br label %.split26
+
+.split26:                                         ; preds = %.split.us, %.split28.critedge
+  %storemerge = phi i32 [ %spec.store.select.us, %.split.us ], [ %spec.store.select.c, %.split28.critedge ]
+  store i32 %storemerge, ptr %i.b, align 8
   %i.x = load i32, ptr %i.e, align 4, !tbaa !112  ; 5 uses
   store i32 %i.x, ptr %1, align 4, !tbaa !100
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 92
@@ -429,7 +433,7 @@ bb.c:                                             ; preds = %.split26
 
 bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.aa, align 8, !tbaa !113
-  store i32 0, ptr %i.b, align 8, !tbaa !133
+  store i32 0, ptr %i.b, align 8, !tbaa !134
   %i.aj = add i32 %i.x, 1
   store i32 %i.aj, ptr %i.e, align 4, !tbaa !112
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -685,8 +689,8 @@ attributes #18 = { nounwind willreturn memory(read) }
 !130 = !{!21, !17, i64 36}
 !131 = !{!43, !42, i64 824}
 !132 = !{!43, !12, i64 28}
-!133 = !{!43, !7, i64 24}
-!134 = !{!"llvm.loop.unswitch.partial.disable"}
+!133 = !{!"llvm.loop.unswitch.partial.disable"}
+!134 = !{!43, !7, i64 24}
 !135 = !{!21, !17, i64 0}
 !136 = !{!21, !17, i64 2}
 !137 = !{!21, !7, i64 52}
@@ -770,8 +774,6 @@ attributes #18 = { nounwind willreturn memory(read) }
 !215 = distinct !{!215, !82}
 !216 = distinct !{!216, !82}
 !217 = distinct !{!217, !82}
-!218 = distinct !{!218, !82}
-!219 = distinct !{!219, !82, !134}
-!220 = distinct !{!220, !82}
-!221 = distinct !{!221, !82, !134}
+!218 = distinct !{!218, !82, !133}
+!219 = distinct !{!219, !82, !133}
 end_hunk_0

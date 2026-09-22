@@ -202,8 +202,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %.preheader106
   %i.ad = trunc nuw nsw i64 %indvars.iv to i32
-  %3 = and i32 %i.ad, 65535
-  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.33, i32 noundef %3) #8
+  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.33, i32 noundef %i.ad) #8
   tail call void @free(ptr noundef nonnull %i.aa) #8
   br label %bb.ad
 

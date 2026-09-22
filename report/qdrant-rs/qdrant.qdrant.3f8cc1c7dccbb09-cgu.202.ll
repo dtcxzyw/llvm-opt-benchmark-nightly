@@ -202,10 +202,8 @@ bb.j:                                             ; preds = %bb.i
   %.sroa.2.0.copyload4.i.i.i.i.i = load i128, ptr %.sroa.2.0..sroa_idx3.i.i.i.i.i, align 1, !alias.scope !233, !noalias !234 ; 2 uses
   %.sroa.2.sroa.210.0.extract.shift.i.i.i.i.i = lshr i128 %.sroa.2.0.copyload4.i.i.i.i.i, 56
   %.sroa.2.sroa.210.0.extract.trunc.i.i.i.i.i = trunc i128 %.sroa.2.sroa.210.0.extract.shift.i.i.i.i.i to i64
-  %.mask.i.i.i.i.i = and i8 %.sroa.01.0.copyload.i.i.i.i.i, 1 ; 2 uses
   %i.p = trunc nuw i8 %.sroa.02.0.copyload.i.i.i.i.i to i1
-  %.mask14.i.i.i.i.i = and i8 %.sroa.02.0.copyload.i.i.i.i.i, 1
-  %i.q = icmp eq i8 %.mask.i.i.i.i.i, %.mask14.i.i.i.i.i
+  %i.q = icmp eq i8 %.sroa.01.0.copyload.i.i.i.i.i, %.sroa.02.0.copyload.i.i.i.i.i
   br i1 %i.q, label %bb.k, label %_RNvXs6_NtNtCs9XvERIT2X68_9itertools8adaptors8coalesceINtB5_22DedupPred2CoalescePredNtB5_7DedupEqEINtB5_17CoalescePredicateNtNtCs607s0NAIaWN_7segment5types11ScoredPointB1W_E13coalesce_pairCsl8OoimOLbh_6qdrant.exit.i.i
 
 bb.k:                                             ; preds = %bb.j
@@ -218,8 +216,6 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.s, label %_RNvXs7_NtNtCs9XvERIT2X68_9itertools8adaptors8coalesceNtB5_7DedupEqINtB5_14DedupPredicateNtNtCs607s0NAIaWN_7segment5types11ScoredPointE10dedup_pairCsl8OoimOLbh_6qdrant.exit.i.i.i, label %_RNvXs6_NtNtCs9XvERIT2X68_9itertools8adaptors8coalesceINtB5_22DedupPred2CoalescePredNtB5_7DedupEqEINtB5_17CoalescePredicateNtNtCs607s0NAIaWN_7segment5types11ScoredPointB1W_E13coalesce_pairCsl8OoimOLbh_6qdrant.exit.i.i
 
 bb.l:                                             ; preds = %bb.k
-  %2 = icmp eq i8 %.mask.i.i.i.i.i, 0
-  call void @llvm.assume(i1 %2)
   %i.t = icmp eq i64 %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i.i, %.sroa.2.sroa.210.0.extract.trunc.i.i.i.i.i
   br i1 %i.t, label %_RNvXs7_NtNtCs9XvERIT2X68_9itertools8adaptors8coalesceNtB5_7DedupEqINtB5_14DedupPredicateNtNtCs607s0NAIaWN_7segment5types11ScoredPointE10dedup_pairCsl8OoimOLbh_6qdrant.exit.i.i.i, label %_RNvXs6_NtNtCs9XvERIT2X68_9itertools8adaptors8coalesceINtB5_22DedupPred2CoalescePredNtB5_7DedupEqEINtB5_17CoalescePredicateNtNtCs607s0NAIaWN_7segment5types11ScoredPointB1W_E13coalesce_pairCsl8OoimOLbh_6qdrant.exit.i.i
 

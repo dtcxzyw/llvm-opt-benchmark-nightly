@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a, %bb.s
   %i.h = phi i1 [ true, %bb.a ], [ false, %bb.s ]
   %indvars.iv = phi i64 [ 0, %bb.a ], [ 1, %bb.s ]
-  %.01017 = phi i8 [ 0, %bb.a ], [ %.2, %bb.s ]   ; 5 uses
+  %.01017 = phi i8 [ 0, %bb.a ], [ %.2, %bb.s ]   ; 2 uses
   %i.i = getelementptr [24 x i8], ptr %i.g, i64 %indvars.iv ; 6 uses
   %i.j = load i32, ptr %i.i, align 8
   %.not = icmp eq i32 %i.j, 0
@@ -283,11 +283,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
 find_next_bit.exit.thread.i:                      ; preds = %bb.g, %find_next_bit.exit.i, %.preheader.i
   call void @kfree(ptr noundef nonnull %i.s) #9
   %i.at = load i8, ptr %i.e, align 1, !range !24, !noundef !25
-  %1 = or i8 %i.at, %.01017
   br label %uncore_discovery_msr.exit
 
 uncore_discovery_msr.exit:                        ; preds = %_kmalloc_array_noprof.exit.i, %find_next_bit.exit.thread.i
-  %.0.i = phi i8 [ %1, %find_next_bit.exit.thread.i ], [ %.01017, %_kmalloc_array_noprof.exit.i ]
+  %.0.i = phi i8 [ %i.at, %find_next_bit.exit.thread.i ], [ 0, %_kmalloc_array_noprof.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
   br label %bb.r
@@ -407,12 +406,11 @@ parse_discovery_table.exit.i:                     ; preds = %bb.q, %bb.n
 
 ._crit_edge.i:                                    ; preds = %.loopexit.i, %bb.h
   %i.ci = load i8, ptr %i.d, align 1, !range !24, !noundef !25
-  %2 = or i8 %i.ci, %.01017
   br label %uncore_discovery_pci.exit
 
 uncore_discovery_pci.exit:                        ; preds = %bb.j, %._crit_edge.i
   %i.cj = phi ptr [ null, %._crit_edge.i ], [ %i.ax, %bb.j ]
-  %i.ck = phi i8 [ %2, %._crit_edge.i ], [ %.01017, %bb.j ]
+  %i.ck = phi i8 [ %i.ci, %._crit_edge.i ], [ 0, %bb.j ]
   call void @pci_dev_put(ptr noundef %i.cj) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
@@ -420,11 +418,12 @@ uncore_discovery_pci.exit:                        ; preds = %bb.j, %._crit_edge.
 
 bb.r:                                             ; preds = %uncore_discovery_pci.exit, %uncore_discovery_msr.exit
   %.1 = phi i8 [ %i.ck, %uncore_discovery_pci.exit ], [ %.0.i, %uncore_discovery_msr.exit ]
+  %.1.in.in = or i8 %.1, %.01017
   call void @cpus_read_unlock() #9
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.b, %bb.r
-  %.2 = phi i8 [ %.1, %bb.r ], [ %.01017, %bb.b ] ; 2 uses
+  %.2 = phi i8 [ %.1.in.in, %bb.r ], [ %.01017, %bb.b ] ; 2 uses
   br i1 %i.h, label %bb.b, label %bb.t, !llvm.loop !23
 
 bb.t:                                             ; preds = %bb.s

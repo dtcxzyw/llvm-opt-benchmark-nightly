@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !39   ; 4 uses
   %.not.i = icmp eq ptr %i.b, null
-  br i1 %.not.i, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, label %bb.b
+  br i1 %.not.i, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 3 uses
@@ -234,7 +234,7 @@ _ZNSt11shared_lockISt12shared_mutexEC2ERS0_.exit.i.i: ; preds = %bb.c
 
 _ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread37: ; preds = %_ZNSt11shared_lockISt12shared_mutexEC2ERS0_.exit.i.i
   %i.i = tail call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.c) #23, !noalias !605 ; 0 uses
-  br label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
+  br label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.j = landingpad { ptr, i32 }
@@ -247,19 +247,38 @@ _ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit: ; preds = %_ZNSt11
   %i.l = load ptr, ptr %i.h, align 8, !tbaa !46, !noalias !605 ; 3 uses
   %i.m = tail call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.c) #23, !noalias !605 ; 0 uses
   %i.n = icmp eq ptr %i.l, null
-  br i1 %i.n, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, label %bb.f
+  br i1 %i.n, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread, label %bb.f
+
+_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread: ; preds = %bb.a, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread37, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 21, ptr %8, align 4, !tbaa !22
+  br label %15
 
 bb.f:                                             ; preds = %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit
   %cond.i = icmp eq i32 %4, 0
   %.sroa.02.0.insert.insert.i = select i1 %cond.i, i64 1, i64 120259084288 ; 2 uses
-  %.sroa.433.0.extract.shift = lshr i64 %.sroa.02.0.insert.insert.i, 32
+  %.sroa.433.0.extract.shift = lshr i64 %.sroa.02.0.insert.insert.i, 32 ; 2 uses
   %i.o = trunc i64 %.sroa.02.0.insert.insert.i to i1
-  %8 = trunc nuw nsw i64 %.sroa.433.0.extract.shift to i32 ; 2 uses
-  br i1 %i.o, label %bb.g, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
+  br i1 %i.o, label %bb.g, label %.thread
+
+.thread:                                          ; preds = %bb.f
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %10 = trunc nuw nsw i64 %.sroa.433.0.extract.shift to i32
+  store i32 %10, ptr %9, align 4, !tbaa !22
+  br label %15
 
 bb.g:                                             ; preds = %bb.f
+  %.sroa.433.sroa.0.0.insert.ext = trunc nuw nsw i64 %.sroa.433.0.extract.shift to i32
   %switch.i = icmp ugt i32 %5, 14
-  br i1 %switch.i, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, label %bb.h
+  br i1 %switch.i, label %.thread40, label %bb.h
+
+.thread40:                                        ; preds = %bb.g
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 28, ptr %11, align 4, !tbaa !22
+  br label %15
 
 bb.h:                                             ; preds = %bb.g
   %i.p = zext i32 %6 to i64                       ; 2 uses
@@ -271,7 +290,13 @@ bb.h:                                             ; preds = %bb.g
   %i.v = icmp ule i64 %i.u, %i.t                  ; 2 uses
   %.not45 = icmp eq i32 %7, 0
   %.not = or i1 %i.v, %.not45
-  br i1 %.not, label %bb.i, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
+  br i1 %.not, label %bb.i, label %12
+
+12:                                               ; preds = %bb.h
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 21, ptr %13, align 4, !tbaa !22
+  br label %15
 
 bb.i:                                             ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 24
@@ -280,17 +305,24 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.0.0.i = select i1 %i.v, ptr %i.y, ptr null
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !608, !nonnull !86, !align !87
-  %i.ab = tail call i32 @_ZNK8WasmEdge4Host4WASI7Environ10sockSetOptEi23__wasi_sock_opt_level_t20__wasi_sock_opt_so_tN5cxx204spanIKhLm18446744073709551615EEE(ptr noundef nonnull align 8 dereferenceable(344) %i.aa, i32 noundef %3, i32 noundef %8, i32 noundef %5, ptr %.sroa.0.0.i, i64 %i.q) #23 ; 2 uses
+  %i.ab = tail call i32 @_ZNK8WasmEdge4Host4WASI7Environ10sockSetOptEi23__wasi_sock_opt_level_t20__wasi_sock_opt_so_tN5cxx204spanIKhLm18446744073709551615EEE(ptr noundef nonnull align 8 dereferenceable(344) %i.aa, i32 noundef %3, i32 noundef %.sroa.433.sroa.0.0.insert.ext, i32 noundef %5, ptr %.sroa.0.0.i, i64 %i.q) #23 ; 2 uses
   %i.ac = trunc i32 %i.ab to i1
-  %.sroa.523.0.extract.shift = lshr i32 %i.ab, 16
-  %spec.select = select i1 %i.ac, i32 0, i32 %.sroa.523.0.extract.shift
-  br label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
+  br i1 %i.ac, label %.critedge, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
 
-_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a: ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread37, %bb.a
-  %.sink = phi i32 [ 28, %bb.g ], [ 21, %bb.h ], [ %spec.select, %bb.i ], [ %8, %bb.f ], [ 21, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit ], [ 21, %bb.a ], [ 21, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread37 ]
+_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a: ; preds = %bb.i
+  %.sroa.523.0.extract.shift = lshr i32 %i.ab, 16
   store i8 1, ptr %0, align 4, !tbaa !35
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sink, ptr %i.ad, align 4, !tbaa !22
+  store i32 %.sroa.523.0.extract.shift, ptr %i.ad, align 4, !tbaa !22
+  br label %15
+
+.critedge:                                        ; preds = %bb.i
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 0, ptr %14, align 4, !tbaa !22
+  br label %15
+
+15:                                               ; preds = %12, %.critedge, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, %.thread40, %.thread, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread
   ret void
 }
 
@@ -693,18 +725,19 @@ _ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread: ; preds = %
 bb.h:                                             ; preds = %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit
   %cond.i = icmp eq i32 %4, 0
   %.sroa.02.0.insert.insert.i = select i1 %cond.i, i64 1, i64 120259084288 ; 2 uses
-  %.sroa.441.0.extract.shift = lshr i64 %.sroa.02.0.insert.insert.i, 32
+  %.sroa.441.0.extract.shift = lshr i64 %.sroa.02.0.insert.insert.i, 32 ; 2 uses
   %i.r = trunc i64 %.sroa.02.0.insert.insert.i to i1
-  %9 = trunc nuw nsw i64 %.sroa.441.0.extract.shift to i32 ; 2 uses
   br i1 %i.r, label %bb.i, label %.thread
 
 .thread:                                          ; preds = %bb.h
   store i8 1, ptr %0, align 4, !tbaa !35
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %9 = trunc nuw nsw i64 %.sroa.441.0.extract.shift to i32
   store i32 %9, ptr %i.s, align 4, !tbaa !22
   br label %bb.p
 
 bb.i:                                             ; preds = %bb.h
+  %.sroa.441.sroa.0.0.insert.ext = trunc nuw nsw i64 %.sroa.441.0.extract.shift to i32
   %switch.i = icmp ugt i32 %5, 14
   br i1 %switch.i, label %.thread50, label %bb.j
 
@@ -752,7 +785,7 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !716, !nonnull !86, !align !87
-  %i.an = call i32 @_ZNK8WasmEdge4Host4WASI7Environ10sockGetOptEi23__wasi_sock_opt_level_t20__wasi_sock_opt_so_tRN5cxx204spanIhLm18446744073709551615EEE(ptr noundef nonnull align 8 dereferenceable(344) %i.am, i32 noundef %3, i32 noundef %9, i32 noundef %5, ptr noundef nonnull align 8 dereferenceable(16) %8) #23 ; 2 uses
+  %i.an = call i32 @_ZNK8WasmEdge4Host4WASI7Environ10sockGetOptEi23__wasi_sock_opt_level_t20__wasi_sock_opt_so_tRN5cxx204spanIhLm18446744073709551615EEE(ptr noundef nonnull align 8 dereferenceable(344) %i.am, i32 noundef %3, i32 noundef %.sroa.441.sroa.0.0.insert.ext, i32 noundef %5, ptr noundef nonnull align 8 dereferenceable(16) %8) #23 ; 2 uses
   %i.ao = trunc i32 %i.an to i1
   br i1 %i.ao, label %.critedge, label %bb.n
 

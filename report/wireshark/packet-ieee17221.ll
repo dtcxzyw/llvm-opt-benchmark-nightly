@@ -204,8 +204,7 @@ bb.z:                                             ; preds = %bb.p, %bb.p, %bb.p
 
 get_ctrl_ref_vals.exit.i:                         ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p
   %.sroa.0.0.i.i = phi i32 [ %i.ve, %bb.z ], [ %i.uv, %bb.q ], [ %i.uw, %bb.r ], [ %i.ux, %bb.s ], [ %i.uy, %bb.t ], [ %i.uz, %bb.u ], [ %i.va, %bb.v ], [ %i.vb, %bb.w ], [ %i.vc, %bb.x ], [ %i.vd, %bb.y ], [ -1, %bb.p ] ; 8 uses
-  %.sroa.13.0.i.i = phi i64 [ 8, %bb.z ], [ 1, %bb.q ], [ 1, %bb.r ], [ 2, %bb.s ], [ 2, %bb.t ], [ 4, %bb.u ], [ 4, %bb.v ], [ 4, %bb.w ], [ 8, %bb.x ], [ 8, %bb.y ], [ 0, %bb.p ] ; 2 uses
-  %.sroa.11.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.13.0.i.i to i32 ; 8 uses
+  %.sroa.13.0.i.i = phi i64 [ 8, %bb.z ], [ 1, %bb.q ], [ 1, %bb.r ], [ 2, %bb.s ], [ 2, %bb.t ], [ 4, %bb.u ], [ 4, %bb.v ], [ 4, %bb.w ], [ 8, %bb.x ], [ 8, %bb.y ], [ 0, %bb.p ] ; 3 uses
   %i.vf = icmp ult i16 %i.uo, 10
   br i1 %i.vf, label %.preheader.i, label %bb.ab
 
@@ -215,6 +214,7 @@ get_ctrl_ref_vals.exit.i:                         ; preds = %bb.z, %bb.y, %bb.x,
   br i1 %.not137.i, label %dissect_17221_ctrl_val.exit, label %.lr.ph136.i
 
 .lr.ph136.i:                                      ; preds = %.preheader.i
+  %2 = trunc nuw nsw i64 %.sroa.13.0.i.i to i32   ; 5 uses
   %i.vh = trunc nuw nsw i64 %.sroa.13.0.i.i to i16 ; 5 uses
   br label %bb.aa
 
@@ -222,19 +222,19 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph136.i
   %.0135.i = phi i16 [ %i.uq, %.lr.ph136.i ], [ %i.we, %bb.aa ] ; 2 uses
   %.0112134.i = phi i32 [ 0, %.lr.ph136.i ], [ %i.wf, %bb.aa ]
   %i.vi = zext i16 %.0135.i to i32
-  %i.vj = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vi, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %i.vj = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vi, i32 noundef %2, i32 noundef 0) ; 0 uses
   %i.vk = add i16 %.0135.i, %i.vh                 ; 2 uses
   %i.vl = zext i16 %i.vk to i32
-  %i.vm = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vl, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %i.vm = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vl, i32 noundef %2, i32 noundef 0) ; 0 uses
   %i.vn = add i16 %i.vk, %i.vh                    ; 2 uses
   %i.vo = zext i16 %i.vn to i32
-  %i.vp = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vo, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %i.vp = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vo, i32 noundef %2, i32 noundef 0) ; 0 uses
   %i.vq = add i16 %i.vn, %i.vh                    ; 2 uses
   %i.vr = zext i16 %i.vq to i32
-  %i.vs = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vr, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %i.vs = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vr, i32 noundef %2, i32 noundef 0) ; 0 uses
   %i.vt = add i16 %i.vq, %i.vh                    ; 2 uses
   %i.vu = zext i16 %i.vt to i32
-  %i.vv = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vu, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %i.vv = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.vu, i32 noundef %2, i32 noundef 0) ; 0 uses
   %i.vw = add i16 %i.vt, %i.vh                    ; 3 uses
   %i.vx = load i32, ptr @hf_aem_unit, align 4
   %i.vy = zext i16 %i.vw to i32
@@ -254,10 +254,11 @@ bb.ab:                                            ; preds = %get_ctrl_ref_vals.e
 
 bb.ac:                                            ; preds = %bb.ab
   %i.wh = zext i16 %i.uq to i32
-  %i.wi = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.wh, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %3 = trunc nuw nsw i64 %.sroa.13.0.i.i to i32   ; 3 uses
+  %i.wi = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.wh, i32 noundef %3, i32 noundef 0) ; 0 uses
   %i.wj = add i16 %i.uq, 2
   %i.wk = zext i16 %i.wj to i32
-  %i.wl = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.wk, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %i.wl = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.wk, i32 noundef %3, i32 noundef 0) ; 0 uses
   %i.wm = add i16 %i.uq, 4                        ; 2 uses
   %i.wn = zext i16 %i.up to i32
   %.not.i = icmp eq i16 %i.up, 0
@@ -267,7 +268,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.1133.i = phi i16 [ %i.wq, %.lr.ph.i ], [ %i.wm, %bb.ac ] ; 2 uses
   %.1113132.i = phi i32 [ %i.wr, %.lr.ph.i ], [ 0, %bb.ac ]
   %i.wo = zext i16 %.1133.i to i32
-  %i.wp = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.wo, i32 noundef %.sroa.11.0.extract.trunc.i, i32 noundef 0) ; 0 uses
+  %i.wp = tail call ptr @proto_tree_add_item(ptr noundef %i.uu, i32 noundef %.sroa.0.0.i.i, ptr noundef %0, i32 noundef %i.wo, i32 noundef %3, i32 noundef 0) ; 0 uses
   %i.wq = add i16 %.1133.i, 2                     ; 2 uses
   %i.wr = add nuw nsw i32 %.1113132.i, 1          ; 2 uses
   %exitcond139.not.i = icmp eq i32 %i.wr, %i.wn

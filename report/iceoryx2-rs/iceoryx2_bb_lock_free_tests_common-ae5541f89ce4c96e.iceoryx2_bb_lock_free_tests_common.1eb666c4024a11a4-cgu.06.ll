@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @_RNvMs0_NtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc23robust_unique_index_setNtB5_20RobustUniqueIndexSet7acquire(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.i, ptr noundef nonnull align 8 %i.u, i64 noundef %.sroa.0.0.copyload.i) #9
   %i.av = load i8, ptr %i.i, align 8, !range !4, !noundef !5
-  %i.aw = trunc nuw i8 %i.av to i1                ; 2 uses
+  %i.aw = trunc nuw i8 %i.av to i1
   %i.ax = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   %i.ay = load i8, ptr %i.ax, align 1, !range !4
   %storemerge = select i1 %i.aw, i8 %i.ay, i8 2   ; 2 uses
@@ -213,10 +213,8 @@ bb.j:                                             ; preds = %bb.h
   store ptr %i.j, ptr %i.k, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr @57, ptr %i.h, align 8, !captures !9
-  %0 = and i8 %storemerge, 1
-  %i.az = icmp eq i8 %0, 0
-  %or.cond = and i1 %i.az, %i.aw
-  br i1 %or.cond, label %bb.l, label %bb.k, !prof !14
+  %i.az = icmp eq i8 %storemerge, 0
+  br i1 %i.az, label %bb.l, label %bb.k, !prof !14
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -619,7 +617,7 @@ bb.d:                                             ; preds = %_RNvMNtCs8Chj7Szqq0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @_RNvMs0_NtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc23robust_unique_index_setNtB5_20RobustUniqueIndexSet7acquire(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.i, ptr noundef nonnull align 8 %i.n, i64 noundef %.sroa.0.0.copyload.i) #9
   %i.w = load i8, ptr %i.i, align 8, !range !4, !noundef !5
-  %i.x = trunc nuw i8 %i.w to i1                  ; 2 uses
+  %i.x = trunc nuw i8 %i.w to i1
   %i.y = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   %i.z = load i8, ptr %i.y, align 1, !range !4
   %storemerge = select i1 %i.x, i8 %i.z, i8 2     ; 2 uses
@@ -628,10 +626,8 @@ bb.d:                                             ; preds = %_RNvMNtCs8Chj7Szqq0
   store ptr %i.j, ptr %i.k, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr @57, ptr %i.h, align 8, !captures !9
-  %0 = and i8 %storemerge, 1
-  %i.aa = icmp eq i8 %0, 0
-  %or.cond = and i1 %i.aa, %i.x
-  br i1 %or.cond, label %bb.h, label %bb.g, !prof !14
+  %i.aa = icmp eq i8 %storemerge, 0
+  br i1 %i.aa, label %bb.h, label %bb.g, !prof !14
 
 bb.e:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc23robust_unique_index_set7OwnerIdNtBJ_15OwnerIdNewErrorE6unwrapCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit, %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultjNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc22unique_index_set_enums28UniqueIndexSetAcquireFailureE6unwrapCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit
   %.sroa.018.024 = phi i64 [ 0, %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc23robust_unique_index_set7OwnerIdNtBJ_15OwnerIdNewErrorE6unwrapCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit ], [ %i.af, %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultjNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc22unique_index_set_enums28UniqueIndexSetAcquireFailureE6unwrapCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit ]

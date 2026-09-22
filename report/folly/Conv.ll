@@ -205,10 +205,10 @@ _ZN10fast_float10digit_compIfcEENS_17adjusted_mantissaERNS_22parsed_number_strin
   %i.vi = phi i8 [ %.pre, %_ZN10fast_float10digit_compIfcEENS_17adjusted_mantissaERNS_22parsed_number_string_tIT0_EES1_.exit ], [ %i.e, %bb.cv ], [ %i.e, %_ZN10fast_float13compute_floatINS_13binary_formatIfEEEENS_17adjusted_mantissaElm.exit.i ], [ %i.e, %_ZN10fast_float13compute_floatINS_13binary_formatIfEEEENS_17adjusted_mantissaElm.exit60.i ]
   %.sroa.0225.1 = phi i64 [ %.fca.0.extract.i, %_ZN10fast_float10digit_compIfcEENS_17adjusted_mantissaERNS_22parsed_number_string_tIT0_EES1_.exit ], [ %i.uh, %bb.cv ], [ %.sroa.0239.2, %_ZN10fast_float13compute_floatINS_13binary_formatIfEEEENS_17adjusted_mantissaElm.exit.i ], [ %.sroa.0239.2, %_ZN10fast_float13compute_floatINS_13binary_formatIfEEEENS_17adjusted_mantissaElm.exit60.i ] ; 2 uses
   %.sroa.9.1 = phi i32 [ %.fca.1.extract.i, %_ZN10fast_float10digit_compIfcEENS_17adjusted_mantissaERNS_22parsed_number_string_tIT0_EES1_.exit ], [ %i.ul, %bb.cv ], [ %.sroa.18244.1, %_ZN10fast_float13compute_floatINS_13binary_formatIfEEEENS_17adjusted_mantissaElm.exit.i ], [ %.sroa.18244.1, %_ZN10fast_float13compute_floatINS_13binary_formatIfEEEENS_17adjusted_mantissaElm.exit60.i ] ; 3 uses
-  %8 = zext nneg i8 %i.vi to i32
   %i.vj = trunc i64 %.sroa.0225.1 to i32
   %i.vk = shl i32 %.sroa.9.1, 23
   %i.vl = or i32 %i.vk, %i.vj
+  %8 = zext nneg i8 %i.vi to i32
   %i.vm = shl nuw i32 %8, 31
   %i.vn = or i32 %i.vl, %i.vm
   store i32 %i.vn, ptr %2, align 4, !tbaa !75
@@ -611,11 +611,11 @@ _ZN10fast_float10digit_compIdcEENS_17adjusted_mantissaERNS_22parsed_number_strin
   %i.vi = phi i8 [ %.pre, %_ZN10fast_float10digit_compIdcEENS_17adjusted_mantissaERNS_22parsed_number_string_tIT0_EES1_.exit ], [ %i.e, %bb.db ], [ %i.e, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit.i ], [ %i.e, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit60.i ]
   %.sroa.0217.1 = phi i64 [ %.fca.0.extract.i, %_ZN10fast_float10digit_compIdcEENS_17adjusted_mantissaERNS_22parsed_number_string_tIT0_EES1_.exit ], [ %i.uh, %bb.db ], [ %.sroa.0231.2, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit.i ], [ %.sroa.0231.2, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit60.i ] ; 2 uses
   %.sroa.9.1 = phi i32 [ %.fca.1.extract.i, %_ZN10fast_float10digit_compIdcEENS_17adjusted_mantissaERNS_22parsed_number_string_tIT0_EES1_.exit ], [ %i.ul, %bb.db ], [ %.sroa.18236.1, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit.i ], [ %.sroa.18236.1, %_ZN10fast_float13compute_floatINS_13binary_formatIdEEEENS_17adjusted_mantissaElm.exit60.i ] ; 3 uses
-  %i.vj = zext nneg i8 %i.vi to i64
-  %8 = zext i32 %.sroa.9.1 to i64
-  %9 = shl i64 %8, 52
-  %i.vk = shl nuw i64 %i.vj, 63
-  %i.vl = or i64 %9, %i.vk
+  %i.vj = zext i32 %.sroa.9.1 to i64
+  %8 = shl i64 %i.vj, 52
+  %9 = zext nneg i8 %i.vi to i64
+  %i.vk = shl nuw i64 %9, 63
+  %i.vl = or i64 %8, %i.vk
   %i.vm = or i64 %i.vl, %.sroa.0217.1
   store i64 %i.vm, ptr %2, align 8, !tbaa !97
   %i.vn = icmp ne i64 %i.vh, 0
@@ -1018,8 +1018,7 @@ bb.bh:                                            ; preds = %bb.bg
   %i.gr = load i32, ptr %i.gq, align 4, !tbaa !236
   %i.gs = zext i32 %i.gr to i64
   %i.gt = shl nuw i64 %i.gs, 32
-  %.mask = and i8 %.sroa.092.0..sroa.092.0..sroa.092.0..sroa.092.0.119, 1
-  %.sroa.0.0.insert.ext.i.i = zext nneg i8 %.mask to i64
+  %.sroa.0.0.insert.ext.i.i = zext nneg i8 %.sroa.092.0..sroa.092.0..sroa.092.0..sroa.092.0.119 to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %i.gt, %.sroa.0.0.insert.ext.i.i
   %i.gu = call ptr @_ZN3fmt2v96detail18write_int_noinlineIcNS0_8appenderEjEET0_S4_NS1_13write_int_argIT1_EERKNS0_18basic_format_specsIT_EENS1_10locale_refE(ptr %.sroa.0.0.copyload.i62, i64 %.sroa.0.0.insert.insert.i.i, ptr noundef nonnull align 4 dereferenceable(16) %7, ptr null)
   br label %_ZN3fmt2v916visit_format_argIRNS0_6detail13arg_formatterIcEENS0_20basic_format_contextINS0_8appenderEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE.exit

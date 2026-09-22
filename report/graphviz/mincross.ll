@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %bb.ah
 
 .lr.ph107.i.i:                                    ; preds = %flat_mval.exit.i.i.a, %.lr.ph107.preheader.i.i
   %indvars.iv118.i.i = phi i64 [ 0, %.lr.ph107.preheader.i.i ], [ %indvars.iv.next119.i.i, %flat_mval.exit.i.i.a ] ; 2 uses
-  %.081105.i.i = phi i1 [ false, %.lr.ph107.preheader.i.i ], [ %.182.i.i, %flat_mval.exit.i.i.a ] ; 3 uses
+  %.081105.i.i = phi i8 [ 0, %.lr.ph107.preheader.i.i ], [ %.182.i.i, %flat_mval.exit.i.i.a ] ; 3 uses
   %i.mo = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %indvars.iv118.i.i
   %i.mp = load ptr, ptr %i.mo, align 8, !tbaa !44
   %i.mq = getelementptr inbounds nuw i8, ptr %i.mp, i64 16
@@ -279,7 +279,7 @@ bb.am:                                            ; preds = %bb.al
   %i.od = getelementptr inbounds nuw i8, ptr %i.oc, i64 368
   %i.oe = load double, ptr %i.od, align 8, !tbaa !179 ; 2 uses
   %i.of = fcmp ult double %i.oe, 0.000000e+00
-  br i1 %i.of, label %flat_mval.exit.i.i.a, label %bb.an
+  br i1 %i.of, label %flat_mval.exit.i.i, label %bb.an
 
 bb.an:                                            ; preds = %._crit_edge.i.i.i
   %i.og = fadd double %i.oe, 1.000000e+00
@@ -289,7 +289,7 @@ bb.ao:                                            ; preds = %bb.al
   %i.oh = getelementptr inbounds nuw i8, ptr %i.mr, i64 296
   %i.oi = load i64, ptr %i.oh, align 8, !tbaa !101
   %.not43.i.i.i = icmp eq i64 %i.oi, 0
-  br i1 %.not43.i.i.i, label %flat_mval.exit.i.i.a, label %bb.ap
+  br i1 %.not43.i.i.i, label %flat_mval.exit.i.i, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   %i.oj = getelementptr inbounds nuw i8, ptr %i.mr, i64 288
@@ -344,7 +344,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pl, i64 368
   %i.pn = load double, ptr %i.pm, align 8, !tbaa !179 ; 2 uses
   %i.po = fcmp ogt double %i.pn, 0.000000e+00
-  br i1 %i.po, label %bb.aq, label %flat_mval.exit.i.i.a
+  br i1 %i.po, label %bb.aq, label %flat_mval.exit.i.i
 
 bb.aq:                                            ; preds = %._crit_edge9.i.i.i
   %i.pp = fadd double %i.pn, -1.000000e+00
@@ -354,10 +354,17 @@ bb.aq:                                            ; preds = %._crit_edge9.i.i.i
   %.sink.i.i.i = phi double [ %i.pp, %bb.aq ], [ %i.og, %bb.an ]
   %i.pq = getelementptr inbounds nuw i8, ptr %i.mr, i64 368
   store double %.sink.i.i.i, ptr %i.pq, align 8, !tbaa !179
+  br label %flat_mval.exit.i.i
+
+flat_mval.exit.i.i:                               ; preds = %.sink.split.i.i.i, %._crit_edge9.i.i.i, %bb.ao, %._crit_edge.i.i.i
+  %.038.i.i.i = phi i8 [ 1, %._crit_edge9.i.i.i ], [ 1, %._crit_edge.i.i.i ], [ 1, %bb.ao ], [ 0, %.sink.split.i.i.i ]
+  %2 = or i8 %.038.i.i.i, %.081105.i.i
+  %3 = icmp ne i8 %2, 0
+  %4 = zext i1 %3 to i8
   br label %flat_mval.exit.i.i.a
 
-flat_mval.exit.i.i.a:                             ; preds = %.sink.split.i.i.i, %._crit_edge9.i.i.i, %bb.ao, %._crit_edge.i.i.i, %bb.ak, %.lr.ph107.i.i
-  %.182.i.i = phi i1 [ %.081105.i.i, %.lr.ph107.i.i ], [ %.081105.i.i, %bb.ak ], [ true, %._crit_edge9.i.i.i ], [ true, %._crit_edge.i.i.i ], [ true, %bb.ao ], [ %.081105.i.i, %.sink.split.i.i.i ] ; 2 uses
+flat_mval.exit.i.i.a:                             ; preds = %flat_mval.exit.i.i, %bb.ak, %.lr.ph107.i.i
+  %.182.i.i = phi i8 [ %4, %flat_mval.exit.i.i ], [ %.081105.i.i, %bb.ak ], [ %.081105.i.i, %.lr.ph107.i.i ] ; 2 uses
   %indvars.iv.next119.i.i = add nuw nsw i64 %indvars.iv118.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next119.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %medians.exit.i, label %.lr.ph107.i.i, !llvm.loop !167
@@ -365,7 +372,8 @@ flat_mval.exit.i.i.a:                             ; preds = %.sink.split.i.i.i, 
 medians.exit.i:                                   ; preds = %flat_mval.exit.i.i.a
   %i.pr = getelementptr inbounds nuw i8, ptr %i.mk, i64 8
   %i.ps = load ptr, ptr %i.pr, align 8, !tbaa !43 ; 3 uses
-  %i.pt = or i1 %i.he, %.182.i.i
+  %5 = trunc nuw i8 %.182.i.i to i1
+  %i.pt = or i1 %i.he, %5
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.ps, i64 %wide.trip.count.i.i
   %.b.i.i.i = load i1, ptr @ReMincross, align 1
   %i.pv = getelementptr inbounds nuw i8, ptr %i.mh, i64 132

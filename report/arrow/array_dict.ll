@@ -205,13 +205,13 @@ bb.a:
   %i.c = tail call i16 @_ZN5arrow4util7Float1610FromDoubleEd(double noundef %i.b)
   %.sroa.01.0.copyload.i.i.fr.i.i = freeze i16 %i.c ; 6 uses
   %.sroa.7.0.extract.shift = lshr i16 %.sroa.01.0.copyload.i.i.fr.i.i, 8
-  %.sroa.7.0.extract.trunc = zext nneg i16 %.sroa.7.0.extract.shift to i64 ; 2 uses
   %i.d = and i16 %.sroa.01.0.copyload.i.i.fr.i.i, 255
   %i.e = zext nneg i16 %i.d to i64
   %i.f = shl nuw nsw i64 %i.e, 16
-  %i.g = shl nuw nsw i64 %.sroa.7.0.extract.trunc, 8
+  %7 = zext nneg i16 %.sroa.7.0.extract.shift to i64 ; 2 uses
+  %i.g = shl nuw nsw i64 %7, 8
   %i.h = or disjoint i64 %i.f, %i.g
-  %.masked.i.i.i = or disjoint i64 %i.h, %.sroa.7.0.extract.trunc
+  %.masked.i.i.i = or disjoint i64 %i.h, %7
   %i.i = mul i64 %.masked.i.i.i, -7046029288634856825
   %i.j = add i64 %i.i, 7137035069683662848        ; 2 uses
   %i.k = tail call noundef i64 @llvm.bswap.i64(i64 %i.j)

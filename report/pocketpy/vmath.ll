@@ -204,7 +204,6 @@ bb.e:                                             ; preds = %bb.k, %bb.i, %bb.g,
   br label %.thread23
 
 bb.f:                                             ; preds = %bb.d
-  %.sroa.0.0.insert.ext = trunc nuw nsw i64 %i.d to i32
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.g = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.f, i16 noundef signext 3) #16
   br i1 %i.g, label %bb.g, label %.thread23
@@ -215,7 +214,6 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond.1, label %bb.h, label %bb.e
 
 bb.h:                                             ; preds = %bb.g
-  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.h to i32
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.j = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.i, i16 noundef signext 3) #16
   br i1 %i.j, label %bb.i, label %.thread23
@@ -226,7 +224,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %or.cond.2, label %bb.j, label %bb.e
 
 bb.j:                                             ; preds = %bb.i
-  %.sroa.5.0.insert.ext = trunc nuw nsw i64 %i.k to i32
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.m = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.l, i16 noundef signext 3) #16
   br i1 %i.m, label %bb.k, label %.thread23
@@ -237,13 +234,16 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond.3, label %bb.l, label %bb.e
 
 bb.l:                                             ; preds = %bb.k
-  %.sroa.6.0.insert.ext = trunc nuw nsw i64 %i.n to i32
   %2 = tail call ptr (...) @py_retval() #16       ; 3 uses
+  %.sroa.6.0.insert.ext = trunc nuw nsw i64 %i.n to i32
   %.sroa.6.0.insert.shift = shl nuw i32 %.sroa.6.0.insert.ext, 24
+  %.sroa.5.0.insert.ext = trunc nuw nsw i64 %i.k to i32
   %.sroa.5.0.insert.shift = shl nuw nsw i32 %.sroa.5.0.insert.ext, 16
   %.sroa.5.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.shift, %.sroa.5.0.insert.shift
+  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.h to i32
   %.sroa.4.0.insert.shift = shl nuw nsw i32 %.sroa.4.0.insert.ext, 8
   %.sroa.4.0.insert.insert = or disjoint i32 %.sroa.5.0.insert.insert, %.sroa.4.0.insert.shift
+  %.sroa.0.0.insert.ext = trunc nuw nsw i64 %i.d to i32
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.insert, %.sroa.0.0.insert.ext
   store i16 78, ptr %2, align 8, !tbaa !11
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 2
@@ -472,9 +472,9 @@ bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.0.0.copyload.i = load i32, ptr %i.b, align 8, !tbaa !13
   %.sroa.3.0.extract.shift = lshr i32 %.sroa.0.0.copyload.i, 24
-  %.sroa.3.0.extract.trunc = zext nneg i32 %.sroa.3.0.extract.shift to i64
   %2 = tail call ptr (...) @py_retval() #16
-  tail call void @py_newint(ptr noundef %2, i64 noundef %.sroa.3.0.extract.trunc) #16
+  %3 = zext nneg i32 %.sroa.3.0.extract.shift to i64
+  tail call void @py_newint(ptr noundef %2, i64 noundef %3) #16
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -510,8 +510,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %.sroa.0.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %2 = tail call ptr (...) @py_retval() #16       ; 3 uses
+  %.sroa.0.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.5.0.extract.shift, %.sroa.0.0.insert.ext
   store i16 78, ptr %2, align 8, !tbaa !11
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 2
@@ -552,8 +552,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %2 = tail call ptr (...) @py_retval() #16       ; 3 uses
+  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %.sroa.4.0.insert.shift = shl nuw nsw i32 %.sroa.4.0.insert.ext, 8
   %i.g = and i32 %.sroa.0.0.copyload.i, -65281
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %i.g
@@ -596,8 +596,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %2 = tail call ptr (...) @py_retval() #16       ; 3 uses
+  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %.sroa.4.0.insert.shift = shl nuw nsw i32 %.sroa.4.0.insert.ext, 16
   %i.g = and i32 %.sroa.0.0.copyload.i, -16711681
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %i.g
@@ -640,8 +640,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %2 = tail call ptr (...) @py_retval() #16       ; 3 uses
+  %.sroa.4.0.insert.ext = trunc nuw nsw i64 %i.e to i32
   %.sroa.4.0.insert.shift = shl nuw i32 %.sroa.4.0.insert.ext, 24
   %.sroa.0.0.insert.ext = and i32 %.sroa.0.0.copyload.i, 16777215
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext

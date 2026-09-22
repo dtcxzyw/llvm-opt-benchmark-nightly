@@ -205,12 +205,16 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNSt15__new_a
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %._crit_edge, label %.lr.ph.split
 
-._crit_edge:                                      ; preds = %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i, %.lr.ph
-  %.0.lcssa = phi i1 [ false, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i ], [ false, %.lr.ph ], [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ]
+._crit_edge.loopexit22:                           ; preds = %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
+  %2 = trunc nuw i8 %.1 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i, %.lr.ph, %._crit_edge.loopexit22
+  %.0.lcssa = phi i1 [ false, %.lr.ph ], [ %2, %._crit_edge.loopexit22 ], [ false, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i ]
   br i1 %1, label %bb.h, label %bb.g
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
-  %.021 = phi i1 [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ false, %.lr.ph ] ; 5 uses
+  %.021 = phi i8 [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ 0, %.lr.ph ] ; 5 uses
   %.sroa.08.020 = phi ptr [ %i.t, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ %i.m, %.lr.ph ]
   %i.s = load ptr, ptr %0, align 8, !tbaa !852    ; 4 uses
   %i.t = getelementptr inbounds i8, ptr %.sroa.08.020, i64 -4 ; 4 uses
@@ -259,7 +263,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ak = tail call noundef zeroext i1 @_ZN3rrr9OptimizerINS_10AndNetworkENS_11BddAnalyzerIS1_EEE12ReduceFaninsEib(ptr noundef nonnull align 8 dereferenceable(5688) %0, i32 noundef %i.u, i1 noundef zeroext false)
-  %2 = or i1 %.021, %i.ak                         ; 2 uses
+  %3 = zext i1 %i.ak to i8
+  %4 = or i8 %.021, %3
+  %5 = icmp ne i8 %4, 0
+  %6 = zext i1 %5 to i8                           ; 2 uses
   %i.al = load ptr, ptr %0, align 8, !tbaa !852   ; 2 uses
   %i.am = load i32, ptr %i.t, align 4, !tbaa !220 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 128
@@ -282,9 +289,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
 
 _ZNK3rrr10AndNetwork5IsIntEi.exit.thread:         ; preds = %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i, %.lr.ph.split, %bb.e, %bb.f, %_ZNK3rrr10AndNetwork5IsIntEi.exit, %bb.d
-  %.1 = phi i1 [ %.021, %bb.d ], [ %2, %bb.f ], [ %2, %bb.e ], [ %.021, %_ZNK3rrr10AndNetwork5IsIntEi.exit ], [ %.021, %.lr.ph.split ], [ %.021, %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i ] ; 2 uses
+  %.1 = phi i8 [ %.021, %bb.d ], [ %6, %bb.f ], [ %6, %bb.e ], [ %.021, %_ZNK3rrr10AndNetwork5IsIntEi.exit ], [ %.021, %.lr.ph.split ], [ %.021, %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i ] ; 2 uses
   %.not = icmp eq ptr %i.t, %i.j
-  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !1988
+  br i1 %.not, label %._crit_edge.loopexit22, label %.lr.ph.split, !llvm.loop !1988
 
 bb.g:                                             ; preds = %._crit_edge
   %i.ay = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #26
@@ -687,12 +694,16 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNSt15__new_a
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %._crit_edge, label %.lr.ph.split
 
-._crit_edge:                                      ; preds = %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i, %.lr.ph
-  %.0.lcssa = phi i1 [ false, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i ], [ false, %.lr.ph ], [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ]
+._crit_edge.loopexit22:                           ; preds = %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
+  %2 = trunc nuw i8 %.1 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i, %.lr.ph, %._crit_edge.loopexit22
+  %.0.lcssa = phi i1 [ false, %.lr.ph ], [ %2, %._crit_edge.loopexit22 ], [ false, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i ]
   br i1 %1, label %bb.h, label %bb.g
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
-  %.021 = phi i1 [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ false, %.lr.ph ] ; 5 uses
+  %.021 = phi i8 [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ 0, %.lr.ph ] ; 5 uses
   %.sroa.08.020 = phi ptr [ %i.t, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ %i.m, %.lr.ph ]
   %i.s = load ptr, ptr %0, align 8, !tbaa !1054   ; 4 uses
   %i.t = getelementptr inbounds i8, ptr %.sroa.08.020, i64 -4 ; 4 uses
@@ -741,7 +752,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ak = tail call noundef zeroext i1 @_ZN3rrr9OptimizerINS_10AndNetworkENS_15BddMspfAnalyzerIS1_EEE12ReduceFaninsEib(ptr noundef nonnull align 8 dereferenceable(5720) %0, i32 noundef %i.u, i1 noundef zeroext false)
-  %2 = or i1 %.021, %i.ak                         ; 2 uses
+  %3 = zext i1 %i.ak to i8
+  %4 = or i8 %.021, %3
+  %5 = icmp ne i8 %4, 0
+  %6 = zext i1 %5 to i8                           ; 2 uses
   %i.al = load ptr, ptr %0, align 8, !tbaa !1054  ; 2 uses
   %i.am = load i32, ptr %i.t, align 4, !tbaa !220 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 128
@@ -764,9 +778,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
 
 _ZNK3rrr10AndNetwork5IsIntEi.exit.thread:         ; preds = %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i, %.lr.ph.split, %bb.e, %bb.f, %_ZNK3rrr10AndNetwork5IsIntEi.exit, %bb.d
-  %.1 = phi i1 [ %.021, %bb.d ], [ %2, %bb.f ], [ %2, %bb.e ], [ %.021, %_ZNK3rrr10AndNetwork5IsIntEi.exit ], [ %.021, %.lr.ph.split ], [ %.021, %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i ] ; 2 uses
+  %.1 = phi i8 [ %.021, %bb.d ], [ %6, %bb.f ], [ %6, %bb.e ], [ %.021, %_ZNK3rrr10AndNetwork5IsIntEi.exit ], [ %.021, %.lr.ph.split ], [ %.021, %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i ] ; 2 uses
   %.not = icmp eq ptr %i.t, %i.j
-  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !2812
+  br i1 %.not, label %._crit_edge.loopexit22, label %.lr.ph.split, !llvm.loop !2812
 
 bb.g:                                             ; preds = %._crit_edge
   %i.ay = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #26
@@ -1169,12 +1183,16 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNSt15__new_a
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %._crit_edge, label %.lr.ph.split
 
-._crit_edge:                                      ; preds = %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i, %.lr.ph
-  %.0.lcssa = phi i1 [ false, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i ], [ false, %.lr.ph ], [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ]
+._crit_edge.loopexit22:                           ; preds = %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
+  %2 = trunc nuw i8 %.1 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i, %.lr.ph, %._crit_edge.loopexit22
+  %.0.lcssa = phi i1 [ false, %.lr.ph ], [ %2, %._crit_edge.loopexit22 ], [ false, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i ]
   br i1 %1, label %bb.h, label %bb.g
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
-  %.021 = phi i1 [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ false, %.lr.ph ] ; 5 uses
+  %.021 = phi i8 [ %.1, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ 0, %.lr.ph ] ; 5 uses
   %.sroa.08.020 = phi ptr [ %i.t, %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread ], [ %i.m, %.lr.ph ]
   %i.s = load ptr, ptr %0, align 8, !tbaa !1164   ; 4 uses
   %i.t = getelementptr inbounds i8, ptr %.sroa.08.020, i64 -4 ; 4 uses
@@ -1223,7 +1241,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ak = tail call noundef zeroext i1 @_ZN3rrr9OptimizerINS_10AndNetworkENS_8AnalyzerIS1_NS_9SimulatorIS1_EENS_9SatSolverIS1_EEEEE12ReduceFaninsEib(ptr noundef nonnull align 8 dereferenceable(5848) %0, i32 noundef %i.u, i1 noundef zeroext false)
-  %2 = or i1 %.021, %i.ak                         ; 2 uses
+  %3 = zext i1 %i.ak to i8
+  %4 = or i8 %.021, %3
+  %5 = icmp ne i8 %4, 0
+  %6 = zext i1 %5 to i8                           ; 2 uses
   %i.al = load ptr, ptr %0, align 8, !tbaa !1164  ; 2 uses
   %i.am = load i32, ptr %i.t, align 4, !tbaa !220 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 128
@@ -1246,9 +1267,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNK3rrr10AndNetwork5IsIntEi.exit.thread
 
 _ZNK3rrr10AndNetwork5IsIntEi.exit.thread:         ; preds = %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i, %.lr.ph.split, %bb.e, %bb.f, %_ZNK3rrr10AndNetwork5IsIntEi.exit, %bb.d
-  %.1 = phi i1 [ %.021, %bb.d ], [ %2, %bb.f ], [ %2, %bb.e ], [ %.021, %_ZNK3rrr10AndNetwork5IsIntEi.exit ], [ %.021, %.lr.ph.split ], [ %.021, %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i ] ; 2 uses
+  %.1 = phi i8 [ %.021, %bb.d ], [ %6, %bb.f ], [ %6, %bb.e ], [ %.021, %_ZNK3rrr10AndNetwork5IsIntEi.exit ], [ %.021, %.lr.ph.split ], [ %.021, %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i ] ; 2 uses
   %.not = icmp eq ptr %i.t, %i.j
-  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !3465
+  br i1 %.not, label %._crit_edge.loopexit22, label %.lr.ph.split, !llvm.loop !3465
 
 bb.g:                                             ; preds = %._crit_edge
   %i.ay = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #26

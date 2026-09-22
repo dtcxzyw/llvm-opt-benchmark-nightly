@@ -202,8 +202,7 @@ bb.a:
 define hidden void @"_ZN4core3ptr60drop_in_place$LT$actix_web_codegen..route..MethodTypeExt$GT$17he113f3ae43ee2cc6E"(ptr align 8 %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i8, ptr %0, align 8
-  %1 = and i8 %i.a, 1
-  %i.b = icmp eq i8 %1, 0
+  %i.b = icmp eq i8 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.c, %bb.a
@@ -399,8 +398,7 @@ bb.a:
 define hidden void @"_ZN4core3ptr79drop_in_place$LT$$LP$actix_web_codegen..route..MethodTypeExt$C$$LP$$RP$$RP$$GT$17hc8285664ae997a8dE"(ptr align 8 %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i8, ptr %0, align 8
-  %1 = and i8 %i.a, 1
-  %i.b = icmp eq i8 %1, 0
+  %i.b = icmp eq i8 %i.a, 0
   br i1 %i.b, label %"_ZN4core3ptr60drop_in_place$LT$actix_web_codegen..route..MethodTypeExt$GT$17he113f3ae43ee2cc6E.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a

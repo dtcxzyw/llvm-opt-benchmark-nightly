@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
   store i64 %i.s, ptr %.0.lcssa, align 8, !tbaa !35
   store ptr %1, ptr %i.q, align 8, !tbaa !32
   %i.t = trunc nuw nsw i64 %.020.lcssa to i32
-  %i.u = sub i32 %i.n, %i.t
+  %i.u = sub nuw i32 %i.n, %i.t
   store i32 %i.u, ptr %i.m, align 8, !tbaa !38
   br label %bb.f
 

@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
 
 .thread233.outer:                                 ; preds = %.critedge, %bb.b
   %.0104.ph = phi i1 [ true, %.critedge ], [ false, %bb.b ]
-  %.091.ph = phi i1 [ %.394, %.critedge ], [ false, %bb.b ]
+  %.091.ph = phi i8 [ %.394, %.critedge ], [ 0, %bb.b ]
   %.083.ph = phi i64 [ %.3, %.critedge ], [ %.val130, %bb.b ]
   br label %.thread233.outer267
 
 .thread233.outer267:                              ; preds = %.thread233.outer, %bb.k
   %.099.ph = phi i64 [ 0, %.thread233.outer ], [ %i.an, %bb.k ]
-  %.091.ph268 = phi i1 [ %.091.ph, %.thread233.outer ], [ %3, %bb.k ] ; 6 uses
+  %.091.ph268 = phi i8 [ %.091.ph, %.thread233.outer ], [ %4, %bb.k ] ; 6 uses
   %.083.ph269 = phi i64 [ %.083.ph, %.thread233.outer ], [ %i.be, %bb.k ]
   br label %.thread233
 
@@ -304,7 +304,8 @@ bb.j:                                             ; preds = %bb.i
   %i.ax = load i32, ptr %i.j, align 8
   %i.ay = sub i32 %i.o, %i.p
   %i.az = icmp uge i32 %i.ay, %i.ax
-  %3 = or i1 %.091.ph268, %i.az                   ; 3 uses
+  %3 = zext i1 %i.az to i8
+  %4 = or i8 %.091.ph268, %3                      ; 3 uses
   %i.ba = load ptr, ptr %i.aw, align 8
   store ptr null, ptr %i.aw, align 8
   %i.bb = getelementptr i8, ptr %i.ba, i64 8
@@ -329,7 +330,7 @@ bb.k:                                             ; preds = %bb.j
 
 .loopexit:                                        ; preds = %bb.k, %.thread233
   %.3102 = phi i64 [ %.099, %.thread233 ], [ %i.an, %bb.k ] ; 2 uses
-  %.394 = phi i1 [ %.091.ph268, %.thread233 ], [ %3, %bb.k ] ; 4 uses
+  %.394 = phi i8 [ %.091.ph268, %.thread233 ], [ %4, %bb.k ] ; 4 uses
   %.3 = phi i64 [ %.083, %.thread233 ], [ %i.be, %bb.k ]
   %i.bh = load i32, ptr %i.k, align 8
   %.not119 = icmp ne i32 %i.bh, 0
@@ -412,13 +413,14 @@ bb.r:                                             ; preds = %bb.q
   br label %.thread233.outer
 
 .thread166:                                       ; preds = %bb.j, %.thread, %bb.m, %bb.l, %.loopexit, %bb.h, %bb.g, %bb.e
-  %.495174 = phi i1 [ %.091.ph268, %bb.e ], [ %.091.ph268, %bb.h ], [ %.091.ph268, %bb.g ], [ %3, %bb.j ], [ %.091.ph268, %.thread ], [ %.394, %bb.m ], [ %.394, %bb.l ], [ %.394, %.loopexit ]
+  %.495174 = phi i8 [ %.091.ph268, %bb.e ], [ %.091.ph268, %bb.h ], [ %.091.ph268, %bb.g ], [ %4, %bb.j ], [ %.091.ph268, %.thread ], [ %.394, %bb.m ], [ %.394, %bb.l ], [ %.394, %.loopexit ]
   %.4103173 = phi i64 [ %spec.store.select, %bb.e ], [ %spec.store.select1, %bb.h ], [ %spec.select, %bb.g ], [ %i.an, %.thread ], [ %i.an, %bb.j ], [ -11, %bb.l ], [ %.3102, %.loopexit ], [ -11, %bb.m ]
   %.val131 = load i32, ptr %i.f, align 8
   %.val132 = load i32, ptr %i.g, align 4
   %.not.i.i148 = icmp ne i32 %.val131, %.val132
   call void @mutex_unlock(ptr noundef %i.d) #14
-  br i1 %.495174, label %bb.s, label %bb.t
+  %5 = trunc nuw i8 %.495174 to i1
+  br i1 %5, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.thread166
   %i.bw = getelementptr i8, ptr %i.d, i64 48

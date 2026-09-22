@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.ab
 .lr.ph1342.split.us:                              ; preds = %.lr.ph1342.us, %._crit_edge.us
   %indvars.iv = phi i64 [ 0, %.lr.ph1342.us ], [ %indvars.iv.next, %._crit_edge.us ] ; 5 uses
   %.0791339.us = phi i8 [ 0, %.lr.ph1342.us ], [ %.1.lcssa.us, %._crit_edge.us ] ; 8 uses
-  %.2861338.us = phi i8 [ %.1851345.us1581, %.lr.ph1342.us ], [ %.3.lcssa.us, %._crit_edge.us ] ; 7 uses
+  %.2861338.us = phi i8 [ %.1851345.us1581, %.lr.ph1342.us ], [ %.3.lcssa.us, %._crit_edge.us ] ; 8 uses
   %i.dw = load ptr, ptr %i.du, align 8, !tbaa !119 ; 3 uses
   %i.dx = getelementptr inbounds nuw [268 x i8], ptr %i.dw, i64 %indvars.iv ; 33 uses
   %i.dy = mul nuw nsw i64 %indvars.iv, 268
@@ -390,12 +390,14 @@ bb.ao:                                            ; preds = %bb.an
   store float %i.hg, ptr %i.gc, align 4, !tbaa !165
   %i.hh = icmp eq i8 %.0791339.us, 0
   %i.hi = fcmp olt float %i.hg, %i.ax
-  %or.cond114.us = select i1 %i.hh, i1 %i.hi, i1 false
-  %3 = fcmp ogt float %i.he, 0.000000e+00
-  %or.cond115.us = select i1 %or.cond114.us, i1 %3, i1 false
-  br i1 %or.cond115.us, label %bb.ap, label %bb.ar
+  %or.cond115.us = select i1 %i.hh, i1 %i.hi, i1 false
+  br i1 %or.cond115.us, label %3, label %bb.ar
 
-bb.ap:                                            ; preds = %.lr.ph.split.us1582.preheader
+3:                                                ; preds = %.lr.ph.split.us1582.preheader
+  %4 = fcmp ogt float %i.he, 0.000000e+00
+  br i1 %4, label %bb.ap, label %bb.ar
+
+bb.ap:                                            ; preds = %3
   %i.hj = load i32, ptr %i.dv, align 8, !tbaa !166 ; 2 uses
   %i.hk = lshr i32 %i.hj, 6
   %i.hl = load ptr, ptr %i.aq, align 8, !tbaa !167 ; 3 uses
@@ -427,9 +429,9 @@ b3SetBit.exit.us:                                 ; preds = %bb.aq
   store i64 %i.ie, ptr %i.hn, align 8, !tbaa !168
   br label %bb.ar
 
-bb.ar:                                            ; preds = %b3SetBit.exit.us, %.lr.ph.split.us1582.preheader
-  %.4.us = phi i8 [ 1, %b3SetBit.exit.us ], [ %.2861338.us, %.lr.ph.split.us1582.preheader ] ; 2 uses
-  %.2.us = phi i8 [ 1, %b3SetBit.exit.us ], [ %.0791339.us, %.lr.ph.split.us1582.preheader ] ; 3 uses
+bb.ar:                                            ; preds = %b3SetBit.exit.us, %3, %.lr.ph.split.us1582.preheader
+  %.4.us = phi i8 [ 1, %b3SetBit.exit.us ], [ %.2861338.us, %3 ], [ %.2861338.us, %.lr.ph.split.us1582.preheader ] ; 3 uses
+  %.2.us = phi i8 [ 1, %b3SetBit.exit.us ], [ 0, %3 ], [ %.0791339.us, %.lr.ph.split.us1582.preheader ] ; 3 uses
   %exitcond3276.not = icmp eq i32 %i.fv, 1
   br i1 %exitcond3276.not, label %._crit_edge.us, label %.lr.ph.split.us1582.1
 
@@ -454,12 +456,14 @@ bb.at:                                            ; preds = %bb.as
   store float %i.im, ptr %i.il, align 4, !tbaa !165
   %i.in = icmp eq i8 %.2.us, 0
   %i.io = fcmp olt float %i.im, %i.ax
-  %or.cond114.us.1 = select i1 %i.in, i1 %i.io, i1 false
-  %4 = fcmp ogt float %i.ii, 0.000000e+00
-  %or.cond115.us.1 = select i1 %or.cond114.us.1, i1 %4, i1 false
-  br i1 %or.cond115.us.1, label %bb.au, label %bb.aw
+  %or.cond115.us.1 = select i1 %i.in, i1 %i.io, i1 false
+  br i1 %or.cond115.us.1, label %5, label %bb.aw
 
-bb.au:                                            ; preds = %bb.at
+5:                                                ; preds = %bb.at
+  %6 = fcmp ogt float %i.ii, 0.000000e+00
+  br i1 %6, label %bb.au, label %bb.aw
+
+bb.au:                                            ; preds = %5
   %i.ip = load i32, ptr %i.dv, align 8, !tbaa !166 ; 2 uses
   %i.iq = lshr i32 %i.ip, 6
   %i.ir = load ptr, ptr %i.aq, align 8, !tbaa !167 ; 3 uses
@@ -491,9 +495,9 @@ b3SetBit.exit.us.1:                               ; preds = %bb.av
   store i64 %i.jk, ptr %i.it, align 8, !tbaa !168
   br label %bb.aw
 
-bb.aw:                                            ; preds = %b3SetBit.exit.us.1, %bb.at
-  %.4.us.1 = phi i8 [ 1, %b3SetBit.exit.us.1 ], [ %.4.us, %bb.at ] ; 2 uses
-  %.2.us.1 = phi i8 [ 1, %b3SetBit.exit.us.1 ], [ %.2.us, %bb.at ] ; 3 uses
+bb.aw:                                            ; preds = %b3SetBit.exit.us.1, %5, %bb.at
+  %.4.us.1 = phi i8 [ 1, %b3SetBit.exit.us.1 ], [ %.4.us, %5 ], [ %.4.us, %bb.at ] ; 3 uses
+  %.2.us.1 = phi i8 [ 1, %b3SetBit.exit.us.1 ], [ 0, %5 ], [ %.2.us, %bb.at ] ; 3 uses
   %exitcond3276.1.not = icmp eq i32 %i.fv, 2
   br i1 %exitcond3276.1.not, label %._crit_edge.us, label %.lr.ph.split.us1582.2
 
@@ -518,12 +522,14 @@ bb.ay:                                            ; preds = %bb.ax
   store float %i.js, ptr %i.jr, align 4, !tbaa !165
   %i.jt = icmp eq i8 %.2.us.1, 0
   %i.ju = fcmp olt float %i.js, %i.ax
-  %or.cond114.us.2 = select i1 %i.jt, i1 %i.ju, i1 false
-  %5 = fcmp ogt float %i.jo, 0.000000e+00
-  %or.cond115.us.2 = select i1 %or.cond114.us.2, i1 %5, i1 false
-  br i1 %or.cond115.us.2, label %bb.az, label %bb.bb
+  %or.cond115.us.2 = select i1 %i.jt, i1 %i.ju, i1 false
+  br i1 %or.cond115.us.2, label %7, label %bb.bb
 
-bb.az:                                            ; preds = %bb.ay
+7:                                                ; preds = %bb.ay
+  %8 = fcmp ogt float %i.jo, 0.000000e+00
+  br i1 %8, label %bb.az, label %bb.bb
+
+bb.az:                                            ; preds = %7
   %i.jv = load i32, ptr %i.dv, align 8, !tbaa !166 ; 2 uses
   %i.jw = lshr i32 %i.jv, 6
   %i.jx = load ptr, ptr %i.aq, align 8, !tbaa !167 ; 3 uses
@@ -555,9 +561,9 @@ b3SetBit.exit.us.2:                               ; preds = %bb.ba
   store i64 %i.kq, ptr %i.jz, align 8, !tbaa !168
   br label %bb.bb
 
-bb.bb:                                            ; preds = %b3SetBit.exit.us.2, %bb.ay
-  %.4.us.2 = phi i8 [ 1, %b3SetBit.exit.us.2 ], [ %.4.us.1, %bb.ay ] ; 2 uses
-  %.2.us.2 = phi i8 [ 1, %b3SetBit.exit.us.2 ], [ %.2.us.1, %bb.ay ] ; 3 uses
+bb.bb:                                            ; preds = %b3SetBit.exit.us.2, %7, %bb.ay
+  %.4.us.2 = phi i8 [ 1, %b3SetBit.exit.us.2 ], [ %.4.us.1, %7 ], [ %.4.us.1, %bb.ay ] ; 3 uses
+  %.2.us.2 = phi i8 [ 1, %b3SetBit.exit.us.2 ], [ 0, %7 ], [ %.2.us.1, %bb.ay ] ; 3 uses
   %exitcond3276.2.not = icmp eq i32 %i.fv, 3
   br i1 %exitcond3276.2.not, label %._crit_edge.us, label %.lr.ph.split.us1582.3
 
@@ -582,12 +588,14 @@ bb.bd:                                            ; preds = %bb.bc
   store float %i.ky, ptr %i.kx, align 4, !tbaa !165
   %i.kz = icmp eq i8 %.2.us.2, 0
   %i.la = fcmp olt float %i.ky, %i.ax
-  %or.cond114.us.3 = select i1 %i.kz, i1 %i.la, i1 false
-  %6 = fcmp ogt float %i.ku, 0.000000e+00
-  %or.cond115.us.3 = select i1 %or.cond114.us.3, i1 %6, i1 false
-  br i1 %or.cond115.us.3, label %bb.be, label %bb.bg
+  %or.cond115.us.3 = select i1 %i.kz, i1 %i.la, i1 false
+  br i1 %or.cond115.us.3, label %9, label %bb.bg
 
-bb.be:                                            ; preds = %bb.bd
+9:                                                ; preds = %bb.bd
+  %10 = fcmp ogt float %i.ku, 0.000000e+00
+  br i1 %10, label %bb.be, label %bb.bg
+
+bb.be:                                            ; preds = %9
   %i.lb = load i32, ptr %i.dv, align 8, !tbaa !166 ; 2 uses
   %i.lc = lshr i32 %i.lb, 6
   %i.ld = load ptr, ptr %i.aq, align 8, !tbaa !167 ; 3 uses
@@ -619,9 +627,9 @@ b3SetBit.exit.us.3:                               ; preds = %bb.bf
   store i64 %i.lw, ptr %i.lf, align 8, !tbaa !168
   br label %bb.bg
 
-bb.bg:                                            ; preds = %b3SetBit.exit.us.3, %bb.bd
-  %.4.us.3 = phi i8 [ 1, %b3SetBit.exit.us.3 ], [ %.4.us.2, %bb.bd ] ; 2 uses
-  %.2.us.3 = phi i8 [ 1, %b3SetBit.exit.us.3 ], [ %.2.us.2, %bb.bd ] ; 3 uses
+bb.bg:                                            ; preds = %b3SetBit.exit.us.3, %9, %bb.bd
+  %.4.us.3 = phi i8 [ 1, %b3SetBit.exit.us.3 ], [ %.4.us.2, %9 ], [ %.4.us.2, %bb.bd ] ; 3 uses
+  %.2.us.3 = phi i8 [ 1, %b3SetBit.exit.us.3 ], [ 0, %9 ], [ %.2.us.2, %bb.bd ] ; 3 uses
   %exitcond3276.3.not = icmp eq i32 %i.fv, 4
   br i1 %exitcond3276.3.not, label %._crit_edge.us, label %.lr.ph.split.us1582.4
 
@@ -646,12 +654,14 @@ bb.bi:                                            ; preds = %bb.bh
   store float %i.me, ptr %i.md, align 4, !tbaa !165
   %i.mf = icmp eq i8 %.2.us.3, 0
   %i.mg = fcmp olt float %i.me, %i.ax
-  %or.cond114.us.4 = select i1 %i.mf, i1 %i.mg, i1 false
-  %7 = fcmp ogt float %i.ma, 0.000000e+00
-  %or.cond115.us.4 = select i1 %or.cond114.us.4, i1 %7, i1 false
-  br i1 %or.cond115.us.4, label %bb.bj, label %bb.bl
+  %or.cond115.us.4 = select i1 %i.mf, i1 %i.mg, i1 false
+  br i1 %or.cond115.us.4, label %11, label %bb.bl
 
-bb.bj:                                            ; preds = %bb.bi
+11:                                               ; preds = %bb.bi
+  %12 = fcmp ogt float %i.ma, 0.000000e+00
+  br i1 %12, label %bb.bj, label %bb.bl
+
+bb.bj:                                            ; preds = %11
   %i.mh = load i32, ptr %i.dv, align 8, !tbaa !166 ; 2 uses
   %i.mi = lshr i32 %i.mh, 6
   %i.mj = load ptr, ptr %i.aq, align 8, !tbaa !167 ; 3 uses
@@ -683,9 +693,9 @@ b3SetBit.exit.us.4:                               ; preds = %bb.bk
   store i64 %i.nc, ptr %i.ml, align 8, !tbaa !168
   br label %bb.bl
 
-bb.bl:                                            ; preds = %b3SetBit.exit.us.4, %bb.bi
-  %.4.us.4 = phi i8 [ 1, %b3SetBit.exit.us.4 ], [ %.4.us.3, %bb.bi ]
-  %.2.us.4 = phi i8 [ 1, %b3SetBit.exit.us.4 ], [ %.2.us.3, %bb.bi ]
+bb.bl:                                            ; preds = %b3SetBit.exit.us.4, %11, %bb.bi
+  %.4.us.4 = phi i8 [ 1, %b3SetBit.exit.us.4 ], [ %.4.us.3, %11 ], [ %.4.us.3, %bb.bi ]
+  %.2.us.4 = phi i8 [ 1, %b3SetBit.exit.us.4 ], [ 0, %11 ], [ %.2.us.3, %bb.bi ]
   %exitcond3276.4.not = icmp eq i32 %i.fv, 5
   br i1 %exitcond3276.4.not, label %._crit_edge.us, label %.split1302.us
 

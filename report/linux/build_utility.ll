@@ -205,7 +205,7 @@ build_sched_domain.exit:                          ; preds = %bb.ao, %._crit_edge
   %i.gk = phi i32 [ %i.gj, %bb.ap ], [ %.pre475, %._crit_edge478 ], [ %.pre475.pre479, %bb.ao ]
   %i.gl = and i32 %i.gk, 32
   %i.gm = zext nneg i8 %.1124424 to i32
-  %i.gn = or disjoint i32 %i.gl, %i.gm
+  %i.gn = or i32 %i.gl, %i.gm
   %i.go = icmp ne i32 %i.gn, 0
   %i.gp = zext i1 %i.go to i8                     ; 3 uses
   %i.gq = load ptr, ptr @sched_domain_topology, align 8
@@ -608,10 +608,12 @@ bb.ae:                                            ; preds = %.lr.ph143.split.spl
   %i.cz = call fastcc i32 @build_sched_domains(ptr noundef %i.cw, ptr noundef %i.cy, ptr noundef nonnull %i.a) #44, !srcloc !295 ; 0 uses
   %i.da = load i8, ptr %i.a, align 1, !range !51, !noundef !52
   %i.db = or i8 %i.da, %.064156.i
+  %5 = icmp ne i8 %i.db, 0
+  %6 = zext i1 %5 to i8
   br label %bb.af
 
 bb.af:                                            ; preds = %.critedge2.i, %.critedge97.i
-  %.2.i = phi i8 [ %.165.i, %.critedge97.i ], [ %i.db, %.critedge2.i ] ; 2 uses
+  %.2.i = phi i8 [ %.165.i, %.critedge97.i ], [ %6, %.critedge2.i ] ; 2 uses
   %indvars.iv.next203.i = add nuw nsw i64 %indvars.iv202.i, 1 ; 2 uses
   %exitcond205.not.i = icmp eq i64 %indvars.iv.next203.i, %wide.trip.count204.i
   br i1 %exitcond205.not.i, label %._crit_edge159.loopexit.i, label %.preheader.i, !llvm.loop !289

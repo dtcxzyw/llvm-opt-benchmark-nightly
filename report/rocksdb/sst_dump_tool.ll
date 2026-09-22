@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit.thread: ; preds
   br i1 %.not4540, label %bb.d, label %._crit_edge.thread4566, !llvm.loop !532
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
-  %i.zn = icmp eq i8 %.1435, %.1437
+  %i.zn = icmp eq i8 %.1437, %.1435
   br i1 %i.zn, label %._crit_edge.thread4566, label %bb.go
 
 bb.go:                                            ; preds = %._crit_edge

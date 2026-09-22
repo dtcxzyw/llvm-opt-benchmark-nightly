@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 "_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit": ; preds = %bb.c
-  %1 = trunc nuw nsw i64 %i.c to i32
   store i64 %i.d, ptr %i.b, align 8
+  %1 = trunc nuw nsw i64 %i.c to i32
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit", %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit
@@ -491,16 +491,16 @@ bb.f:                                             ; preds = %bb.d
   br label %.split.preheader.i
 
 .split98.us:                                      ; preds = %bb.d, %select.unfold.us.peel
-  %.us-phi = phi i64 [ 1, %select.unfold.us.peel ], [ 0, %bb.d ] ; 2 uses
-  %.us-phi99.a = phi i64 [ 65536, %select.unfold.us.peel ], [ %i.g, %bb.d ] ; 2 uses
+  %.us-phi = phi i64 [ 65536, %select.unfold.us.peel ], [ %i.g, %bb.d ] ; 2 uses
+  %.us-phi99.a = phi i64 [ 1, %select.unfold.us.peel ], [ 0, %bb.d ] ; 2 uses
   %.us-phi100.a = phi i8 [ %.sroa.0.0.copyload.us.peel, %select.unfold.us.peel ], [ %.sroa.0.0.copyload, %bb.d ]
   %.us-phi101 = phi i56 [ %.sroa.5.sroa.0.0.copyload.us.peel, %select.unfold.us.peel ], [ %.sroa.5.sroa.0.0.copyload, %bb.d ]
-  %.sroa.6.0.insert.shift = shl nuw i64 %.us-phi99.a, 40
-  %.sroa.549.0.insert.shift = shl nuw nsw i64 %.us-phi, 32
+  %.sroa.6.0.insert.shift = shl nuw i64 %.us-phi, 40
+  %.sroa.549.0.insert.shift = shl nuw nsw i64 %.us-phi99.a, 32
   %.sroa.549.0.insert.insert = or disjoint i64 %.sroa.549.0.insert.shift, %.sroa.6.0.insert.shift
-  %.sroa.4.0.insert.shift46 = shl nuw nsw i64 %.us-phi99.a, 8
+  %.sroa.4.0.insert.shift46 = shl nuw nsw i64 %.us-phi, 8
   %.sroa.4.0.insert.insert48 = add nuw nsw i64 %.sroa.549.0.insert.insert, %.sroa.4.0.insert.shift46
-  %.sroa.044.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert48, %.us-phi
+  %.sroa.044.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert48, %.us-phi99.a
   store i64 %.sroa.044.0.insert.insert, ptr %0, align 8
   br label %bb.c
 }
@@ -592,11 +592,11 @@ bb.c:                                             ; preds = %.split34.us, %.spli
   ret i32 %.sroa.0.0.insert.insert
 
 .split40:                                         ; preds = %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit", %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us"
-  %.us-phi41 = phi i64 [ %.promoted, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us" ], [ %i.s, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit" ]
   %.us-phi42 = phi i8 [ %i.q, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us" ], [ %i.u, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit" ]
-  %1 = trunc nuw i64 %.us-phi41 to i32
+  %.us-phi39 = phi i64 [ %.promoted, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us" ], [ %i.s, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit" ]
   store i8 1, ptr %i.i, align 8
   store i8 %.us-phi42, ptr %i.l, align 1
+  %1 = trunc nuw i64 %.us-phi39 to i32
   br label %bb.c
 }
 
@@ -999,10 +999,10 @@ bb.a:
   %.sroa.0.0.extract.trunc = trunc i24 %2 to i8
   %.sroa.2.0.extract.shift = lshr i24 %2, 8
   %.sroa.3.0.extract.shift = lshr i24 %2, 16
-  %.sroa.3.0.extract.trunc = zext nneg i24 %.sroa.3.0.extract.shift to i64
   %3 = icmp eq i8 %.sroa.0.0.extract.trunc, 0
+  %4 = zext nneg i24 %.sroa.3.0.extract.shift to i64
   %i.a = zext i1 %3 to i64
-  %.sroa.47.0 = add nuw nsw i64 %.sroa.3.0.extract.trunc, %i.a
+  %.sroa.47.0 = add nuw nsw i64 %4, %i.a
   %i.b = and i24 %.sroa.2.0.extract.shift, 255
   %i.c = zext nneg i24 %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1405,15 +1405,15 @@ _ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i: ; preds
 
 .split40.i.i:                                     ; preds = %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i", %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i"
   %.sroa.8.3.i = phi i64 [ %i.us, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i" ], [ %i.uw, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i" ]
-  %.us-phi41.i.i = phi i64 [ %.sroa.8.0.i, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i" ], [ %i.ut, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i" ]
-  %.us-phi42.i.i = phi i8 [ %i.ur, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i" ], [ %i.uv, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i" ]
-  %i.va = trunc nuw i64 %.us-phi41.i.i to i32
+  %.us-phi38.i.i = phi i8 [ %i.ur, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i" ], [ %i.uv, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i" ]
+  %.us-phi39.i.i = phi i64 [ %.sroa.8.0.i, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i" ], [ %i.ut, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i" ]
+  %i.va = trunc nuw i64 %.us-phi39.i.i to i32
   br label %bb.ed
 
 bb.ed:                                            ; preds = %.split40.i.i, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i
   %.sroa.8.4.ph.i = phi i64 [ %.sroa.8.3.i, %.split40.i.i ], [ -1, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i ]
   %.sroa.13.1.ph.i = phi i1 [ true, %.split40.i.i ], [ %.sroa.13.0.i, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i ]
-  %.sroa.16.1.ph.i = phi i8 [ %.us-phi42.i.i, %.split40.i.i ], [ %.sroa.16.0.i, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i ]
+  %.sroa.16.1.ph.i = phi i8 [ %.us-phi38.i.i, %.split40.i.i ], [ %.sroa.16.0.i, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i ]
   %.sroa.4.sroa.0.0.i.ph.i = phi i32 [ %i.va, %.split40.i.i ], [ %.sroa.01.0.insert.insert.i.i.i, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i ]
   %.sroa.0.0.i.ph.i = phi i32 [ 0, %.split40.i.i ], [ 1, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i ]
   %.sroa.4.0.insert.shift.i9.i = shl nuw nsw i32 %.sroa.4.sroa.0.0.i.ph.i, 8
@@ -1468,15 +1468,15 @@ _ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69: ; pre
 
 .split40.i.i79:                                   ; preds = %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i87", %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i78"
   %.sroa.8.3.i80 = phi i64 [ %i.ve, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i78" ], [ %i.vi, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i87" ]
-  %.us-phi41.i.i81 = phi i64 [ %.sroa.8.0.i62, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i78" ], [ %i.vf, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i87" ]
-  %.us-phi42.i.i82 = phi i8 [ %i.vd, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i78" ], [ %i.vh, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i87" ]
-  %i.vm = trunc nuw i64 %.us-phi41.i.i81 to i32
+  %.us-phi38.i.i82 = phi i8 [ %i.vd, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i78" ], [ %i.vh, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i87" ]
+  %.us-phi39.i.i83 = phi i64 [ %.sroa.8.0.i62, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i78" ], [ %i.vf, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i87" ]
+  %i.vm = trunc nuw i64 %.us-phi39.i.i83 to i32
   br label %bb.ee
 
 bb.ee:                                            ; preds = %.split40.i.i79, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69
   %.sroa.8.4.ph.i71 = phi i64 [ %.sroa.8.3.i80, %.split40.i.i79 ], [ -1, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69 ]
   %.sroa.13.1.ph.i72 = phi i1 [ true, %.split40.i.i79 ], [ %.sroa.13.0.i63, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69 ]
-  %.sroa.16.1.ph.i73 = phi i8 [ %.us-phi42.i.i82, %.split40.i.i79 ], [ %.sroa.16.0.i64, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69 ]
+  %.sroa.16.1.ph.i73 = phi i8 [ %.us-phi38.i.i82, %.split40.i.i79 ], [ %.sroa.16.0.i64, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69 ]
   %.sroa.4.sroa.0.0.i.ph.i74 = phi i32 [ %i.vm, %.split40.i.i79 ], [ %.sroa.01.0.insert.insert.i.i.i70, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69 ]
   %.sroa.0.0.i.ph.i75 = phi i32 [ 0, %.split40.i.i79 ], [ 1, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i69 ]
   %.sroa.4.0.insert.shift.i9.i76 = shl nuw nsw i32 %.sroa.4.sroa.0.0.i.ph.i74, 8
@@ -1531,15 +1531,15 @@ _ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98: ; pre
 
 .split40.i.i108:                                  ; preds = %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i116", %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i107"
   %.sroa.8.3.i109 = phi i64 [ %i.vq, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i107" ], [ %i.vu, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i116" ]
-  %.us-phi41.i.i110 = phi i64 [ %.sroa.8.0.i91, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i107" ], [ %i.vr, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i116" ]
-  %.us-phi42.i.i111 = phi i8 [ %i.vp, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i107" ], [ %i.vt, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i116" ]
-  %i.vy = trunc nuw i64 %.us-phi41.i.i110 to i32
+  %.us-phi38.i.i112 = phi i8 [ %i.vp, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i107" ], [ %i.vt, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i116" ]
+  %.us-phi39.i.i113 = phi i64 [ %.sroa.8.0.i91, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.us.i.i107" ], [ %i.vr, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit.i.i116" ]
+  %i.vy = trunc nuw i64 %.us-phi39.i.i113 to i32
   br label %bb.ef
 
 bb.ef:                                            ; preds = %.split40.i.i108, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98
   %.sroa.8.4.ph.i100 = phi i64 [ %.sroa.8.3.i109, %.split40.i.i108 ], [ -1, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98 ]
   %.sroa.13.1.ph.i101 = phi i1 [ true, %.split40.i.i108 ], [ %.sroa.13.0.i92, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98 ]
-  %.sroa.16.1.ph.i102 = phi i8 [ %.us-phi42.i.i111, %.split40.i.i108 ], [ %.sroa.16.0.i93, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98 ]
+  %.sroa.16.1.ph.i102 = phi i8 [ %.us-phi38.i.i112, %.split40.i.i108 ], [ %.sroa.16.0.i93, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98 ]
   %.sroa.4.sroa.0.0.i.ph.i103 = phi i32 [ %i.vy, %.split40.i.i108 ], [ %.sroa.01.0.insert.insert.i.i.i99, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98 ]
   %.sroa.0.0.i.ph.i104 = phi i32 [ 0, %.split40.i.i108 ], [ 1, %_ZN14regex_automata4util8alphabet4Unit3eoi17h7bde68dad5abe20fE.exit.i.i98 ]
   %.sroa.4.0.insert.shift.i9.i105 = shl nuw nsw i32 %.sroa.4.sroa.0.0.i.ph.i103, 8
@@ -1942,7 +1942,7 @@ select.unfold.us.peel.i:                          ; preds = %.split.us.i.us.preh
   %.sroa.095.1.extract.shift104 = lshr i64 %.sroa.095.0, 8
   %i.az = and i64 %.sroa.095.0, 255
   %.not68.us.peel.i = icmp eq i64 %i.az, 2
-  br i1 %.not68.us.peel.i, label %.loopexit.i, label %.split98.us.i
+  br i1 %.not68.us.peel.i, label %.loopexit.i, label %"_ZN113_$LT$regex_automata..util..alphabet..ByteClassElementRanges$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb127a1c5576b45d0E.exit"
 
 .lr.ph:                                           ; preds = %.split.preheader.i.i.preheader, %.split.preheader.i.i
   %umax.i.i144 = phi i64 [ %umax.i.i, %.split.preheader.i.i ], [ %umax.i.i140, %.split.preheader.i.i.preheader ] ; 2 uses
@@ -2014,23 +2014,15 @@ bb.i:                                             ; preds = %bb.g
   %.sroa.052.0.insert.insert.i = or disjoint i64 %.sroa.655.0.insert.shift.i, %i.bj
   br label %.split.preheader.i.i
 
-.split98.us.i:                                    ; preds = %bb.g, %select.unfold.us.peel.i
-  %.sroa.16.3 = phi i64 [ 257, %select.unfold.us.peel.i ], [ %i.bb, %bb.g ]
-  %.us-phi.i = phi i64 [ 4294967297, %select.unfold.us.peel.i ], [ 0, %bb.g ]
-  %.us-phi99.i = phi i64 [ 65536, %select.unfold.us.peel.i ], [ %.sroa.16.2134, %bb.g ] ; 2 uses
-  %.us-phi100.i = phi i64 [ %.sroa.095.0, %select.unfold.us.peel.i ], [ %.sroa.095.1143, %bb.g ]
-  %.us-phi101.i = phi i64 [ %.sroa.095.1.extract.shift104, %select.unfold.us.peel.i ], [ %.sroa.095.1.extract.shift, %bb.g ]
-  %.sroa.6.0.insert.shift.i = shl nuw i64 %.us-phi99.i, 40
-  %.sroa.4.0.insert.shift46.i = shl nuw nsw i64 %.us-phi99.i, 8
-  %.sroa.4.0.insert.insert48.i = or disjoint i64 %.us-phi.i, %.sroa.6.0.insert.shift.i
-  %.sroa.044.0.insert.insert.i = add nuw nsw i64 %.sroa.4.0.insert.insert48.i, %.sroa.4.0.insert.shift46.i
+.split98.us.i:                                    ; preds = %bb.g
+  %2 = mul nuw i64 %.sroa.16.2134, 1099511628032
   br label %"_ZN113_$LT$regex_automata..util..alphabet..ByteClassElementRanges$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb127a1c5576b45d0E.exit"
 
-"_ZN113_$LT$regex_automata..util..alphabet..ByteClassElementRanges$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb127a1c5576b45d0E.exit": ; preds = %.loopexit.i, %.split98.us.i
-  %.sroa.16.5 = phi i64 [ %.sroa.16.4, %.loopexit.i ], [ %.sroa.16.3, %.split98.us.i ]
-  %.sroa.095.3 = phi i64 [ %.sroa.095.0.insert.insert, %.loopexit.i ], [ %.sroa.044.0.insert.insert.i, %.split98.us.i ]
-  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.095.1.extract.shift101, %.loopexit.i ], [ %.us-phi101.i, %.split98.us.i ] ; 6 uses
-  %.sroa.0.0.i = phi i64 [ %.sroa.095.2, %.loopexit.i ], [ %.us-phi100.i, %.split98.us.i ] ; 2 uses
+"_ZN113_$LT$regex_automata..util..alphabet..ByteClassElementRanges$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb127a1c5576b45d0E.exit": ; preds = %select.unfold.us.peel.i, %.split98.us.i, %.loopexit.i
+  %.sroa.16.5 = phi i64 [ %.sroa.16.4, %.loopexit.i ], [ 257, %select.unfold.us.peel.i ], [ %i.bb, %.split98.us.i ]
+  %.sroa.095.3 = phi i64 [ %.sroa.095.0.insert.insert, %.loopexit.i ], [ 72057598349672449, %select.unfold.us.peel.i ], [ %2, %.split98.us.i ]
+  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.095.1.extract.shift101, %.loopexit.i ], [ %.sroa.095.1.extract.shift104, %select.unfold.us.peel.i ], [ %.sroa.095.1.extract.shift, %.split98.us.i ] ; 6 uses
+  %.sroa.0.0.i = phi i64 [ %.sroa.095.2, %.loopexit.i ], [ %.sroa.095.0, %select.unfold.us.peel.i ], [ %.sroa.095.1143, %.split98.us.i ] ; 2 uses
   %.sroa.043.0.extract.trunc = trunc i64 %.sroa.0.0.i to i8 ; 4 uses
   %.not46 = icmp eq i8 %.sroa.043.0.extract.trunc, 2
   br i1 %.not46, label %.split114, label %bb.j
