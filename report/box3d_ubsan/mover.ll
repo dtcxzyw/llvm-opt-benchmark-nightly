@@ -158,7 +158,7 @@ bb.g:                                             ; preds = %bb.f
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @4, i64 %i.l) #4, !nosanitize !9
   unreachable, !nosanitize !9
 
-.split153.us.loopexit:                            ; preds = %._crit_edge103.us.us, %bb.e
+.split153.us.loopexit:                            ; preds = %bb.e, %._crit_edge103.us.us
   %.us-phi154.ph = phi i32 [ %.048128.us.us, %._crit_edge103.us.us ], [ 20, %bb.e ]
   %i.bc = zext nneg i32 %.us-phi154.ph to i64
   %i.bd = shl nuw nsw i64 %i.bc, 32

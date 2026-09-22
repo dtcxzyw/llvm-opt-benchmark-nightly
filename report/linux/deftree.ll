@@ -205,29 +205,23 @@ bb.at:                                            ; preds = %bb.as
   %.not122.i = icmp eq i32 %i.hw, 0
   br i1 %.not122.i, label %gen_bitlen.exit, label %.lr.ph125.i
 
-.lr.ph125.i:                                      ; preds = %.preheader.i, %.outer.split.us.i
-  %.3124.i = phi i32 [ %2, %.outer.split.us.i ], [ %i.hw, %.preheader.i ] ; 4 uses
-  %.190123.i = phi i32 [ %.291.ph.lcssa.i, %.outer.split.us.i ], [ 573, %.preheader.i ] ; 2 uses
+.lr.ph125.i:                                      ; preds = %.preheader.i, %.outer.i.a
+  %.3124.i = phi i32 [ %i.ll, %.outer.i.a ], [ %i.hw, %.preheader.i ] ; 4 uses
+  %.190123.i = phi i32 [ %.291.lcssa.i, %.outer.i.a ], [ 573, %.preheader.i ] ; 2 uses
   %i.kp = sext i32 %.3124.i to i64                ; 2 uses
   %i.kq = getelementptr [2 x i8], ptr %i.hx, i64 %i.kp
   %i.kr = load i16, ptr %i.kq, align 2            ; 2 uses
   %.not99118.i = icmp eq i16 %i.kr, 0
-  br i1 %.not99118.i, label %.outer.split.us.i, label %.outer.split.lr.ph.i
+  br i1 %.not99118.i, label %.outer.i.a, label %.outer.split.lr.ph.i
 
 .outer.split.lr.ph.i:                             ; preds = %.lr.ph125.i
   %i.ks = zext i16 %i.kr to i32
   %i.kt = trunc i32 %.3124.i to i16
   br label %.outer.split.i
 
-.outer.split.us.i:                                ; preds = %.outer.i.a, %.lr.ph125.i
-  %.291.ph.lcssa.i = phi i32 [ %.190123.i, %.lr.ph125.i ], [ %i.ku, %.outer.i.a ]
-  %2 = add i32 %.3124.i, -1                       ; 2 uses
-  %.not.i122 = icmp eq i32 %2, 0
-  br i1 %.not.i122, label %gen_bitlen.exit, label %.lr.ph125.i, !llvm.loop !37
-
-.outer.split.i:                                   ; preds = %.outer.i.a, %.outer.split.lr.ph.i
-  %.088.ph120.i = phi i32 [ %i.ks, %.outer.split.lr.ph.i ], [ %i.ll, %.outer.i.a ]
-  %.291.ph119.i = phi i32 [ %.190123.i, %.outer.split.lr.ph.i ], [ %i.ku, %.outer.i.a ]
+.outer.split.i:                                   ; preds = %.outer.i, %.outer.split.lr.ph.i
+  %.088.ph120.i = phi i32 [ %i.ks, %.outer.split.lr.ph.i ], [ %2, %.outer.i ]
+  %.291.ph119.i = phi i32 [ %.190123.i, %.outer.split.lr.ph.i ], [ %i.ku, %.outer.i ]
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.au, %.outer.split.i
@@ -237,7 +231,7 @@ bb.au:                                            ; preds = %bb.au, %.outer.spli
   %i.kw = getelementptr [4 x i8], ptr %i.ba, i64 %i.kv
   %i.kx = load i32, ptr %i.kw, align 4            ; 2 uses
   %i.ky = icmp sgt i32 %i.kx, %i.ho
-  br i1 %i.ky, label %bb.au, label %bb.av, !llvm.loop !38
+  br i1 %i.ky, label %bb.au, label %bb.av, !llvm.loop !37
 
 bb.av:                                            ; preds = %bb.au
   %i.kz = sext i32 %i.kx to i64
@@ -246,7 +240,7 @@ bb.av:                                            ; preds = %bb.au
   %i.lc = load i16, ptr %i.lb, align 2            ; 2 uses
   %i.ld = zext i16 %i.lc to i32
   %.not100.i = icmp eq i32 %.3124.i, %i.ld
-  br i1 %.not100.i, label %.outer.i.a, label %bb.aw
+  br i1 %.not100.i, label %.outer.i, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.le = zext i16 %i.lc to i64
@@ -258,14 +252,20 @@ bb.aw:                                            ; preds = %bb.av
   %i.lk = add i64 %i.li, %i.lj
   store i64 %i.lk, ptr %i.ih, align 8
   store i16 %i.kt, ptr %i.lb, align 2
-  br label %.outer.i.a
+  br label %.outer.i
 
-.outer.i.a:                                       ; preds = %bb.aw, %bb.av
-  %i.ll = add nsw i32 %.088.ph120.i, -1           ; 2 uses
+.outer.i:                                         ; preds = %bb.aw, %bb.av
+  %2 = add nsw i32 %.088.ph120.i, -1              ; 2 uses
+  %.not99.i = icmp eq i32 %2, 0
+  br i1 %.not99.i, label %.outer.i.a, label %.outer.split.i, !llvm.loop !37
+
+.outer.i.a:                                       ; preds = %.outer.i, %.lr.ph125.i
+  %.291.lcssa.i = phi i32 [ %.190123.i, %.lr.ph125.i ], [ %i.ku, %.outer.i ]
+  %i.ll = add i32 %.3124.i, -1                    ; 2 uses
   %.not99.i.a = icmp eq i32 %i.ll, 0
-  br i1 %.not99.i.a, label %.outer.split.us.i, label %.outer.split.i, !llvm.loop !38
+  br i1 %.not99.i.a, label %gen_bitlen.exit, label %.lr.ph125.i, !llvm.loop !38
 
-gen_bitlen.exit:                                  ; preds = %.outer.split.us.i, %bb.ak, %._crit_edge.i, %.preheader.i
+gen_bitlen.exit:                                  ; preds = %.outer.i.a, %bb.ak, %._crit_edge.i, %.preheader.i
   tail call fastcc void @gen_codes(ptr noundef %i.a, i32 noundef %.2.lcssa, ptr noundef %i.hx) #12, !srcloc !39
   ret void
 }

@@ -202,14 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = phi ptr [ %i.q, %.outer ], [ %i.d, %bb.b ] ; 3 uses
   %.0.ph41 = phi ptr [ %i.e, %.outer ], [ null, %bb.b ] ; 4 uses
   %.not28 = icmp eq ptr %.0.ph41, null
-  br i1 %.not28, label %.lr.ph.split.us, label %.lr.ph.split
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  %1 = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
-  tail call void @slurm_xfree(ptr noundef nonnull %1) #9
-  %2 = load ptr, ptr @fed_name, align 8           ; 2 uses
-  %.not29 = icmp eq ptr %2, null
-  br i1 %.not29, label %bb.e, label %bb.d
+  br i1 %.not28, label %1, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.f = getelementptr inbounds nuw i8, ptr %.0.ph41, i64 24
@@ -229,13 +222,20 @@ bb.c:                                             ; preds = %.lr.ph.split, %bb.k
   %i.o = load ptr, ptr %i.n, align 8              ; 2 uses
   br i1 %.not30, label %bb.f, label %bb.g
 
-bb.d:                                             ; preds = %.lr.ph.split.us
-  tail call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %1, ptr noundef nonnull @.str.72, ptr noundef nonnull %2) #9
+1:                                                ; preds = %.lr.ph
+  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
+  tail call void @slurm_xfree(ptr noundef nonnull %2) #9
+  %3 = load ptr, ptr @fed_name, align 8           ; 2 uses
+  %.not29 = icmp eq ptr %3, null
+  br i1 %.not29, label %bb.e, label %bb.d
+
+bb.d:                                             ; preds = %1
+  tail call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %2, ptr noundef nonnull @.str.72, ptr noundef nonnull %3) #9
   br label %.outer
 
-bb.e:                                             ; preds = %.lr.ph.split.us
+bb.e:                                             ; preds = %1
   %i.p = tail call ptr @xstrdup(ptr noundef nonnull @.str.73) #9
-  store ptr %i.p, ptr %1, align 8
+  store ptr %i.p, ptr %2, align 8
   br label %.outer
 
 .outer:                                           ; preds = %bb.e, %bb.d

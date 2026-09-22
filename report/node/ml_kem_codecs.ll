@@ -202,6 +202,12 @@ bb.c:                                             ; preds = %switch.lookup
   %.not97 = icmp eq ptr %i.r, null
   br i1 %.not97, label %.lr.ph.split.us, label %.thread
 
+3:                                                ; preds = %.lr.ph.split.us
+  %4 = getelementptr inbounds nuw i8, ptr %.084123.us, i64 16 ; 2 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !20       ; 2 uses
+  %cond = icmp eq ptr %5, null
+  br i1 %cond, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !54
+
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %3
   %i.s = phi ptr [ %5, %3 ], [ %i.p, %.lr.ph ]    ; 3 uses
   %.084123.us = phi ptr [ %4, %3 ], [ %i.n, %.lr.ph ]
@@ -213,12 +219,6 @@ bb.c:                                             ; preds = %switch.lookup
 .thread.thread:                                   ; preds = %.lr.ph.split.us
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 40
   br label %bb.d
-
-3:                                                ; preds = %.lr.ph.split.us
-  %4 = getelementptr inbounds nuw i8, ptr %.084123.us, i64 16 ; 2 uses
-  %5 = load ptr, ptr %4, align 8, !tbaa !20       ; 2 uses
-  %cond.us = icmp eq ptr %5, null
-  br i1 %cond.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !54
 
 .thread:                                          ; preds = %.lr.ph
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.p, i64 40

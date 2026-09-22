@@ -205,27 +205,27 @@ bb.a:
   %i.ce = getelementptr inbounds nuw i8, ptr %i.r, i64 40
   %i.cf = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  br i1 %i.ae, label %.lr.ph147.us, label %.lr.ph147, !prof !16
+  br i1 %i.ae, label %.lr.ph147, label %.lr.ph147.us, !prof !16
 
-.lr.ph147.us:                                     ; preds = %.lr.ph147.lr.ph
-  %3 = load ptr, ptr %i.ab, align 8, !nonnull !14, !noundef !14
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %5 = load i64, ptr %4, align 8, !noundef !14
-  %6 = icmp ugt i64 %5, 4294967295
-  br i1 %6, label %.split.us, label %.split150.us, !prof !16
-
-.lr.ph147:                                        ; preds = %.lr.ph147.lr.ph, %.outer
-  %7 = phi i64 [ %i.ch, %.outer ], [ %i.z, %.lr.ph147.lr.ph ]
-  %.sroa.0.0.ph231 = phi i64 [ %8, %.outer ], [ 0, %.lr.ph147.lr.ph ] ; 6 uses
-  %8 = add nuw nsw i64 %.sroa.0.0.ph231, 1        ; 5 uses
-  %.idx31 = mul nuw nsw i64 %8, 72                ; 2 uses
+.lr.ph147.us:                                     ; preds = %.lr.ph147.lr.ph, %.outer
+  %3 = phi i64 [ %i.ch, %.outer ], [ %i.z, %.lr.ph147.lr.ph ]
+  %.sroa.0.0.ph231 = phi i64 [ %4, %.outer ], [ 0, %.lr.ph147.lr.ph ] ; 6 uses
+  %4 = add nuw nsw i64 %.sroa.0.0.ph231, 1        ; 5 uses
+  %.idx31 = mul nuw nsw i64 %4, 72                ; 2 uses
   br label %bb.b
+
+.lr.ph147:                                        ; preds = %.lr.ph147.lr.ph
+  %5 = load ptr, ptr %i.ab, align 8, !nonnull !14, !noundef !14
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %7 = load i64, ptr %6, align 8, !noundef !14
+  %8 = icmp ugt i64 %7, 4294967295
+  br i1 %8, label %.split.us, label %.split150.us, !prof !16
 
 .outer._crit_edge:                                ; preds = %.outer, %bb.bf, %bb.a
   ret void
 
-bb.b:                                             ; preds = %.lr.ph147, %bb.bf
-  %i.ch = phi i64 [ %7, %.lr.ph147 ], [ %i.nq, %bb.bf ] ; 4 uses
+bb.b:                                             ; preds = %.lr.ph147.us, %bb.bf
+  %i.ch = phi i64 [ %3, %.lr.ph147.us ], [ %i.nq, %bb.bf ] ; 4 uses
   %i.ci = load ptr, ptr %i.ab, align 8, !nonnull !14, !noundef !14 ; 3 uses
   %i.cj = getelementptr inbounds nuw [72 x i8], ptr %i.ci, i64 %.sroa.0.0.ph231 ; 14 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 8 ; 2 uses
@@ -236,7 +236,7 @@ bb.b:                                             ; preds = %.lr.ph147, %bb.bf
   %i.co = trunc i64 %.sroa.09.0.insert.insert.i to i1
   br i1 %i.co, label %.split.us, label %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit, !prof !16
 
-.split.us:                                        ; preds = %bb.b, %.lr.ph147.us
+.split.us:                                        ; preds = %bb.b, %.lr.ph147
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   store i8 2, ptr %i.n, align 1
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.n, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @86, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @603) #45
@@ -247,15 +247,15 @@ _RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit: ; p
   %i.cp = icmp samesign ult i64 %.sroa.6.0.extract.shift.i.i, %.sroa.6.0.extract.shift.i.i67
   br i1 %i.cp, label %.outer, label %bb.c
 
-.split150.us:                                     ; preds = %.lr.ph147.us
+.split150.us:                                     ; preds = %.lr.ph147
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store i8 2, ptr %i.m, align 1
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.m, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @86, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @603) #45
   unreachable
 
 .outer:                                           ; preds = %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit
-  %i.cq = icmp samesign ult i64 %8, %i.ch
-  br i1 %i.cq, label %.lr.ph147, label %.outer._crit_edge
+  %i.cq = icmp samesign ult i64 %4, %i.ch
+  br i1 %i.cq, label %.lr.ph147.us, label %.outer._crit_edge
 
 bb.c:                                             ; preds = %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit
   %.idx = mul nuw nsw i64 %i.ch, 72               ; 2 uses
@@ -264,7 +264,7 @@ bb.c:                                             ; preds = %_RNvXs_NtCs2MoD74u7
   %i.ct = load i64, ptr %i.ag, align 8, !noundef !14 ; 2 uses
   %gepdiff = sub nuw nsw i64 %.idx, %.idx31
   %i.cu = udiv exact i64 %gepdiff, 72
-  %i.cv = icmp eq i64 %8, %i.ch
+  %i.cv = icmp eq i64 %4, %i.ch
   br i1 %i.cv, label %.loopexit35, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
@@ -349,7 +349,7 @@ _RNCNvMs5_NtCsEhZmuQNqkz_11ruff_linter11suppressionNtB7_19SuppressionsBuilder14m
 bb.g:                                             ; preds = %_RNCNvMs5_NtCsEhZmuQNqkz_11ruff_linter11suppressionNtB7_19SuppressionsBuilder14match_comments0B9_.exit.i
   %i.ef = icmp samesign ult i64 %.sroa.02.09.i, %i.cu
   call void @llvm.assume(i1 %i.ef)
-  %i.eg = add nuw nsw i64 %.sroa.02.09.i, %8      ; 4 uses
+  %i.eg = add nuw nsw i64 %.sroa.02.09.i, %4      ; 4 uses
   %i.eh = load i64, ptr %i.y, align 8, !noundef !14 ; 2 uses
   %i.ei = icmp ult i64 %i.eg, %i.eh
   br i1 %i.ei, label %bb.h, label %bb.i

@@ -173,31 +173,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %bb.c, %_ZNSt6vector
 
 .preheader.lr.ph.split.us:                        ; preds = %.preheader.lr.ph
   %i.al = load ptr, ptr %2, align 8, !tbaa !12
-  br label %.preheader.us
-
-.preheader.us:                                    ; preds = %.loopexit125.us, %.preheader.lr.ph.split.us
-  %.047155.us = phi i64 [ %.047153, %.preheader.lr.ph.split.us ], [ %.047.us, %.loopexit125.us ] ; 3 uses
-  %4 = getelementptr [4 x i8], ptr %i.al, i64 %.047155.us
-  br label %7
-
-5:                                                ; preds = %7
-  %6 = add nuw i64 %.045149.us, 1                 ; 2 uses
-  %exitcond180.not = icmp eq i64 %6, %i.ak
-  br i1 %exitcond180.not, label %.thread, label %7, !llvm.loop !53
-
-7:                                                ; preds = %.preheader.us, %5
-  %.045149.us = phi i64 [ 0, %.preheader.us ], [ %6, %5 ] ; 3 uses
-  %8 = getelementptr [4 x i8], ptr %4, i64 %.045149.us
-  %9 = load i32, ptr %8, align 4, !tbaa !14
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.4, i64 %.045149.us
-  %11 = load i32, ptr %10, align 4, !tbaa !14
-  %.not61.us = icmp eq i32 %9, %11
-  br i1 %.not61.us, label %5, label %.loopexit125.us
-
-.loopexit125.us:                                  ; preds = %7
-  %.047.us = add i64 %.047155.us, -1              ; 2 uses
-  %cond.us = icmp eq i64 %.047.us, 0
-  br i1 %cond.us, label %.loopexit126.thread, label %.preheader.us
+  br label %.preheader
 
 bb.h:                                             ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i, %bb.e, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i
   %.sroa.0.1 = phi ptr [ %.sroa.0.0.lcssa, %bb.e ], [ %.sroa.0.0.lcssa, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i ], [ null, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ]
@@ -290,8 +266,32 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit77:        ; preds = %bb.i, %_ZNSt6vector
           cleanup
   br label %bb.ab
 
+.loopexit125:                                     ; preds = %7
+  %.047 = add i64 %.047155, -1                    ; 2 uses
+  %cond = icmp eq i64 %.047, 0
+  br i1 %cond, label %.loopexit126.thread, label %.preheader
+
+.preheader:                                       ; preds = %.preheader.lr.ph.split.us, %.loopexit125
+  %.047155 = phi i64 [ %.047153, %.preheader.lr.ph.split.us ], [ %.047, %.loopexit125 ] ; 3 uses
+  %4 = getelementptr [4 x i8], ptr %i.al, i64 %.047155
+  br label %7
+
+5:                                                ; preds = %7
+  %6 = add nuw i64 %.045149, 1                    ; 2 uses
+  %exitcond180.not = icmp eq i64 %6, %i.ak
+  br i1 %exitcond180.not, label %.thread, label %7, !llvm.loop !53
+
+7:                                                ; preds = %.preheader, %5
+  %.045149 = phi i64 [ 0, %.preheader ], [ %6, %5 ] ; 3 uses
+  %8 = getelementptr [4 x i8], ptr %4, i64 %.045149
+  %9 = load i32, ptr %8, align 4, !tbaa !14
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.4, i64 %.045149
+  %11 = load i32, ptr %10, align 4, !tbaa !14
+  %.not61 = icmp eq i32 %9, %11
+  br i1 %.not61, label %5, label %.loopexit125
+
 .thread:                                          ; preds = %5, %.preheader.lr.ph
-  %.047.lcssa132 = phi i64 [ %.047153, %.preheader.lr.ph ], [ %.047155.us, %5 ] ; 2 uses
+  %.047.lcssa132 = phi i64 [ %.047153, %.preheader.lr.ph ], [ %.047155, %5 ] ; 2 uses
   %i.bf = add i64 %.047.lcssa132, %i.i            ; 2 uses
   %i.bg = sub i64 %i.g, %i.bf
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.bg, i64 %i.l) ; 7 uses
@@ -477,7 +477,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit94:        ; preds = %_ZNSt6vectorIiSaIiE
   %.not.i.i.i95 = icmp eq ptr %.sroa.0.4, null
   br i1 %.not.i.i.i95, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %.loopexit126.thread
 
-.loopexit126.thread:                              ; preds = %.loopexit125.us, %.loopexit126
+.loopexit126.thread:                              ; preds = %.loopexit125, %.loopexit126
   %i.dg = ptrtoint ptr %.sroa.25.4 to i64
   %i.dh = ptrtoint ptr %.sroa.0.4 to i64
   %i.di = sub i64 %i.dg, %i.dh
@@ -880,7 +880,7 @@ bb.ad:                                            ; preds = %.thread
   %i.eg = load ptr, ptr %1, align 8, !tbaa !12
   br label %.preheader562.us
 
-.preheader562.us:                                 ; preds = %bb.ag, %.preheader562.lr.ph.split.us
+.preheader562.us:                                 ; preds = %.preheader562.lr.ph.split.us, %bb.ag
   %.0334613.us = phi i64 [ %i.eb, %.preheader562.lr.ph.split.us ], [ %i.en, %bb.ag ] ; 3 uses
   %i.eh = getelementptr [4 x i8], ptr %i.eg, i64 %.0334613.us
   br label %bb.af
@@ -921,11 +921,6 @@ bb.ag:                                            ; preds = %bb.af
   %i.ev = icmp ugt i64 %.0331619.us, %i.eu
   br i1 %i.ev, label %.preheader560.us, label %.critedge.thread836
 
-.preheader560.us:                                 ; preds = %.lr.ph620.split.us
-  %6 = load ptr, ptr %1, align 8, !tbaa !12
-  %7 = getelementptr [4 x i8], ptr %6, i64 %.0331619.us
-  br label %bb.ai
-
 bb.ah:                                            ; preds = %bb.ai
   %i.ew = add nuw nsw i64 %.0329615.us, 1         ; 2 uses
   %exitcond686.not = icmp eq i64 %i.ew, %i.z
@@ -944,6 +939,11 @@ bb.aj:                                            ; preds = %bb.ai
   %i.fb = add i64 %.0331619.us, -1                ; 2 uses
   %i.fc = icmp ugt i64 %i.fb, %i.dt
   br i1 %i.fc, label %.lr.ph620.split.us, label %.critedge.thread836, !llvm.loop !73
+
+.preheader560.us:                                 ; preds = %.lr.ph620.split.us
+  %6 = load ptr, ptr %1, align 8, !tbaa !12
+  %7 = getelementptr [4 x i8], ptr %6, i64 %.0331619.us
+  br label %bb.ai
 
 .lr.ph620.split:                                  ; preds = %.lr.ph620
   %i.fd = icmp ugt i64 %i.eq, %i.eu
@@ -1231,7 +1231,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.jv = load ptr, ptr %1, align 8, !tbaa !12
   br label %.preheader556.us
 
-.preheader556.us:                                 ; preds = %bb.bc, %.preheader556.lr.ph.split.us
+.preheader556.us:                                 ; preds = %.preheader556.lr.ph.split.us, %bb.bc
   %.0323634.us = phi i64 [ 0, %.preheader556.lr.ph.split.us ], [ %i.ke, %bb.bc ] ; 3 uses
   %i.jw = getelementptr inbounds nuw [88 x i8], ptr %i.jq, i64 %.0323634.us
   %i.jx = load i64, ptr %i.jw, align 8, !tbaa !40

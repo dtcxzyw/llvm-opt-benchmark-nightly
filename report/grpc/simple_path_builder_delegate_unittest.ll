@@ -202,11 +202,7 @@ _ZNK7testing8internal14ParamGeneratorIPKcE5beginEv.exit: ; preds = %_ZNSt7__cxx1
 _ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE5beginEv.exit
   %i.cs = icmp eq ptr %i.cm, %i.cr
   %.not.i99 = icmp eq ptr %i.ao, null             ; 4 uses
-  br i1 %i.cs, label %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.cm, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
+  br i1 %i.cs, label %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a, label %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161
   %.034 = phi i64 [ %i.np, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161 ], [ 0, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader ] ; 2 uses
@@ -215,13 +211,17 @@ _ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit: ; preds = %_ZNK7testing8i
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 48
   %i.cv = load ptr, ptr %i.cu, align 8
   %i.cw = invoke noundef zeroext i1 %i.cv(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull align 8 dereferenceable(8) %i.cr)
-          to label %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a unwind label %bb.x, !inline_history !62
+          to label %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit unwind label %bb.x, !inline_history !62
 
-_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
+_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
   br i1 %i.cw, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us
-  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a ]
+_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.cm, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a
+  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit ]
   %i.cx = load ptr, ptr %i.cr, align 8, !tbaa !133
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8
@@ -232,8 +232,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.
   call void %i.dc(ptr noundef nonnull align 8 dereferenceable(8) %i.cm) #26, !call_target !1115, !inline_history !63
   br label %_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90
 
-_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
-  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90: ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
+  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a ] ; 2 uses
   %i.dd = load ptr, ptr %i.q, align 8, !tbaa !1818
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.dd)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -326,7 +326,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.ch
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit
   %i.ea = load ptr, ptr %i.cm, align 8, !tbaa !133
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
   %i.ec = load ptr, ptr %i.eb, align 8
@@ -729,11 +729,7 @@ _ZNK7testing8internal14ParamGeneratorIPKcE5beginEv.exit: ; preds = %_ZNSt7__cxx1
 _ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE5beginEv.exit
   %i.cs = icmp eq ptr %i.cm, %i.cr
   %.not.i99 = icmp eq ptr %i.ao, null             ; 4 uses
-  br i1 %i.cs, label %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.cm, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
+  br i1 %i.cs, label %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a, label %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161
   %.034 = phi i64 [ %i.np, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161 ], [ 0, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader ] ; 2 uses
@@ -742,13 +738,17 @@ _ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit: ; preds = %_ZNK7testing8i
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 48
   %i.cv = load ptr, ptr %i.cu, align 8
   %i.cw = invoke noundef zeroext i1 %i.cv(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull align 8 dereferenceable(8) %i.cr)
-          to label %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a unwind label %bb.x, !inline_history !62
+          to label %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit unwind label %bb.x, !inline_history !62
 
-_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
+_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit
   br i1 %i.cw, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us
-  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a ]
+_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.cm, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a
+  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit ]
   %i.cx = load ptr, ptr %i.cr, align 8, !tbaa !133
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8
@@ -759,8 +759,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.
   call void %i.dc(ptr noundef nonnull align 8 dereferenceable(8) %i.cm) #26, !call_target !1115, !inline_history !63
   br label %_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90
 
-_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90: ; preds = %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
-  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal14ParamGeneratorIPKcE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorIPKcED2Ev.exit90: ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89
+  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIPKcEEEclEPS5_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a ] ; 2 uses
   %i.dd = load ptr, ptr %i.q, align 8, !tbaa !1818
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.dd)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -853,7 +853,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.ch
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIPKcEneERKS4_.exit
   %i.ea = load ptr, ptr %i.cm, align 8, !tbaa !133
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
   %i.ec = load ptr, ptr %i.eb, align 8

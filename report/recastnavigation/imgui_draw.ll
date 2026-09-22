@@ -205,10 +205,10 @@ bb.be:                                            ; preds = %bb.bc
   %i.li = icmp ult ptr %.4305, %.2
   br i1 %i.li, label %.lr.ph433, label %.loopexit
 
-.loopexit:                                        ; preds = %.outer, %bb.ae, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us, %bb.ab, %.thread386
-  %.0291.ph415 = phi ptr [ %.0291.ph457, %.thread386 ], [ %i.fm, %bb.ab ], [ %.0291.ph457, %bb.ae ], [ %.0291.ph457, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us ], [ %.6297, %.outer ] ; 2 uses
-  %.0283.ph413 = phi ptr [ %.0283.ph458, %.thread386 ], [ %i.fn, %bb.ab ], [ %.0283.ph458, %bb.ae ], [ %.0283.ph458, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us ], [ %.6289, %.outer ] ; 2 uses
-  %.0279.ph411 = phi i32 [ %.0279.ph459, %.thread386 ], [ %i.fo, %bb.ab ], [ %.0279.ph459, %bb.ae ], [ %.0279.ph459, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us ], [ %.6, %.outer ]
+.loopexit:                                        ; preds = %.outer, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us, %bb.ae, %bb.ab, %.thread386
+  %.0291.ph415 = phi ptr [ %.0291.ph457, %.thread386 ], [ %.0291.ph457, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us ], [ %i.fm, %bb.ab ], [ %.0291.ph457, %bb.ae ], [ %.6297, %.outer ] ; 2 uses
+  %.0283.ph413 = phi ptr [ %.0283.ph458, %.thread386 ], [ %.0283.ph458, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us ], [ %i.fn, %bb.ab ], [ %.0283.ph458, %bb.ae ], [ %.6289, %.outer ] ; 2 uses
+  %.0279.ph411 = phi i32 [ %.0279.ph459, %.thread386 ], [ %.0279.ph459, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit359.us ], [ %i.fo, %bb.ab ], [ %.0279.ph459, %bb.ae ], [ %.6, %.outer ]
   %i.lj = load i32, ptr %1, align 8, !tbaa !106   ; 3 uses
   %.not347 = icmp eq i32 %i.fp, %i.lj
   br i1 %.not347, label %bb.bk, label %bb.bf

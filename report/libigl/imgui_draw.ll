@@ -205,11 +205,11 @@ bb.f:                                             ; preds = %.loopexit384
   %.0313.ph426 = phi float [ %i.e, %.lr.ph413.lr.ph ], [ %.7320, %.outer ] ; 2 uses
   br i1 %i.o, label %.lr.ph413.split.us, label %.split.us
 
-.lr.ph413.split.us:                               ; preds = %.lr.ph413, %.split.loop.exit402.us
-  %.2294412.us = phi ptr [ %.5297.us, %.split.loop.exit402.us ], [ %.2294.ph429, %.lr.ph413 ] ; 9 uses
-  %.0300411.us = phi ptr [ null, %.split.loop.exit402.us ], [ %.0300.ph428, %.lr.ph413 ] ; 2 uses
-  %.2311410.us = phi float [ %i.bw, %.split.loop.exit402.us ], [ %.2311.ph427, %.lr.ph413 ] ; 2 uses
-  %.0313409.us = phi float [ %i.e, %.split.loop.exit402.us ], [ %.0313.ph426, %.lr.ph413 ] ; 2 uses
+.lr.ph413.split.us:                               ; preds = %.lr.ph413, %.backedge.us
+  %.2294412.us = phi ptr [ %.5297, %.backedge.us ], [ %.2294.ph429, %.lr.ph413 ] ; 9 uses
+  %.0300411.us = phi ptr [ null, %.backedge.us ], [ %.0300.ph428, %.lr.ph413 ] ; 2 uses
+  %.2311410.us = phi float [ %i.bw, %.backedge.us ], [ %.2311.ph427, %.lr.ph413 ] ; 2 uses
+  %.0313409.us = phi float [ %i.e, %.backedge.us ], [ %.0313.ph426, %.lr.ph413 ] ; 2 uses
   %.2294412.us454 = ptrtoaddr ptr %.2294412.us to i64
   %.not345.us = icmp eq ptr %.0300411.us, null
   br i1 %.not345.us, label %bb.g, label %bb.h
@@ -231,7 +231,7 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph413.sp
 bb.i:                                             ; preds = %bb.h
   %i.bw = fadd float %i.n, %.2311410.us
   %i.bx = icmp ult ptr %.2294412.us, %.1322
-  br i1 %i.bx, label %.lr.ph407.us.preheader, label %.split.loop.exit402.us
+  br i1 %i.bx, label %.lr.ph407.us.preheader, label %.backedge.us
 
 .lr.ph407.us.preheader:                           ; preds = %bb.i
   %scevgep = getelementptr i8, ptr %.2294412.us, i64 %i.aw
@@ -239,27 +239,27 @@ bb.i:                                             ; preds = %bb.h
   %scevgep455 = getelementptr i8, ptr %scevgep, i64 %i.by ; 2 uses
   br label %.lr.ph407.us
 
-.lr.ph407.us:                                     ; preds = %.lr.ph407.us.preheader, %.backedge.us
-  %.3295406.us = phi ptr [ %i.ca, %.backedge.us ], [ %.2294412.us, %.lr.ph407.us.preheader ] ; 3 uses
+.lr.ph407.us:                                     ; preds = %.lr.ph407.us.preheader, %.split.loop.exit402.us
+  %.3295406.us = phi ptr [ %i.ca, %.split.loop.exit402.us ], [ %.2294412.us, %.lr.ph407.us.preheader ] ; 3 uses
   %i.bz = load i8, ptr %.3295406.us, align 1, !tbaa !26
   %i.ca = getelementptr inbounds nuw i8, ptr %.3295406.us, i64 1 ; 3 uses
-  switch i8 %i.bz, label %.split.loop.exit.us [
-    i8 32, label %.backedge.us
-    i8 9, label %.backedge.us
-    i8 10, label %.split.loop.exit402.us
+  switch i8 %i.bz, label %.backedge.us [
+    i8 32, label %.split.loop.exit402.us
+    i8 9, label %.split.loop.exit402.us
+    i8 10, label %.split.loop.exit402.loopexit
   ]
 
-.split.loop.exit402.us:                           ; preds = %.lr.ph407.us, %.backedge.us, %bb.i, %.split.loop.exit.us
-  %.5297.us = phi ptr [ %.3295406.us, %.split.loop.exit.us ], [ %.2294412.us, %bb.i ], [ %i.ca, %.lr.ph407.us ], [ %scevgep455, %.backedge.us ] ; 2 uses
-  %10 = icmp ult ptr %.5297.us, %.1322
-  br i1 %10, label %.lr.ph413.split.us, label %.loopexit, !llvm.loop !307
-
-.backedge.us:                                     ; preds = %.lr.ph407.us, %.lr.ph407.us
+.split.loop.exit402.us:                           ; preds = %.lr.ph407.us, %.lr.ph407.us
   %exitcond.not = icmp eq ptr %i.ca, %scevgep455
-  br i1 %exitcond.not, label %.split.loop.exit402.us, label %.lr.ph407.us
+  br i1 %exitcond.not, label %.backedge.us, label %.lr.ph407.us
 
-.split.loop.exit.us:                              ; preds = %.lr.ph407.us
-  br label %.split.loop.exit402.us
+.split.loop.exit402.loopexit:                     ; preds = %.lr.ph407.us
+  br label %.backedge.us
+
+.backedge.us:                                     ; preds = %.split.loop.exit402.us, %.lr.ph407.us, %.split.loop.exit402.loopexit, %bb.i
+  %.5297 = phi ptr [ %.3295406.us, %.lr.ph407.us ], [ %.2294412.us, %bb.i ], [ %scevgep455, %.split.loop.exit402.us ], [ %i.ca, %.split.loop.exit402.loopexit ] ; 2 uses
+  %10 = icmp ult ptr %.5297, %.1322
+  br i1 %10, label %.lr.ph413.split.us, label %.loopexit, !llvm.loop !307
 
 .split.us:                                        ; preds = %bb.h, %.lr.ph413
   %.us-phi = phi float [ %.0313.ph426, %.lr.ph413 ], [ %.0313409.us, %bb.h ] ; 5 uses
@@ -536,10 +536,10 @@ bb.af:                                            ; preds = %bb.ad
   %i.gv = icmp ult ptr %.6298, %.1322
   br i1 %i.gv, label %.lr.ph413, label %.loopexit
 
-.loopexit:                                        ; preds = %.outer, %.split.loop.exit402.us, %bb.f, %.thread373
-  %.0281.ph395 = phi ptr [ %.0281.ph430, %.thread373 ], [ %.0281.ph430, %.split.loop.exit402.us ], [ %i.be, %bb.f ], [ %.7288, %.outer ] ; 2 uses
-  %.0272.ph393 = phi ptr [ %.0272.ph431, %.thread373 ], [ %.0272.ph431, %.split.loop.exit402.us ], [ %i.bg, %bb.f ], [ %.7279, %.outer ] ; 2 uses
-  %.0270.ph391 = phi i32 [ %.0270.ph432, %.thread373 ], [ %.0270.ph432, %.split.loop.exit402.us ], [ %i.bi, %bb.f ], [ %.7, %.outer ]
+.loopexit:                                        ; preds = %.outer, %.backedge.us, %bb.f, %.thread373
+  %.0281.ph395 = phi ptr [ %.0281.ph430, %.thread373 ], [ %.0281.ph430, %.backedge.us ], [ %i.be, %bb.f ], [ %.7288, %.outer ] ; 2 uses
+  %.0272.ph393 = phi ptr [ %.0272.ph431, %.thread373 ], [ %.0272.ph431, %.backedge.us ], [ %i.bg, %bb.f ], [ %.7279, %.outer ] ; 2 uses
+  %.0270.ph391 = phi i32 [ %.0270.ph432, %.thread373 ], [ %.0270.ph432, %.backedge.us ], [ %i.bi, %bb.f ], [ %.7, %.outer ]
   %i.gw = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.gx = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !85

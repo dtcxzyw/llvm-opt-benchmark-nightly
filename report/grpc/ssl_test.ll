@@ -205,11 +205,7 @@ _ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE5begin
 _ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE5beginEv.exit
   %i.dv = icmp eq ptr %i.dq, %i.du
   %.not.i112 = icmp eq ptr %i.bt, null            ; 4 uses
-  br i1 %i.dv, label %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.dq, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEED2Ev.exit103, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102
+  br i1 %i.dv, label %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a, label %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179
   %.035 = phi i64 [ %i.qv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179 ], [ 0, %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader ] ; 2 uses
@@ -218,13 +214,17 @@ _ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 48
   %i.dy = load ptr, ptr %i.dx, align 8
   %i.dz = invoke noundef zeroext i1 %i.dy(ptr noundef nonnull align 8 dereferenceable(8) %i.dq, ptr noundef nonnull align 8 dereferenceable(8) %i.du)
-          to label %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a unwind label %bb.x, !inline_history !13033
+          to label %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit unwind label %bb.x, !inline_history !13033
 
-_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit
+_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit
   br i1 %i.dz, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102: ; preds = %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a, %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader.split.us
-  %.2475 = phi i1 [ %.1616, %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a ]
+_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.dq, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEED2Ev.exit103, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102: ; preds = %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit, %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a
+  %.2475 = phi i1 [ %.1616, %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit ]
   %i.ea = load ptr, ptr %i.du, align 8, !tbaa !195
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
@@ -235,8 +235,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBA
   call void %i.ef(ptr noundef nonnull align 8 dereferenceable(8) %i.dq) #45, !call_target !2089, !inline_history !13034
   br label %_ZN7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEED2Ev.exit103
 
-_ZN7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEED2Ev.exit103: ; preds = %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102
-  %.2476775 = phi i1 [ %.2475, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102 ], [ %.1616, %_ZNK7testing8internal14ParamGeneratorIN4bssl12_GLOBAL__N_112VersionParamEE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEED2Ev.exit103: ; preds = %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102
+  %.2476775 = phi i1 [ %.2475, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceIN4bssl12_GLOBAL__N_112VersionParamEEEEclEPS6_.exit.i.i102 ], [ %.1616, %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a ] ; 2 uses
   %i.eg = load ptr, ptr %i.q, align 8, !tbaa !2648
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %8, ptr noundef %i.eg)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -329,7 +329,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.cn
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorIN4bssl12_GLOBAL__N_112VersionParamEEneERKS5_.exit
   %i.fc = load ptr, ptr %i.dq, align 8, !tbaa !195
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 40
   %i.fe = load ptr, ptr %i.fd, align 8
@@ -732,11 +732,7 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE5beginEv.exit
   %i.dv = icmp eq ptr %i.dq, %i.du
   %.not.i111 = icmp eq ptr %i.bt, null            ; 4 uses
-  br i1 %i.dv, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.dq, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEED2Ev.exit102, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101
+  br i1 %i.dv, label %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179
   %.034 = phi i64 [ %i.rh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179 ], [ 0, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader ] ; 2 uses
@@ -745,13 +741,17 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 48
   %i.dy = load ptr, ptr %i.dx, align 8
   %i.dz = invoke noundef zeroext i1 %i.dy(ptr noundef nonnull align 8 dereferenceable(8) %i.dq, ptr noundef nonnull align 8 dereferenceable(8) %i.du)
-          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a unwind label %bb.x, !inline_history !16204
+          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit unwind label %bb.x, !inline_history !16204
 
-_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit
+_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit
   br i1 %i.dz, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader.split.us
-  %.2475 = phi i1 [ %.1616, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a ]
+_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.dq, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEED2Ev.exit102, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit, %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a
+  %.2475 = phi i1 [ %.1616, %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit ]
   %i.ea = load ptr, ptr %i.du, align 8, !tbaa !195
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
@@ -762,8 +762,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4
   call void %i.ef(ptr noundef nonnull align 8 dereferenceable(8) %i.dq) #45, !call_target !1247, !inline_history !16205
   br label %_ZN7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEED2Ev.exit102
 
-_ZN7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEED2Ev.exit102: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101
-  %.2476775 = phi i1 [ %.2475, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101 ], [ %.1616, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEED2Ev.exit102: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101
+  %.2476775 = phi i1 [ %.2475, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEEEclEPS8_.exit.i.i101 ], [ %.1616, %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a ] ; 2 uses
   %i.eg = load ptr, ptr %i.q, align 8, !tbaa !2648
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %8, ptr noundef %i.eg)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -856,7 +856,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.cn
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJtjN4bssl12_GLOBAL__N_133ssl_test_ticket_aead_failure_modeEEEEneERKS7_.exit
   %i.fc = load ptr, ptr %i.dq, align 8, !tbaa !195
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 40
   %i.fe = load ptr, ptr %i.fd, align 8

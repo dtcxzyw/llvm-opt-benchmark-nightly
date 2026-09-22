@@ -205,15 +205,6 @@ bb.y:                                             ; preds = %bb.x
   %i.cq = inttoptr i64 %i.cp to ptr
   br label %.outer.i.split.us
 
-.outer.i.split.us:                                ; preds = %.outer.i.split.us.preheader, %.outer.backedge.i
-  %i.cr = phi i32 [ %i.dy, %.outer.backedge.i ], [ %i.ck, %.outer.i.split.us.preheader ] ; 3 uses
-  %.046.ph.i78 = phi ptr [ %i.dj, %.outer.backedge.i ], [ %i.cq, %.outer.i.split.us.preheader ] ; 3 uses
-  %.048.ph.i77 = phi i32 [ %.048.ph.be.i, %.outer.backedge.i ], [ 0, %.outer.i.split.us.preheader ] ; 3 uses
-  %.052.ph.i76 = phi i32 [ %i.dl, %.outer.backedge.i ], [ %i.ci, %.outer.i.split.us.preheader ]
-  %i.cs = load i16, ptr %.046.ph.i78, align 2
-  %i.ct = and i16 %i.cs, -256
-  br label %.lr.ph.i63
-
 .outer.i.split:                                   ; preds = %bb.y
   br i1 %i.cl, label %._crit_edge.thread.i.preheader, label %do_update_region.exit
 
@@ -222,6 +213,15 @@ bb.y:                                             ; preds = %bb.x
 
 ._crit_edge.thread.i:                             ; preds = %._crit_edge.thread.i.preheader, %._crit_edge.thread.i
   br label %._crit_edge.thread.i
+
+.outer.i.split.us:                                ; preds = %.outer.i.split.us.preheader, %.outer.backedge.i
+  %i.cr = phi i32 [ %i.dy, %.outer.backedge.i ], [ %i.ck, %.outer.i.split.us.preheader ] ; 3 uses
+  %.046.ph.i78 = phi ptr [ %i.dj, %.outer.backedge.i ], [ %i.cq, %.outer.i.split.us.preheader ] ; 3 uses
+  %.048.ph.i77 = phi i32 [ %.048.ph.be.i, %.outer.backedge.i ], [ 0, %.outer.i.split.us.preheader ] ; 3 uses
+  %.052.ph.i76 = phi i32 [ %i.dl, %.outer.backedge.i ], [ %i.ci, %.outer.i.split.us.preheader ]
+  %i.cs = load i16, ptr %.046.ph.i78, align 2
+  %i.ct = and i16 %i.cs, -256
+  br label %.lr.ph.i63
 
 .lr.ph.i63:                                       ; preds = %bb.ab, %.outer.i.split.us
   %i.cu = phi i32 [ %i.dh, %bb.ab ], [ %i.cr, %.outer.i.split.us ] ; 2 uses
@@ -625,15 +625,6 @@ bb.aj:                                            ; preds = %con_should_update.e
   %i.ir = inttoptr i64 %i.iq to ptr
   br label %.outer.i.split.us.i
 
-.outer.i.split.us.i:                              ; preds = %.outer.backedge.i.i, %.outer.i.split.us.preheader.i
-  %i.is = phi i32 [ %i.jz, %.outer.backedge.i.i ], [ %i.im, %.outer.i.split.us.preheader.i ] ; 3 uses
-  %.046.ph.i79.i = phi ptr [ %i.jk, %.outer.backedge.i.i ], [ %i.ir, %.outer.i.split.us.preheader.i ] ; 3 uses
-  %.048.ph.i78.i = phi i32 [ %.048.ph.be.i.i, %.outer.backedge.i.i ], [ 0, %.outer.i.split.us.preheader.i ] ; 3 uses
-  %.052.ph.i77.i = phi i32 [ %i.jm, %.outer.backedge.i.i ], [ %i.il, %.outer.i.split.us.preheader.i ]
-  %i.it = load i16, ptr %.046.ph.i79.i, align 2
-  %i.iu = and i16 %i.it, -256
-  br label %.lr.ph.i65.i
-
 .outer.i.split.i:                                 ; preds = %bb.aj
   br i1 %i.in, label %._crit_edge.thread.i.i.preheader, label %do_update_region.exit.i
 
@@ -642,6 +633,15 @@ bb.aj:                                            ; preds = %con_should_update.e
 
 ._crit_edge.thread.i.i:                           ; preds = %._crit_edge.thread.i.i.preheader, %._crit_edge.thread.i.i
   br label %._crit_edge.thread.i.i
+
+.outer.i.split.us.i:                              ; preds = %.outer.backedge.i.i, %.outer.i.split.us.preheader.i
+  %i.is = phi i32 [ %i.jz, %.outer.backedge.i.i ], [ %i.im, %.outer.i.split.us.preheader.i ] ; 3 uses
+  %.046.ph.i79.i = phi ptr [ %i.jk, %.outer.backedge.i.i ], [ %i.ir, %.outer.i.split.us.preheader.i ] ; 3 uses
+  %.048.ph.i78.i = phi i32 [ %.048.ph.be.i.i, %.outer.backedge.i.i ], [ 0, %.outer.i.split.us.preheader.i ] ; 3 uses
+  %.052.ph.i77.i = phi i32 [ %i.jm, %.outer.backedge.i.i ], [ %i.il, %.outer.i.split.us.preheader.i ]
+  %i.it = load i16, ptr %.046.ph.i79.i, align 2
+  %i.iu = and i16 %i.it, -256
+  br label %.lr.ph.i65.i
 
 .lr.ph.i65.i:                                     ; preds = %bb.am, %.outer.i.split.us.i
   %i.iv = phi i32 [ %i.ji, %bb.am ], [ %i.is, %.outer.i.split.us.i ] ; 2 uses

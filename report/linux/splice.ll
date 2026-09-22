@@ -202,50 +202,51 @@ declare dso_local void @__SCT__WARN_trap(ptr noundef, ...) local_unnamed_addr #1
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local i64 @splice_to_socket(ptr noundef %0, ptr noundef %1, ptr nofree noundef readnone captures(none) %2, i64 noundef %3, i32 noundef %4) local_unnamed_addr #0 align 16 prefalign(16) {
-  %6 = alloca [16 x %struct.bio_vec], align 16    ; 5 uses
-  %7 = alloca %struct.msghdr, align 8             ; 6 uses
-  %8 = tail call ptr @sock_from_file(ptr noundef %1) #11
+.lr.ph218:
+  %5 = alloca [16 x %struct.bio_vec], align 16    ; 5 uses
+  %6 = alloca %struct.msghdr, align 8             ; 6 uses
+  %7 = tail call ptr @sock_from_file(ptr noundef %1) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %5, i8 0, i64 256, i1 false), !annotation !22
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %6, i8 0, i64 256, i1 false), !annotation !22
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %7, i8 0, i64 96, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %6, i8 0, i64 96, i1 false)
   tail call void @pipe_lock(ptr noundef %0) #11
-  %.not213 = icmp eq i64 %3, 0
-  br i1 %.not213, label %.thread267, label %.lr.ph218
-
-.lr.ph218:                                        ; preds = %5
-  %9 = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #12, !srcloc !20
-  %10 = inttoptr i64 %9 to ptr                    ; 6 uses
   %i.a = getelementptr i8, ptr %0, i64 72         ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 76         ; 6 uses
   %i.c = getelementptr i8, ptr %0, i64 96         ; 2 uses
   %i.d = and i32 %4, 2
   %.not133 = icmp ne i32 %i.d, 0
-  %i.e = getelementptr i8, ptr %0, i64 56         ; 2 uses
-  %i.f = getelementptr i8, ptr %0, i64 48
-  %i.g = getelementptr i8, ptr %0, i64 144
+  %i.e = getelementptr i8, ptr %0, i64 56         ; 4 uses
+  %i.f = getelementptr i8, ptr %0, i64 48         ; 2 uses
+  %i.g = getelementptr i8, ptr %0, i64 144        ; 2 uses
   %i.h = getelementptr i8, ptr %0, i64 84         ; 2 uses
   %i.i = getelementptr i8, ptr %0, i64 152        ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %7, i64 68 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 68 ; 3 uses
   %i.k = and i32 %4, 4
   %.not124 = icmp eq i32 %i.k, 0
   %spec.select = select i1 %.not124, i32 134217728, i32 134250496 ; 3 uses
   %i.l = getelementptr i8, ptr %1, i64 40
-  %i.m = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.n = getelementptr i8, ptr %0, i64 100
+  %.not308 = icmp eq i64 %3, 0
+  br i1 %.not308, label %.thread170, label %.lr.ph312.preheader
+
+.lr.ph312.preheader:                              ; preds = %.lr.ph218
+  %8 = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #12, !srcloc !20
+  %9 = inttoptr i64 %8 to ptr                     ; 6 uses
   br label %test_tsk_thread_flag.exit.i
 
-test_tsk_thread_flag.exit.i:                      ; preds = %bb.u, %.lr.ph218
-  %.089216 = phi i64 [ %3, %.lr.ph218 ], [ %i.ck, %bb.u ] ; 3 uses
-  %.092215 = phi i64 [ 0, %.lr.ph218 ], [ %i.cj, %bb.u ] ; 8 uses
-  %.095214 = phi i8 [ 0, %.lr.ph218 ], [ %.499, %bb.u ] ; 7 uses
-  %i.o = load volatile i64, ptr %10, align 8
+test_tsk_thread_flag.exit.i:                      ; preds = %.lr.ph312.preheader, %bb.u
+  %.089216 = phi i64 [ %i.cj, %bb.u ], [ 0, %.lr.ph312.preheader ] ; 11 uses
+  %.092215 = phi i64 [ %i.ck, %bb.u ], [ %3, %.lr.ph312.preheader ] ; 3 uses
+  %.095214 = phi i8 [ %.499, %bb.u ], [ 0, %.lr.ph312.preheader ] ; 8 uses
+  %i.o = load volatile i64, ptr %9, align 8
   %i.p = and i64 %i.o, 4
   %.not.i = icmp eq i64 %i.p, 0
   br i1 %.not.i, label %signal_pending.exit, label %.thread170, !prof !26
 
 signal_pending.exit:                              ; preds = %test_tsk_thread_flag.exit.i
-  %i.q = load volatile i64, ptr %10, align 8
+  %i.q = load volatile i64, ptr %9, align 8
   %i.r = and i64 %i.q, 2
   %.not120 = icmp eq i64 %i.r, 0
   br i1 %.not120, label %.preheader176, label %.thread170
@@ -254,24 +255,26 @@ signal_pending.exit:                              ; preds = %test_tsk_thread_fla
   %.val143191 = load i32, ptr %i.a, align 8       ; 2 uses
   %.val144192 = load i32, ptr %i.b, align 4       ; 2 uses
   %.not.i.i193 = icmp eq i32 %.val143191, %.val144192
-  br i1 %.not.i.i193, label %.lr.ph.a, label %.preheader
+  br i1 %.not.i.i193, label %.lr.ph, label %.preheader
 
-.lr.ph.a:                                         ; preds = %.preheader176
-  %.not132 = icmp ne i64 %.092215, 0
+.lr.ph:                                           ; preds = %.preheader176
+  %.not132 = icmp eq i64 %.089216, 0
+  br i1 %.not132, label %.lr.ph.a, label %.thread170
+
+.lr.ph.a:                                         ; preds = %.lr.ph
   %i.s = load i32, ptr %i.c, align 8
-  %.not131.peel = icmp eq i32 %i.s, 0
-  %or.cond137.not234.peel = select i1 %.not131.peel, i1 true, i1 %.not132 ; 2 uses
-  %brmerge.peel = or i1 %or.cond137.not234.peel, %.not133
+  %.not131.peel = icmp eq i32 %i.s, 0             ; 2 uses
+  %brmerge.peel = or i1 %.not131.peel, %.not133
   br i1 %brmerge.peel, label %.thread170.split.loop.exit300, label %test_tsk_thread_flag.exit.i146.peel
 
 test_tsk_thread_flag.exit.i146.peel:              ; preds = %.lr.ph.a
-  %i.t = load volatile i64, ptr %10, align 8
+  %i.t = load volatile i64, ptr %9, align 8
   %i.u = and i64 %i.t, 4
   %.not.i147.peel = icmp eq i64 %i.u, 0
   br i1 %.not.i147.peel, label %signal_pending.exit152.peel, label %.thread170, !prof !26
 
 signal_pending.exit152.peel:                      ; preds = %test_tsk_thread_flag.exit.i146.peel
-  %i.v = load volatile i64, ptr %10, align 8
+  %i.v = load volatile i64, ptr %9, align 8
   %i.w = and i64 %i.v, 2
   %.not134.peel = icmp eq i64 %i.w, 0
   br i1 %.not134.peel, label %bb.a, label %.thread170
@@ -314,13 +317,13 @@ bb.d:                                             ; preds = %wakeup_pipe_writers
   br i1 %.not131, label %.thread267, label %test_tsk_thread_flag.exit.i146
 
 test_tsk_thread_flag.exit.i146:                   ; preds = %.peel.next
-  %i.ab = load volatile i64, ptr %10, align 8
+  %i.ab = load volatile i64, ptr %9, align 8
   %i.ac = and i64 %i.ab, 4
   %.not.i147 = icmp eq i64 %i.ac, 0
   br i1 %.not.i147, label %signal_pending.exit152, label %.thread267, !prof !26
 
 signal_pending.exit152:                           ; preds = %test_tsk_thread_flag.exit.i146
-  %i.ad = load volatile i64, ptr %10, align 8
+  %i.ad = load volatile i64, ptr %9, align 8
   %i.ae = and i64 %i.ad, 2
   %.not134 = icmp eq i64 %i.ae, 0
   br i1 %.not134, label %bb.e, label %.thread267
@@ -334,7 +337,7 @@ bb.e:                                             ; preds = %signal_pending.exit
 
 .lr.ph202:                                        ; preds = %.preheader, %bb.h
   %.2201 = phi i64 [ %.3, %bb.h ], [ -512, %.preheader ]
-  %.0103200 = phi i64 [ %.1104, %bb.h ], [ %.089216, %.preheader ] ; 4 uses
+  %.0103200 = phi i64 [ %.1104, %bb.h ], [ %.092215, %.preheader ] ; 4 uses
   %.0106199 = phi i32 [ %.1107, %bb.h ], [ 0, %.preheader ] ; 4 uses
   %.0109198 = phi i32 [ %.1110, %bb.h ], [ %.val144.lcssa, %.preheader ] ; 4 uses
   %.val141 = load i32, ptr %i.h, align 4
@@ -371,7 +374,7 @@ pipe_buf_confirm.exit.thread:                     ; preds = %bb.f, %pipe_buf_con
   %i.ar = call i64 @llvm.umin.i64(i64 %.0103200, i64 %i.aq) ; 2 uses
   %i.as = add i32 %.0106199, 1                    ; 3 uses
   %i.at = zext i32 %.0106199 to i64
-  %i.au = getelementptr [16 x i8], ptr %6, i64 %i.at ; 3 uses
+  %i.au = getelementptr [16 x i8], ptr %5, i64 %i.at ; 3 uses
   %i.av = load ptr, ptr %i.ai, align 8
   %i.aw = trunc nuw i64 %i.ar to i32
   %i.ax = getelementptr i8, ptr %i.ai, i64 8
@@ -431,11 +434,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.bj = zext i32 %.2108 to i64
-  %i.bk = sub i64 %.089216, %.2105
-  call void @iov_iter_bvec(ptr noundef nonnull %i.m, i32 noundef 1, ptr noundef nonnull %6, i64 noundef %i.bj, i64 noundef %i.bk) #11
-  %i.bl = call i32 @sock_sendmsg(ptr noundef %8, ptr noundef nonnull %7) #11 ; 2 uses
-  %i.bm = sext i32 %i.bl to i64                   ; 4 uses
-  %i.bn = icmp slt i32 %i.bl, 1
+  %i.bk = sub i64 %.092215, %.2105
+  call void @iov_iter_bvec(ptr noundef nonnull %i.m, i32 noundef 1, ptr noundef nonnull %5, i64 noundef %i.bj, i64 noundef %i.bk) #11
+  %i.bl = call i32 @sock_sendmsg(ptr noundef %7, ptr noundef nonnull %6) #11
+  %.fr340 = freeze i32 %i.bl                      ; 2 uses
+  %i.bm = sext i32 %.fr340 to i64                 ; 4 uses
+  %i.bn = icmp slt i32 %.fr340, 1
   br i1 %i.bn, label %.thread170, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -482,8 +486,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.ci, label %bb.p, label %bb.s, !llvm.loop !65
 
 bb.s:                                             ; preds = %bb.r
-  %i.cj = add i64 %.092215, %i.bm                 ; 2 uses
-  %i.ck = sub i64 %.089216, %i.bm                 ; 2 uses
+  %i.cj = add i64 %.089216, %i.bm                 ; 2 uses
+  %i.ck = sub i64 %.092215, %i.bm                 ; 2 uses
   %i.cl = load i32, ptr %i.b, align 4
   %.not128 = icmp eq i32 %.4113, %i.cl
   br i1 %.not128, label %bb.u, label %bb.t
@@ -500,50 +504,46 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.not = icmp eq i64 %i.ck, 0
   br i1 %.not, label %.thread170, label %test_tsk_thread_flag.exit.i
 
-.thread267:                                       ; preds = %signal_pending.exit152, %test_tsk_thread_flag.exit.i146, %.peel.next, %5
-  %.7.ph = phi i64 [ 0, %5 ], [ -512, %signal_pending.exit152 ], [ -512, %test_tsk_thread_flag.exit.i146 ], [ 0, %.peel.next ]
+.thread267:                                       ; preds = %signal_pending.exit152, %.peel.next, %test_tsk_thread_flag.exit.i146
+  %.7.ph = phi i64 [ 0, %.peel.next ], [ -512, %test_tsk_thread_flag.exit.i146 ], [ -512, %signal_pending.exit152 ]
   call void @pipe_unlock(ptr noundef %0) #11
   br label %bb.y
 
 .thread170.split.loop.exit300:                    ; preds = %.lr.ph.a
-  %.mux.peel.le = select i1 %or.cond137.not234.peel, i64 0, i64 -11
+  %.mux.peel.le = select i1 %.not131.peel, i64 0, i64 -11
   br label %.thread170
 
-.thread170:                                       ; preds = %signal_pending.exit152.peel, %test_tsk_thread_flag.exit.i146.peel, %test_tsk_thread_flag.exit.i, %bb.n, %.thread, %signal_pending.exit, %bb.u, %.preheader, %.thread170.split.loop.exit300
-  %.5100 = phi i8 [ %.095214, %.thread170.split.loop.exit300 ], [ %.095214, %test_tsk_thread_flag.exit.i ], [ %.196.lcssa, %.preheader ], [ %.196.lcssa, %.thread ], [ %.095214, %signal_pending.exit ], [ %.499, %bb.u ], [ %.196.lcssa, %bb.n ], [ %.095214, %test_tsk_thread_flag.exit.i146.peel ], [ %.095214, %signal_pending.exit152.peel ]
-  %.294 = phi i64 [ %.092215, %.thread170.split.loop.exit300 ], [ %.092215, %test_tsk_thread_flag.exit.i ], [ %.092215, %.preheader ], [ %.092215, %.thread ], [ %.092215, %signal_pending.exit ], [ %i.cj, %bb.u ], [ %.092215, %bb.n ], [ 0, %test_tsk_thread_flag.exit.i146.peel ], [ 0, %signal_pending.exit152.peel ]
-  %.7 = phi i64 [ %.mux.peel.le, %.thread170.split.loop.exit300 ], [ -512, %test_tsk_thread_flag.exit.i ], [ -512, %.preheader ], [ %.4, %.thread ], [ -512, %signal_pending.exit ], [ %i.cc, %bb.u ], [ %i.bm, %bb.n ], [ -512, %test_tsk_thread_flag.exit.i146.peel ], [ -512, %signal_pending.exit152.peel ]
-  %.294.fr = freeze i64 %.294                     ; 2 uses
+.thread170:                                       ; preds = %.preheader, %test_tsk_thread_flag.exit.i, %bb.n, %.thread, %signal_pending.exit, %bb.u, %.lr.ph, %test_tsk_thread_flag.exit.i146.peel, %signal_pending.exit152.peel, %.lr.ph218, %.thread170.split.loop.exit300
+  %.092.fr305 = phi i64 [ %.089216, %.thread170.split.loop.exit300 ], [ 0, %.lr.ph218 ], [ %.089216, %signal_pending.exit152.peel ], [ %.089216, %test_tsk_thread_flag.exit.i146.peel ], [ %.089216, %.lr.ph ], [ %i.cj, %bb.u ], [ %.089216, %signal_pending.exit ], [ %.089216, %.thread ], [ %.089216, %bb.n ], [ %.089216, %test_tsk_thread_flag.exit.i ], [ %.089216, %.preheader ] ; 2 uses
+  %.5100 = phi i8 [ %.095214, %.thread170.split.loop.exit300 ], [ 0, %.lr.ph218 ], [ %.095214, %signal_pending.exit152.peel ], [ %.095214, %test_tsk_thread_flag.exit.i146.peel ], [ %.095214, %.lr.ph ], [ %.499, %bb.u ], [ %.095214, %signal_pending.exit ], [ %.196.lcssa, %.thread ], [ %.196.lcssa, %bb.n ], [ %.095214, %test_tsk_thread_flag.exit.i ], [ %.196.lcssa, %.preheader ]
+  %.7 = phi i64 [ %.mux.peel.le, %.thread170.split.loop.exit300 ], [ 0, %.lr.ph218 ], [ -512, %signal_pending.exit152.peel ], [ -512, %test_tsk_thread_flag.exit.i146.peel ], [ 0, %.lr.ph ], [ %i.cc, %bb.u ], [ -512, %signal_pending.exit ], [ %.4, %.thread ], [ %i.bm, %bb.n ], [ -512, %test_tsk_thread_flag.exit.i ], [ -512, %.preheader ]
   call void @pipe_unlock(ptr noundef %0) #11
   %i.cn = trunc nuw i8 %.5100 to i1
   br i1 %i.cn, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %.thread170
   call void asm sideeffect "lock addl $$0,-4(%rsp)", "~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !25
-  %11 = getelementptr i8, ptr %0, i64 56          ; 2 uses
-  %i.co = load volatile ptr, ptr %11, align 8
-  %.not3.i156 = icmp eq ptr %i.co, %11
+  %i.co = load volatile ptr, ptr %i.e, align 8
+  %.not3.i156 = icmp eq ptr %i.co, %i.e
   br i1 %.not3.i156, label %wakeup_pipe_writers.exit157, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %12 = getelementptr i8, ptr %0, i64 48
-  %i.cp = call i32 @__wake_up(ptr noundef %12, i32 noundef 1, i32 noundef 1, ptr noundef null) #11 ; 0 uses
+  %i.cp = call i32 @__wake_up(ptr noundef %i.f, i32 noundef 1, i32 noundef 1, ptr noundef null) #11 ; 0 uses
   br label %wakeup_pipe_writers.exit157
 
 wakeup_pipe_writers.exit157:                      ; preds = %bb.v, %bb.w
-  %13 = getelementptr i8, ptr %0, i64 144
-  call void @kill_fasync(ptr noundef %13, i32 noundef 29, i32 noundef 2) #11
+  call void @kill_fasync(ptr noundef %i.g, i32 noundef 29, i32 noundef 2) #11
   br label %bb.x
 
 bb.x:                                             ; preds = %wakeup_pipe_writers.exit157, %.thread170
-  %.not135 = icmp eq i64 %.294.fr, 0
-  %spec.select312 = select i1 %.not135, i64 %.7, i64 %.294.fr
+  %.not135 = icmp eq i64 %.092.fr305, 0
+  %spec.select312 = select i1 %.not135, i64 %.7, i64 %.092.fr305
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %.thread267
   %i.cq = phi i64 [ %spec.select312, %bb.x ], [ %.7.ph, %.thread267 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   ret i64 %i.cq
 }
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bb = icmp slt i32 %i.ba, %i.e
   br i1 %i.bb, label %.lr.ph59.split, label %.critedge, !llvm.loop !13
 
-.critedge:                                        ; preds = %.critedge2, %.lr.ph59, %.preheader, %bb.a
+.critedge:                                        ; preds = %.critedge2, %.preheader, %.lr.ph59, %bb.a
   %.042 = phi double [ 0.000000e+00, %bb.a ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.lr.ph59 ], [ %i.ay, %.critedge2 ]
   ret double %.042
 }

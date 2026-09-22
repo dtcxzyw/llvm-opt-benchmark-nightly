@@ -202,87 +202,87 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph.lr.ph
   %.not44.us122 = icmp slt i32 %2, 12
-  br i1 %.not44.us122, label %.lr.ph.split.us, label %.thread
+  br i1 %.not44.us122, label %bb.d, label %.thread
 
 .lr.ph.us:                                        ; preds = %.lr.ph.lr.ph, %.outer.us
   %.036.ph83.us = phi i32 [ %i.s, %.outer.us ], [ %2, %.lr.ph.lr.ph ] ; 2 uses
   %.038.ph82.us = phi i32 [ %i.r, %.outer.us ], [ 0, %.lr.ph.lr.ph ] ; 4 uses
   %.promoted7981.us = phi i8 [ %i.u, %.outer.us ], [ %i.l, %.lr.ph.lr.ph ]
-  br label %bb.d
+  br label %bb.e
 
-bb.d:                                             ; preds = %bb.e, %.lr.ph.us
-  %i.n = phi i32 [ 3, %.lr.ph.us ], [ %15, %bb.e ]
-  %.03961.us86 = phi i32 [ 11, %.lr.ph.us ], [ %i.p, %bb.e ] ; 4 uses
-  %3 = phi i8 [ %.promoted7981.us, %.lr.ph.us ], [ %14, %bb.e ] ; 3 uses
-  %4 = and i32 %.03961.us86, 3
-  %5 = icmp samesign ugt i32 %4, %.037
-  %i.o = add i32 %.03961.us86, 3
-  %.0.in.us87 = select i1 %5, i32 %i.o, i32 %.03961.us86
+bb.d:                                             ; preds = %.lr.ph.split.us.preheader, %bb.d
+  %3 = phi i8 [ %7, %bb.d ], [ %i.l, %.lr.ph.split.us.preheader ] ; 2 uses
+  %i.n = phi i32 [ %i.o, %bb.d ], [ 11, %.lr.ph.split.us.preheader ] ; 2 uses
+  %4 = add i8 %3, 127
+  %5 = and i8 %4, 127
+  %6 = and i8 %3, -128
+  %7 = or disjoint i8 %5, %6                      ; 2 uses
+  %i.o = add i32 %i.n, -3                         ; 3 uses
+  %8 = and i32 %i.o, 3
+  %9 = icmp samesign ugt i32 %8, %.037
+  %.0.in.us87 = select i1 %9, i32 %i.n, i32 %i.o
   %.0.us88 = and i32 %.0.in.us87, -4              ; 2 uses
-  %.not44.us89 = icmp slt i32 %.036.ph83.us, %.0.us88
-  br i1 %.not44.us89, label %6, label %.thread.loopexit99
+  %.not44.us89 = icmp slt i32 %2, %.0.us88
+  br i1 %.not44.us89, label %bb.d, label %.thread.loopexit
 
-6:                                                ; preds = %bb.d
-  %7 = icmp eq i32 %1, %i.n
-  br i1 %7, label %8, label %bb.e
+bb.e:                                             ; preds = %.lr.ph.us, %.lr.ph.split.us
+  %10 = phi i32 [ 3, %.lr.ph.us ], [ %20, %.lr.ph.split.us ]
+  %.03961 = phi i32 [ 11, %.lr.ph.us ], [ %19, %.lr.ph.split.us ] ; 4 uses
+  %11 = phi i8 [ %.promoted7981.us, %.lr.ph.us ], [ %i.y, %.lr.ph.split.us ] ; 3 uses
+  %12 = and i32 %.03961, 3
+  %13 = icmp samesign ugt i32 %12, %.037
+  %i.p = add i32 %.03961, 3
+  %.0.in = select i1 %13, i32 %i.p, i32 %.03961
+  %.0 = and i32 %.0.in, -4                        ; 2 uses
+  %.not44 = icmp slt i32 %.036.ph83.us, %.0
+  br i1 %.not44, label %14, label %.thread.loopexit99
 
-8:                                                ; preds = %6
-  %9 = load i8, ptr %i.m, align 1                 ; 2 uses
-  %10 = icmp ugt i8 %9, 2
-  br i1 %10, label %.outer.us, label %bb.e
+14:                                               ; preds = %bb.e
+  %15 = icmp eq i32 %1, %10
+  br i1 %15, label %16, label %.lr.ph.split.us
 
-bb.e:                                             ; preds = %8, %6
-  %11 = add i8 %3, 127
-  %12 = and i8 %11, 127                           ; 2 uses
-  %13 = and i8 %3, -128
-  %14 = or disjoint i8 %12, %13                   ; 2 uses
-  store i8 %14, ptr %i.a, align 1
-  %i.p = add i32 %.03961.us86, -3
-  %15 = zext nneg i8 %12 to i32                   ; 2 uses
-  %.not43.us90 = icmp samesign ugt i32 %1, %15
-  br i1 %.not43.us90, label %.outer._crit_edge, label %bb.d, !llvm.loop !178
+16:                                               ; preds = %14
+  %17 = load i8, ptr %i.m, align 1                ; 2 uses
+  %18 = icmp ugt i8 %17, 2
+  br i1 %18, label %.outer.us, label %.lr.ph.split.us
 
-.outer.us:                                        ; preds = %8
-  %i.q = add i8 %9, -1
+.outer.us:                                        ; preds = %16
+  %i.q = add i8 %17, -1
   store i8 %i.q, ptr %i.m, align 1
   %i.r = add i32 %.038.ph82.us, 1
   %i.s = add i32 %.036.ph83.us, 8
-  %i.t = and i8 %3, -128
+  %i.t = and i8 %11, -128
   %i.u = or disjoint i8 %i.t, 3                   ; 2 uses
   store i8 %i.u, ptr %i.a, align 1
   br label %.lr.ph.us, !llvm.loop !178
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
-  %16 = phi i8 [ %i.y, %.lr.ph.split.us ], [ %i.l, %.lr.ph.split.us.preheader ] ; 2 uses
-  %.03961.us123 = phi i32 [ %17, %.lr.ph.split.us ], [ 11, %.lr.ph.split.us.preheader ] ; 2 uses
-  %i.v = add i8 %16, 127
-  %i.w = and i8 %i.v, 127
-  %i.x = and i8 %16, -128
+.lr.ph.split.us:                                  ; preds = %14, %16
+  %i.v = add i8 %11, 127
+  %i.w = and i8 %i.v, 127                         ; 2 uses
+  %i.x = and i8 %11, -128
   %i.y = or disjoint i8 %i.w, %i.x                ; 2 uses
-  %17 = add i32 %.03961.us123, -3                 ; 3 uses
-  %18 = and i32 %17, 3
-  %19 = icmp samesign ugt i32 %18, %.037
-  %.0.in.us = select i1 %19, i32 %.03961.us123, i32 %17
-  %.0.us = and i32 %.0.in.us, -4                  ; 2 uses
-  %.not44.us = icmp slt i32 %2, %.0.us
-  br i1 %.not44.us, label %.lr.ph.split.us, label %.thread.loopexit
+  store i8 %i.y, ptr %i.a, align 1
+  %19 = add i32 %.03961, -3
+  %20 = zext nneg i8 %i.w to i32                  ; 2 uses
+  %.not43 = icmp samesign ugt i32 %1, %20
+  br i1 %.not43, label %.outer._crit_edge, label %bb.e, !llvm.loop !178
 
-.outer._crit_edge:                                ; preds = %bb.e
+.outer._crit_edge:                                ; preds = %.lr.ph.split.us
   %i.z = icmp sgt i32 %.038.ph82.us, 0
   br i1 %i.z, label %bb.f, label %bb.g
 
-.thread.loopexit99:                               ; preds = %bb.d
+.thread.loopexit99:                               ; preds = %bb.e
   %i.aa = tail call i32 @llvm.smax.i32(i32 %.038.ph82.us, i32 0)
   %i.ab = shl i32 %i.aa, 3
   br label %.thread
 
-.thread.loopexit:                                 ; preds = %.lr.ph.split.us
-  store i8 %i.y, ptr %i.a, align 1
+.thread.loopexit:                                 ; preds = %bb.d
+  store i8 %7, ptr %i.a, align 1
   br label %.thread
 
 .thread:                                          ; preds = %.thread.loopexit, %.lr.ph.split.us.preheader, %.thread.loopexit99
   %.us-phi = phi i32 [ %i.ab, %.thread.loopexit99 ], [ 0, %.lr.ph.split.us.preheader ], [ 0, %.thread.loopexit ]
-  %.us-phi63 = phi i32 [ %.0.us88, %.thread.loopexit99 ], [ 12, %.lr.ph.split.us.preheader ], [ %.0.us, %.thread.loopexit ]
+  %.us-phi63 = phi i32 [ %.0, %.thread.loopexit99 ], [ 12, %.lr.ph.split.us.preheader ], [ %.0.us88, %.thread.loopexit ]
   %.253 = sub i32 %.us-phi63, %.us-phi
   %i.ac = getelementptr i8, ptr %0, i64 4         ; 2 uses
   %i.ad = load i16, ptr %i.ac, align 4

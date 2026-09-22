@@ -205,7 +205,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !503
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -608,7 +608,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !511
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -1011,7 +1011,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi
   br i1 %i.bb, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !519
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bc, align 8, !tbaa !135
   ret void
@@ -1414,7 +1414,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi
   br i1 %i.bb, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !527
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi12ELi0ELi12ELi12EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bc, align 8, !tbaa !135
   ret void
@@ -1817,7 +1817,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !777
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -2220,7 +2220,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !785
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi4ELi0ELin1ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -2623,7 +2623,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0
   br i1 %i.bb, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !793
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bc, align 8, !tbaa !135
   ret void
@@ -3026,7 +3026,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0
   br i1 %i.bb, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !801
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLi12ELi4ELi0ELi12ELi4EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bc, align 8, !tbaa !135
   ret void
@@ -3429,7 +3429,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !913
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -3832,7 +3832,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !921
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -4235,7 +4235,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !959
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -4638,7 +4638,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !967
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIiLin1ELi2ELi0ELin1ELi2EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -5041,7 +5041,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !1185
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void
@@ -5444,7 +5444,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit, !llvm.loop !1193
 
 _ZSt11__push_heapIPlllN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES8_NS7_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS6_9DenseBaseIT_EEbRNS6_15PlainObjectBaseIT0_EERNSF_IT1_EEEUlmmE0_EEEvSB_SG_SG_SJ_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i, %bb.i, %.lr.ph.i, %bb.g
-  %.01317.i = phi i64 [ %.128, %.lr.ph.i ], [ %.128, %bb.g ], [ %.01320.i, %bb.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
+  %.01317.i = phi i64 [ %.01320.i, %bb.i ], [ %.128, %bb.g ], [ %.128, %.lr.ph.i ], [ %.021.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN3igl8sortrowsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES6_NS5_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS4_9DenseBaseIT_EEbRNS4_15PlainObjectBaseIT0_EERNSD_IT1_EEEUlmmE0_EclIPllEEbS9_RSE_.exit.i ]
   %i.bk = getelementptr inbounds [8 x i8], ptr %0, i64 %.01317.i
   store i64 %3, ptr %i.bk, align 8, !tbaa !135
   ret void

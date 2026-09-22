@@ -204,18 +204,13 @@ bb.a:
   %i.f = sext i32 %.061.ph.ph124 to i64
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.lr.ph.split.us
-  %indvars.iv = phi i64 [ %i.f, %.lr.ph.lr.ph ], [ %indvars.iv.next, %.lr.ph.split.us ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
+  %indvars.iv = phi i64 [ %i.f, %.lr.ph.lr.ph ], [ %indvars.iv.next, %.outer ] ; 3 uses
   %i.g = getelementptr inbounds [24 x i8], ptr %i.a, i64 %indvars.iv ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = load i32, ptr %i.h, align 8, !tbaa !15   ; 4 uses
   %i.j = icmp eq i32 %i.i, 2
-  br i1 %i.j, label %.lr.ph.split.us, label %.lr.ph.split.split.us
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %2 = icmp slt i64 %indvars.iv.next, %i.e
-  br i1 %2, label %.lr.ph, label %.critedge, !llvm.loop !32
+  br i1 %i.j, label %.outer, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph
   %i.k = trunc nsw i64 %indvars.iv to i32
@@ -240,6 +235,11 @@ bb.c:                                             ; preds = %bb.b
   %lftr.wideiv = trunc i64 %indvars.iv.next144 to i32
   %exitcond.not = icmp eq i32 %i.l, %lftr.wideiv
   br i1 %exitcond.not, label %.loopexit, label %bb.b
+
+.outer:                                           ; preds = %.lr.ph
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %2 = icmp slt i64 %indvars.iv.next, %i.e
+  br i1 %2, label %.lr.ph, label %.critedge, !llvm.loop !32
 
 .split.us105:                                     ; preds = %bb.b
   %i.s = trunc nsw i64 %indvars.iv143 to i32      ; 2 uses
@@ -345,8 +345,8 @@ bb.q:                                             ; preds = %bb.n, %bb.m, %bb.o
   %i.bb = icmp slt i32 %.061.ph.ph.be, %i.c
   br i1 %i.bb, label %.lr.ph.lr.ph, label %.critedge, !llvm.loop !32
 
-.critedge:                                        ; preds = %bb.h, %bb.p, %bb.l, %.outer.outer.backedge, %.lr.ph.split.us, %bb.a
-  %.265 = phi i32 [ 0, %bb.a ], [ %.058.ph.ph126, %.lr.ph.split.us ], [ %.058.ph.ph.be, %.outer.outer.backedge ], [ -1, %bb.l ], [ -1, %bb.p ], [ -1, %bb.h ]
+.critedge:                                        ; preds = %bb.h, %bb.p, %bb.l, %.outer.outer.backedge, %.outer, %bb.a
+  %.265 = phi i32 [ 0, %bb.a ], [ %.058.ph.ph126, %.outer ], [ %.058.ph.ph.be, %.outer.outer.backedge ], [ -1, %bb.l ], [ -1, %bb.p ], [ -1, %bb.h ]
   ret i32 %.265
 }
 

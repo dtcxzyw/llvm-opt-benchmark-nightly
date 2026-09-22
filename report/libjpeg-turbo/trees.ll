@@ -205,29 +205,19 @@ bb.at:                                            ; preds = %bb.as
   %.not122.i = icmp eq i32 %i.hu, 0
   br i1 %.not122.i, label %gen_bitlen.exit, label %.lr.ph125.i
 
-.lr.ph125.i:                                      ; preds = %.preheader.i, %.outer.split.us.i
-  %indvars.iv138.i = phi i64 [ %indvars.iv.next139.i, %.outer.split.us.i ], [ %i.jy, %.preheader.i ] ; 5 uses
-  %.190123.i = phi i32 [ %.291.ph.lcssa.i, %.outer.split.us.i ], [ 573, %.preheader.i ] ; 2 uses
+.lr.ph125.i:                                      ; preds = %.preheader.i, %.outer._crit_edge.i
+  %indvars.iv138.i = phi i64 [ %indvars.iv.next139.i, %.outer._crit_edge.i ], [ %i.jy, %.preheader.i ] ; 5 uses
+  %.190123.i = phi i32 [ %.291.lcssa.i, %.outer._crit_edge.i ], [ 573, %.preheader.i ] ; 2 uses
   %i.km = getelementptr inbounds [2 x i8], ptr %i.hv, i64 %indvars.iv138.i
   %i.kn = load i16, ptr %i.km, align 2, !tbaa !75 ; 2 uses
   %.not99118.i = icmp eq i16 %i.kn, 0
-  br i1 %.not99118.i, label %.outer.split.us.i, label %.outer.split.lr.ph.i
+  br i1 %.not99118.i, label %.outer._crit_edge.i, label %.outer.split.lr.ph.i
 
 .outer.split.lr.ph.i:                             ; preds = %.lr.ph125.i
   %i.ko = zext i16 %i.kn to i32
   %i.kp = trunc i64 %indvars.iv138.i to i16
   %i.kq = sext i32 %.190123.i to i64
   br label %.outer.split.i
-
-.outer.split.us.loopexit.i:                       ; preds = %.outer.i
-  %2 = trunc nsw i64 %indvars.iv.next136.i to i32
-  br label %.outer.split.us.i
-
-.outer.split.us.i:                                ; preds = %.outer.split.us.loopexit.i, %.lr.ph125.i
-  %.291.ph.lcssa.i = phi i32 [ %.190123.i, %.lr.ph125.i ], [ %2, %.outer.split.us.loopexit.i ]
-  %indvars.iv.next139.i = add nsw i64 %indvars.iv138.i, -1 ; 2 uses
-  %.not.i124 = icmp eq i64 %indvars.iv.next139.i, 0
-  br i1 %.not.i124, label %gen_bitlen.exit, label %.lr.ph125.i, !llvm.loop !58
 
 .outer.split.i:                                   ; preds = %.outer.i, %.outer.split.lr.ph.i
   %.088.ph120.i = phi i32 [ %i.ko, %.outer.split.lr.ph.i ], [ %i.lf, %.outer.i ]
@@ -240,7 +230,7 @@ bb.au:                                            ; preds = %bb.au, %.outer.spli
   %i.kr = getelementptr inbounds [4 x i8], ptr %i.az, i64 %indvars.iv.next136.i
   %i.ks = load i32, ptr %i.kr, align 4, !tbaa !31 ; 2 uses
   %i.kt = icmp sgt i32 %i.ks, %i.hm
-  br i1 %i.kt, label %bb.au, label %bb.av, !llvm.loop !59
+  br i1 %i.kt, label %bb.au, label %bb.av, !llvm.loop !58
 
 bb.av:                                            ; preds = %bb.au
   %i.ku = sext i32 %i.ks to i64
@@ -265,9 +255,19 @@ bb.aw:                                            ; preds = %bb.av
 .outer.i:                                         ; preds = %bb.aw, %bb.av
   %i.lf = add nsw i32 %.088.ph120.i, -1           ; 2 uses
   %.not99.i = icmp eq i32 %i.lf, 0
-  br i1 %.not99.i, label %.outer.split.us.loopexit.i, label %.outer.split.i, !llvm.loop !59
+  br i1 %.not99.i, label %.outer._crit_edge.loopexit.i, label %.outer.split.i, !llvm.loop !58
 
-gen_bitlen.exit:                                  ; preds = %.outer.split.us.i, %bb.ak, %._crit_edge.i, %.preheader.i
+.outer._crit_edge.loopexit.i:                     ; preds = %.outer.i
+  %2 = trunc nsw i64 %indvars.iv.next136.i to i32
+  br label %.outer._crit_edge.i
+
+.outer._crit_edge.i:                              ; preds = %.outer._crit_edge.loopexit.i, %.lr.ph125.i
+  %.291.lcssa.i = phi i32 [ %.190123.i, %.lr.ph125.i ], [ %2, %.outer._crit_edge.loopexit.i ]
+  %indvars.iv.next139.i = add nsw i64 %indvars.iv138.i, -1 ; 2 uses
+  %.not.i124 = icmp eq i64 %indvars.iv.next139.i, 0
+  br i1 %.not.i124, label %gen_bitlen.exit, label %.lr.ph125.i, !llvm.loop !59
+
+gen_bitlen.exit:                                  ; preds = %.outer._crit_edge.i, %bb.ak, %._crit_edge.i, %.preheader.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.lg = load i16, ptr %i.hv, align 8, !tbaa !75
   %i.lh = shl i16 %i.lg, 1                        ; 2 uses

@@ -206,7 +206,7 @@ sqlite3Dequote.exit:                              ; preds = %sqlite3RenameTokenM
   %i.cj = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.ci
   %i.ck = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 40
   store i32 %.1129249, ptr %i.ck, align 8, !tbaa !570
-  br i1 %i.h, label %8, label %.preheader194
+  br i1 %i.h, label %5, label %.preheader194
 
 .preheader194:                                    ; preds = %sqlite3Dequote.exit
   %i.cl = icmp sgt i32 %.1129249, 0
@@ -231,8 +231,16 @@ sqlite3Dequote.exit:                              ; preds = %sqlite3RenameTokenM
   %wide.trip.count225 = zext nneg i32 %.1129249 to i64
   br label %.preheader193.us
 
-.preheader193.us:                                 ; preds = %.loopexit192.us, %.preheader193.lr.ph.split.us
-  %indvars.iv222 = phi i64 [ %indvars.iv.next223, %.loopexit192.us ], [ 0, %.preheader193.lr.ph.split.us ] ; 3 uses
+5:                                                ; preds = %sqlite3Dequote.exit
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 54
+  %7 = load i16, ptr %6, align 2, !tbaa !1150
+  %8 = sext i16 %7 to i32
+  %9 = add nsw i32 %8, -1
+  store i32 %9, ptr %i.ay, align 8, !tbaa !1155
+  br label %.loopexit195
+
+.preheader193.us:                                 ; preds = %.preheader193.lr.ph.split.us, %.loopexit192.us
+  %indvars.iv222 = phi i64 [ 0, %.preheader193.lr.ph.split.us ], [ %indvars.iv.next223, %.loopexit192.us ] ; 3 uses
   %i.cs = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %indvars.iv222
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !1999 ; 3 uses
@@ -250,7 +258,11 @@ bb.w:                                             ; preds = %bb.y, %bb.v
   %i.cx = load i8, ptr %.013.i.us, align 1, !tbaa !733 ; 3 uses
   %i.cy = load i8, ptr %.012.i.us, align 1, !tbaa !733 ; 2 uses
   %i.cz = icmp eq i8 %i.cx, %i.cy
-  br i1 %i.cz, label %5, label %bb.x
+  br i1 %i.cz, label %10, label %bb.x
+
+10:                                               ; preds = %bb.w
+  %11 = icmp eq i8 %i.cx, 0
+  br i1 %11, label %sqlite3StrICmp.exit.thread.us, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
   %i.da = zext i8 %i.cx to i64
@@ -262,11 +274,7 @@ bb.x:                                             ; preds = %bb.w
   %.not.i154.us = icmp eq i8 %i.dc, %i.df
   br i1 %.not.i154.us, label %bb.y, label %sqlite3StrICmp.exit.us
 
-5:                                                ; preds = %bb.w
-  %6 = icmp eq i8 %i.cx, 0
-  br i1 %6, label %sqlite3StrICmp.exit.thread.us, label %bb.y
-
-bb.y:                                             ; preds = %5, %bb.x
+bb.y:                                             ; preds = %bb.x, %10
   %i.dg = getelementptr inbounds nuw i8, ptr %.013.i.us, i64 1
   %i.dh = getelementptr inbounds nuw i8, ptr %.012.i.us, i64 1
   br label %bb.w
@@ -276,7 +284,7 @@ sqlite3StrICmp.exit.us:                           ; preds = %bb.x
   %exitcond221.not = icmp eq i64 %indvars.iv.next218, %wide.trip.count220
   br i1 %exitcond221.not, label %sqlite3OomFault.exit, label %bb.v, !llvm.loop !4598
 
-sqlite3StrICmp.exit.thread.us:                    ; preds = %5
+sqlite3StrICmp.exit.thread.us:                    ; preds = %10
   %i.di = trunc nuw nsw i64 %indvars.iv217 to i32
   %i.dj = getelementptr inbounds nuw [16 x i8], ptr %i.ay, i64 %indvars.iv222 ; 2 uses
   store i32 %i.di, ptr %i.dj, align 8, !tbaa !1155
@@ -293,7 +301,11 @@ bb.z:                                             ; preds = %sqlite3StrICmp.exit
   %.010.i.us = phi ptr [ %.0.i156.us, %bb.aa ], [ %.08.i.us, %bb.z ] ; 3 uses
   %i.dm = load ptr, ptr %.010.i.us, align 8, !tbaa !2014
   %i.dn = icmp eq ptr %i.dm, %i.cu
-  br i1 %i.dn, label %7, label %bb.aa
+  br i1 %i.dn, label %12, label %bb.aa
+
+12:                                               ; preds = %.lr.ph.i.us
+  store ptr %i.dj, ptr %.010.i.us, align 8, !tbaa !2014
+  br label %.loopexit192.us
 
 bb.aa:                                            ; preds = %.lr.ph.i.us
   %i.do = getelementptr inbounds nuw i8, ptr %.010.i.us, i64 24
@@ -301,24 +313,12 @@ bb.aa:                                            ; preds = %.lr.ph.i.us
   %.not.i157.us = icmp eq ptr %.0.i156.us, null
   br i1 %.not.i157.us, label %.loopexit192.us, label %.lr.ph.i.us, !llvm.loop !286
 
-7:                                                ; preds = %.lr.ph.i.us
-  store ptr %i.dj, ptr %.010.i.us, align 8, !tbaa !2014
-  br label %.loopexit192.us
-
-.loopexit192.us:                                  ; preds = %bb.aa, %7, %bb.z, %sqlite3StrICmp.exit.thread.us
+.loopexit192.us:                                  ; preds = %bb.aa, %sqlite3StrICmp.exit.thread.us, %bb.z, %12
   %indvars.iv.next223 = add nuw nsw i64 %indvars.iv222, 1 ; 2 uses
   %exitcond226.not = icmp eq i64 %indvars.iv.next223, %wide.trip.count225
   br i1 %exitcond226.not, label %.loopexit195, label %.preheader193.us, !llvm.loop !4599
 
-8:                                                ; preds = %sqlite3Dequote.exit
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 54
-  %10 = load i16, ptr %9, align 2, !tbaa !1150
-  %11 = sext i16 %10 to i32
-  %12 = add nsw i32 %11, -1
-  store i32 %12, ptr %i.ay, align 8, !tbaa !1155
-  br label %.loopexit195
-
-.loopexit195:                                     ; preds = %.loopexit192.us, %8
+.loopexit195:                                     ; preds = %.loopexit192.us, %5
   %i.dp = icmp sgt i32 %.1129249, 0
   %or.cond = select i1 %.not148251, i1 %i.dp, i1 false
   br i1 %or.cond, label %.lr.ph211, label %.loopexit
@@ -721,8 +721,8 @@ bb.g:                                             ; preds = %rtreeNodeOfFirstSea
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ac, i64 17
   br i1 %i.o, label %.preheader.us, label %._crit_edge.split.us
 
-.preheader.us:                                    ; preds = %.preheader.lr.ph, %rtreeLeafConstraint.exit.thread.us
-  %.062205.us = phi ptr [ %i.po, %rtreeLeafConstraint.exit.thread.us ], [ %i.bi, %.preheader.lr.ph ] ; 46 uses
+.preheader.us:                                    ; preds = %.preheader.lr.ph, %rtreeLeafConstraint.exit.thread
+  %.062205.us = phi ptr [ %80, %rtreeLeafConstraint.exit.thread ], [ %i.bi, %.preheader.lr.ph ] ; 46 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.062205.us, i64 1
   %i.bl = getelementptr inbounds nuw i8, ptr %.062205.us, i64 2
   %i.bm = getelementptr inbounds nuw i8, ptr %.062205.us, i64 3
@@ -766,133 +766,16 @@ bb.g:                                             ; preds = %rtreeNodeOfFirstSea
   %i.cy = getelementptr inbounds nuw i8, ptr %.062205.us, i64 12 ; 2 uses
   br label %bb.h
 
-bb.h:                                             ; preds = %.preheader.us, %rtreeLeafConstraint.exit.thread175.us
-  %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %rtreeLeafConstraint.exit.thread175.us ] ; 2 uses
-  %.097196.us = phi double [ -1.000000e+00, %.preheader.us ], [ %.198181.us, %rtreeLeafConstraint.exit.thread175.us ] ; 13 uses
-  %.0112195.us = phi i32 [ 2, %.preheader.us ], [ %.1113179.us, %rtreeLeafConstraint.exit.thread175.us ] ; 12 uses
+bb.h:                                             ; preds = %.preheader.us, %rtreeLeafConstraint.exit.thread175
+  %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %rtreeLeafConstraint.exit.thread175 ] ; 2 uses
+  %.097196.us = phi double [ -1.000000e+00, %.preheader.us ], [ %.198181, %rtreeLeafConstraint.exit.thread175 ] ; 13 uses
+  %.0112195.us = phi i32 [ 2, %.preheader.us ], [ %.1113179, %rtreeLeafConstraint.exit.thread175 ] ; 12 uses
   %i.cz = load ptr, ptr %i.p, align 8, !tbaa !2921
   %i.da = getelementptr inbounds nuw [24 x i8], ptr %i.cz, i64 %indvars.iv ; 13 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 4 ; 2 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !2926 ; 3 uses
   %i.dd = icmp sgt i32 %i.dc, 69
-  br i1 %i.dd, label %bb.i, label %1
-
-1:                                                ; preds = %bb.h
-  %2 = load i8, ptr %i.ad, align 8, !tbaa !2960
-  %3 = icmp eq i8 %2, 1
-  %4 = load i32, ptr %i.da, align 8, !tbaa !2927
-  %5 = shl i32 %4, 2                              ; 2 uses
-  br i1 %3, label %47, label %6
-
-6:                                                ; preds = %1
-  %7 = and i32 %5, 1016
-  %8 = zext nneg i32 %7 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %.062205.us, i64 %8 ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  switch i32 %i.dc, label %37 [
-    i32 63, label %rtreeLeafConstraint.exit.thread175.us
-    i32 64, label %rtreeLeafConstraint.exit.thread.us
-    i32 65, label %20
-    i32 66, label %11
-    i32 67, label %11
-  ]
-
-11:                                               ; preds = %6, %6
-  %.sroa.05.0.copyload40.i.us = load i32, ptr %10, align 1
-  %12 = call i32 @llvm.bswap.i32(i32 %.sroa.05.0.copyload40.i.us) ; 2 uses
-  %13 = bitcast i32 %12 to float
-  %14 = sitofp i32 %12 to double
-  %15 = fpext float %13 to double
-  %16 = select i1 %.not183, double %14, double %15
-  %17 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %18 = load double, ptr %17, align 8, !tbaa !733
-  %19 = fcmp ult double %18, %16
-  br i1 %19, label %rtreeLeafConstraint.exit.thread.us, label %rtreeLeafConstraint.exit.thread175.us
-
-20:                                               ; preds = %6
-  %.sroa.015.0.copyload41.i.us = load i32, ptr %10, align 1
-  %21 = call i32 @llvm.bswap.i32(i32 %.sroa.015.0.copyload41.i.us) ; 2 uses
-  %22 = bitcast i32 %21 to float
-  %23 = sitofp i32 %21 to double
-  %24 = fpext float %22 to double
-  %25 = select i1 %.not183, double %23, double %24
-  %26 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %27 = load double, ptr %26, align 8, !tbaa !733 ; 2 uses
-  %28 = fcmp ult double %27, %25
-  br i1 %28, label %rtreeLeafConstraint.exit.thread.us, label %29
-
-29:                                               ; preds = %20
-  %30 = getelementptr inbounds nuw i8, ptr %9, i64 12
-  %.sroa.010.0.copyload43.i.us = load i32, ptr %30, align 1
-  %31 = call i32 @llvm.bswap.i32(i32 %.sroa.010.0.copyload43.i.us) ; 2 uses
-  %32 = bitcast i32 %31 to float
-  %33 = sitofp i32 %31 to double
-  %34 = fpext float %32 to double
-  %35 = select i1 %.not183, double %33, double %34
-  %36 = fcmp ugt double %27, %35
-  br i1 %36, label %rtreeLeafConstraint.exit.thread.us, label %rtreeLeafConstraint.exit.thread175.us
-
-37:                                               ; preds = %6
-  %38 = getelementptr inbounds nuw i8, ptr %9, i64 12
-  %.sroa.0.0.copyload44.i.us = load i32, ptr %38, align 1
-  %39 = call i32 @llvm.bswap.i32(i32 %.sroa.0.0.copyload44.i.us) ; 2 uses
-  %40 = bitcast i32 %39 to float
-  %41 = sitofp i32 %39 to double
-  %42 = fpext float %40 to double
-  %43 = select i1 %.not183, double %41, double %42
-  %44 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %45 = load double, ptr %44, align 8, !tbaa !733
-  %46 = fcmp ugt double %45, %43
-  br i1 %46, label %rtreeLeafConstraint.exit.thread.us, label %rtreeLeafConstraint.exit.thread175.us
-
-47:                                               ; preds = %1
-  %48 = sext i32 %5 to i64
-  %49 = getelementptr i8, ptr %.062205.us, i64 %48
-  %50 = getelementptr i8, ptr %49, i64 8
-  %.sroa.0.0.copyload19.i.us = load i32, ptr %50, align 1
-  %51 = call i32 @llvm.bswap.i32(i32 %.sroa.0.0.copyload19.i.us) ; 2 uses
-  %52 = bitcast i32 %51 to float
-  %53 = sitofp i32 %51 to double
-  %54 = fpext float %52 to double
-  %55 = select i1 %.not183, double %53, double %54 ; 5 uses
-  switch i32 %i.dc, label %72 [
-    i32 63, label %rtreeLeafConstraint.exit.thread175.us
-    i32 64, label %rtreeLeafConstraint.exit.thread.us
-    i32 66, label %68
-    i32 67, label %64
-    i32 68, label %60
-    i32 69, label %56
-  ]
-
-56:                                               ; preds = %47
-  %57 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %58 = load double, ptr %57, align 8, !tbaa !733
-  %59 = fcmp ogt double %55, %58
-  br i1 %59, label %rtreeLeafConstraint.exit.thread175.us, label %rtreeLeafConstraint.exit.thread.us
-
-60:                                               ; preds = %47
-  %61 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %62 = load double, ptr %61, align 8, !tbaa !733
-  %63 = fcmp ult double %55, %62
-  br i1 %63, label %rtreeLeafConstraint.exit.thread.us, label %rtreeLeafConstraint.exit.thread175.us
-
-64:                                               ; preds = %47
-  %65 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %66 = load double, ptr %65, align 8, !tbaa !733
-  %67 = fcmp olt double %55, %66
-  br i1 %67, label %rtreeLeafConstraint.exit.thread175.us, label %rtreeLeafConstraint.exit.thread.us
-
-68:                                               ; preds = %47
-  %69 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %70 = load double, ptr %69, align 8, !tbaa !733
-  %71 = fcmp ugt double %55, %70
-  br i1 %71, label %rtreeLeafConstraint.exit.thread.us, label %rtreeLeafConstraint.exit.thread175.us
-
-72:                                               ; preds = %47
-  %73 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %74 = load double, ptr %73, align 8, !tbaa !733
-  %75 = fcmp oeq double %55, %74
-  br i1 %75, label %rtreeLeafConstraint.exit.thread175.us, label %rtreeLeafConstraint.exit.thread.us
+  br i1 %i.dd, label %bb.i, label %7
 
 bb.i:                                             ; preds = %bb.h
   %i.de = getelementptr inbounds nuw i8, ptr %i.da, i64 16
@@ -1277,7 +1160,19 @@ bb.y:                                             ; preds = %bb.x, %bb.r
   %storemerge.i.us = phi double [ %i.os, %bb.x ], [ %i.jw, %bb.r ]
   store double %storemerge.i.us, ptr %i.a, align 16, !tbaa !782
   %i.ot = icmp eq i32 %i.di, 70
-  br i1 %i.ot, label %bb.ab, label %bb.z
+  br i1 %i.ot, label %1, label %bb.z
+
+1:                                                ; preds = %bb.y
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #58
+  store i32 0, ptr %i.b, align 4, !tbaa !570
+  %2 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %3 = load ptr, ptr %2, align 8, !tbaa !733
+  %4 = call i32 %3(ptr noundef nonnull %i.df, i32 noundef %i.dh, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #58, !inline_history !6628
+  %5 = load i32, ptr %i.b, align 4, !tbaa !570
+  %6 = icmp eq i32 %5, 0
+  %spec.select = select i1 %6, i32 0, i32 %.0112195.us
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
+  br label %rtreeCallbackConstraint.exit
 
 bb.z:                                             ; preds = %bb.y
   %i.ou = getelementptr inbounds nuw i8, ptr %i.df, i64 40
@@ -1307,63 +1202,157 @@ bb.z:                                             ; preds = %bb.y
   %i.pl = fcmp olt double %i.pk, %.097196.us
   %i.pm = fcmp olt double %.097196.us, 0.000000e+00
   %or.cond.i.us = or i1 %i.pm, %i.pl
-  br i1 %or.cond.i.us, label %bb.aa, label %rtreeCallbackConstraint.exit.us
+  br i1 %or.cond.i.us, label %bb.aa, label %rtreeCallbackConstraint.exit
 
 bb.aa:                                            ; preds = %bb.z
-  br label %rtreeCallbackConstraint.exit.us
+  br label %rtreeCallbackConstraint.exit
 
-bb.ab:                                            ; preds = %bb.y
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #58
-  store i32 0, ptr %i.b, align 4, !tbaa !570
-  %i.pn = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  %76 = load ptr, ptr %i.pn, align 8, !tbaa !733
-  %77 = call i32 %76(ptr noundef nonnull %i.df, i32 noundef %i.dh, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #58, !inline_history !6628
-  %78 = load i32, ptr %i.b, align 4, !tbaa !570
-  %79 = icmp eq i32 %78, 0
-  %spec.select.us = select i1 %79, i32 0, i32 %.0112195.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  br label %rtreeCallbackConstraint.exit.us
-
-rtreeCallbackConstraint.exit.us:                  ; preds = %bb.ab, %bb.aa, %bb.z
-  %.6118.us = phi i32 [ %spec.select.us, %bb.ab ], [ %spec.select182.us, %bb.aa ], [ %spec.select182.us, %bb.z ] ; 2 uses
-  %.5102.us = phi double [ 0.000000e+00, %bb.ab ], [ %i.pk, %bb.aa ], [ %.097196.us, %bb.z ]
-  %.0.i.us = phi i32 [ %77, %bb.ab ], [ %i.pi, %bb.aa ], [ %i.pi, %bb.z ] ; 2 uses
+rtreeCallbackConstraint.exit:                     ; preds = %1, %bb.z, %bb.aa
+  %.6118 = phi i32 [ %spec.select, %1 ], [ %spec.select182.us, %bb.aa ], [ %spec.select182.us, %bb.z ] ; 2 uses
+  %.5102 = phi double [ 0.000000e+00, %1 ], [ %i.pk, %bb.aa ], [ %.097196.us, %bb.z ]
+  %.0.i = phi i32 [ %4, %1 ], [ %i.pi, %bb.aa ], [ %i.pi, %bb.z ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #58
-  %.not83.us = icmp eq i32 %.0.i.us, 0
-  br i1 %.not83.us, label %rtreeLeafConstraint.exit.us, label %.thread169
+  %.not83 = icmp eq i32 %.0.i, 0
+  br i1 %.not83, label %rtreeLeafConstraint.exit, label %.thread169
+
+7:                                                ; preds = %bb.h
+  %8 = load i8, ptr %i.ad, align 8, !tbaa !2960
+  %9 = icmp eq i8 %8, 1
+  %10 = load i32, ptr %i.da, align 8, !tbaa !2927
+  %11 = shl i32 %10, 2                            ; 2 uses
+  br i1 %9, label %bb.ab, label %39
+
+bb.ab:                                            ; preds = %7
+  %12 = sext i32 %11 to i64
+  %13 = getelementptr i8, ptr %.062205.us, i64 %12
+  %i.pn = getelementptr i8, ptr %13, i64 8
+  %.sroa.0.0.copyload19.i = load i32, ptr %i.pn, align 1
+  %14 = call i32 @llvm.bswap.i32(i32 %.sroa.0.0.copyload19.i) ; 2 uses
+  %15 = bitcast i32 %14 to float
+  %16 = sitofp i32 %14 to double
+  %17 = fpext float %15 to double
+  %18 = select i1 %.not183, double %16, double %17 ; 5 uses
+  switch i32 %i.dc, label %35 [
+    i32 63, label %rtreeLeafConstraint.exit.thread175
+    i32 64, label %rtreeLeafConstraint.exit.thread
+    i32 66, label %19
+    i32 67, label %23
+    i32 68, label %27
+    i32 69, label %31
+  ]
+
+19:                                               ; preds = %bb.ab
+  %20 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %21 = load double, ptr %20, align 8, !tbaa !733
+  %22 = fcmp ugt double %18, %21
+  br i1 %22, label %rtreeLeafConstraint.exit.thread, label %rtreeLeafConstraint.exit.thread175
+
+23:                                               ; preds = %bb.ab
+  %24 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %25 = load double, ptr %24, align 8, !tbaa !733
+  %26 = fcmp olt double %18, %25
+  br i1 %26, label %rtreeLeafConstraint.exit.thread175, label %rtreeLeafConstraint.exit.thread
+
+27:                                               ; preds = %bb.ab
+  %28 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %29 = load double, ptr %28, align 8, !tbaa !733
+  %30 = fcmp ult double %18, %29
+  br i1 %30, label %rtreeLeafConstraint.exit.thread, label %rtreeLeafConstraint.exit.thread175
+
+31:                                               ; preds = %bb.ab
+  %32 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %33 = load double, ptr %32, align 8, !tbaa !733
+  %34 = fcmp ogt double %18, %33
+  br i1 %34, label %rtreeLeafConstraint.exit.thread175, label %rtreeLeafConstraint.exit.thread
+
+35:                                               ; preds = %bb.ab
+  %36 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %37 = load double, ptr %36, align 8, !tbaa !733
+  %38 = fcmp oeq double %18, %37
+  br i1 %38, label %rtreeLeafConstraint.exit.thread175, label %rtreeLeafConstraint.exit.thread
+
+39:                                               ; preds = %7
+  %40 = and i32 %11, 1016
+  %41 = zext nneg i32 %40 to i64
+  %42 = getelementptr inbounds nuw i8, ptr %.062205.us, i64 %41 ; 3 uses
+  %43 = getelementptr inbounds nuw i8, ptr %42, i64 8 ; 2 uses
+  switch i32 %i.dc, label %rtreeLeafConstraint.exit.thread.us [
+    i32 63, label %rtreeLeafConstraint.exit.thread175
+    i32 64, label %rtreeLeafConstraint.exit.thread
+    i32 65, label %rtreeCallbackConstraint.exit.us
+    i32 66, label %rtreeLeafConstraint.exit.thread175.us
+    i32 67, label %rtreeLeafConstraint.exit.thread175.us
+  ]
+
+rtreeCallbackConstraint.exit.us:                  ; preds = %39
+  %.sroa.015.0.copyload41.i = load i32, ptr %43, align 1
+  %44 = call i32 @llvm.bswap.i32(i32 %.sroa.015.0.copyload41.i) ; 2 uses
+  %45 = bitcast i32 %44 to float
+  %46 = sitofp i32 %44 to double
+  %47 = fpext float %45 to double
+  %48 = select i1 %.not183, double %46, double %47
+  %49 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %50 = load double, ptr %49, align 8, !tbaa !733 ; 2 uses
+  %51 = fcmp ult double %50, %48
+  br i1 %51, label %rtreeLeafConstraint.exit.thread, label %rtreeLeafConstraint.exit.us
 
 rtreeLeafConstraint.exit.us:                      ; preds = %rtreeCallbackConstraint.exit.us
-  %80 = icmp eq i32 %.6118.us, 0
-  br i1 %80, label %rtreeLeafConstraint.exit.thread.us, label %rtreeLeafConstraint.exit.thread175.us
+  %52 = getelementptr inbounds nuw i8, ptr %42, i64 12
+  %.sroa.010.0.copyload43.i = load i32, ptr %52, align 1
+  %53 = call i32 @llvm.bswap.i32(i32 %.sroa.010.0.copyload43.i) ; 2 uses
+  %54 = bitcast i32 %53 to float
+  %55 = sitofp i32 %53 to double
+  %56 = fpext float %54 to double
+  %57 = select i1 %.not183, double %55, double %56
+  %58 = fcmp ugt double %50, %57
+  br i1 %58, label %rtreeLeafConstraint.exit.thread, label %rtreeLeafConstraint.exit.thread175
 
-rtreeLeafConstraint.exit.thread175.us:            ; preds = %rtreeLeafConstraint.exit.us, %72, %68, %64, %60, %56, %47, %37, %29, %11, %6
-  %.198181.us = phi double [ %.5102.us, %rtreeLeafConstraint.exit.us ], [ %.097196.us, %56 ], [ %.097196.us, %72 ], [ %.097196.us, %29 ], [ %.097196.us, %47 ], [ %.097196.us, %68 ], [ %.097196.us, %64 ], [ %.097196.us, %60 ], [ %.097196.us, %11 ], [ %.097196.us, %37 ], [ %.097196.us, %6 ] ; 2 uses
-  %.1113179.us = phi i32 [ %.6118.us, %rtreeLeafConstraint.exit.us ], [ %.0112195.us, %56 ], [ %.0112195.us, %72 ], [ %.0112195.us, %29 ], [ %.0112195.us, %47 ], [ %.0112195.us, %68 ], [ %.0112195.us, %64 ], [ %.0112195.us, %60 ], [ %.0112195.us, %11 ], [ %.0112195.us, %37 ], [ %.0112195.us, %6 ] ; 2 uses
+rtreeLeafConstraint.exit.thread175.us:            ; preds = %39, %39
+  %.sroa.05.0.copyload40.i = load i32, ptr %43, align 1
+  %59 = call i32 @llvm.bswap.i32(i32 %.sroa.05.0.copyload40.i) ; 2 uses
+  %60 = bitcast i32 %59 to float
+  %61 = sitofp i32 %59 to double
+  %62 = fpext float %60 to double
+  %63 = select i1 %.not183, double %61, double %62
+  %64 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %65 = load double, ptr %64, align 8, !tbaa !733
+  %66 = fcmp ult double %65, %63
+  br i1 %66, label %rtreeLeafConstraint.exit.thread, label %rtreeLeafConstraint.exit.thread175
+
+rtreeLeafConstraint.exit.thread.us:               ; preds = %39
+  %67 = getelementptr inbounds nuw i8, ptr %42, i64 12
+  %.sroa.0.0.copyload44.i = load i32, ptr %67, align 1
+  %68 = call i32 @llvm.bswap.i32(i32 %.sroa.0.0.copyload44.i) ; 2 uses
+  %69 = bitcast i32 %68 to float
+  %70 = sitofp i32 %68 to double
+  %71 = fpext float %69 to double
+  %72 = select i1 %.not183, double %70, double %71
+  %i.po = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %73 = load double, ptr %i.po, align 8, !tbaa !733
+  %74 = fcmp ugt double %73, %72
+  br i1 %74, label %rtreeLeafConstraint.exit.thread, label %rtreeLeafConstraint.exit.thread175
+
+rtreeLeafConstraint.exit:                         ; preds = %rtreeCallbackConstraint.exit
+  %75 = icmp eq i32 %.6118, 0
+  br i1 %75, label %rtreeLeafConstraint.exit.thread, label %rtreeLeafConstraint.exit.thread175
+
+rtreeLeafConstraint.exit.thread175:               ; preds = %39, %rtreeLeafConstraint.exit.thread.us, %rtreeLeafConstraint.exit.thread175.us, %27, %23, %19, %bb.ab, %rtreeLeafConstraint.exit.us, %35, %31, %rtreeLeafConstraint.exit
+  %.198181 = phi double [ %.5102, %rtreeLeafConstraint.exit ], [ %.097196.us, %31 ], [ %.097196.us, %35 ], [ %.097196.us, %rtreeLeafConstraint.exit.us ], [ %.097196.us, %bb.ab ], [ %.097196.us, %19 ], [ %.097196.us, %23 ], [ %.097196.us, %27 ], [ %.097196.us, %rtreeLeafConstraint.exit.thread175.us ], [ %.097196.us, %rtreeLeafConstraint.exit.thread.us ], [ %.097196.us, %39 ] ; 2 uses
+  %.1113179 = phi i32 [ %.6118, %rtreeLeafConstraint.exit ], [ %.0112195.us, %31 ], [ %.0112195.us, %35 ], [ %.0112195.us, %rtreeLeafConstraint.exit.us ], [ %.0112195.us, %bb.ab ], [ %.0112195.us, %19 ], [ %.0112195.us, %23 ], [ %.0112195.us, %27 ], [ %.0112195.us, %rtreeLeafConstraint.exit.thread175.us ], [ %.0112195.us, %rtreeLeafConstraint.exit.thread.us ], [ %.0112195.us, %39 ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.split.us.loopexit, label %bb.h, !llvm.loop !6629
 
-rtreeLeafConstraint.exit.thread.us:               ; preds = %rtreeLeafConstraint.exit.us, %72, %68, %64, %60, %56, %47, %37, %29, %20, %11, %6
-  %81 = load i8, ptr %i.az, align 2, !tbaa !2919
-  %82 = add i8 %81, 1                             ; 2 uses
-  store i8 %82, ptr %i.az, align 2, !tbaa !2919
-  %83 = load i8, ptr %i.n, align 1, !tbaa !2918
-  %84 = zext i8 %83 to i64
-  %i.po = getelementptr inbounds nuw i8, ptr %.062205.us, i64 %84
-  %85 = zext i8 %82 to i32
-  %86 = icmp samesign ugt i32 %i.ax, %85
-  br i1 %86, label %.preheader.us, label %.loopexit185.thread
-
-._crit_edge.split.us.loopexit:                    ; preds = %rtreeLeafConstraint.exit.thread175.us
+._crit_edge.split.us.loopexit:                    ; preds = %rtreeLeafConstraint.exit.thread175
   %.pre = load i8, ptr %i.az, align 2, !tbaa !2919
-  %i.pp = trunc i32 %.1113179.us to i8
+  %i.pp = trunc i32 %.1113179 to i8
   br label %._crit_edge.split.us
 
 ._crit_edge.split.us:                             ; preds = %._crit_edge.split.us.loopexit, %.preheader.lr.ph
   %i.pq = phi i8 [ %i.ba, %.preheader.lr.ph ], [ %.pre, %._crit_edge.split.us.loopexit ] ; 2 uses
   %.062.lcssa193 = phi ptr [ %i.bi, %.preheader.lr.ph ], [ %.062205.us, %._crit_edge.split.us.loopexit ] ; 8 uses
   %.0112.lcssa = phi i8 [ 2, %.preheader.lr.ph ], [ %i.pp, %._crit_edge.split.us.loopexit ]
-  %.097.lcssa = phi double [ -1.000000e+00, %.preheader.lr.ph ], [ %.198181.us, %._crit_edge.split.us.loopexit ] ; 2 uses
+  %.097.lcssa = phi double [ -1.000000e+00, %.preheader.lr.ph ], [ %.198181, %._crit_edge.split.us.loopexit ] ; 2 uses
   %i.pr = add i8 %i.pq, 1                         ; 2 uses
   store i8 %i.pr, ptr %i.az, align 2, !tbaa !2919
   %i.ps = load i8, ptr %i.ad, align 8, !tbaa !2960
@@ -1454,6 +1443,17 @@ bb.ah:                                            ; preds = %bb.ag, %.loopexit
   %i.rr = icmp eq ptr %i.rq, null
   br i1 %i.rr, label %.thread169, label %.loopexit185
 
+rtreeLeafConstraint.exit.thread:                  ; preds = %39, %rtreeCallbackConstraint.exit.us, %rtreeLeafConstraint.exit.us, %rtreeLeafConstraint.exit.thread175.us, %rtreeLeafConstraint.exit.thread.us, %bb.ab, %19, %23, %27, %31, %35, %rtreeLeafConstraint.exit
+  %76 = load i8, ptr %i.az, align 2, !tbaa !2919
+  %77 = add i8 %76, 1                             ; 2 uses
+  store i8 %77, ptr %i.az, align 2, !tbaa !2919
+  %78 = load i8, ptr %i.n, align 1, !tbaa !2918
+  %79 = zext i8 %78 to i64
+  %80 = getelementptr inbounds nuw i8, ptr %.062205.us, i64 %79
+  %81 = zext i8 %77 to i32
+  %82 = icmp samesign ugt i32 %i.ax, %81
+  br i1 %82, label %.preheader.us, label %.loopexit185.thread
+
 .loopexit185:                                     ; preds = %bb.ah
   %i.rs = getelementptr inbounds nuw i8, ptr %i.rq, i64 17
   store i8 %.0112.lcssa, ptr %i.rs, align 1, !tbaa !2915
@@ -1468,7 +1468,7 @@ bb.ah:                                            ; preds = %bb.ag, %.loopexit
 .backedge:                                        ; preds = %.loopexit185, %.loopexit185.thread
   br label %bb.b, !llvm.loop !6631
 
-.loopexit185.thread:                              ; preds = %rtreeLeafConstraint.exit.thread.us, %bb.g, %.loopexit185
+.loopexit185.thread:                              ; preds = %rtreeLeafConstraint.exit.thread, %bb.g, %.loopexit185
   call fastcc void @rtreeSearchPointPop(ptr noundef nonnull %0)
   br label %.backedge
 
@@ -1478,8 +1478,8 @@ bb.ah:                                            ; preds = %bb.ag, %.loopexit
   store i8 %.not122, ptr %i.rw, align 8, !tbaa !2920
   br label %.thread169
 
-.thread169:                                       ; preds = %bb.ah, %rtreeNodeOfFirstSearchPoint.exit, %rtreeNodeOfFirstSearchPoint.exit.thread, %bb.ae, %rtreeCallbackConstraint.exit.us, %.critedge
-  %.8 = phi i32 [ 0, %.critedge ], [ %.0.i.us, %rtreeCallbackConstraint.exit.us ], [ 267, %bb.ae ], [ 7, %bb.ah ], [ %i.ao, %rtreeNodeOfFirstSearchPoint.exit ], [ 267, %rtreeNodeOfFirstSearchPoint.exit.thread ]
+.thread169:                                       ; preds = %bb.ah, %rtreeNodeOfFirstSearchPoint.exit, %rtreeNodeOfFirstSearchPoint.exit.thread, %bb.ae, %rtreeCallbackConstraint.exit, %.critedge
+  %.8 = phi i32 [ 0, %.critedge ], [ %.0.i, %rtreeCallbackConstraint.exit ], [ 267, %bb.ae ], [ 7, %bb.ah ], [ %i.ao, %rtreeNodeOfFirstSearchPoint.exit ], [ 267, %rtreeNodeOfFirstSearchPoint.exit.thread ]
   ret i32 %.8
 }
 

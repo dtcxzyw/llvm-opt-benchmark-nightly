@@ -204,9 +204,16 @@ bb.ac:                                            ; preds = %bb.ab
   %i.gv = trunc i16 %i.gu to i1
   br i1 %i.gv, label %.lr.ph136.i.i.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i
 
-.lr.ph136.i.i.i:                                  ; preds = %.split125.us.i.i.i, %.outer.split.us.i.i.i
-  %.pn.i.i.i = phi { i16, i16 } [ %2, %.outer.split.us.i.i.i ], [ %i.gt, %.split125.us.i.i.i ]
-  %.sroa.016.0134.i.i.i = phi i64 [ %.sroa.016.1.ph.lcssa.i.i.i, %.outer.split.us.i.i.i ], [ 573, %.split125.us.i.i.i ] ; 2 uses
+.loopexit.i.i.i:                                  ; preds = %.outer.i.i.i, %bb.ad
+  %.sroa.016.1.lcssa.i.i.i = phi i64 [ %.sroa.016.0134.i.i.i, %bb.ad ], [ %i.hb, %.outer.i.i.i ]
+  %2 = call { i16, i16 } @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3revINtB4_3RevINtNtNtBa_3ops5range14RangeInclusivetEENtNtNtB8_6traits8iterator8Iterator4nextCsehVNULHUZqJ_7zlib_rs(ptr nonnull align 2 %i.u), !noalias !18 ; 2 uses
+  %3 = extractvalue { i16, i16 } %2, 0
+  %4 = trunc i16 %3 to i1
+  br i1 %4, label %.lr.ph136.i.i.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i
+
+.lr.ph136.i.i.i:                                  ; preds = %.split125.us.i.i.i, %.loopexit.i.i.i
+  %.pn.i.i.i = phi { i16, i16 } [ %2, %.loopexit.i.i.i ], [ %i.gt, %.split125.us.i.i.i ]
+  %.sroa.016.0134.i.i.i = phi i64 [ %.sroa.016.1.lcssa.i.i.i, %.loopexit.i.i.i ], [ 573, %.split125.us.i.i.i ] ; 2 uses
   %i.gw = extractvalue { i16, i16 } %.pn.i.i.i, 1 ; 5 uses
   %i.gx = zext i16 %i.gw to i64                   ; 2 uses
   %i.gy = icmp ult i16 %i.gw, 16
@@ -216,7 +223,7 @@ bb.ad:                                            ; preds = %.lr.ph136.i.i.i
   %i.gz = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.gx
   %i.ha = load i16, ptr %i.gz, align 2, !noalias !18 ; 2 uses
   %.not59130.i.i.i = icmp eq i16 %i.ha, 0
-  br i1 %.not59130.i.i.i, label %.outer.split.us.i.i.i, label %.outer.split.i.i.i
+  br i1 %.not59130.i.i.i, label %.loopexit.i.i.i, label %.outer.split.i.i.i
 
 bb.ae:                                            ; preds = %.lr.ph136.i.i.i
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %i.gx, i64 16, ptr nonnull align 8 @9) #21, !noalias !18
@@ -257,14 +264,7 @@ bb.ak:                                            ; preds = %bb.ai
 .outer.i.i.i:                                     ; preds = %bb.al, %bb.aj
   %i.hl = add i16 %.sroa.021.0.ph132.i.i.i, -1    ; 2 uses
   %.not59.i.i.i = icmp eq i16 %i.hl, 0
-  br i1 %.not59.i.i.i, label %.outer.split.us.i.i.i, label %.outer.split.i.i.i
-
-.outer.split.us.i.i.i:                            ; preds = %.outer.i.i.i, %bb.ad
-  %.sroa.016.1.ph.lcssa.i.i.i = phi i64 [ %.sroa.016.0134.i.i.i, %bb.ad ], [ %i.hb, %.outer.i.i.i ]
-  %2 = call { i16, i16 } @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3revINtB4_3RevINtNtNtBa_3ops5range14RangeInclusivetEENtNtNtB8_6traits8iterator8Iterator4nextCsehVNULHUZqJ_7zlib_rs(ptr nonnull align 2 %i.u), !noalias !18 ; 2 uses
-  %3 = extractvalue { i16, i16 } %2, 0
-  %4 = trunc i16 %3 to i1
-  br i1 %4, label %.lr.ph136.i.i.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i
+  br i1 %.not59.i.i.i, label %.loopexit.i.i.i, label %.outer.split.i.i.i
 
 .outer.split.i.i.i:                               ; preds = %bb.ad, %.outer.i.i.i
   %.sroa.021.0.ph132.i.i.i = phi i16 [ %i.hl, %.outer.i.i.i ], [ %i.ha, %bb.ad ]
@@ -458,7 +458,7 @@ bb.ay:                                            ; preds = %bb.ax
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %.sroa.04.0.i.lcssa527.i, i64 %i.bq, ptr nonnull align 8 @3) #21
   unreachable
 
-_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i: ; preds = %.outer.split.us.i.i.i, %.split125.us.i.i.i, %._crit_edge.i.i.i, %bb.n
+_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj23d_EB4_.exit.i: ; preds = %.loopexit.i.i.i, %.split125.us.i.i.i, %._crit_edge.i.i.i, %bb.n
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(32) %i.x, ptr noundef nonnull align 2 dereferenceable(32) %i.w, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
@@ -776,9 +776,16 @@ bb.bt:                                            ; preds = %bb.bs
   %i.pv = trunc i16 %i.pu to i1
   br i1 %i.pv, label %.lr.ph136.i.i52.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i
 
-.lr.ph136.i.i52.i:                                ; preds = %.split125.us.i.i51.i, %.outer.split.us.i.i63.i
-  %.pn.i.i53.i = phi { i16, i16 } [ %5, %.outer.split.us.i.i63.i ], [ %i.pt, %.split125.us.i.i51.i ]
-  %.sroa.016.0134.i.i54.i = phi i64 [ %.sroa.016.1.ph.lcssa.i.i64.i, %.outer.split.us.i.i63.i ], [ 573, %.split125.us.i.i51.i ] ; 2 uses
+.loopexit.i.i63.i:                                ; preds = %.outer.i.i61.i, %bb.bu
+  %.sroa.016.1.lcssa.i.i64.i = phi i64 [ %.sroa.016.0134.i.i54.i, %bb.bu ], [ %i.qb, %.outer.i.i61.i ]
+  %5 = call { i16, i16 } @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3revINtB4_3RevINtNtNtBa_3ops5range14RangeInclusivetEENtNtNtB8_6traits8iterator8Iterator4nextCsehVNULHUZqJ_7zlib_rs(ptr nonnull align 2 %i.p), !noalias !20 ; 2 uses
+  %6 = extractvalue { i16, i16 } %5, 0
+  %7 = trunc i16 %6 to i1
+  br i1 %7, label %.lr.ph136.i.i52.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i
+
+.lr.ph136.i.i52.i:                                ; preds = %.split125.us.i.i51.i, %.loopexit.i.i63.i
+  %.pn.i.i53.i = phi { i16, i16 } [ %5, %.loopexit.i.i63.i ], [ %i.pt, %.split125.us.i.i51.i ]
+  %.sroa.016.0134.i.i54.i = phi i64 [ %.sroa.016.1.lcssa.i.i64.i, %.loopexit.i.i63.i ], [ 573, %.split125.us.i.i51.i ] ; 2 uses
   %i.pw = extractvalue { i16, i16 } %.pn.i.i53.i, 1 ; 5 uses
   %i.px = zext i16 %i.pw to i64                   ; 2 uses
   %i.py = icmp ult i16 %i.pw, 16
@@ -788,7 +795,7 @@ bb.bu:                                            ; preds = %.lr.ph136.i.i52.i
   %i.pz = getelementptr inbounds nuw [2 x i8], ptr %i.r, i64 %i.px
   %i.qa = load i16, ptr %i.pz, align 2, !noalias !20 ; 2 uses
   %.not59130.i.i55.i = icmp eq i16 %i.qa, 0
-  br i1 %.not59130.i.i55.i, label %.outer.split.us.i.i63.i, label %.outer.split.i.i56.i
+  br i1 %.not59130.i.i55.i, label %.loopexit.i.i63.i, label %.outer.split.i.i56.i
 
 bb.bv:                                            ; preds = %.lr.ph136.i.i52.i
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %i.px, i64 16, ptr nonnull align 8 @9) #21, !noalias !20
@@ -829,14 +836,7 @@ bb.cb:                                            ; preds = %bb.bz
 .outer.i.i61.i:                                   ; preds = %bb.cc, %bb.ca
   %i.ql = add i16 %.sroa.021.0.ph132.i.i57.i, -1  ; 2 uses
   %.not59.i.i62.i = icmp eq i16 %i.ql, 0
-  br i1 %.not59.i.i62.i, label %.outer.split.us.i.i63.i, label %.outer.split.i.i56.i
-
-.outer.split.us.i.i63.i:                          ; preds = %.outer.i.i61.i, %bb.bu
-  %.sroa.016.1.ph.lcssa.i.i64.i = phi i64 [ %.sroa.016.0134.i.i54.i, %bb.bu ], [ %i.qb, %.outer.i.i61.i ]
-  %5 = call { i16, i16 } @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3revINtB4_3RevINtNtNtBa_3ops5range14RangeInclusivetEENtNtNtB8_6traits8iterator8Iterator4nextCsehVNULHUZqJ_7zlib_rs(ptr nonnull align 2 %i.p), !noalias !20 ; 2 uses
-  %6 = extractvalue { i16, i16 } %5, 0
-  %7 = trunc i16 %6 to i1
-  br i1 %7, label %.lr.ph136.i.i52.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i
+  br i1 %.not59.i.i62.i, label %.loopexit.i.i63.i, label %.outer.split.i.i56.i
 
 .outer.split.i.i56.i:                             ; preds = %bb.bu, %.outer.i.i61.i
   %.sroa.021.0.ph132.i.i57.i = phi i16 [ %i.ql, %.outer.i.i61.i ], [ %i.qa, %bb.bu ]
@@ -1030,7 +1030,7 @@ bb.cp:                                            ; preds = %bb.co
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %.sroa.04.0.i74.lcssa462.i, i64 %i.kq, ptr nonnull align 8 @3) #21
   unreachable
 
-_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i: ; preds = %.outer.split.us.i.i63.i, %.split125.us.i.i51.i, %._crit_edge.i.i37.i, %bb.be
+_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj3d_EB4_.exit.i: ; preds = %.loopexit.i.i63.i, %.split125.us.i.i51.i, %._crit_edge.i.i37.i, %bb.be
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(32) %i.s, ptr noundef nonnull align 2 dereferenceable(32) %i.r, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
@@ -1356,9 +1356,16 @@ bb.dk:                                            ; preds = %bb.dj
   %i.za = trunc i16 %i.yz to i1
   br i1 %i.za, label %.lr.ph136.i.i.i.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i
 
-.lr.ph136.i.i.i.i:                                ; preds = %.split125.us.i.i.i.i, %.outer.split.us.i.i.i.i
-  %.pn.i.i.i.i = phi { i16, i16 } [ %8, %.outer.split.us.i.i.i.i ], [ %i.yy, %.split125.us.i.i.i.i ]
-  %.sroa.016.0134.i.i.i.i = phi i64 [ %.sroa.016.1.ph.lcssa.i.i.i.i, %.outer.split.us.i.i.i.i ], [ 573, %.split125.us.i.i.i.i ] ; 2 uses
+.loopexit.i.i.i.i:                                ; preds = %.outer.i.i.i.i, %bb.dl
+  %.sroa.016.1.lcssa.i.i.i.i = phi i64 [ %.sroa.016.0134.i.i.i.i, %bb.dl ], [ %i.zg, %.outer.i.i.i.i ]
+  %8 = call { i16, i16 } @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3revINtB4_3RevINtNtNtBa_3ops5range14RangeInclusivetEENtNtNtB8_6traits8iterator8Iterator4nextCsehVNULHUZqJ_7zlib_rs(ptr nonnull align 2 %i.j), !noalias !22 ; 2 uses
+  %9 = extractvalue { i16, i16 } %8, 0
+  %10 = trunc i16 %9 to i1
+  br i1 %10, label %.lr.ph136.i.i.i.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i
+
+.lr.ph136.i.i.i.i:                                ; preds = %.split125.us.i.i.i.i, %.loopexit.i.i.i.i
+  %.pn.i.i.i.i = phi { i16, i16 } [ %8, %.loopexit.i.i.i.i ], [ %i.yy, %.split125.us.i.i.i.i ]
+  %.sroa.016.0134.i.i.i.i = phi i64 [ %.sroa.016.1.lcssa.i.i.i.i, %.loopexit.i.i.i.i ], [ 573, %.split125.us.i.i.i.i ] ; 2 uses
   %i.zb = extractvalue { i16, i16 } %.pn.i.i.i.i, 1 ; 5 uses
   %i.zc = zext i16 %i.zb to i64                   ; 2 uses
   %i.zd = icmp ult i16 %i.zb, 16
@@ -1368,7 +1375,7 @@ bb.dl:                                            ; preds = %.lr.ph136.i.i.i.i
   %i.ze = getelementptr inbounds nuw [2 x i8], ptr %i.l, i64 %i.zc
   %i.zf = load i16, ptr %i.ze, align 2, !noalias !22 ; 2 uses
   %.not59130.i.i.i.i = icmp eq i16 %i.zf, 0
-  br i1 %.not59130.i.i.i.i, label %.outer.split.us.i.i.i.i, label %.outer.split.i.i.i.i
+  br i1 %.not59130.i.i.i.i, label %.loopexit.i.i.i.i, label %.outer.split.i.i.i.i
 
 bb.dm:                                            ; preds = %.lr.ph136.i.i.i.i
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %i.zc, i64 16, ptr nonnull align 8 @9) #21, !noalias !22
@@ -1409,14 +1416,7 @@ bb.ds:                                            ; preds = %bb.dq
 .outer.i.i.i.i:                                   ; preds = %bb.dt, %bb.dr
   %i.zq = add i16 %.sroa.021.0.ph132.i.i.i.i, -1  ; 2 uses
   %.not59.i.i.i.i = icmp eq i16 %i.zq, 0
-  br i1 %.not59.i.i.i.i, label %.outer.split.us.i.i.i.i, label %.outer.split.i.i.i.i
-
-.outer.split.us.i.i.i.i:                          ; preds = %.outer.i.i.i.i, %bb.dl
-  %.sroa.016.1.ph.lcssa.i.i.i.i = phi i64 [ %.sroa.016.0134.i.i.i.i, %bb.dl ], [ %i.zg, %.outer.i.i.i.i ]
-  %8 = call { i16, i16 } @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3revINtB4_3RevINtNtNtBa_3ops5range14RangeInclusivetEENtNtNtB8_6traits8iterator8Iterator4nextCsehVNULHUZqJ_7zlib_rs(ptr nonnull align 2 %i.j), !noalias !22 ; 2 uses
-  %9 = extractvalue { i16, i16 } %8, 0
-  %10 = trunc i16 %9 to i1
-  br i1 %10, label %.lr.ph136.i.i.i.i, label %_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i
+  br i1 %.not59.i.i.i.i, label %.loopexit.i.i.i.i, label %.outer.split.i.i.i.i
 
 .outer.split.i.i.i.i:                             ; preds = %bb.dl, %.outer.i.i.i.i
   %.sroa.021.0.ph132.i.i.i.i = phi i16 [ %i.zq, %.outer.i.i.i.i ], [ %i.zf, %bb.dl ]
@@ -1606,7 +1606,7 @@ bb.eg:                                            ; preds = %bb.ef
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %.sroa.04.0.i.lcssa147.i.i, i64 %i.tv, ptr nonnull align 8 @3) #21
   unreachable
 
-_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i: ; preds = %.outer.split.us.i.i.i.i, %.split125.us.i.i.i.i, %._crit_edge.i.i.i.i, %bb.cv
+_RINvNtCsehVNULHUZqJ_7zlib_rs7deflate10build_treeKj27_EB4_.exit.i.i: ; preds = %.loopexit.i.i.i.i, %.split125.us.i.i.i.i, %._crit_edge.i.i.i.i, %bb.cv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(32) %i.m, ptr noundef nonnull align 2 dereferenceable(32) %i.l, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)

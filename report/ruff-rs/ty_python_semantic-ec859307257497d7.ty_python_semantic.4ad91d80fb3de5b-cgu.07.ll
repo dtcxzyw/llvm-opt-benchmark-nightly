@@ -205,12 +205,6 @@ tailrecurse.us:                                   ; preds = %bb.a, %7
     i8 6, label %7
   ]
 
-7:                                                ; preds = %tailrecurse.us
-  %8 = getelementptr inbounds nuw i8, ptr %.tr66.us, i64 8
-  %9 = load ptr, ptr %8, align 8, !align !18, !noundef !15 ; 2 uses
-  %.not24.us = icmp eq ptr %9, null
-  br i1 %.not24.us, label %.split88.us, label %tailrecurse.us
-
 tailrecurse:                                      ; preds = %bb.a
   %i.w = load ptr, ptr %1, align 8, !nonnull !15, !noundef !15 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -222,7 +216,7 @@ tailrecurse:                                      ; preds = %bb.a
   %.not18 = icmp eq i8 %i.aa, -2
   br i1 %.not18, label %bb.d, label %bb.f
 
-.split88.us:                                      ; preds = %tailrecurse.us, %7
+.split88.us:                                      ; preds = %7, %tailrecurse.us
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr null, ptr %i.ab, align 8
   store i64 1, ptr %0, align 8
@@ -285,6 +279,12 @@ _RINvMs5_NtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrowNtB6_22PatternNarrowi
   %i.aq = getelementptr inbounds nuw i8, ptr %.tr66.us, i64 8
   tail call fastcc void @_RNvMs9_NtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrowNtB5_27NarrowingConstraintsBuilder51evaluate_match_pattern_sequence_for_subject_element(ptr noalias noundef align 8 captures(none) dereferenceable(40) %0, ptr noalias noundef align 8 dereferenceable(64) %1, i32 noundef %2, i32 noundef %3, ptr noundef nonnull align 8 %i.ap, i64 noundef %i.an, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.aq, i1 noundef zeroext true, i32 noundef %6)
   br label %bb.ad
+
+7:                                                ; preds = %tailrecurse.us
+  %8 = getelementptr inbounds nuw i8, ptr %.tr66.us, i64 8
+  %9 = load ptr, ptr %8, align 8, !align !18, !noundef !15 ; 2 uses
+  %.not24 = icmp eq ptr %9, null
+  br i1 %.not24, label %.split88.us, label %tailrecurse.us
 
 bb.d:                                             ; preds = %tailrecurse
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)

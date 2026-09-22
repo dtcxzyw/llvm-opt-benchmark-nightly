@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.a
   %i.cc = load i8, ptr %.0625.ph960, align 1, !tbaa !33 ; 13 uses
   switch i16 %.promoted, label %.loopexit842.split.us [
     i16 239, label %bb.d
-    i16 240, label %.split.us.a
-    i16 217, label %.split873.us.a
+    i16 240, label %.split873.us.a
+    i16 217, label %.split873.us
   ]
 
 bb.d:                                             ; preds = %.lr.ph.split.us.split.preheader
@@ -220,7 +220,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.cg = add i8 %i.cc, -33
   %or.cond.us.peel = icmp ult i8 %i.cg, 31
-  br i1 %or.cond.us.peel, label %bb.i, label %.split877.us
+  br i1 %or.cond.us.peel, label %bb.i, label %.split.us.a
 
 bb.g:                                             ; preds = %bb.e
   %i.ch = load i16, ptr %i.s, align 4, !tbaa !25
@@ -250,23 +250,17 @@ bb.i:                                             ; preds = %.sink.split, %bb.f
   %i.cr = icmp ult ptr %i.cb, %i.d
   br i1 %i.cr, label %.loopexit842.split.us.loopexit.loopexit, label %.loopexit841.thread1085
 
-.split.us.a:                                      ; preds = %.lr.ph.split.us.split.preheader
-  %2 = add i8 %i.cc, 95
-  %3 = icmp ult i8 %2, 78
-  br i1 %3, label %bb.j, label %bb.w
-
-.split873.us.a:                                   ; preds = %.lr.ph.split.us.split.preheader
-  %.not670 = icmp eq i8 %i.cc, -24
-  %4 = load i32, ptr %i.w, align 4, !tbaa !34     ; 2 uses
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %bb.ac, label %bb.x
-
-.split877.us:                                     ; preds = %bb.f
+.split.us.a:                                      ; preds = %bb.f
   store i32 12, ptr %1, align 4, !tbaa !36
   store i16 -2, ptr %i.m, align 2, !tbaa !41
   br label %bb.dr
 
-bb.j:                                             ; preds = %.split.us.a
+.split873.us.a:                                   ; preds = %.lr.ph.split.us.split.preheader
+  %2 = add i8 %i.cc, 95
+  %3 = icmp ult i8 %2, 78
+  br i1 %3, label %bb.j, label %bb.w
+
+bb.j:                                             ; preds = %.split873.us.a
   switch i8 %i.cc, label %bb.v [
     i8 -65, label %bb.k
     i8 -72, label %bb.k
@@ -400,12 +394,18 @@ bb.v:                                             ; preds = %bb.j, %bb.k
   store i32 10, ptr %1, align 4, !tbaa !36
   br label %bb.dr
 
-bb.w:                                             ; preds = %.split.us.a
+bb.w:                                             ; preds = %.split873.us.a
   store i16 -2, ptr %i.m, align 2, !tbaa !41
   store i32 12, ptr %1, align 4, !tbaa !36
   br label %bb.dr
 
-bb.x:                                             ; preds = %.split873.us.a
+.split873.us:                                     ; preds = %.lr.ph.split.us.split.preheader
+  %.not670 = icmp eq i8 %i.cc, -24
+  %4 = load i32, ptr %i.w, align 4, !tbaa !34     ; 2 uses
+  %.not = icmp eq i32 %4, 0
+  br i1 %.not, label %bb.ac, label %bb.x
+
+bb.x:                                             ; preds = %.split873.us
   %i.fh = icmp ult ptr %.0607.ph961, %i.f
   %i.fi = trunc i32 %4 to i16                     ; 2 uses
   br i1 %i.fh, label %bb.y, label %bb.aa
@@ -446,9 +446,9 @@ bb.ab:                                            ; preds = %bb.y, %bb.z, %bb.aa
   store i32 0, ptr %i.w, align 4, !tbaa !34
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab, %.split873.us.a
-  %i.fy = phi i32 [ %i.fx, %bb.ab ], [ %i.br, %.split873.us.a ] ; 2 uses
-  %.5612 = phi ptr [ %.4611, %bb.ab ], [ %.0607.ph961, %.split873.us.a ] ; 4 uses
+bb.ac:                                            ; preds = %bb.ab, %.split873.us
+  %i.fy = phi i32 [ %i.fx, %bb.ab ], [ %i.br, %.split873.us ] ; 2 uses
+  %.5612 = phi ptr [ %.4611, %bb.ab ], [ %.0607.ph961, %.split873.us ] ; 4 uses
   %i.fz = icmp ult ptr %.5612, %i.f
   %i.ga = select i1 %.not670, i16 32, i16 8205    ; 2 uses
   br i1 %i.fz, label %bb.ad, label %bb.af
@@ -851,10 +851,10 @@ bb.dq:                                            ; preds = %.thread813
   store i32 10, ptr %1, align 4, !tbaa !36
   br label %bb.dr
 
-bb.dr:                                            ; preds = %bb.v, %bb.w, %bb.dq, %.split877.us
-  %i.ws = phi ptr [ %i.cb, %.split877.us ], [ %i.cb, %bb.v ], [ %i.cb, %bb.w ], [ %i.gy, %bb.dq ]
-  %i.wt = phi i8 [ %i.cc, %.split877.us ], [ %i.cc, %bb.v ], [ %i.cc, %bb.w ], [ %i.gz, %bb.dq ]
-  %.26 = phi ptr [ %.0607.ph961, %.split877.us ], [ %.0607.ph961, %bb.v ], [ %.0607.ph961, %bb.w ], [ %.25, %bb.dq ]
+bb.dr:                                            ; preds = %bb.v, %bb.w, %bb.dq, %.split.us.a
+  %i.ws = phi ptr [ %i.cb, %.split.us.a ], [ %i.cb, %bb.v ], [ %i.cb, %bb.w ], [ %i.gy, %bb.dq ]
+  %i.wt = phi i8 [ %i.cc, %.split.us.a ], [ %i.cc, %bb.v ], [ %i.cc, %bb.w ], [ %i.gz, %bb.dq ]
+  %.26 = phi ptr [ %.0607.ph961, %.split.us.a ], [ %.0607.ph961, %bb.v ], [ %.0607.ph961, %bb.w ], [ %.25, %bb.dq ]
   %i.wu = getelementptr inbounds nuw i8, ptr %i.h, i64 65
   store i8 %i.wt, ptr %i.wu, align 1, !tbaa !33
   %i.wv = load ptr, ptr %i.g, align 8, !tbaa !55

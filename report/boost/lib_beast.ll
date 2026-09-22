@@ -205,13 +205,13 @@ bb.i:                                             ; preds = %bb.h
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 5900 ; 2 uses
   br label %bb.j
 
-bb.j:                                             ; preds = %.lr.ph106, %.outer.split.us
-  %indvars.iv118 = phi i64 [ %i.bp, %.lr.ph106 ], [ %indvars.iv.next119, %.outer.split.us ] ; 5 uses
-  %.173104 = phi i32 [ 573, %.lr.ph106 ], [ %.274.ph.lcssa, %.outer.split.us ] ; 2 uses
+bb.j:                                             ; preds = %.lr.ph106, %.outer._crit_edge
+  %indvars.iv118 = phi i64 [ %i.bp, %.lr.ph106 ], [ %indvars.iv.next119, %.outer._crit_edge ] ; 5 uses
+  %.173104 = phi i32 [ 573, %.lr.ph106 ], [ %.274.lcssa, %.outer._crit_edge ] ; 2 uses
   %i.ce = getelementptr inbounds nuw [2 x i8], ptr %.ptr88, i64 %indvars.iv118
   %i.cf = load i16, ptr %i.ce, align 2, !tbaa !197 ; 2 uses
   %.not8299 = icmp eq i16 %i.cf, 0
-  br i1 %.not8299, label %.outer.split.us, label %.outer.split.lr.ph
+  br i1 %.not8299, label %.outer._crit_edge, label %.outer.split.lr.ph
 
 .outer.split.lr.ph:                               ; preds = %bb.j
   %i.cg = zext i16 %i.cf to i32
@@ -219,17 +219,6 @@ bb.j:                                             ; preds = %.lr.ph106, %.outer.
   %i.ci = trunc i64 %indvars.iv118 to i16
   %i.cj = sext i32 %.173104 to i64
   br label %.outer.split
-
-.outer.split.us.loopexit:                         ; preds = %.outer
-  %2 = trunc nsw i64 %indvars.iv.next116 to i32
-  br label %.outer.split.us
-
-.outer.split.us:                                  ; preds = %.outer.split.us.loopexit, %bb.j
-  %.274.ph.lcssa = phi i32 [ %.173104, %bb.j ], [ %2, %.outer.split.us.loopexit ]
-  %indvars.iv.next119 = add nsw i64 %indvars.iv118, -1 ; 2 uses
-  %3 = and i64 %indvars.iv.next119, 4294967295
-  %.not = icmp eq i64 %3, 0
-  br i1 %.not, label %.loopexit, label %bb.j, !llvm.loop !1135
 
 .outer.split:                                     ; preds = %.outer.split.lr.ph, %.outer
   %.071.ph101 = phi i32 [ %i.cg, %.outer.split.lr.ph ], [ %i.cz, %.outer ]
@@ -242,7 +231,7 @@ bb.k:                                             ; preds = %.outer.split, %bb.k
   %i.ck = getelementptr inbounds [4 x i8], ptr %i.o, i64 %indvars.iv.next116
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !159 ; 2 uses
   %i.cm = icmp sgt i32 %i.cl, %i.c
-  br i1 %i.cm, label %bb.k, label %bb.l, !llvm.loop !1136
+  br i1 %i.cm, label %bb.k, label %bb.l, !llvm.loop !1135
 
 bb.l:                                             ; preds = %bb.k
   %i.cn = sext i32 %i.cl to i64
@@ -268,9 +257,20 @@ bb.m:                                             ; preds = %bb.l
 .outer:                                           ; preds = %bb.m, %bb.l
   %i.cz = add nsw i32 %.071.ph101, -1             ; 2 uses
   %.not82 = icmp eq i32 %i.cz, 0
-  br i1 %.not82, label %.outer.split.us.loopexit, label %.outer.split, !llvm.loop !1136
+  br i1 %.not82, label %.outer._crit_edge.loopexit, label %.outer.split, !llvm.loop !1135
 
-.loopexit:                                        ; preds = %.outer.split.us, %_ZSt4fillIPttEvT_S1_RKT0_.exit, %.preheader, %._crit_edge
+.outer._crit_edge.loopexit:                       ; preds = %.outer
+  %2 = trunc nsw i64 %indvars.iv.next116 to i32
+  br label %.outer._crit_edge
+
+.outer._crit_edge:                                ; preds = %.outer._crit_edge.loopexit, %bb.j
+  %.274.lcssa = phi i32 [ %.173104, %bb.j ], [ %2, %.outer._crit_edge.loopexit ]
+  %indvars.iv.next119 = add nsw i64 %indvars.iv118, -1 ; 2 uses
+  %3 = and i64 %indvars.iv.next119, 4294967295
+  %.not = icmp eq i64 %3, 0
+  br i1 %.not, label %.loopexit, label %bb.j, !llvm.loop !1136
+
+.loopexit:                                        ; preds = %.outer._crit_edge, %_ZSt4fillIPttEvT_S1_RKT0_.exit, %.preheader, %._crit_edge
   ret void
 }
 

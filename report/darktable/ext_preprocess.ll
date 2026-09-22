@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not80, label %.outer, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.x = add i32 %.054.ph106, 1
+  %i.x = add nsw i32 %.054.ph106, 1
   br label %.outer
 
 .outer:                                           ; preds = %bb.l, %bb.k, %bb.m, %.loopexit

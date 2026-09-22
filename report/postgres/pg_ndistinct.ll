@@ -204,29 +204,29 @@ bb.q:                                             ; preds = %bb.p
   br label %.lr.ph.i.us.i.i
 
 .lr.ph.i.us.i.i:                                  ; preds = %item_has_attnum.exit.us.i.i, %.lr.ph.split.us.i.i
-  %indvars.iv.i113.i = phi i64 [ %indvars.iv.next.i114.i, %item_has_attnum.exit.us.i.i ], [ 0, %.lr.ph.split.us.i.i ] ; 2 uses
+  %indvars.iv.i113.i = phi i64 [ 0, %.lr.ph.split.us.i.i ], [ %indvars.iv.next.i114.i, %item_has_attnum.exit.us.i.i ] ; 2 uses
   %i.dn = getelementptr inbounds nuw [2 x i8], ptr %i.dj, i64 %indvars.iv.i113.i
   %i.do = load i16, ptr %i.dn, align 2
-  br label %bb.r
+  br label %bb.s
 
-bb.r:                                             ; preds = %bb.s, %.lr.ph.i.us.i.i
-  %indvars.iv.i.us.i.i = phi i64 [ 0, %.lr.ph.i.us.i.i ], [ %indvars.iv.next.i.us.i.i, %bb.s ] ; 2 uses
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.dm, i64 %indvars.iv.i.us.i.i
+bb.r:                                             ; preds = %bb.s
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %i.dp = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
+  br i1 %i.dp, label %item_is_attnum_subset.exit.i, label %bb.s, !llvm.loop !11
+
+bb.s:                                             ; preds = %bb.r, %.lr.ph.i.us.i.i
+  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.us.i.i ], [ %indvars.iv.next.i.i.i, %bb.r ] ; 2 uses
+  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.dm, i64 %indvars.iv.i.i.i
   %7 = load i16, ptr %6, align 2
-  %i.dp = icmp eq i16 %i.do, %7
-  br i1 %i.dp, label %item_has_attnum.exit.us.i.i, label %bb.s
+  %exitcond.not.i.us.i.i = icmp eq i16 %i.do, %7
+  br i1 %exitcond.not.i.us.i.i, label %item_has_attnum.exit.us.i.i, label %bb.r
 
-bb.s:                                             ; preds = %bb.r
-  %indvars.iv.next.i.us.i.i = add nuw nsw i64 %indvars.iv.i.us.i.i, 1 ; 2 uses
-  %exitcond.not.i.us.i.i = icmp eq i64 %indvars.iv.next.i.us.i.i, %wide.trip.count.i.i.i
-  br i1 %exitcond.not.i.us.i.i, label %item_is_attnum_subset.exit.i, label %bb.r, !llvm.loop !11
-
-item_has_attnum.exit.us.i.i:                      ; preds = %bb.r
+item_has_attnum.exit.us.i.i:                      ; preds = %bb.s
   %indvars.iv.next.i114.i = add nuw nsw i64 %indvars.iv.i113.i, 1 ; 2 uses
   %exitcond.not.i115.i = icmp eq i64 %indvars.iv.next.i114.i, %wide.trip.count.i112.i
   br i1 %exitcond.not.i115.i, label %item_is_attnum_subset.exit.thread.i, label %.lr.ph.i.us.i.i, !llvm.loop !12
 
-item_is_attnum_subset.exit.i:                     ; preds = %.lr.ph.i111.i, %bb.s
+item_is_attnum_subset.exit.i:                     ; preds = %.lr.ph.i111.i, %bb.r
   %i.dq = getelementptr inbounds nuw i8, ptr %i.de, i64 8 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.de, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7

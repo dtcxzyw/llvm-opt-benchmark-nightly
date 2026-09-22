@@ -204,8 +204,8 @@ bb.ab:                                            ; preds = %bb.aa
   %.not = icmp eq ptr %i.cq, %i.h
   br i1 %.not, label %.critedge, label %.lr.ph.split.split
 
-.critedge:                                        ; preds = %.lr.ph.split.split, %bb.aa, %bb.ab, %bb.y, %bb.z, %.lr.ph.split.split.us.split, %bb.t, %bb.u, %bb.v, %bb.r, %bb.s, %.lr.ph.split.split.us.split.us.split, %bb.n, %bb.o, %bb.m, %bb.l, %.lr.ph.split.split.us.split.us.split.us, %bb.g, %bb.h, %bb.i, %bb.f, %bb.e, %.lr.ph, %bb.b, %bb.a
-  %.3 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ false, %bb.t ], [ false, %bb.y ], [ false, %.lr.ph ], [ true, %bb.i ], [ false, %bb.r ], [ false, %bb.f ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.e ], [ false, %bb.h ], [ false, %.lr.ph.split.split.us.split.us.split.us ], [ false, %bb.g ], [ false, %bb.l ], [ false, %.lr.ph.split.split.us.split.us.split ], [ true, %bb.o ], [ false, %bb.s ], [ false, %.lr.ph.split.split.us.split ], [ false, %bb.u ], [ true, %bb.v ], [ false, %bb.z ], [ false, %bb.aa ], [ false, %.lr.ph.split.split ], [ true, %bb.ab ]
+.critedge:                                        ; preds = %.lr.ph.split.split, %bb.aa, %bb.ab, %bb.y, %bb.z, %.lr.ph.split.split.us.split, %bb.t, %bb.u, %bb.v, %bb.r, %bb.s, %.lr.ph.split.split.us.split.us.split, %bb.n, %bb.o, %bb.m, %bb.l, %.lr.ph.split.split.us.split.us.split.us, %bb.g, %bb.h, %bb.i, %bb.f, %bb.e, %bb.b, %.lr.ph, %bb.a
+  %.3 = phi i1 [ false, %bb.a ], [ false, %.lr.ph ], [ false, %bb.t ], [ false, %bb.y ], [ false, %bb.r ], [ true, %bb.i ], [ false, %bb.f ], [ false, %bb.n ], [ false, %bb.m ], [ true, %bb.b ], [ false, %bb.e ], [ false, %bb.h ], [ false, %.lr.ph.split.split.us.split.us.split.us ], [ false, %bb.g ], [ false, %bb.l ], [ false, %.lr.ph.split.split.us.split.us.split ], [ true, %bb.o ], [ false, %bb.s ], [ false, %.lr.ph.split.split.us.split ], [ false, %bb.u ], [ true, %bb.v ], [ false, %bb.z ], [ false, %bb.aa ], [ true, %bb.ab ], [ false, %.lr.ph.split.split ]
   ret i1 %.3
 }
 
