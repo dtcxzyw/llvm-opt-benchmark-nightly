@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 .preheader103.lr.ph.i:                            ; preds = %.preheader104.i
   %i.gy = getelementptr inbounds nuw i8, ptr %.041138, i64 24
-  %i.gz = zext nneg i32 %i.ct to i64              ; 2 uses
+  %i.gz = zext nneg i32 %i.ct to i64
   %i.ha = icmp sgt i32 %i.ct, 0
   br label %.preheader103.i
 
@@ -312,7 +312,7 @@ scalar.ph222:                                     ; preds = %scalar.ph222.prol.l
 .preheader103.i:                                  ; preds = %.thread.i, %.preheader103.lr.ph.i
   %indvars.iv131.i = phi i64 [ 0, %.preheader103.lr.ph.i ], [ %indvars.iv.next132.i, %.thread.i ] ; 2 uses
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %indvars.iv131.i
-  br i1 %i.ha, label %.lr.ph210.preheader, label %._crit_edge211
+  br i1 %i.ha, label %.lr.ph210.preheader, label %Aig_CutMerge.exit.thread
 
 .lr.ph210.preheader:                              ; preds = %.preheader103.i
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !52
@@ -380,22 +380,17 @@ scalar.ph236.prol.loopexit:                       ; preds = %scalar.ph236.prol, 
 bb.ae:                                            ; preds = %.lr.ph210
   %i.it = trunc nuw i64 %i.iv to i32
   %i.iu = icmp sgt i32 %i.it, 0
-  br i1 %i.iu, label %.lr.ph210, label %._crit_edge211, !llvm.loop !7
+  br i1 %i.iu, label %.lr.ph210, label %Aig_CutMerge.exit.thread, !llvm.loop !7
 
 .lr.ph210:                                        ; preds = %.lr.ph210.preheader, %bb.ae
   %indvars.iv127.i209 = phi i64 [ %i.iv, %bb.ae ], [ %i.gz, %.lr.ph210.preheader ]
-  %i.iv = add nsw i64 %indvars.iv127.i209, -1     ; 4 uses
+  %i.iv = add nsw i64 %indvars.iv127.i209, -1     ; 3 uses
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.cj, i64 %i.iv
   %i.ix = load i32, ptr %i.iw, align 4, !tbaa !52
   %i.iy = icmp eq i32 %i.ix, %i.if
   br i1 %i.iy, label %.thread.i, label %bb.ae, !llvm.loop !7
 
-._crit_edge211:                                   ; preds = %bb.ae, %.preheader103.i
-  %indvars.iv127.i.lcssa = phi i64 [ %i.gz, %.preheader103.i ], [ %i.iv, %bb.ae ]
-  %3 = icmp eq i64 %indvars.iv127.i.lcssa, 0
-  br i1 %3, label %Aig_CutMerge.exit.thread, label %.thread.i
-
-.thread.i:                                        ; preds = %.lr.ph210, %._crit_edge211
+.thread.i:                                        ; preds = %.lr.ph210
   %indvars.iv.next132.i = add nuw nsw i64 %indvars.iv131.i, 1 ; 2 uses
   %exitcond.not.i70 = icmp eq i64 %indvars.iv.next132.i, %wide.trip.count.i69
   br i1 %exitcond.not.i70, label %.preheader102.i, label %.preheader103.i, !llvm.loop !8
@@ -712,7 +707,7 @@ Aig_CutFindCost.exit:                             ; preds = %bb.ba, %.lr.ph.i61,
   store i32 %i.nf, ptr %i.ng, align 8, !tbaa !65
   br label %Aig_CutMerge.exit.thread
 
-Aig_CutMerge.exit.thread:                         ; preds = %._crit_edge211, %bb.ad, %._crit_edge214, %.critedge._crit_edge.i, %.critedge._crit_edge.i73, %Aig_CutFilter.exit, %bb.g, %Aig_CutFindCost.exit, %bb.h
+Aig_CutMerge.exit.thread:                         ; preds = %.preheader103.i, %bb.ad, %._crit_edge214, %bb.ae, %.critedge._crit_edge.i, %.critedge._crit_edge.i73, %Aig_CutFilter.exit, %bb.g, %Aig_CutFindCost.exit, %bb.h
   %i.nh = add nuw nsw i32 %.0143, 1               ; 2 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %.041138, i64 20
   %i.nj = load i16, ptr %i.ni, align 4, !tbaa !56

@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-ppi-sensor?download=true
 inline.NumInlined: 4
 inline.NumDeleted: 1
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@dissect_ppi_sensor:bb.a
   %i.an = lshr i32 %i.aj, 30                      ; 2 uses
   %.not315 = icmp eq i32 %i.an, 0
@@ -202,28 +204,56 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.cx, label %base_10_expt.exit, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.cy = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false)
-  %spec.select.i = zext i8 %i.cy to i32
-  br label %bb.aq
+  %i.cy = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false) ; 2 uses
+  %spec.select.i = zext i8 %i.cy to i32           ; 3 uses
+  %xtraiter = and i32 %spec.select.i, 7           ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 
-bb.aq:                                            ; preds = %bb.aq, %bb.ap
-  %.0914.i = phi double [ 1.000000e+00, %bb.ap ], [ %i.cz, %bb.aq ]
-  %.113.i = phi i32 [ %spec.select.i, %bb.ap ], [ %i.da, %bb.aq ] ; 2 uses
-  %i.cz = fmul double %.0914.i, 1.000000e+01      ; 3 uses
-  %i.da = add nsw i32 %.113.i, -1
-  %4 = icmp samesign ugt i32 %.113.i, 1
-  br i1 %4, label %bb.aq, label %bb.ar, !llvm.loop !6
+.prol.preheader:                                  ; preds = %bb.ap, %.prol.preheader
+  %.0914.i.prol = phi double [ %4, %.prol.preheader ], [ 1.000000e+00, %bb.ap ]
+  %.113.i.prol = phi i32 [ %5, %.prol.preheader ], [ %spec.select.i, %bb.ap ]
+  %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %bb.ap ]
+  %4 = fmul double %.0914.i.prol, 1.000000e+01    ; 3 uses
+  %5 = add nsw i32 %.113.i.prol, -1               ; 2 uses
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !6
 
-bb.ar:                                            ; preds = %bb.aq
+.prol.loopexit:                                   ; preds = %.prol.preheader, %bb.ap
+  %.0914.i.unr = phi double [ 1.000000e+00, %bb.ap ], [ %4, %.prol.preheader ]
+  %.113.i.unr = phi i32 [ %spec.select.i, %bb.ap ], [ %5, %.prol.preheader ]
+  %.lcssa.unr = phi double [ poison, %bb.ap ], [ %4, %.prol.preheader ]
+  %6 = add i8 %i.cy, -1
+  %7 = icmp ult i8 %6, 7
+  br i1 %7, label %bb.ar, label %bb.aq
+
+bb.aq:                                            ; preds = %.prol.loopexit, %bb.aq
+  %.0914.i = phi double [ %i.cz, %bb.aq ], [ %.0914.i.unr, %.prol.loopexit ]
+  %.113.i = phi i32 [ %i.da, %bb.aq ], [ %.113.i.unr, %.prol.loopexit ] ; 2 uses
+  %8 = fmul double %.0914.i, 1.000000e+01
+  %9 = fmul double %8, 1.000000e+01
+  %10 = fmul double %9, 1.000000e+01
+  %11 = fmul double %10, 1.000000e+01
+  %12 = fmul double %11, 1.000000e+01
+  %13 = fmul double %12, 1.000000e+01
+  %14 = fmul double %13, 1.000000e+01
+  %i.cz = fmul double %14, 1.000000e+01           ; 2 uses
+  %i.da = add nsw i32 %.113.i, -8
+  %15 = icmp sgt i32 %.113.i, 8
+  br i1 %15, label %bb.aq, label %bb.ar, !llvm.loop !7
+
+bb.ar:                                            ; preds = %bb.aq, %.prol.loopexit
+  %.lcssa = phi double [ %.lcssa.unr, %.prol.loopexit ], [ %i.cz, %bb.aq ] ; 2 uses
   %i.db = icmp sgt i8 %.0350, -1
   br i1 %i.db, label %base_10_expt.exit, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.dc = fdiv double 1.000000e+00, %i.cz
+  %i.dc = fdiv double 1.000000e+00, %.lcssa
   br label %base_10_expt.exit
 
 base_10_expt.exit:                                ; preds = %bb.ao, %bb.ar, %bb.as
-  %.011.i = phi double [ 1.000000e+00, %bb.ao ], [ %i.dc, %bb.as ], [ %i.cz, %bb.ar ]
+  %.011.i = phi double [ 1.000000e+00, %bb.ao ], [ %i.dc, %bb.as ], [ %.lcssa, %bb.ar ]
   %i.dd = fmul double %i.cu, %.011.i
   tail call void (ptr, ptr, ...) @proto_item_set_text(ptr noundef %i.j, ptr noundef nonnull @.str.93, ptr noundef %.0265346, double noundef %i.dd, ptr noundef %.0263347)
   br label %bb.at
@@ -249,28 +279,56 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.dk, label %base_10_expt.exit329, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.dl = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false)
-  %spec.select.i325 = zext i8 %i.dl to i32
-  br label %bb.ax
+  %i.dl = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false) ; 2 uses
+  %spec.select.i325 = zext i8 %i.dl to i32        ; 3 uses
+  %xtraiter406 = and i32 %spec.select.i325, 7     ; 2 uses
+  %lcmp.mod407.not = icmp eq i32 %xtraiter406, 0
+  br i1 %lcmp.mod407.not, label %.prol.loopexit404, label %.prol.preheader403
 
-bb.ax:                                            ; preds = %bb.ax, %bb.aw
-  %.0914.i326 = phi double [ 1.000000e+00, %bb.aw ], [ %i.dm, %bb.ax ]
-  %.113.i327 = phi i32 [ %spec.select.i325, %bb.aw ], [ %i.dn, %bb.ax ] ; 2 uses
-  %i.dm = fmul double %.0914.i326, 1.000000e+01   ; 3 uses
-  %i.dn = add nsw i32 %.113.i327, -1
-  %5 = icmp samesign ugt i32 %.113.i327, 1
-  br i1 %5, label %bb.ax, label %bb.ay, !llvm.loop !6
+.prol.preheader403:                               ; preds = %bb.aw, %.prol.preheader403
+  %.0914.i326.prol = phi double [ %16, %.prol.preheader403 ], [ 1.000000e+00, %bb.aw ]
+  %.113.i327.prol = phi i32 [ %17, %.prol.preheader403 ], [ %spec.select.i325, %bb.aw ]
+  %prol.iter408 = phi i32 [ %prol.iter408.next, %.prol.preheader403 ], [ 0, %bb.aw ]
+  %16 = fmul double %.0914.i326.prol, 1.000000e+01 ; 3 uses
+  %17 = add nsw i32 %.113.i327.prol, -1           ; 2 uses
+  %prol.iter408.next = add i32 %prol.iter408, 1   ; 2 uses
+  %prol.iter408.cmp.not = icmp eq i32 %prol.iter408.next, %xtraiter406
+  br i1 %prol.iter408.cmp.not, label %.prol.loopexit404, label %.prol.preheader403, !llvm.loop !8
 
-bb.ay:                                            ; preds = %bb.ax
+.prol.loopexit404:                                ; preds = %.prol.preheader403, %bb.aw
+  %.0914.i326.unr = phi double [ 1.000000e+00, %bb.aw ], [ %16, %.prol.preheader403 ]
+  %.113.i327.unr = phi i32 [ %spec.select.i325, %bb.aw ], [ %17, %.prol.preheader403 ]
+  %.lcssa387.unr = phi double [ poison, %bb.aw ], [ %16, %.prol.preheader403 ]
+  %18 = add i8 %i.dl, -1
+  %19 = icmp ult i8 %18, 7
+  br i1 %19, label %bb.ay, label %bb.ax
+
+bb.ax:                                            ; preds = %.prol.loopexit404, %bb.ax
+  %.0914.i326 = phi double [ %i.dm, %bb.ax ], [ %.0914.i326.unr, %.prol.loopexit404 ]
+  %.113.i327 = phi i32 [ %i.dn, %bb.ax ], [ %.113.i327.unr, %.prol.loopexit404 ] ; 2 uses
+  %20 = fmul double %.0914.i326, 1.000000e+01
+  %21 = fmul double %20, 1.000000e+01
+  %22 = fmul double %21, 1.000000e+01
+  %23 = fmul double %22, 1.000000e+01
+  %24 = fmul double %23, 1.000000e+01
+  %25 = fmul double %24, 1.000000e+01
+  %26 = fmul double %25, 1.000000e+01
+  %i.dm = fmul double %26, 1.000000e+01           ; 2 uses
+  %i.dn = add nsw i32 %.113.i327, -8
+  %27 = icmp sgt i32 %.113.i327, 8
+  br i1 %27, label %bb.ax, label %bb.ay, !llvm.loop !7
+
+bb.ay:                                            ; preds = %bb.ax, %.prol.loopexit404
+  %.lcssa387 = phi double [ %.lcssa387.unr, %.prol.loopexit404 ], [ %i.dm, %bb.ax ] ; 2 uses
   %i.do = icmp sgt i8 %.0350, -1
   br i1 %i.do, label %base_10_expt.exit329, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.dp = fdiv double 1.000000e+00, %i.dm
+  %i.dp = fdiv double 1.000000e+00, %.lcssa387
   br label %base_10_expt.exit329
 
 base_10_expt.exit329:                             ; preds = %bb.av, %bb.ay, %bb.az
-  %.011.i328 = phi double [ 1.000000e+00, %bb.av ], [ %i.dp, %bb.az ], [ %i.dm, %bb.ay ]
+  %.011.i328 = phi double [ 1.000000e+00, %bb.av ], [ %i.dp, %bb.az ], [ %.lcssa387, %bb.ay ]
   %i.dq = fmul double %i.dh, %.011.i328
   tail call void (ptr, ptr, ...) @proto_item_set_text(ptr noundef %i.j, ptr noundef nonnull @.str.93, ptr noundef %.0265346, double noundef %i.dq, ptr noundef %.0263347)
   br label %bb.ba
@@ -296,28 +354,56 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.dx, label %base_10_expt.exit334, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.dy = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false)
-  %spec.select.i330 = zext i8 %i.dy to i32
-  br label %bb.bf
+  %i.dy = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false) ; 2 uses
+  %spec.select.i330 = zext i8 %i.dy to i32        ; 3 uses
+  %xtraiter399 = and i32 %spec.select.i330, 7     ; 2 uses
+  %lcmp.mod400.not = icmp eq i32 %xtraiter399, 0
+  br i1 %lcmp.mod400.not, label %.prol.loopexit397, label %.prol.preheader396
 
-bb.bf:                                            ; preds = %bb.bf, %bb.be
-  %.0914.i331 = phi double [ 1.000000e+00, %bb.be ], [ %i.dz, %bb.bf ]
-  %.113.i332 = phi i32 [ %spec.select.i330, %bb.be ], [ %i.ea, %bb.bf ] ; 2 uses
-  %i.dz = fmul double %.0914.i331, 1.000000e+01   ; 3 uses
-  %i.ea = add nsw i32 %.113.i332, -1
-  %6 = icmp samesign ugt i32 %.113.i332, 1
-  br i1 %6, label %bb.bf, label %bb.bg, !llvm.loop !6
+.prol.preheader396:                               ; preds = %bb.be, %.prol.preheader396
+  %.0914.i331.prol = phi double [ %28, %.prol.preheader396 ], [ 1.000000e+00, %bb.be ]
+  %.113.i332.prol = phi i32 [ %29, %.prol.preheader396 ], [ %spec.select.i330, %bb.be ]
+  %prol.iter401 = phi i32 [ %prol.iter401.next, %.prol.preheader396 ], [ 0, %bb.be ]
+  %28 = fmul double %.0914.i331.prol, 1.000000e+01 ; 3 uses
+  %29 = add nsw i32 %.113.i332.prol, -1           ; 2 uses
+  %prol.iter401.next = add i32 %prol.iter401, 1   ; 2 uses
+  %prol.iter401.cmp.not = icmp eq i32 %prol.iter401.next, %xtraiter399
+  br i1 %prol.iter401.cmp.not, label %.prol.loopexit397, label %.prol.preheader396, !llvm.loop !9
 
-bb.bg:                                            ; preds = %bb.bf
+.prol.loopexit397:                                ; preds = %.prol.preheader396, %bb.be
+  %.0914.i331.unr = phi double [ 1.000000e+00, %bb.be ], [ %28, %.prol.preheader396 ]
+  %.113.i332.unr = phi i32 [ %spec.select.i330, %bb.be ], [ %29, %.prol.preheader396 ]
+  %.lcssa386.unr = phi double [ poison, %bb.be ], [ %28, %.prol.preheader396 ]
+  %30 = add i8 %i.dy, -1
+  %31 = icmp ult i8 %30, 7
+  br i1 %31, label %bb.bg, label %bb.bf
+
+bb.bf:                                            ; preds = %.prol.loopexit397, %bb.bf
+  %.0914.i331 = phi double [ %i.dz, %bb.bf ], [ %.0914.i331.unr, %.prol.loopexit397 ]
+  %.113.i332 = phi i32 [ %i.ea, %bb.bf ], [ %.113.i332.unr, %.prol.loopexit397 ] ; 2 uses
+  %32 = fmul double %.0914.i331, 1.000000e+01
+  %33 = fmul double %32, 1.000000e+01
+  %34 = fmul double %33, 1.000000e+01
+  %35 = fmul double %34, 1.000000e+01
+  %36 = fmul double %35, 1.000000e+01
+  %37 = fmul double %36, 1.000000e+01
+  %38 = fmul double %37, 1.000000e+01
+  %i.dz = fmul double %38, 1.000000e+01           ; 2 uses
+  %i.ea = add nsw i32 %.113.i332, -8
+  %39 = icmp sgt i32 %.113.i332, 8
+  br i1 %39, label %bb.bf, label %bb.bg, !llvm.loop !7
+
+bb.bg:                                            ; preds = %bb.bf, %.prol.loopexit397
+  %.lcssa386 = phi double [ %.lcssa386.unr, %.prol.loopexit397 ], [ %i.dz, %bb.bf ] ; 2 uses
   %i.eb = icmp sgt i8 %.0350, -1
   br i1 %i.eb, label %base_10_expt.exit334, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.ec = fdiv double 1.000000e+00, %i.dz
+  %i.ec = fdiv double 1.000000e+00, %.lcssa386
   br label %base_10_expt.exit334
 
 base_10_expt.exit334:                             ; preds = %bb.bd, %bb.bg, %bb.bh
-  %.011.i333 = phi double [ 1.000000e+00, %bb.bd ], [ %i.ec, %bb.bh ], [ %i.dz, %bb.bg ]
+  %.011.i333 = phi double [ 1.000000e+00, %bb.bd ], [ %i.ec, %bb.bh ], [ %.lcssa386, %bb.bg ]
   %i.ed = fmul double %i.du, %.011.i333
   tail call void (ptr, ptr, ...) @proto_item_set_text(ptr noundef %i.j, ptr noundef nonnull @.str.93, ptr noundef %.0265346, double noundef %i.ed, ptr noundef %.0263347)
   br label %bb.bi
@@ -343,28 +429,56 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.ek, label %base_10_expt.exit339, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.el = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false)
-  %spec.select.i335 = zext i8 %i.el to i32
-  br label %bb.bn
+  %i.el = tail call i8 @llvm.abs.i8(i8 %.0350, i1 false) ; 2 uses
+  %spec.select.i335 = zext i8 %i.el to i32        ; 3 uses
+  %xtraiter392 = and i32 %spec.select.i335, 7     ; 2 uses
+  %lcmp.mod393.not = icmp eq i32 %xtraiter392, 0
+  br i1 %lcmp.mod393.not, label %.prol.loopexit390, label %.prol.preheader389
 
-bb.bn:                                            ; preds = %bb.bn, %bb.bm
-  %.0914.i336 = phi double [ 1.000000e+00, %bb.bm ], [ %i.em, %bb.bn ]
-  %.113.i337 = phi i32 [ %spec.select.i335, %bb.bm ], [ %i.en, %bb.bn ] ; 2 uses
-  %i.em = fmul double %.0914.i336, 1.000000e+01   ; 3 uses
-  %i.en = add nsw i32 %.113.i337, -1
-  %7 = icmp samesign ugt i32 %.113.i337, 1
-  br i1 %7, label %bb.bn, label %bb.bo, !llvm.loop !6
+.prol.preheader389:                               ; preds = %bb.bm, %.prol.preheader389
+  %.0914.i336.prol = phi double [ %40, %.prol.preheader389 ], [ 1.000000e+00, %bb.bm ]
+  %.113.i337.prol = phi i32 [ %41, %.prol.preheader389 ], [ %spec.select.i335, %bb.bm ]
+  %prol.iter394 = phi i32 [ %prol.iter394.next, %.prol.preheader389 ], [ 0, %bb.bm ]
+  %40 = fmul double %.0914.i336.prol, 1.000000e+01 ; 3 uses
+  %41 = add nsw i32 %.113.i337.prol, -1           ; 2 uses
+  %prol.iter394.next = add i32 %prol.iter394, 1   ; 2 uses
+  %prol.iter394.cmp.not = icmp eq i32 %prol.iter394.next, %xtraiter392
+  br i1 %prol.iter394.cmp.not, label %.prol.loopexit390, label %.prol.preheader389, !llvm.loop !10
 
-bb.bo:                                            ; preds = %bb.bn
+.prol.loopexit390:                                ; preds = %.prol.preheader389, %bb.bm
+  %.0914.i336.unr = phi double [ 1.000000e+00, %bb.bm ], [ %40, %.prol.preheader389 ]
+  %.113.i337.unr = phi i32 [ %spec.select.i335, %bb.bm ], [ %41, %.prol.preheader389 ]
+  %.lcssa385.unr = phi double [ poison, %bb.bm ], [ %40, %.prol.preheader389 ]
+  %42 = add i8 %i.el, -1
+  %43 = icmp ult i8 %42, 7
+  br i1 %43, label %bb.bo, label %bb.bn
+
+bb.bn:                                            ; preds = %.prol.loopexit390, %bb.bn
+  %.0914.i336 = phi double [ %i.em, %bb.bn ], [ %.0914.i336.unr, %.prol.loopexit390 ]
+  %.113.i337 = phi i32 [ %i.en, %bb.bn ], [ %.113.i337.unr, %.prol.loopexit390 ] ; 2 uses
+  %44 = fmul double %.0914.i336, 1.000000e+01
+  %45 = fmul double %44, 1.000000e+01
+  %46 = fmul double %45, 1.000000e+01
+  %47 = fmul double %46, 1.000000e+01
+  %48 = fmul double %47, 1.000000e+01
+  %49 = fmul double %48, 1.000000e+01
+  %50 = fmul double %49, 1.000000e+01
+  %i.em = fmul double %50, 1.000000e+01           ; 2 uses
+  %i.en = add nsw i32 %.113.i337, -8
+  %51 = icmp sgt i32 %.113.i337, 8
+  br i1 %51, label %bb.bn, label %bb.bo, !llvm.loop !7
+
+bb.bo:                                            ; preds = %bb.bn, %.prol.loopexit390
+  %.lcssa385 = phi double [ %.lcssa385.unr, %.prol.loopexit390 ], [ %i.em, %bb.bn ] ; 2 uses
   %i.eo = icmp sgt i8 %.0350, -1
   br i1 %i.eo, label %base_10_expt.exit339, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.ep = fdiv double 1.000000e+00, %i.em
+  %i.ep = fdiv double 1.000000e+00, %.lcssa385
   br label %base_10_expt.exit339
 
 base_10_expt.exit339:                             ; preds = %bb.bl, %bb.bo, %bb.bp
-  %.011.i338 = phi double [ 1.000000e+00, %bb.bl ], [ %i.ep, %bb.bp ], [ %i.em, %bb.bo ]
+  %.011.i338 = phi double [ 1.000000e+00, %bb.bl ], [ %i.ep, %bb.bp ], [ %.lcssa385, %bb.bo ]
   %i.eq = fmul double %i.eh, %.011.i338
   tail call void (ptr, ptr, ...) @proto_item_set_text(ptr noundef %i.j, ptr noundef nonnull @.str.93, ptr noundef %.0265346, double noundef %i.eq, ptr noundef %.0263347)
   br label %bb.bq
@@ -442,7 +556,7 @@ bb.cd:                                            ; preds = %bb.ak, %bb.am, %bb.
   %.1 = phi i8 [ %.0350, %bb.cc ], [ %.0350, %bb.ah ], [ %.0350, %bb.ak ], [ %.0350, %bb.al ], [ %i.cn, %bb.am ], [ %.0350, %.thread ], [ %.0350, %bb.at ], [ %.0350, %.thread340 ], [ %.0350, %bb.ba ], [ %.0350, %bb.bb ], [ %.0350, %bb.bi ], [ %.0350, %bb.bj ], [ %.0350, %bb.bq ], [ %.0350, %bb.br ], [ %.0350, %bb.bu ], [ %.0350, %bb.bv ], [ %.0350, %bb.by ], [ %.0350, %bb.bz ], [ %.0350, %bb.ca ], [ %.0350, %bb.cb ]
   %i.fo = phi <2 x i32> [ %i.fm, %bb.cc ], [ %i.ae, %bb.ah ], [ %i.ck, %bb.ak ], [ %i.cm, %bb.al ], [ %i.cr, %bb.am ], [ %i.ae, %.thread ], [ %i.de, %bb.at ], [ %i.ae, %.thread340 ], [ %i.dr, %bb.ba ], [ %i.ae, %bb.bb ], [ %i.ee, %bb.bi ], [ %i.ae, %bb.bj ], [ %i.er, %bb.bq ], [ %i.ae, %bb.br ], [ %i.ex, %bb.bu ], [ %i.ae, %bb.bv ], [ %i.fd, %bb.by ], [ %i.ae, %bb.bz ], [ %i.fi, %bb.ca ], [ %i.ae, %bb.cb ]
   %.not = icmp eq i32 %i.ai, 0
-  br i1 %.not, label %._crit_edge, label %bb.h, !llvm.loop !7
+  br i1 %.not, label %._crit_edge, label %bb.h, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %bb.cd, %.thread369, %bb.g
   %i.fp = tail call i32 @tvb_captured_length(ptr noundef %0)
@@ -529,7 +643,12 @@ attributes #2 = { nocallback nofree nosync nounwind speculatable willreturn memo
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = distinct !{!6, !8}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
+!6 = distinct !{!6, !12}
+!7 = distinct !{!7, !13}
+!8 = distinct !{!8, !12}
+!9 = distinct !{!9, !12}
+!10 = distinct !{!10, !12}
+!11 = distinct !{!11, !13}
+!12 = !{!"llvm.loop.unroll.disable"}
+!13 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -203,7 +203,7 @@ bb.a:
   br i1 %i.aq, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.ar = add nsw i32 %i.d, -1                    ; 3 uses
+  %i.ar = add nsw i32 %i.d, -1                    ; 2 uses
   %i.as = sext i32 %i.ar to i64
   %i.at = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.as
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !50 ; 2 uses
@@ -211,17 +211,13 @@ bb.b:                                             ; preds = %._crit_edge
   br i1 %i.av, label %.lr.ph55.preheader, label %._crit_edge56
 
 .lr.ph55.preheader:                               ; preds = %bb.b
-  %i.aw = zext i32 %i.ar to i64                   ; 3 uses
-  %3 = icmp ne i32 %i.ar, 0
-  %.neg = sext i1 %3 to i64
-  %4 = zext nneg i32 %i.d to i64
-  %5 = add nsw i64 %.neg, %4                      ; 3 uses
-  %min.iters.check = icmp ult i64 %5, 4
+  %i.aw = zext i32 %i.ar to i64                   ; 5 uses
+  %min.iters.check = icmp ult i32 %i.d, 5
   br i1 %min.iters.check, label %.lr.ph55.preheader64, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph55.preheader
-  %n.vec = and i64 %5, -4                         ; 3 uses
-  %6 = sub nsw i64 %i.aw, %n.vec
+  %n.vec = and i64 %i.aw, 4294967292              ; 2 uses
+  %3 = and i64 %i.aw, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -253,11 +249,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !66
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %5, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.aw
   br i1 %cmp.n, label %._crit_edge56, label %.lr.ph55.preheader64
 
 .lr.ph55.preheader64:                             ; preds = %.lr.ph55.preheader, %middle.block
-  %indvars.iv58.ph = phi i64 [ %i.aw, %.lr.ph55.preheader ], [ %6, %middle.block ]
+  %indvars.iv58.ph = phi i64 [ %i.aw, %.lr.ph55.preheader ], [ %3, %middle.block ]
   br label %.lr.ph55
 
 .lr.ph55:                                         ; preds = %.lr.ph55.preheader64, %.lr.ph55

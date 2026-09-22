@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/udataswp?download=true
 inline.NumInlined: 13
 inline.NumDeleted: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZL16uprv_swapArray16PK12UDataSwapperPKviPvP10UErrorCode:bb.a
   %i.w = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load40)
   %i.x = getelementptr i8, ptr %next.gep, i64 16
@@ -202,24 +204,63 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %i.j = lshr exact i32 %2, 3
-  br label %.lr.ph
+  %i.j = lshr exact i32 %2, 3                     ; 3 uses
+  %xtraiter = and i32 %i.j, 3                     ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.03039 = phi i32 [ %i.o, %.lr.ph ], [ %i.j, %.lr.ph.preheader ] ; 2 uses
-  %.03138 = phi ptr [ %i.n, %.lr.ph ], [ %3, %.lr.ph.preheader ] ; 2 uses
-  %.03237 = phi ptr [ %i.k, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %.03237, i64 8
-  %i.l = load i64, ptr %.03237, align 8, !tbaa !54
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader, %.lr.ph.prol
+  %.03039.prol = phi i32 [ %9, %.lr.ph.prol ], [ %i.j, %.lr.ph.preheader ]
+  %.03138.prol = phi ptr [ %8, %.lr.ph.prol ], [ %3, %.lr.ph.preheader ] ; 2 uses
+  %.03237.prol = phi ptr [ %5, %.lr.ph.prol ], [ %1, %.lr.ph.preheader ] ; 2 uses
+  %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
+  %5 = getelementptr inbounds nuw i8, ptr %.03237.prol, i64 8 ; 2 uses
+  %6 = load i64, ptr %.03237.prol, align 8, !tbaa !55
+  %7 = tail call i64 @llvm.bswap.i64(i64 %6)
+  %8 = getelementptr inbounds nuw i8, ptr %.03138.prol, i64 8 ; 2 uses
+  store i64 %7, ptr %.03138.prol, align 8, !tbaa !55
+  %9 = add nsw i32 %.03039.prol, -1               ; 2 uses
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !52
+
+.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
+  %.03039.unr = phi i32 [ %i.j, %.lr.ph.preheader ], [ %9, %.lr.ph.prol ]
+  %.03138.unr = phi ptr [ %3, %.lr.ph.preheader ], [ %8, %.lr.ph.prol ]
+  %.03237.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %5, %.lr.ph.prol ]
+  %10 = icmp ult i32 %2, 32
+  br i1 %10, label %.loopexit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
+  %.03039 = phi i32 [ %i.o, %.lr.ph ], [ %.03039.unr, %.lr.ph.prol.loopexit ] ; 2 uses
+  %.03138 = phi ptr [ %i.n, %.lr.ph ], [ %.03138.unr, %.lr.ph.prol.loopexit ] ; 5 uses
+  %.03237 = phi ptr [ %i.k, %.lr.ph ], [ %.03237.unr, %.lr.ph.prol.loopexit ] ; 5 uses
+  %11 = getelementptr inbounds nuw i8, ptr %.03237, i64 8
+  %12 = load i64, ptr %.03237, align 8, !tbaa !55
+  %13 = tail call i64 @llvm.bswap.i64(i64 %12)
+  %14 = getelementptr inbounds nuw i8, ptr %.03138, i64 8
+  store i64 %13, ptr %.03138, align 8, !tbaa !55
+  %15 = getelementptr inbounds nuw i8, ptr %.03237, i64 16
+  %16 = load i64, ptr %11, align 8, !tbaa !55
+  %17 = tail call i64 @llvm.bswap.i64(i64 %16)
+  %18 = getelementptr inbounds nuw i8, ptr %.03138, i64 16
+  store i64 %17, ptr %14, align 8, !tbaa !55
+  %19 = getelementptr inbounds nuw i8, ptr %.03237, i64 24
+  %20 = load i64, ptr %15, align 8, !tbaa !55
+  %21 = tail call i64 @llvm.bswap.i64(i64 %20)
+  %22 = getelementptr inbounds nuw i8, ptr %.03138, i64 24
+  store i64 %21, ptr %18, align 8, !tbaa !55
+  %i.k = getelementptr inbounds nuw i8, ptr %.03237, i64 32
+  %i.l = load i64, ptr %19, align 8, !tbaa !55
   %i.m = tail call i64 @llvm.bswap.i64(i64 %i.l)
-  %i.n = getelementptr inbounds nuw i8, ptr %.03138, i64 8
-  store i64 %i.m, ptr %.03138, align 8, !tbaa !54
-  %i.o = add nsw i32 %.03039, -1
-  %5 = icmp samesign ugt i32 %.03039, 1
-  br i1 %5, label %.lr.ph, label %.loopexit, !llvm.loop !52
+  %i.n = getelementptr inbounds nuw i8, ptr %.03138, i64 32
+  store i64 %i.m, ptr %22, align 8, !tbaa !55
+  %i.o = add nsw i32 %.03039, -4
+  %23 = icmp sgt i32 %.03039, 4
+  br i1 %23, label %.lr.ph, label %.loopexit, !llvm.loop !53
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.f, %bb.a, %bb.b, %bb.e
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ %2, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.f, %bb.a, %bb.b, %bb.e
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ %2, %.lr.ph ], [ %2, %.lr.ph.prol.loopexit ]
   ret i32 %.0
 }
 
@@ -423,7 +464,9 @@ attributes #12 = { allocsize(0) }
 !49 = !{!"branch_weights", i32 8, i32 8}
 !50 = distinct !{!50, !15, !33, !34}
 !51 = distinct !{!51, !15, !33}
-!52 = distinct !{!52, !15}
-!53 = !{!"long", !4, i64 0}
-!54 = !{!53, !53, i64 0}
+!52 = distinct !{!52, !56}
+!53 = distinct !{!53, !15}
+!54 = !{!"long", !4, i64 0}
+!55 = !{!54, !54, i64 0}
+!56 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 1, !tbaa !25 ; 4 uses
   %.sroa.725.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.725.0.copyload = load i64, ptr %.sroa.725.0..sroa_idx, align 8, !tbaa !26 ; 3 uses
-  %i.t = sub i64 52, %.sroa.725.0.copyload        ; 4 uses
+  %i.t = sub nsw i64 52, %.sroa.725.0.copyload    ; 3 uses
   %i.u = icmp slt i64 %.sroa.725.0.copyload, -4
   br i1 %i.u, label %.loopexit, label %.preheader
 
@@ -225,17 +225,12 @@ bb.f:                                             ; preds = %bb.e
   %i.y = extractvalue { i64, i64 } %i.w, 1        ; 2 uses
   %i.z = add nsw i64 %.01837, -1
   %i.aa = icmp sgt i64 %.01837, 1
-  br i1 %i.aa, label %.lr.ph, label %.loopexit.loopexit
+  br i1 %i.aa, label %.lr.ph, label %.loopexit
 
-.loopexit.loopexit:                               ; preds = %.lr.ph
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.t, i64 1)
-  %3 = add i64 %smin, -1
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader, %bb.f
-  %.sroa.17.1 = phi i64 [ 0, %bb.f ], [ %.sroa.17.0.copyload, %.preheader ], [ %i.y, %.loopexit.loopexit ] ; 4 uses
-  %.sroa.10.1 = phi i64 [ 1, %bb.f ], [ %.sroa.10.0.copyload, %.preheader ], [ %i.x, %.loopexit.loopexit ] ; 2 uses
-  %.1 = phi i64 [ %i.t, %bb.f ], [ %i.t, %.preheader ], [ %3, %.loopexit.loopexit ]
+.loopexit:                                        ; preds = %.lr.ph, %.preheader, %bb.f
+  %.sroa.17.1 = phi i64 [ 0, %bb.f ], [ %.sroa.17.0.copyload, %.preheader ], [ %i.y, %.lr.ph ] ; 4 uses
+  %.sroa.10.1 = phi i64 [ 1, %bb.f ], [ %.sroa.10.0.copyload, %.preheader ], [ %i.x, %.lr.ph ] ; 2 uses
+  %.1 = phi i64 [ %i.t, %bb.f ], [ %i.t, %.preheader ], [ 0, %.lr.ph ]
   %i.ab = and i64 %.sroa.17.1, 7                  ; 3 uses
   %i.ac = icmp ne i64 %.sroa.10.1, 0
   %i.ad = zext i1 %i.ac to i64
@@ -444,7 +439,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 1, !tbaa !25 ; 4 uses
   %.sroa.728.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.728.0.copyload = load i64, ptr %.sroa.728.0..sroa_idx, align 8, !tbaa !26 ; 3 uses
-  %i.s = sub i64 112, %.sroa.728.0.copyload       ; 4 uses
+  %i.s = sub nsw i64 112, %.sroa.728.0.copyload   ; 3 uses
   %i.t = icmp slt i64 %.sroa.728.0.copyload, -4
   br i1 %i.t, label %.thread34, label %.preheader
 
@@ -465,17 +460,12 @@ bb.f:                                             ; preds = %bb.e
   %i.x = extractvalue { i64, i64 } %i.v, 1        ; 2 uses
   %i.y = add nsw i64 %.02247, -1
   %i.z = icmp sgt i64 %.02247, 1
-  br i1 %i.z, label %.lr.ph, label %._crit_edge.loopexit
+  br i1 %i.z, label %.lr.ph, label %._crit_edge
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.s, i64 1)
-  %3 = add i64 %smin, -1
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.sroa.17.0.lcssa = phi i64 [ %.sroa.17.0.copyload, %.preheader ], [ %i.x, %._crit_edge.loopexit ] ; 2 uses
-  %.sroa.10.0.lcssa = phi i64 [ %.sroa.10.0.copyload, %.preheader ], [ %i.w, %._crit_edge.loopexit ] ; 3 uses
-  %.022.lcssa = phi i64 [ %i.s, %.preheader ], [ %3, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph, %.preheader
+  %.sroa.17.0.lcssa = phi i64 [ %.sroa.17.0.copyload, %.preheader ], [ %i.x, %.lr.ph ] ; 2 uses
+  %.sroa.10.0.lcssa = phi i64 [ %.sroa.10.0.copyload, %.preheader ], [ %i.w, %.lr.ph ] ; 3 uses
+  %.022.lcssa = phi i64 [ %i.s, %.preheader ], [ 0, %.lr.ph ] ; 2 uses
   %i.aa = trunc i64 %.sroa.10.0.lcssa to i8
   %i.ab = and i8 %i.aa, 127                       ; 2 uses
   %.not.i = icmp eq i8 %i.ab, 0
@@ -685,7 +675,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 1, !tbaa !25 ; 4 uses
   %.sroa.828.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.828.0.copyload = load i64, ptr %.sroa.828.0..sroa_idx, align 8, !tbaa !26 ; 3 uses
-  %i.r = sub i64 52, %.sroa.828.0.copyload        ; 4 uses
+  %i.r = sub nsw i64 52, %.sroa.828.0.copyload    ; 3 uses
   %i.s = icmp slt i64 %.sroa.828.0.copyload, -4
   br i1 %i.s, label %.loopexit, label %.preheader
 
@@ -706,17 +696,12 @@ bb.f:                                             ; preds = %bb.e
   %i.w = extractvalue { i64, i64 } %i.u, 1        ; 2 uses
   %i.x = add nsw i64 %.01939, -1
   %i.y = icmp sgt i64 %.01939, 1
-  br i1 %i.y, label %.lr.ph, label %.loopexit.loopexit
+  br i1 %i.y, label %.lr.ph, label %.loopexit
 
-.loopexit.loopexit:                               ; preds = %.lr.ph
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.r, i64 1)
-  %3 = add i64 %smin, -1
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader, %bb.f
-  %.sroa.18.1 = phi i64 [ 0, %bb.f ], [ %.sroa.18.0.copyload, %.preheader ], [ %i.w, %.loopexit.loopexit ] ; 4 uses
-  %.sroa.11.1 = phi i64 [ 1, %bb.f ], [ %.sroa.11.0.copyload, %.preheader ], [ %i.v, %.loopexit.loopexit ] ; 2 uses
-  %.1 = phi i64 [ %i.r, %bb.f ], [ %i.r, %.preheader ], [ %3, %.loopexit.loopexit ]
+.loopexit:                                        ; preds = %.lr.ph, %.preheader, %bb.f
+  %.sroa.18.1 = phi i64 [ 0, %bb.f ], [ %.sroa.18.0.copyload, %.preheader ], [ %i.w, %.lr.ph ] ; 4 uses
+  %.sroa.11.1 = phi i64 [ 1, %bb.f ], [ %.sroa.11.0.copyload, %.preheader ], [ %i.v, %.lr.ph ] ; 2 uses
+  %.1 = phi i64 [ %i.r, %bb.f ], [ %i.r, %.preheader ], [ 0, %.lr.ph ]
   %i.z = and i64 %.sroa.18.1, 7                   ; 3 uses
   %i.aa = icmp ne i64 %.sroa.11.1, 0
   %i.ab = zext i1 %i.aa to i64
@@ -933,7 +918,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 1, !tbaa !25 ; 4 uses
   %.sroa.830.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.830.0.copyload = load i64, ptr %.sroa.830.0..sroa_idx, align 8, !tbaa !26 ; 3 uses
-  %i.r = sub i64 112, %.sroa.830.0.copyload       ; 4 uses
+  %i.r = sub nsw i64 112, %.sroa.830.0.copyload   ; 3 uses
   %i.s = icmp slt i64 %.sroa.830.0.copyload, -4
   br i1 %i.s, label %.thread37, label %.preheader
 
@@ -954,17 +939,12 @@ bb.f:                                             ; preds = %bb.e
   %i.w = extractvalue { i64, i64 } %i.u, 1        ; 2 uses
   %i.x = add nsw i64 %.02249, -1
   %i.y = icmp sgt i64 %.02249, 1
-  br i1 %i.y, label %.lr.ph, label %._crit_edge.loopexit
+  br i1 %i.y, label %.lr.ph, label %._crit_edge
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.r, i64 1)
-  %3 = add i64 %smin, -1
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.sroa.18.0.lcssa = phi i64 [ %.sroa.18.0.copyload, %.preheader ], [ %i.w, %._crit_edge.loopexit ] ; 2 uses
-  %.sroa.11.0.lcssa = phi i64 [ %.sroa.11.0.copyload, %.preheader ], [ %i.v, %._crit_edge.loopexit ] ; 3 uses
-  %.022.lcssa = phi i64 [ %i.r, %.preheader ], [ %3, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph, %.preheader
+  %.sroa.18.0.lcssa = phi i64 [ %.sroa.18.0.copyload, %.preheader ], [ %i.w, %.lr.ph ] ; 2 uses
+  %.sroa.11.0.lcssa = phi i64 [ %.sroa.11.0.copyload, %.preheader ], [ %i.v, %.lr.ph ] ; 3 uses
+  %.022.lcssa = phi i64 [ %i.r, %.preheader ], [ 0, %.lr.ph ] ; 2 uses
   %i.z = trunc i64 %.sroa.11.0.lcssa to i8
   %i.aa = and i8 %i.z, 127                        ; 2 uses
   %.not.i = icmp eq i8 %i.aa, 0
@@ -1367,7 +1347,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.g = load i64, ptr %i.f, align 8, !tbaa !20   ; 3 uses
-  %i.h = sub i64 112, %i.g                        ; 2 uses
+  %i.h = sub nsw i64 112, %i.g
   %i.i = icmp sgt i64 %i.g, 111
   br i1 %i.i, label %bb.t, label %bb.d
 
@@ -1406,16 +1386,12 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.v, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.h, i64 1) ; 2 uses
-  %3 = sub i64 113, %smin
-  store i64 %3, ptr %i.f, align 8, !tbaa !20
+  store i64 112, ptr %i.f, align 8, !tbaa !20
   store i64 %i.s, ptr %i.q, align 8, !tbaa !26
   store i64 %i.t, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !26
-  %4 = sub i64 114, %smin
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %bb.e
-  %5 = phi i64 [ %4, %._crit_edge ], [ 113, %bb.e ]
   %i.w = phi i64 [ %i.t, %._crit_edge ], [ 0, %bb.e ] ; 8 uses
   %i.x = phi i64 [ %i.s, %._crit_edge ], [ %i.p, %bb.e ] ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1481,7 +1457,7 @@ bb.o:                                             ; preds = %bb.m, %bb.l, %bb.k,
   br i1 %i.as, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  store i64 %5, ptr %i.f, align 8, !tbaa !20
+  store i64 113, ptr %i.f, align 8, !tbaa !20
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -1882,9 +1858,6 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #8

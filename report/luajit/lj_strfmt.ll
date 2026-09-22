@@ -204,11 +204,11 @@ bb.o:                                             ; preds = %bb.n
   %.280 = phi i32 [ %.078, %bb.g ], [ %.078, %bb.f ], [ %spec.select126, %bb.m ], [ %.078133, %bb.o ], [ %.078133, %bb.n ], [ %.078133, %bb.i ] ; 3 uses
   %i.ar = trunc i64 %.490.idx to i32              ; 2 uses
   %i.as = sub i32 23, %i.ar                       ; 2 uses
-  %spec.select127 = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 %i.as) ; 3 uses
+  %spec.select127 = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 %i.as) ; 6 uses
   %i.at = lshr i32 %spec.select124135, 16
   %i.au = and i32 %i.at, 255                      ; 4 uses
-  %i.av = lshr i32 %.280, 8
-  %i.aw = add i32 %spec.select127, %i.av          ; 9 uses
+  %i.av = lshr i32 %.280, 8                       ; 4 uses
+  %i.aw = add i32 %spec.select127, %i.av          ; 6 uses
   %i.ax = tail call i32 @llvm.umax.i32(i32 %i.au, i32 %i.aw) ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !36
@@ -236,7 +236,8 @@ lj_buf_more.exit:                                 ; preds = %.loopexit141, %bb.p
   br i1 %i.bk, label %.lr.ph150.preheader, label %.loopexit140
 
 .lr.ph150.preheader:                              ; preds = %.preheader139
-  %i.bl = sub nsw i32 %i.bj, %i.aw
+  %3 = add i32 %spec.select127, %i.av
+  %i.bl = sub i32 %i.bj, %3
   %i.bm = zext i32 %i.bl to i64
   %i.bn = add nuw nsw i64 %i.bm, 1                ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0.i, i8 32, i64 %i.bn, i1 false), !tbaa !18
@@ -277,7 +278,8 @@ bb.t:                                             ; preds = %bb.s, %.loopexit140
   br i1 %i.bv, label %.lr.ph154.preheader, label %.loopexit138
 
 .lr.ph154.preheader:                              ; preds = %.preheader137
-  %i.bw = sub i32 %i.bu, %i.aw
+  %4 = add i32 %spec.select127, %i.av
+  %i.bw = sub i32 %i.bu, %4
   %i.bx = zext i32 %i.bw to i64
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.384, i8 48, i64 %i.by, i1 false), !tbaa !18
@@ -457,9 +459,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %or.cond171, label %.lr.ph169.preheader, label %.loopexit
 
 .lr.ph169.preheader:                              ; preds = %._crit_edge165
-  %i.eb = xor i32 %i.aw, -1
+  %i.eb = xor i32 %spec.select127, -1
   %i.ec = add i32 %.3, %i.eb
-  %i.ed = zext i32 %i.ec to i64
+  %5 = sub i32 %i.ec, %i.av
+  %i.ed = zext i32 %5 to i64
   %i.ee = add nuw nsw i64 %i.ed, 1                ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.7.lcssa, i8 32, i64 %i.ee, i1 false), !tbaa !18
   %scevgep182 = getelementptr i8, ptr %.7.lcssa, i64 %i.ee

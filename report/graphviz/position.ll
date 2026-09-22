@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/position?download=true
 inline.NumInlined: 41
 inline.NumDeleted: 24
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@clust_ht:bb.a
   %i.bf = and i32 %i.be, 1
   %.not74 = icmp eq i32 %i.bf, 0
@@ -204,93 +204,41 @@ bb.k:                                             ; preds = %bb.j
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !13 ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 264
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !39 ; 8 uses
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !39 ; 6 uses
   %i.cn = load ptr, ptr %i.j, align 8, !tbaa !13  ; 6 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 340
-  %i.cp = load i32, ptr %i.co, align 4, !tbaa !38 ; 3 uses
+  %i.cp = load i32, ptr %i.co, align 4, !tbaa !38 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cn, i64 336
-  %i.cr = load i32, ptr %i.cq, align 8, !tbaa !37 ; 6 uses
+  %i.cr = load i32, ptr %i.cq, align 8, !tbaa !37 ; 5 uses
   %i.cs = fadd nnan double %i.cg, 1.000000e+00
   %i.ct = fmul nnan double %i.cs, 5.000000e-01    ; 4 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cn, i64 136 ; 2 uses
   %i.cv = load double, ptr %i.cu, align 8, !tbaa !91
   %i.cw = fadd double %i.ct, %i.cv                ; 2 uses
-  %i.cx = sext i32 %i.cp to i64                   ; 5 uses
+  %i.cx = sext i32 %i.cp to i64                   ; 2 uses
   %i.cy = getelementptr inbounds [88 x i8], ptr %i.cm, i64 %i.cx
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 32
   %i.da = load double, ptr %i.cz, align 8, !tbaa !85
   %i.db = sitofp i32 %1 to double                 ; 2 uses
   %i.dc = fsub double %i.db, %i.da
-  %i.dd = fadd double %i.cw, %i.dc                ; 5 uses
+  %i.dd = fadd double %i.cw, %i.dc                ; 3 uses
   %i.de = fcmp ogt double %i.dd, 0.000000e+00
   br i1 %i.de, label %.preheader51.i, label %bb.n
 
 .preheader51.i:                                   ; preds = %bb.k
   %.not52.i = icmp slt i32 %i.cp, %i.cr
-  %.pre.i = sext i32 %i.cr to i64                 ; 3 uses
-  br i1 %.not52.i, label %._crit_edge.i, label %.lr.ph.i.preheader
+  %.pre.i = sext i32 %i.cr to i64                 ; 2 uses
+  br i1 %.not52.i, label %._crit_edge.i, label %.lr.ph.i
 
-.lr.ph.i.preheader:                               ; preds = %.preheader51.i
-  %2 = add nsw i64 %i.cx, %.pre.i
-  %3 = and i64 %2, 1
-  %lcmp.mod.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
-  %4 = getelementptr inbounds [88 x i8], ptr %i.cm, i64 %i.cx ; 2 uses
-  %5 = load i32, ptr %4, align 8, !tbaa !42
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %7, label %.lr.ph.i.prol.loopexit.unr-lcssa
-
-7:                                                ; preds = %.lr.ph.i.prol
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %9 = load ptr, ptr %8, align 8, !tbaa !43
-  %10 = load ptr, ptr %9, align 8, !tbaa !44
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %12 = load ptr, ptr %11, align 8, !tbaa !13
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 40 ; 2 uses
-  %14 = load double, ptr %13, align 8, !tbaa !86
-  %15 = fadd double %i.dd, %14
-  store double %15, ptr %13, align 8, !tbaa !86
-  br label %.lr.ph.i.prol.loopexit.unr-lcssa
-
-.lr.ph.i.prol.loopexit.unr-lcssa:                 ; preds = %7, %.lr.ph.i.prol
-  %indvars.iv.next.i.prol = add nsw i64 %i.cx, -1
-  br label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol.loopexit.unr-lcssa, %.lr.ph.i.preheader
-  %indvars.iv.i.unr = phi i64 [ %i.cx, %.lr.ph.i.preheader ], [ %indvars.iv.next.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %16 = icmp eq i32 %i.cp, %i.cr
-  br i1 %16, label %._crit_edge.i, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.m
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %bb.m ], [ %indvars.iv.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
+.lr.ph.i:                                         ; preds = %.preheader51.i, %bb.m
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %bb.m ], [ %i.cx, %.preheader51.i ] ; 3 uses
   %i.df = getelementptr inbounds [88 x i8], ptr %i.cm, i64 %indvars.iv.i ; 2 uses
   %i.dg = load i32, ptr %i.df, align 8, !tbaa !42
   %i.dh = icmp sgt i32 %i.dg, 0
-  br i1 %i.dh, label %17, label %.lr.ph.i.1
+  br i1 %i.dh, label %bb.l, label %bb.m
 
-17:                                               ; preds = %.lr.ph.i
-  %18 = getelementptr inbounds nuw i8, ptr %i.df, i64 8
-  %19 = load ptr, ptr %18, align 8, !tbaa !43
-  %20 = load ptr, ptr %19, align 8, !tbaa !44
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 16
-  %22 = load ptr, ptr %21, align 8, !tbaa !13
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 40 ; 2 uses
-  %24 = load double, ptr %23, align 8, !tbaa !86
-  %25 = fadd double %i.dd, %24
-  store double %25, ptr %23, align 8, !tbaa !86
-  br label %.lr.ph.i.1
-
-.lr.ph.i.1:                                       ; preds = %17, %.lr.ph.i
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
-  %26 = getelementptr inbounds [88 x i8], ptr %i.cm, i64 %indvars.iv.next.i ; 2 uses
-  %27 = load i32, ptr %26, align 8, !tbaa !42
-  %28 = icmp sgt i32 %27, 0
-  br i1 %28, label %bb.l, label %bb.m
-
-bb.l:                                             ; preds = %.lr.ph.i.1
-  %i.di = getelementptr inbounds nuw i8, ptr %26, i64 8
+bb.l:                                             ; preds = %.lr.ph.i
+  %i.di = getelementptr inbounds nuw i8, ptr %i.df, i64 8
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !43
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !44
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 16
@@ -301,12 +249,12 @@ bb.l:                                             ; preds = %.lr.ph.i.1
   store double %i.dp, ptr %i.dn, align 8, !tbaa !86
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %.lr.ph.i.1
-  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2
-  %.not.not.i.1 = icmp sgt i64 %indvars.iv.next.i, %.pre.i
+bb.m:                                             ; preds = %bb.l, %.lr.ph.i
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -1
+  %.not.not.i.1 = icmp sgt i64 %indvars.iv.i, %.pre.i
   br i1 %.not.not.i.1, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !191
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %bb.m, %.preheader51.i
+._crit_edge.i:                                    ; preds = %bb.m, %.preheader51.i
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cn, i64 144
   %i.dr = load double, ptr %i.dq, align 8, !tbaa !90 ; 2 uses
   %i.ds = fsub double %i.cg, %i.ct

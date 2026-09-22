@@ -205,7 +205,7 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bn
 
 bb.bq:                                            ; preds = %bb.bm, %._crit_edge482
   %.096.idx491 = phi i64 [ 0, %bb.bm ], [ %.096.add, %._crit_edge482 ] ; 2 uses
-  %.098490 = phi i1 [ true, %bb.bm ], [ %.199.lcssa, %._crit_edge482 ] ; 2 uses
+  %.098490 = phi i1 [ true, %bb.bm ], [ %.199.lcssa, %._crit_edge482 ] ; 3 uses
   %.sroa.40.0489 = phi ptr [ %.sroa.40.8, %bb.bm ], [ %.sroa.40.1.lcssa, %._crit_edge482 ] ; 2 uses
   %.sroa.20.0488 = phi ptr [ %.sroa.0259.8, %bb.bm ], [ %.sroa.20.1.lcssa, %._crit_edge482 ] ; 2 uses
   %.sroa.0259.0487 = phi ptr [ %.sroa.0259.8, %bb.bm ], [ %.sroa.0259.1.lcssa, %._crit_edge482 ] ; 2 uses
@@ -216,15 +216,17 @@ bb.bq:                                            ; preds = %bb.bm, %._crit_edge
   br i1 %i.fi, label %.lr.ph481, label %._crit_edge482
 
 .lr.ph481:                                        ; preds = %bb.bq
-  %i.fj = lshr i32 %i.fh, 1
+  %i.fj = lshr i32 %i.fh, 1                       ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %.096.ptr492, i64 8 ; 4 uses
+  %58 = trunc i32 %i.fj to i1
+  %59 = xor i1 %.098490, %58
   br label %bb.br
 
 ._crit_edge482:                                   ; preds = %._crit_edge456, %bb.bq
   %.sroa.0259.1.lcssa = phi ptr [ %.sroa.0259.0487, %bb.bq ], [ %.sroa.0259.2.lcssa, %._crit_edge456 ] ; 15 uses
   %.sroa.20.1.lcssa = phi ptr [ %.sroa.20.0488, %bb.bq ], [ %.sroa.20.2.lcssa, %._crit_edge456 ] ; 2 uses
   %.sroa.40.1.lcssa = phi ptr [ %.sroa.40.0489, %bb.bq ], [ %.sroa.40.2.lcssa, %._crit_edge456 ] ; 4 uses
-  %.199.lcssa = phi i1 [ %.098490, %bb.bq ], [ %i.jk, %._crit_edge456 ]
+  %.199.lcssa = phi i1 [ %.098490, %bb.bq ], [ %59, %._crit_edge456 ]
   %.096.add = add nuw nsw i64 %.096.idx491, 208   ; 2 uses
   %.not157 = icmp eq i64 %.096.add, 416
   br i1 %.not157, label %.preheader348, label %bb.bq
@@ -513,7 +515,7 @@ _ZNSt6vectorIhSaIhEE9push_backERKh.exit222.us:    ; preds = %_ZNSt6vectorIhSaIhE
   %.sroa.0259.2.lcssa = phi ptr [ %.sroa.0259.1475, %_ZNK2cv3Mat3colEi.exit203 ], [ %.sroa.0259.4.us, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit222.us ], [ %.sroa.0259.4, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit222 ] ; 2 uses
   %.sroa.20.2.lcssa = phi ptr [ %.sroa.20.1476, %_ZNK2cv3Mat3colEi.exit203 ], [ %.sroa.20.3.us, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit222.us ], [ %.sroa.20.3, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit222 ] ; 2 uses
   %.sroa.40.2.lcssa = phi ptr [ %.sroa.40.1477, %_ZNK2cv3Mat3colEi.exit203 ], [ %.sroa.40.4.us, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit222.us ], [ %.sroa.40.4, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit222 ] ; 2 uses
-  %i.jk = xor i1 %.199478, true                   ; 2 uses
+  %i.jk = xor i1 %.199478, true
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %56) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #27
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %55) #27
