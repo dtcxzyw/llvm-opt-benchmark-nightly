@@ -205,7 +205,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i293: ; preds = %.noexc300
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit212:            ; preds = %.noexc300, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i293
   %i.se = getelementptr inbounds nuw [4 x i8], ptr %i.rz, i64 %.pr388 ; 6 uses
-  %.pre = load i64, ptr %i.b, align 8, !tbaa !44  ; 12 uses
+  %.pre = load i64, ptr %i.b, align 8, !tbaa !44  ; 11 uses
   %.not543 = icmp eq i64 %.pre, 0
   br i1 %.not543, label %._crit_edge496, label %.lr.ph
 
@@ -279,11 +279,12 @@ scalar.ph814.preheader:                           ; preds = %vector.scevcheck, %
   %i.th = getelementptr inbounds nuw i8, ptr %0, i64 1336
   %i.ti = load ptr, ptr %i.th, align 8, !tbaa !144 ; 3 uses
   %i.tj = ptrtoaddr ptr %i.ti to i64              ; 2 uses
-  %min.iters.check841 = icmp ult i64 %.pre, 12
+  %6 = call i64 @llvm.smax.i64(i64 %.pre, i64 1)  ; 2 uses
+  %min.iters.check841 = icmp slt i64 %.pre, 12
   br i1 %min.iters.check841, label %scalar.ph840.preheader, label %vector.scevcheck832
 
 vector.scevcheck832:                              ; preds = %.lr.ph495
-  %i.tk = add i64 %.pre, -1                       ; 2 uses
+  %i.tk = add nsw i64 %.pre, -1                   ; 2 uses
   %i.tl = and i64 %i.tk, 4294967295
   %i.tm = icmp eq i64 %i.tl, 4294967295
   %i.tn = icmp ugt i64 %i.tk, 4294967295
@@ -308,7 +309,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck832
   br i1 %conflict.rdx839, label %scalar.ph840.preheader, label %vector.ph842
 
 vector.ph842:                                     ; preds = %vector.memcheck
-  %n.vec843 = and i64 %.pre, 8589934588           ; 3 uses
+  %n.vec843 = and i64 %6, 8589934588              ; 3 uses
   %broadcast.splat845 = shufflevector <2 x double> %i.td, <2 x double> poison, <4 x i32> zeroinitializer
   %broadcast.splat847 = shufflevector <2 x double> %i.td, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   br label %vector.body848
@@ -334,7 +335,7 @@ vector.body848:                                   ; preds = %vector.body848, %ve
   br i1 %i.ue, label %middle.block853, label %vector.body848, !llvm.loop !114
 
 middle.block853:                                  ; preds = %vector.body848
-  %cmp.n854 = icmp eq i64 %.pre, %n.vec843
+  %cmp.n854 = icmp eq i64 %6, %n.vec843
   br i1 %cmp.n854, label %._crit_edge496.loopexit, label %scalar.ph840.preheader
 
 scalar.ph840.preheader:                           ; preds = %vector.memcheck, %vector.scevcheck832, %.lr.ph495, %middle.block853
@@ -736,6 +737,9 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #15
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,23 +205,24 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %bb.cq
 
 bb.cq:                                            ; preds = %._crit_edge.i.i.i12.thread.i.i, %._crit_edge.i.i.i12.i.i
-  %.pre-phi126.i = phi i64 [ %.pre125.pre-phi.i, %._crit_edge.i.i.i12.thread.i.i ], [ %i.ty, %._crit_edge.i.i.i12.i.i ]
-  br label %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i
+  %.pre-phi126.i = phi i64 [ %.pre125.pre-phi.i, %._crit_edge.i.i.i12.thread.i.i ], [ %i.ty, %._crit_edge.i.i.i12.i.i ] ; 2 uses
+  %.not37.i.i.not.i.i.i317.not = icmp eq i64 %.pre-phi126.i, 0
+  br i1 %.not37.i.i.not.i.i.i317.not, label %.critedge.i.i.i.i.i, label %bb.cr
 
-_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i: ; preds = %bb.cr, %bb.cq
-  %indvars.iv.i15.i.i = phi i64 [ %indvars.iv.next.i16.i.i, %bb.cr ], [ 0, %bb.cq ] ; 4 uses
-  %.not37.i.i.not.i.i.i = icmp samesign ult i64 %indvars.iv.i15.i.i, %.pre-phi126.i
-  br i1 %.not37.i.i.not.i.i.i, label %bb.cr, label %.critedge.i.i.i.i.i
+_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i: ; preds = %bb.cr
+  %indvars.iv.next.i16.i.i = add nuw nsw i64 %indvars.iv.i15.i.i318, 64 ; 2 uses
+  %.not37.i.i.not.i.i.i = icmp samesign ult i64 %indvars.iv.next.i16.i.i, %.pre-phi126.i
+  br i1 %.not37.i.i.not.i.i.i, label %bb.cr, label %.critedge.i.i.i.i.i, !llvm.loop !21
 
-bb.cr:                                            ; preds = %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i
-  %indvars.iv.next.i16.i.i = add nuw nsw i64 %indvars.iv.i15.i.i, 64
-  %i.vp = lshr exact i64 %indvars.iv.i15.i.i, 3
+bb.cr:                                            ; preds = %bb.cq, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i
+  %indvars.iv.i15.i.i318 = phi i64 [ %indvars.iv.next.i16.i.i, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i ], [ 0, %bb.cq ] ; 3 uses
+  %i.vp = lshr exact i64 %indvars.iv.i15.i.i318, 3
   %i.vq = getelementptr inbounds nuw i8, ptr %i.tk, i64 %i.vp
   %i.vr = load i64, ptr %i.vq, align 8, !tbaa !122 ; 2 uses
   %.not.i42.i.i.i.i.i = icmp eq i64 %i.vr, 0
   br i1 %.not.i42.i.i.i.i.i, label %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i, label %_ZN8facebook5velox4bits12findFirstBitEPKmii.exit.loopexit.i.i.i, !llvm.loop !21
 
-.critedge.i.i.i.i.i:                              ; preds = %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i
+.critedge.i.i.i.i.i:                              ; preds = %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i.i.i, %bb.cq
   br i1 %.not34.i.i.i.i.i, label %_ZN8facebook5velox4bits12findFirstBitEPKmii.exit.thread.i.i.i, label %bb.cs
 
 bb.cs:                                            ; preds = %.critedge.i.i.i.i.i
@@ -244,7 +245,7 @@ _ZN8facebook5velox4bits12findFirstBitEPKmii.exit.thread.i.i.i: ; preds = %bb.cs,
   br label %_ZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKi.exit.i
 
 _ZN8facebook5velox4bits12findFirstBitEPKmii.exit.loopexit.i.i.i: ; preds = %bb.cr
-  %i.wa = trunc nuw nsw i64 %indvars.iv.i15.i.i to i32
+  %i.wa = trunc nuw nsw i64 %indvars.iv.i15.i.i318 to i32
   br label %_ZN8facebook5velox4bits12findFirstBitEPKmii.exit.i.i.i
 
 _ZN8facebook5velox4bits12findFirstBitEPKmii.exit.i.i.i: ; preds = %_ZN8facebook5velox4bits12findFirstBitEPKmii.exit.loopexit.i.i.i, %bb.cs

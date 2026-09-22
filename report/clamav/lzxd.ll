@@ -205,22 +205,23 @@ iter.check189:                                    ; preds = %bb.d
   %i.bg = trunc i32 %.us-phi to i16               ; 8 uses
   %i.bh = add i32 %.us-phi, 1
   %i.bi = and i32 %i.bh, 65535                    ; 2 uses
-  %umax177 = tail call i32 @llvm.umax.i32(i32 %.fr141, i32 %i.bi)
-  %i.bj = add i32 %umax177, 1
+  %umax177 = tail call i32 @llvm.smax.i32(i32 %.fr141, i32 %i.bi)
+  %i.bj = add nuw i32 %umax177, 1
   %i.bk = sub i32 %i.bj, %i.bi                    ; 7 uses
   %min.iters.check178 = icmp ult i32 %i.bk, 4
   br i1 %min.iters.check178, label %.lr.ph.preheader, label %vector.scevcheck176
 
 vector.scevcheck176:                              ; preds = %iter.check189
   %i.bl = add i32 %.us-phi, 1
-  %i.bm = and i32 %i.bl, 65535
-  %i.bn = tail call i32 @llvm.usub.sat.i32(i32 %.fr141, i32 %i.bm) ; 2 uses
-  %i.bo = trunc i32 %i.bn to i16                  ; 2 uses
+  %i.bm = and i32 %i.bl, 65535                    ; 2 uses
+  %i.bn = tail call i32 @llvm.smax.i32(i32 %.fr141, i32 %i.bm)
+  %4 = sub nsw i32 %i.bn, %i.bm                   ; 2 uses
+  %i.bo = trunc i32 %4 to i16                     ; 2 uses
   %i.bp = sub i16 -2, %i.bg
   %i.bq = icmp ult i16 %i.bp, %i.bo
   %i.br = xor i16 %i.bg, -1
   %i.bs = icmp ult i16 %i.br, %i.bo
-  %i.bt = icmp ugt i32 %i.bn, 65535
+  %i.bt = icmp ugt i32 %4, 65535
   %i.bu = or i1 %i.bs, %i.bt
   %i.bv = or i1 %i.bq, %i.bu
   br i1 %i.bv, label %.lr.ph.preheader, label %vector.main.loop.iter.check179
@@ -623,7 +624,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #3
+declare i32 @llvm.smax.i32(i32, i32) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

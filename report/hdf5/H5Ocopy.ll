@@ -202,11 +202,12 @@ bb.cy:                                            ; preds = %bb.cw
   br i1 %i.oc, label %.lr.ph728.split.us.preheader, label %.lr.ph728.split
 
 .lr.ph728.split.us.preheader:                     ; preds = %.lr.ph728
-  %min.iters.check901 = icmp ult i64 %i.uu, 11
-  br i1 %min.iters.check901, label %.lr.ph728.split.us.preheader913, label %vector.scevcheck899
+  %11 = call i64 @llvm.smax.i64(i64 %i.uu, i64 1) ; 2 uses
+  %min.iters.check902 = icmp slt i64 %i.uu, 11
+  br i1 %min.iters.check902, label %.lr.ph728.split.us.preheader913, label %vector.scevcheck899
 
 vector.scevcheck899:                              ; preds = %.lr.ph728.split.us.preheader
-  %i.of = add i64 %i.uu, -1                       ; 2 uses
+  %i.of = add nsw i64 %i.uu, -1                   ; 2 uses
   %i.og = and i64 %i.of, 4294967295
   %i.oh = icmp eq i64 %i.og, 4294967295
   %i.oi = icmp ugt i64 %i.of, 4294967295
@@ -214,10 +215,10 @@ vector.scevcheck899:                              ; preds = %.lr.ph728.split.us.
   br i1 %i.oj, label %.lr.ph728.split.us.preheader913, label %vector.ph902
 
 vector.ph902:                                     ; preds = %vector.scevcheck899
-  %i.ok = and i64 %i.uu, 3                        ; 2 uses
+  %i.ok = and i64 %11, 3                          ; 2 uses
   %i.ol = icmp eq i64 %i.ok, 0
   %i.om = select i1 %i.ol, i64 4, i64 %i.ok
-  %n.vec903 = sub nsw i64 %i.uu, %i.om            ; 2 uses
+  %n.vec903 = sub nsw i64 %11, %i.om              ; 2 uses
   br label %vector.body904
 
 vector.body904:                                   ; preds = %vector.body904, %vector.ph902
@@ -277,11 +278,12 @@ middle.block909:                                  ; preds = %vector.body904
   %i.ps = and i8 %i.pr, 2
   %i.pt = or disjoint i8 %i.ps, 4
   %i.pu = zext nneg i8 %i.pt to i64               ; 2 uses
-  %min.iters.check = icmp ult i64 %i.uu, 11
+  %12 = call i64 @llvm.smax.i64(i64 %i.uu, i64 1) ; 2 uses
+  %min.iters.check = icmp slt i64 %i.uu, 11
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph728.split
-  %i.pv = add i64 %i.uu, -1                       ; 2 uses
+  %i.pv = add nsw i64 %i.uu, -1                   ; 2 uses
   %i.pw = and i64 %i.pv, 4294967295
   %i.px = icmp eq i64 %i.pw, 4294967295
   %i.py = icmp ugt i64 %i.pv, 4294967295
@@ -289,10 +291,10 @@ vector.scevcheck:                                 ; preds = %.lr.ph728.split
   br i1 %i.pz, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %i.qa = and i64 %i.uu, 3                        ; 2 uses
+  %i.qa = and i64 %12, 3                          ; 2 uses
   %i.qb = icmp eq i64 %i.qa, 0
   %i.qc = select i1 %i.qb, i64 4, i64 %i.qa
-  %n.vec = sub nsw i64 %i.uu, %i.qc               ; 2 uses
+  %n.vec = sub nsw i64 %12, %i.qc                 ; 2 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.pu, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -570,7 +572,7 @@ bb.dt:                                            ; preds = %bb.dr, %bb.ds
   br label %bb.du
 
 bb.du:                                            ; preds = %bb.dt, %bb.dd
-  %i.uu = phi i64 [ %.pre781, %bb.dt ], [ %i.qz, %bb.dd ] ; 13 uses
+  %i.uu = phi i64 [ %.pre781, %bb.dt ], [ %i.qz, %bb.dd ] ; 11 uses
   %i.uv = add i32 %.1479721, 1                    ; 2 uses
   %i.uw = zext i32 %i.uv to i64                   ; 2 uses
   %i.ux = icmp ugt i64 %i.uu, %i.uw
@@ -971,6 +973,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #6
