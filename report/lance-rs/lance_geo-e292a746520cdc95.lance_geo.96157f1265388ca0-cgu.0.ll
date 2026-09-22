@@ -204,10 +204,13 @@ _RNvXs_NtNtCsfC1H8tYQGpK_14geoarrow_array5array3wktINtB4_15GenericWktArrayxENtNt
   %i.ael = icmp ult i64 %i.aea, %i.adi
   call void @llvm.assume(i1 %i.ael)
   %i.aem = getelementptr inbounds nuw [8 x i8], ptr %i.adu, i64 %i.aea
-  %i.aen = load i64, ptr %i.aem, align 8, !noalias !2689, !noundef !5
+  %i.aen = load i64, ptr %i.aem, align 8, !noalias !2689, !noundef !5 ; 2 uses
   %i.aeo = getelementptr inbounds nuw [8 x i8], ptr %i.adu, i64 %.sroa.536.068.i283
-  %i.aep = load i64, ptr %i.aeo, align 8, !noalias !2689, !noundef !5
+  %i.aep = load i64, ptr %i.aeo, align 8, !noalias !2689, !noundef !5 ; 2 uses
   %i.aeq = getelementptr inbounds i8, ptr %i.adw, i64 %i.aep
+  %3 = sub i64 %i.aen, %i.aep
+  %4 = icmp sgt i64 %3, -1
+  call void @llvm.assume(i1 %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !2690
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2690
   %i.aer = getelementptr inbounds i8, ptr %i.adw, i64 %i.aen
@@ -610,10 +613,13 @@ _RNvXs_NtNtCsfC1H8tYQGpK_14geoarrow_array5array3wktINtB4_15GenericWktArrayxENtNt
   %i.abh = icmp ult i64 %.us-phi.i389, %i.aaa
   call void @llvm.assume(i1 %i.abh)
   %i.abi = getelementptr inbounds nuw [8 x i8], ptr %i.aal, i64 %.us-phi.i389
-  %i.abj = load i64, ptr %i.abi, align 8, !noalias !3390, !noundef !5
+  %i.abj = load i64, ptr %i.abi, align 8, !noalias !3390, !noundef !5 ; 2 uses
   %i.abk = getelementptr inbounds nuw [8 x i8], ptr %i.aal, i64 %.us-phi106.i390
-  %i.abl = load i64, ptr %i.abk, align 8, !noalias !3390, !noundef !5
+  %i.abl = load i64, ptr %i.abk, align 8, !noalias !3390, !noundef !5 ; 2 uses
   %i.abm = getelementptr inbounds i8, ptr %i.aan, i64 %i.abl
+  %3 = sub i64 %i.abj, %i.abl
+  %4 = icmp sgt i64 %3, -1
+  call void @llvm.assume(i1 %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !3391
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !3391
   %i.abn = getelementptr inbounds i8, ptr %i.aan, i64 %i.abj

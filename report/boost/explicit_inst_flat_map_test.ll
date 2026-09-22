@@ -204,13 +204,17 @@ _ZN5boost9container6vectorISt4pairI5emptyS3_EvvE6insertIPKS4_EENS0_12vec_iterato
   %i.p = phi i64 [ %i.o, %_ZN5boost9container6vectorISt4pairI5emptyS3_EvvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIS4_EEPKS4_EEEEvPS4_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i ], [ %.pre30, %bb.e ] ; 4 uses
   %i.q = phi ptr [ %i.d, %_ZN5boost9container6vectorISt4pairI5emptyS3_EvvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIS4_EEPKS4_EEEEvPS4_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i ], [ %.pre29, %bb.e ] ; 8 uses
   %i.r = load ptr, ptr %0, align 8, !tbaa !224, !noalias !685 ; 6 uses
-  %i.s = getelementptr inbounds [2 x i8], ptr %i.r, i64 %i.p ; 3 uses
+  %i.s = getelementptr inbounds [2 x i8], ptr %i.r, i64 %i.p ; 4 uses
   %i.t = icmp eq ptr %i.q, %i.s
   br i1 %i.t, label %_ZN5boost7movelib29inplace_set_unique_differenceINS_9container12vec_iteratorIPSt4pairI5emptyS5_ELb0EEES8_NS2_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEET_SG_SG_T0_SH_T1_.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %_ZN5boost9container6vectorISt4pairI5emptyS3_EvvE6insertIPKS4_EENS0_12vec_iteratorIPS4_Lb0EEENS9_ISA_Lb1EEET_SD_PNS_11move_detail13disable_if_orIvNSE_14is_convertibleISD_mEENS0_3dtl17is_input_iteratorISD_Xsr21has_iterator_categoryISD_EE5valueEEENSE_5bool_ILb0EEESM_E4typeE.exit
   %i.u = ptrtoaddr ptr %i.r to i64
-  %i.v = ptrtoint ptr %i.q to i64
+  %5 = ptrtoint ptr %i.s to i64
+  %i.v = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %6 = sub i64 %5, %i.v
+  %7 = icmp ult i64 %6, 48
+  call void @llvm.assume(i1 %7)
   %i.w = shl nsw i64 %i.p, 1
   %i.x = add i64 %i.w, %i.u
   %i.y = add i64 %i.x, -2

@@ -204,20 +204,20 @@ bb.a:
   %.37 = select i1 %2, i32 2352, i32 2353         ; 2 uses
   %.38 = select i1 %2, i32 21, i32 379            ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !83   ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !83   ; 4 uses
   %i.c = icmp ult i32 %i.b, 65                    ; 2 uses
   br i1 %i.c, label %_ZNK4llvm5APInt6isIntNEj.exit, label %_ZNK4llvm5APInt6isIntNEj.exit.thread
 
 _ZNK4llvm5APInt6isIntNEj.exit:                    ; preds = %bb.a
-  %i.d = load i64, ptr %3, align 8
+  %i.d = load i64, ptr %3, align 8                ; 2 uses
   %i.e = icmp ult i64 %i.d, 65536
-  br i1 %i.e, label %_ZN4llvm6MCInstC2ERKS0_.exit, label %_ZNK4llvm5APInt6isIntNEj.exit48
+  br i1 %i.e, label %_ZN4llvm6MCInstC2ERKS0_.exit, label %12
 
 _ZNK4llvm5APInt6isIntNEj.exit.thread:             ; preds = %bb.a
   %i.f = tail call noundef i32 @_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv(ptr noundef nonnull align 8 dereferenceable(12) %3) #21
   %i.g = sub i32 %i.b, %i.f
   %i.h = icmp ult i32 %i.g, 17
-  br i1 %i.h, label %_ZN4llvm6MCInstC2ERKS0_.exit, label %_ZNK4llvm5APInt6isIntNEj.exit48
+  br i1 %i.h, label %_ZN4llvm6MCInstC2ERKS0_.exit, label %16
 
 _ZN4llvm6MCInstC2ERKS0_.exit:                     ; preds = %_ZNK4llvm5APInt6isIntNEj.exit.thread, %_ZNK4llvm5APInt6isIntNEj.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
@@ -330,8 +330,24 @@ _ZN4llvm13MCInstBuilderD2Ev.exit:                 ; preds = %_ZN4llvm6MCInstD2Ev
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   br label %bb.aa
 
-_ZNK4llvm5APInt6isIntNEj.exit48:                  ; preds = %_ZNK4llvm5APInt6isIntNEj.exit.thread, %_ZNK4llvm5APInt6isIntNEj.exit
+12:                                               ; preds = %_ZNK4llvm5APInt6isIntNEj.exit
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  %.neg.i.i.i47 = add nsw i32 %i.b, -64
+  %13 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.d, i1 true)
+  %14 = trunc nuw nsw i64 %13 to i32
+  %15 = add nsw i32 %.neg.i.i.i47, %14
+  br label %_ZNK4llvm5APInt6isIntNEj.exit48
+
+16:                                               ; preds = %_ZNK4llvm5APInt6isIntNEj.exit.thread
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  %17 = tail call noundef i32 @_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv(ptr noundef nonnull align 8 dereferenceable(12) %3) #21
+  br label %_ZNK4llvm5APInt6isIntNEj.exit48
+
+_ZNK4llvm5APInt6isIntNEj.exit48:                  ; preds = %12, %16
+  %.0.i.i.i46 = phi i32 [ %15, %12 ], [ %17, %16 ]
+  %18 = sub i32 %i.b, %.0.i.i.i46
+  %19 = icmp ult i32 %18, 33
+  tail call void @llvm.assume(i1 %19)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
   call void @_ZNK4llvm5APInt9getHiBitsEj(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APInt") align 8 %6, ptr noundef nonnull align 8 dereferenceable(12) %3, i32 noundef 16) #17
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 8

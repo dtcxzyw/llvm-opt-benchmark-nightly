@@ -205,10 +205,13 @@ _RNCNvXs0_NtNtCs1N9T06jgEdt_11arrow_array5array10byte_arrayINtB7_16GenericByteAr
   %i.ag = icmp samesign ult i64 %i.aa, %i.m
   call void @llvm.assume(i1 %i.ag)
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.aa
-  %i.ai = load i64, ptr %i.ah, align 8, !noalias !21498, !noundef !4
+  %i.ai = load i64, ptr %i.ah, align 8, !noalias !21498, !noundef !4 ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %.sroa.015.0122.us.i
-  %i.ak = load i64, ptr %i.aj, align 8, !noalias !21498, !noundef !4
+  %i.ak = load i64, ptr %i.aj, align 8, !noalias !21498, !noundef !4 ; 2 uses
   %i.al = getelementptr inbounds i8, ptr %i.z, i64 %i.ak
+  %2 = sub i64 %i.ai, %i.ak
+  %3 = icmp sgt i64 %2, -1
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !21499
   call void @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !21500
   %i.am = getelementptr inbounds i8, ptr %i.z, i64 %i.ai
@@ -302,10 +305,13 @@ _RNCNvXs0_NtNtCs1N9T06jgEdt_11arrow_array5array10byte_arrayINtB7_16GenericByteAr
   %i.bw = icmp ult i64 %i.bq, %i.m
   call void @llvm.assume(i1 %i.bw)
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.bq
-  %i.by = load i64, ptr %i.bx, align 8, !noalias !21504, !noundef !4
+  %i.by = load i64, ptr %i.bx, align 8, !noalias !21504, !noundef !4 ; 2 uses
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %.sroa.068.0123.us.i
-  %i.ca = load i64, ptr %i.bz, align 8, !noalias !21504, !noundef !4
+  %i.ca = load i64, ptr %i.bz, align 8, !noalias !21504, !noundef !4 ; 2 uses
   %i.cb = getelementptr inbounds i8, ptr %i.z, i64 %i.ca
+  %4 = sub i64 %i.by, %i.ca
+  %5 = icmp sgt i64 %4, -1
+  call void @llvm.assume(i1 %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !21505
   call void @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !21506
   %i.cc = getelementptr inbounds i8, ptr %i.z, i64 %i.by
@@ -360,10 +366,13 @@ _RNCNvXs0_NtNtCs1N9T06jgEdt_11arrow_array5array10byte_arrayINtB7_16GenericByteAr
   %i.da = icmp ult i64 %i.ck, %i.m
   call void @llvm.assume(i1 %i.da)
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.ck
-  %i.dc = load i64, ptr %i.db, align 8, !noalias !21504, !noundef !4
+  %i.dc = load i64, ptr %i.db, align 8, !noalias !21504, !noundef !4 ; 2 uses
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %.sroa.068.0123.i
-  %i.de = load i64, ptr %i.dd, align 8, !noalias !21504, !noundef !4
+  %i.de = load i64, ptr %i.dd, align 8, !noalias !21504, !noundef !4 ; 2 uses
   %i.df = getelementptr inbounds i8, ptr %i.z, i64 %i.de
+  %6 = sub i64 %i.dc, %i.de
+  %7 = icmp sgt i64 %6, -1
+  call void @llvm.assume(i1 %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !21505
   call void @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !21506
   %i.dg = getelementptr inbounds i8, ptr %i.z, i64 %i.dc
@@ -396,10 +405,13 @@ _RNCNvXs0_NtNtCs1N9T06jgEdt_11arrow_array5array10byte_arrayINtB7_16GenericByteAr
   %i.dq = icmp samesign ult i64 %i.av, %i.m
   call void @llvm.assume(i1 %i.dq)
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.av
-  %i.ds = load i64, ptr %i.dr, align 8, !noalias !21498, !noundef !4
+  %i.ds = load i64, ptr %i.dr, align 8, !noalias !21498, !noundef !4 ; 2 uses
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %.sroa.015.0122.i
-  %i.du = load i64, ptr %i.dt, align 8, !noalias !21498, !noundef !4
+  %i.du = load i64, ptr %i.dt, align 8, !noalias !21498, !noundef !4 ; 2 uses
   %i.dv = getelementptr inbounds i8, ptr %i.z, i64 %i.du
+  %8 = sub i64 %i.ds, %i.du
+  %9 = icmp sgt i64 %8, -1
+  call void @llvm.assume(i1 %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !21499
   call void @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !21500
   %i.dw = getelementptr inbounds i8, ptr %i.z, i64 %i.ds

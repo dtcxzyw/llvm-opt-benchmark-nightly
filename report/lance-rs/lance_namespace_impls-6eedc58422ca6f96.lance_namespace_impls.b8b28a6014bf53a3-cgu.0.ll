@@ -205,9 +205,13 @@ bb.p:                                             ; preds = %bb.k
   %i.bl = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 %i.bc, ptr %i.bl, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.bm = ptrtoint ptr %i.bb to i64
-  %i.bn = and i64 %i.bm, 3
-  %i.bo = icmp eq i64 %i.bn, 0
+  %i.bm = ptrtoint ptr %i.bb to i64               ; 3 uses
+  %2 = add i64 %i.bm, 3
+  %i.bn = and i64 %2, -4                          ; 2 uses
+  %3 = sub i64 %i.bn, %i.bm
+  %4 = icmp ult i64 %3, 4
+  call void @llvm.assume(i1 %4)
+  %i.bo = icmp eq i64 %i.bn, %i.bm
   br i1 %i.bo, label %bb.t, label %.invoke.i, !prof !439
 
 bb.q:                                             ; preds = %.invoke.i
@@ -610,9 +614,13 @@ bb.aj:                                            ; preds = %bb.ai
   call void @llvm.experimental.noalias.scope.decl(metadata !178404)
   %i.fe = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.ff = load ptr, ptr %i.fe, align 8, !alias.scope !178404, !noalias !178405, !noundef !416
-  %i.fg = ptrtoint ptr %i.ff to i64
-  %i.fh = and i64 %i.fg, 3
-  %i.fi = icmp eq i64 %i.fh, 0
+  %i.fg = ptrtoint ptr %i.ff to i64               ; 3 uses
+  %3 = add i64 %i.fg, 3
+  %i.fh = and i64 %3, -4                          ; 2 uses
+  %4 = sub i64 %i.fh, %i.fg
+  %5 = icmp ult i64 %4, 4
+  call void @llvm.assume(i1 %5)
+  %i.fi = icmp eq i64 %i.fh, %i.fg
   br i1 %i.fi, label %bb.ao, label %.invoke.i.i, !prof !439
 
 bb.ak:                                            ; preds = %.invoke.i.i
@@ -1015,9 +1023,13 @@ _RNvMNtCs40k4W9msRzi_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCs4YAKbnGhB
   store ptr %i.cu, ptr %i.de, align 8, !noalias !208457
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.cw, ptr %i.df, align 8, !noalias !208457
-  %i.dg = ptrtoint ptr %i.cu to i64
-  %i.dh = and i64 %i.dg, 3
-  %i.di = icmp eq i64 %i.dh, 0
+  %i.dg = ptrtoint ptr %i.cu to i64               ; 3 uses
+  %2 = add i64 %i.dg, 3
+  %i.dh = and i64 %2, -4                          ; 2 uses
+  %3 = sub i64 %i.dh, %i.dg
+  %4 = icmp ult i64 %3, 4
+  call void @llvm.assume(i1 %4)
+  %i.di = icmp eq i64 %i.dh, %i.dg
   br i1 %i.di, label %bb.al, label %.invoke.i.i.i.i, !prof !439
 
 bb.ai:                                            ; preds = %.invoke.i.i.i.i
@@ -1420,9 +1432,13 @@ bb.aa:                                            ; preds = %bb.v
   %i.cj = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 %i.ca, ptr %i.cj, align 8, !noalias !210820
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !210820
-  %i.ck = ptrtoint ptr %i.bz to i64
-  %i.cl = and i64 %i.ck, 3
-  %i.cm = icmp eq i64 %i.cl, 0
+  %i.ck = ptrtoint ptr %i.bz to i64               ; 3 uses
+  %2 = add i64 %i.ck, 3
+  %i.cl = and i64 %2, -4                          ; 2 uses
+  %3 = sub i64 %i.cl, %i.ck
+  %4 = icmp ult i64 %3, 4
+  call void @llvm.assume(i1 %4)
+  %i.cm = icmp eq i64 %i.cl, %i.ck
   br i1 %i.cm, label %bb.ae, label %.invoke.i.i, !prof !439
 
 bb.ab:                                            ; preds = %.invoke.i.i
@@ -1825,9 +1841,13 @@ bb.f:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !215242)
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !215242, !noalias !215241, !noundef !416
-  %i.n = ptrtoint ptr %i.m to i64
-  %i.o = and i64 %i.n, 3
-  %i.p = icmp eq i64 %i.o, 0
+  %i.n = ptrtoint ptr %i.m to i64                 ; 3 uses
+  %4 = add i64 %i.n, 3
+  %i.o = and i64 %4, -4                           ; 2 uses
+  %5 = sub i64 %i.o, %i.n
+  %6 = icmp ult i64 %5, 4
+  tail call void @llvm.assume(i1 %6)
+  %i.p = icmp eq i64 %i.o, %i.n
   br i1 %i.p, label %bb.j, label %.invoke.i, !prof !439
 
 bb.g:                                             ; preds = %.invoke.i
@@ -1943,9 +1963,13 @@ bb.f:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !215275)
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !215275, !noalias !215274, !noundef !416
-  %i.n = ptrtoint ptr %i.m to i64
-  %i.o = and i64 %i.n, 7
-  %i.p = icmp eq i64 %i.o, 0
+  %i.n = ptrtoint ptr %i.m to i64                 ; 3 uses
+  %4 = add i64 %i.n, 7
+  %i.o = and i64 %4, -8                           ; 2 uses
+  %5 = sub i64 %i.o, %i.n
+  %6 = icmp ult i64 %5, 8
+  tail call void @llvm.assume(i1 %6)
+  %i.p = icmp eq i64 %i.o, %i.n
   br i1 %i.p, label %bb.j, label %.invoke.i, !prof !439
 
 bb.g:                                             ; preds = %.invoke.i
@@ -2186,9 +2210,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !215340)
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !alias.scope !215340, !noalias !215341, !noundef !416
-  %i.ab = ptrtoint ptr %i.aa to i64
-  %i.ac = and i64 %i.ab, 3
-  %i.ad = icmp eq i64 %i.ac, 0
+  %i.ab = ptrtoint ptr %i.aa to i64               ; 3 uses
+  %4 = add i64 %i.ab, 3
+  %i.ac = and i64 %4, -4                          ; 2 uses
+  %5 = sub i64 %i.ac, %i.ab
+  %6 = icmp ult i64 %5, 4
+  call void @llvm.assume(i1 %6)
+  %i.ad = icmp eq i64 %i.ac, %i.ab
   br i1 %i.ad, label %bb.k, label %.invoke.i.i.i, !prof !439
 
 bb.h:                                             ; preds = %.invoke.i.i.i
@@ -2591,9 +2619,13 @@ bb.af:                                            ; preds = %bb.ab
   %i.dx = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   store i64 %i.dp, ptr %i.dx, align 8, !noalias !216238
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !216238
-  %i.dy = ptrtoint ptr %.sroa.4.0.copyload.i to i64
-  %i.dz = and i64 %i.dy, 3
-  %i.ea = icmp eq i64 %i.dz, 0
+  %i.dy = ptrtoint ptr %.sroa.4.0.copyload.i to i64 ; 3 uses
+  %5 = add i64 %i.dy, 3
+  %i.dz = and i64 %5, -4                          ; 2 uses
+  %6 = sub i64 %i.dz, %i.dy
+  %7 = icmp ult i64 %6, 4
+  call void @llvm.assume(i1 %7)
+  %i.ea = icmp eq i64 %i.dz, %i.dy
   br i1 %i.ea, label %bb.aj, label %.invoke.i.i, !prof !439
 
 bb.ag:                                            ; preds = %.invoke.i.i
@@ -2996,9 +3028,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !227154)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !227154, !noalias !227155, !noundef !416
-  %i.ac = ptrtoint ptr %i.ab to i64
-  %i.ad = and i64 %i.ac, 1
-  %i.ae = icmp eq i64 %i.ad, 0
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 3 uses
+  %3 = add i64 %i.ac, 1
+  %i.ad = and i64 %3, -2                          ; 2 uses
+  %4 = sub i64 %i.ad, %i.ac
+  %5 = icmp ult i64 %4, 2
+  call void @llvm.assume(i1 %5)
+  %i.ae = icmp eq i64 %i.ad, %i.ac
   br i1 %i.ae, label %bb.k, label %.invoke.i.i.i.i, !prof !439
 
 bb.h:                                             ; preds = %.invoke.i.i.i.i
@@ -3401,9 +3437,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !227244)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !227244, !noalias !227245, !noundef !416
-  %i.ac = ptrtoint ptr %i.ab to i64
-  %i.ad = and i64 %i.ac, 7
-  %i.ae = icmp eq i64 %i.ad, 0
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 3 uses
+  %3 = add i64 %i.ac, 7
+  %i.ad = and i64 %3, -8                          ; 2 uses
+  %4 = sub i64 %i.ad, %i.ac
+  %5 = icmp ult i64 %4, 8
+  call void @llvm.assume(i1 %5)
+  %i.ae = icmp eq i64 %i.ad, %i.ac
   br i1 %i.ae, label %bb.k, label %.invoke.i.i.i.i, !prof !439
 
 bb.h:                                             ; preds = %.invoke.i.i.i.i
@@ -3806,9 +3846,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !227325)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !227325, !noalias !227326, !noundef !416
-  %i.ac = ptrtoint ptr %i.ab to i64
-  %i.ad = and i64 %i.ac, 3
-  %i.ae = icmp eq i64 %i.ad, 0
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 3 uses
+  %3 = add i64 %i.ac, 3
+  %i.ad = and i64 %3, -4                          ; 2 uses
+  %4 = sub i64 %i.ad, %i.ac
+  %5 = icmp ult i64 %4, 4
+  call void @llvm.assume(i1 %5)
+  %i.ae = icmp eq i64 %i.ad, %i.ac
   br i1 %i.ae, label %bb.k, label %.invoke.i.i.i.i, !prof !439
 
 bb.h:                                             ; preds = %.invoke.i.i.i.i
@@ -4211,9 +4255,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !227466)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !227466, !noalias !227467, !noundef !416
-  %i.ac = ptrtoint ptr %i.ab to i64
-  %i.ad = and i64 %i.ac, 1
-  %i.ae = icmp eq i64 %i.ad, 0
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 3 uses
+  %3 = add i64 %i.ac, 1
+  %i.ad = and i64 %3, -2                          ; 2 uses
+  %4 = sub i64 %i.ad, %i.ac
+  %5 = icmp ult i64 %4, 2
+  call void @llvm.assume(i1 %5)
+  %i.ae = icmp eq i64 %i.ad, %i.ac
   br i1 %i.ae, label %bb.k, label %.invoke.i.i.i.i, !prof !439
 
 bb.h:                                             ; preds = %.invoke.i.i.i.i
