@@ -205,7 +205,7 @@ bb.a:
   %i.i = sub i64 %i.g, %i.h
   %i.j = ashr exact i64 %i.i, 5                   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !284  ; 2 uses
   %i.n = load ptr, ptr %i.k, align 8, !tbaa !285  ; 2 uses
   %i.o = ptrtoint ptr %i.m to i64
@@ -270,7 +270,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.al, i8 0, i64 32, i1 false)
   %i.an = invoke noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #37
-          to label %.noexc.i unwind label %bb.f   ; 9 uses
+          to label %.noexc.i unwind label %bb.f   ; 7 uses
 
 .noexc.i:                                         ; preds = %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 3 uses
@@ -330,15 +330,14 @@ bb.i:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.bi = getelementptr inbounds nuw i8, ptr %i.an, i64 48
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !307
-  store ptr %i.bk, ptr %i.bi, align 8, !tbaa !307
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
-  %10 = getelementptr inbounds nuw i8, ptr %i.an, i64 56
-  %i.bl = load <2 x ptr>, ptr %i.k, align 8, !tbaa !436
-  store <2 x ptr> %i.bl, ptr %10, align 8, !tbaa !436
-  %11 = getelementptr inbounds nuw i8, ptr %i.an, i64 72
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 72
-  %13 = load ptr, ptr %12, align 8, !tbaa !307
-  store ptr %13, ptr %11, align 8, !tbaa !307
+  %10 = load ptr, ptr %i.k, align 8, !tbaa !285
+  %i.bl = load <2 x ptr>, ptr %i.l, align 8, !tbaa !436
+  %11 = insertelement <4 x ptr> poison, ptr %i.bk, i64 0
+  %12 = insertelement <4 x ptr> %11, ptr %10, i64 1
+  %13 = shufflevector <2 x ptr> %i.bl, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %14 = shufflevector <4 x ptr> %12, <4 x ptr> %13, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %14, ptr %i.bi, align 8, !tbaa !436
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 24, i1 false)
   store ptr %i.an, ptr %i.al, align 8, !tbaa !451
   store ptr @_ZNSt17_Function_handlerIFvRKSt6vectorIN2cv4util7variantIJNS1_4GMatENS1_5GMatPENS1_6GFrameENS1_7GScalarENS1_6detail7GArrayUENS8_8GOpaqueUEEEESaISB_EERSD_E9InferCallE9_M_invokeERKSt9_Any_dataSF_SG_, ptr %i.bd, align 8, !tbaa !366

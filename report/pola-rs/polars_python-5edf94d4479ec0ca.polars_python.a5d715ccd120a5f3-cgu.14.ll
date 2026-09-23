@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.ad
 define hidden void @_RINvNtCsgjwxzEoLG5s_12polars_error5abort18catch_polars_abortINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCseeLknQCOKOd_13polars_python9lazyframe7general16PyCollectBatchesNtNtCsbm5zPlkZccl_4pyo33err5PyErrEINtNtNtB11_5panic11unwind_safe16AssertUnwindSafeNCNvMs0_B1A_NtB1C_11PyLazyFrame15collect_batches0EEB1E_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([400 x i8]) align 16 captures(none) dereferenceable(400) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !161899 {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 7 uses
-  %i.b = alloca [64 x i8], align 8                ; 7 uses
+  %i.b = alloca [64 x i8], align 8                ; 5 uses
   %i.c = alloca [72 x i8], align 8                ; 6 uses
   %i.d = alloca [32 x i8], align 8                ; 4 uses
   %i.e = alloca [368 x i8], align 16              ; 4 uses
@@ -215,11 +215,11 @@ bb.a:
   %i.h = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.66.i.i.i = alloca [32 x i8], align 8     ; 6 uses
   %.sroa.6.i.i.i = alloca [32 x i8], align 8      ; 7 uses
-  %i.i = alloca [384 x i8], align 16              ; 14 uses
+  %i.i = alloca [384 x i8], align 16              ; 12 uses
   %.sroa.6.i = alloca [312 x i8], align 8         ; 4 uses
   %.sroa.53.i.sroa.8 = alloca [32 x i8], align 8  ; 5 uses
   %.sroa.15 = alloca [344 x i8], align 8          ; 3 uses
-  %i.j = alloca [400 x i8], align 16              ; 13 uses
+  %i.j = alloca [400 x i8], align 16              ; 11 uses
   %i.k = tail call noundef i8 @_RNvNtCsgjwxzEoLG5s_12polars_error5abort20try_register_catcher(), !dbg !162067 ; 2 uses
   %.not = icmp eq i8 %i.k, 2, !dbg !162095
   br i1 %.not, label %bb.c, label %bb.b, !dbg !162096
@@ -421,11 +421,7 @@ bb.s:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i), !dbg !162160
   %.sroa.01.0.copyload2.i = load i64, ptr %i.i, align 16, !dbg !162161, !noalias !162083
   %.sroa.53.0..sroa_idx4.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8, !dbg !162161
-  %.sroa.53.i.sroa.0.0.copyload59 = load ptr, ptr %.sroa.53.0..sroa_idx4.i, align 8, !dbg !162161, !noalias !162083
-  %.sroa.53.i.sroa.5.0..sroa.53.0..sroa_idx4.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16, !dbg !162161
-  %2 = load <2 x ptr>, ptr %.sroa.53.i.sroa.5.0..sroa.53.0..sroa_idx4.i.sroa_idx, align 16, !dbg !162161, !noalias !162083
-  %.sroa.53.i.sroa.7.0..sroa.53.0..sroa_idx4.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 32, !dbg !162161
-  %.sroa.53.i.sroa.7.0.copyload62 = load ptr, ptr %.sroa.53.i.sroa.7.0..sroa.53.0..sroa_idx4.i.sroa_idx, align 16, !dbg !162161, !noalias !162083
+  %2 = load <4 x ptr>, ptr %.sroa.53.0..sroa_idx4.i, align 8, !dbg !162161, !noalias !162083
   %.sroa.53.i.sroa.8.0..sroa.53.0..sroa_idx4.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 40, !dbg !162161
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.53.i.sroa.8, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.53.i.sroa.8.0..sroa.53.0..sroa_idx4.i.sroa_idx, i64 32, i1 false), !dbg !162161, !noalias !162083
   %.sroa.6.0..sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.i, i64 72, !dbg !162161
@@ -448,11 +444,7 @@ bb.t:                                             ; preds = %bb.n
           to label %bb.u unwind label %bb.j, !dbg !162167, !noalias !162074
 
 bb.u:                                             ; preds = %bb.t
-  %.sroa.53.i.sroa.0.0.copyload = load ptr, ptr %i.b, align 8, !dbg !162168, !noalias !162083 ; 2 uses
-  %.sroa.53.i.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !162168
-  %3 = load <2 x ptr>, ptr %.sroa.53.i.sroa.5.0..sroa_idx, align 8, !dbg !162168, !noalias !162083 ; 2 uses
-  %.sroa.53.i.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24, !dbg !162168
-  %.sroa.53.i.sroa.7.0.copyload = load ptr, ptr %.sroa.53.i.sroa.7.0..sroa_idx, align 8, !dbg !162168, !noalias !162083 ; 2 uses
+  %3 = load <4 x ptr>, ptr %i.b, align 8, !dbg !162168, !noalias !162083 ; 2 uses
   %.sroa.53.i.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32, !dbg !162168
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.53.i.sroa.8, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.53.i.sroa.8.0..sroa_idx, i64 32, i1 false), !dbg !162168, !noalias !162083
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !162169, !noalias !162074
@@ -520,11 +512,9 @@ bb.ac:                                            ; preds = %.body23
   unreachable, !dbg !162186
 
 bb.ad:                                            ; preds = %bb.x, %bb.s, %bb.y
-  %.sroa.53.i.sroa.0.0 = phi ptr [ %.sroa.53.i.sroa.0.0.copyload59, %bb.s ], [ %.sroa.53.i.sroa.0.0.copyload, %bb.x ], [ %.sroa.53.i.sroa.0.0.copyload, %bb.y ], !dbg !162187 ; 2 uses
-  %.sroa.53.i.sroa.7.0 = phi ptr [ %.sroa.53.i.sroa.7.0.copyload62, %bb.s ], [ %.sroa.53.i.sroa.7.0.copyload, %bb.x ], [ %.sroa.53.i.sroa.7.0.copyload, %bb.y ], !dbg !162187
   %.sroa.01.0.i = phi i64 [ %.sroa.01.0.copyload2.i, %bb.s ], [ -9223372036854775778, %bb.x ], [ -9223372036854775778, %bb.y ], !dbg !162187 ; 2 uses
   %.sroa.66.0.i = phi ptr [ %i.be, %bb.s ], [ undef, %bb.x ], [ undef, %bb.y ], !dbg !162102
-  %4 = phi <2 x ptr> [ %2, %bb.s ], [ %3, %bb.x ], [ %3, %bb.y ], !dbg !162187 ; 2 uses
+  %4 = phi <4 x ptr> [ %2, %bb.s ], [ %3, %bb.x ], [ %3, %bb.y ], !dbg !162187 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !162124, !noalias !162074
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.15, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.53.i.sroa.8, i64 32, i1 false), !dbg !162188
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.53.i.sroa.8), !dbg !162189
@@ -533,16 +523,13 @@ bb.ad:                                            ; preds = %bb.x, %bb.s, %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i), !dbg !162191
   store i64 %.sroa.01.0.i, ptr %i.j, align 16, !dbg !162192
   %.sroa.447.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 8, !dbg !162192
-  store ptr %.sroa.53.i.sroa.0.0, ptr %.sroa.447.0..sroa_idx, align 8, !dbg !162192
-  %.sroa.548.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 16, !dbg !162192
-  store <2 x ptr> %4, ptr %.sroa.548.0..sroa_idx, align 16, !dbg !162192
-  %.sroa.750.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !162192
-  store ptr %.sroa.53.i.sroa.7.0, ptr %.sroa.750.0..sroa_idx, align 16, !dbg !162192
+  store <4 x ptr> %4, ptr %.sroa.447.0..sroa_idx, align 8, !dbg !162192
   %.sroa.851.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !162192
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(344) %.sroa.851.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(344) %.sroa.15, i64 344, i1 false), !dbg !162192
   %.sroa.952.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 384, !dbg !162192
   store ptr %.sroa.66.0.i, ptr %.sroa.952.0..sroa_idx, align 16, !dbg !162192
-  %i.bv = extractelement <2 x ptr> %4, i64 0, !dbg !162193
+  %5 = extractelement <4 x ptr> %4, i64 0, !dbg !162193
+  %i.bv = extractelement <4 x ptr> %4, i64 1, !dbg !162193
   br label %bb.af, !dbg !162193
 
 bb.ae:                                            ; preds = %.body23
@@ -558,7 +545,7 @@ bb.ae:                                            ; preds = %.body23
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
   %.sroa.6.0.copyload = phi ptr [ %i.bx, %bb.ae ], [ %i.bv, %bb.ad ] ; 10 uses
-  %.sroa.5.0.copyload = phi ptr [ %i.bw, %bb.ae ], [ %.sroa.53.i.sroa.0.0, %bb.ad ] ; 8 uses
+  %.sroa.5.0.copyload = phi ptr [ %i.bw, %bb.ae ], [ %5, %bb.ad ] ; 8 uses
   %.sroa.03.0.copyload = phi i64 [ -9223372036854775777, %bb.ae ], [ %.sroa.01.0.i, %bb.ad ] ; 2 uses
   invoke void @_RNvNtCsgjwxzEoLG5s_12polars_error5abort18unregister_catcher()
           to label %bb.ag unwind label %bb.at, !dbg !162195

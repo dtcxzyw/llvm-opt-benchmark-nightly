@@ -205,20 +205,17 @@ _RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsbzNSmZPCnTx_10tg
 
 .sink.split.i:                                    ; preds = %_RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsbzNSmZPCnTx_10tgrep_core9gitignore15TrackedSnapshotE15get_or_try_initNCINvB2_11get_or_initNCNvMs0_BV_NtBV_21CaseInsensitiveIgnore30tracked_membership_fingerprint0E0zEBX_.exit.i, %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.o = load <2 x i64>, ptr %i.n, align 8, !noalias !955
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %3 = load i64, ptr %2, align 8, !noalias !955, !noundef !5
+  %2 = load i64, ptr %i.n, align 8, !noalias !955, !noundef !5
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  %i.o = load <2 x i64>, ptr %3, align 8, !noalias !955
+  %4 = insertelement <4 x i64> <i64 1, i64 poison, i64 poison, i64 poison>, i64 %2, i64 1
+  %5 = shufflevector <2 x i64> %i.o, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x i64> %4, <4 x i64> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %_RNvMs0_NtCsbzNSmZPCnTx_10tgrep_core9gitignoreNtB5_21CaseInsensitiveIgnore30tracked_membership_fingerprint.exit
 
 _RNvMs0_NtCsbzNSmZPCnTx_10tgrep_core9gitignoreNtB5_21CaseInsensitiveIgnore30tracked_membership_fingerprint.exit: ; preds = %bb.c, %_RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsbzNSmZPCnTx_10tgrep_core9gitignore15TrackedSnapshotE15get_or_try_initNCINvB2_11get_or_initNCNvMs0_BV_NtBV_21CaseInsensitiveIgnore30tracked_membership_fingerprint0E0zEBX_.exit.i, %.sink.split.i
-  %.sroa.0.0.sink.i = phi i64 [ 0, %bb.c ], [ 0, %_RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsbzNSmZPCnTx_10tgrep_core9gitignore15TrackedSnapshotE15get_or_try_initNCINvB2_11get_or_initNCNvMs0_BV_NtBV_21CaseInsensitiveIgnore30tracked_membership_fingerprint0E0zEBX_.exit.i ], [ 1, %.sink.split.i ]
-  %.sroa.5.sroa.5.0.sink.i = phi i64 [ undef, %bb.c ], [ undef, %_RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsbzNSmZPCnTx_10tgrep_core9gitignore15TrackedSnapshotE15get_or_try_initNCINvB2_11get_or_initNCNvMs0_BV_NtBV_21CaseInsensitiveIgnore30tracked_membership_fingerprint0E0zEBX_.exit.i ], [ %3, %.sink.split.i ]
-  %4 = phi <2 x i64> [ undef, %bb.c ], [ undef, %_RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsbzNSmZPCnTx_10tgrep_core9gitignore15TrackedSnapshotE15get_or_try_initNCINvB2_11get_or_initNCNvMs0_BV_NtBV_21CaseInsensitiveIgnore30tracked_membership_fingerprint0E0zEBX_.exit.i ], [ %i.o, %.sink.split.i ]
-  store i64 %.sroa.0.0.sink.i, ptr %0, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x i64> %4, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.5.sroa.5.0.sink.i, ptr %.sroa.6.0..sroa_idx, align 8
+  %7 = phi <4 x i64> [ <i64 0, i64 undef, i64 undef, i64 undef>, %bb.c ], [ <i64 0, i64 undef, i64 undef, i64 undef>, %_RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsbzNSmZPCnTx_10tgrep_core9gitignore15TrackedSnapshotE15get_or_try_initNCINvB2_11get_or_initNCNvMs0_BV_NtBV_21CaseInsensitiveIgnore30tracked_membership_fingerprint0E0zEBX_.exit.i ], [ %6, %.sink.split.i ]
+  store <4 x i64> %7, ptr %0, align 8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a

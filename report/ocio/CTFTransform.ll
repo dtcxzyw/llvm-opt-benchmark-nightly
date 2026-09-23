@@ -202,8 +202,8 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = alloca [20 x double], align 16           ; 23 uses
   %i.b = alloca [16 x double], align 16           ; 13 uses
-  %i.c = alloca [12 x double], align 16           ; 14 uses
-  %i.d = alloca [9 x double], align 16            ; 11 uses
+  %i.c = alloca [12 x double], align 16           ; 10 uses
+  %i.d = alloca [9 x double], align 16            ; 9 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.f = icmp eq ptr %i.e, @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_2_0E
@@ -606,7 +606,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157: ; preds = %bb
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.fe = load i32, ptr %i.fd, align 4, !tbaa !175
   %i.ff = invoke noundef double @_ZN16OpenColorIO_v2_519GetBitDepthMaxValueENS_8BitDepthE(i32 noundef %i.fe)
-          to label %bb.at unwind label %bb.bb     ; 8 uses
+          to label %bb.at unwind label %bb.bb     ; 7 uses
 
 bb.at:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -615,7 +615,7 @@ bb.at:                                            ; preds = %_ZNSt7__cxx1112basi
           to label %bb.au unwind label %bb.bc
 
 bb.au:                                            ; preds = %bb.at
-  %i.fj = fdiv double %i.ff, %i.fi                ; 22 uses
+  %i.fj = fdiv double %i.ff, %i.fi                ; 20 uses
   %i.fk = invoke noundef zeroext i1 @_ZNK16OpenColorIO_v2_512MatrixOpData8hasAlphaEv(ptr noundef nonnull align 8 dereferenceable(260) %i.bp)
           to label %bb.av unwind label %bb.bc
 
@@ -855,38 +855,37 @@ bb.bi:                                            ; preds = %_ZNK16OpenColorIO_v
   %i.kg = load ptr, ptr %i.fb, align 8, !tbaa !177 ; 6 uses
   %i.kh = load <2 x double>, ptr %i.kg, align 8, !tbaa !139
   %i.ki = insertelement <2 x double> poison, double %i.fj, i64 0
-  %i.kj = shufflevector <2 x double> %i.ki, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.kj = shufflevector <2 x double> %i.ki, <2 x double> poison, <2 x i32> zeroinitializer
   %i.kk = fmul <2 x double> %i.kj, %i.kh
   store <2 x double> %i.kk, ptr %i.c, align 16, !tbaa !139
   %i.kl = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.km = getelementptr inbounds nuw i8, ptr %i.kg, i64 16
-  %i.kn = load double, ptr %i.km, align 8, !tbaa !139
-  %9 = fmul double %i.fj, %i.kn
-  store double %9, ptr %i.kl, align 16, !tbaa !139
-  %10 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %11 = load double, ptr %i.fc, align 8, !tbaa !139
-  %12 = fmul double %i.ff, %11
-  store double %12, ptr %10, align 8, !tbaa !139
-  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %14 = getelementptr inbounds nuw i8, ptr %i.kg, i64 32
-  %15 = load <2 x double>, ptr %14, align 8, !tbaa !139
-  %16 = fmul <2 x double> %i.kj, %15
-  store <2 x double> %16, ptr %13, align 16, !tbaa !139
+  %9 = load double, ptr %i.km, align 8, !tbaa !139
+  %i.kn = load double, ptr %i.fc, align 8, !tbaa !139
+  %10 = getelementptr inbounds nuw i8, ptr %i.kg, i64 32
+  %11 = load <2 x double>, ptr %10, align 8, !tbaa !139
+  %12 = insertelement <4 x double> poison, double %i.fj, i64 0
+  %13 = insertelement <4 x double> %12, double %i.ff, i64 1
+  %14 = shufflevector <4 x double> %13, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 0> ; 2 uses
+  %15 = insertelement <4 x double> poison, double %9, i64 0
+  %16 = insertelement <4 x double> %15, double %i.kn, i64 1
+  %17 = shufflevector <2 x double> %11, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %18 = shufflevector <4 x double> %16, <4 x double> %17, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %19 = fmul <4 x double> %14, %18
+  store <4 x double> %19, ptr %i.kl, align 16, !tbaa !139
   %i.ko = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.kp = getelementptr inbounds nuw i8, ptr %i.kg, i64 48
   %i.kq = load double, ptr %i.kp, align 8, !tbaa !139
-  %17 = fmul double %i.fj, %i.kq
-  store double %17, ptr %i.ko, align 16, !tbaa !139
-  %i.kr = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  %18 = getelementptr inbounds nuw i8, ptr %i.bp, i64 224
-  %19 = load double, ptr %18, align 8, !tbaa !139
-  %20 = fmul double %i.ff, %19
-  store double %20, ptr %i.kr, align 8, !tbaa !139
-  %21 = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  %22 = getelementptr inbounds nuw i8, ptr %i.kg, i64 64
-  %23 = load <2 x double>, ptr %22, align 8, !tbaa !139
-  %24 = fmul <2 x double> %i.kj, %23
-  store <2 x double> %24, ptr %21, align 16, !tbaa !139
+  %i.kr = getelementptr inbounds nuw i8, ptr %i.bp, i64 224
+  %20 = load double, ptr %i.kr, align 8, !tbaa !139
+  %21 = getelementptr inbounds nuw i8, ptr %i.kg, i64 64
+  %22 = load <2 x double>, ptr %21, align 8, !tbaa !139
+  %23 = insertelement <4 x double> poison, double %i.kq, i64 0
+  %24 = insertelement <4 x double> %23, double %20, i64 1
+  %25 = shufflevector <2 x double> %22, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %26 = shufflevector <4 x double> %24, <4 x double> %25, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %27 = fmul <4 x double> %14, %26
+  store <4 x double> %27, ptr %i.ko, align 16, !tbaa !139
   %i.ks = getelementptr inbounds nuw i8, ptr %i.c, i64 80
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kg, i64 80
   %i.ku = load double, ptr %i.kt, align 8, !tbaa !139
@@ -917,24 +916,24 @@ bb.bl:                                            ; preds = %_ZNK16OpenColorIO_v
   %i.ld = load ptr, ptr %i.fb, align 8, !tbaa !177 ; 6 uses
   %i.le = load <2 x double>, ptr %i.ld, align 8, !tbaa !139
   %i.lf = insertelement <2 x double> poison, double %i.fj, i64 0
-  %i.lg = shufflevector <2 x double> %i.lf, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.lg = shufflevector <2 x double> %i.lf, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.lh = fmul <2 x double> %i.lg, %i.le
   store <2 x double> %i.lh, ptr %i.d, align 16, !tbaa !139
   %i.li = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.lj = getelementptr inbounds nuw i8, ptr %i.ld, i64 16
   %i.lk = load double, ptr %i.lj, align 8, !tbaa !139
-  %25 = fmul double %i.fj, %i.lk
-  store double %25, ptr %i.li, align 16, !tbaa !139
-  %i.ll = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %26 = getelementptr inbounds nuw i8, ptr %i.ld, i64 32
-  %27 = load <2 x double>, ptr %26, align 8, !tbaa !139
-  %28 = fmul <2 x double> %i.lg, %27
-  store <2 x double> %28, ptr %i.ll, align 8, !tbaa !139
-  %29 = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  %30 = getelementptr inbounds nuw i8, ptr %i.ld, i64 48
-  %31 = load double, ptr %30, align 8, !tbaa !139
-  %32 = fmul double %i.fj, %31
-  store double %32, ptr %29, align 8, !tbaa !139
+  %28 = getelementptr inbounds nuw i8, ptr %i.ld, i64 32
+  %29 = load double, ptr %28, align 8, !tbaa !139
+  %i.ll = getelementptr inbounds nuw i8, ptr %i.ld, i64 40
+  %30 = load <2 x double>, ptr %i.ll, align 8, !tbaa !139
+  %31 = insertelement <4 x double> poison, double %i.fj, i64 0
+  %32 = shufflevector <4 x double> %31, <4 x double> poison, <4 x i32> zeroinitializer
+  %33 = insertelement <4 x double> poison, double %i.lk, i64 0
+  %34 = insertelement <4 x double> %33, double %29, i64 1
+  %35 = shufflevector <2 x double> %30, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %36 = shufflevector <4 x double> %34, <4 x double> %35, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %37 = fmul <4 x double> %32, %36
+  store <4 x double> %37, ptr %i.li, align 16, !tbaa !139
   %i.lm = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   %i.ln = getelementptr inbounds nuw i8, ptr %i.ld, i64 64
   %i.lo = load <2 x double>, ptr %i.ln, align 8, !tbaa !139

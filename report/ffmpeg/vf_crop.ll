@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !42   ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 32 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 30 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.g = load i32, ptr %i.f, align 4, !tbaa !38
   %i.h = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.g) #8 ; 4 uses
@@ -212,17 +212,12 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !29
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !28
-  %1 = getelementptr inbounds nuw i8, ptr %i.k, i64 40
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 112 ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 120
-  %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 136
-  %i.n = load <2 x i32>, ptr %1, align 8, !tbaa !25
-  %i.o = sitofp <2 x i32> %i.n to <2 x double>    ; 3 uses
-  %3 = extractelement <2 x double> %i.o, i64 0
-  store double %3, ptr %2, align 8, !tbaa !44
-  %4 = extractelement <2 x double> %i.o, i64 1
-  store double %4, ptr %i.m, align 8, !tbaa !44
-  store <2 x double> %i.o, ptr %i.l, align 8, !tbaa !44
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 40
+  %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 112 ; 4 uses
+  %i.n = load <2 x i32>, ptr %i.l, align 8, !tbaa !25
+  %i.o = sitofp <2 x i32> %i.n to <2 x double>
+  %1 = shufflevector <2 x double> %i.o, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  store <4 x double> %1, ptr %i.m, align 8, !tbaa !44
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.r = load <2 x i32>, ptr %i.p, align 8, !tbaa !25
@@ -299,13 +294,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   store <2 x i32> %i.bg, ptr %i.bh, align 8, !tbaa !25
   %i.bj = getelementptr inbounds nuw i8, ptr %i.e, i64 80 ; 3 uses
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !72
-  %i.bl = call i32 @av_expr_parse_and_eval(ptr noundef nonnull %i.a, ptr noundef %i.bk, ptr noundef nonnull @var_names, ptr noundef nonnull %2, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c) #8 ; 0 uses
+  %i.bl = call i32 @av_expr_parse_and_eval(ptr noundef nonnull %i.a, ptr noundef %i.bk, ptr noundef nonnull @var_names, ptr noundef nonnull %i.m, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c) #8 ; 0 uses
   %i.bm = load double, ptr %i.a, align 8, !tbaa !44 ; 2 uses
   store double %i.bm, ptr %i.av, align 8, !tbaa !44
   store double %i.bm, ptr %i.aw, align 8, !tbaa !44
   %i.bn = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 2 uses
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !73 ; 2 uses
-  %i.bp = call i32 @av_expr_parse_and_eval(ptr noundef nonnull %i.a, ptr noundef %i.bo, ptr noundef nonnull @var_names, ptr noundef nonnull %2, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c) #8 ; 2 uses
+  %i.bp = call i32 @av_expr_parse_and_eval(ptr noundef nonnull %i.a, ptr noundef %i.bo, ptr noundef nonnull @var_names, ptr noundef nonnull %i.m, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c) #8 ; 2 uses
   %i.bq = icmp slt i32 %i.bp, 0
   br i1 %i.bq, label %bb.t, label %bb.f
 
@@ -314,7 +309,7 @@ bb.f:                                             ; preds = %bb.e
   store double %i.br, ptr %i.ax, align 8, !tbaa !44
   store double %i.br, ptr %i.ay, align 8, !tbaa !44
   %i.bs = load ptr, ptr %i.bj, align 8, !tbaa !72 ; 2 uses
-  %i.bt = call i32 @av_expr_parse_and_eval(ptr noundef nonnull %i.a, ptr noundef %i.bs, ptr noundef nonnull @var_names, ptr noundef nonnull %2, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c) #8 ; 2 uses
+  %i.bt = call i32 @av_expr_parse_and_eval(ptr noundef nonnull %i.a, ptr noundef %i.bs, ptr noundef nonnull @var_names, ptr noundef nonnull %i.m, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c) #8 ; 2 uses
   %i.bu = icmp slt i32 %i.bt, 0
   br i1 %i.bu, label %bb.t, label %bb.g
 

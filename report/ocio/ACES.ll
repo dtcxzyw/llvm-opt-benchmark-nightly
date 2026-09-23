@@ -204,16 +204,12 @@ declare void @_ZN16OpenColorIO_v2_520build_vonkries_adaptERKNS_12MatrixOpData7Of
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN16OpenColorIO_v2_511ACES_OUTPUT30Generate_nit_normalization_opsERNS_10OpRcPtrVecEd(ptr noundef nonnull align 8 dereferenceable(144) %0, double noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x double], align 16            ; 7 uses
-  %2 = fmul double %1, 1.000000e-02               ; 3 uses
+  %i.a = alloca [4 x double], align 16            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  store double %2, ptr %i.a, align 16, !tbaa !45
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store double %2, ptr %3, align 8, !tbaa !45
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store double %2, ptr %4, align 16, !tbaa !45
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store double 1.000000e+00, ptr %5, align 8, !tbaa !45
+  %.scalar = fmul double %1, 1.000000e-02
+  %2 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %.scalar, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  store <4 x double> %3, ptr %i.a, align 16, !tbaa !45
   call void @_ZN16OpenColorIO_v2_513CreateScaleOpERNS_10OpRcPtrVecEPKdNS_18TransformDirectionE(ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef nonnull %i.a, i32 noundef 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret void

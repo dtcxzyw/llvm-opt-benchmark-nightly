@@ -94,7 +94,7 @@ bb.a:
   %i.g = alloca double, align 8                   ; 6 uses
   %i.h = alloca double, align 8                   ; 8 uses
   %i.i = alloca double, align 8                   ; 8 uses
-  %i.j = alloca [8 x double], align 16            ; 10 uses
+  %i.j = alloca [8 x double], align 16            ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
@@ -362,7 +362,6 @@ check_retval.exit101:                             ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #14
   store double 0.000000e+00, ptr %i.i, align 8, !tbaa !17
   %i.dj = icmp sgt i32 %i.df, 2
-  %4 = select i1 %i.dj, double 1.000000e-01, double 1.000000e-03 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #14
   store double 1.000000e-03, ptr %i.t, align 16, !tbaa !23
   store i32 0, ptr %2, align 16, !tbaa !24
@@ -377,28 +376,21 @@ check_retval.exit101:                             ; preds = %bb.z
   store i32 %.ph112, ptr %i.o, align 4, !tbaa !25
   store ptr %.ph, ptr %i.p, align 16, !tbaa !19
   %exp2 = call double @exp2(double -0.000000e+00) #14 ; 0 uses
-  store double %4, ptr %i.j, align 16, !tbaa !17
   %exp2.1 = call double @exp2(double -1.000000e+00) #14 ; 0 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %exp2.2 = call double @exp2(double -2.000000e+00) #14 ; 0 uses
-  %6 = insertelement <2 x double> poison, double %4, i64 0
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
-  %8 = fmul nnan <2 x double> %7, <double 5.000000e-01, double 2.500000e-01>
-  store <2 x double> %8, ptr %5, align 8, !tbaa !17
   %exp2.3 = call double @exp2(double -3.000000e+00) #14 ; 0 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  %4 = select i1 %i.dj, double 1.000000e-01, double 1.000000e-03 ; 5 uses
+  %5 = insertelement <4 x double> poison, double %4, i64 0
+  %6 = shufflevector <4 x double> %5, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %7 = fmul nnan <4 x double> %6, <double 1.000000e+00, double 5.000000e-01, double 2.500000e-01, double 1.250000e-01>
+  store <4 x double> %7, ptr %i.j, align 16, !tbaa !17
   %exp2.4 = call double @exp2(double -4.000000e+00) #14 ; 0 uses
-  %10 = fmul nnan <2 x double> %7, <double 1.250000e-01, double 6.250000e-02>
-  store <2 x double> %10, ptr %9, align 8, !tbaa !17
+  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %exp2.5 = call double @exp2(double -5.000000e+00) #14 ; 0 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %exp2.6 = call double @exp2(double -6.000000e+00) #14 ; 0 uses
-  %12 = fmul nnan <2 x double> %7, <double 3.125000e-02, double 1.562500e-02>
-  store <2 x double> %12, ptr %11, align 8, !tbaa !17
   %exp2.7 = call double @exp2(double -7.000000e+00) #14 ; 0 uses
-  %13 = fmul nnan double %4, 7.812500e-03
-  %14 = getelementptr inbounds nuw i8, ptr %i.j, i64 56
-  store double %13, ptr %14, align 8, !tbaa !17
+  %9 = fmul nnan <4 x double> %6, <double 6.250000e-02, double 3.125000e-02, double 1.562500e-02, double 7.812500e-03>
+  store <4 x double> %9, ptr %8, align 16, !tbaa !17
   %i.dm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store double %4, ptr %i.t, align 16, !tbaa !23
   %i.dn = load ptr, ptr %i.a, align 8, !tbaa !31

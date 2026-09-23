@@ -206,7 +206,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN3igl8copyleft4cgal9wire_meshIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IdLin1ELi1ELi0ELin1ELi1EEES5_S6_NS4_IiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_10MatrixBaseIT_EERKNS9_IT0_EERKNS9_IT1_EEibRNS3_15PlainObjectBaseIT2_EERNSM_IT3_EERNSM_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, i32 noundef %3, i1 noundef zeroext %4, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(16) %7) local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %8 = alloca %"class.Eigen::Matrix.226", align 16 ; 7 uses
+  %8 = alloca %"class.Eigen::Matrix.226", align 16 ; 6 uses
   %9 = alloca %"class.Eigen::JacobiSVD", align 16 ; 11 uses
   %10 = alloca %"struct.Eigen::internal::evaluator.169", align 8 ; 5 uses
   %11 = alloca %"struct.Eigen::internal::evaluator.173", align 8 ; 5 uses
@@ -441,9 +441,8 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc186, %_ZNSt6v
   br label %.lr.ph528
 
 .lr.ph528:                                        ; preds = %.lr.ph528.unr-lcssa, %.epil.preheader
-  %.sroa.8379.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.bu = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.bt = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.bv = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.bw = getelementptr inbounds nuw i8, ptr %9, i64 128
   %i.bx = getelementptr inbounds nuw i8, ptr %9, i64 140
@@ -768,7 +767,7 @@ bb.x:                                             ; preds = %bb.t, %_ZNSt6vector
 
 .thread:                                          ; preds = %bb.x
   store <2 x double> %.sroa.0376.8.vec.insert, ptr %16, align 16
-  store double %i.hg, ptr %.sroa.8379.0..sroa_idx, align 16, !tbaa !53
+  store double %i.hg, ptr %i.bt, align 16, !tbaa !53
   br label %bb.z
 
 _ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit: ; preds = %bb.x
@@ -777,7 +776,7 @@ _ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit: ;
   %i.ho = fdiv <2 x double> %.sroa.0376.8.vec.insert, %i.hn ; 5 uses
   store <2 x double> %i.ho, ptr %16, align 16, !tbaa !53, !alias.scope !330
   %i.hp = fdiv double %i.hg, %.scalar.i           ; 5 uses
-  store double %i.hp, ptr %.sroa.8379.0..sroa_idx, align 16, !tbaa !19, !alias.scope !330
+  store double %i.hp, ptr %i.bt, align 16, !tbaa !19, !alias.scope !330
   %.pre608 = fmul <2 x double> %i.ho, %i.ho       ; 2 uses
   %shift832 = shufflevector <2 x double> %.pre608, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop833 = fadd <2 x double> %.pre608, %shift832
@@ -797,7 +796,7 @@ bb.y:                                             ; preds = %_ZNK5Eigen10MatrixB
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit, %.thread
-  %i.hv = phi <2 x double> [ %.sroa.0376.8.vec.insert, %.thread ], [ %i.ho, %bb.y ], [ %i.ht, %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit ] ; 6 uses
+  %i.hv = phi <2 x double> [ %.sroa.0376.8.vec.insert, %.thread ], [ %i.ho, %bb.y ], [ %i.ht, %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit ] ; 5 uses
   %i.hw = phi double [ %i.hg, %.thread ], [ %i.hp, %bb.y ], [ %i.hu, %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit ] ; 4 uses
   %i.hx = fmul <2 x double> %i.hv, zeroinitializer ; 2 uses
   %shift835 = shufflevector <2 x double> %i.hx, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -809,11 +808,10 @@ bb.z:                                             ; preds = %bb.y, %_ZNK5Eigen10
 
 bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23, !noalias !331
-  store double 0.000000e+00, ptr %8, align 16, !tbaa !19, !noalias !332
-  %28 = insertelement <2 x double> %i.hv, double 0.000000e+00, i64 1
-  store <2 x double> %28, ptr %i.bt, align 8, !tbaa !19, !noalias !331
-  %29 = shufflevector <2 x double> %i.hv, <2 x double> <double poison, double 1.000000e+00>, <2 x i32> <i32 1, i32 3>
-  store <2 x double> %29, ptr %i.bu, align 8, !tbaa !19, !noalias !331
+  store double 1.000000e+00, ptr %i.bu, align 16, !tbaa !19, !noalias !332
+  %28 = shufflevector <2 x double> %i.hv, <2 x double> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 1>
+  %29 = shufflevector <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x double> %28, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x double> %29, ptr %8, align 16, !tbaa !19, !noalias !331
   store double %i.hw, ptr %i.bv, align 8, !tbaa !19, !noalias !331
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23, !noalias !331
   store i32 0, ptr %i.bx, align 4, !tbaa !69, !noalias !331

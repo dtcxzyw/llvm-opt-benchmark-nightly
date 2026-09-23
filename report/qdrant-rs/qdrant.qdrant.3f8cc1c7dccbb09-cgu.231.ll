@@ -202,7 +202,7 @@ bb.a:
   %i.s = alloca [512 x i8], align 8               ; 10 uses
   %i.t = alloca [480 x i8], align 8               ; 7 uses
   %.sroa.615 = alloca [48 x i8], align 8          ; 6 uses
-  %i.u = alloca [480 x i8], align 8               ; 12 uses
+  %i.u = alloca [480 x i8], align 8               ; 10 uses
   %i.v = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.68 = alloca [48 x i8], align 8           ; 6 uses
   %i.w = alloca [48 x i8], align 8                ; 7 uses
@@ -605,10 +605,6 @@ bb.bg:                                            ; preds = %bb.bf
 bb.bh:                                            ; preds = %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   %i.du = getelementptr inbounds nuw i8, ptr %i.u, i64 224
-  %1 = load i64, ptr %i.du, align 8, !noundef !7
-  %2 = getelementptr inbounds nuw i8, ptr %i.u, i64 232
-  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 248
-  %4 = load i64, ptr %3, align 8, !noundef !7
   store <2 x i64> %i.bh, ptr %0, align 8
   store <2 x i64> %i.bi, ptr %.sroa.657.0..sroa_idx, align 8
   %.sroa.859.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -620,13 +616,9 @@ bb.bh:                                            ; preds = %bb.bf
   %.sroa.1162.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %i.dt, ptr %.sroa.1162.0..sroa_idx, align 8
   %.sroa.1263.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 %1, ptr %.sroa.1263.0..sroa_idx, align 8
-  %.sroa.1364.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %5 = load <2 x i64>, ptr %2, align 8
-  %6 = shufflevector <2 x i64> %5, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %6, ptr %.sroa.1364.0..sroa_idx, align 8
-  %.sroa.1566.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i64 %4, ptr %.sroa.1566.0..sroa_idx, align 8
+  %1 = load <4 x i64>, ptr %i.du, align 8
+  %2 = shufflevector <4 x i64> %1, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i64> %2, ptr %.sroa.1263.0..sroa_idx, align 8
   %.sroa.1667.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   store <2 x i64> %i.df, ptr %.sroa.1667.0..sroa_idx, align 8
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2L9szKvfIY4_11procfs_core7process10MemoryMapsECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(24) %i.r)

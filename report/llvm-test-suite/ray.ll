@@ -204,7 +204,7 @@ bb.a:
   %3 = alloca %"struct.std::pair", align 8        ; 5 uses
   %4 = alloca %"struct.std::pair", align 8        ; 6 uses
   %5 = alloca %"struct.std::pair", align 8        ; 4 uses
-  %6 = alloca %struct.Ray, align 16               ; 7 uses
+  %6 = alloca %struct.Ray, align 16               ; 5 uses
   %i.a = alloca i8, align 1                       ; 4 uses
   %7 = alloca %struct.Vec, align 16               ; 5 uses
   %8 = alloca %struct.Ray, align 16               ; 8 uses
@@ -231,15 +231,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull @.str.1, i64 noundef 1) ; 0 uses
   %i.l = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.j, i32 noundef 512)
   %i.m = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.l, ptr noundef nonnull @.str.2, i64 noundef 5) ; 0 uses
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %.sroa.543.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %8, i64 40
-  %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %.sroa.521.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %.sroa.543.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.o = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.521.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   br label %.preheader51
 
@@ -326,11 +324,11 @@ bb.i:                                             ; preds = %.preheader, %_Z9ray
   %i.ba = shufflevector <4 x double> %i.ay, <4 x double> <double 1.000000e+00, double poison, double poison, double poison>, <4 x i32> <i32 4, i32 poison, i32 1, i32 1>
   %i.bb = insertelement <4 x double> %i.ba, double %i.y, i64 1
   %i.bc = fmul <4 x double> %i.az, %i.bb
-  store <4 x double> %i.bc, ptr %.sroa.5.0..sroa_idx, align 16, !tbaa !13
+  store <4 x double> %i.bc, ptr %.sroa.543.0..sroa_idx.a, align 16, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14, !noalias !78
   store double %i.ap, ptr %3, align 8, !tbaa !17, !noalias !78
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, i8 0, i64 24, i1 false), !noalias !78
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, i8 0, i64 24, i1 false), !noalias !78
   %i.bd = load ptr, ptr %i.h, align 8, !tbaa !19, !noalias !78
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   %i.bf = load ptr, ptr %i.be, align 8, !noalias !78
@@ -342,28 +340,24 @@ bb.i:                                             ; preds = %.preheader, %_Z9ray
   br i1 %i.bi, label %_Z9ray_traceRK3VecRK3RayRK5Scene.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bj = load <2 x double>, ptr %i.o, align 8, !tbaa !13 ; 2 uses
+  %i.bj = load <2 x double>, ptr %.sroa.521.0..sroa_idx.i.a, align 8, !tbaa !13 ; 2 uses
   %i.bk = fmul <2 x double> %i.bj, <double f0xBFD11ACEE560242A, double f0x3FE9A8365810363F> ; 2 uses
   %shift = shufflevector <2 x double> %i.bk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fsub <2 x double> %i.bk, %shift
   %i.bl = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.bm = load double, ptr %i.p, align 8, !tbaa !12 ; 2 uses
+  %i.bm = load double, ptr %i.q, align 8, !tbaa !12 ; 2 uses
   %i.bn = fmul double %i.bm, f0x3FE11ACEE560242A
   %i.bo = fadd double %i.bl, %i.bn                ; 2 uses
   %i.bp = fcmp ult double %i.bo, 0.000000e+00
   br i1 %i.bp, label %bb.k, label %_Z9ray_traceRK3VecRK3RayRK5Scene.exit
 
 bb.k:                                             ; preds = %bb.j
-  %i.bq = load double, ptr %.sroa.543.0..sroa_idx.a, align 8, !tbaa !12, !noalias !90
-  %10 = fmul double %i.bg, %i.bq
-  %i.br = load double, ptr %.sroa.5.0..sroa_idx, align 16, !tbaa !12, !noalias !91
-  %11 = fadd double %10, %i.br
+  %i.bq = load double, ptr %i.o, align 8, !tbaa !12, !noalias !90
+  %i.br = load double, ptr %.sroa.543.0..sroa_idx.a, align 16, !tbaa !12, !noalias !91
   %i.bs = load double, ptr @delta, align 8, !tbaa !13 ; 2 uses
-  %12 = fmul double %i.bm, %i.bs
-  %13 = fadd double %11, %12
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
-  %i.bt = load <2 x double>, ptr %9, align 8, !tbaa !13, !noalias !90
+  %i.bt = load <2 x double>, ptr %i.n, align 8, !tbaa !13, !noalias !90
   %i.bu = insertelement <2 x double> poison, double %i.bg, i64 0
   %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bw = fmul <2 x double> %i.bv, %i.bt
@@ -374,9 +368,12 @@ bb.k:                                             ; preds = %bb.j
   %i.cb = fmul <2 x double> %i.bj, %i.ca
   %i.cc = fadd <2 x double> %i.by, %i.cb
   store <2 x double> %i.cc, ptr %6, align 16, !tbaa !13
-  store double %13, ptr %.sroa.521.0..sroa_idx.i.a, align 16, !tbaa !13
-  store <2 x double> <double f0x3FD11ACEE560242A, double f0x3FE9A8365810363F>, ptr %i.q, align 8, !tbaa !13
-  store double f0xBFE11ACEE560242A, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !13
+  %9 = fmul double %i.bg, %i.bq
+  %10 = fadd double %9, %i.br
+  %11 = fmul double %i.bm, %i.bs
+  %12 = fadd double %10, %11
+  %13 = insertelement <4 x double> <double poison, double f0x3FD11ACEE560242A, double f0x3FE9A8365810363F, double f0xBFE11ACEE560242A>, double %12, i64 0
+  store <4 x double> %13, ptr %.sroa.5.0..sroa_idx.i, align 16, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14, !noalias !92
   store double %i.bh, ptr %2, align 8, !tbaa !17, !noalias !92
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, i8 0, i64 24, i1 false), !noalias !92

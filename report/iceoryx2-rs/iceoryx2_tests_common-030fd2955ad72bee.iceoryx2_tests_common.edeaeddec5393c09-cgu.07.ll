@@ -204,11 +204,10 @@ bb.c:                                             ; preds = %_RNvMs_NtNtNtCsg6ZE
 bb.d:                                             ; preds = %_RNvMs_NtNtNtCsg6ZEkMtNi4J_8iceoryx27service13static_config20message_type_detailsNtB4_18MessageTypeDetails13sample_layout.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.06.0.copyload = load i64, ptr %i.ac, align 8
-  %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  %2 = load <2 x ptr>, ptr %.sroa.47.0..sroa_idx, align 8
-  %.sroa.47.0.copyload = load ptr, ptr %.sroa.47.0..sroa_idx, align 8 ; 3 uses
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8
+  %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %.sroa.47.0.copyload = load ptr, ptr %.sroa.47.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %2 = load <2 x ptr>, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.79.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %.sroa.79.0.copyload = load i64, ptr %.sroa.79.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -244,11 +243,11 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _RNvXs0_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB5_14MutexProtectedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher20PublisherSharedStateNtNtNtB1C_7service14ipc_threadsafe7ServiceEENtNtCs8Chj7Szqq0n_4core5clone5Clone5cloneCskqqG2IB5b71_21iceoryx2_tests_common.exit: ; preds = %bb.d
-  store ptr %.val, ptr %0, align 8
-  %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x ptr> %2, ptr %.sroa.416.0..sroa_idx, align 8
-  %.sroa.618.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %.sroa.6.0.copyload, ptr %.sroa.618.0..sroa_idx, align 8
+  %3 = insertelement <4 x ptr> poison, ptr %.val, i64 0
+  %4 = insertelement <4 x ptr> %3, ptr %.sroa.47.0.copyload, i64 1
+  %5 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x ptr> %4, <4 x ptr> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %6, ptr %0, align 8
   %.sroa.719.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %.sroa.06.0.copyload, ptr %.sroa.719.0..sroa_idx, align 8
   %.sroa.820.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40

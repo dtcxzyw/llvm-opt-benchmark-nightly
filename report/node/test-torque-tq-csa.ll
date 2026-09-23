@@ -202,7 +202,7 @@ bb.a:
   %9 = alloca %"class.v8::internal::compiler::CodeAssemblerParameterizedLabel", align 8 ; 11 uses
   %10 = alloca %"struct.v8::internal::TorqueStructTestStructA_0", align 16 ; 5 uses
   %11 = alloca %"class.v8::internal::TNode.36", align 8 ; 2 uses
-  %12 = alloca %"struct.v8::internal::TorqueStructTestStructA_0", align 16 ; 5 uses
+  %12 = alloca %"struct.v8::internal::TorqueStructTestStructA_0", align 8 ; 5 uses
   %13 = alloca %"class.v8::internal::TNode.36", align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   store ptr %1, ptr %7, align 8
@@ -277,9 +277,9 @@ _ZN2v88internal8compiler13CodeAssembler4BindIJEEEvPNS1_31CodeAssemblerParameteri
   %i.z = load ptr, ptr %2, align 8
   store ptr %i.z, ptr %13, align 8
   call void @_ZN2v88internal13TestStruct2_0EPNS0_8compiler18CodeAssemblerStateENS0_5TNodeINS0_7ContextEEE(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructTestStructA_0") align 8 %12, ptr noundef %1, ptr noundef nonnull dead_on_return %13)
-  %i.aa = getelementptr inbounds nuw i8, ptr %12, i64 16
-  %14 = load ptr, ptr %i.aa, align 16, !noalias !1071
-  %15 = load <2 x ptr>, ptr %12, align 16, !noalias !1071
+  %i.aa = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %14 = load <2 x ptr>, ptr %i.aa, align 8, !noalias !1071
+  %15 = load ptr, ptr %12, align 8, !noalias !1071
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
@@ -300,13 +300,15 @@ bb.e:                                             ; preds = %_ZN2v88internal8com
 _ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit5: ; preds = %_ZN2v88internal8compiler13CodeAssembler4BindIJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpPNS0_5TNodeIS5_EE.exit, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @_ZN2v88internal8compiler13CodeAssembler4GotoEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull %i.f) #11
+  %16 = insertelement <4 x ptr> poison, ptr %i.x, i64 0
+  %17 = insertelement <4 x ptr> %16, ptr %15, i64 1
+  %18 = shufflevector <2 x ptr> %14, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %19 = shufflevector <4 x ptr> %17, <4 x ptr> %18, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit5, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit
-  %.sroa.035.0 = phi ptr [ %14, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit5 ], [ null, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit ]
-  %.sroa.032.0 = phi ptr [ %i.x, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit5 ], [ null, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit ]
   %i.ah = phi <2 x ptr> [ %i.y, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit5 ], [ splat (ptr null), %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit ]
-  %16 = phi <2 x ptr> [ %15, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit5 ], [ splat (ptr null), %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit ]
+  %20 = phi <4 x ptr> [ %19, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit5 ], [ splat (ptr null), %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit ]
   call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull %i.f) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
@@ -328,11 +330,7 @@ _ZN2v88internal8compiler13CodeAssembler4BindIJEEEvPNS1_31CodeAssemblerParameteri
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   store <2 x ptr> %i.ah, ptr %0, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.032.0, ptr %i.ap, align 8
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store <2 x ptr> %16, ptr %17, align 8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr %.sroa.035.0, ptr %18, align 8
+  store <4 x ptr> %20, ptr %i.ap, align 8
   call void @_ZN2v88internal8compiler18CodeAssemblerLabelD1Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %i.f) #11
   %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8            ; 3 uses

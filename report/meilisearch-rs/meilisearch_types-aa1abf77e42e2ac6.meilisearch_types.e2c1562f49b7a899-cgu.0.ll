@@ -205,9 +205,9 @@ define void @_ZN17meilisearch_types4keys21parse_expiration_date17h6fdc6edb1b5b73
 bb.a:
   %i.a = alloca [16 x i8], align 4                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 23 uses
-  %i.c = alloca [64 x i8], align 16               ; 23 uses
+  %i.c = alloca [64 x i8], align 16               ; 22 uses
   %.sroa.33.i.i = alloca [10 x i8], align 2       ; 5 uses
-  %i.d = alloca [64 x i8], align 16               ; 12 uses
+  %i.d = alloca [64 x i8], align 16               ; 10 uses
   %.sroa.41.i = alloca [10 x i8], align 2         ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [16 x i8], align 4                ; 4 uses
@@ -313,7 +313,7 @@ bb.o:                                             ; preds = %bb.n
   store i32 -2147483648, ptr %.sroa.7.0..sroa_idx25.i.i, align 16, !noalias !5952
   %.sroa.8.0..sroa_idx29.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i32 -2147483648, ptr %.sroa.8.0..sroa_idx29.i.i, align 4, !noalias !5952
-  %.sroa.9.0..sroa_idx33.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
+  %.sroa.9.0..sroa_idx33.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i32 -1, ptr %.sroa.9.0..sroa_idx33.i.i, align 8, !noalias !5952
   %.sroa.10.0..sroa_idx37.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   store i16 -32768, ptr %.sroa.10.0..sroa_idx37.i.i, align 4, !noalias !5952
@@ -397,11 +397,7 @@ bb.s:                                             ; preds = %.noexc12
 bb.t:                                             ; preds = %.noexc13
   %i.ag = load i64, ptr %i.s, align 8, !noalias !5951, !noundef !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5951
-  %.sroa.0.0.copyload24.i1.i = load i64, ptr %i.c, align 16, !noalias !5950 ; 2 uses
-  %.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %2 = load <2 x i64>, ptr %.sroa_idx.i, align 8, !noalias !5950
-  %.sroa.0.0.copyload24.i2.i = load i64, ptr %.sroa_idx.i, align 8, !noalias !5950
-  %.sroa.9.0.copyload36.i.i = load i64, ptr %.sroa.9.0..sroa_idx33.i.i, align 8, !noalias !5952
+  %2 = load <4 x i64>, ptr %i.c, align 16, !noalias !5950 ; 3 uses
   %.sroa.12.0.copyload48.i.i = load i16, ptr %.sroa.12.0..sroa_idx45.i.i, align 16, !noalias !5952
   %i.ah = load <16 x i8>, ptr %.sroa.13.0..sroa_idx49.i.i, align 2, !noalias !5952
   %.sroa.32.0.copyload128.i.i = load i8, ptr %.sroa.32.0..sroa_idx125.i.i, align 1, !noalias !5952
@@ -431,11 +427,7 @@ bb.v:                                             ; preds = %_ZN4time7parsing8pa
   %.sroa.811.0..sroa_idx12.i = getelementptr inbounds nuw i8, ptr %i.d, i64 54
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.811.0..sroa_idx12.i, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.41.i, i64 10, i1 false), !noalias !5950
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.41.i)
-  store i64 %.sroa.0.0.copyload24.i1.i, ptr %i.d, align 16, !noalias !5950
-  %.sroa.07.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store <2 x i64> %2, ptr %.sroa.07.sroa.7.0..sroa_idx.i, align 8, !noalias !5950
-  %.sroa.07.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  store i64 %.sroa.9.0.copyload36.i.i, ptr %.sroa.07.sroa.9.0..sroa_idx.i, align 8, !noalias !5950
+  store <4 x i64> %2, ptr %i.d, align 16, !noalias !5950
   %.sroa.07.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   store i16 %.sroa.12.0.copyload48.i.i, ptr %.sroa.07.sroa.10.0..sroa_idx.i, align 16, !noalias !5950
   %.sroa.07.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 34
@@ -472,10 +464,12 @@ bb.x:                                             ; preds = %bb.y, %.thread, %bb
 
 bb.y:                                             ; preds = %_ZN4time7parsing8parsable6sealed6Sealed5parse17hbc0d3cff80b2cc77E.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.41.i)
-  %.sroa.7.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0.copyload24.i2.i to i32
+  %3 = bitcast <4 x i64> %2 to <8 x i32>
+  %.sroa.7.sroa.0.0.extract.trunc = extractelement <8 x i32> %3, i64 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !5950
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %.not9 = icmp eq i64 %.sroa.0.0.copyload24.i1.i, 2
+  %4 = extractelement <4 x i64> %2, i64 0
+  %.not9 = icmp eq i64 %4, 2
   br i1 %.not9, label %bb.x, label %bb.z
 
 .sink.split:                                      ; preds = %.noexc14, %.thread84

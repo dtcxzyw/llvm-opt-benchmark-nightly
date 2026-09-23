@@ -205,7 +205,7 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueNtNtCsj855HSQkgLM_15crossbeam_epoch9coll
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvMs1_NtCshByAT0BfsDP_7ndarray12impl_methodsINtB8_8ArrayRefdINtNtNtB8_9dimension3dim3DimAjj2_EE5sliceINtNtB8_5slice9SliceInfoANtB1G_13SliceInfoElemB1s_BY_IBZ_Ajj1_EEECskcxRuJ53GpR_9rustworkx(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(64) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 10 uses
+  %i.a = alloca [32 x i8], align 8                ; 8 uses
   %.sroa.01.i = alloca i64, align 8               ; 9 uses
   %.sroa.06.i = alloca i64, align 8               ; 8 uses
   %i.b = alloca [40 x i8], align 8                ; 10 uses
@@ -220,28 +220,17 @@ bb.a:
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.e, i64 16, i1 false), !alias.scope !577
   store ptr %i.c, ptr %i.b, align 8, !alias.scope !575, !noalias !576
-  %.sroa.0.0.copyload = load i64, ptr %2, align 8 ; 2 uses
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %3 = load <2 x i64>, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8
+  %3 = load <4 x i64>, ptr %2, align 8            ; 3 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %4 = load <2 x i64>, ptr %.sroa.8.0..sroa_idx, align 8
-  %.sroa.8.0.copyload = load i64, ptr %.sroa.8.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %.sroa.10.0.copyload = load i64, ptr %.sroa.10.0..sroa_idx, align 8
+  %4 = load <4 x i64>, ptr %.sroa.7.0..sroa_idx, align 8 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !578)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !579)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i)
   store i64 0, ptr %.sroa.06.i, align 8, !noalias !580
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01.i)
   store i64 0, ptr %.sroa.01.i, align 8, !noalias !580
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
-  %i.f = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.copyload, i64 1)
+  %5 = extractelement <4 x i64> %3, i64 0
+  %i.f = tail call i64 @llvm.usub.sat.i64(i64 %5, i64 1)
   switch i64 %i.f, label %bb.b [
     i64 0, label %_RNvXsc_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj1_EINtNtNtCslwFuT2d6ECx_4core3ops5index8IndexMutjE9index_mut.exit5.i.i.i
     i64 1, label %_RNvXsh_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj2_EINtNtNtCslwFuT2d6ECx_4core3ops5index5IndexjE5index.exit.i.i.i
@@ -261,9 +250,7 @@ bb.d:                                             ; preds = %_RNvXsh_NtNtCshByAT
 
 _RNvXsc_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj1_EINtNtNtCslwFuT2d6ECx_4core3ops5index8IndexMutjE9index_mut.exit5.i.i.i: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !583
-  store i64 %.sroa.0.0.copyload, ptr %i.a, align 8, !noalias !583
-  store <2 x i64> %3, ptr %5, align 8, !noalias !583
-  store i64 %.sroa.6.0.copyload, ptr %6, align 8, !noalias !583
+  store <4 x i64> %3, ptr %i.a, align 8, !noalias !583
   tail call void @llvm.experimental.noalias.scope.decl(metadata !584)
   %i.g = call noundef i64 @_RNvNtCshByAT0BfsDP_7ndarray9dimension8do_slice(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %.sroa.4.0..sroa_idx.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %.sroa.5.0..sroa_idx.i, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1173), !noalias !585
   %i.h = load ptr, ptr %i.b, align 8, !alias.scope !586, !noalias !587, !nonnull !67, !noundef !67
@@ -280,10 +267,11 @@ bb.e:                                             ; preds = %bb.i
   unreachable
 
 _RNvXsh_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj2_EINtNtNtCslwFuT2d6ECx_4core3ops5index5IndexjE5index.exit.i.i.i: ; preds = %bb.a
-  %i.l = icmp slt i64 %.sroa.4.0.copyload, 0
+  %6 = extractelement <4 x i64> %3, i64 1         ; 2 uses
+  %i.l = icmp slt i64 %6, 0
   %.pre.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !579, !noalias !585 ; 2 uses
   %i.m = select i1 %i.l, i64 %.pre.i.i.i, i64 0
-  %spec.select.i.i.i = add i64 %i.m, %.sroa.4.0.copyload ; 2 uses
+  %spec.select.i.i.i = add i64 %i.m, %6           ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !589)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !590)
   %i.n = icmp ult i64 %spec.select.i.i.i, %.pre.i.i.i
@@ -311,7 +299,8 @@ _RNCINvMs2_NtCshByAT0BfsDP_7ndarray12impl_methodsINtBa_9ArrayBaseINtBa_8ViewRepr
   %.sroa.0.1.i = phi i64 [ %i.k, %_RNvXsc_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj1_EINtNtNtCslwFuT2d6ECx_4core3ops5index8IndexMutjE9index_mut.exit5.i.i.i ], [ 0, %_RINvNtCshByAT0BfsDP_7ndarray9dimension16do_collapse_axisINtNtB2_3dim3DimAjj2_EECskcxRuJ53GpR_9rustworkx.exit.i.i.i ], [ 0, %bb.a ]
   %.sink.i.i.i = phi ptr [ %.sroa.01.i, %_RNvXsc_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj1_EINtNtNtCslwFuT2d6ECx_4core3ops5index8IndexMutjE9index_mut.exit5.i.i.i ], [ %.sroa.06.i, %_RINvNtCshByAT0BfsDP_7ndarray9dimension16do_collapse_axisINtNtB2_3dim3DimAjj2_EECskcxRuJ53GpR_9rustworkx.exit.i.i.i ], [ %.sroa.01.i, %bb.a ]
   store i64 1, ptr %.sink.i.i.i, align 8, !noalias !583
-  %i.s = call i64 @llvm.usub.sat.i64(i64 %.sroa.7.0.copyload, i64 1)
+  %7 = extractelement <4 x i64> %4, i64 0
+  %i.s = call i64 @llvm.usub.sat.i64(i64 %7, i64 1)
   switch i64 %i.s, label %bb.b [
     i64 0, label %bb.j
     i64 1, label %bb.i
@@ -330,10 +319,11 @@ bb.i:                                             ; preds = %_RNCINvMs2_NtCshByA
 
 _RNvXsh_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj2_EINtNtNtCslwFuT2d6ECx_4core3ops5index5IndexjE5index.exit.i.i.1.i: ; preds = %bb.i
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %.sroa.4.0..sroa_idx.i, i64 %.sroa.06.i.0..sroa.06.i.0..sroa.06.i.0..sroa.06.0..sroa.06.0..sroa.06.0..1.i
-  %i.w = icmp slt i64 %.sroa.8.0.copyload, 0
+  %8 = extractelement <4 x i64> %4, i64 1         ; 2 uses
+  %i.w = icmp slt i64 %8, 0
   %.pre.i.i.1.i = load i64, ptr %i.v, align 8, !alias.scope !579, !noalias !598 ; 2 uses
   %i.x = select i1 %i.w, i64 %.pre.i.i.1.i, i64 0
-  %spec.select.i.i.1.i = add i64 %i.x, %.sroa.8.0.copyload ; 2 uses
+  %spec.select.i.i.1.i = add i64 %i.x, %8         ; 2 uses
   %i.y = icmp ult i64 %spec.select.i.i.1.i, %.pre.i.i.1.i
   br i1 %i.y, label %_RINvNtCshByAT0BfsDP_7ndarray9dimension16do_collapse_axisINtNtB2_3dim3DimAjj2_EECskcxRuJ53GpR_9rustworkx.exit.i.i.1.i, label %bb.g, !prof !77
 
@@ -348,9 +338,7 @@ _RINvNtCshByAT0BfsDP_7ndarray9dimension16do_collapse_axisINtNtB2_3dim3DimAjj2_EE
 bb.j:                                             ; preds = %_RNCINvMs2_NtCshByAT0BfsDP_7ndarray12impl_methodsINtBa_9ArrayBaseINtBa_8ViewReprRdEINtNtNtBa_9dimension3dim3DimAjj2_EdE10slice_moveINtNtBa_5slice9SliceInfoANtB27_13SliceInfoElemB1M_B1i_IB1j_Ajj1_EEE0CskcxRuJ53GpR_9rustworkx.exit.i.i
   %.sroa.06.i.0..sroa.06.i.0..sroa.06.i.0..sroa.06.0..sroa.06.0..sroa.06.0.7.1.i = load i64, ptr %.sroa.06.i, align 8, !noalias !597, !noundef !67 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !597
-  store i64 %.sroa.7.0.copyload, ptr %i.a, align 8, !noalias !597
-  store <2 x i64> %4, ptr %5, align 8, !noalias !597
-  store i64 %.sroa.10.0.copyload, ptr %6, align 8, !noalias !597
+  store <4 x i64> %4, ptr %i.a, align 8, !noalias !597
   %i.ae = icmp ult i64 %.sroa.06.i.0..sroa.06.i.0..sroa.06.i.0..sroa.06.0..sroa.06.0..sroa.06.0.7.1.i, 2
   br i1 %i.ae, label %_RNvXsh_NtNtCshByAT0BfsDP_7ndarray9dimension10conversionINtNtB7_3dim3DimAjj2_EINtNtNtCslwFuT2d6ECx_4core3ops5index5IndexjE5index.exit8.i.i.1.i, label %bb.c
 
@@ -753,7 +741,7 @@ bb.cx:                                            ; preds = %.body
 define internal void @_RNvNtCskcxRuJ53GpR_9rustworkx13shortest_path34___pyfunction_graph_distance_matrix(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr nofree readnone captures(none) %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3, ptr noundef %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
-  %i.b = alloca [64 x i8], align 8                ; 10 uses
+  %i.b = alloca [64 x i8], align 8                ; 8 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [72 x i8], align 8                ; 12 uses
   %i.e = alloca [24 x i8], align 8                ; 4 uses
@@ -761,7 +749,7 @@ bb.a:
   %i.g = alloca [40 x i8], align 8                ; 8 uses
   %i.h = alloca [16 x i8], align 8                ; 6 uses
   %i.i = alloca [24 x i8], align 8                ; 9 uses
-  %i.j = alloca [64 x i8], align 8                ; 11 uses
+  %i.j = alloca [64 x i8], align 8                ; 10 uses
   %i.k = alloca [16 x i8], align 8                ; 7 uses
   %i.l = alloca [24 x i8], align 8                ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 11 uses
@@ -1164,8 +1152,7 @@ bb.ax:                                            ; preds = %.body.i.i.i.i
   %i.hp = load i64, ptr %i.o, align 8, !noalias !126499, !noundef !67
   %i.hq = icmp ult i64 %i.hp, %i.bh
   %i.hr = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 2 uses
-  %i.hs = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 2 uses
-  %.sroa.6135.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 40 ; 2 uses
+  %i.hs = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 3 uses
   br i1 %i.hq, label %bb.bd, label %bb.az
 
 .loopexit.i.i:                                    ; preds = %bb.be
@@ -1184,29 +1171,23 @@ bb.ay:                                            ; preds = %.loopexit.split-lp.
           to label %.thread.i.i unwind label %bb.bm, !noalias !126501
 
 bb.az:                                            ; preds = %.loopexit164.i.i
-  %.sroa.9.24..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 56
   call void @llvm.experimental.noalias.scope.decl(metadata !126539)
   %i.ht = load ptr, ptr %i.hr, align 8, !alias.scope !126540, !noalias !126541, !nonnull !67, !noundef !67
-  %.sroa.4142.8.copyload.i.i = load i64, ptr %i.hs, align 8, !alias.scope !126542, !noalias !126499 ; 3 uses
-  %.sroa.9145.24.copyload.i.i = load i64, ptr %.sroa.9.24..sroa_idx.i.i, align 8, !alias.scope !126542, !noalias !126499
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !126499
-  store ptr %i.h, ptr %i.c, align 8, !noalias !126543
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !126544
-  store i64 0, ptr %i.b, align 8, !noalias !126545
+  store ptr %i.h, ptr %i.c, align 8, !noalias !126542
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !126543
+  store i64 0, ptr %i.b, align 8, !noalias !126544
   %.sroa.5126.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i64 %.sroa.4142.8.copyload.i.i, ptr %.sroa.5126.0..sroa_idx.i.i, align 8, !noalias !126545
-  %.sroa.6128.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %5 = load <2 x i64>, ptr %.sroa.6135.8..sroa_idx.i.i, align 8, !alias.scope !126542, !noalias !126499
-  %6 = shufflevector <2 x i64> %5, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %6, ptr %.sroa.6128.0..sroa_idx.i.i, align 8, !noalias !126545
-  %.sroa.6128.sroa.5.0..sroa.6128.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store i64 %.sroa.9145.24.copyload.i.i, ptr %.sroa.6128.sroa.5.0..sroa.6128.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !126545
+  %5 = load <4 x i64>, ptr %i.hs, align 8, !alias.scope !126545, !noalias !126499
+  %.sroa.4142.8.copyload.i.i = load i64, ptr %i.hs, align 8, !alias.scope !126545, !noalias !126499 ; 2 uses
+  %6 = shufflevector <4 x i64> %5, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i64> %6, ptr %.sroa.5126.0..sroa_idx.i.i, align 8, !noalias !126544
   %.sroa.6128.sroa.6.0..sroa.6128.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store ptr %i.ht, ptr %.sroa.6128.sroa.6.0..sroa.6128.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !126545
+  store ptr %i.ht, ptr %.sroa.6128.sroa.6.0..sroa.6128.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !126544
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   store i64 1, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !126546
   %i.hu = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i64 0, ptr %i.hu, align 8, !noalias !126544
+  store i64 0, ptr %i.hu, align 8, !noalias !126543
   %i.hv = invoke noundef i64 @_RNvCslLviULm4Laq_10rayon_core19current_num_threads()
           to label %.noexc86.i.i unwind label %.loopexit.split-lp.i.i, !noalias !126501
 
@@ -1218,7 +1199,7 @@ bb.az:                                            ; preds = %.loopexit164.i.i
           to label %bb.ba unwind label %.loopexit.split-lp.i.i, !noalias !126501
 
 bb.ba:                                            ; preds = %.noexc86.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !126544
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !126543
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !126499
   br label %_RINvYINtNtCshByAT0BfsDP_7ndarray9iterators11AxisIterMutdINtNtNtB8_9dimension3dim3DimAjj1_EENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtB1x_8adapters9enumerateINtB2C_9EnumeratepEB1r_4fold9enumerateINtB8_9ArrayBaseINtB8_8ViewReprQdEBS_dEuNCINvNvB1r_8for_each4callTjB3F_ENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core13shortest_path15distance_matrix15distance_matrixRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB7s_5types3any5PyAnyEB7n_NtB6n_10UndirectedEEs6_0E0E0ECskcxRuJ53GpR_9rustworkx.exit.i.i
 
@@ -1289,6 +1270,7 @@ _RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Al
 
 bb.bd:                                            ; preds = %.loopexit164.i.i
   %i.io = getelementptr inbounds nuw i8, ptr %i.j, i64 48
+  %.sroa.6135.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   call void @llvm.experimental.noalias.scope.decl(metadata !126549)
   %i.ip = load ptr, ptr %i.hr, align 8, !alias.scope !126550, !noalias !126551, !nonnull !67, !noundef !67
   %.sroa.4134.8.copyload.i.i = load i64, ptr %i.hs, align 8, !alias.scope !126552, !noalias !126499 ; 2 uses
@@ -1691,7 +1673,7 @@ bb.da:                                            ; preds = %_RINvNtCslwFuT2d6EC
 define internal void @_RNvNtCskcxRuJ53GpR_9rustworkx13shortest_path36___pyfunction_digraph_distance_matrix(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr nofree readnone captures(none) %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3, ptr noundef %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
-  %i.b = alloca [64 x i8], align 8                ; 10 uses
+  %i.b = alloca [64 x i8], align 8                ; 8 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [72 x i8], align 8                ; 14 uses
   %i.e = alloca [24 x i8], align 8                ; 4 uses
@@ -1703,7 +1685,7 @@ bb.a:
   %i.k = alloca [40 x i8], align 8                ; 8 uses
   %i.l = alloca [16 x i8], align 8                ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 12 uses
-  %i.n = alloca [64 x i8], align 8                ; 11 uses
+  %i.n = alloca [64 x i8], align 8                ; 10 uses
   %i.o = alloca [16 x i8], align 8                ; 8 uses
   %i.p = alloca [24 x i8], align 8                ; 6 uses
   %i.q = alloca [24 x i8], align 8                ; 11 uses
@@ -2106,8 +2088,7 @@ bb.bp:                                            ; preds = %.loopexit204.i.i, %
   %i.kr = load i64, ptr %i.s, align 8, !noalias !127086, !noundef !67
   %i.ks = icmp ult i64 %i.kr, %i.bo
   %i.kt = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
-  %i.ku = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 2 uses
-  %.sroa.6169.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 40 ; 2 uses
+  %i.ku = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 3 uses
   br i1 %i.ks, label %bb.bv, label %bb.br
 
 .loopexit204.i.i:                                 ; preds = %_RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map8map_foldjNtCsiCakYNGl26C_11fixedbitset11FixedBitSetuNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core13shortest_path15distance_matrix15distance_matrixRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4f_5types3any5PyAnyEB4a_EEs3_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtCs87CvPiUlf0m_5alloc3vecINtB6q_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB1C_EE0E0E0CskcxRuJ53GpR_9rustworkx.exit.i.i.i.i.i.i.i.i.i, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecNtCsiCakYNGl26C_11fixedbitset11FixedBitSetE7reserveCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i85.i.i
@@ -2132,29 +2113,23 @@ bb.bq:                                            ; preds = %.loopexit.split-lp.
           to label %.thread.i.i unwind label %bb.ce, !noalias !127088
 
 bb.br:                                            ; preds = %bb.bp
-  %.sroa.9.24..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 56
   call void @llvm.experimental.noalias.scope.decl(metadata !127154)
   %i.kv = load ptr, ptr %i.kt, align 8, !alias.scope !127155, !noalias !127156, !nonnull !67, !noundef !67
-  %.sroa.4176.8.copyload.i.i = load i64, ptr %i.ku, align 8, !alias.scope !127157, !noalias !127086 ; 3 uses
-  %.sroa.9179.24.copyload.i.i = load i64, ptr %.sroa.9.24..sroa_idx.i.i, align 8, !alias.scope !127157, !noalias !127086
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !127086
-  store ptr %i.l, ptr %i.c, align 8, !noalias !127158
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !127159
-  store i64 0, ptr %i.b, align 8, !noalias !127160
+  store ptr %i.l, ptr %i.c, align 8, !noalias !127157
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !127158
+  store i64 0, ptr %i.b, align 8, !noalias !127159
   %.sroa.5160.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i64 %.sroa.4176.8.copyload.i.i, ptr %.sroa.5160.0..sroa_idx.i.i, align 8, !noalias !127160
-  %.sroa.6162.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %5 = load <2 x i64>, ptr %.sroa.6169.8..sroa_idx.i.i, align 8, !alias.scope !127157, !noalias !127086
-  %6 = shufflevector <2 x i64> %5, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %6, ptr %.sroa.6162.0..sroa_idx.i.i, align 8, !noalias !127160
-  %.sroa.6162.sroa.5.0..sroa.6162.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store i64 %.sroa.9179.24.copyload.i.i, ptr %.sroa.6162.sroa.5.0..sroa.6162.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !127160
+  %5 = load <4 x i64>, ptr %i.ku, align 8, !alias.scope !127160, !noalias !127086
+  %.sroa.4176.8.copyload.i.i = load i64, ptr %i.ku, align 8, !alias.scope !127160, !noalias !127086 ; 2 uses
+  %6 = shufflevector <4 x i64> %5, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i64> %6, ptr %.sroa.5160.0..sroa_idx.i.i, align 8, !noalias !127159
   %.sroa.6162.sroa.6.0..sroa.6162.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store ptr %i.kv, ptr %.sroa.6162.sroa.6.0..sroa.6162.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !127160
+  store ptr %i.kv, ptr %.sroa.6162.sroa.6.0..sroa.6162.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !127159
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   store i64 1, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !127161
   %i.kw = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i64 0, ptr %i.kw, align 8, !noalias !127159
+  store i64 0, ptr %i.kw, align 8, !noalias !127158
   %i.kx = invoke noundef i64 @_RNvCslLviULm4Laq_10rayon_core19current_num_threads()
           to label %.noexc114.i.i unwind label %.loopexit.split-lp.i.i, !noalias !127088
 
@@ -2166,7 +2141,7 @@ bb.br:                                            ; preds = %bb.bp
           to label %bb.bs unwind label %.loopexit.split-lp.i.i, !noalias !127088
 
 bb.bs:                                            ; preds = %.noexc114.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !127159
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !127158
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !127086
   br label %_RINvYINtNtCshByAT0BfsDP_7ndarray9iterators11AxisIterMutdINtNtNtB8_9dimension3dim3DimAjj1_EENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtB1x_8adapters9enumerateINtB2C_9EnumeratepEB1r_4fold9enumerateINtB8_9ArrayBaseINtB8_8ViewReprQdEBS_dEuNCINvNvB1r_8for_each4callTjB3F_ENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core13shortest_path15distance_matrix15distance_matrixRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB7s_5types3any5PyAnyEB7n_EEs6_0E0E0ECskcxRuJ53GpR_9rustworkx.exit.i.i
 
@@ -2237,6 +2212,7 @@ _RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Al
 
 bb.bv:                                            ; preds = %bb.bp
   %i.lq = getelementptr inbounds nuw i8, ptr %i.n, i64 48
+  %.sroa.6169.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 40
   call void @llvm.experimental.noalias.scope.decl(metadata !127164)
   %i.lr = load ptr, ptr %i.kt, align 8, !alias.scope !127165, !noalias !127166, !nonnull !67, !noundef !67
   %.sroa.4168.8.copyload.i.i = load i64, ptr %i.ku, align 8, !alias.scope !127167, !noalias !127086 ; 2 uses
@@ -2639,10 +2615,10 @@ begin_hunk_5_@llvm.fabs.v2f64
 !126539 = !{!126446}
 !126540 = !{!126447}
 !126541 = !{!126446, !126365, !126364, !126362}
-!126542 = !{!126446, !126447}
-!126543 = !{!126449, !126365, !126364, !126362}
-!126544 = !{!126464, !126463, !126461, !126460, !126458, !126457, !126455, !126454, !126452, !126451, !126449, !126365, !126364, !126362}
-!126545 = !{!126464, !126460, !126457, !126454, !126451, !126365, !126364, !126362}
+!126542 = !{!126449, !126365, !126364, !126362}
+!126543 = !{!126464, !126463, !126461, !126460, !126458, !126457, !126455, !126454, !126452, !126451, !126449, !126365, !126364, !126362}
+!126544 = !{!126464, !126460, !126457, !126454, !126451, !126365, !126364, !126362}
+!126545 = !{!126446, !126447}
 !126546 = !{!126464, !126461, !126460, !126458, !126457, !126455, !126454, !126452, !126451, !126449, !126365, !126364, !126362}
 !126547 = !{!126466}
 !126548 = !{!126466, !126365}
@@ -3045,10 +3021,10 @@ begin_hunk_6_@llvm.fabs.v2f64
 !127154 = !{!127032}
 !127155 = !{!127033}
 !127156 = !{!127032, !126894, !126893, !126891}
-!127157 = !{!127032, !127033}
-!127158 = !{!127035, !126894, !126893, !126891}
-!127159 = !{!127050, !127049, !127047, !127046, !127044, !127043, !127041, !127040, !127038, !127037, !127035, !126894, !126893, !126891}
-!127160 = !{!127050, !127046, !127043, !127040, !127037, !126894, !126893, !126891}
+!127157 = !{!127035, !126894, !126893, !126891}
+!127158 = !{!127050, !127049, !127047, !127046, !127044, !127043, !127041, !127040, !127038, !127037, !127035, !126894, !126893, !126891}
+!127159 = !{!127050, !127046, !127043, !127040, !127037, !126894, !126893, !126891}
+!127160 = !{!127032, !127033}
 !127161 = !{!127050, !127047, !127046, !127044, !127043, !127041, !127040, !127038, !127037, !127035, !126894, !126893, !126891}
 !127162 = !{!127052}
 !127163 = !{!127052, !126894}

@@ -204,7 +204,7 @@ declare i32 @FT_Done_Face(ptr noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define noundef zeroext i1 @_ZN7msdfgen14getFontMetricsERNS_11FontMetricsEPNS_10FontHandleENS_21FontCoordinateScalingE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(48) initializes((0, 48)) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #9 {
 bb.a:
-  %.val = load ptr, ptr %1, align 8               ; 5 uses
+  %.val = load ptr, ptr %1, align 8               ; 3 uses
   switch i32 %2, label %bb.c [
     i32 2, label %_ZN7msdfgenL22getFontCoordinateScaleERKP11FT_FaceRec_NS_21FontCoordinateScalingE.exit
     i32 1, label %bb.b
@@ -223,32 +223,24 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN7msdfgenL22getFontCoordinateScaleERKP11FT_FaceRec_NS_21FontCoordinateScalingE.exit
 
 _ZN7msdfgenL22getFontCoordinateScaleERKP11FT_FaceRec_NS_21FontCoordinateScalingE.exit: ; preds = %bb.a, %bb.b, %bb.c
-  %.0.i = phi double [ 1.000000e+00, %bb.c ], [ %i.e, %bb.b ], [ 1.562500e-02, %bb.a ] ; 3 uses
+  %.0.i = phi double [ 1.000000e+00, %bb.c ], [ %i.e, %bb.b ], [ 1.562500e-02, %bb.a ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 136
-  %3 = load i16, ptr %i.f, align 8, !tbaa !57
-  %4 = uitofp i16 %3 to double
-  %5 = fmul double %.0.i, %4
-  store double %5, ptr %0, align 8, !tbaa !105
-  %6 = getelementptr inbounds nuw i8, ptr %.val, i64 138
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = load <2 x i16>, ptr %6, align 2, !tbaa !106
-  %9 = sitofp <2 x i16> %8 to <2 x double>
-  %10 = insertelement <2 x double> poison, double %.0.i, i64 0
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %12 = fmul <2 x double> %11, %9
-  store <2 x double> %12, ptr %7, align 8, !tbaa !33
-  %i.g = getelementptr inbounds nuw i8, ptr %.val, i64 142
-  %13 = load i16, ptr %i.g, align 2, !tbaa !107
-  %14 = sitofp i16 %13 to double
-  %15 = fmul double %.0.i, %14
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store double %15, ptr %i.h, align 8, !tbaa !108
-  %16 = getelementptr inbounds nuw i8, ptr %.val, i64 148
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %18 = load <2 x i16>, ptr %16, align 4, !tbaa !106
-  %19 = sitofp <2 x i16> %18 to <2 x double>
-  %i.i = fmul <2 x double> %11, %19
-  store <2 x double> %i.i, ptr %17, align 8, !tbaa !33
+  %3 = load <4 x i16>, ptr %i.f, align 8, !tbaa !104 ; 2 uses
+  %4 = uitofp <4 x i16> %3 to <4 x double>
+  %5 = sitofp <4 x i16> %3 to <4 x double>
+  %6 = shufflevector <4 x double> %4, <4 x double> %5, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %7 = insertelement <4 x double> poison, double %.0.i, i64 0
+  %8 = shufflevector <4 x double> %7, <4 x double> poison, <4 x i32> zeroinitializer
+  %9 = fmul <4 x double> %8, %6
+  store <4 x double> %9, ptr %0, align 8, !tbaa !33
+  %i.g = getelementptr inbounds nuw i8, ptr %.val, i64 148
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %10 = load <2 x i16>, ptr %i.g, align 4, !tbaa !104
+  %11 = sitofp <2 x i16> %10 to <2 x double>
+  %12 = insertelement <2 x double> poison, double %.0.i, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.i = fmul <2 x double> %13, %11
+  store <2 x double> %i.i, ptr %i.h, align 8, !tbaa !33
   ret i1 true
 }
 
@@ -315,7 +307,7 @@ define noundef zeroext i1 @_ZN7msdfgen13getGlyphCountERjPNS_10FontHandleE(ptr no
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !109
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !105
   %i.d = trunc i64 %i.c to i32
   store i32 %i.d, ptr %0, align 4, !tbaa !69
   ret i1 true
@@ -716,7 +708,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.h
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.h, !llvm.loop !110
+  br i1 %exitcond.not, label %.loopexit, label %bb.h, !llvm.loop !106
 
 _ZNSt6vectorIlSaIlEED2Ev.exit:                    ; preds = %.loopexit, %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit
   %i.ac = landingpad { ptr, i32 }
@@ -854,7 +846,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIlSaIlE
 bb.f:                                             ; preds = %bb.g
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !111
+  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !107
 
 _ZNSt6vectorIlSaIlEED2Ev.exit:                    ; preds = %.loopexit, %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit
   %i.aa = landingpad { ptr, i32 }
@@ -1000,12 +992,12 @@ _ZNSt6vectorIN7msdfgen17FontVariationAxisESaIS1_EE6resizeEm.exit: ; preds = %bb.
   %i.ai = getelementptr inbounds nuw [48 x i8], ptr %i.ah, i64 %indvars.iv ; 4 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !80
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store ptr %i.aj, ptr %i.ak, align 8, !tbaa !115
+  store ptr %i.aj, ptr %i.ak, align 8, !tbaa !111
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  %i.am = load i64, ptr %i.al, align 8, !tbaa !116
+  %i.am = load i64, ptr %i.al, align 8, !tbaa !112
   %i.an = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
-  %i.ap = load i64, ptr %i.ao, align 8, !tbaa !117
+  %i.ap = load i64, ptr %i.ao, align 8, !tbaa !113
   %i.aq = sitofp i64 %i.ap to double
   %i.ar = sitofp i64 %i.am to double
   %i.as = insertelement <2 x double> poison, double %i.ar, i64 0
@@ -1013,16 +1005,16 @@ _ZNSt6vectorIN7msdfgen17FontVariationAxisESaIS1_EE6resizeEm.exit: ; preds = %bb.
   %i.au = fmul nnan <2 x double> %i.at, splat (double f0x3EF0000000000000)
   store <2 x double> %i.au, ptr %i.an, align 8, !tbaa !33
   %i.av = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  %i.aw = load i64, ptr %i.av, align 8, !tbaa !118
+  %i.aw = load i64, ptr %i.av, align 8, !tbaa !114
   %i.ax = sitofp i64 %i.aw to double
   %i.ay = fmul nnan double %i.ax, f0x3EF0000000000000
   %i.az = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
-  store double %i.ay, ptr %i.az, align 8, !tbaa !119
+  store double %i.ay, ptr %i.az, align 8, !tbaa !115
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ba = load i32, ptr %i.af, align 8, !tbaa !76
   %i.bb = zext i32 %i.ba to i64
   %i.bc = icmp samesign ult i64 %indvars.iv.next, %i.bb
-  br i1 %i.bc, label %.lr.ph, label %._crit_edge, !llvm.loop !112
+  br i1 %i.bc, label %.lr.ph, label %._crit_edge, !llvm.loop !108
 
 bb.g:                                             ; preds = %bb.b, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -1080,7 +1072,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = sdiv exact i64 %i.f, 40                  ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !125
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !121
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = sub i64 %i.j, %i.d
   %i.l = sdiv exact i64 %i.k, 40                  ; 2 uses
@@ -1103,7 +1095,7 @@ _ZSt10_ConstructIN7msdfgen17FontVariationAxisEJEEvPT_DpOT0_.exit.i.i.i: ; preds 
   %i.p = add nsw i64 %.01013.i.i.i, -1            ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.014.i.i.i, i64 40 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.p, 0
-  br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !120
+  br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !116
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.r = landingpad { ptr, i32 }
@@ -1165,7 +1157,7 @@ _ZSt10_ConstructIN7msdfgen17FontVariationAxisEJEEvPT_DpOT0_.exit.i.i.i33: ; pred
   %i.ad = add nsw i64 %.01013.i.i.i32, -1         ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.014.i.i.i31, i64 40
   %.not.i.i.i34 = icmp eq i64 %i.ad, 0
-  br i1 %.not.i.i.i34, label %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36, label %.lr.ph.i.i.i30, !llvm.loop !120
+  br i1 %.not.i.i.i34, label %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36, label %.lr.ph.i.i.i30, !llvm.loop !116
 
 bb.i:                                             ; preds = %.lr.ph.i.i.i30
   %i.af = landingpad { ptr, i32 }
@@ -1211,18 +1203,18 @@ _ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSa
 .lr.ph.i.i.i38:                                   ; preds = %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36, %.lr.ph.i.i.i38
   %.012.i.i.i = phi ptr [ %i.ap, %.lr.ph.i.i.i38 ], [ %i.ab, %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36 ] ; 2 uses
   %.0911.i.i.i = phi ptr [ %i.ao, %.lr.ph.i.i.i38 ], [ %i.c, %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i, i64 40, i1 false), !tbaa.struct !127, !alias.scope !128
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i, i64 40, i1 false), !tbaa.struct !123, !alias.scope !124
   %i.ao = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 40 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 40
   %.not.i.i.i39 = icmp eq ptr %i.ao, %i.b
-  br i1 %.not.i.i.i39, label %_ZNSt6vectorIN7msdfgen17FontVariationAxisESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i38, !llvm.loop !124
+  br i1 %.not.i.i.i39, label %_ZNSt6vectorIN7msdfgen17FontVariationAxisESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i38, !llvm.loop !120
 
 _ZNSt6vectorIN7msdfgen17FontVariationAxisESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %.lr.ph.i.i.i38, %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36
   %.not.i41 = icmp eq ptr %i.c, null
   br i1 %.not.i41, label %_ZNSt12_Vector_baseIN7msdfgen17FontVariationAxisESaIS1_EE13_M_deallocateEPS1_m.exit42, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt6vectorIN7msdfgen17FontVariationAxisESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
-  %i.aq = load ptr, ptr %i.h, align 8, !tbaa !125
+  %i.aq = load ptr, ptr %i.h, align 8, !tbaa !121
   %i.ar = ptrtoint ptr %i.aq to i64
   %i.as = sub i64 %i.ar, %i.e
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.as) #18
@@ -1233,7 +1225,7 @@ _ZNSt12_Vector_baseIN7msdfgen17FontVariationAxisESaIS1_EE13_M_deallocateEPS1_m.e
   %i.at = getelementptr inbounds nuw [40 x i8], ptr %i.ac, i64 %1
   store ptr %i.at, ptr %i.a, align 8, !tbaa !83
   %i.au = getelementptr inbounds nuw [40 x i8], ptr %i.ab, i64 %i.z
-  store ptr %i.au, ptr %i.h, align 8, !tbaa !125
+  store ptr %i.au, ptr %i.h, align 8, !tbaa !121
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit, %_ZNSt12_Vector_baseIN7msdfgen17FontVariationAxisESaIS1_EE13_M_deallocateEPS1_m.exit42, %bb.a
@@ -1398,29 +1390,25 @@ attributes #22 = { noreturn }
 !101 = !{!20, !20, i64 0}
 !102 = !{i8 0, i8 2}
 !103 = !{}
-!104 = !{!"_ZTSN7msdfgen11FontMetricsE", !23, i64 0, !23, i64 8, !23, i64 16, !23, i64 24, !23, i64 32, !23, i64 40}
-!105 = !{!104, !23, i64 0}
-!106 = !{!46, !46, i64 0}
-!107 = !{!56, !46, i64 142}
-!108 = !{!104, !23, i64 24}
-!109 = !{!56, !29, i64 32}
-!110 = distinct !{!110, !22}
-!111 = distinct !{!111, !22}
-!112 = distinct !{!112, !22}
-!113 = !{!"_ZTSN7msdfgen17FontVariationAxis3TagE", !4, i64 0}
-!114 = !{!"_ZTSN7msdfgen17FontVariationAxisE", !113, i64 0, !40, i64 8, !23, i64 16, !23, i64 24, !23, i64 32}
-!115 = !{!114, !40, i64 8}
-!116 = !{!78, !29, i64 8}
-!117 = !{!78, !29, i64 24}
-!118 = !{!78, !29, i64 16}
-!119 = !{!114, !23, i64 32}
+!104 = !{!46, !46, i64 0}
+!105 = !{!56, !29, i64 32}
+!106 = distinct !{!106, !22}
+!107 = distinct !{!107, !22}
+!108 = distinct !{!108, !22}
+!109 = !{!"_ZTSN7msdfgen17FontVariationAxis3TagE", !4, i64 0}
+!110 = !{!"_ZTSN7msdfgen17FontVariationAxisE", !109, i64 0, !40, i64 8, !23, i64 16, !23, i64 24, !23, i64 32}
+!111 = !{!110, !40, i64 8}
+!112 = !{!78, !29, i64 8}
+!113 = !{!78, !29, i64 24}
+!114 = !{!78, !29, i64 16}
+!115 = !{!110, !23, i64 32}
+!116 = distinct !{!116, !22}
+!117 = distinct !{!117, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_"}
+!118 = distinct !{!118, !117, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
+!119 = distinct !{!119, !117, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !120 = distinct !{!120, !22}
-!121 = distinct !{!121, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_"}
-!122 = distinct !{!122, !121, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!123 = distinct !{!123, !121, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!124 = distinct !{!124, !22}
-!125 = !{!82, !81, i64 16}
-!126 = !{!40, !40, i64 0}
-!127 = !{i64 0, i64 4, !10, i64 8, i64 8, !126, i64 16, i64 8, !33, i64 24, i64 8, !33, i64 32, i64 8, !33}
-!128 = !{!123, !122}
+!121 = !{!82, !81, i64 16}
+!122 = !{!40, !40, i64 0}
+!123 = !{i64 0, i64 4, !10, i64 8, i64 8, !122, i64 16, i64 8, !33, i64 24, i64 8, !33, i64 32, i64 8, !33}
+!124 = !{!119, !118}
 end_hunk_0

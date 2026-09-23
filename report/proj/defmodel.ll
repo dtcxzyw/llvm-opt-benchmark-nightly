@@ -204,9 +204,10 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   store <2 x double> splat (double +qnan), ptr %i.f, align 8, !tbaa !61
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
   store <2 x double> splat (double +qnan), ptr %i.h, align 8, !tbaa !61
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 56
   store <2 x double> splat (double +qnan), ptr %i.i, align 8, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #37
   call fastcc void @_ZN16DeformationModelL9getStringERKN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEEEPKcb(ptr dead_on_unwind noalias nonnull writable align 8 %2, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull @.str.37, i1 noundef zeroext false)
@@ -514,15 +515,14 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   %i.by = load double, ptr %i.a, align 8, !tbaa !61 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
-  store double %i.by, ptr %i.g, align 8, !tbaa !347
-  %11 = insertelement <2 x double> poison, double %i.bs, i64 0
-  %12 = insertelement <2 x double> %11, double %i.bu, i64 1
-  %13 = fmul <2 x double> %12, splat (double f0x3F91DF46A2529D39)
-  store <2 x double> %13, ptr %i.h, align 8, !tbaa !61
-  %14 = insertelement <2 x double> poison, double %i.bw, i64 0
-  %15 = insertelement <2 x double> %14, double %i.by, i64 1
-  %16 = fmul <2 x double> %15, splat (double f0x3F91DF46A2529D39)
-  store <2 x double> %16, ptr %i.i, align 8, !tbaa !61
+  %12 = insertelement <4 x double> poison, double %i.by, i64 0
+  %13 = insertelement <4 x double> %12, double %i.bs, i64 1
+  %14 = insertelement <4 x double> %13, double %i.bu, i64 2
+  %15 = insertelement <4 x double> %14, double %i.bw, i64 3
+  %16 = fmul <4 x double> %15, <double 1.000000e+00, double f0x3F91DF46A2529D39, double f0x3F91DF46A2529D39, double f0x3F91DF46A2529D39>
+  store <4 x double> %16, ptr %i.g, align 8, !tbaa !61
+  %17 = fmul double %i.by, f0x3F91DF46A2529D39
+  store double %17, ptr %11, align 8, !tbaa !347
   %i.bz = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ca = load i8, ptr %6, align 8, !tbaa !42
   call void @_ZN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE10json_value7destroyENS_6detail7value_tE(ptr noundef nonnull align 8 dereferenceable(8) %i.bz, i8 noundef zeroext %i.ca) #37, !inline_history !0
@@ -925,15 +925,11 @@ bb.c:                                             ; preds = %bb.b
   %i.l = tail call double @llvm.fmuladd.f64(double %i.i, double %i.k, double %i.h) ; 2 uses
   %i.m = tail call double @sin(double noundef %i.l) #37 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store double %i.m, ptr %i.n, align 8, !tbaa !551
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
   %18 = tail call double @cos(double noundef %i.l) #37 ; 3 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store double %18, ptr %i.o, align 8, !tbaa !552
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %19 = load <2 x double>, ptr %i.p, align 8
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.q = load double, ptr %20, align 8, !tbaa !555 ; 2 uses
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %19 = load <2 x double>, ptr %i.o, align 8
+  %i.q = load double, ptr %i.p, align 8, !tbaa !555 ; 2 uses
   %i.r = fneg double %i.q
   %i.s = insertelement <2 x double> poison, double %18, i64 0
   %i.t = insertelement <2 x double> %i.s, double %i.m, i64 1 ; 2 uses
@@ -943,7 +939,10 @@ bb.c:                                             ; preds = %bb.b
   %i.x = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.y = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
   %i.z = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.x, <2 x double> %i.y, <2 x double> %i.w) ; 2 uses
-  store <2 x double> %i.z, ptr %21, align 8, !tbaa !61
+  %20 = shufflevector <2 x double> %i.z, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
+  %21 = insertelement <4 x double> %20, double %i.m, i64 0
+  %22 = insertelement <4 x double> %21, double %18, i64 1
+  store <4 x double> %22, ptr %i.n, align 8, !tbaa !61
   store i32 %2, ptr %i.c, align 4, !tbaa !556
   br label %bb.d
 
@@ -1346,7 +1345,7 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !344 = !{!102, !31, i64 0}
 !345 = !{!102, !31, i64 8}
 !346 = !{!102, !31, i64 16}
-!347 = !{!102, !31, i64 24}
+!347 = !{!102, !31, i64 56}
 !348 = distinct !{null, null, null, null}
 !349 = distinct !{null, null, null, null}
 !350 = distinct !{null, null}

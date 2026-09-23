@@ -204,9 +204,8 @@ bb.a:
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 264, !dbg !10058 ; 2 uses
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.6.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 272, !dbg !10058 ; 2 uses
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 280, !dbg !10058 ; 2 uses
-  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 288, !dbg !10058 ; 2 uses
-  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 304, !dbg !10058 ; 2 uses
-  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 320, !dbg !10058 ; 2 uses
+  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 312, !dbg !10058 ; 2 uses
+  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344, !dbg !10058 ; 2 uses
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.13.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 352, !dbg !10058 ; 2 uses
   %.sroa.7.sroa.13.sroa.7.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 360, !dbg !10058 ; 2 uses
   %.sroa.7.sroa.13.sroa.11.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 368, !dbg !10058 ; 2 uses
@@ -216,13 +215,14 @@ bb.a:
   tail call void @llvm.assume(i1 %i.j), !dbg !10054
   %i.k = xor i64 %.sroa.0.0.copyload, -9223372036854775808, !dbg !10054
   %i.l = icmp slt i64 %.sroa.0.0.copyload, 0, !dbg !10054
-  %i.m = select i1 %i.l, i64 %i.k, i64 1, !dbg !10054 ; 15 uses
+  %i.m = select i1 %i.l, i64 %i.k, i64 1, !dbg !10054 ; 16 uses
   %i.n = insertelement <8 x i16> <i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 0, i16 0, i16 0>, i16 %i.b, i64 3, !dbg !10050
   %i.o = insertelement <8 x i16> %i.n, i16 %i.c, i64 4, !dbg !10050
   %i.p = insertelement <4 x i16> <i16 poison, i16 poison, i16 0, i16 0>, i16 %i.b, i64 0, !dbg !10050
   %i.q = insertelement <4 x i16> %i.p, i16 %i.c, i64 1, !dbg !10050 ; 2 uses
-  %i.r = insertelement <4 x i64> poison, i64 %i.m, i64 0, !dbg !10050
-  %1 = shufflevector <4 x i64> %i.r, <4 x i64> poison, <4 x i32> zeroinitializer, !dbg !10050
+  %1 = insertelement <4 x i64> <i64 poison, i64 8317987319222330741, i64 7816392313619706465, i64 7237128888997146477>, i64 %i.m, i64 0, !dbg !10050
+  %i.r = insertelement <4 x i64> <i64 8387220255154660723, i64 poison, i64 poison, i64 poison>, i64 %i.m, i64 1, !dbg !10050
+  %2 = shufflevector <4 x i64> %i.r, <4 x i64> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>, !dbg !10050
   switch i64 %i.m, label %bb.b [
     i64 0, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs8Nb2mar7w9E_7inquire2ui14frame_renderer11RenderStateECsjfnSKV9Rz3v_3h3i.exit
     i64 1, label %bb.c
@@ -239,10 +239,9 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.7.sroa.13.sroa.11.sroa.0.0.copyload = load i16, ptr %.sroa.7.sroa.13.sroa.11.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
   %i.t = load <4 x i16>, ptr %.sroa.7.sroa.13.sroa.7.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.13.0.copyload = load i64, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.13.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
-  %2 = load <4 x i64>, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
-  %3 = load <2 x i64>, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
-  %4 = load <2 x i64>, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
-  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0.copyload = load i64, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
+  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.12.0.copyload = load i64, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
+  %3 = load <4 x i64>, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
+  %4 = load <4 x i64>, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.6.0.copyload = load ptr, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.6.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.0.0.copyload = load i64, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10058
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.8.sroa.0.0.copyload = load i56, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !dbg !10058
@@ -307,7 +306,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs8Nb2mar7w9E_7inquire2ui14frame_r
   %.sroa.7.sroa.13.sroa.0.sroa.7.0 = phi i16 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.7.0.copyload, %bb.c ], [ 0, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.0.0 = phi i64 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.0.0.copyload, %bb.c ], [ %i.m, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.6.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.6.0.copyload, %bb.c ], [ inttoptr (i64 8 to ptr), %bb.a ], !dbg !10050
-  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0 = phi i64 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0.copyload, %bb.c ], [ %i.m, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.11.sroa.0.0 = phi i16 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.11.sroa.0.0.copyload, %bb.c ], [ 0, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.11.sroa.6.0 = phi i32 [ undef, %bb.d ], [ %.sroa.7.sroa.13.sroa.11.sroa.6.0.copyload, %bb.c ], [ 0, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.6.0 = phi i64 [ 1095216660735, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.6.0.copyload, %bb.c ], [ 1095216660735, %bb.a ], !dbg !10050
@@ -316,6 +314,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs8Nb2mar7w9E_7inquire2ui14frame_r
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.0.sroa.6.0 = phi ptr [ inttoptr (i64 1 to ptr), %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.0.sroa.6.0.copyload, %bb.c ], [ inttoptr (i64 1 to ptr), %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.0.sroa.7.0 = phi i64 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.0.sroa.7.0.copyload, %bb.c ], [ %i.m, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.12.0 = phi i16 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.12.0.copyload, %bb.c ], [ 0, %bb.a ], !dbg !10050
+  %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.12.0 = phi i64 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.12.0.copyload, %bb.c ], [ %i.m, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.13.0 = phi i64 [ 0, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.13.0.copyload, %bb.c ], [ %i.m, %bb.a ], !dbg !10050
   %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.8.sroa.0.0 = phi i56 [ undef, %bb.d ], [ %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.8.sroa.0.0.copyload, %bb.c ], [ 0, %bb.a ], !dbg !10050
   %.sroa.0.0 = phi i64 [ %.sroa.7.sroa.0.sroa.0.0.copyload, %bb.d ], [ %.sroa.0.0.copyload, %bb.c ], [ %i.m, %bb.a ], !dbg !10050
@@ -327,9 +326,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs8Nb2mar7w9E_7inquire2ui14frame_r
   %i.bf = phi <4 x i16> [ %i.az, %bb.d ], [ %i.aw, %bb.c ], [ <i16 undef, i16 undef, i16 0, i16 0>, %bb.a ], !dbg !10050
   %i.bg = phi <4 x i16> [ %i.q, %bb.d ], [ %i.t, %bb.c ], [ %i.q, %bb.a ], !dbg !10050
   %i.bh = phi <2 x i16> [ zeroinitializer, %bb.d ], [ %i.s, %bb.c ], [ zeroinitializer, %bb.a ], !dbg !10050
-  %5 = phi <2 x i64> [ <i64 8317987319222330741, i64 7816392313619706465>, %bb.d ], [ %4, %bb.c ], [ <i64 8317987319222330741, i64 7816392313619706465>, %bb.a ], !dbg !10050
-  %6 = phi <2 x i64> [ <i64 7237128888997146477, i64 8387220255154660723>, %bb.d ], [ %3, %bb.c ], [ <i64 7237128888997146477, i64 8387220255154660723>, %bb.a ], !dbg !10050
-  %i.bi = phi <4 x i64> [ zeroinitializer, %bb.d ], [ %2, %bb.c ], [ %1, %bb.a ], !dbg !10050
+  %5 = phi <4 x i64> [ <i64 0, i64 8317987319222330741, i64 7816392313619706465, i64 7237128888997146477>, %bb.d ], [ %4, %bb.c ], [ %1, %bb.a ], !dbg !10050
+  %i.bi = phi <4 x i64> [ <i64 8387220255154660723, i64 0, i64 0, i64 0>, %bb.d ], [ %3, %bb.c ], [ %2, %bb.a ], !dbg !10050
   %.sroa.7.sroa.11.sroa.7.0..sroa.7.sroa.11.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 194, !dbg !10058
   %.sroa.7.sroa.0.sroa.9.0..sroa.7.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 178, !dbg !10058
   %.sroa.7.sroa.0.sroa.7.sroa.7.sroa.9.0..sroa.7.sroa.0.sroa.7.sroa.7.0..sroa.7.sroa.0.sroa.7.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 162, !dbg !10058
@@ -366,10 +364,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs8Nb2mar7w9E_7inquire2ui14frame_r
   store i56 %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.8.sroa.0.0, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !dbg !10062
   store i64 %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.0.0, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
   store ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.6.0, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.6.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
-  store i64 %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
-  store <2 x i64> %5, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
-  store <2 x i64> %6, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
-  store <4 x i64> %i.bi, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
+  store <4 x i64> %5, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.8.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
+  store <4 x i64> %i.bi, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.7.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
+  store i64 %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.12.0, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
   store i64 %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.13.0, ptr %.sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.sroa.13.0..sroa.7.sroa.13.sroa.0.sroa.8.sroa.9.0..sroa.7.sroa.13.sroa.0.sroa.8.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
   store <4 x i16> %i.bg, ptr %.sroa.7.sroa.13.sroa.7.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062
   store i16 %.sroa.7.sroa.13.sroa.11.sroa.0.0, ptr %.sroa.7.sroa.13.sroa.11.0..sroa.7.sroa.13.0..sroa.7.0..sroa_idx.sroa_idx.sroa_idx, align 8, !dbg !10062

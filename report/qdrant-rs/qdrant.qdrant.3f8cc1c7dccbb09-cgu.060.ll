@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [96 x i8], align 8                ; 4 uses
   %.sroa.422.i = alloca [102 x i8], align 2       ; 4 uses
   %i.d = alloca [40 x i8], align 8                ; 4 uses
-  %i.e = alloca [224 x i8], align 8               ; 8 uses
+  %i.e = alloca [224 x i8], align 8               ; 7 uses
   %i.f = alloca [144 x i8], align 8               ; 7 uses
   %i.g = alloca [144 x i8], align 8               ; 4 uses
   %i.h = alloca [104 x i8], align 16              ; 9 uses
@@ -319,14 +319,12 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %i.f, ptr noundef nonnull align 8 dereferenceable(144) %i.g, i64 144, i1 false), !noalias !2961
   %i.x = getelementptr inbounds nuw i8, ptr %i.f, i64 72 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 152
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 184
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   br label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i, %bb.m
-  %4 = phi <2 x i64> [ zeroinitializer, %bb.m ], [ %11, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i ] ; 3 uses
-  %5 = phi <2 x i64> [ zeroinitializer, %bb.m ], [ %9, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i ] ; 3 uses
+  %3 = phi <4 x i64> [ zeroinitializer, %bb.m ], [ %6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i ] ; 3 uses
   %i.ab = load i64, ptr %i.f, align 8, !range !13, !alias.scope !2962, !noalias !2961, !noundef !8
   %.not.i.i = icmp eq i64 %i.ab, 2
   br i1 %.not.i.i, label %bb.q, label %bb.o
@@ -460,8 +458,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtC
   %i.bj = load ptr, ptr %i.bi, align 8, !alias.scope !2977, !noalias !2960, !nonnull !8, !noundef !8
   %i.bk = atomicrmw sub ptr %i.bj, i64 1 release, align 8, !noalias !2978
   %i.bl = icmp eq i64 %i.bk, 1
-  %6 = extractelement <2 x i64> %5, i64 0         ; 2 uses
-  %7 = extractelement <2 x i64> %5, i64 1         ; 2 uses
   br i1 %i.bl, label %.sink.split, label %bb.aq
 
 bb.x:                                             ; preds = %bb.w
@@ -516,10 +512,9 @@ bb.ab:                                            ; preds = %.loopexit.split-lp.
           to label %.body.i unwind label %bb.ak, !noalias !2960
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsbO4BqjCww8C_8lock_api6rwlock15RwLockReadGuardNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockDNtNtNtCs607s0NAIaWN_7segment5entry11entry_point12SegmentEntryEL_EECsl8OoimOLbh_6qdrant.exit.i: ; preds = %bb.aa, %.noexc49.i
-  %8 = load <2 x i64>, ptr %i.y, align 8, !noalias !2961
-  %9 = add <2 x i64> %8, %5
-  %10 = load <2 x i64>, ptr %3, align 8, !noalias !2961
-  %11 = add <2 x i64> %10, %4
+  %4 = load <6 x i64>, ptr %i.y, align 8, !noalias !2961
+  %5 = shufflevector <6 x i64> %4, <6 x i64> poison, <4 x i32> <i32 0, i32 4, i32 5, i32 1>
+  %6 = add <4 x i64> %5, %3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2961
   invoke void @_RNvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCs607s0NAIaWN_7segment5types14VectorDataInfoNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE4iterCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.z)
           to label %bb.ac unwind label %.loopexit.split-lp.i, !noalias !2960
@@ -633,19 +628,15 @@ bb.ap:                                            ; preds = %bb.ao
 
 .sink.split:                                      ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i
   %.sink = phi ptr [ %i.bi, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ %i.cl, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ]
-  %.sroa.9.0.ph = phi i64 [ %7, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ]
-  %.sroa.618.0.ph = phi i64 [ %6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ]
   %i.cq = phi <2 x i64> [ %i.au, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ <i64 undef, i64 -2>, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ]
-  %12 = phi <2 x i64> [ %4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ]
+  %7 = phi <4 x i64> [ %3, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ]
   fence acquire
   call void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsbO4BqjCww8C_8lock_api5mutex5MutexNtNtCs27TyLBeV75a_11parking_lot9raw_mutex8RawMutexuEE9drop_slowCs5QaNqjAn6vc_5shard(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %.sink) #15
   br label %bb.aq
 
 bb.aq:                                            ; preds = %.sink.split, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i
-  %.sroa.9.0 = phi i64 [ %7, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ], [ %.sroa.9.0.ph, %.sink.split ]
-  %.sroa.618.0 = phi i64 [ %6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ], [ %.sroa.618.0.ph, %.sink.split ]
   %i.cr = phi <2 x i64> [ %i.au, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ <i64 undef, i64 -2>, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ], [ %i.cq, %.sink.split ]
-  %13 = phi <2 x i64> [ %4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ], [ %12, %.sink.split ]
+  %8 = phi <4 x i64> [ %3, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtCsbO4BqjCww8C_8lock_api6rwlock6RwLockNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockNtNtCs5QaNqjAn6vc_5shard14segment_holder13SegmentHolderEEECsl8OoimOLbh_6qdrant.exit.i.i52.i ], [ %7, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   store <2 x i64> %i.cr, ptr %0, align 8
@@ -654,11 +645,7 @@ bb.aq:                                            ; preds = %.sink.split, %_RINv
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6, i64 40, i1 false)
   %.sroa.618.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store i64 %.sroa.618.0, ptr %.sroa.618.0..sroa_idx, align 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store <2 x i64> %13, ptr %.sroa.7.0..sroa_idx, align 8
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
-  store i64 %.sroa.9.0, ptr %.sroa.9.0..sroa_idx, align 8
+  store <4 x i64> %8, ptr %.sroa.618.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)

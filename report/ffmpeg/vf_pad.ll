@@ -204,7 +204,7 @@ bb.bk:                                            ; preds = %bb.g, %bb.bj, %bb.a
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -2147483648, 1) i32 @config_input(ptr noundef %0) #0 {
 bb.a:
-  %i.a = alloca [15 x double], align 16           ; 22 uses
+  %i.a = alloca [15 x double], align 16           ; 20 uses
   %i.b = alloca double, align 8                   ; 14 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !20   ; 12 uses
@@ -228,23 +228,20 @@ bb.c:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 80 ; 2 uses
   tail call void @ff_draw_color(ptr noundef nonnull %i.h, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l) #7
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 7 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.o = load <2 x i32>, ptr %i.m, align 8, !tbaa !50
   %i.p = sitofp <2 x i32> %i.o to <2 x double>    ; 3 uses
-  %3 = extractelement <2 x double> %i.p, i64 0    ; 2 uses
-  store double %3, ptr %i.a, align 16, !tbaa !75
-  %4 = extractelement <2 x double> %i.p, i64 1    ; 2 uses
-  store double %4, ptr %2, align 8, !tbaa !75
-  store <2 x double> %i.p, ptr %1, align 8, !tbaa !75
+  %1 = shufflevector <2 x double> %i.p, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  store <4 x double> %1, ptr %i.a, align 16, !tbaa !75
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 5 uses
   store <2 x double> splat (double +qnan), ptr %i.r, align 16, !tbaa !75
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 4 uses
   store <2 x double> splat (double +qnan), ptr %i.t, align 16, !tbaa !75
-  %i.u = fdiv nsz double %3, %4                   ; 2 uses
+  %2 = extractelement <2 x double> %i.p, i64 0
+  %3 = extractelement <2 x double> %i.p, i64 1
+  %i.u = fdiv nsz double %2, %3                   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   store double %i.u, ptr %i.v, align 16, !tbaa !75
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses

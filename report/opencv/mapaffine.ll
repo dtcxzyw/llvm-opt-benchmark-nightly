@@ -205,7 +205,7 @@ declare void @_ZN2cv5remapERKNS_11_InputArrayERKNS_12_OutputArrayES2_S2_iiRKNS_7
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK2cv3reg9MapAffine10inverseMapEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.cv::Ptr") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.cv::Matx", align 8          ; 8 uses
+  %2 = alloca %"class.cv::Matx", align 8          ; 6 uses
   %3 = alloca %"class.cv::Vec", align 16          ; 5 uses
   %4 = alloca %"class.cv::_InputArray", align 8   ; 8 uses
   %5 = alloca %"class.cv::_InputArray", align 8   ; 8 uses
@@ -232,18 +232,12 @@ bb.b:                                             ; preds = %bb.a
   %i.p = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.q = insertelement <2 x double> poison, double %i.n, i64 0
   %i.r = insertelement <2 x double> %i.q, double %i.b, i64 1
-  %i.s = fmul <2 x double> %i.p, %i.r             ; 3 uses
+  %i.s = fmul <2 x double> %i.p, %i.r             ; 2 uses
   %i.t = insertelement <2 x double> poison, double %i.d, i64 0
   %i.u = insertelement <2 x double> %i.t, double %i.i, i64 1
-  %i.v = fmul <2 x double> %i.u, %i.p             ; 3 uses
-  %6 = extractelement <2 x double> %i.v, i64 0
-  store double %6, ptr %2, align 8, !alias.scope !73
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %7 = shufflevector <2 x double> %i.s, <2 x double> %i.v, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %7, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !73
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %8 = extractelement <2 x double> %i.s, i64 1
-  store double %8, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !29, !alias.scope !73
+  %i.v = fmul <2 x double> %i.u, %i.p             ; 2 uses
+  %6 = shufflevector <2 x double> %i.v, <2 x double> %i.s, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x double> %6, ptr %2, align 8, !alias.scope !73
   br label %bb.c
 
 _ZNK2cv8internal14Matx_FastInvOpIdLi2ELi2EEclERKNS_4MatxIdLi2ELi2EEERS4_i.exit.i: ; preds = %bb.a

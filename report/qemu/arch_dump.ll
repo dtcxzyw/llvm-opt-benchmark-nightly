@@ -202,16 +202,9 @@ bb.a:
 ; Function Attrs: inlinehint nounwind sspstrong uwtable
 define internal fastcc range(i32 -1, 1) i32 @cpu_write_qemu_note(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly %1, ptr noundef %2) unnamed_addr #4 {
 bb.a:
-  %3 = load i64, ptr %1, align 16
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %5 = load i64, ptr %4, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 256
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 312
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 336
@@ -279,17 +272,16 @@ bb.a:
   %i.bp = load <2 x i32>, ptr %i.ap, align 16
   %i.bq = load <2 x i32>, ptr %i.au, align 8
   %i.br = load <2 x i32>, ptr %i.az, align 16
-  %10 = load <2 x i64>, ptr %6, align 8
-  %11 = load <2 x i64>, ptr %7, align 16
-  %12 = load <2 x i64>, ptr %i.a, align 16
-  %13 = load <2 x i64>, ptr %i.b, align 16
-  %14 = load <2 x i64>, ptr %8, align 16
-  %15 = load <2 x i64>, ptr %i.c, align 16
-  %16 = load <2 x i64>, ptr %9, align 16
+  %3 = load <4 x i64>, ptr %1, align 16
+  %4 = shufflevector <4 x i64> %3, <4 x i64> poison, <4 x i32> <i32 0, i32 3, i32 1, i32 2>
+  %5 = load <4 x i64>, ptr %i.a, align 16
+  %6 = shufflevector <4 x i64> %5, <4 x i64> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  %7 = load <4 x i64>, ptr %i.b, align 16
+  %8 = load <4 x i64>, ptr %i.c, align 16
   %i.bs = load <2 x i64>, ptr %i.d, align 16
   %i.bt = load <2 x i64>, ptr %i.bc, align 8
   %i.bu = load <2 x i64>, ptr %i.bd, align 8
-  %i.bv = tail call noalias dereferenceable_or_null(460) ptr @g_malloc0(i64 noundef 460) #8 ; 62 uses
+  %i.bv = tail call noalias dereferenceable_or_null(460) ptr @g_malloc0(i64 noundef 460) #8 ; 57 uses
   store i32 5, ptr %i.bv, align 4
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
   store i32 440, ptr %i.bw, align 4
@@ -297,28 +289,18 @@ bb.a:
   store i32 0, ptr %i.bx, align 4
   %i.by = getelementptr inbounds nuw i8, ptr %i.bv, i64 12
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %i.by, ptr noundef nonnull align 1 dereferenceable(5) @.str.3, i64 noundef 5, i1 noundef false) #7
-  %17 = getelementptr inbounds nuw i8, ptr %i.bv, i64 20
-  store i32 1, ptr %17, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
-  store i32 440, ptr %.sroa.6.0..sroa_idx, align 4
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 28
-  store i64 %3, ptr %.sroa.7.0..sroa_idx, align 4
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 36
-  store i64 %5, ptr %.sroa.8.0..sroa_idx, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 44
-  store <2 x i64> %10, ptr %.sroa.9.0..sroa_idx, align 4
-  %.sroa.11.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.bv, i64 60
-  store <2 x i64> %11, ptr %.sroa.11.0..sroa_idx.a, align 4
-  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 76
-  store <2 x i64> %12, ptr %.sroa.13.0..sroa_idx, align 4
-  %.sroa.15.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.bv, i64 92
-  store <2 x i64> %13, ptr %.sroa.15.0..sroa_idx.a, align 4
-  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 108
-  store <2 x i64> %14, ptr %.sroa.17.0..sroa_idx, align 4
-  %.sroa.19.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.bv, i64 124
-  store <2 x i64> %15, ptr %.sroa.19.0..sroa_idx.a, align 4
-  %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 140
-  store <2 x i64> %16, ptr %.sroa.21.0..sroa_idx, align 4
+  %.sroa.11.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.bv, i64 20
+  store i32 1, ptr %.sroa.11.0..sroa_idx.a, align 4
+  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
+  store i32 440, ptr %.sroa.13.0..sroa_idx, align 4
+  %.sroa.15.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.bv, i64 28
+  store <4 x i64> %4, ptr %.sroa.15.0..sroa_idx.a, align 4
+  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 60
+  store <4 x i64> %6, ptr %.sroa.17.0..sroa_idx, align 4
+  %.sroa.19.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.bv, i64 92
+  store <4 x i64> %7, ptr %.sroa.19.0..sroa_idx.a, align 4
+  %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 124
+  store <4 x i64> %8, ptr %.sroa.21.0..sroa_idx, align 4
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 156
   store <2 x i64> %i.bs, ptr %.sroa.23.0..sroa_idx, align 4
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 172

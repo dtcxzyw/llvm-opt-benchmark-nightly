@@ -202,11 +202,10 @@ bb.e:                                             ; preds = %_RNvMs_NtNtNtCsg6ZE
 bb.f:                                             ; preds = %_RNvMs_NtNtNtCsg6ZEkMtNi4J_8iceoryx27service13static_config20message_type_detailsNtB4_18MessageTypeDetails13sample_layout.exit.i
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.018.0.copyload.i = load i64, ptr %i.bd, align 8, !noalias !1579
-  %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  %3 = load <2 x ptr>, ptr %.sroa.419.0..sroa_idx.i, align 8, !noalias !1579
-  %.sroa.419.0.copyload.i = load ptr, ptr %.sroa.419.0..sroa_idx.i, align 8, !noalias !1579 ; 3 uses
-  %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %.sroa.621.0.copyload.i = load ptr, ptr %.sroa.621.0..sroa_idx.i, align 8, !noalias !1579
+  %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %.sroa.419.0.copyload.i = load ptr, ptr %.sroa.419.0..sroa_idx.i, align 8, !noalias !1579 ; 4 uses
+  %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %3 = load <2 x ptr>, ptr %.sroa.621.0..sroa_idx.i, align 8, !noalias !1579
   %.sroa.722.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %.sroa.722.0.copyload.i = load i64, ptr %.sroa.722.0..sroa_idx.i, align 8, !noalias !1579
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1579
@@ -242,11 +241,11 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _RNvXs0_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB5_14MutexProtectedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher20PublisherSharedStateNtNtNtB1C_7service14ipc_threadsafe7ServiceEENtNtCs8Chj7Szqq0n_4core5clone5Clone5cloneCs8mxkWwUnjF1_14iceoryx2_ffi_c.exit.i: ; preds = %bb.f
-  store ptr %.val.i, ptr %0, align 8, !alias.scope !1577, !noalias !1578
-  %.sroa.430.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x ptr> %3, ptr %.sroa.430.0..sroa_idx.i, align 8, !alias.scope !1577, !noalias !1578
-  %.sroa.632.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %.sroa.621.0.copyload.i, ptr %.sroa.632.0..sroa_idx.i, align 8, !alias.scope !1577, !noalias !1578
+  %4 = insertelement <4 x ptr> poison, ptr %.val.i, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %.sroa.419.0.copyload.i, i64 1
+  %6 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %7, ptr %0, align 8, !alias.scope !1577, !noalias !1578
   %.sroa.733.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.o, ptr %.sroa.733.0..sroa_idx.i, align 8, !alias.scope !1577, !noalias !1578
   %.sroa.834.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -386,11 +385,10 @@ bb.e:                                             ; preds = %_RNvMs_NtNtNtCsg6ZE
 bb.f:                                             ; preds = %_RNvMs_NtNtNtCsg6ZEkMtNi4J_8iceoryx27service13static_config20message_type_detailsNtB4_18MessageTypeDetails13sample_layout.exit.i
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.018.0.copyload.i = load i64, ptr %i.bd, align 8, !noalias !1594
-  %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  %3 = load <2 x ptr>, ptr %.sroa.419.0..sroa_idx.i, align 8, !noalias !1594
-  %.sroa.419.0.copyload.i = load ptr, ptr %.sroa.419.0..sroa_idx.i, align 8, !noalias !1594 ; 3 uses
-  %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %.sroa.621.0.copyload.i = load ptr, ptr %.sroa.621.0..sroa_idx.i, align 8, !noalias !1594
+  %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %.sroa.419.0.copyload.i = load ptr, ptr %.sroa.419.0..sroa_idx.i, align 8, !noalias !1594 ; 4 uses
+  %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %3 = load <2 x ptr>, ptr %.sroa.621.0..sroa_idx.i, align 8, !noalias !1594
   %.sroa.722.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %.sroa.722.0.copyload.i = load i64, ptr %.sroa.722.0..sroa_idx.i, align 8, !noalias !1594
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1594
@@ -426,11 +424,11 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _RNvXs0_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB5_14MutexProtectedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher20PublisherSharedStateNtNtNtB1C_7service16local_threadsafe7ServiceEENtNtCs8Chj7Szqq0n_4core5clone5Clone5cloneCs8mxkWwUnjF1_14iceoryx2_ffi_c.exit.i: ; preds = %bb.f
-  store ptr %.val.i, ptr %0, align 8, !alias.scope !1592, !noalias !1593
-  %.sroa.430.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x ptr> %3, ptr %.sroa.430.0..sroa_idx.i, align 8, !alias.scope !1592, !noalias !1593
-  %.sroa.632.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %.sroa.621.0.copyload.i, ptr %.sroa.632.0..sroa_idx.i, align 8, !alias.scope !1592, !noalias !1593
+  %4 = insertelement <4 x ptr> poison, ptr %.val.i, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %.sroa.419.0.copyload.i, i64 1
+  %6 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %7, ptr %0, align 8, !alias.scope !1592, !noalias !1593
   %.sroa.733.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.o, ptr %.sroa.733.0..sroa_idx.i, align 8, !alias.scope !1592, !noalias !1593
   %.sroa.834.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40

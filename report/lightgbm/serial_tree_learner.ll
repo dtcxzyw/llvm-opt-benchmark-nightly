@@ -205,22 +205,16 @@ _ZN8LightGBM27CumulativeFeatureConstraint18CumulativeExtremumEPFRKdS2_S2_EbPSt6v
   br i1 %3, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %_ZN8LightGBM27CumulativeFeatureConstraint18CumulativeExtremumEPFRKdS2_S2_EbPSt6vectorIdSaIdEE.exit23
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = load ptr, ptr %4, align 8, !tbaa !403
-  %6 = load ptr, ptr %0, align 8, !tbaa !222
-  %7 = ptrtoint ptr %5 to i64
-  %8 = ptrtoint ptr %6 to i64
-  %9 = sub i64 %7, %8
-  %10 = ashr exact i64 %9, 2
-  %11 = add nsw i64 %10, -1
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %13 = load ptr, ptr %12, align 8, !tbaa !403
-  %14 = load ptr, ptr %i.a, align 8, !tbaa !222
-  %15 = ptrtoint ptr %13 to i64
-  %16 = ptrtoint ptr %14 to i64
-  %17 = sub i64 %15, %16
-  %18 = ashr exact i64 %17, 2
-  %19 = add nsw i64 %18, -1
+  %4 = load <2 x ptr>, ptr %0, align 8, !tbaa !329 ; 2 uses
+  %5 = load <2 x ptr>, ptr %i.a, align 8, !tbaa !329 ; 2 uses
+  %6 = shufflevector <2 x ptr> %4, <2 x ptr> %5, <2 x i32> <i32 1, i32 3>
+  %7 = ptrtoint <2 x ptr> %6 to <2 x i64>
+  %8 = shufflevector <2 x ptr> %4, <2 x ptr> %5, <2 x i32> <i32 0, i32 2>
+  %9 = ptrtoint <2 x ptr> %8 to <2 x i64>
+  %10 = sub <2 x i64> %7, %9
+  %11 = ashr exact <2 x i64> %10, splat (i64 2)
+  %12 = add nsw <2 x i64> %11, splat (i64 -1)
+  %13 = shufflevector <2 x i64> %12, <2 x i64> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
@@ -231,16 +225,9 @@ bb.m:                                             ; preds = %bb.f, %bb.e, %bb.d,
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %bb.o
 
 bb.n:                                             ; preds = %_ZN8LightGBM27CumulativeFeatureConstraint18CumulativeExtremumEPFRKdS2_S2_EbPSt6vectorIdSaIdEE.exit23, %bb.l
-  %.sink42 = phi i64 [ %11, %bb.l ], [ 0, %_ZN8LightGBM27CumulativeFeatureConstraint18CumulativeExtremumEPFRKdS2_S2_EbPSt6vectorIdSaIdEE.exit23 ] ; 2 uses
-  %.sink40 = phi i64 [ %19, %bb.l ], [ 0, %_ZN8LightGBM27CumulativeFeatureConstraint18CumulativeExtremumEPFRKdS2_S2_EbPSt6vectorIdSaIdEE.exit23 ] ; 2 uses
+  %14 = phi <4 x i64> [ %13, %bb.l ], [ zeroinitializer, %_ZN8LightGBM27CumulativeFeatureConstraint18CumulativeExtremumEPFRKdS2_S2_EbPSt6vectorIdSaIdEE.exit23 ]
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 144
-  store i64 %.sink42, ptr %i.dp, align 8, !tbaa !439
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store i64 %.sink42, ptr %20, align 8, !tbaa !440
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store i64 %.sink40, ptr %21, align 8, !tbaa !441
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store i64 %.sink40, ptr %22, align 8, !tbaa !442
+  store <4 x i64> %14, ptr %i.dp, align 8, !tbaa !243
   ret void
 
 bb.o:                                             ; preds = %bb.m
@@ -643,8 +630,8 @@ bb.a:
   br i1 %.not10, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.012 = phi ptr [ %i.bn, %.lr.ph ], [ %2, %bb.a ] ; 24 uses
-  %.0911 = phi ptr [ %i.bm, %.lr.ph ], [ %0, %bb.a ] ; 25 uses
+  %.012 = phi ptr [ %i.bn, %.lr.ph ], [ %2, %bb.a ] ; 23 uses
+  %.0911 = phi ptr [ %i.bm, %.lr.ph ], [ %0, %bb.a ] ; 26 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !720)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !721)
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN8LightGBM26AdvancedFeatureConstraintsE, i64 16), ptr %.012, align 8, !tbaa !226, !alias.scope !720, !noalias !721
@@ -652,29 +639,33 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.0911, i64 8 ; 2 uses
   %i.c = load <2 x ptr>, ptr %i.b, align 8, !tbaa !269, !alias.scope !721, !noalias !720
   store <2 x ptr> %i.c, ptr %i.a, align 8, !tbaa !269, !alias.scope !720, !noalias !721
-  %i.d = getelementptr inbounds nuw i8, ptr %.012, i64 24
-  %i.e = getelementptr inbounds nuw i8, ptr %.0911, i64 24
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !438, !alias.scope !721, !noalias !720
-  store ptr %i.f, ptr %i.d, align 8, !tbaa !438, !alias.scope !720, !noalias !721
+  %4 = getelementptr inbounds nuw i8, ptr %.012, i64 24
+  %5 = getelementptr inbounds nuw i8, ptr %.0911, i64 24
+  %i.d = getelementptr inbounds nuw i8, ptr %.0911, i64 32 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %.0911, i64 40
+  %6 = load ptr, ptr %5, align 8, !tbaa !438, !alias.scope !721, !noalias !720
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, i8 0, i64 24, i1 false), !alias.scope !721, !noalias !720
-  %4 = getelementptr inbounds nuw i8, ptr %.012, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr %.0911, i64 32 ; 2 uses
-  %6 = load <2 x ptr>, ptr %5, align 8, !tbaa !329, !alias.scope !721, !noalias !720
-  store <2 x ptr> %6, ptr %4, align 8, !tbaa !329, !alias.scope !720, !noalias !721
-  %i.g = getelementptr inbounds nuw i8, ptr %.012, i64 48
-  %i.h = getelementptr inbounds nuw i8, ptr %.0911, i64 48
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !223, !alias.scope !721, !noalias !720
-  store ptr %i.i, ptr %i.g, align 8, !tbaa !223, !alias.scope !720, !noalias !721
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false), !alias.scope !721, !noalias !720
-  %i.j = getelementptr inbounds nuw i8, ptr %.012, i64 56
-  %i.k = getelementptr inbounds nuw i8, ptr %.0911, i64 56 ; 2 uses
-  %7 = load <2 x ptr>, ptr %i.k, align 8, !tbaa !269, !alias.scope !721, !noalias !720
-  store <2 x ptr> %7, ptr %i.j, align 8, !tbaa !269, !alias.scope !720, !noalias !721
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !222, !alias.scope !721, !noalias !720
+  %7 = load <2 x ptr>, ptr %i.e, align 8, !tbaa !329, !alias.scope !721, !noalias !720
+  %8 = insertelement <4 x ptr> poison, ptr %6, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %i.f, i64 1
+  %10 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x ptr> %9, <4 x ptr> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %11, ptr %4, align 8, !tbaa !333, !alias.scope !720, !noalias !721
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i8 0, i64 24, i1 false), !alias.scope !721, !noalias !720
+  %i.g = getelementptr inbounds nuw i8, ptr %.012, i64 56
+  %i.h = getelementptr inbounds nuw i8, ptr %.0911, i64 56 ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !308, !alias.scope !721, !noalias !720
+  store ptr %i.i, ptr %i.g, align 8, !tbaa !308, !alias.scope !720, !noalias !721
+  %i.j = getelementptr inbounds nuw i8, ptr %.012, i64 64
+  %i.k = getelementptr inbounds nuw i8, ptr %.0911, i64 64
+  %12 = load ptr, ptr %i.k, align 8, !tbaa !431, !alias.scope !721, !noalias !720
+  store ptr %12, ptr %i.j, align 8, !tbaa !431, !alias.scope !720, !noalias !721
   %i.l = getelementptr inbounds nuw i8, ptr %.012, i64 72
   %i.m = getelementptr inbounds nuw i8, ptr %.0911, i64 72
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !438, !alias.scope !721, !noalias !720
   store ptr %i.n, ptr %i.l, align 8, !tbaa !438, !alias.scope !720, !noalias !721
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.k, i8 0, i64 24, i1 false), !alias.scope !721, !noalias !720
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, i8 0, i64 24, i1 false), !alias.scope !721, !noalias !720
   %i.o = getelementptr inbounds nuw i8, ptr %.012, i64 80
   %i.p = getelementptr inbounds nuw i8, ptr %.0911, i64 80 ; 2 uses
   %i.q = load <2 x ptr>, ptr %i.p, align 8, !tbaa !329, !alias.scope !721, !noalias !720

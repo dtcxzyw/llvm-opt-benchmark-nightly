@@ -204,7 +204,7 @@ bb.a:
   %42 = alloca %class.QLineF, align 8             ; 7 uses
   %43 = alloca %class.QLineF, align 8             ; 7 uses
   %44 = alloca %class.QLineF, align 16            ; 5 uses
-  %45 = alloca %class.QLineF, align 8             ; 6 uses
+  %45 = alloca %class.QLineF, align 8             ; 4 uses
   %46 = alloca [3 x %class.QPointF], align 16     ; 9 uses
   %47 = alloca [3 x %class.QPointF], align 16     ; 9 uses
   %48 = alloca %class.QRectF, align 8             ; 7 uses
@@ -214,7 +214,7 @@ bb.a:
   %52 = alloca %class.QLineF, align 8             ; 7 uses
   %53 = alloca %class.QLineF, align 8             ; 7 uses
   %54 = alloca %class.QLineF, align 16            ; 5 uses
-  %55 = alloca %class.QLineF, align 8             ; 6 uses
+  %55 = alloca %class.QLineF, align 8             ; 4 uses
   %56 = alloca %class.QLineF, align 8             ; 7 uses
   %57 = alloca %class.QLineF, align 8             ; 7 uses
   %58 = alloca %class.QLineF, align 8             ; 7 uses
@@ -617,11 +617,11 @@ _ZN10QCPPainter8drawLineERK6QLineF.exit310:       ; preds = %bb.ao, %bb.ap
   %i.gv = insertelement <2 x double> %i.gu, double %i.gt, i64 1 ; 2 uses
   %i.gw = insertelement <2 x double> poison, double %2, i64 0
   %i.gx = shufflevector <2 x double> %i.gw, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.gy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gv, <2 x double> splat (double 7.070000e-01), <2 x double> %i.gx) ; 5 uses
+  %i.gy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gv, <2 x double> splat (double 7.070000e-01), <2 x double> %i.gx) ; 4 uses
   %i.gz = shufflevector <2 x double> %i.gy, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
   %i.ha = insertelement <2 x double> poison, double %3, i64 0
   %i.hb = shufflevector <2 x double> %i.ha, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gv, <2 x double> splat (double 7.070000e-01), <2 x double> %i.hb) ; 8 uses
+  %i.hc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gv, <2 x double> splat (double 7.070000e-01), <2 x double> %i.hb) ; 7 uses
   %i.hd = shufflevector <2 x double> %i.gy, <2 x double> %i.hc, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.hd, ptr %44, align 16
   %i.he = getelementptr inbounds nuw i8, ptr %44, i64 16
@@ -663,14 +663,8 @@ bb.as:                                            ; preds = %bb.aq
 _ZN10QCPPainter8drawLineERK6QLineF.exit320:       ; preds = %bb.ar, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %44) #51
   call void @llvm.lifetime.start.p0(ptr nonnull %45) #51
-  %64 = extractelement <2 x double> %i.gy, i64 1
-  store double %64, ptr %45, align 8
-  %65 = getelementptr inbounds nuw i8, ptr %45, i64 8
-  %66 = shufflevector <2 x double> %i.hc, <2 x double> %i.gy, <2 x i32> <i32 0, i32 2>
-  store <2 x double> %66, ptr %65, align 8
-  %67 = getelementptr inbounds nuw i8, ptr %45, i64 24
-  %68 = extractelement <2 x double> %i.hc, i64 1
-  store double %68, ptr %67, align 8
+  %64 = shufflevector <2 x double> %i.gy, <2 x double> %i.hc, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
+  store <4 x double> %64, ptr %45, align 8
   %i.hw = load i8, ptr %i.fe, align 4, !range !175, !noundef !176
   %i.hx = trunc nuw i8 %i.hw to i1
   br i1 %i.hx, label %bb.au, label %bb.at
@@ -1003,11 +997,11 @@ bb.bm:                                            ; preds = %bb.a
   %i.nw = insertelement <2 x double> %i.nv, double %i.nu, i64 1 ; 2 uses
   %i.nx = insertelement <2 x double> poison, double %2, i64 0
   %i.ny = shufflevector <2 x double> %i.nx, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.nz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nw, <2 x double> <double 6.700000e-01, double 7.070000e-01>, <2 x double> %i.ny) ; 5 uses
+  %i.nz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nw, <2 x double> <double 6.700000e-01, double 7.070000e-01>, <2 x double> %i.ny) ; 4 uses
   %i.oa = shufflevector <2 x double> %i.nz, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
   %i.ob = insertelement <2 x double> poison, double %3, i64 0
   %i.oc = shufflevector <2 x double> %i.ob, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.od = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nw, <2 x double> <double 6.700000e-01, double 7.070000e-01>, <2 x double> %i.oc) ; 8 uses
+  %i.od = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nw, <2 x double> <double 6.700000e-01, double 7.070000e-01>, <2 x double> %i.oc) ; 7 uses
   %i.oe = shufflevector <2 x double> %i.nz, <2 x double> %i.od, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.oe, ptr %54, align 16
   %i.of = getelementptr inbounds nuw i8, ptr %54, i64 16
@@ -1050,14 +1044,8 @@ bb.bp:                                            ; preds = %bb.bn
 _ZN10QCPPainter8drawLineERK6QLineF.exit380:       ; preds = %bb.bo, %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #51
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #51
-  %69 = extractelement <2 x double> %i.nz, i64 1
-  store double %69, ptr %55, align 8
-  %70 = getelementptr inbounds nuw i8, ptr %55, i64 8
-  %71 = shufflevector <2 x double> %i.od, <2 x double> %i.nz, <2 x i32> <i32 0, i32 2>
-  store <2 x double> %71, ptr %70, align 8
-  %72 = getelementptr inbounds nuw i8, ptr %55, i64 24
-  %73 = extractelement <2 x double> %i.od, i64 1
-  store double %73, ptr %72, align 8
+  %65 = shufflevector <2 x double> %i.nz, <2 x double> %i.od, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
+  store <4 x double> %65, ptr %55, align 8
   %i.oy = load i8, ptr %i.oh, align 4, !range !175, !noundef !176
   %i.oz = trunc nuw i8 %i.oy to i1
   br i1 %i.oz, label %bb.br, label %bb.bq
@@ -1460,10 +1448,10 @@ bb.a:
   %9 = alloca %class.QLine, align 8               ; 5 uses
   %10 = alloca %class.QLineF, align 8             ; 7 uses
   %11 = alloca %class.QLineF, align 8             ; 7 uses
-  %12 = alloca %class.QLineF, align 8             ; 6 uses
+  %12 = alloca %class.QLineF, align 8             ; 4 uses
   %13 = alloca %class.QRectF, align 16            ; 5 uses
   %14 = alloca %class.QRectF, align 16            ; 5 uses
-  %15 = alloca %class.QLineF, align 8             ; 6 uses
+  %15 = alloca %class.QLineF, align 8             ; 4 uses
   %16 = alloca %class.QLineF, align 16            ; 5 uses
   %17 = alloca %class.QDebug, align 8             ; 12 uses
   %18 = alloca %class.QMessageLogger, align 8     ; 7 uses
@@ -1587,14 +1575,10 @@ _ZN10QCPPainter8drawLineERK6QLineF.exit21:        ; preds = %bb.g, %bb.h
   %i.ay = insertelement <2 x i32> poison, i32 %i.ax, i64 0
   %i.az = insertelement <2 x i32> %i.ay, i32 %i.aw, i64 1
   %i.ba = sitofp <2 x i32> %i.az to <2 x double>
-  %i.bb = fmul nnan <2 x double> %i.ba, splat (double 5.000000e-01) ; 4 uses
-  store double 0.000000e+00, ptr %12, align 8
-  %19 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  %20 = insertelement <2 x double> %i.bb, double 0.000000e+00, i64 1
-  store <2 x double> %20, ptr %19, align 8
-  %21 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  %22 = extractelement <2 x double> %i.bb, i64 1
-  store double %22, ptr %21, align 8
+  %i.bb = fmul nnan <2 x double> %i.ba, splat (double 5.000000e-01) ; 3 uses
+  %19 = shufflevector <2 x double> %i.bb, <2 x double> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 1>
+  %20 = shufflevector <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x double> %19, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x double> %20, ptr %12, align 8
   %i.bc = load i8, ptr %i.o, align 4, !range !175, !noundef !176
   %i.bd = trunc nuw i8 %i.bc to i1
   br i1 %i.bd, label %bb.j, label %bb.i
@@ -1665,14 +1649,10 @@ bb.n:                                             ; preds = %bb.a
   %i.ce = insertelement <2 x i32> poison, i32 %i.cd, i64 0
   %i.cf = insertelement <2 x i32> %i.ce, i32 %i.cc, i64 1
   %i.cg = sitofp <2 x i32> %i.cf to <2 x double>
-  %i.ch = fmul nnan <2 x double> %i.cg, splat (double 5.000000e-01) ; 4 uses
-  store double 0.000000e+00, ptr %15, align 8
-  %23 = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %24 = insertelement <2 x double> %i.ch, double 0.000000e+00, i64 1
-  store <2 x double> %24, ptr %23, align 8
-  %25 = getelementptr inbounds nuw i8, ptr %15, i64 24
-  %26 = extractelement <2 x double> %i.ch, i64 1
-  store double %26, ptr %25, align 8
+  %i.ch = fmul nnan <2 x double> %i.cg, splat (double 5.000000e-01) ; 3 uses
+  %21 = shufflevector <2 x double> %i.ch, <2 x double> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 1>
+  %22 = shufflevector <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x double> %21, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x double> %22, ptr %15, align 8
   %i.ci = getelementptr i8, ptr %1, i64 12        ; 2 uses
   %i.cj = load i8, ptr %i.ci, align 4, !range !175, !noundef !176
   %i.ck = trunc nuw i8 %i.cj to i1
@@ -2075,7 +2055,7 @@ declare void @_ZN6QImageC1Ev(ptr noundef align 8 dereferenceable_or_null(24)) un
 ; Function Attrs: mustprogress null_pointer_is_valid sspstrong uwtable
 define void @_ZN28QCPColorScaleAxisRectPrivate4drawEP10QCPPainter(ptr noundef align 8 dereferenceable_or_null(465) %0, ptr noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %class.QRectF, align 8              ; 6 uses
+  %2 = alloca %class.QRectF, align 8              ; 4 uses
   %3 = alloca %class.QRectF, align 8              ; 6 uses
   %4 = alloca %class.QImage, align 8              ; 9 uses
   %i.a = getelementptr i8, ptr %0, i64 464
@@ -2145,33 +2125,28 @@ _ZNK8QPointerI7QCPAxisEcvPS0_Ev.exit.thread:      ; preds = %bb.f, %bb.c, %bb.d,
   %.06 = phi i1 [ false, %_ZNK8QPointerI7QCPAxisEcvPS0_Ev.exit ], [ false, %_ZNK8QPointerI7QCPAxisE4dataEv.exit7 ], [ %spec.select15, %bb.f ], [ false, %bb.c ], [ false, %bb.d ]
   %.0 = phi i1 [ false, %_ZNK8QPointerI7QCPAxisEcvPS0_Ev.exit ], [ %i.w, %_ZNK8QPointerI7QCPAxisE4dataEv.exit7 ], [ %i.w, %bb.f ], [ false, %bb.c ], [ false, %bb.d ]
   %i.af = getelementptr i8, ptr %0, i64 92
-  %.sroa.0.0.copyload.i = load i64, ptr %i.af, align 4 ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.af, align 4 ; 3 uses
   %.sroa.2.0..sroa_idx.i = getelementptr i8, ptr %0, i64 100
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 4 ; 2 uses
   %.sroa.0.4.extract.shift = lshr i64 %.sroa.0.0.copyload.i, 32
-  %.sroa.0.4.extract.trunc = trunc nuw i64 %.sroa.0.4.extract.shift to i32 ; 2 uses
+  %.sroa.0.4.extract.trunc = trunc nuw i64 %.sroa.0.4.extract.shift to i32
   %.sroa.6.12.extract.shift = lshr i64 %.sroa.2.0.copyload.i, 32
   %.sroa.6.12.extract.trunc = trunc nuw i64 %.sroa.6.12.extract.shift to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #51
   %i.ag = getelementptr i8, ptr %0, i64 440
   call void @_ZNK6QImage15mirrored_helperEbb(ptr dead_on_unwind nonnull writable sret(%class.QImage) align 8 %4, ptr noundef align 8 dereferenceable_or_null(24) %i.ag, i1 noundef zeroext %.0, i1 noundef zeroext %.06)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #51
-  %.sroa.012.0.extract.trunc.a = trunc i64 %.sroa.0.0.copyload.i to i32 ; 2 uses
-  %5 = sitofp i32 %.sroa.012.0.extract.trunc.a to double
-  store double %5, ptr %2, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.613.8.extract.trunc = trunc i64 %.sroa.2.0.copyload.i to i32
-  %reass.sub = sub i32 %.sroa.613.8.extract.trunc, %.sroa.012.0.extract.trunc.a
-  %7 = insertelement <2 x i32> poison, i32 %.sroa.0.4.extract.trunc, i64 0
-  %8 = insertelement <2 x i32> %7, i32 %reass.sub, i64 1
-  %9 = add <2 x i32> %8, <i32 -1, i32 1>
-  %10 = sitofp <2 x i32> %9 to <2 x double>
-  store <2 x double> %10, ptr %6, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %.sroa.012.0.extract.trunc.a = trunc i64 %.sroa.2.0.copyload.i to i32
   %reass.sub16 = sub i32 %.sroa.6.12.extract.trunc, %.sroa.0.4.extract.trunc
-  %12 = add i32 %reass.sub16, 1
-  %13 = sitofp i32 %12 to double
-  store double %13, ptr %11, align 8
+  %.sroa.613.8.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32
+  %reass.sub = sub i32 %.sroa.012.0.extract.trunc.a, %.sroa.613.8.extract.trunc
+  %5 = insertelement <2 x i64> poison, i64 %.sroa.0.0.copyload.i, i64 0
+  %6 = bitcast <2 x i64> %5 to <4 x i32>
+  %7 = insertelement <4 x i32> %6, i32 %reass.sub, i64 2
+  %8 = insertelement <4 x i32> %7, i32 %reass.sub16, i64 3
+  %9 = add <4 x i32> %8, <i32 0, i32 -1, i32 1, i32 1>
+  %10 = sitofp <4 x i32> %9 to <4 x double>
+  store <4 x double> %10, ptr %2, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #51
   %i.ah = invoke noundef i32 @_ZNK6QImage5widthEv(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %4)
           to label %.noexc unwind label %bb.h
@@ -2574,7 +2549,7 @@ bb.a:
   %11 = alloca %class.QLineF, align 16            ; 6 uses
   %12 = alloca %class.QFont, align 8              ; 8 uses
   %13 = alloca %class.QPen, align 8               ; 7 uses
-  %14 = alloca %class.QLineF, align 8             ; 7 uses
+  %14 = alloca %class.QLineF, align 8             ; 5 uses
   %15 = alloca %class.QPointF, align 16           ; 5 uses
   %i.a = getelementptr i8, ptr %0, i64 80
   %i.b = load double, ptr %i.a, align 8
@@ -2895,8 +2870,6 @@ _ZN10QCPPainter6setPenERK4QPen.exit88:            ; preds = %bb.r, %.noexc86
 .lr.ph168:                                        ; preds = %_ZN10QCPPainter6setPenERK4QPen.exit88
   %i.eo = getelementptr i8, ptr %0, i64 424
   %i.ep = getelementptr i8, ptr %0, i64 300
-  %.sroa.5124.0..sroa_idx = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %.sroa.5120.0..sroa_idx = getelementptr inbounds nuw i8, ptr %14, i64 24
   %i.eq = getelementptr i8, ptr %0, i64 456
   %i.er = getelementptr i8, ptr %0, i64 368
   %i.es = getelementptr i8, ptr %0, i64 312
@@ -2948,12 +2921,10 @@ bb.u:                                             ; preds = %.lr.ph168, %bb.ah
   %i.fs = fsub <2 x double> %i.fr, %i.fm          ; 2 uses
   %i.ft = fadd <2 x double> %i.fr, %i.fm          ; 2 uses
   %i.fu = shufflevector <2 x double> %i.fs, <2 x double> %i.ft, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %16 = extractelement <2 x double> %i.fo, i64 0
-  store double %16, ptr %14, align 8
-  %17 = shufflevector <2 x double> %i.fs, <2 x double> %i.fp, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %17, ptr %.sroa.5124.0..sroa_idx, align 8
-  %18 = extractelement <2 x double> %i.ft, i64 1
-  store double %18, ptr %.sroa.5120.0..sroa_idx, align 8
+  %16 = shufflevector <2 x double> %i.fo, <2 x double> %i.fs, <2 x i32> <i32 0, i32 2>
+  %17 = shufflevector <2 x double> %i.fp, <2 x double> %i.ft, <2 x i32> <i32 1, i32 3>
+  %18 = shufflevector <2 x double> %16, <2 x double> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %18, ptr %14, align 8
   %i.fv = load i8, ptr %i.an, align 4, !range !175, !noundef !176
   %i.fw = trunc nuw i8 %i.fv to i1
   br i1 %i.fw, label %bb.w, label %bb.v
@@ -3356,7 +3327,7 @@ bb.a:
   %2 = alloca %class.QLine, align 16              ; 4 uses
   %3 = alloca %class.QLineF, align 16             ; 5 uses
   %4 = alloca %class.QLine, align 16              ; 4 uses
-  %5 = alloca %class.QLineF, align 8              ; 6 uses
+  %5 = alloca %class.QLineF, align 8              ; 4 uses
   %6 = alloca %class.QRectF, align 16             ; 6 uses
   %7 = alloca %class.QPen, align 8                ; 7 uses
   %8 = alloca %class.QPen, align 8                ; 7 uses
@@ -3442,8 +3413,6 @@ _ZN10QCPPainter6setPenERK4QPen.exit38:            ; preds = %.noexc36, %bb.d
 .lr.ph:                                           ; preds = %_ZN10QCPPainter6setPenERK4QPen.exit38
   %i.ac = getelementptr i8, ptr %0, i64 752
   %i.ad = getelementptr i8, ptr %0, i64 484
-  %.sroa.497.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %.sroa.493.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.ae = getelementptr i8, ptr %1, i64 12
   br label %bb.g
 
@@ -3479,16 +3448,12 @@ bb.g:                                             ; preds = %.lr.ph, %_ZN10QCPPa
   %i.au = shufflevector <2 x double> %i.ak, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.av = fmul <2 x double> %i.ar, %i.au
   %i.aw = shufflevector <3 x double> %i.al, <3 x double> poison, <2 x i32> zeroinitializer
-  %i.ax = fadd <2 x double> %i.aw, %i.at          ; 4 uses
+  %i.ax = fadd <2 x double> %i.aw, %i.at          ; 3 uses
   %i.ay = shufflevector <3 x double> %i.al, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.az = fadd <2 x double> %i.av, %i.ay          ; 4 uses
+  %i.az = fadd <2 x double> %i.av, %i.ay          ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #51
-  %12 = extractelement <2 x double> %i.ax, i64 0
-  store double %12, ptr %5, align 8
-  %13 = shufflevector <2 x double> %i.az, <2 x double> %i.ax, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %13, ptr %.sroa.497.0..sroa_idx, align 8
-  %14 = extractelement <2 x double> %i.az, i64 1
-  store double %14, ptr %.sroa.493.0..sroa_idx, align 8
+  %12 = shufflevector <2 x double> %i.ax, <2 x double> %i.az, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x double> %12, ptr %5, align 8
   %i.ba = load i8, ptr %i.ae, align 4, !range !175, !noundef !176
   %i.bb = trunc nuw i8 %i.ba to i1
   br i1 %i.bb, label %bb.i, label %bb.h

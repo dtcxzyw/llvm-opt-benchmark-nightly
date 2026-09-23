@@ -204,29 +204,23 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden { ptr, ptr } @_RNvXs2_NtCs1pSuea8KFR7_16libp2p_gossipsub8protocolNtB5_14ProtocolConfigINtNtCsdTHTBGblh3Z_11libp2p_core7upgrade14InboundUpgradeNtNtCs6b9j1MKPRPC_12libp2p_swarm6stream6StreamE15upgrade_inboundCsvMXERwWlfq_12chat_example(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(104) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(136) %1, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [88 x i8], align 8                ; 8 uses
+  %i.a = alloca [88 x i8], align 8                ; 6 uses
   %i.b = alloca [296 x i8], align 8               ; 4 uses
   %i.c = alloca [304 x i8], align 8               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.f = load i8, ptr %i.e, align 8, !range !41, !noundef !9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %i.g, i64 48, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %4 = load i64, ptr %3, align 8, !noundef !9
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  store i8 %i.f, ptr %i.h, align 8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %6 = load <2 x i64>, ptr %i.d, align 8
-  %7 = load i64, ptr %i.d, align 8, !noundef !9
-  store i64 %7, ptr %5, align 8
-  store <2 x i64> %6, ptr %i.i, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i64 %4, ptr %8, align 8
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 80
+  store i8 %i.f, ptr %i.i, align 8
+  %3 = load <3 x i64>, ptr %i.d, align 8
+  %4 = shufflevector <3 x i64> %3, <3 x i64> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 2>
+  store <4 x i64> %4, ptr %i.h, align 8
   invoke void @_RNvMs0_NtCsjYje7j88m19_18asynchronous_codec6framedINtB5_6FramedNtNtCs6b9j1MKPRPC_12libp2p_swarm6stream6StreamNtNtCs1pSuea8KFR7_16libp2p_gossipsub8protocol14GossipsubCodecE3newCsvMXERwWlfq_12chat_example(ptr noalias nofree noundef nonnull sret([296 x i8]) align 8 captures(none) dereferenceable(296) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(136) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %i.a)
           to label %bb.e unwind label %bb.b
 
@@ -629,7 +623,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 ; Function Attrs: nonlazybind uwtable
 define hidden { ptr, ptr } @_RNvXs_NtCs6b9j1MKPRPC_12libp2p_swarm7upgradeNtNtCs1pSuea8KFR7_16libp2p_gossipsub8protocol14ProtocolConfigNtB4_19OutboundUpgradeSend16upgrade_outboundCsvMXERwWlfq_12chat_example(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(104) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(136) %1, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [88 x i8], align 8                ; 8 uses
+  %i.a = alloca [88 x i8], align 8                ; 6 uses
   %i.b = alloca [296 x i8], align 8               ; 4 uses
   %i.c = alloca [304 x i8], align 8               ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2674)
@@ -637,23 +631,17 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2676
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2676
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2676
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.f = load i8, ptr %i.e, align 8, !range !41, !alias.scope !2674, !noalias !2677, !noundef !9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %i.g, i64 48, i1 false), !noalias !2677
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %4 = load i64, ptr %3, align 8, !alias.scope !2674, !noalias !2677, !noundef !9
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  store i8 %i.f, ptr %i.h, align 8, !noalias !2676
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %6 = load <2 x i64>, ptr %i.d, align 8, !alias.scope !2674, !noalias !2677
-  %7 = load i64, ptr %i.d, align 8, !alias.scope !2674, !noalias !2677, !noundef !9
-  store i64 %7, ptr %5, align 8, !noalias !2676
-  store <2 x i64> %6, ptr %i.i, align 8, !noalias !2676
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i64 %4, ptr %8, align 8, !noalias !2676
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 80
+  store i8 %i.f, ptr %i.i, align 8, !noalias !2676
+  %3 = load <3 x i64>, ptr %i.d, align 8, !alias.scope !2674, !noalias !2677
+  %4 = shufflevector <3 x i64> %3, <3 x i64> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 2>
+  store <4 x i64> %4, ptr %i.h, align 8, !noalias !2676
   invoke void @_RNvMs0_NtCsjYje7j88m19_18asynchronous_codec6framedINtB5_6FramedNtNtCs6b9j1MKPRPC_12libp2p_swarm6stream6StreamNtNtCs1pSuea8KFR7_16libp2p_gossipsub8protocol14GossipsubCodecE3newCsvMXERwWlfq_12chat_example(ptr noalias nofree noundef nonnull sret([296 x i8]) align 8 captures(none) dereferenceable(296) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(136) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %i.a)
           to label %bb.e unwind label %bb.b, !noalias !2678
 

@@ -76,24 +76,18 @@ bb.j:                                             ; preds = %bb.b
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.pre-phi = phi i64 [ %i.s, %bb.j ], [ %.pre, %bb.i ]
-  %.042 = phi ptr [ %i.t, %bb.j ], [ %i.e, %bb.i ] ; 10 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.042, i64 120 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.042, i64 88
-  store ptr %2, ptr %3, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %.042, i64 184 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.042, i64 96
-  store ptr %4, ptr %5, align 8
-  %i.u = getelementptr inbounds nuw i8, ptr %.042, i64 104
-  store ptr %2, ptr %i.u, align 8
-  %i.v = getelementptr inbounds nuw i8, ptr %.042, i64 112
-  store ptr %2, ptr %i.v, align 8
+  %.042 = phi ptr [ %i.t, %bb.j ], [ %i.e, %bb.i ] ; 7 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.042, <4 x i64> <i64 120, i64 184, i64 120, i64 120>
+  %i.u = getelementptr inbounds nuw i8, ptr %.042, i64 88
+  %i.v = getelementptr inbounds nuw i8, ptr %.042, i64 184
+  store <4 x ptr> %2, ptr %i.u, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %.042, i64 186
   store i8 12, ptr %i.w, align 2
   %i.x = inttoptr i64 %.pre-phi to ptr
   %i.y = getelementptr inbounds nuw i8, ptr %.042, i64 80
   store ptr %i.x, ptr %i.y, align 8
   %i.z = trunc i32 %i.b to i16
-  store i16 %i.z, ptr %4, align 8
+  store i16 %i.z, ptr %i.v, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %.042, i64 48
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.aa, i8 0, i64 32, i1 false)
   br label %bb.n

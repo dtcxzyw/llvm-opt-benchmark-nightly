@@ -202,7 +202,7 @@ declare void @vmport_register(i32 noundef, ptr noundef, ptr noundef) local_unnam
 ; Function Attrs: nounwind sspstrong uwtable
 define internal i32 @vmmouse_ioport_read(ptr noundef %0, i32 %1) #0 {
 bb.a:
-  %i.a = alloca [6 x i64], align 16               ; 10 uses
+  %i.a = alloca [6 x i64], align 16               ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @current_cpu) ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
@@ -212,10 +212,10 @@ bb.a:
   store i64 %i.f, ptr %i.a, align 16
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16520
   %i.h = load i64, ptr %i.g, align 8              ; 7 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.h, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 16504 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.l = load <2 x i64>, ptr %i.j, align 8
   %i.m = load i64, ptr %i.j, align 8              ; 2 uses
   store <2 x i64> %i.l, ptr %i.k, align 16
@@ -587,20 +587,16 @@ bb.ap:                                            ; preds = %bb.a
 
 vmmouse_disable.exit:                             ; preds = %bb.ao, %._crit_edge.i, %bb.an, %bb.am, %bb.af, %vmmouse_remove_handler.exit.i.i25, %trace_vmmouse_request_absolute.exit.i, %bb.x, %vmmouse_remove_handler.exit.i.i17, %trace_vmmouse_request_relative.exit.i, %bb.p, %vmmouse_remove_handler.exit.i.i, %trace_vmmouse_read_id.exit.i, %bb.k, %trace_vmmouse_disable.exit.i, %bb.ag, %bb.ap, %vmmouse_get_status.exit
   %i.dp = load ptr, ptr %i.b, align 8
-  %i.dq = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.dp, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.14, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #4 ; 4 uses
+  %i.dq = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.dp, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.14, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #4 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 16496
-  %2 = load i64, ptr %i.a, align 16               ; 2 uses
-  store i64 %2, ptr %i.dr, align 16
-  %i.ds = load i64, ptr %i.i, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.dq, i64 16520
-  store i64 %i.ds, ptr %3, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.dq, i64 16504
-  %5 = load <2 x i64>, ptr %i.k, align 16
-  store <2 x i64> %5, ptr %4, align 8
+  %2 = load <4 x i64>, ptr %i.a, align 16
+  %i.ds = load i64, ptr %i.a, align 16
+  %3 = shufflevector <4 x i64> %2, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 1>
+  store <4 x i64> %3, ptr %i.dr, align 16
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dq, i64 16544
   %i.du = load <2 x i64>, ptr %i.o, align 16
   store <2 x i64> %i.du, ptr %i.dt, align 16
-  %i.dv = trunc i64 %2 to i32
+  %i.dv = trunc i64 %i.ds to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %i.dv
 }

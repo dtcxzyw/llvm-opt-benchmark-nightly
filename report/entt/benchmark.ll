@@ -205,8 +205,8 @@ bb.a:
   %3 = alloca %"class.entt::basic_any", align 8   ; 9 uses
   %4 = alloca %"class.entt::basic_any", align 8   ; 9 uses
   %5 = alloca %"class.entt::basic_any", align 8   ; 9 uses
-  %6 = alloca %"class.entt::dense_map.21", align 16 ; 9 uses
-  %7 = alloca %"class.entt::dense_map.12", align 16 ; 9 uses
+  %6 = alloca %"class.entt::dense_map.21", align 16 ; 7 uses
+  %7 = alloca %"class.entt::dense_map.12", align 16 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !191
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -291,19 +291,18 @@ _ZSt4swapIN4entt8internal16registry_contextISaINS0_6entityEEEEENSt9enable_ifIXsr
   store <2 x ptr> %i.ai, ptr %7, align 16, !tbaa !454
   %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %8 = load ptr, ptr %i.ak, align 8, !tbaa !191
-  store ptr %8, ptr %i.aj, align 16, !tbaa !191
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
+  %10 = load ptr, ptr %i.ak, align 8, !tbaa !191
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.ag, i8 0, i64 24, i1 false)
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.al = load <2 x ptr>, ptr %10, align 8, !tbaa !463
-  store <2 x ptr> %i.al, ptr %9, align 8, !tbaa !463
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 40
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %14 = load ptr, ptr %13, align 8, !tbaa !412
-  store ptr %14, ptr %12, align 8, !tbaa !412
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 0, i64 24, i1 false)
+  %11 = load ptr, ptr %8, align 8, !tbaa !259
+  %i.al = load <2 x ptr>, ptr %9, align 8, !tbaa !463
+  %12 = insertelement <4 x ptr> poison, ptr %10, i64 0
+  %13 = insertelement <4 x ptr> %12, ptr %11, i64 1
+  %14 = shufflevector <2 x ptr> %i.al, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x ptr> %13, <4 x ptr> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %15, ptr %i.aj, align 16, !tbaa !244
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 48
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ao = load float, ptr %i.an, align 8, !tbaa !453
@@ -319,18 +318,18 @@ _ZSt4swapIN4entt8internal16registry_contextISaINS0_6entityEEEEENSt9enable_ifIXsr
   store <2 x ptr> %i.at, ptr %6, align 16, !tbaa !454
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %15 = load ptr, ptr %i.av, align 8, !tbaa !191
-  store ptr %15, ptr %i.au, align 16, !tbaa !191
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %18 = load ptr, ptr %i.av, align 8, !tbaa !191
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.ar, i8 0, i64 24, i1 false)
-  %16 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %19 = load ptr, ptr %16, align 8, !tbaa !410
   %i.aw = load <2 x ptr>, ptr %17, align 8, !tbaa !464
-  store <2 x ptr> %i.aw, ptr %16, align 8, !tbaa !464
-  %18 = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %20 = load ptr, ptr %19, align 8, !tbaa !411
-  store ptr %20, ptr %18, align 8, !tbaa !411
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, i8 0, i64 24, i1 false)
+  %20 = insertelement <4 x ptr> poison, ptr %18, i64 0
+  %21 = insertelement <4 x ptr> %20, ptr %19, i64 1
+  %22 = shufflevector <2 x ptr> %i.aw, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %23 = shufflevector <4 x ptr> %21, <4 x ptr> %22, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %23, ptr %i.au, align 16, !tbaa !244
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, i8 0, i64 24, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.az = load float, ptr %i.ay, align 8, !tbaa !471
@@ -373,8 +372,8 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN4entt16basic_sparse_setINS_6entityESaIS1_EE4bindIRNS_14basic_registryIS1_S2_EEEEvOT_.exit.i: ; preds = %bb.f, %_ZSt4swapIN4entt8internal16registry_contextISaINS0_6entityEEEEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS9_ESt18is_move_assignableIS9_EEE5valueEvE4typeERS9_SI_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %i.bo = load ptr, ptr %10, align 8, !tbaa !259  ; 2 uses
-  %i.bp = load ptr, ptr %11, align 8, !tbaa !260  ; 2 uses
+  %i.bo = load ptr, ptr %8, align 8, !tbaa !259   ; 2 uses
+  %i.bp = load ptr, ptr %9, align 8, !tbaa !260   ; 2 uses
   %i.bq = icmp eq ptr %i.bo, %i.bp
   br i1 %i.bq, label %_ZN4entt14basic_registryINS_6entityESaIS1_EE6rebindEv.exit, label %.lr.ph.i
 
@@ -508,7 +507,7 @@ _ZN4entt14basic_registryINS_6entityESaIS1_EE6rebindEv.exit12: ; preds = %_ZN4ent
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZSt4swapIN4entt16basic_sigh_mixinINS0_13basic_storageINS0_6entityES3_SaIS3_EEENS0_14basic_registryIS3_S4_EEEEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleISC_ESt18is_move_assignableISC_EEE5valueEvE4typeERSC_SL_(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull align 8 dereferenceable(168) %1) local_unnamed_addr #12 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.entt::basic_sigh_mixin", align 8 ; 17 uses
+  %2 = alloca %"class.entt::basic_sigh_mixin", align 8 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -516,19 +515,19 @@ bb.a:
   store <2 x ptr> %i.c, ptr %i.a, align 8, !tbaa !406
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %3 = load ptr, ptr %i.e, align 8, !tbaa !409
-  store ptr %3, ptr %i.d, align 8, !tbaa !409
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %6 = load ptr, ptr %i.e, align 8, !tbaa !409
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %7 = load ptr, ptr %3, align 8, !tbaa !242
   %i.f = load <2 x ptr>, ptr %5, align 8, !tbaa !244
-  store <2 x ptr> %i.f, ptr %4, align 8, !tbaa !244
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %9 = load ptr, ptr %8, align 8, !tbaa !408
-  store ptr %9, ptr %7, align 8, !tbaa !408
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  %8 = insertelement <4 x ptr> poison, ptr %6, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %7, i64 1
+  %10 = shufflevector <2 x ptr> %i.f, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x ptr> %9, <4 x ptr> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %11, ptr %i.d, align 8, !tbaa !244
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !416
@@ -558,22 +557,20 @@ bb.a:
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 152
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 160
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   %i.ag = load <2 x ptr>, ptr %i.t, align 8, !tbaa !244
   %i.ah = load <2 x ptr>, ptr %i.w, align 8, !tbaa !214
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.u, i8 0, i64 24, i1 false)
-  %10 = load ptr, ptr %i.aa, align 8, !tbaa !405
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 2 uses
   %i.ak = load <2 x ptr>, ptr %i.y, align 8, !tbaa !214
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, i8 0, i64 24, i1 false)
-  %i.al = load ptr, ptr %i.ad, align 8, !tbaa !405
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 144
   %12 = getelementptr inbounds nuw i8, ptr %1, i64 152
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %i.am = load <2 x ptr>, ptr %i.ab, align 8, !tbaa !214
+  %i.al = load ptr, ptr %i.aa, align 8, !tbaa !405
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, i8 0, i64 24, i1 false)
+  %13 = load ptr, ptr %i.ab, align 8, !tbaa !218
+  %i.am = load <2 x ptr>, ptr %i.ad, align 8, !tbaa !214
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i8 0, i64 24, i1 false)
   tail call void @_ZN4entt16basic_sigh_mixinINS_13basic_storageINS_6entityES2_SaIS2_EEENS_14basic_registryIS2_S3_EEE4swapERS7_(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull align 8 dereferenceable(168) %1) #23
   %i.an = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !244
@@ -586,11 +583,13 @@ bb.a:
   store <2 x ptr> %i.ak, ptr %i.ai, align 8, !tbaa !214
   store <2 x ptr> %i.ap, ptr %i.x, align 8, !tbaa !214
   %i.aq = load <2 x ptr>, ptr %i.aj, align 8, !tbaa !214
-  store ptr %10, ptr %i.aj, align 8, !tbaa !405
   store <2 x ptr> %i.aq, ptr %i.z, align 8, !tbaa !214
   %14 = load <2 x ptr>, ptr %12, align 8, !tbaa !214
-  store <2 x ptr> %i.am, ptr %11, align 8, !tbaa !214
-  store ptr %i.al, ptr %13, align 8, !tbaa !405
+  %15 = insertelement <4 x ptr> poison, ptr %i.al, i64 0
+  %16 = insertelement <4 x ptr> %15, ptr %13, i64 1
+  %17 = shufflevector <2 x ptr> %i.am, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %18 = shufflevector <4 x ptr> %16, <4 x ptr> %17, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %18, ptr %i.aj, align 8, !tbaa !214
   store <2 x ptr> %14, ptr %i.ac, align 8, !tbaa !214
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -605,9 +604,9 @@ bb.a:
   store <2 x ptr> %i.ay, ptr %i.at, align 8, !tbaa !244
   store <2 x ptr> %i.ax, ptr %i.d, align 8, !tbaa !244
   %i.az = load <2 x ptr>, ptr %i.aw, align 8, !tbaa !244
-  %i.ba = load <2 x ptr>, ptr %6, align 8, !tbaa !244
+  %i.ba = load <2 x ptr>, ptr %4, align 8, !tbaa !244
   store <2 x ptr> %i.ba, ptr %i.aw, align 8, !tbaa !244
-  store <2 x ptr> %i.az, ptr %6, align 8, !tbaa !244
+  store <2 x ptr> %i.az, ptr %4, align 8, !tbaa !244
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !472
   %i.bd = load ptr, ptr %i.g, align 8, !tbaa !472

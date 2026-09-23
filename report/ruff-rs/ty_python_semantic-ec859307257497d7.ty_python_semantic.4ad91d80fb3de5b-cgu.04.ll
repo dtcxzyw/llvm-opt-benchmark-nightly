@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [16 x i8], align 4                ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 3 uses
   %i.d = alloca [16 x i8], align 8                ; 4 uses
-  %i.e = alloca [96 x i8], align 8                ; 19 uses
+  %i.e = alloca [96 x i8], align 8                ; 17 uses
   %i.f = alloca [16 x i8], align 8                ; 6 uses
   %i.g = alloca [16 x i8], align 4                ; 4 uses
   %i.h = alloca [16 x i8], align 4                ; 4 uses
@@ -608,39 +608,38 @@ bb.af:                                            ; preds = %.thread
   %.sroa.7137.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 4
   store i64 %.sroa.7137.0.copyload139, ptr %.sroa.7137.0..sroa_idx, align 4, !noalias !698
   %i.gu = getelementptr inbounds nuw i8, ptr %i.de, i64 40
-  %7 = load ptr, ptr %i.gu, align 8, !noalias !719, !nonnull !12, !align !16, !noundef !12 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !719
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !719
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.de, i64 48 ; 3 uses
-  %i.gw = getelementptr inbounds nuw i8, ptr %i.de, i64 64
-  %i.gx = getelementptr inbounds nuw i8, ptr %i.de, i64 80
-  %8 = load ptr, ptr %i.gx, align 8, !noalias !719, !nonnull !12, !align !13, !noundef !12
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.e, i64 40
-  store ptr %7, ptr %i.gy, align 8, !alias.scope !720, !noalias !719
-  %i.gz = getelementptr inbounds nuw i8, ptr %i.e, i64 48
-  %i.ha = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  store i32 0, ptr %i.ha, align 8, !alias.scope !720, !noalias !719
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.e, i64 88
+  %7 = getelementptr inbounds nuw i8, ptr %i.de, i64 48 ; 2 uses
+  %i.gv = getelementptr inbounds nuw i8, ptr %i.de, i64 56
+  %i.gw = getelementptr inbounds nuw i8, ptr %i.de, i64 72
+  %i.gx = getelementptr inbounds nuw i8, ptr %i.e, i64 40
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %i.gy = getelementptr inbounds nuw i8, ptr %i.e, i64 88
   %9 = getelementptr inbounds nuw i8, ptr %i.e, i64 89
-  store ptr null, ptr %i.e, align 8, !alias.scope !720, !noalias !719
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  store i32 -2, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !720, !noalias !719
+  %i.gz = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %i.ha = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %.sroa.5.0..sroa_idx.i.i73 = getelementptr inbounds nuw i8, ptr %i.e, i64 28
-  store i32 0, ptr %.sroa.5.0..sroa_idx.i.i73, align 4, !alias.scope !720, !noalias !719
-  %11 = getelementptr inbounds nuw i8, ptr %i.e, i64 90
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.e, i64 90
+  %10 = load ptr, ptr %i.gu, align 8, !noalias !719, !nonnull !12, !align !16, !noundef !12 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !719
+  %11 = load ptr, ptr %7, align 8, !noalias !719, !nonnull !12, !align !13, !noundef !12 ; 2 uses
   %12 = load <2 x ptr>, ptr %i.gv, align 8, !noalias !719
-  %13 = load ptr, ptr %i.gv, align 8, !noalias !719, !nonnull !12, !align !13, !noundef !12
-  store ptr %13, ptr %10, align 8, !alias.scope !720, !noalias !719
-  store <2 x ptr> %12, ptr %i.gz, align 8, !alias.scope !720, !noalias !719
-  %14 = getelementptr inbounds nuw i8, ptr %i.e, i64 64
-  %15 = load <2 x ptr>, ptr %i.gw, align 8, !noalias !719
-  store i8 2, ptr %i.hb, align 8, !alias.scope !720, !noalias !719
+  store i32 0, ptr %8, align 8, !alias.scope !720, !noalias !719
+  store ptr null, ptr %i.e, align 8, !alias.scope !720, !noalias !719
+  store ptr %11, ptr %i.gz, align 8, !alias.scope !720, !noalias !719
+  store i32 -2, ptr %i.ha, align 8, !alias.scope !720, !noalias !719
+  store i32 0, ptr %.sroa.5.0..sroa_idx.i.i73, align 4, !alias.scope !720, !noalias !719
+  %13 = insertelement <4 x ptr> poison, ptr %10, i64 0
+  %14 = insertelement <4 x ptr> %13, ptr %11, i64 1
+  %15 = shufflevector <2 x ptr> %12, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %16 = shufflevector <4 x ptr> %14, <4 x ptr> %15, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %16, ptr %i.gx, align 8, !alias.scope !720, !noalias !719
+  %17 = getelementptr inbounds nuw i8, ptr %i.e, i64 72
+  %18 = load <2 x ptr>, ptr %i.gw, align 8, !noalias !719
+  store i8 2, ptr %i.gy, align 8, !alias.scope !720, !noalias !719
   store i8 0, ptr %9, align 1, !alias.scope !720, !noalias !719
-  store i8 1, ptr %11, align 2, !alias.scope !720, !noalias !719
-  store <2 x ptr> %15, ptr %14, align 8, !alias.scope !720, !noalias !719
-  %16 = getelementptr inbounds nuw i8, ptr %i.e, i64 80
-  store ptr %8, ptr %16, align 8, !alias.scope !720, !noalias !719
+  store i8 1, ptr %i.hb, align 2, !alias.scope !720, !noalias !719
+  store <2 x ptr> %18, ptr %17, align 8, !alias.scope !720, !noalias !719
   invoke void @_RNvMsf_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5classNtNtB7_8relation19TypeRelationChecker16check_class_pair(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noundef nonnull align 8 %i.e, ptr noundef nonnull %i.dg, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.di, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(12) %i.by, ptr noalias noundef nonnull readonly align 4 captures(address) dereferenceable(12) %i.bx)
           to label %bb.aj unwind label %bb.ag, !noalias !697, !inline_history !570
 
@@ -685,7 +684,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.hn = load i32, ptr %i.hm, align 8, !alias.scope !726, !noalias !727, !noundef !12
   %i.ho = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %i.hp = load i32, ptr %i.ho, align 4, !alias.scope !726, !noalias !727, !noundef !12
-  %i.hq = invoke noundef zeroext i1 @_RNvMsh_NtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraintsNtB5_6NodeId19is_always_satisfied(i32 noundef %i.hn, ptr noundef nonnull %i.dg, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.di, ptr noundef nonnull align 4 %7, ptr noalias noundef nonnull align 8 dereferenceable(688) %i.hl, i32 noundef %i.hp)
+  %i.hq = invoke noundef zeroext i1 @_RNvMsh_NtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraintsNtB5_6NodeId19is_always_satisfied(i32 noundef %i.hn, ptr noundef nonnull %i.dg, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.di, ptr noundef nonnull align 4 %10, ptr noalias noundef nonnull align 8 dereferenceable(688) %i.hl, i32 noundef %i.hp)
           to label %_RNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraintsNtB5_13ConstraintSet19is_always_satisfied.exit.i unwind label %bb.am, !noalias !729, !inline_history !570
 
 bb.al:                                            ; preds = %bb.aj
@@ -744,7 +743,7 @@ bb.ar:                                            ; preds = %_RNvMs2_NtNtCsoTR8n
   br label %bb.aq
 
 bb.as:                                            ; preds = %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_19TypeRelationChecker16is_class_subtype.exit
-  %.val108.i.i = load ptr, ptr %i.gv, align 8, !noalias !698, !nonnull !12, !align !13, !noundef !12
+  %.val108.i.i = load ptr, ptr %7, align 8, !noalias !698, !nonnull !12, !align !13, !noundef !12
   %i.ic = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
   store i32 -1, ptr %i.ic, align 8, !alias.scope !734, !noalias !712
   %i.id = getelementptr inbounds nuw i8, ptr %i.cq, i64 12

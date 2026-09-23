@@ -205,7 +205,7 @@ bb.a:
   %7 = alloca %class.QColor, align 8              ; 6 uses
   %8 = alloca %class.QPen, align 8                ; 7 uses
   %9 = alloca %class.QBrush, align 8              ; 7 uses
-  %10 = alloca %class.QRectF, align 8             ; 7 uses
+  %10 = alloca %class.QRectF, align 8             ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.b = load double, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -240,39 +240,37 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #23
   %i.i = load double, ptr %2, align 8
   %i.j = load double, ptr %i.h, align 8
-  %11 = fadd double %i.i, %i.j
-  %12 = fadd double %11, -1.200000e+01
-  %i.k = fadd double %12, -1.000000e+01           ; 4 uses
-  %i.l = fadd double %i.g, -5.000000e+00          ; 4 uses
-  %i.m = fadd double %i.k, 1.000000e+01           ; 2 uses
-  %i.n = fadd double %i.l, 1.000000e+01           ; 2 uses
+  %i.k = fadd double %i.i, %i.j
+  %i.l = fadd double %i.k, -1.200000e+01
+  %i.m = fadd double %i.l, -1.000000e+01          ; 4 uses
+  %i.n = fadd double %i.m, 1.000000e+01           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
-  store double %i.k, ptr %6, align 8
+  store double %i.m, ptr %6, align 8
   %.sroa.444.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store double %i.l, ptr %.sroa.444.0..sroa_idx, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store double %i.m, ptr %i.o, align 8
+  store double %i.n, ptr %i.o, align 8
   %.sroa.442.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 24
-  store double %i.n, ptr %.sroa.442.0..sroa_idx, align 8
+  %.sroa.440.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %12 = insertelement <4 x double> <double poison, double poison, double -0.000000e+00, double -0.000000e+00>, double %i.m, i64 0
+  %13 = insertelement <4 x double> %12, double %i.g, i64 1
+  %14 = fadd <4 x double> %13, <double -1.800000e+01, double -5.000000e+00, double 1.000000e+01, double 1.000000e+01> ; 2 uses
+  %15 = extractelement <4 x double> %14, i64 1    ; 3 uses
+  %16 = fadd double %15, 1.000000e+01             ; 2 uses
+  store double %15, ptr %.sroa.444.0..sroa_idx, align 8
+  store double %16, ptr %.sroa.442.0..sroa_idx, align 8
   call void @_ZN8QPainter9drawLinesEPK6QLineFi(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
-  store double %i.m, ptr %5, align 8
-  %.sroa.440.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store double %i.l, ptr %.sroa.440.0..sroa_idx, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store double %i.k, ptr %13, align 8
-  %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 24
-  store double %i.n, ptr %.sroa.438.0..sroa_idx, align 8
+  store double %i.n, ptr %5, align 8
+  store double %15, ptr %.sroa.440.0..sroa_idx, align 8
+  store double %i.m, ptr %11, align 8
+  store double %16, ptr %.sroa.438.0..sroa_idx, align 8
   call void @_ZN8QPainter9drawLinesEPK6QLineFi(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %5, i32 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #23
-  %14 = fadd double %i.k, -1.800000e+01
-  store double %14, ptr %10, align 8
-  %15 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store double %i.l, ptr %15, align 8
-  %16 = getelementptr inbounds nuw i8, ptr %10, i64 16
-  store <2 x double> splat (double 1.000000e+01), ptr %16, align 8
+  store <4 x double> %14, ptr %10, align 8
   call void @_ZN8QPainter9drawRectsEPK6QRectFi(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %10, i32 noundef 1)
   %i.p = load double, ptr %10, align 8
   %i.q = fadd double %i.p, -1.800000e+01          ; 2 uses

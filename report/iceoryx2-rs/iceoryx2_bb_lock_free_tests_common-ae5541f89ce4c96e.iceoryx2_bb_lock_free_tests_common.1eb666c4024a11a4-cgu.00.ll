@@ -205,13 +205,9 @@ bb.a:
   %.sroa.7.sroa.6.0..sroa.7.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ep, i64 1064
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ep, i64 1072
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ep, i64 1076
-  %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = load ptr, ptr %i.ev, align 8, !alias.scope !390, !noalias !391, !nonnull !5, !align !6, !noundef !5 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %3 = load <2 x ptr>, ptr %2, align 8, !alias.scope !390, !noalias !391
-  %4 = load ptr, ptr %2, align 8, !alias.scope !390, !noalias !391, !nonnull !5, !noundef !5
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.ew = load ptr, ptr %5, align 8, !alias.scope !390, !noalias !391, !nonnull !5, !align !6, !noundef !5 ; 2 uses
+  %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %1 = load <4 x ptr>, ptr %i.ev, align 8, !alias.scope !390, !noalias !391 ; 3 uses
+  %i.ew = load ptr, ptr %i.ev, align 8, !alias.scope !390, !noalias !391, !nonnull !5, !align !6, !noundef !5
   %i.ex = getelementptr inbounds nuw i8, ptr %i.bq, i64 1078
   %i.ey = getelementptr inbounds nuw i8, ptr %i.bq, i64 1077
   %i.ez = getelementptr inbounds nuw i8, ptr %i.bg, i64 56
@@ -239,13 +235,15 @@ bb.a:
 ._crit_edge.i.loopexit:                           ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultuNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread22ScopedThreadSpawnErrorE6expectCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit124.i
   %.pre = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !391, !noalias !393
   %i.fq = icmp eq i64 %.pre, 128
+  %2 = extractelement <4 x ptr> %1, i64 1
+  %3 = extractelement <4 x ptr> %1, i64 3
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %.._crit_edge_crit_edge.i
   %i.fr = phi i1 [ false, %.._crit_edge_crit_edge.i ], [ %i.fq, %._crit_edge.i.loopexit ]
-  %i.fs = phi ptr [ %.pre322.i, %.._crit_edge_crit_edge.i ], [ %4, %._crit_edge.i.loopexit ]
-  %i.ft = phi ptr [ %.pre320.i, %.._crit_edge_crit_edge.i ], [ %i.ew, %._crit_edge.i.loopexit ]
-  %i.fu = phi ptr [ %.pre.i, %.._crit_edge_crit_edge.i ], [ %1, %._crit_edge.i.loopexit ]
+  %i.fs = phi ptr [ %.pre322.i, %.._crit_edge_crit_edge.i ], [ %2, %._crit_edge.i.loopexit ]
+  %i.ft = phi ptr [ %.pre320.i, %.._crit_edge_crit_edge.i ], [ %3, %._crit_edge.i.loopexit ]
+  %i.fu = phi ptr [ %.pre.i, %.._crit_edge_crit_edge.i ], [ %i.ew, %._crit_edge.i.loopexit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eo), !noalias !392
   %.sroa.510.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.eo, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %.sroa.510.0..sroa_idx.i, i8 1, i64 1024, i1 false), !noalias !392
@@ -648,14 +646,10 @@ bb.cm:                                            ; preds = %._crit_edge.i.i68.i
 
 bb.cn:                                            ; preds = %._crit_edge.i.i68.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !407
-  %i.mq = call noundef ptr @_RNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6stdlib6malloc(i64 noundef 56) #9, !noalias !408 ; 5 uses
+  %i.mq = call noundef ptr @_RNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6stdlib6malloc(i64 noundef 56) #9, !noalias !408 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(24) %i.fo, i64 24, i1 false), !noalias !406
-  store ptr %1, ptr %i.mq, align 8, !noalias !408
-  %.sroa.4135.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.mq, i64 8
-  store <2 x ptr> %3, ptr %.sroa.4135.0..sroa_idx.i, align 8, !noalias !408
-  %.sroa.6137.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.mq, i64 24
-  store ptr %i.ew, ptr %.sroa.6137.0..sroa_idx.i, align 8, !noalias !408
+  store <4 x ptr> %1, ptr %i.mq, align 8, !noalias !408
   %.sroa.7.0..sroa_idx138.i = getelementptr inbounds nuw i8, ptr %i.mq, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx138.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, i64 24, i1 false), !noalias !408
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)

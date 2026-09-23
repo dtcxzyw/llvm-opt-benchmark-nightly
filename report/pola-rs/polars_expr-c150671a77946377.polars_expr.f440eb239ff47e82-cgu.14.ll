@@ -204,7 +204,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6resu
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal void @_RNCINvCsiMOpCev58qw_7stacker4growINtNtCscgRAwXFJnXP_4core6result6ResultNtNtCskY9G75ZWc4U_11polars_expr11expressions18AggregationContextNtCsgjwxzEoLG5s_12polars_error11PolarsErrorENCNvXs0_NtB19_6binaryNtB2Z_10BinaryExprNtB19_12PhysicalExpr23evaluate_on_groups_impl0E0B1b_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 personality ptr @rust_eh_personality !dbg !133833 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 6 uses
+  %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [272 x i8], align 16              ; 4 uses
   %i.c = alloca [272 x i8], align 16              ; 4 uses
   %i.d = alloca [272 x i8], align 16              ; 4 uses
@@ -227,14 +227,11 @@ bb.a:
   %.sroa.4.i = alloca [184 x i8], align 8         ; 4 uses
   %i.t = alloca [272 x i8], align 16              ; 13 uses
   %i.u = alloca [272 x i8], align 16              ; 5 uses
-  %i.v = load ptr, ptr %0, align 8, !dbg !134268, !nonnull !860, !align !884, !noundef !860 ; 4 uses
-  %.sroa.0.0.copyload = load ptr, ptr %i.v, align 8, !dbg !134269 ; 9 uses
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 8, !dbg !134269
-  %1 = load <2 x ptr>, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !134269 ; 3 uses
-  %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 24, !dbg !134269
-  %.sroa.5.sroa.5.0.copyload = load ptr, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 8, !dbg !134269 ; 2 uses
+  %i.v = load ptr, ptr %0, align 8, !dbg !134268, !nonnull !860, !align !884, !noundef !860 ; 2 uses
+  %1 = load <4 x ptr>, ptr %i.v, align 8, !dbg !134269 ; 5 uses
+  %2 = extractelement <4 x ptr> %1, i64 0, !dbg !134269 ; 8 uses
   store ptr null, ptr %i.v, align 8, !dbg !134270
-  %.not = icmp eq ptr %.sroa.0.0.copyload, null, !dbg !134271
+  %.not = icmp eq ptr %2, null, !dbg !134271
   br i1 %.not, label %bb.ci, label %bb.b, !dbg !134272, !prof !866
 
 bb.b:                                             ; preds = %bb.a
@@ -244,17 +241,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i), !dbg !134275
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i), !dbg !134275
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !134275, !noalias !134174
-  %i.w = extractelement <2 x ptr> %1, i64 0
+  %i.w = extractelement <4 x ptr> %1, i64 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
-  %i.x = extractelement <2 x ptr> %1, i64 1
+  %i.x = extractelement <4 x ptr> %1, i64 2
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.5.0.copyload) ]
+  %3 = extractelement <4 x ptr> %1, i64 3
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !134276, !noalias !134174
-  store ptr %.sroa.0.0.copyload, ptr %i.a, align 8, !dbg !134276, !noalias !134174
-  %.sroa.410.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !134276
-  store <2 x ptr> %1, ptr %.sroa.410.0..sroa_idx.i, align 8, !dbg !134276, !noalias !134174
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !134276
-  store ptr %.sroa.5.sroa.5.0.copyload, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !134276, !noalias !134174
+  store <4 x ptr> %1, ptr %i.a, align 8, !dbg !134276, !noalias !134174
   call void @_RINvMNtCs1LHh8CLbVkQ_11polars_core7runtimeNtB3_5RAYON4withNCINvB2_7installNCNCNvXs0_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB1k_10BinaryExprNtB1m_12PhysicalExpr23evaluate_on_groups_impl00TINtNtCscgRAwXFJnXP_4core6result6ResultNtB1m_18AggregationContextNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEB3d_EE0B3c_EB1o_(ptr noalias noundef nonnull sret([544 x i8]) align 16 captures(address) dereferenceable(544) %i.r, ptr noalias noundef nonnull readonly captures(address, read_provenance) inttoptr (i64 1 to ptr), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a), !dbg !134277, !noalias !134174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !134278, !noalias !134174
   %.sroa.0.0.copyload.i = load i128, ptr %i.r, align 16, !dbg !134279, !noalias !134174 ; 2 uses
@@ -553,7 +547,7 @@ bb.x:                                             ; preds = %thread-pre-split.i,
   br i1 %i.cm, label %switch.lookup, label %bb.y, !dbg !134354
 
 switch.lookup:                                    ; preds = %bb.aa, %bb.x
-  %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 256, !dbg !134355
+  %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 256, !dbg !134355
   %i.co = load i8, ptr %i.cn, align 16, !dbg !134355, !range !1227, !noalias !134174, !noundef !860
   %switch.cast = zext nneg i8 %i.co to i20, !dbg !134356
   %switch.downshift = lshr i20 -229632, %switch.cast, !dbg !134356
@@ -834,7 +828,7 @@ bb.at:                                            ; preds = %.loopexit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.n, ptr noundef nonnull align 16 dereferenceable(272) %i.q, i64 272, i1 false), !dbg !134420, !noalias !134174
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !dbg !134421, !noalias !134174
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.m, ptr noundef nonnull align 16 dereferenceable(272) %i.p, i64 272, i1 false), !dbg !134421, !noalias !134174
-  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_all_literal(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %.sroa.0.0.copyload, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.n, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.m), !dbg !134422, !noalias !134176
+  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_all_literal(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %2, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.n, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.m), !dbg !134422, !noalias !134176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !134423, !noalias !134174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !dbg !134423, !noalias !134174
   br label %bb.bv, !dbg !134424
@@ -850,7 +844,7 @@ bb.av:                                            ; preds = %bb.as
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.l, ptr noundef nonnull align 16 dereferenceable(272) %i.q, i64 272, i1 false), !dbg !134426, !noalias !134174
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !dbg !134427, !noalias !134174
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.k, ptr noundef nonnull align 16 dereferenceable(272) %i.p, i64 272, i1 false), !dbg !134427, !noalias !134174
-  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %.sroa.0.0.copyload, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.l, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.k), !dbg !134428, !noalias !134176
+  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %2, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.l, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.k), !dbg !134428, !noalias !134176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !dbg !134429, !noalias !134174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !dbg !134429, !noalias !134174
   br label %bb.bv, !dbg !134430
@@ -863,7 +857,7 @@ bb.ax:                                            ; preds = %bb.au
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.j, ptr noundef nonnull align 16 dereferenceable(272) %i.q, i64 272, i1 false), !dbg !134432, !noalias !134174
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !134433, !noalias !134174
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.i, ptr noundef nonnull align 16 dereferenceable(272) %i.p, i64 272, i1 false), !dbg !134433, !noalias !134174
-  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %.sroa.0.0.copyload, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.j, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.i), !dbg !134434, !noalias !134176
+  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %2, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.j, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.i), !dbg !134434, !noalias !134176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !134435, !noalias !134174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !134435, !noalias !134174
   br label %bb.bv, !dbg !134436
@@ -887,7 +881,7 @@ bb.bc:                                            ; preds = %bb.bd, %bb.ba
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.h, ptr noundef nonnull align 16 dereferenceable(272) %i.q, i64 272, i1 false), !dbg !134441, !noalias !134174
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !134442, !noalias !134174
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.g, ptr noundef nonnull align 16 dereferenceable(272) %i.p, i64 272, i1 false), !dbg !134442, !noalias !134174
-  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %.sroa.0.0.copyload, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.h, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.g), !dbg !134443, !noalias !134176
+  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %2, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.h, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.g), !dbg !134443, !noalias !134176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !134444, !noalias !134174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !134444, !noalias !134174
   br label %bb.bv, !dbg !134445
@@ -916,7 +910,7 @@ bb.bh:                                            ; preds = %bb.be
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !134453, !noalias !134174
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.b, ptr noundef nonnull align 16 dereferenceable(272) %i.p, i64 272, i1 false), !dbg !134453, !noalias !134174
   %i.hf = trunc nuw i8 %.sroa.056.1.i to i1, !dbg !134454
-  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_elementwise(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %.sroa.0.0.copyload, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.c, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.b, i1 noundef zeroext %i.hf), !dbg !134455, !noalias !134176
+  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_elementwise(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %2, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.c, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.b, i1 noundef zeroext %i.hf), !dbg !134455, !noalias !134176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !134456, !noalias !134174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !134456, !noalias !134174
   br label %bb.bv, !dbg !134457
@@ -926,7 +920,7 @@ bb.bi:                                            ; preds = %bb.be
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.e, ptr noundef nonnull align 16 dereferenceable(272) %i.q, i64 272, i1 false), !dbg !134458, !noalias !134174
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !134459, !noalias !134174
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.d, ptr noundef nonnull align 16 dereferenceable(272) %i.p, i64 272, i1 false), !dbg !134459, !noalias !134174
-  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %.sroa.0.0.copyload, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.e, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.d), !dbg !134460, !noalias !134176
+  call void @_RNvMs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6binaryNtB4_10BinaryExpr17apply_group_aware(ptr noalias noundef nonnull sret([272 x i8]) align 16 captures(none) dereferenceable(272) %i.t, ptr noundef nonnull align 16 %2, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.e, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(272) %i.d), !dbg !134460, !noalias !134176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !134461, !noalias !134174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !134461, !noalias !134174
   br label %bb.bv, !dbg !134457

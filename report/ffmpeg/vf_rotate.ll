@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca double, align 8                   ; 8 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !159    ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !19   ; 26 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !19   ; 24 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !160
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !39   ; 3 uses
@@ -240,15 +240,10 @@ bb.b:                                             ; preds = %bb.a
   store ptr %spec.select, ptr %i.aa, align 8, !tbaa !62
   %i.ab = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 104 ; 4 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 128
   %i.ad = load <2 x i32>, ptr %i.ab, align 8, !tbaa !54
-  %i.ae = sitofp <2 x i32> %i.ad to <2 x double>  ; 3 uses
-  %3 = extractelement <2 x double> %i.ae, i64 0
-  store double %3, ptr %i.ac, align 8, !tbaa !41
-  %4 = extractelement <2 x double> %i.ae, i64 1
-  store double %4, ptr %2, align 8, !tbaa !41
-  store <2 x double> %i.ae, ptr %1, align 8, !tbaa !41
+  %i.ae = sitofp <2 x i32> %i.ad to <2 x double>
+  %1 = shufflevector <2 x double> %i.ae, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  store <4 x double> %1, ptr %i.ac, align 8, !tbaa !41
   %i.af = shl nuw i32 1, %i.r
   %i.ag = sitofp nsz i32 %i.af to double
   %i.ah = getelementptr inbounds nuw i8, ptr %i.d, i64 168

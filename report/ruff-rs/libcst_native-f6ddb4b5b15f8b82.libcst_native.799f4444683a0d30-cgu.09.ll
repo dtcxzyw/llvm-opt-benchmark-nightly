@@ -204,12 +204,8 @@ bb.af:                                            ; preds = %bb.aa
   br label %bb.ad
 
 bb.ag:                                            ; preds = %bb.ad
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %3 = load i64, ptr %2, align 8, !noalias !201, !noundef !3
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %5 = load <2 x i64>, ptr %4, align 8, !noalias !201
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 152
-  %6 = load i64, ptr %i.cp, align 8, !noalias !201, !noundef !3
+  %2 = load <4 x i64>, ptr %i.cp, align 8, !noalias !201
   %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 272
   %i.cr = load i64, ptr %i.cq, align 8, !noalias !201, !noundef !3 ; 2 uses
   %.not84.i = icmp eq i64 %i.cr, 0
@@ -256,7 +252,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.ag
   %i.dj = icmp ult i64 %i.di, 576460752303423488
   call void @llvm.assume(i1 %i.dj)
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !201
-  %i.dk = call noundef align 8 dereferenceable_or_null(80) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef 80, i64 noundef 8) #22, !noalias !201 ; 12 uses
+  %i.dk = call noundef align 8 dereferenceable_or_null(80) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef 80, i64 noundef 8) #22, !noalias !201 ; 10 uses
   %i.dl = icmp eq ptr %i.dk, null
   br i1 %i.dl, label %bb.am, label %.thread.i, !prof !205
 
@@ -299,11 +295,8 @@ bb.ao:                                            ; preds = %bb.bc, %bb.am
   %.sroa.7101.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dk, i64 32
   store i64 %i.dg, ptr %.sroa.7101.0..sroa_idx.i, align 8, !noalias !201
   %.sroa.8102.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dk, i64 40
-  store i64 %3, ptr %.sroa.8102.0..sroa_idx.i, align 8, !noalias !201
-  %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dk, i64 48
-  store <2 x i64> %5, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !201
-  %.sroa.11.0..sroa_idx103.i = getelementptr inbounds nuw i8, ptr %i.dk, i64 64
-  store i64 %6, ptr %.sroa.11.0..sroa_idx103.i, align 8, !noalias !201
+  %3 = shufflevector <4 x i64> %2, <4 x i64> poison, <4 x i32> <i32 3, i32 1, i32 2, i32 0>
+  store <4 x i64> %3, ptr %.sroa.8102.0..sroa_idx.i, align 8, !noalias !201
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dk, i64 72
   store i8 %i.ds, ptr %.sroa.12.0..sroa_idx.i, align 8, !noalias !201
   store ptr %i.dk, ptr %i.b, align 8, !noalias !201

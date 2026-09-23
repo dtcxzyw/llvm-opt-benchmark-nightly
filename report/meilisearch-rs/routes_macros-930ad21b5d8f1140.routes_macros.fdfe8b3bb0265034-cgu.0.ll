@@ -202,8 +202,8 @@ bb.a:
   %i.cz = alloca [56 x i8], align 8               ; 8 uses
   %i.da = alloca [32 x i8], align 8               ; 12 uses
   %i.db = alloca [24 x i8], align 8               ; 7 uses
-  %i.dc = alloca [72 x i8], align 8               ; 10 uses
-  %i.dd = alloca [72 x i8], align 8               ; 8 uses
+  %i.dc = alloca [72 x i8], align 8               ; 8 uses
+  %i.dd = alloca [72 x i8], align 8               ; 6 uses
   %i.de = alloca [296 x i8], align 8              ; 21 uses
   %i.df = alloca [24 x i8], align 8               ; 7 uses
   %i.dg = alloca [24 x i8], align 8               ; 7 uses
@@ -450,12 +450,8 @@ bb.i:                                             ; preds = %.noexc.i
   %.sroa.23.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.de, i64 16 ; 2 uses
   %.sroa.29.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.de, i64 24 ; 2 uses
   %.sroa.31.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.de, i64 32 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  %.sroa.621.i.sroa.8.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
   %.sroa.665.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dd, i64 32
   %.sroa.823.0..sroa_idx24.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dc, i64 32
-  %.sroa.621.0..sroa_idx22.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
-  %.sroa.621.i.sroa.8.0..sroa.621.0..sroa_idx22.i.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dc, i64 24
   %.sroa.23.8..sroa.26.0..sroa_idx.i.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dt, i64 16
   %.sroa.29.8..sroa.26.0..sroa_idx.i.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dt, i64 24
   %i.hx = getelementptr inbounds nuw i8, ptr %i.da, i64 16 ; 8 uses
@@ -858,27 +854,25 @@ bb.fk:                                            ; preds = %bb.fg
           to label %.thread126.i.i.i.i.i unwind label %bb.fd, !noalias !1655
 
 bb.fl:                                            ; preds = %bb.cn
-  %4 = load i64, ptr %i.dd, align 8, !range !72, !noalias !1654, !noundef !69 ; 2 uses
+  %3 = load <4 x i64>, ptr %i.dd, align 8, !noalias !1654 ; 6 uses
+  %4 = extractelement <4 x i64> %3, i64 0
   %5 = icmp eq i64 %4, -9223372036854775808
-  %6 = load <2 x i64>, ptr %3, align 8, !noalias !1654 ; 4 uses
-  %.sroa.621.i.sroa.8.0.copyload274.i.i.i.i = load i64, ptr %.sroa.621.i.sroa.8.0..sroa_idx.i.i.i.i, align 8, !noalias !1654 ; 2 uses
   br i1 %5, label %bb.fm, label %bb.fn
 
 bb.fm:                                            ; preds = %bb.fl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dd), !noalias !1654
-  %7 = bitcast <2 x i64> %6 to <4 x i32>
-  %.sroa.23.sroa.0.0.extract.trunc236.i.i.i.i = extractelement <4 x i32> %7, i64 2
-  %8 = bitcast <2 x i64> %6 to <4 x i32>
-  %.sroa.23.sroa.14.0.extract.trunc250.i.i.i.i = extractelement <4 x i32> %8, i64 3
-  %i.qn = extractelement <2 x i64> %6, i64 0
+  %6 = bitcast <4 x i64> %3 to <8 x i32>
+  %.sroa.23.sroa.0.0.extract.trunc236.i.i.i.i = extractelement <8 x i32> %6, i64 4
+  %7 = bitcast <4 x i64> %3 to <8 x i32>
+  %.sroa.23.sroa.14.0.extract.trunc250.i.i.i.i = extractelement <8 x i32> %7, i64 5
+  %8 = extractelement <4 x i64> %3, i64 1
+  %i.qn = extractelement <4 x i64> %3, i64 3
   br label %bb.fq
 
 bb.fn:                                            ; preds = %bb.fl
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.823.0..sroa_idx24.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.665.0..sroa_idx.i.i.i.i.i, i64 40, i1 false), !noalias !1654
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dd), !noalias !1654
-  store i64 %4, ptr %i.dc, align 8, !noalias !1654
-  store <2 x i64> %6, ptr %.sroa.621.0..sroa_idx22.i.i.i.i.i, align 8, !noalias !1654
-  store i64 %.sroa.621.i.sroa.8.0.copyload274.i.i.i.i, ptr %.sroa.621.i.sroa.8.0..sroa.621.0..sroa_idx22.i.sroa_idx.i.i.i.i, align 8, !noalias !1654
+  store <4 x i64> %3, ptr %i.dc, align 8, !noalias !1654
   call void @llvm.lifetime.start.p0(ptr nonnull %i.db), !noalias !1654
   invoke fastcc void @_ZN13routes_macros6routes5Route15apply_component17h559506c84a5d4f41E(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.db, ptr noalias noundef align 8 dereferenceable(296) %i.de, ptr noalias noundef readonly align 8 captures(address) dereferenceable(72) %i.dc)
           to label %bb.fo unwind label %.thread130.i.loopexit.i.i.i.i, !noalias !1655
@@ -900,8 +894,8 @@ bb.fp:                                            ; preds = %bb.fo
 bb.fq:                                            ; preds = %bb.fp, %bb.fm, %"_ZN4core3ptr44drop_in_place$LT$syn..parse..ParseBuffer$GT$17h8e25d1bb16af3c56E.exit.i.i.i.i.i"
   %.sroa.23.sroa.14.3.i.i.i.i = phi i32 [ %.sroa.23.sroa.14.0.extract.trunc250.i.i.i.i, %bb.fm ], [ %.sroa.23.sroa.14.0.extract.trunc248.i.i.i.i, %bb.fp ], [ %.sroa.23.sroa.14.2.i.i.i.i, %"_ZN4core3ptr44drop_in_place$LT$syn..parse..ParseBuffer$GT$17h8e25d1bb16af3c56E.exit.i.i.i.i.i" ]
   %.sroa.23.sroa.0.3.i.i.i.i = phi i32 [ %.sroa.23.sroa.0.0.extract.trunc236.i.i.i.i, %bb.fm ], [ %.sroa.23.sroa.0.0.extract.trunc235.i.i.i.i, %bb.fp ], [ %.sroa.23.sroa.0.2.i.i.i.i, %"_ZN4core3ptr44drop_in_place$LT$syn..parse..ParseBuffer$GT$17h8e25d1bb16af3c56E.exit.i.i.i.i.i" ]
-  %.sroa.29.3.i.i.i.i = phi i64 [ %.sroa.621.i.sroa.8.0.copyload274.i.i.i.i, %bb.fm ], [ %.sroa.29.8.copyload227.i.i.i.i, %bb.fp ], [ %.sroa.29.2.i.i.i.i, %"_ZN4core3ptr44drop_in_place$LT$syn..parse..ParseBuffer$GT$17h8e25d1bb16af3c56E.exit.i.i.i.i.i" ]
-  %.sroa.13.3.i.i.i.i = phi i64 [ %i.qn, %bb.fm ], [ %i.qo, %bb.fp ], [ %.sroa.13.2.i.i.i.i, %"_ZN4core3ptr44drop_in_place$LT$syn..parse..ParseBuffer$GT$17h8e25d1bb16af3c56E.exit.i.i.i.i.i" ]
+  %.sroa.29.3.i.i.i.i = phi i64 [ %i.qn, %bb.fm ], [ %.sroa.29.8.copyload227.i.i.i.i, %bb.fp ], [ %.sroa.29.2.i.i.i.i, %"_ZN4core3ptr44drop_in_place$LT$syn..parse..ParseBuffer$GT$17h8e25d1bb16af3c56E.exit.i.i.i.i.i" ]
+  %.sroa.13.3.i.i.i.i = phi i64 [ %8, %bb.fm ], [ %i.qo, %bb.fp ], [ %.sroa.13.2.i.i.i.i, %"_ZN4core3ptr44drop_in_place$LT$syn..parse..ParseBuffer$GT$17h8e25d1bb16af3c56E.exit.i.i.i.i.i" ]
   invoke fastcc void @"_ZN4core3ptr49drop_in_place$LT$routes_macros..routes..Route$GT$17h734985d79fbce868E"(ptr noalias noundef align 8 dereferenceable(296) %i.de)
           to label %.thread338.i.i.i.i unwind label %.loopexit.split-lp.i.i.i.i, !noalias !1602
 

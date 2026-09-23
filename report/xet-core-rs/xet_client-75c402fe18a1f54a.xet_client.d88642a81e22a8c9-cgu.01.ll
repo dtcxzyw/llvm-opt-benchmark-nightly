@@ -202,7 +202,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 bb.ci:                                            ; preds = %bb.cg, %bb.ce
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !3289
-  %.val171.i = load ptr, ptr %i.aa, align 8, !noalias !3289, !nonnull !11, !align !15, !noundef !11 ; 12 uses
+  %.val171.i = load ptr, ptr %i.aa, align 8, !noalias !3289, !nonnull !11, !align !15, !noundef !11 ; 9 uses
   %i.lf = getelementptr inbounds nuw i8, ptr %.val171.i, i64 40 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3299)
   call void @llvm.experimental.noalias.scope.decl(metadata !3300)
@@ -265,42 +265,33 @@ bb.cl:                                            ; preds = %bb.ck
   %i.mt = fdiv double %i.ms, 1.000000e+09
   %i.mu = fadd double %i.mt, %i.mr
   %i.mv = call nsz double @llvm.maximumnum.f64(double %i.mu, double 1.000000e-09) ; 3 uses
-  %i.mw = load double, ptr %i.lf, align 8, !alias.scope !3303, !noundef !11 ; 6 uses
+  %i.mw = load double, ptr %i.lf, align 8, !alias.scope !3303, !noundef !11 ; 3 uses
   %i.mx = getelementptr inbounds nuw i8, ptr %.val171.i, i64 48 ; 2 uses
-  %2 = load double, ptr %i.mx, align 8, !alias.scope !3303, !noundef !11
-  %3 = fmul double %i.mw, %2
-  %4 = getelementptr inbounds nuw i8, ptr %.val171.i, i64 56 ; 2 uses
-  %5 = load double, ptr %4, align 8, !alias.scope !3303, !noundef !11
-  %6 = fmul double %i.mw, %5
-  %i.my = getelementptr inbounds nuw i8, ptr %.val171.i, i64 64 ; 2 uses
+  %i.my = getelementptr inbounds nuw i8, ptr %.val171.i, i64 80 ; 2 uses
   %i.mz = load double, ptr %i.my, align 8, !alias.scope !3303, !noundef !11
   %i.na = fmul double %i.mw, %i.mz
-  %i.nb = getelementptr inbounds nuw i8, ptr %.val171.i, i64 72 ; 2 uses
+  %i.nb = getelementptr inbounds nuw i8, ptr %.val171.i, i64 88 ; 2 uses
   %i.nc = load double, ptr %i.nb, align 8, !alias.scope !3303, !noundef !11
   %i.nd = fmul double %i.mw, %i.nc
-  %7 = getelementptr inbounds nuw i8, ptr %.val171.i, i64 80 ; 2 uses
-  %8 = load double, ptr %7, align 8, !alias.scope !3303, !noundef !11
-  %i.ne = fmul double %i.mw, %8
-  %9 = getelementptr inbounds nuw i8, ptr %.val171.i, i64 88 ; 2 uses
-  %10 = load double, ptr %9, align 8, !alias.scope !3303, !noundef !11
-  %i.nf = fmul double %i.mw, %10
-  %i.ng = fmul double %i.mq, %i.mm                ; 3 uses
-  %11 = fmul double %i.mm, %i.mv                  ; 2 uses
-  %12 = fadd double %i.mm, %3
-  store double %12, ptr %i.mx, align 8, !alias.scope !3303
-  %13 = fadd double %i.ng, %6
-  store double %13, ptr %4, align 8, !alias.scope !3303
-  %14 = fadd double %11, %i.na
-  store double %14, ptr %i.my, align 8, !alias.scope !3303
-  %15 = fmul double %i.mq, %i.ng
-  %16 = fadd double %15, %i.nd
-  store double %16, ptr %i.nb, align 8, !alias.scope !3303
-  %i.nh = fmul double %i.ng, %i.mv
-  %i.ni = fadd double %i.nh, %i.ne
-  store double %i.ni, ptr %7, align 8, !alias.scope !3303
-  %i.nj = fmul double %i.mv, %11
-  %i.nk = fadd double %i.nj, %i.nf
-  store double %i.nk, ptr %9, align 8, !alias.scope !3303
+  %i.ne = fmul double %i.mq, %i.mm                ; 3 uses
+  %i.nf = fmul double %i.mm, %i.mv                ; 2 uses
+  %i.ng = fmul double %i.mq, %i.ne
+  %2 = load <4 x double>, ptr %i.mx, align 8, !alias.scope !3303
+  %3 = insertelement <4 x double> poison, double %i.mw, i64 0
+  %4 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> zeroinitializer
+  %5 = fmul <4 x double> %4, %2
+  %6 = insertelement <4 x double> poison, double %i.mm, i64 0
+  %7 = insertelement <4 x double> %6, double %i.ne, i64 1
+  %8 = insertelement <4 x double> %7, double %i.nf, i64 2
+  %9 = insertelement <4 x double> %8, double %i.ng, i64 3
+  %10 = fadd <4 x double> %9, %5
+  store <4 x double> %10, ptr %i.mx, align 8, !alias.scope !3303
+  %i.nh = fmul double %i.ne, %i.mv
+  %i.ni = fadd double %i.nh, %i.na
+  store double %i.ni, ptr %i.my, align 8, !alias.scope !3303
+  %i.nj = fmul double %i.mv, %i.nf
+  %i.nk = fadd double %i.nj, %i.nd
+  store double %i.nk, ptr %i.nb, align 8, !alias.scope !3303
   br label %bb.cj
 
 bb.cm:                                            ; preds = %bb.ea, %bb.cr, %bb.cp

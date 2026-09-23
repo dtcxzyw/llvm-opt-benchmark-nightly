@@ -205,11 +205,12 @@ define dso_local void @_ZN4MeshC2Eiiiiddiii(ptr noundef nonnull align 8 derefere
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 1144 ; 4 uses
   store i32 %i.cr, ptr %i.cs, align 8, !tbaa !95
   %.not = icmp eq i32 %7, 0
+  %10 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %11 = insertelement <2 x i32> %10, i32 %2, i64 1 ; 2 uses
   br i1 %.not, label %bb.b, label %bb.a
 
 bb.a:                                             ; preds = %.preheader217
-  %10 = add nsw i32 %1, 2
-  %11 = add nsw i32 %2, 2
+  %12 = add nsw <2 x i32> %11, splat (i32 2)
   store i32 0, ptr %i.cn, align 4, !tbaa !154
   store i32 0, ptr %i.co, align 4, !tbaa !155
   store i32 %i.cp, ptr %i.cq, align 8, !tbaa !94
@@ -217,26 +218,16 @@ bb.a:                                             ; preds = %.preheader217
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %.preheader217
-  %.067 = phi i32 [ %10, %bb.a ], [ %1, %.preheader217 ]
-  %.066 = phi i32 [ %11, %bb.a ], [ %2, %.preheader217 ]
-  %12 = fmul double %5, -5.000000e-01
-  %13 = sitofp i32 %.067 to double                ; 2 uses
-  %14 = fmul double %12, %13
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 1184
-  store double %14, ptr %15, align 8, !tbaa !53
-  %16 = fmul double %6, -5.000000e-01
-  %17 = sitofp i32 %.066 to double                ; 2 uses
-  %18 = fmul double %16, %17
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 1200
-  store double %18, ptr %19, align 8, !tbaa !54
-  %20 = fmul double %5, 5.000000e-01
-  %21 = fmul double %20, %13
-  %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 1192
-  store double %21, ptr %i.ct, align 8, !tbaa !55
-  %22 = fmul double %6, 5.000000e-01
-  %23 = fmul double %22, %17
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 1208
-  store double %23, ptr %24, align 8, !tbaa !56
+  %13 = phi <2 x i32> [ %12, %bb.a ], [ %11, %.preheader217 ]
+  %14 = insertelement <4 x double> poison, double %5, i64 0
+  %15 = insertelement <4 x double> %14, double %6, i64 2
+  %16 = shufflevector <4 x double> %15, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %17 = fmul <4 x double> %16, <double -5.000000e-01, double 5.000000e-01, double -5.000000e-01, double 5.000000e-01>
+  %18 = sitofp <2 x i32> %13 to <2 x double>
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 1184
+  %20 = fmul <4 x double> %17, %19
+  store <4 x double> %20, ptr %i.ct, align 8, !tbaa !59
   %i.cu = add nsw i32 %3, 1                       ; 2 uses
   %i.cv = sext i32 %i.cu to i64                   ; 29 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 1032 ; 2 uses

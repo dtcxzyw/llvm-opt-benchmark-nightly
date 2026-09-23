@@ -33,7 +33,7 @@ bb.a:
   %i.b = zext nneg i32 %i.a to i64                ; 2 uses
   %i.c = mul nuw nsw i64 %i.b, 88
   %i.d = add nuw nsw i64 %i.c, 152
-  %i.e = tail call noalias ptr @zalloc(i64 noundef %i.d) #11 ; 18 uses
+  %i.e = tail call noalias ptr @zalloc(i64 noundef %i.d) #11 ; 16 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -49,14 +49,9 @@ bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %i.l = tail call i32 @nxsem_init(ptr noundef nonnull %i.k, i32 noundef 0, i32 noundef 0) #13 ; 0 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 152
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 72 ; 3 uses
-  store ptr %2, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 80
-  store ptr %2, ptr %3, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 3 uses
-  store ptr %4, ptr %4, align 8
-  %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 96
-  store ptr %4, ptr %i.n, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.e, <4 x i64> <i64 72, i64 72, i64 88, i64 88>
+  %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 72
+  store <4 x ptr> %2, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 104 ; 3 uses
   store ptr %i.o, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 112

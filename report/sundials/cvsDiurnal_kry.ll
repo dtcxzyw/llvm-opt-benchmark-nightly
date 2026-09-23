@@ -188,124 +188,104 @@ check_retval.exit38:                              ; preds = %.preheader.i
   store <2 x double> <double f0x4001C71C71C71C72, double f0x3EAB2DD8D6457178>, ptr %i.by, align 8, !tbaa !18
   %i.bz = getelementptr inbounds nuw i8, ptr %i.m, i64 2440
   store <2 x double> <double 2.250000e-04, double 2.025000e-09>, ptr %i.bz, align 8, !tbaa !18
-  %i.ca = call ptr @N_VGetArrayPointer(ptr noundef nonnull %i.i) #9 ; 60 uses
-  store <4 x double> <double 2.500000e+05, double 2.500000e+11, double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5>, ptr %i.ca, align 8, !tbaa !18
+  %i.ca = call ptr @N_VGetArrayPointer(ptr noundef nonnull %i.i) #9 ; 50 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 32
-  store <2 x double> <double f0x41168D57EB160BA1, double f0x425581E3AC6E122F>, ptr %i.cb, align 8, !tbaa !18
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 48
-  store <4 x double> <double f0x411B50AB74F03291, double f0x425A0CBAC39161F9, double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B>, ptr %i.cc, align 8, !tbaa !18
-  %0 = getelementptr inbounds nuw i8, ptr %i.ca, i64 80
-  store <4 x double> <double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B, double f0x411B50AB74F03291, double f0x425A0CBAC39161F9>, ptr %0, align 8, !tbaa !18
-  %1 = getelementptr inbounds nuw i8, ptr %i.ca, i64 112
-  store <2 x double> <double f0x41168D57EB160BA0, double f0x425581E3AC6E122E>, ptr %1, align 8, !tbaa !18
+  %0 = getelementptr inbounds nuw i8, ptr %i.ca, i64 64
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 96
+  store <4 x double> <double 2.500000e+05, double 2.500000e+11, double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5>, ptr %i.ca, align 8, !tbaa !18
+  store <4 x double> <double f0x41168D57EB160BA1, double f0x425581E3AC6E122F, double f0x411B50AB74F03291, double f0x425A0CBAC39161F9>, ptr %i.cb, align 8, !tbaa !18
+  store <4 x double> <double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B, double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B>, ptr %0, align 8, !tbaa !18
+  store <4 x double> <double f0x411B50AB74F03291, double f0x425A0CBAC39161F9, double f0x41168D57EB160BA0, double f0x425581E3AC6E122E>, ptr %i.cc, align 8, !tbaa !18
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 128
   store <4 x double> <double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5, double 2.500000e+05, double 2.500000e+11>, ptr %i.cd, align 8, !tbaa !18
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 160
-  store <4 x double> <double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5, double f0x411464BA8F579BB7, double f0x425372DFFADBA8BC>, ptr %i.ce, align 8, !tbaa !18
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ca, i64 192
-  store <2 x double> <double f0x411A126930D354BA, double f0x4258DD36D9544A79>, ptr %i.cf, align 8, !tbaa !18
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.ca, i64 208
-  store <4 x double> <double f0x411F940AC5A86538, double f0x425E1D8B15E84C27, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %i.cg, align 8, !tbaa !18
-  %2 = getelementptr inbounds nuw i8, ptr %i.ca, i64 240
-  store <4 x double> <double f0x41216C815B037382, double f0x42609DDE8CF01694, double f0x411F940AC5A86538, double f0x425E1D8B15E84C27>, ptr %2, align 8, !tbaa !18
-  %3 = getelementptr inbounds nuw i8, ptr %i.ca, i64 272
-  store <2 x double> <double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %3, align 8, !tbaa !18
+  %1 = getelementptr inbounds nuw i8, ptr %i.ca, i64 224
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.ca, i64 256
+  store <4 x double> <double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5, double f0x411464BA8F579BB7, double f0x425372DFFADBA8BC>, ptr %i.ce, align 8, !tbaa !18
+  store <4 x double> <double f0x411A126930D354BA, double f0x4258DD36D9544A79, double f0x411F940AC5A86538, double f0x425E1D8B15E84C27>, ptr %i.cf, align 8, !tbaa !18
+  store <4 x double> <double f0x41216C815B037382, double f0x42609DDE8CF01694, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %1, align 8, !tbaa !18
+  store <4 x double> <double f0x411F940AC5A86538, double f0x425E1D8B15E84C27, double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %i.cg, align 8, !tbaa !18
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ca, i64 288
   store <4 x double> <double f0x411464BA8F579BB7, double f0x425372DFFADBA8BC, double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5>, ptr %i.ch, align 8, !tbaa !18
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ca, i64 320
-  store <4 x double> <double f0x41168D57EB160BA0, double f0x425581E3AC6E122E, double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %i.ci, align 8, !tbaa !18
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ca, i64 352
-  store <2 x double> <double f0x4120AA6E6854DDC0, double f0x425FC99265EF1E94>, ptr %i.cj, align 8, !tbaa !18
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.ca, i64 368
-  store <4 x double> <double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794, double f0x41264681EF7A8A41, double f0x42653E55C2867902>, ptr %i.ck, align 8, !tbaa !18
-  %4 = getelementptr inbounds nuw i8, ptr %i.ca, i64 400
-  store <4 x double> <double f0x41264681EF7A8A41, double f0x42653E55C2867902, double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %4, align 8, !tbaa !18
-  %5 = getelementptr inbounds nuw i8, ptr %i.ca, i64 432
-  store <2 x double> <double f0x4120AA6E6854DDBF, double f0x425FC99265EF1E92>, ptr %5, align 8, !tbaa !18
+  %2 = getelementptr inbounds nuw i8, ptr %i.ca, i64 384
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.ca, i64 416
+  store <4 x double> <double f0x41168D57EB160BA0, double f0x425581E3AC6E122E, double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %i.ci, align 8, !tbaa !18
+  store <4 x double> <double f0x4120AA6E6854DDC0, double f0x425FC99265EF1E94, double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %i.cj, align 8, !tbaa !18
+  store <4 x double> <double f0x41264681EF7A8A41, double f0x42653E55C2867902, double f0x41264681EF7A8A41, double f0x42653E55C2867902>, ptr %2, align 8, !tbaa !18
+  store <4 x double> <double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794, double f0x4120AA6E6854DDBF, double f0x425FC99265EF1E92>, ptr %i.ck, align 8, !tbaa !18
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ca, i64 448
   store <4 x double> <double f0x411A126930D354B9, double f0x4258DD36D9544A78, double f0x41168D57EB160BA0, double f0x425581E3AC6E122E>, ptr %i.cl, align 8, !tbaa !18
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ca, i64 480
-  store <4 x double> <double f0x411B50AB74F03290, double f0x425A0CBAC39161F9, double f0x411F940AC5A86537, double f0x425E1D8B15E84C27>, ptr %i.cm, align 8, !tbaa !18
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ca, i64 512
-  store <2 x double> <double f0x41242F7FAE1226DA, double f0x4263401C5FDDC795>, ptr %i.cn, align 8, !tbaa !18
-  %i.co = getelementptr inbounds nuw i8, ptr %i.ca, i64 528
-  store <4 x double> <double f0x412872DEFECA5981, double f0x426750ECB234B1C3, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %i.co, align 8, !tbaa !18
-  %6 = getelementptr inbounds nuw i8, ptr %i.ca, i64 560
-  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x412872DEFECA5981, double f0x426750ECB234B1C3>, ptr %6, align 8, !tbaa !18
-  %7 = getelementptr inbounds nuw i8, ptr %i.ca, i64 592
-  store <2 x double> <double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %7, align 8, !tbaa !18
+  %3 = getelementptr inbounds nuw i8, ptr %i.ca, i64 544
+  %i.co = getelementptr inbounds nuw i8, ptr %i.ca, i64 576
+  store <4 x double> <double f0x411B50AB74F03290, double f0x425A0CBAC39161F9, double f0x411F940AC5A86537, double f0x425E1D8B15E84C27>, ptr %i.cm, align 8, !tbaa !18
+  store <4 x double> <double f0x41242F7FAE1226DA, double f0x4263401C5FDDC795, double f0x412872DEFECA5981, double f0x426750ECB234B1C3>, ptr %i.cn, align 8, !tbaa !18
+  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %3, align 8, !tbaa !18
+  store <4 x double> <double f0x412872DEFECA5981, double f0x426750ECB234B1C3, double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %i.co, align 8, !tbaa !18
   %i.cp = getelementptr inbounds nuw i8, ptr %i.ca, i64 608
   store <4 x double> <double f0x411F940AC5A86537, double f0x425E1D8B15E84C27, double f0x411B50AB74F03290, double f0x425A0CBAC39161F9>, ptr %i.cp, align 8, !tbaa !18
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ca, i64 640
-  store <4 x double> <double f0x411E24A50EC9B9B0, double f0x425CBF2A794E595A, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %i.cq, align 8, !tbaa !18
   %i.cr = getelementptr inbounds nuw i8, ptr %i.ca, i64 672
-  store <2 x double> <double f0x41264681EF7A8A42, double f0x42653E55C2867902>, ptr %i.cr, align 8, !tbaa !18
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.ca, i64 688
-  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x412DC5F732040A80, double f0x426C64DF726EE294>, ptr %i.cs, align 8, !tbaa !18
-  %8 = getelementptr inbounds nuw i8, ptr %i.ca, i64 720
-  store <4 x double> <double f0x412DC5F732040A80, double f0x426C64DF726EE294, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %8, align 8, !tbaa !18
-  %9 = getelementptr inbounds nuw i8, ptr %i.ca, i64 752
-  store <2 x double> <double f0x41264681EF7A8A41, double f0x42653E55C2867901>, ptr %9, align 8, !tbaa !18
+  %4 = getelementptr inbounds nuw i8, ptr %i.ca, i64 704
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.ca, i64 736
+  store <4 x double> <double f0x411E24A50EC9B9B0, double f0x425CBF2A794E595A, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %i.cq, align 8, !tbaa !18
+  store <4 x double> <double f0x41264681EF7A8A42, double f0x42653E55C2867902, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %i.cr, align 8, !tbaa !18
+  store <4 x double> <double f0x412DC5F732040A80, double f0x426C64DF726EE294, double f0x412DC5F732040A80, double f0x426C64DF726EE294>, ptr %4, align 8, !tbaa !18
+  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x41264681EF7A8A41, double f0x42653E55C2867901>, ptr %i.cs, align 8, !tbaa !18
   %i.ct = getelementptr inbounds nuw i8, ptr %i.ca, i64 768
   store <4 x double> <double f0x41216C815B037382, double f0x42609DDE8CF01694, double f0x411E24A50EC9B9B0, double f0x425CBF2A794E595A>, ptr %i.ct, align 8, !tbaa !18
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ca, i64 800
-  store <4 x double> <double f0x411E24A50EC9B9B0, double f0x425CBF2A794E595A, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %i.cu, align 8, !tbaa !18
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ca, i64 832
-  store <2 x double> <double f0x41264681EF7A8A42, double f0x42653E55C2867902>, ptr %i.cv, align 8, !tbaa !18
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.ca, i64 848
-  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x412DC5F732040A80, double f0x426C64DF726EE294>, ptr %i.cw, align 8, !tbaa !18
-  %10 = getelementptr inbounds nuw i8, ptr %i.ca, i64 880
-  store <4 x double> <double f0x412DC5F732040A80, double f0x426C64DF726EE294, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %10, align 8, !tbaa !18
-  %11 = getelementptr inbounds nuw i8, ptr %i.ca, i64 912
-  store <2 x double> <double f0x41264681EF7A8A41, double f0x42653E55C2867901>, ptr %11, align 8, !tbaa !18
+  %5 = getelementptr inbounds nuw i8, ptr %i.ca, i64 864
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.ca, i64 896
+  store <4 x double> <double f0x411E24A50EC9B9B0, double f0x425CBF2A794E595A, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %i.cu, align 8, !tbaa !18
+  store <4 x double> <double f0x41264681EF7A8A42, double f0x42653E55C2867902, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %i.cv, align 8, !tbaa !18
+  store <4 x double> <double f0x412DC5F732040A80, double f0x426C64DF726EE294, double f0x412DC5F732040A80, double f0x426C64DF726EE294>, ptr %5, align 8, !tbaa !18
+  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x41264681EF7A8A41, double f0x42653E55C2867901>, ptr %i.cw, align 8, !tbaa !18
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ca, i64 928
   store <4 x double> <double f0x41216C815B037382, double f0x42609DDE8CF01694, double f0x411E24A50EC9B9B0, double f0x425CBF2A794E595A>, ptr %i.cx, align 8, !tbaa !18
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ca, i64 960
-  store <4 x double> <double f0x411B50AB74F03290, double f0x425A0CBAC39161F9, double f0x411F940AC5A86537, double f0x425E1D8B15E84C27>, ptr %i.cy, align 8, !tbaa !18
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ca, i64 992
-  store <2 x double> <double f0x41242F7FAE1226DA, double f0x4263401C5FDDC795>, ptr %i.cz, align 8, !tbaa !18
-  %i.da = getelementptr inbounds nuw i8, ptr %i.ca, i64 1008
-  store <4 x double> <double f0x412872DEFECA5981, double f0x426750ECB234B1C3, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %i.da, align 8, !tbaa !18
-  %12 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1040
-  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x412872DEFECA5981, double f0x426750ECB234B1C3>, ptr %12, align 8, !tbaa !18
-  %13 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1072
-  store <2 x double> <double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %13, align 8, !tbaa !18
+  %6 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1024
+  %i.da = getelementptr inbounds nuw i8, ptr %i.ca, i64 1056
+  store <4 x double> <double f0x411B50AB74F03290, double f0x425A0CBAC39161F9, double f0x411F940AC5A86537, double f0x425E1D8B15E84C27>, ptr %i.cy, align 8, !tbaa !18
+  store <4 x double> <double f0x41242F7FAE1226DA, double f0x4263401C5FDDC795, double f0x412872DEFECA5981, double f0x426750ECB234B1C3>, ptr %i.cz, align 8, !tbaa !18
+  store <4 x double> <double f0x412AFADF96B7B795, double f0x4269BAE863184CD0, double f0x412AFADF96B7B795, double f0x4269BAE863184CD0>, ptr %6, align 8, !tbaa !18
+  store <4 x double> <double f0x412872DEFECA5981, double f0x426750ECB234B1C3, double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %i.da, align 8, !tbaa !18
   %i.db = getelementptr inbounds nuw i8, ptr %i.ca, i64 1088
   store <4 x double> <double f0x411F940AC5A86537, double f0x425E1D8B15E84C27, double f0x411B50AB74F03290, double f0x425A0CBAC39161F9>, ptr %i.db, align 8, !tbaa !18
   %i.dc = getelementptr inbounds nuw i8, ptr %i.ca, i64 1120
-  store <4 x double> <double f0x41168D57EB160BA0, double f0x425581E3AC6E122E, double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %i.dc, align 8, !tbaa !18
   %i.dd = getelementptr inbounds nuw i8, ptr %i.ca, i64 1152
-  store <2 x double> <double f0x4120AA6E6854DDC0, double f0x425FC99265EF1E94>, ptr %i.dd, align 8, !tbaa !18
-  %i.de = getelementptr inbounds nuw i8, ptr %i.ca, i64 1168
-  store <4 x double> <double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794, double f0x41264681EF7A8A41, double f0x42653E55C2867902>, ptr %i.de, align 8, !tbaa !18
-  %14 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1200
-  store <4 x double> <double f0x41264681EF7A8A41, double f0x42653E55C2867902, double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %14, align 8, !tbaa !18
-  %15 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1232
-  store <2 x double> <double f0x4120AA6E6854DDBF, double f0x425FC99265EF1E92>, ptr %15, align 8, !tbaa !18
+  %7 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1184
+  %i.de = getelementptr inbounds nuw i8, ptr %i.ca, i64 1216
+  store <4 x double> <double f0x41168D57EB160BA0, double f0x425581E3AC6E122E, double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %i.dc, align 8, !tbaa !18
+  store <4 x double> <double f0x4120AA6E6854DDC0, double f0x425FC99265EF1E94, double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794>, ptr %i.dd, align 8, !tbaa !18
+  store <4 x double> <double f0x41264681EF7A8A41, double f0x42653E55C2867902, double f0x41264681EF7A8A41, double f0x42653E55C2867902>, ptr %7, align 8, !tbaa !18
+  store <4 x double> <double f0x41242F7FAE1226D9, double f0x4263401C5FDDC794, double f0x4120AA6E6854DDBF, double f0x425FC99265EF1E92>, ptr %i.de, align 8, !tbaa !18
   %i.df = getelementptr inbounds nuw i8, ptr %i.ca, i64 1248
   store <4 x double> <double f0x411A126930D354B9, double f0x4258DD36D9544A78, double f0x41168D57EB160BA0, double f0x425581E3AC6E122E>, ptr %i.df, align 8, !tbaa !18
   %i.dg = getelementptr inbounds nuw i8, ptr %i.ca, i64 1280
-  store <4 x double> <double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5, double f0x411464BA8F579BB7, double f0x425372DFFADBA8BC>, ptr %i.dg, align 8, !tbaa !18
   %i.dh = getelementptr inbounds nuw i8, ptr %i.ca, i64 1312
-  store <2 x double> <double f0x411A126930D354BA, double f0x4258DD36D9544A79>, ptr %i.dh, align 8, !tbaa !18
-  %i.di = getelementptr inbounds nuw i8, ptr %i.ca, i64 1328
-  store <4 x double> <double f0x411F940AC5A86538, double f0x425E1D8B15E84C27, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %i.di, align 8, !tbaa !18
-  %16 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1360
-  store <4 x double> <double f0x41216C815B037382, double f0x42609DDE8CF01694, double f0x411F940AC5A86538, double f0x425E1D8B15E84C27>, ptr %16, align 8, !tbaa !18
-  %17 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1392
-  store <2 x double> <double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %17, align 8, !tbaa !18
+  %8 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1344
+  %i.di = getelementptr inbounds nuw i8, ptr %i.ca, i64 1376
+  store <4 x double> <double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5, double f0x411464BA8F579BB7, double f0x425372DFFADBA8BC>, ptr %i.dg, align 8, !tbaa !18
+  store <4 x double> <double f0x411A126930D354BA, double f0x4258DD36D9544A79, double f0x411F940AC5A86538, double f0x425E1D8B15E84C27>, ptr %i.dh, align 8, !tbaa !18
+  store <4 x double> <double f0x41216C815B037382, double f0x42609DDE8CF01694, double f0x41216C815B037382, double f0x42609DDE8CF01694>, ptr %8, align 8, !tbaa !18
+  store <4 x double> <double f0x411F940AC5A86538, double f0x425E1D8B15E84C27, double f0x411A126930D354B9, double f0x4258DD36D9544A78>, ptr %i.di, align 8, !tbaa !18
   %i.dj = getelementptr inbounds nuw i8, ptr %i.ca, i64 1408
   store <4 x double> <double f0x411464BA8F579BB7, double f0x425372DFFADBA8BC, double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5>, ptr %i.dj, align 8, !tbaa !18
   %i.dk = getelementptr inbounds nuw i8, ptr %i.ca, i64 1440
-  store <4 x double> <double 2.500000e+05, double 2.500000e+11, double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5>, ptr %i.dk, align 8, !tbaa !18
   %i.dl = getelementptr inbounds nuw i8, ptr %i.ca, i64 1472
-  store <2 x double> <double f0x41168D57EB160BA1, double f0x425581E3AC6E122F>, ptr %i.dl, align 8, !tbaa !18
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.ca, i64 1488
-  store <4 x double> <double f0x411B50AB74F03291, double f0x425A0CBAC39161F9, double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B>, ptr %i.dm, align 8, !tbaa !18
-  %18 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1520
-  store <4 x double> <double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B, double f0x411B50AB74F03291, double f0x425A0CBAC39161F9>, ptr %18, align 8, !tbaa !18
-  %19 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1552
-  store <2 x double> <double f0x41168D57EB160BA0, double f0x425581E3AC6E122E>, ptr %19, align 8, !tbaa !18
+  %9 = getelementptr inbounds nuw i8, ptr %i.ca, i64 1504
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.ca, i64 1536
+  store <4 x double> <double 2.500000e+05, double 2.500000e+11, double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5>, ptr %i.dk, align 8, !tbaa !18
+  store <4 x double> <double f0x41168D57EB160BA1, double f0x425581E3AC6E122F, double f0x411B50AB74F03291, double f0x425A0CBAC39161F9>, ptr %i.dl, align 8, !tbaa !18
+  store <4 x double> <double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B, double f0x411E24A50EC9B9B1, double f0x425CBF2A794E595B>, ptr %9, align 8, !tbaa !18
+  store <4 x double> <double f0x411B50AB74F03291, double f0x425A0CBAC39161F9, double f0x41168D57EB160BA0, double f0x425581E3AC6E122E>, ptr %i.dm, align 8, !tbaa !18
   %i.dn = getelementptr inbounds nuw i8, ptr %i.ca, i64 1568
   store <4 x double> <double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5, double 2.500000e+05, double 2.500000e+11>, ptr %i.dn, align 8, !tbaa !18
   %i.do = load ptr, ptr %i.a, align 8, !tbaa !31

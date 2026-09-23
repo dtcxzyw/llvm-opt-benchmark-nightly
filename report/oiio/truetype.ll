@@ -205,7 +205,7 @@ bb.a:
   %i.h = load ptr, ptr %0, align 8, !tbaa !135
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 184
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !139  ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 104 ; 9 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 104 ; 10 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !448
   %i.m = sext i16 %i.f to i64                     ; 8 uses
   %i.n = getelementptr inbounds [16 x i8], ptr %i.l, i64 %i.m
@@ -271,25 +271,23 @@ bb.f:                                             ; preds = %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 222
   store i16 %i.au, ptr %i.av, align 2, !tbaa !469
   %i.aw = getelementptr inbounds nuw i8, ptr %i.c, i64 136
-  %1 = load ptr, ptr %i.aw, align 8, !tbaa !470
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store ptr %1, ptr %i.ax, align 8, !tbaa !166
-  %2 = load ptr, ptr %i.k, align 8, !tbaa !471    ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 232
-  store ptr %2, ptr %3, align 8, !tbaa !165
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 144
-  %i.ay = load ptr, ptr %4, align 8, !tbaa !472   ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 240
-  store ptr %i.ay, ptr %5, align 8, !tbaa !167
-  %i.az = getelementptr inbounds nuw i8, ptr %i.c, i64 112
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 248
-  %7 = load <2 x ptr>, ptr %i.az, align 8, !tbaa !179
-  store <2 x ptr> %7, ptr %6, align 8, !tbaa !179
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 144
+  %2 = load <2 x ptr>, ptr %i.aw, align 8, !tbaa !196
+  %3 = load ptr, ptr %1, align 8, !tbaa !470
+  %4 = load <2 x ptr>, ptr %i.k, align 8, !tbaa !179
+  %i.ay = load ptr, ptr %i.k, align 8, !tbaa !471
+  %5 = shufflevector <2 x ptr> %2, <2 x ptr> %4, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x ptr> %5, ptr %i.ax, align 8, !tbaa !179
+  %i.az = getelementptr inbounds nuw i8, ptr %i.c, i64 120
+  %6 = load ptr, ptr %i.az, align 8, !tbaa !472
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 256
+  store ptr %6, ptr %7, align 8, !tbaa !163
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 264
   store i16 0, ptr %i.ba, align 8, !tbaa !473
   %i.bb = zext i16 %i.as to i64
   %i.bc = shl nuw nsw i64 %i.bb, 4
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ay, ptr align 8 %2, i64 %i.bc, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %3, ptr align 8 %i.ay, i64 %i.bc, i1 false)
   %.pre = load i64, ptr %i.an, align 8, !tbaa !134
   br label %bb.g
 
@@ -692,7 +690,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 222
   store i16 %i.bv, ptr %i.bw, align 2, !tbaa !469
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bm, i64 64
-  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !470
+  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !875
   %i.bz = zext i32 %1 to i64                      ; 4 uses
   %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.by, i64 %i.bz
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 224
@@ -703,17 +701,17 @@ bb.k:                                             ; preds = %bb.j
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 232
   store ptr %i.ce, ptr %i.cf, align 8, !tbaa !165
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bm, i64 72
-  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !472
+  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !470
   %i.ci = getelementptr inbounds nuw [16 x i8], ptr %i.ch, i64 %i.bz
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 240
   store ptr %i.ci, ptr %i.cj, align 8, !tbaa !167
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bm, i64 40
-  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !875
+  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !876
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.bz
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   store ptr %i.cm, ptr %i.cn, align 8, !tbaa !164
   %i.co = getelementptr inbounds nuw i8, ptr %i.bm, i64 48
-  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !876
+  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !472
   %i.cq = zext i32 %2 to i64
   %i.cr = getelementptr inbounds nuw [2 x i8], ptr %i.cp, i64 %i.cq
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -1116,9 +1114,9 @@ begin_hunk_2_@llvm.bswap.i32
 !467 = !{!24, !20, i64 12}
 !468 = !{!192, !20, i64 0}
 !469 = !{!24, !20, i64 14}
-!470 = !{!192, !21, i64 40}
+!470 = !{!192, !21, i64 48}
 !471 = !{!192, !21, i64 8}
-!472 = !{!192, !21, i64 48}
+!472 = !{!192, !23, i64 24}
 !473 = !{!24, !20, i64 56}
 !474 = !{!456, !27, i64 16}
 !475 = !{!456, !27, i64 24}
@@ -1521,8 +1519,8 @@ begin_hunk_3_@llvm.bswap.i32
 !872 = distinct !{!872, !209, !211, !210}
 !873 = !{!193, !21, i64 32}
 !874 = distinct !{!874, !209}
-!875 = !{!192, !22, i64 16}
-!876 = !{!192, !23, i64 24}
+!875 = !{!192, !21, i64 40}
+!876 = !{!192, !22, i64 16}
 !877 = !{!133, !22, i64 248}
 !878 = !{!133, !20, i64 220}
 !879 = distinct !{!879, !209}

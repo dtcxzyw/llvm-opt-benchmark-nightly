@@ -36,7 +36,7 @@ bb.a:
   %3 = alloca %union.PJ_COORD, align 8            ; 5 uses
   %4 = alloca %union.PJ_COORD, align 16           ; 5 uses
   %i.a = alloca i64, align 8                      ; 6 uses
-  %5 = alloca %struct.FACTORS, align 16           ; 25 uses
+  %5 = alloca %struct.FACTORS, align 16           ; 23 uses
   %i.b = alloca double, align 8                   ; 6 uses
   %i.c = alloca double, align 8                   ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
@@ -439,25 +439,17 @@ bb.aq:                                            ; preds = %bb.ap
   %i.gj = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.gk = load <2 x double>, ptr %i.gj, align 16, !tbaa !38
   store <2 x double> %i.gk, ptr %0, align 8, !tbaa !38
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 72
-  %8 = load double, ptr %7, align 8, !tbaa !59
   %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %8, ptr %i.gl, align 8, !tbaa !65
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %11 = load <2 x double>, ptr %9, align 16, !tbaa !38
-  store <2 x double> %11, ptr %10, align 8, !tbaa !38
-  %i.gm = getelementptr inbounds nuw i8, ptr %5, i64 64
-  %12 = load double, ptr %i.gm, align 16, !tbaa !58
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store double %12, ptr %13, align 8, !tbaa !66
+  %i.gm = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %7 = load <4 x double>, ptr %i.gm, align 16, !tbaa !38
+  %8 = shufflevector <4 x double> %7, <4 x double> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2>
+  store <4 x double> %8, ptr %i.gl, align 8, !tbaa !38
   %i.gn = getelementptr inbounds nuw i8, ptr %5, i64 80
   %i.go = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.gp = load <2 x double>, ptr %i.gn, align 16, !tbaa !38
-  store <2 x double> %i.gp, ptr %i.go, align 8, !tbaa !38
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %15 = load <2 x double>, ptr %5, align 16, !tbaa !38
-  store <2 x double> %15, ptr %14, align 8, !tbaa !38
+  %9 = load <2 x double>, ptr %5, align 16, !tbaa !38
+  %10 = shufflevector <2 x double> %i.gp, <2 x double> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %10, ptr %i.go, align 8, !tbaa !38
   %i.gq = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.gr = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.gs = load <2 x double>, ptr %i.gq, align 16, !tbaa !38
@@ -724,7 +716,4 @@ attributes #14 = { nounwind willreturn memory(read) }
 !61 = !{!47, !14, i64 88}
 !62 = !{!47, !14, i64 80}
 !63 = !{!47, !14, i64 48}
-!64 = !{!"_ZTS10P5_FACTORS", !14, i64 0, !14, i64 8, !14, i64 16, !14, i64 24, !14, i64 32, !14, i64 40, !14, i64 48, !14, i64 56, !14, i64 64, !14, i64 72, !14, i64 80, !14, i64 88}
-!65 = !{!64, !14, i64 16}
-!66 = !{!64, !14, i64 40}
 end_hunk_1

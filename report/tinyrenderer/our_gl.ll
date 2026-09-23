@@ -82,11 +82,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.1065.0.copyload = load double, ptr %.sroa.1065.0..sroa_idx, align 8, !tbaa !16
-  %i.d = load double, ptr %i.a, align 8, !tbaa !16, !noalias !26 ; 2 uses
+  %i.d = load double, ptr %i.a, align 8, !tbaa !16, !noalias !27 ; 2 uses
   %i.e = fsub double %.sroa.1065.0.copyload, %i.d ; 3 uses
   %i.f = tail call double @llvm.fmuladd.f64(double %i.e, double %i.e, double 0.000000e+00)
   %i.g = load <2 x double>, ptr %0, align 8, !tbaa !16
-  %i.h = load <2 x double>, ptr %1, align 8, !tbaa !16, !noalias !26 ; 3 uses
+  %i.h = load <2 x double>, ptr %1, align 8, !tbaa !16, !noalias !27 ; 3 uses
   %i.i = fsub <2 x double> %i.g, %i.h             ; 3 uses
   %i.j = extractelement <2 x double> %i.i, i64 1  ; 2 uses
   %i.k = tail call double @llvm.fmuladd.f64(double %i.j, double %i.j, double %i.f)
@@ -113,7 +113,7 @@ bb.a:
   %i.ae = shufflevector <2 x double> %i.r, <2 x double> <double 0.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
   %i.af = insertelement <2 x double> poison, double %i.v, i64 0
   %i.ag = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ah = load double, ptr %i.c, align 8, !tbaa !27, !noalias !28
+  %i.ah = load double, ptr %i.c, align 8, !tbaa !18, !noalias !28
   %i.ai = load <2 x double>, ptr %i.b, align 8, !tbaa !16, !noalias !28
   %i.aj = load <2 x double>, ptr %2, align 8, !tbaa !16, !noalias !28 ; 2 uses
   %i.ak = fneg <2 x double> %i.r
@@ -214,7 +214,7 @@ bb.a:
   store double %i.dp, ptr getelementptr inbounds nuw (i8, ptr @ModelView, i64 88), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @ModelView, i64 96), i8 0, i64 24, i1 false)
   %i.dq = extractelement <2 x double> %i.bd, i64 0
-  store double %i.dq, ptr getelementptr inbounds nuw (i8, ptr @ModelView, i64 120), align 8, !tbaa !18
+  store double %i.dq, ptr getelementptr inbounds nuw (i8, ptr @ModelView, i64 120), align 8, !tbaa !19
   ret void
 }
 
@@ -245,7 +245,7 @@ bb.a:
   store double 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @Perspective, i64 80), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @Perspective, i64 88), i8 0, i64 24, i1 false)
   store double %i.a, ptr getelementptr inbounds nuw (i8, ptr @Perspective, i64 112), align 8
-  store double 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @Perspective, i64 120), align 8, !tbaa !18
+  store double 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @Perspective, i64 120), align 8, !tbaa !19
   ret void
 }
 
@@ -271,7 +271,7 @@ bb.a:
   store double %i.h, ptr getelementptr inbounds nuw (i8, ptr @Viewport, i64 56), align 8
   store double 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @Viewport, i64 80), align 8
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @Viewport, i64 88), align 8
-  store double 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @Viewport, i64 120), align 8, !tbaa !18
+  store double 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @Viewport, i64 120), align 8, !tbaa !19
   ret void
 }
 
@@ -369,8 +369,8 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #12
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_Z9rasterizeRA3_K3vecILi4EERK7IShaderR8TGAImage(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(40) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca [3 x %struct.vec], align 16         ; 9 uses
-  %4 = alloca %struct.mat.2, align 8              ; 9 uses
+  %3 = alloca [3 x %struct.vec], align 16         ; 8 uses
+  %4 = alloca %struct.mat.2, align 8              ; 6 uses
   %i.a = alloca double, align 8                   ; 4 uses
   %i.b = alloca double, align 8                   ; 4 uses
   %i.c = alloca double, align 8                   ; 4 uses
@@ -391,7 +391,6 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !44)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.k, ptr noundef nonnull align 8 dereferenceable(32) %i.l, i64 32, i1 false), !tbaa.struct !42
   %i.n = load double, ptr %i.m, align 8, !tbaa !16, !noalias !44
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.o = load <8 x double>, ptr %3, align 16, !tbaa !16 ; 4 uses
   %i.p = shufflevector <8 x double> %i.o, <8 x double> poison, <2 x i32> <i32 3, i32 7>
   %i.q = insertelement <2 x double> %i.f, double %i.j, i64 1 ; 4 uses
@@ -426,15 +425,12 @@ bb.a:
   %i.ar = shufflevector <8 x double> %i.ai, <8 x double> poison, <4 x i32> <i32 5, i32 1, i32 5, i32 1>
   %i.as = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ar, <4 x double> %i.y, <4 x double> %i.aq)
   %i.at = shufflevector <8 x double> %i.ai, <8 x double> poison, <4 x i32> <i32 4, i32 0, i32 4, i32 0>
-  %i.au = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.at, <4 x double> %i.ab, <4 x double> %i.as) ; 8 uses
+  %i.au = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.at, <4 x double> %i.ab, <4 x double> %i.as) ; 10 uses
   %i.av = load <4 x double>, ptr %i.k, align 16, !tbaa !16, !alias.scope !44
   %i.aw = insertelement <4 x double> poison, double %i.n, i64 0
   %i.ax = shufflevector <4 x double> %i.aw, <4 x double> poison, <4 x i32> zeroinitializer
-  %i.ay = fdiv <4 x double> %i.av, %i.ax          ; 6 uses
-  %6 = shufflevector <4 x double> %i.ay, <4 x double> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x double> %6, ptr %5, align 16, !tbaa !16, !alias.scope !44
-  %7 = shufflevector <4 x double> %i.ay, <4 x double> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x double> %7, ptr %i.k, align 16, !tbaa !16, !alias.scope !44
+  %i.ay = fdiv <4 x double> %i.av, %i.ax          ; 5 uses
+  store <4 x double> %i.ay, ptr %i.k, align 16, !tbaa !16, !alias.scope !44
   %i.az = insertelement <2 x double> %i.aj, double %i.al, i64 1
   %i.ba = shufflevector <4 x double> %i.ay, <4 x double> poison, <2 x i32> <i32 3, i32 3>
   %i.bb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.az, <2 x double> %i.ba, <2 x double> zeroinitializer)
@@ -448,38 +444,31 @@ bb.a:
   %i.bj = shufflevector <4 x double> %i.ay, <4 x double> poison, <2 x i32> zeroinitializer
   %i.bk = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bi, <2 x double> %i.bj, <2 x double> %i.bh) ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
-  %i.bl = extractelement <4 x double> %i.au, i64 1 ; 2 uses
-  store double %i.bl, ptr %4, align 8, !tbaa !47
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.bl = extractelement <4 x double> %i.au, i64 1
   %i.bm = extractelement <4 x double> %i.au, i64 0
-  %9 = shufflevector <4 x double> %i.au, <4 x double> poison, <2 x i32> <i32 0, i32 1> ; 3 uses
-  %10 = insertelement <2 x double> %9, double 1.000000e+00, i64 1
-  store <2 x double> %10, ptr %8, align 8, !tbaa !16
-  %i.bn = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %i.bo = extractelement <4 x double> %i.au, i64 3 ; 3 uses
-  store double %i.bo, ptr %i.bn, align 8, !tbaa !47
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.bp = extractelement <4 x double> %i.au, i64 2 ; 2 uses
-  %12 = shufflevector <4 x double> %i.au, <4 x double> poison, <2 x i32> <i32 2, i32 3> ; 3 uses
-  %13 = insertelement <2 x double> %12, double 1.000000e+00, i64 1
-  store <2 x double> %13, ptr %11, align 8, !tbaa !16
-  %14 = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %15 = extractelement <2 x double> %i.bk, i64 1  ; 3 uses
-  store double %15, ptr %14, align 8, !tbaa !47
-  %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 56
-  %16 = extractelement <2 x double> %i.bk, i64 0  ; 2 uses
-  %17 = insertelement <2 x double> %i.bk, double 1.000000e+00, i64 1
-  store <2 x double> %17, ptr %i.bq, align 8, !tbaa !16
-  %i.br = fneg double %15
-  %i.bs = fsub double 0.000000e+00, %15
-  %i.bt = fadd double %i.bo, %i.bs
+  %5 = extractelement <4 x double> %i.au, i64 3   ; 2 uses
+  %6 = shufflevector <4 x double> %i.au, <4 x double> <double poison, double poison, double 1.000000e+00, double poison>, <4 x i32> <i32 1, i32 0, i32 6, i32 3>
+  store <4 x double> %6, ptr %4, align 8, !tbaa !16
+  %i.bn = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.bo = extractelement <4 x double> %i.au, i64 2 ; 2 uses
+  %i.bp = extractelement <2 x double> %i.bk, i64 1 ; 2 uses
+  %7 = extractelement <2 x double> %i.bk, i64 0   ; 2 uses
+  %8 = shufflevector <2 x double> %i.bk, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x double> %i.au, <4 x double> %8, <4 x i32> <i32 2, i32 poison, i32 5, i32 4>
+  %10 = insertelement <4 x double> %9, double 1.000000e+00, i64 1
+  store <4 x double> %10, ptr %i.bn, align 8, !tbaa !16
+  %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 64
+  store double 1.000000e+00, ptr %i.bq, align 8, !tbaa !18
+  %i.br = fneg double %i.bp
+  %i.bs = fsub double 0.000000e+00, %i.bp
+  %i.bt = fadd double %5, %i.bs
   %i.bu = fneg double %i.bt
-  %i.bv = tail call double @llvm.fmuladd.f64(double %i.bp, double %i.br, double 0.000000e+00)
-  %i.bw = tail call noundef double @llvm.fmuladd.f64(double %i.bo, double %16, double %i.bv)
+  %i.bv = tail call double @llvm.fmuladd.f64(double %i.bo, double %i.br, double 0.000000e+00)
+  %i.bw = tail call noundef double @llvm.fmuladd.f64(double %5, double %7, double %i.bv)
   %i.bx = fadd double %i.bw, 0.000000e+00
   %i.by = tail call double @llvm.fmuladd.f64(double %i.bm, double %i.bu, double %i.bx)
-  %i.bz = fsub double 0.000000e+00, %16
-  %i.ca = fadd double %i.bp, %i.bz
+  %i.bz = fsub double 0.000000e+00, %7
+  %i.ca = fadd double %i.bo, %i.bz
   %i.cb = tail call noundef double @llvm.fmuladd.f64(double %i.bl, double %i.ca, double %i.by)
   %i.cc = fcmp olt double %i.cb, 1.000000e+00
   br i1 %i.cc, label %bb.b, label %.lr.ph.i.i
@@ -491,7 +480,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   %i.cf = shufflevector <4 x i1> %i.ce, <4 x i1> poison, <2 x i32> <i32 2, i32 3>
-  %i.cg = select <2 x i1> %i.cf, <2 x double> %12, <2 x double> %9 ; 2 uses
+  %11 = shufflevector <4 x double> %i.au, <4 x double> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %12 = shufflevector <4 x double> %i.au, <4 x double> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
+  %i.cg = select <2 x i1> %i.cf, <2 x double> %11, <2 x double> %12 ; 2 uses
   %i.ch = fcmp olt <2 x double> %i.bk, %i.cg
   %i.ci = select <2 x i1> %i.ch, <2 x double> %i.bk, <2 x double> %i.cg ; 2 uses
   %i.cj = extractelement <2 x double> %i.ci, i64 1
@@ -500,7 +491,7 @@ bb.a:
   store double %i.ck, ptr %i.c, align 8, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
   %i.cl = shufflevector <4 x i1> %i.ce, <4 x i1> poison, <2 x i32> <i32 0, i32 1>
-  %i.cm = select <2 x i1> %i.cl, <2 x double> %12, <2 x double> %9 ; 2 uses
+  %i.cm = select <2 x i1> %i.cl, <2 x double> %11, <2 x double> %12 ; 2 uses
   %i.cn = fcmp olt <2 x double> %i.cm, %i.bk
   %i.co = select <2 x i1> %i.cn, <2 x double> %i.bk, <2 x double> %i.cm ; 2 uses
   %i.cp = extractelement <2 x double> %i.co, i64 1
@@ -546,19 +537,19 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.k = sub nuw nsw i32 %.sroa.speculated93, %.sroa.speculated99 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  store i32 0, ptr %i.a, align 4, !tbaa !51
+  store i32 0, ptr %i.a, align 4, !tbaa !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
-  store i32 %i.k, ptr %i.b, align 4, !tbaa !51
+  store i32 %i.k, ptr %i.b, align 4, !tbaa !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
-  store i32 1, ptr %i.c, align 4, !tbaa !51
+  store i32 1, ptr %i.c, align 4, !tbaa !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
-  store i32 0, ptr %i.d, align 4, !tbaa !51
-  %i.l = load i32, ptr %0, align 4, !tbaa !51     ; 2 uses
+  store i32 0, ptr %i.d, align 4, !tbaa !50
+  %i.l = load i32, ptr %0, align 4, !tbaa !50     ; 2 uses
   call void @__kmpc_for_static_init_4u(ptr nonnull @1, i32 %i.l, i32 34, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i32 1, i32 1)
-  %i.m = load i32, ptr %i.b, align 4, !tbaa !51
+  %i.m = load i32, ptr %i.b, align 4, !tbaa !50
   %i.n = call i32 @llvm.umin.i32(i32 %i.m, i32 %i.k) ; 2 uses
-  store i32 %i.n, ptr %i.b, align 4, !tbaa !51
-  %i.o = load i32, ptr %i.a, align 4, !tbaa !51   ; 2 uses
+  store i32 %i.n, ptr %i.b, align 4, !tbaa !50
+  %i.o = load i32, ptr %i.a, align 4, !tbaa !50   ; 2 uses
   %.not53104 = icmp ugt i32 %i.o, %i.n
   br i1 %.not53104, label %._crit_edge, label %.lr.ph
 
@@ -606,28 +597,28 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.an = add i32 %.050105, 1                     ; 2 uses
-  %i.ao = load i32, ptr %i.b, align 4, !tbaa !51
+  %i.ao = load i32, ptr %i.b, align 4, !tbaa !50
   %.not53 = icmp ugt i32 %i.an, %i.ao
   br i1 %.not53, label %._crit_edge, label %bb.d
 
 bb.h:                                             ; preds = %bb.f
   %i.ap = uitofp nneg i32 %.0 to double           ; 2 uses
-  %i.aq = load double, ptr %i.v, align 8, !tbaa !53
-  %i.ar = load double, ptr %i.w, align 8, !tbaa !53
-  %i.as = load <2 x double>, ptr %7, align 8, !tbaa !16, !noalias !54 ; 7 uses
-  %i.at = load double, ptr %i.p, align 8, !tbaa !16, !noalias !54 ; 3 uses
+  %i.aq = load double, ptr %i.v, align 8, !tbaa !52
+  %i.ar = load double, ptr %i.w, align 8, !tbaa !52
+  %i.as = load <2 x double>, ptr %7, align 8, !tbaa !16, !noalias !53 ; 7 uses
+  %i.at = load double, ptr %i.p, align 8, !tbaa !16, !noalias !53 ; 3 uses
   %i.au = fneg double %i.at
-  %i.av = load double, ptr %i.r, align 8, !tbaa !16, !noalias !54 ; 4 uses
+  %i.av = load double, ptr %i.r, align 8, !tbaa !16, !noalias !53 ; 4 uses
   %i.aw = extractelement <2 x double> %i.as, i64 1
-  %i.ax = load double, ptr %i.u, align 8, !tbaa !16, !noalias !54 ; 4 uses
+  %i.ax = load double, ptr %i.u, align 8, !tbaa !16, !noalias !53 ; 4 uses
   %i.ay = extractelement <2 x double> %i.as, i64 0
   %i.az = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.ax, i64 0
   %i.ba = shufflevector <2 x double> %i.as, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.bb = insertelement <2 x double> %i.ba, double %i.av, i64 1 ; 2 uses
-  %i.bc = load <2 x double>, ptr %i.q, align 8, !tbaa !16, !noalias !54 ; 6 uses
+  %i.bc = load <2 x double>, ptr %i.q, align 8, !tbaa !16, !noalias !53 ; 6 uses
   %i.bd = extractelement <2 x double> %i.bc, i64 1
-  %i.be = load double, ptr %i.t, align 8, !tbaa !16, !noalias !54
-  %i.bf = load <2 x double>, ptr %i.s, align 8, !tbaa !16, !noalias !54 ; 2 uses
+  %i.be = load double, ptr %i.t, align 8, !tbaa !16, !noalias !53
+  %i.bf = load <2 x double>, ptr %i.s, align 8, !tbaa !16, !noalias !53 ; 2 uses
   %i.bg = fneg <2 x double> %i.bf                 ; 4 uses
   %i.bh = extractelement <2 x double> %i.bg, i64 1
   %i.bi = call double @llvm.fmuladd.f64(double %i.av, double %i.bh, double 0.000000e+00)
@@ -674,7 +665,7 @@ bb.h:                                             ; preds = %bb.f
   %i.cx = shufflevector <2 x double> %i.cw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cy = insertelement <2 x double> poison, double %i.aq, i64 0
   %i.cz = insertelement <2 x double> %i.cy, double %i.ar, i64 1
-  %i.da = load double, ptr %i.x, align 8, !tbaa !53
+  %i.da = load double, ptr %i.x, align 8, !tbaa !52
   %i.db = shufflevector <2 x double> %i.as, <2 x double> %i.cl, <2 x i32> <i32 1, i32 3>
   %i.dc = insertelement <2 x double> %i.bg, double %i.ap, i64 1
   %i.dd = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.cu, i64 1
@@ -709,9 +700,9 @@ bb.h:                                             ; preds = %bb.f
   br i1 %or.cond5, label %bb.p, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ec = load double, ptr %i.y, align 16, !tbaa !55
-  %i.ed = load double, ptr %i.z, align 16, !tbaa !55
-  %i.ee = load double, ptr %i.aa, align 16, !tbaa !55
+  %i.ec = load double, ptr %i.y, align 16, !tbaa !54
+  %i.ed = load double, ptr %i.z, align 16, !tbaa !54
+  %i.ee = load double, ptr %i.aa, align 16, !tbaa !54
   %i.ef = call double @llvm.fmuladd.f64(double %i.ea, double %i.ee, double 0.000000e+00)
   %i.eg = call double @llvm.fmuladd.f64(double %i.dy, double %i.ed, double %i.ef)
   %i.eh = call noundef double @llvm.fmuladd.f64(double %i.dw, double %i.ec, double %i.eg) ; 2 uses
@@ -732,7 +723,7 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
   store <2 x double> %i.dv, ptr %12, align 16, !tbaa !16
   store double %i.ds, ptr %.sroa.11.0..sroa_idx, align 16, !tbaa !16
-  %i.eq = load ptr, ptr %10, align 8, !tbaa !57
+  %i.eq = load ptr, ptr %10, align 8, !tbaa !56
   %i.er = load ptr, ptr %i.eq, align 8
   %i.es = invoke i48 %i.er(ptr noundef nonnull align 8 dereferenceable(8) %10, ptr noundef nonnull byval(%struct.vec.0) align 8 %12)
           to label %bb.l unwind label %.loopexit  ; 2 uses
@@ -762,7 +753,7 @@ bb.o:                                             ; preds = %bb.n, %bb.l
 
 bb.p:                                             ; preds = %bb.o, %bb.j, %bb.h
   %i.fa = add nuw nsw i32 %.0, 1
-  br label %bb.e, !llvm.loop !50
+  br label %bb.e, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.c
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.l)
@@ -805,7 +796,7 @@ declare void @_ZN8TGAImage3setEiiRK8TGAColor(ptr noundef nonnull align 8 derefer
 declare void @__kmpc_for_static_fini(ptr, i32) local_unnamed_addr #15
 
 ; Function Attrs: nounwind
-declare !callback !21 void @__kmpc_fork_call(ptr, i32, ptr, ...) local_unnamed_addr #15
+declare !callback !22 void @__kmpc_fork_call(ptr, i32, ptr, ...) local_unnamed_addr #15
 
 ; Function Attrs: nofree nounwind uwtable
 define internal void @_GLOBAL__sub_I_our_gl.cpp() #16 section ".text.startup" {
@@ -880,19 +871,19 @@ attributes #21 = { builtin allocsize(0) }
 !15 = !{!"double", !6, i64 0}
 !16 = !{!15, !15, i64 0}
 !17 = !{!"_ZTS3vecILi3EE", !15, i64 0, !15, i64 8, !15, i64 16}
-!18 = !{!6, !6, i64 0}
-!19 = !{!"llvm.loop.mustprogress"}
-!20 = !{i64 2, i64 -1, i64 -1, i1 true}
-!21 = !{!20}
-!22 = distinct !{!22, !"_ZmiILi3EE3vecIXT_EERKS1_S3_"}
-!23 = distinct !{!23, !22, !"_ZmiILi3EE3vecIXT_EERKS1_S3_: argument 0"}
-!24 = distinct !{!24, !"_Z5crossRK3vecILi3EES2_"}
-!25 = distinct !{!25, !24, !"_Z5crossRK3vecILi3EES2_: argument 0"}
-!26 = !{!23}
-!27 = !{!17, !15, i64 16}
-!28 = !{!25}
-!29 = distinct !{!29, !19, !31, !32}
-!30 = distinct !{!30, !19, !32, !31}
+!18 = !{!17, !15, i64 16}
+!19 = !{!6, !6, i64 0}
+!20 = !{!"llvm.loop.mustprogress"}
+!21 = !{i64 2, i64 -1, i64 -1, i1 true}
+!22 = !{!21}
+!23 = distinct !{!23, !"_ZmiILi3EE3vecIXT_EERKS1_S3_"}
+!24 = distinct !{!24, !23, !"_ZmiILi3EE3vecIXT_EERKS1_S3_: argument 0"}
+!25 = distinct !{!25, !"_Z5crossRK3vecILi3EES2_"}
+!26 = distinct !{!26, !25, !"_Z5crossRK3vecILi3EES2_: argument 0"}
+!27 = !{!24}
+!28 = !{!26}
+!29 = distinct !{!29, !20, !31, !32}
+!30 = distinct !{!30, !20, !32, !31}
 !31 = !{!"llvm.loop.isvectorized", i32 1}
 !32 = !{!"llvm.loop.unroll.runtime.disable"}
 !33 = !{!12, !11, i64 8}
@@ -909,15 +900,14 @@ attributes #21 = { builtin allocsize(0) }
 !44 = !{!37}
 !45 = !{!39}
 !46 = !{!41}
-!47 = !{!17, !15, i64 0}
-!48 = distinct !{!48, !"_ZNK3matILi3ELi3EE16invert_transposeEv"}
-!49 = distinct !{!49, !48, !"_ZNK3matILi3ELi3EE16invert_transposeEv: argument 0"}
-!50 = distinct !{!50, !19}
-!51 = !{!7, !7, i64 0}
-!52 = !{!"_ZTS3vecILi4EE", !15, i64 0, !15, i64 8, !15, i64 16, !15, i64 24}
-!53 = !{!52, !15, i64 24}
-!54 = !{!49}
-!55 = !{!52, !15, i64 16}
-!56 = !{!"vtable pointer", !5, i64 0}
-!57 = !{!56, !56, i64 0}
+!47 = distinct !{!47, !"_ZNK3matILi3ELi3EE16invert_transposeEv"}
+!48 = distinct !{!48, !47, !"_ZNK3matILi3ELi3EE16invert_transposeEv: argument 0"}
+!49 = distinct !{!49, !20}
+!50 = !{!7, !7, i64 0}
+!51 = !{!"_ZTS3vecILi4EE", !15, i64 0, !15, i64 8, !15, i64 16, !15, i64 24}
+!52 = !{!51, !15, i64 24}
+!53 = !{!48}
+!54 = !{!51, !15, i64 16}
+!55 = !{!"vtable pointer", !5, i64 0}
+!56 = !{!55, !55, i64 0}
 end_hunk_0

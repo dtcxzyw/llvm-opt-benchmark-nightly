@@ -202,7 +202,7 @@ av_get_detection_bbox.exit:                       ; preds = %.lr.ph.split
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -2147483648, 1) i32 @config_input(ptr nofree noundef readonly captures(none) %0) #1 {
 bb.a:
-  %i.a = alloca [14 x double], align 16           ; 20 uses
+  %i.a = alloca [14 x double], align 16           ; 18 uses
   %i.b = alloca double, align 8                   ; 12 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 9 uses
@@ -243,18 +243,12 @@ bb.a:
   %i.ae = getelementptr inbounds nuw i8, ptr %i.f, i64 112
   store i32 %i.ad, ptr %i.ae, align 8, !tbaa !55
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.ai = load <2 x i32>, ptr %i.ah, align 8, !tbaa !26
   %i.aj = sitofp <2 x i32> %i.ai to <2 x double>  ; 3 uses
-  %3 = extractelement <2 x double> %i.aj, i64 1   ; 2 uses
-  store double %3, ptr %i.ag, align 8, !tbaa !79
-  %4 = extractelement <2 x double> %i.aj, i64 0   ; 2 uses
-  store double %4, ptr %2, align 16, !tbaa !79
-  %5 = shufflevector <2 x double> %i.aj, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %5, ptr %1, align 16, !tbaa !79
+  %1 = shufflevector <2 x double> %i.aj, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
+  store <4 x double> %1, ptr %i.ag, align 8, !tbaa !79
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !80
   %.not96 = icmp eq i32 %i.al, 0
@@ -274,7 +268,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.aq = phi nsz double [ %i.ap, %bb.b ], [ 1.000000e+00, %bb.a ] ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store double %i.aq, ptr %i.ar, align 8, !tbaa !79
-  %i.as = fdiv nsz double %4, %3
+  %2 = extractelement <2 x double> %i.aj, i64 0
+  %3 = extractelement <2 x double> %i.aj, i64 1
+  %i.as = fdiv nsz double %2, %3
   %i.at = fmul nsz double %i.as, %i.aq
   store double %i.at, ptr %i.a, align 16, !tbaa !79
   %i.au = uitofp i8 %i.u to double

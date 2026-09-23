@@ -205,24 +205,22 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   call void @_RNvXs4_NtNtCse67t6KqNqGQ_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_15try_reduce_with21TryReduceWithConsumerNCNCNvNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5joins9equi_join20estimate_cardinality0s0_0ENCB1J_s_0EINtNtB7_8plumbing8ConsumerINtNtCscgRAwXFJnXP_4core6result6ResultNtNtCs2mZqlW55729_12polars_utils18cardinality_sketch17CardinalitySketchNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE8split_atB1T_(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.a, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, i64 noundef %2), !dbg !88150
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48, !dbg !88151
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !88152
-  %3 = load ptr, ptr %i.d, align 8, !dbg !88152, !nonnull !3602, !noundef !3602 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !88152 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !88152
-  %4 = load ptr, ptr %i.e, align 8, !dbg !88152, !nonnull !3602, !align !3643, !noundef !3602 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !dbg !88153
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !88153
-  store ptr %3, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !88153
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !88153
-  store ptr %4, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !88153
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !88153
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !88153
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64, !dbg !88153
-  store ptr %3, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !88153
-  %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72, !dbg !88153
-  store ptr %4, ptr %.sroa.53.0..sroa_idx, align 8, !dbg !88153
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !88153
-  %6 = load <2 x ptr>, ptr %i.c, align 8, !dbg !88151
-  store <2 x ptr> %6, ptr %5, align 8, !dbg !88153
+  %3 = load <2 x ptr>, ptr %i.c, align 8, !dbg !88151
+  %4 = load <2 x ptr>, ptr %i.d, align 8, !dbg !88152
+  %5 = load ptr, ptr %i.e, align 8, !dbg !88152, !nonnull !3602, !align !3643, !noundef !3602
+  %6 = load ptr, ptr %i.d, align 8, !dbg !88152, !nonnull !3602, !noundef !3602
+  store ptr %6, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !88153
+  store ptr %5, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !88153
+  %7 = shufflevector <2 x ptr> %4, <2 x ptr> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !88153
+  store <4 x ptr> %7, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !88153
   ret void, !dbg !88154
 }
 
