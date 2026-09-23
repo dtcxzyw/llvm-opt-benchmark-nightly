@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.std::weak_ptr", align 16    ; 9 uses
   %3 = alloca %"class.std::shared_ptr", align 8   ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 3 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 5 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !37
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !38
   %i.e = ptrtoint ptr %i.c to i64
@@ -486,17 +486,19 @@ _ZNSt10__weak_ptrIN5sound12PlayingSoundELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit1
 
 bb.ad:                                            ; preds = %._crit_edge
   store float 3.000000e-01, ptr %i.k, align 8, !tbaa !97
-  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
-  %5 = load ptr, ptr %4, align 8, !tbaa !115
+  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 424
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !38
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 416
   %i.co = load <2 x ptr>, ptr %i.cn, align 8, !tbaa !98
-  %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 440 ; 2 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 440
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !115
-  store ptr %i.cq, ptr %4, align 8, !tbaa !115
-  %6 = load <2 x ptr>, ptr %i.a, align 8, !tbaa !98
+  %6 = load <2 x ptr>, ptr %i.b, align 8, !tbaa !98
   store <2 x ptr> %i.co, ptr %i.a, align 8, !tbaa !98
-  store <2 x ptr> %6, ptr %i.cn, align 8, !tbaa !98
-  store ptr %5, ptr %i.cp, align 8, !tbaa !115
+  %7 = insertelement <4 x ptr> poison, ptr %i.cq, i64 0
+  %8 = insertelement <4 x ptr> %7, ptr %4, i64 1
+  %9 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x ptr> %8, <4 x ptr> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %10, ptr %5, align 8, !tbaa !98
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %._crit_edge

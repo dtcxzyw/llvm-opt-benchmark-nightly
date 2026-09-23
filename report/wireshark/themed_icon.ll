@@ -202,7 +202,7 @@ bb.a:
   %9 = alloca %class.QSvgRenderer, align 8        ; 8 uses
   %10 = alloca %class.QPainter, align 8           ; 10 uses
   %11 = alloca %class.QRectF, align 8             ; 8 uses
-  %12 = alloca %class.QRectF, align 8             ; 9 uses
+  %12 = alloca %class.QRectF, align 8             ; 6 uses
   %13 = alloca %class.QPalette, align 8           ; 7 uses
   %14 = alloca %class.QPalette, align 8           ; 7 uses
   %15 = alloca %class.QPalette, align 8           ; 7 uses
@@ -605,12 +605,12 @@ bb.be:                                            ; preds = %bb.bz, %bb.ap
 bb.bf:                                            ; preds = %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11, !noalias !13
-  %i.eb = sitofp i32 %.sroa.099.0.extract.trunc to double ; 4 uses
+  %i.eb = sitofp i32 %.sroa.099.0.extract.trunc to double ; 3 uses
   %i.ec = fmul double %5, %i.eb                   ; 2 uses
   %i.ed = call double @llvm.copysign.f64(double 5.000000e-01, double %i.ec)
   %i.ee = fadd double %i.ec, %i.ed
   %i.ef = fptosi double %i.ee to i32
-  %i.eg = sitofp i32 %.sroa.7.0.extract.trunc to double ; 4 uses
+  %i.eg = sitofp i32 %.sroa.7.0.extract.trunc to double ; 3 uses
   %i.eh = fmul double %5, %i.eg                   ; 2 uses
   %i.ei = call double @llvm.copysign.f64(double 5.000000e-01, double %i.eh)
   %i.ej = fadd double %i.eh, %i.ei
@@ -670,34 +670,26 @@ _ZNK6QSizeF7isEmptyEv.exit.thread.i.i:            ; preds = %bb.bk
   br label %_ZN12_GLOBAL__N_19aspectFitE6QSizeFRK6QRectF.exit.i
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.eq = uitofp nneg i32 %.sroa.5.0.extract.trunc.i to double ; 2 uses
-  %i.er = uitofp nneg i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
+  %i.eq = uitofp nneg i32 %.sroa.5.0.extract.trunc.i to double
+  %i.er = uitofp nneg i32 %.sroa.0.0.extract.trunc.i to double
   %i.es = insertelement <2 x double> poison, double %i.eb, i64 0
-  %i.et = insertelement <2 x double> %i.es, double %i.eg, i64 1
+  %i.et = insertelement <2 x double> %i.es, double %i.eg, i64 1 ; 2 uses
   %i.eu = insertelement <2 x double> poison, double %i.er, i64 0
-  %i.ev = insertelement <2 x double> %i.eu, double %i.eq, i64 1
+  %i.ev = insertelement <2 x double> %i.eu, double %i.eq, i64 1 ; 2 uses
   %i.ew = fdiv <2 x double> %i.et, %i.ev          ; 2 uses
   %i.ex = extractelement <2 x double> %i.ew, i64 0 ; 2 uses
   %i.ey = extractelement <2 x double> %i.ew, i64 1 ; 2 uses
   %i.ez = fcmp olt double %i.ex, %i.ey
-  %.sroa.speculated.i.i = select i1 %i.ez, double %i.ex, double %i.ey ; 2 uses
-  %32 = fmul double %.sroa.speculated.i.i, %i.er  ; 2 uses
-  %33 = fmul double %.sroa.speculated.i.i, %i.eq  ; 2 uses
-  %34 = fmul nnan double %i.eb, 5.000000e-01
-  %35 = fadd double %34, 0.000000e+00
-  %36 = fmul nnan double %i.eg, 5.000000e-01
-  %37 = fadd double %36, 0.000000e+00
-  %38 = fmul double %32, 5.000000e-01
-  %39 = fmul double %33, 5.000000e-01
-  %40 = fsub double %35, %38
-  %41 = fsub double %37, %39
-  store double %40, ptr %12, align 8, !alias.scope !14, !noalias !13
-  %42 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  store double %41, ptr %42, align 8, !alias.scope !14, !noalias !13
-  %43 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  store double %32, ptr %43, align 8, !alias.scope !14, !noalias !13
-  %44 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store double %33, ptr %44, align 8, !alias.scope !14, !noalias !13
+  %.sroa.speculated.i.i = select i1 %i.ez, double %i.ex, double %i.ey
+  %32 = fmul nnan <2 x double> %i.et, splat (double 5.000000e-01)
+  %33 = insertelement <2 x double> poison, double %.sroa.speculated.i.i, i64 0
+  %34 = shufflevector <2 x double> %33, <2 x double> poison, <2 x i32> zeroinitializer
+  %35 = fmul <2 x double> %34, %i.ev              ; 2 uses
+  %36 = fadd <2 x double> %32, zeroinitializer
+  %37 = fmul <2 x double> %35, splat (double 5.000000e-01)
+  %38 = fsub <2 x double> %36, %37
+  %39 = shufflevector <2 x double> %35, <2 x double> %38, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  store <4 x double> %39, ptr %12, align 8, !alias.scope !14, !noalias !13
   br label %_ZN12_GLOBAL__N_19aspectFitE6QSizeFRK6QRectF.exit.i
 
 _ZN12_GLOBAL__N_19aspectFitE6QSizeFRK6QRectF.exit.i: ; preds = %bb.bl, %_ZNK6QSizeF7isEmptyEv.exit.thread.i.i

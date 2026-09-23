@@ -202,7 +202,7 @@ define linkonce_odr void @_ZN6duckdb9make_uniqINS_20ForeignKeyConstraintEJRNS_6v
 bb.a:
   %4 = alloca %"class.duckdb::vector", align 8    ; 9 uses
   %5 = alloca %"class.duckdb::vector", align 8    ; 9 uses
-  %6 = alloca %"struct.duckdb::ForeignKeyInfo", align 8 ; 13 uses
+  %6 = alloca %"struct.duckdb::ForeignKeyInfo", align 8 ; 12 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(184) ptr @_Znwm(i64 noundef 184) #21 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !41   ; 3 uses
@@ -392,24 +392,25 @@ _ZN6duckdb14ForeignKeyInfoC2EOS0_.exit:           ; preds = %bb.k, %_ZNKSt7__cxx
   store <2 x ptr> %i.bo, ptr %i.bm, align 8, !tbaa !109
   %i.bp = getelementptr inbounds nuw i8, ptr %6, i64 88
   %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 88
-  %7 = load ptr, ptr %i.bq, align 8, !tbaa !110
-  store ptr %7, ptr %i.bp, align 8, !tbaa !110
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 104
+  %9 = load ptr, ptr %i.bq, align 8, !tbaa !110
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bn, i8 0, i64 24, i1 false)
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 96 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
-  %i.br = load <2 x ptr>, ptr %9, align 8, !tbaa !109
-  store <2 x ptr> %i.br, ptr %8, align 8, !tbaa !109
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 112
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 112
-  %12 = load ptr, ptr %11, align 8, !tbaa !110
-  store ptr %12, ptr %10, align 8, !tbaa !110
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
+  %10 = load ptr, ptr %7, align 8, !tbaa !67
+  %i.br = load <2 x ptr>, ptr %8, align 8, !tbaa !109
+  %11 = insertelement <4 x ptr> poison, ptr %9, i64 0
+  %12 = insertelement <4 x ptr> %11, ptr %10, i64 1
+  %13 = shufflevector <2 x ptr> %i.br, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %14 = shufflevector <4 x ptr> %12, <4 x ptr> %13, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %14, ptr %i.bp, align 8, !tbaa !109
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
   invoke void @_ZN6duckdb20ForeignKeyConstraintC1ENS_6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb1ESaIS7_EEES9_NS_14ForeignKeyInfoE(ptr noundef nonnull align 8 dereferenceable(184) %i.a, ptr noundef nonnull %4, ptr noundef nonnull %5, ptr noundef nonnull %6)
           to label %bb.l unwind label %bb.s
 
 bb.l:                                             ; preds = %_ZN6duckdb14ForeignKeyInfoC2EOS0_.exit
+  %15 = getelementptr inbounds nuw i8, ptr %6, i64 96
   store ptr %i.a, ptr %0, align 8, !tbaa !48
-  %i.bs = load ptr, ptr %8, align 8, !tbaa !67    ; 2 uses
+  %i.bs = load ptr, ptr %15, align 8, !tbaa !67   ; 2 uses
   %.not.i.i.i.i20 = icmp eq ptr %i.bs, null
   br i1 %.not.i.i.i.i20, label %_ZNSt6vectorIN6duckdb13PhysicalIndexESaIS1_EED2Ev.exit.i, label %bb.m
 

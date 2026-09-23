@@ -204,7 +204,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs8sO4Nh65sHq_10rayon_core6unwind12A
 define hidden void @_RNvXs2_NtCs8sO4Nh65sHq_10rayon_core3jobINtB5_8StackJobNtNtB7_5latch9SpinLatchNCINvNvNtB7_4join12join_context6call_bTINtNtNtCsgCecv3eZDcN_5alloc11collections11linked_list10LinkedListINtNtB1X_3vec3VecyEEIB1R_IB2U_NtNtCsbzNSmZPCnTx_10tgrep_core7builder11BatchChargeEEENCINvNvNtNtCsjFxWRWgRcyr_5rayon4iter8plumbing24bridge_producer_consumer6helperINtNtB4q_5slice12IterProducerNtNtCs5Xr050g3D4S_3std4path7PathBufEINtNtB4o_3map11MapConsumerINtNtB4o_5unzip13UnzipConsumerNtB71_5UnzipNtNtB4o_6extend15ListVecConsumerB7E_ENCNvB3p_23batch_sizes_and_charges0EEs_0E0B1P_ENtB5_3Job7executeB3r_(ptr noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [48 x i8], align 8                ; 8 uses
+  %i.b = alloca [48 x i8], align 8                ; 6 uses
   %i.c = alloca [8 x i8], align 8                 ; 7 uses
   %.sroa.0.0.copyload = load ptr, ptr %0, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -270,11 +270,7 @@ bb.g:                                             ; preds = %bb.e
   unreachable
 
 bb.h:                                             ; preds = %bb.b
-  %.sroa.0.0.copyload37 = load ptr, ptr %i.b, align 8
-  %.sroa.938.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %1 = load <2 x ptr>, ptr %.sroa.938.0..sroa_idx, align 8
-  %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %.sroa.16.0.copyload = load ptr, ptr %.sroa.16.0..sroa_idx, align 8
+  %1 = load <4 x ptr>, ptr %i.b, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %.sroa.17.0.copyload = load i64, ptr %.sroa.17.0..sroa_idx, align 8
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -287,16 +283,15 @@ bb.i:                                             ; preds = %bb.c
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
-  %2 = insertelement <2 x ptr> <ptr poison, ptr undef>, ptr %i.p, i64 0
+  %2 = insertelement <4 x ptr> <ptr poison, ptr poison, ptr undef, ptr undef>, ptr %i.o, i64 0
+  %3 = insertelement <4 x ptr> %2, ptr %i.p, i64 1
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.sroa.0.053 = phi ptr [ %i.o, %bb.i ], [ %.sroa.0.0.copyload37, %bb.h ] ; 2 uses
-  %.sroa.9.sroa.5.0 = phi ptr [ undef, %bb.i ], [ %.sroa.16.0.copyload, %bb.h ] ; 2 uses
   %.sroa.9.sroa.6.0 = phi i64 [ undef, %bb.i ], [ %.sroa.17.0.copyload, %bb.h ] ; 2 uses
   %.sroa.9.sroa.7.0 = phi ptr [ undef, %bb.i ], [ %.sroa.18.0.copyload, %bb.h ] ; 2 uses
   %.sroa.04.0 = phi i64 [ 2, %bb.i ], [ 1, %bb.h ] ; 2 uses
-  %3 = phi <2 x ptr> [ %2, %bb.i ], [ %1, %bb.h ] ; 3 uses
+  %4 = phi <4 x ptr> [ %3, %bb.i ], [ %1, %bb.h ] ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs8sO4Nh65sHq_10rayon_core3job9JobResultTINtNtNtCsgCecv3eZDcN_5alloc11collections11linked_list10LinkedListINtNtB1s_3vec3VecyEEIB1m_IB2p_NtNtCsbzNSmZPCnTx_10tgrep_core7builder11BatchChargeEEEEEB2W_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.q)
           to label %bb.l unwind label %bb.k
@@ -306,15 +301,17 @@ bb.k:                                             ; preds = %bb.j
           cleanup
   store i64 %.sroa.04.0, ptr %i.q, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store ptr %.sroa.0.053, ptr %.sroa.6.0..sroa_idx, align 8
+  %5 = extractelement <4 x ptr> %4, i64 0
+  store ptr %5, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.s = extractelement <2 x ptr> %3, i64 0
+  %i.s = extractelement <4 x ptr> %4, i64 1
   store ptr %i.s, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.t = extractelement <2 x ptr> %3, i64 1
+  %i.t = extractelement <4 x ptr> %4, i64 2
   store ptr %i.t, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
+  %6 = extractelement <4 x ptr> %4, i64 3
+  store ptr %6, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   store i64 %.sroa.9.sroa.6.0, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx, align 8
   %.sroa.9.sroa.7.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -324,11 +321,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   store i64 %.sroa.04.0, ptr %i.q, align 8
   %.sroa.6.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store ptr %.sroa.0.053, ptr %.sroa.6.0..sroa_idx6, align 8
-  %.sroa.8.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store <2 x ptr> %3, ptr %.sroa.8.0..sroa_idx8, align 8
-  %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
+  store <4 x ptr> %4, ptr %.sroa.6.0..sroa_idx6, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   store i64 %.sroa.9.sroa.6.0, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
   %.sroa.9.sroa.7.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -434,7 +427,7 @@ define hidden void @_RNvXs2_NtCs8sO4Nh65sHq_10rayon_core3jobINtB5_8StackJobNtNtB
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [32 x i8], align 8                ; 5 uses
-  %i.c = alloca [48 x i8], align 8                ; 7 uses
+  %i.c = alloca [48 x i8], align 8                ; 5 uses
   %i.d = alloca [8 x i8], align 8                 ; 7 uses
   %.sroa.0.0.copyload = load ptr, ptr %0, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -502,11 +495,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1708
-  %.sroa.0.0.copyload37 = load ptr, ptr %i.c, align 8
-  %.sroa.938.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %1 = load <2 x ptr>, ptr %.sroa.938.0..sroa_idx, align 8
-  %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %.sroa.16.0.copyload = load ptr, ptr %.sroa.16.0..sroa_idx, align 8
+  %1 = load <4 x ptr>, ptr %i.c, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.p = load <2 x i64>, ptr %.sroa.17.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -517,15 +506,14 @@ bb.i:                                             ; preds = %bb.c
   %i.r = extractvalue { ptr, ptr } %i.m, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
-  %2 = insertelement <2 x ptr> <ptr poison, ptr undef>, ptr %i.r, i64 0
+  %2 = insertelement <4 x ptr> <ptr poison, ptr poison, ptr undef, ptr undef>, ptr %i.q, i64 0
+  %3 = insertelement <4 x ptr> %2, ptr %i.r, i64 1
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.sroa.0.055 = phi ptr [ %i.q, %bb.i ], [ %.sroa.0.0.copyload37, %bb.h ] ; 2 uses
-  %.sroa.9.sroa.5.0 = phi ptr [ undef, %bb.i ], [ %.sroa.16.0.copyload, %bb.h ] ; 2 uses
   %.sroa.04.0 = phi i64 [ 2, %bb.i ], [ 1, %bb.h ] ; 2 uses
   %i.s = phi <2 x i64> [ undef, %bb.i ], [ %i.p, %bb.h ] ; 3 uses
-  %3 = phi <2 x ptr> [ %2, %bb.i ], [ %1, %bb.h ] ; 3 uses
+  %4 = phi <4 x ptr> [ %3, %bb.i ], [ %1, %bb.h ] ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs8sO4Nh65sHq_10rayon_core3job9JobResultTINtNtNtCsgCecv3eZDcN_5alloc11collections11linked_list10LinkedListINtNtB1s_3vec3VecyEEINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultNtNtCsbzNSmZPCnTx_10tgrep_core7builder11BatchChargeEEEEB3Q_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.t)
           to label %bb.l unwind label %bb.k
@@ -535,15 +523,17 @@ bb.k:                                             ; preds = %bb.j
           cleanup
   store i64 %.sroa.04.0, ptr %i.t, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr %.sroa.0.055, ptr %.sroa.6.0..sroa_idx, align 8
+  %5 = extractelement <4 x ptr> %4, i64 0
+  store ptr %5, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.v = extractelement <2 x ptr> %3, i64 0
+  %i.v = extractelement <4 x ptr> %4, i64 1
   store ptr %i.v, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.w = extractelement <2 x ptr> %3, i64 1
+  %i.w = extractelement <4 x ptr> %4, i64 2
   store ptr %i.w, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
+  %6 = extractelement <4 x ptr> %4, i64 3
+  store ptr %6, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.x = extractelement <2 x i64> %i.s, i64 0
   store i64 %i.x, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx, align 8
@@ -555,11 +545,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   store i64 %.sroa.04.0, ptr %i.t, align 8
   %.sroa.6.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr %.sroa.0.055, ptr %.sroa.6.0..sroa_idx6, align 8
-  %.sroa.8.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store <2 x ptr> %3, ptr %.sroa.8.0..sroa_idx8, align 8
-  %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
+  store <4 x ptr> %4, ptr %.sroa.6.0..sroa_idx6, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store <2 x i64> %i.s, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
@@ -663,7 +649,7 @@ define hidden void @_RNvXs2_NtCs8sO4Nh65sHq_10rayon_core3jobINtB5_8StackJobNtNtB
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [48 x i8], align 8                ; 5 uses
-  %i.c = alloca [48 x i8], align 8                ; 7 uses
+  %i.c = alloca [48 x i8], align 8                ; 5 uses
   %i.d = alloca [8 x i8], align 8                 ; 7 uses
   %.sroa.0.0.copyload = load ptr, ptr %0, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -731,11 +717,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1735
-  %.sroa.0.0.copyload37 = load ptr, ptr %i.c, align 8
-  %.sroa.938.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %1 = load <2 x ptr>, ptr %.sroa.938.0..sroa_idx, align 8
-  %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %.sroa.16.0.copyload = load ptr, ptr %.sroa.16.0..sroa_idx, align 8
+  %1 = load <4 x ptr>, ptr %i.c, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.p = load <2 x i64>, ptr %.sroa.17.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -746,15 +728,14 @@ bb.i:                                             ; preds = %bb.c
   %i.r = extractvalue { ptr, ptr } %i.m, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
-  %2 = insertelement <2 x ptr> <ptr poison, ptr undef>, ptr %i.r, i64 0
+  %2 = insertelement <4 x ptr> <ptr poison, ptr poison, ptr undef, ptr undef>, ptr %i.q, i64 0
+  %3 = insertelement <4 x ptr> %2, ptr %i.r, i64 1
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.sroa.0.055 = phi ptr [ %i.q, %bb.i ], [ %.sroa.0.0.copyload37, %bb.h ] ; 2 uses
-  %.sroa.9.sroa.5.0 = phi ptr [ undef, %bb.i ], [ %.sroa.16.0.copyload, %bb.h ] ; 2 uses
   %.sroa.04.0 = phi i64 [ 2, %bb.i ], [ 1, %bb.h ] ; 2 uses
   %i.s = phi <2 x i64> [ undef, %bb.i ], [ %i.p, %bb.h ] ; 3 uses
-  %3 = phi <2 x ptr> [ %2, %bb.i ], [ %1, %bb.h ] ; 3 uses
+  %4 = phi <4 x ptr> [ %3, %bb.i ], [ %1, %bb.h ] ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs8sO4Nh65sHq_10rayon_core3job9JobResultTINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultyEIB1m_NtNtCsbzNSmZPCnTx_10tgrep_core7builder11BatchChargeEEEEB2A_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.t)
           to label %bb.l unwind label %bb.k
@@ -764,15 +745,17 @@ bb.k:                                             ; preds = %bb.j
           cleanup
   store i64 %.sroa.04.0, ptr %i.t, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store ptr %.sroa.0.055, ptr %.sroa.6.0..sroa_idx, align 8
+  %5 = extractelement <4 x ptr> %4, i64 0
+  store ptr %5, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.v = extractelement <2 x ptr> %3, i64 0
+  %i.v = extractelement <4 x ptr> %4, i64 1
   store ptr %i.v, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.w = extractelement <2 x ptr> %3, i64 1
+  %i.w = extractelement <4 x ptr> %4, i64 2
   store ptr %i.w, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
+  %6 = extractelement <4 x ptr> %4, i64 3
+  store ptr %6, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.x = extractelement <2 x i64> %i.s, i64 0
   store i64 %i.x, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx, align 8
@@ -784,11 +767,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   store i64 %.sroa.04.0, ptr %i.t, align 8
   %.sroa.6.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store ptr %.sroa.0.055, ptr %.sroa.6.0..sroa_idx6, align 8
-  %.sroa.8.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store <2 x ptr> %3, ptr %.sroa.8.0..sroa_idx8, align 8
-  %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
+  store <4 x ptr> %4, ptr %.sroa.6.0..sroa_idx6, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
   store <2 x i64> %i.s, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
@@ -892,7 +871,7 @@ define hidden void @_RNvXs2_NtCs8sO4Nh65sHq_10rayon_core3jobINtB5_8StackJobNtNtB
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [32 x i8], align 8                ; 5 uses
-  %i.c = alloca [48 x i8], align 8                ; 7 uses
+  %i.c = alloca [48 x i8], align 8                ; 5 uses
   %i.d = alloca [8 x i8], align 8                 ; 7 uses
   %.sroa.0.0.copyload = load ptr, ptr %0, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -960,11 +939,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1762
-  %.sroa.0.0.copyload37 = load ptr, ptr %i.c, align 8
-  %.sroa.938.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %1 = load <2 x ptr>, ptr %.sroa.938.0..sroa_idx, align 8
-  %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %.sroa.16.0.copyload = load ptr, ptr %.sroa.16.0..sroa_idx, align 8
+  %1 = load <4 x ptr>, ptr %i.c, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.p = load <2 x i64>, ptr %.sroa.17.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -975,15 +950,14 @@ bb.i:                                             ; preds = %bb.c
   %i.r = extractvalue { ptr, ptr } %i.m, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
-  %2 = insertelement <2 x ptr> <ptr poison, ptr undef>, ptr %i.r, i64 0
+  %2 = insertelement <4 x ptr> <ptr poison, ptr poison, ptr undef, ptr undef>, ptr %i.q, i64 0
+  %3 = insertelement <4 x ptr> %2, ptr %i.r, i64 1
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.sroa.0.055 = phi ptr [ %i.q, %bb.i ], [ %.sroa.0.0.copyload37, %bb.h ] ; 2 uses
-  %.sroa.9.sroa.5.0 = phi ptr [ undef, %bb.i ], [ %.sroa.16.0.copyload, %bb.h ] ; 2 uses
   %.sroa.04.0 = phi i64 [ 2, %bb.i ], [ 1, %bb.h ] ; 2 uses
   %i.s = phi <2 x i64> [ undef, %bb.i ], [ %i.p, %bb.h ] ; 3 uses
-  %3 = phi <2 x ptr> [ %2, %bb.i ], [ %1, %bb.h ] ; 3 uses
+  %4 = phi <4 x ptr> [ %3, %bb.i ], [ %1, %bb.h ] ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs8sO4Nh65sHq_10rayon_core3job9JobResultTINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultyEINtNtNtCsgCecv3eZDcN_5alloc11collections11linked_list10LinkedListINtNtB2y_3vec3VecNtNtCsbzNSmZPCnTx_10tgrep_core7builder11BatchChargeEEEEEB3P_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.t)
           to label %bb.l unwind label %bb.k
@@ -993,15 +967,17 @@ bb.k:                                             ; preds = %bb.j
           cleanup
   store i64 %.sroa.04.0, ptr %i.t, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr %.sroa.0.055, ptr %.sroa.6.0..sroa_idx, align 8
+  %5 = extractelement <4 x ptr> %4, i64 0
+  store ptr %5, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.v = extractelement <2 x ptr> %3, i64 0
+  %i.v = extractelement <4 x ptr> %4, i64 1
   store ptr %i.v, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.w = extractelement <2 x ptr> %3, i64 1
+  %i.w = extractelement <4 x ptr> %4, i64 2
   store ptr %i.w, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
+  %6 = extractelement <4 x ptr> %4, i64 3
+  store ptr %6, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.x = extractelement <2 x i64> %i.s, i64 0
   store i64 %i.x, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx.sroa_idx, align 8
@@ -1013,11 +989,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   store i64 %.sroa.04.0, ptr %i.t, align 8
   %.sroa.6.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr %.sroa.0.055, ptr %.sroa.6.0..sroa_idx6, align 8
-  %.sroa.8.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store <2 x ptr> %3, ptr %.sroa.8.0..sroa_idx8, align 8
-  %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store ptr %.sroa.9.sroa.5.0, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
+  store <4 x ptr> %4, ptr %.sroa.6.0..sroa_idx6, align 8
   %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store <2 x i64> %i.s, ptr %.sroa.9.sroa.6.0..sroa.9.0..sroa_idx10.sroa_idx, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses

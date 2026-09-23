@@ -204,18 +204,19 @@ bb.a:
   store <2 x ptr> %i.e, ptr %i.c, align 8, !tbaa !123
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %4 = load ptr, ptr %i.g, align 8, !tbaa !348
-  store ptr %4, ptr %i.f, align 8, !tbaa !348
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 56
+  %7 = load ptr, ptr %i.g, align 8, !tbaa !348
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i8 0, i64 24, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.h = load <2 x ptr>, ptr %6, align 8, !tbaa !381
-  store <2 x ptr> %i.h, ptr %5, align 8, !tbaa !381
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %9 = load ptr, ptr %8, align 8, !tbaa !346
-  store ptr %9, ptr %7, align 8, !tbaa !346
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
+  %8 = load ptr, ptr %4, align 8, !tbaa !345
+  %i.h = load <2 x ptr>, ptr %5, align 8, !tbaa !381
+  %9 = insertelement <4 x ptr> poison, ptr %7, i64 0
+  %10 = insertelement <4 x ptr> %9, ptr %8, i64 1
+  %11 = shufflevector <2 x ptr> %i.h, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x ptr> %10, <4 x ptr> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %12, ptr %i.f, align 8, !tbaa !715
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false)
@@ -227,12 +228,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.m = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.n = load ptr, ptr %5, align 8, !tbaa !345    ; 3 uses
+  %13 = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %i.n = load ptr, ptr %13, align 8, !tbaa !345   ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = load ptr, ptr %7, align 8, !tbaa !346
+  %i.o = load ptr, ptr %6, align 8, !tbaa !346
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = ptrtoint ptr %i.n to i64
   %i.r = sub i64 %i.p, %i.q

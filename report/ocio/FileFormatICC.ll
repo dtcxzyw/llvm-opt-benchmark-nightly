@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit192: ; preds = %bb
 bb.q:                                             ; preds = %bb.n
   %i.ap = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !208
-  %i.ar = load ptr, ptr %6, align 8, !tbaa !76    ; 10 uses
+  %i.ar = load ptr, ptr %6, align 8, !tbaa !76    ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 40
   %i.at = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.au = load i32, ptr %i.at, align 4, !tbaa !208
@@ -217,43 +217,40 @@ bb.q:                                             ; preds = %bb.n
   %i.az = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !208
   %i.bb = sitofp i32 %i.ba to double
-  %13 = fmul nnan double %i.bb, f0x3EF0000000000000
-  %14 = getelementptr inbounds nuw i8, ptr %i.ar, i64 56
-  store double %13, ptr %14, align 8, !tbaa !105
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.ar, i64 64
-  store double 0.000000e+00, ptr %i.bc, align 8, !tbaa !105
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.ar, i64 56
   %i.bd = getelementptr inbounds nuw i8, ptr %i.r, i64 12
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !209
-  %15 = getelementptr inbounds nuw i8, ptr %i.ar, i64 72
   %i.bf = getelementptr inbounds nuw i8, ptr %i.w, i64 12
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !209
   %i.bh = insertelement <2 x i32> poison, i32 %i.be, i64 0
   %i.bi = insertelement <2 x i32> %i.bh, i32 %i.bg, i64 1
   %i.bj = sitofp <2 x i32> %i.bi to <2 x double>
-  %16 = fmul nnan <2 x double> %i.bj, splat (double f0x3EF0000000000000)
-  store <2 x double> %16, ptr %15, align 8, !tbaa !105
-  %17 = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
-  %18 = getelementptr inbounds nuw i8, ptr %i.ar, i64 88
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.ar, i64 96
-  store double 0.000000e+00, ptr %i.bk, align 8, !tbaa !105
+  %13 = insertelement <4 x double> <double poison, double 1.000000e+00, double poison, double poison>, double %i.bb, i64 0
+  %14 = shufflevector <2 x double> %i.bj, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x double> %13, <4 x double> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %16 = fmul nnan <4 x double> %15, <double f0x3EF0000000000000, double 0.000000e+00, double f0x3EF0000000000000, double f0x3EF0000000000000>
+  store <4 x double> %16, ptr %i.bc, align 8, !tbaa !105
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
+  %17 = getelementptr inbounds nuw i8, ptr %i.ar, i64 88
   %i.bl = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !210
-  %19 = getelementptr inbounds nuw i8, ptr %i.ar, i64 104
   %i.bn = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !210
   %i.bp = insertelement <2 x i32> poison, i32 %i.bm, i64 0
   %i.bq = insertelement <2 x i32> %i.bp, i32 %i.bo, i64 1
   %i.br = sitofp <2 x i32> %i.bq to <2 x double>
-  %20 = fmul nnan <2 x double> %i.br, splat (double f0x3EF0000000000000)
-  store <2 x double> %20, ptr %19, align 8, !tbaa !105
-  %21 = load <2 x i32>, ptr %17, align 4, !tbaa !71
-  %22 = sitofp <2 x i32> %21 to <2 x double>
-  %23 = fmul nnan <2 x double> %22, splat (double f0x3EF0000000000000) ; 2 uses
-  %24 = extractelement <2 x double> %23, i64 0
-  store double %24, ptr %18, align 8, !tbaa !105
-  %25 = getelementptr inbounds nuw i8, ptr %i.ar, i64 120
-  %26 = extractelement <2 x double> %23, i64 1
-  store double %26, ptr %25, align 8, !tbaa !105
+  %18 = shufflevector <2 x double> %i.br, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %19 = load <2 x i32>, ptr %i.bk, align 4, !tbaa !71
+  %20 = sitofp <2 x i32> %19 to <2 x double>      ; 2 uses
+  %21 = shufflevector <2 x double> %20, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %22 = insertelement <4 x double> %21, double 1.000000e+00, i64 1
+  %23 = shufflevector <4 x double> %22, <4 x double> %18, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %24 = fmul nnan <4 x double> %23, <double f0x3EF0000000000000, double 0.000000e+00, double f0x3EF0000000000000, double f0x3EF0000000000000>
+  store <4 x double> %24, ptr %17, align 8, !tbaa !105
+  %25 = extractelement <2 x double> %20, i64 1
+  %26 = fmul nnan double %25, f0x3EF0000000000000
+  %27 = getelementptr inbounds nuw i8, ptr %i.ar, i64 120
+  store double %26, ptr %27, align 8, !tbaa !105
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ar, i64 128
   %i.bt = getelementptr inbounds nuw i8, ptr %i.ar, i64 160
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bs, i8 0, i64 32, i1 false)

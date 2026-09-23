@@ -205,21 +205,31 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead3aes8fallbackNtB2_5Batch3set.exit.i.i.i.i.i: ; preds = %bb.g
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %.sroa.01.0.i, i64 %storemerge61.i.i.i
-  %i.w = load <2 x i64>, ptr %i.v, align 8, !alias.scope !6913, !noalias !6916 ; 3 uses
-  %i.x = shufflevector <2 x i64> %i.w, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.y = lshr <2 x i64> %i.w, splat (i64 1)
-  %i.z = xor <2 x i64> %i.y, %i.w
-  %i.aa = and <2 x i64> %i.z, splat (i64 6148914691236517205) ; 2 uses
-  %i.ab = shl nuw <2 x i64> %i.aa, splat (i64 1)
+  %i.w = load <2 x i64>, ptr %i.v, align 8, !alias.scope !6913, !noalias !6916 ; 4 uses
+  %3 = lshr <2 x i64> %i.w, splat (i64 1)
+  %4 = xor <2 x i64> %3, %i.w
+  %5 = and <2 x i64> %4, splat (i64 6148914691236517205) ; 3 uses
+  %6 = shl nuw <2 x i64> %5, splat (i64 1)        ; 2 uses
+  %7 = shufflevector <2 x i64> %6, <2 x i64> %5, <2 x i32> <i32 0, i32 2>
+  %8 = shufflevector <2 x i64> %i.w, <2 x i64> poison, <2 x i32> zeroinitializer
+  %9 = xor <2 x i64> %7, %8                       ; 3 uses
+  %i.x = shufflevector <2 x i64> %9, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.y = lshr <2 x i64> %9, splat (i64 2)
+  %i.z = xor <2 x i64> %i.y, %9
+  %i.aa = and <2 x i64> %i.z, splat (i64 3689348814741910323) ; 2 uses
+  %i.ab = shl nuw <2 x i64> %i.aa, splat (i64 2)
   %i.ac = shufflevector <2 x i64> %i.aa, <2 x i64> %i.ab, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  %i.ad = xor <4 x i64> %i.ac, %i.x               ; 3 uses
-  %3 = lshr <4 x i64> %i.ad, splat (i64 2)
-  %4 = xor <4 x i64> %3, %i.ad
-  %5 = and <4 x i64> %4, splat (i64 3689348814741910323) ; 2 uses
-  %6 = shl nuw <4 x i64> %5, splat (i64 2)
-  %7 = shufflevector <4 x i64> %6, <4 x i64> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %8 = shufflevector <4 x i64> %i.ad, <4 x i64> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
-  %9 = xor <8 x i64> %7, %8
+  %i.ad = xor <4 x i64> %i.ac, %i.x
+  %10 = shufflevector <2 x i64> %6, <2 x i64> %5, <2 x i32> <i32 1, i32 3>
+  %11 = shufflevector <2 x i64> %i.w, <2 x i64> poison, <2 x i32> <i32 1, i32 1>
+  %12 = xor <2 x i64> %10, %11                    ; 3 uses
+  %13 = shufflevector <2 x i64> %12, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %14 = lshr <2 x i64> %12, splat (i64 2)
+  %15 = xor <2 x i64> %14, %12
+  %16 = and <2 x i64> %15, splat (i64 3689348814741910323) ; 2 uses
+  %17 = shl nuw <2 x i64> %16, splat (i64 2)
+  %18 = shufflevector <2 x i64> %16, <2 x i64> %17, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  %19 = xor <4 x i64> %18, %13
   br label %bb.h
 
 .noexc.i.i.i:                                     ; preds = %bb.g
@@ -227,31 +237,12 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead3aes8fallbackNtB2_5Batch3set.exit.i.i.i.i.i: 
   unreachable
 
 bb.h:                                             ; preds = %_RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead3aes8fallbackNtB2_5Batch3set.exit.i.i.i.i.i, %bb.f
-  %10 = phi <8 x i64> [ %9, %_RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead3aes8fallbackNtB2_5Batch3set.exit.i.i.i.i.i ], [ zeroinitializer, %bb.f ] ; 8 uses
-  %11 = getelementptr inbounds nuw [64 x i8], ptr %i.a, i64 %storemerge61.i.i.i ; 8 uses
-  %12 = extractelement <8 x i64> %10, i64 0
-  store i64 %12, ptr %11, align 8, !alias.scope !6915, !noalias !6918
-  %.sroa.453.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %13 = extractelement <8 x i64> %10, i64 2
-  store i64 %13, ptr %.sroa.453.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
-  %.sroa.554.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 16
-  %14 = extractelement <8 x i64> %10, i64 4
-  store i64 %14, ptr %.sroa.554.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
-  %.sroa.655.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 24
-  %15 = extractelement <8 x i64> %10, i64 6
-  store i64 %15, ptr %.sroa.655.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
-  %.sroa.756.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 32
-  %16 = extractelement <8 x i64> %10, i64 1
-  store i64 %16, ptr %.sroa.756.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
-  %.sroa.857.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 40
-  %17 = extractelement <8 x i64> %10, i64 3
-  store i64 %17, ptr %.sroa.857.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
-  %.sroa.958.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 48
-  %18 = extractelement <8 x i64> %10, i64 5
-  store i64 %18, ptr %.sroa.958.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
-  %.sroa.1059.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 56
-  %19 = extractelement <8 x i64> %10, i64 7
-  store i64 %19, ptr %.sroa.1059.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
+  %20 = phi <4 x i64> [ %i.ad, %_RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead3aes8fallbackNtB2_5Batch3set.exit.i.i.i.i.i ], [ zeroinitializer, %bb.f ]
+  %21 = phi <4 x i64> [ %19, %_RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead3aes8fallbackNtB2_5Batch3set.exit.i.i.i.i.i ], [ zeroinitializer, %bb.f ]
+  %22 = getelementptr inbounds nuw [64 x i8], ptr %i.a, i64 %storemerge61.i.i.i ; 2 uses
+  store <4 x i64> %20, ptr %22, align 8, !alias.scope !6915, !noalias !6918
+  %.sroa.1059.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %22, i64 32
+  store <4 x i64> %21, ptr %.sroa.1059.0..sroa_idx.i.i.i, align 8, !alias.scope !6915, !noalias !6918
   %i.ae = add nuw nsw i64 %storemerge61.i.i.i, 1  ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.ae, 15
   br i1 %exitcond.not.i.i.i, label %_RNvMs1_NtNtNtCs5yxAJGbRKSL_4ring4aead3aes8fallbackNtB5_8Schedule17expand_round_keys.exit, label %bb.f

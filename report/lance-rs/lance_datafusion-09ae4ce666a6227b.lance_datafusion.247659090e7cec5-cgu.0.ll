@@ -205,8 +205,8 @@ bb.a:
   %.sroa.7385.i.i.i.i.i.i.i.i.i.i.i.i = alloca [60 x i8], align 8 ; 8 uses
   %.sroa.8387.i.i.i.i.i.i.i.i.i.i.i.i = alloca [3 x i8], align 1 ; 8 uses
   %i.ae = alloca [144 x i8], align 16             ; 13 uses
-  %i.af = alloca [40 x i8], align 8               ; 7 uses
-  %i.ag = alloca [40 x i8], align 8               ; 9 uses
+  %i.af = alloca [40 x i8], align 8               ; 6 uses
+  %i.ag = alloca [40 x i8], align 8               ; 10 uses
   %i.ah = alloca [8 x i8], align 8                ; 5 uses
   %i.ai = alloca [2 x i8], align 2                ; 5 uses
   %i.aj = alloca [24 x i8], align 8               ; 10 uses
@@ -448,11 +448,11 @@ bb.p:                                             ; preds = %bb.k
   %.sroa.0274.sroa.5.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 139
   %.sroa.5.0..sroa_idx275.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 140
   %.sroa.6.0..sroa_idx277.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 141
-  %i.do = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %.sroa.651.i.sroa.8.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.af, i64 24
-  %.sroa.464.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 8 ; 2 uses
-  %.sroa.651.i.sroa.7.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.sroa.651.i.sroa.8.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 24 ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %i.af, i64 32
+  %.sroa.651.i.sroa.8.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  %.sroa.464.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
+  %.sroa.651.i.sroa.7.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
+  %.sroa.651.i.sroa.8.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %.sroa.4299.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %.sroa.5300.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %.sroa.631.sroa.7.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.al, i64 8
@@ -855,25 +855,23 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
 
 bb.au:                                            ; preds = %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !29404
-  %1 = load i64, ptr %i.af, align 8, !range !334, !noalias !29404, !noundef !315 ; 2 uses
-  %2 = icmp eq i64 %1, -1
-  %3 = load <2 x i64>, ptr %i.do, align 8, !noalias !29404 ; 3 uses
-  %4 = load <2 x i64>, ptr %.sroa.651.i.sroa.8.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404 ; 3 uses
+  %1 = load <4 x i64>, ptr %i.af, align 8, !noalias !29404 ; 5 uses
+  %2 = extractelement <4 x i64> %1, i64 0
+  %3 = icmp eq i64 %2, -1
+  %.sroa.651.i.sroa.9.0.copyload92.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.do, align 8, !noalias !29404 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !29404
-  br i1 %2, label %bb.av, label %bb.aw
+  br i1 %3, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
   %.pre.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.ac, align 8, !alias.scope !29461, !noalias !29404
-  %5 = extractelement <2 x i64> %3, i64 0
-  %i.hx = extractelement <2 x i64> %3, i64 1
-  %i.hy = extractelement <2 x i64> %4, i64 0
-  %i.hz = extractelement <2 x i64> %4, i64 1
+  %i.hx = extractelement <4 x i64> %1, i64 1
+  %i.hy = extractelement <4 x i64> %1, i64 2
+  %i.hz = extractelement <4 x i64> %1, i64 3
   br label %bb.ba
 
 bb.aw:                                            ; preds = %bb.au
-  store <2 x i64> %3, ptr %.sroa.464.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
-  store <2 x i64> %4, ptr %.sroa.651.i.sroa.8.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
-  store i64 %1, ptr %i.ag, align 8, !noalias !29404
+  store i64 %.sroa.651.i.sroa.9.0.copyload92.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.651.i.sroa.8.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
+  store <4 x i64> %1, ptr %i.ag, align 8, !noalias !29404
   call void @llvm.experimental.noalias.scope.decl(metadata !29462)
   call void @llvm.experimental.noalias.scope.decl(metadata !29463)
   call void @llvm.experimental.noalias.scope.decl(metadata !29464)
@@ -897,9 +895,9 @@ bb.ay:                                            ; preds = %bb.ax
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsc85D0lJ81Z_16lance_datafusion.exit244.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.ax, %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !29404
   %.sroa.065.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.ag, align 8, !noalias !29404
-  %.sroa.466.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.464.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
-  %.sroa.567.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.651.i.sroa.7.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
-  %i.ie = load <2 x i64>, ptr %.sroa.651.i.sroa.8.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
+  %.sroa.466.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.651.i.sroa.8.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
+  %.sroa.567.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.464.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
+  %i.ie = load <2 x i64>, ptr %.sroa.651.i.sroa.7.0..sroa.464.0..sroa_idx.i.sroa_idx.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !29404
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !29404
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !29404
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !29404
@@ -912,10 +910,10 @@ bb.az:                                            ; preds = %.loopexit.i.i.i.i.i
   unreachable
 
 bb.ba:                                            ; preds = %bb.av, %bb.aq
-  %.sroa.44.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.hu, %bb.aq ], [ %i.hz, %bb.av ]
-  %.sroa.38.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ht, %bb.aq ], [ %i.hy, %bb.av ]
-  %.sroa.31.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.hs, %bb.aq ], [ %i.hx, %bb.av ]
-  %.sroa.1924.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.hr, %bb.aq ], [ %5, %bb.av ]
+  %.sroa.44.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.hu, %bb.aq ], [ %.sroa.651.i.sroa.9.0.copyload92.i.i.i.i.i.i.i.i.i.i.i, %bb.av ]
+  %.sroa.38.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ht, %bb.aq ], [ %i.hz, %bb.av ]
+  %.sroa.31.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.hs, %bb.aq ], [ %i.hy, %bb.av ]
+  %.sroa.1924.4.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.hr, %bb.aq ], [ %i.hx, %bb.av ]
   %i.ig = phi ptr [ %i.hf, %bb.aq ], [ %.pre.i.i.i.i.i.i.i.i.i.i.i.i, %bb.av ]
   call void @llvm.experimental.noalias.scope.decl(metadata !29467)
   call void @llvm.experimental.noalias.scope.decl(metadata !29468)

@@ -202,14 +202,18 @@ bb.g:                                             ; preds = %bb.f
 _ZN2v88internal8compiler13CodeAssembler4BindIJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpPNS0_5TNodeIS5_EE.exit5: ; preds = %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.ai = load ptr, ptr %2, align 8               ; 2 uses
-  store ptr %i.ai, ptr %0, align 8
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ak = load <2 x ptr>, ptr %3, align 8
-  store <2 x ptr> %i.ak, ptr %i.aj, align 8
-  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %11 = load <2 x ptr>, ptr %i.am, align 8
-  store <2 x ptr> %11, ptr %i.al, align 8
+  %11 = load ptr, ptr %3, align 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ak = load <2 x ptr>, ptr %i.aj, align 8
+  %12 = insertelement <4 x ptr> poison, ptr %i.ai, i64 0
+  %13 = insertelement <4 x ptr> %12, ptr %11, i64 1
+  %14 = shufflevector <2 x ptr> %i.ak, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x ptr> %13, <4 x ptr> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %15, ptr %0, align 8
+  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %16 = load ptr, ptr %i.am, align 8
+  store ptr %16, ptr %i.al, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.ai, ptr %i.an, align 8
   call void @_ZN2v88internal8compiler18CodeAssemblerLabelD1Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %i.f) #8

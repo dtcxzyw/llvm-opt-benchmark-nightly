@@ -205,7 +205,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define dso_local range(i64 -1, -9223372036854775808) i64 @set_vfd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [7 x i32], align 16               ; 5 uses
-  %i.b = alloca [7 x i64], align 16               ; 6 uses
+  %i.b = alloca [7 x i64], align 16               ; 8 uses
   %i.c = alloca [7 x ptr], align 16               ; 11 uses
   %i.d = alloca [7 x i64], align 16               ; 11 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -284,19 +284,23 @@ bb.i:                                             ; preds = %bb.d
   store ptr %i.ae, ptr %i.ag, align 16, !tbaa !22
   %i.ah = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 1844674407370955161, ptr %i.ah, align 16, !tbaa !16
+  store <4 x i64> zeroinitializer, ptr %i.b, align 16, !tbaa !16
   %i.ai = getelementptr inbounds nuw i8, ptr %i.x, i64 3072 ; 2 uses
   %i.aj = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.ai, i64 noundef 1024, ptr noundef nonnull @.str.15, i32 noundef 114) #17 ; 0 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %i.ai, ptr %i.ak, align 8, !tbaa !22
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 3689348814741910322, ptr %i.al, align 8, !tbaa !16
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  store i64 0, ptr %1, align 16, !tbaa !16
   %i.am = getelementptr inbounds nuw i8, ptr %i.x, i64 4096 ; 2 uses
   %i.an = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.am, i64 noundef 1024, ptr noundef nonnull @.str.15, i32 noundef 103) #17 ; 0 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store ptr %i.am, ptr %i.ao, align 16, !tbaa !22
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   store i64 5534023222112865483, ptr %i.ap, align 16, !tbaa !16
-  store <6 x i64> zeroinitializer, ptr %i.b, align 16, !tbaa !16
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  store i64 0, ptr %2, align 8, !tbaa !16
   %i.aq = getelementptr inbounds nuw i8, ptr %i.x, i64 5120 ; 2 uses
   %i.ar = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.aq, i64 noundef 1024, ptr noundef nonnull @.str.15, i32 noundef 108) #17 ; 0 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 40

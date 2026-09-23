@@ -205,20 +205,22 @@ bb.afj:                                           ; preds = %.thread1942, %bb.af
   %i.dbl = phi ptr [ %i.dbg, %.thread1942 ], [ %i.dbi, %bb.afi ] ; 4 uses
   %i.dbm = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.dbn = load ptr, ptr %i.dbl, align 8, !noalias !40913, !nonnull !68, !align !73, !noundef !68 ; 2 uses
-  store ptr %i.dbn, ptr %i.dbm, align 8, !noalias !40913
-  %i.dbo = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
+  %i.dbo = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.dbp = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 216
-  %3 = load <2 x ptr>, ptr %i.dbp, align 8, !noalias !40913
-  store <2 x ptr> %3, ptr %i.dbo, align 8, !noalias !40913
+  %2 = load ptr, ptr %i.dbp, align 8, !noalias !40913, !nonnull !68, !align !73, !noundef !68
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 216
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.dbq = getelementptr inbounds nuw i8, ptr %0, i64 244 ; 2 uses
   %i.dbr = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.dbs = load i32, ptr %i.dbr, align 8, !noalias !40913, !noundef !68
   store i32 %i.dbs, ptr %i.dbq, align 4, !noalias !40913
-  %i.dbt = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %5 = load ptr, ptr %4, align 8, !noalias !40913, !nonnull !68, !align !73, !noundef !68
-  store ptr %5, ptr %i.dbt, align 8, !noalias !40913
+  %i.dbt = getelementptr inbounds nuw i8, ptr %0, i64 224
+  %5 = load <2 x ptr>, ptr %4, align 8, !noalias !40913
+  %6 = insertelement <4 x ptr> poison, ptr %i.dbn, i64 0
+  %7 = insertelement <4 x ptr> %6, ptr %2, i64 1
+  %8 = shufflevector <2 x ptr> %5, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x ptr> %7, <4 x ptr> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %9, ptr %i.dbm, align 8, !noalias !40913
   %i.dbu = getelementptr inbounds nuw i8, ptr %i.dbn, i64 72
   %i.dbv = invoke noundef i64 @_RNvMs_NtNtNtCskTBvlRM5ILY_4moka6common4time5clockNtB4_5Clock3now(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.dbu)
           to label %_RNvMsa_NtNtCskTBvlRM5ILY_4moka6future10base_cacheINtB5_5InnerNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtBZ_16CachedReaderDataNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE12current_timeCs9KQ7US1M400_11lance_table.exit.i unwind label %bb.afl ; 3 uses
@@ -254,7 +256,7 @@ _RNvMsa_NtNtCskTBvlRM5ILY_4moka6future10base_cacheINtB5_5InnerNtNtNtCsjjbR6Jfsbq
   %i.dcf = load ptr, ptr %i.dbo, align 8, !noalias !40913, !nonnull !68, !align !73, !noundef !68
   %.val39.i529 = load ptr, ptr %i.dcf, align 8, !nonnull !68, !align !73, !noundef !68
   %i.dcg = getelementptr inbounds nuw i8, ptr %.val39.i529, i64 16 ; 2 uses
-  %i.dch = load ptr, ptr %2, align 8, !noalias !40913, !nonnull !68, !align !73, !noundef !68 ; 2 uses
+  %i.dch = load ptr, ptr %3, align 8, !noalias !40913, !nonnull !68, !align !73, !noundef !68 ; 2 uses
   %i.dci = load i32, ptr %i.dbq, align 4, !noalias !40913, !noundef !68 ; 2 uses
   %i.dcj = load ptr, ptr %i.dbt, align 8, !noalias !40913, !nonnull !68, !align !73, !noundef !68 ; 2 uses
   %.sroa.748.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 320
@@ -657,12 +659,12 @@ bb.y:                                             ; preds = %_RNvXsf_NtCscI6d9CV
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.aw, ptr noundef nonnull align 8 dereferenceable(80) %i.bv, i64 80, i1 false)
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 256
   %.sroa.7237.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 424
-  store ptr %i.cz, ptr %.sroa.7237.0..sroa_idx, align 8
-  %.sroa.8238.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 432
-  store ptr %i.db, ptr %.sroa.8238.0..sroa_idx, align 8
-  %.sroa.9239.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 440
   %3 = load <2 x ptr>, ptr %i.dc, align 8
-  store <2 x ptr> %3, ptr %.sroa.9239.0..sroa_idx, align 8
+  %4 = insertelement <4 x ptr> poison, ptr %i.cz, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %i.db, i64 1
+  %6 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %7, ptr %.sroa.7237.0..sroa_idx, align 8
   %.sroa.12242.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 656
   store i8 0, ptr %.sroa.12242.0..sroa_idx, align 8
   br label %bb.cz

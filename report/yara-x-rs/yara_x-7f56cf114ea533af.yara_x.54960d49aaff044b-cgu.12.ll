@@ -205,7 +205,7 @@ bb.a:
   %.sroa.36.i.i.i.i.i = alloca [184 x i8], align 8 ; 5 uses
   %i.t = alloca [216 x i8], align 8               ; 11 uses
   %i.u = alloca [24 x i8], align 8                ; 6 uses
-  %i.v = alloca [216 x i8], align 8               ; 9 uses
+  %i.v = alloca [216 x i8], align 8               ; 7 uses
   %.sroa.28.i.i.i.i = alloca [184 x i8], align 8  ; 5 uses
   %i.w = alloca [24 x i8], align 8                ; 13 uses
   %i.x = alloca [288 x i8], align 32              ; 4 uses
@@ -471,11 +471,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.14.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.31.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %.sroa.512.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 32 ; 2 uses
-  %.sroa.4.0..sroa_idx.i25.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
+  %.sroa.4.0..sroa_idx.i25.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 24 ; 2 uses
-  %.sroa.6.0..sroa_idx9.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx9.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 24
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %.sroa.8.0..sroa_idx10.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %i.gb = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %.sroa.46.0..sroa_idx.i.i.i.i50.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -878,25 +876,25 @@ bb.jz:                                            ; preds = %bb.jv
   unreachable
 
 _RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i: ; preds = %bb.jx
-  %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.t, align 8, !noalias !18660 ; 2 uses
-  %2 = load <2 x i64>, ptr %.sroa.4.0..sroa_idx.i25.i.i.i.i, align 8, !noalias !18660 ; 3 uses
-  %.sroa.23.0.copyload.i.i.i.i = load i64, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i, align 8, !noalias !18660 ; 5 uses
+  %2 = load <4 x i64>, ptr %i.t, align 8, !noalias !18660 ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(184) %.sroa.28.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(184) %.sroa.512.0..sroa_idx.i.i.i.i.i, i64 184, i1 false), !noalias !18660
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !18646
-  %i.abp = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i, 2
+  %3 = extractelement <4 x i64> %2, i64 0
+  %i.abp = icmp eq i64 %3, 2
   br i1 %i.abp, label %_RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.thread.loopexit.i.i.i.i, label %bb.ka
 
 _RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.thread.loopexit.i.i.i.i: ; preds = %_RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i
-  %i.abq = extractelement <2 x i64> %2, i64 0     ; 2 uses
+  %i.abq = extractelement <4 x i64> %2, i64 1     ; 2 uses
   %.sroa.9.sroa.12.0.extract.shift.le.i.i.i.i = and i64 %i.abq, -72057594037927936
-  %.sroa.23.sroa.0.0.extract.trunc.le.i.i.i.i = trunc i64 %.sroa.23.0.copyload.i.i.i.i to i8
-  %.sroa.23.sroa.8.0.extract.shift.le.i.i.i.i = lshr i64 %.sroa.23.0.copyload.i.i.i.i, 8
+  %4 = extractelement <4 x i64> %2, i64 3         ; 3 uses
+  %.sroa.23.sroa.0.0.extract.trunc.le.i.i.i.i = trunc i64 %4 to i8
+  %.sroa.23.sroa.8.0.extract.shift.le.i.i.i.i = lshr i64 %4, 8
   %.sroa.23.sroa.8.0.extract.trunc.le.i.i.i.i = trunc i64 %.sroa.23.sroa.8.0.extract.shift.le.i.i.i.i to i32
-  %.sroa.23.sroa.9.0.extract.shift.le.i.i.i.i = lshr i64 %.sroa.23.0.copyload.i.i.i.i, 40
+  %.sroa.23.sroa.9.0.extract.shift.le.i.i.i.i = lshr i64 %4, 40
   %.sroa.23.sroa.9.0.extract.trunc.le.i.i.i.i = trunc i64 %.sroa.23.sroa.9.0.extract.shift.le.i.i.i.i to i16
-  %.sroa.23.sroa.10.0.extract.shift.le.i.i.i.i = lshr i64 %.sroa.23.0.copyload.i.i.i.i, 56
-  %.sroa.23.sroa.10.0.extract.trunc.le.i.i.i.i = trunc nuw i64 %.sroa.23.sroa.10.0.extract.shift.le.i.i.i.i to i8
-  %i.abr = extractelement <2 x i64> %2, i64 1
+  %5 = bitcast <4 x i64> %2 to <32 x i8>
+  %.sroa.23.sroa.10.0.extract.trunc.le.i.i.i.i = extractelement <32 x i8> %5, i64 31
+  %i.abr = extractelement <4 x i64> %2, i64 2
   br label %_RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.thread.i.i.i.i
 
 _RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.thread.i.i.i.i: ; preds = %_RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.thread.loopexit.i.i.i.i, %.noexc28.i.i.i.i, %.loopexit152.i.i.i.i
@@ -925,9 +923,7 @@ _RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4
 bb.ka:                                            ; preds = %_RINvNtCsgtXWG2OCnrB_3zip4read26central_header_to_zip_fileINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(184) %.sroa.8.0..sroa_idx10.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(184) %.sroa.28.i.i.i.i, i64 184, i1 false), !noalias !18641
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.28.i.i.i.i)
-  store i64 %.sroa.0.0.copyload.i.i.i.i, ptr %i.v, align 8, !noalias !18641
-  store <2 x i64> %2, ptr %.sroa.6.0..sroa_idx9.i.i.i.i, align 8, !noalias !18641
-  store i64 %.sroa.23.0.copyload.i.i.i.i, ptr %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx9.sroa_idx.i.i.i.i, align 8, !noalias !18641
+  store <4 x i64> %2, ptr %i.v, align 8, !noalias !18641
   %i.abs = load i64, ptr %i.eh, align 8, !alias.scope !18661, !noalias !18662, !noundef !8 ; 3 uses
   %i.abt = load i64, ptr %i.w, align 8, !range !28, !alias.scope !18661, !noalias !18662, !noundef !8
   %i.abu = icmp eq i64 %i.abs, %i.abt

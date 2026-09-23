@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [96 x i8], align 8                ; 4 uses
   %.sroa.422.i = alloca [102 x i8], align 2       ; 4 uses
   %i.d = alloca [40 x i8], align 8                ; 4 uses
-  %i.e = alloca [224 x i8], align 8               ; 8 uses
+  %i.e = alloca [224 x i8], align 8               ; 7 uses
   %i.f = alloca [144 x i8], align 8               ; 7 uses
   %i.g = alloca [144 x i8], align 8               ; 4 uses
   %i.h = alloca [104 x i8], align 8               ; 7 uses
@@ -292,14 +292,12 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %i.f, ptr noundef nonnull align 8 dereferenceable(144) %i.g, i64 144, i1 false), !noalias !3216
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 72 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.e, i64 152
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 184
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   br label %bb.k
 
 bb.k:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i, %bb.j
-  %3 = phi <2 x i64> [ zeroinitializer, %bb.j ], [ %10, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i ] ; 2 uses
-  %4 = phi <2 x i64> [ zeroinitializer, %bb.j ], [ %8, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i ] ; 3 uses
+  %2 = phi <4 x i64> [ zeroinitializer, %bb.j ], [ %5, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types11SegmentInfoECsl8OoimOLbh_6qdrant.exit.i ] ; 2 uses
   %i.x = load i64, ptr %i.f, align 8, !range !14, !alias.scope !3217, !noalias !3216, !noundef !6
   %.not.i.i = icmp eq i64 %i.x, 2
   br i1 %.not.i.i, label %bb.n, label %bb.l
@@ -372,13 +370,7 @@ _RNvMs8_NtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB5_9RawRwLock20try_lock_share
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !3216
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %0, ptr noundef nonnull align 8 dereferenceable(104) %i.h, i64 104, i1 false), !noalias !3215
   %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %5 = extractelement <2 x i64> %4, i64 0
-  store i64 %5, ptr %.sroa.419.0..sroa_idx.i, align 8, !alias.scope !3214, !noalias !3215
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store <2 x i64> %3, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !3214, !noalias !3215
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %6 = extractelement <2 x i64> %4, i64 1
-  store i64 %6, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !3214, !noalias !3215
+  store <4 x i64> %2, ptr %.sroa.419.0..sroa_idx.i, align 8, !alias.scope !3214, !noalias !3215
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !3216
   %i.aq = ptrtoint ptr %i.n to i64                ; 2 uses
   invoke void @_RNvNtNtCsawlvgPhpsYW_16parking_lot_core11parking_lot13deadlock_impl16release_resource(i64 noundef %i.aq)
@@ -491,10 +483,9 @@ bb.y:                                             ; preds = %.loopexit.split-lp.
           to label %.body.i unwind label %bb.ah, !noalias !3214
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsbO4BqjCww8C_8lock_api6rwlock15RwLockReadGuardNtNtCs27TyLBeV75a_11parking_lot10raw_rwlock9RawRwLockDNtNtNtCs607s0NAIaWN_7segment5entry11entry_point12SegmentEntryEL_EECsl8OoimOLbh_6qdrant.exit.i: ; preds = %bb.x, %.noexc49.i
-  %7 = load <2 x i64>, ptr %i.u, align 8, !noalias !3216
-  %8 = add <2 x i64> %7, %4
-  %9 = load <2 x i64>, ptr %2, align 8, !noalias !3216
-  %10 = add <2 x i64> %9, %3
+  %3 = load <6 x i64>, ptr %i.u, align 8, !noalias !3216
+  %4 = shufflevector <6 x i64> %3, <6 x i64> poison, <4 x i32> <i32 0, i32 4, i32 5, i32 1>
+  %5 = add <4 x i64> %4, %2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !3216
   invoke void @_RNvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCs607s0NAIaWN_7segment5types14VectorDataInfoNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE4iterCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.v)
           to label %bb.z unwind label %.loopexit.split-lp.i, !noalias !3214

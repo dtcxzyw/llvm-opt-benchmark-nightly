@@ -205,50 +205,47 @@ stream_skip.exit.i.i:                             ; preds = %bb.x, %bb.w
 decode_block_int64_1.exit.i:                      ; preds = %stream_skip.exit.i.i, %stream_read_bits.exit.i11
   %.0.i32.i = phi i32 [ %i.ej, %stream_skip.exit.i.i ], [ %i.en, %stream_read_bits.exit.i11 ]
   %i.fj = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = load i64, ptr %i.a, align 256, !tbaa !15
-  %3 = xor i64 %2, -6148914691236517206           ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.fl = load i64, ptr %i.fj, align 8, !tbaa !15
   %i.fm = xor i64 %i.fl, -6148914691236517206
   %i.fn = add i64 %i.fm, 6148914691236517206
   %i.fo = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %2 = add i32 %.0.i32.i, 12
+  %3 = add nsw i32 %i.eb, -1085
   %i.fp = load i64, ptr %i.fk, align 16, !tbaa !15
-  %4 = xor i64 %i.fp, -6148914691236517206        ; 2 uses
-  %i.fq = load i64, ptr %i.fo, align 8, !tbaa !15
-  %i.fr = xor i64 %i.fq, -6148914691236517206
-  %i.fs = add i64 %i.fr, 6148914691236517206      ; 2 uses
+  %4 = load i64, ptr %i.fo, align 8, !tbaa !15
+  %i.fq = load i64, ptr %i.a, align 256, !tbaa !15
+  %5 = xor i64 %4, -6148914691236517206
+  %i.fr = xor i64 %i.fq, -6148914691236517206     ; 2 uses
+  %i.fs = add i64 %5, 6148914691236517206         ; 2 uses
   %i.ft = ashr i64 %i.fs, 1
   %i.fu = add nsw i64 %i.fn, %i.ft                ; 3 uses
+  %6 = xor i64 %i.fp, -6148914691236517206        ; 2 uses
   %i.fv = ashr i64 %i.fu, 1
-  %5 = sub nsw i64 %i.fs, %i.fv                   ; 2 uses
-  %6 = add nsw i64 %5, %i.fu                      ; 2 uses
-  %i.fw = sub nsw i64 %5, %i.fu                   ; 2 uses
-  %i.fx = add i64 %3, -6148914691236517204
-  %i.fy = add i64 %i.fx, %4                       ; 2 uses
-  %i.fz = sub i64 %3, %4                          ; 2 uses
-  %i.ga = add nsw i64 %6, %i.fy
-  %i.gb = sub nsw i64 %i.fy, %6
-  %i.gc = add nsw i64 %i.fw, %i.fz
+  %7 = add i64 %i.fr, -6148914691236517204
+  %8 = sub nsw i64 %i.fs, %i.fv                   ; 2 uses
+  %i.fw = sub nsw i64 %8, %i.fu                   ; 2 uses
+  %i.fx = add i64 %7, %6                          ; 2 uses
+  %i.fy = add nsw i64 %8, %i.fu                   ; 2 uses
+  %i.fz = sub i64 %i.fr, %6                       ; 2 uses
+  %i.ga = add nsw i64 %i.fw, %i.fz
+  %i.gb = sub nsw i64 %i.fx, %i.fy
+  %i.gc = add nsw i64 %i.fy, %i.fx
   %i.gd = sub nsw i64 %i.fz, %i.fw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  %7 = add i32 %.0.i32.i, 12
-  %8 = add nsw i32 %i.eb, -1085
-  %i.ge = tail call double @ldexp(double noundef 1.000000e+00, i32 noundef %8) #8 ; 4 uses
-  %i.gf = sitofp i64 %i.gd to double
-  %9 = fmul double %i.ge, %i.gf
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store double %9, ptr %1, align 8, !tbaa !18
-  %i.gg = sitofp i64 %i.ga to double
-  %11 = fmul double %i.ge, %i.gg
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store double %11, ptr %10, align 8, !tbaa !18
-  %13 = sitofp i64 %i.gb to double
-  %14 = fmul double %i.ge, %13
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store double %14, ptr %12, align 8, !tbaa !18
-  %16 = sitofp i64 %i.gc to double
-  %17 = fmul double %i.ge, %16
-  store double %17, ptr %15, align 8, !tbaa !18
+  %i.ge = tail call double @ldexp(double noundef 1.000000e+00, i32 noundef %3) #8
+  %i.gf = sitofp i64 %i.ga to double
+  %i.gg = sitofp i64 %i.gb to double
+  %9 = sitofp i64 %i.gc to double
+  %10 = sitofp i64 %i.gd to double
+  %11 = insertelement <4 x double> poison, double %i.ge, i64 0
+  %12 = shufflevector <4 x double> %11, <4 x double> poison, <4 x i32> zeroinitializer
+  %13 = insertelement <4 x double> poison, double %10, i64 0
+  %14 = insertelement <4 x double> %13, double %9, i64 1
+  %15 = insertelement <4 x double> %14, double %i.gg, i64 2
+  %16 = insertelement <4 x double> %15, double %i.gf, i64 3
+  %17 = fmul <4 x double> %12, %16
+  store <4 x double> %17, ptr %1, align 8, !tbaa !18
   br label %decode_block_double_1.exit
 
 bb.y:                                             ; preds = %.preheader.preheader.i16
@@ -287,7 +284,7 @@ stream_skip.exit.i18:                             ; preds = %bb.z, %bb.y
   br label %decode_block_double_1.exit
 
 decode_block_double_1.exit:                       ; preds = %stream_skip.exit.i18, %decode_block_int64_1.exit.i, %.preheader.preheader.i16, %rev_decode_block_double_1.exit
-  %i.ha = phi i32 [ %.1.i, %rev_decode_block_double_1.exit ], [ %7, %decode_block_int64_1.exit.i ], [ %i.dm, %stream_skip.exit.i18 ], [ 1, %.preheader.preheader.i16 ]
+  %i.ha = phi i32 [ %.1.i, %rev_decode_block_double_1.exit ], [ %2, %decode_block_int64_1.exit.i ], [ %i.dm, %stream_skip.exit.i18 ], [ 1, %.preheader.preheader.i16 ]
   %i.hb = zext i32 %i.ha to i64
   ret i64 %i.hb
 }

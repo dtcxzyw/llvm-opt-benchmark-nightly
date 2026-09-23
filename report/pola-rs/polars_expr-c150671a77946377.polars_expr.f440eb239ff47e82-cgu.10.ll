@@ -205,24 +205,22 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   call void @_RNvXs0_NtNtCse67t6KqNqGQ_5rayon4iter10while_someINtB5_17WhileSomeConsumerINtNtB7_4fold12FoldConsumerINtNtB7_3map11MapConsumerINtNtB7_6reduce14ReduceConsumerINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array17from_iterator_par11list_appendINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtCscgRAwXFJnXP_4core6option6OptionNtNtB2B_6series6SeriesEEENvMs5_NtNtB3S_11collections11linked_listINtB5r_10LinkedListB3N_E3newEINvB2x_7as_listB3N_EENvMB3Q_B3N_3newINvB2x_8vec_pushB4k_EEEINtNtB7_8plumbing8ConsumerIB4l_B4k_EE8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %i.a, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1, i64 noundef %2), !dbg !114540
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 96, !dbg !114541
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !114542
-  %3 = load ptr, ptr %i.d, align 8, !dbg !114542, !alias.scope !114538, !noalias !114539, !nonnull !2618, !align !2672, !noundef !2618 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !114542 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56, !dbg !114543
-  %4 = load ptr, ptr %i.e, align 8, !dbg !114543, !nonnull !2618, !align !2672, !noundef !2618 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !114544
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !114544
-  store ptr %3, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !dbg !114544
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !114544
-  store ptr %4, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !114544
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64, !dbg !114544
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.f, ptr noundef nonnull align 8 dereferenceable(48) %i.b, i64 48, i1 false), !dbg !114544
   %.sroa.01.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !114544
-  store ptr %3, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8, !dbg !114544
-  %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120, !dbg !114544
-  store ptr %4, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !114544
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128, !dbg !114544
-  %6 = load <2 x ptr>, ptr %i.c, align 8, !dbg !114541
-  store <2 x ptr> %6, ptr %5, align 8, !dbg !114544
+  %3 = load <2 x ptr>, ptr %i.c, align 8, !dbg !114541
+  %4 = load <2 x ptr>, ptr %i.d, align 8, !dbg !114542
+  %5 = load ptr, ptr %i.e, align 8, !dbg !114543, !nonnull !2618, !align !2672, !noundef !2618
+  %6 = load ptr, ptr %i.d, align 8, !dbg !114542, !alias.scope !114538, !noalias !114539, !nonnull !2618, !align !2672, !noundef !2618
+  store ptr %6, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !dbg !114544
+  store ptr %5, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !114544
+  %7 = shufflevector <2 x ptr> %4, <2 x ptr> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !114544
+  store <4 x ptr> %7, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8, !dbg !114544
   ret void, !dbg !114545
 }
 
@@ -261,24 +259,22 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   call void @_RNvXs0_NtNtCse67t6KqNqGQ_5rayon4iter10while_someINtB5_17WhileSomeConsumerINtNtB7_4fold12FoldConsumerINtNtB7_3map11MapConsumerINtNtB7_6reduce14ReduceConsumerINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array17from_iterator_par11list_appendINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtCscgRAwXFJnXP_4core6option6OptionNtNtB2B_6series6SeriesEEENvMs5_NtNtB3S_11collections11linked_listINtB5r_10LinkedListB3N_E3newEINvB2x_7as_listB3N_EENvMB3Q_B3N_3newINvB2x_8vec_pushB4k_EEEINtNtB7_8plumbing8ConsumerIB4l_B4k_EE8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %i.a, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1, i64 noundef %2), !dbg !114570
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 96, !dbg !114571
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !114572
-  %3 = load ptr, ptr %i.d, align 8, !dbg !114572, !alias.scope !114568, !noalias !114569, !nonnull !2618, !align !2672, !noundef !2618 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !114572 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56, !dbg !114573
-  %4 = load ptr, ptr %i.e, align 8, !dbg !114573, !nonnull !2618, !align !2672, !noundef !2618 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !114574
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !114574
-  store ptr %3, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !dbg !114574
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !114574
-  store ptr %4, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !114574
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64, !dbg !114574
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.f, ptr noundef nonnull align 8 dereferenceable(48) %i.b, i64 48, i1 false), !dbg !114574
   %.sroa.01.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !114574
-  store ptr %3, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8, !dbg !114574
-  %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120, !dbg !114574
-  store ptr %4, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !114574
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128, !dbg !114574
-  %6 = load <2 x ptr>, ptr %i.c, align 8, !dbg !114571
-  store <2 x ptr> %6, ptr %5, align 8, !dbg !114574
+  %3 = load <2 x ptr>, ptr %i.c, align 8, !dbg !114571
+  %4 = load <2 x ptr>, ptr %i.d, align 8, !dbg !114572
+  %5 = load ptr, ptr %i.e, align 8, !dbg !114573, !nonnull !2618, !align !2672, !noundef !2618
+  %6 = load ptr, ptr %i.d, align 8, !dbg !114572, !alias.scope !114568, !noalias !114569, !nonnull !2618, !align !2672, !noundef !2618
+  store ptr %6, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !dbg !114574
+  store ptr %5, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !114574
+  %7 = shufflevector <2 x ptr> %4, <2 x ptr> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !114574
+  store <4 x ptr> %7, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8, !dbg !114574
   ret void, !dbg !114575
 }
 

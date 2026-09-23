@@ -202,16 +202,16 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %10, i64 144 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %10, i64 136
   %i.r = getelementptr inbounds nuw i8, ptr %10, i64 140
-  %i.s = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %.sroa.0.i.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %.sroa.0.i.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.u = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 16
   %.sroa.0.i4.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.x = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %.sroa.475.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %.sroa.475.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.y = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.z = ptrtoint ptr %14 to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -398,28 +398,27 @@ bb.m:                                             ; preds = %_ZN4llvm4findINS_15
   store ptr %i.ch, ptr %.sroa.0.i4.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !179
   store ptr %10, ptr %i.x, align 8, !tbaa !180, !noalias !179
   call fastcc void @_ZN4llvm20filter_iterator_baseINS_6detail12zip_shortestIJPN4mlir27SubsetExtractionOpInterfaceEPNS3_26SubsetInsertionOpInterfaceEEEEZN12_GLOBAL__N_115MatchingSubsets21getHoistableSubsetOpsEvEUlT_E_St26bidirectional_iterator_tagE13findNextValidEv(ptr noundef nonnull align 8 dereferenceable(40) %8), !noalias !179
-  %.val.i.i.i.i.i.i = load i64, ptr %7, align 8, !tbaa !59, !noalias !181 ; 3 uses
+  %.val.i.i.i.i.i.i = load i64, ptr %i.u, align 8, !tbaa !180, !noalias !181
   %.val.i.i1.i.i.i.i = load i64, ptr %8, align 8, !tbaa !59, !noalias !181 ; 2 uses
   %.val4.i.i2.i.i.i.i = load i64, ptr %i.v, align 8, !tbaa !61, !noalias !181 ; 2 uses
   %i.co = inttoptr i64 %.val.i.i1.i.i.i.i to ptr
   %i.cp = inttoptr i64 %.val4.i.i2.i.i.i.i to ptr
-  %21 = load <2 x i64>, ptr %i.s, align 8, !tbaa !63, !noalias !181
-  %.val4.i.i.i.i.i.i = load i64, ptr %i.s, align 8, !tbaa !61, !noalias !181 ; 2 uses
-  %22 = load <2 x i64>, ptr %.sroa.0.i.sroa.4.0..sroa_idx.i.i.i, align 8, !tbaa !63, !noalias !181
+  %21 = load <4 x i64>, ptr %7, align 8, !tbaa !63, !noalias !181 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7), !noalias !178
   call void @llvm.lifetime.end.p0(ptr nonnull %8), !noalias !178
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
-  store i64 %.val.i.i.i.i.i.i, ptr %11, align 16
-  store <2 x i64> %21, ptr %.sroa.475.0..sroa_idx.i, align 8
-  store <2 x i64> %22, ptr %.sroa.6.0..sroa_idx.i, align 8
-  %i.cq = icmp ne i64 %.val4.i.i.i.i.i.i, %.val4.i.i2.i.i.i.i
-  %i.cr = icmp ne i64 %.val.i.i.i.i.i.i, %.val.i.i1.i.i.i.i
+  store <4 x i64> %21, ptr %11, align 16
+  store i64 %.val.i.i.i.i.i.i, ptr %.sroa.6.0..sroa_idx.i, align 16
+  %22 = extractelement <4 x i64> %21, i64 1       ; 2 uses
+  %i.cq = icmp ne i64 %22, %.val4.i.i2.i.i.i.i
+  %23 = extractelement <4 x i64> %21, i64 0       ; 2 uses
+  %i.cr = icmp ne i64 %23, %.val.i.i1.i.i.i.i
   %.not6.i115.i = select i1 %i.cq, i1 %i.cr, i1 false
   br i1 %.not6.i115.i, label %.lr.ph.i, label %.thread90.i
 
 .lr.ph.i:                                         ; preds = %bb.m
-  %i.cs = inttoptr i64 %.val.i.i.i.i.i.i to ptr
-  %i.ct = inttoptr i64 %.val4.i.i.i.i.i.i to ptr
+  %i.cs = inttoptr i64 %23 to ptr
+  %i.ct = inttoptr i64 %22 to ptr
   br label %bb.n
 
 .thread90.i:                                      ; preds = %bb.av, %bb.m

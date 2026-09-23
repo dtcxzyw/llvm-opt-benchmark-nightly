@@ -205,13 +205,9 @@ bb.a:
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bw, i64 1076
   %i.ca = load <2 x ptr>, ptr %0, align 8, !alias.scope !410, !noalias !411
   %i.cb = load ptr, ptr %0, align 8, !alias.scope !410, !noalias !411, !nonnull !4, !align !5, !noundef !4
-  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load ptr, ptr %i.cc, align 8, !alias.scope !410, !noalias !411, !nonnull !4, !align !6, !noundef !4 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %3 = load ptr, ptr %2, align 8, !alias.scope !410, !noalias !411, !nonnull !4, !align !5, !noundef !4 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %5 = load <2 x ptr>, ptr %4, align 8, !alias.scope !410, !noalias !411
-  %i.cd = load ptr, ptr %4, align 8, !alias.scope !410, !noalias !411, !nonnull !4, !align !6, !noundef !4
+  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %1 = load <4 x ptr>, ptr %i.cc, align 8, !alias.scope !410, !noalias !411 ; 3 uses
+  %i.cd = load ptr, ptr %i.cc, align 8, !alias.scope !410, !noalias !411, !nonnull !4, !align !6, !noundef !4
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bq, i64 1078
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bq, i64 1077
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bg, i64 56
@@ -238,7 +234,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultuNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread22ScopedThreadSpawnErrorE6expectCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common.exit.i
   call void @_RINvMNtNtCsdPvzwAcGc8J_29iceoryx2_pal_concurrency_sync8strategy7barrierNtB3_7Barrier4waitNCNCNvNtCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common33strategy_condition_variable_tests23notify_all_unblocks_all0s_0NCB1r_s0_0EB1x_(ptr noundef nonnull align 8 %i.cb) #10, !noalias !410
-  call void @_RNvMNtCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common33strategy_condition_variable_testsINtB2_12ThreadInWaitKj5_E35block_until_all_threads_are_waitingB4_(ptr noundef nonnull align 4 %1) #10, !noalias !410
+  call void @_RNvMNtCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common33strategy_condition_variable_testsINtB2_12ThreadInWaitKj5_E35block_until_all_threads_are_waitingB4_(ptr noundef nonnull align 4 %i.cd) #10, !noalias !410
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bv), !noalias !412
   call void @_RNvNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5clock9nanosleep(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.bv, i64 noundef 0, i32 noundef 25000000) #10, !noalias !410
   call void @llvm.experimental.noalias.scope.decl(metadata !413)
@@ -641,16 +637,12 @@ bb.ah:                                            ; preds = %._crit_edge.i.i.i
 
 bb.ai:                                            ; preds = %._crit_edge.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !422
-  %i.fm = call noundef ptr @_RNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6stdlib6malloc(i64 noundef 72) #10, !noalias !423 ; 6 uses
+  %i.fm = call noundef ptr @_RNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6stdlib6malloc(i64 noundef 72) #10, !noalias !423 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.i, ptr noundef nonnull align 8 dereferenceable(24) %i.cv, i64 24, i1 false), !noalias !421
   store <2 x ptr> %i.ca, ptr %i.fm, align 8, !noalias !423
-  %.sroa.517.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fm, i64 16
-  store ptr %1, ptr %.sroa.517.0..sroa_idx.i, align 8, !noalias !423
-  %.sroa.618.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fm, i64 24
-  store ptr %3, ptr %.sroa.618.0..sroa_idx.i, align 8, !noalias !423
-  %.sroa.719.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fm, i64 32
-  store <2 x ptr> %5, ptr %.sroa.719.0..sroa_idx.i, align 8, !noalias !423
+  %.sroa.719.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fm, i64 16
+  store <4 x ptr> %1, ptr %.sroa.719.0..sroa_idx.i, align 8, !noalias !423
   %.sroa.9.0..sroa_idx21.i = getelementptr inbounds nuw i8, ptr %i.fm, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.0..sroa_idx21.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.i, i64 24, i1 false), !noalias !423
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i)
@@ -979,7 +971,9 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultuNtNtCslxWRlZ2j4ks_17iceoryx2_bb_p
 
 _RNCNvNtCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common33strategy_condition_variable_tests23notify_all_unblocks_all0B5_.exit: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv), !noalias !412
-  call void @_RINvMs_NtNtCsdPvzwAcGc8J_29iceoryx2_pal_concurrency_sync8strategy18condition_variableNtB5_17ConditionVariable10notify_allNCNCNvNtCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common33strategy_condition_variable_tests23notify_all_unblocks_all0s1_0EB23_(ptr noundef nonnull align 8 %3, ptr noundef nonnull align 4 %i.cd) #10, !noalias !410
+  %2 = extractelement <4 x ptr> %1, i64 1
+  %3 = extractelement <4 x ptr> %1, i64 2
+  call void @_RINvMs_NtNtCsdPvzwAcGc8J_29iceoryx2_pal_concurrency_sync8strategy18condition_variableNtB5_17ConditionVariable10notify_allNCNCNvNtCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common33strategy_condition_variable_tests23notify_all_unblocks_all0s1_0EB23_(ptr noundef nonnull align 8 %2, ptr noundef nonnull align 4 %3) #10, !noalias !410
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bx)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(4104) %i.bx, ptr noundef nonnull align 8 dereferenceable(4104) %i.by, i64 4104, i1 false)
   call void @_RNvXs0_NtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector10static_vecINtB5_9StaticVecNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread6ThreadKj80_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCs7nBjgsJFv3h_36iceoryx2_bb_concurrency_tests_common(ptr noalias nofree noundef nonnull align 8 dereferenceable(4104) %i.bx) #10

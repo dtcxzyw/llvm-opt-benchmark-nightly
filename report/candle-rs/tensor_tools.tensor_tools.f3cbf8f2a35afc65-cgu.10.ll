@@ -202,7 +202,7 @@ bb.a:
   %.sroa.670.i.i.i.i.i = alloca [9 x i8], align 2 ; 5 uses
   %.sroa.36.i.i.i.i.i = alloca [200 x i8], align 8 ; 5 uses
   %i.s = alloca [232 x i8], align 8               ; 11 uses
-  %i.t = alloca [232 x i8], align 8               ; 9 uses
+  %i.t = alloca [232 x i8], align 8               ; 7 uses
   %.sroa.31.i.i.i.i = alloca [200 x i8], align 8  ; 5 uses
   %i.u = alloca [24 x i8], align 8                ; 13 uses
   %i.v = alloca [1408 x i8], align 32             ; 4 uses
@@ -426,11 +426,9 @@ bb.b:                                             ; preds = %.noexc.i
   %.sroa.1451.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.31.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %.sroa.512.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 32 ; 2 uses
-  %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
+  %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
-  %.sroa.6.0..sroa_idx14.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx14.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 24
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %.sroa.8.0..sroa_idx15.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.el = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %.sroa.46.0..sroa_idx.i.i.i.i33.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -833,27 +831,27 @@ bb.iy:                                            ; preds = %bb.it
   unreachable
 
 _RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i: ; preds = %bb.iw
-  %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.s, align 8, !noalias !577 ; 2 uses
-  %2 = load <2 x i64>, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !noalias !577 ; 3 uses
-  %.sroa.25.0.copyload.i.i.i.i = load i64, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i, align 8, !noalias !577 ; 6 uses
+  %2 = load <4 x i64>, ptr %i.s, align 8, !noalias !577 ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(200) %.sroa.31.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(200) %.sroa.512.0..sroa_idx.i.i.i.i.i, i64 200, i1 false), !noalias !577
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !559
-  %i.vz = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i, 2
+  %3 = extractelement <4 x i64> %2, i64 0
+  %i.vz = icmp eq i64 %3, 2
   br i1 %i.vz, label %_RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.loopexit.split.loop.exit.i.i.i.i, label %bb.iz
 
 _RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.loopexit.split.loop.exit.i.i.i.i: ; preds = %_RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i
-  %i.wa = extractelement <2 x i64> %2, i64 0      ; 2 uses
+  %i.wa = extractelement <4 x i64> %2, i64 1      ; 2 uses
   %.sroa.10.sroa.12.0.extract.shift.le.i.i.i.i = and i64 %i.wa, -1099511627776
-  %.sroa.25.sroa.0.0.extract.trunc.le.i.i.i.i = trunc i64 %.sroa.25.0.copyload.i.i.i.i to i8
-  %.sroa.25.sroa.8.0.extract.shift.le.i.i.i.i = lshr i64 %.sroa.25.0.copyload.i.i.i.i, 8
+  %4 = extractelement <4 x i64> %2, i64 3         ; 4 uses
+  %.sroa.25.sroa.0.0.extract.trunc.le.i.i.i.i = trunc i64 %4 to i8
+  %.sroa.25.sroa.8.0.extract.shift.le.i.i.i.i = lshr i64 %4, 8
   %.sroa.25.sroa.8.0.extract.trunc.le.i.i.i.i = trunc i64 %.sroa.25.sroa.8.0.extract.shift.le.i.i.i.i to i16
-  %.sroa.25.sroa.9.0.extract.shift.le.i.i.i.i = lshr i64 %.sroa.25.0.copyload.i.i.i.i, 24
+  %.sroa.25.sroa.9.0.extract.shift.le.i.i.i.i = lshr i64 %4, 24
   %.sroa.25.sroa.9.0.extract.trunc.le.i.i.i.i = trunc i64 %.sroa.25.sroa.9.0.extract.shift.le.i.i.i.i to i16
-  %.sroa.25.sroa.10.0.extract.shift.le.i.i.i.i = lshr i64 %.sroa.25.0.copyload.i.i.i.i, 40
+  %.sroa.25.sroa.10.0.extract.shift.le.i.i.i.i = lshr i64 %4, 40
   %.sroa.25.sroa.10.0.extract.trunc.le.i.i.i.i = trunc i64 %.sroa.25.sroa.10.0.extract.shift.le.i.i.i.i to i16
-  %.sroa.25.sroa.11.0.extract.shift.le.i.i.i.i = lshr i64 %.sroa.25.0.copyload.i.i.i.i, 56
-  %.sroa.25.sroa.11.0.extract.trunc.le.i.i.i.i = trunc nuw i64 %.sroa.25.sroa.11.0.extract.shift.le.i.i.i.i to i8
-  %i.wb = extractelement <2 x i64> %2, i64 1
+  %5 = bitcast <4 x i64> %2 to <32 x i8>
+  %.sroa.25.sroa.11.0.extract.trunc.le.i.i.i.i = extractelement <32 x i8> %5, i64 31
+  %i.wb = extractelement <4 x i64> %2, i64 2
   br label %_RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i
 
 _RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i: ; preds = %.noexc.i.i29.i.i, %_RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.loopexit.split.loop.exit.i.i.i.i, %.noexc33.i.i.i.i, %.loopexit170.i.i.i.i
@@ -886,9 +884,7 @@ _RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN
 bb.iz:                                            ; preds = %_RINvNtCscWUIX17zZnI_3zip4read26central_header_to_zip_fileINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(200) %.sroa.8.0..sroa_idx15.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(200) %.sroa.31.i.i.i.i, i64 200, i1 false), !noalias !556
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.31.i.i.i.i)
-  store i64 %.sroa.0.0.copyload.i.i.i.i, ptr %i.t, align 8, !noalias !556
-  store <2 x i64> %2, ptr %.sroa.6.0..sroa_idx14.i.i.i.i, align 8, !noalias !556
-  store i64 %.sroa.25.0.copyload.i.i.i.i, ptr %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx14.sroa_idx.i.i.i.i, align 8, !noalias !556
+  store <4 x i64> %2, ptr %i.t, align 8, !noalias !556
   %i.wc = load i64, ptr %i.cu, align 8, !alias.scope !578, !noalias !579, !noundef !8 ; 3 uses
   %i.wd = load i64, ptr %i.u, align 8, !range !19, !alias.scope !578, !noalias !579, !noundef !8
   %i.we = icmp eq i64 %i.wc, %i.wd

@@ -189,7 +189,7 @@ bb.a:
   %4 = alloca %"class.ArgumentParser::Instance", align 8 ; 14 uses
   %5 = alloca %class.cmArgumentParser, align 8    ; 9 uses
   %6 = alloca %"class.std::vector.7", align 8     ; 12 uses
-  %7 = alloca %"struct.(anonymous namespace)::Arguments", align 8 ; 36 uses
+  %7 = alloca %"struct.(anonymous namespace)::Arguments", align 8 ; 35 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -592,7 +592,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62: ; preds = %bb.
 
 bb.af:                                            ; preds = %bb.ac
   %i.dx = getelementptr inbounds nuw i8, ptr %7, i64 208 ; 3 uses
-  %i.dy = getelementptr inbounds nuw i8, ptr %7, i64 216
+  %i.dy = getelementptr inbounds nuw i8, ptr %7, i64 216 ; 2 uses
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !49
   %i.ea = load ptr, ptr %i.dx, align 8, !tbaa !50
   %i.eb = ptrtoint ptr %i.dz to i64
@@ -673,7 +673,7 @@ bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.ew = invoke noalias noundef nonnull dereferenceable(416) ptr @_Znwm(i64 noundef 416) #24
-          to label %.noexc78 unwind label %bb.bc  ; 31 uses
+          to label %.noexc78 unwind label %bb.bc  ; 27 uses
 
 .noexc78:                                         ; preds = %bb.aj
   %i.ex = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
@@ -719,17 +719,19 @@ _ZN14ArgumentParser11ParseResultC2EOS0_.exit.i.i: ; preds = %bb.al, %bb.ak
   store <2 x ptr> %i.fl, ptr %i.fj, align 8, !tbaa !47, !noalias !149
   %i.fm = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %7, i64 64
-  %14 = load ptr, ptr %i.fn, align 8, !tbaa !52, !noalias !149
-  store ptr %14, ptr %i.fm, align 8, !tbaa !52, !noalias !149
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fk, i8 0, i64 24, i1 false), !noalias !149
-  %i.fo = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 3 uses
+  %14 = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   %15 = getelementptr inbounds nuw i8, ptr %7, i64 72 ; 2 uses
-  %i.fp = load <2 x ptr>, ptr %15, align 8, !tbaa !47, !noalias !149
-  store <2 x ptr> %i.fp, ptr %i.fo, align 8, !tbaa !47, !noalias !149
-  %16 = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %7, i64 88
-  %18 = load ptr, ptr %17, align 8, !tbaa !52, !noalias !149
-  store ptr %18, ptr %16, align 8, !tbaa !52, !noalias !149
+  %16 = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %i.fo = getelementptr inbounds nuw i8, ptr %7, i64 80
+  %17 = load ptr, ptr %i.fn, align 8, !tbaa !52, !noalias !149
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fk, i8 0, i64 24, i1 false), !noalias !149
+  %18 = load ptr, ptr %15, align 8, !tbaa !50, !noalias !149
+  %i.fp = load <2 x ptr>, ptr %i.fo, align 8, !tbaa !47, !noalias !149
+  %19 = insertelement <4 x ptr> poison, ptr %17, i64 0
+  %20 = insertelement <4 x ptr> %19, ptr %18, i64 1
+  %21 = shufflevector <2 x ptr> %i.fp, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %22 = shufflevector <4 x ptr> %20, <4 x ptr> %21, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %22, ptr %i.fm, align 8, !tbaa !47, !noalias !149
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 24, i1 false), !noalias !149
   %i.fq = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 4 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %2, i64 112 ; 8 uses
@@ -800,18 +802,19 @@ _ZN19cmTestDiscoveryArgsC2EOS_.exit.i:            ; preds = %_ZNKSt7__cxx1112bas
   %i.gp = getelementptr inbounds nuw i8, ptr %2, i64 184 ; 3 uses
   %i.gq = load <2 x ptr>, ptr %i.v, align 8, !tbaa !47, !noalias !149
   store <2 x ptr> %i.gq, ptr %i.gp, align 8, !tbaa !47, !noalias !149
-  %i.gr = getelementptr inbounds nuw i8, ptr %2, i64 200 ; 2 uses
-  %i.gs = getelementptr inbounds nuw i8, ptr %7, i64 200
-  %19 = load ptr, ptr %i.gs, align 8, !tbaa !52, !noalias !149
-  store ptr %19, ptr %i.gr, align 8, !tbaa !52, !noalias !149
+  %23 = getelementptr inbounds nuw i8, ptr %2, i64 200 ; 2 uses
+  %i.gr = getelementptr inbounds nuw i8, ptr %7, i64 200
+  %i.gs = getelementptr inbounds nuw i8, ptr %2, i64 208 ; 2 uses
+  %24 = getelementptr inbounds nuw i8, ptr %2, i64 216
+  %25 = load ptr, ptr %i.gr, align 8, !tbaa !52, !noalias !149
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, i8 0, i64 24, i1 false), !noalias !149
-  %20 = getelementptr inbounds nuw i8, ptr %2, i64 208 ; 3 uses
-  %i.gt = load <2 x ptr>, ptr %i.dx, align 8, !tbaa !47, !noalias !149
-  store <2 x ptr> %i.gt, ptr %20, align 8, !tbaa !47, !noalias !149
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 224 ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %7, i64 224
-  %23 = load ptr, ptr %22, align 8, !tbaa !52, !noalias !149
-  store ptr %23, ptr %21, align 8, !tbaa !52, !noalias !149
+  %26 = load ptr, ptr %i.dx, align 8, !tbaa !50, !noalias !149
+  %i.gt = load <2 x ptr>, ptr %i.dy, align 8, !tbaa !47, !noalias !149
+  %27 = insertelement <4 x ptr> poison, ptr %25, i64 0
+  %28 = insertelement <4 x ptr> %27, ptr %26, i64 1
+  %29 = shufflevector <2 x ptr> %i.gt, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %30 = shufflevector <4 x ptr> %28, <4 x ptr> %29, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %30, ptr %23, align 8, !tbaa !47, !noalias !149
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dx, i8 0, i64 24, i1 false), !noalias !149
   %i.gu = getelementptr inbounds nuw i8, ptr %2, i64 232 ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %7, i64 232
@@ -881,15 +884,15 @@ _ZN14ArgumentParser11ParseResultC2EOS0_.exit.i6.i: ; preds = %bb.ap, %bb.ao
   store <2 x ptr> %i.hu, ptr %i.ht, align 8, !tbaa !47, !noalias !149
   %i.hv = getelementptr inbounds nuw i8, ptr %i.ew, i64 200
   %i.hw = load ptr, ptr %i.fm, align 8, !tbaa !52, !noalias !149
-  store ptr %i.hw, ptr %i.hv, align 8, !tbaa !52, !noalias !149
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fj, i8 0, i64 24, i1 false), !noalias !149
-  %24 = getelementptr inbounds nuw i8, ptr %i.ew, i64 208
-  %i.hx = load <2 x ptr>, ptr %i.fo, align 8, !tbaa !47, !noalias !149
-  store <2 x ptr> %i.hx, ptr %24, align 8, !tbaa !47, !noalias !149
-  %25 = getelementptr inbounds nuw i8, ptr %i.ew, i64 224
-  %26 = load ptr, ptr %16, align 8, !tbaa !52, !noalias !149
-  store ptr %26, ptr %25, align 8, !tbaa !52, !noalias !149
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fo, i8 0, i64 24, i1 false), !noalias !149
+  %31 = load ptr, ptr %14, align 8, !tbaa !50, !noalias !149
+  %i.hx = load <2 x ptr>, ptr %16, align 8, !tbaa !47, !noalias !149
+  %32 = insertelement <4 x ptr> poison, ptr %i.hw, i64 0
+  %33 = insertelement <4 x ptr> %32, ptr %31, i64 1
+  %34 = shufflevector <2 x ptr> %i.hx, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %35 = shufflevector <4 x ptr> %33, <4 x ptr> %34, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %35, ptr %i.hv, align 8, !tbaa !47, !noalias !149
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false), !noalias !149
   %i.hy = getelementptr inbounds nuw i8, ptr %i.ew, i64 232 ; 2 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %i.ew, i64 248 ; 3 uses
   store ptr %i.hz, ptr %i.hy, align 8, !tbaa !24, !noalias !149
@@ -967,16 +970,16 @@ bb.at:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.iy = load <2 x ptr>, ptr %i.gp, align 8, !tbaa !47, !noalias !149
   store <2 x ptr> %i.iy, ptr %i.ix, align 8, !tbaa !47, !noalias !149
   %i.iz = getelementptr inbounds nuw i8, ptr %i.ew, i64 336
-  %i.ja = load ptr, ptr %i.gr, align 8, !tbaa !52, !noalias !149
-  store ptr %i.ja, ptr %i.iz, align 8, !tbaa !52, !noalias !149
+  %i.ja = load ptr, ptr %23, align 8, !tbaa !52, !noalias !149
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gp, i8 0, i64 24, i1 false), !noalias !149
-  %27 = getelementptr inbounds nuw i8, ptr %i.ew, i64 344
-  %i.jb = load <2 x ptr>, ptr %20, align 8, !tbaa !47, !noalias !149
-  store <2 x ptr> %i.jb, ptr %27, align 8, !tbaa !47, !noalias !149
-  %28 = getelementptr inbounds nuw i8, ptr %i.ew, i64 360
-  %29 = load ptr, ptr %21, align 8, !tbaa !52, !noalias !149
-  store ptr %29, ptr %28, align 8, !tbaa !52, !noalias !149
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %20, i8 0, i64 24, i1 false), !noalias !149
+  %36 = load ptr, ptr %i.gs, align 8, !tbaa !50, !noalias !149
+  %i.jb = load <2 x ptr>, ptr %24, align 8, !tbaa !47, !noalias !149
+  %37 = insertelement <4 x ptr> poison, ptr %i.ja, i64 0
+  %38 = insertelement <4 x ptr> %37, ptr %36, i64 1
+  %39 = shufflevector <2 x ptr> %i.jb, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %40 = shufflevector <4 x ptr> %38, <4 x ptr> %39, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %40, ptr %i.iz, align 8, !tbaa !47, !noalias !149
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gs, i8 0, i64 24, i1 false), !noalias !149
   %i.jc = getelementptr inbounds nuw i8, ptr %i.ew, i64 368
   %i.jd = load i8, ptr %i.gu, align 8, !tbaa !152, !range !64, !noalias !149, !noundef !45
   store i8 %i.jd, ptr %i.jc, align 8, !tbaa !152, !noalias !149

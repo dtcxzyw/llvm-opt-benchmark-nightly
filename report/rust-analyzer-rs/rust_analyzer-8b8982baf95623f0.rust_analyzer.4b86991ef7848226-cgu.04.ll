@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.d
 bb.d:                                             ; preds = %bb.g, %bb.b
   %.val10.i = phi i64 [ %.sroa.6.0.copyload, %bb.b ], [ %i.q, %bb.g ] ; 3 uses
   %.sroa.01.0.i = phi i64 [ 0, %bb.b ], [ %i.r, %bb.g ] ; 2 uses
-  %i.i = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.0.i ; 6 uses
+  %i.i = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.0.i ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5547)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5548)
@@ -233,28 +233,20 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.noexc.i
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 48
-  %3 = load i64, ptr %i.m, align 8, !alias.scope !5552, !noalias !5551, !noundef !14
-  %4 = getelementptr inbounds nuw i8, ptr %i.i, i64 56
-  %5 = getelementptr inbounds nuw i8, ptr %i.i, i64 72
-  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 88
-  %6 = load i64, ptr %i.n, align 8, !alias.scope !5552, !noalias !5551, !noundef !14
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !5553
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.24..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !5553
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 80
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !5552
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.24..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !5552
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5549
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5549
-  %i.o = getelementptr inbounds nuw [96 x i8], ptr %.sroa.8.0.copyload, i64 %.val10.i ; 5 uses
-  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 48
-  %.sroa.52.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 56
-  %7 = load <2 x i64>, ptr %4, align 8, !alias.scope !5552, !noalias !5551
-  %8 = shufflevector <2 x i64> %7, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %.sroa.74.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 72
-  %i.p = load <2 x i64>, ptr %5, align 8, !alias.scope !5552, !noalias !5551
+  %i.o = getelementptr inbounds nuw [96 x i8], ptr %.sroa.8.0.copyload, i64 %.val10.i ; 3 uses
+  %.sroa.52.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 48
+  %3 = load <4 x i64>, ptr %i.m, align 8, !alias.scope !5553, !noalias !5551
+  %4 = shufflevector <4 x i64> %3, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %.sroa.74.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 80
+  %i.p = load <2 x i64>, ptr %i.n, align 8, !alias.scope !5553, !noalias !5551
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.o, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.i.i, i64 48, i1 false), !noalias !5554
-  store i64 %3, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !5555
-  store <2 x i64> %8, ptr %.sroa.52.0..sroa_idx.i.i, align 8, !noalias !5555
+  store <4 x i64> %4, ptr %.sroa.52.0..sroa_idx.i.i, align 8, !noalias !5555
   store <2 x i64> %i.p, ptr %.sroa.74.0..sroa_idx.i.i, align 8, !noalias !5555
-  %.sroa.96.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 88
-  store i64 %6, ptr %.sroa.96.0..sroa_idx.i.i, align 8, !noalias !5555
   %i.q = add i64 %.val10.i, 1                     ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.r = add nuw i64 %.sroa.01.0.i, 1             ; 2 uses
@@ -657,8 +649,8 @@ begin_hunk_1_@llvm.umax.i64
 !5549 = !{!5542, !5538, !5541, !5536, !5540}
 !5550 = !{!5540}
 !5551 = !{!5542, !5541, !5540}
-!5552 = !{!5538, !5536}
-!5553 = !{!5541, !5536, !5540}
+!5552 = !{!5541, !5536, !5540}
+!5553 = !{!5538, !5536}
 !5554 = !{!5541, !5540}
 !5555 = !{!5546, !5544, !5541, !5540}
 !5556 = distinct !{!5556, !"_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map8map_foldRNtNtCslLuZgPVt6hg_3ide7moniker17MonikerDescriptorNtNtNtCsfeJ0nYrpyOI_4scip8scip_mod4scip10DescriptoruNCNvNtNtCs6u1mgJOKDyY_13rust_analyzer3cli4scip19moniker_descriptors0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1I_NCINvMsk_NtCsbSS6DM8SDEO_5alloc3vecINtB4K_3VecB1I_E14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB2y_EE0E0E0B2G_"}

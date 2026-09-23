@@ -205,15 +205,15 @@ _RINvMs2_NtNtCsG258MDvU3F_3std6thread5localINtB6_8LocalKeyNtNtNtCsc13h7DQFCSE_5t
   %i.ar = getelementptr inbounds nuw i8, ptr %.val1, i64 88 ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.val1, i64 128
   %i.at = getelementptr inbounds nuw i8, ptr %.val1, i64 136
-  %i.au = getelementptr inbounds nuw i8, ptr %.val1, i64 96 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %.val1, i64 96
   %i.av = getelementptr inbounds nuw i8, ptr %.val1, i64 144
   %i.aw = getelementptr inbounds nuw i8, ptr %.val1, i64 56 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.val1, i64 72
   %i.ay = getelementptr inbounds nuw i8, ptr %.val1, i64 80
   %i.az = getelementptr inbounds nuw i8, ptr %.val1, i64 64 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.val1, i64 104 ; 2 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %.val1, i64 112 ; 3 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %.val1, i64 160
+  %i.bb = getelementptr inbounds nuw i8, ptr %.val1, i64 152
+  %i.bc = getelementptr inbounds nuw i8, ptr %.val1, i64 112 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.val1, i64 184 ; 27 uses
   %.sroa.3.0..sroa_idx215.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %.sroa.5217.sroa.2.0..sroa.5217.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 24
@@ -449,18 +449,20 @@ bb.v:                                             ; preds = %bb.w
 bb.w:                                             ; preds = %bb.q
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %i.aq, i8 0, i64 5, i1 false), !noalias !2280
   %i.dg = load ptr, ptr %i.as, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9
-  store ptr %i.dg, ptr %i.ar, align 8, !noalias !2280
-  %i.dh = load ptr, ptr %i.at, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9 ; 2 uses
+  %3 = load ptr, ptr %i.at, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9 ; 2 uses
+  %i.dh = load ptr, ptr %i.av, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9
   %i.di = load ptr, ptr %i.ax, align 8, !noalias !2280, !nonnull !9, !noundef !9 ; 2 uses
   %i.dj = load i64, ptr %i.ay, align 8, !noalias !2280, !noundef !9 ; 2 uses
   store ptr %i.di, ptr %i.aw, align 8, !noalias !2280
   store i64 %i.dj, ptr %i.az, align 8, !noalias !2280
-  %i.dk = load <2 x ptr>, ptr %i.av, align 8, !noalias !2280
-  store <2 x ptr> %i.dk, ptr %i.au, align 8, !noalias !2280
-  %3 = load ptr, ptr %i.bc, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9
-  store ptr %3, ptr %i.bb, align 8, !noalias !2280, !captures !34
-  %.val.i15.i = load ptr, ptr %i.dh, align 8, !noalias !2281, !nonnull !9, !noundef !9
-  %i.dl = getelementptr i8, ptr %i.dh, i64 8
+  %i.dk = load <2 x ptr>, ptr %i.bb, align 8, !noalias !2280
+  %4 = insertelement <4 x ptr> poison, ptr %i.dg, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %i.dh, i64 1
+  %6 = shufflevector <2 x ptr> %i.dk, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %7, ptr %i.ar, align 8, !noalias !2280
+  %.val.i15.i = load ptr, ptr %3, align 8, !noalias !2281, !nonnull !9, !noundef !9
+  %i.dl = getelementptr i8, ptr %3, i64 8
   %.val107.i.i = load ptr, ptr %i.dl, align 8, !noalias !2281, !nonnull !9, !align !16, !noundef !9 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.val107.i.i, i64 16
   %i.dn = load i64, ptr %i.dm, align 8, !range !11, !invariant.load !9, !noalias !2281
@@ -863,7 +865,7 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.cs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !2280
-  %i.he = load ptr, ptr %i.bb, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9
+  %i.he = load ptr, ptr %i.bc, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9
   %.val119.i.i = load ptr, ptr %i.he, align 8, !noalias !2281, !nonnull !9, !noundef !9
   %i.hf = getelementptr inbounds nuw i8, ptr %.val119.i.i, i64 16
   %i.hg = load atomic i8, ptr %i.hf seq_cst, align 1, !noalias !2281
@@ -1266,7 +1268,7 @@ bb.ln:                                            ; preds = %bb.ll
   %i.ta = load ptr, ptr %i.ar, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ap, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false), !noalias !2280
   store ptr %i.ta, ptr %.sroa.0257.sroa.7.0..sroa_idx.i.i, align 8, !noalias !2280
-  %i.tb = load ptr, ptr %i.bb, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9
+  %i.tb = load ptr, ptr %i.bc, align 8, !noalias !2280, !nonnull !9, !align !16, !noundef !9
   %i.tc = load <2 x ptr>, ptr %i.ba, align 8, !noalias !2280 ; 2 uses
   store <2 x ptr> %i.tc, ptr %.sroa.7258.0..sroa_idx.i.i, align 8, !noalias !2280
   store i8 0, ptr %.phi.trans.insert426.i.i, align 8, !noalias !2280

@@ -204,11 +204,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, i8 0, i64 40, i1 false)
-  %2 = insertelement <2 x double> poison, double %1, i64 0
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
-  %4 = fmul nnan <2 x double> %3, <double 2.000000e+00, double 4.000000e+00> ; 2 uses
-  %5 = extractelement <2 x double> %4, i64 0
-  %6 = fadd double %5, 3.000000e+00
   %i.d = fmul nnan double %1, 5.000000e-01
   %i.e = fadd nnan double %1, 1.000000e+00
   %i.f = fmul nnan double %i.e, 5.000000e-01
@@ -223,12 +218,11 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i64 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store double 1.000000e+00, ptr %i.h, align 8
-  %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %7 = fadd <2 x double> %4, splat (double 1.000000e+00)
-  store <2 x double> %7, ptr %.sroa.42.0..sroa_idx, align 8
-  %.sroa.64.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store double %6, ptr %.sroa.64.0..sroa_idx, align 8
+  %2 = insertelement <4 x double> <double 1.000000e+00, double poison, double poison, double poison>, double %1, i64 1
+  %3 = shufflevector <4 x double> %2, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %4 = fmul nnan <4 x double> %3, <double -0.000000e+00, double 2.000000e+00, double 4.000000e+00, double 2.000000e+00>
+  %5 = fadd <4 x double> %4, <double 1.000000e+00, double 1.000000e+00, double 1.000000e+00, double 3.000000e+00>
+  store <4 x double> %5, ptr %i.h, align 8
   %.sroa.75.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
   store <2 x double> <double 5.000000e+00, double 0.000000e+00>, ptr %.sroa.75.0..sroa_idx, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144

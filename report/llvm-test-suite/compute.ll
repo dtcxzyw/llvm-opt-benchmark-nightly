@@ -122,7 +122,7 @@ bb.a:
 ; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local { double, double } @Compute_Lateral(ptr nofree noundef captures(none) initializes((0, 16)) %0, double noundef %1, double noundef %2, double noundef %3, double noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load <2 x double>, ptr %i.b, align 8, !tbaa !12 ; 2 uses
   %i.d = insertelement <2 x double> poison, double %1, i64 0
@@ -168,7 +168,6 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.sink86 = phi double [ %i.ag, %bb.c ], [ %i.z, %bb.b ] ; 3 uses
   %.sink = phi double [ %i.ah, %bb.c ], [ %i.aa, %bb.b ] ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ai = fneg double %.sink86                    ; 2 uses
   %i.aj = load <2 x double>, ptr %i.b, align 8, !tbaa !12 ; 4 uses
   %i.ak = extractelement <2 x double> %i.aj, i64 1 ; 4 uses
@@ -195,15 +194,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bf = tail call double @sqrt(double noundef %i.be) #10, !tbaa !7
   %i.bg = fsub double %i.ba, %i.bf
   %i.bh = fmul double %i.an, 2.000000e+00
-  %i.bi = fdiv double %i.bg, %i.bh                ; 4 uses
+  %i.bi = fdiv double %i.bg, %i.bh                ; 3 uses
   %i.bj = fsub double %i.bi, %.sink86
   %i.bk = fmul double %i.ak, %i.bj
   %i.bl = fdiv double %i.bk, %i.am
-  %i.bm = fadd double %.sink, %i.bl               ; 3 uses
-  store double %i.bm, ptr %5, align 8, !tbaa !26
-  store double %i.bi, ptr %0, align 8, !tbaa !27
+  %i.bm = fadd double %.sink, %i.bl               ; 2 uses
   %i.bn = insertelement <2 x double> poison, double %i.bi, i64 0
-  %i.bo = insertelement <2 x double> %i.bn, double %i.bm, i64 1
+  %i.bo = insertelement <2 x double> %i.bn, double %i.bm, i64 1 ; 2 uses
   %i.bp = fmul <2 x double> %i.ao, %i.bo          ; 3 uses
   %i.bq = extractelement <2 x double> %i.bp, i64 0
   %i.br = fsub double 1.000000e+00, %i.bq
@@ -212,7 +209,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bu = insertelement <2 x double> poison, double %i.bt, i64 0
   %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bw = fdiv <2 x double> %i.bp, %i.bv
-  store <2 x double> %i.bw, ptr %i.a, align 8, !tbaa !12
+  %5 = shufflevector <2 x double> %i.bo, <2 x double> %i.bw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %5, ptr %0, align 8, !tbaa !12
   %.fca.0.insert = insertvalue { double, double } poison, double %i.bi, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.bm, 1
   ret { double, double } %.fca.1.insert
@@ -224,7 +222,7 @@ declare double @llvm.fmuladd.f64(double, double, double) #1
 ; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local { double, double } @Compute_Branch(ptr nofree noundef captures(none) initializes((0, 16)) %0, double noundef %1, double noundef %2, double noundef %3, double noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load <2 x double>, ptr %i.b, align 8, !tbaa !12 ; 2 uses
   %i.d = insertelement <2 x double> poison, double %1, i64 0
@@ -240,7 +238,7 @@ bb.a:
   %i.n = extractelement <2 x double> %i.m, i64 1  ; 13 uses
   %i.o = extractelement <2 x double> %i.m, i64 0  ; 13 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !29   ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !27   ; 2 uses
   %.not = icmp eq ptr %i.q, null                  ; 3 uses
   br i1 %.not, label %Compute_Leaf.exit, label %bb.b
 
@@ -254,7 +252,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   %.sroa.44.0 = phi double [ %i.t, %bb.b ], [ undef, %bb.a ]
   %.sroa.03.0 = phi double [ %i.s, %bb.b ], [ undef, %bb.a ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !31   ; 3 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !29   ; 3 uses
   %i.w = load double, ptr %i.v, align 8, !tbaa !15
   store double %i.w, ptr @P, align 8, !tbaa !12
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 2 uses
@@ -269,7 +267,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.ac, ptr %i.v, align 8, !tbaa !15
   store double %i.ab, ptr %i.x, align 8, !tbaa !16
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !31 ; 3 uses
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !29 ; 3 uses
   %i.af = load double, ptr %i.ae, align 8, !tbaa !15
   store double %i.af, ptr @P, align 8, !tbaa !12
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
@@ -284,7 +282,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.al, ptr %i.ae, align 8, !tbaa !15
   store double %i.ak, ptr %i.ag, align 8, !tbaa !16
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !31 ; 3 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !29 ; 3 uses
   %i.ao = load double, ptr %i.an, align 8, !tbaa !15
   store double %i.ao, ptr @P, align 8, !tbaa !12
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 2 uses
@@ -299,7 +297,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.au, ptr %i.an, align 8, !tbaa !15
   store double %i.at, ptr %i.ap, align 8, !tbaa !16
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !31 ; 3 uses
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !29 ; 3 uses
   %i.ax = load double, ptr %i.aw, align 8, !tbaa !15
   store double %i.ax, ptr @P, align 8, !tbaa !12
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 2 uses
@@ -314,7 +312,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.bd, ptr %i.aw, align 8, !tbaa !15
   store double %i.bc, ptr %i.ay, align 8, !tbaa !16
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !31 ; 3 uses
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !29 ; 3 uses
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !15
   store double %i.bg, ptr @P, align 8, !tbaa !12
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 2 uses
@@ -329,7 +327,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.bm, ptr %i.bf, align 8, !tbaa !15
   store double %i.bl, ptr %i.bh, align 8, !tbaa !16
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !31 ; 3 uses
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !29 ; 3 uses
   %i.bp = load double, ptr %i.bo, align 8, !tbaa !15
   store double %i.bp, ptr @P, align 8, !tbaa !12
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 8 ; 2 uses
@@ -344,7 +342,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.bv, ptr %i.bo, align 8, !tbaa !15
   store double %i.bu, ptr %i.bq, align 8, !tbaa !16
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !31 ; 3 uses
+  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !29 ; 3 uses
   %i.by = load double, ptr %i.bx, align 8, !tbaa !15
   store double %i.by, ptr @P, align 8, !tbaa !12
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 8 ; 2 uses
@@ -359,7 +357,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.ce, ptr %i.bx, align 8, !tbaa !15
   store double %i.cd, ptr %i.bz, align 8, !tbaa !16
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !31 ; 3 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !29 ; 3 uses
   %i.ch = load double, ptr %i.cg, align 8, !tbaa !15
   store double %i.ch, ptr @P, align 8, !tbaa !12
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 8 ; 2 uses
@@ -374,7 +372,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.cn, ptr %i.cg, align 8, !tbaa !15
   store double %i.cm, ptr %i.ci, align 8, !tbaa !16
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !31 ; 3 uses
+  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !29 ; 3 uses
   %i.cq = load double, ptr %i.cp, align 8, !tbaa !15
   store double %i.cq, ptr @P, align 8, !tbaa !12
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cp, i64 8 ; 2 uses
@@ -389,7 +387,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.cw, ptr %i.cp, align 8, !tbaa !15
   store double %i.cv, ptr %i.cr, align 8, !tbaa !16
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !31 ; 3 uses
+  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !29 ; 3 uses
   %i.cz = load double, ptr %i.cy, align 8, !tbaa !15
   store double %i.cz, ptr @P, align 8, !tbaa !12
   %i.da = getelementptr inbounds nuw i8, ptr %i.cy, i64 8 ; 2 uses
@@ -404,7 +402,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.df, ptr %i.cy, align 8, !tbaa !15
   store double %i.de, ptr %i.da, align 8, !tbaa !16
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !31 ; 3 uses
+  %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !29 ; 3 uses
   %i.di = load double, ptr %i.dh, align 8, !tbaa !15
   store double %i.di, ptr @P, align 8, !tbaa !12
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 8 ; 2 uses
@@ -419,7 +417,7 @@ Compute_Leaf.exit:                                ; preds = %bb.b, %bb.a
   store double %i.do, ptr %i.dh, align 8, !tbaa !15
   store double %i.dn, ptr %i.dj, align 8, !tbaa !16
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !31 ; 3 uses
+  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !29 ; 3 uses
   %i.dr = load double, ptr %i.dq, align 8, !tbaa !15
   store double %i.dr, ptr @P, align 8, !tbaa !12
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dq, i64 8 ; 2 uses
@@ -472,7 +470,6 @@ Compute_Leaf.exit.11:                             ; preds = %bb.c, %._crit_edge.
   %i.ex = fadd double %.sroa.44.0, %i.ev
   %.sink94 = select i1 %.not, double %i.eu, double %i.ew ; 3 uses
   %.sink = select i1 %.not, double %i.ev, double %i.ex ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ey = fneg double %.sink94                    ; 2 uses
   %i.ez = load <2 x double>, ptr %i.b, align 8, !tbaa !12 ; 4 uses
   %i.fa = extractelement <2 x double> %i.ez, i64 1 ; 4 uses
@@ -499,15 +496,13 @@ Compute_Leaf.exit.11:                             ; preds = %bb.c, %._crit_edge.
   %i.fv = tail call double @sqrt(double noundef %i.fu) #10, !tbaa !7
   %i.fw = fsub double %i.fq, %i.fv
   %i.fx = fmul double %i.fd, 2.000000e+00
-  %i.fy = fdiv double %i.fw, %i.fx                ; 4 uses
+  %i.fy = fdiv double %i.fw, %i.fx                ; 3 uses
   %i.fz = fsub double %i.fy, %.sink94
   %i.ga = fmul double %i.fa, %i.fz
   %i.gb = fdiv double %i.ga, %i.fc
-  %i.gc = fadd double %.sink, %i.gb               ; 3 uses
-  store double %i.gc, ptr %5, align 8, !tbaa !32
-  store double %i.fy, ptr %0, align 8, !tbaa !33
+  %i.gc = fadd double %.sink, %i.gb               ; 2 uses
   %i.gd = insertelement <2 x double> poison, double %i.fy, i64 0
-  %i.ge = insertelement <2 x double> %i.gd, double %i.gc, i64 1
+  %i.ge = insertelement <2 x double> %i.gd, double %i.gc, i64 1 ; 2 uses
   %i.gf = fmul <2 x double> %i.fe, %i.ge          ; 3 uses
   %i.gg = extractelement <2 x double> %i.gf, i64 0
   %i.gh = fsub double 1.000000e+00, %i.gg
@@ -516,7 +511,8 @@ Compute_Leaf.exit.11:                             ; preds = %bb.c, %._crit_edge.
   %i.gk = insertelement <2 x double> poison, double %i.gj, i64 0
   %i.gl = shufflevector <2 x double> %i.gk, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gm = fdiv <2 x double> %i.gf, %i.gl
-  store <2 x double> %i.gm, ptr %i.a, align 8, !tbaa !12
+  %5 = shufflevector <2 x double> %i.ge, <2 x double> %i.gm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %5, ptr %0, align 8, !tbaa !12
   %.fca.0.insert = insertvalue { double, double } poison, double %i.fy, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.gc, 1
   ret { double, double } %.fca.1.insert
@@ -768,7 +764,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ex, label %.critedge.backedge, label %.critedge3
 
 .critedge.backedge:                               ; preds = %bb.j, %bb.h
-  br label %.critedge, !llvm.loop !34
+  br label %.critedge, !llvm.loop !30
 
 .critedge3:                                       ; preds = %bb.i, %bb.j
   store double %i.dx, ptr @P, align 8, !tbaa !12
@@ -963,14 +959,10 @@ attributes #10 = { nounwind }
 !23 = !{!"lateral", !11, i64 0, !10, i64 16, !10, i64 24, !10, i64 32, !10, i64 40, !9, i64 48, !13, i64 56}
 !24 = !{!23, !9, i64 48}
 !25 = !{!23, !13, i64 56}
-!26 = !{!23, !10, i64 8}
-!27 = !{!23, !10, i64 0}
-!28 = !{!"branch", !11, i64 0, !10, i64 16, !10, i64 24, !10, i64 32, !10, i64 40, !13, i64 48, !5, i64 56}
-!29 = !{!28, !13, i64 48}
-!30 = !{!"p1 _ZTS4leaf", !8, i64 0}
-!31 = !{!30, !30, i64 0}
-!32 = !{!28, !10, i64 8}
-!33 = !{!28, !10, i64 0}
-!34 = distinct !{!34, !35}
-!35 = !{!"llvm.loop.mustprogress"}
+!26 = !{!"branch", !11, i64 0, !10, i64 16, !10, i64 24, !10, i64 32, !10, i64 40, !13, i64 48, !5, i64 56}
+!27 = !{!26, !13, i64 48}
+!28 = !{!"p1 _ZTS4leaf", !8, i64 0}
+!29 = !{!28, !28, i64 0}
+!30 = distinct !{!30, !31}
+!31 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

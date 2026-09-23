@@ -202,17 +202,19 @@ bb.a:
   store <2 x ptr> %i.e, ptr %i.c, align 8, !tbaa !64
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %4 = load ptr, ptr %i.g, align 8, !tbaa !65
-  store ptr %4, ptr %i.f, align 8, !tbaa !65
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i8 0, i64 24, i1 false)
-  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 56
   %5 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
-  %i.i = load <2 x ptr>, ptr %5, align 8, !tbaa !64
-  store <2 x ptr> %i.i, ptr %i.h, align 8, !tbaa !64
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 72
-  %8 = load ptr, ptr %7, align 8, !tbaa !65
-  store ptr %8, ptr %6, align 8, !tbaa !65
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 72
+  %7 = load ptr, ptr %i.g, align 8, !tbaa !65
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i8 0, i64 24, i1 false)
+  %8 = load ptr, ptr %5, align 8, !tbaa !85
+  %i.i = load <2 x ptr>, ptr %6, align 8, !tbaa !64
+  %9 = insertelement <4 x ptr> poison, ptr %7, i64 0
+  %10 = insertelement <4 x ptr> %9, ptr %8, i64 1
+  %11 = shufflevector <2 x ptr> %i.i, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x ptr> %10, <4 x ptr> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %12, ptr %i.f, align 8, !tbaa !64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 80
@@ -326,12 +328,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN9grpc_core12EvaluateArgs14PerChannelArgs7AddressD2Ev.exit3.i
 
 _ZN9grpc_core12EvaluateArgs14PerChannelArgs7AddressD2Ev.exit3.i: ; preds = %_ZN9grpc_core12EvaluateArgs14PerChannelArgs7AddressD2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1.i
-  %i.bf = load ptr, ptr %i.h, align 8, !tbaa !85  ; 3 uses
+  %i.bf = load ptr, ptr %4, align 8, !tbaa !85    ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.bf, null
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZN9grpc_core12EvaluateArgs14PerChannelArgs7AddressD2Ev.exit3.i
-  %i.bg = load ptr, ptr %6, align 8, !tbaa !65
+  %i.bg = load ptr, ptr %i.h, align 8, !tbaa !65
   %i.bh = ptrtoint ptr %i.bg to i64
   %i.bi = ptrtoint ptr %i.bf to i64
   %i.bj = sub i64 %i.bh, %i.bi

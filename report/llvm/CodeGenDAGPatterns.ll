@@ -205,7 +205,7 @@ _ZNSt6vectorIPKN4llvm6RecordESaIS3_EED2Ev.exit8:  ; preds = %_ZNSt6vectorIPKN4ll
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr ptr @_ZNSt8_Rb_treeIPKN4llvm6RecordESt4pairIKS3_NS0_14DAGInstructionEESt10_Select1stIS7_ENS0_14LessRecordByIDESaIS7_EE22_M_emplace_hint_uniqueIJRKSt21piecewise_construct_tSt5tupleIJRS5_EESH_IJOSt6vectorIS3_SaIS3_EESN_SN_EEEEESt17_Rb_tree_iteratorIS7_ESt23_Rb_tree_const_iteratorIS7_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(24) %4) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #32 ; 11 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #32 ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.c = load i64, ptr %3, align 8, !tbaa !281
   %i.d = inttoptr i64 %i.c to ptr
@@ -218,14 +218,14 @@ bb.a:
   %i.k = load i64, ptr %i.j, align 8, !tbaa !534
   %i.l = inttoptr i64 %i.k to ptr                 ; 3 uses
   %i.m = load ptr, ptr %i.d, align 8, !tbaa !232
-  store ptr %i.m, ptr %i.b, align 8, !tbaa !532
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
-  %i.o = load <2 x ptr>, ptr %i.l, align 8, !tbaa !281
-  store <2 x ptr> %i.o, ptr %i.n, align 8, !tbaa !281
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !283
-  store ptr %7, ptr %5, align 8, !tbaa !283
+  %5 = load ptr, ptr %i.l, align 8, !tbaa !282
+  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %i.o = load <2 x ptr>, ptr %i.n, align 8, !tbaa !281
+  %6 = insertelement <4 x ptr> poison, ptr %i.m, i64 0
+  %7 = insertelement <4 x ptr> %6, ptr %5, i64 1
+  %8 = shufflevector <2 x ptr> %i.o, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x ptr> %7, <4 x ptr> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %9, ptr %i.b, align 8, !tbaa !557
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.q = load <2 x ptr>, ptr %i.i, align 8, !tbaa !281
@@ -279,7 +279,8 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNSt8_Rb_treeIPKN4llvm6RecordESt4pairIKS3_NS0_14DAGInstructionEESt10_Select1stIS7_ENS0_14LessRecordByIDESaIS7_EE10_Auto_nodeD2Ev.exit
 
 bb.d:                                             ; preds = %bb.a
-  tail call void @_ZN4llvm14DAGInstructionD2Ev(ptr noundef nonnull align 8 dead_on_return(88) dereferenceable(88) %i.n) #29
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  tail call void @_ZN4llvm14DAGInstructionD2Ev(ptr noundef nonnull align 8 dead_on_return(88) dereferenceable(88) %10) #29
   tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 128) #33
   br label %_ZNSt8_Rb_treeIPKN4llvm6RecordESt4pairIKS3_NS0_14DAGInstructionEESt10_Select1stIS7_ENS0_14LessRecordByIDESaIS7_EE10_Auto_nodeD2Ev.exit
 

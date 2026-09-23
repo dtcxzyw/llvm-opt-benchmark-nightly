@@ -205,10 +205,10 @@ bb.a:
   %3 = alloca %struct.kvm_mp_state, align 4       ; 4 uses
   %4 = alloca %struct.kvm_vcpu_events, align 8    ; 26 uses
   %5 = alloca %struct.kvm_xcrs, align 8           ; 8 uses
-  %6 = alloca %struct.kvm_regs, align 8           ; 13 uses
+  %6 = alloca %struct.kvm_regs, align 8           ; 8 uses
   %7 = alloca %struct.kvm_sregs, align 8          ; 155 uses
   %8 = alloca %struct.kvm_sregs2, align 8         ; 157 uses
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.113, ptr noundef nonnull @.str.114, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #29 ; 172 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.113, ptr noundef nonnull @.str.114, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #29 ; 167 uses
   %i.b = tail call zeroext i1 @cpu_is_stopped(ptr noundef %0) #29
   %.sink36.i.sroa.gep = getelementptr inbounds nuw i8, ptr %8, i64 142
   %.sink36.i.sroa.gep100 = getelementptr inbounds nuw i8, ptr %8, i64 138 ; 2 uses
@@ -611,40 +611,22 @@ bb.ac:                                            ; preds = %bb.ab
 .thread104:                                       ; preds = %bb.r, %kvm_put_nested_state.exit.thread, %bb.ab, %bb.aa
   %i.ana = getelementptr inbounds nuw i8, ptr %i.a, i64 16496
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
-  %9 = load i64, ptr %i.ana, align 8
-  store i64 %9, ptr %6, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 16520
-  %12 = load i64, ptr %11, align 8
-  store i64 %12, ptr %10, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 16504
-  %15 = load <2 x i64>, ptr %14, align 8
-  store <2 x i64> %15, ptr %13, align 8
-  %16 = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 16544
-  %18 = load <2 x i64>, ptr %17, align 8
-  store <2 x i64> %18, ptr %16, align 8
-  %i.anb = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %9 = load <4 x i64>, ptr %i.ana, align 8
+  %10 = shufflevector <4 x i64> %9, <4 x i64> poison, <4 x i32> <i32 0, i32 3, i32 1, i32 2>
+  store <4 x i64> %10, ptr %6, align 8
+  %i.anb = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.anc = getelementptr inbounds nuw i8, ptr %i.a, i64 16528
-  %19 = load <2 x i64>, ptr %i.anc, align 8
-  store <2 x i64> %19, ptr %i.anb, align 8
-  %20 = getelementptr inbounds nuw i8, ptr %6, i64 64
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 16560
-  %22 = load <2 x i64>, ptr %21, align 8
-  store <2 x i64> %22, ptr %20, align 8
-  %i.and = getelementptr inbounds nuw i8, ptr %6, i64 80
-  %i.ane = getelementptr inbounds nuw i8, ptr %i.a, i64 16576
-  %23 = load <2 x i64>, ptr %i.ane, align 8
-  store <2 x i64> %23, ptr %i.and, align 8
+  %11 = load <4 x i64>, ptr %i.anc, align 8
+  %12 = shufflevector <4 x i64> %11, <4 x i64> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  store <4 x i64> %12, ptr %i.anb, align 8
+  %i.and = getelementptr inbounds nuw i8, ptr %6, i64 64
+  %i.ane = getelementptr inbounds nuw i8, ptr %i.a, i64 16560
+  %13 = load <4 x i64>, ptr %i.ane, align 8
+  store <4 x i64> %13, ptr %i.and, align 8
   %i.anf = getelementptr inbounds nuw i8, ptr %6, i64 96
   %i.ang = getelementptr inbounds nuw i8, ptr %i.a, i64 16592
-  %24 = load <2 x i64>, ptr %i.ang, align 8
-  store <2 x i64> %24, ptr %i.anf, align 8
-  %25 = getelementptr inbounds nuw i8, ptr %6, i64 112
-  %26 = getelementptr inbounds nuw i8, ptr %i.a, i64 16608
-  %27 = load <2 x i64>, ptr %26, align 8
-  store <2 x i64> %27, ptr %25, align 8
+  %14 = load <4 x i64>, ptr %i.ang, align 8
+  store <4 x i64> %14, ptr %i.anf, align 8
   %i.anh = getelementptr inbounds nuw i8, ptr %6, i64 128
   %i.ani = getelementptr inbounds nuw i8, ptr %i.a, i64 16752
   %i.anj = load <2 x i64>, ptr %i.ani, align 8
@@ -1047,10 +1029,10 @@ bb.a:
   %3 = alloca %struct.kvm_sregs, align 8          ; 108 uses
   %4 = alloca %struct.kvm_sregs2, align 8         ; 110 uses
   %5 = alloca %struct.kvm_xcrs, align 8           ; 7 uses
-  %6 = alloca %struct.kvm_regs, align 8           ; 15 uses
+  %6 = alloca %struct.kvm_regs, align 8           ; 10 uses
   %7 = alloca %struct.kvm_mp_state, align 4       ; 6 uses
   %8 = alloca %struct.kvm_vcpu_events, align 8    ; 25 uses
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.113, ptr noundef nonnull @.str.114, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #29 ; 131 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.113, ptr noundef nonnull @.str.114, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #29 ; 126 uses
   %i.b = tail call zeroext i1 @cpu_is_stopped(ptr noundef %0) #29
   br i1 %i.b, label %bb.d, label %bb.b
 
@@ -1254,40 +1236,22 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.bd
 
 bb.u:                                             ; preds = %bb.s
-  %9 = load i64, ptr %6, align 8
-  store i64 %9, ptr %i.cg, align 16
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 16520
-  %12 = load i64, ptr %10, align 8
-  store i64 %12, ptr %11, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 16504
-  %15 = load <2 x i64>, ptr %13, align 8
-  store <2 x i64> %15, ptr %14, align 8
-  %16 = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 16544
-  %18 = load <2 x i64>, ptr %16, align 8
-  store <2 x i64> %18, ptr %17, align 16
-  %i.ck = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %9 = load <4 x i64>, ptr %6, align 8
+  %10 = shufflevector <4 x i64> %9, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 1>
+  store <4 x i64> %10, ptr %i.cg, align 16
+  %i.ck = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 16528
-  %19 = load <2 x i64>, ptr %i.ck, align 8
-  store <2 x i64> %19, ptr %i.cl, align 16
-  %20 = getelementptr inbounds nuw i8, ptr %6, i64 64
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 16560
-  %22 = load <2 x i64>, ptr %20, align 8
-  store <2 x i64> %22, ptr %21, align 16
-  %i.cm = getelementptr inbounds nuw i8, ptr %6, i64 80
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.a, i64 16576
-  %23 = load <2 x i64>, ptr %i.cm, align 8
-  store <2 x i64> %23, ptr %i.cn, align 16
+  %11 = load <4 x i64>, ptr %i.ck, align 8
+  %12 = shufflevector <4 x i64> %11, <4 x i64> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  store <4 x i64> %12, ptr %i.cl, align 16
+  %i.cm = getelementptr inbounds nuw i8, ptr %6, i64 64
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.a, i64 16560
+  %13 = load <4 x i64>, ptr %i.cm, align 8
+  store <4 x i64> %13, ptr %i.cn, align 16
   %i.co = getelementptr inbounds nuw i8, ptr %6, i64 96
   %i.cp = getelementptr inbounds nuw i8, ptr %i.a, i64 16592
-  %24 = load <2 x i64>, ptr %i.co, align 8
-  store <2 x i64> %24, ptr %i.cp, align 16
-  %25 = getelementptr inbounds nuw i8, ptr %6, i64 112
-  %26 = getelementptr inbounds nuw i8, ptr %i.a, i64 16608
-  %27 = load <2 x i64>, ptr %25, align 8
-  store <2 x i64> %27, ptr %26, align 16
+  %14 = load <4 x i64>, ptr %i.co, align 8
+  store <4 x i64> %14, ptr %i.cp, align 16
   %i.cq = getelementptr inbounds nuw i8, ptr %6, i64 128
   %i.cr = getelementptr inbounds nuw i8, ptr %i.a, i64 16752
   %i.cs = load <2 x i64>, ptr %i.cq, align 8

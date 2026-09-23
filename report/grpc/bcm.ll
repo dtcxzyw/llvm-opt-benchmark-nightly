@@ -205,7 +205,7 @@ bb.a:
   %i.c = alloca [4 x i64], align 16               ; 5 uses
   %i.d = alloca [4 x i64], align 16               ; 9 uses
   %i.e = alloca [4 x i64], align 16               ; 12 uses
-  %i.f = alloca [4 x i64], align 16               ; 13 uses
+  %i.f = alloca [4 x i64], align 16               ; 10 uses
   %i.g = alloca [4 x i64], align 16               ; 15 uses
   %i.h = alloca [4 x i64], align 16               ; 9 uses
   %i.i = alloca [4 x i64], align 16               ; 7 uses
@@ -455,10 +455,8 @@ bb.b:                                             ; preds = %bb.a
   %.phi.trans.insert145 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.pre146 = load i64, ptr %.phi.trans.insert145, align 16, !tbaa !96
   %.phi.trans.insert147 = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %.pre148 = load i64, ptr %.phi.trans.insert147, align 8, !tbaa !96
-  %.pre149 = load i64, ptr %i.f, align 16, !tbaa !96
-  %.phi.trans.insert150 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %.pre151 = load i64, ptr %.phi.trans.insert150, align 8, !tbaa !96
+  %.pre149 = load i64, ptr %.phi.trans.insert147, align 8, !tbaa !96
+  %10 = load <2 x i64>, ptr %i.f, align 16, !tbaa !96
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -541,26 +539,17 @@ bb.c:                                             ; preds = %bb.a
   store i64 %i.js, ptr %i.jx, align 16, !tbaa !96
   %i.jy = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store i64 %i.jv, ptr %i.jy, align 8, !tbaa !96
-  %10 = load i64, ptr %4, align 8, !tbaa !96      ; 2 uses
-  store i64 %10, ptr %i.f, align 16, !tbaa !96
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %13 = load <2 x i64>, ptr %11, align 8, !tbaa !96
-  %14 = load i64, ptr %11, align 8, !tbaa !96
-  store <2 x i64> %13, ptr %12, align 8, !tbaa !96
-  %15 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %16 = load i64, ptr %15, align 8, !tbaa !96
-  %17 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  store i64 %16, ptr %17, align 8, !tbaa !96
+  %11 = load <4 x i64>, ptr %4, align 8, !tbaa !96 ; 2 uses
+  store <4 x i64> %11, ptr %i.f, align 16, !tbaa !96
+  %12 = shufflevector <4 x i64> %11, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %18 = phi i64 [ %14, %bb.c ], [ %.pre151, %bb.b ]
-  %19 = phi i64 [ %10, %bb.c ], [ %.pre149, %bb.b ]
-  %i.jz = phi i64 [ %i.hs, %bb.c ], [ %.pre148, %bb.b ]
+  %i.jz = phi i64 [ %i.hs, %bb.c ], [ %.pre149, %bb.b ]
   %i.ka = phi i64 [ %i.hp, %bb.c ], [ %.pre146, %bb.b ]
   %i.kb = phi i64 [ %i.hm, %bb.c ], [ %.pre144, %bb.b ]
   %i.kc = phi i64 [ %i.hk, %bb.c ], [ %.pre, %bb.b ]
+  %13 = phi <2 x i64> [ %12, %bb.c ], [ %10, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #36
   call fastcc void @_ZL13fiat_p256_mulPmPKmS1_(ptr noundef %i.i, ptr noundef %7, ptr noundef %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #36
@@ -636,7 +625,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #36
   %i.ml = load i64, ptr %i.l, align 16, !tbaa !96
   %i.mm = zext i64 %i.ml to i128
-  %i.mn = zext i64 %19 to i128
+  %14 = extractelement <2 x i64> %13, i64 0
+  %i.mn = zext i64 %14 to i128
   %i.mo = sub nsw i128 %i.mm, %i.mn               ; 2 uses
   %i.mp = lshr i128 %i.mo, 64
   %i.mq = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -644,7 +634,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ms = zext i64 %i.mr to i128
   %i.mt = sub nsw i128 0, %i.mp
   %i.mu = and i128 %i.mt, 255
-  %i.mv = zext i64 %18 to i128
+  %15 = extractelement <2 x i64> %13, i64 1
+  %i.mv = zext i64 %15 to i128
   %i.mw = add nuw nsw i128 %i.mu, %i.mv
   %i.mx = sub nsw i128 %i.ms, %i.mw               ; 2 uses
   %i.my = lshr i128 %i.mx, 64

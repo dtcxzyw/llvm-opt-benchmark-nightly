@@ -102,28 +102,27 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.c, %bb.d
   %i.i = load ptr, ptr %9, align 8
-  store ptr %i.i, ptr %0, align 8
   %i.j = load i64, ptr %8, align 8
   %i.k = trunc i64 %i.j to i16
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 52
   store i16 %i.k, ptr %i.l, align 4
-  %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 54
-  %i.n = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %11 = load ptr, ptr %i.n, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %11, ptr %12, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %10 = load ptr, ptr %i.m, align 8               ; 2 uses
+  %11 = icmp ne ptr %10, null
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 54
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.n, align 2
+  %13 = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.o = getelementptr inbounds nuw i8, ptr %8, i64 34
   %i.p = load i8, ptr %i.o, align 2
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 50
   store i8 %i.p, ptr %i.q, align 2
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.r = load <2 x ptr>, ptr %i.m, align 8
-  %14 = load ptr, ptr %i.m, align 8
-  %15 = icmp ne ptr %14, null
-  %16 = zext i1 %15 to i8
-  store i8 %16, ptr %10, align 2
-  store <2 x ptr> %i.r, ptr %13, align 8
+  %i.r = load <2 x ptr>, ptr %13, align 8
+  %14 = insertelement <4 x ptr> poison, ptr %i.i, i64 0
+  %15 = insertelement <4 x ptr> %14, ptr %10, i64 1
+  %16 = shufflevector <2 x ptr> %i.r, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %17 = shufflevector <4 x ptr> %15, <4 x ptr> %16, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %17, ptr %0, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 %6, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56

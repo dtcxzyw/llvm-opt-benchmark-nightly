@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
-  %i.e = tail call noalias ptr @av_mallocz(i64 noundef 128) #17 ; 11 uses
+  %i.e = tail call noalias ptr @av_mallocz(i64 noundef 128) #17 ; 13 uses
   store ptr %i.e, ptr %i.b, align 8, !tbaa !99
   %.not40 = icmp eq ptr %i.e, null
   br i1 %.not40, label %.sink.split, label %bb.e
@@ -298,7 +298,11 @@ bb.m:                                             ; preds = %.lr.ph.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 -9223372036854775808, ptr %i.ac, align 8, !tbaa !108
   %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 48
-  store <6 x i64> splat (i64 -9223372036854775808), ptr %i.ad, align 8, !tbaa !77
+  store <4 x i64> splat (i64 -9223372036854775808), ptr %i.ad, align 8, !tbaa !77
+  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 80
+  store i64 -9223372036854775808, ptr %2, align 8, !tbaa !77
+  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 88
+  store i64 -9223372036854775808, ptr %3, align 8, !tbaa !77
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 96
   store i64 -9223372036854775808, ptr %i.ae, align 8, !tbaa !77
   br label %.sink.split

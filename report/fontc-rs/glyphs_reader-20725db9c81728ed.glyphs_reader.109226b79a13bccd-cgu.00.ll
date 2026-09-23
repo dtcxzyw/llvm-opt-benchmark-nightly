@@ -204,7 +204,7 @@ bb.a:
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 2 uses
   %.sroa.416 = alloca [31 x i8], align 1          ; 4 uses
-  %i.i = alloca [56 x i8], align 8                ; 9 uses
+  %i.i = alloca [56 x i8], align 8                ; 8 uses
   %i.j = alloca [24 x i8], align 8                ; 13 uses
   %i.k = alloca [24 x i8], align 8                ; 12 uses
   %.sroa.4.sroa.0.sroa.0 = alloca [152 x i8], align 8 ; 4 uses
@@ -293,27 +293,23 @@ bb.j:                                             ; preds = %bb.h
   %i.al = load i64, ptr %i.i, align 8, !range !7, !noundef !6
   %i.am = trunc nuw i64 %i.al to i1
   %i.an = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %.sroa.6376.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  %2 = load <4 x double>, ptr %i.an, align 8      ; 6 uses
-  %3 = load <2 x double>, ptr %.sroa.6376.0..sroa_idx, align 8 ; 2 uses
+  %2 = load <4 x double>, ptr %i.an, align 8      ; 5 uses
+  %.sroa.7377.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 40
+  %.sroa.7377.0.copyload = load double, ptr %.sroa.7377.0..sroa_idx, align 8 ; 2 uses
   br i1 %i.am, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  %.sroa.4374.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %.sroa.4374.0.copyload = load double, ptr %.sroa.4374.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 12, ptr %i.ao, align 8
   %.sroa.449.sroa.3.0..sroa.449.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = extractelement <4 x double> %2, i64 0
-  store double %4, ptr %.sroa.449.sroa.3.0..sroa.449.0..sroa_idx.sroa_idx, align 8
-  %.sroa.449.sroa.4.0..sroa.449.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store double %.sroa.4374.0.copyload, ptr %.sroa.449.sroa.4.0..sroa.449.0..sroa_idx.sroa_idx, align 8
+  %3 = shufflevector <4 x double> %2, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x double> %3, ptr %.sroa.449.sroa.3.0..sroa.449.0..sroa_idx.sroa_idx, align 8
   %.sroa.449.sroa.5.0..sroa.449.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = extractelement <4 x double> %2, i64 2
-  store double %5, ptr %.sroa.449.sroa.5.0..sroa.449.0..sroa_idx.sroa_idx, align 8
-  %.sroa.449.sroa.6.0..sroa.449.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store <2 x double> %3, ptr %.sroa.449.sroa.6.0..sroa.449.0..sroa_idx.sroa_idx, align 8
+  %4 = shufflevector <4 x double> %2, <4 x double> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x double> %4, ptr %.sroa.449.sroa.5.0..sroa.449.0..sroa_idx.sroa_idx, align 8
+  %.sroa.449.sroa.6.0..sroa.449.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store double %.sroa.7377.0.copyload, ptr %.sroa.449.sroa.6.0..sroa.449.0..sroa_idx.sroa_idx, align 8
   store i64 -1, ptr %0, align 8
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECs1qcNTItuk7F_13glyphs_reader.exit.i unwind label %bb.l
@@ -388,27 +384,23 @@ bb.s:                                             ; preds = %bb.aq, %bb.ad, %bb.
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECs1qcNTItuk7F_13glyphs_reader.exit.i128
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %i.az = insertelement <2 x double> %3, double %.sroa.8367.0.copyload, i64 0
+  %i.az = insertelement <2 x double> poison, double %.sroa.7377.0.copyload, i64 0
+  %5 = insertelement <2 x double> %i.az, double %.sroa.8367.0.copyload, i64 1
   %6 = shufflevector <4 x double> %2, <4 x double> poison, <2 x i32> <i32 1, i32 2>
-  %7 = shufflevector <4 x double> %2, <4 x double> poison, <2 x i32> <i32 3, i32 0>
-  %8 = shufflevector <4 x double> %2, <4 x double> poison, <2 x i32> <i32 2, i32 3>
-  %9 = shufflevector <4 x double> %2, <4 x double> poison, <2 x i32> <i32 1, i32 0>
-  %10 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %7 = shufflevector <4 x double> %2, <4 x double> poison, <2 x i32> <i32 0, i32 3>
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.f, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132
   %.sroa.045.2 = phi i8 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ 1, %bb.f ] ; 9 uses
-  %11 = phi <2 x double> [ %i.az, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ zeroinitializer, %bb.f ] ; 2 uses
-  %i.ba = phi <2 x double> [ %6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ zeroinitializer, %bb.f ] ; 3 uses
-  %i.bb = phi <2 x double> [ %7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ splat (double 1.000000e+00), %bb.f ] ; 3 uses
-  %i.bc = phi <2 x double> [ %10, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ <double 1.000000e+00, double 0.000000e+00>, %bb.f ]
-  %12 = phi <2 x double> [ %9, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ <double 0.000000e+00, double 1.000000e+00>, %bb.f ]
+  %8 = phi <4 x double> [ %2, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ <double 1.000000e+00, double 0.000000e+00, double 0.000000e+00, double 1.000000e+00>, %bb.f ] ; 2 uses
+  %i.ba = phi <2 x double> [ %5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ zeroinitializer, %bb.f ] ; 2 uses
+  %i.bb = phi <2 x double> [ %6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ zeroinitializer, %bb.f ]
+  %i.bc = phi <2 x double> [ %7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit132 ], [ splat (double 1.000000e+00), %bb.f ]
+  %9 = shufflevector <4 x double> %8, <4 x double> poison, <4 x i32> <i32 0, i32 3, i32 2, i32 1> ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.be = load i64, ptr %i.bd, align 8, !noundef !6 ; 2 uses
   %i.bf = icmp ult i64 %i.be, 1152921504606846976
   call void @llvm.assume(i1 %i.bf)
-  %13 = shufflevector <2 x double> %i.bb, <2 x double> %i.ba, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %14 = shufflevector <2 x double> %i.ba, <2 x double> %i.bb, <2 x i32> <i32 0, i32 3> ; 2 uses
   switch i64 %i.be, label %bb.z [
     i64 0, label %bb.y
     i64 2, label %bb.ab
@@ -447,9 +439,8 @@ bb.x:                                             ; preds = %bb.cx, %bb.cq, %.bo
   unreachable
 
 bb.y:                                             ; preds = %bb.t, %bb.ab
-  %15 = phi <2 x double> [ %11, %bb.t ], [ %i.by, %bb.ab ] ; 2 uses
-  %16 = phi <2 x double> [ %13, %bb.t ], [ %20, %bb.ab ] ; 4 uses
-  %i.bm = phi <2 x double> [ %14, %bb.t ], [ %18, %bb.ab ] ; 4 uses
+  %10 = phi <4 x double> [ %9, %bb.t ], [ %13, %bb.ab ] ; 5 uses
+  %i.bm = phi <2 x double> [ %i.ba, %bb.t ], [ %i.by, %bb.ab ] ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 240
   %i.bo = load i64, ptr %i.bn, align 8, !noundef !6 ; 2 uses
   %i.bp = icmp ult i64 %i.bo, 1152921504606846976
@@ -475,16 +466,15 @@ bb.aa:                                            ; preds = %bb.g
 bb.ab:                                            ; preds = %bb.t
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 184
   %i.bs = load ptr, ptr %i.br, align 8, !nonnull !6, !noundef !6
-  %17 = fmul <2 x double> %13, zeroinitializer
-  %18 = fadd <2 x double> %17, %12
-  %19 = fmul <2 x double> %14, zeroinitializer
-  %20 = fadd <2 x double> %i.bc, %19
+  %11 = fmul <4 x double> %8, zeroinitializer
+  %12 = shufflevector <4 x double> %11, <4 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %13 = fadd <4 x double> %9, %12
   %i.bt = load <2 x double>, ptr %i.bs, align 8   ; 2 uses
-  %i.bu = fmul <2 x double> %i.ba, %i.bt
-  %i.bv = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.bw = fmul <2 x double> %i.bb, %i.bv
-  %i.bx = fadd <2 x double> %i.bu, %i.bw
-  %i.by = fadd <2 x double> %11, %i.bx
+  %i.bu = fmul <2 x double> %i.bb, %i.bt
+  %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.bw = fmul <2 x double> %i.bc, %i.bt
+  %i.bx = fadd <2 x double> %i.bv, %i.bw
+  %i.by = fadd <2 x double> %i.ba, %i.bx
   br label %bb.y
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1qcNTItuk7F_13glyphs_reader.exit: ; preds = %bb.z
@@ -500,11 +490,11 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN
   br label %bb.u
 
 bb.ac:                                            ; preds = %bb.y, %bb.ae
-  %21 = phi <2 x double> [ %15, %bb.y ], [ %i.co, %bb.ae ] ; 2 uses
-  %22 = phi <2 x double> [ %16, %bb.y ], [ %32, %bb.ae ] ; 5 uses
-  %i.ca = phi <2 x double> [ %i.bm, %bb.y ], [ %28, %bb.ae ] ; 5 uses
+  %14 = phi <4 x double> [ %10, %bb.y ], [ %21, %bb.ae ] ; 5 uses
+  %i.ca = phi <2 x double> [ %i.bm, %bb.y ], [ %i.co, %bb.ae ] ; 2 uses
   %i.cb = load i64, ptr %1, align 8, !range !7, !noundef !6
   %i.cc = trunc nuw i64 %i.cb to i1
+  %15 = shufflevector <4 x double> %14, <4 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
   br i1 %i.cc, label %bb.af, label %bb.ak
 
 bb.ad:                                            ; preds = %bb.y
@@ -527,18 +517,18 @@ bb.ae:                                            ; preds = %bb.y
   %i.ck = load double, ptr %i.cj, align 8, !noundef !6
   %i.cl = fmul double %i.ck, f0x3F91DF46A2529D39
   %i.cm = call noundef double @tan(double noundef %i.cl) #36
-  %23 = fmul <2 x double> %i.bm, zeroinitializer
-  %24 = fmul <2 x double> %16, zeroinitializer
-  %25 = insertelement <2 x double> poison, double %i.cm, i64 0
-  %26 = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
-  %27 = fmul <2 x double> %16, %26
-  %28 = fadd <2 x double> %i.bm, %27
-  %29 = insertelement <2 x double> poison, double %i.ci, i64 0
-  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
-  %31 = fmul <2 x double> %i.bm, %30
-  %32 = fadd <2 x double> %16, %31
-  %i.cn = fadd <2 x double> %24, %23
-  %i.co = fadd <2 x double> %15, %i.cn
+  %16 = shufflevector <4 x double> %10, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  %17 = insertelement <4 x double> poison, double %i.cm, i64 0
+  %18 = insertelement <4 x double> %17, double %i.ci, i64 1
+  %19 = shufflevector <4 x double> %18, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 0>
+  %20 = fmul <4 x double> %16, %19
+  %21 = fadd <4 x double> %10, %20
+  %22 = shufflevector <4 x double> %10, <4 x double> poison, <2 x i32> <i32 2, i32 3>
+  %23 = fmul <2 x double> %22, zeroinitializer
+  %24 = shufflevector <4 x double> %10, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %25 = fmul <2 x double> %24, zeroinitializer
+  %i.cn = fadd <2 x double> %25, %23
+  %i.co = fadd <2 x double> %i.bm, %i.cn
   br label %bb.ac
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1qcNTItuk7F_13glyphs_reader.exit138: ; preds = %bb.ad
@@ -579,52 +569,45 @@ bb.aj:                                            ; preds = %bb.ai
   %i.cz = fmul double %i.cr, f0x3F91DF46A2529D39
   %sincos.i = call { double, double } @llvm.sincos.f64(double %i.cz) ; 2 uses
   %sin.i = extractvalue { double, double } %sincos.i, 0 ; 2 uses
-  %cos.i = extractvalue { double, double } %sincos.i, 1 ; 2 uses
+  %cos.i = extractvalue { double, double } %sincos.i, 1
   %i.da = fneg double %sin.i
-  %33 = insertelement <2 x double> poison, double %cos.i, i64 0
-  %34 = insertelement <2 x double> %33, double %sin.i, i64 1
+  %26 = insertelement <4 x double> poison, double %i.da, i64 0
+  %27 = insertelement <4 x double> %26, double %cos.i, i64 1
+  %28 = insertelement <4 x double> %27, double %sin.i, i64 2
+  %29 = shufflevector <4 x double> %28, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
   br label %bb.al
 
 bb.ak:                                            ; preds = %bb.al, %bb.ac
-  %35 = phi <2 x double> [ %i.di, %bb.al ], [ %21, %bb.ac ] ; 2 uses
-  %36 = phi <2 x double> [ %44, %bb.al ], [ %i.ca, %bb.ac ] ; 3 uses
-  %i.db = phi <2 x double> [ %50, %bb.al ], [ %22, %bb.ac ] ; 3 uses
+  %30 = phi <4 x double> [ %37, %bb.al ], [ %15, %bb.ac ] ; 2 uses
+  %i.db = phi <2 x double> [ %i.di, %bb.al ], [ %i.ca, %bb.ac ] ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 216
   %i.dd = load i64, ptr %i.dc, align 8, !noundef !6 ; 2 uses
   %i.de = icmp ult i64 %i.dd, 1152921504606846976
   call void @llvm.assume(i1 %i.de)
-  %37 = shufflevector <2 x double> %36, <2 x double> %i.db, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %31 = shufflevector <4 x double> %30, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1> ; 2 uses
   switch i64 %i.dd, label %bb.aq [
     i64 0, label %bb.am
     i64 2, label %bb.ar
   ]
 
 bb.al:                                            ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.aj
-  %.sroa.12338.0 = phi double [ %cos.i, %bb.aj ], [ 1.000000e+00, %bb.af ], [ 0.000000e+00, %bb.ag ], [ -1.000000e+00, %bb.ah ], [ 0.000000e+00, %bb.ai ]
-  %.sroa.10334.0 = phi double [ %i.da, %bb.aj ], [ 0.000000e+00, %bb.af ], [ -1.000000e+00, %bb.ag ], [ 0.000000e+00, %bb.ah ], [ 1.000000e+00, %bb.ai ]
-  %38 = phi <2 x double> [ %34, %bb.aj ], [ <double 1.000000e+00, double 0.000000e+00>, %bb.af ], [ <double 0.000000e+00, double 1.000000e+00>, %bb.ag ], [ <double -1.000000e+00, double 0.000000e+00>, %bb.ah ], [ <double 0.000000e+00, double -1.000000e+00>, %bb.ai ] ; 2 uses
-  %39 = shufflevector <2 x double> %22, <2 x double> %i.ca, <2 x i32> <i32 0, i32 3>
-  %40 = shufflevector <2 x double> %38, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %41 = fmul <2 x double> %39, %40
-  %42 = shufflevector <2 x double> %i.ca, <2 x double> %22, <2 x i32> <i32 0, i32 3>
-  %43 = fmul <2 x double> %42, %38
-  %44 = fadd <2 x double> %43, %41
-  %45 = insertelement <2 x double> poison, double %.sroa.10334.0, i64 0
-  %46 = shufflevector <2 x double> %45, <2 x double> poison, <2 x i32> zeroinitializer
-  %47 = fmul <2 x double> %i.ca, %46
-  %48 = insertelement <2 x double> poison, double %.sroa.12338.0, i64 0
-  %49 = shufflevector <2 x double> %48, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.df = fmul <2 x double> %22, %49
-  %50 = fadd <2 x double> %i.df, %47
-  %51 = fmul <2 x double> %i.ca, zeroinitializer
-  %i.dg = fmul <2 x double> %22, zeroinitializer
-  %i.dh = fadd <2 x double> %i.dg, %51
-  %i.di = fadd <2 x double> %21, %i.dh
+  %32 = phi <4 x double> [ %29, %bb.aj ], [ <double 0.000000e+00, double 1.000000e+00, double 0.000000e+00, double 1.000000e+00>, %bb.af ], [ <double -1.000000e+00, double 0.000000e+00, double 1.000000e+00, double 0.000000e+00>, %bb.ag ], [ <double 0.000000e+00, double -1.000000e+00, double 0.000000e+00, double -1.000000e+00>, %bb.ah ], [ <double 1.000000e+00, double 0.000000e+00, double -1.000000e+00, double 0.000000e+00>, %bb.ai ] ; 2 uses
+  %33 = shufflevector <4 x double> %14, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  %34 = shufflevector <4 x double> %32, <4 x double> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 2>
+  %35 = fmul <4 x double> %33, %34
+  %36 = fmul <4 x double> %14, %32
+  %37 = fadd <4 x double> %36, %35
+  %38 = shufflevector <4 x double> %14, <4 x double> poison, <2 x i32> <i32 2, i32 3>
+  %i.df = fmul <2 x double> %38, zeroinitializer
+  %39 = shufflevector <4 x double> %14, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %i.dg = fmul <2 x double> %39, zeroinitializer
+  %i.dh = fadd <2 x double> %i.dg, %i.df
+  %i.di = fadd <2 x double> %i.ca, %i.dh
   br label %bb.ak
 
 bb.am:                                            ; preds = %bb.ak, %bb.ar
-  %52 = phi <2 x double> [ %35, %bb.ak ], [ %i.du, %bb.ar ]
-  %53 = phi <4 x double> [ %37, %bb.ak ], [ %62, %bb.ar ]
+  %40 = phi <4 x double> [ %31, %bb.ak ], [ %45, %bb.ar ]
+  %41 = phi <2 x double> [ %i.db, %bb.ak ], [ %i.du, %bb.ar ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.425.sroa.0.sroa.0)
   %.sroa.425.sroa.0.sroa.0.128..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.425.sroa.0.sroa.0, i64 128
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.425.sroa.0.sroa.0.128..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
@@ -655,11 +638,9 @@ bb.am:                                            ; preds = %bb.ak, %bb.ar
   %.sroa.5.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %0, i64 176
   store i64 %.sroa.635.0.copyload, ptr %.sroa.5.0..sroa_idx10, align 8
   %.sroa.5.sroa.3.0..sroa.5.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %54 = shufflevector <4 x double> %53, <4 x double> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
-  store <4 x double> %54, ptr %.sroa.5.sroa.3.0..sroa.5.0..sroa_idx10.sroa_idx, align 8
+  store <4 x double> %40, ptr %.sroa.5.sroa.3.0..sroa.5.0..sroa_idx10.sroa_idx, align 8
   %.sroa.5.sroa.3.sroa.6.0..sroa.5.sroa.3.0..sroa.5.0..sroa_idx10.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
-  %55 = shufflevector <2 x double> %52, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %55, ptr %.sroa.5.sroa.3.sroa.6.0..sroa.5.sroa.3.0..sroa.5.0..sroa_idx10.sroa_idx.sroa_idx, align 8
+  store <2 x double> %41, ptr %.sroa.5.sroa.3.sroa.6.0..sroa.5.sroa.3.0..sroa.5.0..sroa_idx10.sroa_idx.sroa_idx, align 8
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 232
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx10.sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.dl, i64 24, i1 false)
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 3 uses
@@ -695,16 +676,15 @@ bb.aq:                                            ; preds = %bb.ak
 bb.ar:                                            ; preds = %bb.ak
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 208
   %i.dr = load ptr, ptr %i.dq, align 8, !nonnull !6, !noundef !6
-  %56 = fmul <2 x double> %i.db, zeroinitializer  ; 2 uses
-  %57 = fmul <2 x double> %36, zeroinitializer    ; 2 uses
+  %42 = fmul <4 x double> %30, zeroinitializer    ; 3 uses
   %i.ds = load <2 x double>, ptr %i.dr, align 8
-  %58 = shufflevector <2 x double> %36, <2 x double> %i.db, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %59 = shufflevector <2 x double> %i.ds, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
-  %60 = fmul <4 x double> %58, %59
-  %61 = shufflevector <2 x double> %56, <2 x double> %57, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %62 = fadd <4 x double> %61, %60
-  %i.dt = fadd <2 x double> %56, %57
-  %i.du = fadd <2 x double> %35, %i.dt
+  %43 = shufflevector <2 x double> %i.ds, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %44 = fmul <4 x double> %31, %43
+  %45 = fadd <4 x double> %42, %44
+  %46 = shufflevector <4 x double> %42, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %47 = shufflevector <4 x double> %42, <4 x double> poison, <2 x i32> <i32 2, i32 3>
+  %i.dt = fadd <2 x double> %46, %47
+  %i.du = fadd <2 x double> %i.db, %i.dt
   br label %bb.am
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1qcNTItuk7F_13glyphs_reader.exit157: ; preds = %bb.aq
@@ -1107,7 +1087,7 @@ bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !nonnull !6, !noundef !6 ; 4 uses
+  %i.f = load ptr, ptr %i.e, align 8, !nonnull !6, !noundef !6 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !6 ; 2 uses
   switch i64 %i.h, label %bb.i [
@@ -1117,13 +1097,9 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.j = load <2 x i64>, ptr %i.f, align 8
-  %2 = load i64, ptr %i.f, align 8, !noundef !6   ; 2 uses
-  store i64 %2, ptr %i.i, align 8
-  store i64 %2, ptr %.sroa.417.0..sroa_idx, align 8
-  store <2 x i64> %i.j, ptr %.sroa.518.0..sroa_idx, align 8
+  %2 = shufflevector <2 x i64> %i.j, <2 x i64> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  store <4 x i64> %2, ptr %i.i, align 8
   store i32 -1, ptr %0, align 8
   br label %bb.e
 

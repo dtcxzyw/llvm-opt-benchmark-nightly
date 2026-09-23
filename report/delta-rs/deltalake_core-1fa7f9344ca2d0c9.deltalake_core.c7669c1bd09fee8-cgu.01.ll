@@ -204,7 +204,7 @@ bb.a:
   %.sroa.38 = alloca [40 x i8], align 8           ; 6 uses
   %.sroa.40 = alloca [64 x i8], align 8           ; 6 uses
   %i.bc = alloca [24 x i8], align 8               ; 4 uses
-  %i.bd = alloca [168 x i8], align 8              ; 15 uses
+  %i.bd = alloca [168 x i8], align 8              ; 13 uses
   %i.be = alloca [176 x i8], align 8              ; 9 uses
   %.sroa.16 = alloca [40 x i8], align 8           ; 6 uses
   %.sroa.17 = alloca [24 x i8], align 8           ; 6 uses
@@ -607,6 +607,10 @@ bb.ap:                                            ; preds = %.noexc87.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !17056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw), !noalias !17056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax), !noalias !17056
+  %6 = insertelement <4 x ptr> poison, ptr %i.ff, i64 0
+  %7 = insertelement <4 x ptr> %6, ptr %i.fg, i64 1
+  %8 = shufflevector <2 x ptr> %i.fh, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x ptr> %7, <4 x ptr> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %_RINvXs0_NvXNvNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4nexts5_1__NtBb_9DeltaScanNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB1L_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3p_4read9SliceReadEEBh_.exit
 
 bb.aq:                                            ; preds = %bb.ai
@@ -761,13 +765,11 @@ bb.bh:                                            ; preds = %bb.bg
   br label %_RINvXs0_NvXNvNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4nexts5_1__NtBb_9DeltaScanNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB1L_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3p_4read9SliceReadEEBh_.exit
 
 _RINvXs0_NvXNvNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4nexts5_1__NtBb_9DeltaScanNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB1L_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3p_4read9SliceReadEEBh_.exit: ; preds = %bb.i, %bb.k, %bb.q, %bb.ap, %bb.be, %bb.bf, %bb.bg, %bb.bh
-  %.sroa.23.0 = phi ptr [ %i.fg, %bb.ap ], [ undef, %bb.bf ], [ undef, %bb.be ], [ undef, %bb.bh ], [ undef, %bb.bg ], [ undef, %bb.q ], [ undef, %bb.k ], [ undef, %bb.i ]
-  %.sroa.22.0 = phi ptr [ %i.ff, %bb.ap ], [ undef, %bb.bf ], [ undef, %bb.be ], [ undef, %bb.bh ], [ undef, %bb.bg ], [ undef, %bb.q ], [ undef, %bb.k ], [ undef, %bb.i ]
   %.sroa.20.0 = phi i8 [ %i.eu, %bb.ap ], [ undef, %bb.bf ], [ undef, %bb.be ], [ undef, %bb.bh ], [ undef, %bb.bg ], [ undef, %bb.q ], [ undef, %bb.k ], [ undef, %bb.i ]
   %.sroa.18.0 = phi ptr [ %i.ew, %bb.ap ], [ undef, %bb.bf ], [ undef, %bb.be ], [ undef, %bb.bh ], [ undef, %bb.bg ], [ undef, %bb.q ], [ undef, %bb.k ], [ undef, %bb.i ]
   %.sroa.10.358 = phi ptr [ %i.fe, %bb.ap ], [ %.sroa.10.156, %bb.bf ], [ %.sroa.10.156, %bb.be ], [ %.sroa.10.156, %bb.bh ], [ %.sroa.10.156, %bb.bg ], [ %i.de, %bb.q ], [ %i.cq, %bb.k ], [ %i.ci, %bb.i ]
   %.sroa.052.3 = phi i64 [ %i.fd, %bb.ap ], [ 2, %bb.bf ], [ 2, %bb.be ], [ 2, %bb.bh ], [ 2, %bb.bg ], [ 2, %bb.q ], [ 2, %bb.k ], [ 2, %bb.i ]
-  %6 = phi <2 x ptr> [ %i.fh, %bb.ap ], [ undef, %bb.bf ], [ undef, %bb.be ], [ undef, %bb.bh ], [ undef, %bb.bg ], [ undef, %bb.q ], [ undef, %bb.k ], [ undef, %bb.i ]
+  %10 = phi <4 x ptr> [ %9, %bb.ap ], [ undef, %bb.bf ], [ undef, %bb.be ], [ undef, %bb.bh ], [ undef, %bb.bg ], [ undef, %bb.q ], [ undef, %bb.k ], [ undef, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay), !noalias !17056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.az)
   %i.gl = load i8, ptr %i.bu, align 8, !noundef !24
@@ -791,11 +793,7 @@ _RINvXs0_NvXNvNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_prov
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bd, i64 129
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.21.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.21, i64 7, i1 false)
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bd, i64 136
-  store ptr %.sroa.22.0, ptr %.sroa.22.0..sroa_idx, align 8
-  %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bd, i64 144
-  store ptr %.sroa.23.0, ptr %.sroa.23.0..sroa_idx, align 8
-  %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bd, i64 152
-  store <2 x ptr> %6, ptr %.sroa.24.0..sroa_idx, align 8
+  store <4 x ptr> %10, ptr %.sroa.22.0..sroa_idx, align 8
   %i.gn = invoke fastcc noundef align 8 ptr @_RNvMs3_NtCseqDwI8vvjGQ_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE7end_seqCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 dereferenceable(64) %1)
           to label %bb.bk unwind label %bb.bj     ; 10 uses
 

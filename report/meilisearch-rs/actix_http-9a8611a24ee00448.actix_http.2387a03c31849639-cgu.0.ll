@@ -205,10 +205,10 @@ bb.a:
   %i.dd = getelementptr inbounds nuw i8, ptr %i.am, i64 240 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.am, i64 192 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.am, i64 200 ; 2 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.am, i64 248
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.am, i64 248 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.am, i64 208 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.am, i64 216 ; 2 uses
-  %i.dj = getelementptr inbounds nuw i8, ptr %i.am, i64 256 ; 2 uses
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.am, i64 256 ; 3 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.dm = getelementptr inbounds nuw i8, ptr %i.an, i64 32
@@ -611,8 +611,10 @@ bb.ex:                                            ; preds = %bb.el
   store i64 0, ptr %i.dc, align 8, !alias.scope !5367, !noalias !5348
   store ptr inttoptr (i64 8 to ptr), ptr %i.de, align 8, !alias.scope !5367, !noalias !5348
   store i64 0, ptr %i.df, align 8, !alias.scope !5367, !noalias !5348
+  store i64 0, ptr %i.dg, align 8, !alias.scope !5367, !noalias !5348
   store ptr inttoptr (i64 8 to ptr), ptr %i.dh, align 8, !alias.scope !5367, !noalias !5348
-  store <6 x i64> zeroinitializer, ptr %i.di, align 8, !alias.scope !5367, !noalias !5348
+  store <4 x i64> zeroinitializer, ptr %i.di, align 8, !alias.scope !5367, !noalias !5348
+  store i64 0, ptr %i.dj, align 8, !alias.scope !5367, !noalias !5348
   %i.xb = icmp samesign ult i32 %i.vf, 10
   br i1 %i.xb, label %bb.fd, label %bb.fc
 
@@ -1015,10 +1017,10 @@ bb.a:
   %i.dd = getelementptr inbounds nuw i8, ptr %i.am, i64 240 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.am, i64 192 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.am, i64 200 ; 2 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.am, i64 248
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.am, i64 248 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.am, i64 208 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.am, i64 216 ; 2 uses
-  %i.dj = getelementptr inbounds nuw i8, ptr %i.am, i64 256 ; 2 uses
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.am, i64 256 ; 3 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.dm = getelementptr inbounds nuw i8, ptr %i.an, i64 32
@@ -1421,8 +1423,10 @@ bb.eb:                                            ; preds = %bb.dn
   store i64 0, ptr %i.dc, align 8, !alias.scope !11888, !noalias !11869
   store ptr inttoptr (i64 8 to ptr), ptr %i.de, align 8, !alias.scope !11888, !noalias !11869
   store i64 0, ptr %i.df, align 8, !alias.scope !11888, !noalias !11869
+  store i64 0, ptr %i.dg, align 8, !alias.scope !11888, !noalias !11869
   store ptr inttoptr (i64 8 to ptr), ptr %i.dh, align 8, !alias.scope !11888, !noalias !11869
-  store <6 x i64> zeroinitializer, ptr %i.di, align 8, !alias.scope !11888, !noalias !11869
+  store <4 x i64> zeroinitializer, ptr %i.di, align 8, !alias.scope !11888, !noalias !11869
+  store i64 0, ptr %i.dj, align 8, !alias.scope !11888, !noalias !11869
   %i.ul = icmp samesign ult i32 %i.sp, 10
   br i1 %i.ul, label %bb.ej, label %bb.ei
 

@@ -202,11 +202,11 @@ bb.a:
   br i1 %i.d, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt6vectorIiSaIiEES2_IS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZN2cv19RegionGrowing3DImpl7segmentERKNSB_12_OutputArrayESF_RKNSB_11_InputArrayESI_SI_E3$_0EEEvT_SL_SL_T0_.exit"
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.f = getelementptr i8, ptr %0, i64 32         ; 2 uses
-  %i.g = getelementptr i8, ptr %0, i64 8          ; 9 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 11 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %i.g = getelementptr i8, ptr %0, i64 8          ; 10 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.j = icmp eq i64 %2, 0
   br i1 %i.j, label %._crit_edge, label %.lr.ph57
 
@@ -369,14 +369,16 @@ bb.l:                                             ; preds = %.lr.ph57
   br i1 %i.bs, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.bt = load ptr, ptr %i.h, align 8, !tbaa !70
-  %i.bu = load ptr, ptr %i.i, align 8, !tbaa !70
-  store ptr %i.bu, ptr %i.h, align 8, !tbaa !70
-  %5 = load <2 x ptr>, ptr %0, align 8, !tbaa !57
+  %i.bt = load ptr, ptr %0, align 8, !tbaa !69
   store ptr %.val.i.i.i, ptr %0, align 8, !tbaa !69
+  %i.bu = load ptr, ptr %i.i, align 8, !tbaa !70
+  %5 = load <2 x ptr>, ptr %i.g, align 8, !tbaa !57
   store ptr %.val1.i.i.i, ptr %i.g, align 8, !tbaa !71
-  store <2 x ptr> %5, ptr %i.e, align 8, !tbaa !57
-  store ptr %i.bt, ptr %i.i, align 8, !tbaa !70
+  %6 = insertelement <4 x ptr> poison, ptr %i.bu, i64 0
+  %7 = insertelement <4 x ptr> %6, ptr %i.bt, i64 1
+  %8 = shufflevector <2 x ptr> %5, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x ptr> %7, <4 x ptr> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %9, ptr %i.h, align 8, !tbaa !57
   br label %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt6vectorIiSaIiEES2_IS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZN2cv19RegionGrowing3DImpl7segmentERKNSB_12_OutputArrayESF_RKNSB_11_InputArrayESI_SI_E3$_0EEEvT_SL_SL_SL_T0_.exit.i.preheader"
 
 bb.n:                                             ; preds = %bb.l

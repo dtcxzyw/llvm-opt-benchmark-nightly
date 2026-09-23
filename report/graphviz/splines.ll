@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.c, %bb.d, %bb.e,
 ; Function Attrs: nounwind uwtable
 define void @makeSelfEdge(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, double noundef %2, double noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = alloca [7 x %struct.pointf_s], align 16    ; 17 uses
+  %5 = alloca [7 x %struct.pointf_s], align 16    ; 14 uses
   %6 = alloca [7 x %struct.pointf_s], align 16    ; 17 uses
   %7 = alloca [7 x %struct.pointf_s], align 16    ; 17 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !104    ; 7 uses
@@ -607,7 +607,7 @@ bb.z:                                             ; preds = %bb.y
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 32
   %.sroa.0.0.copyload.i93 = load double, ptr %i.jh, align 8, !tbaa !11 ; 2 uses
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jg, i64 40
-  %.sroa.5.0.copyload.i = load double, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !11 ; 2 uses
+  %.sroa.5.0.copyload.i = load double, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !11
   %i.ji = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %.sroa.069.0.copyload.i = load double, ptr %i.ji, align 8, !tbaa !11
   %.sroa.1075.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32
@@ -618,7 +618,7 @@ bb.z:                                             ; preds = %bb.y
   %.sroa.10.0..sroa_idx.i94 = getelementptr inbounds nuw i8, ptr %i.c, i64 80
   %.sroa.10.0.copyload.i95 = load double, ptr %.sroa.10.0..sroa_idx.i94, align 8, !tbaa !11
   %i.jl = fadd double %.sroa.0.0.copyload.i93, %.sroa.059.0.copyload.i ; 4 uses
-  %i.jm = insertelement <2 x double> poison, double %.sroa.5.0.copyload.i, i64 0
+  %i.jm = insertelement <2 x double> poison, double %.sroa.5.0.copyload.i, i64 0 ; 2 uses
   %i.jn = shufflevector <2 x double> %i.jm, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.jo = insertelement <2 x double> poison, double %.sroa.1075.0.copyload.i, i64 0
   %i.jp = insertelement <2 x double> %i.jo, double %.sroa.10.0.copyload.i95, i64 1
@@ -689,17 +689,16 @@ convert_sides_to_points.exit.thread.i102:         ; preds = %convert_sides_to_po
   %i.ks = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.kt = fadd double %i.jj, %i.jl
   %i.ku = fmul double %i.kt, 5.000000e-01
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 56
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 64
-  %i.kv = getelementptr inbounds nuw i8, ptr %5, i64 72
-  %i.kw = getelementptr inbounds nuw i8, ptr %5, i64 80
-  %i.kx = getelementptr inbounds nuw i8, ptr %5, i64 88
-  %i.ky = getelementptr inbounds nuw i8, ptr %5, i64 96
-  %.sroa.10.0..sroa_idx65.i = getelementptr inbounds nuw i8, ptr %5, i64 104
+  %i.kv = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %i.kw = getelementptr inbounds nuw i8, ptr %5, i64 88
+  %i.kx = getelementptr inbounds nuw i8, ptr %5, i64 96
+  %i.ky = getelementptr inbounds nuw i8, ptr %5, i64 104
+  %8 = insertelement <2 x double> %i.jm, double %i.jl, i64 1
   %i.kz = insertelement <2 x double> poison, double %3, i64 0
   %i.la = shufflevector <2 x double> %i.kz, <2 x double> poison, <2 x i32> zeroinitializer
   %i.lb = extractelement <2 x double> %i.jq, i64 0
   %i.lc = extractelement <2 x double> %i.jq, i64 1
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.af, %.lr.ph.i104
@@ -718,23 +717,23 @@ bb.ac:                                            ; preds = %bb.af, %.lr.ph.i104
   %i.lj = fadd double %i.jj, %i.li                ; 2 uses
   store double %i.lj, ptr %i.ko, align 16, !tbaa !70
   store double %i.lj, ptr %i.kq, align 16, !tbaa !70
-  %10 = fsub double %.sroa.5.0.copyload.i, %i.lg  ; 3 uses
-  store double %10, ptr %i.kr, align 8, !tbaa !71
   store double %i.ku, ptr %i.ks, align 16, !tbaa !70
-  store double %10, ptr %8, align 8, !tbaa !71
-  %11 = fsub double %i.jl, %i.li                  ; 2 uses
-  store double %11, ptr %9, align 16, !tbaa !70
-  store double %10, ptr %i.kv, align 8, !tbaa !71
-  store double %11, ptr %i.kw, align 16, !tbaa !70
+  %10 = insertelement <2 x double> poison, double %i.lg, i64 0
+  %11 = insertelement <2 x double> %10, double %i.li, i64 1
+  %12 = shufflevector <2 x double> %11, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %13 = fsub <4 x double> %9, %12                 ; 2 uses
+  %14 = extractelement <4 x double> %13, i64 0
+  store double %14, ptr %i.kr, align 8, !tbaa !71
+  store <4 x double> %13, ptr %i.kv, align 8, !tbaa !11
   %i.lk = fdiv <2 x double> %i.lh, splat (double 3.000000e+00) ; 2 uses
   %foldExtExtBinop166 = fsub <2 x double> %i.jq, %i.lk
   %i.ll = extractelement <2 x double> %foldExtExtBinop166, i64 0
   store double %i.ll, ptr %i.kp, align 8, !tbaa !71
   %foldExtExtBinop168 = fsub <2 x double> %i.jq, %i.lk
   %i.lm = extractelement <2 x double> %foldExtExtBinop168, i64 1
-  store double %i.lm, ptr %i.kx, align 8, !tbaa !71
-  store double %i.jl, ptr %i.ky, align 16, !tbaa !11
-  store double %i.lc, ptr %.sroa.10.0..sroa_idx65.i, align 8, !tbaa !11
+  store double %i.lm, ptr %i.kw, align 8, !tbaa !71
+  store double %i.jl, ptr %i.kx, align 16, !tbaa !11
+  store double %i.lc, ptr %i.ky, align 8, !tbaa !11
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lf, i64 16 ; 2 uses
   %i.lo = load ptr, ptr %i.ln, align 8, !tbaa !18
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 120

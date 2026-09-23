@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN11colvar_gridIdEC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(698) %0, ptr noundef nonnull align 8 dereferenceable(698) %1) unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %class.colvar_grid_params, align 8  ; 15 uses
+  %2 = alloca %class.colvar_grid_params, align 8  ; 16 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 320
@@ -216,28 +216,32 @@ bb.a:
   %i.f = load <2 x ptr>, ptr %i.e, align 8, !tbaa !304
   store <2 x ptr> %i.f, ptr %i.d, align 8, !tbaa !304
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 344
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !226
-  store ptr %i.i, ptr %i.g, align 8, !tbaa !226
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 24
   %4 = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %5 = load <2 x ptr>, ptr %4, align 8, !tbaa !304
-  store <2 x ptr> %5, ptr %3, align 8, !tbaa !304
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 368
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !226
-  store ptr %i.l, ptr %i.j, align 8, !tbaa !226
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %5 = load ptr, ptr %3, align 8, !tbaa !226
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
+  %i.i = load ptr, ptr %4, align 8, !tbaa !225
+  %6 = load <2 x ptr>, ptr %i.h, align 8, !tbaa !304
+  %7 = insertelement <4 x ptr> poison, ptr %5, i64 0
+  %8 = insertelement <4 x ptr> %7, ptr %i.i, i64 1
+  %9 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x ptr> %8, <4 x ptr> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %10, ptr %i.g, align 8, !tbaa !304
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 376
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
-  %6 = load <2 x ptr>, ptr %i.n, align 8, !tbaa !295
-  store <2 x ptr> %6, ptr %i.m, align 8, !tbaa !295
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 376
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !228
+  store ptr %i.l, ptr %i.j, align 8, !tbaa !228
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %11 = load ptr, ptr %i.n, align 8, !tbaa !291
+  store ptr %11, ptr %i.m, align 8, !tbaa !291
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !292
   store ptr %i.q, ptr %i.o, align 8, !tbaa !292
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 24, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 400
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
   %i.t = load <2 x ptr>, ptr %i.s, align 8, !tbaa !295

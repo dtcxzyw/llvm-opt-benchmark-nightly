@@ -204,7 +204,7 @@ declare void @_ZN4Luau15BytecodeBuilder7emitAuxEj(ptr noundef nonnull align 8 de
 define linkonce_odr dso_local void @_ZN4Luau8Compiler23compileClassDeclarationEPNS_12AstStatClassE(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
-  %2 = alloca %"struct.Luau::BytecodeBuilder::ClassShape", align 8 ; 12 uses
+  %2 = alloca %"struct.Luau::BytecodeBuilder::ClassShape", align 8 ; 13 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %3 = alloca %"struct.Luau::overloaded", align 8 ; 10 uses
   %4 = alloca %"struct.Luau::BytecodeBuilder::ClassShape", align 8 ; 7 uses
@@ -485,18 +485,20 @@ bb.ab:                                            ; preds = %_ZN4Luau8Compiler13
   store <2 x ptr> %i.dn, ptr %i.dm, align 8, !tbaa !827
   %i.do = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %5 = load ptr, ptr %i.dp, align 8, !tbaa !395
-  store ptr %5, ptr %i.do, align 8, !tbaa !395
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %8 = load ptr, ptr %i.dp, align 8, !tbaa !395
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.co, i8 0, i64 24, i1 false)
-  %i.dq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
+  %9 = load ptr, ptr %5, align 8, !tbaa !394
   %i.dr = load <2 x ptr>, ptr %6, align 8, !tbaa !827
-  store <2 x ptr> %i.dr, ptr %i.dq, align 8, !tbaa !827
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
-  %9 = load ptr, ptr %8, align 8, !tbaa !395
-  store ptr %9, ptr %7, align 8, !tbaa !395
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
+  %10 = insertelement <4 x ptr> poison, ptr %8, i64 0
+  %11 = insertelement <4 x ptr> %10, ptr %9, i64 1
+  %12 = shufflevector <2 x ptr> %i.dr, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x ptr> %11, <4 x ptr> %12, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %13, ptr %i.do, align 8, !tbaa !827
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.ds = invoke noundef i32 @_ZN4Luau15BytecodeBuilder13addClassShapeENS0_10ClassShapeE(ptr noundef nonnull align 8 dereferenceable(1048) %i.dl, ptr noundef nonnull align 8 %4)
           to label %bb.ah unwind label %bb.ao     ; 2 uses
 
@@ -550,7 +552,8 @@ bb.ag:                                            ; preds = %call.1.i, %call.0.i
   br label %bb.aq
 
 bb.ah:                                            ; preds = %._crit_edge
-  %i.eb = load ptr, ptr %i.dq, align 8, !tbaa !394 ; 3 uses
+  %14 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.eb = load ptr, ptr %14, align 8, !tbaa !394  ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.eb, null
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit.i, label %bb.ai
 
@@ -594,12 +597,12 @@ _ZN4Luau8Compiler13checkConstantEiRKNS_8LocationE.exit61: ; preds = %_ZN4Luau15B
 
 bb.al:                                            ; preds = %_ZN4Luau8Compiler13checkConstantEiRKNS_8LocationE.exit61
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
-  %i.eo = load ptr, ptr %6, align 8, !tbaa !394   ; 3 uses
+  %i.eo = load ptr, ptr %5, align 8, !tbaa !394   ; 3 uses
   %.not.i.i.i.i62 = icmp eq ptr %i.eo, null
   br i1 %.not.i.i.i.i62, label %_ZNSt6vectorIiSaIiEED2Ev.exit.i63, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.ep = load ptr, ptr %8, align 8, !tbaa !395
+  %i.ep = load ptr, ptr %i.dq, align 8, !tbaa !395
   %i.eq = ptrtoint ptr %i.ep to i64
   %i.er = ptrtoint ptr %i.eo to i64
   %i.es = sub i64 %i.eq, %i.er

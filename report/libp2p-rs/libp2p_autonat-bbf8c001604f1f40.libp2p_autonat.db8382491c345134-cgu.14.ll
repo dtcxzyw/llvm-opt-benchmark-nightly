@@ -202,14 +202,14 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [32 x i8], align 8                ; 8 uses
   %i.f = alloca [272 x i8], align 8               ; 6 uses
-  %i.g = alloca [184 x i8], align 8               ; 13 uses
+  %i.g = alloca [184 x i8], align 8               ; 9 uses
   %i.h = alloca [128 x i8], align 8               ; 6 uses
   %i.i = alloca [272 x i8], align 8               ; 4 uses
   %i.j = alloca [272 x i8], align 8               ; 4 uses
   %i.k = alloca [208 x i8], align 8               ; 4 uses
-  %i.l = alloca [48 x i8], align 8                ; 8 uses
+  %i.l = alloca [48 x i8], align 8                ; 7 uses
   %i.m = alloca [208 x i8], align 8               ; 4 uses
-  %i.n = alloca [184 x i8], align 8               ; 12 uses
+  %i.n = alloca [184 x i8], align 8               ; 11 uses
   %i.o = alloca [32 x i8], align 8                ; 7 uses
   %i.p = alloca [208 x i8], align 8               ; 6 uses
   %i.q = alloca [272 x i8], align 8               ; 11 uses
@@ -253,28 +253,29 @@ _RNvMNtCs1SQIzZDXHNl_7tracing4spanNtB2_4Span8do_enter.exit: ; preds = %.noexc43,
   %i.ab = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 480 ; 3 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 776 ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 480
+  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 776
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 1016
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 424
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 680
   %i.aj = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.al = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 920 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 480, i64 776, i64 1016, i64 632>
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 632
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 400
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 360
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 1000
+  %4 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 400, i64 360, i64 1000, i64 728>
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 728
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 616
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 1008
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 824
+  %5 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 616, i64 1008, i64 824, i64 872>
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 872
   %i.aw = getelementptr inbounds nuw i8, ptr %i.n, i64 104
   %i.ax = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.az = getelementptr inbounds nuw i8, ptr %i.n, i64 40
   %i.ba = getelementptr inbounds nuw i8, ptr %i.n, i64 56
@@ -282,24 +283,22 @@ _RNvMNtCs1SQIzZDXHNl_7tracing4spanNtB2_4Span8do_enter.exit: ; preds = %.noexc43,
   %i.bc = getelementptr inbounds nuw i8, ptr %i.n, i64 88
   %i.bd = getelementptr inbounds nuw i8, ptr %i.g, i64 104
   %i.be = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.bf = getelementptr inbounds nuw i8, ptr %i.g, i64 40
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.g, i64 56
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.g, i64 72
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.g, i64 88
-  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.g, i64 72
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %6 = insertelement <2 x ptr> poison, ptr %i.ae, i64 0
+  %7 = insertelement <2 x ptr> %6, ptr %i.af, i64 1 ; 2 uses
   %i.bj = insertelement <2 x ptr> poison, ptr %i.ag, i64 0 ; 2 uses
-  %i.bk = insertelement <2 x ptr> %i.bj, ptr %i.an, i64 1 ; 2 uses
+  %i.bk = insertelement <2 x ptr> %i.bj, ptr %i.an, i64 1
   %i.bl = insertelement <2 x ptr> poison, ptr %i.ao, i64 0
-  %i.bm = insertelement <2 x ptr> %i.bl, ptr %i.ap, i64 1 ; 2 uses
+  %i.bm = insertelement <2 x ptr> %i.bl, ptr %i.ap, i64 1
   %i.bn = insertelement <2 x ptr> poison, ptr %i.aq, i64 0
-  %i.bo = insertelement <2 x ptr> %i.bn, ptr %i.ar, i64 1 ; 2 uses
+  %i.bo = insertelement <2 x ptr> %i.bn, ptr %i.ar, i64 1
   %i.bp = insertelement <2 x ptr> poison, ptr %i.as, i64 0
-  %i.bq = insertelement <2 x ptr> %i.bp, ptr %i.at, i64 1 ; 2 uses
+  %i.bq = insertelement <2 x ptr> %i.bp, ptr %i.at, i64 1
   %i.br = insertelement <2 x ptr> poison, ptr %i.au, i64 0
-  %i.bs = insertelement <2 x ptr> %i.br, ptr %i.av, i64 1 ; 2 uses
+  %i.bs = insertelement <2 x ptr> %i.br, ptr %i.av, i64 1
   %i.bt = insertelement <2 x ptr> %i.bj, ptr %i.ah, i64 1
   br label %.backedge
 
@@ -476,13 +475,9 @@ bb.ab:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.bd, ptr noundef nonnull align 8 dereferenceable(80) %i.am, i64 80, i1 false)
   store ptr %1, ptr %i.g, align 8
-  store ptr %i.ae, ptr %i.be, align 8
-  store ptr %i.af, ptr %5, align 8
-  store <2 x ptr> %i.bk, ptr %6, align 8
-  store <2 x ptr> %i.bm, ptr %i.bf, align 8
-  store <2 x ptr> %i.bo, ptr %i.bg, align 8
-  store <2 x ptr> %i.bq, ptr %i.bh, align 8
-  store <2 x ptr> %i.bs, ptr %i.bi, align 8
+  store <4 x ptr> %3, ptr %i.be, align 8
+  store <4 x ptr> %4, ptr %i.bf, align 8
+  store <4 x ptr> %5, ptr %i.bg, align 8
   invoke void @_RNvMs_NtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v19behaviour9as_clientNtB4_8AsClient15poll_auto_probe(ptr noalias nofree noundef nonnull sret([128 x i8]) align 8 captures(none) dereferenceable(128) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.az unwind label %.loopexit
 
@@ -521,8 +516,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.aw, ptr noundef nonnull align 8 dereferenceable(80) %i.am, i64 80, i1 false)
   store ptr %1, ptr %i.n, align 8
-  store ptr %i.ae, ptr %i.ax, align 8
-  store ptr %i.af, ptr %4, align 8
+  store <2 x ptr> %7, ptr %i.ax, align 8
   store <2 x ptr> %i.bk, ptr %i.ay, align 8
   store <2 x ptr> %i.bm, ptr %i.az, align 8
   store <2 x ptr> %i.bo, ptr %i.ba, align 8
@@ -536,8 +530,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ad
 bb.ah:                                            ; preds = %bb.af, %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   store ptr %1, ptr %i.l, align 8
-  store ptr %i.ae, ptr %i.aj, align 8
-  store ptr %i.af, ptr %3, align 8
+  store <2 x ptr> %7, ptr %i.aj, align 8
   store <2 x ptr> %i.bt, ptr %i.ak, align 8
   store ptr %i.ai, ptr %i.al, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
@@ -658,8 +651,8 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.az
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(128) %i.h, i64 128, i1 false)
-  store i64 1, ptr %7, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.bi, ptr noundef nonnull align 8 dereferenceable(128) %i.h, i64 128, i1 false)
+  store i64 1, ptr %i.bh, align 8
   store i64 2, ptr %i.f, align 8
   %i.ds = invoke noundef nonnull align 8 ptr @_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtCs6b9j1MKPRPC_12libp2p_swarm9behaviour7ToSwarmNtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v19behaviour5EventINtNtCsfoiTdJnOWBy_23libp2p_request_response7handler15OutboundMessageNtNtB1Y_8protocol12AutoNatCodecEEE13push_back_mutB20_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.aa, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(272) %i.f)
           to label %bb.bc unwind label %.loopexit ; 0 uses

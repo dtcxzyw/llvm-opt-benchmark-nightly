@@ -204,8 +204,8 @@ declare i32 @fits_write_compressed_img(ptr noundef, i32 noundef, ptr noundef, pt
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @ffpsse(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [7 x i64], align 16               ; 12 uses
-  %i.b = alloca [7 x i64], align 16               ; 10 uses
+  %i.a = alloca [7 x i64], align 16               ; 14 uses
+  %i.b = alloca [7 x i64], align 16               ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = load i32, ptr %7, align 4, !tbaa !18     ; 2 uses
@@ -232,8 +232,16 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.h
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  store <6 x i64> splat (i64 1), ptr %i.a, align 16, !tbaa !20
-  store <6 x i64> splat (i64 1), ptr %i.b, align 16, !tbaa !20
+  store <4 x i64> splat (i64 1), ptr %i.a, align 16, !tbaa !20
+  store <4 x i64> splat (i64 1), ptr %i.b, align 16, !tbaa !20
+  %.32..32..sroa_idx306 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store i64 1, ptr %.32..32..sroa_idx306, align 16, !tbaa !20
+  %.32..32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  store i64 1, ptr %.32..32..sroa_idx, align 16, !tbaa !20
+  %.40..40..sroa_idx308 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  store i64 1, ptr %.40..40..sroa_idx308, align 8, !tbaa !20
+  %.40..40..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  store i64 1, ptr %.40..40..sroa_idx, align 8, !tbaa !20
   %.48..48..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store i64 1, ptr %.48..48..sroa_idx, align 16, !tbaa !20
   %i.i = tail call i64 @llvm.smax.i64(i64 %1, i64 1)
@@ -244,7 +252,7 @@ bb.e:                                             ; preds = %bb.d
   %i.l = load i64, ptr %5, align 8, !tbaa !22
   %reass.sub = sub i64 %i.l, %i.k
   %i.m = add i64 %reass.sub, 1
-  %.sroa.0.0.vec.insert = insertelement <6 x i64> <i64 poison, i64 1, i64 1, i64 1, i64 1, i64 1>, i64 %i.m, i64 0 ; 2 uses
+  %.sroa.0.0.vec.insert = insertelement <4 x i64> <i64 poison, i64 1, i64 1, i64 1>, i64 %i.m, i64 0 ; 2 uses
   %exitcond.not = icmp eq i64 %2, 1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.1
 
@@ -255,7 +263,7 @@ bb.e:                                             ; preds = %bb.d
   %i.q = load i64, ptr %i.p, align 8, !tbaa !22
   %reass.sub.1 = sub i64 %i.q, %i.o
   %i.r = add i64 %reass.sub.1, 1
-  %.sroa.0.8.vec.insert = insertelement <6 x i64> %.sroa.0.0.vec.insert, i64 %i.r, i64 1 ; 2 uses
+  %.sroa.0.8.vec.insert = insertelement <4 x i64> %.sroa.0.0.vec.insert, i64 %i.r, i64 1 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %2, 2
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.2
 
@@ -266,7 +274,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load i64, ptr %i.u, align 8, !tbaa !22
   %reass.sub.2 = sub i64 %i.v, %i.t
   %i.w = add i64 %reass.sub.2, 1
-  %.sroa.0.16.vec.insert = insertelement <6 x i64> %.sroa.0.8.vec.insert, i64 %i.w, i64 2 ; 2 uses
+  %.sroa.0.16.vec.insert = insertelement <4 x i64> %.sroa.0.8.vec.insert, i64 %i.w, i64 2 ; 2 uses
   %exitcond.not.2 = icmp eq i64 %2, 3
   br i1 %exitcond.not.2, label %._crit_edge, label %.lr.ph.3
 
@@ -277,7 +285,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !22
   %reass.sub.3 = sub i64 %i.aa, %i.y
   %i.ab = add i64 %reass.sub.3, 1
-  %.sroa.0.24.vec.insert = insertelement <6 x i64> %.sroa.0.16.vec.insert, i64 %i.ab, i64 3 ; 2 uses
+  %.sroa.0.24.vec.insert = insertelement <4 x i64> %.sroa.0.16.vec.insert, i64 %i.ab, i64 3 ; 4 uses
   %exitcond.not.3 = icmp eq i64 %2, 4
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph.4
 
@@ -287,8 +295,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !22
   %reass.sub.4 = sub i64 %i.af, %i.ad
-  %i.ag = add i64 %reass.sub.4, 1
-  %.sroa.0.32.vec.insert = insertelement <6 x i64> %.sroa.0.24.vec.insert, i64 %i.ag, i64 4 ; 2 uses
+  %i.ag = add i64 %reass.sub.4, 1                 ; 3 uses
   %exitcond.not.4 = icmp eq i64 %2, 5
   br i1 %exitcond.not.4, label %._crit_edge, label %.lr.ph.5
 
@@ -298,8 +305,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !22
   %reass.sub.5 = sub i64 %i.ak, %i.ai
-  %i.al = add i64 %reass.sub.5, 1
-  %.sroa.0.40.vec.insert = insertelement <6 x i64> %.sroa.0.32.vec.insert, i64 %i.al, i64 5 ; 2 uses
+  %i.al = add i64 %reass.sub.5, 1                 ; 2 uses
   %exitcond.not.5 = icmp eq i64 %2, 6
   br i1 %exitcond.not.5, label %._crit_edge, label %.lr.ph.6
 
@@ -314,8 +320,10 @@ bb.e:                                             ; preds = %bb.d
 
 ._crit_edge:                                      ; preds = %.lr.ph.6, %.lr.ph.5, %.lr.ph.4, %.lr.ph.3, %.lr.ph.2, %.lr.ph.1, %.lr.ph.preheader
   %.sroa.15.0 = phi i64 [ 1, %.lr.ph.preheader ], [ 1, %.lr.ph.1 ], [ 1, %.lr.ph.2 ], [ 1, %.lr.ph.3 ], [ 1, %.lr.ph.4 ], [ 1, %.lr.ph.5 ], [ %i.aq, %.lr.ph.6 ] ; 2 uses
-  %.sroa.0.0 = phi <6 x i64> [ %.sroa.0.0.vec.insert, %.lr.ph.preheader ], [ %.sroa.0.8.vec.insert, %.lr.ph.1 ], [ %.sroa.0.16.vec.insert, %.lr.ph.2 ], [ %.sroa.0.24.vec.insert, %.lr.ph.3 ], [ %.sroa.0.32.vec.insert, %.lr.ph.4 ], [ %.sroa.0.40.vec.insert, %.lr.ph.5 ], [ %.sroa.0.40.vec.insert, %.lr.ph.6 ] ; 6 uses
-  %.sroa.0.0.vec.extract = extractelement <6 x i64> %.sroa.0.0, i64 0 ; 2 uses
+  %.sroa.14.0 = phi i64 [ 1, %.lr.ph.preheader ], [ 1, %.lr.ph.1 ], [ 1, %.lr.ph.2 ], [ 1, %.lr.ph.3 ], [ 1, %.lr.ph.4 ], [ %i.al, %.lr.ph.5 ], [ %i.al, %.lr.ph.6 ] ; 2 uses
+  %.sroa.11.0 = phi i64 [ 1, %.lr.ph.preheader ], [ 1, %.lr.ph.1 ], [ 1, %.lr.ph.2 ], [ 1, %.lr.ph.3 ], [ %i.ag, %.lr.ph.4 ], [ %i.ag, %.lr.ph.5 ], [ %i.ag, %.lr.ph.6 ] ; 2 uses
+  %.sroa.0.0 = phi <4 x i64> [ %.sroa.0.0.vec.insert, %.lr.ph.preheader ], [ %.sroa.0.8.vec.insert, %.lr.ph.1 ], [ %.sroa.0.16.vec.insert, %.lr.ph.2 ], [ %.sroa.0.24.vec.insert, %.lr.ph.3 ], [ %.sroa.0.24.vec.insert, %.lr.ph.4 ], [ %.sroa.0.24.vec.insert, %.lr.ph.5 ], [ %.sroa.0.24.vec.insert, %.lr.ph.6 ] ; 4 uses
+  %.sroa.0.0.vec.extract = extractelement <4 x i64> %.sroa.0.0, i64 0 ; 2 uses
   %.0..0..pre = load i64, ptr %i.b, align 16, !tbaa !20 ; 3 uses
   %.8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.8..8..pre = load i64, ptr %.8..8..sroa_idx, align 8, !tbaa !20
@@ -357,17 +365,15 @@ bb.e:                                             ; preds = %bb.d
   %i.bf = add nsw i64 %.8..8.247, -1
   %i.bg = mul nsw i64 %i.bf, %.0..0..pre
   %.0..0.245 = load i64, ptr %i.a, align 16, !tbaa !20
-  %.sroa.0.40.vec.extract = extractelement <6 x i64> %.sroa.0.0, i64 5 ; 2 uses
-  %i.bh = icmp slt i64 %.sroa.0.40.vec.extract, 1
-  %.sroa.0.32.vec.extract = extractelement <6 x i64> %.sroa.0.0, i64 4 ; 2 uses
-  %.sroa.0.24.vec.extract = extractelement <6 x i64> %.sroa.0.0, i64 3 ; 2 uses
+  %i.bh = icmp slt i64 %.sroa.14.0, 1
+  %.sroa.0.24.vec.extract = extractelement <4 x i64> %.sroa.0.0, i64 3 ; 2 uses
   %i.bi = icmp slt i64 %.sroa.0.24.vec.extract, 1
-  %.sroa.0.16.vec.extract = extractelement <6 x i64> %.sroa.0.0, i64 2 ; 2 uses
+  %.sroa.0.16.vec.extract = extractelement <4 x i64> %.sroa.0.0, i64 2 ; 2 uses
   %i.bj = icmp slt i64 %.sroa.0.16.vec.extract, 1
   %i.bk = add nsw i64 %i.bg, %.0..0.245
-  %.sroa.0.8.vec.extract = extractelement <6 x i64> %.sroa.0.0, i64 1 ; 2 uses
+  %.sroa.0.8.vec.extract = extractelement <4 x i64> %.sroa.0.0, i64 1 ; 2 uses
   %i.bl = icmp slt i64 %.sroa.0.8.vec.extract, 1
-  %i.bm = icmp slt i64 %.sroa.0.32.vec.extract, 1
+  %i.bm = icmp slt i64 %.sroa.11.0, 1
   %or.cond288.not296 = select i1 %i.bh, i1 true, i1 %i.bm
   %brmerge = select i1 %or.cond288.not296, i1 true, i1 %i.bi
   %brmerge291 = select i1 %brmerge, i1 true, i1 %i.bj
@@ -447,13 +453,13 @@ bb.g:                                             ; preds = %bb.f
 ._crit_edge161.split.us.split.us.us.us.us.us.us.us.us.us.us.us.us: ; preds = %._crit_edge156.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us
   %i.ca = add nsw i64 %.2170.us.us.us.us.us.us.us.us.us.us.us, %i.at
   %i.cb = add nuw nsw i64 %.0101171.us.us.us.us.us.us.us.us.us.us.us, 1 ; 2 uses
-  %exitcond237.not = icmp eq i64 %i.cb, %.sroa.0.32.vec.extract
+  %exitcond237.not = icmp eq i64 %i.cb, %.sroa.11.0
   br i1 %exitcond237.not, label %._crit_edge172.split.us.split.us.split.us.us.us.us.us.us.us.us.us, label %.preheader132.us.us.us.us.us.us.us.us.us.us.us, !llvm.loop !62
 
 ._crit_edge172.split.us.split.us.split.us.us.us.us.us.us.us.us.us: ; preds = %._crit_edge161.split.us.split.us.us.us.us.us.us.us.us.us.us.us.us
   %i.cc = add nsw i64 %.1108187.us.us.us.us.us.us.us.us, %i.au
   %i.cd = add nuw nsw i64 %.0100188.us.us.us.us.us.us.us.us, 1 ; 2 uses
-  %exitcond238.not = icmp eq i64 %i.cd, %.sroa.0.40.vec.extract
+  %exitcond238.not = icmp eq i64 %i.cd, %.sroa.14.0
   br i1 %exitcond238.not, label %._crit_edge189.split.us.split.us.split.us.split.us.us.us.us.us, label %.preheader133.us.us.us.us.us.us.us.us, !llvm.loop !63
 
 ._crit_edge189.split.us.split.us.split.us.split.us.us.us.us.us: ; preds = %._crit_edge172.split.us.split.us.split.us.us.us.us.us.us.us.us.us

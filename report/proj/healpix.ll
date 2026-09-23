@@ -204,7 +204,7 @@ declare double @llvm.floor.f64(double) #7
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define internal fastcc noundef range(i32 0, 2) i32 @_ZL8in_imageddiii(double noundef %0, double noundef %1, i32 noundef range(i32 0, 2) %2, i32 noundef %3, i32 noundef %4) unnamed_addr #8 {
 bb.a:
-  %i.a = alloca [12 x [2 x double]], align 16     ; 13 uses
+  %i.a = alloca [12 x [2 x double]], align 16     ; 9 uses
   %i.b = icmp eq i32 %2, 0
   br i1 %i.b, label %.preheader27.preheader, label %bb.k
 
@@ -379,18 +379,14 @@ bb.k:                                             ; preds = %bb.a
   %i.bn = shufflevector <4 x double> %i.bm, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
   store <4 x double> %i.bn, ptr %i.bd, align 16, !tbaa !58
   %i.bo = extractelement <2 x double> %i.bj, i64 1
-  %i.bp = fadd double %i.bo, 1.000000e-15         ; 3 uses
-  store double %i.bp, ptr %i.be, align 16, !tbaa !58
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store double f0x4002D97C7F3321D4, ptr %5, align 8, !tbaa !58
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store double %i.bp, ptr %6, align 16, !tbaa !58
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store <2 x double> <double f0x3FE921FB54442D21, double f0x400921FB54442D1A>, ptr %7, align 8, !tbaa !58
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.a, i64 88
-  store <2 x double> <double f0x3FE921FB54442D21, double f0x400921FB54442D1A>, ptr %i.bq, align 8, !tbaa !58
-  %i.br = getelementptr inbounds nuw i8, ptr %i.a, i64 104
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 136
+  %i.bp = fadd double %i.bo, 1.000000e-15         ; 2 uses
+  %5 = insertelement <4 x double> <double poison, double f0x4002D97C7F3321D4, double poison, double f0x3FE921FB54442D21>, double %i.bp, i64 0
+  %6 = shufflevector <4 x double> %5, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
+  store <4 x double> %6, ptr %i.be, align 16, !tbaa !58
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.a, i64 80
+  store <4 x double> <double f0x400921FB54442D1A, double f0x3FE921FB54442D21, double f0x400921FB54442D1A, double f0xBFE921FB54442D21>, ptr %i.bq, align 16, !tbaa !58
+  %i.br = getelementptr inbounds nuw i8, ptr %i.a, i64 112
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.bt = sitofp i32 %4 to double
   %i.bu = insertelement <2 x double> poison, double %i.bt, i64 0
   %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
@@ -398,18 +394,16 @@ bb.k:                                             ; preds = %bb.a
   %i.bx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bw, <2 x double> splat (double f0x3FF921FB54442D18), <2 x double> splat (double f0xC00921FB54442D18)) ; 2 uses
   %i.by = extractelement <2 x double> %i.bx, i64 0
   %i.bz = fadd double %i.by, 1.000000e-15         ; 2 uses
-  %i.ca = insertelement <4 x double> <double f0xBFE921FB54442D21, double poison, double f0xBFE921FB54442D21, double poison>, double %i.bz, i64 1
-  %8 = shufflevector <4 x double> %i.ca, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
-  store <4 x double> %8, ptr %i.br, align 8, !tbaa !58
+  %i.ca = insertelement <4 x double> <double poison, double f0xBFE921FB54442D21, double poison, double f0xC002D97C7F3321D4>, double %i.bz, i64 0
+  %7 = shufflevector <4 x double> %i.ca, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
+  store <4 x double> %7, ptr %i.br, align 16, !tbaa !58
   %i.cb = extractelement <2 x double> %i.bx, i64 1
   %i.cc = fadd double %i.cb, -1.000000e-15        ; 2 uses
-  %i.cd = insertelement <4 x double> <double f0xC002D97C7F3321D4, double poison, double f0xC002D97C7F3321D4, double poison>, double %i.cc, i64 1
-  %9 = shufflevector <4 x double> %i.cd, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
-  store <4 x double> %9, ptr %i.bs, align 8, !tbaa !58
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  store <2 x double> <double f0xBFE921FB54442D21, double f0xC00921FB54442D1A>, ptr %10, align 8, !tbaa !58
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.a, i64 184
-  store double f0xBFE921FB54442D21, ptr %i.ce, align 8, !tbaa !58
+  %i.cd = insertelement <4 x double> <double poison, double f0xC002D97C7F3321D4, double poison, double f0xBFE921FB54442D21>, double %i.cc, i64 0
+  %8 = shufflevector <4 x double> %i.cd, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
+  store <4 x double> %8, ptr %i.bs, align 16, !tbaa !58
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.a, i64 176
+  store <2 x double> <double f0xC00921FB54442D1A, double f0xBFE921FB54442D21>, ptr %i.ce, align 16, !tbaa !58
   %i.cf = fcmp oeq double %0, f0xC00921FB54442D1A ; 2 uses
   %i.cg = fcmp oeq double %1, f0x3FE921FB54442D21
   %or.cond55 = and i1 %i.cf, %i.cg

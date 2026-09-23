@@ -205,7 +205,7 @@ bb.a:
   %16 = alloca %"struct.arrow::Datum", align 8    ; 7 uses
   %17 = alloca %"class.std::shared_ptr.175", align 8 ; 7 uses
   %18 = alloca %"struct.arrow::Datum", align 8    ; 9 uses
-  %19 = alloca %"struct.arrow::ArrayData", align 16 ; 15 uses
+  %19 = alloca %"struct.arrow::ArrayData", align 16 ; 14 uses
   %20 = alloca %"class.std::shared_ptr.104", align 8 ; 7 uses
   %21 = alloca %"class.arrow::compute::TakeOptions", align 8 ; 5 uses
   %22 = alloca %"struct.arrow::Datum", align 8    ; 9 uses
@@ -606,15 +606,14 @@ _ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE7reserveEm.exit: ; preds 
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE7reserveEm.exit
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %23 = getelementptr inbounds nuw i8, ptr %19, i64 8
-  %i.er = getelementptr inbounds nuw i8, ptr %19, i64 16
-  %i.es = getelementptr inbounds nuw i8, ptr %19, i64 32
-  %i.et = getelementptr inbounds nuw i8, ptr %19, i64 40 ; 2 uses
-  %i.eu = getelementptr inbounds nuw i8, ptr %19, i64 56
-  %i.ev = getelementptr inbounds nuw i8, ptr %19, i64 64 ; 2 uses
-  %i.ew = getelementptr inbounds nuw i8, ptr %19, i64 80
-  %i.ex = getelementptr inbounds nuw i8, ptr %19, i64 88 ; 2 uses
-  %i.ey = getelementptr inbounds nuw i8, ptr %19, i64 104
+  %i.er = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %i.es = getelementptr inbounds nuw i8, ptr %19, i64 16
+  %i.et = getelementptr inbounds nuw i8, ptr %19, i64 32
+  %i.eu = getelementptr inbounds nuw i8, ptr %19, i64 40 ; 2 uses
+  %i.ev = getelementptr inbounds nuw i8, ptr %19, i64 56
+  %i.ew = getelementptr inbounds nuw i8, ptr %19, i64 64 ; 2 uses
+  %i.ex = getelementptr inbounds nuw i8, ptr %19, i64 72
+  %i.ey = getelementptr inbounds nuw i8, ptr %19, i64 88 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %19, i64 24
   %i.fa = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.fb = getelementptr inbounds nuw i8, ptr %18, i64 16
@@ -690,7 +689,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.fs = load ptr, ptr %20, align 8, !tbaa !260
   call void @_ZN5arrow9ArrayDataC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(120) %19, ptr noundef nonnull align 8 dereferenceable(120) %i.fs) #24
   %i.ft = invoke noalias noundef nonnull dereferenceable(136) ptr @_Znwm(i64 noundef 136) #25
-          to label %bb.ap unwind label %bb.bj     ; 14 uses
+          to label %bb.ap unwind label %bb.bj     ; 11 uses
 
 bb.ap:                                            ; preds = %bb.ao
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
@@ -700,38 +699,35 @@ bb.ap:                                            ; preds = %bb.ao
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow9ArrayDataESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ft, align 8, !tbaa !62, !noalias !4041
   %i.fw = getelementptr inbounds nuw i8, ptr %i.ft, i64 16 ; 2 uses
   %i.fx = load <2 x ptr>, ptr %19, align 16, !tbaa !86, !noalias !4041
-  store ptr null, ptr %23, align 8, !tbaa !65, !noalias !4041
+  store ptr null, ptr %i.er, align 8, !tbaa !65, !noalias !4041
   store <2 x ptr> %i.fx, ptr %i.fw, align 8, !tbaa !86, !noalias !4041
   store ptr null, ptr %19, align 16, !tbaa !80, !noalias !4041
   %i.fy = getelementptr inbounds nuw i8, ptr %i.ft, i64 32
-  %i.fz = load i64, ptr %i.er, align 16, !tbaa !423, !noalias !4041
+  %i.fz = load i64, ptr %i.es, align 16, !tbaa !423, !noalias !4041
   store i64 %i.fz, ptr %i.fy, align 8, !tbaa !423, !noalias !4041
   %i.ga = getelementptr inbounds nuw i8, ptr %i.ft, i64 40 ; 2 uses
   store i64 0, ptr %i.ga, align 8, !tbaa !525, !noalias !4041
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ft, i64 48
-  %i.gc = load i64, ptr %i.es, align 16, !tbaa !334, !noalias !4041
+  %i.gc = load i64, ptr %i.et, align 16, !tbaa !334, !noalias !4041
   store i64 %i.gc, ptr %i.gb, align 8, !tbaa !334, !noalias !4041
   %i.gd = getelementptr inbounds nuw i8, ptr %i.ft, i64 56
-  %i.ge = load <2 x ptr>, ptr %i.et, align 8, !tbaa !521, !noalias !4041
+  %i.ge = load <2 x ptr>, ptr %i.eu, align 8, !tbaa !521, !noalias !4041
   store <2 x ptr> %i.ge, ptr %i.gd, align 8, !tbaa !521, !noalias !4041
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ft, i64 72
-  %i.gg = load ptr, ptr %i.eu, align 8, !tbaa !478, !noalias !4041
-  store ptr %i.gg, ptr %i.gf, align 8, !tbaa !478, !noalias !4041
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.et, i8 0, i64 24, i1 false), !noalias !4041
-  %24 = getelementptr inbounds nuw i8, ptr %i.ft, i64 80
-  %25 = load <2 x ptr>, ptr %i.ev, align 16, !tbaa !522, !noalias !4041
-  store <2 x ptr> %25, ptr %24, align 8, !tbaa !522, !noalias !4041
-  %26 = getelementptr inbounds nuw i8, ptr %i.ft, i64 96
-  %27 = load ptr, ptr %i.ew, align 16, !tbaa !503, !noalias !4041
-  store ptr %27, ptr %26, align 8, !tbaa !503, !noalias !4041
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.ev, i8 0, i64 24, i1 false), !noalias !4041
+  %i.gg = load ptr, ptr %i.ev, align 8, !tbaa !478, !noalias !4041
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eu, i8 0, i64 24, i1 false), !noalias !4041
+  %23 = load ptr, ptr %i.ew, align 16, !tbaa !504, !noalias !4041
+  %24 = load <2 x ptr>, ptr %i.ex, align 8, !tbaa !522, !noalias !4041
+  %25 = insertelement <4 x ptr> poison, ptr %i.gg, i64 0
+  %26 = insertelement <4 x ptr> %25, ptr %23, i64 1
+  %27 = shufflevector <2 x ptr> %24, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %28 = shufflevector <4 x ptr> %26, <4 x ptr> %27, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %28, ptr %i.gf, align 8, !tbaa !86, !noalias !4041
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.ew, i8 0, i64 24, i1 false), !noalias !4041
   %i.gh = getelementptr inbounds nuw i8, ptr %i.ft, i64 104
-  %28 = load <2 x ptr>, ptr %i.ex, align 8, !tbaa !86, !noalias !4041
-  store <2 x ptr> %28, ptr %i.gh, align 8, !tbaa !86, !noalias !4041
-  %29 = getelementptr inbounds nuw i8, ptr %i.ft, i64 120
-  %30 = load <2 x ptr>, ptr %i.ey, align 8, !tbaa !86, !noalias !4041
-  store <2 x ptr> %30, ptr %29, align 8, !tbaa !86, !noalias !4041
-  store <4 x ptr> splat (ptr null), ptr %i.ex, align 8, !tbaa !86, !noalias !4041
+  %29 = load <4 x ptr>, ptr %i.ey, align 8, !tbaa !86, !noalias !4041
+  store <4 x ptr> %29, ptr %i.gh, align 8, !tbaa !86, !noalias !4041
+  store <4 x ptr> splat (ptr null), ptr %i.ey, align 8, !tbaa !86, !noalias !4041
   %i.gi = load atomic i64, ptr %i.ez seq_cst, align 8, !noalias !4041
   store atomic i64 %i.gi, ptr %i.ga seq_cst, align 8, !noalias !4041
   store ptr %i.fw, ptr %18, align 8, !tbaa !260

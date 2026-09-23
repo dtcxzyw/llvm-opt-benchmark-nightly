@@ -202,9 +202,9 @@ _ZN2v88internal8compiler13CodeAssembler4BindIJEEEvPNS1_31CodeAssemblerParameteri
   %i.xs = getelementptr inbounds nuw i8, ptr %199, i64 8
   %i.xt = getelementptr inbounds nuw i8, ptr %199, i64 16
   %i.xu = getelementptr inbounds nuw i8, ptr %199, i64 24
-  %i.xv = getelementptr inbounds nuw i8, ptr %199, i64 40
-  %306 = load ptr, ptr %i.xv, align 8, !noalias !160
-  %307 = load <2 x ptr>, ptr %i.xu, align 8, !noalias !160
+  %i.xv = getelementptr inbounds nuw i8, ptr %199, i64 32
+  %306 = load <2 x ptr>, ptr %i.xv, align 8, !noalias !160
+  %307 = load ptr, ptr %i.xu, align 8, !noalias !160
   %i.xw = load ptr, ptr %i.xt, align 8, !noalias !160
   %i.xx = load ptr, ptr %i.xs, align 8, !noalias !160
   %i.xy = load ptr, ptr %199, align 8, !noalias !160
@@ -271,15 +271,17 @@ _ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParamete
 bb.cq:                                            ; preds = %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit196, %_ZN2v88internal8compiler13CodeAssembler4GotoIJEJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit194
   call void @_ZN2v88internal8compiler18CodeAssemblerLabelD1Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %204) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %204) #7
+  %308 = insertelement <4 x ptr> poison, ptr %i.ya, i64 0
+  %309 = insertelement <4 x ptr> %308, ptr %307, i64 1
+  %310 = shufflevector <2 x ptr> %306, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %311 = shufflevector <4 x ptr> %309, <4 x ptr> %310, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq, %bb.ck
-  %.sroa.01301.0 = phi ptr [ %306, %bb.cq ], [ null, %bb.ck ]
   %.sroa.01298.0 = phi ptr [ %i.xw, %bb.cq ], [ null, %bb.ck ]
   %.sroa.01297.0 = phi ptr [ %i.xx, %bb.cq ], [ null, %bb.ck ]
   %.sroa.01296.0 = phi ptr [ %i.xy, %bb.cq ], [ null, %bb.ck ]
-  %.sroa.01132.0 = phi ptr [ %i.ya, %bb.cq ], [ null, %bb.ck ]
-  %308 = phi <2 x ptr> [ %307, %bb.cq ], [ splat (ptr null), %bb.ck ]
+  %312 = phi <4 x ptr> [ %311, %bb.cq ], [ splat (ptr null), %bb.ck ]
   %i.yp = getelementptr inbounds nuw i8, ptr %116, i64 64
   %i.yq = load i64, ptr %i.yp, align 8
   %.not1335 = icmp eq i64 %i.yq, 0
@@ -339,25 +341,21 @@ bb.cw:                                            ; preds = %bb.cv
 _ZN2v88internal8compiler13CodeAssembler4BindIJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpPNS0_5TNodeIS5_EE.exit200: ; preds = %bb.cv, %bb.cw
   call void @llvm.lifetime.end.p0(ptr nonnull %48)
   call void @llvm.lifetime.start.p0(ptr nonnull %47)
-  %i.zh = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8 ; 5 uses
+  %i.zh = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8 ; 3 uses
   store ptr %i.zh, ptr %47, align 8
-  %309 = getelementptr inbounds nuw i8, ptr %i.zh, i64 32 ; 2 uses
-  %i.zi = getelementptr inbounds nuw i8, ptr %47, i64 16 ; 2 uses
-  store ptr %309, ptr %i.zi, align 8
-  store ptr %.sroa.01132.0, ptr %i.zh, align 8
-  %.sroa.4.0..sroa_idx.i.i201 = getelementptr inbounds nuw i8, ptr %i.zh, i64 8
-  store <2 x ptr> %308, ptr %.sroa.4.0..sroa_idx.i.i201, align 8
-  %.sroa.6.0..sroa_idx.i.i203 = getelementptr inbounds nuw i8, ptr %i.zh, i64 24
-  store ptr %.sroa.01301.0, ptr %.sroa.6.0..sroa_idx.i.i203, align 8
+  %i.zi = getelementptr inbounds nuw i8, ptr %i.zh, i64 32 ; 2 uses
+  %.sroa.4.0..sroa_idx.i.i201 = getelementptr inbounds nuw i8, ptr %47, i64 16 ; 2 uses
+  store ptr %i.zi, ptr %.sroa.4.0..sroa_idx.i.i201, align 8
+  store <4 x ptr> %312, ptr %i.zh, align 8
   %i.zj = getelementptr inbounds nuw i8, ptr %47, i64 8
-  store ptr %309, ptr %i.zj, align 8
+  store ptr %i.zi, ptr %i.zj, align 8
   call void @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase9AddInputsESt6vectorIPNS1_4NodeESaIS5_EE(ptr noundef nonnull align 8 dereferenceable(184) %118, ptr noundef nonnull %47) #7
   %i.zk = load ptr, ptr %47, align 8              ; 3 uses
   %.not.i.i.i.i.i204 = icmp eq ptr %i.zk, null
   br i1 %.not.i.i.i.i.i204, label %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_14OrderedHashSetENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEESF_NS0_7IntPtrTEEJNS0_5TNodeIS4_EENSH_ISF_EESJ_NSH_ISG_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit, label %bb.cx
 
 bb.cx:                                            ; preds = %_ZN2v88internal8compiler13CodeAssembler4BindIJEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpPNS0_5TNodeIS5_EE.exit200
-  %i.zl = load ptr, ptr %i.zi, align 8
+  %i.zl = load ptr, ptr %.sroa.4.0..sroa_idx.i.i201, align 8
   %i.zm = ptrtoint ptr %i.zl to i64
   %i.zn = ptrtoint ptr %i.zk to i64
   %i.zo = sub i64 %i.zm, %i.zn

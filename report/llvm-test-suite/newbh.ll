@@ -203,10 +203,9 @@ define dso_local void @gravsub(ptr dead_on_unwind noalias nofree writable writeo
   %i.d = load double, ptr %i.c, align 8, !tbaa !15
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.f = load double, ptr %i.e, align 8, !tbaa !15
-  %3 = fsub double %i.d, %i.f                     ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %3 = fsub double %i.d, %i.f                     ; 3 uses
   %i.i = load <2 x double>, ptr %i.a, align 8, !tbaa !15
   %i.j = load <2 x double>, ptr %i.b, align 8, !tbaa !15
   %i.k = fsub <2 x double> %i.i, %i.j             ; 3 uses
@@ -219,21 +218,20 @@ define dso_local void @gravsub(ptr dead_on_unwind noalias nofree writable writeo
   %i.r = tail call double @sqrt(double noundef %i.q) #20, !tbaa !9
   %i.s = load double, ptr %i.g, align 8, !tbaa !43
   %i.t = fdiv double %i.s, %i.r                   ; 2 uses
-  %5 = load double, ptr %i.h, align 8, !tbaa !32
-  %6 = fsub double %5, %i.t
-  store double %6, ptr %i.h, align 8, !tbaa !32
-  %7 = fdiv double %i.t, %i.q                     ; 2 uses
-  %i.u = insertelement <2 x double> poison, double %7, i64 0
+  %4 = fdiv double %i.t, %i.q                     ; 2 uses
+  %5 = fmul double %4, %3
+  %i.u = insertelement <2 x double> poison, double %4, i64 0
   %i.v = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> zeroinitializer
   %i.w = fmul <2 x double> %i.v, %i.k
-  %8 = fmul double %7, %3
-  %9 = load <2 x double>, ptr %4, align 8, !tbaa !15
-  %10 = fadd <2 x double> %9, %i.w
-  store <2 x double> %10, ptr %4, align 8, !tbaa !15
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
-  %12 = load double, ptr %11, align 8, !tbaa !15
-  %13 = fadd double %12, %8
-  store double %13, ptr %11, align 8, !tbaa !15
+  %6 = load <4 x double>, ptr %i.h, align 8, !tbaa !15 ; 2 uses
+  %7 = insertelement <4 x double> poison, double %i.t, i64 0
+  %8 = shufflevector <2 x double> %i.w, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x double> %7, <4 x double> %8, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %10 = insertelement <4 x double> %9, double %5, i64 3 ; 2 uses
+  %11 = fsub <4 x double> %6, %10
+  %12 = fadd <4 x double> %6, %10
+  %13 = shufflevector <4 x double> %11, <4 x double> %12, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  store <4 x double> %13, ptr %i.h, align 8, !tbaa !15
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !tbaa.struct !31
   ret void
 }

@@ -204,7 +204,7 @@ define hidden void @_ZN41TableDeathTest_DISABLED_Constructors_Test8TestBodyEv(pt
 bb.a:
   %1 = alloca %"class.std::vector", align 8       ; 10 uses
   %2 = alloca %"class.std::vector.3", align 8     ; 10 uses
-  %3 = alloca %"class.entt::basic_table", align 16 ; 30 uses
+  %3 = alloca %"class.entt::basic_table", align 16 ; 32 uses
   %i.a = alloca ptr, align 8                      ; 11 uses
   %4 = alloca %"class.testing::Matcher", align 8  ; 6 uses
   %5 = alloca %"class.entt::basic_table", align 16 ; 8 uses
@@ -213,7 +213,7 @@ bb.a:
   %8 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %i.b = alloca ptr, align 8                      ; 11 uses
   %9 = alloca %"class.testing::Matcher", align 8  ; 6 uses
-  %10 = alloca %"class.entt::basic_table", align 16 ; 8 uses
+  %10 = alloca %"class.entt::basic_table", align 16 ; 9 uses
   %11 = alloca %"class.std::vector.3", align 16   ; 8 uses
   %i.c = alloca [1 x i8], align 1                 ; 5 uses
   %12 = alloca %"class.std::allocator", align 1   ; 4 uses
@@ -229,7 +229,7 @@ bb.a:
   %21 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %i.e = alloca ptr, align 8                      ; 11 uses
   %22 = alloca %"class.testing::Matcher", align 8 ; 4 uses
-  %23 = alloca %"class.entt::basic_table", align 16 ; 8 uses
+  %23 = alloca %"class.entt::basic_table", align 16 ; 9 uses
   %24 = alloca %"class.std::vector.3", align 16   ; 8 uses
   %i.f = alloca [1 x i8], align 1                 ; 5 uses
   %25 = alloca %"class.std::allocator", align 1   ; 4 uses
@@ -632,18 +632,22 @@ bb.bw:                                            ; preds = %bb.bv
   %i.fu = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.fv = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
   %i.fw = load ptr, ptr %i.fv, align 16, !tbaa !46
-  %i.fx = getelementptr inbounds nuw i8, ptr %10, i64 24
-  %i.fy = getelementptr inbounds nuw i8, ptr %10, i64 40
-  %i.fz = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %29 = getelementptr inbounds nuw i8, ptr %10, i64 24
+  %30 = getelementptr inbounds nuw i8, ptr %10, i64 32
+  %i.fx = getelementptr inbounds nuw i8, ptr %10, i64 40
+  %i.fy = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %i.fz = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ga = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.gb = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.gc = load <2 x ptr>, ptr %11, align 16, !tbaa !49
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %11, i8 0, i64 24, i1 false)
-  %i.gd = load ptr, ptr %i.ga, align 8, !tbaa !40
-  %29 = load <2 x ptr>, ptr %i.fz, align 8, !tbaa !80
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fz, i8 0, i64 24, i1 false)
-  store <2 x ptr> %29, ptr %i.fx, align 8, !tbaa !80
-  store ptr %i.gd, ptr %i.fy, align 8, !tbaa !40
+  %31 = load ptr, ptr %i.fy, align 8, !tbaa !39
+  %i.gd = load ptr, ptr %i.fz, align 16, !tbaa !42
+  %32 = load ptr, ptr %i.ga, align 8, !tbaa !40
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fy, i8 0, i64 24, i1 false)
+  store ptr %31, ptr %29, align 8, !tbaa !39
+  store ptr %i.gd, ptr %30, align 16, !tbaa !42
+  store ptr %32, ptr %i.fx, align 8, !tbaa !40
   %i.ge = load ptr, ptr %i.gb, align 16, !tbaa !46
   store ptr %i.fw, ptr %i.gb, align 16, !tbaa !46
   %i.gf = load <2 x ptr>, ptr %3, align 16, !tbaa !49
@@ -1046,25 +1050,29 @@ bb.fm:                                            ; preds = %bb.fl
 bb.fn:                                            ; preds = %bb.fm
   %i.ns = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 2 uses
   %i.nt = load ptr, ptr %i.ns, align 16, !tbaa !46
-  %i.nu = getelementptr inbounds nuw i8, ptr %23, i64 16
-  %i.nv = getelementptr inbounds nuw i8, ptr %23, i64 24
-  %i.nw = getelementptr inbounds nuw i8, ptr %23, i64 40
-  %i.nx = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %23, i64 16
+  %34 = getelementptr inbounds nuw i8, ptr %23, i64 24
+  %i.nu = getelementptr inbounds nuw i8, ptr %23, i64 32
+  %i.nv = getelementptr inbounds nuw i8, ptr %23, i64 40
+  %i.nw = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %i.nx = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ny = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.nz = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.oa = load <2 x ptr>, ptr %24, align 16, !tbaa !49
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %24, i8 0, i64 24, i1 false)
-  %i.ob = load ptr, ptr %i.ny, align 8, !tbaa !40
-  %30 = load <2 x ptr>, ptr %i.nx, align 8, !tbaa !80
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.nx, i8 0, i64 24, i1 false)
-  store <2 x ptr> %30, ptr %i.nv, align 8, !tbaa !80
-  store ptr %i.ob, ptr %i.nw, align 8, !tbaa !40
+  %35 = load ptr, ptr %i.nw, align 8, !tbaa !39
+  %i.ob = load ptr, ptr %i.nx, align 16, !tbaa !42
+  %36 = load ptr, ptr %i.ny, align 8, !tbaa !40
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.nw, i8 0, i64 24, i1 false)
+  store ptr %35, ptr %34, align 8, !tbaa !39
+  store ptr %i.ob, ptr %i.nu, align 16, !tbaa !42
+  store ptr %36, ptr %i.nv, align 8, !tbaa !40
   %i.oc = load ptr, ptr %i.nz, align 16, !tbaa !46
   store ptr %i.nt, ptr %i.nz, align 16, !tbaa !46
   %i.od = load <2 x ptr>, ptr %3, align 16, !tbaa !49
   store <2 x ptr> %i.oa, ptr %3, align 16, !tbaa !49
   store <2 x ptr> %i.od, ptr %23, align 16, !tbaa !49
-  store ptr %i.oc, ptr %i.nu, align 16, !tbaa !46
+  store ptr %i.oc, ptr %33, align 16, !tbaa !46
   call void @_ZN4entt11basic_tableIJSt6vectorIiSaIiEES1_IcSaIcEEEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %23) #27
   %i.oe = load ptr, ptr %24, align 16, !tbaa !45  ; 3 uses
   %.not.i.i.i181 = icmp eq ptr %i.oe, null

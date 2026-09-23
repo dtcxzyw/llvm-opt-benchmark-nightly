@@ -205,14 +205,14 @@ bb.k:                                             ; preds = %bb.j
   %i.cp = getelementptr inbounds nuw i8, ptr %.031, i64 32
   %i.cq = load ptr, ptr %i.cp, align 8
   %i.cr = getelementptr inbounds nuw i8, ptr %.031, i64 8
-  %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.031, i64 16
   %i.cv = load double, ptr %i.cr, align 8         ; 3 uses
   store double %i.cv, ptr %i.cs, align 8
   store double %i.cv, ptr %i.ct, align 8
   %i.cw = load double, ptr %i.cu, align 8         ; 3 uses
-  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store double %i.cw, ptr %i.cx, align 8
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 56
   store double %i.cw, ptr %i.cy, align 8
@@ -227,15 +227,11 @@ bb.l:                                             ; preds = %bb.l, %bb.k
   %i.dd = getelementptr inbounds nuw i8, ptr %.0, i64 8
   %i.de = load <2 x double>, ptr %i.dd, align 8   ; 4 uses
   %i.df = fcmp olt <2 x double> %i.de, %i.dc
-  %i.dg = select <2 x i1> %i.df, <2 x double> %i.de, <2 x double> %i.dc ; 4 uses
-  %2 = extractelement <2 x double> %i.dg, i64 0
-  store double %2, ptr %i.ct, align 8
+  %i.dg = select <2 x i1> %i.df, <2 x double> %i.de, <2 x double> %i.dc ; 3 uses
   %i.dh = fcmp olt <2 x double> %i.db, %i.de
-  %i.di = select <2 x i1> %i.dh, <2 x double> %i.de, <2 x double> %i.db ; 4 uses
-  %3 = shufflevector <2 x double> %i.di, <2 x double> %i.dg, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %3, ptr %i.cs, align 8
-  %4 = extractelement <2 x double> %i.di, i64 1
-  store double %4, ptr %i.cx, align 8
+  %i.di = select <2 x i1> %i.dh, <2 x double> %i.de, <2 x double> %i.db ; 3 uses
+  %2 = shufflevector <2 x double> %i.dg, <2 x double> %i.di, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x double> %2, ptr %i.ct, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %.0, i64 32
   %i.dk = load ptr, ptr %i.dj, align 8            ; 2 uses
   %.not37 = icmp eq ptr %i.dk, %.031

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.e, i32 noundef 0) #11 ; 0 uses
   %i.g = load ptr, ptr @PredXact, align 8         ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.i = load ptr, ptr %i.h, align 8              ; 28 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 26 uses
   %i.j = icmp eq ptr %i.i, null
   %i.k = icmp eq ptr %i.i, %i.g
   %spec.select.i.i = or i1 %i.j, %i.k
@@ -295,14 +295,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.az = phi i32 [ %.pre, %bb.g ], [ %i.as, %bb.f ]
-  %6 = getelementptr inbounds i8, ptr %i.i, i64 -64 ; 3 uses
-  store ptr %6, ptr %6, align 8
-  %7 = getelementptr inbounds i8, ptr %i.i, i64 -56
-  store ptr %6, ptr %7, align 8
-  %8 = getelementptr inbounds i8, ptr %i.i, i64 -48 ; 3 uses
-  store ptr %8, ptr %8, align 8
-  %i.ba = getelementptr inbounds i8, ptr %i.i, i64 -40
-  store ptr %8, ptr %i.ba, align 8
+  %6 = getelementptr inbounds i8, ptr %i.i, <4 x i64> <i64 -64, i64 -64, i64 -48, i64 -48>
+  %i.ba = getelementptr inbounds i8, ptr %i.i, i64 -64
+  store <4 x ptr> %6, ptr %i.ba, align 8
   %i.bb = or i32 %i.az, 1536
   store i32 %i.bb, ptr %i.at, align 4
   store i32 %i.b, ptr %4, align 4

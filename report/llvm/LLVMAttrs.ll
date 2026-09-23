@@ -205,9 +205,9 @@ bb.a:
   %7 = alloca %class.anon.2243, align 8           ; 5 uses
   %8 = alloca %"class.llvm::function_ref.1633", align 8 ; 5 uses
   %9 = alloca %class.anon.2228, align 8           ; 5 uses
-  %10 = alloca %"struct.std::array.2060", align 8 ; 4 uses
+  %10 = alloca %"struct.std::array.2060", align 8 ; 6 uses
   %11 = alloca %"class.llvm::function_ref.2227", align 8 ; 5 uses
-  %12 = alloca %"class.std::tuple.2229", align 8  ; 5 uses
+  %12 = alloca %"class.std::tuple.2229", align 8  ; 7 uses
   %13 = alloca %class.anon.2242, align 8          ; 4 uses
   %14 = alloca %class.anon.2243, align 8          ; 5 uses
   %15 = alloca %"class.llvm::function_ref.1633", align 8 ; 5 uses
@@ -230,9 +230,17 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 %i.c, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
-  store <6 x i64> splat (i64 3), ptr %12, align 8, !tbaa !1056, !alias.scope !2470
+  store <4 x i64> splat (i64 3), ptr %12, align 8, !tbaa !1056, !alias.scope !2470
+  %17 = getelementptr inbounds nuw i8, ptr %12, i64 32
+  store i64 3, ptr %17, align 8, !tbaa !739, !alias.scope !2470
+  %18 = getelementptr inbounds nuw i8, ptr %12, i64 40
+  store i64 3, ptr %18, align 8, !tbaa !741, !alias.scope !2470
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #22
-  store <6 x i64> splat (i64 3), ptr %10, align 8
+  store <4 x i64> splat (i64 3), ptr %10, align 8
+  %19 = getelementptr inbounds nuw i8, ptr %10, i64 32
+  store i64 3, ptr %19, align 8
+  %20 = getelementptr inbounds nuw i8, ptr %10, i64 40
+  store i64 3, ptr %20, align 8
   %i.e = call noundef i64 @_ZN4llvm11xxh3_64bitsEPKhm(ptr noundef nonnull %10, i64 noundef 48) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
   %i.f = trunc i64 %i.e to i32

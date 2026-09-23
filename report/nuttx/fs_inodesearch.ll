@@ -178,13 +178,11 @@ _inode_compare.exit.thread55.i:                   ; preds = %bb.g, %inode_nextna
   %.343.i = phi ptr [ null, %bb.h ], [ null, %.preheader.i ], [ %.04077.i, %.critedge.i.i ], [ null, %.lr.ph.i.i ], [ null, %.lr.ph.i.i ], [ %.04077.i, %inode_nextname.exit.thread.i ], [ null, %_inode_compare.exit.thread55.i ]
   %.232.i = phi ptr [ null, %bb.h ], [ null, %.preheader.i ], [ %.1.i.i, %.critedge.i.i ], [ null, %.lr.ph.i.i ], [ null, %.lr.ph.i.i ], [ %.1.i.i, %inode_nextname.exit.thread.i ], [ null, %_inode_compare.exit.thread55.i ]
   %.2.i = phi i32 [ -2, %bb.h ], [ -2, %.preheader.i ], [ 0, %.critedge.i.i ], [ -2, %.lr.ph.i.i ], [ -2, %.lr.ph.i.i ], [ 0, %inode_nextname.exit.thread.i ], [ -2, %_inode_compare.exit.thread55.i ]
-  store ptr %.347.i, ptr %0, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.343.i, ptr %1, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.03673.i, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %.03371.i, ptr %3, align 8
+  %1 = insertelement <4 x ptr> poison, ptr %.347.i, i64 0
+  %2 = insertelement <4 x ptr> %1, ptr %.343.i, i64 1
+  %3 = insertelement <4 x ptr> %2, ptr %.03673.i, i64 2
+  %4 = insertelement <4 x ptr> %3, ptr %.03371.i, i64 3
+  store <4 x ptr> %4, ptr %0, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %.232.i, ptr %i.ai, align 8
   br label %_inode_search.exit

@@ -204,13 +204,11 @@ bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8, !tbaa !13
   %i.b = load ptr, ptr %0, align 8, !tbaa !13     ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load <2 x ptr>, ptr %i.c, align 8, !tbaa !13
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %3 = load <2 x ptr>, ptr %2, align 8, !tbaa !13
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %1 = load ptr, ptr %i.c, align 8, !tbaa !13
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load <2 x ptr>, ptr %i.d, align 8, !tbaa !13
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %4 = load ptr, ptr %i.f, align 8, !tbaa !13
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %2 = load <4 x ptr>, ptr %i.f, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !13   ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -275,31 +273,29 @@ bb.h:                                             ; preds = %bb.g
   br label %l___private_Lean_Meta_Tactic_Grind_MatchCond_0__Lean_Meta_Grind_collectMatchCondLhssAndAbstract_go___lam__1.exit
 
 l___private_Lean_Meta_Tactic_Grind_MatchCond_0__Lean_Meta_Grind_collectMatchCondLhssAndAbstract_go___lam__1.exit: ; preds = %lean_inc_ref.exit.i, %bb.f, %bb.g, %bb.h
-  %i.ak = tail call ptr @lean_alloc_object(i64 noundef 104) #4, !inline_history !24 ; 12 uses
+  %i.ak = tail call ptr @lean_alloc_object(i64 noundef 104) #4, !inline_history !24 ; 9 uses
   store i32 1, ptr %i.ak, align 4, !tbaa !10
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 4 ; 2 uses
   %i.am = load i32, ptr %i.al, align 4
   %i.an = and i32 %i.am, 65535
   %i.ao = or disjoint i32 %i.an, -184549376
   store i32 %i.ao, ptr %i.al, align 4
-  %5 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
-  store ptr @l___private_Lean_Meta_Tactic_Grind_MatchCond_0__Lean_Meta_Grind_collectMatchCondLhssAndAbstract_go___lam__0___boxed, ptr %5, align 8, !tbaa !13
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
-  store i16 22, ptr %i.ap, align 8, !tbaa !21
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ak, i64 18
-  store i16 10, ptr %i.aq, align 2, !tbaa !21
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
-  store <2 x ptr> %i.a, ptr %i.ar, align 8, !tbaa !13
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
-  store ptr %i.h, ptr %i.as, align 8, !tbaa !13
-  %i.at = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
-  store <2 x ptr> %1, ptr %i.at, align 8, !tbaa !13
-  %6 = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
-  store <2 x ptr> %3, ptr %6, align 8, !tbaa !13
-  %7 = getelementptr inbounds nuw i8, ptr %i.ak, i64 80
-  store <2 x ptr> %i.e, ptr %7, align 8, !tbaa !13
-  %i.au = getelementptr inbounds nuw i8, ptr %i.ak, i64 96
-  store ptr %4, ptr %i.au, align 8, !tbaa !13
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
+  store ptr @l___private_Lean_Meta_Tactic_Grind_MatchCond_0__Lean_Meta_Grind_collectMatchCondLhssAndAbstract_go___lam__0___boxed, ptr %i.ap, align 8, !tbaa !13
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
+  store i16 22, ptr %i.aq, align 8, !tbaa !21
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 18
+  store i16 10, ptr %i.ar, align 2, !tbaa !21
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
+  store <2 x ptr> %i.a, ptr %i.as, align 8, !tbaa !13
+  %i.at = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
+  %3 = insertelement <4 x ptr> poison, ptr %i.h, i64 0
+  %4 = insertelement <4 x ptr> %3, ptr %1, i64 1
+  %5 = shufflevector <2 x ptr> %i.e, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x ptr> %4, <4 x ptr> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %6, ptr %i.at, align 8, !tbaa !13
+  %i.au = getelementptr inbounds nuw i8, ptr %i.ak, i64 72
+  store <4 x ptr> %2, ptr %i.au, align 8, !tbaa !13
   %i.av = tail call ptr @lean_name_append_index_after(ptr noundef nonnull @l___private_Lean_Meta_Tactic_Grind_MatchCond_0__Lean_Meta_Grind_collectMatchCondLhssAndAbstract_go___lam__1___closed__1_value, ptr noundef %i.b) #4, !inline_history !24
   %i.aw = tail call ptr @l_Lean_Meta_withLocalDecl___at___00Lean_Meta_withLocalDeclD___at___00__private_Lean_Meta_Tactic_Grind_MatchCond_0__Lean_Meta_Grind_collectMatchCondLhssAndAbstract_go_spec__0_spec__0___redArg(ptr noundef %i.av, i8 noundef zeroext 0, ptr noundef nonnull %i.h, ptr noundef nonnull %i.ak, i8 noundef zeroext 0, ptr noundef %i.j, ptr noundef %i.l, ptr noundef %i.n, ptr noundef %i.p, ptr noundef %i.r, ptr noundef %i.t, ptr noundef %i.v, ptr noundef %i.x, ptr noundef %i.z, ptr noundef %i.ab), !inline_history !24
   %i.ax = ptrtoint ptr %i.ab to i64

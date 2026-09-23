@@ -206,9 +206,9 @@ bb.a:
   %i.c = alloca [56 x i8], align 8                ; 5 uses
   %i.d = alloca [488 x i8], align 8               ; 8 uses
   %i.e = alloca [152 x i8], align 8               ; 24 uses
-  %i.f = alloca [24 x i8], align 8                ; 12 uses
+  %i.f = alloca [24 x i8], align 8                ; 13 uses
   %i.g = alloca [80 x i8], align 8                ; 14 uses
-  %i.h = alloca [32 x i8], align 8                ; 7 uses
+  %i.h = alloca [32 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !59891
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59892)
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #83, !noalias !59893
@@ -274,7 +274,7 @@ _ZN4core5array5drain16drain_array_with17h08a2da7b0cf678ceE.exit: ; preds = %bb.d
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.59.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(80) %i.g, i64 80, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !59891
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !59901
-  %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59902)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.f, i8 0, i64 17, i1 false), !noalias !59901
@@ -561,21 +561,17 @@ bb.am:                                            ; preds = %bb.al
 
 _ZN18nickel_lang_parser5files5Files3new17hbfcbadc27aa6adb1E.exit: ; preds = %"_ZN4core3ptr362drop_in_place$LT$core..iter..adapters..peekable..Peekable$LT$core..iter..adapters..map..Map$LT$core..array..iter..IntoIter$LT$$LP$alloc..string..String$C$$RF$str$RP$$C$2_usize$GT$$C$nickel_lang_parser..files..Files..new$LT$alloc..string..String$C$$RF$str$C$$u5b$$LP$alloc..string..String$C$$RF$str$RP$$u3b$$u20$2$u5d$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$$GT$$GT$17hf5050854868d5643E.exit.i.i.i.i"
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !59900
-  %.sroa.0.0.copyload1.i = load i64, ptr %i.f, align 8, !noalias !59933 ; 3 uses
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %1 = load <2 x i64>, ptr %i.o, align 8, !noalias !59933
-  %.sroa.2.0.copyload3.i = load i64, ptr %i.o, align 8, !noalias !59933
+  %1 = load <3 x i64>, ptr %i.f, align 8, !noalias !59933
+  %2 = shufflevector <3 x i64> %1, <3 x i64> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  %.sroa.2.0.copyload3.i = load i64, ptr %i.f, align 8, !noalias !59933 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !59901
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  store i64 %.sroa.0.0.copyload1.i, ptr %i.h, align 8
-  store <2 x i64> %1, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  store i64 %.sroa.2.0.copyload3.i, ptr %.sroa.6.0..sroa_idx, align 8
+  store <4 x i64> %2, ptr %i.h, align 8
   %i.bq = call align 8 ptr @llvm.threadlocal.address.p0(ptr @"_ZN3std4hash6random11RandomState3new4KEYS29_$u7b$$u7b$constant$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$3VAL17h3d0bd8071983845cE") ; 5 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 2 uses
   %i.bs = load i8, ptr %i.br, align 8, !range !153, !noalias !59934, !noundef !145
   %i.bt = trunc nuw i8 %i.bs to i1
-  %i.bu = inttoptr i64 %.sroa.0.0.copyload1.i to ptr ; 2 uses
+  %i.bu = inttoptr i64 %.sroa.2.0.copyload3.i to ptr ; 2 uses
   br i1 %i.bt, label %._ZN4core3ops8function6FnOnce9call_once17h3ee7bcb50ddd8192E.exit_crit_edge.i.i, label %"_ZN3std3sys12thread_local6native4lazy20Storage$LT$T$C$D$GT$16get_or_init_slow17hde27455dd15c4fabE.exit.i.i", !prof !154
 
 ._ZN4core3ops8function6FnOnce9call_once17h3ee7bcb50ddd8192E.exit_crit_edge.i.i: ; preds = %_ZN18nickel_lang_parser5files5Files3new17hbfcbadc27aa6adb1E.exit
@@ -599,7 +595,7 @@ _ZN18nickel_lang_parser5files5Files3new17hbfcbadc27aa6adb1E.exit: ; preds = %"_Z
 bb.an:                                            ; preds = %"_ZN3std3sys12thread_local6native4lazy20Storage$LT$T$C$D$GT$16get_or_init_slow17hde27455dd15c4fabE.exit.i.i"
   %i.bz = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
-  %i.ca = icmp eq i64 %.sroa.0.0.copyload1.i, 0
+  %i.ca = icmp eq i64 %.sroa.2.0.copyload3.i, 0
   br i1 %i.ca, label %common.resume, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an

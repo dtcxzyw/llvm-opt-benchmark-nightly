@@ -205,13 +205,13 @@ _ZN4mlir6linalg16Conv2DNchwFchwOp9getInputsEv.exit:
   %i.c = alloca [3 x i64], align 8                ; 6 uses
   %29 = alloca %"class.llvm::SmallVector.90", align 8 ; 6 uses
   %i.d = alloca [2 x i64], align 8                ; 5 uses
-  %30 = alloca %"struct.mlir::linalg::Im2ColToInputDimsExprs", align 8 ; 6 uses
+  %30 = alloca %"struct.mlir::linalg::Im2ColToInputDimsExprs", align 8 ; 4 uses
   %31 = alloca %"struct.mlir::linalg::Im2ColToOperandsExprs", align 16 ; 4 uses
   %32 = alloca %"class.llvm::SmallVector.55", align 8 ; 13 uses
   %33 = alloca %"class.mlir::DenseIntElementsAttr", align 8 ; 8 uses
   %34 = alloca %"class.llvm::SmallVector.97", align 8 ; 5 uses
   %35 = alloca [1 x %"class.llvm::ArrayRef.104"], align 8 ; 5 uses
-  %36 = alloca [4 x %"class.mlir::AffineExpr"], align 8 ; 6 uses
+  %36 = alloca [4 x %"class.mlir::AffineExpr"], align 8 ; 4 uses
   %37 = alloca %"class.llvm::SmallVector.106", align 8 ; 9 uses
   %38 = alloca %"class.mlir::TypeRange", align 8  ; 3 uses
   %39 = alloca %"class.mlir::Type", align 8       ; 4 uses
@@ -614,16 +614,9 @@ _ZN4llvm11SmallVectorIlLj6EED2Ev.exit:            ; preds = %_ZN4llvm9to_vectorI
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #13
-  %63 = load i64, ptr %30, align 8, !tbaa !65
-  store i64 %63, ptr %36, align 8, !tbaa !65
-  %64 = getelementptr inbounds nuw i8, ptr %36, i64 8
-  %65 = getelementptr inbounds nuw i8, ptr %30, i64 24
-  %66 = load i64, ptr %65, align 8, !tbaa !65
-  store i64 %66, ptr %64, align 8, !tbaa !65
-  %67 = getelementptr inbounds nuw i8, ptr %36, i64 16
-  %68 = getelementptr inbounds nuw i8, ptr %30, i64 8
-  %69 = load <2 x i64>, ptr %68, align 8, !tbaa !65
-  store <2 x i64> %69, ptr %67, align 8, !tbaa !65
+  %63 = load <4 x i64>, ptr %30, align 8, !tbaa !65
+  %64 = shufflevector <4 x i64> %63, <4 x i64> poison, <4 x i32> <i32 0, i32 3, i32 1, i32 2>
+  store <4 x i64> %64, ptr %36, align 8, !tbaa !65
   store ptr %36, ptr %35, align 8, !tbaa !71
   %i.sy = getelementptr inbounds nuw i8, ptr %35, i64 8
   store i64 4, ptr %i.sy, align 8, !tbaa !72

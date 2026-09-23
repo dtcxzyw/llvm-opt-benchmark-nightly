@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %5 = alloca %"class.std::allocator", align 1    ; 3 uses
   %6 = alloca %"struct.cv::MatShape", align 4     ; 8 uses
-  %7 = alloca %"class.cv::Mat", align 16          ; 19 uses
+  %7 = alloca %"class.cv::Mat", align 16          ; 18 uses
   %8 = alloca %"class.cv::Mat", align 8           ; 7 uses
   %9 = alloca %"class.cv::_OutputArray", align 8  ; 7 uses
   %i.a = trunc i64 %1 to i32                      ; 2 uses
@@ -565,7 +565,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br label %bb.ai
 
 bb.aa:                                            ; preds = %bb.w, %bb.t
-  %i.ew = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 2 uses
+  %i.ew = getelementptr inbounds nuw i8, ptr %7, i64 64
   %i.ex = load ptr, ptr %i.ew, align 16, !tbaa !74 ; 2 uses
   %.not18.i = icmp eq ptr %i.ex, null
   br i1 %.not18.i, label %.loopexit.loopexit.i.i, label %bb.ab
@@ -606,22 +606,16 @@ bb.ac:                                            ; preds = %.loopexit.loopexit.
   %i.fr = getelementptr inbounds nuw i8, ptr %7, i64 128
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.fs, ptr noundef nonnull readonly align 16 dereferenceable(80) %i.fr, i64 80, i1 false), !tbaa.struct !83
-  %i.ft = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %10 = load ptr, ptr %i.ft, align 8, !tbaa !75   ; 2 uses
+  %i.ft = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %10, ptr %i.fu, align 8, !tbaa !75
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %13 = load <2 x ptr>, ptr %11, align 16, !tbaa !62
-  store <2 x ptr> %13, ptr %i.fv, align 8, !tbaa !62
-  %i.fw = getelementptr inbounds nuw i8, ptr %7, i64 48
-  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.fy = load <2 x ptr>, ptr %i.fw, align 16, !tbaa !82
+  %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %10 = load <4 x ptr>, ptr %i.ft, align 8, !tbaa !62
+  %11 = load ptr, ptr %i.ft, align 8, !tbaa !75
+  store <4 x ptr> %10, ptr %i.fu, align 8, !tbaa !62
+  %i.fw = getelementptr inbounds nuw i8, ptr %7, i64 56
+  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %i.fy = load <2 x ptr>, ptr %i.fw, align 8, !tbaa !82
   store <2 x ptr> %i.fy, ptr %i.fx, align 8, !tbaa !82
-  %14 = load ptr, ptr %i.ew, align 16, !tbaa !74
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store ptr %14, ptr %15, align 8, !tbaa !74
   store i32 %i.u, ptr %i.t, align 4, !tbaa !32
   switch i32 %i.fc, label %bb.ag [
     i32 2, label %bb.ad
@@ -646,8 +640,8 @@ bb.af:                                            ; preds = %bb.ac
 bb.ag:                                            ; preds = %bb.ac, %bb.af, %bb.ad
   %i.gc = load i64, ptr %i.fs, align 8, !tbaa !22
   %i.gd = mul i64 %i.gc, %i.v
-  %i.ge = getelementptr inbounds nuw i8, ptr %10, i64 %i.gd
-  store ptr %i.ge, ptr %12, align 8, !tbaa !78
+  %i.ge = getelementptr inbounds nuw i8, ptr %11, i64 %i.gd
+  store ptr %i.ge, ptr %i.fv, align 8, !tbaa !78
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24

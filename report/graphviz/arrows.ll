@@ -204,9 +204,11 @@ bb.m:                                             ; preds = %bb.k
   %i.ec = fsub <2 x double> %i.ea, %i.w
   store <2 x double> %i.ec, ptr %i.do, align 8, !tbaa !19
   store <2 x double> %i.dq, ptr %i.dp, align 8, !tbaa !19
-  %i.ed = fadd <2 x double> %i.dl, %i.ea
-  %12 = shufflevector <2 x double> %i.ed, <2 x double> poison, <6 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
-  store <6 x double> %12, ptr %i.dr, align 8, !tbaa !19
+  %i.ed = fadd <2 x double> %i.dl, %i.ea          ; 2 uses
+  %12 = shufflevector <2 x double> %i.ed, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  store <4 x double> %12, ptr %i.dr, align 8, !tbaa !19
+  %13 = getelementptr inbounds nuw i8, ptr %7, i64 80
+  store <2 x double> %i.ed, ptr %13, align 8, !tbaa !19
   %i.ee = fadd <2 x double> %i.dm, %i.eb
   br label %bb.n
 

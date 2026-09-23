@@ -206,7 +206,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define weak_odr dso_local void @_ZN3igl16snap_to_fixed_upIdEEvRKN5Eigen10QuaternionIT_Li0EEERS4_(ptr noundef nonnull align 16 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) %1) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 _ZN5Eigen10MatrixBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEE9normalizeEv.exit:
-  %2 = alloca %"class.Eigen::Matrix.2436", align 16 ; 8 uses
+  %2 = alloca %"class.Eigen::Matrix.2436", align 16 ; 6 uses
   %3 = alloca %"class.Eigen::JacobiSVD.2455", align 16 ; 11 uses
   %.sroa.0 = alloca [3 x double], align 16        ; 5 uses
   %i.a = load double, ptr %0, align 16, !tbaa !15, !noalias !459 ; 4 uses
@@ -304,7 +304,7 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEE9normalizeEv.exit:
   %i.bt = fdiv <2 x double> %i.an, %i.bs
   %i.bu = fcmp ogt <2 x double> %i.bq, zeroinitializer ; 3 uses
   %.splat = shufflevector <2 x i1> %i.bu, <2 x i1> poison, <2 x i32> <i32 1, i32 1>
-  %.sroa.0.0.i.i = select <2 x i1> %.splat, <2 x double> %i.bt, <2 x double> %i.an ; 7 uses
+  %.sroa.0.0.i.i = select <2 x i1> %.splat, <2 x double> %i.bt, <2 x double> %i.an ; 6 uses
   %i.bv = shufflevector <2 x double> %i.br, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bw = fdiv <2 x double> %.sroa.014.1, %i.bv
   %i.bx = insertelement <2 x double> poison, double %.sroa.10.1, i64 0
@@ -312,7 +312,7 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEE9normalizeEv.exit:
   %i.bz = fdiv <2 x double> %i.by, %i.br
   %i.ca = select <2 x i1> %i.bu, <2 x double> %i.bz, <2 x double> %i.by ; 5 uses
   %.splat54 = shufflevector <2 x i1> %i.bu, <2 x i1> poison, <2 x i32> zeroinitializer
-  %.sroa.057.0.i.i = select <2 x i1> %.splat54, <2 x double> %i.bw, <2 x double> %.sroa.014.1 ; 7 uses
+  %.sroa.057.0.i.i = select <2 x i1> %.splat54, <2 x double> %i.bw, <2 x double> %.sroa.014.1 ; 6 uses
   %i.cb = fmul <2 x double> %.sroa.0.0.i.i, %.sroa.057.0.i.i ; 2 uses
   %shift51 = shufflevector <2 x double> %i.cb, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop52 = fadd <2 x double> %i.cb, %shift51
@@ -328,16 +328,10 @@ bb.a:                                             ; preds = %_ZN5Eigen10MatrixBa
   %i.ci = fcmp olt double %i.cg, -1.000000e+00
   %.sroa.speculated.i.i = select i1 %i.ci, double -1.000000e+00, double %i.cg
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19, !noalias !460
-  %.sroa.0.0.vec.extract53.i.i = extractelement <2 x double> %.sroa.0.0.i.i, i64 0
-  store double %.sroa.0.0.vec.extract53.i.i, ptr %2, align 16, !tbaa !15, !noalias !461
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store double %i.ce, ptr %4, align 16, !tbaa !15, !noalias !461
-  %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = shufflevector <2 x double> %.sroa.057.0.i.i, <2 x double> %.sroa.0.0.i.i, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %5, ptr %i.cj, align 8, !tbaa !15, !noalias !460
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.057.8.vec.extract62.i.i = extractelement <2 x double> %.sroa.057.0.i.i, i64 1
-  store double %.sroa.057.8.vec.extract62.i.i, ptr %6, align 8, !tbaa !15, !noalias !460
+  %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 32
+  store double %i.ce, ptr %i.cj, align 16, !tbaa !15, !noalias !461
+  %4 = shufflevector <2 x double> %.sroa.0.0.i.i, <2 x double> %.sroa.057.0.i.i, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x double> %4, ptr %2, align 16, !tbaa !15, !noalias !460
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 40
   store double %i.cd, ptr %i.ck, align 8, !tbaa !15, !noalias !460
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19, !noalias !460

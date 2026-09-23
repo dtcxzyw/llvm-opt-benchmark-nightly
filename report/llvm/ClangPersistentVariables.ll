@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %.loopexit
 _ZN4llvm12DenseMapBaseINS_8DenseMapIPKcN12lldb_private24ClangPersistentVariables14PersistentDeclENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E22findBucketForInsertionIS3_EEPSB_RKT_SF_.exit: ; preds = %.loopexit, %bb.d
   %i.ar = phi ptr [ %.pre16, %bb.d ], [ %i.b, %.loopexit ]
   %i.as = phi ptr [ %.pre, %bb.d ], [ %i.d, %.loopexit ]
-  %i.at = phi ptr [ %.pre.i, %bb.d ], [ %.lcssa28.sink.i.ph, %.loopexit ] ; 5 uses
+  %i.at = phi ptr [ %.pre.i, %bb.d ], [ %.lcssa28.sink.i.ph, %.loopexit ] ; 3 uses
   %i.au = ptrtoint ptr %i.at to i64
   %i.av = ptrtoint ptr %i.ar to i64
   %i.aw = sub i64 %i.au, %i.av
@@ -220,15 +220,14 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKcN12lldb_private24ClangPersistentVariables
   store i32 %i.bg, ptr %i.ak, align 8, !tbaa !107
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bh = load ptr, ptr %1, align 8, !tbaa !88
-  store ptr %i.bh, ptr %i.at, align 8, !tbaa !88
-  %3 = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.bj = load <2 x ptr>, ptr %2, align 8, !tbaa !23
-  store <2 x ptr> %i.bj, ptr %3, align 8, !tbaa !23
-  %4 = getelementptr inbounds nuw i8, ptr %i.at, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %6 = load ptr, ptr %5, align 8, !tbaa !35
-  store ptr %6, ptr %4, align 8, !tbaa !35
+  %3 = load ptr, ptr %2, align 8, !tbaa !97
+  %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.bj = load <2 x ptr>, ptr %i.bi, align 8, !tbaa !23
+  %4 = insertelement <4 x ptr> poison, ptr %i.bh, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %3, i64 1
+  %6 = shufflevector <2 x ptr> %i.bj, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %7, ptr %i.at, align 8, !tbaa !23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bi, i8 0, i64 16, i1 false)
   br label %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKcN12lldb_private24ClangPersistentVariables14PersistentDeclENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E15LookupBucketForIS3_EEbRKT_RPSB_.exit
 

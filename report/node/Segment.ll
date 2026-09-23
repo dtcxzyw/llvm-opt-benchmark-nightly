@@ -205,20 +205,23 @@ _ZN4LIEF3ELF7SegmentD2Ev.exit:                    ; preds = %bb.a
   %i.g = load <2 x ptr>, ptr %i.f, align 8
   store <2 x ptr> %i.g, ptr %i.e, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 96
-  %i.j = load ptr, ptr %i.i, align 8
-  store ptr %i.j, ptr %i.h, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, i8 0, i64 24, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 96
   %6 = getelementptr inbounds nuw i8, ptr %3, i64 104
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 112
-  %8 = load <2 x ptr>, ptr %6, align 8
-  store <2 x ptr> %8, ptr %5, align 8
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 120
-  %9 = load <2 x ptr>, ptr %i.l, align 8
-  store <2 x ptr> %9, ptr %i.k, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 112 ; 2 uses
+  %i.j = load ptr, ptr %5, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, i8 0, i64 24, i1 false)
+  %7 = load ptr, ptr %6, align 8
+  %8 = load <2 x ptr>, ptr %i.i, align 8
+  %9 = insertelement <4 x ptr> poison, ptr %i.j, i64 0
+  %10 = insertelement <4 x ptr> %9, ptr %7, i64 1
+  %11 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x ptr> %10, <4 x ptr> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %12, ptr %i.h, align 8
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 128
+  %13 = load ptr, ptr %i.l, align 8
+  store ptr %13, ptr %i.k, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i8 1, ptr %i.m, align 8
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN4LIEF3ELF7SegmentE, i64 16), ptr %3, align 8
@@ -238,20 +241,23 @@ _ZN4LIEF3ELF7SegmentD2Ev.exit9:                   ; preds = %bb.a
   %i.r = load <2 x ptr>, ptr %i.q, align 8
   store <2 x ptr> %i.r, ptr %i.p, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 96
-  %i.u = load ptr, ptr %i.t, align 8
-  store ptr %i.u, ptr %i.s, align 8
+  %14 = getelementptr inbounds nuw i8, ptr %4, i64 96
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 104
+  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 112 ; 2 uses
+  %i.u = load ptr, ptr %14, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i8 0, i64 24, i1 false)
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 104
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 112
-  %13 = load <2 x ptr>, ptr %11, align 8
-  store <2 x ptr> %13, ptr %10, align 8
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 120
-  %14 = load <2 x ptr>, ptr %i.w, align 8
-  store <2 x ptr> %14, ptr %i.v, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
+  %16 = load ptr, ptr %15, align 8
+  %17 = load <2 x ptr>, ptr %i.t, align 8
+  %18 = insertelement <4 x ptr> poison, ptr %i.u, i64 0
+  %19 = insertelement <4 x ptr> %18, ptr %16, i64 1
+  %20 = shufflevector <2 x ptr> %17, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %21 = shufflevector <4 x ptr> %19, <4 x ptr> %20, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %21, ptr %i.s, align 8
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 128
+  %22 = load ptr, ptr %i.w, align 8
+  store ptr %22, ptr %i.v, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, i8 0, i64 24, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i8 1, ptr %i.x, align 8
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN4LIEF3ELF7SegmentE, i64 16), ptr %4, align 8

@@ -202,7 +202,7 @@ bb.a:
   %.sroa.6129.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8121.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6129.0..sroa_idx.i, i64 13, i1 false)
   %.sroa.7130.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.sroa.7130.0.copyload.i = load ptr, ptr %.sroa.7130.0..sroa_idx.i, align 8, !tbaa !19 ; 14 uses
+  %.sroa.7130.0.copyload.i = load ptr, ptr %.sroa.7130.0..sroa_idx.i, align 8, !tbaa !19 ; 12 uses
   %.sroa.8131.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.sroa.8131.0.copyload.i = load ptr, ptr %.sroa.8131.0..sroa_idx.i, align 8, !tbaa !21 ; 3 uses
   %i.a = getelementptr i8, ptr %1, i64 1
@@ -227,7 +227,6 @@ reset_raw.exit:                                   ; preds = %bb.a, %bb.b
   %.sroa.1186.0.copyload.i = load ptr, ptr %.sroa.1186.0..sroa_idx.i, align 8, !tbaa !21
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.13.0.copyload.i = load ptr, ptr %.sroa.13.0..sroa_idx.i, align 8, !tbaa !21
-  %3 = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 32
   %i.i = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 64
   %i.j = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 96
   %i.k = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 72
@@ -236,7 +235,6 @@ reset_raw.exit:                                   ; preds = %bb.a, %bb.b
   %i.n = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 104
   %i.o = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 112
   %i.p = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 120
-  %4 = xor i64 %i.h, 4354685564936845355
   %i.q = load <2 x i64>, ptr %1, align 8
   store i64 7640891576956012808, ptr %i.i, align 8, !tbaa !12
   store i64 -4942790177534073029, ptr %i.k, align 8, !tbaa !12
@@ -248,16 +246,16 @@ reset_raw.exit:                                   ; preds = %bb.a, %bb.b
   store i64 6620516959819538809, ptr %i.p, align 8, !tbaa !12
   %i.r = xor <2 x i64> %i.q, <i64 7640891576956012808, i64 -4942790177534073029>
   %i.s = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 16
-  %5 = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 24
-  %6 = load <2 x i64>, ptr %.sroa.1186.0.copyload.i, align 1
-  %7 = xor <2 x i64> %6, <i64 5840696475078001361, i64 -7276294671716946913>
+  %3 = load <2 x i64>, ptr %.sroa.1186.0.copyload.i, align 1
+  %4 = shufflevector <2 x i64> %3, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %5 = shufflevector <4 x i64> %4, <4 x i64> <i64 poison, i64 0, i64 poison, i64 poison>, <4 x i32> <i32 poison, i32 5, i32 0, i32 1>
+  %6 = insertelement <4 x i64> %5, i64 %i.h, i64 0
+  %7 = xor <4 x i64> %6, <i64 4354685564936845355, i64 -6534734903238641935, i64 5840696475078001361, i64 -7276294671716946913>
   %8 = getelementptr i8, ptr %.sroa.7130.0.copyload.i, i64 48
   %9 = load <2 x i64>, ptr %.sroa.13.0.copyload.i, align 1
   %10 = xor <2 x i64> %9, <i64 2270897969802886507, i64 6620516959819538809>
   store <2 x i64> %i.r, ptr %.sroa.7130.0.copyload.i, align 8, !tbaa !12
-  store i64 %4, ptr %i.s, align 8, !tbaa !12
-  store i64 -6534734903238641935, ptr %5, align 8, !tbaa !12
-  store <2 x i64> %7, ptr %3, align 8, !tbaa !12
+  store <4 x i64> %7, ptr %i.s, align 8, !tbaa !12
   store <2 x i64> %10, ptr %8, align 8, !tbaa !12
   %.not.i = icmp eq i8 %.sroa.0.0.copyload.i, 0
   %..i = select i1 %.not.i, i64 0, i64 128
@@ -660,12 +658,11 @@ bb.a:
   %i.a = alloca [128 x i8], align 16              ; 6 uses
   %i.b = alloca [64 x i8], align 16               ; 8 uses
   %i.c = alloca [128 x i8], align 16              ; 6 uses
-  %i.d = alloca [16 x i64], align 16              ; 21 uses
+  %i.d = alloca [16 x i64], align 16              ; 20 uses
   %i.e = alloca [16 x i64], align 16              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.e, i8 0, i64 128, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 64
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 96
   store i64 7640891576956012808, ptr %i.f, align 16, !tbaa !12
@@ -689,23 +686,22 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.s = load i16, ptr %i.r, align 8
   %i.t = zext i16 %i.s to i64
-  %6 = xor i64 %i.t, 4354685564936845355
   %i.u = load <2 x i64>, ptr %3, align 8
   %i.v = load i64, ptr %3, align 8                ; 2 uses
   %i.w = lshr i64 %i.v, 8                         ; 2 uses
   %i.x = trunc i64 %i.w to i8                     ; 2 uses
   %i.y = xor <2 x i64> %i.u, <i64 7640891576956012808, i64 -4942790177534073029>
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %8 = load <2 x i64>, ptr %i.o, align 1
-  %9 = xor <2 x i64> %8, <i64 5840696475078001361, i64 -7276294671716946913>
+  %5 = load <2 x i64>, ptr %i.o, align 1
+  %6 = shufflevector <2 x i64> %5, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x i64> %6, <4 x i64> <i64 poison, i64 0, i64 poison, i64 poison>, <4 x i32> <i32 poison, i32 5, i32 0, i32 1>
+  %8 = insertelement <4 x i64> %7, i64 %i.t, i64 0
+  %9 = xor <4 x i64> %8, <i64 4354685564936845355, i64 -6534734903238641935, i64 5840696475078001361, i64 -7276294671716946913>
   %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 2 uses
   %11 = load <2 x i64>, ptr %i.q, align 1
   %12 = xor <2 x i64> %11, <i64 2270897969802886507, i64 6620516959819538809>
   store <2 x i64> %i.y, ptr %i.d, align 16, !tbaa !12
-  store i64 %6, ptr %i.z, align 16, !tbaa !12
-  store i64 -6534734903238641935, ptr %7, align 8, !tbaa !12
-  store <2 x i64> %9, ptr %5, align 16, !tbaa !12
+  store <4 x i64> %9, ptr %i.z, align 16, !tbaa !12
   store <2 x i64> %12, ptr %10, align 16, !tbaa !12
   %.not.i = icmp eq i8 %i.x, 0
   br i1 %.not.i, label %bb.d, label %bb.b
@@ -772,6 +768,7 @@ update_blocks.exit:                               ; preds = %.lr.ph.i.i, %bb.d
   br label %update.exit
 
 update.exit:                                      ; preds = %bb.b, %bb.c, %update_blocks.exit
+  %13 = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.ax = load <2 x i64>, ptr %i.d, align 16, !tbaa !12
@@ -779,7 +776,7 @@ update.exit:                                      ; preds = %bb.b, %bb.c, %updat
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.az = load <2 x i64>, ptr %i.z, align 16, !tbaa !12
   store <2 x i64> %i.az, ptr %i.ay, align 16
-  %i.ba = load <2 x i64>, ptr %5, align 16, !tbaa !12
+  %i.ba = load <2 x i64>, ptr %13, align 16, !tbaa !12
   store <2 x i64> %i.ba, ptr %i.aw, align 16
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.bc = load <2 x i64>, ptr %10, align 16, !tbaa !12

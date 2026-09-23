@@ -205,7 +205,7 @@ bb.a:
   %i.t = alloca [24 x i8], align 8                ; 6 uses
   %i.u = alloca [24 x i8], align 8                ; 6 uses
   %i.v = alloca [24 x i8], align 8                ; 6 uses
-  %i.w = alloca [56 x i8], align 8                ; 10 uses
+  %i.w = alloca [56 x i8], align 8                ; 8 uses
   %i.x = alloca [24 x i8], align 8                ; 6 uses
   %i.y = alloca [24 x i8], align 8                ; 6 uses
   %i.z = alloca [24 x i8], align 8                ; 6 uses
@@ -277,7 +277,7 @@ bb.a:
   %i.ch = alloca [24 x i8], align 8               ; 4 uses
   %i.ci = alloca [24 x i8], align 8               ; 4 uses
   %i.cj = alloca [24 x i8], align 8               ; 5 uses
-  %i.ck = alloca [528 x i8], align 8              ; 38 uses
+  %i.ck = alloca [528 x i8], align 8              ; 37 uses
   %i.cl = alloca [32 x i8], align 8               ; 8 uses
   %i.cm = alloca [24 x i8], align 8               ; 8 uses
   %i.cn = alloca [96 x i8], align 8               ; 4 uses
@@ -629,15 +629,12 @@ _RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsf8NQSppxkmK_1
   %.sroa.510.sroa.5.0..sroa.510.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %.sroa.510.sroa.6.0..sroa.510.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 25
   %i.ks = getelementptr inbounds nuw i8, ptr %i.ck, i64 416
-  %.sroa.436.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ck, i64 424 ; 2 uses
-  %.sroa.426.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ck, i64 440
+  %.sroa.436.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ck, i64 424
   %.sroa.423.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.kt = getelementptr inbounds nuw i8, ptr %i.ck, i64 400
   %.sroa.028.sroa.0.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %.sroa.517.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %.sroa.517.sroa.0.sroa.0.sroa.5.0..sroa.517.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 24
-  %.sroa.517.sroa.0.sroa.5.0..sroa.517.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 32
-  %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 48
   %i.ku = getelementptr inbounds nuw i8, ptr %i.ck, i64 456 ; 4 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 5 uses
   %i.kw = getelementptr inbounds nuw i8, ptr %i.bb, i64 312 ; 2 uses
@@ -1040,25 +1037,23 @@ bb.ji:                                            ; preds = %bb.jf
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.517.sroa.0.sroa.0.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !noalias !4902
   %.sroa.028.sroa.0.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.028.sroa.0.sroa.4.0..sroa_idx.i.i, align 8, !noalias !4902
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !4902
+  %9 = shufflevector <2 x i64> %i.vf, <2 x i64> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %10 = insertelement <4 x i64> poison, i64 %.sroa.028.sroa.0.sroa.4.0.copyload.i.i, i64 0
+  %11 = shufflevector <4 x i64> %10, <4 x i64> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
+  %12 = shufflevector <4 x i64> %11, <4 x i64> %9, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   br label %bb.jj
 
 bb.jj:                                            ; preds = %bb.jk, %bb.ji
-  %.sroa.517.sroa.0.sroa.0.sroa.5.0.i.i = phi i64 [ %.sroa.034.0.copyload.i.i, %bb.jk ], [ %.sroa.028.sroa.0.sroa.4.0.copyload.i.i, %bb.ji ]
-  %.sroa.619.0.i.i = phi i64 [ %.sroa.426.0.copyload.i.i, %bb.jk ], [ undef, %bb.ji ]
   %.sroa.015.0.i.i = phi i64 [ %.sroa.022.0.copyload.i.i, %bb.jk ], [ -1, %bb.ji ]
-  %9 = phi <2 x i64> [ %10, %bb.jk ], [ %i.vf, %bb.ji ]
+  %13 = phi <4 x i64> [ %14, %bb.jk ], [ %12, %bb.ji ]
   store i64 %.sroa.015.0.i.i, ptr %i.w, align 8, !noalias !4902
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.517.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.517.sroa.0.sroa.0.sroa.0.i.i, i64 16, i1 false), !noalias !4902
-  store i64 %.sroa.517.sroa.0.sroa.0.sroa.5.0.i.i, ptr %.sroa.517.sroa.0.sroa.0.sroa.5.0..sroa.517.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !4902
-  store <2 x i64> %9, ptr %.sroa.517.sroa.0.sroa.5.0..sroa.517.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !4902
-  store i64 %.sroa.619.0.i.i, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !noalias !4902
+  store <4 x i64> %13, ptr %.sroa.517.sroa.0.sroa.0.sroa.5.0..sroa.517.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !4902
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.517.sroa.0.sroa.0.sroa.0.i.i)
   br label %bb.jd
 
 bb.jk:                                            ; preds = %bb.je
-  %.sroa.034.0.copyload.i.i = load i64, ptr %i.ks, align 8, !alias.scope !4901, !noalias !4903
-  %10 = load <2 x i64>, ptr %.sroa.436.0..sroa_idx.i.i, align 8, !alias.scope !4901, !noalias !4903
-  %.sroa.426.0.copyload.i.i = load i64, ptr %.sroa.426.0..sroa_idx.i.i, align 8, !alias.scope !4901, !noalias !4903
+  %14 = load <4 x i64>, ptr %i.ks, align 8, !alias.scope !4901, !noalias !4903
   %.sroa.022.0.copyload.i.i = load i64, ptr %i.k, align 8, !noalias !4902
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.517.sroa.0.sroa.0.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.423.0..sroa_idx.i.i, i64 16, i1 false), !noalias !4902
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !4902

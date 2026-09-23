@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.lr.ph
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXst_Csheqz6YZvxwl_8smallvecINtB6_8SmallVecANtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8callable12CallableTypej1_EINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendBJ_E6extendINtNtNtB20_8adapters3map3MapINtNtNtB22_5slice4iter4IterBJ_ENCINvMs4_BL_NtBL_13CallableTypes3mapNCNvMsp_NtNtBN_5class14static_literalNtB4C_18StaticClassLiteral22own_synthesized_members1_0E0EEBP_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [48 x i8], align 8                ; 8 uses
+  %i.a = alloca [48 x i8], align 8                ; 6 uses
   %i.b = alloca [80 x i8], align 8                ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 8 uses
   %i.d = alloca [80 x i8], align 8                ; 4 uses
@@ -213,7 +213,7 @@ bb.a:
   %.sroa.8.0..sroa_idx35 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.8.0.copyload36 = load ptr, ptr %.sroa.8.0..sroa_idx35, align 8, !alias.scope !11310, !nonnull !15, !noundef !15 ; 4 uses
   %.sroa.10.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.10.0.copyload38 = load ptr, ptr %.sroa.10.0..sroa_idx37, align 8, !alias.scope !11310 ; 8 uses
+  %.sroa.10.0.copyload38 = load ptr, ptr %.sroa.10.0..sroa_idx37, align 8, !alias.scope !11310 ; 9 uses
   %i.e = ptrtoint ptr %.sroa.8.0.copyload36 to i64
   %i.f = ptrtoint ptr %.sroa.0.0.copyload34 to i64
   %i.g = sub nuw i64 %i.e, %i.f
@@ -299,8 +299,6 @@ _RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.10.0.copyload38, i64 16
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.4.0..sroa_idx.i.i.i26 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %.sroa.5.0..sroa_idx.i.i.i27 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   br label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8callable12CallableTypeENCINvMs4_B1o_NtB1o_13CallableTypes3mapNCNvMsp_NtNtB1q_5class14static_literalNtB3d_18StaticClassLiteral22own_synthesized_members1_0E0ENtNtNtB9_6traits8iterator8Iterator4nextB1s_.exit31
 
 bb.e:                                             ; preds = %.lr.ph, %bb.j
@@ -353,21 +351,21 @@ _RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   call void @llvm.experimental.noalias.scope.decl(metadata !11320)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !11321
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !11321
-  %i.ba = load ptr, ptr %.sroa.10.0.copyload38, align 8, !alias.scope !11320, !noalias !11319, !nonnull !15, !noundef !15 ; 3 uses
-  %i.bb = load ptr, ptr %i.aj, align 8, !alias.scope !11320, !noalias !11319, !nonnull !15, !align !18, !noundef !15 ; 3 uses
-  %i.bc = call noundef nonnull align 8 ptr @_RINvMs9_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types8callable1__NtB8_12CallableType10signaturesDNtNtBc_2db2DbEL_EBc_(i32 noundef range(i32 1, 0) %.val3.i24, i32 noundef %.val4.i25, ptr noundef nonnull %i.ba, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.bb), !noalias !11321
+  %2 = load <2 x ptr>, ptr %.sroa.10.0.copyload38, align 8, !alias.scope !11320, !noalias !11319
+  %i.ba = load ptr, ptr %i.aj, align 8, !alias.scope !11320, !noalias !11319, !nonnull !15, !align !18, !noundef !15 ; 2 uses
+  %i.bb = load ptr, ptr %.sroa.10.0.copyload38, align 8, !alias.scope !11320, !noalias !11319, !nonnull !15, !noundef !15 ; 2 uses
+  %i.bc = call noundef nonnull align 8 ptr @_RINvMs9_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types8callable1__NtB8_12CallableType10signaturesDNtNtBc_2db2DbEL_EBc_(i32 noundef range(i32 1, 0) %.val3.i24, i32 noundef %.val4.i25, ptr noundef nonnull %i.bb, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.ba), !noalias !11321
   %i.bd = call { ptr, ptr } @_RNvMs_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB4_17CallableSignature4iter(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bc), !noalias !11321 ; 2 uses
   %i.be = extractvalue { ptr, ptr } %i.bd, 0
   %i.bf = extractvalue { ptr, ptr } %i.bd, 1
+  %3 = load <2 x ptr>, ptr %i.ak, align 8, !alias.scope !11320, !noalias !11319
   store ptr %i.be, ptr %i.a, align 8, !noalias !11321
   store ptr %i.bf, ptr %i.al, align 8, !noalias !11321
-  store ptr %i.ba, ptr %i.am, align 8, !noalias !11321
-  store ptr %i.bb, ptr %.sroa.4.0..sroa_idx.i.i.i26, align 8, !noalias !11321
-  %2 = load <2 x ptr>, ptr %i.ak, align 8, !alias.scope !11320, !noalias !11319
-  store <2 x ptr> %2, ptr %.sroa.5.0..sroa_idx.i.i.i27, align 8, !noalias !11321
+  %4 = shufflevector <2 x ptr> %2, <2 x ptr> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x ptr> %4, ptr %i.am, align 8, !noalias !11321
   call void @_RINvMs_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB5_17CallableSignature14from_overloadsINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB1L_5slice4iter4IterNtB5_9SignatureENCNCNvMsp_NtNtB7_5class14static_literalNtB3h_18StaticClassLiteral22own_synthesized_members1_00EEB9_(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.b, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.a), !noalias !11321
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !11321
-  %i.bg = call { i32, i32 } @_RINvMs9_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types8callable1__NtB8_12CallableType3newDNtNtBc_2db2DbEL_NtNtBa_10signatures17CallableSignatureNtB8_16CallableTypeKindNtB8_26CallableFunctionProvenanceEBc_(ptr noundef nonnull %i.ba, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.bb, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(80) %i.b, i8 noundef 1, i8 noundef 0), !noalias !11321 ; 2 uses
+  %i.bg = call { i32, i32 } @_RINvMs9_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types8callable1__NtB8_12CallableType3newDNtNtBc_2db2DbEL_NtNtBa_10signatures17CallableSignatureNtB8_16CallableTypeKindNtB8_26CallableFunctionProvenanceEBc_(ptr noundef nonnull %i.bb, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.ba, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(80) %i.b, i8 noundef 1, i8 noundef 0), !noalias !11321 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !11321
   %i.bh = extractvalue { i32, i32 } %i.bg, 0      ; 2 uses
   %i.bi = extractvalue { i32, i32 } %i.bg, 1

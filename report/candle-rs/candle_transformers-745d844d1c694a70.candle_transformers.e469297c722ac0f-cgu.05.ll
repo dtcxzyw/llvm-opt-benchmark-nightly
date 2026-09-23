@@ -205,7 +205,7 @@ bb.a:
   %i.fc = alloca [8 x i8], align 8                ; 15 uses
   %i.fd = alloca [8 x i8], align 8                ; 15 uses
   %i.fe = alloca [1 x i8], align 1                ; 10 uses
-  %i.ff = alloca [80 x i8], align 8               ; 8 uses
+  %i.ff = alloca [80 x i8], align 8               ; 6 uses
   %i.fg = alloca [80 x i8], align 8               ; 7 uses
   %i.fh = alloca [8 x i8], align 8                ; 21 uses
   %i.fi = alloca [80 x i8], align 8               ; 16 uses
@@ -608,12 +608,9 @@ bb.bv:                                            ; preds = %bb.ud, %bb.bu
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorEECs1dZk1kIfPhr_19candle_transformers.exit1663.thread
 
 bb.bw:                                            ; preds = %bb.bu
-  %12 = load i64, ptr %i.ff, align 8, !range !14, !noundef !5 ; 2 uses
-  %.not1206 = icmp eq i64 %12, -1
-  %13 = getelementptr inbounds nuw i8, ptr %i.ff, i64 8
-  %.sroa.0672.0.copyload = load i64, ptr %13, align 8 ; 3 uses
-  %.sroa.4673.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ff, i64 16
-  %14 = load <2 x i64>, ptr %.sroa.4673.0..sroa_idx, align 8 ; 5 uses
+  %12 = load <4 x i64>, ptr %i.ff, align 8        ; 8 uses
+  %13 = extractelement <4 x i64> %12, i64 0
+  %.not1206 = icmp eq i64 %13, -1
   br i1 %.not1206, label %switch.lookup, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
@@ -621,11 +618,7 @@ bb.bx:                                            ; preds = %bb.bw
   %.sroa.7689.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7689.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7684.0..sroa_idx, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ff)
-  store i64 %12, ptr %0, align 8
-  %.sroa.4686.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.0672.0.copyload, ptr %.sroa.4686.0..sroa_idx, align 8
-  %.sroa.5687.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <2 x i64> %14, ptr %.sroa.5687.0..sroa_idx, align 8
+  store <4 x i64> %12, ptr %0, align 8
   br label %bb.ug
 
 switch.lookup:                                    ; preds = %bb.bw
@@ -1025,8 +1018,9 @@ bb.dk:                                            ; preds = %bb.di
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ej)
   %i.mv = load ptr, ptr %2, align 8, !nonnull !5, !noundef !5
   %i.mw = getelementptr inbounds nuw i8, ptr %i.mv, i64 145 ; 2 uses
-  %i.mx = extractelement <2 x i64> %14, i64 0
-  invoke void @_RINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB6_6Tensor10zeros_implTjjEECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.ej, i64 noundef %.sroa.0672.0.copyload, i64 noundef %i.mx, i8 noundef 7, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.mw, i1 noundef zeroext false)
+  %14 = extractelement <4 x i64> %12, i64 1
+  %i.mx = extractelement <4 x i64> %12, i64 2
+  invoke void @_RINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB6_6Tensor10zeros_implTjjEECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.ej, i64 noundef %14, i64 noundef %i.mx, i8 noundef 7, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.mw, i1 noundef zeroext false)
           to label %bb.dm unwind label %bb.dl
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit1411: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit1425, %bb.dp, %bb.dl
@@ -1150,7 +1144,8 @@ bb.du:                                            ; preds = %bb.dt
   %i.of = getelementptr inbounds nuw i8, ptr %i.dr, i64 16
   %i.og = getelementptr inbounds nuw i8, ptr %i.dr, i64 24
   %i.oh = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
-  %i.oi = insertelement <2 x i64> %14, i64 0, i64 0
+  %15 = shufflevector <4 x i64> %12, <4 x i64> poison, <2 x i32> <i32 poison, i32 3>
+  %i.oi = insertelement <2 x i64> %15, i64 0, i64 0
   br label %bb.dw
 
 bb.dv:                                            ; preds = %bb.dt
@@ -1553,8 +1548,9 @@ bb.hv:                                            ; preds = %bb.ht
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cy)
   %i.vo = load ptr, ptr %2, align 8, !nonnull !5, !noundef !5
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vo, i64 145 ; 2 uses
-  %i.vq = extractelement <2 x i64> %14, i64 0
-  invoke void @_RINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB6_6Tensor10zeros_implTjjEECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.cy, i64 noundef %.sroa.0672.0.copyload, i64 noundef %i.vq, i8 noundef 7, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.vp, i1 noundef zeroext false)
+  %16 = extractelement <4 x i64> %12, i64 1
+  %i.vq = extractelement <4 x i64> %12, i64 2
+  invoke void @_RINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB6_6Tensor10zeros_implTjjEECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.cy, i64 noundef %16, i64 noundef %i.vq, i8 noundef 7, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.vp, i1 noundef zeroext false)
           to label %bb.hx unwind label %bb.hw
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit1475: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit1492, %bb.ia, %bb.hw
@@ -1678,7 +1674,8 @@ bb.if:                                            ; preds = %bb.ie
   %i.wy = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.wz = getelementptr inbounds nuw i8, ptr %i.cg, i64 24
   %i.xa = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
-  %i.xb = insertelement <2 x i64> %14, i64 0, i64 0
+  %17 = shufflevector <4 x i64> %12, <4 x i64> poison, <2 x i32> <i32 poison, i32 3>
+  %i.xb = insertelement <2 x i64> %17, i64 0, i64 0
   br label %bb.ih
 
 bb.ig:                                            ; preds = %bb.ie
@@ -2081,12 +2078,16 @@ _RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 2, ptr %i.f, align 8
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30
-  %i.g = tail call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 8, 201) 48, i64 noundef 8) #30 ; 3 uses
+  %i.g = tail call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 8, 201) 48, i64 noundef 8) #30 ; 5 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.c, label %_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit3.preheader, !prof !7
 
 _RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit3.preheader: ; preds = %_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit
-  store <6 x i64> splat (i64 1025), ptr %i.g, align 8
+  store <4 x i64> splat (i64 1025), ptr %i.g, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.g, i64 32
+  store i64 1025, ptr %1, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 40
+  store i64 1025, ptr %2, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 1024, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16

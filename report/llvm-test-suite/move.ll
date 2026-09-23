@@ -202,7 +202,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nofree nounwind uwtable
 define dso_local void @check_objects() local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [3 x [2 x double]], align 16      ; 13 uses
+  %i.a = alloca [3 x [2 x double]], align 16      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.b = load ptr, ptr @sorted_index, align 8, !tbaa !18
   %i.c = load i32, ptr @num_refine, align 4, !tbaa !7 ; 2 uses
@@ -214,9 +214,7 @@ bb.a:
   br i1 %i.h, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
   br label %bb.b
@@ -351,7 +349,6 @@ bb.h:                                             ; preds = %bb.g
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !7
   %i.df = sitofp i32 %i.de to double              ; 2 uses
   %i.dg = load i32, ptr @x_block_size, align 4, !tbaa !7
-  %2 = load double, ptr %i.a, align 16, !tbaa !12
   %i.dh = load i32, ptr @y_block_size, align 4, !tbaa !7
   %i.di = insertelement <2 x i32> poison, i32 %i.dg, i64 0
   %i.dj = insertelement <2 x i32> %i.di, i32 %i.dh, i64 1
@@ -361,19 +358,13 @@ bb.h:                                             ; preds = %bb.g
   %i.dn = fdiv <2 x double> %i.dm, %i.dk
   %i.do = load <2 x i32>, ptr @mesh_size, align 4, !tbaa !7
   %i.dp = sitofp <2 x i32> %i.do to <2 x double>
-  %i.dq = fdiv <2 x double> %i.dn, %i.dp          ; 4 uses
-  %3 = extractelement <2 x double> %i.dq, i64 0
-  %4 = fsub double %2, %3
-  store double %4, ptr %i.a, align 16, !tbaa !12
-  %5 = load <2 x double>, ptr %0, align 8, !tbaa !12 ; 2 uses
-  %6 = fadd <2 x double> %5, %i.dq
-  %7 = fsub <2 x double> %5, %i.dq
-  %8 = shufflevector <2 x double> %6, <2 x double> %7, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %8, ptr %0, align 8, !tbaa !12
-  %9 = load double, ptr %1, align 8, !tbaa !12
-  %10 = extractelement <2 x double> %i.dq, i64 1
-  %11 = fadd double %10, %9
-  store double %11, ptr %1, align 8, !tbaa !12
+  %i.dq = fdiv <2 x double> %i.dn, %i.dp
+  %0 = shufflevector <2 x double> %i.dq, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1> ; 2 uses
+  %1 = load <4 x double>, ptr %i.a, align 16, !tbaa !12 ; 2 uses
+  %2 = fsub <4 x double> %1, %0
+  %3 = fadd <4 x double> %1, %0
+  %4 = shufflevector <4 x double> %2, <4 x double> %3, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x double> %4, ptr %i.a, align 16, !tbaa !12
   %i.dr = load i32, ptr @z_block_size, align 4, !tbaa !7
   %i.ds = sitofp i32 %i.dr to double
   %i.dt = fdiv double %i.df, %i.ds

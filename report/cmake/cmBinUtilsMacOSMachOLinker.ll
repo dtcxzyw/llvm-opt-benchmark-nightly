@@ -204,18 +204,20 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %._cri
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.ab = load <2 x ptr>, ptr %2, align 16, !tbaa !39
   store <2 x ptr> %i.ab, ptr %i.z, align 8, !tbaa !39
-  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %4 = load ptr, ptr %i.ad, align 16, !tbaa !41
-  store ptr %4, ptr %i.ac, align 8, !tbaa !41
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 72
+  %7 = load ptr, ptr %5, align 16, !tbaa !41
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %2, i8 0, i64 24, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 3 uses
-  %i.ae = load <2 x ptr>, ptr %i.g, align 8, !tbaa !39
-  store <2 x ptr> %i.ae, ptr %5, align 8, !tbaa !39
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %8 = load ptr, ptr %7, align 8, !tbaa !41
-  store ptr %8, ptr %6, align 8, !tbaa !41
+  %8 = load ptr, ptr %i.g, align 8, !tbaa !42
+  %i.ae = load <2 x ptr>, ptr %i.ad, align 16, !tbaa !39
+  %9 = insertelement <4 x ptr> poison, ptr %7, i64 0
+  %10 = insertelement <4 x ptr> %9, ptr %8, i64 1
+  %11 = shufflevector <2 x ptr> %i.ae, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x ptr> %10, <4 x ptr> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %12, ptr %4, align 8, !tbaa !39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, i8 0, i64 24, i1 false)
   %i.af = invoke { ptr, i8 } @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N26cmBinUtilsMacOSMachOLinker8FileInfoEESaISA_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE10_M_emplaceIJSA_EEES6_INSC_14_Node_iteratorISA_Lb0ELb1EEEbESt17integral_constantIbLb1EEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.b, ptr noundef nonnull align 8 dereferenceable(80) %3)
           to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN26cmBinUtilsMacOSMachOLinker8FileInfoESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S7_EEE6insertEOSE_.exit unwind label %bb.m
@@ -223,7 +225,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %._cri
 _ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN26cmBinUtilsMacOSMachOLinker8FileInfoESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S7_EEE6insertEOSE_.exit: ; preds = %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 64
   %.fca.0.extract = extractvalue { ptr, i8 } %i.af, 0
-  %i.ah = load ptr, ptr %5, align 8, !tbaa !42    ; 3 uses
+  %i.ah = load ptr, ptr %i.ac, align 8, !tbaa !42 ; 3 uses
   %i.ai = load ptr, ptr %i.ag, align 8, !tbaa !43 ; 2 uses
   %.not4.i.i.i.i.i = icmp eq ptr %i.ah, %i.ai
   br i1 %.not4.i.i.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i, label %.lr.ph.i.i.i.i.i
@@ -247,7 +249,7 @@ _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i
   br i1 %.not.i.i.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !0
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i.i: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i.i
-  %.pr.i.i.i = load ptr, ptr %5, align 8, !tbaa !42
+  %.pr.i.i.i = load ptr, ptr %i.ac, align 8, !tbaa !42
   br label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i.i, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN26cmBinUtilsMacOSMachOLinker8FileInfoESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S7_EEE6insertEOSE_.exit
@@ -297,7 +299,7 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
   br i1 %.not.i.i1.i10.i.i, label %_ZN26cmBinUtilsMacOSMachOLinker8FileInfoD2Ev.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i9.i.i
-  %i.bd = load ptr, ptr %i.ac, align 8, !tbaa !41
+  %i.bd = load ptr, ptr %4, align 8, !tbaa !41
   %i.be = ptrtoint ptr %i.bd to i64
   %i.bf = ptrtoint ptr %i.bc to i64
   %i.bg = sub i64 %i.be, %i.bf
@@ -700,7 +702,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define linkonce_odr dso_local noundef ptr @_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN26cmBinUtilsMacOSMachOLinker8FileInfoEELb1EEEEE16_M_allocate_nodeIJSC_EEEPSD_DpOT_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(80) %1) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = tail call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #20 ; 10 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #20 ; 8 uses
   store ptr null, ptr %i.b, align 8, !tbaa !52
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
@@ -753,18 +755,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
   store <2 x ptr> %i.s, ptr %i.q, align 8, !tbaa !39
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %2 = load ptr, ptr %i.u, align 8, !tbaa !41
-  store ptr %2, ptr %i.t, align 8, !tbaa !41
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %4 = load ptr, ptr %i.u, align 8, !tbaa !41
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.r, i8 0, i64 24, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %i.v = load <2 x ptr>, ptr %4, align 8, !tbaa !39
-  store <2 x ptr> %i.v, ptr %3, align 8, !tbaa !39
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %7 = load ptr, ptr %6, align 8, !tbaa !41
-  store ptr %7, ptr %5, align 8, !tbaa !41
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
+  %5 = load ptr, ptr %2, align 8, !tbaa !42
+  %i.v = load <2 x ptr>, ptr %3, align 8, !tbaa !39
+  %6 = insertelement <4 x ptr> poison, ptr %4, i64 0
+  %7 = insertelement <4 x ptr> %6, ptr %5, i64 1
+  %8 = shufflevector <2 x ptr> %i.v, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x ptr> %7, <4 x ptr> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %9, ptr %i.t, align 8, !tbaa !39
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   ret ptr %i.b
 
 bb.e:                                             ; preds = %.noexc.i.i

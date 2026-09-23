@@ -204,22 +204,26 @@ _ZNSt14_Optional_baseIN19cmCxxModuleMetadata18LocalArgumentsDataELb0ELb0EED2Ev.e
   store <2 x ptr> %i.aj, ptr %i.ah, align 8, !tbaa !73
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %3 = load ptr, ptr %i.al, align 8, !tbaa !58
-  store ptr %3, ptr %i.ak, align 8, !tbaa !58
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 104
+  %5 = load ptr, ptr %i.al, align 8, !tbaa !58
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.ai, i8 0, i64 24, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
-  %i.am = load <2 x ptr>, ptr %5, align 8, !tbaa !73
-  store <2 x ptr> %i.am, ptr %4, align 8, !tbaa !73
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %8 = load ptr, ptr %7, align 8, !tbaa !58
-  store ptr %8, ptr %6, align 8, !tbaa !58
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  %6 = load ptr, ptr %3, align 8, !tbaa !97
+  %i.am = load <2 x ptr>, ptr %4, align 8, !tbaa !73
+  %7 = insertelement <4 x ptr> poison, ptr %5, i64 0
+  %8 = insertelement <4 x ptr> %7, ptr %6, i64 1
+  %9 = shufflevector <2 x ptr> %i.am, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x ptr> %8, <4 x ptr> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %10, ptr %i.ak, align 8, !tbaa !73
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
-  %9 = load <2 x ptr>, ptr %i.ao, align 8, !tbaa !63
-  store <2 x ptr> %9, ptr %i.an, align 8, !tbaa !63
+  %11 = load ptr, ptr %i.ao, align 8, !tbaa !100
+  store ptr %11, ptr %i.an, align 8, !tbaa !100
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 128
+  %14 = load ptr, ptr %13, align 8, !tbaa !61
+  store ptr %14, ptr %12, align 8, !tbaa !61
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !62
