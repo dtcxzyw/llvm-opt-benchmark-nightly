@@ -202,13 +202,12 @@ bb.qo:                                            ; preds = %bb.ql
 vector.ph:                                        ; preds = %.lr.ph.i109.preheader
   %n.vec = and i64 %i.ahv, -8                     ; 3 uses
   %i.ahw = or disjoint i64 %n.vec, 2
-  %71 = insertelement <4 x i32> <i32 poison, i32 -1, i32 -1, i32 -1>, i32 %i.aho, i64 0
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <4 x i32> [ %71, %vector.ph ], [ %74, %vector.body ]
-  %vec.phi337 = phi <4 x i32> [ splat (i32 -1), %vector.ph ], [ %75, %vector.body ]
+  %vec.phi = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %71, %vector.body ]
+  %vec.phi337 = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %72, %vector.body ]
   %i.ahx = getelementptr inbounds nuw i8, ptr %.sroa.0.2.ph, i64 %index ; 2 uses
   %i.ahy = getelementptr inbounds nuw i8, ptr %i.ahx, i64 2
   %i.ahz = getelementptr inbounds nuw i8, ptr %i.ahx, i64 6
@@ -216,27 +215,28 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load338 = load <4 x i8>, ptr %i.ahz, align 1, !tbaa !175
   %i.aia = icmp eq <4 x i8> %wide.load, zeroinitializer
   %i.aib = icmp eq <4 x i8> %wide.load338, zeroinitializer
-  %72 = select <4 x i1> %i.aia, <4 x i32> splat (i32 -256), <4 x i32> splat (i32 -1)
-  %73 = select <4 x i1> %i.aib, <4 x i32> splat (i32 -256), <4 x i32> splat (i32 -1)
-  %74 = and <4 x i32> %72, %vec.phi               ; 2 uses
-  %75 = and <4 x i32> %73, %vec.phi337            ; 2 uses
+  %71 = or <4 x i1> %vec.phi, %i.aia              ; 2 uses
+  %72 = or <4 x i1> %vec.phi337, %i.aib           ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.aic = icmp eq i64 %index.next, %n.vec
   br i1 %i.aic, label %middle.block, label %vector.body, !llvm.loop !259
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = and <4 x i32> %75, %74
-  %76 = call i32 @llvm.vector.reduce.and.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %bin.rdx = or <4 x i1> %72, %71
+  %bin.rdx.fr = freeze <4 x i1> %bin.rdx
+  %73 = bitcast <4 x i1> %bin.rdx.fr to i4
+  %.not = icmp eq i4 %73, 0
+  %rdx.select = select i1 %.not, i32 %i.aho, i32 0 ; 2 uses
   %cmp.n = icmp eq i64 %i.ahv, %n.vec
   br i1 %cmp.n, label %._crit_edge.i107, label %.lr.ph.i109.preheader339
 
 .lr.ph.i109.preheader339:                         ; preds = %.lr.ph.i109.preheader, %middle.block
   %.082187.i.ph = phi i64 [ 2, %.lr.ph.i109.preheader ], [ %i.ahw, %middle.block ]
-  %.083186.i.ph = phi i32 [ %i.aho, %.lr.ph.i109.preheader ], [ %76, %middle.block ]
+  %.083186.i.ph = phi i32 [ %i.aho, %.lr.ph.i109.preheader ], [ %rdx.select, %middle.block ]
   br label %.lr.ph.i109
 
 ._crit_edge.i107:                                 ; preds = %.lr.ph.i109, %middle.block, %bb.qo
-  %.083.lcssa.i = phi i32 [ %i.aho, %bb.qo ], [ %76, %middle.block ], [ %77, %.lr.ph.i109 ]
+  %.083.lcssa.i = phi i32 [ %i.aho, %bb.qo ], [ %rdx.select, %middle.block ], [ %i.aig, %.lr.ph.i109 ]
   %i.aid = icmp ult i64 %i.ahp, %i.agk
   br i1 %i.aid, label %bb.qr, label %bb.qp
 
@@ -246,12 +246,11 @@ bb.qp:                                            ; preds = %._crit_edge.i107
 
 .lr.ph.i109:                                      ; preds = %.lr.ph.i109.preheader339, %.lr.ph.i109
   %.082187.i = phi i64 [ %i.aih, %.lr.ph.i109 ], [ %.082187.i.ph, %.lr.ph.i109.preheader339 ] ; 2 uses
-  %.083186.i = phi i32 [ %77, %.lr.ph.i109 ], [ %.083186.i.ph, %.lr.ph.i109.preheader339 ]
+  %.083186.i = phi i32 [ %i.aig, %.lr.ph.i109 ], [ %.083186.i.ph, %.lr.ph.i109.preheader339 ]
   %i.aie = getelementptr inbounds nuw i8, ptr %.sroa.0.2.ph, i64 %.082187.i
   %i.aif = load i8, ptr %i.aie, align 1, !tbaa !175
   %.not183.i = icmp eq i8 %i.aif, 0
-  %i.aig = select i1 %.not183.i, i32 -256, i32 -1
-  %77 = and i32 %i.aig, %.083186.i                ; 2 uses
+  %i.aig = select i1 %.not183.i, i32 0, i32 %.083186.i ; 2 uses
   %i.aih = add nuw i64 %.082187.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.aih, %i.ahp
   br i1 %exitcond.not.i, label %._crit_edge.i107, label %.lr.ph.i109, !llvm.loop !260
@@ -263,6 +262,8 @@ bb.qq:                                            ; preds = %.lr.ph.preheader.i1
 bb.qr:                                            ; preds = %._crit_edge.i107
   %i.aii = getelementptr inbounds nuw i8, ptr %.sroa.0.2.ph, i64 %i.ahp
   %i.aij = load i8, ptr %i.aii, align 1, !tbaa !175
+  %74 = zext i8 %i.aij to i64
+  %75 = add nsw i64 %74, -1
   %i.aik = icmp ult i64 %i.ahd, %i.agk
   br i1 %i.aik, label %bb.qt, label %bb.qs
 
@@ -273,49 +274,54 @@ bb.qs:                                            ; preds = %bb.qr
 bb.qt:                                            ; preds = %bb.qr
   %i.ail = add nuw i64 %i.ahd, 1                  ; 2 uses
   %i.aim = icmp ult i64 %i.ail, %i.agk
-  br i1 %i.aim, label %78, label %bb.qu
+  br i1 %i.aim, label %.lr.ph191.i, label %bb.qu
 
 bb.qu:                                            ; preds = %bb.qt
   call void @abort() #14
   unreachable
 
-78:                                               ; preds = %bb.qt
-  %.not192.i = icmp eq i64 %i.agz, 0
-  br i1 %.not192.i, label %.loopexit.i102, label %.lr.ph191.i
-
-.lr.ph191.i:                                      ; preds = %78
-  %i.ain = getelementptr inbounds nuw i8, ptr %.sroa.0.2.ph, i64 %i.ail
+.lr.ph191.i:                                      ; preds = %bb.qt
+  %76 = load i16, ptr %i.aw, align 4, !tbaa !339  ; 2 uses
+  %77 = lshr i16 %76, 8
+  %i.ain = getelementptr inbounds nuw i8, ptr %.sroa.0.2.ph, i64 %i.ahd
   %i.aio = load i8, ptr %i.ain, align 1, !tbaa !175
-  %79 = load i16, ptr %i.aw, align 4, !tbaa !339  ; 2 uses
-  %80 = trunc i16 %79 to i8
-  %isneg182.i = icmp eq i8 %i.aio, %80
-  %81 = lshr i16 %79, 8
-  %i.aip = getelementptr inbounds nuw i8, ptr %.sroa.0.2.ph, i64 %i.ahd
+  %78 = zext i8 %i.aio to i16
+  %79 = xor i16 %77, %78
+  %80 = zext nneg i16 %79 to i64
+  %81 = add nsw i64 %80, -1
+  %i.aip = getelementptr inbounds nuw i8, ptr %.sroa.0.2.ph, i64 %i.ail
   %i.aiq = load i8, ptr %i.aip, align 1, !tbaa !175
-  %82 = zext i8 %i.aiq to i16
-  %isneg181.i = icmp eq i16 %81, %82
-  %83 = select i1 %isneg182.i, i1 %isneg181.i, i1 false
-  %isneg.i = icmp eq i8 %i.aij, 0
-  %84 = select i1 %83, i1 %isneg.i, i1 false
-  %85 = zext nneg i32 %.083.lcssa.i to i64
-  %86 = select i1 %84, i64 %85, i64 0
-  %87 = add i64 %i.agz, %i.agk                    ; 2 uses
-  %88 = sub i64 %87, %i.agy
-  %invariant.gep = getelementptr i8, ptr %.sroa.0.2.ph, i64 %i.ahd
-  %exitcond.not335.a = icmp eq i64 %87, %i.agy
-  br i1 %exitcond.not335.a, label %.lr.ph191.i._crit_edge, label %_ZN4bssl5ArrayIhEixEm.exit157.i.preheader
+  %82 = and i16 %76, 255
+  %83 = zext i8 %i.aiq to i16
+  %84 = xor i16 %82, %83
+  %85 = zext nneg i16 %84 to i64
+  %86 = add nsw i64 %85, -1
+  %.neg.i.i.i181.i = and i64 %81, %75
+  %87 = and i64 %.neg.i.i.i181.i, %86
+  %88 = zext nneg i32 %.083.lcssa.i to i64
+  %isneg.i = icmp slt i64 %87, 0
+  %89 = select i1 %isneg.i, i64 %88, i64 0
+  %exitcond.not335.a = icmp eq i64 %i.agz, 0
+  br i1 %exitcond.not335.a, label %.loopexit.i102, label %.lr.ph190.i.preheader
 
-_ZN4bssl5ArrayIhEixEm.exit157.i.preheader:        ; preds = %.lr.ph191.i
-  %i.air = call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %86) #16, !srcloc !519
+.lr.ph190.i.preheader:                            ; preds = %.lr.ph191.i
+  %90 = add i64 %i.agz, %i.agk                    ; 2 uses
+  %91 = sub i64 %90, %i.agy
+  %invariant.gep = getelementptr i8, ptr %.sroa.0.2.ph, i64 %i.ahd
+  %exitcond.not335 = icmp eq i64 %90, %i.agy
+  br i1 %exitcond.not335, label %.lr.ph191.i._crit_edge, label %_ZN4bssl5ArrayIhEixEm.exit157.i.preheader
+
+_ZN4bssl5ArrayIhEixEm.exit157.i.preheader:        ; preds = %.lr.ph190.i.preheader
+  %i.air = call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %89) #16, !srcloc !519
   %i.ais = trunc i64 %i.air to i8                 ; 2 uses
   %i.ait = xor i8 %i.ais, -1
   br label %_ZN4bssl5ArrayIhEixEm.exit157.i
 
 bb.qv:                                            ; preds = %_ZN4bssl5ArrayIhEixEm.exit157.i
-  %exitcond.not = icmp eq i64 %i.ajb, %88
+  %exitcond.not = icmp eq i64 %i.ajb, %91
   br i1 %exitcond.not, label %.lr.ph191.i._crit_edge, label %_ZN4bssl5ArrayIhEixEm.exit157.i, !llvm.loop !261
 
-.lr.ph191.i._crit_edge:                           ; preds = %.lr.ph191.i, %bb.qv
+.lr.ph191.i._crit_edge:                           ; preds = %.lr.ph190.i.preheader, %bb.qv
   call void @abort() #14
   unreachable
 
@@ -335,9 +341,9 @@ _ZN4bssl5ArrayIhEixEm.exit157.i:                  ; preds = %_ZN4bssl5ArrayIhEix
   %i.ajd = icmp ult i64 %i.ajb, %i.ajc
   br i1 %i.ajd, label %bb.qv, label %.loopexit.i102, !llvm.loop !261
 
-.loopexit.i102:                                   ; preds = %_ZN4bssl5ArrayIhEixEm.exit157.i, %78, %.invoke.i106, %bb.qj, %bb.qh, %bb.qe, %bb.qc
-  %i.aje = phi i1 [ false, %bb.qc ], [ false, %bb.qh ], [ false, %.invoke.i106 ], [ true, %78 ], [ false, %bb.qe ], [ false, %bb.qj ], [ true, %_ZN4bssl5ArrayIhEixEm.exit157.i ]
-  %.3.i103 = phi i32 [ 0, %bb.qc ], [ 0, %bb.qh ], [ 0, %.invoke.i106 ], [ 0, %78 ], [ 9, %bb.qe ], [ 0, %bb.qj ], [ 0, %_ZN4bssl5ArrayIhEixEm.exit157.i ]
+.loopexit.i102:                                   ; preds = %_ZN4bssl5ArrayIhEixEm.exit157.i, %.lr.ph191.i, %.invoke.i106, %bb.qj, %bb.qh, %bb.qe, %bb.qc
+  %i.aje = phi i1 [ false, %bb.qc ], [ false, %bb.qh ], [ false, %.invoke.i106 ], [ true, %.lr.ph191.i ], [ false, %bb.qe ], [ false, %bb.qj ], [ true, %_ZN4bssl5ArrayIhEixEm.exit157.i ]
+  %.3.i103 = phi i32 [ 0, %bb.qc ], [ 0, %bb.qh ], [ 0, %.invoke.i106 ], [ 0, %.lr.ph191.i ], [ 9, %bb.qe ], [ 0, %bb.qj ], [ 0, %_ZN4bssl5ArrayIhEixEm.exit157.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #13
   br label %_ZN4bssl5ArrayIhE16InitForOverwriteEm.exit
 
@@ -739,9 +745,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.and.v4i32(<4 x i32>) #10
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

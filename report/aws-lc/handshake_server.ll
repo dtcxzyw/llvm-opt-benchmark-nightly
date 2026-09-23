@@ -202,13 +202,12 @@ bb.lu:                                            ; preds = %bb.ls
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.agn, -8                     ; 3 uses
   %i.ago = or disjoint i64 %n.vec, 2
-  %65 = insertelement <4 x i32> <i32 poison, i32 -1, i32 -1, i32 -1>, i32 %i.agj, i64 0
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <4 x i32> [ %65, %vector.ph ], [ %68, %vector.body ]
-  %vec.phi219 = phi <4 x i32> [ splat (i32 -1), %vector.ph ], [ %69, %vector.body ]
+  %vec.phi = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %65, %vector.body ]
+  %vec.phi219 = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %66, %vector.body ]
   %i.agp = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph, i64 %index ; 2 uses
   %i.agq = getelementptr inbounds nuw i8, ptr %i.agp, i64 2
   %i.agr = getelementptr inbounds nuw i8, ptr %i.agp, i64 6
@@ -216,48 +215,56 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load220 = load <4 x i8>, ptr %i.agr, align 1, !tbaa !141
   %i.ags = icmp eq <4 x i8> %wide.load, zeroinitializer
   %i.agt = icmp eq <4 x i8> %wide.load220, zeroinitializer
-  %66 = select <4 x i1> %i.ags, <4 x i32> splat (i32 -256), <4 x i32> splat (i32 -1)
-  %67 = select <4 x i1> %i.agt, <4 x i32> splat (i32 -256), <4 x i32> splat (i32 -1)
-  %68 = and <4 x i32> %66, %vec.phi               ; 2 uses
-  %69 = and <4 x i32> %67, %vec.phi219            ; 2 uses
+  %65 = or <4 x i1> %vec.phi, %i.ags              ; 2 uses
+  %66 = or <4 x i1> %vec.phi219, %i.agt           ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.agu = icmp eq i64 %index.next, %n.vec
   br i1 %i.agu, label %middle.block, label %vector.body, !llvm.loop !166
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = and <4 x i32> %69, %68
-  %70 = call i32 @llvm.vector.reduce.and.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %bin.rdx = or <4 x i1> %66, %65
+  %bin.rdx.fr = freeze <4 x i1> %bin.rdx
+  %67 = bitcast <4 x i1> %bin.rdx.fr to i4
+  %.not = icmp eq i4 %67, 0
+  %rdx.select = select i1 %.not, i32 %i.agj, i32 0 ; 2 uses
   %cmp.n = icmp eq i64 %i.agn, %n.vec
   br i1 %cmp.n, label %._crit_edge.i100, label %.lr.ph.i.preheader223
 
 .lr.ph.i.preheader223:                            ; preds = %.lr.ph.i.preheader, %middle.block
   %.093153.i.ph = phi i64 [ 2, %.lr.ph.i.preheader ], [ %i.ago, %middle.block ]
-  %.094152.i.ph = phi i32 [ %i.agj, %.lr.ph.i.preheader ], [ %70, %middle.block ]
+  %.094152.i.ph = phi i32 [ %i.agj, %.lr.ph.i.preheader ], [ %rdx.select, %middle.block ]
   br label %.lr.ph.i
 
 ._crit_edge.i100:                                 ; preds = %.lr.ph.i, %middle.block, %bb.lu
-  %.094.lcssa.i = phi i32 [ %i.agj, %bb.lu ], [ %70, %middle.block ], [ %79, %.lr.ph.i ]
+  %.094.lcssa.i = phi i32 [ %i.agj, %bb.lu ], [ %rdx.select, %middle.block ], [ %i.ahg, %.lr.ph.i ]
   %.not159.i = icmp eq i64 %i.afv, 0
   br i1 %.not159.i, label %._crit_edge158.i, label %.lr.ph157.i
 
 .lr.ph157.i:                                      ; preds = %._crit_edge.i100
+  %68 = load i16, ptr %i.ar, align 4, !tbaa !287  ; 2 uses
+  %69 = lshr i16 %68, 8
   %i.agv = getelementptr i8, ptr %.sroa.0.0.ph, i64 %i.afy ; 3 uses
-  %71 = getelementptr i8, ptr %i.agv, i64 1
-  %72 = load i8, ptr %71, align 1, !tbaa !141
-  %73 = load i16, ptr %i.ar, align 4, !tbaa !287  ; 2 uses
-  %74 = trunc i16 %73 to i8
-  %isneg150.i = icmp eq i8 %72, %74
-  %75 = lshr i16 %73, 8
-  %i.agw = load i8, ptr %i.agv, align 1, !tbaa !141
-  %76 = zext i8 %i.agw to i16
-  %isneg149.i = icmp eq i16 %75, %76
-  %77 = select i1 %isneg150.i, i1 %isneg149.i, i1 false
-  %i.agx = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph, i64 %i.agk
+  %70 = load i8, ptr %i.agv, align 1, !tbaa !141
+  %71 = zext i8 %70 to i16
+  %72 = xor i16 %69, %71
+  %73 = zext nneg i16 %72 to i64
+  %74 = add nsw i64 %73, -1
+  %75 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph, i64 %i.agk
+  %i.agw = load i8, ptr %75, align 1, !tbaa !141
+  %76 = zext i8 %i.agw to i64
+  %77 = add nsw i64 %76, -1
+  %.neg.i.i.i149.i = and i64 %74, %77
+  %78 = and i16 %68, 255
+  %i.agx = getelementptr i8, ptr %i.agv, i64 1
   %i.agy = load i8, ptr %i.agx, align 1, !tbaa !141
-  %isneg.i = icmp eq i8 %i.agy, 0
-  %78 = select i1 %77, i1 %isneg.i, i1 false
+  %79 = zext i8 %i.agy to i16
+  %80 = xor i16 %78, %79
+  %81 = zext nneg i16 %80 to i64
+  %82 = add nsw i64 %81, -1
+  %83 = and i64 %.neg.i.i.i149.i, %82
+  %isneg.i = icmp slt i64 %83, 0
   %i.agz = zext nneg i32 %.094.lcssa.i to i64
-  %i.aha = select i1 %78, i64 %i.agz, i64 0       ; 2 uses
+  %i.aha = select i1 %isneg.i, i64 %i.agz, i64 0  ; 2 uses
   %i.ahb = call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.aha) #9, !srcloc !371
   %i.ahc = xor i64 %i.aha, -1
   %i.ahd = call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 -256, 256) %i.ahc) #9, !srcloc !371
@@ -265,12 +272,11 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader223, %.lr.ph.i
   %.093153.i = phi i64 [ %i.ahh, %.lr.ph.i ], [ %.093153.i.ph, %.lr.ph.i.preheader223 ] ; 2 uses
-  %.094152.i = phi i32 [ %79, %.lr.ph.i ], [ %.094152.i.ph, %.lr.ph.i.preheader223 ]
+  %.094152.i = phi i32 [ %i.ahg, %.lr.ph.i ], [ %.094152.i.ph, %.lr.ph.i.preheader223 ]
   %i.ahe = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph, i64 %.093153.i
   %i.ahf = load i8, ptr %i.ahe, align 1, !tbaa !141
   %.not151.i = icmp eq i8 %i.ahf, 0
-  %i.ahg = select i1 %.not151.i, i32 -256, i32 -1
-  %79 = and i32 %i.ahg, %.094152.i                ; 2 uses
+  %i.ahg = select i1 %.not151.i, i32 0, i32 %.094152.i ; 2 uses
   %i.ahh = add nuw i64 %.093153.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ahh, %i.agk
   br i1 %exitcond.not.i, label %._crit_edge.i100, label %.lr.ph.i, !llvm.loop !167
@@ -672,9 +678,6 @@ bb.a:
 declare void @CRYPTO_BUFFER_free(ptr noundef) local_unnamed_addr #2
 
 declare i32 @SSL_SESSION_up_ref(ptr noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.and.v4i32(<4 x i32>) #6
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -203,7 +203,7 @@ vector.body79:                                    ; preds = %.preheader33.us.us,
 middle.block83:                                   ; preds = %vector.body79
   %bin.rdx = or <4 x i32> %i.as, %i.ar
   %i.au = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  br i1 %cmp.n84, label %ff_clz_c.exit.us.us, label %scalar.ph75.preheader
+  br i1 %cmp.n84, label %.lr.ph42.us.us.preheader, label %scalar.ph75.preheader
 
 scalar.ph75.preheader:                            ; preds = %.preheader33.us.us, %middle.block83
   %indvars.iv56.ph = phi i64 [ 0, %.preheader33.us.us ], [ %n.vec78, %middle.block83 ]
@@ -222,22 +222,32 @@ scalar.ph75:                                      ; preds = %scalar.ph75.prehead
   %.1.us.us = or i32 %i.ay, %.036.us.us           ; 2 uses
   %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 1 ; 2 uses
   %exitcond60.not = icmp eq i64 %indvars.iv.next57, %wide.trip.count59
-  br i1 %exitcond60.not, label %ff_clz_c.exit.us.us, label %scalar.ph75, !llvm.loop !36
+  br i1 %exitcond60.not, label %.lr.ph42.us.us.preheader, label %scalar.ph75, !llvm.loop !36
 
-ff_clz_c.exit.us.us:                              ; preds = %scalar.ph75, %middle.block83
-  %.1.us.us.lcssa = phi i32 [ %i.au, %middle.block83 ], [ %.1.us.us, %scalar.ph75 ]
-  %5 = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.1.us.us.lcssa, i1 true)
-  %i.az = sub nuw nsw i32 16, %5
+.lr.ph42.us.us.preheader:                         ; preds = %scalar.ph75, %middle.block83
+  %.04.i40.us.us.ph = phi i32 [ %i.au, %middle.block83 ], [ %.1.us.us, %scalar.ph75 ]
+  br label %.lr.ph42.us.us
+
+.lr.ph42.us.us:                                   ; preds = %.lr.ph42.us.us.preheader, %.lr.ph42.us.us
+  %.0.i41.us.us = phi i32 [ %6, %.lr.ph42.us.us ], [ 32, %.lr.ph42.us.us.preheader ] ; 2 uses
+  %.04.i40.us.us = phi i32 [ %5, %.lr.ph42.us.us ], [ %.04.i40.us.us.ph, %.lr.ph42.us.us.preheader ]
+  %5 = lshr i32 %.04.i40.us.us, 1                 ; 2 uses
+  %6 = add nsw i32 %.0.i41.us.us, -1
+  %.not.i.us.us = icmp eq i32 %5, 0
+  br i1 %.not.i.us.us, label %ff_clz_c.exit.us.us, label %.lr.ph42.us.us, !llvm.loop !37
+
+ff_clz_c.exit.us.us:                              ; preds = %.lr.ph42.us.us
+  %i.az = sub i32 17, %.0.i41.us.us
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv61
   store i32 %i.az, ptr %i.ba, align 4, !tbaa !16
   %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1 ; 2 uses
   %exitcond65.not = icmp eq i64 %indvars.iv.next62, %wide.trip.count64
-  br i1 %exitcond65.not, label %._crit_edge.split.us.us, label %.preheader33.us.us, !llvm.loop !37
+  br i1 %exitcond65.not, label %._crit_edge.split.us.us, label %.preheader33.us.us, !llvm.loop !38
 
 ._crit_edge.split.us.us:                          ; preds = %ff_clz_c.exit.us.us
   %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1 ; 2 uses
   %exitcond70.not = icmp eq i64 %indvars.iv.next67, %wide.trip.count69
-  br i1 %exitcond70.not, label %._crit_edge46.split, label %.preheader34.us, !llvm.loop !38
+  br i1 %exitcond70.not, label %._crit_edge46.split, label %.preheader34.us, !llvm.loop !39
 
 .preheader34:                                     ; preds = %.preheader34.preheader, %._crit_edge.split
   %indvars.iv51 = phi i64 [ %indvars.iv.next52, %._crit_edge.split ], [ 0, %.preheader34.preheader ] ; 2 uses
@@ -252,7 +262,7 @@ vector.body:                                      ; preds = %.preheader34, %vect
   store <4 x i32> zeroinitializer, ptr %i.bd, align 4, !tbaa !16
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.be = icmp eq i64 %index.next, %n.vec
-  br i1 %i.be, label %middle.block, label %vector.body, !llvm.loop !39
+  br i1 %i.be, label %middle.block, label %vector.body, !llvm.loop !40
 
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.split, label %.preheader33.preheader
@@ -267,12 +277,12 @@ middle.block:                                     ; preds = %vector.body
   store i32 0, ptr %i.bf, align 4, !tbaa !16
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count64
-  br i1 %exitcond.not, label %._crit_edge.split, label %.preheader33, !llvm.loop !40
+  br i1 %exitcond.not, label %._crit_edge.split, label %.preheader33, !llvm.loop !41
 
 ._crit_edge.split:                                ; preds = %.preheader33, %middle.block
   %indvars.iv.next52 = add nuw nsw i64 %indvars.iv51, 1 ; 2 uses
   %exitcond55.not = icmp eq i64 %indvars.iv.next52, %wide.trip.count69
-  br i1 %exitcond55.not, label %._crit_edge46.split, label %.preheader34, !llvm.loop !38
+  br i1 %exitcond55.not, label %._crit_edge46.split, label %.preheader34, !llvm.loop !39
 
 ._crit_edge46.split:                              ; preds = %._crit_edge.split, %._crit_edge.split.us.us, %bb.a
   ret void
@@ -395,7 +405,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cq = or <4 x i32> %i.co, %vec.phi251         ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.cr = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cr, label %middle.block, label %vector.body, !llvm.loop !41
+  br i1 %i.cr, label %middle.block, label %vector.body, !llvm.loop !42
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = or <4 x i32> %i.cq, %i.cp
@@ -442,7 +452,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.1 = or i32 %i.dj, %.0111169                   ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader166.loopexit, label %scalar.ph, !llvm.loop !42
+  br i1 %exitcond.not, label %.preheader166.loopexit, label %scalar.ph, !llvm.loop !43
 
 ff_clz_c.exit160:                                 ; preds = %.preheader166.loopexit, %bb.a
   %.0112.lcssa = phi i32 [ 0, %bb.a ], [ %i.cv, %.preheader166.loopexit ]
@@ -561,7 +571,7 @@ vector.body282:                                   ; preds = %.lr.ph184.preheader
   %i.gc = or <2 x i32> %i.ga, %vec.phi285         ; 2 uses
   %index.next290 = add nuw i64 %index283, 4       ; 2 uses
   %i.gd = icmp eq i64 %index.next290, %n.vec281
-  br i1 %i.gd, label %middle.block291, label %vector.body282, !llvm.loop !43
+  br i1 %i.gd, label %middle.block291, label %vector.body282, !llvm.loop !44
 
 middle.block291:                                  ; preds = %vector.body282
   %bin.rdx292 = or <2 x i32> %i.gc, %i.gb
@@ -619,7 +629,7 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph184
   %.3 = or i32 %i.gz, %.2183                      ; 2 uses
   %indvars.iv.next226 = add nuw nsw i64 %indvars.iv225, 1 ; 2 uses
   %exitcond229.not = icmp eq i64 %indvars.iv.next226, %wide.trip.count228
-  br i1 %exitcond229.not, label %ff_clz_c.exit152, label %.lr.ph184, !llvm.loop !44
+  br i1 %exitcond229.not, label %ff_clz_c.exit152, label %.lr.ph184, !llvm.loop !45
 
 ff_clz_c.exit152:                                 ; preds = %bb.d, %middle.block291
   %.3115.lcssa = phi i32 [ %i.gf, %middle.block291 ], [ %.3115, %bb.d ]
@@ -671,7 +681,7 @@ vector.body260:                                   ; preds = %ff_clz_c.exit152, %
   %i.ic = or <4 x i32> %i.ia, %vec.phi263         ; 2 uses
   %index.next270 = add nuw i64 %index261, 8       ; 2 uses
   %i.id = icmp eq i64 %index.next270, %n.vec259
-  br i1 %i.id, label %middle.block271, label %vector.body260, !llvm.loop !45
+  br i1 %i.id, label %middle.block271, label %vector.body260, !llvm.loop !46
 
 middle.block271:                                  ; preds = %vector.body260
   %bin.rdx272 = or <4 x i32> %i.ic, %i.ib
@@ -710,7 +720,7 @@ middle.block271:                                  ; preds = %vector.body260
   %i.ix = or <2 x i32> %i.iw, %i.iq               ; 2 uses
   %indvars.iv.next231 = add nuw nsw i64 %indvars.iv230, 1 ; 2 uses
   %exitcond234.not = icmp eq i64 %indvars.iv.next231, %wide.trip.count233
-  br i1 %exitcond234.not, label %.preheader.loopexit, label %.lr.ph200, !llvm.loop !46
+  br i1 %exitcond234.not, label %.preheader.loopexit, label %.lr.ph200, !llvm.loop !47
 
 ff_clz_c.exit:                                    ; preds = %ff_clz_c.exit152.thread, %.preheader.loopexit
   %i.iy = phi ptr [ %i.gh, %ff_clz_c.exit152.thread ], [ %i.hf, %.preheader.loopexit ]
@@ -760,7 +770,7 @@ bb.e:                                             ; preds = %ff_clz_c.exit
   %indvars.iv.next236.1 = add nuw nsw i64 %indvars.iv235, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph214, !llvm.loop !47
+  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph214, !llvm.loop !48
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph214
   br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph214.epil.preheader
@@ -786,7 +796,7 @@ bb.e:                                             ; preds = %ff_clz_c.exit
   %indvars.iv.next241 = add nsw i64 %indvars.iv240, -1
   %i.ke = icmp sgt i64 %indvars.iv240, 0
   %i.kf = trunc nuw nsw i64 %indvars.iv240 to i32
-  br i1 %i.ke, label %bb.b, label %._crit_edge, !llvm.loop !48
+  br i1 %i.ke, label %bb.b, label %._crit_edge, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %.loopexit, %ff_clz_c.exit160
   %.0118.lcssa = phi i32 [ 0, %ff_clz_c.exit160 ], [ %.1119, %.loopexit ]
@@ -894,14 +904,15 @@ attributes #9 = { nounwind }
 !36 = distinct !{!36, !17, !21, !20}
 !37 = distinct !{!37, !17}
 !38 = distinct !{!38, !17}
-!39 = distinct !{!39, !17, !20, !21}
-!40 = distinct !{!40, !17, !21, !20}
-!41 = distinct !{!41, !17, !20, !21}
-!42 = distinct !{!42, !17, !21, !20}
-!43 = distinct !{!43, !17, !20, !21}
-!44 = distinct !{!44, !17, !21, !20}
-!45 = distinct !{!45, !17, !20, !21}
-!46 = distinct !{!46, !17, !21, !20}
-!47 = distinct !{!47, !17}
+!39 = distinct !{!39, !17}
+!40 = distinct !{!40, !17, !20, !21}
+!41 = distinct !{!41, !17, !21, !20}
+!42 = distinct !{!42, !17, !20, !21}
+!43 = distinct !{!43, !17, !21, !20}
+!44 = distinct !{!44, !17, !20, !21}
+!45 = distinct !{!45, !17, !21, !20}
+!46 = distinct !{!46, !17, !20, !21}
+!47 = distinct !{!47, !17, !21, !20}
 !48 = distinct !{!48, !17}
+!49 = distinct !{!49, !17}
 end_hunk_0
