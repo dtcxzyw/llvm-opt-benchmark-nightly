@@ -204,82 +204,48 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Elab_Visibility_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Elab_Visibility_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Elab_Visibility_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Elab_Visibility_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_Visibility_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_Visibility_ctorIdx.exit
-
-l_Lean_Elab_Visibility_ctorIdx.exit:              ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Elab_Visibility_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lean_Elab_Visibility_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lean_Elab_Visibility_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lean_Elab_Visibility_ctorIdx.exit
-
-l_Lean_Elab_Visibility_ctorIdx.exit:              ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lean_Elab_Visibility_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Elab_Visibility_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Elab_Visibility_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Elab_Visibility_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_Visibility_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_Visibility_toCtorIdx.exit
-
-l_Lean_Elab_Visibility_toCtorIdx.exit:            ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -682,82 +648,48 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Elab_RecKind_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Elab_RecKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Elab_RecKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Elab_RecKind_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_RecKind_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_RecKind_ctorIdx.exit
-
-l_Lean_Elab_RecKind_ctorIdx.exit:                 ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Elab_RecKind_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lean_Elab_RecKind_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lean_Elab_RecKind_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lean_Elab_RecKind_ctorIdx.exit
-
-l_Lean_Elab_RecKind_ctorIdx.exit:                 ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lean_Elab_RecKind_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Elab_RecKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Elab_RecKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Elab_RecKind_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_RecKind_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_RecKind_toCtorIdx.exit
-
-l_Lean_Elab_RecKind_toCtorIdx.exit:               ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -1160,82 +1092,48 @@ lean_dec.exit:                                    ; preds = %bb.d, %bb.a, %bb.i,
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Elab_ComputeKind_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Elab_ComputeKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Elab_ComputeKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-
-l_Lean_Elab_ComputeKind_ctorIdx.exit:             ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Elab_ComputeKind_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-
-l_Lean_Elab_ComputeKind_ctorIdx.exit:             ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lean_Elab_ComputeKind_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Elab_ComputeKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Elab_ComputeKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Elab_ComputeKind_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_ComputeKind_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_ComputeKind_toCtorIdx.exit
-
-l_Lean_Elab_ComputeKind_toCtorIdx.exit:           ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -1638,75 +1536,38 @@ lean_dec.exit:                                    ; preds = %bb.d, %bb.a, %bb.i,
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext range(i8 0, 2) i8 @l_Lean_Elab_instBEqComputeKind_beq(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #3 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-
-4:                                                ; preds = %2
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit
-
-l_Lean_Elab_ComputeKind_ctorIdx.exit:             ; preds = %2, %3, %4
-  %.0.i12 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %lean_dec.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lean_Elab_ComputeKind_ctorIdx.exit
-  br label %lean_dec.exit
-
-6:                                                ; preds = %l_Lean_Elab_ComputeKind_ctorIdx.exit
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %6, %5, %l_Lean_Elab_ComputeKind_ctorIdx.exit
-  %.0.i13 = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lean_Elab_ComputeKind_ctorIdx.exit ]
-  %i.a = icmp eq ptr %.0.i12, %.0.i13
-  %i.b = zext i1 %i.a to i8
+lean_dec.exit:
+  %switch.selectcmp4.i = icmp eq i8 %0, 0         ; 2 uses
+  %switch.selectcmp.i = icmp ne i8 %0, 1
+  %switch.selectcmp4.i14 = icmp eq i8 %1, 0
+  %i.a = icmp eq i8 %1, 1
+  %2 = xor i1 %switch.selectcmp.i, %i.a
+  %not.switch.selectcmp4.i = xor i1 %switch.selectcmp4.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i
+  %4 = select i1 %switch.selectcmp4.i14, i1 %switch.selectcmp4.i, i1 %3
+  %i.b = zext i1 %4 to i8
   ret i8 %i.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Elab_instBEqComputeKind_beq___boxed(ptr noundef %0, ptr noundef %1) #3 {
+define nonnull ptr @l_Lean_Elab_instBEqComputeKind_beq___boxed(ptr noundef %0, ptr noundef %1) #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
   %i.d = ptrtoint ptr %1 to i64
   %i.e = lshr i64 %i.d, 1
-  %i.f = trunc i64 %i.e to i8
-  switch i8 %i.c, label %3 [
-    i8 0, label %l_Lean_Elab_ComputeKind_ctorIdx.exit.i
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lean_Elab_ComputeKind_ctorIdx.exit.i
-
-l_Lean_Elab_ComputeKind_ctorIdx.exit.i:           ; preds = %3, %2, %bb.a
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.f, label %5 [
-    i8 0, label %l_Lean_Elab_instBEqComputeKind_beq.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lean_Elab_ComputeKind_ctorIdx.exit.i
-  br label %l_Lean_Elab_instBEqComputeKind_beq.exit
-
-5:                                                ; preds = %l_Lean_Elab_ComputeKind_ctorIdx.exit.i
-  br label %l_Lean_Elab_instBEqComputeKind_beq.exit
-
-l_Lean_Elab_instBEqComputeKind_beq.exit:          ; preds = %l_Lean_Elab_ComputeKind_ctorIdx.exit.i, %4, %5
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lean_Elab_ComputeKind_ctorIdx.exit.i ]
-  %6 = icmp eq ptr %.0.i12.i, %.0.i13.i
-  %7 = select i1 %6, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
-  ret ptr %7
+  %i.f = trunc i64 %i.e to i8                     ; 2 uses
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0     ; 2 uses
+  %switch.selectcmp.i.i = icmp ne i8 %i.c, 1
+  %switch.selectcmp4.i14.i = icmp eq i8 %i.f, 0
+  %switch.selectcmp.i12.i = icmp eq i8 %i.f, 1
+  %2 = xor i1 %switch.selectcmp.i.i, %switch.selectcmp.i12.i
+  %not.switch.selectcmp4.i.i = xor i1 %switch.selectcmp4.i.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i.i
+  %4 = select i1 %switch.selectcmp4.i14.i, i1 %switch.selectcmp4.i.i, i1 %3
+  %5 = select i1 %4, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
+  ret ptr %5
 }
 
 ; Function Attrs: nounwind uwtable
@@ -2109,13 +1970,13 @@ bb.e:                                             ; preds = %bb.d
 
 lean_inc.exit215:                                 ; preds = %bb.e, %bb.d, %bb.c, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.i = load i8, ptr %i.h, align 8, !tbaa !15
+  %i.i = load i8, ptr %i.h, align 8, !tbaa !15    ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 33
   %i.k = load i8, ptr %i.j, align 1, !tbaa !15
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 34
-  %i.m = load i8, ptr %i.l, align 2, !tbaa !15
+  %i.m = load i8, ptr %i.l, align 2, !tbaa !15    ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 35
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !15
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !15    ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 36
   %i.q = load i8, ptr %i.p, align 4, !tbaa !15
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -2518,27 +2379,14 @@ lean_alloc_ctor.exit265:                          ; preds = %lean_alloc_ctor.exi
   store ptr %i.fc, ptr %i.fl, align 8, !tbaa !10
   ret ptr %i.fh
 
-3:                                                ; preds = %lean_inc.exit203
-  br label %5
-
-4:                                                ; preds = %lean_inc.exit203
-  br label %5
-
-5:                                                ; preds = %lean_inc.exit203, %4, %3
-  %.0182 = phi ptr [ inttoptr (i64 1 to ptr), %4 ], [ @l_Lean_Elab_instToFormatModifiers___lam__1___closed__17_value, %3 ], [ @l_Lean_Elab_instToFormatModifiers___lam__1___closed__14_value, %lean_inc.exit203 ] ; 5 uses
-  %6 = ptrtoint ptr %.0182 to i64
-  %7 = and i64 %6, 1
-  %.not.i204 = icmp eq i64 %7, 0
-  br i1 %.not.i204, label %bb.bs, label %lean_inc.exit205
-
-bb.bs:                                            ; preds = %5
-  %.val.i.i266 = load i32, ptr %.0182, align 4, !tbaa !14 ; 3 uses
+bb.bs:                                            ; preds = %bb.ca
+  %.val.i.i266 = load i32, ptr %switch.select280, align 4, !tbaa !14 ; 3 uses
   %i.fm = icmp sgt i32 %.val.i.i266, 0
   br i1 %i.fm, label %bb.bt, label %bb.bu, !prof !16
 
 bb.bt:                                            ; preds = %bb.bs
   %i.fn = add nuw i32 %.val.i.i266, 1
-  store i32 %i.fn, ptr %.0182, align 4, !tbaa !14
+  store i32 %i.fn, ptr %switch.select280, align 4, !tbaa !14
   br label %lean_inc.exit205
 
 bb.bu:                                            ; preds = %bb.bs
@@ -2546,11 +2394,11 @@ bb.bu:                                            ; preds = %bb.bs
   br i1 %.not.i.i267, label %lean_inc.exit205, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.fo = atomicrmw sub ptr %.0182, i32 1 monotonic, align 4 ; 0 uses
+  %i.fo = atomicrmw sub ptr %switch.select280, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc.exit205
 
-lean_inc.exit205:                                 ; preds = %bb.bv, %bb.bu, %bb.bt, %5
-  %i.fp = tail call ptr @l_List_appendTR___redArg(ptr noundef %13, ptr noundef nonnull %.0182) #8
+lean_inc.exit205:                                 ; preds = %bb.bv, %bb.bu, %bb.bt, %bb.ca
+  %i.fp = tail call ptr @l_List_appendTR___redArg(ptr noundef %3, ptr noundef nonnull %switch.select280) #8
   %i.fq = icmp eq i8 %i.q, 0
   %.0180 = select i1 %i.fq, ptr inttoptr (i64 1 to ptr), ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__11_value ; 5 uses
   %i.fr = ptrtoint ptr %.0180 to i64
@@ -2558,59 +2406,43 @@ lean_inc.exit205:                                 ; preds = %bb.bv, %bb.bu, %bb.
   %.not.i206 = icmp eq i64 %i.fs, 0
   br i1 %.not.i206, label %bb.bi, label %lean_inc.exit207
 
-8:                                                ; preds = %lean_inc.exit201
-  br label %10
-
-9:                                                ; preds = %lean_inc.exit201
-  br label %10
-
-10:                                               ; preds = %lean_inc.exit201, %9, %8
-  %.0184 = phi ptr [ @l_Lean_Elab_instToFormatModifiers___lam__1___closed__23_value, %9 ], [ inttoptr (i64 1 to ptr), %8 ], [ @l_Lean_Elab_instToFormatModifiers___lam__1___closed__20_value, %lean_inc.exit201 ] ; 5 uses
-  %11 = ptrtoint ptr %.0184 to i64
-  %12 = and i64 %11, 1
-  %.not.i202 = icmp eq i64 %12, 0
-  br i1 %.not.i202, label %bb.bw, label %lean_inc.exit203
-
-bb.bw:                                            ; preds = %10
-  %.val.i.i269 = load i32, ptr %.0184, align 4, !tbaa !14 ; 3 uses
+bb.bw:                                            ; preds = %lean_inc.exit201
+  %.val.i.i269 = load i32, ptr %switch.select284, align 4, !tbaa !14 ; 3 uses
   %i.ft = icmp sgt i32 %.val.i.i269, 0
   br i1 %i.ft, label %bb.bx, label %bb.by, !prof !16
 
 bb.bx:                                            ; preds = %bb.bw
   %i.fu = add nuw i32 %.val.i.i269, 1
-  store i32 %i.fu, ptr %.0184, align 4, !tbaa !14
-  br label %lean_inc.exit203
+  store i32 %i.fu, ptr %switch.select284, align 4, !tbaa !14
+  br label %bb.ca
 
 bb.by:                                            ; preds = %bb.bw
   %.not.i.i270 = icmp eq i32 %.val.i.i269, 0
-  br i1 %.not.i.i270, label %lean_inc.exit203, label %bb.bz
+  br i1 %.not.i.i270, label %bb.ca, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by
-  %i.fv = atomicrmw sub ptr %.0184, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc.exit203
+  %i.fv = atomicrmw sub ptr %switch.select284, i32 1 monotonic, align 4 ; 0 uses
+  br label %bb.ca
 
-lean_inc.exit203:                                 ; preds = %bb.bz, %bb.by, %bb.bx, %10
-  %13 = tail call ptr @l_List_appendTR___redArg(ptr noundef %i.gi, ptr noundef nonnull %.0184) #8
-  switch i8 %i.o, label %4 [
-    i8 0, label %5
-    i8 1, label %3
-  ]
-
-bb.ca:                                            ; preds = %bb.cj, %15, %14
-  %.0188 = phi ptr [ @l_Lean_Elab_instToFormatModifiers___lam__1___closed__30_value, %15 ], [ inttoptr (i64 1 to ptr), %14 ], [ @l_Lean_Elab_instToFormatModifiers___lam__1___closed__28_value, %bb.cj ] ; 5 uses
-  %i.fw = ptrtoint ptr %.0188 to i64
+bb.ca:                                            ; preds = %bb.bz, %bb.by, %bb.bx, %lean_inc.exit201
+  %3 = tail call ptr @l_List_appendTR___redArg(ptr noundef %i.gi, ptr noundef nonnull %switch.select284) #8
+  %switch.selectcmp = icmp eq i8 %i.o, 1
+  %switch.select = select i1 %switch.selectcmp, ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__17_value, ptr inttoptr (i64 1 to ptr)
+  %switch.selectcmp279 = icmp eq i8 %i.o, 0
+  %switch.select280 = select i1 %switch.selectcmp279, ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__14_value, ptr %switch.select ; 5 uses
+  %i.fw = ptrtoint ptr %switch.select280 to i64
   %i.fx = and i64 %i.fw, 1
   %.not.i.a = icmp eq i64 %i.fx, 0
-  br i1 %.not.i.a, label %bb.cb, label %lean_inc.exit
+  br i1 %.not.i.a, label %bb.bs, label %lean_inc.exit205
 
-bb.cb:                                            ; preds = %bb.ca
-  %.val.i.i272 = load i32, ptr %.0188, align 4, !tbaa !14 ; 3 uses
+bb.cb:                                            ; preds = %bb.cj
+  %.val.i.i272 = load i32, ptr %switch.select288, align 4, !tbaa !14 ; 3 uses
   %i.fy = icmp sgt i32 %.val.i.i272, 0
   br i1 %i.fy, label %bb.cc, label %bb.cd, !prof !16
 
 bb.cc:                                            ; preds = %bb.cb
   %i.fz = add nuw i32 %.val.i.i272, 1
-  store i32 %i.fz, ptr %.0188, align 4, !tbaa !14
+  store i32 %i.fz, ptr %switch.select288, align 4, !tbaa !14
   br label %lean_inc.exit
 
 bb.cd:                                            ; preds = %bb.cb
@@ -2618,11 +2450,11 @@ bb.cd:                                            ; preds = %bb.cb
   br i1 %.not.i.i273, label %lean_inc.exit, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.ga = atomicrmw sub ptr %.0188, i32 1 monotonic, align 4 ; 0 uses
+  %i.ga = atomicrmw sub ptr %switch.select288, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc.exit
 
-lean_inc.exit:                                    ; preds = %bb.ce, %bb.cd, %bb.cc, %bb.ca
-  %i.gb = tail call ptr @l_List_appendTR___redArg(ptr noundef nonnull %.3, ptr noundef nonnull %.0188) #8
+lean_inc.exit:                                    ; preds = %bb.ce, %bb.cd, %bb.cc, %bb.cj
+  %i.gb = tail call ptr @l_List_appendTR___redArg(ptr noundef nonnull %.3, ptr noundef nonnull %switch.select288) #8
   %i.gc = icmp eq i8 %i.k, 0
   %spec.select = select i1 %i.gc, ptr inttoptr (i64 1 to ptr), ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__26_value ; 5 uses
   %i.gd = ptrtoint ptr %spec.select to i64
@@ -2650,23 +2482,25 @@ bb.ci:                                            ; preds = %bb.ch
 
 lean_inc.exit201:                                 ; preds = %bb.ci, %bb.ch, %bb.cg, %lean_inc.exit
   %i.gi = tail call ptr @l_List_appendTR___redArg(ptr noundef %i.gb, ptr noundef nonnull %spec.select) #8
-  switch i8 %i.m, label %9 [
-    i8 0, label %8
-    i8 1, label %10
-  ]
+  %switch.selectcmp281 = icmp eq i8 %i.m, 1
+  %switch.select282 = select i1 %switch.selectcmp281, ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__20_value, ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__23_value
+  %switch.selectcmp283 = icmp eq i8 %i.m, 0
+  %switch.select284 = select i1 %switch.selectcmp283, ptr inttoptr (i64 1 to ptr), ptr %switch.select282 ; 5 uses
+  %4 = ptrtoint ptr %switch.select284 to i64
+  %5 = and i64 %4, 1
+  %.not.i202 = icmp eq i64 %5, 0
+  br i1 %.not.i202, label %bb.bw, label %bb.ca
 
 bb.cj:                                            ; preds = %lean_obj_tag.exit, %lean_alloc_ctor.exit255
   %.3 = phi ptr [ %i.eb, %lean_alloc_ctor.exit255 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  switch i8 %i.i, label %15 [
-    i8 0, label %14
-    i8 1, label %bb.ca
-  ]
-
-14:                                               ; preds = %bb.cj
-  br label %bb.ca
-
-15:                                               ; preds = %bb.cj
-  br label %bb.ca
+  %switch.selectcmp285 = icmp eq i8 %i.i, 1
+  %switch.select286 = select i1 %switch.selectcmp285, ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__28_value, ptr @l_Lean_Elab_instToFormatModifiers___lam__1___closed__30_value
+  %switch.selectcmp287 = icmp eq i8 %i.i, 0
+  %switch.select288 = select i1 %switch.selectcmp287, ptr inttoptr (i64 1 to ptr), ptr %switch.select286 ; 5 uses
+  %6 = ptrtoint ptr %switch.select288 to i64
+  %7 = and i64 %6, 1
+  %.not.i = icmp eq i64 %7, 0
+  br i1 %.not.i, label %bb.cb, label %lean_inc.exit
 }
 
 ; Function Attrs: nounwind uwtable

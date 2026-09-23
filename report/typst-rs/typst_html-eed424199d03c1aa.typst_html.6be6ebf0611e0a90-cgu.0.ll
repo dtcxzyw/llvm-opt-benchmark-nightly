@@ -205,9 +205,9 @@ bb.bx:                                            ; preds = %bb.bh
   %i.gj = icmp eq i64 %i.gi, 0
   br i1 %i.gj, label %.invoke.i.i.i, label %.preheader.i.i.i.i, !prof !60
 
-.invoke.i.i.i:                                    ; preds = %bb.bx, %bb.cb, %bb.ca, %bb.ca, %bb.ca, %bb.ca, %bb.ca, %bb.ca, %bb.ca, %.preheader.i.i.i.i
-  %5 = phi ptr [ @1389, %bb.cb ], [ @1389, %.preheader.i.i.i.i ], [ @1389, %bb.ca ], [ @1389, %bb.ca ], [ @1389, %bb.ca ], [ @1389, %bb.ca ], [ @1389, %bb.ca ], [ @1389, %bb.ca ], [ @1389, %bb.ca ], [ @1386, %bb.bx ]
-  %6 = phi ptr [ inttoptr (i64 99 to ptr), %bb.cb ], [ inttoptr (i64 99 to ptr), %.preheader.i.i.i.i ], [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 65 to ptr), %bb.bx ]
+.invoke.i.i.i:                                    ; preds = %bb.bx, %bb.ca, %bb.cb, %.preheader.i.i.i.i
+  %5 = phi ptr [ @1389, %bb.ca ], [ @1389, %.preheader.i.i.i.i ], [ @1389, %bb.cb ], [ @1386, %bb.bx ]
+  %6 = phi ptr [ inttoptr (i64 99 to ptr), %bb.ca ], [ inttoptr (i64 99 to ptr), %.preheader.i.i.i.i ], [ inttoptr (i64 99 to ptr), %bb.cb ], [ inttoptr (i64 65 to ptr), %bb.bx ]
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr noundef nonnull %5, ptr noundef nonnull %6, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @880) #51
           to label %.cont.i.i.i unwind label %.loopexit.split-lp.i.i, !noalias !11619
 
@@ -226,20 +226,17 @@ bb.bz:                                            ; preds = %bb.by
 .preheader.i.i.i.i:                               ; preds = %bb.bx, %bb.by
   %.sroa.0.06.i.i.i.i = phi i64 [ %i.gk, %bb.by ], [ 0, %bb.bx ] ; 2 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gg, i64 %.sroa.0.06.i.i.i.i
-  %i.gn = load i8, ptr %i.gm, align 1, !alias.scope !11668, !noalias !11669, !noundef !57 ; 4 uses
+  %i.gn = load i8, ptr %i.gm, align 1, !alias.scope !11668, !noalias !11669, !noundef !57 ; 5 uses
   %i.go = icmp sgt i8 %i.gn, -1
   br i1 %i.go, label %bb.ca, label %.invoke.i.i.i, !prof !59
 
 bb.ca:                                            ; preds = %.preheader.i.i.i.i
-  switch i8 %i.gn, label %bb.cb [
-    i8 0, label %.invoke.i.i.i
-    i8 32, label %.invoke.i.i.i
-    i8 34, label %.invoke.i.i.i
-    i8 39, label %.invoke.i.i.i
-    i8 62, label %.invoke.i.i.i
-    i8 47, label %.invoke.i.i.i
-    i8 61, label %.invoke.i.i.i
-  ]
+  %7 = icmp ult i8 %i.gn, 63
+  %switch.maskindex = zext nneg i8 %i.gn to i64
+  %switch.shifted = lshr i64 6917670336360087553, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %or.cond = select i1 %7, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %.invoke.i.i.i, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
   %i.gp = icmp samesign ult i8 %i.gn, 32

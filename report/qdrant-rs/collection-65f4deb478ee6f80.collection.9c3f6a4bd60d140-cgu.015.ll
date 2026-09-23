@@ -204,9 +204,9 @@ define void @_RNvXsj_NtNtCsPYQCUnoTxQ_10collection10operations11conversionsNtNtN
 bb.a:
   %.sroa.0.0.copyload = load i64, ptr %1, align 8 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.b = load i8, ptr %i.a, align 8, !range !22, !noundef !5
+  %i.b = load i8, ptr %i.a, align 8, !range !22, !noundef !5 ; 2 uses
   %.not = icmp eq i64 %.sroa.0.0.copyload, 2
-  br i1 %.not, label %2, label %switch.lookup
+  br i1 %.not, label %bb.b, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.a
   %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 18
@@ -237,22 +237,19 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.ext31 = zext i8 %switch.load30 to i32
   %i.g = trunc nuw i64 %.sroa.0.0.copyload to i1
   %.sroa.5.0.i = select i1 %i.g, i64 %.sroa.5.sroa.0.0.copyload, i64 undef
-  br label %2
+  br label %bb.b
 
-2:                                                ; preds = %bb.a, %switch.lookup
+bb.b:                                             ; preds = %bb.a, %switch.lookup
   %.sroa.57.sroa.8.0 = phi i8 [ undef, %bb.a ], [ %.sroa.5.sroa.4.0.copyload, %switch.lookup ]
   %.sroa.57.sroa.7.0 = phi i32 [ undef, %bb.a ], [ %switch.ext, %switch.lookup ]
   %.sroa.57.sroa.6.0 = phi i32 [ undef, %bb.a ], [ %switch.ext23, %switch.lookup ]
   %.sroa.57.sroa.5.0 = phi i32 [ undef, %bb.a ], [ %switch.ext28, %switch.lookup ]
   %.sroa.57.sroa.4.0 = phi i32 [ undef, %bb.a ], [ %switch.ext31, %switch.lookup ]
   %.sroa.57.sroa.0.0 = phi i64 [ undef, %bb.a ], [ %.sroa.5.0.i, %switch.lookup ]
-  switch i8 %i.b, label %5 [
-    i8 2, label %bb.b
-    i8 0, label %4
-  ]
-
-bb.b:                                             ; preds = %4, %2, %5
-  %3 = phi <2 x i32> [ <i32 0, i32 undef>, %2 ], [ <i32 1, i32 0>, %4 ], [ splat (i32 1), %5 ]
+  %switch.selectcmp = icmp eq i8 %i.b, 0
+  %switch.select = select i1 %switch.selectcmp, <2 x i32> <i32 1, i32 0>, <2 x i32> splat (i32 1)
+  %switch.selectcmp32 = icmp eq i8 %i.b, 2
+  %switch.select33 = select i1 %switch.selectcmp32, <2 x i32> <i32 0, i32 undef>, <2 x i32> %switch.select
   store i64 %.sroa.0.0.copyload, ptr %0, align 8
   %.sroa.57.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.57.sroa.0.0, ptr %.sroa.57.0..sroa_idx8, align 8
@@ -267,14 +264,8 @@ bb.b:                                             ; preds = %4, %2, %5
   %.sroa.57.sroa.8.0..sroa.57.0..sroa_idx8.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 %.sroa.57.sroa.8.0, ptr %.sroa.57.sroa.8.0..sroa.57.0..sroa_idx8.sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store <2 x i32> %3, ptr %i.h, align 8
+  store <2 x i32> %switch.select33, ptr %i.h, align 8
   ret void
-
-4:                                                ; preds = %2
-  br label %bb.b
-
-5:                                                ; preds = %2
-  br label %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable

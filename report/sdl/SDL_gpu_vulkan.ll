@@ -205,46 +205,37 @@ bb.a:
   %i.f = tail call noalias dereferenceable_or_null(104) ptr @SDL_calloc_REAL(i64 noundef 1, i64 noundef 104) #16 ; 26 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 7 uses
-  %i.i = load i32, ptr %i.h, align 4
-  switch i32 %i.i, label %7 [
-    i32 1, label %SwizzleForSDLFormat.exit
-    i32 11, label %6
-  ]
+  %6 = load i32, ptr %i.h, align 4                ; 2 uses
+  %switch.selectcmp = icmp eq i32 %6, 11
+  %switch.select = select i1 %switch.selectcmp, <2 x i64> <i64 12884901892, i64 21474836486>, <2 x i64> zeroinitializer
+  %switch.selectcmp279 = icmp eq i32 %6, 1
+  %switch.select280 = select i1 %switch.selectcmp279, <2 x i64> <i64 4294967297, i64 12884901889>, <2 x i64> %switch.select
+  store <2 x i64> %switch.select280, ptr %i.g, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 60
+  store i32 %.269, ptr %7, align 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
+  %9 = load i32, ptr %8, align 4
+  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 76
+  store i32 %9, ptr %10, align 4
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
+  %12 = load i32, ptr %11, align 4
+  %13 = getelementptr inbounds nuw i8, ptr %i.f, i64 64
+  store i32 %12, ptr %13, align 8
+  %i.i = load i32, ptr %1, align 4                ; 2 uses
+  %14 = icmp eq i32 %i.i, 2
+  br i1 %14, label %bb.c, label %bb.b
 
-6:                                                ; preds = %bb.a
-  br label %SwizzleForSDLFormat.exit
-
-7:                                                ; preds = %bb.a
-  br label %SwizzleForSDLFormat.exit
-
-SwizzleForSDLFormat.exit:                         ; preds = %bb.a, %6, %7
-  %8 = phi <2 x i64> [ zeroinitializer, %7 ], [ <i64 12884901892, i64 21474836486>, %6 ], [ <i64 4294967297, i64 12884901889>, %bb.a ]
-  store <2 x i64> %8, ptr %i.g, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 60
-  store i32 %.269, ptr %9, align 4
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
-  %11 = load i32, ptr %10, align 4
-  %12 = getelementptr inbounds nuw i8, ptr %i.f, i64 76
-  store i32 %11, ptr %12, align 4
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
-  %14 = load i32, ptr %13, align 4
-  %15 = getelementptr inbounds nuw i8, ptr %i.f, i64 64
-  store i32 %14, ptr %15, align 8
-  %16 = load i32, ptr %1, align 4                 ; 2 uses
-  %17 = icmp eq i32 %16, 2
-  br i1 %17, label %bb.c, label %bb.b
-
-bb.b:                                             ; preds = %SwizzleForSDLFormat.exit
+bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.k = load i32, ptr %i.j, align 4
   br label %bb.c
 
-bb.c:                                             ; preds = %SwizzleForSDLFormat.exit, %bb.b
-  %i.l = phi i32 [ %i.k, %bb.b ], [ 1, %SwizzleForSDLFormat.exit ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %i.l = phi i32 [ %i.k, %bb.b ], [ 1, %bb.a ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 68
   store i32 %i.l, ptr %i.m, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 72
-  store i32 %16, ptr %i.n, align 8
+  store i32 %i.i, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 100
   %i.p = tail call i32 @SDL_SetAtomicInt_REAL(ptr noundef nonnull %i.o, i32 noundef 0) #13 ; 0 uses
   %i.q = load i32, ptr %i.h, align 4              ; 3 uses
@@ -270,7 +261,7 @@ switch.lookup:                                    ; preds = %bb.c
 
 .fold.split:                                      ; preds = %bb.c, %switch.lookup
   %.0190 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.c ]
-  %i.v = load i32, ptr %10, align 4               ; 3 uses
+  %i.v = load i32, ptr %8, align 4                ; 3 uses
   %i.w = and i32 %i.v, 25
   %.not = icmp eq i32 %i.w, 0
   %spec.select = select i1 %.not, i32 3, i32 7
@@ -301,7 +292,7 @@ switch.lookup:                                    ; preds = %bb.c
   store <2 x i32> %i.al, ptr %i.ak, align 4
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 36
   store i32 %.269, ptr %i.am, align 4
-  %i.an = load i32, ptr %13, align 4
+  %i.an = load i32, ptr %11, align 4
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i32 %i.an, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 44
@@ -559,7 +550,7 @@ VULKAN_INTERNAL_BindMemoryForImage.exit.thread:   ; preds = %bb.aq, %bb.as, %bb.
   %i.ck = load ptr, ptr %i.bn, align 8
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 56
   store ptr %i.f, ptr %i.cl, align 8
-  %i.cm = load i32, ptr %10, align 4
+  %i.cm = load i32, ptr %8, align 4
   %i.cn = and i32 %i.cm, 25
   %.not202 = icmp eq i32 %i.cn, 0
   br i1 %.not202, label %bb.ci, label %bb.av
@@ -610,7 +601,7 @@ bb.av:                                            ; preds = %VULKAN_INTERNAL_Bin
   store i32 %i.dh, ptr %i.di, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %4, i64 60
   store i32 0, ptr %i.dj, align 4
-  %i.dk = load i32, ptr %13, align 4
+  %i.dk = load i32, ptr %11, align 4
   %i.dl = getelementptr inbounds nuw i8, ptr %4, i64 64
   store i32 %i.dk, ptr %i.dl, align 8
   %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 68
@@ -803,7 +794,7 @@ VkErrorMessages.exit235:                          ; preds = %bb.bq, %bb.br, %bb.
   br label %bb.cw
 
 bb.ci:                                            ; preds = %bb.aw, %VULKAN_INTERNAL_BindMemoryForImage.exit.thread
-  %i.eb = load i32, ptr %13, align 4
+  %i.eb = load i32, ptr %11, align 4
   %i.ec = mul i32 %i.eb, %.                       ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.f, i64 80
   store i32 %i.ec, ptr %i.ed, align 8
@@ -818,7 +809,7 @@ bb.ci:                                            ; preds = %bb.aw, %VULKAN_INTE
   %i.eh = zext i32 %.269 to i64                   ; 2 uses
   %i.ei = shl nuw nsw i64 %i.eh, 3
   %i.ej = icmp ugt i32 %.269, 1
-  %i.ek = load i32, ptr %13, align 4              ; 2 uses
+  %i.ek = load i32, ptr %11, align 4              ; 2 uses
   %.not248 = icmp eq i32 %i.ek, 0
   br i1 %.not248, label %.critedge216, label %.preheader241
 
@@ -833,7 +824,7 @@ bb.ci:                                            ; preds = %bb.aw, %VULKAN_INTE
   %.0179245 = phi i32 [ %i.gj, %.critedge212 ], [ 0, %.preheader241 ] ; 7 uses
   %i.en = mul i32 %i.em, %.0180247
   %i.eo = add i32 %i.en, %.0179245                ; 3 uses
-  %i.ep = load i32, ptr %10, align 4
+  %i.ep = load i32, ptr %8, align 4
   %i.eq = and i32 %i.ep, 2
   %.not204 = icmp eq i32 %i.eq, 0
   br i1 %.not204, label %.critedge, label %bb.cj
@@ -892,7 +883,7 @@ bb.cn:                                            ; preds = %bb.cm
   br label %bb.cw
 
 .critedge:                                        ; preds = %bb.ck, %bb.cm, %.lr.ph
-  %i.fq = load i32, ptr %10, align 4              ; 2 uses
+  %i.fq = load i32, ptr %8, align 4               ; 2 uses
   %i.fr = and i32 %i.fq, 96
   %or.cond = icmp eq i32 %i.fr, 0
   %.pre254.pre255 = load ptr, ptr %i.eg, align 8  ; 2 uses
@@ -910,7 +901,7 @@ bb.co:                                            ; preds = %.critedge
   br i1 %i.fv, label %._crit_edge, label %bb.cp
 
 ._crit_edge:                                      ; preds = %bb.co
-  %.pre = load i32, ptr %10, align 4
+  %.pre = load i32, ptr %8, align 4
   %.pre254.pre = load ptr, ptr %i.eg, align 8
   br label %bb.cq
 
@@ -957,7 +948,7 @@ bb.cs:                                            ; preds = %bb.cr
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 12
   store i32 %.0179245, ptr %i.gi, align 4
   %i.gj = add nuw i32 %.0179245, 1                ; 2 uses
-  %i.gk = load i32, ptr %13, align 4              ; 3 uses
+  %i.gk = load i32, ptr %11, align 4              ; 3 uses
   %.not210 = icmp ult i32 %i.gj, %i.gk
   br i1 %.not210, label %.lr.ph, label %.critedge214, !llvm.loop !168
 

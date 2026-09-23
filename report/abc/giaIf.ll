@@ -205,77 +205,55 @@ begin_hunk_0_@Gia_ManFromIfGetConfig2:bb.a
   %i.pb = lshr i64 %i.f, %i.pa
   %i.pc = shl i64 %i.pb, 1
   %i.pd = and i64 %i.pc, 2
-  %5 = or disjoint i64 %i.pd, %i.oz
   %i.pe = zext nneg i32 %.lcssa553.a to i64
-  %6 = lshr i64 %i.f, %i.pe
-  %7 = shl i64 %6, 2
-  %8 = and i64 %7, 4
-  %9 = or disjoint i64 %5, %8
   %i.pf = zext nneg i32 %.lcssa552.a to i64
-  %10 = lshr i64 %i.f, %i.pf
-  %11 = shl i64 %10, 3
-  %12 = and i64 %11, 8
-  %13 = or disjoint i64 %9, %12
   %i.pg = zext nneg i32 %.lcssa551.a to i64
-  %14 = lshr i64 %i.f, %i.pg
-  %15 = shl i64 %14, 4
-  %16 = and i64 %15, 16
-  %17 = or disjoint i64 %13, %16
   %i.ph = zext nneg i32 %.lcssa550.a to i64
-  %18 = lshr i64 %i.f, %i.ph
-  %19 = shl i64 %18, 5
-  %20 = and i64 %19, 32
-  %21 = or disjoint i64 %17, %20
   %i.pi = zext nneg i32 %.lcssa549.a to i64
-  %22 = lshr i64 %i.f, %i.pi
-  %23 = shl i64 %22, 6
-  %24 = and i64 %23, 64
-  %25 = or i64 %21, %24
-  %i.pj = zext nneg i32 %.lcssa548.a to i64
-  %26 = lshr i64 %i.f, %i.pj
-  %27 = shl i64 %26, 7
-  %28 = and i64 %27, 128
-  %29 = or i64 %25, %28
-  %i.pk = zext nneg i32 %.lcssa547.a to i64
+  %5 = zext nneg i32 %.lcssa548.a to i64
+  %6 = zext nneg i32 %.lcssa547.a to i64
+  %7 = zext nneg i32 %.lcssa546.a to i64
+  %i.pj = zext nneg i32 %.lcssa545.a to i64
+  %8 = zext nneg i32 %.lcssa544.a to i64
+  %9 = zext nneg i32 %.lcssa543.a to i64
+  %10 = zext nneg i32 %.lcssa542.a to i64
+  %11 = zext nneg i32 %.lcssa541 to i64
+  %i.pk = zext nneg i32 %.lcssa to i64
   %i.pl = lshr i64 %i.f, %i.pk
-  %30 = shl i64 %i.pl, 8
-  %31 = and i64 %30, 256
-  %32 = or i64 %29, %31
-  %33 = zext nneg i32 %.lcssa546.a to i64
-  %i.pm = lshr i64 %i.f, %33
-  %34 = shl i64 %i.pm, 9
-  %35 = and i64 %34, 512
-  %36 = or i64 %32, %35
-  %37 = zext nneg i32 %.lcssa545.a to i64
-  %i.pn = lshr i64 %i.f, %37
-  %38 = shl i64 %i.pn, 10
-  %39 = and i64 %38, 1024
-  %40 = or i64 %36, %39
-  %41 = zext nneg i32 %.lcssa544.a to i64
-  %i.po = lshr i64 %i.f, %41
-  %42 = shl i64 %i.po, 11
-  %43 = and i64 %42, 2048
-  %44 = or i64 %40, %43
-  %45 = zext nneg i32 %.lcssa543.a to i64
-  %46 = lshr i64 %i.f, %45
-  %47 = shl i64 %46, 12
-  %48 = and i64 %47, 4096
-  %49 = or i64 %44, %48
-  %50 = zext nneg i32 %.lcssa542.a to i64
-  %51 = lshr i64 %i.f, %50
-  %52 = shl i64 %51, 13
-  %53 = and i64 %52, 8192
-  %54 = or i64 %49, %53
-  %55 = zext nneg i32 %.lcssa541 to i64
-  %56 = lshr i64 %i.f, %55
-  %57 = shl i64 %56, 14
-  %58 = and i64 %57, 16384
-  %59 = or i64 %54, %58
-  %i.pp = zext nneg i32 %.lcssa to i64
-  %60 = lshr i64 %i.f, %i.pp
-  %61 = shl i64 %60, 15
-  %62 = and i64 %61, 32768
-  %i.pq = or i64 %59, %62
+  %12 = lshr i64 %i.f, %11
+  %13 = lshr i64 %i.f, %10
+  %i.pm = lshr i64 %i.f, %9
+  %14 = lshr i64 %i.f, %8
+  %15 = lshr i64 %i.f, %i.pj
+  %16 = lshr i64 %i.f, %7
+  %17 = lshr i64 %i.f, %6
+  %i.pn = lshr i64 %i.f, %5
+  %18 = lshr i64 %i.f, %i.pi
+  %19 = lshr i64 %i.f, %i.ph
+  %20 = lshr i64 %i.f, %i.pg
+  %21 = lshr i64 %i.f, %i.pf
+  %i.po = lshr i64 %i.f, %i.pe
+  %22 = insertelement <14 x i64> poison, i64 %i.po, i64 0
+  %23 = insertelement <14 x i64> %22, i64 %21, i64 1
+  %24 = insertelement <14 x i64> %23, i64 %20, i64 2
+  %25 = insertelement <14 x i64> %24, i64 %19, i64 3
+  %26 = insertelement <14 x i64> %25, i64 %18, i64 4
+  %27 = insertelement <14 x i64> %26, i64 %i.pn, i64 5
+  %28 = insertelement <14 x i64> %27, i64 %17, i64 6
+  %29 = insertelement <14 x i64> %28, i64 %16, i64 7
+  %30 = insertelement <14 x i64> %29, i64 %15, i64 8
+  %31 = insertelement <14 x i64> %30, i64 %14, i64 9
+  %32 = insertelement <14 x i64> %31, i64 %i.pm, i64 10
+  %33 = insertelement <14 x i64> %32, i64 %13, i64 11
+  %34 = insertelement <14 x i64> %33, i64 %12, i64 12
+  %35 = insertelement <14 x i64> %34, i64 %i.pl, i64 13
+  %36 = trunc <14 x i64> %35 to <14 x i16>
+  %37 = shl <14 x i16> %36, <i16 2, i16 3, i16 4, i16 5, i16 6, i16 7, i16 8, i16 9, i16 10, i16 11, i16 12, i16 13, i16 14, i16 15>
+  %38 = and <14 x i16> %37, <i16 4, i16 8, i16 16, i16 32, i16 64, i16 128, i16 256, i16 512, i16 1024, i16 2048, i16 4096, i16 8192, i16 16384, i16 -32768>
+  %39 = tail call i16 @llvm.vector.reduce.or.v14i16(<14 x i16> %38)
+  %i.pp = zext i16 %39 to i64
+  %op.rdx = or disjoint i64 %i.pd, %i.pp
+  %i.pq = or disjoint i64 %op.rdx, %i.oz
   br label %Gia_ManFromIfPermuteTruth4.exit
 
 .split.i:                                         ; preds = %bb.ab
@@ -676,6 +654,9 @@ declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.or.v14i16(<14 x i16>) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.or.v6i16(<6 x i16>) #24

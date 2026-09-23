@@ -204,14 +204,10 @@ begin_hunk_0
 @425 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @424, [16 x i8] c"b\00\00\00\00\00\00\00\12\00\00\00\1F\00\00\00" }>, align 8
 @426 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00k\04\00\00$\00\00\00" }>, align 8
 @427 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -654675508425364404 to ptr), ptr inttoptr (i64 7626636266285069727 to ptr) }>, align 8
-@switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format = private unnamed_addr constant [6 x ptr] [ptr @43, ptr poison, ptr @41, ptr poison, ptr @43, ptr @45], align 8
-@switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format.422 = private unnamed_addr constant [6 x i8] [i8 9, i8 poison, i8 6, i8 poison, i8 9, i8 9], align 8
-@switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format.423 = private unnamed_addr constant [6 x ptr] [ptr @44, ptr poison, ptr @42, ptr poison, ptr @44, ptr @46], align 8
-@switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format.424 = private unnamed_addr constant [6 x i8] [i8 1, i8 poison, i8 7, i8 poison, i8 1, i8 1], align 8
 @switch.table._RNvXs1_NtCsd9Lm8bEdjjY_5salsa9cancelledNtB5_9CancelledNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt = private unnamed_addr constant [3 x i8] c"\05\0C\0F", align 8
-@switch.table._RNvXs1_NtCsd9Lm8bEdjjY_5salsa9cancelledNtB5_9CancelledNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.425 = private unnamed_addr constant [3 x ptr] [ptr @81, ptr @82, ptr @83], align 8
+@switch.table._RNvXs1_NtCsd9Lm8bEdjjY_5salsa9cancelledNtB5_9CancelledNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.422 = private unnamed_addr constant [3 x ptr] [ptr @81, ptr @82, ptr @83], align 8
 @switch.table._RNvXs6_NtNtCsdVrXiLXuAnx_6parser11syntax_kind9generatedNtB5_10SyntaxKindNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt = private unnamed_addr constant [329 x i8] c"\09\03\06\09\05\07\07\07\07\07\07\07\07\02\05\05\08\03\04\04\04\05\05\07\0A\03\04\04\06\05\06\02\03\09\04\03\05\0A\04\04\06\07\06\05\07\07\06\09\04\05\03\03\05\05\0C\0B\05\09\06\08\08\0B\08\05\07\07\09\08\08\05\06\05\07\05\06\07\08\08\06\07\06\0B\07\06\06\09\07\09\09\08\08\07\07\09\09\0A\06\0A\08\08\08\06\08\0D\07\08\0B\0A\0B\06\0E\0A\08\06\0E\06\0D\10\0C\08\05\08\0A\0E\0D\0C\08\0B\0A\07\0C\0A\06\0F\12\07\06\0B\07\06\06\08\07\04\0B\04\08\0C\0A\06\07\05\0B\05\0E\07\07\0A\03\08\0A\0A\0F\09\0C\08\09\10\11\0A\0B\0F\0C\07\0F\0E\04\0A\0B\08\0A\07\0A\09\09\08\0D\0D\08\0C\05\09\0F\0B\0D\09\0E\04\09\0C\0C\10\0A\02\0B\0F\14\10\0A\08\08\10\12\09\07\04\10\0F\12\0A\0A\09\0E\05\08\08\08\08\0C\0E\07\0B\09\0A\09\0A\0B\09\0B\0B\0A\09\0E\0A\0B\10\06\0F\04\08\0A\08\0E\06\05\0A\16\0A\09\0A\04\09\09\08\0C\09\0C\0B\08\0A\09\0B\11\16\0C\11\0A\10\15\08\07\08\06\08\0B\12\08\0A\09\0A\0B\06\09\06\0A\0F\05\12\08\0A\0B\10\09\10\0A\0A\0B\08\0A\0F\0A\0F\05\0B\03\16\08\0D\07\0C\0A\10\0C\0A\0A\0C\09\0A\06", align 8
-@switch.table._RNvXs6_NtNtCsdVrXiLXuAnx_6parser11syntax_kind9generatedNtB5_10SyntaxKindNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.426 = private unnamed_addr constant [329 x ptr] [ptr @84, ptr @85, ptr @86, ptr @87, ptr @88, ptr @89, ptr @90, ptr @91, ptr @92, ptr @93, ptr @94, ptr @95, ptr @96, ptr @97, ptr @98, ptr @99, ptr @100, ptr @101, ptr @102, ptr @103, ptr @104, ptr @105, ptr @106, ptr @107, ptr @108, ptr @109, ptr @110, ptr @111, ptr @112, ptr @113, ptr @114, ptr @115, ptr @116, ptr @117, ptr @118, ptr @119, ptr @120, ptr @121, ptr @122, ptr @123, ptr @124, ptr @125, ptr @126, ptr @127, ptr @128, ptr @129, ptr @130, ptr @131, ptr @132, ptr @133, ptr @134, ptr @135, ptr @136, ptr @137, ptr @138, ptr @139, ptr @140, ptr @141, ptr @142, ptr @143, ptr @144, ptr @145, ptr @146, ptr @147, ptr @148, ptr @149, ptr @150, ptr @151, ptr @152, ptr @153, ptr @154, ptr @155, ptr @156, ptr @157, ptr @158, ptr @159, ptr @160, ptr @161, ptr @162, ptr @163, ptr @164, ptr @165, ptr @166, ptr @167, ptr @168, ptr @169, ptr @170, ptr @171, ptr @172, ptr @173, ptr @174, ptr @175, ptr @176, ptr @177, ptr @178, ptr @179, ptr @180, ptr @181, ptr @182, ptr @183, ptr @184, ptr @185, ptr @186, ptr @187, ptr @188, ptr @189, ptr @190, ptr @191, ptr @192, ptr @193, ptr @194, ptr @195, ptr @196, ptr @197, ptr @198, ptr @199, ptr @200, ptr @201, ptr @202, ptr @203, ptr @204, ptr @205, ptr @206, ptr @207, ptr @208, ptr @209, ptr @210, ptr @211, ptr @212, ptr @213, ptr @214, ptr @215, ptr @216, ptr @217, ptr @218, ptr @219, ptr @220, ptr @221, ptr @222, ptr @223, ptr @224, ptr @225, ptr @226, ptr @227, ptr @228, ptr @229, ptr @230, ptr @231, ptr @232, ptr @233, ptr @234, ptr @235, ptr @236, ptr @237, ptr @238, ptr @239, ptr @240, ptr @241, ptr @242, ptr @243, ptr @244, ptr @245, ptr @246, ptr @247, ptr @248, ptr @249, ptr @250, ptr @251, ptr @252, ptr @253, ptr @254, ptr @255, ptr @256, ptr @257, ptr @258, ptr @259, ptr @260, ptr @261, ptr @262, ptr @263, ptr @264, ptr @265, ptr @266, ptr @267, ptr @268, ptr @269, ptr @270, ptr @271, ptr @272, ptr @273, ptr @274, ptr @275, ptr @276, ptr @277, ptr @278, ptr @279, ptr @280, ptr @281, ptr @282, ptr @283, ptr @284, ptr @285, ptr @286, ptr @287, ptr @288, ptr @289, ptr @290, ptr @291, ptr @292, ptr @293, ptr @294, ptr @295, ptr @296, ptr @297, ptr @298, ptr @299, ptr @300, ptr @301, ptr @302, ptr @303, ptr @304, ptr @305, ptr @306, ptr @307, ptr @308, ptr @309, ptr @310, ptr @311, ptr @312, ptr @313, ptr @314, ptr @315, ptr @316, ptr @317, ptr @318, ptr @319, ptr @320, ptr @321, ptr @322, ptr @323, ptr @324, ptr @325, ptr @326, ptr @327, ptr @328, ptr @329, ptr @330, ptr @331, ptr @332, ptr @333, ptr @334, ptr @335, ptr @336, ptr @337, ptr @338, ptr @339, ptr @340, ptr @341, ptr @342, ptr @343, ptr @344, ptr @345, ptr @346, ptr @347, ptr @348, ptr @349, ptr @350, ptr @351, ptr @352, ptr @353, ptr @354, ptr @355, ptr @356, ptr @357, ptr @358, ptr @359, ptr @360, ptr @361, ptr @362, ptr @363, ptr @364, ptr @365, ptr @366, ptr @367, ptr @368, ptr @369, ptr @370, ptr @371, ptr @372, ptr @373, ptr @374, ptr @375, ptr @376, ptr @377, ptr @378, ptr @379, ptr @380, ptr @381, ptr @382, ptr @383, ptr @384, ptr @385, ptr @386, ptr @387, ptr @388, ptr @389, ptr @390, ptr @391, ptr @392, ptr @393, ptr @394, ptr @395, ptr @396, ptr @397, ptr @398, ptr @399, ptr @400, ptr @401, ptr @402, ptr @403, ptr @404, ptr @405, ptr @406, ptr @407, ptr @408, ptr @409, ptr @410, ptr @411, ptr @412], align 8
+@switch.table._RNvXs6_NtNtCsdVrXiLXuAnx_6parser11syntax_kind9generatedNtB5_10SyntaxKindNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.423 = private unnamed_addr constant [329 x ptr] [ptr @84, ptr @85, ptr @86, ptr @87, ptr @88, ptr @89, ptr @90, ptr @91, ptr @92, ptr @93, ptr @94, ptr @95, ptr @96, ptr @97, ptr @98, ptr @99, ptr @100, ptr @101, ptr @102, ptr @103, ptr @104, ptr @105, ptr @106, ptr @107, ptr @108, ptr @109, ptr @110, ptr @111, ptr @112, ptr @113, ptr @114, ptr @115, ptr @116, ptr @117, ptr @118, ptr @119, ptr @120, ptr @121, ptr @122, ptr @123, ptr @124, ptr @125, ptr @126, ptr @127, ptr @128, ptr @129, ptr @130, ptr @131, ptr @132, ptr @133, ptr @134, ptr @135, ptr @136, ptr @137, ptr @138, ptr @139, ptr @140, ptr @141, ptr @142, ptr @143, ptr @144, ptr @145, ptr @146, ptr @147, ptr @148, ptr @149, ptr @150, ptr @151, ptr @152, ptr @153, ptr @154, ptr @155, ptr @156, ptr @157, ptr @158, ptr @159, ptr @160, ptr @161, ptr @162, ptr @163, ptr @164, ptr @165, ptr @166, ptr @167, ptr @168, ptr @169, ptr @170, ptr @171, ptr @172, ptr @173, ptr @174, ptr @175, ptr @176, ptr @177, ptr @178, ptr @179, ptr @180, ptr @181, ptr @182, ptr @183, ptr @184, ptr @185, ptr @186, ptr @187, ptr @188, ptr @189, ptr @190, ptr @191, ptr @192, ptr @193, ptr @194, ptr @195, ptr @196, ptr @197, ptr @198, ptr @199, ptr @200, ptr @201, ptr @202, ptr @203, ptr @204, ptr @205, ptr @206, ptr @207, ptr @208, ptr @209, ptr @210, ptr @211, ptr @212, ptr @213, ptr @214, ptr @215, ptr @216, ptr @217, ptr @218, ptr @219, ptr @220, ptr @221, ptr @222, ptr @223, ptr @224, ptr @225, ptr @226, ptr @227, ptr @228, ptr @229, ptr @230, ptr @231, ptr @232, ptr @233, ptr @234, ptr @235, ptr @236, ptr @237, ptr @238, ptr @239, ptr @240, ptr @241, ptr @242, ptr @243, ptr @244, ptr @245, ptr @246, ptr @247, ptr @248, ptr @249, ptr @250, ptr @251, ptr @252, ptr @253, ptr @254, ptr @255, ptr @256, ptr @257, ptr @258, ptr @259, ptr @260, ptr @261, ptr @262, ptr @263, ptr @264, ptr @265, ptr @266, ptr @267, ptr @268, ptr @269, ptr @270, ptr @271, ptr @272, ptr @273, ptr @274, ptr @275, ptr @276, ptr @277, ptr @278, ptr @279, ptr @280, ptr @281, ptr @282, ptr @283, ptr @284, ptr @285, ptr @286, ptr @287, ptr @288, ptr @289, ptr @290, ptr @291, ptr @292, ptr @293, ptr @294, ptr @295, ptr @296, ptr @297, ptr @298, ptr @299, ptr @300, ptr @301, ptr @302, ptr @303, ptr @304, ptr @305, ptr @306, ptr @307, ptr @308, ptr @309, ptr @310, ptr @311, ptr @312, ptr @313, ptr @314, ptr @315, ptr @316, ptr @317, ptr @318, ptr @319, ptr @320, ptr @321, ptr @322, ptr @323, ptr @324, ptr @325, ptr @326, ptr @327, ptr @328, ptr @329, ptr @330, ptr @331, ptr @332, ptr @333, ptr @334, ptr @335, ptr @336, ptr @337, ptr @338, ptr @339, ptr @340, ptr @341, ptr @342, ptr @343, ptr @344, ptr @345, ptr @346, ptr @347, ptr @348, ptr @349, ptr @350, ptr @351, ptr @352, ptr @353, ptr @354, ptr @355, ptr @356, ptr @357, ptr @358, ptr @359, ptr @360, ptr @361, ptr @362, ptr @363, ptr @364, ptr @365, ptr @366, ptr @367, ptr @368, ptr @369, ptr @370, ptr @371, ptr @372, ptr @373, ptr @374, ptr @375, ptr @376, ptr @377, ptr @378, ptr @379, ptr @380, ptr @381, ptr @382, ptr @383, ptr @384, ptr @385, ptr @386, ptr @387, ptr @388, ptr @389, ptr @390, ptr @391, ptr @392, ptr @393, ptr @394, ptr @395, ptr @396, ptr @397, ptr @398, ptr @399, ptr @400, ptr @401, ptr @402, ptr @403, ptr @404, ptr @405, ptr @406, ptr @407, ptr @408, ptr @409, ptr @410, ptr @411, ptr @412], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden range(i64 0, -4294967295) i64 @_RINvMNtCsd9Lm8bEdjjY_5salsa9cancelledNtB3_9Cancelled5catchNCNCINvMs1_CslLuZgPVt6hg_3ideNtB15_8Analysis7with_dbNCNvB11_10crate_root0NtCs4sl5YdnrCxp_3vfs6FileIdE00B25_EB15_(ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(8) %0, ptr noundef nonnull align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -614,36 +610,27 @@ bb.l:                                             ; preds = %_RINvNtCshzWfHUSfYa
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VechEECslLuZgPVt6hg_3ide.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !2821
-  %switch.tableidx = add nsw i16 %2, -235         ; 6 uses
-  %8 = icmp ult i16 %switch.tableidx, 6
-  %switch.maskindex = trunc i16 %switch.tableidx to i8
-  %switch.shifted = lshr i8 53, %switch.maskindex
-  %switch.lobit = trunc i8 %switch.shifted to i1
-  %or.cond = select i1 %8, i1 %switch.lobit, i1 false
-  br i1 %or.cond, label %switch.lookup, label %bb.m
+  switch i16 %2, label %bb.m [
+    i16 235, label %8
+    i16 237, label %9
+    i16 239, label %8
+    i16 240, label %switch.lookup
+  ]
 
-switch.lookup:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i
-  %9 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format, i64 %9
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  %10 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep30 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format.422, i64 %10
-  %switch.load31 = load i8, ptr %switch.gep30, align 1
-  %switch.ext = zext i8 %switch.load31 to i64
-  %11 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep32 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format.423, i64 %11
-  %switch.load33 = load ptr, ptr %switch.gep32, align 8
-  %12 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep34 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCslLuZgPVt6hg_3ide12expand_macro6format.424, i64 %12
-  %switch.load35 = load i8, ptr %switch.gep34, align 1
-  %switch.ext36 = zext i8 %switch.load35 to i64
+8:                                                ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i
   br label %bb.m
 
-bb.m:                                             ; preds = %switch.lookup, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i
-  %.sroa.083.0.i = phi ptr [ inttoptr (i64 1 to ptr), %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ], [ %switch.load, %switch.lookup ]
-  %.sroa.784.0.i = phi i64 [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ], [ %switch.ext, %switch.lookup ]
-  %.sroa.085.0.i = phi ptr [ inttoptr (i64 1 to ptr), %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ], [ %switch.load33, %switch.lookup ]
-  %.sroa.786.0.i = phi i64 [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ], [ %switch.ext36, %switch.lookup ]
+9:                                                ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i
+  br label %bb.m
+
+switch.lookup:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i
+  br label %bb.m
+
+bb.m:                                             ; preds = %switch.lookup, %9, %8, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i
+  %.sroa.083.0.i = phi ptr [ @45, %switch.lookup ], [ @41, %9 ], [ @43, %8 ], [ inttoptr (i64 1 to ptr), %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ]
+  %.sroa.784.0.i = phi i64 [ 9, %switch.lookup ], [ 6, %9 ], [ 9, %8 ], [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ]
+  %.sroa.085.0.i = phi ptr [ @46, %switch.lookup ], [ @42, %9 ], [ @44, %8 ], [ inttoptr (i64 1 to ptr), %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ]
+  %.sroa.786.0.i = phi i64 [ 1, %switch.lookup ], [ 7, %9 ], [ 1, %8 ], [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslLuZgPVt6hg_3ide.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !2821
   store ptr %.sroa.083.0.i, ptr %i.ae, align 8, !noalias !2821, !captures !28
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
@@ -1046,7 +1033,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1_NtCsd9Lm8bEdjjY_5salsa9cancelledNtB5_9CancelledNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.425, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1_NtCsd9Lm8bEdjjY_5salsa9cancelledNtB5_9CancelledNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.422, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -1449,7 +1436,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i16 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs6_NtNtCsdVrXiLXuAnx_6parser11syntax_kind9generatedNtB5_10SyntaxKindNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.426, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs6_NtNtCsdVrXiLXuAnx_6parser11syntax_kind9generatedNtB5_10SyntaxKindNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt.423, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d

@@ -204,82 +204,48 @@ begin_hunk_0
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lake_Backend_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_Backend_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_Backend_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lake_Backend_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lake_Backend_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_Backend_ctorIdx.exit
-
-l_Lake_Backend_ctorIdx.exit:                      ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lake_Backend_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lake_Backend_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lake_Backend_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lake_Backend_ctorIdx.exit
-
-l_Lake_Backend_ctorIdx.exit:                      ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lake_Backend_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_Backend_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_Backend_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lake_Backend_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lake_Backend_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_Backend_toCtorIdx.exit
-
-l_Lake_Backend_toCtorIdx.exit:                    ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -682,75 +648,38 @@ lean_dec.exit:                                    ; preds = %lean_nat_le.exit.th
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext range(i8 0, 2) i8 @l_Lake_instDecidableEqBackend(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lake_Backend_ctorIdx.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lake_Backend_ctorIdx.exit
-
-4:                                                ; preds = %2
-  br label %l_Lake_Backend_ctorIdx.exit
-
-l_Lake_Backend_ctorIdx.exit:                      ; preds = %2, %3, %4
-  %.0.i12 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %lean_dec.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lake_Backend_ctorIdx.exit
-  br label %lean_dec.exit
-
-6:                                                ; preds = %l_Lake_Backend_ctorIdx.exit
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %6, %5, %l_Lake_Backend_ctorIdx.exit
-  %.0.i13 = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lake_Backend_ctorIdx.exit ]
-  %i.a = icmp eq ptr %.0.i12, %.0.i13
-  %i.b = zext i1 %i.a to i8
+lean_dec.exit:
+  %switch.selectcmp4.i = icmp eq i8 %0, 0         ; 2 uses
+  %switch.selectcmp.i = icmp ne i8 %0, 1
+  %switch.selectcmp4.i14 = icmp eq i8 %1, 0
+  %i.a = icmp eq i8 %1, 1
+  %2 = xor i1 %switch.selectcmp.i, %i.a
+  %not.switch.selectcmp4.i = xor i1 %switch.selectcmp4.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i
+  %4 = select i1 %switch.selectcmp4.i14, i1 %switch.selectcmp4.i, i1 %3
+  %i.b = zext i1 %4 to i8
   ret i8 %i.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_instDecidableEqBackend___boxed(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_instDecidableEqBackend___boxed(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
   %i.d = ptrtoint ptr %1 to i64
   %i.e = lshr i64 %i.d, 1
-  %i.f = trunc i64 %i.e to i8
-  switch i8 %i.c, label %3 [
-    i8 0, label %l_Lake_Backend_ctorIdx.exit.i
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_Backend_ctorIdx.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lake_Backend_ctorIdx.exit.i
-
-l_Lake_Backend_ctorIdx.exit.i:                    ; preds = %3, %2, %bb.a
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.f, label %5 [
-    i8 0, label %l_Lake_instDecidableEqBackend.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lake_Backend_ctorIdx.exit.i
-  br label %l_Lake_instDecidableEqBackend.exit
-
-5:                                                ; preds = %l_Lake_Backend_ctorIdx.exit.i
-  br label %l_Lake_instDecidableEqBackend.exit
-
-l_Lake_instDecidableEqBackend.exit:               ; preds = %l_Lake_Backend_ctorIdx.exit.i, %4, %5
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lake_Backend_ctorIdx.exit.i ]
-  %6 = icmp eq ptr %.0.i12.i, %.0.i13.i
-  %7 = select i1 %6, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
-  ret ptr %7
+  %i.f = trunc i64 %i.e to i8                     ; 2 uses
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0     ; 2 uses
+  %switch.selectcmp.i.i = icmp ne i8 %i.c, 1
+  %switch.selectcmp4.i14.i = icmp eq i8 %i.f, 0
+  %switch.selectcmp.i12.i = icmp eq i8 %i.f, 1
+  %2 = xor i1 %switch.selectcmp.i.i, %switch.selectcmp.i12.i
+  %not.switch.selectcmp4.i.i = xor i1 %switch.selectcmp4.i.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i.i
+  %4 = select i1 %switch.selectcmp4.i14.i, i1 %switch.selectcmp4.i.i, i1 %3
+  %5 = select i1 %4, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
+  ret ptr %5
 }
 
 ; Function Attrs: nounwind uwtable

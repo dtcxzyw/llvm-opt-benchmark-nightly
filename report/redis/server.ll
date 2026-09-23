@@ -205,45 +205,37 @@ bb.a:
   %.not = icmp eq i32 %i.e, -1
   %spec.select = select i1 %.not, i64 2, i64 3
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
-  %3 = load ptr, ptr %i.f, align 8, !tbaa !639
-  %.not99 = icmp ne ptr %3, null
-  %4 = zext i1 %.not99 to i64
-  %.1 = add nuw nsw i64 %spec.select, %4
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !640
-  %.not100 = icmp ne ptr %i.h, null
-  %5 = zext i1 %.not100 to i64
-  %.2 = add nuw nsw i64 %.1, %5
-  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 3 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !641
-  %.not101 = icmp ne ptr %i.j, null
-  %6 = zext i1 %.not101 to i64
-  %.3 = add nuw nsw i64 %.2, %6
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 3 uses
-  %8 = load ptr, ptr %7, align 8, !tbaa !642
-  %.not102 = icmp ne ptr %8, null
-  %9 = zext i1 %.not102 to i64
-  %.4 = add nuw nsw i64 %.3, %9
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !639
+  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !640
+  %4 = load <2 x ptr>, ptr %i.f, align 8, !tbaa !240
+  %5 = insertelement <4 x ptr> poison, ptr %i.h, i64 2
+  %6 = insertelement <4 x ptr> %5, ptr %i.j, i64 3
+  %7 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x ptr> %7, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %9 = icmp ne <4 x ptr> %8, splat (ptr null)
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 3 uses
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !643
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !641
   %.not103 = icmp ne i32 %i.l, 0
   %i.m = zext i1 %.not103 to i64
-  %.5 = add nuw nsw i64 %.4, %i.m
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !644
+  %i.o = load i32, ptr %i.n, align 8, !tbaa !642
   %.off113 = add i32 %i.o, -7
-  %switch114 = icmp ult i32 %.off113, 2           ; 3 uses
-  %10 = zext i1 %switch114 to i64
-  %spec.select116 = add nuw nsw i64 %.5, %10
-  %not.switch114 = xor i1 %switch114, true
-  %11 = zext i1 %not.switch114 to i64
-  %spec.select112 = add nuw nsw i64 %spec.select116, %11
+  %switch114 = icmp ult i32 %.off113, 2
+  %10 = bitcast <4 x i1> %9 to i4
+  %11 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %10)
+  %12 = zext nneg i4 %11 to i64
+  %op.rdx = add nuw nsw i64 %12, %i.m
+  %op.rdx121 = add nuw nsw i64 %op.rdx, 1
+  %spec.select112 = add nuw nsw i64 %op.rdx121, %spec.select
   tail call void @addReplyMapLen(ptr noundef %0, i64 noundef %spec.select112) #39
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.280) #39
-  %i.p = load ptr, ptr %i.c, align 8, !tbaa !645
+  %i.p = load ptr, ptr %i.c, align 8, !tbaa !643
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef %i.p) #39
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.281) #39
-  %i.q = load i32, ptr %i.n, align 8, !tbaa !644
+  %i.q = load i32, ptr %i.n, align 8, !tbaa !642
   %i.r = zext i32 %i.q to i64
   %i.s = getelementptr inbounds nuw [8 x i8], ptr @ARG_TYPE_STR, i64 %i.r
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !240
@@ -253,12 +245,12 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.282) #39
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !646  ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !644  ; 2 uses
   %.not105 = icmp eq ptr %i.v, null
   br i1 %.not105, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = load ptr, ptr %i.c, align 8, !tbaa !645
+  %i.w = load ptr, ptr %i.c, align 8, !tbaa !643
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
@@ -279,57 +271,57 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.ab = load ptr, ptr %i.f, align 8, !tbaa !639
+  %i.ab = load ptr, ptr %i.f, align 8, !tbaa !645
   %.not107 = icmp eq ptr %i.ab, null
   br i1 %.not107, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.284) #39
-  %i.ac = load ptr, ptr %i.f, align 8, !tbaa !639
+  %i.ac = load ptr, ptr %i.f, align 8, !tbaa !645
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef %i.ac) #39
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.ad = load ptr, ptr %i.g, align 8, !tbaa !640
+  %i.ad = load ptr, ptr %3, align 8, !tbaa !646
   %.not108 = icmp eq ptr %i.ad, null
   br i1 %.not108, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.285) #39
-  %i.ae = load ptr, ptr %i.g, align 8, !tbaa !640
+  %i.ae = load ptr, ptr %3, align 8, !tbaa !646
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef %i.ae) #39
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.af = load ptr, ptr %i.i, align 8, !tbaa !641
+  %i.af = load ptr, ptr %i.g, align 8, !tbaa !639
   %.not109 = icmp eq ptr %i.af, null
   br i1 %.not109, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.286) #39
-  %i.ag = load ptr, ptr %i.i, align 8, !tbaa !641
+  %i.ag = load ptr, ptr %i.g, align 8, !tbaa !639
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef %i.ag) #39
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.ah = load ptr, ptr %7, align 8, !tbaa !642
+  %i.ah = load ptr, ptr %i.i, align 8, !tbaa !640
   %.not110 = icmp eq ptr %i.ah, null
   br i1 %.not110, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.287) #39
-  %i.ai = load ptr, ptr %7, align 8, !tbaa !642
+  %i.ai = load ptr, ptr %i.i, align 8, !tbaa !640
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef %i.ai) #39
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %i.aj = load i32, ptr %i.k, align 8, !tbaa !643
+  %i.aj = load i32, ptr %i.k, align 8, !tbaa !641
   %.not111 = icmp eq i32 %i.aj, 0
   br i1 %.not111, label %addReplyFlagsForArg.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.288) #39
-  %i.ak = load i32, ptr %i.k, align 8, !tbaa !643 ; 4 uses
+  %i.ak = load i32, ptr %i.k, align 8, !tbaa !641 ; 4 uses
   %i.al = zext i32 %i.ak to i64                   ; 3 uses
   %i.am = and i64 %i.al, 1
   %i.an = lshr i64 %i.al, 1
@@ -366,7 +358,7 @@ bb.s:                                             ; preds = %.lr.ph29.i.2.i
   br label %addReplyFlagsForArg.exit
 
 addReplyFlagsForArg.exit:                         ; preds = %bb.s, %.lr.ph29.i.2.i, %bb.o
-  %i.as = load i32, ptr %i.n, align 8, !tbaa !644
+  %i.as = load i32, ptr %i.n, align 8, !tbaa !642
   %.off = add i32 %i.as, -7
   %switch = icmp ult i32 %.off, 2
   br i1 %switch, label %bb.t, label %bb.u
@@ -768,6 +760,9 @@ declare void @llvm.assume(i1 noundef) #38
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v16i64(<16 x i64>) #37
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #37
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1171,14 +1166,14 @@ begin_hunk_2_@llvm.vector.reduce.add.v16i64/@llvm.ctpop.i4
 !636 = distinct !{!636, !148}
 !637 = !{!"redisCommandArg", !29, i64 0, !25, i64 8, !25, i64 12, !29, i64 16, !29, i64 24, !29, i64 32, !25, i64 40, !29, i64 48, !25, i64 56, !258, i64 64, !29, i64 72}
 !638 = !{!637, !25, i64 12}
-!639 = !{!637, !29, i64 16}
-!640 = !{!637, !29, i64 24}
-!641 = !{!637, !29, i64 32}
-!642 = !{!637, !29, i64 48}
-!643 = !{!637, !25, i64 40}
-!644 = !{!637, !25, i64 8}
-!645 = !{!637, !29, i64 0}
-!646 = !{!637, !29, i64 72}
+!639 = !{!637, !29, i64 32}
+!640 = !{!637, !29, i64 48}
+!641 = !{!637, !25, i64 40}
+!642 = !{!637, !25, i64 8}
+!643 = !{!637, !29, i64 0}
+!644 = !{!637, !29, i64 72}
+!645 = !{!637, !29, i64 16}
+!646 = !{!637, !29, i64 24}
 !647 = !{!637, !258, i64 64}
 !648 = !{!637, !25, i64 56}
 !649 = distinct !{!649, !148}

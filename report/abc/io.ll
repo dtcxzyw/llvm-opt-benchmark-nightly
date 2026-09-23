@@ -204,25 +204,16 @@ bb.dd:                                            ; preds = %.sink.split620, %.l
 
 bb.de:                                            ; preds = %.lr.ph425.split
   %i.mi = getelementptr inbounds nuw [4 x i8], ptr %i.ku, i64 %indvars.iv459
-  %i.mj = load i32, ptr %i.mi, align 4, !tbaa !11
+  %i.mj = load i32, ptr %i.mi, align 4, !tbaa !11 ; 2 uses
   %i.mk = getelementptr inbounds nuw i8, ptr %i.mf, i64 64
-  switch i32 %i.mj, label %8 [
-    i32 1, label %.sink.split622
-    i32 2, label %7
-  ]
-
-7:                                                ; preds = %bb.de
-  br label %.sink.split622
-
-8:                                                ; preds = %bb.de
-  br label %.sink.split622
-
-.sink.split622:                                   ; preds = %bb.de, %8, %7
-  %.sink623 = phi ptr [ null, %7 ], [ inttoptr (i64 1 to ptr), %8 ], [ inttoptr (i64 2 to ptr), %bb.de ]
-  store ptr %.sink623, ptr %i.mk, align 8, !tbaa !16
+  %switch.selectcmp = icmp eq i32 %i.mj, 2
+  %switch.select = select i1 %switch.selectcmp, ptr null, ptr inttoptr (i64 1 to ptr)
+  %switch.selectcmp631 = icmp eq i32 %i.mj, 1
+  %switch.select632 = select i1 %switch.selectcmp631, ptr inttoptr (i64 2 to ptr), ptr %switch.select
+  store ptr %switch.select632, ptr %i.mk, align 8, !tbaa !16
   br label %bb.df
 
-bb.df:                                            ; preds = %.sink.split622, %.lr.ph425.split
+bb.df:                                            ; preds = %bb.de, %.lr.ph425.split
   %indvars.iv.next460 = add nuw nsw i64 %indvars.iv459, 1 ; 2 uses
   %i.ml = load ptr, ptr %i.h, align 8, !tbaa !91  ; 2 uses
   %i.mm = getelementptr i8, ptr %i.ml, i64 4
