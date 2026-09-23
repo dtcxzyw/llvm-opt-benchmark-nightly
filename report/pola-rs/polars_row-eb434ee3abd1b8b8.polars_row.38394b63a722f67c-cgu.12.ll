@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 bb.c:                                             ; preds = %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core3ops8function5implsQNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtBT_18CategoricalMapping20insert_cat_with_hash0INtB7_5FnMutTReEE8call_mutCs4PheDXcg4wa_10polars_row.exit.thread.i, %.lr.ph.i
   %.sroa.014.031.i = phi i64 [ %i.ae, %.lr.ph.i ], [ %i.at, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core3ops8function5implsQNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtBT_18CategoricalMapping20insert_cat_with_hash0INtB7_5FnMutTReEE8call_mutCs4PheDXcg4wa_10polars_row.exit.thread.i ] ; 3 uses
-  %i.ak = tail call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %.sroa.014.031.i, i1 true), !dbg !1781
+  %i.ak = tail call range(i64 7, 65) i64 @llvm.cttz.i64(i64 %.sroa.014.031.i, i1 true), !dbg !1781
   %i.al = lshr i64 %i.ak, 3, !dbg !1782
   %i.am = or disjoint i64 %i.al, %i.ag, !dbg !1783 ; 2 uses
   %i.an = icmp ult i64 %i.am, %i.m, !dbg !1784
@@ -224,7 +224,7 @@ bb.d:                                             ; preds = %._crit_edge.i
   br label %bb.b, !dbg !1769
 
 _RNvXs1_NtNtNtCscgRAwXFJnXP_4core3ops8function5implsQNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtBT_18CategoricalMapping20insert_cat_with_hash0INtB7_5FnMutTReEE8call_mutCs4PheDXcg4wa_10polars_row.exit.thread.i: ; preds = %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core3ops8function5implsQNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtBT_18CategoricalMapping20insert_cat_with_hash0INtB7_5FnMutTReEE8call_mutCs4PheDXcg4wa_10polars_row.exit.i, %_RNvMs_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB4_11EntryHeaderemE7key_ptrCs4PheDXcg4wa_10polars_row.exit.i, %bb.e, %bb.c
-  %i.as = add i64 %.sroa.014.031.i, -1, !dbg !1791
+  %i.as = add i64 %.sroa.014.031.i, -128, !dbg !1791
   %i.at = and i64 %i.as, %.sroa.014.031.i, !dbg !1792 ; 2 uses
   %i.au = icmp eq i64 %i.at, 0, !dbg !1777
   br i1 %i.au, label %._crit_edge.i, label %bb.c, !dbg !1777
@@ -627,7 +627,7 @@ _RNvMs2_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB5_8RawTableemE20start_inse
 
 bb.bg:                                            ; preds = %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0Cs4PheDXcg4wa_10polars_row.exit.thread.i, %.lr.ph.i19
   %.sroa.019.092.i = phi i64 [ %i.iz, %.lr.ph.i19 ], [ %i.nx, %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0Cs4PheDXcg4wa_10polars_row.exit.thread.i ] ; 3 uses
-  %i.je = tail call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %.sroa.019.092.i, i1 true), !dbg !2019 ; 2 uses
+  %i.je = tail call range(i64 7, 65) i64 @llvm.cttz.i64(i64 %.sroa.019.092.i, i1 true), !dbg !2019 ; 2 uses
   %i.jf = lshr i64 %i.je, 3, !dbg !2020
   %i.jg = and i64 %i.je, 56, !dbg !2021           ; 2 uses
   %i.jh = shl nuw i64 128, %i.jg, !dbg !2022
@@ -1019,7 +1019,7 @@ _RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMa
   br i1 %i.nv, label %bb.cv, label %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0Cs4PheDXcg4wa_10polars_row.exit.thread.i, !dbg !2161
 
 _RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0Cs4PheDXcg4wa_10polars_row.exit.thread.i: ; preds = %_RNvMs_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB4_11EntryHeaderemE13wait_for_initCs4PheDXcg4wa_10polars_row.exit.i, %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0Cs4PheDXcg4wa_10polars_row.exit.i, %_RNvMs_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB4_11EntryHeaderemE7key_ptrCs4PheDXcg4wa_10polars_row.exit.i21, %bb.cu
-  %i.nw = add i64 %.sroa.019.092.i, -1, !dbg !2162
+  %i.nw = add i64 %.sroa.019.092.i, -128, !dbg !2162
   %i.nx = and i64 %i.nw, %.sroa.019.092.i, !dbg !2163 ; 2 uses
   %i.ny = icmp eq i64 %i.nx, 0, !dbg !2016
   br i1 %i.ny, label %._crit_edge.i20, label %bb.bg, !dbg !2016

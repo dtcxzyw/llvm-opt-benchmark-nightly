@@ -204,17 +204,17 @@ bytestream2_peek_byte.exit:                       ; preds = %bb.t, %bb.u
   %or.cond3 = or i1 %i.dg, %i.dk
   %i.dm = icmp eq i32 %.283174, 0
   %or.cond5.not = select i1 %or.cond3, i1 %i.dm, i1 false
-  %.not97 = icmp eq i32 %.287173, 0
-  %narrow = select i1 %or.cond5.not, i1 %.not97, i1 false
+  %2 = xor i32 %.287173, 1
+  %3 = select i1 %or.cond5.not, i32 %2, i32 0
   %i.dn = load ptr, ptr %i.bp, align 8, !tbaa !25
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 24
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !21
-  %2 = select i1 %narrow, i32 %i.dp, i32 0        ; 3 uses
+  %4 = mul nuw nsw i32 %3, %i.dp                  ; 3 uses
   %i.dq = or i32 %.287173, %i.dh
   %i.dr = or i32 %.283174, %i.dl
   %i.ds = zext i32 %.0.i.lcssa to i64             ; 2 uses
   %i.dt = add nuw nsw i64 %i.ds, 4
-  %i.du = sext i32 %2 to i64                      ; 4 uses
+  %i.du = sext i32 %4 to i64                      ; 4 uses
   %i.dv = add nsw i64 %i.dt, %i.du
   %i.dw = icmp ugt i64 %i.dv, 2147483647
   br i1 %i.dw, label %.thread149, label %bb.v
@@ -222,13 +222,13 @@ bytestream2_peek_byte.exit:                       ; preds = %bb.t, %bb.u
 bb.v:                                             ; preds = %bytestream2_peek_byte.exit
   %i.dx = load i32, ptr %i.bq, align 8, !tbaa !40 ; 2 uses
   %i.dy = add i32 %.0.i.lcssa, 4
-  %i.dz = add i32 %i.dy, %2
+  %i.dz = add i32 %i.dy, %4
   %i.ea = call i32 @av_grow_packet(ptr noundef %1, i32 noundef %i.dz) #7 ; 2 uses
   %i.eb = icmp slt i32 %i.ea, 0
   br i1 %i.eb, label %.thread149, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %.not98 = icmp eq i32 %2, 0
+  %.not98 = icmp eq i32 %4, 0
   br i1 %.not98, label %._crit_edge182, label %bb.x
 
 ._crit_edge182:                                   ; preds = %bb.w

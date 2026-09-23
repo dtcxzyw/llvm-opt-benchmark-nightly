@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   br i1 %i.ai, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiN4i18n12phonenumbers13PhoneMetadataEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS6_EEE4findIiEENSH_8iteratorERSE_.exit.i, label %bb.c, !prof !169
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
-  %i.aj = add nsw i32 %.sroa.014.044.i.i.i, -1
+  %i.aj = add nuw nsw i32 %.sroa.014.044.i.i.i, 65535
   %i.ak = and i32 %i.aj, %.sroa.014.044.i.i.i     ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.ak, 0
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
@@ -434,7 +434,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   br i1 %i.ai, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiN4i18n12phonenumbers13PhoneMetadataEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS6_EEE4findIiEENSH_8iteratorERSE_.exit, label %bb.c, !prof !169
 
 bb.c:                                             ; preds = %.lr.ph.i.i
-  %i.aj = add nsw i32 %.sroa.014.044.i.i, -1
+  %i.aj = add nuw nsw i32 %.sroa.014.044.i.i, 65535
   %i.ak = and i32 %i.aj, %.sroa.014.044.i.i       ; 2 uses
   %.not.i.i = icmp eq i32 %i.ak, 0
   br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
@@ -837,7 +837,7 @@ bb.a:
   br i1 %i.ao, label %.thread31.i, label %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.thread26.i.us.us, !prof !179
 
 _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.thread26.i.us.us: ; preds = %.lr.ph.i.us.us
-  %i.ap = add nsw i32 %.sroa.014.048.i.us.us, -1
+  %i.ap = add nuw nsw i32 %.sroa.014.048.i.us.us, 65535
   %i.aq = and i32 %i.ap, %.sroa.014.048.i.us.us   ; 2 uses
   %.not.i.us.us = icmp eq i32 %i.aq, 0
   br i1 %.not.i.us.us, label %._crit_edge.i.us, label %.lr.ph.i.us.us
@@ -894,7 +894,7 @@ _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicy
   br label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE4findIS9_EENSK_8iteratorERKT_m.exit
 
 _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.thread26.i: ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.i, %.lr.ph.i
-  %i.bn = add nsw i32 %.sroa.014.048.i, -1
+  %i.bn = add nuw nsw i32 %.sroa.014.048.i, 65535
   %i.bo = and i32 %i.bn, %.sroa.014.048.i         ; 2 uses
   %.not.i = icmp eq i32 %i.bo, 0
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
@@ -1297,7 +1297,7 @@ bb.b:                                             ; preds = %bb.d, %_ZSteqIcSt11
   br i1 %i.aw, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiN4i18n12phonenumbers13PhoneMetadataEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS6_EEE4findIiEENSH_8iteratorERSE_.exit.i, label %bb.c, !prof !169
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
-  %i.ax = add nsw i32 %.sroa.014.044.i.i.i, -1
+  %i.ax = add nuw nsw i32 %.sroa.014.044.i.i.i, 65535
   %i.ay = and i32 %i.ax, %.sroa.014.044.i.i.i     ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.ay, 0
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
@@ -1700,7 +1700,7 @@ bb.a:
   br i1 %i.ao, label %.thread31.i, label %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.thread26.i.us.us, !prof !179
 
 _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.thread26.i.us.us: ; preds = %.lr.ph.i.us.us
-  %i.ap = add nsw i32 %.sroa.014.048.i.us.us, -1
+  %i.ap = add nuw nsw i32 %.sroa.014.048.i.us.us, 65535
   %i.aq = and i32 %i.ap, %.sroa.014.048.i.us.us   ; 2 uses
   %.not.i.us.us = icmp eq i32 %i.aq, 0
   br i1 %.not.i.us.us, label %._crit_edge.i.us, label %.lr.ph.i.us.us
@@ -1757,7 +1757,7 @@ _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicy
   br label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_10StringHashENS1_8StringEqESaIS9_EE4findIS9_EENSE_8iteratorERKT_m.exit
 
 _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.thread26.i: ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.i, %.lr.ph.i
-  %i.bn = add nsw i32 %.sroa.014.048.i, -1
+  %i.bn = add nuw nsw i32 %.sroa.014.048.i, 65535
   %i.bo = and i32 %i.bn, %.sroa.014.048.i         ; 2 uses
   %.not.i = icmp eq i32 %i.bo, 0
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
@@ -2160,7 +2160,7 @@ bb.n:                                             ; preds = %bb.p, %bb.m
   br i1 %i.eq, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiN4i18n12phonenumbers13PhoneMetadataEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS6_EEE4findIiEENSH_8iteratorERSE_.exit.i, label %bb.o, !prof !169
 
 bb.o:                                             ; preds = %.lr.ph.i.i.i73
-  %i.er = add nsw i32 %.sroa.014.044.i.i.i, -1
+  %i.er = add nuw nsw i32 %.sroa.014.044.i.i.i, 65535
   %i.es = and i32 %i.er, %.sroa.014.044.i.i.i     ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.es, 0
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i74, label %.lr.ph.i.i.i73
@@ -2563,7 +2563,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   br i1 %i.ai, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiN4i18n12phonenumbers13PhoneMetadataEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS6_EEE4findIiEENSH_8iteratorERSE_.exit.i, label %bb.c, !prof !169
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
-  %i.aj = add nsw i32 %.sroa.014.044.i.i.i, -1
+  %i.aj = add nuw nsw i32 %.sroa.014.044.i.i.i, 65535
   %i.ak = and i32 %i.aj, %.sroa.014.044.i.i.i     ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.ak, 0
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
@@ -2966,7 +2966,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   br i1 %i.ai, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiN4i18n12phonenumbers13PhoneMetadataEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS6_EEE22find_or_prepare_insertIiEESD_ImbERKT_.exit, label %.critedge.i, !prof !169
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.aj = add nsw i32 %.sroa.018.050.i, -1
+  %i.aj = add nuw nsw i32 %.sroa.018.050.i, 65535
   %i.ak = and i32 %i.aj, %.sroa.018.050.i         ; 2 uses
   %.not.i = icmp eq i32 %i.ak, 0
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
@@ -3369,7 +3369,7 @@ _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicy
   br i1 %i.aq, label %.thread38, label %.critedge, !prof !180
 
 .critedge:                                        ; preds = %bb.c, %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit
-  %i.ar = add nsw i32 %.sroa.018.052, -1
+  %i.ar = add nuw nsw i32 %.sroa.018.052, 65535
   %i.as = and i32 %i.ar, %.sroa.018.052           ; 2 uses
   %.not = icmp eq i32 %i.as, 0
   br i1 %.not, label %._crit_edge, label %bb.c
@@ -3772,7 +3772,7 @@ _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicy
   br i1 %i.aq, label %.thread38, label %.critedge, !prof !180
 
 .critedge:                                        ; preds = %bb.c, %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit
-  %i.ar = add nsw i32 %.sroa.018.052, -1
+  %i.ar = add nuw nsw i32 %.sroa.018.052, 65535
   %i.as = and i32 %i.ar, %.sroa.018.052           ; 2 uses
   %.not = icmp eq i32 %i.as, 0
   br i1 %.not, label %._crit_edge, label %bb.c

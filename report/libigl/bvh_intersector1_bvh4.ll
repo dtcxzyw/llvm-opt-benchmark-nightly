@@ -204,7 +204,7 @@ _ZN6embree4sse220BVHNNodeIntersector1ILi4ELi257ELb0EE9intersectERKNS_10NodeRefPt
   store i64 %i.kq, ptr %storemerge.i23430, align 8
   %storemerge.i23 = getelementptr inbounds nuw i8, ptr %storemerge.i23430, i64 8 ; 2 uses
   %i.ks = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.kr) #11, !srcloc !23
-  %i.kt = add nsw i64 %i.kr, -1
+  %i.kt = add nuw nsw i64 %i.kr, 14
   %i.ku = and i64 %i.kt, %i.kr                    ; 2 uses
   %i.kv = getelementptr inbounds nuw [8 x i8], ptr %i.jv, i64 %i.ks
   %i.kw = load i64, ptr %i.kv, align 8            ; 3 uses
@@ -607,7 +607,7 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.ne, ptr %storemerge.i24537, align 8
   %storemerge.i24 = getelementptr inbounds nuw i8, ptr %storemerge.i24537, i64 8 ; 2 uses
   %i.ng = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.nf) #11, !srcloc !23
-  %i.nh = add nsw i64 %i.nf, -1
+  %i.nh = add nuw nsw i64 %i.nf, 14
   %i.ni = and i64 %i.nh, %i.nf                    ; 2 uses
   %i.nj = getelementptr inbounds nuw [8 x i8], ptr %i.mj, i64 %i.ng
   %i.nk = load i64, ptr %i.nj, align 8            ; 3 uses
@@ -1010,7 +1010,7 @@ _ZN6embree4sse220BVHNNodeIntersector1ILi4ELi257ELb1EE9intersectERKNS_10NodeRefPt
   store i64 %i.kt, ptr %storemerge.i439, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i439, i64 8 ; 2 uses
   %i.kv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ku) #11, !srcloc !23
-  %i.kw = add nsw i64 %i.ku, -1
+  %i.kw = add nuw nsw i64 %i.ku, 14
   %i.kx = and i64 %i.kw, %i.ku                    ; 2 uses
   %i.ky = getelementptr inbounds nuw [8 x i8], ptr %i.jy, i64 %i.kv
   %i.kz = load i64, ptr %i.ky, align 8            ; 3 uses
@@ -1413,7 +1413,7 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.nh, ptr %storemerge.i546, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i546, i64 8 ; 2 uses
   %i.nj = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ni) #11, !srcloc !23
-  %i.nk = add nsw i64 %i.ni, -1
+  %i.nk = add nuw nsw i64 %i.ni, 14
   %i.nl = and i64 %i.nk, %i.ni                    ; 2 uses
   %i.nm = getelementptr inbounds nuw [8 x i8], ptr %i.mm, i64 %i.nj
   %i.nn = load i64, ptr %i.nm, align 8            ; 3 uses
@@ -1816,7 +1816,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.ea, ptr %storemerge.i359, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i359, i64 8 ; 2 uses
   %i.ec = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.eb) #11, !srcloc !23
-  %i.ed = add nsw i64 %i.eb, -1
+  %i.ed = add nuw nsw i64 %i.eb, 14
   %i.ee = and i64 %i.ed, %i.eb                    ; 2 uses
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %i.ec
   %i.eg = load i64, ptr %i.ef, align 8            ; 3 uses
@@ -2219,7 +2219,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.ea, ptr %storemerge.i458, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i458, i64 8 ; 2 uses
   %i.ec = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.eb) #11, !srcloc !23
-  %i.ed = add nsw i64 %i.eb, -1
+  %i.ed = add nuw nsw i64 %i.eb, 14
   %i.ee = and i64 %i.ed, %i.eb                    ; 2 uses
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %i.ec
   %i.eg = load i64, ptr %i.ef, align 8            ; 3 uses
@@ -2622,7 +2622,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.ec, ptr %storemerge.i538, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i538, i64 8 ; 2 uses
   %i.ee = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ed) #11, !srcloc !23
-  %i.ef = add nsw i64 %i.ed, -1
+  %i.ef = add nuw nsw i64 %i.ed, 14
   %i.eg = and i64 %i.ef, %i.ed                    ; 2 uses
   %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %i.ee
   %i.ei = load i64, ptr %i.eh, align 8            ; 3 uses
@@ -3025,7 +3025,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.eb, ptr %storemerge.i608, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i608, i64 8 ; 2 uses
   %i.ed = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ec) #11, !srcloc !23
-  %i.ee = add nsw i64 %i.ec, -1
+  %i.ee = add nuw nsw i64 %i.ec, 14
   %i.ef = and i64 %i.ee, %i.ec                    ; 2 uses
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %i.ed
   %i.eh = load i64, ptr %i.eg, align 8            ; 3 uses
@@ -3428,7 +3428,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.fo, ptr %storemerge.i472, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i472, i64 8 ; 2 uses
   %i.fq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fp) #11, !srcloc !23
-  %i.fr = add nsw i64 %i.fp, -1
+  %i.fr = add nuw nsw i64 %i.fp, 14
   %i.fs = and i64 %i.fr, %i.fp                    ; 2 uses
   %i.ft = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %i.fq
   %i.fu = load i64, ptr %i.ft, align 8            ; 3 uses
@@ -3831,7 +3831,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.fo, ptr %storemerge.i652, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i652, i64 8 ; 2 uses
   %i.fq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fp) #11, !srcloc !23
-  %i.fr = add nsw i64 %i.fp, -1
+  %i.fr = add nuw nsw i64 %i.fp, 14
   %i.fs = and i64 %i.fr, %i.fp                    ; 2 uses
   %i.ft = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %i.fq
   %i.fu = load i64, ptr %i.ft, align 8            ; 3 uses
@@ -4234,7 +4234,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.fp, ptr %storemerge.i622, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i622, i64 8 ; 2 uses
   %i.fr = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fq) #11, !srcloc !23
-  %i.fs = add nsw i64 %i.fq, -1
+  %i.fs = add nuw nsw i64 %i.fq, 14
   %i.ft = and i64 %i.fs, %i.fq                    ; 2 uses
   %i.fu = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %i.fr
   %i.fv = load i64, ptr %i.fu, align 8            ; 3 uses
@@ -4637,7 +4637,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.fp, ptr %storemerge.i802, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i802, i64 8 ; 2 uses
   %i.fr = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fq) #11, !srcloc !23
-  %i.fs = add nsw i64 %i.fq, -1
+  %i.fs = add nuw nsw i64 %i.fq, 14
   %i.ft = and i64 %i.fs, %i.fq                    ; 2 uses
   %i.fu = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %i.fr
   %i.fv = load i64, ptr %i.fu, align 8            ; 3 uses
@@ -5040,7 +5040,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.eo, ptr %storemerge.i615, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i615, i64 8 ; 2 uses
   %i.eq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ep) #11, !srcloc !23
-  %i.er = add nsw i64 %i.ep, -1
+  %i.er = add nuw nsw i64 %i.ep, 14
   %i.es = and i64 %i.er, %i.ep                    ; 2 uses
   %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.dx, i64 %i.eq
   %i.eu = load i64, ptr %i.et, align 8            ; 3 uses
@@ -5443,7 +5443,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.eo, ptr %storemerge.i727, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i727, i64 8 ; 2 uses
   %i.eq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ep) #11, !srcloc !23
-  %i.er = add nsw i64 %i.ep, -1
+  %i.er = add nuw nsw i64 %i.ep, 14
   %i.es = and i64 %i.er, %i.ep                    ; 2 uses
   %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.dx, i64 %i.eq
   %i.eu = load i64, ptr %i.et, align 8            ; 3 uses
@@ -5846,7 +5846,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.fl, ptr %storemerge.i963, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i963, i64 8 ; 2 uses
   %i.fn = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fm) #11, !srcloc !23
-  %i.fo = add nsw i64 %i.fm, -1
+  %i.fo = add nuw nsw i64 %i.fm, 14
   %i.fp = and i64 %i.fo, %i.fm                    ; 2 uses
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %i.fn
   %i.fr = load i64, ptr %i.fq, align 8            ; 3 uses
@@ -6249,7 +6249,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.fk, ptr %storemerge.i1044, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i1044, i64 8 ; 2 uses
   %i.fm = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fl) #11, !srcloc !23
-  %i.fn = add nsw i64 %i.fl, -1
+  %i.fn = add nuw nsw i64 %i.fl, 14
   %i.fo = and i64 %i.fn, %i.fl                    ; 2 uses
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %i.fm
   %i.fq = load i64, ptr %i.fp, align 8            ; 3 uses
@@ -6652,7 +6652,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.gc, ptr %storemerge.i976, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i976, i64 8 ; 2 uses
   %i.ge = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.gd) #11, !srcloc !23
-  %i.gf = add nsw i64 %i.gd, -1
+  %i.gf = add nuw nsw i64 %i.gd, 14
   %i.gg = and i64 %i.gf, %i.gd                    ; 2 uses
   %i.gh = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %i.ge
   %i.gi = load i64, ptr %i.gh, align 8            ; 3 uses
@@ -7055,7 +7055,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.gy, ptr %storemerge.i1293, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i1293, i64 8 ; 2 uses
   %i.ha = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.gz) #11, !srcloc !23
-  %i.hb = add nsw i64 %i.gz, -1
+  %i.hb = add nuw nsw i64 %i.gz, 14
   %i.hc = and i64 %i.hb, %i.gz                    ; 2 uses
   %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %i.ha
   %i.he = load i64, ptr %i.hd, align 8            ; 3 uses
@@ -7458,7 +7458,7 @@ bb.f:                                             ; preds = %bb.e
   store i64 %i.fd, ptr %storemerge.i1256, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i1256, i64 8 ; 2 uses
   %i.ff = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fe) #11, !srcloc !23
-  %i.fg = add nsw i64 %i.fe, -1
+  %i.fg = add nuw nsw i64 %i.fe, 14
   %i.fh = and i64 %i.fg, %i.fe                    ; 2 uses
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %i.ff
   %i.fj = load i64, ptr %i.fi, align 8            ; 3 uses
@@ -7861,7 +7861,7 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.gr, ptr %storemerge.i1595, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i1595, i64 8 ; 2 uses
   %i.gt = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.gs) #11, !srcloc !23
-  %i.gu = add nsw i64 %i.gs, -1
+  %i.gu = add nuw nsw i64 %i.gs, 14
   %i.gv = and i64 %i.gu, %i.gs                    ; 2 uses
   %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %i.gt
   %i.gx = load i64, ptr %i.gw, align 8            ; 3 uses
@@ -8264,7 +8264,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.dl, ptr %storemerge.i152, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i152, i64 8 ; 2 uses
   %i.dn = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.dm) #11, !srcloc !23
-  %i.do = add nsw i64 %i.dm, -1
+  %i.do = add nuw nsw i64 %i.dm, 14
   %i.dp = and i64 %i.do, %i.dm                    ; 2 uses
   %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %i.dn
   %i.dr = load i64, ptr %i.dq, align 8            ; 3 uses
@@ -8667,7 +8667,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.ez, ptr %storemerge.i178, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i178, i64 8 ; 2 uses
   %i.fb = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fa) #11, !srcloc !23
-  %i.fc = add nsw i64 %i.fa, -1
+  %i.fc = add nuw nsw i64 %i.fa, 14
   %i.fd = and i64 %i.fc, %i.fa                    ; 2 uses
   %i.fe = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %i.fb
   %i.ff = load i64, ptr %i.fe, align 8            ; 3 uses
@@ -9070,7 +9070,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.cy, ptr %storemerge.i147, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i147, i64 8 ; 2 uses
   %i.da = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.cz) #11, !srcloc !23
-  %i.db = add nsw i64 %i.cz, -1
+  %i.db = add nuw nsw i64 %i.cz, 14
   %i.dc = and i64 %i.db, %i.cz                    ; 2 uses
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %i.da
   %i.de = load i64, ptr %i.dd, align 8            ; 3 uses
@@ -9473,7 +9473,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.em, ptr %storemerge.i174, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i174, i64 8 ; 2 uses
   %i.eo = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.en) #11, !srcloc !23
-  %i.ep = add nsw i64 %i.en, -1
+  %i.ep = add nuw nsw i64 %i.en, 14
   %i.eq = and i64 %i.ep, %i.en                    ; 2 uses
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.eo
   %i.es = load i64, ptr %i.er, align 8            ; 3 uses
@@ -9876,7 +9876,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.cy, ptr %storemerge.i147, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i147, i64 8 ; 2 uses
   %i.da = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.cz) #11, !srcloc !23
-  %i.db = add nsw i64 %i.cz, -1
+  %i.db = add nuw nsw i64 %i.cz, 14
   %i.dc = and i64 %i.db, %i.cz                    ; 2 uses
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %i.da
   %i.de = load i64, ptr %i.dd, align 8            ; 3 uses
@@ -10279,7 +10279,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.em, ptr %storemerge.i174, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i174, i64 8 ; 2 uses
   %i.eo = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.en) #11, !srcloc !23
-  %i.ep = add nsw i64 %i.en, -1
+  %i.ep = add nuw nsw i64 %i.en, 14
   %i.eq = and i64 %i.ep, %i.en                    ; 2 uses
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.eo
   %i.es = load i64, ptr %i.er, align 8            ; 3 uses
@@ -10682,7 +10682,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.fw, ptr %storemerge.i640, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i640, i64 8 ; 2 uses
   %i.fy = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.fx) #11, !srcloc !23
-  %i.fz = add nsw i64 %i.fx, -1
+  %i.fz = add nuw nsw i64 %i.fx, 14
   %i.ga = and i64 %i.fz, %i.fx                    ; 2 uses
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %i.fy
   %i.gc = load i64, ptr %i.gb, align 8            ; 3 uses
@@ -11085,7 +11085,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.hf, ptr %storemerge.i1078, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i1078, i64 8 ; 2 uses
   %i.hh = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.hg) #11, !srcloc !23
-  %i.hi = add nsw i64 %i.hg, -1
+  %i.hi = add nuw nsw i64 %i.hg, 14
   %i.hj = and i64 %i.hi, %i.hg                    ; 2 uses
   %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %i.hh
   %i.hl = load i64, ptr %i.hk, align 8            ; 3 uses
@@ -11488,7 +11488,7 @@ _ZN6embree4sse220BVHNNodeIntersector1ILi4ELi1ELb0EE9intersectERKNS_10NodeRefPtrI
 bb.l:                                             ; preds = %.lr.ph1075, %bb.aq
   %.010251073 = phi i64 [ %i.mc, %.lr.ph1075 ], [ %i.mg, %bb.aq ] ; 3 uses
   %i.me = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.010251073) #11, !srcloc !23 ; 2 uses
-  %i.mf = add nsw i64 %.010251073, -1
+  %i.mf = add nuw nsw i64 %.010251073, 15
   %i.mg = and i64 %i.mf, %.010251073              ; 2 uses
   %i.mh = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %i.me
   %i.mi = load float, ptr %i.mh, align 4
@@ -11891,7 +11891,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.eu, ptr %storemerge.i845, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i845, i64 8 ; 2 uses
   %i.ew = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ev) #11, !srcloc !23
-  %i.ex = add nsw i64 %i.ev, -1
+  %i.ex = add nuw nsw i64 %i.ev, 14
   %i.ey = and i64 %i.ex, %i.ev                    ; 2 uses
   %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %i.ew
   %i.fa = load i64, ptr %i.ez, align 8            ; 3 uses
@@ -12013,7 +12013,7 @@ _ZN6embree4sse226SubGridIntersector1MoellerILi4ELb1EE8occludedERKNS0_39SubGridQu
 _ZN6embree4sse226SubGridIntersector1MoellerILi4ELb1EE8occludedERKNS0_39SubGridQuadMIntersector1MoellerTrumboreILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit: ; preds = %_ZN6embree4sse226SubGridIntersector1MoellerILi4ELb1EE8occludedERKNS0_39SubGridQuadMIntersector1MoellerTrumboreILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit.lr.ph, %_ZNK6embree4sse239SubGridQuadMIntersector1MoellerTrumboreILi4ELb1EE8occludedERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_4Vec3INS_11vfloat_implILi4EEEEESD_SD_SD_RKNS_8GridMesh4GridERKNS_7SubGridE.exit
   %.0797867 = phi i64 [ %i.im, %_ZN6embree4sse226SubGridIntersector1MoellerILi4ELb1EE8occludedERKNS0_39SubGridQuadMIntersector1MoellerTrumboreILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit.lr.ph ], [ %i.iq, %_ZNK6embree4sse239SubGridQuadMIntersector1MoellerTrumboreILi4ELb1EE8occludedERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_4Vec3INS_11vfloat_implILi4EEEEESD_SD_SD_RKNS_8GridMesh4GridERKNS_7SubGridE.exit ] ; 3 uses
   %i.io = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0797867) #11, !srcloc !23
-  %i.ip = add nsw i64 %.0797867, -1
+  %i.ip = add nuw nsw i64 %.0797867, 15
   %i.iq = and i64 %i.ip, %.0797867                ; 2 uses
   %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.fj, i64 %i.io ; 3 uses
   %i.is = load i16, ptr %i.ir, align 8            ; 2 uses
@@ -12416,7 +12416,7 @@ bb.y:                                             ; preds = %.lr.ph, %bb.y
   %.1.i3531 = phi i1 [ %.0.i533, %.lr.ph ], [ %i.oo, %bb.y ]
   %.0530 = phi i64 [ %i.nx, %.lr.ph ], [ %i.oc, %bb.y ] ; 3 uses
   %i.oa = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0530) #11, !srcloc !23
-  %i.ob = add nsw i64 %.0530, -1
+  %i.ob = add nuw nsw i64 %.0530, 15
   %i.oc = and i64 %i.ob, %.0530                   ; 2 uses
   %i.od = getelementptr inbounds nuw [8 x i8], ptr %i.ny, i64 %i.oa
   %i.oe = load i32, ptr %i.nz, align 8            ; 2 uses
@@ -12819,7 +12819,7 @@ begin_hunk_31_@_ZN6embree4sse216BVHNIntersector1ILi4ELi16777232ELb1ENS0_29SubGri
 bb.n:                                             ; preds = %.lr.ph1545, %bb.as
   %.014871543 = phi i64 [ %i.qx, %.lr.ph1545 ], [ %i.rb, %bb.as ] ; 3 uses
   %i.qz = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.014871543) #11, !srcloc !23 ; 2 uses
-  %i.ra = add nsw i64 %.014871543, -1
+  %i.ra = add nuw nsw i64 %.014871543, 15
   %i.rb = and i64 %i.ra, %.014871543              ; 2 uses
   %i.rc = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.qz
   %i.rd = load float, ptr %i.rc, align 4
@@ -13222,7 +13222,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.gd, ptr %storemerge.i1312, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i1312, i64 8 ; 2 uses
   %i.gf = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ge) #11, !srcloc !23
-  %i.gg = add nsw i64 %i.ge, -1
+  %i.gg = add nuw nsw i64 %i.ge, 14
   %i.gh = and i64 %i.gg, %i.ge                    ; 2 uses
   %i.gi = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %i.gf
   %i.gj = load i64, ptr %i.gi, align 8            ; 3 uses
@@ -13433,7 +13433,7 @@ _ZN6embree4sse229SubGridMBIntersector1PlueckerILi4ELb1EE8occludedERKNS0_32SubGri
 _ZN6embree4sse229SubGridMBIntersector1PlueckerILi4ELb1EE8occludedERKNS0_32SubGridQuadMIntersector1PlueckerILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit: ; preds = %_ZN6embree4sse229SubGridMBIntersector1PlueckerILi4ELb1EE8occludedERKNS0_32SubGridQuadMIntersector1PlueckerILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit.lr.ph, %_ZNK6embree4sse232SubGridQuadMIntersector1PlueckerILi4ELb1EE8occludedERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_4Vec3INS_11vfloat_implILi4EEEEESD_SD_SD_RKNS_8GridMesh4GridERKNS_7SubGridE.exit
   %.012571336 = phi i64 [ %i.ne, %_ZN6embree4sse229SubGridMBIntersector1PlueckerILi4ELb1EE8occludedERKNS0_32SubGridQuadMIntersector1PlueckerILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit.lr.ph ], [ %i.ni, %_ZNK6embree4sse232SubGridQuadMIntersector1PlueckerILi4ELb1EE8occludedERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_4Vec3INS_11vfloat_implILi4EEEEESD_SD_SD_RKNS_8GridMesh4GridERKNS_7SubGridE.exit ] ; 3 uses
   %i.ng = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.012571336) #11, !srcloc !23
-  %i.nh = add nsw i64 %.012571336, -1
+  %i.nh = add nuw nsw i64 %.012571336, 15
   %i.ni = and i64 %i.nh, %.012571336              ; 2 uses
   %i.nj = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %i.ng ; 3 uses
   %i.nk = load i16, ptr %i.nj, align 8            ; 2 uses
@@ -13836,7 +13836,7 @@ _ZN6embree4sse220BVHNNodeIntersector1ILi4ELi1ELb1EE9intersectERKNS_10NodeRefPtrI
 bb.l:                                             ; preds = %.lr.ph1364, %bb.aq
   %.013091362 = phi i64 [ %i.me, %.lr.ph1364 ], [ %i.mi, %bb.aq ] ; 3 uses
   %i.mg = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.013091362) #11, !srcloc !23 ; 2 uses
-  %i.mh = add nsw i64 %.013091362, -1
+  %i.mh = add nuw nsw i64 %.013091362, 15
   %i.mi = and i64 %i.mh, %.013091362              ; 2 uses
   %i.mj = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.mg
   %i.mk = load float, ptr %i.mj, align 4
@@ -14239,7 +14239,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.ev, ptr %storemerge.i1130, align 8
   %storemerge.i = getelementptr inbounds nuw i8, ptr %storemerge.i1130, i64 8 ; 2 uses
   %i.ex = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.ew) #11, !srcloc !23
-  %i.ey = add nsw i64 %i.ew, -1
+  %i.ey = add nuw nsw i64 %i.ew, 14
   %i.ez = and i64 %i.ey, %i.ew                    ; 2 uses
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %i.ex
   %i.fb = load i64, ptr %i.fa, align 8            ; 3 uses
@@ -14361,7 +14361,7 @@ _ZNK6embree7SubGrid6gatherERNS_4Vec3INS_11vfloat_implILi4EEEEES5_S5_S5_PKNS_8Gri
 _ZNK6embree7SubGrid6gatherERNS_4Vec3INS_11vfloat_implILi4EEEEES5_S5_S5_PKNS_8GridMeshERKNS6_4GridE.exit.i: ; preds = %_ZNK6embree7SubGrid6gatherERNS_4Vec3INS_11vfloat_implILi4EEEEES5_S5_S5_PKNS_8GridMeshERKNS6_4GridE.exit.i.lr.ph, %_ZN6embree4sse227SubGridIntersector1PlueckerILi4ELb1EE8occludedERKNS0_32SubGridQuadMIntersector1PlueckerILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit
   %.010781152 = phi i64 [ %i.in, %_ZNK6embree7SubGrid6gatherERNS_4Vec3INS_11vfloat_implILi4EEEEES5_S5_S5_PKNS_8GridMeshERKNS6_4GridE.exit.i.lr.ph ], [ %i.ir, %_ZN6embree4sse227SubGridIntersector1PlueckerILi4ELb1EE8occludedERKNS0_32SubGridQuadMIntersector1PlueckerILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextERKNS_7SubGridE.exit ] ; 3 uses
   %i.ip = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.010781152) #11, !srcloc !23
-  %i.iq = add nsw i64 %.010781152, -1
+  %i.iq = add nuw nsw i64 %.010781152, 15
   %i.ir = and i64 %i.iq, %.010781152              ; 2 uses
   %i.is = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %i.ip ; 3 uses
   %i.it = load i16, ptr %i.is, align 8            ; 2 uses
@@ -14764,7 +14764,7 @@ bb.y:                                             ; preds = %.lr.ph, %bb.y
   %.1.i3531 = phi i1 [ %.0.i533, %.lr.ph ], [ %i.oo, %bb.y ]
   %.0530 = phi i64 [ %i.nx, %.lr.ph ], [ %i.oc, %bb.y ] ; 3 uses
   %i.oa = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0530) #11, !srcloc !23
-  %i.ob = add nsw i64 %.0530, -1
+  %i.ob = add nuw nsw i64 %.0530, 15
   %i.oc = and i64 %i.ob, %.0530                   ; 2 uses
   %i.od = getelementptr inbounds nuw [8 x i8], ptr %i.ny, i64 %i.oa
   %i.oe = load i32, ptr %i.nz, align 8            ; 2 uses
