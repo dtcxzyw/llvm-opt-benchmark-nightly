@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wasmi-rs/original/wasmi-f4c56b525af24363.wasmi.a5f598a5e97a06b2-cgu.03?download=true
+inline.NumInlined: 4814
+inline.NumDeleted: 1768
+loop-unroll.NumCompletelyUnrolled: 193
+loop-unroll.NumUnrolled: 193
 begin_hunk_0_@_RNvNtCs5zeGauAcNNa_10wasmi_core4simd12i8x16_avgr_u:bb.a
   %i.b = load <16 x i8>, ptr %2, align 1, !alias.scope !4046, !noalias !4047
   %i.c = zext <16 x i8> %i.a to <16 x i16>
@@ -200,51 +204,13 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define internal noundef range(i32 0, 65536) i32 @_RNvNtCs5zeGauAcNNa_10wasmi_core4simd13i8x16_bitmask(ptr noalias nofree noundef readonly align 1 captures(none) dead_on_return dereferenceable(16) %0) unnamed_addr #8 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %.sroa.5.0.copyload.i = load i8, ptr %.sroa.5.0..sroa_idx.i, align 1, !alias.scope !4112
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %.sroa.10.0.copyload.i = load i8, ptr %.sroa.10.0..sroa_idx.i, align 1, !alias.scope !4112
-  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.11.0.copyload.i = load i8, ptr %.sroa.11.0..sroa_idx.i, align 1, !alias.scope !4112
-  %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 15
-  %.sroa.18.0.copyload.i = load i8, ptr %.sroa.18.0..sroa_idx.i, align 1, !alias.scope !4112
-  %1 = lshr i8 %.sroa.5.0.copyload.i, 5
-  %2 = load <4 x i8>, ptr %.sroa.6.0..sroa_idx.i, align 1, !alias.scope !4112
-  %3 = lshr <4 x i8> %2, <i8 4, i8 3, i8 2, i8 1>
-  %.lobit.i.8.i.i = lshr i8 %.sroa.11.0.copyload.i, 7
-  %4 = load <2 x i8>, ptr %0, align 1, !alias.scope !4112
-  %5 = load <2 x i8>, ptr %.sroa.12.0..sroa_idx.i, align 1, !alias.scope !4112
-  %6 = shufflevector <2 x i8> %4, <2 x i8> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %7 = lshr <4 x i8> %6, <i8 7, i8 6, i8 7, i8 7>
-  %8 = load <4 x i8>, ptr %.sroa.14.0..sroa_idx.i, align 1, !alias.scope !4112
-  %9 = lshr <4 x i8> %8, splat (i8 7)
-  %.lobit.i.15.i.i = lshr i8 %.sroa.18.0.copyload.i, 7
-  %10 = and <4 x i8> %3, <i8 8, i8 16, i8 32, i8 64>
-  %11 = zext nneg <4 x i8> %10 to <4 x i32>
-  %12 = and <4 x i8> %7, <i8 -1, i8 2, i8 -1, i8 -1>
-  %13 = zext nneg <4 x i8> %12 to <4 x i32>
-  %14 = shl nuw nsw <4 x i32> %13, <i32 0, i32 0, i32 9, i32 10>
-  %15 = zext nneg <4 x i8> %9 to <4 x i32>
-  %16 = shl nuw nsw <4 x i32> %15, <i32 11, i32 12, i32 13, i32 14>
-  %rdx.op = or <4 x i32> %14, %11
-  %rdx.op1 = or <4 x i32> %rdx.op, %16
-  %i.a = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %rdx.op1)
-  %17 = zext nneg i8 %.lobit.i.8.i.i to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %op.rdx = or i32 %i.a, %18
-  %19 = and i8 %1, 4
-  %20 = zext nneg i8 %19 to i32
-  %21 = zext nneg i8 %.lobit.i.15.i.i to i32
-  %22 = shl nuw nsw i32 %21, 15
-  %op.rdx2 = or disjoint i32 %22, %20
-  %op.rdx3 = or i32 %op.rdx, %op.rdx2
-  %23 = and i8 %.sroa.10.0.copyload.i, -128
-  %24 = zext i8 %23 to i32
-  %op.rdx4 = or i32 %op.rdx3, %24
-  ret i32 %op.rdx4
+  %1 = load <16 x i8>, ptr %0, align 1, !alias.scope !4112
+  %2 = lshr <16 x i8> %1, <i8 7, i8 6, i8 5, i8 4, i8 3, i8 2, i8 1, i8 0, i8 7, i8 7, i8 7, i8 7, i8 7, i8 7, i8 7, i8 7>
+  %3 = and <16 x i8> %2, <i8 -1, i8 2, i8 4, i8 8, i8 16, i8 32, i8 64, i8 -128, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>
+  %4 = zext <16 x i8> %3 to <16 x i32>
+  %5 = shl nuw nsw <16 x i32> %4, <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.a = tail call i32 @llvm.vector.reduce.or.v16i32(<16 x i32> %5)
+  ret i32 %i.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
@@ -647,7 +613,7 @@ declare <16 x i8> @llvm.ctpop.v16i8(<16 x i8>) #22
 declare i16 @llvm.vector.reduce.or.v8i16(<8 x i16>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #22
+declare i32 @llvm.vector.reduce.or.v16i32(<16 x i32>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.sadd.sat.v8i16(<8 x i16>, <8 x i16>) #22
