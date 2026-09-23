@@ -205,10 +205,9 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %.val119, i64 1
   store ptr %i.ab, ptr %i.t, align 8, !tbaa !30
-  %8 = zext i16 %3 to i32                         ; 2 uses
-  %9 = add nuw nsw i32 %8, 1
-  %10 = zext nneg i32 %9 to i64
-  %i.ac = tail call noalias ptr @calloc(i64 noundef %10, i64 noundef 4) #14 ; 10 uses
+  %8 = zext i16 %3 to i64
+  %9 = add nuw nsw i64 %8, 1
+  %i.ac = tail call noalias ptr @calloc(i64 noundef %9, i64 noundef 4) #14 ; 10 uses
   %.not = icmp eq ptr %i.ac, null
   br i1 %.not, label %.thread, label %.preheader.preheader, !prof !18
 
@@ -235,14 +234,13 @@ bb.g:                                             ; preds = %bb.e
   br i1 %lcmp.mod.not, label %bb.h, label %.preheader.epil.preheader
 
 .preheader.epil.preheader:                        ; preds = %.unr-lcssa, %.preheader.preheader
-  %.0103147.epil.init = phi i32 [ 0, %.preheader.preheader ], [ %18, %.unr-lcssa ]
+  %.0103147.epil.init = phi i16 [ 0, %.preheader.preheader ], [ %13, %.unr-lcssa ]
   %.0104146.epil.init = phi i64 [ 0, %.preheader.preheader ], [ %i.az, %.unr-lcssa ]
   %lcmp.mod179 = trunc i64 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod179)
   %i.aj = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.0104146.epil.init
   %.val123.epil = load i16, ptr %i.aj, align 1    ; 2 uses
-  %11 = zext i16 %.val123.epil to i32
-  %12 = or i32 %.0103147.epil.init, %11
+  %10 = or i16 %.val123.epil, %.0103147.epil.init
   %i.ak = zext i16 %.val123.epil to i64
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.ak ; 2 uses
   %i.am = load i32, ptr %i.al, align 4, !tbaa !19
@@ -251,19 +249,17 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %.unr-lcssa, %.preheader.epil.preheader
-  %.lcssa177 = phi i32 [ %18, %.unr-lcssa ], [ %12, %.preheader.epil.preheader ]
-  %13 = tail call i32 @llvm.smin.i32(i32 %.lcssa177, i32 %8)
-  %14 = trunc nuw i32 %13 to i16
+  %.lcssa177 = phi i16 [ %13, %.unr-lcssa ], [ %10, %.preheader.epil.preheader ]
+  %11 = tail call i16 @llvm.umin.i16(i16 %.lcssa177, i16 %3)
   br label %bb.i
 
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
-  %.0103147 = phi i32 [ 0, %.preheader.preheader.new ], [ %18, %.preheader ]
+  %.0103147 = phi i16 [ 0, %.preheader.preheader.new ], [ %13, %.preheader ]
   %.0104146 = phi i64 [ 0, %.preheader.preheader.new ], [ %i.az, %.preheader ] ; 3 uses
   %niter = phi i64 [ 0, %.preheader.preheader.new ], [ %niter.next.1, %.preheader ]
   %i.ao = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.0104146
   %.val123 = load i16, ptr %i.ao, align 1         ; 2 uses
-  %15 = zext i16 %.val123 to i32
-  %16 = or i32 %.0103147, %15
+  %12 = or i16 %.val123, %.0103147
   %i.ap = zext i16 %.val123 to i64
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.ap ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !19
@@ -272,8 +268,7 @@ bb.h:                                             ; preds = %.unr-lcssa, %.prehe
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.0104146
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 2
   %.val123.1 = load i16, ptr %i.au, align 1       ; 2 uses
-  %17 = zext i16 %.val123.1 to i32
-  %18 = or i32 %16, %17                           ; 3 uses
+  %13 = or i16 %.val123.1, %12                    ; 3 uses
   %i.av = zext i16 %.val123.1 to i64
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.av ; 2 uses
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !19
@@ -285,7 +280,7 @@ bb.h:                                             ; preds = %.unr-lcssa, %.prehe
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %.preheader, !llvm.loop !69
 
 bb.i:                                             ; preds = %bb.i, %bb.h
-  %.0 = phi i16 [ %14, %bb.h ], [ %i.be, %bb.i ]  ; 5 uses
+  %.0 = phi i16 [ %11, %bb.h ], [ %i.be, %bb.i ]  ; 5 uses
   %i.ba = zext i16 %.0 to i64                     ; 2 uses
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.ba
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !19 ; 2 uses
@@ -687,6 +682,9 @@ declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11

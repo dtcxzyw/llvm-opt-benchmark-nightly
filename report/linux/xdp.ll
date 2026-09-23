@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.i
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 4 uses
-  %.03331 = phi i32 [ 0, %.lr.ph ], [ %spec.select, %bb.i ]
+  %.03331 = phi i8 [ 0, %.lr.ph ], [ %spec.select, %bb.i ]
   %.03530 = phi i32 [ 0, %.lr.ph ], [ %i.bb, %bb.i ]
   %i.m = getelementptr [16 x i8], ptr %i.j, i64 %indvars.iv ; 3 uses
   %i.n = getelementptr i8, ptr %i.m, i64 8
@@ -299,9 +299,9 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.bc = getelementptr i8, ptr %i.ac, i64 8
   %.val46 = load ptr, ptr %i.bc, align 8
   %i.bd = ptrtoint ptr %.val46 to i64
-  %2 = trunc i64 %i.bd to i32
-  %3 = and i32 %2, 2
-  %spec.select = or i32 %3, %.03331               ; 2 uses
+  %2 = trunc i64 %i.bd to i8
+  %3 = and i8 %2, 2
+  %spec.select = or i8 %3, %.03331                ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -318,8 +318,7 @@ page_pool_dev_alloc.exit.thread9:                 ; preds = %bb.d, %page_pool_de
   %.val.i.pre = load i32, ptr %i.b, align 8
   %.val13.i.pre = load ptr, ptr %i.c, align 8
   %.pre = zext i32 %.val.i.pre to i64
-  %4 = trunc nuw nsw i32 %spec.select to i8
-  %i.bg = shl nuw nsw i8 %4, 5
+  %i.bg = shl nuw nsw i8 %spec.select, 5
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a

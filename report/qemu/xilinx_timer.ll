@@ -202,7 +202,7 @@ middle.block:                                     ; preds = %vector.body
   %bin.rdx = or <4 x i32> %i.bg, %i.bf
   %i.bi = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %wide.trip.count.i, %n.vec
-  br i1 %cmp.n, label %._crit_edge.loopexit.i, label %scalar.ph.preheader
+  br i1 %cmp.n, label %timer_update_irq.exit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ]
@@ -221,16 +221,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bp = or i32 %.011.i, %i.bo                   ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %scalar.ph, !llvm.loop !12
+  br i1 %exitcond.not.i, label %timer_update_irq.exit, label %scalar.ph, !llvm.loop !12
 
-._crit_edge.loopexit.i:                           ; preds = %scalar.ph, %middle.block
-  %.lcssa = phi i32 [ %i.bi, %middle.block ], [ %i.bp, %scalar.ph ]
-  %1 = icmp ne i32 %.lcssa, 0
-  %2 = zext i1 %1 to i32
-  br label %timer_update_irq.exit
-
-timer_update_irq.exit:                            ; preds = %bb.c, %._crit_edge.loopexit.i
-  %.0.lcssa.i = phi i32 [ 0, %bb.c ], [ %2, %._crit_edge.loopexit.i ]
+timer_update_irq.exit:                            ; preds = %scalar.ph, %middle.block, %bb.c
+  %.0.lcssa.i = phi i32 [ 0, %bb.c ], [ %i.bi, %middle.block ], [ %i.bp, %scalar.ph ]
   %i.bq = getelementptr inbounds nuw i8, ptr %i.b, i64 1088
   %i.br = load ptr, ptr %i.bq, align 16
   tail call void @qemu_set_irq(ptr noundef %i.br, i32 noundef %.0.lcssa.i) #4
@@ -411,7 +405,7 @@ middle.block:                                     ; preds = %vector.body
   %bin.rdx = or <4 x i32> %i.bo, %i.bn
   %i.bq = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %wide.trip.count.i, %n.vec
-  br i1 %cmp.n, label %._crit_edge.loopexit.i, label %scalar.ph.preheader
+  br i1 %cmp.n, label %timer_update_irq.exit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ]
@@ -430,16 +424,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bx = or i32 %.011.i, %i.bw                   ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %scalar.ph, !llvm.loop !14
+  br i1 %exitcond.not.i, label %timer_update_irq.exit, label %scalar.ph, !llvm.loop !14
 
-._crit_edge.loopexit.i:                           ; preds = %scalar.ph, %middle.block
-  %.lcssa = phi i32 [ %i.bq, %middle.block ], [ %i.bx, %scalar.ph ]
-  %4 = icmp ne i32 %.lcssa, 0
-  %5 = zext i1 %4 to i32
-  br label %timer_update_irq.exit
-
-timer_update_irq.exit:                            ; preds = %bb.e, %._crit_edge.loopexit.i
-  %.0.lcssa.i = phi i32 [ 0, %bb.e ], [ %5, %._crit_edge.loopexit.i ]
+timer_update_irq.exit:                            ; preds = %scalar.ph, %middle.block, %bb.e
+  %.0.lcssa.i = phi i32 [ 0, %bb.e ], [ %i.bq, %middle.block ], [ %i.bx, %scalar.ph ]
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 1088
   %i.bz = load ptr, ptr %i.by, align 16
   tail call void @qemu_set_irq(ptr noundef %i.bz, i32 noundef %.0.lcssa.i) #4
