@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.bl, label %.noexc40.thread, label %.critedge.i.us, !prof !69
 
 .critedge.i.us:                                   ; preds = %.noexc39.us
-  %i.bm = add nsw i32 %.sroa.0123.0.us, -1
+  %i.bm = add nuw nsw i32 %.sroa.0123.0.us, 65535
   %i.bn = and i32 %i.bm, %.sroa.0123.0.us         ; 2 uses
   %i.bo = and i32 %i.bn, 4094
   %.not208.us = icmp eq i32 %i.bo, 0
@@ -216,7 +216,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bp = icmp ne i32 %.sroa.0123.0, 0
   call void @llvm.assume(i1 %i.bp)
   %i.bq = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.0123.0, i1 true)
-  %i.br = add nsw i32 %.sroa.0123.0, -1
+  %i.br = add nuw nsw i32 %.sroa.0123.0, 65535
   %i.bs = and i32 %i.br, %.sroa.0123.0            ; 2 uses
   %i.bt = shl nuw nsw i32 %i.bq, 2
   %i.bu = zext nneg i32 %i.bt to i64
@@ -533,7 +533,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.gg, label %.loopexit249, label %.critedge.i56.us, !prof !69
 
 .critedge.i56.us:                                 ; preds = %.noexc62.us
-  %i.gh = add nsw i32 %.sroa.0128.0.us, -1
+  %i.gh = add nuw nsw i32 %.sroa.0128.0.us, 65535
   %i.gi = and i32 %i.gh, %.sroa.0128.0.us         ; 2 uses
   %i.gj = and i32 %i.gi, 4094
   %.not210.us = icmp eq i32 %i.gj, 0
@@ -544,7 +544,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.gk = icmp ne i32 %.sroa.0128.0, 0
   call void @llvm.assume(i1 %i.gk)
   %i.gl = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.0128.0, i1 true)
-  %i.gm = add nsw i32 %.sroa.0128.0, -1
+  %i.gm = add nuw nsw i32 %.sroa.0128.0, 65535
   %i.gn = and i32 %i.gm, %.sroa.0128.0            ; 2 uses
   %i.go = shl nuw nsw i32 %i.gl, 2
   %i.gp = zext nneg i32 %i.go to i64
@@ -947,7 +947,7 @@ bb.c:                                             ; preds = %.critedge.i.us.us, 
   br i1 %i.am, label %_ZNK5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEjvvvSt17integral_constantIbLb1EEE14keyMatchesItemIS8_EEbRKT_RKj.exit.thread, label %.critedge.i.us.us, !prof !69
 
 .critedge.i.us.us:                                ; preds = %bb.c
-  %i.an = add nsw i32 %.sroa.044.0.us.us, -1
+  %i.an = add nuw nsw i32 %.sroa.044.0.us.us, 65535
   %i.ao = and i32 %i.an, %.sroa.044.0.us.us       ; 2 uses
   %i.ap = and i32 %i.ao, 4094
   %.not73.us.us = icmp eq i32 %i.ap, 0
@@ -988,7 +988,7 @@ bb.e:                                             ; preds = %.preheader, %.crite
   %i.bd = icmp ne i32 %.sroa.044.0, 0
   tail call void @llvm.assume(i1 %i.bd)
   %i.be = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.bf = add nsw i32 %.sroa.044.0, -1
+  %i.bf = add nuw nsw i32 %.sroa.044.0, 65535
   %i.bg = and i32 %i.bf, %.sroa.044.0             ; 2 uses
   %i.bh = zext nneg i32 %i.be to i64              ; 2 uses
   %i.bi = shl nuw nsw i64 %i.bh, 2
@@ -1391,7 +1391,7 @@ bb.g:                                             ; preds = %.critedge.i.i, %.pr
   br i1 %i.co, label %.loopexit, label %.critedge.i.i, !prof !73
 
 .critedge.i.i:                                    ; preds = %bb.g
-  %i.cp = add nsw i32 %.sroa.042.0.i, -1
+  %i.cp = add nuw nsw i32 %.sroa.042.0.i, 65535
   %i.cq = and i32 %i.cp, %.sroa.042.0.i           ; 2 uses
   %i.cr = and i32 %i.cq, 16382
   %.not70.i = icmp eq i32 %i.cr, 0
@@ -1794,7 +1794,7 @@ bb.d:                                             ; preds = %.preheader, %.crite
   br i1 %i.ae, label %bb.f, label %.critedge.i, !prof !73
 
 .critedge.i:                                      ; preds = %bb.d
-  %i.af = add nsw i32 %.sroa.042.0, -1
+  %i.af = add nuw nsw i32 %.sroa.042.0, 65535
   %i.ag = and i32 %i.af, %.sroa.042.0             ; 2 uses
   %i.ah = and i32 %i.ag, 16382
   %.not70 = icmp eq i32 %i.ah, 0
@@ -2197,7 +2197,7 @@ bb.g:                                             ; preds = %.critedge.i.i.i, %.
   br i1 %i.be, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKvvvvvEEE4findIS5_EENS1_11F14ItemIterIPNS1_8F14ChunkIS5_EEEERKT_.exit.thread39.i, label %.critedge.i.i.i, !prof !73
 
 .critedge.i.i.i:                                  ; preds = %bb.g
-  %i.bf = add nsw i32 %.sroa.014.0.i, -1
+  %i.bf = add nuw nsw i32 %.sroa.014.0.i, 65535
   %i.bg = and i32 %i.bf, %.sroa.014.0.i           ; 2 uses
   %i.bh = and i32 %i.bg, 16382
   %.not51.i = icmp eq i32 %i.bh, 0
@@ -2382,7 +2382,7 @@ bb.g:                                             ; preds = %.critedge.i.i.i, %.
   br i1 %i.bk, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKvvvvvEEE4findIS5_EENS1_11F14ItemIterIPNS1_8F14ChunkIS5_EEEERKT_.exit.thread39.i, label %.critedge.i.i.i, !prof !73
 
 .critedge.i.i.i:                                  ; preds = %bb.g
-  %i.bl = add nsw i32 %.sroa.014.0.i, -1
+  %i.bl = add nuw nsw i32 %.sroa.014.0.i, 65535
   %i.bm = and i32 %i.bl, %.sroa.014.0.i           ; 2 uses
   %i.bn = and i32 %i.bm, 16382
   %.not51.i = icmp eq i32 %i.bn, 0

@@ -205,7 +205,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit304: ;
   br i1 %.not, label %.thread1010.loopexit, label %bb.b
 
 .thread1010.loopexit:                             ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit304
-  %i.jz = zext i32 %i.jx to i64
+  %i.jz = zext nneg i32 %i.jx to i64
   %i.ka = or disjoint i64 %i.jz, 4294967296
   br label %.thread1010
 
@@ -608,7 +608,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit104: ;
   br i1 %.not, label %.thread335.loopexit, label %bb.b
 
 .thread335.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit104
-  %i.di = zext i32 %i.dg to i64
+  %i.di = zext nneg i32 %i.dg to i64
   %i.dj = or disjoint i64 %i.di, 4294967296
   br label %.thread335
 
@@ -1011,7 +1011,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit79: ; 
   br i1 %.not, label %.thread266.loopexit, label %bb.b
 
 .thread266.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit79
-  %i.br = zext i32 %i.bp to i64
+  %i.br = zext nneg i32 %i.bp to i64
   %i.bs = or disjoint i64 %i.br, 4294967296
   br label %.thread266
 
@@ -1414,7 +1414,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit43: ; 
   br i1 %.not, label %.thread137.loopexit, label %bb.b
 
 .thread137.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit43
-  %i.az = zext i32 %i.ax to i64
+  %i.az = zext nneg i32 %i.ax to i64
   %i.ba = or disjoint i64 %i.az, 4294967296
   br label %.thread137
 
@@ -1817,7 +1817,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit25.thr
   br label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit25
-  %i.au = zext i32 %i.as to i64
+  %i.au = zext nneg i32 %i.as to i64
   %i.av = or disjoint i64 %i.au, 4294967296
   br label %.loopexit
 

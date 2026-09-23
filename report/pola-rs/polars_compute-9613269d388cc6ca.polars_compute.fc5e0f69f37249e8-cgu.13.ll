@@ -204,7 +204,7 @@ _RNvYNtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayNtB6_5Array17
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.l, %_RNvYNtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayNtB6_5Array17is_null_uncheckedCslFlrwjHoTci_14polars_compute.exit.thread.us.epil.preheader, %._crit_edge.loopexit.unr-lcssa
   %.sroa.02.0.lcssa = phi i8 [ %i.dy, %_RNvYNtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayNtB6_5Array17is_null_uncheckedCslFlrwjHoTci_14polars_compute.exit.thread.us.epil.preheader ], [ %i.bk, %._crit_edge.loopexit.unr-lcssa ], [ %i.eq, %bb.m ], [ 7, %bb.l ], !dbg !39087
-  %i.dz = call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %.sroa.02.0.lcssa), !dbg !39086
+  %i.dz = call range(i8 0, 4) i8 @llvm.ctpop.i8(i8 %.sroa.02.0.lcssa), !dbg !39086
   %i.ea = zext nneg i8 %i.dz to i32, !dbg !39086
   br label %.loopexit, !dbg !39088
 

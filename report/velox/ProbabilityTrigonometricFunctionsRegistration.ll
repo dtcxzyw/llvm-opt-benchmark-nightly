@@ -205,7 +205,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2560
@@ -390,7 +390,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2560
@@ -590,7 +590,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @cos(double noundef %i.ka) #41, !noalias !2644
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2584
@@ -730,7 +730,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @cos(double noundef %i.mo) #41, !noalias !2652
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2584
@@ -1133,7 +1133,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @cos(double noundef %i.ur) #41, !noalias !2654
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !2615
@@ -1419,7 +1419,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @cos(double noundef %i.aai) #41, !noalias !2658
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2615
@@ -1445,7 +1445,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @cos(double noundef %i.aav) #41, !noalias !2658
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2615
@@ -1468,7 +1468,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @cos(double noundef %i.abi) #41, !noalias !2658
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111CosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2615
@@ -1871,7 +1871,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2922
@@ -2056,7 +2056,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2922
@@ -2256,7 +2256,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @cosh(double noundef %i.ka) #41, !noalias !3006
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2946
@@ -2396,7 +2396,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @cosh(double noundef %i.mo) #41, !noalias !3014
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2946
@@ -2799,7 +2799,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @cosh(double noundef %i.ur) #41, !noalias !3016
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !2977
@@ -3085,7 +3085,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @cosh(double noundef %i.aai) #41, !noalias !3020
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2977
@@ -3111,7 +3111,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @cosh(double noundef %i.aav) #41, !noalias !3020
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2977
@@ -3134,7 +3134,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @cosh(double noundef %i.abi) #41, !noalias !3020
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112CoshFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !2977
@@ -3537,7 +3537,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3094
@@ -3722,7 +3722,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3094
@@ -3922,7 +3922,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @acos(double noundef %i.ka) #41, !noalias !3178
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3118
@@ -4062,7 +4062,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @acos(double noundef %i.mo) #41, !noalias !3186
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3118
@@ -4465,7 +4465,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @acos(double noundef %i.ur) #41, !noalias !3188
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !3149
@@ -4751,7 +4751,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @acos(double noundef %i.aai) #41, !noalias !3192
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3149
@@ -4777,7 +4777,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @acos(double noundef %i.aav) #41, !noalias !3192
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3149
@@ -4800,7 +4800,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @acos(double noundef %i.abi) #41, !noalias !3192
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AcosFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3149
@@ -5203,7 +5203,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3266
@@ -5388,7 +5388,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3266
@@ -5588,7 +5588,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @sin(double noundef %i.ka) #41, !noalias !3350
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3290
@@ -5728,7 +5728,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @sin(double noundef %i.mo) #41, !noalias !3358
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3290
@@ -6131,7 +6131,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @sin(double noundef %i.ur) #41, !noalias !3360
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !3321
@@ -6417,7 +6417,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @sin(double noundef %i.aai) #41, !noalias !3364
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3321
@@ -6443,7 +6443,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @sin(double noundef %i.aav) #41, !noalias !3364
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3321
@@ -6466,7 +6466,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @sin(double noundef %i.abi) #41, !noalias !3364
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111SinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3321
@@ -6869,7 +6869,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3438
@@ -7054,7 +7054,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3438
@@ -7254,7 +7254,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @asin(double noundef %i.ka) #41, !noalias !3522
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3462
@@ -7394,7 +7394,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @asin(double noundef %i.mo) #41, !noalias !3530
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3462
@@ -7797,7 +7797,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @asin(double noundef %i.ur) #41, !noalias !3532
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !3493
@@ -8083,7 +8083,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @asin(double noundef %i.aai) #41, !noalias !3536
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3493
@@ -8109,7 +8109,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @asin(double noundef %i.aav) #41, !noalias !3536
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3493
@@ -8132,7 +8132,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @asin(double noundef %i.abi) #41, !noalias !3536
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AsinFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3493
@@ -8535,7 +8535,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3610
@@ -8720,7 +8720,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3610
@@ -8920,7 +8920,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @tan(double noundef %i.ka) #41, !noalias !3694
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3634
@@ -9060,7 +9060,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @tan(double noundef %i.mo) #41, !noalias !3702
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3634
@@ -9463,7 +9463,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @tan(double noundef %i.ur) #41, !noalias !3704
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !3665
@@ -9749,7 +9749,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @tan(double noundef %i.aai) #41, !noalias !3708
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3665
@@ -9775,7 +9775,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @tan(double noundef %i.aav) #41, !noalias !3708
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3665
@@ -9798,7 +9798,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @tan(double noundef %i.abi) #41, !noalias !3708
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_111TanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3665
@@ -10201,7 +10201,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3782
@@ -10386,7 +10386,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3782
@@ -10586,7 +10586,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @tanh(double noundef %i.ka) #41, !noalias !3866
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3806
@@ -10726,7 +10726,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @tanh(double noundef %i.mo) #41, !noalias !3874
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3806
@@ -11129,7 +11129,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @tanh(double noundef %i.ur) #41, !noalias !3876
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !3837
@@ -11415,7 +11415,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @tanh(double noundef %i.aai) #41, !noalias !3880
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3837
@@ -11441,7 +11441,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @tanh(double noundef %i.aav) #41, !noalias !3880
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3837
@@ -11464,7 +11464,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @tanh(double noundef %i.abi) #41, !noalias !3880
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112TanhFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3837
@@ -11867,7 +11867,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.ee = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ee
   store double %i.ed, ptr %gep.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ef = add nsw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ef = add nuw i64 %.032.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.eg = and i64 %i.ef, %.032.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.eg, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3954
@@ -12052,7 +12052,7 @@ _ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i, i64 %i.gm
   store double %i.gl, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.gn = add nsw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, -1
+  %i.gn = add nuw i64 %.032.i55.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.go = and i64 %i.gn, %.032.i55.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.go, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit23.i54.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3954
@@ -12252,7 +12252,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8faceb
   %i.kb = tail call double @atan(double noundef %i.ka) #41, !noalias !4038
   %i.kc = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.jy
   store double %i.kb, ptr %i.kc, align 8, !tbaa !82
-  %i.kd = add nsw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.kd = add nuw i64 %.029.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ke = and i64 %i.kd, %.029.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i31.i = icmp eq i64 %i.ke, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i31.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3978
@@ -12392,7 +12392,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.mp = tail call double @atan(double noundef %i.mo) #41, !noalias !4046
   %i.mq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.mm
   store double %i.mp, ptr %i.mq, align 8, !tbaa !82
-  %i.mr = add nsw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, -1
+  %i.mr = add nuw i64 %.029.i50.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ms = and i64 %i.mr, %.029.i50.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i, !llvm.loop !3978
@@ -12795,7 +12795,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bp, %b
   %i.us = call double @atan(double noundef %i.ur) #41, !noalias !4048
   %i.ut = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uh
   store double %i.us, ptr %i.ut, align 8, !tbaa !82
-  %i.uu = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.uu = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uv = and i64 %i.uu, %.030.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i72 = icmp eq i64 %i.uv, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i72, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.bm, !llvm.loop !4009
@@ -13081,7 +13081,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8
   %i.aaj = call double @atan(double noundef %i.aai) #41, !noalias !4052
   %i.aak = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.aag
   store double %i.aaj, ptr %i.aak, align 8, !tbaa !82
-  %i.aal = add nsw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aal = add nuw i64 %.030.i51.us.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aam = and i64 %i.aal, %.030.i51.us.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aam, 0
   br i1 %.not10.i54.us.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4009
@@ -13107,7 +13107,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   %i.aaw = call double @atan(double noundef %i.aav) #41, !noalias !4052
   %gep99.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep98.i.i.i.i.i.i.i.i.i.i, i64 %i.aau
   store double %i.aaw, ptr %gep99.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.aax = add nsw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, -1
+  %i.aax = add nuw i64 %.030.i51.us67.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aay = and i64 %i.aax, %.030.i51.us67.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.aay, 0
   br i1 %.not10.i54.us70.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.us68.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4009
@@ -13130,7 +13130,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.abj = call double @atan(double noundef %i.abi) #41, !noalias !4052
   %i.abk = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abc
   store double %i.abj, ptr %i.abk, align 8, !tbaa !82
-  %i.abl = add nsw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, -1
+  %i.abl = add nuw i64 %.030.i51.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.abm = and i64 %i.abl, %.030.i51.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i54.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.abm, 0
   br i1 %.not10.i54.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112AtanFunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJdEEEJdEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i52.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4009
@@ -13533,7 +13533,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.fs = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.034.i.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i.i.i, i64 %i.fs
   store double %i.fr, ptr %gep.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ft = add nsw i64 %.034.i.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ft = add nuw i64 %.034.i.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.fu = and i64 %i.ft, %.034.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.fu, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4137
@@ -13718,7 +13718,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i54.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8f
   %i.ia = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.034.i55.i.i.i.i.i.i.i.i.i.i.i, i1 true)
   %gep.i56.i.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %invariant.gep.i53.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ia
   store double %i.hz, ptr %gep.i56.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !82
-  %i.ib = add nsw i64 %.034.i55.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.ib = add nuw i64 %.034.i55.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ic = and i64 %i.ib, %.034.i55.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i57.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ic, 0
   br i1 %.not10.i57.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i54.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4137
@@ -13918,7 +13918,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.lp = tail call double @atan2(double noundef %.sroa.014.0.i, double noundef %i.lo) #41, !noalias !4291
   %i.lq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.lm
   store double %i.lp, ptr %i.lq, align 8, !tbaa !82
-  %i.lr = add nsw i64 %.031.i.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.lr = add nuw i64 %.031.i.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.ls = and i64 %i.lr, %.031.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i33.i.i = icmp eq i64 %i.ls, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i33.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4161
@@ -14058,7 +14058,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i49.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8f
   %i.od = tail call double @atan2(double noundef %.sroa.014.0.i, double noundef %i.oc) #41, !noalias !4299
   %i.oe = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.oa
   store double %i.od, ptr %i.oe, align 8, !tbaa !82
-  %i.of = add nsw i64 %.031.i50.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.of = add nuw i64 %.031.i50.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.og = and i64 %i.of, %.031.i50.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.og, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit21.i49.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4161
@@ -14274,7 +14274,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8fac
   %i.rz = tail call double @atan2(double noundef %i.ry, double noundef %.sroa.06.0.i25.i) #41, !noalias !4303
   %i.sa = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.rw
   store double %i.rz, ptr %i.sa, align 8, !tbaa !82
-  %i.sb = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.sb = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.sc = and i64 %i.sb, %.030.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i54.i = icmp eq i64 %i.sc, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i54.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4191
@@ -14414,7 +14414,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN8f
   %i.un = tail call double @atan2(double noundef %i.um, double noundef %.sroa.06.0.i25.i) #41, !noalias !4311
   %i.uo = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.uk
   store double %i.un, ptr %i.uo, align 8, !tbaa !82
-  %i.up = add nsw i64 %.030.i50.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.up = add nuw i64 %.030.i50.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.uq = and i64 %i.up, %.030.i50.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i.i46.i = icmp eq i64 %i.uq, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i.i46.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !4191
@@ -14626,7 +14626,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i51.i.i: ; preds = %_ZN8f
   %i.yp = tail call double @atan2(double noundef %i.ym, double noundef %i.yo) #41, !noalias !4317
   %i.yq = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.yk
   store double %i.yp, ptr %i.yq, align 8, !tbaa !82
-  %i.yr = add nsw i64 %.030.i.i.i.i.i.i.i.i.i.i52.i.i, -1
+  %i.yr = add nuw i64 %.030.i.i.i.i.i.i.i.i.i.i52.i.i, 9223372036854775807
   %i.ys = and i64 %i.yr, %.030.i.i.i.i.i.i.i.i.i.i52.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i53.i.i = icmp eq i64 %i.ys, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i53.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i.i.i.i.i.i.i.i.i.i51.i.i, !llvm.loop !4225
@@ -14774,7 +14774,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i36.i.i: ; preds = %_ZN
   %i.abl = tail call double @atan2(double noundef %i.abi, double noundef %i.abk) #41, !noalias !4329
   %i.abm = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.abg
   store double %i.abl, ptr %i.abm, align 8, !tbaa !82
-  %i.abn = add nsw i64 %.030.i50.i.i.i.i.i.i.i.i.i37.i.i, -1
+  %i.abn = add nuw i64 %.030.i50.i.i.i.i.i.i.i.i.i37.i.i, 9223372036854775807
   %i.abo = and i64 %i.abn, %.030.i50.i.i.i.i.i.i.i.i.i37.i.i ; 2 uses
   %.not10.i51.i.i.i.i.i.i.i.i.i38.i.i = icmp eq i64 %i.abo, 0
   br i1 %.not10.i51.i.i.i.i.i.i.i.i.i38.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %_ZN8facebook5velox6StatusD2Ev.exit20.i49.i.i.i.i.i.i.i.i.i36.i.i, !llvm.loop !4225
@@ -15177,7 +15177,7 @@ _ZN8facebook5velox6StatusD2Ev.exit26.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.dp, 
   %i.akf = call double @atan2(double noundef %i.aju, double noundef %i.ake) #41, !noalias !4331
   %i.akg = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.ajk
   store double %i.akf, ptr %i.akg, align 8, !tbaa !82
-  %i.akh = add nsw i64 %.036.i.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.akh = add nuw i64 %.036.i.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.aki = and i64 %i.akh, %.036.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i.i.i.i.i.i.i.i.i.i.i.i73 = icmp eq i64 %i.aki, 0
   br i1 %.not10.i.i.i.i.i.i.i.i.i.i.i.i73, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.dj, !llvm.loop !4262
@@ -15580,7 +15580,7 @@ _ZN8facebook5velox6StatusD2Ev.exit26.i56.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.et
   %i.ata = call double @atan2(double noundef %i.asp, double noundef %i.asz) #41, !noalias !4335
   %i.atb = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %i.asf
   store double %i.ata, ptr %i.atb, align 8, !tbaa !82
-  %i.atc = add nsw i64 %.036.i53.i.i.i.i.i.i.i.i.i.i.i, -1
+  %i.atc = add nuw i64 %.036.i53.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775807
   %i.atd = and i64 %i.atc, %.036.i53.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %.not10.i58.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.atd, 0
   br i1 %.not10.i58.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113Atan2FunctionINS1_10VectorExecEEES8_dNS0_15ConstantCheckerIJddEEEJddEEEE31unpackSpecializeForAllEncodingsILi0EJEEEvRNSD_12ApplyContextERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISK_EEDpRT0_.exit, label %bb.en, !llvm.loop !4262

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.be = add nsw i64 %.034.i, -1
+  %i.be = add nuw i64 %.034.i, 9223372036854775807
   %i.bf = and i64 %i.be, %.034.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bf, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !1950
@@ -393,7 +393,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fa = add nsw i64 %.034.i48, -1
+  %i.fa = add nuw i64 %.034.i48, 9223372036854775807
   %i.fb = and i64 %i.fa, %.034.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fb, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !1950
@@ -796,7 +796,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bg = add nsw i64 %.031.i, -1
+  %i.bg = add nuw i64 %.031.i, 9223372036854775807
   %i.bh = and i64 %i.bg, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bh, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2009
@@ -988,7 +988,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fg = add nsw i64 %.031.i48, -1
+  %i.fg = add nuw i64 %.031.i48, 9223372036854775807
   %i.fh = and i64 %i.fg, %.031.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fh, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2009
@@ -1391,7 +1391,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bg = add nsw i64 %.030.i, -1
+  %i.bg = add nuw i64 %.030.i, 9223372036854775807
   %i.bh = and i64 %i.bg, %.030.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bh, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2068
@@ -1583,7 +1583,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fg = add nsw i64 %.030.i48, -1
+  %i.fg = add nuw i64 %.030.i48, 9223372036854775807
   %i.fh = and i64 %i.fg, %.030.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fh, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2068
@@ -1986,7 +1986,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bi = add nsw i64 %.030.i, -1
+  %i.bi = add nuw i64 %.030.i, 9223372036854775807
   %i.bj = and i64 %i.bi, %.030.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bj, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2127
@@ -2182,7 +2182,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fm = add nsw i64 %.030.i48, -1
+  %i.fm = add nuw i64 %.030.i48, 9223372036854775807
   %i.fn = and i64 %i.fm, %.030.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fn, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2127
@@ -2585,7 +2585,7 @@ bb.n:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i31:         ; preds = %bb.n, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i28
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
-  %i.cl = add nsw i64 %.037.i22, -1
+  %i.cl = add nuw i64 %.037.i22, 9223372036854775807
   %i.cm = and i64 %i.cl, %.037.i22                ; 2 uses
   %.not10.i32 = icmp eq i64 %i.cm, 0
   br i1 %.not10.i32, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.d, !llvm.loop !2177
@@ -2893,7 +2893,7 @@ bb.am:                                            ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i:           ; preds = %bb.am, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #34
-  %i.it = add nsw i64 %.037.i, -1
+  %i.it = add nuw i64 %.037.i, 9223372036854775807
   %i.iu = and i64 %i.it, %.037.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.iu, 0
   br i1 %.not10.i, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14LtFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.ac, !llvm.loop !2177
@@ -3296,7 +3296,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.be = add nsw i64 %.034.i, -1
+  %i.be = add nuw i64 %.034.i, 9223372036854775807
   %i.bf = and i64 %i.be, %.034.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bf, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2289
@@ -3484,7 +3484,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fa = add nsw i64 %.034.i48, -1
+  %i.fa = add nuw i64 %.034.i48, 9223372036854775807
   %i.fb = and i64 %i.fa, %.034.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fb, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2289
@@ -3887,7 +3887,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bg = add nsw i64 %.031.i, -1
+  %i.bg = add nuw i64 %.031.i, 9223372036854775807
   %i.bh = and i64 %i.bg, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bh, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2348
@@ -4079,7 +4079,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fg = add nsw i64 %.031.i48, -1
+  %i.fg = add nuw i64 %.031.i48, 9223372036854775807
   %i.fh = and i64 %i.fg, %.031.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fh, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2348
@@ -4482,7 +4482,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bg = add nsw i64 %.030.i, -1
+  %i.bg = add nuw i64 %.030.i, 9223372036854775807
   %i.bh = and i64 %i.bg, %.030.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bh, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2407
@@ -4674,7 +4674,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fg = add nsw i64 %.030.i48, -1
+  %i.fg = add nuw i64 %.030.i48, 9223372036854775807
   %i.fh = and i64 %i.fg, %.030.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fh, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2407
@@ -5077,7 +5077,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bi = add nsw i64 %.030.i, -1
+  %i.bi = add nuw i64 %.030.i, 9223372036854775807
   %i.bj = and i64 %i.bi, %.030.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bj, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2466
@@ -5273,7 +5273,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i52:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fm = add nsw i64 %.030.i48, -1
+  %i.fm = add nuw i64 %.030.i48, 9223372036854775807
   %i.fn = and i64 %i.fm, %.030.i48                ; 2 uses
   %.not10.i53 = icmp eq i64 %i.fn, 0
   br i1 %.not10.i53, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2466
@@ -5676,7 +5676,7 @@ bb.n:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i31:         ; preds = %bb.n, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i28
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
-  %i.cl = add nsw i64 %.037.i22, -1
+  %i.cl = add nuw i64 %.037.i22, 9223372036854775807
   %i.cm = and i64 %i.cl, %.037.i22                ; 2 uses
   %.not10.i32 = icmp eq i64 %i.cm, 0
   br i1 %.not10.i32, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.d, !llvm.loop !2516
@@ -5984,7 +5984,7 @@ bb.am:                                            ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i:           ; preds = %bb.am, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #34
-  %i.it = add nsw i64 %.037.i, -1
+  %i.it = add nuw i64 %.037.i, 9223372036854775807
   %i.iu = and i64 %i.it, %.037.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.iu, 0
   br i1 %.not10.i, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions14GtFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.ac, !llvm.loop !2516
@@ -6387,7 +6387,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bd = add nsw i64 %.035.i, -1
+  %i.bd = add nuw i64 %.035.i, 9223372036854775807
   %i.be = and i64 %i.bd, %.035.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.be, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2628
@@ -6575,7 +6575,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.ex = add nsw i64 %.035.i49, -1
+  %i.ex = add nuw i64 %.035.i49, 9223372036854775807
   %i.ey = and i64 %i.ex, %.035.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.ey, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2628
@@ -6978,7 +6978,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bf = add nsw i64 %.032.i, -1
+  %i.bf = add nuw i64 %.032.i, 9223372036854775807
   %i.bg = and i64 %i.bf, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bg, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2687
@@ -7170,7 +7170,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fd = add nsw i64 %.032.i49, -1
+  %i.fd = add nuw i64 %.032.i49, 9223372036854775807
   %i.fe = and i64 %i.fd, %.032.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.fe, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2687
@@ -7573,7 +7573,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bf = add nsw i64 %.031.i, -1
+  %i.bf = add nuw i64 %.031.i, 9223372036854775807
   %i.bg = and i64 %i.bf, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bg, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2746
@@ -7765,7 +7765,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fd = add nsw i64 %.031.i49, -1
+  %i.fd = add nuw i64 %.031.i49, 9223372036854775807
   %i.fe = and i64 %i.fd, %.031.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.fe, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2746
@@ -8168,7 +8168,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bh = add nsw i64 %.031.i, -1
+  %i.bh = add nuw i64 %.031.i, 9223372036854775807
   %i.bi = and i64 %i.bh, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bi, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2805
@@ -8364,7 +8364,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fj = add nsw i64 %.031.i49, -1
+  %i.fj = add nuw i64 %.031.i49, 9223372036854775807
   %i.fk = and i64 %i.fj, %.031.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.fk, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2805
@@ -8767,7 +8767,7 @@ bb.n:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i34:         ; preds = %bb.n, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i31
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
-  %i.ck = add nsw i64 %.038.i24, -1
+  %i.ck = add nuw i64 %.038.i24, 9223372036854775807
   %i.cl = and i64 %i.ck, %.038.i24                ; 2 uses
   %.not10.i35 = icmp eq i64 %i.cl, 0
   br i1 %.not10.i35, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.d, !llvm.loop !2855
@@ -9075,7 +9075,7 @@ bb.am:                                            ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i:           ; preds = %bb.am, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #34
-  %i.iq = add nsw i64 %.038.i6, -1
+  %i.iq = add nuw i64 %.038.i6, 9223372036854775807
   %i.ir = and i64 %i.iq, %.038.i6                 ; 2 uses
   %.not10.i = icmp eq i64 %i.ir, 0
   br i1 %.not10.i, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15LteFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.ac, !llvm.loop !2855
@@ -9478,7 +9478,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bd = add nsw i64 %.035.i, -1
+  %i.bd = add nuw i64 %.035.i, 9223372036854775807
   %i.be = and i64 %i.bd, %.035.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.be, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !2967
@@ -9666,7 +9666,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit23.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.ex = add nsw i64 %.035.i49, -1
+  %i.ex = add nuw i64 %.035.i49, 9223372036854775807
   %i.ey = and i64 %i.ex, %.035.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.ey, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !2967
@@ -10069,7 +10069,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bf = add nsw i64 %.032.i, -1
+  %i.bf = add nuw i64 %.032.i, 9223372036854775807
   %i.bg = and i64 %i.bf, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bg, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3026
@@ -10261,7 +10261,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fd = add nsw i64 %.032.i49, -1
+  %i.fd = add nuw i64 %.032.i49, 9223372036854775807
   %i.fe = and i64 %i.fd, %.032.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.fe, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3026
@@ -10664,7 +10664,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bf = add nsw i64 %.031.i, -1
+  %i.bf = add nuw i64 %.031.i, 9223372036854775807
   %i.bg = and i64 %i.bf, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bg, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3085
@@ -10856,7 +10856,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fd = add nsw i64 %.031.i49, -1
+  %i.fd = add nuw i64 %.031.i49, 9223372036854775807
   %i.fe = and i64 %i.fd, %.031.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.fe, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3085
@@ -11259,7 +11259,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bh = add nsw i64 %.031.i, -1
+  %i.bh = add nuw i64 %.031.i, 9223372036854775807
   %i.bi = and i64 %i.bh, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bi, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3144
@@ -11455,7 +11455,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i54:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i51
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fj = add nsw i64 %.031.i49, -1
+  %i.fj = add nuw i64 %.031.i49, 9223372036854775807
   %i.fk = and i64 %i.fj, %.031.i49                ; 2 uses
   %.not10.i55 = icmp eq i64 %i.fk, 0
   br i1 %.not10.i55, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_EEEJSG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3144
@@ -11858,7 +11858,7 @@ bb.n:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i34:         ; preds = %bb.n, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i31
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
-  %i.ck = add nsw i64 %.038.i24, -1
+  %i.ck = add nuw i64 %.038.i24, 9223372036854775807
   %i.cl = and i64 %i.ck, %.038.i24                ; 2 uses
   %.not10.i35 = icmp eq i64 %i.cl, 0
   br i1 %.not10.i35, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.d, !llvm.loop !3194
@@ -12166,7 +12166,7 @@ bb.am:                                            ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit26.i:           ; preds = %bb.am, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_EEEJSC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #34
-  %i.iq = add nsw i64 %.038.i6, -1
+  %i.iq = add nuw i64 %.038.i6, 9223372036854775807
   %i.ir = and i64 %i.iq, %.038.i6                 ; 2 uses
   %.not10.i = icmp eq i64 %i.ir, 0
   br i1 %.not10.i, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15GteFunctionUuidINS4_10VectorExecEEESC_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESH_EEEJSH_SH_EEEE7iterateIJNS4_12VectorReaderISH_EESN_EEEvRNSK_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_EUlST_E_EEvPKmiibST_EUlimE_ZNS3_IS11_EEvS13_iibST_EUliE_EEviiST_S10_.exit, label %bb.ac, !llvm.loop !3194
@@ -12569,7 +12569,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit25.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_SI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bh = add nsw i64 %.037.i, -1
+  %i.bh = add nuw i64 %.037.i, 9223372036854775807
   %i.bi = and i64 %i.bh, %.037.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bi, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_SM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3325
@@ -12767,7 +12767,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit25.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_SI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fj = add nsw i64 %.037.i50, -1
+  %i.fj = add nuw i64 %.037.i50, 9223372036854775807
   %i.fk = and i64 %i.fj, %.037.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.fk, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_SM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3325
@@ -13170,7 +13170,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit22.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_NS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bj = add nsw i64 %.034.i, -1
+  %i.bj = add nuw i64 %.034.i, 9223372036854775807
   %i.bk = and i64 %i.bj, %.034.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bk, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_NS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3402
@@ -13372,7 +13372,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit22.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EESI_NS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fp = add nsw i64 %.034.i50, -1
+  %i.fp = add nuw i64 %.034.i50, 9223372036854775807
   %i.fq = and i64 %i.fp, %.034.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.fq, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EESM_NS3_16FlatVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3402
@@ -13775,7 +13775,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit21.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bj = add nsw i64 %.033.i, -1
+  %i.bj = add nuw i64 %.033.i, 9223372036854775807
   %i.bk = and i64 %i.bj, %.033.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bk, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3479
@@ -13977,7 +13977,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit21.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fp = add nsw i64 %.033.i50, -1
+  %i.fp = add nuw i64 %.033.i50, 9223372036854775807
   %i.fq = and i64 %i.fp, %.033.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.fq, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3479
@@ -14380,7 +14380,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EESK_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bl = add nsw i64 %.032.i, -1
+  %i.bl = add nuw i64 %.032.i, 9223372036854775807
   %i.bm = and i64 %i.bl, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bm, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EESO_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3556
@@ -14586,7 +14586,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EENS1_16FlatVectorReaderISC_EESK_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fv = add nsw i64 %.032.i50, -1
+  %i.fv = add nuw i64 %.032.i50, 9223372036854775807
   %i.fw = and i64 %i.fv, %.032.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.fw, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_20ConstantVectorReaderISG_EENS3_16FlatVectorReaderISG_EESO_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3556
@@ -14989,7 +14989,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EESK_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bj = add nsw i64 %.032.i, -1
+  %i.bj = add nuw i64 %.032.i, 9223372036854775807
   %i.bk = and i64 %i.bj, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bk, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EESO_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3637
@@ -15191,7 +15191,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit20.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EESK_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fp = add nsw i64 %.032.i50, -1
+  %i.fp = add nuw i64 %.032.i50, 9223372036854775807
   %i.fq = and i64 %i.fp, %.032.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.fq, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EESO_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3637
@@ -15594,7 +15594,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bl = add nsw i64 %.031.i, -1
+  %i.bl = add nuw i64 %.031.i, 9223372036854775807
   %i.bm = and i64 %i.bl, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bm, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3714
@@ -15800,7 +15800,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EENS1_20ConstantVectorReaderISC_EESI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fv = add nsw i64 %.031.i50, -1
+  %i.fv = add nuw i64 %.031.i50, 9223372036854775807
   %i.fw = and i64 %i.fv, %.031.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.fw, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EENS3_20ConstantVectorReaderISG_EESM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3714
@@ -16203,7 +16203,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_NS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bl = add nsw i64 %.031.i, -1
+  %i.bl = add nuw i64 %.031.i, 9223372036854775807
   %i.bm = and i64 %i.bl, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bm, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_NS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3791
@@ -16409,7 +16409,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_NS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSQ_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.fv = add nsw i64 %.031.i50, -1
+  %i.fv = add nuw i64 %.031.i50, 9223372036854775807
   %i.fw = and i64 %i.fv, %.031.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.fw, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_NS3_20ConstantVectorReaderISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3791
@@ -16812,7 +16812,7 @@ bb.g:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.g, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_SI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %i.bn = add nsw i64 %.031.i, -1
+  %i.bn = add nuw i64 %.031.i, 9223372036854775807
   %i.bo = and i64 %i.bn, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bo, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_SM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !3868
@@ -17022,7 +17022,7 @@ bb.r:                                             ; preds = %_ZZNK8facebook5velo
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i56:         ; preds = %bb.r, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EESI_SI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i53
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %i.gb = add nsw i64 %.031.i50, -1
+  %i.gb = add nuw i64 %.031.i50, 9223372036854775807
   %i.gc = and i64 %i.gb, %.031.i50                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.gc, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19BetweenFunctionUuidINS3_10VectorExecEEESB_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_5UuidTELb0EEESG_SG_EEEJSG_SG_SG_EEEE7iterateIJNS3_16FlatVectorReaderISG_EESM_SM_EEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !3868
@@ -17425,7 +17425,7 @@ _ZN8facebook5velox6StatusD2Ev.exit28.i:           ; preds = %bb.j, %bb.i, %.noex
   %.0.copyload.i.i.i.i.i.i = load i128, ptr %i.bw, align 1
   %i.bx = getelementptr inbounds [16 x i8], ptr %i.ba, i64 %i.be
   store i128 %.0.copyload.i.i.i.i.i.i, ptr %i.bx, align 16, !tbaa !396
-  %i.by = add nsw i64 %.039.i, -1
+  %i.by = add nuw i64 %.039.i, 9223372036854775807
   %i.bz = and i64 %i.by, %.039.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bz, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19IPSubnetMinFunctionINS3_10VectorExecEEESB_NS0_10CustomTypeINS0_10IPAddressTELb1EEENS0_15ConstantCheckerIJNSD_INS0_9IPPrefixTELb0EEEEEEJSI_EEEE7iterateIJNS3_12VectorReaderISI_EEEEEvRNSL_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !4811
@@ -17667,7 +17667,7 @@ _ZN8facebook5velox6StatusD2Ev.exit28.i54:         ; preds = %bb.aa, %bb.z, %.noe
   %.0.copyload.i.i.i.i.i.i56 = load i128, ptr %i.hg, align 1
   %i.hh = getelementptr inbounds [16 x i8], ptr %i.gk, i64 %i.go
   store i128 %.0.copyload.i.i.i.i.i.i56, ptr %i.hh, align 16, !tbaa !396
-  %i.hi = add nsw i64 %.039.i51, -1
+  %i.hi = add nuw i64 %.039.i51, 9223372036854775807
   %i.hj = and i64 %i.hi, %.039.i51                ; 2 uses
   %.not10.i57 = icmp eq i64 %i.hj, 0
   br i1 %.not10.i57, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19IPSubnetMinFunctionINS3_10VectorExecEEESB_NS0_10CustomTypeINS0_10IPAddressTELb1EEENS0_15ConstantCheckerIJNSD_INS0_9IPPrefixTELb0EEEEEEJSI_EEEE7iterateIJNS3_12VectorReaderISI_EEEEEvRNSL_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISV_EEvRKNS0_17SelectivityVectorESU_EUlSU_E_EEvSZ_SU_T0_EUlSU_E_EEvPKmiibSU_ENKUlimE_clEim.exit, label %bb.u, !llvm.loop !4811
@@ -18070,7 +18070,7 @@ _ZN8facebook5velox6StatusD2Ev.exit35.i36:         ; preds = %bb.p, %bb.o, %bb.n
   %.0.i.i37 = phi i128 [ %i.cv, %bb.n ], [ %i.db, %bb.p ], [ -1, %bb.o ]
   %i.dc = getelementptr inbounds [16 x i8], ptr %i.bi, i64 %i.bm
   store i128 %.0.i.i37, ptr %i.dc, align 16, !tbaa !396
-  %i.dd = add nsw i64 %.049.i27, -1
+  %i.dd = add nuw i64 %.049.i27, 9223372036854775807
   %i.de = and i64 %i.dd, %.049.i27                ; 2 uses
   %.not10.i38 = icmp eq i64 %i.de, 0
   br i1 %.not10.i38, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19IPSubnetMaxFunctionINS4_10VectorExecEEESC_NS0_10CustomTypeINS0_10IPAddressTELb1EEENS0_15ConstantCheckerIJNSE_INS0_9IPPrefixTELb0EEEEEEJSJ_EEEE7iterateIJNS4_12VectorReaderISJ_EEEEEvRNSM_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISW_EEvRKNS0_17SelectivityVectorESV_EUlSV_E_EEvS10_SV_T0_EUlSV_E_EEvPKmiibSV_EUlimE_ZNS3_IS13_EEvS15_iibSV_EUliE_EEviiSV_S12_.exit, label %bb.d, !llvm.loop !4878
@@ -18426,7 +18426,7 @@ _ZN8facebook5velox6StatusD2Ev.exit35.i:           ; preds = %bb.as, %bb.ar, %bb.
   %.0.i.i = phi i128 [ %i.kn, %bb.aq ], [ %i.kt, %bb.as ], [ -1, %bb.ar ]
   %i.ku = getelementptr inbounds [16 x i8], ptr %i.ja, i64 %i.je
   store i128 %.0.i.i, ptr %i.ku, align 16, !tbaa !396
-  %i.kv = add nsw i64 %.049.i, -1
+  %i.kv = add nuw i64 %.049.i, 9223372036854775807
   %i.kw = and i64 %i.kv, %.049.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.kw, 0
   br i1 %.not10.i, label %_ZN8facebook5velox4bits11forEachWordIZNS1_10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS4_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19IPSubnetMaxFunctionINS4_10VectorExecEEESC_NS0_10CustomTypeINS0_10IPAddressTELb1EEENS0_15ConstantCheckerIJNSE_INS0_9IPPrefixTELb0EEEEEEJSJ_EEEE7iterateIJNS4_12VectorReaderISJ_EEEEEvRNSM_12ApplyContextEDpRT_EUlT_E1_ZNS5_22applyToSelectedNoThrowISW_EEvRKNS0_17SelectivityVectorESV_EUlSV_E_EEvS10_SV_T0_EUlSV_E_EEvPKmiibSV_EUlimE_ZNS3_IS13_EEvS15_iibSV_EUliE_EEviiSV_S12_.exit, label %bb.ag, !llvm.loop !4878

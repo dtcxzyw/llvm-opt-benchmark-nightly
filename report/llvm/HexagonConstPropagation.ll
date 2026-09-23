@@ -205,8 +205,8 @@ _ZNK12_GLOBAL__N_121MachineConstEvaluator10constToIntEPKN4llvm8ConstantERNS1_5AP
 
 bb.p:                                             ; preds = %_ZNK12_GLOBAL__N_121MachineConstEvaluator10constToIntEPKN4llvm8ConstantERNS1_5APIntE.exit.i.i
   %i.ay = load i8, ptr %i.a, align 1, !range !296 ; 2 uses
-  %i.az = xor i8 %i.ay, 1
-  %i.ba = and i8 %i.az, %.03862.i.i               ; 2 uses
+  %i.az = xor i8 %i.ay, -1
+  %i.ba = and i8 %.03862.i.i, %i.az               ; 2 uses
   %i.bb = and i8 %i.ay, %.03961.i.i               ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
@@ -609,8 +609,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   call fastcc void @_ZN12_GLOBAL__N_121MachineConstEvaluator13evaluateCMPiiEjRKN4llvm5APIntES4_Rb(i32 noundef %1, ptr noundef nonnull align 8 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(12) %3, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
   %i.t = load i8, ptr %i.a, align 1, !tbaa !294, !range !296, !noundef !149 ; 2 uses
   %i.u = and i8 %i.t, %.02242                     ; 2 uses
-  %i.v = xor i8 %i.t, 1
-  %i.w = and i8 %i.v, %.02143                     ; 2 uses
+  %i.v = xor i8 %i.t, -1
+  %i.w = and i8 %.02143, %i.v                     ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.val = load i8, ptr %6, align 8
@@ -1013,8 +1013,8 @@ _ZNK12_GLOBAL__N_121MachineConstEvaluator10constToIntEPKN4llvm8ConstantERNS1_5AP
 
 bb.l:                                             ; preds = %_ZNK12_GLOBAL__N_121MachineConstEvaluator10constToIntEPKN4llvm8ConstantERNS1_5APIntE.exit
   %i.x = load i8, ptr %i.a, align 1, !range !296  ; 2 uses
-  %i.y = xor i8 %i.x, 1
-  %i.z = and i8 %i.y, %.02244                     ; 2 uses
+  %i.y = xor i8 %i.x, -1
+  %i.z = and i8 %.02244, %i.y                     ; 2 uses
   %i.aa = and i8 %i.x, %.02343                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
