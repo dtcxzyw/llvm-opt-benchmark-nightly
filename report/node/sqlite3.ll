@@ -1,4 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/sqlite3?download=true
+inline.NumInlined: 12422
+inline.NumDeleted: 1708
+loop-unroll.NumCompletelyUnrolled: 294
+loop-unroll.NumRuntimeUnrolled: 125
+loop-unroll.NumUnrolled: 423
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@sqlite3_str_vappendf:bb.a
   %i.afa = load i32, ptr %3, align 8, !tbaa !3778
   %i.afb = icmp slt i32 %.2623, %i.afa
@@ -200,7 +206,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ahz = sub i64 %i.ahn, %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aia = sub i64 %i.ahn, %index                 ; 2 uses
   %i.aib = trunc nsw i64 %i.aia to i32
@@ -254,7 +260,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n2026 = icmp eq i64 %i.ahq, %n.vec2022
   br i1 %cmp.n2026, label %.lr.ph1413.preheader, label %.lr.ph1407.preheader
 
-.lr.ph1407.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph1407.preheader:                             ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv1506.ph = phi i64 [ %i.ahn, %iter.check ], [ %i.ahn, %vector.scevcheck ], [ %i.ahn, %vector.memcheck ], [ %i.ahz, %vec.epilog.iter.check ], [ %i.ail, %vec.epilog.middle.block ]
   br label %.lr.ph1407
 
@@ -657,7 +663,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %.pre154, %i.ah            ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.da, %vector.body ]
   %vec.phi176 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.db, %vector.body ]
@@ -1060,7 +1066,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %wide.trip.count, %i.k     ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.cd, %vector.body ]
   %vec.phi25 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.ce, %vector.body ]
@@ -1463,7 +1469,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %.pre, %i.ag               ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.cz, %vector.body ]
   %vec.phi144 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.da, %vector.body ]
@@ -1866,7 +1872,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count.i.i, 2147483632 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <8 x i16> [ <i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %step.add = add <8 x i16> %vec.ind, splat (i16 8)
@@ -2269,7 +2275,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ap = sub nsw i64 %indvars.iv, %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.aq = sub i64 %indvars.iv, %index
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.aq ; 2 uses
@@ -2672,7 +2678,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %invariant.gep = getelementptr i8, ptr %.0.i155166, i64 %i.ho
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 %index ; 2 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 16
@@ -3075,7 +3081,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ej = shl nuw i64 %n.vec, 1
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ek = shl nuw i64 %index, 1                   ; 16 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.ek ; 2 uses
@@ -3271,7 +3277,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n39 = icmp eq i64 %i.ec, %n.vec36
   br i1 %cmp.n39, label %._crit_edge.i, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %i.ej, %vec.epilog.iter.check ], [ %i.jf, %vec.epilog.middle.block ]
   br label %.lr.ph.i
 
@@ -3674,7 +3680,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.q = shl nuw i64 %n.vec, 1
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.r = shl nuw i64 %index, 1                    ; 16 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.r ; 2 uses
@@ -3870,7 +3876,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n25 = icmp eq i64 %i.j, %n.vec22
   br i1 %cmp.n25, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %i.q, %vec.epilog.iter.check ], [ %i.em, %vec.epilog.middle.block ]
   br label %.lr.ph
 
@@ -4273,7 +4279,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %indvars.iv290, %i.abc     ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.adv, %vector.body ]
   %vec.phi495 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.adw, %vector.body ]
@@ -4676,7 +4682,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %.pre, %i.bn               ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.eg, %vector.body ]
   %vec.phi64 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.eh, %vector.body ]
@@ -5079,7 +5085,7 @@ vector.ph1275:                                    ; preds = %vector.main.loop.it
   %n.vec1276 = sub nsw i64 %wide.trip.count.i590.i, %i.adp ; 3 uses
   br label %vector.body1277
 
-vector.body1277:                                  ; preds = %vector.body1277, %vector.ph1275
+vector.body1277:                                  ; preds = %vector.ph1275, %vector.body1277
   %index1278 = phi i64 [ 0, %vector.ph1275 ], [ %index.next1281, %vector.body1277 ] ; 17 uses
   %vec.phi1279 = phi <8 x i16> [ zeroinitializer, %vector.ph1275 ], [ %i.agi, %vector.body1277 ]
   %vec.phi1280 = phi <8 x i16> [ zeroinitializer, %vector.ph1275 ], [ %i.agj, %vector.body1277 ]
@@ -5296,7 +5302,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %wide.trip.count.i599.i, %i.aiu ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.aln, %vector.body ]
   %vec.phi1266 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.alo, %vector.body ]
@@ -5699,7 +5705,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %wide.trip.count.i, %i.bk  ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.ed, %vector.body ]
   %vec.phi48 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.ee, %vector.body ]
@@ -6102,7 +6108,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %indvars.iv, %i.er         ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.hk, %vector.body ]
   %vec.phi261 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.hl, %vector.body ]
@@ -6505,7 +6511,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %.pre259, %i.dh            ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.ga, %vector.body ]
   %vec.phi299 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.gb, %vector.body ]
@@ -6908,7 +6914,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %.pre282, %i.bi            ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.eb, %vector.body ]
   %vec.phi324 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.ec, %vector.body ]
@@ -7178,7 +7184,7 @@ vector.ph414:                                     ; preds = %vector.main.loop.it
   %n.vec415 = sub nsw i64 %.pre275, %i.hk         ; 3 uses
   br label %vector.body416
 
-vector.body416:                                   ; preds = %vector.body416, %vector.ph414
+vector.body416:                                   ; preds = %vector.ph414, %vector.body416
   %index417 = phi i64 [ 0, %vector.ph414 ], [ %index.next420, %vector.body416 ] ; 17 uses
   %vec.phi418 = phi <8 x i16> [ zeroinitializer, %vector.ph414 ], [ %i.kd, %vector.body416 ]
   %vec.phi419 = phi <8 x i16> [ zeroinitializer, %vector.ph414 ], [ %i.ke, %vector.body416 ]
@@ -7581,7 +7587,7 @@ vector.ph333:                                     ; preds = %vector.main.loop.it
   %n.vec334 = sub nsw i64 %.pre280, %i.sm         ; 3 uses
   br label %vector.body335
 
-vector.body335:                                   ; preds = %vector.body335, %vector.ph333
+vector.body335:                                   ; preds = %vector.ph333, %vector.body335
   %index336 = phi i64 [ 0, %vector.ph333 ], [ %index.next339, %vector.body335 ] ; 17 uses
   %vec.phi337 = phi <8 x i16> [ zeroinitializer, %vector.ph333 ], [ %i.vf, %vector.body335 ]
   %vec.phi338 = phi <8 x i16> [ zeroinitializer, %vector.ph333 ], [ %i.vg, %vector.body335 ]
@@ -7845,7 +7851,7 @@ vector.ph387:                                     ; preds = %vector.main.loop.it
   %n.vec388 = sub nsw i64 %.pre278, %i.yn         ; 3 uses
   br label %vector.body389
 
-vector.body389:                                   ; preds = %vector.body389, %vector.ph387
+vector.body389:                                   ; preds = %vector.ph387, %vector.body389
   %index390 = phi i64 [ 0, %vector.ph387 ], [ %index.next393, %vector.body389 ] ; 17 uses
   %vec.phi391 = phi <8 x i16> [ zeroinitializer, %vector.ph387 ], [ %i.abg, %vector.body389 ]
   %vec.phi392 = phi <8 x i16> [ zeroinitializer, %vector.ph387 ], [ %i.abh, %vector.body389 ]
@@ -8046,7 +8052,7 @@ vector.ph360:                                     ; preds = %vector.main.loop.it
   %n.vec361 = sub nsw i64 %wide.trip.count.i216, %i.ado ; 3 uses
   br label %vector.body362
 
-vector.body362:                                   ; preds = %vector.body362, %vector.ph360
+vector.body362:                                   ; preds = %vector.ph360, %vector.body362
   %index363 = phi i64 [ 0, %vector.ph360 ], [ %index.next366, %vector.body362 ] ; 17 uses
   %vec.phi364 = phi <8 x i16> [ zeroinitializer, %vector.ph360 ], [ %i.agh, %vector.body362 ]
   %vec.phi365 = phi <8 x i16> [ zeroinitializer, %vector.ph360 ], [ %i.agi, %vector.body362 ]
@@ -8449,7 +8455,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %i.l, %i.t                 ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.cm, %vector.body ]
   %vec.phi36 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.cn, %vector.body ]
@@ -8852,7 +8858,7 @@ vector.ph123:                                     ; preds = %vector.main.loop.it
   %n.vec124 = sub nsw i64 %indvars.iv91, %i.em    ; 3 uses
   br label %vector.body125
 
-vector.body125:                                   ; preds = %vector.body125, %vector.ph123
+vector.body125:                                   ; preds = %vector.ph123, %vector.body125
   %index126 = phi i64 [ 0, %vector.ph123 ], [ %index.next128, %vector.body125 ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph123 ], [ %i.hf, %vector.body125 ]
   %vec.phi127 = phi <8 x i16> [ zeroinitializer, %vector.ph123 ], [ %i.hg, %vector.body125 ]
@@ -9216,7 +9222,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = sub nsw i64 %indvars.iv, %i.bl         ; 3 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 17 uses
   %vec.phi = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.ee, %vector.body ]
   %vec.phi1258 = phi <8 x i16> [ zeroinitializer, %vector.ph ], [ %i.ef, %vector.body ]
@@ -9619,7 +9625,7 @@ vector.ph1294:                                    ; preds = %vector.main.loop.it
   %n.vec1295 = sub nsw i64 %wide.trip.count.i823, %i.ahg ; 3 uses
   br label %vector.body1296
 
-vector.body1296:                                  ; preds = %vector.body1296, %vector.ph1294
+vector.body1296:                                  ; preds = %vector.ph1294, %vector.body1296
   %index1297 = phi i64 [ 0, %vector.ph1294 ], [ %index.next1300, %vector.body1296 ] ; 17 uses
   %vec.phi1298 = phi <8 x i16> [ zeroinitializer, %vector.ph1294 ], [ %i.ajz, %vector.body1296 ]
   %vec.phi1299 = phi <8 x i16> [ zeroinitializer, %vector.ph1294 ], [ %i.aka, %vector.body1296 ]
@@ -10022,7 +10028,7 @@ vector.ph1267:                                    ; preds = %vector.main.loop.it
   %n.vec1268 = sub nsw i64 %wide.trip.count.i870, %i.atq ; 3 uses
   br label %vector.body1269
 
-vector.body1269:                                  ; preds = %vector.body1269, %vector.ph1267
+vector.body1269:                                  ; preds = %vector.ph1267, %vector.body1269
   %index1270 = phi i64 [ 0, %vector.ph1267 ], [ %index.next1273, %vector.body1269 ] ; 17 uses
   %vec.phi1271 = phi <8 x i16> [ zeroinitializer, %vector.ph1267 ], [ %i.awj, %vector.body1269 ]
   %vec.phi1272 = phi <8 x i16> [ zeroinitializer, %vector.ph1267 ], [ %i.awk, %vector.body1269 ]
@@ -10425,7 +10431,7 @@ bb.ax:                                            ; preds = %bb.av
 
 bb.ay:                                            ; preds = %bb.ad
   %i.mc = getelementptr inbounds nuw i8, ptr %i.cj, i64 2
-  %i.md = load i8, ptr %i.mc, align 1, !tbaa !741 ; 3 uses
+  %i.md = load i8, ptr %i.mc, align 1, !tbaa !741 ; 2 uses
   %i.me = zext i8 %i.md to i64
   %i.mf = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.me
   %i.mg = load i8, ptr %i.mf, align 1, !tbaa !741
@@ -10435,7 +10441,7 @@ bb.ay:                                            ; preds = %bb.ad
 
 bb.az:                                            ; preds = %bb.ay
   %i.mi = getelementptr inbounds nuw i8, ptr %i.cj, i64 3
-  %i.mj = load i8, ptr %i.mi, align 1, !tbaa !741 ; 3 uses
+  %i.mj = load i8, ptr %i.mi, align 1, !tbaa !741 ; 2 uses
   %i.mk = zext i8 %i.mj to i64
   %i.ml = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.mk
   %i.mm = load i8, ptr %i.ml, align 1, !tbaa !741
@@ -10445,7 +10451,7 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   %i.mo = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
-  %i.mp = load i8, ptr %i.mo, align 1, !tbaa !741 ; 3 uses
+  %i.mp = load i8, ptr %i.mo, align 1, !tbaa !741 ; 2 uses
   %i.mq = zext i8 %i.mp to i64
   %i.mr = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.mq
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !741
@@ -10455,7 +10461,7 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.ba
   %i.mu = getelementptr inbounds nuw i8, ptr %i.cj, i64 5
-  %i.mv = load i8, ptr %i.mu, align 1, !tbaa !741 ; 3 uses
+  %i.mv = load i8, ptr %i.mu, align 1, !tbaa !741 ; 2 uses
   %i.mw = zext i8 %i.mv to i64
   %i.mx = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.mw
   %i.my = load i8, ptr %i.mx, align 1, !tbaa !741
@@ -10504,34 +10510,19 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not.i121.7, label %isNHex.exit.thread, label %isNHex.exit126
 
 isNHex.exit126:                                   ; preds = %bb.bf
-  %3 = and i8 %i.md, 64
-  %.not.i.i122 = icmp eq i8 %3, 0
-  %4 = select i1 %.not.i.i122, i8 0, i8 9
-  %5 = add i8 %4, %i.md
-  %6 = shl i8 %5, 4
-  %7 = and i8 %i.mj, 64
-  %.not.i.i122.1 = icmp eq i8 %7, 0
-  %8 = select i1 %.not.i.i122.1, i8 0, i8 9
-  %9 = add i8 %8, %i.mj
-  %10 = and i8 %9, 15
-  %11 = or disjoint i8 %6, %10
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = and i8 %i.mp, 64
-  %.not.i.i122.2 = icmp eq i8 %14, 0
-  %15 = select i1 %.not.i.i122.2, i8 0, i8 9
-  %16 = add i8 %15, %i.mp
-  %17 = shl i8 %16, 4
-  %18 = zext i8 %17 to i32
-  %19 = or disjoint i32 %13, %18
-  %20 = and i8 %i.mv, 64
-  %.not.i.i122.3 = icmp eq i8 %20, 0
-  %21 = select i1 %.not.i.i122.3, i8 0, i8 9
-  %22 = add i8 %21, %i.mv
-  %23 = and i8 %22, 15
-  %24 = zext nneg i8 %23 to i32
-  %25 = or disjoint i32 %19, %24                  ; 3 uses
-  %i.ny = shl nuw nsw i32 %25, 8
+  %3 = insertelement <4 x i8> poison, i8 %i.mj, i64 0
+  %4 = insertelement <4 x i8> %3, i8 %i.md, i64 1
+  %5 = insertelement <4 x i8> %4, i8 %i.mp, i64 2
+  %6 = insertelement <4 x i8> %5, i8 %i.mv, i64 3 ; 2 uses
+  %7 = and <4 x i8> %6, splat (i8 64)
+  %8 = icmp eq <4 x i8> %7, zeroinitializer
+  %9 = select <4 x i1> %8, <4 x i8> zeroinitializer, <4 x i8> splat (i8 9)
+  %10 = add <4 x i8> %9, %6
+  %11 = and <4 x i8> %10, splat (i8 15)
+  %12 = zext nneg <4 x i8> %11 to <4 x i32>
+  %13 = shl nuw nsw <4 x i32> %12, <i32 8, i32 12, i32 4, i32 0>
+  %14 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %13) ; 3 uses
+  %i.ny = shl nuw nsw i32 %14, 8
   %i.nz = and i8 %i.nb, 64
   %.not.i.i122.4 = icmp eq i8 %i.nz, 0
   %i.oa = select i1 %.not.i.i122.4, i8 0, i8 9
@@ -10588,7 +10579,7 @@ bb.bi:                                            ; preds = %bb.bh
   br label %sqlite3AppendOneUtf8Character.exit
 
 bb.bj:                                            ; preds = %bb.bh
-  %i.pk = icmp eq i32 %25, 0
+  %i.pk = icmp eq i32 %14, 0
   br i1 %i.pk, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
@@ -10614,7 +10605,7 @@ bb.bl:                                            ; preds = %bb.bj
   %i.py = trunc i32 %i.ow to i8
   %i.pz = trunc i32 %i.pw to i8
   %i.qa = trunc i32 %i.px to i8
-  %i.qb = trunc i32 %25 to i8
+  %i.qb = trunc i32 %14 to i8
   %i.qc = lshr i8 %i.qb, 2
   %i.qd = insertelement <4 x i8> poison, i8 %i.qc, i64 0
   %i.qe = insertelement <4 x i8> %i.qd, i8 %i.qa, i64 1
@@ -11017,7 +11008,7 @@ vector.ph1008:                                    ; preds = %vector.main.loop.it
   %invariant.gep1148 = getelementptr i8, ptr %i.az, i64 %i.dc
   br label %vector.body1010
 
-vector.body1010:                                  ; preds = %vector.body1010, %vector.ph1008
+vector.body1010:                                  ; preds = %vector.ph1008, %vector.body1010
   %index1011 = phi i64 [ 0, %vector.ph1008 ], [ %index.next1014, %vector.body1010 ] ; 3 uses
   %gep1147 = getelementptr i8, ptr %invariant.gep1146, i64 %index1011 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %gep1147, i64 16
@@ -11249,7 +11240,7 @@ vector.ph964:                                     ; preds = %vector.main.loop.it
   %invariant.gep1140 = getelementptr i8, ptr %i.az, i64 %i.fz
   br label %vector.body966
 
-vector.body966:                                   ; preds = %vector.body966, %vector.ph964
+vector.body966:                                   ; preds = %vector.ph964, %vector.body966
   %index967 = phi i64 [ 0, %vector.ph964 ], [ %index.next970, %vector.body966 ] ; 3 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %index967 ; 2 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %gep, i64 16
@@ -11652,7 +11643,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ap = sub nsw i64 %indvars.iv, %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.aq = sub i64 %indvars.iv, %index
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.aq ; 2 uses
@@ -12055,7 +12046,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count.i.pre-phi, 2147483616 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 %index ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
@@ -12108,7 +12099,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n146 = icmp eq i64 %wide.trip.count.i.pre-phi, %n.vec142
   br i1 %cmp.n146, label %.loopexit, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec142, %vec.epilog.middle.block ] ; 5 uses
   %.neg = or disjoint i64 %indvars.iv.i.ph, 1
   %xtraiter = and i64 %wide.trip.count.i.pre-phi, 1
@@ -12509,6 +12500,9 @@ declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #47
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smin.v4i32(<4 x i32>, <4 x i32>) #47
