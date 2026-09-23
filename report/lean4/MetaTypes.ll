@@ -202,82 +202,48 @@ l_Lean_Meta_instBEqTransparencyMode_beq.exit:     ; preds = %l_Lean_Meta_Transpa
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Meta_EtaStructMode_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Meta_EtaStructMode_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_Meta_EtaStructMode_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-
-l_Lean_Meta_EtaStructMode_ctorIdx.exit:           ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Meta_EtaStructMode_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-
-l_Lean_Meta_EtaStructMode_ctorIdx.exit:           ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lean_Meta_EtaStructMode_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Meta_EtaStructMode_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_Meta_EtaStructMode_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Meta_EtaStructMode_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_EtaStructMode_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_EtaStructMode_toCtorIdx.exit
-
-l_Lean_Meta_EtaStructMode_toCtorIdx.exit:         ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -680,75 +646,38 @@ lean_dec.exit:                                    ; preds = %bb.d, %bb.a, %bb.i,
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext range(i8 0, 2) i8 @l_Lean_Meta_instBEqEtaStructMode_beq(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-
-4:                                                ; preds = %2
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-
-l_Lean_Meta_EtaStructMode_ctorIdx.exit:           ; preds = %2, %3, %4
-  %.0.i12 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %lean_dec.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-  br label %lean_dec.exit
-
-6:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %6, %5, %l_Lean_Meta_EtaStructMode_ctorIdx.exit
-  %.0.i13 = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lean_Meta_EtaStructMode_ctorIdx.exit ]
-  %i.a = icmp eq ptr %.0.i12, %.0.i13
-  %i.b = zext i1 %i.a to i8
+lean_dec.exit:
+  %switch.selectcmp4.i = icmp eq i8 %0, 0         ; 2 uses
+  %switch.selectcmp.i = icmp ne i8 %0, 1
+  %switch.selectcmp4.i14 = icmp eq i8 %1, 0
+  %i.a = icmp eq i8 %1, 1
+  %2 = xor i1 %switch.selectcmp.i, %i.a
+  %not.switch.selectcmp4.i = xor i1 %switch.selectcmp4.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i
+  %4 = select i1 %switch.selectcmp4.i14, i1 %switch.selectcmp4.i, i1 %3
+  %i.b = zext i1 %4 to i8
   ret i8 %i.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Meta_instBEqEtaStructMode_beq___boxed(ptr noundef %0, ptr noundef %1) #0 {
+define nonnull ptr @l_Lean_Meta_instBEqEtaStructMode_beq___boxed(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
   %i.d = ptrtoint ptr %1 to i64
   %i.e = lshr i64 %i.d, 1
-  %i.f = trunc i64 %i.e to i8
-  switch i8 %i.c, label %3 [
-    i8 0, label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-
-l_Lean_Meta_EtaStructMode_ctorIdx.exit.i:         ; preds = %3, %2, %bb.a
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.f, label %5 [
-    i8 0, label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-  br label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-
-5:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-  br label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-
-l_Lean_Meta_instBEqEtaStructMode_beq.exit:        ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i, %4, %5
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i ]
-  %6 = icmp eq ptr %.0.i12.i, %.0.i13.i
-  %7 = select i1 %6, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
-  ret ptr %7
+  %i.f = trunc i64 %i.e to i8                     ; 2 uses
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0     ; 2 uses
+  %switch.selectcmp.i.i = icmp ne i8 %i.c, 1
+  %switch.selectcmp4.i14.i = icmp eq i8 %i.f, 0
+  %switch.selectcmp.i12.i = icmp eq i8 %i.f, 1
+  %2 = xor i1 %switch.selectcmp.i.i, %switch.selectcmp.i12.i
+  %not.switch.selectcmp4.i.i = xor i1 %switch.selectcmp4.i.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i.i
+  %4 = select i1 %switch.selectcmp4.i14.i, i1 %switch.selectcmp4.i.i, i1 %3
+  %5 = select i1 %4, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
+  ret ptr %5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -761,7 +690,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.f = load i8, ptr %i.e, align 1, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %i.h = load i8, ptr %i.g, align 1, !tbaa !13
+  %i.h = load i8, ptr %i.g, align 1, !tbaa !13    ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.j = load i8, ptr %i.i, align 1, !tbaa !13
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 13
@@ -793,7 +722,7 @@ bb.a:
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !13
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 11
-  %i.an = load i8, ptr %i.am, align 1, !tbaa !13
+  %i.an = load i8, ptr %i.am, align 1, !tbaa !13  ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !13  ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 13
@@ -961,35 +890,16 @@ bb.ah:                                            ; preds = %.thread156
 bb.ai:                                            ; preds = %.thread156
   br i1 %i.cj, label %.thread152, label %bb.ad
 
-2:                                                ; preds = %bb.an, %bb.am
-  switch i8 %i.h, label %4 [
-    i8 0, label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-
-4:                                                ; preds = %2
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-
-l_Lean_Meta_EtaStructMode_ctorIdx.exit.i:         ; preds = %4, %3, %2
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %i.an, label %6 [
-    i8 0, label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-  br label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-
-6:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-  br label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-
-l_Lean_Meta_instBEqEtaStructMode_beq.exit:        ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i, %5, %6
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i ]
-  %.not = icmp eq ptr %.0.i12.i, %.0.i13.i
-  br i1 %.not, label %bb.aj, label %.thread152
+l_Lean_Meta_instBEqEtaStructMode_beq.exit:        ; preds = %bb.an, %bb.am
+  %switch.selectcmp4.i.i = icmp eq i8 %i.h, 0     ; 2 uses
+  %switch.selectcmp.i.i = icmp ne i8 %i.h, 1
+  %switch.selectcmp4.i14.i = icmp eq i8 %i.an, 0
+  %.not = icmp eq i8 %i.an, 1
+  %2 = xor i1 %switch.selectcmp.i.i, %.not
+  %not.switch.selectcmp4.i.i = xor i1 %switch.selectcmp4.i.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i.i
+  %4 = select i1 %switch.selectcmp4.i14.i, i1 %switch.selectcmp4.i.i, i1 %3
+  br i1 %4, label %bb.aj, label %.thread152
 
 bb.aj:                                            ; preds = %l_Lean_Meta_instBEqEtaStructMode_beq.exit
   %i.ck = icmp eq i8 %i.j, 0
@@ -1005,10 +915,10 @@ bb.al:                                            ; preds = %bb.aq, %bb.ap
   br i1 %i.cm, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  br i1 %i.cn, label %2, label %.thread152
+  br i1 %i.cn, label %l_Lean_Meta_instBEqEtaStructMode_beq.exit, label %.thread152
 
 bb.an:                                            ; preds = %bb.al
-  br i1 %i.cn, label %.thread152, label %2
+  br i1 %i.cn, label %.thread152, label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
 
 bb.ao:                                            ; preds = %bb.c, %bb.b
   %i.co = icmp eq i8 %i.d, 0
@@ -1317,7 +1227,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 37
   %i.p = load i8, ptr %i.o, align 1, !tbaa !13
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 38
-  %i.r = load i8, ptr %i.q, align 2, !tbaa !13
+  %i.r = load i8, ptr %i.q, align 2, !tbaa !13    ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 39
   %i.t = load i8, ptr %i.s, align 1, !tbaa !13
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -1381,7 +1291,7 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 37
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !13
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 38
-  %i.cd = load i8, ptr %i.cc, align 2, !tbaa !13
+  %i.cd = load i8, ptr %i.cc, align 2, !tbaa !13  ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 39
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !13
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -1705,35 +1615,16 @@ bb.bm:                                            ; preds = %.thread282
 bb.bn:                                            ; preds = %.thread282
   br i1 %i.gb, label %.thread252, label %bb.bi
 
-2:                                                ; preds = %bb.bs, %bb.br
-  switch i8 %i.r, label %4 [
-    i8 0, label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-
-4:                                                ; preds = %2
-  br label %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-
-l_Lean_Meta_EtaStructMode_ctorIdx.exit.i:         ; preds = %4, %3, %2
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %i.cd, label %6 [
-    i8 0, label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-  br label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-
-6:                                                ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i
-  br label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
-
-l_Lean_Meta_instBEqEtaStructMode_beq.exit:        ; preds = %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i, %5, %6
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lean_Meta_EtaStructMode_ctorIdx.exit.i ]
-  %.not = icmp eq ptr %.0.i12.i, %.0.i13.i
-  br i1 %.not, label %bb.bo, label %.thread252
+l_Lean_Meta_instBEqEtaStructMode_beq.exit:        ; preds = %bb.bs, %bb.br
+  %switch.selectcmp4.i.i = icmp eq i8 %i.r, 0     ; 2 uses
+  %switch.selectcmp.i.i = icmp ne i8 %i.r, 1
+  %switch.selectcmp4.i14.i = icmp eq i8 %i.cd, 0
+  %.not = icmp eq i8 %i.cd, 1
+  %2 = xor i1 %switch.selectcmp.i.i, %.not
+  %not.switch.selectcmp4.i.i = xor i1 %switch.selectcmp4.i.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i.i
+  %4 = select i1 %switch.selectcmp4.i14.i, i1 %switch.selectcmp4.i.i, i1 %3
+  br i1 %4, label %bb.bo, label %.thread252
 
 bb.bo:                                            ; preds = %l_Lean_Meta_instBEqEtaStructMode_beq.exit
   %i.gc = icmp eq i8 %i.t, 0
@@ -1749,10 +1640,10 @@ bb.bq:                                            ; preds = %bb.bv, %bb.bu
   br i1 %i.ge, label %bb.br, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
-  br i1 %i.gf, label %2, label %.thread252
+  br i1 %i.gf, label %l_Lean_Meta_instBEqEtaStructMode_beq.exit, label %.thread252
 
 bb.bs:                                            ; preds = %bb.bq
-  br i1 %i.gf, label %.thread252, label %2
+  br i1 %i.gf, label %.thread252, label %l_Lean_Meta_instBEqEtaStructMode_beq.exit
 
 bb.bt:                                            ; preds = %bb.by, %bb.bx
   %i.gg = icmp eq i8 %i.n, 0
@@ -1854,7 +1745,7 @@ lean_dec_ref.exit:                                ; preds = %bb.e, %bb.f, %bb.g
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lean_Meta_Occurrences_ctorIdx(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Meta_Occurrences_ctorIdx(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -1864,88 +1755,64 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i, 24
-  br label %lean_obj_tag.exit
-
-lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i, label %2 [
-    i32 0, label %bb.d
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit
   br label %bb.d
 
-2:                                                ; preds = %lean_obj_tag.exit
-  br label %bb.d
-
-bb.d:                                             ; preds = %lean_obj_tag.exit, %2, %1
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp = icmp eq i32 %.0.i, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5 = icmp eq i32 %.0.i, 0
+  %switch.select6 = select i1 %switch.selectcmp5, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select6
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lean_Meta_Occurrences_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #2 {
+define nonnull ptr @l_Lean_Meta_Occurrences_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
-  %.not.i.i = icmp eq i64 %i.b, 0                 ; 2 uses
+  %.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %lean_dec.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
-  %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
+  %i.f = lshr i32 %.val.i.i, 24                   ; 3 uses
+  %1 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
+  %2 = icmp sgt i32 %1, 1
+  br i1 %2, label %bb.d, label %bb.e, !prof !11
 
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %2 [
-    i32 0, label %l_Lean_Meta_Occurrences_ctorIdx.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Meta_Occurrences_ctorIdx.exit
-
-2:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Meta_Occurrences_ctorIdx.exit
-
-l_Lean_Meta_Occurrences_ctorIdx.exit:             ; preds = %lean_obj_tag.exit.i, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
-  br i1 %.not.i.i, label %3, label %lean_dec.exit
-
-3:                                                ; preds = %l_Lean_Meta_Occurrences_ctorIdx.exit
-  %4 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
-  %5 = icmp sgt i32 %4, 1
-  br i1 %5, label %bb.d, label %bb.e, !prof !11
-
-bb.d:                                             ; preds = %3
-  %i.g = add nsw i32 %4, -1
+bb.d:                                             ; preds = %bb.c
+  %i.g = add nsw i32 %1, -1
   store i32 %i.g, ptr %0, align 4, !tbaa !10
   br label %lean_dec.exit
 
-bb.e:                                             ; preds = %3
-  %.not.i3 = icmp eq i32 %4, 0
+bb.e:                                             ; preds = %bb.c
+  %.not.i3 = icmp eq i32 %1, 0
   br i1 %.not.i3, label %lean_dec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #6
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.f, %bb.e, %bb.d, %l_Lean_Meta_Occurrences_ctorIdx.exit
-  ret ptr %.0.i
+lean_dec.exit:                                    ; preds = %bb.b, %bb.f, %bb.e, %bb.d
+  %.0.i.i5 = phi i32 [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.d, %bb.b ] ; 2 uses
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i5, 0
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i5, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: nounwind uwtable

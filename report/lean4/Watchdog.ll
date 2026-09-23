@@ -204,7 +204,7 @@ lean_dec_ref.exit:                                ; preds = %bb.b, %bb.c, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lean_Server_Watchdog_ServerEvent_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_Server_Watchdog_ServerEvent_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -214,34 +214,25 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i, 24
-  br label %lean_obj_tag.exit
-
-lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i, label %2 [
-    i32 0, label %bb.d
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit
   br label %bb.d
 
-2:                                                ; preds = %lean_obj_tag.exit
-  br label %bb.d
-
-bb.d:                                             ; preds = %lean_obj_tag.exit, %2, %1
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp = icmp eq i32 %.0.i, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5 = icmp eq i32 %.0.i, 0
+  %switch.select6 = select i1 %switch.selectcmp5, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select6
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lean_Server_Watchdog_ServerEvent_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
+define nonnull ptr @l_Lean_Server_Watchdog_ServerEvent_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -251,29 +242,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %l_Lean_Server_Watchdog_ServerEvent_ctorIdx.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
-
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %2 [
-    i32 0, label %l_Lean_Server_Watchdog_ServerEvent_ctorIdx.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit.i
   br label %l_Lean_Server_Watchdog_ServerEvent_ctorIdx.exit
 
-2:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Server_Watchdog_ServerEvent_ctorIdx.exit
-
-l_Lean_Server_Watchdog_ServerEvent_ctorIdx.exit:  ; preds = %lean_obj_tag.exit.i, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
+l_Lean_Server_Watchdog_ServerEvent_ctorIdx.exit:  ; preds = %bb.b, %bb.c
+  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
   %i.g = load i32, ptr %0, align 4, !tbaa !10     ; 3 uses
   %i.h = icmp sgt i32 %i.g, 1
   br i1 %i.h, label %bb.d, label %bb.e, !prof !11
@@ -292,7 +270,11 @@ bb.f:                                             ; preds = %bb.e
   br label %lean_dec_ref.exit
 
 lean_dec_ref.exit:                                ; preds = %bb.d, %bb.e, %bb.f
-  ret ptr %.0.i
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i, 0
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: nounwind uwtable

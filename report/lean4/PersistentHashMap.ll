@@ -14,7 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 @l_Lean_PersistentHashMap_subarrayMeasure___redArg___closed__0_value = internal constant { { i32, i8, i8, i8, i8 }, i64, i64, [0 x ptr] } { { i32, i8, i8, i8, i8 } { i32 0, i8 24, i8 0, i8 0, i8 -10 }, i64 0, i64 0, [0 x ptr] zeroinitializer }, align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -24,92 +24,68 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i, 24
-  br label %lean_obj_tag.exit
-
-lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i, label %2 [
-    i32 0, label %bb.d
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit
   br label %bb.d
 
-2:                                                ; preds = %lean_obj_tag.exit
-  br label %bb.d
-
-bb.d:                                             ; preds = %lean_obj_tag.exit, %2, %1
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp = icmp eq i32 %.0.i, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5 = icmp eq i32 %.0.i, 0
+  %switch.select6 = select i1 %switch.selectcmp5, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select6
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg___boxed(ptr noundef %0) local_unnamed_addr #1 {
+define nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg___boxed(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
-  %.not.i.i = icmp eq i64 %i.b, 0                 ; 2 uses
+  %.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %lean_dec.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
-  %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
+  %i.f = lshr i32 %.val.i.i, 24                   ; 3 uses
+  %1 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
+  %2 = icmp sgt i32 %1, 1
+  br i1 %2, label %bb.d, label %bb.e, !prof !11
 
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %2 [
-    i32 0, label %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
-
-2:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
-
-l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit: ; preds = %lean_obj_tag.exit.i, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
-  br i1 %.not.i.i, label %3, label %lean_dec.exit
-
-3:                                                ; preds = %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
-  %4 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
-  %5 = icmp sgt i32 %4, 1
-  br i1 %5, label %bb.d, label %bb.e, !prof !11
-
-bb.d:                                             ; preds = %3
-  %i.g = add nsw i32 %4, -1
+bb.d:                                             ; preds = %bb.c
+  %i.g = add nsw i32 %1, -1
   store i32 %i.g, ptr %0, align 4, !tbaa !10
   br label %lean_dec.exit
 
-bb.e:                                             ; preds = %3
-  %.not.i3 = icmp eq i32 %4, 0
+bb.e:                                             ; preds = %bb.c
+  %.not.i3 = icmp eq i32 %1, 0
   br i1 %.not.i3, label %lean_dec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #6
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.f, %bb.e, %bb.d, %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
-  ret ptr %.0.i
+lean_dec.exit:                                    ; preds = %bb.b, %bb.f, %bb.e, %bb.d
+  %.0.i.i5 = phi i32 [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.d, %bb.b ] ; 2 uses
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i5, 0
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i5, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readnone captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readnone captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -119,88 +95,64 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %2, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
-
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %4 [
-    i32 0, label %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
-    i32 1, label %3
-  ]
-
-3:                                                ; preds = %lean_obj_tag.exit.i
   br label %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
 
-4:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit
-
-l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit: ; preds = %lean_obj_tag.exit.i, %3, %4
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
-  ret ptr %.0.i
+l_Lean_PersistentHashMap_Zipper_ctorIdx___redArg.exit: ; preds = %bb.b, %bb.c
+  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i, 0
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx___boxed(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readnone captures(none) %1, ptr noundef %2) local_unnamed_addr #1 {
+define nonnull ptr @l_Lean_PersistentHashMap_Zipper_ctorIdx___boxed(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readnone captures(none) %1, ptr noundef %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
-  %.not.i.i.i = icmp eq i64 %i.b, 0               ; 2 uses
+  %.not.i.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i.i
+  br label %lean_dec.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %2, i64 4
   %.val.i.i.i = load i32, ptr %i.e, align 4
-  %i.f = lshr i32 %.val.i.i.i, 24
-  br label %lean_obj_tag.exit.i.i
+  %i.f = lshr i32 %.val.i.i.i, 24                 ; 3 uses
+  %3 = load i32, ptr %2, align 4, !tbaa !10       ; 3 uses
+  %4 = icmp sgt i32 %3, 1
+  br i1 %4, label %bb.d, label %bb.e, !prof !11
 
-lean_obj_tag.exit.i.i:                            ; preds = %bb.c, %bb.b
-  %.0.i.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i.i, label %4 [
-    i32 0, label %l_Lean_PersistentHashMap_Zipper_ctorIdx.exit
-    i32 1, label %3
-  ]
-
-3:                                                ; preds = %lean_obj_tag.exit.i.i
-  br label %l_Lean_PersistentHashMap_Zipper_ctorIdx.exit
-
-4:                                                ; preds = %lean_obj_tag.exit.i.i
-  br label %l_Lean_PersistentHashMap_Zipper_ctorIdx.exit
-
-l_Lean_PersistentHashMap_Zipper_ctorIdx.exit:     ; preds = %lean_obj_tag.exit.i.i, %3, %4
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i.i ]
-  br i1 %.not.i.i.i, label %5, label %lean_dec.exit
-
-5:                                                ; preds = %l_Lean_PersistentHashMap_Zipper_ctorIdx.exit
-  %6 = load i32, ptr %2, align 4, !tbaa !10       ; 3 uses
-  %7 = icmp sgt i32 %6, 1
-  br i1 %7, label %bb.d, label %bb.e, !prof !11
-
-bb.d:                                             ; preds = %5
-  %i.g = add nsw i32 %6, -1
+bb.d:                                             ; preds = %bb.c
+  %i.g = add nsw i32 %3, -1
   store i32 %i.g, ptr %2, align 4, !tbaa !10
   br label %lean_dec.exit
 
-bb.e:                                             ; preds = %5
-  %.not.i5 = icmp eq i32 %6, 0
+bb.e:                                             ; preds = %bb.c
+  %.not.i5 = icmp eq i32 %3, 0
   br i1 %.not.i5, label %lean_dec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %2) #6
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.f, %bb.e, %bb.d, %l_Lean_PersistentHashMap_Zipper_ctorIdx.exit
-  ret ptr %.0.i.i
+lean_dec.exit:                                    ; preds = %bb.b, %bb.f, %bb.e, %bb.d
+  %.0.i.i.i7 = phi i32 [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.d, %bb.b ] ; 2 uses
+  %switch.selectcmp5.i.i = icmp eq i32 %.0.i.i.i7, 0
+  %switch.selectcmp.i.i = icmp eq i32 %.0.i.i.i7, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i.i = select i1 %switch.selectcmp5.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select6.i.i
 }
 
 ; Function Attrs: nounwind uwtable

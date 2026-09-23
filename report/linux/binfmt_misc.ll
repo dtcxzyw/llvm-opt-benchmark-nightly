@@ -202,14 +202,11 @@ copy_from_user.exit.i:                            ; preds = %_kmalloc_noprof.exi
 bb.b:                                             ; preds = %copy_from_user.exit.i
   %i.i = load i8, ptr %i.g, align 8               ; 6 uses
   %i.j = zext i8 %i.i to i32                      ; 5 uses
-  switch i8 %i.i, label %bb.c [
-    i8 80, label %create_entry.exit.thread.sink.split
-    i8 79, label %create_entry.exit.thread.sink.split
-    i8 70, label %create_entry.exit.thread.sink.split
-    i8 67, label %create_entry.exit.thread.sink.split
-  ]
+  %switch.tableidx = add i8 %i.i, -67             ; 2 uses
+  %4 = icmp ult i8 %switch.tableidx, 14
+  br i1 %4, label %switch.hole_check, label %bb.c
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %switch.hole_check, %bb.b
   %i.k = getelementptr i8, ptr %i.f, i64 89       ; 2 uses
   %i.l = getelementptr i8, ptr %i.g, i64 %2       ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(8) %i.l, i8 %i.i, i64 8, i1 false)
@@ -452,8 +449,14 @@ create_entry.exit:                                ; preds = %check_special_flags
   %i.bx = icmp ugt ptr %.0.i, inttoptr (i64 -4096 to ptr)
   br i1 %i.bx, label %create_entry.exit.thread, label %bb.ah
 
-create_entry.exit.thread.sink.split:              ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.c, %bb.d, %.tail190.i, %.tail190.thread.i, %bb.e, %bb.g, %bb.i, %bb.k, %bb.l, %bb.m, %.thread179.i, %bb.n, %bb.o, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %.thread184.i, %bb.ab, %check_special_flags.exit.i, %.tail.i, %copy_from_user.exit.i
-  %.0.i30.ph = phi ptr [ inttoptr (i64 -22 to ptr), %bb.b ], [ inttoptr (i64 -14 to ptr), %copy_from_user.exit.i ], [ inttoptr (i64 -22 to ptr), %bb.b ], [ inttoptr (i64 -22 to ptr), %.tail.i ], [ inttoptr (i64 -22 to ptr), %check_special_flags.exit.i ], [ inttoptr (i64 -22 to ptr), %bb.ab ], [ inttoptr (i64 -22 to ptr), %.thread184.i ], [ inttoptr (i64 -22 to ptr), %bb.z ], [ inttoptr (i64 -22 to ptr), %bb.y ], [ inttoptr (i64 -22 to ptr), %bb.x ], [ inttoptr (i64 -22 to ptr), %bb.w ], [ inttoptr (i64 -22 to ptr), %bb.v ], [ inttoptr (i64 -22 to ptr), %bb.u ], [ inttoptr (i64 -22 to ptr), %bb.t ], [ inttoptr (i64 -22 to ptr), %bb.s ], [ inttoptr (i64 -22 to ptr), %bb.o ], [ inttoptr (i64 -22 to ptr), %bb.n ], [ inttoptr (i64 -22 to ptr), %.thread179.i ], [ inttoptr (i64 -22 to ptr), %bb.m ], [ inttoptr (i64 -22 to ptr), %bb.l ], [ inttoptr (i64 -22 to ptr), %bb.k ], [ inttoptr (i64 -22 to ptr), %bb.i ], [ inttoptr (i64 -22 to ptr), %bb.g ], [ inttoptr (i64 -22 to ptr), %bb.e ], [ inttoptr (i64 -22 to ptr), %.tail190.thread.i ], [ inttoptr (i64 -22 to ptr), %.tail190.i ], [ inttoptr (i64 -22 to ptr), %bb.d ], [ inttoptr (i64 -22 to ptr), %bb.c ], [ inttoptr (i64 -22 to ptr), %bb.b ], [ inttoptr (i64 -22 to ptr), %bb.b ]
+switch.hole_check:                                ; preds = %bb.b
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i16
+  %switch.shifted = lshr i16 12297, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  br i1 %switch.lobit, label %create_entry.exit.thread.sink.split, label %bb.c
+
+create_entry.exit.thread.sink.split:              ; preds = %switch.hole_check, %bb.c, %bb.d, %.tail190.i, %.tail190.thread.i, %bb.e, %bb.g, %bb.i, %bb.k, %bb.l, %bb.m, %.thread179.i, %bb.n, %bb.o, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %.thread184.i, %bb.ab, %check_special_flags.exit.i, %.tail.i, %copy_from_user.exit.i
+  %.0.i30.ph = phi ptr [ inttoptr (i64 -22 to ptr), %bb.d ], [ inttoptr (i64 -14 to ptr), %copy_from_user.exit.i ], [ inttoptr (i64 -22 to ptr), %bb.c ], [ inttoptr (i64 -22 to ptr), %.tail.i ], [ inttoptr (i64 -22 to ptr), %check_special_flags.exit.i ], [ inttoptr (i64 -22 to ptr), %bb.ab ], [ inttoptr (i64 -22 to ptr), %.thread184.i ], [ inttoptr (i64 -22 to ptr), %bb.z ], [ inttoptr (i64 -22 to ptr), %bb.y ], [ inttoptr (i64 -22 to ptr), %bb.x ], [ inttoptr (i64 -22 to ptr), %bb.w ], [ inttoptr (i64 -22 to ptr), %bb.v ], [ inttoptr (i64 -22 to ptr), %bb.u ], [ inttoptr (i64 -22 to ptr), %bb.t ], [ inttoptr (i64 -22 to ptr), %bb.s ], [ inttoptr (i64 -22 to ptr), %bb.o ], [ inttoptr (i64 -22 to ptr), %bb.n ], [ inttoptr (i64 -22 to ptr), %.thread179.i ], [ inttoptr (i64 -22 to ptr), %bb.m ], [ inttoptr (i64 -22 to ptr), %bb.l ], [ inttoptr (i64 -22 to ptr), %bb.k ], [ inttoptr (i64 -22 to ptr), %bb.i ], [ inttoptr (i64 -22 to ptr), %bb.g ], [ inttoptr (i64 -22 to ptr), %bb.e ], [ inttoptr (i64 -22 to ptr), %.tail190.thread.i ], [ inttoptr (i64 -22 to ptr), %.tail190.i ], [ inttoptr (i64 -22 to ptr), %switch.hole_check ]
   tail call void @kfree(ptr noundef nonnull %i.f) #14
   br label %create_entry.exit.thread
 

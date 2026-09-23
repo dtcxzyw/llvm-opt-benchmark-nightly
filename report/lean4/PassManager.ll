@@ -184,42 +184,25 @@ target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Compiler_LCNF_Phase_toNat(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Compiler_LCNF_Phase_toNat___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_Compiler_LCNF_Phase_toNat___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-
-l_Lean_Compiler_LCNF_Phase_toNat.exit:            ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -414,34 +397,14 @@ lean_dec.exit:                                    ; preds = %bb.e, %bb.d, %bb.c,
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext range(i8 0, 2) i8 @l_Lean_Compiler_LCNF_instDecidableLtPhase(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-
-4:                                                ; preds = %2
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-
-l_Lean_Compiler_LCNF_Phase_toNat.exit:            ; preds = %2, %3, %4
-  %.0.i12 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %lean_dec.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit
-  br label %lean_dec.exit
-
-6:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %6, %5, %l_Lean_Compiler_LCNF_Phase_toNat.exit
-  %.0.i13 = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lean_Compiler_LCNF_Phase_toNat.exit ]
-  %i.a = icmp samesign ult ptr %.0.i12, %.0.i13
-  %i.b = zext i1 %i.a to i8
+lean_dec.exit:
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.selectcmp4.i14 = icmp ne i8 %1, 0
+  %switch.selectcmp.i12 = icmp eq i8 %1, 1
+  %i.a = icmp ult i8 %0, 2
+  %2 = select i1 %switch.selectcmp.i12, i1 %switch.selectcmp4.i, i1 %i.a
+  %3 = and i1 %switch.selectcmp4.i14, %2
+  %i.b = zext i1 %3 to i8
   ret i8 %i.b
 }
 
@@ -450,71 +413,30 @@ define nonnull ptr @l_Lean_Compiler_LCNF_instDecidableLtPhase___boxed(ptr nounde
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
   %i.d = ptrtoint ptr %1 to i64
   %i.e = lshr i64 %i.d, 1
-  %i.f = trunc i64 %i.e to i8
-  switch i8 %i.c, label %3 [
-    i8 0, label %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-
-l_Lean_Compiler_LCNF_Phase_toNat.exit.i:          ; preds = %3, %2, %bb.a
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.f, label %5 [
-    i8 0, label %l_Lean_Compiler_LCNF_instDecidableLtPhase.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-  br label %l_Lean_Compiler_LCNF_instDecidableLtPhase.exit
-
-5:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-  br label %l_Lean_Compiler_LCNF_instDecidableLtPhase.exit
-
-l_Lean_Compiler_LCNF_instDecidableLtPhase.exit:   ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit.i, %4, %5
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lean_Compiler_LCNF_Phase_toNat.exit.i ]
-  %6 = icmp samesign ult ptr %.0.i12.i, %.0.i13.i
-  %7 = select i1 %6, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
-  ret ptr %7
+  %i.f = trunc i64 %i.e to i8                     ; 2 uses
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.selectcmp4.i14.i = icmp ne i8 %i.f, 0
+  %switch.selectcmp.i12.i = icmp eq i8 %i.f, 1
+  %2 = icmp ult i8 %i.c, 2
+  %3 = select i1 %switch.selectcmp.i12.i, i1 %switch.selectcmp4.i.i, i1 %2
+  %4 = and i1 %switch.selectcmp4.i14.i, %3
+  %5 = select i1 %4, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
+  ret ptr %5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext range(i8 0, 2) i8 @l_Lean_Compiler_LCNF_instDecidableLePhase(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-
-4:                                                ; preds = %2
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit
-
-l_Lean_Compiler_LCNF_Phase_toNat.exit:            ; preds = %2, %3, %4
-  %.0.i12 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %lean_dec.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit
-  br label %lean_dec.exit
-
-6:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %6, %5, %l_Lean_Compiler_LCNF_Phase_toNat.exit
-  %.0.i13 = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lean_Compiler_LCNF_Phase_toNat.exit ]
-  %7 = icmp samesign ule ptr %.0.i12, %.0.i13
-  %i.a = zext i1 %7 to i8
+lean_dec.exit:
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.selectcmp4.i14 = icmp eq i8 %1, 0
+  %switch.selectcmp.i12 = icmp ne i8 %1, 1
+  %2 = icmp ult i8 %0, 2
+  %3 = or i1 %2, %switch.selectcmp.i12
+  %4 = select i1 %switch.selectcmp4.i14, i1 %switch.selectcmp4.i, i1 %3
+  %i.a = zext i1 %4 to i8
   ret i8 %i.a
 }
 
@@ -523,39 +445,18 @@ define nonnull ptr @l_Lean_Compiler_LCNF_instDecidableLePhase___boxed(ptr nounde
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
   %i.d = ptrtoint ptr %1 to i64
   %i.e = lshr i64 %i.d, 1
-  %i.f = trunc i64 %i.e to i8
-  switch i8 %i.c, label %3 [
-    i8 0, label %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-
-l_Lean_Compiler_LCNF_Phase_toNat.exit.i:          ; preds = %3, %2, %bb.a
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.f, label %5 [
-    i8 0, label %l_Lean_Compiler_LCNF_instDecidableLePhase.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-  br label %l_Lean_Compiler_LCNF_instDecidableLePhase.exit
-
-5:                                                ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit.i
-  br label %l_Lean_Compiler_LCNF_instDecidableLePhase.exit
-
-l_Lean_Compiler_LCNF_instDecidableLePhase.exit:   ; preds = %l_Lean_Compiler_LCNF_Phase_toNat.exit.i, %4, %5
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lean_Compiler_LCNF_Phase_toNat.exit.i ]
-  %.not = icmp samesign ugt ptr %.0.i12.i, %.0.i13.i
-  %6 = select i1 %.not, ptr inttoptr (i64 1 to ptr), ptr inttoptr (i64 3 to ptr)
-  ret ptr %6
+  %i.f = trunc i64 %i.e to i8                     ; 2 uses
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.selectcmp4.i14.i = icmp eq i8 %i.f, 0
+  %switch.selectcmp.i12.i = icmp ne i8 %i.f, 1
+  %2 = icmp ult i8 %i.c, 2
+  %3 = or i1 %2, %switch.selectcmp.i12.i
+  %4 = select i1 %switch.selectcmp4.i14.i, i1 %switch.selectcmp4.i.i, i1 %3
+  %5 = select i1 %4, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
+  ret ptr %5
 }
 
 ; Function Attrs: nounwind uwtable

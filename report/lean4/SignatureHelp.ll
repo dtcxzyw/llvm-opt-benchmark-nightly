@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 lean_dec.exit:                                    ; preds = %bb.g, %bb.f, %bb.e, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !23
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !24
 
 bb.h:                                             ; preds = %bb.a
   %i.j = icmp sgt i32 %.val, 1
@@ -607,82 +607,48 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit: ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit: ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_toCtorIdx.exit
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_toCtorIdx.exit: ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -1085,42 +1051,25 @@ lean_dec.exit:                                    ; preds = %bb.d, %bb.a, %bb.i,
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit: ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -1523,8 +1472,8 @@ lean_dec.exit278:                                 ; preds = %bb.fe, %bb.ff, %bb.
   %.not.i388 = trunc i64 %i.kg to i1              ; 2 uses
   %i.kh = ptrtoint ptr %.1.i264 to i64            ; 2 uses
   %i.ki = trunc i64 %i.kh to i1
-  %or.cond = select i1 %.not.i388, i1 %i.ki, i1 false, !prof !25
-  br i1 %or.cond, label %bb.fk, label %.critedge.i389, !prof !25
+  %or.cond = select i1 %.not.i388, i1 %i.ki, i1 false, !prof !21
+  br i1 %or.cond, label %bb.fk, label %.critedge.i389, !prof !21
 
 bb.fk:                                            ; preds = %lean_dec.exit278
   %i.kj = icmp eq ptr %.0.i458, %.1.i264
@@ -1927,7 +1876,7 @@ lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit
   store ptr inttoptr (i64 1 to ptr), ptr %i.l, align 8, !tbaa !10
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store ptr %i.d, ptr %i.m, align 8, !tbaa !10
-  %i.n = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__2_once seq_cst, align 4, !tbaa !22
+  %i.n = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__2_once seq_cst, align 4, !tbaa !23
   %i.o = icmp eq i32 %i.n, 1
   br i1 %i.o, label %bb.f, label %bb.g, !prof !13
 
@@ -1945,7 +1894,7 @@ lean_uint8_once.exit:                             ; preds = %bb.f, %bb.g
   br i1 %i.r, label %bb.h, label %lean_obj_once.exit
 
 bb.h:                                             ; preds = %lean_uint8_once.exit
-  %i.s = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__5_once seq_cst, align 4, !tbaa !22
+  %i.s = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__5_once seq_cst, align 4, !tbaa !23
   %i.t = icmp eq i32 %i.s, 1
   br i1 %i.t, label %bb.i, label %bb.j, !prof !13
 
@@ -2204,7 +2153,7 @@ lean_dec.exit:                                    ; preds = %bb.aj, %lean_obj_ta
 ; Function Attrs: nounwind uwtable
 define internal zeroext range(i8 0, 2) i8 @_init_l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__2() #0 {
 bb.a:
-  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__1_once seq_cst, align 4, !tbaa !22
+  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__1_once seq_cst, align 4, !tbaa !23
   %i.b = icmp eq i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c, !prof !13
 
@@ -2240,7 +2189,7 @@ lean_nat_eq.exit:                                 ; preds = %bb.d, %.critedge.i
 ; Function Attrs: nounwind uwtable
 define internal nonnull ptr @_init_l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__5() #0 {
 bb.a:
-  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__4_once seq_cst, align 4, !tbaa !22
+  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__4_once seq_cst, align 4, !tbaa !23
   %i.b = icmp eq i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c, !prof !13
 
@@ -2254,7 +2203,7 @@ bb.c:                                             ; preds = %bb.a
 
 lean_obj_once.exit:                               ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.c, %bb.b ], [ %i.d, %bb.c ]
-  %i.e = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__3_once seq_cst, align 4, !tbaa !22
+  %i.e = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__3_once seq_cst, align 4, !tbaa !23
   %i.f = icmp eq i32 %i.e, 1
   br i1 %i.f, label %bb.d, label %bb.e, !prof !13
 
@@ -2657,84 +2606,37 @@ lean_dec.exit:                                    ; preds = %bb.i, %bb.h, %bb.g,
 define zeroext range(i8 0, 2) i8 @l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !19
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !19    ; 2 uses
+  %switch.selectcmp4.i = icmp eq i8 %i.b, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !19
-  switch i8 %i.b, label %3 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-
-3:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit: ; preds = %bb.a, %2, %3
-  %.0.i14 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.d, label %5 [
-    i8 0, label %lean_dec.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-  br label %lean_dec.exit
-
-5:                                                ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %5, %4, %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-  %.0.i15 = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit ]
-  %6 = icmp samesign ule ptr %.0.i14, %.0.i15
-  %7 = zext i1 %6 to i8
-  ret i8 %7
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !19    ; 2 uses
+  %switch.selectcmp4.i16 = icmp eq i8 %i.d, 0
+  %switch.selectcmp.i14 = icmp ne i8 %i.d, 1
+  %2 = icmp ult i8 %i.b, 2
+  %3 = select i1 %switch.selectcmp.i14, i1 true, i1 %2
+  %4 = select i1 %switch.selectcmp4.i16, i1 %switch.selectcmp4.i, i1 %3
+  %5 = zext i1 %4 to i8
+  ret i8 %5
 }
 
 ; Function Attrs: nounwind uwtable
 define nonnull ptr @l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2___boxed(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !19
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !19    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !19
-  switch i8 %i.b, label %3 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-    i8 1, label %2
-  ]
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !19    ; 2 uses
+  %2 = load i32, ptr %1, align 4, !tbaa !12       ; 3 uses
+  %3 = icmp sgt i32 %2, 1
+  br i1 %3, label %bb.b, label %bb.c, !prof !13
 
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i: ; preds = %3, %2, %bb.a
-  %.0.i14.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.d, label %5 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-  br label %l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2.exit
-
-5:                                                ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-  br label %l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2.exit
-
-l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2.exit: ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i, %4, %5
-  %.0.i15.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i ]
-  %6 = load i32, ptr %1, align 4, !tbaa !12       ; 3 uses
-  %7 = icmp sgt i32 %6, 1
-  br i1 %7, label %bb.b, label %bb.c, !prof !13
-
-bb.b:                                             ; preds = %l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2.exit
-  %i.e = add nsw i32 %6, -1
+bb.b:                                             ; preds = %bb.a
+  %i.e = add nsw i32 %2, -1
   store i32 %i.e, ptr %1, align 4, !tbaa !12
   br label %lean_dec_ref.exit6
 
-bb.c:                                             ; preds = %l_Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f___lam__2.exit
-  %.not.i5 = icmp eq i32 %6, 0
+bb.c:                                             ; preds = %bb.a
+  %.not.i5 = icmp eq i32 %2, 0
   br i1 %.not.i5, label %lean_dec_ref.exit6, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -2760,8 +2662,13 @@ bb.g:                                             ; preds = %bb.f
   br label %lean_dec_ref.exit
 
 lean_dec_ref.exit:                                ; preds = %bb.e, %bb.f, %bb.g
-  %.not = icmp samesign ugt ptr %.0.i14.i, %.0.i15.i
-  %i.i = select i1 %.not, ptr inttoptr (i64 1 to ptr), ptr inttoptr (i64 3 to ptr)
+  %switch.selectcmp4.i16.i = icmp eq i8 %i.d, 0
+  %switch.selectcmp4.i.i = icmp eq i8 %i.b, 0
+  %switch.selectcmp.i14.i = icmp ne i8 %i.d, 1
+  %4 = icmp ult i8 %i.b, 2
+  %5 = select i1 %switch.selectcmp.i14.i, i1 true, i1 %4
+  %6 = select i1 %switch.selectcmp4.i16.i, i1 %switch.selectcmp4.i.i, i1 %5
+  %i.i = select i1 %6, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
   ret ptr %i.i
 }
 
@@ -3164,45 +3071,35 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01931
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !19
-  %i.g = load atomic i32, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once seq_cst, align 4, !tbaa !22
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !19    ; 2 uses
+  %i.g = load atomic i32, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once seq_cst, align 4, !tbaa !23
   %i.h = icmp eq i32 %i.g, 1
   br i1 %i.h, label %bb.d, label %bb.e, !prof !13
 
 bb.d:                                             ; preds = %bb.c
   %i.i = load ptr, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0, align 8, !tbaa !10
-  br label %lean_obj_once.exit
+  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
 
 bb.e:                                             ; preds = %bb.c
   %i.j = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0, ptr noundef nonnull @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once, ptr noundef nonnull @_init_l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0) #7
-  br label %lean_obj_once.exit
+  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
 
-lean_obj_once.exit:                               ; preds = %bb.d, %bb.e
+l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit: ; preds = %bb.d, %bb.e
   %.0.i24 = phi ptr [ %i.i, %bb.d ], [ %i.j, %bb.e ] ; 3 uses
-  switch i8 %i.f, label %4 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %lean_obj_once.exit
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-
-4:                                                ; preds = %lean_obj_once.exit
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit: ; preds = %lean_obj_once.exit, %3, %4
-  %.0.i25 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %lean_obj_once.exit ] ; 2 uses
-  %5 = ptrtoint ptr %.0.i24 to i64
-  %6 = and i64 %5, 1
-  %.not.i23.a = icmp eq i64 %6, 0
-  br i1 %.not.i23.a, label %lean_dec.exit, label %.split, !prof !20
+  %switch.selectcmp.i = icmp eq i8 %i.f, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %.not.i23.a = icmp eq i8 %i.f, 0
+  %switch.select5.i = select i1 %.not.i23.a, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i ; 2 uses
+  %3 = ptrtoint ptr %.0.i24 to i64
+  %.not.i23 = trunc i64 %3 to i1
+  br i1 %.not.i23, label %.split, label %lean_dec.exit, !prof !21
 
 .split:                                           ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-  %i.k = icmp ult ptr %.0.i24, %.0.i25
+  %i.k = icmp ult ptr %.0.i24, %switch.select5.i
   br i1 %i.k, label %lean_dec.exit._crit_edge, label %bb.b
 
 lean_dec.exit:                                    ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit
-  %i.l = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %.0.i24, ptr noundef nonnull %.0.i25) #7
+  %i.l = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %.0.i24, ptr noundef nonnull %switch.select5.i) #7
   br i1 %i.l, label %lean_dec.exit._crit_edge, label %bb.b
 
 lean_dec.exit._crit_edge:                         ; preds = %bb.b, %lean_dec.exit, %.split, %bb.a
@@ -3276,45 +3173,35 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.01931.i
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !10
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !19
-  %i.o = load atomic i32, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once seq_cst, align 4, !tbaa !22
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !19    ; 2 uses
+  %i.o = load atomic i32, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once seq_cst, align 4, !tbaa !23
   %i.p = icmp eq i32 %i.o, 1
   br i1 %i.p, label %bb.j, label %bb.k, !prof !13
 
 bb.j:                                             ; preds = %bb.i
   %i.q = load ptr, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0, align 8, !tbaa !10
-  br label %lean_obj_once.exit.i
+  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
 
 bb.k:                                             ; preds = %bb.i
   %i.r = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0, ptr noundef nonnull @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once, ptr noundef nonnull @_init_l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0) #7
-  br label %lean_obj_once.exit.i
+  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
 
-lean_obj_once.exit.i:                             ; preds = %bb.k, %bb.j
+l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i: ; preds = %bb.k, %bb.j
   %.0.i24.i = phi ptr [ %i.q, %bb.j ], [ %i.r, %bb.k ] ; 3 uses
-  switch i8 %i.n, label %4 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %lean_obj_once.exit.i
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-
-4:                                                ; preds = %lean_obj_once.exit.i
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i: ; preds = %4, %3, %lean_obj_once.exit.i
-  %.0.i25.i = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %lean_obj_once.exit.i ] ; 2 uses
-  %5 = ptrtoint ptr %.0.i24.i to i64
-  %6 = and i64 %5, 1
-  %.not.i23.i.a = icmp eq i64 %6, 0
-  br i1 %.not.i23.i.a, label %lean_dec.exit.i, label %.split.i, !prof !20
+  %switch.selectcmp.i.i = icmp eq i8 %i.n, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %.not.i23.i.a = icmp eq i8 %i.n, 0
+  %switch.select5.i.i = select i1 %.not.i23.i.a, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i ; 2 uses
+  %3 = ptrtoint ptr %.0.i24.i to i64
+  %.not.i23.i = trunc i64 %3 to i1
+  br i1 %.not.i23.i, label %.split.i, label %lean_dec.exit.i, !prof !21
 
 .split.i:                                         ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-  %i.s = icmp ult ptr %.0.i24.i, %.0.i25.i
+  %i.s = icmp ult ptr %.0.i24.i, %switch.select5.i.i
   br i1 %i.s, label %l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2.exit, label %bb.h
 
 lean_dec.exit.i:                                  ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-  %i.t = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %.0.i24.i, ptr noundef nonnull %.0.i25.i) #7
+  %i.t = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %.0.i24.i, ptr noundef nonnull %switch.select5.i.i) #7
   br i1 %i.t, label %l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2.exit, label %bb.h
 
 l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2.exit: ; preds = %bb.h, %.split.i, %lean_dec.exit.i, %lean_dec.exit
@@ -3717,45 +3604,35 @@ bb.at:                                            ; preds = %bb.as, %.lr.ph.i
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %.01931.i
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !10
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
-  %i.cv = load i8, ptr %i.cu, align 1, !tbaa !19
-  %i.cw = load atomic i32, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once seq_cst, align 4, !tbaa !22
+  %i.cv = load i8, ptr %i.cu, align 1, !tbaa !19  ; 2 uses
+  %i.cw = load atomic i32, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once seq_cst, align 4, !tbaa !23
   %i.cx = icmp eq i32 %i.cw, 1
   br i1 %i.cx, label %bb.au, label %bb.av, !prof !13
 
 bb.au:                                            ; preds = %bb.at
   %i.cy = load ptr, ptr @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0, align 8, !tbaa !10
-  br label %lean_obj_once.exit.i
+  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
 
 bb.av:                                            ; preds = %bb.at
   %i.cz = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0, ptr noundef nonnull @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0_once, ptr noundef nonnull @_init_l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2___closed__0) #7
-  br label %lean_obj_once.exit.i
+  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
 
-lean_obj_once.exit.i:                             ; preds = %bb.av, %bb.au
+l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i: ; preds = %bb.av, %bb.au
   %.0.i24.i = phi ptr [ %i.cy, %bb.au ], [ %i.cz, %bb.av ] ; 3 uses
-  switch i8 %i.cv, label %6 [
-    i8 0, label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %lean_obj_once.exit.i
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-
-6:                                                ; preds = %lean_obj_once.exit.i
-  br label %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-
-l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i: ; preds = %6, %5, %lean_obj_once.exit.i
-  %.0.i25.i = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %lean_obj_once.exit.i ] ; 2 uses
-  %7 = ptrtoint ptr %.0.i24.i to i64
-  %8 = and i64 %7, 1
-  %.not.i23.i.a = icmp eq i64 %8, 0
-  br i1 %.not.i23.i.a, label %lean_dec.exit.i261, label %.split.i, !prof !20
+  %switch.selectcmp.i.i = icmp eq i8 %i.cv, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %.not.i23.i.a = icmp eq i8 %i.cv, 0
+  %switch.select5.i.i = select i1 %.not.i23.i.a, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i ; 2 uses
+  %5 = ptrtoint ptr %.0.i24.i to i64
+  %.not.i23.i = trunc i64 %5 to i1
+  br i1 %.not.i23.i, label %.split.i, label %lean_dec.exit.i261, !prof !21
 
 .split.i:                                         ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-  %i.da = icmp ult ptr %.0.i24.i, %.0.i25.i
+  %i.da = icmp ult ptr %.0.i24.i, %switch.select5.i.i
   br i1 %i.da, label %l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2.exit.loopexit, label %bb.as
 
 lean_dec.exit.i261:                               ; preds = %l_Lean_Server_FileWorker_SignatureHelp_CandidateKind_prio.exit.i
-  %i.db = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %.0.i24.i, ptr noundef nonnull %.0.i25.i) #7
+  %i.db = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %.0.i24.i, ptr noundef nonnull %switch.select5.i.i) #7
   br i1 %i.db, label %l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2.exit.loopexit, label %bb.as
 
 l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Lean_Server_FileWorker_SignatureHelp_findSignatureHelp_x3f_spec__2.exit.loopexit: ; preds = %bb.as, %.split.i, %lean_dec.exit.i261
@@ -4158,7 +4035,7 @@ declare ptr @lean_obj_once_cold(ptr noundef, ptr noundef, ptr noundef) local_unn
 ; Function Attrs: nounwind uwtable
 define internal ptr @_init_l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__4() #0 {
 bb.a:
-  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__3_once seq_cst, align 4, !tbaa !22
+  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__3_once seq_cst, align 4, !tbaa !23
   %i.b = icmp eq i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c, !prof !13
 
@@ -4179,7 +4056,7 @@ lean_obj_once.exit:                               ; preds = %bb.b, %bb.c
 ; Function Attrs: nounwind uwtable
 define internal nonnull ptr @_init_l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__3() #0 {
 bb.a:
-  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__1_once seq_cst, align 4, !tbaa !22
+  %i.a = load atomic i32, ptr @l___private_Lean_Server_FileWorker_SignatureHelp_0__Lean_Server_FileWorker_SignatureHelp_lineCommentPosition_x3f___closed__1_once seq_cst, align 4, !tbaa !23
   %i.b = icmp eq i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c, !prof !13
 
@@ -4252,11 +4129,11 @@ attributes #8 = { noreturn nounwind }
 !18 = !{!"branch_weights", !"expected", i32 2146812770, i32 670878}
 !19 = !{!5, !5, i64 0}
 !20 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!21 = !{!"", !5, i64 0, !5, i64 4}
-!22 = !{!21, !5, i64 0}
-!23 = distinct !{!23, !24}
-!24 = !{!"llvm.loop.mustprogress"}
-!25 = !{!"branch_weights", i32 4000000, i32 4001}
+!21 = !{!"branch_weights", i32 4000000, i32 4001}
+!22 = !{!"", !5, i64 0, !5, i64 4}
+!23 = !{!22, !5, i64 0}
+!24 = distinct !{!24, !25}
+!25 = !{!"llvm.loop.mustprogress"}
 !26 = !{!"branch_weights", i32 4001, i32 4000000}
 !27 = distinct !{!27, !28}
 !28 = !{!"llvm.loop.peeled.count", i32 1}

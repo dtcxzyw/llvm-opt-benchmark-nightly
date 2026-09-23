@@ -204,7 +204,7 @@ begin_hunk_0
 @switch.table.l_Lean_Elab_Term_instToStringSyntheticMVarKind___lam__0___boxed = private unnamed_addr constant [3 x ptr] [ptr @l_Lean_Elab_Term_instToStringSyntheticMVarKind___lam__0___closed__0_value, ptr @l_Lean_Elab_Term_instToStringSyntheticMVarKind___lam__0___closed__1_value, ptr @l_Lean_Elab_Term_instToStringSyntheticMVarKind___lam__0___closed__2_value], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lean_Elab_Term_TacticMVarKind_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_Elab_Term_TacticMVarKind_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -214,88 +214,64 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i, 24
-  br label %lean_obj_tag.exit
-
-lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i, label %2 [
-    i32 0, label %bb.d
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit
   br label %bb.d
 
-2:                                                ; preds = %lean_obj_tag.exit
-  br label %bb.d
-
-bb.d:                                             ; preds = %lean_obj_tag.exit, %2, %1
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp = icmp eq i32 %.0.i, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5 = icmp eq i32 %.0.i, 0
+  %switch.select6 = select i1 %switch.selectcmp5, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select6
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lean_Elab_Term_TacticMVarKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
+define nonnull ptr @l_Lean_Elab_Term_TacticMVarKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
-  %.not.i.i = icmp eq i64 %i.b, 0                 ; 2 uses
+  %.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %lean_dec.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
-  %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
+  %i.f = lshr i32 %.val.i.i, 24                   ; 3 uses
+  %1 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
+  %2 = icmp sgt i32 %1, 1
+  br i1 %2, label %bb.d, label %bb.e, !prof !11
 
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %2 [
-    i32 0, label %l_Lean_Elab_Term_TacticMVarKind_ctorIdx.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Elab_Term_TacticMVarKind_ctorIdx.exit
-
-2:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Elab_Term_TacticMVarKind_ctorIdx.exit
-
-l_Lean_Elab_Term_TacticMVarKind_ctorIdx.exit:     ; preds = %lean_obj_tag.exit.i, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
-  br i1 %.not.i.i, label %3, label %lean_dec.exit
-
-3:                                                ; preds = %l_Lean_Elab_Term_TacticMVarKind_ctorIdx.exit
-  %4 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
-  %5 = icmp sgt i32 %4, 1
-  br i1 %5, label %bb.d, label %bb.e, !prof !11
-
-bb.d:                                             ; preds = %3
-  %i.g = add nsw i32 %4, -1
+bb.d:                                             ; preds = %bb.c
+  %i.g = add nsw i32 %1, -1
   store i32 %i.g, ptr %0, align 4, !tbaa !10
   br label %lean_dec.exit
 
-bb.e:                                             ; preds = %3
-  %.not.i3 = icmp eq i32 %4, 0
+bb.e:                                             ; preds = %bb.c
+  %.not.i3 = icmp eq i32 %1, 0
   br i1 %.not.i3, label %lean_dec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #9
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.f, %bb.e, %bb.d, %l_Lean_Elab_Term_TacticMVarKind_ctorIdx.exit
-  ret ptr %.0.i
+lean_dec.exit:                                    ; preds = %bb.b, %bb.f, %bb.e, %bb.d
+  %.0.i.i5 = phi i32 [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.d, %bb.b ] ; 2 uses
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i5, 0
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i5, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: nounwind uwtable
@@ -698,7 +674,7 @@ lean_dec_ref.exit:                                ; preds = %bb.d, %bb.e, %bb.f
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lean_Elab_Term_MVarErrorKind_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_Elab_Term_MVarErrorKind_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -708,88 +684,64 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i, 24
-  br label %lean_obj_tag.exit
-
-lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i, label %2 [
-    i32 0, label %bb.d
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit
   br label %bb.d
 
-2:                                                ; preds = %lean_obj_tag.exit
-  br label %bb.d
-
-bb.d:                                             ; preds = %lean_obj_tag.exit, %2, %1
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp = icmp eq i32 %.0.i, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5 = icmp eq i32 %.0.i, 0
+  %switch.select6 = select i1 %switch.selectcmp5, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select6
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lean_Elab_Term_MVarErrorKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
+define nonnull ptr @l_Lean_Elab_Term_MVarErrorKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
-  %.not.i.i = icmp eq i64 %i.b, 0                 ; 2 uses
+  %.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %lean_dec.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
-  %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
+  %i.f = lshr i32 %.val.i.i, 24                   ; 3 uses
+  %1 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
+  %2 = icmp sgt i32 %1, 1
+  br i1 %2, label %bb.d, label %bb.e, !prof !11
 
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %2 [
-    i32 0, label %l_Lean_Elab_Term_MVarErrorKind_ctorIdx.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Elab_Term_MVarErrorKind_ctorIdx.exit
-
-2:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Elab_Term_MVarErrorKind_ctorIdx.exit
-
-l_Lean_Elab_Term_MVarErrorKind_ctorIdx.exit:      ; preds = %lean_obj_tag.exit.i, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
-  br i1 %.not.i.i, label %3, label %lean_dec.exit
-
-3:                                                ; preds = %l_Lean_Elab_Term_MVarErrorKind_ctorIdx.exit
-  %4 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
-  %5 = icmp sgt i32 %4, 1
-  br i1 %5, label %bb.d, label %bb.e, !prof !11
-
-bb.d:                                             ; preds = %3
-  %i.g = add nsw i32 %4, -1
+bb.d:                                             ; preds = %bb.c
+  %i.g = add nsw i32 %1, -1
   store i32 %i.g, ptr %0, align 4, !tbaa !10
   br label %lean_dec.exit
 
-bb.e:                                             ; preds = %3
-  %.not.i3 = icmp eq i32 %4, 0
+bb.e:                                             ; preds = %bb.c
+  %.not.i3 = icmp eq i32 %1, 0
   br i1 %.not.i3, label %lean_dec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #9
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.f, %bb.e, %bb.d, %l_Lean_Elab_Term_MVarErrorKind_ctorIdx.exit
-  ret ptr %.0.i
+lean_dec.exit:                                    ; preds = %bb.b, %bb.f, %bb.e, %bb.d
+  %.0.i.i5 = phi i32 [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.d, %bb.b ] ; 2 uses
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i5, 0
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i5, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: nounwind uwtable
@@ -1192,7 +1144,7 @@ lean_dec_ref.exit24:                              ; preds = %bb.t, %bb.u, %bb.v
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -1202,88 +1154,64 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i, 24
-  br label %lean_obj_tag.exit
-
-lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i, label %2 [
-    i32 0, label %bb.d
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit
   br label %bb.d
 
-2:                                                ; preds = %lean_obj_tag.exit
-  br label %bb.d
-
-bb.d:                                             ; preds = %lean_obj_tag.exit, %2, %1
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp = icmp eq i32 %.0.i, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5 = icmp eq i32 %.0.i, 0
+  %switch.select6 = select i1 %switch.selectcmp5, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select6
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
+define nonnull ptr @l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
-  %.not.i.i = icmp eq i64 %i.b, 0                 ; 2 uses
+  %.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %lean_dec.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
-  %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
+  %i.f = lshr i32 %.val.i.i, 24                   ; 3 uses
+  %1 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
+  %2 = icmp sgt i32 %1, 1
+  br i1 %2, label %bb.d, label %bb.e, !prof !11
 
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %2 [
-    i32 0, label %l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx.exit
-
-2:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx.exit
-
-l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx.exit: ; preds = %lean_obj_tag.exit.i, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
-  br i1 %.not.i.i, label %3, label %lean_dec.exit
-
-3:                                                ; preds = %l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx.exit
-  %4 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
-  %5 = icmp sgt i32 %4, 1
-  br i1 %5, label %bb.d, label %bb.e, !prof !11
-
-bb.d:                                             ; preds = %3
-  %i.g = add nsw i32 %4, -1
+bb.d:                                             ; preds = %bb.c
+  %i.g = add nsw i32 %1, -1
   store i32 %i.g, ptr %0, align 4, !tbaa !10
   br label %lean_dec.exit
 
-bb.e:                                             ; preds = %3
-  %.not.i3 = icmp eq i32 %4, 0
+bb.e:                                             ; preds = %bb.c
+  %.not.i3 = icmp eq i32 %1, 0
   br i1 %.not.i3, label %lean_dec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #9
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.f, %bb.e, %bb.d, %l_Lean_Elab_Term_UseImplicitLambdaResult_ctorIdx.exit
-  ret ptr %.0.i
+lean_dec.exit:                                    ; preds = %bb.b, %bb.f, %bb.e, %bb.d
+  %.0.i.i5 = phi i32 [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.d, %bb.b ] ; 2 uses
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i5, 0
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i5, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: nounwind uwtable

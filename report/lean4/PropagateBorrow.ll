@@ -204,7 +204,7 @@ bb.og:                                            ; preds = %lean_dec.exit1050
   br label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_join.exit1616
 
 l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_join.exit1616: ; preds = %lean_dec.exit1050, %bb.oe, %bb.of, %bb.og
-  %.0.i1614 = phi i8 [ 3, %bb.og ], [ %.10.i1613, %bb.of ], [ %..i1615, %bb.oe ], [ %.1031, %lean_dec.exit1050 ] ; 2 uses
+  %.0.i1614 = phi i8 [ 3, %bb.og ], [ %.10.i1613, %bb.of ], [ %..i1615, %bb.oe ], [ %.1031, %lean_dec.exit1050 ] ; 3 uses
   %i.wo = and i64 %i.wl, 1
   %.not.i1047 = icmp eq i64 %i.wo, 0
   br i1 %.not.i1047, label %bb.oh, label %lean_dec.exit1048
@@ -228,37 +228,25 @@ bb.ok:                                            ; preds = %bb.oj
   br label %lean_dec.exit1048
 
 lean_dec.exit1048:                                ; preds = %bb.ok, %bb.oj, %bb.oi, %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_join.exit1616
-  switch i8 %i.wn, label %9 [
-    i8 0, label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617
-    i8 1, label %7
-    i8 2, label %8
-  ]
-
-7:                                                ; preds = %lean_dec.exit1048
-  br label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617
-
-8:                                                ; preds = %lean_dec.exit1048
-  br label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617
-
-9:                                                ; preds = %lean_dec.exit1048
-  br label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617
-
-l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617: ; preds = %9, %8, %7, %lean_dec.exit1048
-  %.0.i12.i1618 = phi ptr [ inttoptr (i64 7 to ptr), %9 ], [ inttoptr (i64 5 to ptr), %8 ], [ inttoptr (i64 3 to ptr), %7 ], [ inttoptr (i64 1 to ptr), %lean_dec.exit1048 ]
-  switch i8 %.0.i1614, label %bb.om [
-    i8 2, label %bb.ol
+  switch i8 %i.wn, label %bb.om [
+    i8 0, label %bb.ace
     i8 1, label %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1621
+    i8 2, label %bb.ol
   ]
 
-bb.ol:                                            ; preds = %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617
+bb.ol:                                            ; preds = %lean_dec.exit1048
   br label %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1621
 
-bb.om:                                            ; preds = %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617
+bb.om:                                            ; preds = %lean_dec.exit1048
   br label %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1621
 
-l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1621: ; preds = %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617, %bb.ol, %bb.om
-  %.0.i13.i1620 = phi ptr [ inttoptr (i64 7 to ptr), %bb.om ], [ inttoptr (i64 5 to ptr), %bb.ol ], [ inttoptr (i64 3 to ptr), %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1617 ]
-  %.not1899 = icmp eq ptr %.0.i12.i1618, %.0.i13.i1620
+l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1621: ; preds = %lean_dec.exit1048, %bb.om, %bb.ol
+  %.0.i13.i1620 = phi ptr [ inttoptr (i64 7 to ptr), %bb.om ], [ inttoptr (i64 5 to ptr), %bb.ol ], [ inttoptr (i64 3 to ptr), %lean_dec.exit1048 ]
+  %switch.selectcmp = icmp eq i8 %.0.i1614, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 7 to ptr)
+  %switch.selectcmp1878 = icmp eq i8 %.0.i1614, 2
+  %switch.select1879 = select i1 %switch.selectcmp1878, ptr inttoptr (i64 5 to ptr), ptr %switch.select
+  %.not1899 = icmp eq ptr %.0.i13.i1620, %switch.select1879
   br i1 %.not1899, label %bb.acq, label %bb.ace
 
 bb.on:                                            ; preds = %lean_obj_tag.exit
@@ -661,7 +649,7 @@ bb.aay:                                           ; preds = %lean_dec.exit1060
   br label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_join.exit1819
 
 l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_join.exit1819: ; preds = %lean_dec.exit1060, %bb.aaw, %bb.aax, %bb.aay
-  %.0.i1817 = phi i8 [ 3, %bb.aay ], [ %.10.i1816, %bb.aax ], [ %..i1818, %bb.aaw ], [ %.1030, %lean_dec.exit1060 ] ; 2 uses
+  %.0.i1817 = phi i8 [ 3, %bb.aay ], [ %.10.i1816, %bb.aax ], [ %..i1818, %bb.aaw ], [ %.1030, %lean_dec.exit1060 ] ; 3 uses
   %i.atg = and i64 %i.atd, 1
   %.not.i1057 = icmp eq i64 %i.atg, 0
   br i1 %.not.i1057, label %bb.aaz, label %lean_dec.exit1058
@@ -685,40 +673,28 @@ bb.abc:                                           ; preds = %bb.abb
   br label %lean_dec.exit1058
 
 lean_dec.exit1058:                                ; preds = %bb.abc, %bb.abb, %bb.aba, %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_join.exit1819
-  switch i8 %i.atf, label %12 [
-    i8 0, label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820
-    i8 1, label %10
-    i8 2, label %11
-  ]
-
-10:                                               ; preds = %lean_dec.exit1058
-  br label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820
-
-11:                                               ; preds = %lean_dec.exit1058
-  br label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820
-
-12:                                               ; preds = %lean_dec.exit1058
-  br label %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820
-
-l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820: ; preds = %12, %11, %10, %lean_dec.exit1058
-  %.0.i12.i1821 = phi ptr [ inttoptr (i64 7 to ptr), %12 ], [ inttoptr (i64 5 to ptr), %11 ], [ inttoptr (i64 3 to ptr), %10 ], [ inttoptr (i64 1 to ptr), %lean_dec.exit1058 ]
-  switch i8 %.0.i1817, label %bb.abe [
-    i8 2, label %bb.abd
+  switch i8 %i.atf, label %bb.abe [
+    i8 0, label %bb.abf
     i8 1, label %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1824
+    i8 2, label %bb.abd
   ]
 
-bb.abd:                                           ; preds = %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820
+bb.abd:                                           ; preds = %lean_dec.exit1058
   br label %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1824
 
-bb.abe:                                           ; preds = %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820
+bb.abe:                                           ; preds = %lean_dec.exit1058
   br label %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1824
 
-l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1824: ; preds = %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820, %bb.abd, %bb.abe
-  %.0.i13.i1823 = phi ptr [ inttoptr (i64 7 to ptr), %bb.abe ], [ inttoptr (i64 5 to ptr), %bb.abd ], [ inttoptr (i64 3 to ptr), %l_Lean_Compiler_LCNF_Ownedness_ctorIdx.exit.i1820 ]
-  %.not1904 = icmp eq ptr %.0.i12.i1821, %.0.i13.i1823
+l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1824: ; preds = %lean_dec.exit1058, %bb.abe, %bb.abd
+  %.0.i13.i1823 = phi ptr [ inttoptr (i64 7 to ptr), %bb.abe ], [ inttoptr (i64 5 to ptr), %bb.abd ], [ inttoptr (i64 3 to ptr), %lean_dec.exit1058 ]
+  %switch.selectcmp1896 = icmp eq i8 %.0.i1817, 1
+  %switch.select1897 = select i1 %switch.selectcmp1896, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 7 to ptr)
+  %switch.selectcmp1898 = icmp eq i8 %.0.i1817, 2
+  %switch.select1899 = select i1 %switch.selectcmp1898, ptr inttoptr (i64 5 to ptr), ptr %switch.select1897
+  %.not1904 = icmp eq ptr %.0.i13.i1823, %switch.select1899
   br i1 %.not1904, label %bb.abr, label %bb.abf
 
-bb.abf:                                           ; preds = %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1824
+bb.abf:                                           ; preds = %lean_dec.exit1058, %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1824
   %.val1427 = load i32, ptr %i.arp, align 8, !tbaa !14 ; 4 uses
   %i.atk = icmp eq i32 %.val1427, 1               ; 2 uses
   br i1 %i.atk, label %bb.abg, label %bb.abl
@@ -888,7 +864,7 @@ lean_alloc_ctor.exit1827:                         ; preds = %bb.acc
   store ptr inttoptr (i64 1 to ptr), ptr %i.aux, align 8, !tbaa !12
   br label %lean_dec_ref.exit1419.thread1841
 
-bb.ace:                                           ; preds = %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1621
+bb.ace:                                           ; preds = %lean_dec.exit1048, %l_Lean_Compiler_LCNF_instBEqOwnedness_beq.exit1621
   %.val = load i32, ptr %i.ux, align 8, !tbaa !14 ; 4 uses
   %i.auy = icmp eq i32 %.val, 1                   ; 2 uses
   br i1 %i.auy, label %bb.acf, label %bb.ack
@@ -1291,42 +1267,25 @@ lean_dec_ref.exit16:                              ; preds = %bb.m, %bb.n, %bb.o
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow(i8 noundef zeroext %0) local_unnamed_addr #1 {
-  switch i8 %0, label %3 [
-    i8 0, label %2
-    i8 1, label %bb.a
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__1_value, %3 ], [ inttoptr (i64 1 to ptr), %2 ], [ @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__0_value, %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__0_value, ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__1_value
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___boxed(ptr noundef %0) local_unnamed_addr #1 {
+define nonnull ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___boxed(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %1
-    i8 1, label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-
-2:                                                ; preds = %bb.a
-  br label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-
-l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit: ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__1_value, %2 ], [ inttoptr (i64 1 to ptr), %1 ], [ @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__0_value, %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__0_value, ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__1_value
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: nounwind uwtable
@@ -1729,32 +1688,23 @@ lean_array_uset.exit:                             ; preds = %lean_ensure_exclusi
   %i.ah = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.ag
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !12
-  %i.ak = tail call zeroext i8 @l_Std_DHashMap_Internal_AssocList_get_x21___at___00Std_DHashMap_Internal_Raw_u2080_Const_get_x21___at___00__private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Decl_applyOwnedness_updateParams_spec__0_spec__0(ptr noundef %i.m, ptr noundef %i.aj)
-  switch i8 %i.ak, label %6 [
-    i8 0, label %5
-    i8 1, label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-  ]
-
-5:                                                ; preds = %lean_array_uset.exit
-  br label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-
-6:                                                ; preds = %lean_array_uset.exit
-  br label %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-
-l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit: ; preds = %lean_array_uset.exit, %5, %6
-  %.0.i = phi ptr [ @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__1_value, %6 ], [ inttoptr (i64 1 to ptr), %5 ], [ @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__0_value, %lean_array_uset.exit ] ; 7 uses
-  %7 = ptrtoint ptr %.0.i to i64                  ; 2 uses
-  %8 = and i64 %7, 1
-  %.not.i85 = icmp eq i64 %8, 0
+  %i.ak = tail call zeroext i8 @l_Std_DHashMap_Internal_AssocList_get_x21___at___00Std_DHashMap_Internal_Raw_u2080_Const_get_x21___at___00__private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Decl_applyOwnedness_updateParams_spec__0_spec__0(ptr noundef %i.m, ptr noundef %i.aj) ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.ak, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__0_value, ptr @l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow___closed__1_value
+  %switch.selectcmp4.i = icmp eq i8 %i.ak, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i ; 7 uses
+  %5 = ptrtoint ptr %switch.select5.i to i64      ; 2 uses
+  %6 = and i64 %5, 1
+  %.not.i85 = icmp eq i64 %6, 0
   br i1 %.not.i85, label %bb.n, label %bb.m
 
-bb.m:                                             ; preds = %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-  %i.al = lshr i64 %7, 1
+bb.m:                                             ; preds = %lean_array_uset.exit
+  %i.al = lshr i64 %5, 1
   %i.am = trunc i64 %i.al to i32
   br label %lean_obj_tag.exit
 
-bb.n:                                             ; preds = %l___private_Lean_Compiler_LCNF_PropagateBorrow_0__Lean_Compiler_LCNF_Ownedness_toBorrow.exit
-  %i.an = getelementptr i8, ptr %.0.i, i64 4
+bb.n:                                             ; preds = %lean_array_uset.exit
+  %i.an = getelementptr i8, ptr %switch.select5.i, i64 4
   %.val.i87 = load i32, ptr %i.an, align 4
   %i.ao = lshr i32 %.val.i87, 24
   br label %lean_obj_tag.exit
@@ -1765,7 +1715,7 @@ lean_obj_tag.exit:                                ; preds = %bb.m, %bb.n
   br i1 %i.ap, label %lean_dec_ref_known.exit108.thread, label %bb.o
 
 bb.o:                                             ; preds = %lean_obj_tag.exit
-  %i.aq = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %switch.select5.i, i64 8 ; 2 uses
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !12 ; 7 uses
   %i.as = ptrtoint ptr %i.ar to i64               ; 2 uses
   %i.at = and i64 %i.as, 1
@@ -1791,7 +1741,7 @@ bb.s:                                             ; preds = %bb.r
   br label %lean_inc.exit75
 
 lean_inc.exit75:                                  ; preds = %bb.s, %bb.r, %bb.q, %bb.o
-  %.val.i90 = load i32, ptr %.0.i, align 8, !tbaa !14 ; 4 uses
+  %.val.i90 = load i32, ptr %switch.select5.i, align 8, !tbaa !14 ; 4 uses
   %i.ax = icmp eq i32 %.val.i90, 1
   br i1 %i.ax, label %.preheader.i.preheader, label %bb.x
 
@@ -1821,7 +1771,7 @@ bb.w:                                             ; preds = %bb.v
   br label %lean_dec.exit.i
 
 lean_dec.exit.i:                                  ; preds = %bb.w, %bb.v, %bb.u, %.preheader.i.preheader
-  tail call void @lean_free_object(ptr noundef nonnull %.0.i) #6
+  tail call void @lean_free_object(ptr noundef nonnull %switch.select5.i) #6
   br label %lean_dec_ref_known.exit
 
 bb.x:                                             ; preds = %lean_inc.exit75
@@ -1830,7 +1780,7 @@ bb.x:                                             ; preds = %lean_inc.exit75
 
 bb.y:                                             ; preds = %bb.x
   %i.bf = add nsw i32 %.val.i90, -1
-  store i32 %i.bf, ptr %.0.i, align 8, !tbaa !14
+  store i32 %i.bf, ptr %switch.select5.i, align 8, !tbaa !14
   br label %lean_dec_ref_known.exit
 
 bb.z:                                             ; preds = %bb.x
@@ -1838,7 +1788,7 @@ bb.z:                                             ; preds = %bb.x
   br i1 %.not.i8.i, label %lean_dec_ref_known.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %.0.i) #6
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %switch.select5.i) #6
   br label %lean_dec_ref_known.exit
 
 lean_dec_ref_known.exit:                          ; preds = %lean_dec.exit.i, %bb.y, %bb.z, %bb.aa

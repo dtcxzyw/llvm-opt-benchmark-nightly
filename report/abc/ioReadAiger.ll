@@ -202,31 +202,22 @@ bb.cf:                                            ; preds = %bb.ce
 bb.cg:                                            ; preds = %bb.ce
   %i.mj = getelementptr inbounds nuw i8, ptr %i.mg, i64 1 ; 2 uses
   %i.mk = call i64 @strtol(ptr noundef nonnull captures(none) %i.mj, ptr noundef null, i32 noundef 10) #14, !inline_history !24
-  %i.ml = trunc i64 %i.mk to i32
+  %i.ml = trunc i64 %i.mk to i32                  ; 2 uses
   %.val381 = load ptr, ptr %i.ll, align 8, !tbaa !82
   %i.mm = getelementptr i8, ptr %.val381, i64 8
   %.val381.val = load ptr, ptr %i.mm, align 8, !tbaa !78
   %i.mn = getelementptr inbounds nuw [8 x i8], ptr %.val381.val, i64 %indvars.iv686
   %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !80
   %i.mp = getelementptr inbounds nuw i8, ptr %i.mo, i64 64
-  switch i32 %i.ml, label %3 [
-    i32 0, label %4
-    i32 1, label %2
-  ]
-
-2:                                                ; preds = %bb.cg
-  br label %4
-
-3:                                                ; preds = %bb.cg
-  br label %4
-
-4:                                                ; preds = %bb.cg, %2, %3
-  %.sink811 = phi ptr [ inttoptr (i64 2 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %bb.cg ]
-  store ptr %.sink811, ptr %i.mp, align 8, !tbaa !15
+  %switch.selectcmp = icmp eq i32 %i.ml, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 3 to ptr)
+  %switch.selectcmp812 = icmp eq i32 %i.ml, 0
+  %switch.select813 = select i1 %switch.selectcmp812, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  store ptr %switch.select813, ptr %i.mp, align 8, !tbaa !15
   br label %bb.ch
 
-bb.ch:                                            ; preds = %bb.ci, %4
-  %i.mq = phi ptr [ %i.ms, %bb.ci ], [ %i.mj, %4 ] ; 3 uses
+bb.ch:                                            ; preds = %bb.ci, %bb.cg
+  %i.mq = phi ptr [ %i.ms, %bb.ci ], [ %i.mj, %bb.cg ] ; 3 uses
   %i.mr = load i8, ptr %i.mq, align 1, !tbaa !15
   switch i8 %i.mr, label %bb.ci [
     i8 10, label %.critedge13.thread

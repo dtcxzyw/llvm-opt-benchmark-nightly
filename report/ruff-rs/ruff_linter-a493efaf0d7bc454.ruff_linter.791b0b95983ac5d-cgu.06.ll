@@ -204,17 +204,21 @@ begin_hunk_0
 @switch.table._RNvNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort14format_imports.506 = private unnamed_addr constant [3 x i8] c"\01\01\02", align 8
 @switch.table._RNvNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort14format_imports.507 = private unnamed_addr constant [3 x ptr] [ptr @655, ptr @656, ptr @657], align 8
 @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules20flake8_type_checking5rules26typing_only_runtime_import26typing_only_runtime_import.517 = private unnamed_addr constant [3 x i8] c"\00\02\01", align 8
+@switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator = private unnamed_addr constant [13 x i8] c"\03\03\03\06\07\03\03\06\06\03\03\04\08", align 8
+@switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator.520 = private unnamed_addr constant [13 x ptr] [ptr @854, ptr @855, ptr @856, ptr @857, ptr @858, ptr @859, ptr @860, ptr @861, ptr @862, ptr @863, ptr @864, ptr @865, ptr @866], align 8
+@switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator.521 = private unnamed_addr constant [4 x i8] c"\06\04\03\03", align 8
+@switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator.522 = private unnamed_addr constant [4 x ptr] [ptr @876, ptr @877, ptr @878, ptr @879], align 8
 @switch.table._RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize10ImportTypeNtB6_5Debug3fmtBE_ = private unnamed_addr constant [5 x i8] c"\06\0F\0A\0A\0B", align 8
-@switch.table._RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize10ImportTypeNtB6_5Debug3fmtBE_.546 = private unnamed_addr constant [5 x ptr] [ptr @1041, ptr @1042, ptr @1043, ptr @1044, ptr @1045], align 8
-@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558 = private unnamed_addr constant [33 x i8] c" \18\18\10\10   ((((\10\08\1008008( \08\04\040\18\10\18  \08\18", align 8
-@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559 = private unnamed_addr constant [33 x i8] c"$\1C\1C\14\14$$$,,,,\14\0C\144<44<,$\0C\08\084\1C\14\1C$$\0C\1C", align 8
-@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.560 = private unnamed_addr constant [4 x i8] c"\02\03\00\01", align 8
-@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.561 = private unnamed_addr constant [3 x i8] c"\0A\0C\09", align 4
-@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.562 = private unnamed_addr constant [25 x i8] c"<\04\04\1C\14$\14\14$\1C,$$\044\0C\1C<\1C\1C\0C\04\04\04\14", align 8
+@switch.table._RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize10ImportTypeNtB6_5Debug3fmtBE_.549 = private unnamed_addr constant [5 x ptr] [ptr @1041, ptr @1042, ptr @1043, ptr @1044, ptr @1045], align 8
+@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561 = private unnamed_addr constant [33 x i8] c" \18\18\10\10   ((((\10\08\1008008( \08\04\040\18\10\18  \08\18", align 8
+@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562 = private unnamed_addr constant [33 x i8] c"$\1C\1C\14\14$$$,,,,\14\0C\144<44<,$\0C\08\084\1C\14\1C$$\0C\1C", align 8
+@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.563 = private unnamed_addr constant [4 x i8] c"\02\03\00\01", align 8
+@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.564 = private unnamed_addr constant [3 x i8] c"\0A\0C\09", align 4
+@switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.565 = private unnamed_addr constant [25 x i8] c"<\04\04\1C\14$\14\14$\1C,$$\044\0C\1C<\1C\1C\0C\04\04\04\14", align 8
 @switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace3url = private unnamed_addr constant [59 x i8] [i8 40, i8 35, i8 33, i8 37, i8 44, i8 38, i8 39, i8 45, i8 45, i8 40, i8 41, i8 39, i8 47, i8 42, i8 42, i8 41, i8 39, i8 39, i8 43, i8 43, i8 51, i8 40, i8 52, i8 57, i8 40, i8 47, i8 42, i8 36, i8 38, i8 36, i8 45, i8 39, i8 38, i8 39, i8 37, i8 41, i8 38, i8 45, i8 46, i8 46, i8 49, i8 44, i8 31, i8 31, i8 32, i8 undef, i8 36, i8 37, i8 34, i8 37, i8 35, i8 36, i8 34, i8 42, i8 32, i8 35, i8 32, i8 undef, i8 37], align 8
-@switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace3url.563 = private unnamed_addr constant [59 x ptr] [ptr @1176, ptr @1177, ptr @1178, ptr @1179, ptr @1180, ptr @1181, ptr @1182, ptr @1183, ptr @1184, ptr @1185, ptr @1186, ptr @1187, ptr @1188, ptr @1189, ptr @1190, ptr @1191, ptr @1192, ptr @1193, ptr @1194, ptr @1195, ptr @1196, ptr @1197, ptr @1198, ptr @1199, ptr @1200, ptr @1201, ptr @1202, ptr @1203, ptr @1204, ptr @1205, ptr @1206, ptr @1207, ptr @1208, ptr @1209, ptr @1210, ptr @1211, ptr @1212, ptr @1213, ptr @1214, ptr @1215, ptr @1216, ptr @1217, ptr @1218, ptr @1219, ptr @1220, ptr null, ptr @1221, ptr @1222, ptr @1223, ptr @1224, ptr @1225, ptr @1226, ptr @1227, ptr @1228, ptr @1229, ptr @1230, ptr @1231, ptr null, ptr @1232], align 8
+@switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace3url.566 = private unnamed_addr constant [59 x ptr] [ptr @1176, ptr @1177, ptr @1178, ptr @1179, ptr @1180, ptr @1181, ptr @1182, ptr @1183, ptr @1184, ptr @1185, ptr @1186, ptr @1187, ptr @1188, ptr @1189, ptr @1190, ptr @1191, ptr @1192, ptr @1193, ptr @1194, ptr @1195, ptr @1196, ptr @1197, ptr @1198, ptr @1199, ptr @1200, ptr @1201, ptr @1202, ptr @1203, ptr @1204, ptr @1205, ptr @1206, ptr @1207, ptr @1208, ptr @1209, ptr @1210, ptr @1211, ptr @1212, ptr @1213, ptr @1214, ptr @1215, ptr @1216, ptr @1217, ptr @1218, ptr @1219, ptr @1220, ptr null, ptr @1221, ptr @1222, ptr @1223, ptr @1224, ptr @1225, ptr @1226, ptr @1227, ptr @1228, ptr @1229, ptr @1230, ptr @1231, ptr null, ptr @1232], align 8
 @switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace4name = private unnamed_addr constant [59 x i8] c"\07\09\07\0B\12\0C\0D\13\13\0E\0F\0D\15\10\10\0F\0D\0D\11\0C\19\0E\1A\19\0E\15\10\0A\0C\0A\13\0D\0C\0D\0B\0F\0C\13\0C\14\17\12\05\05\06\14\0A\0B\08\0B\09\0A\08\0C\06\09\06\13\0B", align 8
-@switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace4name.564 = private unnamed_addr constant [59 x ptr] [ptr @1233, ptr @1234, ptr @1235, ptr @1236, ptr @1237, ptr @1238, ptr @1239, ptr @1240, ptr @1241, ptr @1242, ptr @1243, ptr @1244, ptr @1245, ptr @1246, ptr @1247, ptr @1248, ptr @1249, ptr @1250, ptr @1251, ptr @1252, ptr @1253, ptr @1254, ptr @1255, ptr @1256, ptr @1257, ptr @1258, ptr @1259, ptr @1260, ptr @1261, ptr @1262, ptr @1263, ptr @1264, ptr @1265, ptr @1266, ptr @1267, ptr @1268, ptr @1269, ptr @1270, ptr @1271, ptr @1272, ptr @1273, ptr @1274, ptr @1275, ptr @1276, ptr @1277, ptr @1278, ptr @1279, ptr @1280, ptr @1281, ptr @1282, ptr @1283, ptr @1284, ptr @1285, ptr @1286, ptr @1287, ptr @1288, ptr @1289, ptr @1290, ptr @1291], align 8
+@switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace4name.567 = private unnamed_addr constant [59 x ptr] [ptr @1233, ptr @1234, ptr @1235, ptr @1236, ptr @1237, ptr @1238, ptr @1239, ptr @1240, ptr @1241, ptr @1242, ptr @1243, ptr @1244, ptr @1245, ptr @1246, ptr @1247, ptr @1248, ptr @1249, ptr @1250, ptr @1251, ptr @1252, ptr @1253, ptr @1254, ptr @1255, ptr @1256, ptr @1257, ptr @1258, ptr @1259, ptr @1260, ptr @1261, ptr @1262, ptr @1263, ptr @1264, ptr @1265, ptr @1266, ptr @1267, ptr @1268, ptr @1269, ptr @1270, ptr @1271, ptr @1272, ptr @1273, ptr @1274, ptr @1275, ptr @1276, ptr @1277, ptr @1278, ptr @1279, ptr @1280, ptr @1281, ptr @1282, ptr @1283, ptr @1284, ptr @1285, ptr @1286, ptr @1287, ptr @1288, ptr @1289, ptr @1290, ptr @1291], align 8
 
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvMNtCs4NRVxsYgnAr_4core3stre11rsplit_oncecECsEhZmuQNqkz_11ruff_linter(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -617,7 +621,7 @@ switch.lookup:
   %i.af = load ptr, ptr %i.ae, align 8, !alias.scope !1115, !noalias !1117, !nonnull !5, !align !6, !noundef !5 ; 5 uses
   %i.ag = load i32, ptr %i.af, align 8, !range !11, !noalias !1116, !noundef !5
   %i.ah = zext nneg i32 %i.ag to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.ah
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.ah
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %switch.ext
@@ -658,11 +662,11 @@ switch.lookup20:                                  ; preds = %switch.lookup
   store i64 %i.al, ptr %i.g, align 8, !noalias !1116
   %i.ao = load i32, ptr %i.af, align 8, !range !11, !noalias !1116, !noundef !5 ; 2 uses
   %i.ap = zext nneg i32 %i.ao to i64
-  %switch.gep21 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.ap
+  %switch.gep21 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.ap
   %switch.load22 = load i8, ptr %switch.gep21, align 1
   %switch.ext23 = zext i8 %switch.load22 to i64
   %i.aq = zext nneg i32 %i.ao to i64
-  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.aq
+  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.aq
   %switch.load25 = load i8, ptr %switch.gep24, align 1
   %switch.ext26 = zext i8 %switch.load25 to i64
   %i.ar = getelementptr inbounds nuw i8, ptr %i.af, i64 %switch.ext23
@@ -1065,11 +1069,11 @@ bb.d:                                             ; preds = %bb.b
 switch.lookup:                                    ; preds = %bb.d
   %i.o = load i32, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.p = zext nneg i32 %i.o to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.p
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.p
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.q = zext nneg i32 %i.o to i64
-  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.q
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.q
   %switch.load11 = load i8, ptr %switch.gep10, align 1
   %switch.ext12 = zext i8 %switch.load11 to i64
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
@@ -1265,11 +1269,11 @@ bb.d:                                             ; preds = %bb.b
 switch.lookup:                                    ; preds = %bb.d
   %i.o = load i32, ptr %2, align 8, !range !11, !noundef !5 ; 2 uses
   %i.p = zext nneg i32 %i.o to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.p
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.p
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.q = zext nneg i32 %i.o to i64
-  %switch.gep7 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.q
+  %switch.gep7 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.q
   %switch.load8 = load i8, ptr %switch.gep7, align 1
   %switch.ext9 = zext i8 %switch.load8 to i64
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 %switch.ext
@@ -1664,11 +1668,11 @@ switch.lookup:                                    ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.ds = load i32, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.dt = zext nneg i32 %i.ds to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.dt
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.dt
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.du = zext nneg i32 %i.ds to i64
-  %switch.gep42 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.du
+  %switch.gep42 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.du
   %switch.load43 = load i8, ptr %switch.gep42, align 1
   %switch.ext44 = zext i8 %switch.load43 to i64
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
@@ -1750,11 +1754,11 @@ switch.lookup45:                                  ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   %i.ep = load i32, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.eq = zext nneg i32 %i.ep to i64
-  %switch.gep46 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.eq
+  %switch.gep46 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.eq
   %switch.load47 = load i8, ptr %switch.gep46, align 1
   %switch.ext48 = zext i8 %switch.load47 to i64
   %i.er = zext nneg i32 %i.ep to i64
-  %switch.gep49 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.er
+  %switch.gep49 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.er
   %switch.load50 = load i8, ptr %switch.gep49, align 1
   %switch.ext51 = zext i8 %switch.load50 to i64
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext48
@@ -2157,11 +2161,11 @@ switch.lookup:                                    ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   %i.ez = load i32, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.fa = zext nneg i32 %i.ez to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.fa
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.fa
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.fb = zext nneg i32 %i.ez to i64
-  %switch.gep66 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.fb
+  %switch.gep66 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.fb
   %switch.load67 = load i8, ptr %switch.gep66, align 1
   %switch.ext68 = zext i8 %switch.load67 to i64
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
@@ -2564,11 +2568,11 @@ _RNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules13flake8_bandit5rules22tarfile_uns
   %i.bd = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.be = load i32, ptr %i.bd, align 8, !range !11, !noundef !5 ; 2 uses
   %i.bf = zext nneg i32 %i.be to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.bf
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.bf
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.bg = zext nneg i32 %i.be to i64
-  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.bg
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.bg
   %switch.load11 = load i8, ptr %switch.gep10, align 1
   %switch.ext12 = zext i8 %switch.load11 to i64
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bd, i64 %switch.ext
@@ -2971,11 +2975,11 @@ switch.lookup:                                    ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.ap = load i32, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.aq = zext nneg i32 %i.ap to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.aq
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.aq
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.ar = zext nneg i32 %i.ap to i64
-  %switch.gep20 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.ar
+  %switch.gep20 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.ar
   %switch.load21 = load i8, ptr %switch.gep20, align 1
   %switch.ext22 = zext i8 %switch.load21 to i64
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
@@ -3378,11 +3382,11 @@ switch.lookup:                                    ; preds = %_RINvXs2J_NtNtCs4NR
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   %i.aj = load i32, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.ak = zext nneg i32 %i.aj to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.ak
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.ak
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.al = zext nneg i32 %i.aj to i64
-  %switch.gep11 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.al
+  %switch.gep11 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.al
   %switch.load12 = load i8, ptr %switch.gep11, align 1
   %switch.ext13 = zext i8 %switch.load12 to i64
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
@@ -3785,11 +3789,11 @@ switch.lookup:                                    ; preds = %.noexc
   store i64 %i.ex, ptr %i.c, align 8, !noalias !4844
   %i.fa = load i32, ptr %.sroa.03.091, align 8, !range !11, !noalias !4844, !noundef !5 ; 2 uses
   %i.fb = zext nneg i32 %i.fa to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.fb
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.fb
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.fc = zext nneg i32 %i.fa to i64
-  %switch.gep192 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.fc
+  %switch.gep192 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.fc
   %switch.load193 = load i8, ptr %switch.gep192, align 1
   %switch.ext194 = zext i8 %switch.load193 to i64
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.03.091, i64 %switch.ext
@@ -4192,61 +4196,17 @@ _RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operato
 
 bb.y:                                             ; preds = %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator18is_same_expression.exit11.i.i
   %i.fg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i2575, i64 36
-  %i.fh = load i8, ptr %i.fg, align 4, !range !19, !noalias !5074, !noundef !5
-  switch i8 %i.fh, label %default.unreachable [
-    i8 0, label %bb.br
-    i8 1, label %2
-    i8 2, label %3
-    i8 3, label %4
-    i8 4, label %5
-    i8 5, label %6
-    i8 6, label %7
-    i8 7, label %8
-    i8 8, label %9
-    i8 9, label %10
-    i8 10, label %11
-    i8 11, label %12
-    i8 12, label %13
-  ]
+  %2 = load i8, ptr %i.fg, align 4, !range !19, !noalias !5074, !noundef !5 ; 2 uses
+  %3 = zext nneg i8 %2 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator, i64 %3
+  %i.fh = load i8, ptr %switch.gep, align 1
+  %4 = zext nneg i8 %2 to i64
+  %switch.gep143 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator.520, i64 %4
+  %switch.load144 = load ptr, ptr %switch.gep143, align 8
+  br label %bb.br
 
-default.unreachable:                              ; preds = %bb.ah, %bb.ad, %bb.y
+default.unreachable:                              ; preds = %bb.ah
   unreachable
-
-2:                                                ; preds = %bb.y
-  br label %bb.br
-
-3:                                                ; preds = %bb.y
-  br label %bb.br
-
-4:                                                ; preds = %bb.y
-  br label %bb.br
-
-5:                                                ; preds = %bb.y
-  br label %bb.br
-
-6:                                                ; preds = %bb.y
-  br label %bb.br
-
-7:                                                ; preds = %bb.y
-  br label %bb.br
-
-8:                                                ; preds = %bb.y
-  br label %bb.br
-
-9:                                                ; preds = %bb.y
-  br label %bb.br
-
-10:                                               ; preds = %bb.y
-  br label %bb.br
-
-11:                                               ; preds = %bb.y
-  br label %bb.br
-
-12:                                               ; preds = %bb.y
-  br label %bb.br
-
-13:                                               ; preds = %bb.y
-  br label %bb.br
 
 bb.z:                                             ; preds = %bb.q
   %i.fi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i566074, i64 8 ; 2 uses
@@ -4309,21 +4269,13 @@ _RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operato
 
 bb.ad:                                            ; preds = %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator18is_same_expression.exit.i37.i
   %i.gr = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i2575, i64 28
-  %i.gs = load i8, ptr %i.gr, align 4, !range !31, !noalias !5074, !noundef !5
-  switch i8 %i.gs, label %default.unreachable [
-    i8 0, label %bb.br
-    i8 1, label %14
-    i8 2, label %15
-    i8 3, label %16
-  ]
-
-14:                                               ; preds = %bb.ad
-  br label %bb.br
-
-15:                                               ; preds = %bb.ad
-  br label %bb.br
-
-16:                                               ; preds = %bb.ad
+  %5 = load i8, ptr %i.gr, align 4, !range !31, !noalias !5074, !noundef !5 ; 2 uses
+  %6 = zext nneg i8 %5 to i64
+  %switch.gep146 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator.521, i64 %6
+  %i.gs = load i8, ptr %switch.gep146, align 1
+  %7 = zext nneg i8 %5 to i64
+  %switch.gep149 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb5rules22reimplemented_operator22reimplemented_operator.522, i64 %7
+  %switch.load150 = load ptr, ptr %switch.gep149, align 8
   br label %bb.br
 
 bb.ae:                                            ; preds = %bb.q
@@ -4639,18 +4591,19 @@ bb.bq:                                            ; preds = %_RINvNtCs4NRVxsYgnA
           cleanup
   br label %.thread35.i
 
-bb.br:                                            ; preds = %bb.y, %bb.ad, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i, %bb.bo, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2, %16, %15, %14, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai
-  %.sroa.33.0.ph = phi i64 [ 8, %bb.aq ], [ 3, %bb.ao ], [ 2, %bb.an ], [ 6, %bb.ap ], [ 2, %bb.al ], [ 2, %bb.ai ], [ 2, %bb.ak ], [ 2, %bb.aj ], [ 2, %bb.am ], [ 3, %16 ], [ 6, %bb.ad ], [ 3, %15 ], [ 3, %2 ], [ 3, %3 ], [ 6, %4 ], [ 7, %5 ], [ 3, %6 ], [ 3, %7 ], [ 6, %8 ], [ 6, %9 ], [ 3, %10 ], [ 3, %11 ], [ 4, %12 ], [ 3, %bb.y ], [ 10, %bb.bo ], [ 10, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ 4, %14 ], [ 8, %13 ] ; 2 uses
-  %.sroa.28.0.ph = phi ptr [ @875, %bb.aq ], [ @873, %bb.ao ], [ @872, %bb.an ], [ @874, %bb.ap ], [ @870, %bb.al ], [ @867, %bb.ai ], [ @869, %bb.ak ], [ @868, %bb.aj ], [ @871, %bb.am ], [ @879, %16 ], [ @876, %bb.ad ], [ @878, %15 ], [ @855, %2 ], [ @856, %3 ], [ @857, %4 ], [ @858, %5 ], [ @859, %6 ], [ @860, %7 ], [ @861, %8 ], [ @862, %9 ], [ @863, %10 ], [ @864, %11 ], [ @865, %12 ], [ @854, %bb.y ], [ @848, %bb.bo ], [ @848, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ @877, %14 ], [ @866, %13 ] ; 2 uses
-  %17 = phi i64 [ 0, %bb.aq ], [ 0, %bb.ao ], [ 0, %bb.an ], [ 0, %bb.ap ], [ 0, %bb.al ], [ 0, %bb.ai ], [ 0, %bb.ak ], [ 0, %bb.aj ], [ 0, %bb.am ], [ 0, %16 ], [ 0, %bb.ad ], [ 0, %15 ], [ 0, %2 ], [ 0, %3 ], [ 0, %4 ], [ 0, %5 ], [ 0, %6 ], [ 0, %7 ], [ 0, %8 ], [ 0, %9 ], [ 0, %10 ], [ 0, %11 ], [ 0, %12 ], [ 0, %bb.y ], [ %.sroa.24.0.copyload47, %bb.bo ], [ 1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ 0, %14 ], [ 0, %13 ] ; 4 uses
-  %18 = phi ptr [ inttoptr (i64 8 to ptr), %bb.aq ], [ inttoptr (i64 8 to ptr), %bb.ao ], [ inttoptr (i64 8 to ptr), %bb.an ], [ inttoptr (i64 8 to ptr), %bb.ap ], [ inttoptr (i64 8 to ptr), %bb.al ], [ inttoptr (i64 8 to ptr), %bb.ai ], [ inttoptr (i64 8 to ptr), %bb.ak ], [ inttoptr (i64 8 to ptr), %bb.aj ], [ inttoptr (i64 8 to ptr), %bb.am ], [ inttoptr (i64 8 to ptr), %16 ], [ inttoptr (i64 8 to ptr), %bb.ad ], [ inttoptr (i64 8 to ptr), %15 ], [ inttoptr (i64 8 to ptr), %2 ], [ inttoptr (i64 8 to ptr), %3 ], [ inttoptr (i64 8 to ptr), %4 ], [ inttoptr (i64 8 to ptr), %5 ], [ inttoptr (i64 8 to ptr), %6 ], [ inttoptr (i64 8 to ptr), %7 ], [ inttoptr (i64 8 to ptr), %8 ], [ inttoptr (i64 8 to ptr), %9 ], [ inttoptr (i64 8 to ptr), %10 ], [ inttoptr (i64 8 to ptr), %11 ], [ inttoptr (i64 8 to ptr), %12 ], [ inttoptr (i64 8 to ptr), %bb.y ], [ %.sroa.20.0.copyload45, %bb.bo ], [ %i.jp, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ inttoptr (i64 8 to ptr), %14 ], [ inttoptr (i64 8 to ptr), %13 ] ; 2 uses
-  %.sroa.0.0.ph = phi i64 [ 0, %bb.aq ], [ 0, %bb.ao ], [ 0, %bb.an ], [ 0, %bb.ap ], [ 0, %bb.al ], [ 0, %bb.ai ], [ 0, %bb.ak ], [ 0, %bb.aj ], [ 0, %bb.am ], [ 0, %16 ], [ 0, %bb.ad ], [ 0, %15 ], [ 0, %2 ], [ 0, %3 ], [ 0, %4 ], [ 0, %5 ], [ 0, %6 ], [ 0, %7 ], [ 0, %8 ], [ 0, %9 ], [ 0, %10 ], [ 0, %11 ], [ 0, %12 ], [ 0, %bb.y ], [ %i.la, %bb.bo ], [ 1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ 0, %14 ], [ 0, %13 ]
+bb.br:                                            ; preds = %bb.ad, %bb.y, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i, %bb.bo, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai
+  %.sroa.33.0.ph.shrunk = phi i8 [ 8, %bb.aq ], [ 3, %bb.ao ], [ 2, %bb.an ], [ 6, %bb.ap ], [ 2, %bb.al ], [ 2, %bb.ai ], [ 2, %bb.ak ], [ 2, %bb.aj ], [ 2, %bb.am ], [ 10, %bb.bo ], [ %i.gs, %bb.ad ], [ 10, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ %i.fh, %bb.y ]
+  %.sroa.28.0.ph = phi ptr [ @875, %bb.aq ], [ @873, %bb.ao ], [ @872, %bb.an ], [ @874, %bb.ap ], [ @870, %bb.al ], [ @867, %bb.ai ], [ @869, %bb.ak ], [ @868, %bb.aj ], [ @871, %bb.am ], [ @848, %bb.bo ], [ %switch.load150, %bb.ad ], [ @848, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ %switch.load144, %bb.y ] ; 2 uses
+  %8 = phi i64 [ 0, %bb.aq ], [ 0, %bb.ao ], [ 0, %bb.an ], [ 0, %bb.ap ], [ 0, %bb.al ], [ 0, %bb.ai ], [ 0, %bb.ak ], [ 0, %bb.aj ], [ 0, %bb.am ], [ %.sroa.24.0.copyload47, %bb.bo ], [ 0, %bb.ad ], [ 1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ 0, %bb.y ] ; 4 uses
+  %9 = phi ptr [ inttoptr (i64 8 to ptr), %bb.aq ], [ inttoptr (i64 8 to ptr), %bb.ao ], [ inttoptr (i64 8 to ptr), %bb.an ], [ inttoptr (i64 8 to ptr), %bb.ap ], [ inttoptr (i64 8 to ptr), %bb.al ], [ inttoptr (i64 8 to ptr), %bb.ai ], [ inttoptr (i64 8 to ptr), %bb.ak ], [ inttoptr (i64 8 to ptr), %bb.aj ], [ inttoptr (i64 8 to ptr), %bb.am ], [ %.sroa.20.0.copyload45, %bb.bo ], [ inttoptr (i64 8 to ptr), %bb.ad ], [ %i.jp, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ inttoptr (i64 8 to ptr), %bb.y ] ; 2 uses
+  %.sroa.0.0.ph = phi i64 [ 0, %bb.aq ], [ 0, %bb.ao ], [ 0, %bb.an ], [ 0, %bb.ap ], [ 0, %bb.al ], [ 0, %bb.ai ], [ 0, %bb.ak ], [ 0, %bb.aj ], [ 0, %bb.am ], [ %i.la, %bb.bo ], [ 0, %bb.ad ], [ 1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ 0, %bb.y ]
+  %.sroa.33.0.ph = zext i8 %.sroa.33.0.ph.shrunk to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
   store i64 %.sroa.0.0.ph, ptr %i.ag, align 8
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  store ptr %18, ptr %.sroa.20.0..sroa_idx, align 8
+  store ptr %9, ptr %.sroa.20.0..sroa_idx, align 8
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  store i64 %17, ptr %.sroa.24.0..sroa_idx, align 8
+  store i64 %8, ptr %.sroa.24.0..sroa_idx, align 8
   %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   store ptr %.sroa.28.0.ph, ptr %.sroa.28.0..sroa_idx, align 8
   %.sroa.33.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
@@ -4721,9 +4674,9 @@ bb.bv:                                            ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !5088
   store i64 %i.li, ptr %i.z, align 8, !noalias !5088
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !5088
-  %i.lm = icmp ult i64 %17, 384307168202282326
+  %i.lm = icmp ult i64 %8, 384307168202282326
   call void @llvm.assume(i1 %i.lm)
-  %i.ln = icmp eq i64 %17, 0
+  %i.ln = icmp eq i64 %8, 0
   br i1 %i.ln, label %bb.bw, label %bb.bx
 
 bb.bw:                                            ; preds = %bb.bv
@@ -4733,7 +4686,7 @@ bb.bw:                                            ; preds = %bb.bv
 bb.bx:                                            ; preds = %bb.bv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !5088
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !5088
-  invoke void @_RINvNtCscdodAO9FK5_5alloc3str17join_generic_copyehNtNtB4_6string6StringECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.o, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %18, i64 noundef %17, ptr noalias noundef nonnull readonly captures(address, read_provenance) @124, i64 noundef 2)
+  invoke void @_RINvNtCscdodAO9FK5_5alloc3str17join_generic_copyehNtNtB4_6string6StringECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.o, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %9, i64 noundef %8, ptr noalias noundef nonnull readonly captures(address, read_provenance) @124, i64 noundef 2)
           to label %bb.bz unwind label %bb.by, !noalias !5091
 
 .body.i:                                          ; preds = %bb.cd, %bb.by
@@ -5136,11 +5089,11 @@ switch.lookup:                                    ; preds = %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   %i.ga = load i32, ptr %i.bg, align 8, !range !11, !noundef !5 ; 2 uses
   %i.gb = zext nneg i32 %i.ga to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.gb
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.gb
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.gc = zext nneg i32 %i.ga to i64
-  %switch.gep541 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.gc
+  %switch.gep541 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.gc
   %switch.load542 = load i8, ptr %switch.gep541, align 1
   %switch.ext543 = zext i8 %switch.load542 to i64
   %i.gd = getelementptr inbounds nuw i8, ptr %i.bg, i64 %switch.ext
@@ -5337,11 +5290,11 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionReE11map_or_elseNtNtCscdodAO9FK5_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.hj = load i32, ptr %i.bg, align 8, !range !11, !noundef !5 ; 2 uses
   %i.hk = zext nneg i32 %i.hj to i64
-  %switch.gep545 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.hk
+  %switch.gep545 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.hk
   %switch.load546 = load i8, ptr %switch.gep545, align 1
   %switch.ext547 = zext i8 %switch.load546 to i64
   %i.hl = zext nneg i32 %i.hj to i64
-  %switch.gep548 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.hl
+  %switch.gep548 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.hl
   %switch.load549 = load i8, ptr %switch.gep548, align 1
   %switch.ext550 = zext i8 %switch.load549 to i64
   %i.hm = getelementptr inbounds nuw i8, ptr %i.bg, i64 %switch.ext547
@@ -5492,11 +5445,11 @@ _RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules8pyflakes5rules21raise_not_implement
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   %i.ba = load i32, ptr %.sink13.i, align 8, !range !11, !noundef !5 ; 2 uses
   %i.bb = zext nneg i32 %i.ba to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.bb
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.bb
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.bc = zext nneg i32 %i.ba to i64
-  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.bc
+  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.bc
   %switch.load13 = load i8, ptr %switch.gep12, align 1
   %switch.ext14 = zext i8 %switch.load13 to i64
   %i.bd = getelementptr inbounds nuw i8, ptr %.sink13.i, i64 %switch.ext
@@ -5615,7 +5568,7 @@ _RINvMs2_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_7Checker17report_diagno
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.cg = load i32, ptr %.sink13.i, align 8, !range !11, !noalias !5219, !noundef !5
   %i.ch = zext nneg i32 %i.cg to i64
-  %switch.gep15 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.ch
+  %switch.gep15 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.ch
   %switch.load16 = load i8, ptr %switch.gep15, align 1
   %switch.ext17 = zext i8 %switch.load16 to i64
   %i.ci = getelementptr inbounds nuw i8, ptr %.sink13.i, i64 %switch.ext17
@@ -5658,11 +5611,11 @@ switch.lookup:                                    ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !5219
   %i.co = load i32, ptr %.sink13.i, align 8, !range !11, !noalias !5219, !noundef !5 ; 2 uses
   %i.cp = zext nneg i32 %i.co to i64
-  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.cp
+  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.cp
   %switch.load19 = load i8, ptr %switch.gep18, align 1
   %switch.ext20 = zext i8 %switch.load19 to i64
   %i.cq = zext nneg i32 %i.co to i64
-  %switch.gep21 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.cq
+  %switch.gep21 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.cq
   %switch.load22 = load i8, ptr %switch.gep21, align 1
   %switch.ext23 = zext i8 %switch.load22 to i64
   %i.cr = getelementptr inbounds nuw i8, ptr %.sink13.i, i64 %switch.ext20
@@ -6065,11 +6018,11 @@ switch.lookup:                                    ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
   %i.be = load i32, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.bf = zext nneg i32 %i.be to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.bf
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.bf
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.bg = zext nneg i32 %i.be to i64
-  %switch.gep149 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.bg
+  %switch.gep149 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.bg
   %switch.load150 = load i8, ptr %switch.gep149, align 1
   %switch.ext151 = zext i8 %switch.load150 to i64
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
@@ -6332,7 +6285,7 @@ switch.lookup152:                                 ; preds = %bb.ak
   store i8 1, ptr %i.dk, align 8, !alias.scope !5304, !noalias !5305
   %i.dl = load i32, ptr %1, align 8, !range !11, !noalias !5303, !noundef !5
   %i.dm = zext nneg i32 %i.dl to i64
-  %switch.gep153 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.dm
+  %switch.gep153 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.dm
   %switch.load154 = load i8, ptr %switch.gep153, align 1
   %switch.ext155 = zext i8 %switch.load154 to i64
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext155
@@ -6377,11 +6330,11 @@ switch.lookup156:                                 ; preds = %bb.am
   store i64 %i.dq, ptr %i.p, align 8, !noalias !5303
   %i.dt = load i32, ptr %1, align 8, !range !11, !noalias !5303, !noundef !5 ; 2 uses
   %i.du = zext nneg i32 %i.dt to i64
-  %switch.gep157 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.du
+  %switch.gep157 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.du
   %switch.load158 = load i8, ptr %switch.gep157, align 1
   %switch.ext159 = zext i8 %switch.load158 to i64
   %i.dv = zext nneg i32 %i.dt to i64
-  %switch.gep160 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.dv
+  %switch.gep160 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.dv
   %switch.load161 = load i8, ptr %switch.gep160, align 1
   %switch.ext162 = zext i8 %switch.load161 to i64
   %i.dw = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext159
@@ -6643,7 +6596,7 @@ switch.lookup163:                                 ; preds = %bb.ak
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.ey = load i32, ptr %1, align 8, !range !11, !noalias !5318, !noundef !5
   %i.ez = zext nneg i32 %i.ey to i64
-  %switch.gep164 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.ez
+  %switch.gep164 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.ez
   %switch.load165 = load i8, ptr %switch.gep164, align 1
   %switch.ext166 = zext i8 %switch.load165 to i64
   %i.fa = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext166
@@ -6685,11 +6638,11 @@ switch.lookup167:                                 ; preds = %bb.bu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !5318
   %i.fg = load i32, ptr %1, align 8, !range !11, !noalias !5318, !noundef !5 ; 2 uses
   %i.fh = zext nneg i32 %i.fg to i64
-  %switch.gep168 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.fh
+  %switch.gep168 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.fh
   %switch.load169 = load i8, ptr %switch.gep168, align 1
   %switch.ext170 = zext i8 %switch.load169 to i64
   %i.fi = zext nneg i32 %i.fg to i64
-  %switch.gep171 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.fi
+  %switch.gep171 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.fi
   %switch.load172 = load i8, ptr %switch.gep171, align 1
   %switch.ext173 = zext i8 %switch.load172 to i64
   %i.fj = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext170
@@ -7092,11 +7045,11 @@ switch.lookup:                                    ; preds = %bb.kt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cc)
   %i.aqd = load i32, ptr %.sroa.01.0.i639, align 8, !range !11, !noundef !5 ; 2 uses
   %i.aqe = zext nneg i32 %i.aqd to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.aqe
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.aqe
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.aqf = zext nneg i32 %i.aqd to i64
-  %switch.gep2006 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.aqf
+  %switch.gep2006 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.aqf
   %switch.load2007 = load i8, ptr %switch.gep2006, align 1
   %switch.ext2008 = zext i8 %switch.load2007 to i64
   %i.aqg = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i639, i64 %switch.ext
@@ -7240,7 +7193,7 @@ _RINvMs8_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_11LintContext17report_d
   store i8 1, ptr %i.ara, align 8, !alias.scope !6711, !noalias !6712
   %i.arb = load i32, ptr %i.aoi, align 8, !range !11, !noalias !6710, !noundef !5
   %i.arc = zext nneg i32 %i.arb to i64
-  %switch.gep2010 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.arc
+  %switch.gep2010 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.arc
   %switch.load2011 = load i8, ptr %switch.gep2010, align 1
   %switch.ext2012 = zext i8 %switch.load2011 to i64
   %i.ard = getelementptr inbounds nuw i8, ptr %i.aoi, i64 %switch.ext2012
@@ -7286,11 +7239,11 @@ switch.lookup2013:                                ; preds = %.noexc.i
   store i64 %i.arf, ptr %i.bh, align 8, !noalias !6710
   %i.ari = load i32, ptr %.sroa.01.0.i639, align 8, !range !11, !noalias !6710, !noundef !5 ; 2 uses
   %i.arj = zext nneg i32 %i.ari to i64
-  %switch.gep2014 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.arj
+  %switch.gep2014 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.arj
   %switch.load2015 = load i8, ptr %switch.gep2014, align 1
   %switch.ext2016 = zext i8 %switch.load2015 to i64
   %i.ark = zext nneg i32 %i.ari to i64
-  %switch.gep2017 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.ark
+  %switch.gep2017 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.ark
   %switch.load2018 = load i8, ptr %switch.gep2017, align 1
   %switch.ext2019 = zext i8 %switch.load2018 to i64
   %i.arl = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i639, i64 %switch.ext2016
@@ -7693,11 +7646,11 @@ switch.lookup2020:                                ; preds = %bb.qs, %bb.qr
   %i.bfh = load ptr, ptr %i.bcb, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.bfi = load i32, ptr %i.bfh, align 8, !range !11, !noundef !5 ; 2 uses
   %i.bfj = zext nneg i32 %i.bfi to i64
-  %switch.gep2021 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.bfj
+  %switch.gep2021 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.bfj
   %switch.load2022 = load i8, ptr %switch.gep2021, align 1
   %switch.ext2023 = zext i8 %switch.load2022 to i64
   %i.bfk = zext nneg i32 %i.bfi to i64
-  %switch.gep2024 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.bfk
+  %switch.gep2024 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.bfk
   %switch.load2025 = load i8, ptr %switch.gep2024, align 1
   %switch.ext2026 = zext i8 %switch.load2025 to i64
   %i.bfl = getelementptr inbounds nuw i8, ptr %i.bfh, i64 %switch.ext2023
@@ -8100,11 +8053,11 @@ switch.lookup:                                    ; preds = %bb.i
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !5, !align !6, !noundef !5 ; 3 uses
   %i.z = load i32, ptr %i.y, align 8, !range !11, !noundef !5 ; 2 uses
   %i.aa = zext nneg i32 %i.z to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.aa
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.aa
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.ab = zext nneg i32 %i.z to i64
-  %switch.gep112 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.ab
+  %switch.gep112 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.ab
   %switch.load113 = load i8, ptr %switch.gep112, align 1
   %switch.ext114 = zext i8 %switch.load113 to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 %switch.ext
@@ -8198,11 +8151,11 @@ switch.lookup115:                                 ; preds = %.lr.ph, %bb.ae
   %i.bj = load ptr, ptr %.sroa.0.05176, align 8, !nonnull !5, !align !6, !noundef !5 ; 3 uses
   %i.bk = load i32, ptr %i.bj, align 8, !range !11, !noundef !5 ; 2 uses
   %i.bl = zext nneg i32 %i.bk to i64
-  %switch.gep116 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.bl
+  %switch.gep116 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.bl
   %switch.load117 = load i8, ptr %switch.gep116, align 1
   %switch.ext118 = zext i8 %switch.load117 to i64
   %i.bm = zext nneg i32 %i.bk to i64
-  %switch.gep119 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.bm
+  %switch.gep119 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.bm
   %switch.load120 = load i8, ptr %switch.gep119, align 1
   %switch.ext121 = zext i8 %switch.load120 to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bj, i64 %switch.ext118
@@ -8287,11 +8240,11 @@ switch.lookup122:                                 ; preds = %bb.af
   %i.cm = load i64, ptr %i.cl, align 8, !noundef !5 ; 5 uses
   %i.cn = load i32, ptr %i.n, align 8, !range !11, !noundef !5 ; 2 uses
   %i.co = zext nneg i32 %i.cn to i64
-  %switch.gep123 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.co
+  %switch.gep123 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.co
   %switch.load124 = load i8, ptr %switch.gep123, align 1
   %switch.ext125 = zext i8 %switch.load124 to i64
   %i.cp = zext nneg i32 %i.cn to i64
-  %switch.gep126 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.cp
+  %switch.gep126 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.cp
   %switch.load127 = load i8, ptr %switch.gep126, align 1
   %switch.ext128 = zext i8 %switch.load127 to i64
   %i.cq = getelementptr inbounds nuw i8, ptr %i.n, i64 %switch.ext125
@@ -8394,11 +8347,11 @@ define internal fastcc { i32, i32 } @_RNvXs12_NtCskLngH8kgpZI_15ruff_python_ast9
 switch.lookup:
   %i.a = load i32, ptr %0, align 8, !range !11, !noundef !5 ; 2 uses
   %i.b = zext nneg i32 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.b
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i32 %i.a to i64
-  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.c
+  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.c
   %switch.load4 = load i8, ptr %switch.gep3, align 1
   %switch.ext5 = zext i8 %switch.load4 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext
@@ -8798,7 +8751,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %.val to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize10ImportTypeNtB6_5Debug3fmtBE_.546, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize10ImportTypeNtB6_5Debug3fmtBE_.549, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -9201,11 +9154,11 @@ switch.lookup:                                    ; preds = %bb.z
   %.sroa.0.3.i = or i16 %.sroa.0.1.i, %i.fk
   %i.fl = load i32, ptr %1, align 8, !range !11, !noalias !7463, !noundef !5 ; 2 uses
   %i.fm = zext nneg i32 %i.fl to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.fm
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.fm
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.fn = zext nneg i32 %i.fl to i64
-  %switch.gep489 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.fn
+  %switch.gep489 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.fn
   %switch.load490 = load i8, ptr %switch.gep489, align 1
   %switch.ext491 = zext i8 %switch.load490 to i64
   %i.fo = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
@@ -9236,11 +9189,11 @@ bb.ad:                                            ; preds = %bb.ac
 switch.lookup492:                                 ; preds = %bb.ac
   %i.fx = load i32, ptr %1, align 8, !range !11, !noalias !7463, !noundef !5 ; 2 uses
   %i.fy = zext nneg i32 %i.fx to i64
-  %switch.gep493 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.fy
+  %switch.gep493 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.fy
   %switch.load494 = load i8, ptr %switch.gep493, align 1
   %switch.ext495 = zext i8 %switch.load494 to i64
   %i.fz = zext nneg i32 %i.fx to i64
-  %switch.gep496 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.fz
+  %switch.gep496 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.fz
   %switch.load497 = load i8, ptr %switch.gep496, align 1
   %switch.ext498 = zext i8 %switch.load497 to i64
   %i.ga = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext495
@@ -9278,11 +9231,11 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 switch.lookup499:                                 ; preds = %bb.ae
   %i.go = load i32, ptr %1, align 8, !range !11, !noalias !7463, !noundef !5 ; 2 uses
   %i.gp = zext nneg i32 %i.go to i64
-  %switch.gep500 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.gp
+  %switch.gep500 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.gp
   %switch.load501 = load i8, ptr %switch.gep500, align 1
   %switch.ext502 = zext i8 %switch.load501 to i64
   %i.gq = zext nneg i32 %i.go to i64
-  %switch.gep503 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.gq
+  %switch.gep503 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.gq
   %switch.load504 = load i8, ptr %switch.gep503, align 1
   %switch.ext505 = zext i8 %switch.load504 to i64
   %i.gr = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext502
@@ -9296,10 +9249,10 @@ switch.lookup499:                                 ; preds = %bb.ae
   br label %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker17handle_node_store.exit
 
 switch.lookup506:                                 ; preds = %bb.af
-  %switch.gep507 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.gm
+  %switch.gep507 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.gm
   %switch.load508 = load i8, ptr %switch.gep507, align 1
   %switch.ext509 = zext i8 %switch.load508 to i64
-  %switch.gep510 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.gn
+  %switch.gep510 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.gn
   %switch.load511 = load i8, ptr %switch.gep510, align 1
   %switch.ext512 = zext i8 %switch.load511 to i64
   %i.gt = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext509
@@ -9313,10 +9266,10 @@ switch.lookup506:                                 ; preds = %bb.af
   br label %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker17handle_node_store.exit
 
 switch.lookup513:                                 ; preds = %bb.af
-  %switch.gep514 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.gm
+  %switch.gep514 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.gm
   %switch.load515 = load i8, ptr %switch.gep514, align 1
   %switch.ext516 = zext i8 %switch.load515 to i64
-  %switch.gep517 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.gn
+  %switch.gep517 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.gn
   %switch.load518 = load i8, ptr %switch.gep517, align 1
   %switch.ext519 = zext i8 %switch.load518 to i64
   %i.gv = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext516
@@ -9330,10 +9283,10 @@ switch.lookup513:                                 ; preds = %bb.af
   br label %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker17handle_node_store.exit
 
 switch.lookup520:                                 ; preds = %bb.af
-  %switch.gep521 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.gm
+  %switch.gep521 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.gm
   %switch.load522 = load i8, ptr %switch.gep521, align 1
   %switch.ext523 = zext i8 %switch.load522 to i64
-  %switch.gep524 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.gn
+  %switch.gep524 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.gn
   %switch.load525 = load i8, ptr %switch.gep524, align 1
   %switch.ext526 = zext i8 %switch.load525 to i64
   %i.gx = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext523
@@ -9474,11 +9427,11 @@ switch.lookup527:                                 ; preds = %.loopexit.i
   %.sroa.01.0.i6.i = select i1 %i.ja, ptr %i.jb, ptr %i.gz
   %i.jc = load i32, ptr %1, align 8, !range !11, !noalias !7464, !noundef !5 ; 2 uses
   %i.jd = zext nneg i32 %i.jc to i64
-  %switch.gep528 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.558, i64 %i.jd
+  %switch.gep528 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.561, i64 %i.jd
   %switch.load529 = load i8, ptr %switch.gep528, align 1
   %switch.ext530 = zext i8 %switch.load529 to i64
   %i.je = zext nneg i32 %i.jc to i64
-  %switch.gep531 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.559, i64 %i.je
+  %switch.gep531 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.562, i64 %i.je
   %switch.load532 = load i8, ptr %switch.gep531, align 1
   %switch.ext533 = zext i8 %switch.load532 to i64
   %i.jf = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext530
@@ -9881,7 +9834,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCs7bpTdHNYxeX_20ruff_python_seman
 
 switch.lookup534:                                 ; preds = %bb.fi
   %i.aec = zext nneg i32 %switch.tableidx to i64
-  %switch.gep535 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.560, i64 %i.aec
+  %switch.gep535 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_expr.563, i64 %i.aec
   %switch.load536 = load i8, ptr %switch.gep535, align 1
   %switch.ext537 = zext i8 %switch.load536 to i64
   %i.aed = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -10284,7 +10237,7 @@ bb.ez:                                            ; preds = %bb.ey, %bb.ex
   %.sroa.14323.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 56
   %.sroa.14323.0.copyload = load ptr, ptr %.sroa.14323.0..sroa_idx, align 8
   %i.aaa = zext nneg i8 %i.ys to i64
-  %switch.gep700 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.561, i64 %i.aaa
+  %switch.gep700 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.564, i64 %i.aaa
   br label %bb.fa
 
 bb.fa:                                            ; preds = %.backedge707, %bb.ez
@@ -10341,7 +10294,7 @@ bb.fj:                                            ; preds = %bb.fi
 
 switch.lookup:                                    ; preds = %bb.fj
   %i.aaj = zext nneg i8 %i.ys to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.561, i64 %i.aaj
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.564, i64 %i.aaj
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32
   br label %.sink.split
@@ -10744,7 +10697,7 @@ switch.lookup703:                                 ; preds = %.sink.split685, %bb
   %i.ald = zext nneg i8 %i.alb to i64
   %i.ale = add nsw i64 %i.ald, -1
   %i.alf = select i1 %i.alc, i64 %i.ale, i64 0
-  %switch.gep704 = getelementptr inbounds i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.562, i64 %i.alf
+  %switch.gep704 = getelementptr inbounds i8, ptr @switch.table._RNvXs5_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7CheckerNtNtCskLngH8kgpZI_15ruff_python_ast7visitor7Visitor10visit_stmt.565, i64 %i.alf
   %switch.load705 = load i8, ptr %switch.gep704, align 1
   %switch.ext706 = zext i8 %switch.load705 to i64
   %i.alg = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext706
@@ -11147,7 +11100,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace3url.563, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace3url.566, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = insertvalue { ptr, i64 } poison, ptr %switch.load3, 0
   %i.e = insertvalue { ptr, i64 } %i.d, i64 %switch.ext, 1
@@ -11163,7 +11116,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace4name.564, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsh_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_6LinterNtB5_13RuleNamespace4name.567, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = insertvalue { ptr, i64 } poison, ptr %switch.load3, 0
   %i.e = insertvalue { ptr, i64 } %i.d, i64 %switch.ext, 1

@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.f, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.h = load i8, ptr %i.g, align 8, !range !46, !noundef !8
+  %i.h = load i8, ptr %i.g, align 8, !range !46, !noundef !8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.02.0.copyload = load i32, ptr %i.i, align 8 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 52
@@ -253,23 +253,14 @@ bb.f:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !1600
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1598
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1598
-  switch i8 %i.h, label %5 [
-    i8 2, label %2
-    i8 0, label %4
-  ]
-
-2:                                                ; preds = %4, %bb.f, %5
-  %3 = phi <2 x i32> [ <i32 0, i32 undef>, %bb.f ], [ <i32 1, i32 0>, %4 ], [ splat (i32 1), %5 ]
+  %switch.selectcmp = icmp eq i8 %i.h, 0
+  %switch.select = select i1 %switch.selectcmp, <2 x i32> <i32 1, i32 0>, <2 x i32> splat (i32 1)
+  %switch.selectcmp17 = icmp eq i8 %i.h, 2
+  %switch.select18 = select i1 %switch.selectcmp17, <2 x i32> <i32 0, i32 undef>, <2 x i32> %switch.select
   %.not13 = icmp eq i32 %.sroa.02.0.copyload, -1
   br i1 %.not13, label %bb.k, label %bb.g
 
-4:                                                ; preds = %bb.f
-  br label %2
-
-5:                                                ; preds = %bb.f
-  br label %2
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i32 %.sroa.02.0.copyload, ptr %i.d, align 8
   %.sroa.5.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
@@ -302,13 +293,13 @@ bb.j:                                             ; preds = %bb.g
   %i.u = extractvalue { i64, i32 } %i.s, 1
   br label %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit
 
-bb.k:                                             ; preds = %2, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit
-  %.sroa.59.sroa.4.0 = phi i32 [ undef, %2 ], [ %.sroa.9.0.i, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit ]
-  %.sroa.59.sroa.0.0 = phi i64 [ undef, %2 ], [ %.sroa.6.0.i, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit ]
-  %.sroa.07.0 = phi i64 [ -2, %2 ], [ %.sroa.0.0.i, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit ]
+bb.k:                                             ; preds = %bb.f, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit
+  %.sroa.59.sroa.4.0 = phi i32 [ undef, %bb.f ], [ %.sroa.9.0.i, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit ]
+  %.sroa.59.sroa.0.0 = phi i64 [ undef, %bb.f ], [ %.sroa.6.0.i, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit ]
+  %.sroa.07.0 = phi i64 [ -2, %bb.f ], [ %.sroa.0.0.i, %_RNvXs1N_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtB8_6qdrant9StartFromINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types8order_by9StartFromE4from.exit ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store <2 x i32> %3, ptr %i.v, align 8
+  store <2 x i32> %switch.select18, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.07.0, ptr %i.w, align 8
   %.sroa.59.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32

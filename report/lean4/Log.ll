@@ -205,82 +205,48 @@ begin_hunk_0
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lake_Verbosity_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_Verbosity_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_Verbosity_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-l_Lake_Verbosity_ctorIdx.exit:                    ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lake_Verbosity_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-l_Lake_Verbosity_ctorIdx.exit:                    ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lake_Verbosity_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_Verbosity_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_Verbosity_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lake_Verbosity_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_toCtorIdx.exit
-
-l_Lake_Verbosity_toCtorIdx.exit:                  ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -683,107 +649,53 @@ lean_dec.exit:                                    ; preds = %lean_nat_le.exit.th
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext range(i8 0, 2) i8 @l_Lake_instDecidableEqVerbosity(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-4:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-l_Lake_Verbosity_ctorIdx.exit:                    ; preds = %2, %3, %4
-  %.0.i12 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %lean_dec.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit
-  br label %lean_dec.exit
-
-6:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %6, %5, %l_Lake_Verbosity_ctorIdx.exit
-  %.0.i13 = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit ]
-  %i.a = icmp eq ptr %.0.i12, %.0.i13
-  %i.b = zext i1 %i.a to i8
+lean_dec.exit:
+  %switch.selectcmp4.i = icmp eq i8 %0, 0         ; 2 uses
+  %switch.selectcmp.i = icmp ne i8 %0, 1
+  %switch.selectcmp4.i14 = icmp eq i8 %1, 0
+  %i.a = icmp eq i8 %1, 1
+  %2 = xor i1 %switch.selectcmp.i, %i.a
+  %not.switch.selectcmp4.i = xor i1 %switch.selectcmp4.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i
+  %4 = select i1 %switch.selectcmp4.i14, i1 %switch.selectcmp4.i, i1 %3
+  %i.b = zext i1 %4 to i8
   ret i8 %i.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_instDecidableEqVerbosity___boxed(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_instDecidableEqVerbosity___boxed(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
   %i.d = ptrtoint ptr %1 to i64
   %i.e = lshr i64 %i.d, 1
-  %i.f = trunc i64 %i.e to i8
-  switch i8 %i.c, label %3 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit.i
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-l_Lake_Verbosity_ctorIdx.exit.i:                  ; preds = %3, %2, %bb.a
-  %.0.i12.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  switch i8 %i.f, label %5 [
-    i8 0, label %l_Lake_instDecidableEqVerbosity.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instDecidableEqVerbosity.exit
-
-5:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instDecidableEqVerbosity.exit
-
-l_Lake_instDecidableEqVerbosity.exit:             ; preds = %l_Lake_Verbosity_ctorIdx.exit.i, %4, %5
-  %.0.i13.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit.i ]
-  %6 = icmp eq ptr %.0.i12.i, %.0.i13.i
-  %7 = select i1 %6, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
-  ret ptr %7
+  %i.f = trunc i64 %i.e to i8                     ; 2 uses
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0     ; 2 uses
+  %switch.selectcmp.i.i = icmp ne i8 %i.c, 1
+  %switch.selectcmp4.i14.i = icmp eq i8 %i.f, 0
+  %switch.selectcmp.i12.i = icmp eq i8 %i.f, 1
+  %2 = xor i1 %switch.selectcmp.i.i, %switch.selectcmp.i12.i
+  %not.switch.selectcmp4.i.i = xor i1 %switch.selectcmp4.i.i, true
+  %3 = and i1 %2, %not.switch.selectcmp4.i.i
+  %4 = select i1 %switch.selectcmp4.i14.i, i1 %switch.selectcmp4.i.i, i1 %3
+  %5 = select i1 %4, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 1 to ptr)
+  ret ptr %5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext range(i8 0, 3) i8 @l_Lake_instOrdVerbosity_ord(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-4:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit
-
-l_Lake_Verbosity_ctorIdx.exit:                    ; preds = %2, %3, %4
-  %.0.i32 = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ] ; 2 uses
-  switch i8 %1, label %6 [
-    i8 0, label %lean_nat_lt.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit
-  br label %lean_nat_lt.exit
-
-6:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit
-  br label %lean_nat_lt.exit
-
-lean_nat_lt.exit:                                 ; preds = %6, %5, %l_Lake_Verbosity_ctorIdx.exit
-  %.0.i33 = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit ] ; 2 uses
-  %.not = icmp samesign ult ptr %.0.i32, %.0.i33
-  %.not35 = icmp eq ptr %.0.i32, %.0.i33
+lean_nat_lt.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i ; 2 uses
+  %switch.selectcmp.i32 = icmp eq i8 %1, 1
+  %switch.select.i33 = select i1 %switch.selectcmp.i32, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i34 = icmp eq i8 %1, 0
+  %switch.select5.i35 = select i1 %switch.selectcmp4.i34, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i33 ; 2 uses
+  %.not = icmp samesign ult ptr %switch.select5.i, %switch.select5.i35
+  %.not35 = icmp eq ptr %switch.select5.i, %switch.select5.i35
   %. = select i1 %.not35, i8 1, i8 2
   %.1 = select i1 %.not, i8 0, i8 %.
   ret i8 %.1
@@ -794,112 +706,54 @@ define nonnull ptr @l_Lake_instOrdVerbosity_ord___boxed(ptr noundef %0, ptr noun
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
   %i.d = ptrtoint ptr %1 to i64
   %i.e = lshr i64 %i.d, 1
-  %i.f = trunc i64 %i.e to i8
-  switch i8 %i.c, label %3 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit.i
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-l_Lake_Verbosity_ctorIdx.exit.i:                  ; preds = %3, %2, %bb.a
-  %.0.i32.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %bb.a ] ; 2 uses
-  switch i8 %i.f, label %5 [
-    i8 0, label %l_Lake_instOrdVerbosity_ord.exit
-    i8 1, label %4
-  ]
-
-4:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instOrdVerbosity_ord.exit
-
-5:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instOrdVerbosity_ord.exit
-
-l_Lake_instOrdVerbosity_ord.exit:                 ; preds = %l_Lake_Verbosity_ctorIdx.exit.i, %4, %5
-  %.0.i33.i = phi ptr [ inttoptr (i64 5 to ptr), %5 ], [ inttoptr (i64 3 to ptr), %4 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit.i ] ; 2 uses
-  %.not.i = icmp samesign ult ptr %.0.i32.i, %.0.i33.i
-  %.not35.i = icmp eq ptr %.0.i32.i, %.0.i33.i
-  %6 = select i1 %.not35.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
-  %7 = select i1 %.not.i, ptr inttoptr (i64 1 to ptr), ptr %6
-  ret ptr %7
+  %i.f = trunc i64 %i.e to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i ; 2 uses
+  %switch.selectcmp.i32.i = icmp eq i8 %i.f, 1
+  %switch.select.i33.i = select i1 %switch.selectcmp.i32.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i34.i = icmp eq i8 %i.f, 0
+  %switch.select5.i35.i = select i1 %switch.selectcmp4.i34.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i33.i ; 2 uses
+  %.not.i = icmp samesign ult ptr %switch.select5.i.i, %switch.select5.i35.i
+  %.not39.i = icmp eq ptr %switch.select5.i.i, %switch.select5.i35.i
+  %2 = select i1 %.not39.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %3 = select i1 %.not.i, ptr inttoptr (i64 1 to ptr), ptr %2
+  ret ptr %3
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define zeroext i8 @l_Lake_instMinVerbosity___lam__0(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit.i
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-4:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-l_Lake_Verbosity_ctorIdx.exit.i:                  ; preds = %4, %3, %2
-  %.0.i32.i = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %l_Lake_instOrdVerbosity_ord.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instOrdVerbosity_ord.exit
-
-6:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instOrdVerbosity_ord.exit
-
-l_Lake_instOrdVerbosity_ord.exit:                 ; preds = %l_Lake_Verbosity_ctorIdx.exit.i, %5, %6
-  %.0.i33.i = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit.i ]
-  %7 = icmp samesign ugt ptr %.0.i32.i, %.0.i33.i
-  %. = select i1 %7, i8 %1, i8 %0
+define noundef zeroext i8 @l_Lake_instMinVerbosity___lam__0(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
+l_Lake_instOrdVerbosity_ord.exit:
+  %switch.selectcmp.i.i = icmp eq i8 %0, 1
+  %switch.selectcmp4.i.i = icmp ne i8 %0, 0
+  %switch.selectcmp4.i34.i = icmp eq i8 %1, 0
+  %2 = icmp ult i8 %1, 2
+  %3 = select i1 %switch.selectcmp.i.i, i1 %switch.selectcmp4.i34.i, i1 %2
+  %4 = and i1 %switch.selectcmp4.i.i, %3
+  %. = select i1 %4, i8 %1, i8 %0
   ret i8 %.
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define nonnull ptr @l_Lake_instMinVerbosity___lam__0___boxed(ptr noundef %0, ptr noundef %1) #0 {
-  %3 = ptrtoint ptr %0 to i64
-  %4 = lshr i64 %3, 1                             ; 2 uses
-  %5 = trunc i64 %4 to i8
-  %6 = ptrtoint ptr %1 to i64
-  %7 = lshr i64 %6, 1                             ; 2 uses
-  %8 = trunc i64 %7 to i8
-  switch i8 %5, label %10 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit.i.i
-    i8 1, label %9
-  ]
-
-9:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i.i
-
-10:                                               ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i.i
-
-l_Lake_Verbosity_ctorIdx.exit.i.i:                ; preds = %10, %9, %2
-  %.0.i32.i.i = phi ptr [ inttoptr (i64 5 to ptr), %10 ], [ inttoptr (i64 3 to ptr), %9 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %8, label %12 [
-    i8 0, label %l_Lake_instMinVerbosity___lam__0.exit
-    i8 1, label %11
-  ]
-
-11:                                               ; preds = %l_Lake_Verbosity_ctorIdx.exit.i.i
-  br label %l_Lake_instMinVerbosity___lam__0.exit
-
-12:                                               ; preds = %l_Lake_Verbosity_ctorIdx.exit.i.i
-  br label %l_Lake_instMinVerbosity___lam__0.exit
-
-l_Lake_instMinVerbosity___lam__0.exit:            ; preds = %l_Lake_Verbosity_ctorIdx.exit.i.i, %11, %12
-  %.0.i33.i.i = phi ptr [ inttoptr (i64 5 to ptr), %12 ], [ inttoptr (i64 3 to ptr), %11 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit.i.i ]
-  %13 = icmp samesign ugt ptr %.0.i32.i.i, %.0.i33.i.i
-  %..i = select i1 %13, i64 %7, i64 %4
+l_Lake_instMinVerbosity___lam__0.exit:
+  %2 = ptrtoint ptr %0 to i64
+  %3 = lshr i64 %2, 1                             ; 2 uses
+  %4 = trunc i64 %3 to i8                         ; 2 uses
+  %5 = ptrtoint ptr %1 to i64
+  %6 = lshr i64 %5, 1                             ; 2 uses
+  %7 = trunc i64 %6 to i8                         ; 2 uses
+  %switch.selectcmp.i.i.i = icmp eq i8 %4, 1
+  %switch.selectcmp4.i.i.i = icmp ne i8 %4, 0
+  %switch.selectcmp4.i34.i.i = icmp eq i8 %7, 0
+  %8 = icmp ult i8 %7, 2
+  %9 = select i1 %switch.selectcmp.i.i.i, i1 %switch.selectcmp4.i34.i.i, i1 %8
+  %10 = and i1 %switch.selectcmp4.i.i.i, %9
+  %..i = select i1 %10, i64 %6, i64 %3
   %i.a = shl nuw i64 %..i, 1
   %i.b = and i64 %i.a, 510
   %i.c = or disjoint i64 %i.b, 1
@@ -908,74 +762,34 @@ l_Lake_instMinVerbosity___lam__0.exit:            ; preds = %l_Lake_Verbosity_ct
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define zeroext i8 @l_Lake_instMaxVerbosity___lam__0(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
-  switch i8 %0, label %4 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit.i
-    i8 1, label %3
-  ]
-
-3:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-4:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i
-
-l_Lake_Verbosity_ctorIdx.exit.i:                  ; preds = %4, %3, %2
-  %.0.i32.i = phi ptr [ inttoptr (i64 5 to ptr), %4 ], [ inttoptr (i64 3 to ptr), %3 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %1, label %6 [
-    i8 0, label %l_Lake_instOrdVerbosity_ord.exit
-    i8 1, label %5
-  ]
-
-5:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instOrdVerbosity_ord.exit
-
-6:                                                ; preds = %l_Lake_Verbosity_ctorIdx.exit.i
-  br label %l_Lake_instOrdVerbosity_ord.exit
-
-l_Lake_instOrdVerbosity_ord.exit:                 ; preds = %l_Lake_Verbosity_ctorIdx.exit.i, %5, %6
-  %.0.i33.i = phi ptr [ inttoptr (i64 5 to ptr), %6 ], [ inttoptr (i64 3 to ptr), %5 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit.i ]
-  %7 = icmp samesign ugt ptr %.0.i32.i, %.0.i33.i
-  %. = select i1 %7, i8 %0, i8 %1
+define noundef zeroext i8 @l_Lake_instMaxVerbosity___lam__0(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
+l_Lake_instOrdVerbosity_ord.exit:
+  %switch.selectcmp.i.i = icmp eq i8 %0, 1
+  %switch.selectcmp4.i.i = icmp ne i8 %0, 0
+  %switch.selectcmp4.i34.i = icmp eq i8 %1, 0
+  %2 = icmp ult i8 %1, 2
+  %3 = select i1 %switch.selectcmp.i.i, i1 %switch.selectcmp4.i34.i, i1 %2
+  %4 = and i1 %switch.selectcmp4.i.i, %3
+  %. = select i1 %4, i8 %0, i8 %1
   ret i8 %.
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define nonnull ptr @l_Lake_instMaxVerbosity___lam__0___boxed(ptr noundef %0, ptr noundef %1) #0 {
-  %3 = ptrtoint ptr %0 to i64
-  %4 = lshr i64 %3, 1                             ; 2 uses
-  %5 = trunc i64 %4 to i8
-  %6 = ptrtoint ptr %1 to i64
-  %7 = lshr i64 %6, 1                             ; 2 uses
-  %8 = trunc i64 %7 to i8
-  switch i8 %5, label %10 [
-    i8 0, label %l_Lake_Verbosity_ctorIdx.exit.i.i
-    i8 1, label %9
-  ]
-
-9:                                                ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i.i
-
-10:                                               ; preds = %2
-  br label %l_Lake_Verbosity_ctorIdx.exit.i.i
-
-l_Lake_Verbosity_ctorIdx.exit.i.i:                ; preds = %10, %9, %2
-  %.0.i32.i.i = phi ptr [ inttoptr (i64 5 to ptr), %10 ], [ inttoptr (i64 3 to ptr), %9 ], [ inttoptr (i64 1 to ptr), %2 ]
-  switch i8 %8, label %12 [
-    i8 0, label %l_Lake_instMaxVerbosity___lam__0.exit
-    i8 1, label %11
-  ]
-
-11:                                               ; preds = %l_Lake_Verbosity_ctorIdx.exit.i.i
-  br label %l_Lake_instMaxVerbosity___lam__0.exit
-
-12:                                               ; preds = %l_Lake_Verbosity_ctorIdx.exit.i.i
-  br label %l_Lake_instMaxVerbosity___lam__0.exit
-
-l_Lake_instMaxVerbosity___lam__0.exit:            ; preds = %l_Lake_Verbosity_ctorIdx.exit.i.i, %11, %12
-  %.0.i33.i.i = phi ptr [ inttoptr (i64 5 to ptr), %12 ], [ inttoptr (i64 3 to ptr), %11 ], [ inttoptr (i64 1 to ptr), %l_Lake_Verbosity_ctorIdx.exit.i.i ]
-  %13 = icmp samesign ugt ptr %.0.i32.i.i, %.0.i33.i.i
-  %..i = select i1 %13, i64 %4, i64 %7
+l_Lake_instMaxVerbosity___lam__0.exit:
+  %2 = ptrtoint ptr %0 to i64
+  %3 = lshr i64 %2, 1                             ; 2 uses
+  %4 = trunc i64 %3 to i8                         ; 2 uses
+  %5 = ptrtoint ptr %1 to i64
+  %6 = lshr i64 %5, 1                             ; 2 uses
+  %7 = trunc i64 %6 to i8                         ; 2 uses
+  %switch.selectcmp.i.i.i = icmp eq i8 %4, 1
+  %switch.selectcmp4.i.i.i = icmp ne i8 %4, 0
+  %switch.selectcmp4.i34.i.i = icmp eq i8 %7, 0
+  %8 = icmp ult i8 %7, 2
+  %9 = select i1 %switch.selectcmp.i.i.i, i1 %switch.selectcmp4.i34.i.i, i1 %8
+  %10 = and i1 %switch.selectcmp4.i.i.i, %9
+  %..i = select i1 %10, i64 %3, i64 %6
   %i.a = shl nuw i64 %..i, 1
   %i.b = and i64 %i.a, 510
   %i.c = or disjoint i64 %i.b, 1
@@ -985,82 +799,48 @@ l_Lake_instMaxVerbosity___lam__0.exit:            ; preds = %l_Lake_Verbosity_ct
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lake_AnsiMode_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_AnsiMode_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_AnsiMode_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lake_AnsiMode_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lake_AnsiMode_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_AnsiMode_ctorIdx.exit
-
-l_Lake_AnsiMode_ctorIdx.exit:                     ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lake_AnsiMode_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lake_AnsiMode_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lake_AnsiMode_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lake_AnsiMode_ctorIdx.exit
-
-l_Lake_AnsiMode_ctorIdx.exit:                     ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lake_AnsiMode_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lake_AnsiMode_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
+define nonnull ptr @l_Lake_AnsiMode_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lake_AnsiMode_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lake_AnsiMode_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lake_AnsiMode_toCtorIdx.exit
-
-l_Lake_AnsiMode_toCtorIdx.exit:                   ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -1463,7 +1243,7 @@ lean_dec_ref.exit:                                ; preds = %bb.e, %bb.f, %bb.g
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef nonnull ptr @l_Lake_OutStream_ctorIdx(ptr noundef %0) local_unnamed_addr #4 {
+define nonnull ptr @l_Lake_OutStream_ctorIdx(ptr noundef %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -1473,88 +1253,64 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i = load i32, ptr %i.e, align 4
   %i.f = lshr i32 %.val.i, 24
-  br label %lean_obj_tag.exit
-
-lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i, label %2 [
-    i32 0, label %bb.d
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit
   br label %bb.d
 
-2:                                                ; preds = %lean_obj_tag.exit
-  br label %bb.d
-
-bb.d:                                             ; preds = %lean_obj_tag.exit, %2, %1
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ] ; 2 uses
+  %switch.selectcmp = icmp eq i32 %.0.i, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp5 = icmp eq i32 %.0.i, 0
+  %switch.select6 = select i1 %switch.selectcmp5, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select6
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l_Lake_OutStream_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #2 {
+define nonnull ptr @l_Lake_OutStream_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
-  %.not.i.i = icmp eq i64 %i.b, 0                 ; 2 uses
+  %.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.a, 1
   %i.d = trunc i64 %i.c to i32
-  br label %lean_obj_tag.exit.i
+  br label %lean_dec.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 4
   %.val.i.i = load i32, ptr %i.e, align 4
-  %i.f = lshr i32 %.val.i.i, 24
-  br label %lean_obj_tag.exit.i
+  %i.f = lshr i32 %.val.i.i, 24                   ; 3 uses
+  %1 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
+  %2 = icmp sgt i32 %1, 1
+  br i1 %2, label %bb.d, label %bb.e, !prof !11
 
-lean_obj_tag.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  switch i32 %.0.i.i, label %2 [
-    i32 0, label %l_Lake_OutStream_ctorIdx.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lake_OutStream_ctorIdx.exit
-
-2:                                                ; preds = %lean_obj_tag.exit.i
-  br label %l_Lake_OutStream_ctorIdx.exit
-
-l_Lake_OutStream_ctorIdx.exit:                    ; preds = %lean_obj_tag.exit.i, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.i ]
-  br i1 %.not.i.i, label %3, label %lean_dec.exit
-
-3:                                                ; preds = %l_Lake_OutStream_ctorIdx.exit
-  %4 = load i32, ptr %0, align 4, !tbaa !10       ; 3 uses
-  %5 = icmp sgt i32 %4, 1
-  br i1 %5, label %bb.d, label %bb.e, !prof !11
-
-bb.d:                                             ; preds = %3
-  %i.g = add nsw i32 %4, -1
+bb.d:                                             ; preds = %bb.c
+  %i.g = add nsw i32 %1, -1
   store i32 %i.g, ptr %0, align 4, !tbaa !10
   br label %lean_dec.exit
 
-bb.e:                                             ; preds = %3
-  %.not.i3 = icmp eq i32 %4, 0
+bb.e:                                             ; preds = %bb.c
+  %.not.i3 = icmp eq i32 %1, 0
   br i1 %.not.i3, label %lean_dec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #10
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.f, %bb.e, %bb.d, %l_Lake_OutStream_ctorIdx.exit
-  ret ptr %.0.i
+lean_dec.exit:                                    ; preds = %bb.b, %bb.f, %bb.e, %bb.d
+  %.0.i.i5 = phi i32 [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.d, %bb.b ] ; 2 uses
+  %switch.selectcmp5.i = icmp eq i32 %.0.i.i5, 0
+  %switch.selectcmp.i = icmp eq i32 %.0.i.i5, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.select6.i = select i1 %switch.selectcmp5.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select6.i
 }
 
 ; Function Attrs: nounwind uwtable

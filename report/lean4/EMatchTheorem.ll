@@ -204,82 +204,48 @@ lean_dec_ref.exit30:                              ; preds = %bb.w, %bb.x, %bb.y
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit
-
-l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit: ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit
-
-l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit: ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_toCtorIdx.exit
-
-l___private_Lean_Meta_Tactic_Grind_EMatchTheorem_0__Lean_Meta_Grind_NormalizePattern_ParentKind_toCtorIdx.exit: ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
@@ -682,82 +648,48 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Meta_Grind_MinIndexableMode_ctorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %bb.a
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %bb.a
-
-3:                                                ; preds = %1
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %2
-  %.0 = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0
+bb.a:
+  %switch.selectcmp = icmp eq i8 %0, 1
+  %switch.select = select i1 %switch.selectcmp, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4 = icmp eq i8 %0, 0
+  %switch.select5 = select i1 %switch.selectcmp4, ptr inttoptr (i64 1 to ptr), ptr %switch.select
+  ret ptr %switch.select5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Meta_Grind_MinIndexableMode_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Meta_Grind_MinIndexableMode_ctorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit
-
-l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit:  ; preds = %bb.a, %1, %2
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i = icmp eq i8 %i.c, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %i.c, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @l_Lean_Meta_Grind_MinIndexableMode_toCtorIdx(i8 noundef zeroext %0) local_unnamed_addr #3 {
-  switch i8 %0, label %3 [
-    i8 0, label %l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit
-    i8 1, label %2
-  ]
-
-2:                                                ; preds = %1
-  br label %l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit
-
-3:                                                ; preds = %1
-  br label %l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit
-
-l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit:  ; preds = %1, %2, %3
-  %.0.i = phi ptr [ inttoptr (i64 5 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %2 ], [ inttoptr (i64 1 to ptr), %1 ]
-  ret ptr %.0.i
+l_Lean_Meta_Grind_MinIndexableMode_ctorIdx.exit:
+  %switch.selectcmp.i = icmp eq i8 %0, 1
+  %switch.select.i = select i1 %switch.selectcmp.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i = icmp eq i8 %0, 0
+  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i
+  ret ptr %switch.select5.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef nonnull ptr @l_Lean_Meta_Grind_MinIndexableMode_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
+define nonnull ptr @l_Lean_Meta_Grind_MinIndexableMode_toCtorIdx___boxed(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = lshr i64 %i.a, 1
-  %i.c = trunc i64 %i.b to i8
-  switch i8 %i.c, label %2 [
-    i8 0, label %l_Lean_Meta_Grind_MinIndexableMode_toCtorIdx.exit
-    i8 1, label %1
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_Grind_MinIndexableMode_toCtorIdx.exit
-
-2:                                                ; preds = %bb.a
-  br label %l_Lean_Meta_Grind_MinIndexableMode_toCtorIdx.exit
-
-l_Lean_Meta_Grind_MinIndexableMode_toCtorIdx.exit: ; preds = %bb.a, %1, %2
-  %.0.i.i = phi ptr [ inttoptr (i64 5 to ptr), %2 ], [ inttoptr (i64 3 to ptr), %1 ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  ret ptr %.0.i.i
+  %i.c = trunc i64 %i.b to i8                     ; 2 uses
+  %switch.selectcmp.i.i = icmp eq i8 %i.c, 1
+  %switch.select.i.i = select i1 %switch.selectcmp.i.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 5 to ptr)
+  %switch.selectcmp4.i.i = icmp eq i8 %i.c, 0
+  %switch.select5.i.i = select i1 %switch.selectcmp4.i.i, ptr inttoptr (i64 1 to ptr), ptr %switch.select.i.i
+  ret ptr %switch.select5.i.i
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable

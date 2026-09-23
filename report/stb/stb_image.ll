@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.c, %bb.e, %bb.d,
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @stbi__bmp_parse_header(ptr noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #2 {
+define ptr @stbi__bmp_parse_header(ptr noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 7 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 3 uses
@@ -477,7 +477,7 @@ bb.ac:                                            ; preds = %bb.aa, %bb.aa, %bb.
   %i.dp = tail call i32 @stbi__get32le(ptr noundef nonnull %0) ; 0 uses
   %i.dq = add i32 %i.bz, -40                      ; 2 uses
   %i.dr = tail call i32 @llvm.fshl.i32(i32 %i.dq, i32 %i.dq, i32 30)
-  switch i32 %i.dr, label %bb.ar [
+  switch i32 %i.dr, label %bb.an [
     i32 4, label %bb.ad
     i32 0, label %bb.ae
     i32 21, label %bb.ao
@@ -525,7 +525,7 @@ bb.aj:                                            ; preds = %bb.ag
   br label %stbi__bmp_set_mask_defaults.exit
 
 bb.ak:                                            ; preds = %bb.af
-  br i1 %i.di, label %bb.al, label %bb.an
+  br i1 %i.di, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
   %i.dz = tail call i32 @stbi__get32le(ptr noundef nonnull %0)
@@ -542,17 +542,22 @@ bb.al:                                            ; preds = %bb.ak
   %i.eg = icmp eq i32 %i.ee, %i.ef
   %i.eh = icmp eq i32 %i.ef, %i.eb
   %or.cond = select i1 %i.eg, i1 %i.eh, i1 false
-  br i1 %or.cond, label %bb.am, label %stbi__bmp_set_mask_defaults.exit
+  br i1 %or.cond, label %2, label %stbi__bmp_set_mask_defaults.exit
 
-bb.am:                                            ; preds = %bb.al
+2:                                                ; preds = %bb.al
+  %3 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @stbi__g_failure_reason)
+  store ptr @.str.71, ptr %3, align 8, !tbaa !39
+  br label %.critedge
+
+bb.am:                                            ; preds = %bb.ak
   %i.ei = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @stbi__g_failure_reason)
   store ptr @.str.71, ptr %i.ei, align 8, !tbaa !39
   br label %.critedge
 
-bb.an:                                            ; preds = %bb.ak
+bb.an:                                            ; preds = %bb.ac
   %i.ej = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @stbi__g_failure_reason)
   store ptr @.str.71, ptr %i.ej, align 8, !tbaa !39
-  br label %.critedge
+  br label %bb.ar
 
 bb.ao:                                            ; preds = %bb.ac, %bb.ac
   %i.ek = tail call i32 @stbi__get32le(ptr noundef nonnull %0)
@@ -605,21 +610,20 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.fp = tail call i32 @stbi__get32le(ptr noundef nonnull %0) ; 0 uses
   %i.fq = tail call i32 @stbi__get32le(ptr noundef nonnull %0) ; 0 uses
   %i.fr = tail call i32 @stbi__get32le(ptr noundef nonnull %0) ; 0 uses
-  br label %stbi__bmp_set_mask_defaults.exit
+  br label %bb.ar
 
-bb.ar:                                            ; preds = %bb.ac
-  %2 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @stbi__g_failure_reason)
-  store ptr @.str.71, ptr %2, align 8, !tbaa !39
-  switch i32 %i.bz, label %.critedge [
-    i32 124, label %stbi__bmp_set_mask_defaults.exit
-    i32 108, label %stbi__bmp_set_mask_defaults.exit
-  ]
-
-stbi__bmp_set_mask_defaults.exit:                 ; preds = %.thread, %bb.aj, %bb.ai, %bb.ah, %bb.aq, %bb.ar, %bb.ar, %bb.ae, %bb.al
+bb.ar:                                            ; preds = %.thread, %bb.an
+  %4 = add i32 %i.bz, -108
+  %switch.and = and i32 %4, -17
+  %switch.selectcmp = icmp eq i32 %switch.and, 0
+  %5 = select i1 %switch.selectcmp, ptr inttoptr (i64 1 to ptr), ptr null
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.aq, %bb.w, %bb.y, %bb.ab, %bb.am, %bb.an, %bb.ar, %bb.u, %stbi__bmp_set_mask_defaults.exit, %bb.t, %bb.p, %bb.n, %stbi__get8.exit.thread
-  %.3 = phi ptr [ null, %stbi__get8.exit.thread ], [ null, %bb.n ], [ null, %bb.p ], [ null, %bb.t ], [ inttoptr (i64 1 to ptr), %bb.u ], [ inttoptr (i64 1 to ptr), %stbi__bmp_set_mask_defaults.exit ], [ null, %bb.ar ], [ null, %bb.an ], [ null, %bb.am ], [ null, %bb.ab ], [ null, %bb.y ], [ null, %bb.w ], [ null, %bb.aq ]
+stbi__bmp_set_mask_defaults.exit:                 ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.aq, %bb.ae, %bb.al
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.ar, %bb.aq, %bb.w, %bb.y, %bb.ab, %2, %bb.am, %bb.u, %stbi__bmp_set_mask_defaults.exit, %bb.t, %bb.p, %bb.n, %stbi__get8.exit.thread
+  %.3 = phi ptr [ null, %stbi__get8.exit.thread ], [ null, %bb.n ], [ null, %bb.p ], [ null, %bb.t ], [ inttoptr (i64 1 to ptr), %bb.u ], [ inttoptr (i64 1 to ptr), %stbi__bmp_set_mask_defaults.exit ], [ null, %bb.aq ], [ null, %bb.am ], [ null, %2 ], [ null, %bb.ab ], [ null, %bb.y ], [ null, %bb.w ], [ %5, %bb.ar ]
   ret ptr %.3
 }
 

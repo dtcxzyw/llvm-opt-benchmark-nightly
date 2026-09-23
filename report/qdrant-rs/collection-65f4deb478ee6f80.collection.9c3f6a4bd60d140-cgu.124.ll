@@ -202,10 +202,17 @@ switch.lookup:
   br i1 %i.j, label %bb.a, label %switch.lookup.i
 
 bb.a:                                             ; preds = %switch.lookup
-  %.sroa.044.sroa.0.0.extract.trunc = trunc i64 %.sroa.044.0.copyload to i8
-  switch i8 %.sroa.044.sroa.0.0.extract.trunc, label %bb.e [
-    i8 2, label %12
-    i8 0, label %bb.d
+  %.sroa.044.sroa.0.0.extract.trunc = trunc i64 %.sroa.044.0.copyload to i8 ; 2 uses
+  %switch.selectcmp = icmp eq i8 %.sroa.044.sroa.0.0.extract.trunc, 0
+  %switch.select = select i1 %switch.selectcmp, <2 x i32> <i32 1, i32 0>, <2 x i32> splat (i32 1)
+  %switch.selectcmp51 = icmp eq i8 %.sroa.044.sroa.0.0.extract.trunc, 2
+  %switch.select52 = select i1 %switch.selectcmp51, <2 x i32> <i32 0, i32 undef>, <2 x i32> %switch.select ; 5 uses
+  switch i8 %.sroa.044.sroa.5.0.extract.trunc, label %default.unreachable25.i [
+    i8 -1, label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
+    i8 0, label %bb.i
+    i8 1, label %bb.f
+    i8 2, label %bb.g
+    i8 3, label %bb.h
   ]
 
 switch.lookup.i:                                  ; preds = %switch.lookup
@@ -217,20 +224,14 @@ switch.lookup.i:                                  ; preds = %switch.lookup
   %switch.offset.i = zext nneg i8 %narrow.i to i32 ; 5 uses
   switch i8 %.sroa.646.0.copyload, label %default.unreachable25.i [
     i8 -1, label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
-    i8 0, label %bb.c
-    i8 1, label %10
-    i8 2, label %11
-    i8 3, label %bb.b
+    i8 0, label %bb.e
+    i8 1, label %bb.b
+    i8 2, label %bb.c
+    i8 3, label %bb.d
   ]
 
-default.unreachable25.i:                          ; preds = %12, %switch.lookup.i
+default.unreachable25.i:                          ; preds = %bb.a, %switch.lookup.i
   unreachable
-
-10:                                               ; preds = %switch.lookup.i
-  br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
-
-11:                                               ; preds = %switch.lookup.i
-  br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
 
 bb.b:                                             ; preds = %switch.lookup.i
   br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
@@ -238,39 +239,29 @@ bb.b:                                             ; preds = %switch.lookup.i
 bb.c:                                             ; preds = %switch.lookup.i
   br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
 
-12:                                               ; preds = %bb.e, %bb.d, %bb.a
-  %13 = phi <2 x i32> [ <i32 0, i32 undef>, %bb.a ], [ <i32 1, i32 0>, %bb.d ], [ splat (i32 1), %bb.e ] ; 5 uses
-  switch i8 %.sroa.044.sroa.5.0.extract.trunc, label %default.unreachable25.i [
-    i8 -1, label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
-    i8 0, label %bb.i
-    i8 1, label %bb.f
-    i8 2, label %bb.g
-    i8 3, label %bb.h
-  ]
-
-bb.d:                                             ; preds = %bb.a
-  br label %12
-
-bb.e:                                             ; preds = %bb.a
-  br label %12
-
-bb.f:                                             ; preds = %12
+bb.d:                                             ; preds = %switch.lookup.i
   br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
 
-bb.g:                                             ; preds = %12
+bb.e:                                             ; preds = %switch.lookup.i
   br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
 
-bb.h:                                             ; preds = %12
+bb.f:                                             ; preds = %bb.a
   br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
 
-bb.i:                                             ; preds = %12
+bb.g:                                             ; preds = %bb.a
   br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
 
-_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit: ; preds = %switch.lookup.i, %10, %11, %bb.b, %bb.c, %bb.i, %bb.h, %bb.g, %bb.f, %12
-  %.sroa.1138.sroa.5.0 = phi i64 [ 0, %12 ], [ 1, %bb.i ], [ 4, %bb.h ], [ 2, %bb.g ], [ 3, %bb.f ], [ %.sroa.044.0.copyload, %bb.c ], [ %.sroa.044.0.copyload, %bb.b ], [ %.sroa.044.0.copyload, %11 ], [ %.sroa.044.0.copyload, %10 ], [ %.sroa.044.0.copyload, %switch.lookup.i ]
-  %.sroa.13.0 = phi i32 [ undef, %12 ], [ undef, %bb.i ], [ undef, %bb.h ], [ undef, %bb.g ], [ undef, %bb.f ], [ %switch.offset.i, %bb.c ], [ %switch.offset.i, %bb.b ], [ %switch.offset.i, %11 ], [ %switch.offset.i, %10 ], [ %switch.offset.i, %switch.lookup.i ]
-  %.sroa.9.0 = phi i32 [ 0, %12 ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.g ], [ 1, %bb.f ], [ 1, %bb.c ], [ 4, %bb.b ], [ 2, %11 ], [ 3, %10 ], [ undef, %switch.lookup.i ]
-  %i.k = phi <2 x i32> [ %13, %12 ], [ %13, %bb.i ], [ %13, %bb.h ], [ %13, %bb.g ], [ %13, %bb.f ], [ <i32 0, i32 1>, %bb.c ], [ <i32 0, i32 1>, %bb.b ], [ <i32 0, i32 1>, %11 ], [ <i32 0, i32 1>, %10 ], [ zeroinitializer, %switch.lookup.i ]
+bb.h:                                             ; preds = %bb.a
+  br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
+
+bb.i:                                             ; preds = %bb.a
+  br label %_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit
+
+_RNvXs2H_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtB8_6qdrant26create_vector_name_request12VectorConfigINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCs607s0NAIaWN_7segment10data_types18vector_name_config16VectorNameConfigE4from.exit: ; preds = %switch.lookup.i, %bb.b, %bb.c, %bb.d, %bb.e, %bb.i, %bb.h, %bb.g, %bb.f, %bb.a
+  %.sroa.1138.sroa.5.0 = phi i64 [ 0, %bb.a ], [ 1, %bb.i ], [ 4, %bb.h ], [ 2, %bb.g ], [ 3, %bb.f ], [ %.sroa.044.0.copyload, %bb.e ], [ %.sroa.044.0.copyload, %bb.d ], [ %.sroa.044.0.copyload, %bb.c ], [ %.sroa.044.0.copyload, %bb.b ], [ %.sroa.044.0.copyload, %switch.lookup.i ]
+  %.sroa.13.0 = phi i32 [ undef, %bb.a ], [ undef, %bb.i ], [ undef, %bb.h ], [ undef, %bb.g ], [ undef, %bb.f ], [ %switch.offset.i, %bb.e ], [ %switch.offset.i, %bb.d ], [ %switch.offset.i, %bb.c ], [ %switch.offset.i, %bb.b ], [ %switch.offset.i, %switch.lookup.i ]
+  %.sroa.9.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.g ], [ 1, %bb.f ], [ 1, %bb.e ], [ 4, %bb.d ], [ 2, %bb.c ], [ 3, %bb.b ], [ undef, %switch.lookup.i ]
+  %i.k = phi <2 x i32> [ %switch.select52, %bb.a ], [ %switch.select52, %bb.i ], [ %switch.select52, %bb.h ], [ %switch.select52, %bb.g ], [ %switch.select52, %bb.f ], [ <i32 0, i32 1>, %bb.e ], [ <i32 0, i32 1>, %bb.d ], [ <i32 0, i32 1>, %bb.c ], [ <i32 0, i32 1>, %bb.b ], [ zeroinitializer, %switch.lookup.i ]
   %switch.idx.cast = zext nneg i8 %6 to i32
   %i.l = shl nuw nsw i8 %6, 3
   %switch.shiftamt = zext nneg i8 %i.l to i24

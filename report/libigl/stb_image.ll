@@ -205,7 +205,7 @@ bb.cc:                                            ; preds = %bb.ca
   %i.ln = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
   %i.lo = add i32 %i.dr, -40                      ; 2 uses
   %i.lp = tail call i32 @llvm.fshl.i32(i32 %i.lo, i32 %i.lo, i32 30)
-  switch i32 %i.lp, label %bb.cn [
+  switch i32 %i.lp, label %bb.cl [
     i32 4, label %bb.cd
     i32 0, label %bb.ce
     i32 21, label %bb.cm
@@ -227,7 +227,7 @@ bb.ce:                                            ; preds = %bb.cc, %bb.cd
   ]
 
 bb.cf:                                            ; preds = %bb.ce, %bb.ce
-  switch i32 %i.lh, label %bb.cl [
+  switch i32 %i.lh, label %bb.ck [
     i32 0, label %bb.cg
     i32 3, label %bb.cj
   ]
@@ -260,15 +260,19 @@ bb.cj:                                            ; preds = %bb.cf
   %i.mc = icmp eq i32 %i.ma, %i.mb
   %i.md = icmp eq i32 %i.mb, %i.lz
   %or.cond = and i1 %i.mc, %i.md
-  br i1 %or.cond, label %bb.ck, label %bb.co
+  br i1 %or.cond, label %2, label %bb.co
 
-bb.ck:                                            ; preds = %bb.cj
+2:                                                ; preds = %bb.cj
   store ptr @.str.63, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !23
   br label %.critedge
 
-bb.cl:                                            ; preds = %bb.cf
+bb.ck:                                            ; preds = %bb.cf
   store ptr @.str.63, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !23
   br label %.critedge
+
+bb.cl:                                            ; preds = %bb.cc
+  store ptr @.str.63, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !23
+  br label %bb.cn
 
 bb.cm:                                            ; preds = %bb.cc, %bb.cc
   %i.me = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0)
@@ -302,20 +306,20 @@ bb.cm:                                            ; preds = %bb.cc, %bb.cc
   %i.mw = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
   %i.mx = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
   %i.my = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
-  br label %bb.co
+  br label %bb.cn
 
-bb.cn:                                            ; preds = %bb.cc
-  store ptr @.str.63, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !23
-  switch i32 %i.dr, label %.critedge [
-    i32 124, label %bb.co
-    i32 108, label %bb.co
-  ]
-
-bb.co:                                            ; preds = %.thread, %bb.cm, %bb.cn, %bb.cn, %bb.ce, %bb.cj, %bb.ch, %bb.ci
+bb.cn:                                            ; preds = %.thread, %bb.cl
+  %3 = add i32 %i.dr, -108
+  %switch.and = and i32 %3, -17
+  %switch.selectcmp = icmp eq i32 %switch.and, 0
+  %4 = select i1 %switch.selectcmp, ptr inttoptr (i64 1 to ptr), ptr null
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.cm, %bb.cb, %bb.ck, %bb.cl, %bb.cn, %_ZL13stbi__get16leP13stbi__context.exit178, %bb.co, %bb.bo, %bb.ag, %_ZL10stbi__get8P13stbi__context.exit.thread
-  %.3 = phi ptr [ null, %_ZL10stbi__get8P13stbi__context.exit.thread ], [ null, %bb.ag ], [ null, %bb.bo ], [ inttoptr (i64 1 to ptr), %_ZL13stbi__get16leP13stbi__context.exit178 ], [ inttoptr (i64 1 to ptr), %bb.co ], [ null, %bb.cn ], [ null, %bb.cl ], [ null, %bb.ck ], [ null, %bb.cb ], [ null, %bb.cm ]
+bb.co:                                            ; preds = %bb.cm, %bb.ce, %bb.cj, %bb.ch, %bb.ci
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.cn, %bb.cm, %bb.cb, %2, %bb.ck, %_ZL13stbi__get16leP13stbi__context.exit178, %bb.co, %bb.bo, %bb.ag, %_ZL10stbi__get8P13stbi__context.exit.thread
+  %.3 = phi ptr [ null, %_ZL10stbi__get8P13stbi__context.exit.thread ], [ null, %bb.ag ], [ null, %bb.bo ], [ inttoptr (i64 1 to ptr), %_ZL13stbi__get16leP13stbi__context.exit178 ], [ inttoptr (i64 1 to ptr), %bb.co ], [ null, %bb.cm ], [ null, %bb.ck ], [ null, %2 ], [ null, %bb.cb ], [ %4, %bb.cn ]
   ret ptr %.3
 }
 
