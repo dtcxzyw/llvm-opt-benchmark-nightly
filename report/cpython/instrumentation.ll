@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.ae, %bb.r
   %.178 = phi i8 [ %.077, %bb.r ], [ %i.fh, %bb.ae ] ; 4 uses
-  %i.et = icmp ugt i8 %.178, 15
+  %i.et = icmp samesign ugt i8 %.178, 15
   br i1 %i.et, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s

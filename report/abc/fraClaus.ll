@@ -205,12 +205,12 @@ bb.m:                                             ; preds = %bb.l
 
 ._crit_edge45.loopexit:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %.lr.ph44
   %.135.lcssa = phi i32 [ %i.bd, %.lr.ph44 ], [ %.135.1, %bb.h ], [ %.135.2, %bb.i ], [ %.135.3, %bb.j ], [ %.135.4, %bb.k ], [ %.135.5, %bb.l ], [ %.135.6, %bb.m ]
-  %4 = sext i32 %.135.lcssa to i64
+  %4 = zext nneg i32 %.135.lcssa to i64
   br label %._crit_edge45
 
 ._crit_edge45:                                    ; preds = %._crit_edge45.loopexit, %.preheader39
   %.034.lcssa = phi i64 [ 0, %.preheader39 ], [ %4, %._crit_edge45.loopexit ]
-  %i.bw = getelementptr inbounds [4 x i8], ptr %3, i64 %.034.lcssa ; 2 uses
+  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.034.lcssa ; 2 uses
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !48
   %i.by = add nsw i32 %i.bx, 1
   store i32 %i.by, ptr %i.bw, align 4, !tbaa !48

@@ -202,14 +202,14 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %.not122.i.i.i, label %._crit_edge.i.i.i, label %_ZZL10encodeCrelILb1EEvN4llvm8ArrayRefINS0_18ELFRelocationEntryEEERNS0_11raw_ostreamEENKUlRKS2_E_clES7_.exit.i.i.i
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %_ZZL10encodeCrelILb1EEvN4llvm8ArrayRefINS0_18ELFRelocationEntryEEERNS0_11raw_ostreamEENKUlRKS2_E_clES7_.exit.i.i.i
-  %i.aqg = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.aqs, i1 false)
+  %i.aqg = call range(i64 0, 4) i64 @llvm.cttz.i64(i64 %i.aqs, i1 true)
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.ea
   %.039.lcssa.i.i.i = phi i64 [ 3, %bb.ea ], [ %i.aqg, %._crit_edge.loopexit.i.i.i ] ; 2 uses
   %i.aqh = ashr exact i64 %i.aqe, 2
-  %21 = add nuw nsw i64 %i.aqh, 4
-  %22 = add nsw i64 %21, %.039.lcssa.i.i.i
+  %21 = or disjoint i64 %i.aqh, %.039.lcssa.i.i.i
+  %22 = or disjoint i64 %21, 4
   %i.aqi = getelementptr inbounds nuw i8, ptr %i.aqf, i64 32 ; 14 uses
   %i.aqj = getelementptr inbounds nuw i8, ptr %i.aqf, i64 24 ; 7 uses
   br label %bb.eb
@@ -478,15 +478,15 @@ bb.fa:                                            ; preds = %bb.dz
   br i1 %.not122.i.i.i, label %._crit_edge.i.i121.i, label %_ZZL10encodeCrelILb0EEvN4llvm8ArrayRefINS0_18ELFRelocationEntryEEERNS0_11raw_ostreamEENKUlRKS2_E_clES7_.exit.i.i.i
 
 ._crit_edge.loopexit.i.i120.i:                    ; preds = %_ZZL10encodeCrelILb0EEvN4llvm8ArrayRefINS0_18ELFRelocationEntryEEERNS0_11raw_ostreamEENKUlRKS2_E_clES7_.exit.i.i.i
-  %i.atp = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.aub, i1 false)
+  %i.atp = call range(i32 0, 4) i32 @llvm.cttz.i32(i32 %i.aub, i1 true)
   br label %._crit_edge.i.i121.i
 
 ._crit_edge.i.i121.i:                             ; preds = %._crit_edge.loopexit.i.i120.i, %bb.fa
   %.058.lcssa.i.i.i = phi i32 [ 3, %bb.fa ], [ %i.atp, %._crit_edge.loopexit.i.i120.i ] ; 2 uses
   %i.atq = ashr exact i64 %i.aqe, 2
-  %23 = add nuw nsw i64 %i.atq, 4
-  %24 = zext nneg i32 %.058.lcssa.i.i.i to i64
-  %25 = add nsw i64 %23, %24
+  %23 = zext nneg i32 %.058.lcssa.i.i.i to i64
+  %24 = or disjoint i64 %i.atq, %23
+  %25 = or disjoint i64 %24, 4
   %i.atr = getelementptr inbounds nuw i8, ptr %i.aqf, i64 32 ; 14 uses
   %i.ats = getelementptr inbounds nuw i8, ptr %i.aqf, i64 24 ; 7 uses
   br label %bb.fb
