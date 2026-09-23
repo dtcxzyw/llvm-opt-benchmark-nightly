@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.dt = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dt = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.du = and i64 %i.dt, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.du, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIbE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !821
@@ -337,7 +337,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fr = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fr = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIbE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !821
@@ -740,7 +740,7 @@ bb.d:                                             ; preds = %bb.d, %.preheader.i
   %i.ad = trunc nuw nsw i64 %i.ac to i32
   %i.ae = or disjoint i32 %i.d, %i.ad
   call void @_ZZN8facebook5velox9functions13toElementRowsINS0_11ArrayVectorEEENS0_17SelectivityVectorEiRKS4_PKT_PKmPKiENKUliE_clEi(ptr noundef nonnull align 8 dereferenceable(40) %i.ab, i32 noundef %i.ae)
-  %i.af = add nsw i64 %.011.i, -1
+  %i.af = add nuw i64 %.011.i, 9223372036854775807
   %i.ag = and i64 %i.af, %.011.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.ag, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13toElementRowsINS0_11ArrayVectorEEENS0_17SelectivityVectorEiRKS6_PKT_PKmPKiEUliE_EEvSD_iibS9_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !886
@@ -1028,7 +1028,7 @@ bb.w:                                             ; preds = %bb.w, %.preheader.i
   %i.ft = trunc nuw nsw i64 %i.fs to i32
   %i.fu = or disjoint i32 %i.d, %i.ft
   call void @_ZZN8facebook5velox9functions13toElementRowsINS0_11ArrayVectorEEENS0_17SelectivityVectorEiRKS4_PKT_PKmPKiENKUliE_clEi(ptr noundef nonnull align 8 dereferenceable(40) %i.fr, i32 noundef %i.fu)
-  %i.fv = add nsw i64 %.011.i45, -1
+  %i.fv = add nuw i64 %.011.i45, 9223372036854775807
   %i.fw = and i64 %i.fv, %.011.i45                ; 2 uses
   %.not10.i46 = icmp eq i64 %i.fw, 0
   br i1 %.not10.i46, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13toElementRowsINS0_11ArrayVectorEEENS0_17SelectivityVectorEiRKS6_PKT_PKmPKiEUliE_EEvSD_iibS9_ENKUlimE_clEim.exit, label %bb.w, !llvm.loop !886
@@ -1431,7 +1431,7 @@ bb.u:                                             ; preds = %bb.t, %bb.x
 
 bb.v:                                             ; preds = %.critedge.i
   %i.gf = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.gg = add nsw i32 %.sroa.044.0, -1
+  %i.gg = add nuw nsw i32 %.sroa.044.0, 16383
   %i.gh = and i32 %i.gg, %.sroa.044.0
   %i.gi = zext nneg i32 %i.gf to i64              ; 2 uses
   call void @llvm.assume(i1 %i.gc)
@@ -1559,7 +1559,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.u = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.v = add nsw i32 %.sroa.042.0, -1
+  %i.v = add nuw nsw i32 %.sroa.042.0, 16383
   %i.w = and i32 %i.v, %.sroa.042.0
   %i.x = zext nneg i32 %i.u to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.r)
@@ -1962,7 +1962,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.dt = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dt = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.du = and i64 %i.dt, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.du, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIiE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1088
@@ -2094,7 +2094,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fr = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fr = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIiE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1088
@@ -2497,7 +2497,7 @@ bb.u:                                             ; preds = %bb.t, %bb.x
 
 bb.v:                                             ; preds = %.critedge.i
   %i.gb = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.gc = add nsw i32 %.sroa.044.0, -1
+  %i.gc = add nuw nsw i32 %.sroa.044.0, 16383
   %i.gd = and i32 %i.gc, %.sroa.044.0
   %i.ge = zext nneg i32 %i.gb to i64              ; 2 uses
   call void @llvm.assume(i1 %i.fz)
@@ -2615,7 +2615,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.v = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.w = add nsw i32 %.sroa.042.0, -1
+  %i.w = add nuw nsw i32 %.sroa.042.0, 16383
   %i.x = and i32 %i.w, %.sroa.042.0
   %i.y = zext nneg i32 %i.v to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)
@@ -3018,7 +3018,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.dt = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dt = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.du = and i64 %i.dt, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.du, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIaE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1172
@@ -3150,7 +3150,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fr = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fr = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIaE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1172
@@ -3553,7 +3553,7 @@ bb.u:                                             ; preds = %bb.t, %bb.x
 
 bb.v:                                             ; preds = %.critedge.i
   %i.ga = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.gb = add nsw i32 %.sroa.044.0, -1
+  %i.gb = add nuw nsw i32 %.sroa.044.0, 16383
   %i.gc = and i32 %i.gb, %.sroa.044.0
   %i.gd = zext nneg i32 %i.ga to i64              ; 2 uses
   call void @llvm.assume(i1 %i.fx)
@@ -3669,7 +3669,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.u = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.v = add nsw i32 %.sroa.042.0, -1
+  %i.v = add nuw nsw i32 %.sroa.042.0, 16383
   %i.w = and i32 %i.v, %.sroa.042.0
   %i.x = zext nneg i32 %i.u to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.r)
@@ -4072,7 +4072,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.dt = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dt = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.du = and i64 %i.dt, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.du, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIsE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1256
@@ -4204,7 +4204,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fr = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fr = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIsE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1256
@@ -4607,7 +4607,7 @@ bb.u:                                             ; preds = %bb.t, %bb.x
 
 bb.v:                                             ; preds = %.critedge.i
   %i.fy = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.fz = add nsw i32 %.sroa.044.0, -1
+  %i.fz = add nuw nsw i32 %.sroa.044.0, 4095
   %i.ga = and i32 %i.fz, %.sroa.044.0
   %i.gb = zext nneg i32 %i.fy to i64              ; 2 uses
   call void @llvm.assume(i1 %i.fv)
@@ -4727,7 +4727,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.u = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.v = add nsw i32 %.sroa.042.0, -1
+  %i.v = add nuw nsw i32 %.sroa.042.0, 4095
   %i.w = and i32 %i.v, %.sroa.042.0
   %i.x = zext nneg i32 %i.u to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.r)
@@ -5130,7 +5130,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.dt = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dt = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.du = and i64 %i.dt, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.du, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIlE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1340
@@ -5262,7 +5262,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fr = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fr = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIlE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1340
@@ -5665,7 +5665,7 @@ bb.u:                                             ; preds = %bb.t, %bb.x
 
 bb.v:                                             ; preds = %.critedge.i
   %i.ga = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.gb = add nsw i32 %.sroa.044.0, -1
+  %i.gb = add nuw nsw i32 %.sroa.044.0, 16383
   %i.gc = and i32 %i.gb, %.sroa.044.0
   %i.gd = zext nneg i32 %i.ga to i64
   call void @llvm.assume(i1 %i.fy)
@@ -5778,7 +5778,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.v = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.w = add nsw i32 %.sroa.042.0, -1
+  %i.w = add nuw nsw i32 %.sroa.042.0, 16383
   %i.x = and i32 %i.w, %.sroa.042.0
   %i.y = zext nneg i32 %i.v to i64                ; 2 uses
   tail call void @llvm.assume(i1 %i.t)
@@ -6181,7 +6181,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.du = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.du = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.dv = and i64 %i.du, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.dv, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionInE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1424
@@ -6313,7 +6313,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fs = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fs = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.ft = and i64 %i.fs, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.ft, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionInE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1424
@@ -6716,7 +6716,7 @@ bb.s:                                             ; preds = %bb.r, %bb.v
 
 bb.t:                                             ; preds = %.critedge.i
   %i.fu = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.036.0, i1 true)
-  %i.fv = add nsw i32 %.sroa.036.0, -1
+  %i.fv = add nuw nsw i32 %.sroa.036.0, 4095
   %i.fw = and i32 %i.fv, %.sroa.036.0
   %i.fx = zext nneg i32 %i.fu to i64
   call void @llvm.assume(i1 %i.fr)
@@ -6837,7 +6837,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.w = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.x = add nsw i32 %.sroa.042.0, -1
+  %i.x = add nuw nsw i32 %.sroa.042.0, 4095
   %i.y = and i32 %i.x, %.sroa.042.0
   %i.z = zext nneg i32 %i.w to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)
@@ -7240,7 +7240,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.dt = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dt = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.du = and i64 %i.dt, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.du, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIfE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1508
@@ -7372,7 +7372,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fr = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fr = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIfE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1508
@@ -7775,7 +7775,7 @@ bb.w:                                             ; preds = %_ZNK5folly3f146deta
 
 bb.x:                                             ; preds = %.critedge.i
   %i.gj = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.gk = add nsw i32 %.sroa.044.0, -1
+  %i.gk = add nuw nsw i32 %.sroa.044.0, 16383
   %i.gl = and i32 %i.gk, %.sroa.044.0
   %i.gm = zext nneg i32 %i.gj to i64              ; 2 uses
   call void @llvm.assume(i1 %i.gh)
@@ -7919,7 +7919,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.v = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.w = add nsw i32 %.sroa.042.0, -1
+  %i.w = add nuw nsw i32 %.sroa.042.0, 16383
   %i.x = and i32 %i.w, %.sroa.042.0
   %i.y = zext nneg i32 %i.v to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)
@@ -8322,7 +8322,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.dt = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dt = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.du = and i64 %i.dt, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.du, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIdE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1595
@@ -8454,7 +8454,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fr = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fr = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionIdE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1595
@@ -8857,7 +8857,7 @@ bb.w:                                             ; preds = %_ZNK5folly3f146deta
 
 bb.x:                                             ; preds = %.critedge.i
   %i.gj = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.044.0, i1 true)
-  %i.gk = add nsw i32 %.sroa.044.0, -1
+  %i.gk = add nuw nsw i32 %.sroa.044.0, 16383
   %i.gl = and i32 %i.gk, %.sroa.044.0
   %i.gm = zext nneg i32 %i.gj to i64
   call void @llvm.assume(i1 %i.gh)
@@ -8995,7 +8995,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.v = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.w = add nsw i32 %.sroa.042.0, -1
+  %i.w = add nuw nsw i32 %.sroa.042.0, 16383
   %i.x = and i32 %i.w, %.sroa.042.0
   %i.y = zext nneg i32 %i.v to i64                ; 2 uses
   tail call void @llvm.assume(i1 %i.t)
@@ -9398,7 +9398,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.du = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.du = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.dv = and i64 %i.du, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.dv, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionINS0_10StringViewEE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1682
@@ -9530,7 +9530,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fs = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fs = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.ft = and i64 %i.fs, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.ft, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionINS0_10StringViewEE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1682
@@ -9933,7 +9933,7 @@ bb.q:                                             ; preds = %.critedge.i.backedg
   br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewEbvvvSt17integral_constantIbLb1EEE14keyMatchesItemIS5_EEbRKT_RKj.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !566
 
 .critedge.i.backedge.us.us.us.us:                 ; preds = %bb.q
-  %i.gv = add nsw i32 %.sroa.038.083.us.us.us.us, -1
+  %i.gv = add nuw nsw i32 %.sroa.038.083.us.us.us.us, 4095
   %i.gw = and i32 %i.gv, %.sroa.038.083.us.us.us.us ; 2 uses
   %.not.us.us.us.us = icmp eq i32 %i.gw, 0
   br i1 %.not.us.us.us.us, label %.critedge.i._crit_edge.split.us.split.us.us.us, label %bb.q, !llvm.loop !58
@@ -9972,7 +9972,7 @@ bb.r:                                             ; preds = %.critedge.i._crit_e
 bb.s:                                             ; preds = %.critedge.i.backedge.us.us102, %.lr.ph.us
   %.sroa.038.083.us.us100 = phi i32 [ %i.hh, %.lr.ph.us ], [ %i.hn, %.critedge.i.backedge.us.us102 ] ; 3 uses
   %i.hl = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.038.083.us.us100, i1 true)
-  %i.hm = add nsw i32 %.sroa.038.083.us.us100, -1
+  %i.hm = add nuw nsw i32 %.sroa.038.083.us.us100, 4095
   %i.hn = and i32 %i.hm, %.sroa.038.083.us.us100  ; 2 uses
   %i.ho = zext nneg i32 %i.hl to i64
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.hj, i64 %i.ho
@@ -10027,7 +10027,7 @@ bb.t:                                             ; preds = %.critedge.i._crit_e
 bb.u:                                             ; preds = %.lr.ph, %.critedge.i.backedge
   %.sroa.038.083 = phi i32 [ %i.ih, %.lr.ph ], [ %i.in, %.critedge.i.backedge ] ; 3 uses
   %i.il = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.038.083, i1 true)
-  %i.im = add nsw i32 %.sroa.038.083, -1
+  %i.im = add nuw nsw i32 %.sroa.038.083, 4095
   %i.in = and i32 %i.im, %.sroa.038.083           ; 2 uses
   %i.io = zext nneg i32 %i.il to i64
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr %i.ij, i64 %i.io
@@ -10202,7 +10202,7 @@ bb.c:                                             ; preds = %.critedge.i.backedg
   br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewEbvvvSt17integral_constantIbLb1EEE14keyMatchesItemIS5_EEbRKT_RKj.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !566
 
 .critedge.i.backedge.us.us.us.us:                 ; preds = %bb.c
-  %i.al = add nsw i32 %.sroa.042.080.us.us.us.us, -1
+  %i.al = add nuw nsw i32 %.sroa.042.080.us.us.us.us, 4095
   %i.am = and i32 %i.al, %.sroa.042.080.us.us.us.us ; 2 uses
   %.not71.us.us.us.us = icmp eq i32 %i.am, 0
   br i1 %.not71.us.us.us.us, label %.critedge.i._crit_edge.split.us.split.us.us.us, label %bb.c, !llvm.loop !58
@@ -10240,7 +10240,7 @@ bb.d:                                             ; preds = %.critedge.i._crit_e
 bb.e:                                             ; preds = %.critedge.i.backedge.us.us102, %.lr.ph.us
   %.sroa.042.080.us.us100 = phi i32 [ %i.ax, %.lr.ph.us ], [ %i.bc, %.critedge.i.backedge.us.us102 ] ; 3 uses
   %i.ba = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.080.us.us100, i1 true)
-  %i.bb = add nsw i32 %.sroa.042.080.us.us100, -1
+  %i.bb = add nuw nsw i32 %.sroa.042.080.us.us100, 4095
   %i.bc = and i32 %i.bb, %.sroa.042.080.us.us100  ; 2 uses
   %i.bd = zext nneg i32 %i.ba to i64              ; 2 uses
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %i.bd
@@ -10295,7 +10295,7 @@ bb.f:                                             ; preds = %.critedge.i._crit_e
 bb.g:                                             ; preds = %.lr.ph, %.critedge.i.backedge
   %.sroa.042.080 = phi i32 [ %i.bx, %.lr.ph ], [ %i.cc, %.critedge.i.backedge ] ; 3 uses
   %i.ca = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.080, i1 true)
-  %i.cb = add nsw i32 %.sroa.042.080, -1
+  %i.cb = add nuw nsw i32 %.sroa.042.080, 4095
   %i.cc = and i32 %i.cb, %.sroa.042.080           ; 2 uses
   %i.cd = zext nneg i32 %i.ca to i64              ; 2 uses
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.cd
@@ -10698,7 +10698,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.noexc39 unwind label %.loopexit.split-lp.loopexit
 
 .noexc39:                                         ; preds = %.preheader.i.i.i.i.i
-  %i.du = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.du = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.dv = and i64 %i.du, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.dv, 0
   br i1 %.not10.i.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionINS0_9TimestampEE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i.i.i.i.i, !llvm.loop !1770
@@ -10830,7 +10830,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc43:                                         ; preds = %.preheader.i44.i.i.i.i
-  %i.fs = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.fs = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.ft = and i64 %i.fs, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.ft, 0
   br i1 %.not10.i46.i.i.i.i, label %_ZN8facebook5velox4bits13forEachSetBitIZNKS0_9functions12_GLOBAL__N_123ArrayDuplicatesFunctionINS0_9TimestampEE9applyFlatERKNS0_17SelectivityVectorERKSt10shared_ptrINS0_10BaseVectorEERNS0_4exec7EvalCtxEEUliE_EEvPKmiiT_.exit.i, label %.preheader.i44.i.i.i.i, !llvm.loop !1770
@@ -11233,7 +11233,7 @@ bb.s:                                             ; preds = %bb.r, %bb.v
 
 bb.t:                                             ; preds = %.critedge.i
   %i.ft = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.038.0, i1 true)
-  %i.fu = add nsw i32 %.sroa.038.0, -1
+  %i.fu = add nuw nsw i32 %.sroa.038.0, 4095
   %i.fv = and i32 %i.fu, %.sroa.038.0
   %i.fw = zext nneg i32 %i.ft to i64
   call void @llvm.assume(i1 %i.fq)
@@ -11358,7 +11358,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.w = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.x = add nsw i32 %.sroa.042.0, -1
+  %i.x = add nuw nsw i32 %.sroa.042.0, 4095
   %i.y = and i32 %i.x, %.sroa.042.0
   %i.z = zext nneg i32 %i.w to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)

@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br label %_ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451
 
 _ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451: ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i170.thread620, %bb.p, %bb.o, %_ZL9hasPrefixN4llvm9StringRefES0_.exit172.thread, %_ZN4llvmeqENS_9StringRefES0_.exit176, %_ZN4llvmeqENS_9StringRefES0_.exit176.thread463, %bb.r, %bb.s, %bb.t, %_ZN4llvmeqENS_9StringRefES0_.exit164, %_ZN4llvmeqENS_9StringRefES0_.exit168, %_ZL9hasPrefixN4llvm9StringRefES0_.exit172, %_ZL9hasPrefixN4llvm9StringRefES0_.exit, %_ZN4llvmeqENS_9StringRefES0_.exit, %bb.v, %bb.w
-  %.0141 = phi i32 [ 0, %bb.v ], [ 2, %_ZL9hasPrefixN4llvm9StringRefES0_.exit ], [ 6, %_ZN4llvmeqENS_9StringRefES0_.exit164 ], [ 1027, %bb.w ], [ 2, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ 6, %_ZL9hasPrefixN4llvm9StringRefES0_.exit172 ], [ 6, %_ZN4llvmeqENS_9StringRefES0_.exit168 ], [ 3, %bb.t ], [ 3, %bb.s ], [ 3, %bb.r ], [ 3, %_ZN4llvmeqENS_9StringRefES0_.exit176.thread463 ], [ 3, %_ZN4llvmeqENS_9StringRefES0_.exit176 ], [ 3, %_ZL9hasPrefixN4llvm9StringRefES0_.exit172.thread ], [ 6, %bb.p ], [ 2, %bb.o ], [ 6, %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i170.thread620 ] ; 4 uses
+  %.0141 = phi i32 [ 0, %bb.v ], [ 2, %_ZL9hasPrefixN4llvm9StringRefES0_.exit ], [ 6, %_ZN4llvmeqENS_9StringRefES0_.exit164 ], [ 1027, %bb.w ], [ 2, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ 6, %_ZL9hasPrefixN4llvm9StringRefES0_.exit172 ], [ 6, %_ZN4llvmeqENS_9StringRefES0_.exit168 ], [ 3, %bb.t ], [ 3, %bb.s ], [ 3, %bb.r ], [ 3, %_ZN4llvmeqENS_9StringRefES0_.exit176.thread463 ], [ 3, %_ZN4llvmeqENS_9StringRefES0_.exit176 ], [ 3, %_ZL9hasPrefixN4llvm9StringRefES0_.exit172.thread ], [ 6, %bb.p ], [ 2, %bb.o ], [ 6, %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i170.thread620 ] ; 3 uses
   %i.gi = load ptr, ptr %i.j, align 8, !tbaa !17  ; 4 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 48
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !21
@@ -378,24 +378,24 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread.i:       ; preds = %_ZN4llvmeqENS_9Stri
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 152
   %i.jy = load ptr, ptr %i.jx, align 8
   %i.jz = call noundef nonnull align 8 dereferenceable(40) ptr %i.jy(ptr noundef nonnull align 8 dereferenceable(243) %i.jv) #16, !inline_history !309 ; 0 uses
-  %i.ka = load ptr, ptr %i.j, align 8, !tbaa !17  ; 3 uses
+  %i.ka = load ptr, ptr %i.j, align 8, !tbaa !17  ; 4 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 48
   %i.kc = load ptr, ptr %i.kb, align 8, !tbaa !21
   %i.kd = load i32, ptr %i.kc, align 8, !tbaa !28
   %i.ke = icmp eq i32 %i.kd, 26
-  br i1 %i.ke, label %bb.ah, label %_ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit
+  br i1 %i.ke, label %bb.ah, label %.thread
 
 bb.ah:                                            ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i
   %i.kf = load ptr, ptr %i.ka, align 8, !tbaa !12
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 152
   %i.kh = load ptr, ptr %i.kg, align 8
   %i.ki = call noundef nonnull align 8 dereferenceable(40) ptr %i.kh(ptr noundef nonnull align 8 dereferenceable(243) %i.ka) #16, !inline_history !309 ; 0 uses
-  %i.kj = load ptr, ptr %i.j, align 8, !tbaa !17  ; 2 uses
+  %i.kj = load ptr, ptr %i.j, align 8, !tbaa !17  ; 3 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 48
   %i.kl = load ptr, ptr %i.kk, align 8, !tbaa !21
   %i.km = load i32, ptr %i.kl, align 8, !tbaa !28
   %i.kn = icmp eq i32 %i.km, 38
-  br i1 %i.kn, label %.lr.ph.i, label %_ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit
+  br i1 %i.kn, label %.lr.ph.i, label %.thread
 
 bb.ai:                                            ; preds = %bb.ac
   %i.ko = call noundef nonnull align 8 dereferenceable(40) ptr @_ZNK4llvm11MCAsmParser6getTokEv(ptr noundef nonnull align 8 dereferenceable(243) %i.hd) #16 ; 2 uses
@@ -442,7 +442,7 @@ bb.al:                                            ; preds = %bb.aj, %bb.ai
 
 ..thread_crit_edge:                               ; preds = %bb.al
   %.pre581.a = load ptr, ptr %i.j, align 8, !tbaa !17
-  br label %.thread.a
+  br label %.thread
 
 .lr.ph.i188:                                      ; preds = %bb.al
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lf, i64 68
@@ -586,9 +586,16 @@ bb.bl:                                            ; preds = %bb.am, %bb.bk, %bb.
   %.not.i189 = icmp eq ptr %i.ml, %i.lj
   br i1 %.not.i189, label %_ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit, label %bb.am
 
-_ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit: ; preds = %bb.ah, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i, %bb.bl, %bb.ak
-  %.0 = phi i8 [ %.3442, %bb.bl ], [ 0, %bb.ak ], [ 0, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ], [ 0, %bb.ah ] ; 2 uses
-  %.0146 = phi i32 [ %.1.i, %bb.bl ], [ %i.li, %bb.ak ], [ %i.ju, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ], [ %i.ju, %bb.ah ] ; 5 uses
+.thread:                                          ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i, %bb.ah, %..thread_crit_edge
+  %.pre579 = phi ptr [ %.pre581.a, %..thread_crit_edge ], [ %i.ka, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ], [ %i.kj, %bb.ah ]
+  %.0146.ph = phi i32 [ 0, %..thread_crit_edge ], [ %i.ju, %bb.ah ], [ %i.ju, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ] ; 2 uses
+  %33 = and i32 %.0146.ph, 512
+  %34 = icmp ne i32 %33, 0
+  br label %.thread.a
+
+_ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit: ; preds = %bb.bl, %bb.ak
+  %.0 = phi i8 [ 0, %bb.ak ], [ %.3442, %bb.bl ]  ; 2 uses
+  %.0146 = phi i32 [ %i.li, %bb.ak ], [ %.1.i, %bb.bl ] ; 3 uses
   %i.mm = icmp eq i32 %.0146, -1
   br i1 %i.mm, label %_ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit.thread, label %bb.bm
 
@@ -605,9 +612,6 @@ _ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit.thread: ; pred
   br label %.thread493
 
 bb.bm:                                            ; preds = %_ZN12_GLOBAL__N_112ELFAsmParser25parseSunStyleSectionFlagsEv.exit
-  %33 = or i32 %.0146, %.0141
-  %34 = and i32 %.0146, 16
-  %.not = icmp eq i32 %34, 0
   %i.mr = and i32 %.0146, 512
   %i.ms = icmp ne i32 %i.mr, 0                    ; 2 uses
   %i.mt = trunc nuw i8 %.0 to i1
@@ -626,13 +630,14 @@ bb.bn:                                            ; preds = %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #16
   br label %.thread493
 
-.thread.a:                                        ; preds = %..thread_crit_edge, %bb.bm
-  %i.mx = phi ptr [ %.pre582.a, %bb.bm ], [ %.pre581.a, %..thread_crit_edge ] ; 3 uses
-  %i.my = phi i1 [ %i.ms, %bb.bm ], [ false, %..thread_crit_edge ] ; 2 uses
-  %.not480 = phi i1 [ %.not, %bb.bm ], [ true, %..thread_crit_edge ] ; 2 uses
-  %i.mz = phi i32 [ %33, %bb.bm ], [ %.0141, %..thread_crit_edge ]
-  %.0470479 = phi i8 [ %.0, %bb.bm ], [ 0, %..thread_crit_edge ]
-  %.0146471477 = phi i32 [ %.0146, %bb.bm ], [ 0, %..thread_crit_edge ] ; 2 uses
+.thread.a:                                        ; preds = %.thread, %bb.bm
+  %i.mx = phi ptr [ %.pre579, %.thread ], [ %.pre582.a, %bb.bm ] ; 3 uses
+  %i.my = phi i1 [ %34, %.thread ], [ %i.ms, %bb.bm ] ; 2 uses
+  %.0471480 = phi i8 [ 0, %.thread ], [ %.0, %bb.bm ]
+  %i.mz = phi i32 [ %.0146.ph, %.thread ], [ %.0146, %bb.bm ] ; 4 uses
+  %35 = or i32 %i.mz, %.0141
+  %.not481.in = and i32 %i.mz, 16
+  %.not481 = icmp eq i32 %.not481.in, 0           ; 2 uses
   %i.na = getelementptr inbounds nuw i8, ptr %i.mx, i64 48 ; 3 uses
   %i.nb = load ptr, ptr %i.na, align 8, !tbaa !21
   %i.nc = load i32, ptr %i.nb, align 8, !tbaa !28
@@ -749,7 +754,7 @@ _ZN12_GLOBAL__N_112ELFAsmParser21maybeParseSectionTypeERN4llvm9StringRefE.exit.t
   br i1 %i.oz, label %bb.bs, label %bb.by
 
 bb.bs:                                            ; preds = %_ZN12_GLOBAL__N_112ELFAsmParser21maybeParseSectionTypeERN4llvm9StringRefE.exit.thread
-  br i1 %.not480, label %bb.bu, label %bb.bt
+  br i1 %.not481, label %bb.bu, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #16
@@ -794,7 +799,7 @@ bb.bx:                                            ; preds = %bb.bw
   br label %.thread493
 
 bb.by:                                            ; preds = %_ZN12_GLOBAL__N_112ELFAsmParser21maybeParseSectionTypeERN4llvm9StringRefE.exit.thread
-  br i1 %.not480, label %.thread483, label %_ZN4llvmeqENS_9StringRefES0_.exit199.thread491
+  br i1 %.not481, label %.thread483, label %_ZN4llvmeqENS_9StringRefES0_.exit199.thread491
 
 .thread483:                                       ; preds = %bb.by
   %.not.i196485 = icmp eq i64 %i.oy, 19
@@ -818,7 +823,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit199.thread491:   ; preds = %_ZN4llvmeqENS_9Stri
   br i1 %i.pu, label %.thread493, label %_ZN4llvmeqENS_9StringRefES0_.exit199.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit199.thread:      ; preds = %bb.bw, %.thread483, %_ZN4llvmeqENS_9StringRefES0_.exit199.thread491, %_ZN4llvmeqENS_9StringRefES0_.exit199
-  %i.pv = and i32 %.0146471477, 128
+  %i.pv = and i32 %i.mz, 128
   %.not150 = icmp eq i32 %i.pv, 0
   br i1 %.not150, label %bb.ca, label %bb.bz
 
@@ -842,8 +847,8 @@ bb.cc:                                            ; preds = %bb.ca, %bb.cb
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre583.a, i64 48
   %.pre584.a = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !21
   %.pre585.a = load i32, ptr %.pre584.a, align 8, !tbaa !28
-  %i.pz = trunc nuw i8 %.0470479 to i1
-  %i.qa = icmp eq i32 %.0146471477, 0
+  %i.pz = trunc nuw i8 %.0471480 to i1
+  %i.qa = icmp eq i32 %i.mz, 0
   br label %bb.cd
 
 bb.cd:                                            ; preds = %._crit_edge, %_ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451, %bb.aa
@@ -851,7 +856,7 @@ bb.cd:                                            ; preds = %._crit_edge, %_ZL9h
   %i.qc = phi ptr [ %i.gv, %bb.aa ], [ %.pre583.a, %._crit_edge ], [ %i.gi, %_ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451 ] ; 3 uses
   %.1440 = phi i1 [ false, %bb.aa ], [ %i.pz, %._crit_edge ], [ false, %_ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451 ]
   %.1147 = phi i1 [ true, %bb.aa ], [ %i.qa, %._crit_edge ], [ true, %_ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451 ] ; 2 uses
-  %.1142 = phi i32 [ %.0141, %bb.aa ], [ %i.mz, %._crit_edge ], [ %.0141, %_ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451 ] ; 4 uses
+  %.1142 = phi i32 [ %.0141, %bb.aa ], [ %35, %._crit_edge ], [ %.0141, %_ZL9hasPrefixN4llvm9StringRefES0_.exit.thread451 ] ; 4 uses
   %.not534 = icmp eq i32 %i.qb, 9
   br i1 %.not534, label %bb.cf, label %bb.ce
 

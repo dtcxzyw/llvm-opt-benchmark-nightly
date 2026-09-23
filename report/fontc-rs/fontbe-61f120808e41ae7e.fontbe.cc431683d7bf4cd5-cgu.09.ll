@@ -204,8 +204,8 @@ bb.ff:                                            ; preds = %bb.fc
   %i.aab = getelementptr inbounds nuw i8, ptr %i.gp, i64 24
   br label %bb.fg
 
-bb.fg:                                            ; preds = %.noexc79.i, %.lr.ph.i.i
-  %i.aac = phi ptr [ %i.aaa, %.lr.ph.i.i ], [ %3, %.noexc79.i ]
+bb.fg:                                            ; preds = %.noexc82.i, %.lr.ph.i.i
+  %i.aac = phi ptr [ %i.aaa, %.lr.ph.i.i ], [ %5, %.noexc82.i ]
   %.val5.i.i = load i32, ptr %i.aac, align 4, !noalias !1999, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.gp), !noalias !2015
   invoke void @_RNvNtNtCshxhuDJfZv4T_6fontbe8features10properties25unicode_script_extensions(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.gp, i32 noundef %.val5.i.i)
@@ -216,21 +216,8 @@ bb.fg:                                            ; preds = %.noexc79.i, %.lr.ph
   %.not.i6.i.i.i.i.i.i = icmp eq ptr %i.aad, null
   br i1 %.not.i6.i.i.i.i.i.i, label %.backedge.sink.split.i.i, label %.lr.ph.i.i.i.i.i.i
 
-.backedge.sink.split.i.i:                         ; preds = %_RNCNvMs2_NtNtCshxhuDJfZv4T_6fontbe8features5marksNtB7_17MarkLookupBuilder31split_mark_and_abvm_blwm_glyphss_0Bb_.exit.thread.i.i.i.i.i, %.noexc78.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.gp), !noalias !2015
-  br label %.backedge.i.i
-
-.backedge.i.i:                                    ; preds = %_RNCNvMs2_NtNtCshxhuDJfZv4T_6fontbe8features5marksNtB7_17MarkLookupBuilder31split_mark_and_abvm_blwm_glyphss_0Bb_.exit.i.i.i.i.i, %_RNCNvMs2_NtNtCshxhuDJfZv4T_6fontbe8features5marksNtB7_17MarkLookupBuilder31split_mark_and_abvm_blwm_glyphss_0Bb_.exit.i.i.i.i.i, %.backedge.sink.split.i.i
-  %2 = invoke { ptr, ptr } @_RNvXsG_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_4ItermNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.hj)
-          to label %.noexc79.i unwind label %.loopexit.split-lp.loopexit.i314, !noalias !1999
-
-.noexc79.i:                                       ; preds = %.backedge.i.i
-  %3 = extractvalue { ptr, ptr } %2, 0            ; 2 uses
-  %.not.not.i.i = icmp eq ptr %3, null
-  br i1 %.not.not.i.i, label %.loopexit102.i, label %bb.fg
-
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.noexc78.i, %.noexc82.i.a
-  %.sroa.01.07.i.i.i.i.i.i = phi i8 [ %5, %.noexc82.i.a ], [ 0, %.noexc78.i ] ; 2 uses
+  %.sroa.01.07.i.i.i.i.i.i = phi i1 [ %2, %.noexc82.i.a ], [ false, %.noexc78.i ] ; 2 uses
   %i.aae = invoke i32 @_RINvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB6_3MapINtNtNtCsgeZ8ebHI9QV_7zerovec7zerovec5slice13ZeroSliceIterNtNtCs6ycZ7hHN0vs_14icu_properties5props6ScriptENvNtNtCshxhuDJfZv4T_6fontbe8features10properties21get_script_short_nameENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtB8_7flatten15try_flatten_oneINtNtBc_6option6OptionINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_EEuINtNtNtBc_3ops12control_flow11ControlFlowB5s_ENCINvNvB3P_8find_map5checkB5s_B5s_QNCNvB2H_25unicode_script_extensions0E0E0B6k_EB2L_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.gp, ptr noundef nonnull %i.aab)
           to label %.noexc80.i.a unwind label %.loopexit.i315, !noalias !1999 ; 2 uses
 
@@ -253,8 +240,7 @@ bb.fh:                                            ; preds = %.noexc81.i.a
           to label %.noexc82.i.a unwind label %.loopexit.i315, !noalias !1999
 
 .noexc82.i.a:                                     ; preds = %bb.fh
-  %4 = zext i1 %i.aah to i8
-  %5 = or i8 %.sroa.01.07.i.i.i.i.i.i, %4         ; 2 uses
+  %2 = or i1 %.sroa.01.07.i.i.i.i.i.i, %i.aah     ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.go), !noalias !2015
   %i.aai = load ptr, ptr %i.gp, align 8, !alias.scope !2016, !noalias !2015, !noundef !4
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.aai, null
@@ -265,15 +251,24 @@ _RNCNvMs2_NtNtCshxhuDJfZv4T_6fontbe8features5marksNtB7_17MarkLookupBuilder31spli
   br label %.backedge.sink.split.i.i
 
 _RNCNvMs2_NtNtCshxhuDJfZv4T_6fontbe8features5marksNtB7_17MarkLookupBuilder31split_mark_and_abvm_blwm_glyphss_0Bb_.exit.i.i.i.i.i: ; preds = %.noexc82.i.a, %.noexc80.i.a
-  %.sroa.0.0.i.i.i.i.i.i = phi i8 [ %5, %.noexc82.i.a ], [ %.sroa.01.07.i.i.i.i.i.i, %.noexc80.i.a ]
-  %.sroa.0.0.i.fr.i.i.i.i.i = freeze i8 %.sroa.0.0.i.i.i.i.i.i
+  %3 = phi i1 [ %2, %.noexc82.i.a ], [ %.sroa.01.07.i.i.i.i.i.i, %.noexc80.i.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.gp), !noalias !2015
-  switch i8 %.sroa.0.0.i.fr.i.i.i.i.i, label %bb.fi [
-    i8 2, label %.backedge.i.i
-    i8 0, label %.backedge.i.i
-  ]
+  br i1 %3, label %bb.fi, label %.backedge.i.i
 
-.loopexit102.i:                                   ; preds = %.noexc79.i, %.noexc77.i
+.backedge.sink.split.i.i:                         ; preds = %_RNCNvMs2_NtNtCshxhuDJfZv4T_6fontbe8features5marksNtB7_17MarkLookupBuilder31split_mark_and_abvm_blwm_glyphss_0Bb_.exit.thread.i.i.i.i.i, %.noexc78.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.gp), !noalias !2015
+  br label %.backedge.i.i
+
+.backedge.i.i:                                    ; preds = %.backedge.sink.split.i.i, %_RNCNvMs2_NtNtCshxhuDJfZv4T_6fontbe8features5marksNtB7_17MarkLookupBuilder31split_mark_and_abvm_blwm_glyphss_0Bb_.exit.i.i.i.i.i
+  %4 = invoke { ptr, ptr } @_RNvXsG_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_4ItermNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.hj)
+          to label %.noexc82.i unwind label %.loopexit.split-lp.loopexit.i314, !noalias !1999
+
+.noexc82.i:                                       ; preds = %.backedge.i.i
+  %5 = extractvalue { ptr, ptr } %4, 0            ; 2 uses
+  %.not.not.i.i = icmp eq ptr %5, null
+  br i1 %.not.not.i.i, label %.loopexit102.i, label %bb.fg
+
+.loopexit102.i:                                   ; preds = %.noexc82.i, %.noexc77.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.hj), !noalias !1991
   br label %bb.fd
 

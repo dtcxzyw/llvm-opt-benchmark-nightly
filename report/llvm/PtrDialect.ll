@@ -206,7 +206,7 @@ _ZN4llvm12StringSwitchISt8optionalIhES2_E4CaseENS_13StringLiteralES2_.exit25.thr
   br label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %_ZN4llvm12StringSwitchISt8optionalIhES2_E4CaseENS_13StringLiteralES2_.exit25
-  %i.au = zext i8 %i.as to i16
+  %i.au = zext nneg i8 %i.as to i16
   %i.av = or disjoint i16 %i.au, 256
   br label %.loopexit
 

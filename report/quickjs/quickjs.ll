@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
   %.lcssa111 = phi i32 [ %i.s, %middle.block ], [ %i.w, %scalar.ph ]
-  %3 = icmp sgt i32 %.lcssa111, 127
+  %3 = icmp samesign ugt i32 %.lcssa111, 127
   br i1 %3, label %.lr.ph.i, label %utf8_scan.exit
 
 .lr.ph.i:                                         ; preds = %.loopexit
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %switch.lookup
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1478
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
-  %.0.lcssa = phi i32 [ 0, %.preheader ], [ %i.v, %bb.e ] ; 2 uses
+  %.0.lcssa = phi i32 [ 0, %.preheader ], [ %i.v, %bb.e ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !232
   %i.z = getelementptr inbounds i8, ptr %i.f, i64 -28 ; 2 uses
@@ -625,9 +625,11 @@ bb.f:                                             ; preds = %._crit_edge
   br label %JS_FreeCString.exit62
 
 JS_FreeCString.exit62:                            ; preds = %bb.f, %._crit_edge
-  %i.af = and i32 %.0.lcssa, 272
-  %or.cond.not = icmp eq i32 %i.af, 272
-  br i1 %or.cond.not, label %bb.g, label %JS_FreeCString.exit62.thread
+  %i.af = and i32 %.0.lcssa, 16
+  %or.cond.not = icmp eq i32 %i.af, 0
+  %.not56 = icmp samesign ult i32 %.0.lcssa, 256
+  %or.cond = or i1 %.not56, %or.cond.not
+  br i1 %or.cond, label %JS_FreeCString.exit62.thread, label %bb.g
 
 bb.g:                                             ; preds = %JS_FreeCString.exit62
   %i.ag = call { i64, i64 } (ptr, ptr, ...) @JS_ThrowSyntaxError(ptr noundef nonnull %0, ptr noundef nonnull @.str.250) ; 0 uses
@@ -1030,7 +1032,7 @@ bb.v:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %str16.exit.us122, %str16.exit.us115, %str16.exit.us, %middle.block, %middle.block179, %middle.block195
   %.0.lcssa = phi i32 [ %i.dw, %str16.exit.us ], [ %i.eq, %str16.exit.us115 ], [ %i.ds, %middle.block195 ], [ %i.em, %middle.block179 ], [ %i.fb, %middle.block ], [ %i.ff, %str16.exit.us122 ]
-  %4 = icmp sgt i32 %.0.lcssa, 255
+  %4 = icmp samesign ugt i32 %.0.lcssa, 255
   br i1 %4, label %bb.w, label %._crit_edge.thread
 
 bb.w:                                             ; preds = %._crit_edge
@@ -1433,7 +1435,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.v = load i32, ptr %i.u, align 8, !tbaa !647
   %i.w = icmp eq i32 %i.v, 0
-  %3 = icmp sgt i32 %.035.lcssa, 255
+  %3 = icmp samesign ugt i32 %.035.lcssa, 255
   %or.cond = select i1 %i.w, i1 %3, i1 false
   br i1 %or.cond, label %bb.d, label %bb.e
 

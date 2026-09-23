@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.critedge.i.us.us, 
   %i.bf = icmp ne i32 %.sroa.019.0.us.us, 0
   call void @llvm.assume(i1 %i.bf)
   %i.bg = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.019.0.us.us, i1 true)
-  %i.bh = add nsw i32 %.sroa.019.0.us.us, -1
+  %i.bh = add nuw nsw i32 %.sroa.019.0.us.us, 65535
   %i.bi = and i32 %i.bh, %.sroa.019.0.us.us       ; 2 uses
   %i.bj = zext nneg i32 %i.bg to i64              ; 2 uses
   %i.bk = shl nuw nsw i64 %i.bj, 3
@@ -264,7 +264,7 @@ bb.i:                                             ; preds = %.preheader, %.crite
   %i.ch = icmp ne i32 %.sroa.019.0, 0
   call void @llvm.assume(i1 %i.ch)
   %i.ci = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.019.0, i1 true)
-  %i.cj = add nsw i32 %.sroa.019.0, -1
+  %i.cj = add nuw nsw i32 %.sroa.019.0, 65535
   %i.ck = and i32 %i.cj, %.sroa.019.0             ; 2 uses
   %i.cl = zext nneg i32 %i.ci to i64              ; 2 uses
   %i.cm = shl nuw nsw i64 %i.cl, 3
@@ -667,7 +667,7 @@ _ZN5folly20partialLoadUnalignedImEET_PKvm.exit:   ; preds = %bb.j, %bb.i, %bb.d
   %i.cc = xor i64 %i.cb, -9187201950435737472
   %i.cd = and i64 %i.cc, %i.ca
   %i.ce = or i64 %i.cd, %.128.i                   ; 2 uses
-  %i.cf = add i64 %.01929.i, -2
+  %i.cf = add i64 %.01929.i, -4294967296
   %i.cg = and i64 %i.cf, %.01929.i                ; 2 uses
   %.not22.i = icmp eq i64 %i.cg, 0
   br i1 %.not22.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !1128
@@ -1070,7 +1070,7 @@ bb.d:                                             ; preds = %.preheader, %.crite
   %i.z = icmp ne i32 %.sroa.043.0, 0
   call void @llvm.assume(i1 %i.z)
   %i.aa = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.043.0, i1 true)
-  %i.ab = add nsw i32 %.sroa.043.0, -1
+  %i.ab = add nuw nsw i32 %.sroa.043.0, 65535
   %i.ac = and i32 %i.ab, %.sroa.043.0             ; 2 uses
   %i.ad = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ae = shl nuw nsw i64 %i.ad, 3
@@ -1473,7 +1473,7 @@ bb.d:                                             ; preds = %.preheader, %.crite
   br i1 %i.af, label %bb.f, label %.critedge.i, !prof !82
 
 .critedge.i:                                      ; preds = %bb.d
-  %i.ag = add nsw i32 %.sroa.044.0, -1
+  %i.ag = add nuw nsw i32 %.sroa.044.0, 65535
   %i.ah = and i32 %i.ag, %.sroa.044.0             ; 2 uses
   %i.ai = and i32 %i.ah, 16382
   %.not72 = icmp eq i32 %i.ai, 0

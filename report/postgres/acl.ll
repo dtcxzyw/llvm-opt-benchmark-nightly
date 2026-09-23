@@ -204,12 +204,12 @@ bb.ae:                                            ; preds = %bb.ab, %bb.aa, %bb.
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.ae
   %i.bm = shl i64 %.155.i, 32
-  %1 = or i64 %i.bf, %i.bm
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.preheader.i
   %.058.pn.lcssa.i = phi ptr [ %.05890.i, %.preheader.i ], [ %.15980.i, %._crit_edge.loopexit.i ]
-  %.054.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %1, %._crit_edge.loopexit.i ]
+  %.056.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %i.bf, %._crit_edge.loopexit.i ]
+  %.054.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %i.bm, %._crit_edge.loopexit.i ]
   %.159.lcssa.i = phi ptr [ %.15974.i, %.preheader.i ], [ %.159.i, %._crit_edge.loopexit.i ] ; 4 uses
   %i.bn = load i8, ptr %i.a, align 16
   %i.bo = icmp eq i8 %i.bn, 0
@@ -325,8 +325,9 @@ bb.az:                                            ; preds = %bb.ay
 
 aclparse.exit:                                    ; preds = %bb.au, %bb.ax, %bb.ay, %bb.az
   %.2.i = phi ptr [ %i.ca, %bb.au ], [ %.159.lcssa.i, %bb.ax ], [ %.159.lcssa.i, %bb.az ], [ %.159.lcssa.i, %bb.ay ]
+  %1 = add nuw nsw i64 %.054.lcssa.i, %.056.lcssa.i
   %i.cw = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  store i64 %.054.lcssa.i, ptr %i.cw, align 8
+  store i64 %1, ptr %i.cw, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.cx = load ptr, ptr %i.ap, align 8

@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %backup4xU.ex
   br i1 %.091.in.lcssa, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %._crit_edge
-  %i.er = and i32 %.093.lcssa, -3
+  %i.er = and i32 %.093.lcssa, 5
   %i.es = sub nsw i32 %3, %.090.lcssa
   %.not98 = icmp eq i32 %.089.lcssa, 0
   %.sroa.sel103.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not98, i64 1088, i64 0

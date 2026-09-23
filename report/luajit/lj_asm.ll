@@ -205,7 +205,7 @@ checkmclim.exit105.i.i:                           ; preds = %bb.id, %._crit_edge
   br i1 %.not95.i.i, label %bb.if, label %bb.id
 
 bb.id:                                            ; preds = %checkmclim.exit105.i.i
-  %i.ayf = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0.i.i1068, i1 true) ; 2 uses
+  %i.ayf = call range(i32 16, 33) i32 @llvm.cttz.i32(i32 %.0.i.i1068, i1 true) ; 2 uses
   %i.ayg = zext nneg i32 %i.ayf to i64
   %i.ayh = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.ayg
   %i.ayi = load i32, ptr %i.ayh, align 4, !tbaa !26
@@ -608,7 +608,7 @@ bb.ayy:                                           ; preds = %bb.ayx, %checkmclim
 
 bb.ayz:                                           ; preds = %checkmclim.exit29.i, %.lr.ph.i236
   %.031.i = phi i32 [ %i.ilf, %.lr.ph.i236 ], [ %i.ilr, %checkmclim.exit29.i ] ; 2 uses
-  %i.ilg = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.031.i, i1 true) ; 2 uses
+  %i.ilg = call range(i32 16, 33) i32 @llvm.cttz.i32(i32 %.031.i, i1 true) ; 2 uses
   %i.ilh = zext nneg i32 %i.ilg to i64
   %i.ili = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.ilh
   %i.ilj = load i32, ptr %i.ili, align 4, !tbaa !26
@@ -1011,7 +1011,7 @@ bb.bao:                                           ; preds = %bb.ban, %bb.bam, %b
   %.not226.i = icmp ult i16 %i.ioz, 256
   %i.irx = shl nuw i32 1, %i.ipa
   %i.iry = xor i32 %i.irx, -1
-  %i.irz = select i1 %.not226.i, i32 %i.iry, i32 -1
+  %i.irz = select i1 %.not226.i, i32 %i.iry, i32 49135
   %.2176.i = and i32 %i.irz, %.1175291.i          ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
   %indvars.i = trunc i64 %indvars.iv.next.i to i32
@@ -1414,7 +1414,7 @@ checkmclim.exit22:                                ; preds = %bb.b, %bb.a
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %checkmclim.exit22
-  %i.k = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0, i1 true) ; 2 uses
+  %i.k = tail call range(i32 16, 33) i32 @llvm.cttz.i32(i32 %.0, i1 true) ; 2 uses
   %i.l = zext nneg i32 %i.k to i64
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !26

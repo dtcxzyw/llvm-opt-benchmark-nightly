@@ -204,7 +204,7 @@ bb.lb:                                            ; preds = %bb.la
   br i1 %.not122.i.i, label %._crit_edge.loopexit.i308.i, label %.lr.ph.i307.i
 
 ._crit_edge.loopexit.i308.i:                      ; preds = %.lr.ph.i307.i
-  %i.cgq = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cgo, i1 false)
+  %i.cgq = call range(i64 0, 4) i64 @llvm.cttz.i64(i64 %i.cgo, i1 true)
   br label %.thread.i309.i
 
 .thread.i309.i:                                   ; preds = %._crit_edge.loopexit.i308.i, %bb.lb
@@ -214,8 +214,8 @@ bb.lb:                                            ; preds = %bb.la
   %i.cgt = sub i64 %i.cgr, %i.cgs
   %i.cgu = sdiv exact i64 %i.cgt, 48
   %i.cgv = shl nsw i64 %i.cgu, 3
-  %i.cgw = or disjoint i64 %i.cgv, 4
-  %81 = add nsw i64 %i.cgw, %.0.lcssa.i310.i
+  %i.cgw = or disjoint i64 %.0.lcssa.i310.i, %i.cgv
+  %81 = or disjoint i64 %i.cgw, 4
   %i.cgx = call noundef i32 @_ZN4llvm4yaml25ContiguousBlobAccumulator12writeULEB128Em(ptr noundef nonnull align 8 dereferenceable(232) %78, i64 noundef %81) #20 ; 0 uses
   %i.cgy = load ptr, ptr %i.cfu, align 8, !tbaa !317 ; 2 uses
   %i.cgz = load ptr, ptr %i.cgl, align 8, !tbaa !317 ; 2 uses
@@ -618,7 +618,7 @@ bb.ld:                                            ; preds = %bb.lc
   br i1 %.not122.i.i, label %._crit_edge.loopexit.i308.i, label %.lr.ph.i307.i
 
 ._crit_edge.loopexit.i308.i:                      ; preds = %.lr.ph.i307.i
-  %i.cig = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cie, i1 false)
+  %i.cig = call range(i64 0, 4) i64 @llvm.cttz.i64(i64 %i.cie, i1 true)
   br label %.thread.i309.i
 
 .thread.i309.i:                                   ; preds = %._crit_edge.loopexit.i308.i, %bb.ld
@@ -628,8 +628,8 @@ bb.ld:                                            ; preds = %bb.lc
   %i.cij = sub i64 %i.cih, %i.cii
   %i.cik = sdiv exact i64 %i.cij, 48
   %i.cil = shl nsw i64 %i.cik, 3
-  %i.cim = or disjoint i64 %i.cil, 4
-  %81 = add nsw i64 %i.cim, %.0.lcssa.i310.i
+  %i.cim = or disjoint i64 %.0.lcssa.i310.i, %i.cil
+  %81 = or disjoint i64 %i.cim, 4
   %i.cin = call noundef i32 @_ZN4llvm4yaml25ContiguousBlobAccumulator12writeULEB128Em(ptr noundef nonnull align 8 dereferenceable(232) %78, i64 noundef %81) #20 ; 0 uses
   %i.cio = load ptr, ptr %i.chk, align 8, !tbaa !317 ; 2 uses
   %i.cip = load ptr, ptr %i.cib, align 8, !tbaa !317 ; 2 uses
@@ -1032,7 +1032,7 @@ bb.lb:                                            ; preds = %bb.la
   br i1 %.not113.i.i, label %._crit_edge.loopexit.i309.i, label %.lr.ph.i308.i
 
 ._crit_edge.loopexit.i309.i:                      ; preds = %.lr.ph.i308.i
-  %i.chx = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.chv, i1 false)
+  %i.chx = call range(i32 0, 4) i32 @llvm.cttz.i32(i32 %i.chv, i1 true)
   br label %.thread.i310.i
 
 .thread.i310.i:                                   ; preds = %._crit_edge.loopexit.i309.i, %bb.lb
@@ -1042,10 +1042,10 @@ bb.lb:                                            ; preds = %bb.la
   %i.cia = sub i64 %i.chy, %i.chz
   %i.cib = sdiv exact i64 %i.cia, 48
   %i.cic = shl nsw i64 %i.cib, 3
-  %narrow.i.i = add nuw nsw i32 %.0.lcssa.i311.i, 4
-  %83 = zext nneg i32 %narrow.i.i to i64
-  %84 = add nsw i64 %i.cic, %83
-  %i.cid = call noundef i32 @_ZN4llvm4yaml25ContiguousBlobAccumulator12writeULEB128Em(ptr noundef nonnull align 8 dereferenceable(232) %80, i64 noundef %84) #20 ; 0 uses
+  %83 = zext nneg i32 %.0.lcssa.i311.i to i64
+  %84 = or disjoint i64 %i.cic, %83
+  %85 = or disjoint i64 %84, 4
+  %i.cid = call noundef i32 @_ZN4llvm4yaml25ContiguousBlobAccumulator12writeULEB128Em(ptr noundef nonnull align 8 dereferenceable(232) %80, i64 noundef %85) #20 ; 0 uses
   %i.cie = load ptr, ptr %i.cha, align 8, !tbaa !317 ; 2 uses
   %i.cif = load ptr, ptr %i.chr, align 8, !tbaa !317 ; 2 uses
   %.not114124.i.i = icmp eq ptr %i.cie, %i.cif
@@ -1448,7 +1448,7 @@ bb.ld:                                            ; preds = %bb.lc
   br i1 %.not113.i.i, label %._crit_edge.loopexit.i309.i, label %.lr.ph.i308.i
 
 ._crit_edge.loopexit.i309.i:                      ; preds = %.lr.ph.i308.i
-  %i.cjn = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.cjl, i1 false)
+  %i.cjn = call range(i32 0, 4) i32 @llvm.cttz.i32(i32 %i.cjl, i1 true)
   br label %.thread.i310.i
 
 .thread.i310.i:                                   ; preds = %._crit_edge.loopexit.i309.i, %bb.ld
@@ -1458,10 +1458,10 @@ bb.ld:                                            ; preds = %bb.lc
   %i.cjq = sub i64 %i.cjo, %i.cjp
   %i.cjr = sdiv exact i64 %i.cjq, 48
   %i.cjs = shl nsw i64 %i.cjr, 3
-  %narrow.i.i = add nuw nsw i32 %.0.lcssa.i311.i, 4
-  %83 = zext nneg i32 %narrow.i.i to i64
-  %84 = add nsw i64 %i.cjs, %83
-  %i.cjt = call noundef i32 @_ZN4llvm4yaml25ContiguousBlobAccumulator12writeULEB128Em(ptr noundef nonnull align 8 dereferenceable(232) %80, i64 noundef %84) #20 ; 0 uses
+  %83 = zext nneg i32 %.0.lcssa.i311.i to i64
+  %84 = or disjoint i64 %i.cjs, %83
+  %85 = or disjoint i64 %84, 4
+  %i.cjt = call noundef i32 @_ZN4llvm4yaml25ContiguousBlobAccumulator12writeULEB128Em(ptr noundef nonnull align 8 dereferenceable(232) %80, i64 noundef %85) #20 ; 0 uses
   %i.cju = load ptr, ptr %i.ciq, align 8, !tbaa !317 ; 2 uses
   %i.cjv = load ptr, ptr %i.cjh, align 8, !tbaa !317 ; 2 uses
   %.not114124.i.i = icmp eq ptr %i.cju, %i.cjv

@@ -205,14 +205,14 @@ _ZZL10encodeCrelILb1EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf1
 
 ._crit_edge.loopexit.i:                           ; preds = %_ZZL10encodeCrelILb1EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil, %._crit_edge.loopexit.i.unr-lcssa
   %.lcssa = phi i64 [ %i.az, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.o, %_ZZL10encodeCrelILb1EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil ]
-  %i.q = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa, i1 false)
+  %i.q = call range(i64 0, 4) i64 @llvm.cttz.i64(i64 %.lcssa, i1 true)
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.a
   %.039.lcssa.i = phi i64 [ 3, %bb.a ], [ %i.q, %._crit_edge.loopexit.i ] ; 2 uses
   %i.r = shl i64 %2, 3
-  %i.s = or disjoint i64 %i.r, 4
-  %4 = add i64 %i.s, %.039.lcssa.i
+  %i.s = or disjoint i64 %.039.lcssa.i, %i.r
+  %4 = or disjoint i64 %i.s, 4
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 14 uses
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 7 uses
   br label %bb.b
@@ -615,15 +615,15 @@ _ZZL10encodeCrelILb0EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf1
 
 ._crit_edge.loopexit.i:                           ; preds = %_ZZL10encodeCrelILb0EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil, %._crit_edge.loopexit.i.unr-lcssa
   %.lcssa = phi i32 [ %i.ay, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.o, %_ZZL10encodeCrelILb0EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil ]
-  %i.q = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.lcssa, i1 false)
+  %i.q = call range(i32 0, 4) i32 @llvm.cttz.i32(i32 %.lcssa, i1 true)
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.a
   %.058.lcssa.i = phi i32 [ 3, %bb.a ], [ %i.q, %._crit_edge.loopexit.i ] ; 2 uses
   %i.r = shl i64 %2, 3
-  %4 = or disjoint i64 %i.r, 4
-  %5 = zext nneg i32 %.058.lcssa.i to i64
-  %6 = add i64 %4, %5
+  %4 = zext nneg i32 %.058.lcssa.i to i64
+  %5 = or disjoint i64 %i.r, %4
+  %6 = or disjoint i64 %5, 4
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 14 uses
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 7 uses
   br label %bb.b

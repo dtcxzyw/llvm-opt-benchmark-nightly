@@ -205,7 +205,7 @@ bb.a:
   %i.h = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.02024, i1 true) ; 2 uses
   %i.i = shl i32 %.02024, %i.h
   %i.j = xor i32 %i.i, -1
-  %i.k = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.j, i1 false) ; 2 uses
+  %i.k = tail call range(i32 0, 17) i32 @llvm.ctlz.i32(i32 %i.j, i1 true) ; 2 uses
   %i.l = add nuw nsw i32 %i.k, %i.h               ; 2 uses
   %i.m = sub nsw i32 32, %i.l                     ; 2 uses
   %i.n = icmp samesign ult i32 %i.l, 17
@@ -297,7 +297,7 @@ _ZN4llvm21UnwindOpcodeAssembler9EmitInt16Ej.exit: ; preds = %bb.f, %bb.g
   %i.aw = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.02024.1, i1 true) ; 2 uses
   %i.ax = shl i32 %.02024.1, %i.aw
   %i.ay = xor i32 %i.ax, -1
-  %i.az = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ay, i1 false) ; 2 uses
+  %i.az = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.ay, i1 true) ; 2 uses
   %i.ba = add nuw nsw i32 %i.az, %i.aw            ; 2 uses
   %i.bb = sub nsw i32 32, %i.ba                   ; 2 uses
   %i.bc = icmp samesign ult i32 %i.ba, 17

@@ -95,7 +95,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.014.030.i = phi i64 [ %i.al, %.lr.ph.i ], [ %i.ba, %bb.e ] ; 3 uses
-  %i.ar = call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %.sroa.014.030.i, i1 true), !dbg !1300
+  %i.ar = call range(i64 7, 65) i64 @llvm.cttz.i64(i64 %.sroa.014.030.i, i1 true), !dbg !1300
   %i.as = lshr i64 %i.ar, 3, !dbg !1301
   %i.at = or disjoint i64 %i.as, %i.an, !dbg !1302 ; 2 uses
   %i.au = icmp ult i64 %i.at, %i.w, !dbg !1303
@@ -114,7 +114,7 @@ bb.d:                                             ; preds = %._crit_edge.i
   br label %bb.b, !dbg !1288
 
 bb.e:                                             ; preds = %_RNvMs_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB4_11EntryHeaderemE7key_ptrCs80wj1cxFixi_12polars_dtype.exit.i, %bb.f, %bb.c
-  %i.az = add i64 %.sroa.014.030.i, -1, !dbg !1310
+  %i.az = add i64 %.sroa.014.030.i, -128, !dbg !1310
   %i.ba = and i64 %i.az, %.sroa.014.030.i, !dbg !1311 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0, !dbg !1296
   br i1 %i.bb, label %._crit_edge.i, label %bb.c, !dbg !1296
@@ -517,7 +517,7 @@ _RNvMs2_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB5_8RawTableemE20start_inse
 
 bb.au:                                            ; preds = %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0B8_.exit.thread.i, %.lr.ph.i19
   %.sroa.019.097.i = phi i64 [ %i.iz, %.lr.ph.i19 ], [ %i.nv, %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0B8_.exit.thread.i ] ; 3 uses
-  %i.je = call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %.sroa.019.097.i, i1 true), !dbg !1510 ; 2 uses
+  %i.je = call range(i64 7, 65) i64 @llvm.cttz.i64(i64 %.sroa.019.097.i, i1 true), !dbg !1510 ; 2 uses
   %i.jf = lshr i64 %i.je, 3, !dbg !1511
   %i.jg = and i64 %i.je, 56, !dbg !1512           ; 2 uses
   %i.jh = shl nuw i64 128, %i.jg, !dbg !1513
@@ -897,7 +897,7 @@ _RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMa
   br i1 %i.nt, label %bb.cj, label %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0B8_.exit.thread.i, !dbg !1649
 
 _RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0B8_.exit.thread.i: ; preds = %_RNvMs_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB4_11EntryHeaderemE13wait_for_initCs80wj1cxFixi_12polars_dtype.exit.i, %_RNCNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB4_18CategoricalMapping20insert_cat_with_hash0B8_.exit.i, %_RNvMs_NtNtCs2mZqlW55729_12polars_utils5parma3rawINtB4_11EntryHeaderemE7key_ptrCs80wj1cxFixi_12polars_dtype.exit.i21, %bb.ci
-  %i.nu = add i64 %.sroa.019.097.i, -1, !dbg !1650
+  %i.nu = add i64 %.sroa.019.097.i, -128, !dbg !1650
   %i.nv = and i64 %i.nu, %.sroa.019.097.i, !dbg !1651 ; 2 uses
   %i.nw = icmp eq i64 %i.nv, 0, !dbg !1507
   br i1 %i.nw, label %._crit_edge.i20, label %bb.au, !dbg !1507
