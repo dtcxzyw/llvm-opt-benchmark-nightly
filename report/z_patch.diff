@@ -1,0 +1,42 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index ed1e2f7467e19..7a24877ce4732 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -1899,13 +1899,35 @@ static void computeKnownBitsFromOperator(const Operator *I,
+         break;
+       }
+ 
++      case Instruction::And: {
++        // Start with Start's zeros and set more zeros based on Step.
++        KnownBits KnownStep(BitWidth);
++        computeKnownBitsForRecurrenceOperands(P, Start, Step, DemandedElts,
++                                              KnownStart, KnownStep, Q, Depth);
++
++        Known.Zero = KnownStart.Zero;
++        Known.One = ~KnownStart.Zero & KnownStart.One & KnownStep.One;
++
++        break;
++      }
++
++      case Instruction::Or: {
++        // Start with Start's ones and set more ones based on Step.
++        KnownBits KnownStep(BitWidth);
++        computeKnownBitsForRecurrenceOperands(P, Start, Step, DemandedElts,
++                                              KnownStart, KnownStep, Q, Depth);
++
++        Known.One = KnownStart.One;
++        Known.Zero = ~KnownStart.One & KnownStart.Zero & KnownStep.Zero;
++
++        break;
++      }
++
+       // Check for operations that have the property that if
+       // both their operands have low zero bits, the result
+       // will have low zero bits.
+       case Instruction::Add:
+       case Instruction::Sub:
+-      case Instruction::And:
+-      case Instruction::Or:
+       case Instruction::Mul: {
+         // Ok, we have a recurrence of the form {Start,op,Step}. Check for low
+         // zero bits.
