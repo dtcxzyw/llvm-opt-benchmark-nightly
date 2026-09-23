@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160: ; preds = %bb
   %i.cr = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.cs = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.ct = getelementptr inbounds nuw i8, ptr %16, i64 16
-  %i.cu = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 5 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %26, i64 8
   %i.cw = getelementptr inbounds nuw i8, ptr %26, i64 16
   %i.cx = getelementptr inbounds nuw i8, ptr %27, i64 16
@@ -216,7 +216,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160: ; preds = %bb
   %i.dd = getelementptr inbounds nuw i8, ptr %29, i64 16
   %i.de = getelementptr inbounds nuw i8, ptr %29, i64 20
   %i.df = getelementptr inbounds nuw i8, ptr %29, i64 8
-  %i.dg = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 13 uses
+  %i.dg = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 12 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %30, i64 8
   %i.di = getelementptr inbounds nuw i8, ptr %30, i64 16
   %i.dj = getelementptr inbounds nuw i8, ptr %31, i64 8
@@ -228,7 +228,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160: ; preds = %bb
   %i.do = getelementptr inbounds nuw i8, ptr %34, i64 8
   %i.dp = getelementptr inbounds nuw i8, ptr %34, i64 16
   %i.dq = getelementptr inbounds nuw i8, ptr %35, i64 16
-  %i.dr = getelementptr inbounds nuw i8, ptr %13, i64 40 ; 8 uses
+  %i.dr = getelementptr inbounds nuw i8, ptr %13, i64 40 ; 7 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %18, i64 16
@@ -256,7 +256,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160: ; preds = %bb
   %i.eq = getelementptr inbounds nuw i8, ptr %40, i64 16
   %i.er = getelementptr inbounds nuw i8, ptr %40, i64 20
   %i.es = getelementptr inbounds nuw i8, ptr %40, i64 8
-  %i.et = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.eu = getelementptr inbounds nuw i8, ptr %39, i64 23
   br label %bb.s
 
@@ -659,13 +659,15 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EE5clearEv.exit211: ; preds = %_ZSt8_DestroyIP
   %.165 = phi i1 [ %.064, %bb.cg ], [ %.064, %bb.ch ], [ %i.mc, %bb.cj ], [ %.064, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE5clearEv.exit ], [ %.064, %_ZSt8_DestroyIPN2cv6Point_IfEES2_EvT_S4_RSaIT0_E.exit.i.i210 ]
   %.162 = phi i1 [ false, %bb.cg ], [ true, %bb.ch ], [ false, %bb.cj ], [ false, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE5clearEv.exit ], [ false, %_ZSt8_DestroyIPN2cv6Point_IfEES2_EvT_S4_RSaIT0_E.exit.i.i210 ]
   %i.md = load ptr, ptr %i.dr, align 8, !tbaa !78
-  %i.me = load ptr, ptr %i.et, align 16, !tbaa !78
-  store ptr %i.me, ptr %i.dr, align 8, !tbaa !78
+  %i.me = load ptr, ptr %13, align 16, !tbaa !65
   %i.mf = load <2 x ptr>, ptr %i.dg, align 8, !tbaa !62
-  %i.mg = load <2 x ptr>, ptr %13, align 16, !tbaa !62
-  store <2 x ptr> %i.mg, ptr %i.dg, align 8, !tbaa !62
+  %i.mg = load <2 x ptr>, ptr %i.cu, align 8, !tbaa !62
   store <2 x ptr> %i.mf, ptr %13, align 16, !tbaa !62
-  store ptr %i.md, ptr %i.et, align 16, !tbaa !78
+  %41 = insertelement <4 x ptr> poison, ptr %i.md, i64 0
+  %42 = insertelement <4 x ptr> %41, ptr %i.me, i64 1
+  %43 = shufflevector <2 x ptr> %i.mg, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %44 = shufflevector <4 x ptr> %42, <4 x ptr> %43, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %44, ptr %i.et, align 16, !tbaa !62
   invoke void @_ZN2cv4swapERNS_3MatES1_(ptr noundef nonnull align 8 dereferenceable(208) %10, ptr noundef nonnull align 8 dereferenceable(208) %9)
           to label %bb.s unwind label %bb.cf
 

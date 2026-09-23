@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %.loopexit.split-lp
 define void @_RNvMCs2vT3jxLudSK_3urlNtB2_12ParseOptions5parse(ptr dead_on_unwind noalias nofree noundef writable sret([88 x i8]) align 8 captures(address) dereferenceable(88) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [72 x i8], align 8                ; 10 uses
+  %i.b = alloca [72 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2vT3jxLudSK_3url(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %3, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -226,21 +226,25 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.assume(i1 %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.l = load ptr, ptr %i.k, align 8, !align !7, !noundef !5
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = load ptr, ptr %i.k, align 8, !align !7, !noundef !5
+  %i.l = load ptr, ptr %1, align 8, !noundef !5
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = load ptr, ptr %i.m, align 8
   store i64 %i.f, ptr %i.b, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.i, ptr %.sroa.42.0..sroa_idx, align 8
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 0, ptr %.sroa.53.0..sroa_idx, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  store ptr %i.l, ptr %i.n, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %5 = load <2 x ptr>, ptr %1, align 8
-  store <2 x ptr> %5, ptr %4, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %7 = load <2 x ptr>, ptr %i.m, align 8
-  store <2 x ptr> %7, ptr %6, align 8
+  %7 = load <2 x ptr>, ptr %5, align 8
+  %8 = insertelement <4 x ptr> poison, ptr %4, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %i.l, i64 1
+  %10 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x ptr> %9, <4 x ptr> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %11, ptr %i.n, align 8
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
+  store ptr %6, ptr %12, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   store i8 0, ptr %i.o, align 8
   call void @_RNvMs8_NtCs2vT3jxLudSK_3url6parserNtB5_6Parser9parse_url(ptr noalias nofree noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3)

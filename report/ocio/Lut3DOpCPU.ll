@@ -205,7 +205,7 @@ define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer5app
   %i.h = alloca [4 x double], align 16            ; 9 uses
   %i.i = alloca [4 x double], align 16            ; 12 uses
   %i.j = alloca [3 x i64], align 16               ; 8 uses
-  %i.k = alloca [8 x i64], align 16               ; 5 uses
+  %i.k = alloca [8 x i64], align 16               ; 7 uses
   %i.l = alloca [8 x i64], align 16               ; 9 uses
   %i.m = alloca [8 x i64], align 16               ; 11 uses
   %i.n = alloca [16 x i64], align 16              ; 7 uses
@@ -232,8 +232,12 @@ define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer5app
   store i64 1, ptr %i.ac, align 16, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.k, i8 0, i64 16, i1 false)
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  store <6 x i64> splat (i64 1), ptr %i.ad, align 16
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  store <4 x i64> splat (i64 1), ptr %4, align 16
+  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 48
+  store i64 1, ptr %5, align 16
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.k, i64 56
+  store i64 1, ptr %i.ad, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #25
   %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.ae, i8 0, i64 48, i1 false)
@@ -636,8 +640,8 @@ _ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS
   br i1 %.not1.i.i.i.i.i.i, label %_ZNSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i, %.lr.ph.i.i.i.i.i.i
-  %.03.i.i.i.i.i.i = phi ptr [ %i.hb, %.lr.ph.i.i.i.i.i.i ], [ %i.gd, %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 10 uses
-  %.092.i.i.i.i.i.i = phi ptr [ %i.ha, %.lr.ph.i.i.i.i.i.i ], [ %.val7.i.i, %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 10 uses
+  %.03.i.i.i.i.i.i = phi ptr [ %i.hb, %.lr.ph.i.i.i.i.i.i ], [ %i.gd, %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 9 uses
+  %.092.i.i.i.i.i.i = phi ptr [ %i.ha, %.lr.ph.i.i.i.i.i.i ], [ %.val7.i.i, %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !217)
   call void @llvm.experimental.noalias.scope.decl(metadata !218)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.03.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(112) %.092.i.i.i.i.i.i, i64 16, i1 false), !alias.scope !219
@@ -645,29 +649,33 @@ _ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9treeLevelESaIS
   %i.gh = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.gi = load <2 x ptr>, ptr %i.gh, align 8, !tbaa !220, !alias.scope !218, !noalias !217
   store <2 x ptr> %i.gi, ptr %i.gg, align 8, !tbaa !220, !alias.scope !217, !noalias !218
-  %i.gj = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 32
-  %i.gk = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 32
-  %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !48, !alias.scope !218, !noalias !217
-  store ptr %i.gl, ptr %i.gj, align 8, !tbaa !48, !alias.scope !217, !noalias !218
+  %5 = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 32
+  %6 = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 32
+  %i.gj = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 40 ; 2 uses
+  %i.gk = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 48
+  %7 = load ptr, ptr %6, align 8, !tbaa !48, !alias.scope !218, !noalias !217
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gh, i8 0, i64 24, i1 false), !alias.scope !218, !noalias !217
-  %5 = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 40
-  %6 = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 40 ; 2 uses
-  %7 = load <2 x ptr>, ptr %6, align 8, !tbaa !220, !alias.scope !218, !noalias !217
-  store <2 x ptr> %7, ptr %5, align 8, !tbaa !220, !alias.scope !217, !noalias !218
-  %i.gm = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 56
-  %i.gn = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 56
-  %i.go = load ptr, ptr %i.gn, align 8, !tbaa !48, !alias.scope !218, !noalias !217
-  store ptr %i.go, ptr %i.gm, align 8, !tbaa !48, !alias.scope !217, !noalias !218
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false), !alias.scope !218, !noalias !217
-  %i.gp = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 64
-  %i.gq = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 64 ; 2 uses
-  %8 = load <2 x ptr>, ptr %i.gq, align 8, !tbaa !221, !alias.scope !218, !noalias !217
-  store <2 x ptr> %8, ptr %i.gp, align 8, !tbaa !221, !alias.scope !217, !noalias !218
+  %i.gl = load ptr, ptr %i.gj, align 8, !tbaa !47, !alias.scope !218, !noalias !217
+  %8 = load <2 x ptr>, ptr %i.gk, align 8, !tbaa !220, !alias.scope !218, !noalias !217
+  %9 = insertelement <4 x ptr> poison, ptr %7, i64 0
+  %10 = insertelement <4 x ptr> %9, ptr %i.gl, i64 1
+  %11 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x ptr> %10, <4 x ptr> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %12, ptr %5, align 8, !tbaa !220, !alias.scope !217, !noalias !218
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gj, i8 0, i64 24, i1 false), !alias.scope !218, !noalias !217
+  %i.gm = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 64
+  %i.gn = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 64 ; 2 uses
+  %i.go = load ptr, ptr %i.gn, align 8, !tbaa !59, !alias.scope !218, !noalias !217
+  store ptr %i.go, ptr %i.gm, align 8, !tbaa !59, !alias.scope !217, !noalias !218
+  %i.gp = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 72
+  %i.gq = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 72
+  %13 = load ptr, ptr %i.gq, align 8, !tbaa !69, !alias.scope !218, !noalias !217
+  store ptr %13, ptr %i.gp, align 8, !tbaa !69, !alias.scope !217, !noalias !218
   %i.gr = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 80
   %i.gs = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 80
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !60, !alias.scope !218, !noalias !217
   store ptr %i.gt, ptr %i.gr, align 8, !tbaa !60, !alias.scope !217, !noalias !218
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gq, i8 0, i64 24, i1 false), !alias.scope !218, !noalias !217
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gn, i8 0, i64 24, i1 false), !alias.scope !218, !noalias !217
   %i.gu = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i, i64 88
   %i.gv = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i, i64 88 ; 2 uses
   %i.gw = load <2 x ptr>, ptr %i.gv, align 8, !tbaa !221, !alias.scope !218, !noalias !217

@@ -110,9 +110,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  store <6 x i64> splat (i64 -1688849860263936), ptr %i.d, align 8, !tbaa !10
+  store <4 x i64> splat (i64 -1688849860263936), ptr %i.d, align 8, !tbaa !10
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
+  store i64 -1688849860263936, ptr %i.h, align 8, !tbaa !10
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
+  store i64 -1688849860263936, ptr %i.i, align 8, !tbaa !10
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i8 0, ptr %i.j, align 8, !tbaa !46
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 80

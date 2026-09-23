@@ -202,18 +202,18 @@ call.7.i:                                         ; preds = %bb.b
   store <2 x ptr> %i.ai, ptr %i.ag, align 8, !tbaa !59
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %3 = load ptr, ptr %i.ak, align 8, !tbaa !58
-  store ptr %3, ptr %i.aj, align 8, !tbaa !58
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %5 = load ptr, ptr %i.ak, align 8, !tbaa !58
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i8 0, i64 24, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %i.al = load <2 x ptr>, ptr %5, align 8, !tbaa !70
-  store <2 x ptr> %i.al, ptr %4, align 8, !tbaa !70
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %8 = load ptr, ptr %7, align 8, !tbaa !72
-  store ptr %8, ptr %6, align 8, !tbaa !72
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  %6 = load ptr, ptr %3, align 8, !tbaa !98
+  %i.al = load <2 x ptr>, ptr %4, align 8, !tbaa !70
+  %7 = insertelement <4 x ptr> poison, ptr %5, i64 0
+  %8 = insertelement <4 x ptr> %7, ptr %6, i64 1
+  %9 = shufflevector <2 x ptr> %i.al, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x ptr> %8, <4 x ptr> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %10, ptr %i.aj, align 8, !tbaa !152
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   br label %_ZN4Luau7VariantIJNS_9Unifiable5BoundIPKNS_11TypePackVarEEENS1_5ErrorIS5_EENS_12FreeTypePackENS_15GenericTypePackENS_8TypePackENS_16VariadicTypePackENS_15BlockedTypePackENS_28TypeFunctionInstanceTypePackEEEaSEOSF_.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -436,7 +436,7 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EEC2ERKS5_.exit: ; preds = %bb.d, %bb.e, %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !152 ; 2 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !153 ; 2 uses
   %i.ac = load ptr, ptr %i.z, align 8, !tbaa !98  ; 2 uses
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = ptrtoint ptr %i.ac to i64
@@ -464,7 +464,7 @@ _ZNSt15__new_allocatorIPKN4Luau11TypePackVarEE8allocateEmPKv.exit.i.i.i.i: ; pre
   %i.ai = phi ptr [ null, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EEC2ERKS5_.exit ], [ %i.ah, %_ZNSt15__new_allocatorIPKN4Luau11TypePackVarEE8allocateEmPKv.exit.i.i.i.i ] ; 6 uses
   store ptr %i.ai, ptr %i.y, align 8, !tbaa !98
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !152
+  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !153
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.af
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !72
@@ -491,7 +491,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.au = getelementptr inbounds i8, ptr %i.ai, i64 %i.aq
-  store ptr %i.au, ptr %i.aj, align 8, !tbaa !152
+  store ptr %i.au, ptr %i.aj, align 8, !tbaa !153
   ret void
 
 bb.l:                                             ; preds = %_ZNSt15__new_allocatorIPKN4Luau11TypePackVarEE8allocateEmPKv.exit.i.i.i.i, %.noexc.i.i6
@@ -722,5 +722,6 @@ attributes #31 = { allocsize(0) }
 !149 = distinct !{!149, !31}
 !150 = !{!75, !74, i64 24}
 !151 = !{!75, !74, i64 16}
-!152 = !{!71, !69, i64 8}
+!152 = !{!52, !52, i64 0}
+!153 = !{!71, !69, i64 8}
 end_hunk_0

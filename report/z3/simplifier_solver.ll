@@ -205,8 +205,8 @@ _ZN6vectorI14dependent_exprLb1EjE3endEv.exit:     ; preds = %bb.c
 .lr.ph:                                           ; preds = %_ZN6vectorI14dependent_exprLb1EjE3endEv.exit
   %i.t = getelementptr inbounds nuw i8, ptr %i.k, i64 128 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 24
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %_ZN14dependent_exprD2Ev.exit, %bb.c, %_ZN6vectorI14dependent_exprLb1EjE3endEv.exit
@@ -253,18 +253,19 @@ _ZN14dependent_exprD2Ev.exit:                     ; preds = %bb.g, %.noexc
   %i.ah = phi i32 [ %.pre2.i, %.noexc ], [ %i.ad, %bb.g ]
   %i.ai = phi ptr [ %.pre.i, %.noexc ], [ %i.aa, %bb.g ]
   %i.aj = zext i32 %i.ah to i64
-  %i.ak = getelementptr inbounds nuw [32 x i8], ptr %i.ai, i64 %i.aj ; 3 uses
+  %i.ak = getelementptr inbounds nuw [32 x i8], ptr %i.ai, i64 %i.aj ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.al = load ptr, ptr %4, align 8, !tbaa !156, !nonnull !108, !align !109
-  store ptr %i.al, ptr %i.ak, align 8, !tbaa !22
-  %5 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
-  %7 = load <2 x ptr>, ptr %i.u, align 8, !tbaa !157
-  store <2 x ptr> %7, ptr %5, align 8, !tbaa !157
+  %6 = load ptr, ptr %i.u, align 8, !tbaa !145
+  %7 = load <2 x ptr>, ptr %i.v, align 8, !tbaa !157
+  %8 = insertelement <4 x ptr> poison, ptr %i.al, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %6, i64 1
+  %10 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x ptr> %9, <4 x ptr> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %11, ptr %i.ak, align 8, !tbaa !157
   store ptr null, ptr %i.u, align 8, !tbaa !145
   store ptr null, ptr %i.v, align 8, !tbaa !158
-  %8 = load ptr, ptr %i.w, align 8, !tbaa !159
-  store ptr %8, ptr %6, align 8, !tbaa !159
   store ptr null, ptr %i.w, align 8, !tbaa !159
   %i.am = load ptr, ptr %i.t, align 8, !tbaa !50
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 -4 ; 2 uses

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_RNCNvMs1l_NtCscdodAO9FK5_5alloc4syncINtB8_15UniqueArcUninitNtNtCsgHAIXRTqFF5_9pep440_rs7version12VersionInnerNtNtBa_5alloc6GlobalE3new0CsEhZmuQNqkz_11ruff_linter.exit.i.i
 
 _RNCNvMs1l_NtCscdodAO9FK5_5alloc4syncINtB8_15UniqueArcUninitNtNtCsgHAIXRTqFF5_9pep440_rs7version12VersionInnerNtNtBa_5alloc6GlobalE3new0CsEhZmuQNqkz_11ruff_linter.exit.i.i: ; preds = %bb.c, %bb.b
-  %.sroa.0.0.i.i.i.i.i = phi ptr [ %i.h, %bb.b ], [ %i.i, %bb.c ] ; 16 uses
+  %.sroa.0.0.i.i.i.i.i = phi ptr [ %i.h, %bb.b ], [ %i.i, %bb.c ] ; 15 uses
   %i.j = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
   br i1 %i.j, label %bb.d, label %_RNvMs1l_NtCscdodAO9FK5_5alloc4syncINtB6_15UniqueArcUninitNtNtCsgHAIXRTqFF5_9pep440_rs7version12VersionInnerNtNtB8_5alloc6GlobalE3newCsEhZmuQNqkz_11ruff_linter.exit, !prof !13
 
@@ -257,7 +257,7 @@ bb.e:                                             ; preds = %_RNvMs1l_NtCscdodAO
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = load <2 x i64>, ptr %i.x, align 8, !alias.scope !9593, !noalias !9594
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %1 = load i64, ptr %i.z, align 8, !alias.scope !9593, !noalias !9594
+  %1 = load <2 x i64>, ptr %i.z, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !9595
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 88
   invoke void @_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCsgHAIXRTqFF5_9pep440_rs7version12LocalSegmentENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aa)
@@ -276,25 +276,29 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i: ; preds = %.noexc
+  %2 = shufflevector <2 x i64> %1, <2 x i64> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.ae = load <2 x i64>, ptr %i.ad, align 8, !alias.scope !9593, !noalias !9594
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %2 = load <2 x i64>, ptr %i.af, align 8, !alias.scope !9593, !noalias !9594
+  %3 = load i64, ptr %i.ad, align 8, !range !17, !alias.scope !9593, !noalias !9594, !noundef !12
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.ae = load <2 x i64>, ptr %4, align 8, !alias.scope !9593, !noalias !9594
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %5 = load i64, ptr %i.af, align 8, !alias.scope !9593, !noalias !9594
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !9591
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.13.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !9591
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9595
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !9595
+  %6 = insertelement <4 x i64> %2, i64 %3, i64 1
+  %7 = shufflevector <2 x i64> %i.ae, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x i64> %6, <4 x i64> %7, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.i
 
 bb.h:                                             ; preds = %_RNvMs1l_NtCscdodAO9FK5_5alloc4syncINtB6_15UniqueArcUninitNtNtCsgHAIXRTqFF5_9pep440_rs7version12VersionInnerNtNtB8_5alloc6GlobalE3newCsEhZmuQNqkz_11ruff_linter.exit
   %.sroa.5.0..sroa_idx2.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ag = load <2 x i64>, ptr %.sroa.5.0..sroa_idx2.i.i, align 8, !alias.scope !9596
   %.sroa.7.0..sroa_idx6.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.sroa.7.0.copyload7.i.i = load i64, ptr %.sroa.7.0..sroa_idx6.i.i, align 8, !alias.scope !9596
-  %.sroa.8.0..sroa_idx8.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %3 = load <2 x i64>, ptr %.sroa.8.0..sroa_idx8.i.i, align 8, !alias.scope !9596
-  %.sroa.10.0..sroa_idx12.i.i = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %4 = load <2 x i64>, ptr %.sroa.10.0..sroa_idx12.i.i, align 8, !alias.scope !9596
+  %9 = load <4 x i64>, ptr %.sroa.7.0..sroa_idx6.i.i, align 8, !alias.scope !9596
+  %.sroa.10.0..sroa_idx12.i.i = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %.sroa.11.0.copyload15.i.i = load i64, ptr %.sroa.10.0..sroa_idx12.i.i, align 8, !alias.scope !9596
   %.sroa.12.0..sroa_idx16.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.i.i, ptr noundef nonnull readonly align 8 dereferenceable(24) %.sroa.12.0..sroa_idx16.i.i, i64 24, i1 false), !alias.scope !9597
   %.sroa.13.0..sroa_idx17.i.i = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -313,20 +317,17 @@ bb.i:                                             ; preds = %bb.h, %_RNvXsT_NtCs
   %.sroa.1623.0.i.i = phi i64 [ %.sroa.1623.0.copyload25.i.i, %bb.h ], [ %i.q, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
   %.sroa.15.0.i.i = phi i8 [ %.sroa.15.0.copyload21.i.i, %bb.h ], [ %i.w, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
   %.sroa.14.0.i.i = phi i64 [ %.sroa.14.0.copyload19.i.i, %bb.h ], [ %i.u, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
-  %.sroa.7.0.i.i = phi i64 [ %.sroa.7.0.copyload7.i.i, %bb.h ], [ %1, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
+  %.sroa.7.0.i.i = phi i64 [ %.sroa.11.0.copyload15.i.i, %bb.h ], [ %5, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
   %i.ah = phi <2 x i64> [ %i.ag, %bb.h ], [ %i.y, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
-  %5 = phi <2 x i64> [ %3, %bb.h ], [ %i.ae, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
-  %6 = phi <2 x i64> [ %4, %bb.h ], [ %2, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
+  %10 = phi <4 x i64> [ %9, %bb.h ], [ %8, %_RNvXsT_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_11VersionFullNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i ]
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 16
   store i64 %i.o, ptr %i.ai, align 8, !noalias !9598
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 24
   store <2 x i64> %i.ah, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !noalias !9598
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 40
-  store i64 %.sroa.7.0.i.i, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !noalias !9598
-  %.sroa.8.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 48
-  store <2 x i64> %5, ptr %.sroa.8.0..sroa_idx.i.i, align 8, !noalias !9598
-  %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 64
-  store <2 x i64> %6, ptr %.sroa.10.0..sroa_idx.i.i, align 8, !noalias !9598
+  store <4 x i64> %10, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !noalias !9598
+  %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 72
+  store i64 %.sroa.7.0.i.i, ptr %.sroa.10.0..sroa_idx.i.i, align 8, !noalias !9598
   %.sroa.12.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 80
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.i.i, i64 24, i1 false), !noalias !9598
   %.sroa.13.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 104

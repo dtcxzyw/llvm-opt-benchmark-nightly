@@ -204,7 +204,7 @@ _ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EE9push_bac
 define linkonce_odr noundef ptr @_ZN6duckdb14ArenaAllocator4MakeINS_13PhysicalPivotEJRNS_12PhysicalPlanENS_6vectorINS_11LogicalTypeELb1ESaIS6_EEERNS_16PhysicalOperatorENS_14BoundPivotInfoEEEEPT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(104) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(136) %3, ptr noundef nonnull align 8 dereferenceable(80) %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.duckdb::vector.42", align 16 ; 7 uses
-  %6 = alloca %"struct.duckdb::BoundPivotInfo", align 8 ; 12 uses
+  %6 = alloca %"struct.duckdb::BoundPivotInfo", align 8 ; 11 uses
   %i.a = tail call noundef ptr @_ZN6duckdb14ArenaAllocator15AllocateAlignedEm(ptr noundef nonnull align 8 dereferenceable(72) %0, i64 noundef 296) ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.c = load <2 x ptr>, ptr %2, align 8, !tbaa !315
@@ -223,18 +223,19 @@ bb.a:
   store <2 x ptr> %i.k, ptr %i.h, align 8, !tbaa !315
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %7 = load ptr, ptr %i.m, align 8, !tbaa !286
-  store ptr %7, ptr %i.l, align 8, !tbaa !286
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
-  %i.n = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
   %8 = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %9 = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %i.o = load <2 x ptr>, ptr %8, align 8, !tbaa !707
-  store <2 x ptr> %i.o, ptr %i.n, align 8, !tbaa !707
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 48
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %12 = load ptr, ptr %11, align 8, !tbaa !529
-  store ptr %12, ptr %10, align 8, !tbaa !529
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %10 = load ptr, ptr %i.m, align 8, !tbaa !286
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
+  %11 = load ptr, ptr %8, align 8, !tbaa !527
+  %i.o = load <2 x ptr>, ptr %i.n, align 8, !tbaa !707
+  %12 = insertelement <4 x ptr> poison, ptr %10, i64 0
+  %13 = insertelement <4 x ptr> %12, ptr %11, i64 1
+  %14 = shufflevector <2 x ptr> %i.o, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x ptr> %13, <4 x ptr> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %15, ptr %i.l, align 8, !tbaa !366
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 2 uses
@@ -287,7 +288,7 @@ bb.c:                                             ; preds = %_ZSt8_DestroyIPN6du
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EED2Ev.exit.i
 
 _ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EED2Ev.exit.i: ; preds = %bb.c, %_ZSt8_DestroyIPN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEES5_EvT_S7_RSaIT0_E.exit.i.i
-  %i.ae = load ptr, ptr %i.n, align 8, !tbaa !527 ; 3 uses
+  %i.ae = load ptr, ptr %7, align 8, !tbaa !527   ; 3 uses
   %i.af = load ptr, ptr %9, align 8, !tbaa !528   ; 2 uses
   %.not4.i.i.i1.i = icmp eq ptr %i.ae, %i.af
   br i1 %.not4.i.i.i1.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i2.i
@@ -309,7 +310,7 @@ _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i
   br i1 %.not.i.i.i4.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i, label %.lr.ph.i.i.i2.i, !llvm.loop !26
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i
-  %.pr.i5.i = load ptr, ptr %i.n, align 8, !tbaa !527
+  %.pr.i5.i = load ptr, ptr %7, align 8, !tbaa !527
   br label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EED2Ev.exit.i

@@ -202,12 +202,10 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 88
+  %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.640.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ab
@@ -374,12 +372,17 @@ bb.p:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %i.d, i64 48, i1 false), !noalias !7281
   call void @llvm.experimental.noalias.scope.decl(metadata !7301)
   call void @llvm.experimental.noalias.scope.decl(metadata !7302)
-  %i.bh = load <2 x i64>, ptr %i.p, align 8, !alias.scope !7301, !noalias !7303
-  %i.bi = load <2 x i64>, ptr %i.q, align 8, !alias.scope !7302, !noalias !7304
-  %4 = add <2 x i64> %i.bi, %i.bh
-  %5 = load i64, ptr %i.r, align 8, !alias.scope !7301, !noalias !7303, !noundef !17
-  %6 = load i64, ptr %i.s, align 8, !alias.scope !7302, !noalias !7304, !noundef !17
-  %7 = add i64 %6, %5
+  %4 = load i64, ptr %i.p, align 8, !alias.scope !7301, !noalias !7303, !noundef !17
+  %5 = load i64, ptr %i.q, align 8, !alias.scope !7302, !noalias !7304, !noundef !17
+  %i.bh = load <2 x i64>, ptr %i.r, align 8, !alias.scope !7301, !noalias !7303
+  %i.bi = load <2 x i64>, ptr %i.s, align 8, !alias.scope !7302, !noalias !7304
+  %6 = insertelement <4 x i64> <i64 0, i64 poison, i64 poison, i64 poison>, i64 %5, i64 1
+  %7 = shufflevector <2 x i64> %i.bi, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x i64> %6, <4 x i64> %7, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %9 = insertelement <4 x i64> <i64 0, i64 poison, i64 poison, i64 poison>, i64 %4, i64 1
+  %10 = shufflevector <2 x i64> %i.bh, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x i64> %9, <4 x i64> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %12 = add <4 x i64> %8, %11
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs607s0NAIaWN_7segment5index11field_index16PrimaryConditionENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.n)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs607s0NAIaWN_7segment5index11field_index16PrimaryConditionEECsl8OoimOLbh_6qdrant.exit.i.i.i.i unwind label %bb.q, !noalias !7304
 
@@ -501,9 +504,7 @@ bb.ab:                                            ; preds = %_RINvNtCskKLDkoKarT
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !7281
   store i64 0, ptr %2, align 8
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.2.0..sroa_idx, align 8
-  store i64 0, ptr %.sroa.3.0..sroa_idx, align 8
-  store <2 x i64> %4, ptr %.sroa.438.0..sroa_idx, align 8
-  store i64 %7, ptr %.sroa.640.0..sroa_idx, align 8
+  store <4 x i64> %12, ptr %.sroa.3.0..sroa_idx, align 8
   %.not = icmp eq ptr %i.x, %i.g
   br i1 %.not, label %._crit_edge, label %bb.b
 }

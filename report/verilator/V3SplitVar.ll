@@ -205,14 +205,16 @@ bb.a:
   %i.b = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #28 ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.d = load ptr, ptr %2, align 8, !tbaa !92
-  store ptr %i.d, ptr %i.c, align 8, !tbaa !409
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
-  %i.f = load <2 x ptr>, ptr %3, align 8, !tbaa !435
-  store <2 x ptr> %i.f, ptr %i.e, align 8, !tbaa !435
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !428
-  store ptr %7, ptr %5, align 8, !tbaa !428
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  %6 = load ptr, ptr %3, align 8, !tbaa !412
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 56
+  %i.f = load <2 x ptr>, ptr %7, align 8, !tbaa !435
+  %8 = insertelement <4 x ptr> poison, ptr %i.d, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %6, i64 1
+  %10 = shufflevector <2 x ptr> %i.f, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x ptr> %9, <4 x ptr> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %11, ptr %i.c, align 8, !tbaa !315
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %3, i8 0, i64 24, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
@@ -261,12 +263,12 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorI17PackedVarRefEntrySaIS0_EED2Ev.exit.i.i.i.i.i
 
 _ZNSt6vectorI17PackedVarRefEntrySaIS0_EED2Ev.exit.i.i.i.i.i: ; preds = %bb.f, %bb.e
-  %i.y = load ptr, ptr %i.e, align 8, !tbaa !412  ; 3 uses
+  %i.y = load ptr, ptr %5, align 8, !tbaa !412    ; 3 uses
   %.not.i.i.i1.i.i.i.i.i = icmp eq ptr %i.y, null
   br i1 %.not.i.i.i1.i.i.i.i.i, label %_ZNSt8_Rb_treeIP6AstVarSt4pairIKS1_12PackedVarRefESt10_Select1stIS5_E17AstNodeComparatorSaIS5_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS5_E.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorI17PackedVarRefEntrySaIS0_EED2Ev.exit.i.i.i.i.i
-  %i.z = load ptr, ptr %5, align 8, !tbaa !428
+  %i.z = load ptr, ptr %i.e, align 8, !tbaa !428
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = ptrtoint ptr %i.y to i64
   %i.ac = sub i64 %i.aa, %i.ab

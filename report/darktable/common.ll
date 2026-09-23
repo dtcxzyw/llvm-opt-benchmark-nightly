@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define hidden range(i32 0, 2) i32 @get_homography(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [81 x double], align 16           ; 91 uses
+  %i.a = alloca [81 x double], align 16           ; 93 uses
   %i.b = alloca [9 x double], align 16            ; 21 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -61,6 +61,7 @@ bb.a:
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 96 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, i8 0, i64 24, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   store <2 x double> %i.af, ptr %i.aq, align 16, !tbaa !33
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 2 uses
   store double -1.000000e+00, ptr %i.ar, align 16, !tbaa !33
@@ -79,10 +80,11 @@ bb.a:
   store <2 x double> %i.bb, ptr %i.ax, align 16, !tbaa !33
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 160 ; 2 uses
   store double -1.000000e+00, ptr %i.bc, align 16, !tbaa !33
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 168 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 168 ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 184
   %i.bf = getelementptr inbounds nuw i8, ptr %i.a, i64 192
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.bg = insertelement <2 x double> poison, double %i.m, i64 0
   %i.bh = shufflevector <2 x double> %i.bg, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bi = fmul reassoc nsz arcp contract afn <2 x double> %i.bh, %i.ba
@@ -485,8 +487,12 @@ begin_hunk_1_@get_homography:bb.a
   %i.qw = load double, ptr %i.cp, align 8, !tbaa !33
   %i.qx = load double, ptr %i.co, align 16, !tbaa !33
   %i.qy = load double, ptr %i.cc, align 16, !tbaa !33
+  %5 = load double, ptr %3, align 8, !tbaa !33
+  %6 = load double, ptr %i.bd, align 16, !tbaa !33
   %i.qz = load double, ptr %i.bo, align 8, !tbaa !33
   %i.ra = load double, ptr %i.bn, align 16, !tbaa !33
+  %7 = load double, ptr %i.aq, align 16, !tbaa !33
+  %8 = load double, ptr %4, align 8, !tbaa !33
   %i.rb = load double, ptr %i.bc, align 16, !tbaa !33
   %i.rc = load double, ptr %i.ap, align 8, !tbaa !33
   %i.rd = load double, ptr %i.ao, align 16, !tbaa !33
@@ -496,8 +502,6 @@ begin_hunk_1_@get_homography:bb.a
   %i.rg = load <4 x double>, ptr %i.bp, align 16, !tbaa !33
   %i.rh = load <4 x double>, ptr %i.be, align 8, !tbaa !33
   %i.ri = load <4 x double>, ptr %i.ar, align 16, !tbaa !33
-  %3 = load <2 x double>, ptr %i.bd, align 8, !tbaa !33
-  %4 = load <2 x double>, ptr %i.aq, align 16, !tbaa !33
   %i.rj = load <8 x double>, ptr %i.ac, align 8, !tbaa !33
   %i.rk = fdiv reassoc nsz arcp contract afn double %i.qg, %i.qh ; 6 uses
   store double %i.rk, ptr %i.ef, align 16, !tbaa !33
@@ -521,37 +525,34 @@ begin_hunk_1_@get_homography:bb.a
   %i.sb = insertelement <4 x double> %i.sa, double %i.rv, i64 1
   %i.sc = insertelement <4 x double> %i.sb, double %i.rp, i64 2
   %i.sd = insertelement <4 x double> %i.sc, double %i.rk, i64 3 ; 4 uses
-  %i.se = fmul reassoc nsz arcp contract afn <4 x double> %i.ri, %i.sd ; 2 uses
-  %i.sf = fmul reassoc nsz arcp contract afn <4 x double> %i.rh, %i.sd ; 2 uses
+  %i.se = fmul reassoc nsz arcp contract afn <4 x double> %i.ri, %i.sd
+  %i.sf = fmul reassoc nsz arcp contract afn <4 x double> %i.rh, %i.sd
   %i.sg = fmul reassoc nsz arcp contract afn <4 x double> %i.rg, %i.sd
   %i.sh = fmul reassoc nsz arcp contract afn <4 x double> %i.rf, %i.sd
   %i.si = call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %i.sh)
   %op.rdx = fsub reassoc nsz arcp contract afn double %i.qm, %i.si
-  %i.sj = fdiv reassoc nsz arcp contract afn double %op.rdx, %i.qy ; 4 uses
-  %i.sk = fmul reassoc nsz arcp contract afn double %i.qz, %i.sj
-  %op.rdx133 = call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double %i.sk, <4 x double> %i.sg)
+  %i.sj = fdiv reassoc nsz arcp contract afn double %op.rdx, %i.qy ; 5 uses
+  %i.sk = fmul reassoc nsz arcp contract afn double %5, %i.sj
+  %9 = fmul reassoc nsz arcp contract afn double %6, %i.sj
+  %10 = fmul reassoc nsz arcp contract afn double %i.qz, %i.sj
+  %op.rdx133 = call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double %10, <4 x double> %i.sg)
   %op.rdx134 = fsub reassoc nsz arcp contract afn double %i.ql, %op.rdx133
-  %5 = fdiv reassoc nsz arcp contract afn double %op.rdx134, %i.ra ; 3 uses
-  %6 = insertelement <2 x double> poison, double %5, i64 0
-  %7 = insertelement <2 x double> %6, double %i.sj, i64 1 ; 2 uses
-  %8 = fmul reassoc nsz arcp contract afn <2 x double> %4, %7
-  %9 = fmul reassoc nsz arcp contract afn <2 x double> %3, %7
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %11 = fadd reassoc nsz arcp contract afn <4 x double> %i.sf, %10
-  %12 = shufflevector <4 x double> %11, <4 x double> %i.sf, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %13 = call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %12)
-  %op.rdx135.a = fsub reassoc nsz arcp contract afn double %i.qk, %13
+  %11 = fdiv reassoc nsz arcp contract afn double %op.rdx134, %i.ra ; 4 uses
+  %12 = fmul reassoc nsz arcp contract afn double %7, %11
+  %13 = fmul reassoc nsz arcp contract afn double %8, %11
+  %op.rdx135 = call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double %9, <4 x double> %i.sf)
+  %op.rdx136 = fadd reassoc nsz arcp contract afn double %op.rdx135, %13
+  %op.rdx135.a = fsub reassoc nsz arcp contract afn double %i.qk, %op.rdx136
   %i.sl = fdiv reassoc nsz arcp contract afn double %op.rdx135.a, %i.rb ; 3 uses
   %i.sm = fmul reassoc nsz arcp contract afn double %i.rc, %i.sl
-  %14 = shufflevector <2 x double> %8, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %15 = fadd reassoc nsz arcp contract afn <4 x double> %i.se, %14
-  %16 = shufflevector <4 x double> %15, <4 x double> %i.se, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %op.rdx137 = call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double %i.sm, <4 x double> %16)
-  %op.rdx138.a = fsub reassoc nsz arcp contract afn double %i.qj, %op.rdx137
+  %op.rdx138 = call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double %i.sk, <4 x double> %i.se)
+  %op.rdx139 = fadd reassoc nsz arcp contract afn double %12, %i.sm
+  %op.rdx140 = fadd reassoc nsz arcp contract afn double %op.rdx138, %op.rdx139
+  %op.rdx138.a = fsub reassoc nsz arcp contract afn double %i.qj, %op.rdx140
   %i.sn = fdiv reassoc nsz arcp contract afn double %op.rdx138.a, %i.rd ; 2 uses
   %i.so = insertelement <8 x double> poison, double %i.sn, i64 0
   %i.sp = insertelement <8 x double> %i.so, double %i.sl, i64 1
-  %i.sq = insertelement <8 x double> %i.sp, double %5, i64 2
+  %i.sq = insertelement <8 x double> %i.sp, double %11, i64 2
   %i.sr = insertelement <8 x double> %i.sq, double %i.sj, i64 3
   %i.ss = insertelement <8 x double> %i.sr, double %i.rz, i64 4
   %i.st = insertelement <8 x double> %i.ss, double %i.rv, i64 5
@@ -566,7 +567,7 @@ begin_hunk_1_@get_homography:bb.a
   %i.ta = insertelement <8 x double> poison, double %i.sy, i64 0
   %i.tb = insertelement <8 x double> %i.ta, double %i.sn, i64 1
   %i.tc = insertelement <8 x double> %i.tb, double %i.sl, i64 2
-  %i.td = insertelement <8 x double> %i.tc, double %5, i64 3
+  %i.td = insertelement <8 x double> %i.tc, double %11, i64 3
   %i.te = insertelement <8 x double> %i.td, double %i.sj, i64 4
   %i.tf = insertelement <8 x double> %i.te, double %i.rz, i64 5
   %i.tg = shufflevector <2 x double> %i.sz, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>

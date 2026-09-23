@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.loopexit
   store i64 0, ptr %i.bc, align 8, !tbaa !199
   store i8 0, ptr %i.bb, align 8, !tbaa !195
   %i.bd = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 5 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 4 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %8, i64 72 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !888)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, i8 0, i64 64, i1 false)
@@ -534,22 +534,22 @@ bb.al:                                            ; preds = %bb.af
 
 bb.am:                                            ; preds = %_ZN4Luau12ParseOptionsD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #26
-  %i.fc = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 2 uses
-  %i.fd = load <2 x ptr>, ptr %i.fc, align 8, !tbaa !151
+  %15 = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 2 uses
+  %i.fc = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
+  %i.fd = load <2 x ptr>, ptr %15, align 8, !tbaa !151
   store <2 x ptr> %i.fd, ptr %13, align 16, !tbaa !151
-  %i.fe = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 4 uses
+  %i.fe = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %7, i64 80
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !180
   store ptr %i.fg, ptr %i.fe, align 16, !tbaa !180
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fc, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   %.sroa.04.0.copyload = load i64, ptr %5, align 4
   invoke void @_ZN4Luau37findAncestryAtPositionForAutocompleteEPNS_12AstStatBlockENS_8PositionE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.27") align 8 %14, ptr noundef nonnull %i.ey, i64 %.sroa.04.0.copyload)
           to label %bb.an unwind label %bb.au
 
 bb.an:                                            ; preds = %bb.am
-  %15 = getelementptr inbounds nuw i8, ptr %13, i64 8
-  %i.fh = load ptr, ptr %15, align 8, !tbaa !151
+  %i.fh = load ptr, ptr %i.fc, align 8, !tbaa !151
   %i.fi = load ptr, ptr %14, align 8, !tbaa !151
   %i.fj = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !151
@@ -562,18 +562,20 @@ bb.an:                                            ; preds = %bb.am
           to label %bb.ao unwind label %bb.av
 
 bb.ao:                                            ; preds = %bb.an
+  %16 = load ptr, ptr %13, align 16, !tbaa !151
   %i.fq = icmp eq ptr %i.c, null
   %i.fr = load ptr, ptr %11, align 8              ; 2 uses
   %spec.select = select i1 %i.fq, ptr %i.fr, ptr %i.c
-  store ptr %i.fr, ptr %i.bd, align 8, !tbaa !248
   %i.fs = load ptr, ptr %i.be, align 8, !tbaa !174 ; 3 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %i.fu = getelementptr inbounds nuw i8, ptr %8, i64 56 ; 2 uses
+  %i.fu = getelementptr inbounds nuw i8, ptr %8, i64 56
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !180
-  %i.fw = load <2 x ptr>, ptr %13, align 16, !tbaa !151
-  store <2 x ptr> %i.fw, ptr %i.be, align 8, !tbaa !151
-  %16 = load ptr, ptr %i.fe, align 16, !tbaa !180
-  store ptr %16, ptr %i.fu, align 8, !tbaa !180
+  %i.fw = load <2 x ptr>, ptr %i.fc, align 8, !tbaa !151
+  %17 = insertelement <4 x ptr> poison, ptr %i.fr, i64 0
+  %18 = insertelement <4 x ptr> %17, ptr %16, i64 1
+  %19 = shufflevector <2 x ptr> %i.fw, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %20 = shufflevector <4 x ptr> %18, <4 x ptr> %19, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %20, ptr %i.bd, align 8, !tbaa !58
   %.not.i.i.i.i.i = icmp eq ptr %i.fs, null
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %13, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIPN4Luau7AstNodeESaIS2_EEaSEOS4_.exit, label %bb.ap

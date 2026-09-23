@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 define linkonce_odr void @_ZN6duckdb9make_uniqINS_12UnboundIndexEJNS_10unique_ptrINS_10CreateInfoESt14default_deleteIS3_ELb1EEENS_16IndexStorageInfoERNS_14TableIOManagerERNS_16AttachedDatabaseEEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_(ptr dead_on_unwind noalias writable sret(%"class.duckdb::unique_ptr.1116") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(160) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(408) %4) local_unnamed_addr #16 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.duckdb::unique_ptr.1085", align 8 ; 4 uses
-  %6 = alloca %"struct.duckdb::IndexStorageInfo", align 8 ; 19 uses
+  %6 = alloca %"struct.duckdb::IndexStorageInfo", align 8 ; 17 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(336) ptr @_Znwm(i64 noundef 336) #46 ; 3 uses
   %i.b = load i64, ptr %1, align 8, !tbaa !728
   store i64 %i.b, ptr %5, align 8, !tbaa !728
@@ -303,18 +303,18 @@ _ZN6duckdb16IndexStorageInfoC2EOS0_.exit:         ; preds = %bb.d, %bb.e
   store <2 x ptr> %i.ar, ptr %i.ap, align 8, !tbaa !792
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 112
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 112
-  %7 = load ptr, ptr %i.at, align 8, !tbaa !791
-  store ptr %7, ptr %i.as, align 8, !tbaa !791
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 128
+  %9 = load ptr, ptr %i.at, align 8, !tbaa !791
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i8 0, i64 24, i1 false)
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 120
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 2 uses
-  %i.au = load <2 x ptr>, ptr %9, align 8, !tbaa !795
-  store <2 x ptr> %i.au, ptr %8, align 8, !tbaa !795
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 136
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 136
-  %12 = load ptr, ptr %11, align 8, !tbaa !796
-  store ptr %12, ptr %10, align 8, !tbaa !796
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
+  %10 = load ptr, ptr %7, align 8, !tbaa !793
+  %i.au = load <2 x ptr>, ptr %8, align 8, !tbaa !795
+  %11 = insertelement <4 x ptr> poison, ptr %9, i64 0
+  %12 = insertelement <4 x ptr> %11, ptr %10, i64 1
+  %13 = shufflevector <2 x ptr> %i.au, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %14 = shufflevector <4 x ptr> %12, <4 x ptr> %13, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %14, ptr %i.as, align 8, !tbaa !379
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
   %i.av = getelementptr inbounds nuw i8, ptr %6, i64 144
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 144
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.av, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false), !tbaa.struct !800
@@ -717,7 +717,11 @@ define void @_ZN6duckdb34TemporaryFileCompressionAdaptivityC2Ev(ptr noundef nonn
 bb.a:
   tail call void @_ZN6duckdb12RandomEngineC1El(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 noundef -1)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store <6 x i64> splat (i64 50000), ptr %i.a, align 8, !tbaa !248
+  store <4 x i64> splat (i64 50000), ptr %i.a, align 8, !tbaa !248
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  store i64 50000, ptr %1, align 8, !tbaa !248
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 88
+  store i64 50000, ptr %2, align 8, !tbaa !248
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96
   store i64 50000, ptr %i.b, align 8, !tbaa !248
   ret void

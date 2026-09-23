@@ -205,19 +205,22 @@ bb.ac:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %common.resume
 
 .sink.split.i:                                    ; preds = %_ZN6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEaSEOS4_.exit.i.i, %bb.x, %bb.w
-  %.sink62.i = phi ptr [ %i.dd, %bb.x ], [ %1, %bb.w ], [ %1, %_ZN6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEaSEOS4_.exit.i.i ] ; 4 uses
+  %.sink62.i = phi ptr [ %i.dd, %bb.x ], [ %1, %bb.w ], [ %1, %_ZN6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEaSEOS4_.exit.i.i ] ; 5 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 112 ; 2 uses
-  %i.do = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 136 ; 2 uses
-  %i.dp = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 128 ; 2 uses
-  %6 = load ptr, ptr %i.dp, align 8, !tbaa !347
+  %i.do = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 136
+  %6 = load ptr, ptr %i.dn, align 8, !tbaa !306
+  %i.dp = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 120
+  %7 = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 128
   %i.dq = load <2 x ptr>, ptr %i.do, align 8, !tbaa !288
-  %i.dr = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 152 ; 2 uses
+  %i.dr = getelementptr inbounds nuw i8, ptr %.sink62.i, i64 152
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !347
-  store ptr %i.ds, ptr %i.dp, align 8, !tbaa !347
-  %7 = load <2 x ptr>, ptr %i.dn, align 8, !tbaa !288
+  %8 = load <2 x ptr>, ptr %i.dp, align 8, !tbaa !288
   store <2 x ptr> %i.dq, ptr %i.dn, align 8, !tbaa !288
-  store <2 x ptr> %7, ptr %i.do, align 8, !tbaa !288
-  store ptr %6, ptr %i.dr, align 8, !tbaa !347
+  %9 = insertelement <4 x ptr> poison, ptr %i.ds, i64 0
+  %10 = insertelement <4 x ptr> %9, ptr %6, i64 1
+  %11 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x ptr> %10, <4 x ptr> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %12, ptr %7, align 8, !tbaa !288
   br label %_ZN6duckdbL12FlipChildrenERNS_15LogicalOperatorE.exit
 
 bb.ad:                                            ; preds = %bb.aa
@@ -620,7 +623,7 @@ _ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EE9push_backEOS1_.exit: ; preds = %tail
 define void @_ZN6duckdb16BaseColumnPruner10AddBindingERNS_24BoundColumnRefExpressionENS_11ColumnIndexE(ptr noundef nonnull align 8 dereferenceable(65) %0, ptr noundef nonnull align 8 dereferenceable(112) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.duckdb::ReferencedColumn", align 16 ; 26 uses
-  %4 = alloca %"struct.std::pair.2227", align 8   ; 20 uses
+  %4 = alloca %"struct.std::pair.2227", align 8   ; 19 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -821,19 +824,20 @@ _ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EE9push_backEOS1_.exit: ; preds = %._ZN
   %i.ct = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.cu = load <2 x ptr>, ptr %3, align 16, !tbaa !1131, !noalias !3790
   store <2 x ptr> %i.cu, ptr %i.ct, align 8, !tbaa !1131, !alias.scope !3790
-  %i.cv = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %5 = load ptr, ptr %i.bj, align 16, !tbaa !1256, !noalias !3790
-  store ptr %5, ptr %i.cv, align 8, !tbaa !1256, !alias.scope !3790
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.cv = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %8 = load ptr, ptr %i.bj, align 16, !tbaa !1256, !noalias !3790
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(136) %3, i8 0, i64 24, i1 false), !noalias !3790
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
-  %i.cw = load <2 x ptr>, ptr %7, align 8, !tbaa !1262, !noalias !3790
-  store <2 x ptr> %i.cw, ptr %6, align 8, !tbaa !1262, !alias.scope !3790
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 56
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  %10 = load ptr, ptr %9, align 8, !tbaa !1298, !noalias !3790
-  store ptr %10, ptr %8, align 8, !tbaa !1298, !alias.scope !3790
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false), !noalias !3790
+  %9 = load ptr, ptr %6, align 8, !tbaa !1093, !noalias !3790
+  %i.cw = load <2 x ptr>, ptr %7, align 16, !tbaa !1262, !noalias !3790
+  %10 = insertelement <4 x ptr> poison, ptr %8, i64 0
+  %11 = insertelement <4 x ptr> %10, ptr %9, i64 1
+  %12 = shufflevector <2 x ptr> %i.cw, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x ptr> %11, <4 x ptr> %12, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %13, ptr %5, align 8, !tbaa !299, !alias.scope !3790
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false), !noalias !3790
   %i.cx = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 3 uses
   %i.cy = load ptr, ptr %i.bo, align 16, !tbaa !902, !noalias !3790
   store ptr %i.cy, ptr %i.cx, align 8, !tbaa !902, !alias.scope !3790
@@ -863,14 +867,14 @@ _ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EE9push_backEOS1_.exit: ; preds = %._ZN
   %i.do = getelementptr inbounds nuw i8, ptr %4, i64 128
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.do, ptr noundef nonnull align 16 dereferenceable(16) %i.bh, i64 16, i1 false), !tbaa.struct !730
   %i.dp = getelementptr inbounds nuw i8, ptr %4, i64 144 ; 5 uses
-  store ptr null, ptr %i.dp, align 8, !tbaa !1299, !alias.scope !3790
+  store ptr null, ptr %i.dp, align 8, !tbaa !1298, !alias.scope !3790
   %i.dq = icmp eq ptr %i.dg, %i.be
   br i1 %i.dq, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %_ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EE9push_backEOS1_.exit
   store ptr %i.dp, ptr %i.df, align 8, !tbaa !1089, !alias.scope !3790
-  %i.dr = load ptr, ptr %i.be, align 16, !tbaa !1299, !noalias !3790
-  store ptr %i.dr, ptr %i.dp, align 8, !tbaa !1299, !alias.scope !3790
+  %i.dr = load ptr, ptr %i.be, align 16, !tbaa !1298, !noalias !3790
+  store ptr %i.dr, ptr %i.dp, align 8, !tbaa !1298, !alias.scope !3790
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EE9push_backEOS1_.exit
@@ -889,7 +893,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   store i64 0, ptr %i.bi, align 8, !tbaa !580, !noalias !3790
   store i64 1, ptr %i.bf, align 8, !tbaa !1090, !noalias !3790
-  store ptr null, ptr %i.be, align 16, !tbaa !1299, !noalias !3790
+  store ptr null, ptr %i.be, align 16, !tbaa !1298, !noalias !3790
   store ptr %i.be, ptr %i.bd, align 16, !tbaa !1089, !noalias !3790
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bg, i8 0, i64 16, i1 false), !noalias !3790
   %i.dx = invoke { ptr, i8 } @_ZNSt10_HashtableIN6duckdb13ColumnBindingESt4pairIKS1_NS0_16ReferencedColumnEESaIS5_ENSt8__detail10_Select1stENS0_21ColumnBindingEqualityENS0_25ColumnBindingHashFunctionENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb0ELb1EEEE10_M_emplaceIJS2_IS1_S4_EEEES2_INS7_14_Node_iteratorIS5_Lb0ELb1EEEbESt17integral_constantIbLb1EEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.a, ptr noundef nonnull align 8 dereferenceable(152) %4)
@@ -990,7 +994,7 @@ bb.r:                                             ; preds = %_ZSt8_DestroyIPN6du
   br label %_ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EED2Ev.exit.i.i
 
 _ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EED2Ev.exit.i.i: ; preds = %bb.r, %_ZSt8_DestroyIPN6duckdb11ColumnIndexES1_EvT_S3_RSaIT0_E.exit.i.i.i
-  call void @_ZNSt6vectorIN6duckdb23ReferencedStructExtractESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %6) #33
+  call void @_ZNSt6vectorIN6duckdb23ReferencedStructExtractESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.cv) #33
   %i.eu = load ptr, ptr %i.ct, align 8, !tbaa !1100 ; 2 uses
   %.not.i.i.i1.i.i = icmp eq ptr %i.eu, null
   br i1 %.not.i.i.i1.i.i, label %_ZNSt4pairIN6duckdb13ColumnBindingENS0_16ReferencedColumnEED2Ev.exit, label %bb.s
@@ -1094,7 +1098,7 @@ bb.v:                                             ; preds = %_ZSt8_DestroyIPN6du
   br label %_ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EED2Ev.exit.i
 
 _ZNSt6vectorIN6duckdb11ColumnIndexESaIS1_EED2Ev.exit.i: ; preds = %bb.v, %_ZSt8_DestroyIPN6duckdb11ColumnIndexES1_EvT_S3_RSaIT0_E.exit.i.i
-  call void @_ZNSt6vectorIN6duckdb23ReferencedStructExtractESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %7) #33
+  call void @_ZNSt6vectorIN6duckdb23ReferencedStructExtractESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %6) #33
   %i.fr = load ptr, ptr %3, align 16, !tbaa !1100 ; 2 uses
   %.not.i.i.i1.i = icmp eq ptr %i.fr, null
   br i1 %.not.i.i.i1.i, label %_ZN6duckdb16ReferencedColumnD2Ev.exit, label %bb.w
@@ -1497,7 +1501,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1094 ; 14 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1298
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1299
   %.not = icmp eq ptr %i.b, %i.d
   br i1 %.not, label %bb.f, label %bb.b
 
@@ -1900,7 +1904,7 @@ _ZNSt15__new_allocatorIN6duckdb23ReferencedStructExtractEE8allocateEmPKv.exit.i.
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !1094
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.y
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr %i.ae, ptr %i.af, align 8, !tbaa !1298
+  store ptr %i.ae, ptr %i.af, align 8, !tbaa !1299
   %i.ag = load ptr, ptr %i.s, align 8, !tbaa !1262
   %i.ah = load ptr, ptr %i.t, align 8, !tbaa !1262
   %i.ai = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKN6duckdb23ReferencedStructExtractESt6vectorIS3_SaIS3_EEEEPS3_ET0_T_SC_SB_(ptr %i.ag, ptr %i.ah, ptr noundef %i.ac)
@@ -1994,7 +1998,7 @@ bb.k:                                             ; preds = %.noexc18
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 112
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.br, ptr noundef nonnull align 8 dereferenceable(16) %i.bs, i64 16, i1 false), !tbaa.struct !730
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 128
-  store ptr null, ptr %i.bt, align 8, !tbaa !1299
+  store ptr null, ptr %i.bt, align 8, !tbaa !1298
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   store ptr %i.bi, ptr %2, align 8, !tbaa !5799
   invoke void @_ZNSt10_HashtableIN6duckdb11ColumnIndexES1_SaIS1_ENSt8__detail9_IdentityENS0_19ColumnIndexEqualityENS0_23ColumnIndexHashFunctionENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE9_M_assignIRKSC_NS3_10_AllocNodeISaINS3_10_Hash_nodeIS1_Lb1EEEEEEEEvOT_RKT0_(ptr noundef nonnull align 8 dereferenceable(56) %i.bi, ptr noundef nonnull align 8 dereferenceable(56) %i.bj, ptr noundef nonnull align 8 dereferenceable(8) %2)
@@ -2184,7 +2188,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  store ptr null, ptr %i.e, align 8, !tbaa !1299
+  store ptr null, ptr %i.e, align 8, !tbaa !1298
   br label %_ZNSt10_HashtableIN6duckdb11ColumnIndexES1_SaIS1_ENSt8__detail9_IdentityENS0_19ColumnIndexEqualityENS0_23ColumnIndexHashFunctionENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -2587,7 +2591,7 @@ bb.a:
   %2 = alloca %"struct.std::_Hashtable<duckdb::ColumnBinding, std::pair<const duckdb::ColumnBinding, duckdb::ReferencedColumn>, std::allocator<std::pair<const duckdb::ColumnBinding, duckdb::ReferencedColumn>>, std::__detail::_Select1st, duckdb::ColumnBindingEquality, duckdb::ColumnBindingHashFunction, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true>>::_Scoped_node", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   store ptr %0, ptr %2, align 8, !tbaa !1661
-  %i.a = tail call noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #36 ; 20 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #36 ; 18 uses
   store ptr null, ptr %i.a, align 8, !tbaa !313
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %i.b, ptr noundef nonnull align 8 dereferenceable(152) %1, i64 16, i1 false), !tbaa.struct !271
@@ -2597,18 +2601,18 @@ bb.a:
   store <2 x ptr> %i.e, ptr %i.c, align 8, !tbaa !1131
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %3 = load ptr, ptr %i.g, align 8, !tbaa !1256
-  store ptr %3, ptr %i.f, align 8, !tbaa !1256
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %5 = load ptr, ptr %i.g, align 8, !tbaa !1256
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.d, i8 0, i64 24, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %i.h = load <2 x ptr>, ptr %5, align 8, !tbaa !1262
-  store <2 x ptr> %i.h, ptr %4, align 8, !tbaa !1262
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %8 = load ptr, ptr %7, align 8, !tbaa !1298
-  store ptr %8, ptr %6, align 8, !tbaa !1298
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  %6 = load ptr, ptr %3, align 8, !tbaa !1093
+  %i.h = load <2 x ptr>, ptr %4, align 8, !tbaa !1262
+  %7 = insertelement <4 x ptr> poison, ptr %5, i64 0
+  %8 = insertelement <4 x ptr> %7, ptr %6, i64 1
+  %9 = shufflevector <2 x ptr> %i.h, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x ptr> %8, <4 x ptr> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %10, ptr %i.f, align 8, !tbaa !299
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.k = load <2 x ptr>, ptr %i.j, align 8, !tbaa !244
@@ -2642,15 +2646,15 @@ bb.a:
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 128
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, ptr noundef nonnull align 8 dereferenceable(16) %i.ae, i64 16, i1 false), !tbaa.struct !730
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 152 ; 4 uses
-  store ptr null, ptr %i.af, align 8, !tbaa !1299
+  store ptr null, ptr %i.af, align 8, !tbaa !1298
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 4 uses
   %i.ah = icmp eq ptr %i.t, %i.ag
   br i1 %i.ah, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   store ptr %i.af, ptr %i.r, align 8, !tbaa !1089
-  %i.ai = load ptr, ptr %i.ag, align 8, !tbaa !1299
-  store ptr %i.ai, ptr %i.af, align 8, !tbaa !1299
+  %i.ai = load ptr, ptr %i.ag, align 8, !tbaa !1298
+  store ptr %i.ai, ptr %i.af, align 8, !tbaa !1298
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -2671,7 +2675,7 @@ _ZNSt10_HashtableIN6duckdb13ColumnBindingESt4pairIKS1_NS0_16ReferencedColumnEESa
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 136
   store i64 0, ptr %i.ap, align 8, !tbaa !580
   store i64 1, ptr %i.v, align 8, !tbaa !1090
-  store ptr null, ptr %i.ag, align 8, !tbaa !1299
+  store ptr null, ptr %i.ag, align 8, !tbaa !1298
   store ptr %i.ag, ptr %i.s, align 8, !tbaa !1089
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
   store ptr %i.a, ptr %i.ao, align 8, !tbaa !1662
@@ -3074,7 +3078,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  store ptr null, ptr %i.b, align 8, !tbaa !1299
+  store ptr null, ptr %i.b, align 8, !tbaa !1298
   br label %_ZNSt10_HashtableIN6duckdb11ColumnIndexES1_SaIS1_ENSt8__detail9_IdentityENS0_19ColumnIndexEqualityENS0_23ColumnIndexHashFunctionENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -3321,7 +3325,7 @@ _ZNSt12_Vector_baseIN6duckdb23ReferencedStructExtractESaIS1_EE13_M_deallocateEPS
   store ptr %i.q, ptr %0, align 8, !tbaa !1093
   store ptr %i.bm, ptr %i.a, align 8, !tbaa !1094
   %i.bo = getelementptr inbounds nuw [136 x i8], ptr %i.q, i64 %i.l
-  store ptr %i.bo, ptr %i.bn, align 8, !tbaa !1298
+  store ptr %i.bo, ptr %i.bn, align 8, !tbaa !1299
   ret void
 
 bb.h:                                             ; preds = %_ZNSt15__new_allocatorIN6duckdb26ReferencedExtractComponentEE8allocateEmPKv.exit.i.i.i.i.i, %.noexc.i.i.i
@@ -3724,8 +3728,8 @@ begin_hunk_6_@llvm.umin.i64
 !1295 = !{!1096, !1095, i64 16}
 !1296 = !{i64 0, i64 8, !443, i64 8, i64 8, !443}
 !1297 = !{!1095, !1095, i64 0}
-!1298 = !{!1092, !1091, i64 16}
-!1299 = !{!1087, !309, i64 48}
+!1298 = !{!1087, !309, i64 48}
+!1299 = !{!1092, !1091, i64 16}
 !1300 = !{!"_ZTSN6duckdb12optional_ptrINS_12LogicalOrderELb1EEE", !1115, i64 0}
 !1301 = !{!1300, !1115, i64 0}
 !1302 = !{!"_ZTSN6duckdb12optional_ptrINS_10LogicalGetELb1EEE", !1034, i64 0}

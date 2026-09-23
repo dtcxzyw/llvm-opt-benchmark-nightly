@@ -204,8 +204,11 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define ptr @l_Lean_Elab_Tactic_Do_suggestInvariant___lam__6___boxed(ptr nofree noundef readonly captures(none) %0) #1 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %1 = load ptr, ptr %0, align 8, !tbaa !16
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %3 = load ptr, ptr %i.b, align 8, !tbaa !16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -236,30 +239,31 @@ bb.a:
   %i.ad = and i64 %i.ac, 510
   %i.ae = or disjoint i64 %i.ad, 1
   %i.af = inttoptr i64 %i.ae to ptr
-  %i.ag = load <2 x ptr>, ptr %0, align 8, !tbaa !16
-  %1 = load <2 x ptr>, ptr %i.a, align 8, !tbaa !16
-  %i.ah = load <2 x ptr>, ptr %i.b, align 8, !tbaa !16
-  %i.ai = tail call ptr @lean_alloc_object(i64 noundef 120) #8 ; 15 uses
+  %i.ag = load <2 x ptr>, ptr %2, align 8, !tbaa !16
+  %4 = insertelement <4 x ptr> poison, ptr %i.l, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %1, i64 1
+  %6 = shufflevector <2 x ptr> %i.ag, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.ah = load <2 x ptr>, ptr %i.a, align 8, !tbaa !16
+  %i.ai = tail call ptr @lean_alloc_object(i64 noundef 120) #8 ; 14 uses
   store i32 1, ptr %i.ai, align 4, !tbaa !11
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 4 ; 2 uses
   %i.ak = load i32, ptr %i.aj, align 4
   %i.al = and i32 %i.ak, 65535
   %i.am = or disjoint i32 %i.al, -184549376
   store i32 %i.am, ptr %i.aj, align 4
-  %2 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  store ptr @l_Lean_Elab_Tactic_Do_suggestInvariant___lam__5___boxed, ptr %2, align 8, !tbaa !16
-  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  store i16 22, ptr %i.an, align 8, !tbaa !20
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 18
-  store i16 12, ptr %i.ao, align 2, !tbaa !20
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
-  store ptr %i.l, ptr %i.ap, align 8, !tbaa !16
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
-  store <2 x ptr> %i.ag, ptr %i.aq, align 8, !tbaa !16
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
-  store <2 x ptr> %1, ptr %i.ar, align 8, !tbaa !16
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
-  store <2 x ptr> %i.ah, ptr %i.as, align 8, !tbaa !16
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
+  store ptr @l_Lean_Elab_Tactic_Do_suggestInvariant___lam__5___boxed, ptr %i.an, align 8, !tbaa !16
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
+  store i16 22, ptr %i.ao, align 8, !tbaa !20
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 18
+  store i16 12, ptr %i.ap, align 2, !tbaa !20
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
+  store <4 x ptr> %7, ptr %i.aq, align 8, !tbaa !16
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 56
+  store <2 x ptr> %i.ah, ptr %i.ar, align 8, !tbaa !16
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ai, i64 72
+  store ptr %3, ptr %i.as, align 8, !tbaa !16
   %i.at = getelementptr inbounds nuw i8, ptr %i.ai, i64 80
   store ptr @l_Lean_Elab_Tactic_Do_suggestInvariant___lam__1___closed__0_value, ptr %i.at, align 8, !tbaa !16
   %i.au = getelementptr inbounds nuw i8, ptr %i.ai, i64 88

@@ -205,7 +205,7 @@ bb.a:
   %26 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %27 = alloca %"class.entt::basic_flow", align 8 ; 9 uses
   %28 = alloca %"class.std::allocator.1", align 1 ; 4 uses
-  %29 = alloca %"class.entt::basic_flow", align 8 ; 17 uses
+  %29 = alloca %"class.entt::basic_flow", align 8 ; 15 uses
   %30 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
   %i.f = alloca i64, align 8                      ; 5 uses
   %i.g = alloca i32, align 4                      ; 5 uses
@@ -592,9 +592,9 @@ _ZN4entt15compressed_pairISt6vectorImSaImEESt8identityEaSEOS5_.exit.i: ; preds =
   %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 4 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %11, i64 88 ; 2 uses
   %i.dn = load ptr, ptr %i.dl, align 8, !tbaa !80 ; 5 uses
-  %i.do = getelementptr inbounds nuw i8, ptr %3, i64 96
+  %i.do = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !81 ; 2 uses
-  %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 3 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 2 uses
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !82
   %i.ds = load <2 x ptr>, ptr %i.dm, align 8, !tbaa !83
   store <2 x ptr> %i.ds, ptr %i.dl, align 8, !tbaa !83
@@ -997,14 +997,14 @@ bb.cq:                                            ; preds = %.noexc257
   store <2 x ptr> %i.mc, ptr %i.mb, align 8, !tbaa !61
   %i.md = getelementptr inbounds nuw i8, ptr %29, i64 80
   %i.me = load ptr, ptr %i.dd, align 8, !tbaa !60
-  store ptr %i.me, ptr %i.md, align 8, !tbaa !60
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.da, i8 0, i64 24, i1 false)
-  %42 = getelementptr inbounds nuw i8, ptr %29, i64 88
-  %i.mf = load <2 x ptr>, ptr %i.dl, align 8, !tbaa !83
-  store <2 x ptr> %i.mf, ptr %42, align 8, !tbaa !83
-  %43 = getelementptr inbounds nuw i8, ptr %29, i64 104
-  %44 = load ptr, ptr %i.dq, align 8, !tbaa !82
-  store ptr %44, ptr %43, align 8, !tbaa !82
+  %42 = load ptr, ptr %i.dl, align 8, !tbaa !80
+  %i.mf = load <2 x ptr>, ptr %i.do, align 8, !tbaa !83
+  %43 = insertelement <4 x ptr> poison, ptr %i.me, i64 0
+  %44 = insertelement <4 x ptr> %43, ptr %42, i64 1
+  %45 = shufflevector <2 x ptr> %i.mf, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %46 = shufflevector <4 x ptr> %44, <4 x ptr> %45, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %46, ptr %i.md, align 8, !tbaa !105
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dl, i8 0, i64 24, i1 false)
   %i.mg = getelementptr inbounds nuw i8, ptr %29, i64 112
   %i.mh = load float, ptr %i.ei, align 8, !tbaa !95
@@ -1407,20 +1407,22 @@ bb.f:                                             ; preds = %bb.c
   store <2 x ptr> %i.cf, ptr %i.cd, align 8, !tbaa !61
   %i.cg = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 4 uses
-  %28 = load ptr, ptr %i.ch, align 8, !tbaa !60
-  store ptr %28, ptr %i.cg, align 8, !tbaa !60
+  %28 = getelementptr inbounds nuw i8, ptr %4, i64 88 ; 2 uses
+  %29 = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 6 uses
+  %30 = getelementptr inbounds nuw i8, ptr %4, i64 96
+  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %4, i64 104 ; 2 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 3 uses
+  %31 = load ptr, ptr %i.ch, align 8, !tbaa !60
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.ce, i8 0, i64 24, i1 false)
-  %i.ci = getelementptr inbounds nuw i8, ptr %4, i64 88 ; 3 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 6 uses
-  %i.ck = getelementptr inbounds nuw i8, ptr %4, i64 96
-  %29 = getelementptr inbounds nuw i8, ptr %3, i64 96
-  %i.cl = load <2 x ptr>, ptr %i.cj, align 8, !tbaa !83
-  store <2 x ptr> %i.cl, ptr %i.ci, align 8, !tbaa !83
-  %30 = getelementptr inbounds nuw i8, ptr %4, i64 104 ; 3 uses
-  %31 = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 4 uses
-  %32 = load ptr, ptr %31, align 8, !tbaa !82
-  store ptr %32, ptr %30, align 8, !tbaa !82
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cj, i8 0, i64 24, i1 false)
+  %32 = load ptr, ptr %29, align 8, !tbaa !80
+  %i.cl = load <2 x ptr>, ptr %i.ci, align 8, !tbaa !83
+  %33 = insertelement <4 x ptr> poison, ptr %31, i64 0
+  %34 = insertelement <4 x ptr> %33, ptr %32, i64 1
+  %35 = shufflevector <2 x ptr> %i.cl, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %36 = shufflevector <4 x ptr> %34, <4 x ptr> %35, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %36, ptr %i.cg, align 8, !tbaa !105
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %29, i8 0, i64 24, i1 false)
   %i.cm = getelementptr inbounds nuw i8, ptr %4, i64 112 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %3, i64 112 ; 3 uses
   %i.co = load float, ptr %i.cn, align 8, !tbaa !95
@@ -1823,14 +1825,14 @@ bb.bu:                                            ; preds = %_ZN4entt10basic_flo
 
 _ZN4entt15compressed_pairISt6vectorImSaImEESt8identityEaSEOS5_.exit.i: ; preds = %bb.bu, %_ZN4entt10basic_flowISaIjEEaSEOS2_.exit
   %i.jf = getelementptr inbounds nuw i8, ptr %17, i64 88 ; 2 uses
-  %i.jg = load ptr, ptr %i.cj, align 8, !tbaa !80 ; 5 uses
-  %i.jh = load ptr, ptr %29, align 8, !tbaa !81   ; 2 uses
-  %i.ji = load ptr, ptr %31, align 8, !tbaa !82
+  %i.jg = load ptr, ptr %29, align 8, !tbaa !80   ; 5 uses
+  %i.jh = load ptr, ptr %i.ci, align 8, !tbaa !81 ; 2 uses
+  %i.ji = load ptr, ptr %i.ck, align 8, !tbaa !82
   %i.jj = load <2 x ptr>, ptr %i.jf, align 8, !tbaa !83
-  store <2 x ptr> %i.jj, ptr %i.cj, align 8, !tbaa !83
+  store <2 x ptr> %i.jj, ptr %29, align 8, !tbaa !83
   %i.jk = getelementptr inbounds nuw i8, ptr %17, i64 104
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !82
-  store ptr %i.jl, ptr %31, align 8, !tbaa !82
+  store ptr %i.jl, ptr %i.ck, align 8, !tbaa !82
   %.not4.i.i.i.i.i.i.i.i = icmp eq ptr %i.jg, %i.jh
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.jf, i8 0, i64 24, i1 false)
   br i1 %.not4.i.i.i.i.i.i.i.i, label %_ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt6vectorISt4pairImbESaIS5_EEEES8_EvT_SA_RSaIT0_E.exit.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
@@ -1979,15 +1981,15 @@ bb.cb:                                            ; preds = %_ZN4entt10basic_flo
   br label %_ZN4entt15compressed_pairISt6vectorImSaImEESt8identityEaSEOS5_.exit.i261
 
 _ZN4entt15compressed_pairISt6vectorImSaImEESt8identityEaSEOS5_.exit.i261: ; preds = %bb.cb, %_ZN4entt10basic_flowISaIjEEaSEOS2_.exit200
-  %i.ma = load ptr, ptr %i.ci, align 8, !tbaa !80 ; 5 uses
-  %i.mb = load ptr, ptr %i.ck, align 8, !tbaa !81 ; 2 uses
-  %i.mc = load ptr, ptr %30, align 8, !tbaa !82
-  %i.md = load <2 x ptr>, ptr %i.cj, align 8, !tbaa !83
-  store <2 x ptr> %i.md, ptr %i.ci, align 8, !tbaa !83
-  %i.me = load ptr, ptr %31, align 8, !tbaa !82
-  store ptr %i.me, ptr %30, align 8, !tbaa !82
+  %i.ma = load ptr, ptr %28, align 8, !tbaa !80   ; 5 uses
+  %i.mb = load ptr, ptr %30, align 8, !tbaa !81   ; 2 uses
+  %i.mc = load ptr, ptr %i.cj, align 8, !tbaa !82
+  %i.md = load <2 x ptr>, ptr %29, align 8, !tbaa !83
+  store <2 x ptr> %i.md, ptr %28, align 8, !tbaa !83
+  %i.me = load ptr, ptr %i.ck, align 8, !tbaa !82
+  store ptr %i.me, ptr %i.cj, align 8, !tbaa !82
   %.not4.i.i.i.i.i.i.i.i262 = icmp eq ptr %i.ma, %i.mb
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cj, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %29, i8 0, i64 24, i1 false)
   br i1 %.not4.i.i.i.i.i.i.i.i262, label %_ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt6vectorISt4pairImbESaIS5_EEEES8_EvT_SA_RSaIT0_E.exit.i.i.i.i.i.i268, label %.lr.ph.i.i.i.i.i.i.i.i263
 
 .lr.ph.i.i.i.i.i.i.i.i263:                        ; preds = %_ZN4entt15compressed_pairISt6vectorImSaImEESt8identityEaSEOS5_.exit.i261, %_ZSt8_DestroyIN4entt8internal14dense_map_nodeIjSt6vectorISt4pairImbESaIS5_EEEEEvPT_.exit.i.i.i.i.i.i.i.i266

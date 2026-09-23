@@ -204,7 +204,7 @@ bb.a:
   %36 = alloca [1 x %"class.std::__cxx11::basic_string"], align 8 ; 9 uses
   %37 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %38 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %39 = alloca %"struct.(anonymous namespace)::CompileData", align 8 ; 31 uses
+  %39 = alloca %"struct.(anonymous namespace)::CompileData", align 8 ; 32 uses
   %40 = alloca %"struct.(anonymous namespace)::Target::CompileGroup", align 8 ; 7 uses
   %41 = alloca %"class.Json::Value", align 8      ; 7 uses
   %42 = alloca %"class.Json::Value", align 8      ; 7 uses
@@ -607,19 +607,20 @@ bb.aia:                                           ; preds = %.noexc425
   %i.cwp = getelementptr inbounds nuw i8, ptr %1, i64 648 ; 10 uses
   %i.cwq = getelementptr inbounds nuw i8, ptr %1, i64 688 ; 4 uses
   %i.cwr = getelementptr inbounds nuw i8, ptr %1, i64 696 ; 5 uses
-  %i.cws = getelementptr inbounds nuw i8, ptr %39, i64 16 ; 5 uses
-  %.phi.trans.insert.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %39, i64 8 ; 3 uses
-  %i.cwt = getelementptr inbounds nuw i8, ptr %39, i64 32 ; 2 uses
-  %i.cwu = getelementptr inbounds nuw i8, ptr %39, i64 48 ; 5 uses
-  %.phi.trans.insert1.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %39, i64 40 ; 3 uses
-  %i.cwv = getelementptr inbounds nuw i8, ptr %39, i64 64 ; 2 uses
-  %i.cww = getelementptr inbounds nuw i8, ptr %39, i64 80 ; 5 uses
-  %.phi.trans.insert3.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %39, i64 72 ; 3 uses
-  %i.cwx = getelementptr inbounds nuw i8, ptr %39, i64 96 ; 2 uses
-  %i.cwy = getelementptr inbounds nuw i8, ptr %39, i64 112
-  %i.cwz = getelementptr inbounds nuw i8, ptr %39, i64 120 ; 2 uses
-  %i.cxa = getelementptr inbounds nuw i8, ptr %39, i64 136
-  %i.cxb = getelementptr inbounds nuw i8, ptr %39, i64 144 ; 2 uses
+  %218 = getelementptr inbounds nuw i8, ptr %39, i64 16 ; 5 uses
+  %i.cws = getelementptr inbounds nuw i8, ptr %39, i64 8 ; 3 uses
+  %.phi.trans.insert.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %39, i64 32 ; 2 uses
+  %i.cwt = getelementptr inbounds nuw i8, ptr %39, i64 48 ; 5 uses
+  %i.cwu = getelementptr inbounds nuw i8, ptr %39, i64 40 ; 3 uses
+  %.phi.trans.insert1.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %39, i64 64 ; 2 uses
+  %i.cwv = getelementptr inbounds nuw i8, ptr %39, i64 80 ; 5 uses
+  %i.cww = getelementptr inbounds nuw i8, ptr %39, i64 72 ; 3 uses
+  %.phi.trans.insert3.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %39, i64 96 ; 2 uses
+  %i.cwx = getelementptr inbounds nuw i8, ptr %39, i64 112
+  %i.cwy = getelementptr inbounds nuw i8, ptr %39, i64 120 ; 2 uses
+  %i.cwz = getelementptr inbounds nuw i8, ptr %39, i64 128
+  %i.cxa = getelementptr inbounds nuw i8, ptr %39, i64 144 ; 2 uses
+  %i.cxb = getelementptr inbounds nuw i8, ptr %39, i64 152
   %i.cxc = getelementptr inbounds nuw i8, ptr %39, i64 160
   %i.cxd = getelementptr inbounds nuw i8, ptr %39, i64 168 ; 2 uses
   %i.cxe = getelementptr inbounds nuw i8, ptr %39, i64 184
@@ -1022,7 +1023,7 @@ bb.alp:                                           ; preds = %_ZNKSt8__detail15_H
   %i.dcw = sdiv exact i64 %i.dcv, 48
   %i.dcx = trunc i64 %i.dcw to i32
   %i.dcy = invoke noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #29
-          to label %.noexc.i85.i.i unwind label %bb.amx ; 32 uses
+          to label %.noexc.i85.i.i unwind label %bb.amx ; 31 uses
 
 .noexc.i85.i.i:                                   ; preds = %.loopexit.i.i.i400
   store ptr null, ptr %i.dcy, align 8, !tbaa !235
@@ -1030,110 +1031,113 @@ bb.alp:                                           ; preds = %_ZNKSt8__detail15_H
   %i.dda = getelementptr inbounds nuw i8, ptr %i.dcy, i64 24 ; 3 uses
   store ptr %i.dda, ptr %i.dcz, align 8, !tbaa !125
   %i.ddb = load ptr, ptr %39, align 8, !tbaa !102, !noalias !1050 ; 2 uses
-  %i.ddc = icmp eq ptr %i.ddb, %i.cws
+  %i.ddc = icmp eq ptr %i.ddb, %218
   br i1 %i.ddc, label %bb.alq, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i
 
 bb.alq:                                           ; preds = %.noexc.i85.i.i
-  %i.ddd = load i64, ptr %.phi.trans.insert.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050 ; 3 uses
+  %i.ddd = load i64, ptr %i.cws, align 8, !tbaa !126, !noalias !1050 ; 3 uses
   %i.dde = icmp ult i64 %i.ddd, 16
   call void @llvm.assume(i1 %i.dde)
   %i.ddf = add nuw nsw i64 %i.ddd, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dda, ptr noundef nonnull align 8 dereferenceable(1) %i.cws, i64 %i.ddf, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dda, ptr noundef nonnull align 8 dereferenceable(1) %218, i64 %i.ddf, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i.i.i.i.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.noexc.i85.i.i
   store ptr %i.ddb, ptr %i.dcz, align 8, !tbaa !102
-  %i.ddg = load i64, ptr %i.cws, align 8, !tbaa !103, !noalias !1050
+  %i.ddg = load i64, ptr %218, align 8, !tbaa !103, !noalias !1050
   store i64 %i.ddg, ptr %i.dda, align 8, !tbaa !103
-  %.pre.i.i.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050
+  %.pre.i.i.i.i.i.i.i.i = load i64, ptr %i.cws, align 8, !tbaa !126, !noalias !1050
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i.i.i.i.i.i.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i, %bb.alq
   %i.ddh = phi i64 [ %.pre.i.i.i.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ddd, %bb.alq ]
   %i.ddi = getelementptr inbounds nuw i8, ptr %i.dcy, i64 16
   store i64 %i.ddh, ptr %i.ddi, align 8, !tbaa !126
-  store ptr %i.cws, ptr %39, align 8, !tbaa !102, !noalias !1050
-  store i64 0, ptr %.phi.trans.insert.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050
-  store i8 0, ptr %i.cws, align 8, !tbaa !103, !noalias !1050
+  store ptr %218, ptr %39, align 8, !tbaa !102, !noalias !1050
+  store i64 0, ptr %i.cws, align 8, !tbaa !126, !noalias !1050
+  store i8 0, ptr %218, align 8, !tbaa !103, !noalias !1050
   %i.ddj = getelementptr inbounds nuw i8, ptr %i.dcy, i64 40 ; 2 uses
   %i.ddk = getelementptr inbounds nuw i8, ptr %i.dcy, i64 56 ; 3 uses
   store ptr %i.ddk, ptr %i.ddj, align 8, !tbaa !125
-  %i.ddl = load ptr, ptr %i.cwt, align 8, !tbaa !102, !noalias !1050 ; 2 uses
-  %i.ddm = icmp eq ptr %i.ddl, %i.cwu
+  %i.ddl = load ptr, ptr %.phi.trans.insert.i.i.i.i.i.i.i.i, align 8, !tbaa !102, !noalias !1050 ; 2 uses
+  %i.ddm = icmp eq ptr %i.ddl, %i.cwt
   br i1 %i.ddm, label %bb.alr, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i9.i.i.i.i.i.i.i.i.i.i
 
 bb.alr:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i.i.i.i.i.i.i.i.i
-  %i.ddn = load i64, ptr %.phi.trans.insert1.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050 ; 3 uses
+  %i.ddn = load i64, ptr %i.cwu, align 8, !tbaa !126, !noalias !1050 ; 3 uses
   %i.ddo = icmp ult i64 %i.ddn, 16
   call void @llvm.assume(i1 %i.ddo)
   %i.ddp = add nuw nsw i64 %i.ddn, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ddk, ptr noundef nonnull align 8 dereferenceable(1) %i.cwu, i64 %i.ddp, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ddk, ptr noundef nonnull align 8 dereferenceable(1) %i.cwt, i64 %i.ddp, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit10.i.i.i.i.i.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i9.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i.i.i.i.i.i.i.i.i
   store ptr %i.ddl, ptr %i.ddj, align 8, !tbaa !102
-  %i.ddq = load i64, ptr %i.cwu, align 8, !tbaa !103, !noalias !1050
+  %i.ddq = load i64, ptr %i.cwt, align 8, !tbaa !103, !noalias !1050
   store i64 %i.ddq, ptr %i.ddk, align 8, !tbaa !103
-  %.pre2.i.i.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert1.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050
+  %.pre2.i.i.i.i.i.i.i.i = load i64, ptr %i.cwu, align 8, !tbaa !126, !noalias !1050
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit10.i.i.i.i.i.i.i.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit10.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i9.i.i.i.i.i.i.i.i.i.i, %bb.alr
   %i.ddr = phi i64 [ %.pre2.i.i.i.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i9.i.i.i.i.i.i.i.i.i.i ], [ %i.ddn, %bb.alr ]
   %i.dds = getelementptr inbounds nuw i8, ptr %i.dcy, i64 48
   store i64 %i.ddr, ptr %i.dds, align 8, !tbaa !126
-  store ptr %i.cwu, ptr %i.cwt, align 8, !tbaa !102, !noalias !1050
-  store i64 0, ptr %.phi.trans.insert1.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050
-  store i8 0, ptr %i.cwu, align 8, !tbaa !103, !noalias !1050
+  store ptr %i.cwt, ptr %.phi.trans.insert.i.i.i.i.i.i.i.i, align 8, !tbaa !102, !noalias !1050
+  store i64 0, ptr %i.cwu, align 8, !tbaa !126, !noalias !1050
+  store i8 0, ptr %i.cwt, align 8, !tbaa !103, !noalias !1050
   %i.ddt = getelementptr inbounds nuw i8, ptr %i.dcy, i64 72 ; 2 uses
   %i.ddu = getelementptr inbounds nuw i8, ptr %i.dcy, i64 88 ; 3 uses
   store ptr %i.ddu, ptr %i.ddt, align 8, !tbaa !125
-  %i.ddv = load ptr, ptr %i.cwv, align 8, !tbaa !102, !noalias !1050 ; 2 uses
-  %i.ddw = icmp eq ptr %i.ddv, %i.cww
+  %i.ddv = load ptr, ptr %.phi.trans.insert1.i.i.i.i.i.i.i.i, align 8, !tbaa !102, !noalias !1050 ; 2 uses
+  %i.ddw = icmp eq ptr %i.ddv, %i.cwv
   br i1 %i.ddw, label %bb.als, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i
 
 bb.als:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit10.i.i.i.i.i.i.i.i.i.i
-  %i.ddx = load i64, ptr %.phi.trans.insert3.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050 ; 3 uses
+  %i.ddx = load i64, ptr %i.cww, align 8, !tbaa !126, !noalias !1050 ; 3 uses
   %i.ddy = icmp ult i64 %i.ddx, 16
   call void @llvm.assume(i1 %i.ddy)
   %i.ddz = add nuw nsw i64 %i.ddx, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ddu, ptr noundef nonnull align 8 dereferenceable(1) %i.cww, i64 %i.ddz, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ddu, ptr noundef nonnull align 8 dereferenceable(1) %i.cwv, i64 %i.ddz, i1 false)
   br label %_ZNSt10_HashtableIN12_GLOBAL__N_111CompileDataESt4pairIKS1_jESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ESt4hashIS1_ENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeC2IJS1_RjEEEPNS6_16_Hashtable_allocISaINS6_10_Hash_nodeIS4_Lb1EEEEEEDpOT_.exit.i.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit10.i.i.i.i.i.i.i.i.i.i
   store ptr %i.ddv, ptr %i.ddt, align 8, !tbaa !102
-  %i.dea = load i64, ptr %i.cww, align 8, !tbaa !103, !noalias !1050
+  %i.dea = load i64, ptr %i.cwv, align 8, !tbaa !103, !noalias !1050
   store i64 %i.dea, ptr %i.ddu, align 8, !tbaa !103
-  %.pre4.i.i.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert3.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050
+  %.pre4.i.i.i.i.i.i.i.i = load i64, ptr %i.cww, align 8, !tbaa !126, !noalias !1050
   br label %_ZNSt10_HashtableIN12_GLOBAL__N_111CompileDataESt4pairIKS1_jESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ESt4hashIS1_ENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeC2IJS1_RjEEEPNS6_16_Hashtable_allocISaINS6_10_Hash_nodeIS4_Lb1EEEEEEDpOT_.exit.i.i.i.i.i.i
 
 _ZNSt10_HashtableIN12_GLOBAL__N_111CompileDataESt4pairIKS1_jESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ESt4hashIS1_ENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeC2IJS1_RjEEEPNS6_16_Hashtable_allocISaINS6_10_Hash_nodeIS4_Lb1EEEEEEDpOT_.exit.i.i.i.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i, %bb.als
   %i.deb = phi i64 [ %i.ddx, %bb.als ], [ %.pre4.i.i.i.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i ]
   %i.dec = getelementptr inbounds nuw i8, ptr %i.dcy, i64 80
   store i64 %i.deb, ptr %i.dec, align 8, !tbaa !126
-  store ptr %i.cww, ptr %i.cwv, align 8, !tbaa !102, !noalias !1050
-  store i64 0, ptr %.phi.trans.insert3.i.i.i.i.i.i.i.i, align 8, !tbaa !126, !noalias !1050
-  store i8 0, ptr %i.cww, align 8, !tbaa !103, !noalias !1050
+  store ptr %i.cwv, ptr %.phi.trans.insert1.i.i.i.i.i.i.i.i, align 8, !tbaa !102, !noalias !1050
+  store i64 0, ptr %i.cww, align 8, !tbaa !126, !noalias !1050
+  store i8 0, ptr %i.cwv, align 8, !tbaa !103, !noalias !1050
   %i.ded = getelementptr inbounds nuw i8, ptr %i.dcy, i64 104
-  %i.dee = load <2 x ptr>, ptr %i.cwx, align 8, !tbaa !412, !noalias !1050
+  %i.dee = load <2 x ptr>, ptr %.phi.trans.insert3.i.i.i.i.i.i.i.i, align 8, !tbaa !412, !noalias !1050
   store <2 x ptr> %i.dee, ptr %i.ded, align 8, !tbaa !412
   %i.def = getelementptr inbounds nuw i8, ptr %i.dcy, i64 120
-  %i.deg = load ptr, ptr %i.cwy, align 8, !tbaa !1017, !noalias !1050
-  store ptr %i.deg, ptr %i.def, align 8, !tbaa !1017
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cwx, i8 0, i64 24, i1 false), !noalias !1050
-  %218 = getelementptr inbounds nuw i8, ptr %i.dcy, i64 128
-  %219 = load <2 x ptr>, ptr %i.cwz, align 8, !tbaa !440, !noalias !1050
-  store <2 x ptr> %219, ptr %218, align 8, !tbaa !440
-  %i.deh = getelementptr inbounds nuw i8, ptr %i.dcy, i64 144
-  %i.dei = load ptr, ptr %i.cxa, align 8, !tbaa !393, !noalias !1050
-  store ptr %i.dei, ptr %i.deh, align 8, !tbaa !393
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cwz, i8 0, i64 24, i1 false), !noalias !1050
-  %i.dej = getelementptr inbounds nuw i8, ptr %i.dcy, i64 152
-  %220 = load <2 x ptr>, ptr %i.cxb, align 8, !tbaa !440, !noalias !1050
-  store <2 x ptr> %220, ptr %i.dej, align 8, !tbaa !440
+  %219 = load ptr, ptr %i.cwx, align 8, !tbaa !1017, !noalias !1050
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.phi.trans.insert3.i.i.i.i.i.i.i.i, i8 0, i64 24, i1 false), !noalias !1050
+  %i.deg = load ptr, ptr %i.cwy, align 8, !tbaa !394, !noalias !1050
+  %220 = load <2 x ptr>, ptr %i.cwz, align 8, !tbaa !440, !noalias !1050
+  %221 = insertelement <4 x ptr> poison, ptr %219, i64 0
+  %222 = insertelement <4 x ptr> %221, ptr %i.deg, i64 1
+  %223 = shufflevector <2 x ptr> %220, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %224 = shufflevector <4 x ptr> %222, <4 x ptr> %223, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %224, ptr %i.def, align 8, !tbaa !378
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cwy, i8 0, i64 24, i1 false), !noalias !1050
+  %i.deh = getelementptr inbounds nuw i8, ptr %i.dcy, i64 152
+  %i.dei = load ptr, ptr %i.cxa, align 8, !tbaa !394, !noalias !1050
+  store ptr %i.dei, ptr %i.deh, align 8, !tbaa !394
+  %i.dej = getelementptr inbounds nuw i8, ptr %i.dcy, i64 160
+  %225 = load ptr, ptr %i.cxb, align 8, !tbaa !392, !noalias !1050
+  store ptr %225, ptr %i.dej, align 8, !tbaa !392
   %i.dek = getelementptr inbounds nuw i8, ptr %i.dcy, i64 168
   %i.del = load ptr, ptr %i.cxc, align 8, !tbaa !393, !noalias !1050
   store ptr %i.del, ptr %i.dek, align 8, !tbaa !393
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cxb, i8 0, i64 24, i1 false), !noalias !1050
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cxa, i8 0, i64 24, i1 false), !noalias !1050
   %i.dem = getelementptr inbounds nuw i8, ptr %i.dcy, i64 176
   %i.den = load <2 x ptr>, ptr %i.cxd, align 8, !tbaa !440, !noalias !1050
   store <2 x ptr> %i.den, ptr %i.dem, align 8, !tbaa !440

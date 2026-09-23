@@ -103,30 +103,38 @@ bb.e:                                             ; preds = %.loopexit208
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.av, ptr align 1 %.1100, i64 %i.at, i1 false)
   %i.aw = getelementptr inbounds i8, ptr %i.av, i64 %i.at
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 20 ; 5 uses
-  %i.ay = tail call ptr @timelib_time_ctor() #9   ; 9 uses
-  store <6 x i64> splat (i64 -9999999), ptr %i.ay, align 8, !tbaa !38
+  %i.ay = tail call ptr @timelib_time_ctor() #9   ; 11 uses
+  store <4 x i64> splat (i64 -9999999), ptr %i.ay, align 8, !tbaa !38
+  %7 = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
+  store i64 -9999999, ptr %7, align 8, !tbaa !43
+  %8 = getelementptr inbounds nuw i8, ptr %i.ay, i64 40
+  store i64 -9999999, ptr %8, align 8, !tbaa !44
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 48
-  store i64 0, ptr %i.az, align 8, !tbaa !43
+  store i64 0, ptr %i.az, align 8, !tbaa !45
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 56
-  store i32 0, ptr %i.ba, align 8, !tbaa !44
+  store i32 0, ptr %i.ba, align 8, !tbaa !46
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ay, i64 80
-  store i32 0, ptr %i.bb, align 8, !tbaa !45
+  store i32 0, ptr %i.bb, align 8, !tbaa !47
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 228
-  store i32 0, ptr %i.bc, align 4, !tbaa !46
+  store i32 0, ptr %i.bc, align 4, !tbaa !48
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ay, i64 232
-  store i32 1, ptr %i.bd, align 8, !tbaa !47
-  %i.be = tail call ptr @timelib_time_ctor() #9   ; 9 uses
-  store <6 x i64> splat (i64 -9999999), ptr %i.be, align 8, !tbaa !38
+  store i32 1, ptr %i.bd, align 8, !tbaa !49
+  %i.be = tail call ptr @timelib_time_ctor() #9   ; 11 uses
+  store <4 x i64> splat (i64 -9999999), ptr %i.be, align 8, !tbaa !38
+  %9 = getelementptr inbounds nuw i8, ptr %i.be, i64 32
+  store i64 -9999999, ptr %9, align 8, !tbaa !43
+  %10 = getelementptr inbounds nuw i8, ptr %i.be, i64 40
+  store i64 -9999999, ptr %10, align 8, !tbaa !44
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 48
-  store i64 0, ptr %i.bf, align 8, !tbaa !43
+  store i64 0, ptr %i.bf, align 8, !tbaa !45
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 56
-  store i32 0, ptr %i.bg, align 8, !tbaa !44
+  store i32 0, ptr %i.bg, align 8, !tbaa !46
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 80
-  store i32 0, ptr %i.bh, align 8, !tbaa !45
+  store i32 0, ptr %i.bh, align 8, !tbaa !47
   %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 228
-  store i32 0, ptr %i.bi, align 4, !tbaa !46
+  store i32 0, ptr %i.bi, align 4, !tbaa !48
   %i.bj = getelementptr inbounds nuw i8, ptr %i.be, i64 232
-  store i32 1, ptr %i.bj, align 8, !tbaa !47
+  store i32 1, ptr %i.bj, align 8, !tbaa !49
   %i.bk = tail call ptr @timelib_rel_time_ctor() #9 ; 14 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 5 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 8 ; 2 uses
@@ -134,14 +142,14 @@ bb.e:                                             ; preds = %.loopexit208
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bk, i64 32 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 40 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bk, i64 56
-  store i32 0, ptr %i.bq, align 8, !tbaa !48
+  store i32 0, ptr %i.bq, align 8, !tbaa !50
   %i.br = getelementptr inbounds nuw i8, ptr %i.bk, i64 60
-  store i32 0, ptr %i.br, align 4, !tbaa !49
+  store i32 0, ptr %i.br, align 4, !tbaa !51
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bk, i64 64
-  store i32 0, ptr %i.bs, align 8, !tbaa !50
+  store i32 0, ptr %i.bs, align 8, !tbaa !52
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bk, i64 72
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bk, i8 0, i64 48, i1 false)
-  store i64 -9999999, ptr %i.bt, align 8, !tbaa !51
+  store i64 -9999999, ptr %i.bt, align 8, !tbaa !53
   %i.bu = ptrtoint ptr %i.ax to i64               ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store ptr null, ptr %i.a, align 8, !tbaa !18
@@ -356,28 +364,28 @@ bb.z:                                             ; preds = %bb.y
   ]
 
 bb.aa:                                            ; preds = %bb.z
-  store i64 %i.ey, ptr %i.bk, align 8, !tbaa !52
+  store i64 %i.ey, ptr %i.bk, align 8, !tbaa !54
   br label %bb.ai
 
 bb.ab:                                            ; preds = %bb.z
   %i.fb = mul i64 %i.ey, 7
-  %i.fc = load i64, ptr %i.bl, align 8, !tbaa !53
+  %i.fc = load i64, ptr %i.bl, align 8, !tbaa !55
   %i.fd = add i64 %i.fc, %i.fb
-  store i64 %i.fd, ptr %i.bl, align 8, !tbaa !53
+  store i64 %i.fd, ptr %i.bl, align 8, !tbaa !55
   br label %bb.ai
 
 bb.ac:                                            ; preds = %bb.z
-  %i.fe = load i64, ptr %i.bl, align 8, !tbaa !53
+  %i.fe = load i64, ptr %i.bl, align 8, !tbaa !55
   %i.ff = add i64 %i.fe, %i.ey
-  store i64 %i.ff, ptr %i.bl, align 8, !tbaa !53
+  store i64 %i.ff, ptr %i.bl, align 8, !tbaa !55
   br label %bb.ai
 
 bb.ad:                                            ; preds = %bb.z
-  store i64 %i.ey, ptr %i.bn, align 8, !tbaa !54
+  store i64 %i.ey, ptr %i.bn, align 8, !tbaa !56
   br label %bb.ai
 
 bb.ae:                                            ; preds = %bb.z
-  store i64 %i.ey, ptr %i.bp, align 8, !tbaa !55
+  store i64 %i.ey, ptr %i.bp, align 8, !tbaa !57
   br label %bb.ai
 
 bb.af:                                            ; preds = %bb.z
@@ -385,11 +393,11 @@ bb.af:                                            ; preds = %bb.z
   br i1 %.not566.i, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  store i64 %i.ey, ptr %i.bo, align 8, !tbaa !56
+  store i64 %i.ey, ptr %i.bo, align 8, !tbaa !58
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.af
-  store i64 %i.ey, ptr %i.bm, align 8, !tbaa !57
+  store i64 %i.ey, ptr %i.bm, align 8, !tbaa !59
   br label %bb.ai
 
 add_error.exit575.i:                              ; preds = %bb.z
@@ -792,22 +800,22 @@ bb.fm:                                            ; preds = %bb.fj
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.so, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.33.0, i64 %i.sp, i1 false)
   store ptr %i.so, ptr %i.a, align 8, !tbaa !18
   %i.sq = call fastcc i64 @timelib_get_nr(ptr noundef %i.a, i32 noundef 4)
-  store i64 %i.sq, ptr %.0.i, align 8, !tbaa !58
+  store i64 %i.sq, ptr %.0.i, align 8, !tbaa !60
   %i.sr = call fastcc i64 @timelib_get_nr(ptr noundef %i.a, i32 noundef 2)
   %i.ss = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
-  store i64 %i.sr, ptr %i.ss, align 8, !tbaa !59
+  store i64 %i.sr, ptr %i.ss, align 8, !tbaa !61
   %i.st = call fastcc i64 @timelib_get_nr(ptr noundef %i.a, i32 noundef 2)
   %i.su = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
-  store i64 %i.st, ptr %i.su, align 8, !tbaa !60
+  store i64 %i.st, ptr %i.su, align 8, !tbaa !62
   %i.sv = call fastcc i64 @timelib_get_nr(ptr noundef %i.a, i32 noundef 2)
   %i.sw = getelementptr inbounds nuw i8, ptr %.0.i, i64 24
-  store i64 %i.sv, ptr %i.sw, align 8, !tbaa !61
+  store i64 %i.sv, ptr %i.sw, align 8, !tbaa !63
   %i.sx = call fastcc i64 @timelib_get_nr(ptr noundef %i.a, i32 noundef 2)
   %i.sy = getelementptr inbounds nuw i8, ptr %.0.i, i64 32
-  store i64 %i.sx, ptr %i.sy, align 8, !tbaa !62
+  store i64 %i.sx, ptr %i.sy, align 8, !tbaa !43
   %i.sz = call fastcc i64 @timelib_get_nr(ptr noundef %i.a, i32 noundef 2)
   %i.ta = getelementptr inbounds nuw i8, ptr %.0.i, i64 40
-  store i64 %i.sz, ptr %i.ta, align 8, !tbaa !63
+  store i64 %i.sz, ptr %i.ta, align 8, !tbaa !44
   br label %scan.exit
 
 bb.fn:                                            ; preds = %bb.fk
@@ -843,32 +851,32 @@ bb.fr:                                            ; preds = %bb.fq
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.tn, ptr noundef nonnull align 1 dereferenceable(20) %.sroa.33.0, i64 20, i1 false)
   store ptr %i.tn, ptr %i.a, align 8, !tbaa !18
   %i.to = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 4)
-  store i64 %i.to, ptr %i.bk, align 8, !tbaa !52
+  store i64 %i.to, ptr %i.bk, align 8, !tbaa !54
   %i.tp = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.tq = getelementptr inbounds nuw i8, ptr %i.tp, i64 1
   store ptr %i.tq, ptr %i.a, align 8, !tbaa !18
   %i.tr = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 2)
-  store i64 %i.tr, ptr %i.bm, align 8, !tbaa !57
+  store i64 %i.tr, ptr %i.bm, align 8, !tbaa !59
   %i.ts = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.tt = getelementptr inbounds nuw i8, ptr %i.ts, i64 1
   store ptr %i.tt, ptr %i.a, align 8, !tbaa !18
   %i.tu = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 2)
-  store i64 %i.tu, ptr %i.bl, align 8, !tbaa !53
+  store i64 %i.tu, ptr %i.bl, align 8, !tbaa !55
   %i.tv = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.tw = getelementptr inbounds nuw i8, ptr %i.tv, i64 1
   store ptr %i.tw, ptr %i.a, align 8, !tbaa !18
   %i.tx = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 2)
-  store i64 %i.tx, ptr %i.bn, align 8, !tbaa !54
+  store i64 %i.tx, ptr %i.bn, align 8, !tbaa !56
   %i.ty = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.tz = getelementptr inbounds nuw i8, ptr %i.ty, i64 1
   store ptr %i.tz, ptr %i.a, align 8, !tbaa !18
   %i.ua = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 2)
-  store i64 %i.ua, ptr %i.bo, align 8, !tbaa !56
+  store i64 %i.ua, ptr %i.bo, align 8, !tbaa !58
   %i.ub = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.uc = getelementptr inbounds nuw i8, ptr %i.ub, i64 1
   store ptr %i.uc, ptr %i.a, align 8, !tbaa !18
   %i.ud = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 2)
-  store i64 %i.ud, ptr %i.bp, align 8, !tbaa !55
+  store i64 %i.ud, ptr %i.bp, align 8, !tbaa !57
   br label %scan.exit
 
 bb.fs:                                            ; preds = %bb.r, %.thread.i112, %bb.p
@@ -1230,27 +1238,27 @@ attributes #13 = { nounwind allocsize(0,1) }
 !40 = !{!"", !11, i64 0, !37, i64 8}
 !41 = !{!"_timelib_rel_time", !37, i64 0, !37, i64 8, !37, i64 16, !37, i64 24, !37, i64 32, !37, i64 40, !37, i64 48, !11, i64 56, !11, i64 60, !11, i64 64, !11, i64 68, !37, i64 72, !40, i64 80, !11, i64 96, !11, i64 100}
 !42 = !{!"_timelib_time", !37, i64 0, !37, i64 8, !37, i64 16, !37, i64 24, !37, i64 32, !37, i64 40, !37, i64 48, !11, i64 56, !17, i64 64, !39, i64 72, !11, i64 80, !41, i64 88, !37, i64 192, !11, i64 200, !11, i64 204, !11, i64 208, !11, i64 212, !11, i64 216, !11, i64 220, !11, i64 224, !11, i64 228, !11, i64 232}
-!43 = !{!42, !37, i64 48}
-!44 = !{!42, !11, i64 56}
-!45 = !{!42, !11, i64 80}
-!46 = !{!42, !11, i64 228}
-!47 = !{!42, !11, i64 232}
-!48 = !{!41, !11, i64 56}
-!49 = !{!41, !11, i64 60}
-!50 = !{!41, !11, i64 64}
-!51 = !{!41, !37, i64 72}
-!52 = !{!41, !37, i64 0}
-!53 = !{!41, !37, i64 16}
-!54 = !{!41, !37, i64 24}
-!55 = !{!41, !37, i64 40}
-!56 = !{!41, !37, i64 32}
-!57 = !{!41, !37, i64 8}
-!58 = !{!42, !37, i64 0}
-!59 = !{!42, !37, i64 8}
-!60 = !{!42, !37, i64 16}
-!61 = !{!42, !37, i64 24}
-!62 = !{!42, !37, i64 32}
-!63 = !{!42, !37, i64 40}
+!43 = !{!42, !37, i64 32}
+!44 = !{!42, !37, i64 40}
+!45 = !{!42, !37, i64 48}
+!46 = !{!42, !11, i64 56}
+!47 = !{!42, !11, i64 80}
+!48 = !{!42, !11, i64 228}
+!49 = !{!42, !11, i64 232}
+!50 = !{!41, !11, i64 56}
+!51 = !{!41, !11, i64 60}
+!52 = !{!41, !11, i64 64}
+!53 = !{!41, !37, i64 72}
+!54 = !{!41, !37, i64 0}
+!55 = !{!41, !37, i64 16}
+!56 = !{!41, !37, i64 24}
+!57 = !{!41, !37, i64 40}
+!58 = !{!41, !37, i64 32}
+!59 = !{!41, !37, i64 8}
+!60 = !{!42, !37, i64 0}
+!61 = !{!42, !37, i64 8}
+!62 = !{!42, !37, i64 16}
+!63 = !{!42, !37, i64 24}
 !64 = !{!"p1 _ZTS13_timelib_time", !14, i64 0}
 !65 = !{!64, !64, i64 0}
 !66 = !{!"p1 _ZTS17_timelib_rel_time", !14, i64 0}

@@ -204,7 +204,7 @@ _ZNKSt6vectorIN2cv8haar_cvt14HaarClassifierESaIS2_EE12_M_check_lenEmPKc.exit: ; 
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN2cv8haar_cvt14HaarClassifierESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorIN2cv8haar_cvt14HaarClassifierESaIS2_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i
-  %.012.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorIN2cv8haar_cvt14HaarClassifierESaIS2_EE12_M_check_lenEmPKc.exit ] ; 5 uses
+  %.012.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorIN2cv8haar_cvt14HaarClassifierESaIS2_EE12_M_check_lenEmPKc.exit ] ; 3 uses
   %.0911.i.i.i = phi ptr [ %i.ab, %.lr.ph.i.i.i ], [ %i.c, %_ZNKSt6vectorIN2cv8haar_cvt14HaarClassifierESaIS2_EE12_M_check_lenEmPKc.exit ] ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !103)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !104)
@@ -212,18 +212,18 @@ _ZNKSt6vectorIN2cv8haar_cvt14HaarClassifierESaIS2_EE12_M_check_lenEmPKc.exit: ; 
   store <2 x ptr> %i.x, ptr %.012.i.i.i, align 8, !tbaa !105, !alias.scope !103, !noalias !104
   %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 16
   %i.z = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 16
-  %2 = load ptr, ptr %i.z, align 8, !tbaa !26, !alias.scope !104, !noalias !103
-  store ptr %2, ptr %i.y, align 8, !tbaa !26, !alias.scope !103, !noalias !104
+  %2 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 32
+  %4 = load ptr, ptr %i.z, align 8, !tbaa !26, !alias.scope !104, !noalias !103
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.0911.i.i.i, i8 0, i64 24, i1 false), !alias.scope !104, !noalias !103
-  %3 = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24
-  %4 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 2 uses
-  %i.aa = load <2 x ptr>, ptr %4, align 8, !tbaa !106, !alias.scope !104, !noalias !103
-  store <2 x ptr> %i.aa, ptr %3, align 8, !tbaa !106, !alias.scope !103, !noalias !104
-  %5 = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 40
-  %6 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 40
-  %7 = load ptr, ptr %6, align 8, !tbaa !22, !alias.scope !104, !noalias !103
-  store ptr %7, ptr %5, align 8, !tbaa !22, !alias.scope !103, !noalias !104
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false), !alias.scope !104, !noalias !103
+  %5 = load ptr, ptr %2, align 8, !tbaa !21, !alias.scope !104, !noalias !103
+  %i.aa = load <2 x ptr>, ptr %3, align 8, !tbaa !106, !alias.scope !104, !noalias !103
+  %6 = insertelement <4 x ptr> poison, ptr %4, i64 0
+  %7 = insertelement <4 x ptr> %6, ptr %5, i64 1
+  %8 = shufflevector <2 x ptr> %i.aa, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x ptr> %7, <4 x ptr> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %9, ptr %i.y, align 8, !tbaa !107, !alias.scope !103, !noalias !104
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !alias.scope !104, !noalias !103
   %i.ab = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 48 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 48
   %.not.i.i.i = icmp eq ptr %i.ab, %i.b
@@ -416,4 +416,5 @@ attributes #18 = { builtin nounwind }
 !104 = !{!101}
 !105 = !{!23, !23, i64 0}
 !106 = !{!19, !19, i64 0}
+!107 = !{!9, !9, i64 0}
 end_hunk_0

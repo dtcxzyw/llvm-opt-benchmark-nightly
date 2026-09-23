@@ -205,8 +205,8 @@ bb.a:
   br i1 %.not10, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.012 = phi ptr [ %i.bf, %.lr.ph ], [ %2, %bb.a ] ; 22 uses
-  %.0911 = phi ptr [ %i.be, %.lr.ph ], [ %0, %bb.a ] ; 22 uses
+  %.012 = phi ptr [ %i.bf, %.lr.ph ], [ %2, %bb.a ] ; 21 uses
+  %.0911 = phi ptr [ %i.be, %.lr.ph ], [ %0, %bb.a ] ; 23 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !890)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !891)
   %i.a = load i32, ptr %.0911, align 8, !alias.scope !891, !noalias !890
@@ -215,29 +215,33 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.0911, i64 8 ; 3 uses
   %i.d = load <2 x ptr>, ptr %i.c, align 8, !alias.scope !891, !noalias !890
   store <2 x ptr> %i.d, ptr %i.b, align 8, !alias.scope !890, !noalias !891
-  %i.e = getelementptr inbounds nuw i8, ptr %.012, i64 24
-  %i.f = getelementptr inbounds nuw i8, ptr %.0911, i64 24
-  %i.g = load ptr, ptr %i.f, align 8, !alias.scope !891, !noalias !890
-  store ptr %i.g, ptr %i.e, align 8, !alias.scope !890, !noalias !891
+  %4 = getelementptr inbounds nuw i8, ptr %.012, i64 24
+  %5 = getelementptr inbounds nuw i8, ptr %.0911, i64 24
+  %i.e = getelementptr inbounds nuw i8, ptr %.0911, i64 32 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %.0911, i64 40
+  %6 = load ptr, ptr %5, align 8, !alias.scope !891, !noalias !890
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.c, i8 0, i64 24, i1 false), !alias.scope !891, !noalias !890
-  %4 = getelementptr inbounds nuw i8, ptr %.012, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr %.0911, i64 32 ; 2 uses
-  %6 = load <2 x ptr>, ptr %5, align 8, !alias.scope !891, !noalias !890
-  store <2 x ptr> %6, ptr %4, align 8, !alias.scope !890, !noalias !891
-  %i.h = getelementptr inbounds nuw i8, ptr %.012, i64 48
-  %i.i = getelementptr inbounds nuw i8, ptr %.0911, i64 48
+  %i.g = load ptr, ptr %i.e, align 8, !alias.scope !891, !noalias !890
+  %7 = load <2 x ptr>, ptr %i.f, align 8, !alias.scope !891, !noalias !890
+  %8 = insertelement <4 x ptr> poison, ptr %6, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %i.g, i64 1
+  %10 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x ptr> %9, <4 x ptr> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %11, ptr %4, align 8, !alias.scope !890, !noalias !891
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false), !alias.scope !891, !noalias !890
+  %i.h = getelementptr inbounds nuw i8, ptr %.012, i64 56
+  %i.i = getelementptr inbounds nuw i8, ptr %.0911, i64 56 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !alias.scope !891, !noalias !890
   store ptr %i.j, ptr %i.h, align 8, !alias.scope !890, !noalias !891
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false), !alias.scope !891, !noalias !890
-  %i.k = getelementptr inbounds nuw i8, ptr %.012, i64 56
-  %i.l = getelementptr inbounds nuw i8, ptr %.0911, i64 56 ; 2 uses
-  %7 = load <2 x ptr>, ptr %i.l, align 8, !alias.scope !891, !noalias !890
-  store <2 x ptr> %7, ptr %i.k, align 8, !alias.scope !890, !noalias !891
+  %i.k = getelementptr inbounds nuw i8, ptr %.012, i64 64
+  %i.l = getelementptr inbounds nuw i8, ptr %.0911, i64 64
+  %12 = load ptr, ptr %i.l, align 8, !alias.scope !891, !noalias !890
+  store ptr %12, ptr %i.k, align 8, !alias.scope !890, !noalias !891
   %i.m = getelementptr inbounds nuw i8, ptr %.012, i64 72
   %i.n = getelementptr inbounds nuw i8, ptr %.0911, i64 72
   %i.o = load ptr, ptr %i.n, align 8, !alias.scope !891, !noalias !890
   store ptr %i.o, ptr %i.m, align 8, !alias.scope !890, !noalias !891
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false), !alias.scope !891, !noalias !890
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false), !alias.scope !891, !noalias !890
   %i.p = getelementptr inbounds nuw i8, ptr %.012, i64 80
   %i.q = getelementptr inbounds nuw i8, ptr %.0911, i64 80 ; 2 uses
   %i.r = load <2 x ptr>, ptr %i.q, align 8, !alias.scope !891, !noalias !890
@@ -640,7 +644,7 @@ _ZNKSt6vectorIN5glTF24Mesh9Primitive6TargetESaIS3_EE12_M_check_lenEmPKc.exit: ; 
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN5glTF24Mesh9Primitive6TargetESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorIN5glTF24Mesh9Primitive6TargetESaIS3_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i
-  %.012.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorIN5glTF24Mesh9Primitive6TargetESaIS3_EE12_M_check_lenEmPKc.exit ] ; 7 uses
+  %.012.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorIN5glTF24Mesh9Primitive6TargetESaIS3_EE12_M_check_lenEmPKc.exit ] ; 5 uses
   %.0911.i.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i ], [ %i.c, %_ZNKSt6vectorIN5glTF24Mesh9Primitive6TargetESaIS3_EE12_M_check_lenEmPKc.exit ] ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !988)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !989)
@@ -648,18 +652,18 @@ _ZNKSt6vectorIN5glTF24Mesh9Primitive6TargetESaIS3_EE12_M_check_lenEmPKc.exit: ; 
   store <2 x ptr> %i.x, ptr %.012.i.i.i, align 8, !alias.scope !988, !noalias !989
   %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 16
   %i.z = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 16
-  %2 = load ptr, ptr %i.z, align 8, !alias.scope !989, !noalias !988
-  store ptr %2, ptr %i.y, align 8, !alias.scope !988, !noalias !989
+  %2 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 32
+  %4 = load ptr, ptr %i.z, align 8, !alias.scope !989, !noalias !988
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.0911.i.i.i, i8 0, i64 24, i1 false), !alias.scope !989, !noalias !988
-  %3 = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24
-  %4 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 2 uses
-  %i.aa = load <2 x ptr>, ptr %4, align 8, !alias.scope !989, !noalias !988
-  store <2 x ptr> %i.aa, ptr %3, align 8, !alias.scope !988, !noalias !989
-  %5 = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 40
-  %6 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 40
-  %7 = load ptr, ptr %6, align 8, !alias.scope !989, !noalias !988
-  store ptr %7, ptr %5, align 8, !alias.scope !988, !noalias !989
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false), !alias.scope !989, !noalias !988
+  %5 = load ptr, ptr %2, align 8, !alias.scope !989, !noalias !988
+  %i.aa = load <2 x ptr>, ptr %3, align 8, !alias.scope !989, !noalias !988
+  %6 = insertelement <4 x ptr> poison, ptr %4, i64 0
+  %7 = insertelement <4 x ptr> %6, ptr %5, i64 1
+  %8 = shufflevector <2 x ptr> %i.aa, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x ptr> %7, <4 x ptr> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %9, ptr %i.y, align 8, !alias.scope !988, !noalias !989
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !alias.scope !989, !noalias !988
   %i.ab = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 48
   %i.ac = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 48 ; 2 uses
   %i.ad = load <2 x ptr>, ptr %i.ac, align 8, !alias.scope !989, !noalias !988
