@@ -205,7 +205,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.ck = load ptr, ptr %0, align 8, !tbaa !18
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.cm = call i32 @EVP_EncryptUpdate(ptr noundef %i.ck, ptr noundef nonnull %i.cl, ptr noundef nonnull %i.n, ptr noundef nonnull %i.l, i32 noundef 16) #6
-  %.not49.i = icmp eq i32 %i.cm, 0                ; 2 uses
+  %.not49.i = icmp eq i32 %i.cm, 0
+  %6 = zext i1 %.not49.i to i32                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(15) %5, ptr noundef nonnull align 8 dereferenceable(15) %i.cl, i64 15, i1 false)
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 151
@@ -339,26 +340,26 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.eg, label %iter.check, label %._crit_edge28.loopexit.i.i, !llvm.loop !27
 
 ._crit_edge28.loopexit.i.i:                       ; preds = %._crit_edge.i.i
-  %6 = icmp ne i32 %i.ee, 0
-  %7 = or i1 %.not49.i, %6
+  %7 = or i32 %i.ee, %6
   br label %aes_gcm_siv_ctr32.exit.i
 
 aes_gcm_siv_ctr32.exit.i:                         ; preds = %._crit_edge28.loopexit.i.i, %bb.t
-  %.0.lcssa.i.in.i = phi i1 [ %.not49.i, %bb.t ], [ %7, %._crit_edge28.loopexit.i.i ] ; 2 uses
+  %.0.lcssa.i.i = phi i32 [ %6, %bb.t ], [ %7, %._crit_edge28.loopexit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #6
-  %8 = xor i1 %.0.lcssa.i.in.i, true
-  %9 = zext i1 %8 to i32
+  %8 = xor i32 %.0.lcssa.i.i, 1                   ; 2 uses
+  %9 = trunc nuw nsw i32 %8 to i8
   %i.eh = load i8, ptr %i.ba, align 8
+  %10 = shl nuw nsw i8 %9, 2
   %i.ei = and i8 %i.eh, -13
-  %10 = select i1 %.0.lcssa.i.in.i, i8 8, i8 12
-  %i.ej = or disjoint i8 %i.ei, %10
+  %11 = or i8 %10, %i.ei
+  %i.ej = or i8 %11, 8
   store i8 %i.ej, ptr %i.ba, align 8
   br label %aes_gcm_siv_encrypt.exit
 
 aes_gcm_siv_encrypt.exit:                         ; preds = %bb.m, %aes_gcm_siv_ctr32.exit.i
-  %.041.i = phi i32 [ 0, %bb.m ], [ %9, %aes_gcm_siv_ctr32.exit.i ]
+  %.041.i = phi i32 [ 0, %bb.m ], [ %8, %aes_gcm_siv_ctr32.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #6
@@ -509,15 +510,10 @@ vec.epilog.middle.block89:                        ; preds = %vec.epilog.vector.b
   %i.gf = add i64 %.02024.i.i28, 16               ; 2 uses
   %i.gg = icmp ult i64 %i.gf, %3
   %indvars.iv.next.i.i35 = add i64 %indvars.iv.i.i26, -16
-  br i1 %i.gg, label %iter.check78, label %._crit_edge28.loopexit.i.i36, !llvm.loop !27
+  br i1 %i.gg, label %iter.check78, label %aes_gcm_siv_ctr32.exit.i37, !llvm.loop !27
 
-._crit_edge28.loopexit.i.i36:                     ; preds = %._crit_edge.i.i33
-  %11 = icmp ne i32 %i.ge, 0
-  %12 = zext i1 %11 to i32
-  br label %aes_gcm_siv_ctr32.exit.i37
-
-aes_gcm_siv_ctr32.exit.i37:                       ; preds = %._crit_edge28.loopexit.i.i36, %bb.v
-  %.0.lcssa.i.i.a = phi i32 [ 0, %bb.v ], [ %12, %._crit_edge28.loopexit.i.i36 ]
+aes_gcm_siv_ctr32.exit.i37:                       ; preds = %._crit_edge.i.i33, %bb.v
+  %.0.lcssa.i.i.a = phi i32 [ 0, %bb.v ], [ %i.ge, %._crit_edge.i.i33 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
@@ -596,7 +592,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.hs = load i8, ptr %i.ba, align 8
   %i.ht = shl nuw nsw i8 %i.hr, 2
   %i.hu = and i8 %i.hs, -21
-  %i.hv = or disjoint i8 %i.ht, %i.hu
+  %i.hv = or i8 %i.hu, %i.ht
   %i.hw = or i8 %i.hv, 16
   store i8 %i.hw, ptr %i.ba, align 8
   br label %aes_gcm_siv_decrypt.exit

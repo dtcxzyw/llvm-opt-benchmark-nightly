@@ -202,15 +202,14 @@ bb.d:                                             ; preds = %bb.c
 define dso_local ptr @node_state_flag_string(i32 noundef %0) #1 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = and i32 %0, -16                          ; 3 uses
+  %i.b = and i32 %0, -16                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store ptr null, ptr %i.a, align 8
   %.not.i13 = icmp eq i32 %i.b, 0
   br i1 %.not.i13, label %node_state_flag_string_single.exit.thread, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %bb.a, %bb.c
-  %1 = phi i32 [ %2, %bb.c ], [ %i.b, %bb.a ]     ; 2 uses
-  %.014 = phi i32 [ %.18, %bb.c ], [ %i.b, %bb.a ]
+  %.014 = phi i32 [ %.18, %bb.c ], [ %i.b, %bb.a ] ; 3 uses
   br label %.preheader.i
 
 bb.b:                                             ; preds = %.preheader.i
@@ -222,12 +221,12 @@ bb.b:                                             ; preds = %.preheader.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ 0, %.preheader.i.preheader ] ; 2 uses
   %i.c = getelementptr inbounds nuw [16 x i8], ptr @node_state_flags, i64 %indvars.iv.i ; 2 uses
   %i.d = load i32, ptr %i.c, align 16             ; 2 uses
-  %i.e = and i32 %i.d, %1
+  %i.e = and i32 %i.d, %.014
   %.not17.i = icmp eq i32 %i.e, 0
   br i1 %.not17.i, label %bb.b, label %node_state_flag_string_single.exit
 
 node_state_flag_string_single.exit.thread4:       ; preds = %bb.b
-  %i.f = add i32 %1, -1
+  %i.f = add i32 %.014, -1
   br label %bb.c
 
 node_state_flag_string_single.exit:               ; preds = %.preheader.i
@@ -241,8 +240,7 @@ bb.c:                                             ; preds = %node_state_flag_str
   %.pn = phi i32 [ %i.f, %node_state_flag_string_single.exit.thread4 ], [ %i.g, %node_state_flag_string_single.exit ]
   %.18 = and i32 %.pn, %.014                      ; 2 uses
   call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.232, ptr noundef nonnull %.1.i9) #23
-  %2 = and i32 %.18, -16                          ; 2 uses
-  %.not.i = icmp eq i32 %2, 0
+  %.not.i = icmp eq i32 %.18, 0
   br i1 %.not.i, label %node_state_flag_string_single.exit.thread.loopexit, label %.preheader.i.preheader, !llvm.loop !2
 
 node_state_flag_string_single.exit.thread.loopexit: ; preds = %bb.c
@@ -645,7 +643,7 @@ node_state_base_string.exit:                      ; preds = %bb.b, %bb.d
   %i.j = phi ptr [ %i.i, %bb.d ], [ @.str.12, %bb.b ]
   %i.k = tail call ptr @xstrdup(ptr noundef %i.j) #23 ; 3 uses
   store ptr %i.k, ptr %i.b, align 8
-  %i.l = and i32 %0, -16                          ; 3 uses
+  %i.l = and i32 %0, -16                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store ptr null, ptr %i.a, align 8
   %.not.i13.i = icmp eq i32 %i.l, 0
@@ -656,8 +654,7 @@ node_state_flag_string.exit.thread:               ; preds = %node_state_base_str
   br label %bb.h
 
 .preheader.i.preheader.i:                         ; preds = %node_state_base_string.exit, %bb.f
-  %1 = phi i32 [ %2, %bb.f ], [ %i.l, %node_state_base_string.exit ] ; 2 uses
-  %.014.i = phi i32 [ %.18.i, %bb.f ], [ %i.l, %node_state_base_string.exit ]
+  %.014.i = phi i32 [ %.18.i, %bb.f ], [ %i.l, %node_state_base_string.exit ] ; 3 uses
   br label %.preheader.i.i
 
 bb.e:                                             ; preds = %.preheader.i.i
@@ -669,12 +666,12 @@ bb.e:                                             ; preds = %.preheader.i.i
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.e ], [ 0, %.preheader.i.preheader.i ] ; 2 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr @node_state_flags, i64 %indvars.iv.i.i ; 2 uses
   %i.n = load i32, ptr %i.m, align 16             ; 2 uses
-  %i.o = and i32 %i.n, %1
+  %i.o = and i32 %i.n, %.014.i
   %.not17.i.i = icmp eq i32 %i.o, 0
   br i1 %.not17.i.i, label %bb.e, label %node_state_flag_string_single.exit.i
 
 node_state_flag_string_single.exit.thread4.i:     ; preds = %bb.e
-  %i.p = add i32 %1, -1
+  %i.p = add i32 %.014.i, -1
   br label %bb.f
 
 node_state_flag_string_single.exit.i:             ; preds = %.preheader.i.i
@@ -688,8 +685,7 @@ bb.f:                                             ; preds = %node_state_flag_str
   %.pn.i = phi i32 [ %i.p, %node_state_flag_string_single.exit.thread4.i ], [ %i.q, %node_state_flag_string_single.exit.i ]
   %.18.i = and i32 %.pn.i, %.014.i                ; 2 uses
   call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.232, ptr noundef nonnull %.1.i9.i) #23
-  %2 = and i32 %.18.i, -16                        ; 2 uses
-  %.not.i.i = icmp eq i32 %2, 0
+  %.not.i.i = icmp eq i32 %.18.i, 0
   br i1 %.not.i.i, label %node_state_flag_string.exit, label %.preheader.i.preheader.i, !llvm.loop !2
 
 node_state_flag_string.exit:                      ; preds = %bb.f
