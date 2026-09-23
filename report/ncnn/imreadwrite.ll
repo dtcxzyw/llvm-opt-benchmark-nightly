@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.aa, %bb.aa, %bb.
   %i.di = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
   %i.dj = add i32 %i.by, -40                      ; 2 uses
   %i.dk = tail call i32 @llvm.fshl.i32(i32 %i.dj, i32 %i.dj, i32 30)
-  switch i32 %i.dk, label %bb.ar [
+  switch i32 %i.dk, label %bb.an [
     i32 4, label %bb.ad
     i32 0, label %bb.ae
     i32 21, label %bb.ao
@@ -253,7 +253,7 @@ bb.aj:                                            ; preds = %bb.ag
   br label %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit
 
 bb.ak:                                            ; preds = %bb.af
-  br i1 %i.dc, label %bb.al, label %bb.an
+  br i1 %i.dc, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
   %i.ds = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0)
@@ -270,15 +270,19 @@ bb.al:                                            ; preds = %bb.ak
   %i.dz = icmp eq i32 %i.dx, %i.dy
   %i.ea = icmp eq i32 %i.dy, %i.du
   %or.cond = and i1 %i.dz, %i.ea
-  br i1 %or.cond, label %bb.am, label %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit
+  br i1 %or.cond, label %2, label %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit
 
-bb.am:                                            ; preds = %bb.al
+2:                                                ; preds = %bb.al
   store ptr @.str.36, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !22
   br label %.critedge
 
-bb.an:                                            ; preds = %bb.ak
+bb.am:                                            ; preds = %bb.ak
   store ptr @.str.36, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !22
   br label %.critedge
+
+bb.an:                                            ; preds = %bb.ac
+  store ptr @.str.36, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !22
+  br label %bb.ar
 
 bb.ao:                                            ; preds = %bb.ac, %bb.ac
   %i.eb = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0)
@@ -331,20 +335,20 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.ff = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
   %i.fg = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
   %i.fh = tail call fastcc noundef i32 @_ZL13stbi__get32leP13stbi__context(ptr noundef %0) ; 0 uses
-  br label %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit
+  br label %bb.ar
 
-bb.ar:                                            ; preds = %bb.ac
-  store ptr @.str.36, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !22
-  switch i32 %i.by, label %.critedge [
-    i32 124, label %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit
-    i32 108, label %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit
-  ]
-
-_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit: ; preds = %.thread, %bb.aj, %bb.ai, %bb.ah, %bb.aq, %bb.ar, %bb.ar, %bb.ae, %bb.al
+bb.ar:                                            ; preds = %.thread, %bb.an
+  %3 = add i32 %i.by, -108
+  %switch.and = and i32 %3, -17
+  %switch.selectcmp = icmp eq i32 %switch.and, 0
+  %4 = select i1 %switch.selectcmp, ptr inttoptr (i64 1 to ptr), ptr null
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.aq, %bb.w, %bb.y, %bb.ab, %bb.am, %bb.an, %bb.ar, %bb.u, %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit, %bb.t, %bb.p, %bb.n, %_ZL10stbi__get8P13stbi__context.exit.thread
-  %.3 = phi ptr [ null, %_ZL10stbi__get8P13stbi__context.exit.thread ], [ null, %bb.n ], [ null, %bb.p ], [ null, %bb.t ], [ inttoptr (i64 1 to ptr), %bb.u ], [ inttoptr (i64 1 to ptr), %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit ], [ null, %bb.ar ], [ null, %bb.an ], [ null, %bb.am ], [ null, %bb.ab ], [ null, %bb.y ], [ null, %bb.w ], [ null, %bb.aq ]
+_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit: ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.aq, %bb.ae, %bb.al
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.ar, %bb.aq, %bb.w, %bb.y, %bb.ab, %2, %bb.am, %bb.u, %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit, %bb.t, %bb.p, %bb.n, %_ZL10stbi__get8P13stbi__context.exit.thread
+  %.3 = phi ptr [ null, %_ZL10stbi__get8P13stbi__context.exit.thread ], [ null, %bb.n ], [ null, %bb.p ], [ null, %bb.t ], [ inttoptr (i64 1 to ptr), %bb.u ], [ inttoptr (i64 1 to ptr), %_ZL27stbi__bmp_set_mask_defaultsP14stbi__bmp_datai.exit ], [ null, %bb.aq ], [ null, %bb.am ], [ null, %2 ], [ null, %bb.ab ], [ null, %bb.y ], [ null, %bb.w ], [ %4, %bb.ar ]
   ret ptr %.3
 }
 
