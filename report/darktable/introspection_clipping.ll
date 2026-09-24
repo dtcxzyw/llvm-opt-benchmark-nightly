@@ -204,12 +204,13 @@ bb.c:                                             ; preds = %format_aspect.exit
 
 bb.d:                                             ; preds = %_iop_gui_alloc.exit, %format_aspect.exit
   %indvars.iv = phi i64 [ 0, %_iop_gui_alloc.exit ], [ %indvars.iv.next, %format_aspect.exit ] ; 2 uses
-  %i.er = call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #24 ; 3 uses
+  %i.er = call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #24 ; 4 uses
   %i.es = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   %i.et = load ptr, ptr %i.es, align 16, !tbaa !208 ; 2 uses
-  %i.eu = getelementptr inbounds nuw i8, ptr %i.es, i64 8 ; 2 uses
+  %i.eu = getelementptr inbounds nuw i8, ptr %i.es, i64 8
+  %2 = load i32, ptr %i.eu, align 8, !tbaa !205   ; 2 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %i.es, i64 12
-  %i.ew = load i32, ptr %i.ev, align 4, !tbaa !206 ; 2 uses
+  %i.ew = load i32, ptr %i.ev, align 4, !tbaa !206 ; 3 uses
   %i.ex = icmp eq i32 %i.ew, 0
   br i1 %i.ex, label %bb.e, label %bb.f
 
@@ -218,7 +219,6 @@ bb.e:                                             ; preds = %bb.d
   br label %format_aspect.exit
 
 bb.f:                                             ; preds = %bb.d
-  %2 = load i32, ptr %i.eu, align 8, !tbaa !205
   %i.ez = sitofp reassoc nsz arcp contract afn i32 %2 to float
   %i.fa = sitofp reassoc nsz arcp contract afn i32 %i.ew to float
   %i.fb = fdiv reassoc nsz arcp contract afn float %i.ez, %i.fa
@@ -230,8 +230,9 @@ format_aspect.exit:                               ; preds = %bb.e, %bb.f
   %.0.i = phi ptr [ %i.fd, %bb.f ], [ %i.ey, %bb.e ]
   store ptr %.0.i, ptr %i.er, align 8, !tbaa !208
   %i.fe = getelementptr inbounds nuw i8, ptr %i.er, i64 8
-  %3 = load <2 x i32>, ptr %i.eu, align 8, !tbaa !14
-  store <2 x i32> %3, ptr %i.fe, align 8, !tbaa !14
+  store i32 %2, ptr %i.fe, align 8, !tbaa !205
+  %3 = getelementptr inbounds nuw i8, ptr %i.er, i64 12
+  store i32 %i.ew, ptr %3, align 4, !tbaa !206
   %i.ff = load ptr, ptr %i.f, align 8, !tbaa !209
   %i.fg = call ptr @g_list_append(ptr noundef %i.ff, ptr noundef nonnull %i.er) #25
   store ptr %i.fg, ptr %i.f, align 8, !tbaa !209

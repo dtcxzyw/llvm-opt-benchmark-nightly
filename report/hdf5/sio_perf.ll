@@ -182,9 +182,9 @@ bb.a:
   tail call void @h5tools_init() #19
   %i.g = load ptr, ptr @stdout, align 8, !tbaa !11
   store ptr %i.g, ptr @output, align 8, !tbaa !11
-  %i.h = tail call noalias dereferenceable_or_null(1024) ptr @malloc(i64 noundef 1024) #20 ; 36 uses
+  %i.h = tail call noalias dereferenceable_or_null(1024) ptr @malloc(i64 noundef 1024) #20 ; 34 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 1008 ; 4 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 6 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
   store i32 1, ptr %i.j, align 8, !tbaa !42
@@ -263,6 +263,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge.i, %.lr.ph.i
+  %3 = phi i32 [ 1, %.lr.ph.i ], [ %6, %.critedge.i ] ; 24 uses
+  %4 = phi i64 [ 0, %.lr.ph.i ], [ %7, %.critedge.i ] ; 23 uses
   %i.bb = phi i32 [ %i.ar, %.lr.ph.i ], [ %i.jm, %.critedge.i ]
   %sext.i = shl i32 %i.bb, 24
   %i.bc = ashr exact i32 %sext.i, 24
@@ -307,6 +309,7 @@ bb.h:                                             ; preds = %bb.d
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.r, %bb.h
+  %5 = phi i64 [ %4, %bb.h ], [ %i.cc, %bb.r ]    ; 3 uses
   %.0244.i = phi ptr [ %i.bj, %bb.h ], [ %i.ce, %bb.r ] ; 3 uses
   %.not301.i = icmp eq ptr %.0244.i, null
   br i1 %.not301.i, label %.critedge.i, label %bb.j
@@ -322,9 +325,9 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.o, %bb.k
-  %i.bl = phi i8 [ %i.bk, %bb.k ], [ %.pre346.i, %bb.o ] ; 3 uses
+  %i.bl = phi i8 [ %i.bk, %bb.k ], [ %.pre346.i, %bb.o ] ; 4 uses
   %.1251.i = phi i32 [ 0, %bb.k ], [ %.2252.i, %bb.o ] ; 4 uses
-  %.1245.i = phi ptr [ %.0244.i, %bb.k ], [ %i.bx, %bb.o ] ; 3 uses
+  %.1245.i = phi ptr [ %.0244.i, %bb.k ], [ %i.bx, %bb.o ] ; 2 uses
   switch i8 %i.bl, label %bb.m [
     i8 0, label %.critedge2.i
     i8 44, label %.critedge2.i
@@ -373,11 +376,9 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p, %.critedge2.i
   %.sink391.i = phi i64 [ 4, %.critedge2.i ], [ 1, %bb.p ]
-  %3 = load i64, ptr %i.h, align 8, !tbaa !53
-  %i.cc = or i64 %3, %.sink391.i
+  %i.cc = or i64 %.sink391.i, %5                  ; 3 uses
   store i64 %i.cc, ptr %i.h, align 8, !tbaa !53
-  %4 = load i8, ptr %.1245.i, align 1, !tbaa !20
-  %i.cd = icmp eq i8 %4, 0
+  %i.cd = icmp eq i8 %i.bl, 0
   %i.ce = getelementptr inbounds nuw i8, ptr %.1245.i, i64 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br i1 %i.cd, label %.critedge.i, label %bb.i
@@ -780,7 +781,7 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
 bb.bv:                                            ; preds = %bb.d
   %i.ha = load ptr, ptr @H5_optarg, align 8, !tbaa !19
   %i.hb = call i64 @__isoc23_strtol(ptr noundef nonnull %i.ha, ptr noundef null, i32 noundef 10) #19, !inline_history !30
-  %i.hc = trunc i64 %i.hb to i32
+  %i.hc = trunc i64 %i.hb to i32                  ; 2 uses
   store i32 %i.hc, ptr %i.j, align 8, !tbaa !42
   br label %.critedge.i
 
@@ -1087,11 +1088,19 @@ parse_command_line.exit.thread:                   ; preds = %bb.d
   br label %bb.et
 
 .critedge.i:                                      ; preds = %bb.bm, %bb.ac, %bb.ab, %bb.r, %bb.j, %bb.i, %.critedge31.i, %.critedge25.i, %bb.co, %bb.cn, %bb.cl, %bb.cj, %bb.ch, %bb.cf, %bb.cd, %bb.cb, %bb.bz, %bb.bx, %bb.bw, %bb.bv, %.critedge19.i, %.critedge5.i, %bb.g, %bb.f, %bb.e
+  %6 = phi i32 [ %3, %bb.r ], [ %3, %bb.e ], [ %3, %bb.bz ], [ %3, %bb.cd ], [ %3, %bb.ch ], [ %3, %bb.cl ], [ %3, %bb.cj ], [ %3, %bb.cf ], [ %3, %bb.cb ], [ %3, %.critedge31.i ], [ %3, %.critedge25.i ], [ %3, %bb.co ], [ %3, %bb.cn ], [ %3, %bb.bx ], [ %3, %bb.bw ], [ %i.hc, %bb.bv ], [ %3, %.critedge19.i ], [ %3, %.critedge5.i ], [ %3, %bb.g ], [ %3, %bb.f ], [ %3, %bb.i ], [ %3, %bb.j ], [ %3, %bb.ab ], [ %3, %bb.ac ], [ %3, %bb.bm ] ; 2 uses
+  %7 = phi i64 [ %i.cc, %bb.r ], [ %4, %bb.e ], [ %4, %bb.bz ], [ %4, %bb.cd ], [ %4, %bb.ch ], [ %4, %bb.cl ], [ %4, %bb.cj ], [ %4, %bb.cf ], [ %4, %bb.cb ], [ %4, %.critedge31.i ], [ %4, %.critedge25.i ], [ %4, %bb.co ], [ %4, %bb.cn ], [ %4, %bb.bx ], [ %4, %bb.bw ], [ %4, %bb.bv ], [ %4, %.critedge19.i ], [ %4, %.critedge5.i ], [ %4, %bb.g ], [ %4, %bb.f ], [ %5, %bb.j ], [ %5, %bb.i ], [ %4, %bb.ab ], [ %4, %bb.ac ], [ %4, %bb.bm ] ; 2 uses
   %i.jm = call i32 @H5_get_option(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @.str.78, ptr noundef nonnull @l_opts) #19 ; 2 uses
   %.not.i = icmp eq i32 %i.jm, -1
-  br i1 %.not.i, label %._crit_edge.i, label %bb.d, !llvm.loop !34
+  br i1 %.not.i, label %._crit_edge.loopexit.i, label %bb.d, !llvm.loop !34
 
-._crit_edge.i:                                    ; preds = %.critedge.i, %bb.c
+._crit_edge.loopexit.i:                           ; preds = %.critedge.i
+  %8 = call i32 @llvm.smax.i32(i32 %6, i32 1)
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.c
+  %spec.store.select307.i = phi i32 [ %8, %._crit_edge.loopexit.i ], [ 1, %bb.c ]
+  %9 = phi i64 [ %7, %._crit_edge.loopexit.i ], [ 0, %bb.c ] ; 2 uses
   %i.jn = load i32, ptr %i.k, align 8, !tbaa !57  ; 3 uses
   %i.jo = load i32, ptr %i.af, align 4, !tbaa !61 ; 3 uses
   %i.jp = load i32, ptr %i.ah, align 8, !tbaa !62 ; 5 uses
@@ -1172,13 +1181,10 @@ bb.dm:                                            ; preds = %bb.dl
   unreachable
 
 bb.dn:                                            ; preds = %bb.dk
-  %5 = load i64, ptr %i.h, align 8, !tbaa !53     ; 2 uses
-  %.not268.i = icmp eq i64 %5, 0
-  %spec.store.select.i = select i1 %.not268.i, i64 5, i64 %5
+  %.not268.i = icmp eq i64 %9, 0
+  %spec.store.select.i = select i1 %.not268.i, i64 5, i64 %9
   store i64 %spec.store.select.i, ptr %i.h, align 8
-  %6 = load i32, ptr %i.j, align 8, !tbaa !42
-  %spec.store.select394.i = call i32 @llvm.smax.i32(i32 %6, i32 1)
-  store i32 %spec.store.select394.i, ptr %i.j, align 8
+  store i32 %spec.store.select307.i, ptr %i.j, align 8
   %i.kd = load ptr, ptr %i.ae, align 8, !tbaa !58 ; 2 uses
   %.not11 = icmp eq ptr %i.kd, null
   br i1 %.not11, label %bb.dq, label %bb.do

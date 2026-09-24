@@ -206,7 +206,7 @@ bb.o:                                             ; preds = %bb.k, %bb.f
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN5osgeo4proj2io10JSONParser6createERKN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS3_14adl_serializerES6_IhSaIhEEEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.osgeo::proj::util::BaseObjectNNPtr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN5osgeo4proj2io10JSONParser6createERKN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS3_14adl_serializerES6_IhSaIhEEEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.osgeo::proj::util::BaseObjectNNPtr") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 38 uses
   %4 = alloca %"class.dropbox::oxygen::nn.383", align 8 ; 6 uses
@@ -609,13 +609,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
   call void @_ZN5osgeo4proj2io10JSONParser6createERKN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS3_14adl_serializerES6_IhSaIhEEEE(ptr dead_on_unwind nonnull writable sret(%"struct.osgeo::proj::util::BaseObjectNNPtr") align 8 %4, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(16) %2)
-  call void @llvm.experimental.noalias.scope.decl(metadata !1875)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1875)
   %i.a = load ptr, ptr %4, align 8, !tbaa !293, !noalias !1875 ; 2 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %_ZN7dropbox6oxygen23nn_dynamic_pointer_castIN5osgeo4proj3crs3CRSENS3_4util10BaseObjectEEESt10shared_ptrIT_ERKNS0_2nnIS8_IT0_EEE.exit.thread16, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = call ptr @__dynamic_cast(ptr nonnull %i.a, ptr nonnull @_ZTIN5osgeo4proj4util10BaseObjectE, ptr nonnull @_ZTIN5osgeo4proj3crs3CRSE, i64 0) #41, !noalias !1875 ; 3 uses
+  %5 = tail call ptr @__dynamic_cast(ptr nonnull %i.a, ptr nonnull @_ZTIN5osgeo4proj4util10BaseObjectE, ptr nonnull @_ZTIN5osgeo4proj3crs3CRSE, i64 0) #41, !noalias !1875 ; 3 uses
   %.not.i = icmp eq ptr %5, null
   br i1 %.not.i, label %_ZN7dropbox6oxygen23nn_dynamic_pointer_castIN5osgeo4proj3crs3CRSENS3_4util10BaseObjectEEESt10shared_ptrIT_ERKNS0_2nnIS8_IT0_EEE.exit.thread16, label %bb.c
 
@@ -1018,7 +1018,7 @@ bb.af:                                            ; preds = %bb.c
   br label %.preheader3584
 
 .preheader3584:                                   ; preds = %.preheader3584.loopexit, %.loopexit3586
-  %.sroa.03071.03856 = phi ptr [ %.sroa.03071.03856.pre, %.preheader3584.loopexit ], [ %i.ex, %.loopexit3586 ] ; 2 uses
+  %.sroa.03071.03856 = phi ptr [ %.sroa.03071.03856.pre, %.preheader3584.loopexit ], [ %i.ex, %.loopexit3586 ] ; 3 uses
   %.not35033857 = icmp eq ptr %.sroa.03071.03856, %i.k
   br i1 %.not35033857, label %._crit_edge, label %.lr.ph3859
 
@@ -1421,9 +1421,13 @@ bb.ao:                                            ; preds = %_ZSteqIcSt11char_tr
   %.not3502.a = icmp eq ptr %.sroa.03078.1, %i.k
   br i1 %.not3502.a, label %.preheader3584.loopexit, label %bb.ag, !llvm.loop !1920
 
-._crit_edge:                                      ; preds = %.critedge1167, %.preheader3584
+._crit_edge.loopexit:                             ; preds = %.critedge1167
+  %.pre3976 = load ptr, ptr %i.k, align 8, !tbaa !273
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader3584
+  %94 = phi ptr [ %.pre3976, %._crit_edge.loopexit ], [ %.sroa.03071.03856, %.preheader3584 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
-  %94 = load ptr, ptr %i.k, align 8, !tbaa !273   ; 5 uses
   store ptr %94, ptr %4, align 8
   %.not3504.a = icmp eq ptr %94, %i.k
   br i1 %.not3504.a, label %bb.ba, label %bb.az
@@ -1826,10 +1830,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   store i8 0, ptr %i.nh, align 1, !tbaa !587
   br label %.critedge1167
 
-.critedge1167:                                    ; preds = %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1306.thread3160, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1314, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1317, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1320, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1323, %bb.ay, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1314.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1317.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1320.thread, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1283.thread, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1293, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i1289, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i1291, %bb.av, %bb.aq, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1271.thread3143, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1293.thread3153, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1301.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1309.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1323.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1325, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1325.thread, %bb.ap
+.critedge1167:                                    ; preds = %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1306.thread3160, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1314, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1317, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1320, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1323, %bb.ay, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1314.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1317.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1320.thread, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1283.thread, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1293, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i1289, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i1291, %bb.av, %bb.aq, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1271.thread3143, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit1293.thread3153, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1301.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1309.thread, %_ZNK5osgeo4proj2io4Step8KeyValue9keyEqualsEPKc.exit1323.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1325.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1325, %bb.ap
   %.sroa.03071.0 = load ptr, ptr %.sroa.03071.03858, align 8, !tbaa !273 ; 2 uses
   %.not3503.a = icmp eq ptr %.sroa.03071.0, %i.k
-  br i1 %.not3503.a, label %._crit_edge, label %bb.ap
+  br i1 %.not3503.a, label %._crit_edge.loopexit, label %bb.ap
 
 bb.az:                                            ; preds = %._crit_edge
   %i.xp = load ptr, ptr %94, align 8, !tbaa !273  ; 2 uses

@@ -204,6 +204,7 @@ bb.m:                                             ; preds = %bb.l
   br label %common.resume
 
 bb.n:                                             ; preds = %bb.a
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1600)
   %i.ab = icmp ne i64 %i.a, -9223372036854775800
   tail call void @llvm.assume(i1 %i.ab)
   %i.ac = add nsw i64 %i.a, 9223372036854775802
@@ -249,40 +250,40 @@ bb.r:                                             ; preds = %bb.n
   %.val27.i = load ptr, ptr %i.ai, align 8, !alias.scope !1600 ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.val28.i = load ptr, ptr %i.aj, align 8, !alias.scope !1600, !nonnull !6, !align !9, !noundef !6 ; 5 uses
-  %i.ak = load ptr, ptr %.val28.i, align 8, !invariant.load !6 ; 2 uses
+  %i.ak = load ptr, ptr %.val28.i, align 8, !invariant.load !6, !noalias !1600 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ak, null
   br i1 %.not.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val27.i) ]
   invoke void %i.ak(ptr noundef nonnull %.val27.i)
-          to label %bb.t unwind label %bb.v
+          to label %bb.t unwind label %bb.v, !noalias !1600
 
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.al = getelementptr inbounds nuw i8, ptr %.val28.i, i64 8
-  %i.am = load i64, ptr %i.al, align 8, !range !11, !invariant.load !6 ; 2 uses
+  %i.am = load i64, ptr %i.al, align 8, !range !11, !invariant.load !6, !noalias !1600 ; 2 uses
   %i.an = icmp eq i64 %i.am, 0
   br i1 %i.an, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1ElB0qm0ygX_13influxdb3_wal9serialize5ErrorECsgsNUVCRJO2f_13influxdb3_lib.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.ao = getelementptr inbounds nuw i8, ptr %.val28.i, i64 16
-  %i.ap = load i64, ptr %i.ao, align 8, !range !12, !invariant.load !6
+  %i.ap = load i64, ptr %i.ao, align 8, !range !12, !invariant.load !6, !noalias !1600
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val27.i) ]
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val27.i, i64 noundef range(i64 1, 0) %i.am, i64 noundef range(i64 1, 536870913) %i.ap) #31
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val27.i, i64 noundef range(i64 1, 0) %i.am, i64 noundef range(i64 1, 536870913) %i.ap) #31, !noalias !1600
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1ElB0qm0ygX_13influxdb3_wal9serialize5ErrorECsgsNUVCRJO2f_13influxdb3_lib.exit
 
 bb.v:                                             ; preds = %bb.s
   %i.aq = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.val28.i, i64 8
-  %i.as = load i64, ptr %i.ar, align 8, !range !11, !invariant.load !6 ; 2 uses
+  %i.as = load i64, ptr %i.ar, align 8, !range !11, !invariant.load !6, !noalias !1600 ; 2 uses
   %i.at = icmp eq i64 %i.as, 0
   br i1 %i.at, label %common.resume, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.au = getelementptr inbounds nuw i8, ptr %.val28.i, i64 16
-  %i.av = load i64, ptr %i.au, align 8, !range !12, !invariant.load !6
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val27.i, i64 noundef range(i64 1, 0) %i.as, i64 noundef range(i64 1, 536870913) %i.av) #31
+  %i.av = load i64, ptr %i.au, align 8, !range !12, !invariant.load !6, !noalias !1600
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val27.i, i64 noundef range(i64 1, 0) %i.as, i64 noundef range(i64 1, 536870913) %i.av) #31, !noalias !1600
   br label %common.resume
 
 bb.x:                                             ; preds = %bb.n
@@ -525,38 +526,38 @@ bb.az:                                            ; preds = %bb.n
 
 bb.ba:                                            ; preds = %bb.az
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val30.i) ]
-  %i.cj = load ptr, ptr %.val30.i, align 8, !invariant.load !6 ; 2 uses
+  %i.cj = load ptr, ptr %.val30.i, align 8, !invariant.load !6, !noalias !1600 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.cj, null
   br i1 %.not.i.i.i.i.i, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   invoke void %i.cj(ptr noundef nonnull %.val29.i)
-          to label %bb.bc unwind label %bb.be
+          to label %bb.bc unwind label %bb.be, !noalias !1600
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.ck = getelementptr inbounds nuw i8, ptr %.val30.i, i64 8
-  %i.cl = load i64, ptr %i.ck, align 8, !range !11, !invariant.load !6 ; 2 uses
+  %i.cl = load i64, ptr %i.ck, align 8, !range !11, !invariant.load !6, !noalias !1600 ; 2 uses
   %i.cm = icmp eq i64 %i.cl, 0
   br i1 %i.cm, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1ElB0qm0ygX_13influxdb3_wal9serialize5ErrorECsgsNUVCRJO2f_13influxdb3_lib.exit, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   %i.cn = getelementptr inbounds nuw i8, ptr %.val30.i, i64 16
-  %i.co = load i64, ptr %i.cn, align 8, !range !12, !invariant.load !6
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val29.i, i64 noundef range(i64 1, 0) %i.cl, i64 noundef range(i64 1, 536870913) %i.co) #31
+  %i.co = load i64, ptr %i.cn, align 8, !range !12, !invariant.load !6, !noalias !1600
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val29.i, i64 noundef range(i64 1, 0) %i.cl, i64 noundef range(i64 1, 536870913) %i.co) #31, !noalias !1600
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1ElB0qm0ygX_13influxdb3_wal9serialize5ErrorECsgsNUVCRJO2f_13influxdb3_lib.exit
 
 bb.be:                                            ; preds = %bb.bb
   %i.cp = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %.val30.i, i64 8
-  %i.cr = load i64, ptr %i.cq, align 8, !range !11, !invariant.load !6 ; 2 uses
+  %i.cr = load i64, ptr %i.cq, align 8, !range !11, !invariant.load !6, !noalias !1600 ; 2 uses
   %i.cs = icmp eq i64 %i.cr, 0
   br i1 %i.cs, label %common.resume, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   %i.ct = getelementptr inbounds nuw i8, ptr %.val30.i, i64 16
-  %i.cu = load i64, ptr %i.ct, align 8, !range !12, !invariant.load !6
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val29.i, i64 noundef range(i64 1, 0) %i.cr, i64 noundef range(i64 1, 536870913) %i.cu) #31
+  %i.cu = load i64, ptr %i.ct, align 8, !range !12, !invariant.load !6, !noalias !1600
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val29.i, i64 noundef range(i64 1, 0) %i.cr, i64 noundef range(i64 1, 536870913) %i.cu) #31, !noalias !1600
   br label %common.resume
 
 bb.bg:                                            ; preds = %bb.n
@@ -564,40 +565,40 @@ bb.bg:                                            ; preds = %bb.n
   %.val25.i = load ptr, ptr %i.cv, align 8, !alias.scope !1600 ; 5 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val26.i = load ptr, ptr %i.cw, align 8, !alias.scope !1600, !nonnull !6, !align !9, !noundef !6 ; 5 uses
-  %i.cx = load ptr, ptr %.val26.i, align 8, !invariant.load !6 ; 2 uses
+  %i.cx = load ptr, ptr %.val26.i, align 8, !invariant.load !6, !noalias !1600 ; 2 uses
   %.not.i33.i = icmp eq ptr %i.cx, null
   br i1 %.not.i33.i, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val25.i) ]
   invoke void %i.cx(ptr noundef nonnull %.val25.i)
-          to label %bb.bi unwind label %bb.bk
+          to label %bb.bi unwind label %bb.bk, !noalias !1600
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %i.cy = getelementptr inbounds nuw i8, ptr %.val26.i, i64 8
-  %i.cz = load i64, ptr %i.cy, align 8, !range !11, !invariant.load !6 ; 2 uses
+  %i.cz = load i64, ptr %i.cy, align 8, !range !11, !invariant.load !6, !noalias !1600 ; 2 uses
   %i.da = icmp eq i64 %i.cz, 0
   br i1 %i.da, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1ElB0qm0ygX_13influxdb3_wal9serialize5ErrorECsgsNUVCRJO2f_13influxdb3_lib.exit, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
   %i.db = getelementptr inbounds nuw i8, ptr %.val26.i, i64 16
-  %i.dc = load i64, ptr %i.db, align 8, !range !12, !invariant.load !6
+  %i.dc = load i64, ptr %i.db, align 8, !range !12, !invariant.load !6, !noalias !1600
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val25.i) ]
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val25.i, i64 noundef range(i64 1, 0) %i.cz, i64 noundef range(i64 1, 536870913) %i.dc) #31
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val25.i, i64 noundef range(i64 1, 0) %i.cz, i64 noundef range(i64 1, 536870913) %i.dc) #31, !noalias !1600
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1ElB0qm0ygX_13influxdb3_wal9serialize5ErrorECsgsNUVCRJO2f_13influxdb3_lib.exit
 
 bb.bk:                                            ; preds = %bb.bh
   %i.dd = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.val26.i, i64 8
-  %i.df = load i64, ptr %i.de, align 8, !range !11, !invariant.load !6 ; 2 uses
+  %i.df = load i64, ptr %i.de, align 8, !range !11, !invariant.load !6, !noalias !1600 ; 2 uses
   %i.dg = icmp eq i64 %i.df, 0
   br i1 %i.dg, label %common.resume, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.dh = getelementptr inbounds nuw i8, ptr %.val26.i, i64 16
-  %i.di = load i64, ptr %i.dh, align 8, !range !12, !invariant.load !6
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val25.i, i64 noundef range(i64 1, 0) %i.df, i64 noundef range(i64 1, 536870913) %i.di) #31
+  %i.di = load i64, ptr %i.dh, align 8, !range !12, !invariant.load !6, !noalias !1600
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val25.i, i64 noundef range(i64 1, 0) %i.df, i64 noundef range(i64 1, 536870913) %i.di) #31, !noalias !1600
   br label %common.resume
 
 bb.bm:                                            ; preds = %bb.n

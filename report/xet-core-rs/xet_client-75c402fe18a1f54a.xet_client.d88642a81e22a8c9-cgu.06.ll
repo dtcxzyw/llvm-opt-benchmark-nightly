@@ -205,7 +205,12 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   %i.gz = ptrtoint ptr %.val10.i.1 to i64
   store i64 %i.gz, ptr %i.gk, align 8
   %i.ha = icmp eq i64 %.sroa.05.058.1, 1
-  br i1 %i.ha, label %._crit_edge83, label %.lr.ph82
+  br i1 %i.ha, label %._crit_edge83, label %.lr.ph82.preheader
+
+.lr.ph82.preheader:                               ; preds = %.preheader.1.preheader
+  %5 = load i64, ptr %i.gn, align 8, !noundef !16 ; 2 uses
+  %6 = load i32, ptr %i.gp, align 8, !range !33, !noundef !16
+  br label %.lr.ph82
 
 .preheader.1:                                     ; preds = %.lr.ph82
   %i.hb = ptrtoint ptr %.val8.i50.1 to i64
@@ -213,12 +218,10 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   %i.hc = icmp eq ptr %i.hd, %i.gh
   br i1 %i.hc, label %._crit_edge83, label %.lr.ph82
 
-.lr.ph82:                                         ; preds = %.preheader.1.preheader, %.preheader.1
-  %.sroa.0.0.i49.181 = phi ptr [ %i.hd, %.preheader.1 ], [ %i.gm, %.preheader.1.preheader ] ; 3 uses
+.lr.ph82:                                         ; preds = %.lr.ph82.preheader, %.preheader.1
+  %.sroa.0.0.i49.181 = phi ptr [ %i.hd, %.preheader.1 ], [ %i.gm, %.lr.ph82.preheader ] ; 3 uses
   %i.hd = getelementptr inbounds i8, ptr %.sroa.0.0.i49.181, i64 -8 ; 3 uses
   %.val8.i50.1 = load ptr, ptr %i.hd, align 8, !nonnull !16, !noundef !16 ; 3 uses
-  %5 = load i64, ptr %i.gn, align 8, !noundef !16 ; 2 uses
-  %6 = load i32, ptr %i.gp, align 8, !range !33, !noundef !16
   %i.he = getelementptr inbounds nuw i8, ptr %.val8.i50.1, i64 40
   %i.hf = load i64, ptr %i.he, align 8, !noundef !16 ; 2 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %.val8.i50.1, i64 48
@@ -377,7 +380,12 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort19bidirectional_merg
   %i.kh = ptrtoint ptr %.val10.i to i64
   store i64 %i.kh, ptr %i.js, align 8
   %i.ki = icmp eq i64 %.sroa.05.058, 1
-  br i1 %i.ki, label %._crit_edge, label %.lr.ph79
+  br i1 %i.ki, label %._crit_edge, label %.lr.ph79.preheader
+
+.lr.ph79.preheader:                               ; preds = %.preheader.preheader
+  %7 = load i64, ptr %i.jv, align 8, !noundef !16 ; 2 uses
+  %8 = load i32, ptr %i.jx, align 8, !range !33, !noundef !16
+  br label %.lr.ph79
 
 .preheader:                                       ; preds = %.lr.ph79
   %i.kj = ptrtoint ptr %.val8.i50 to i64
@@ -385,12 +393,10 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort19bidirectional_merg
   %i.kk = icmp eq ptr %i.kl, %2
   br i1 %i.kk, label %._crit_edge, label %.lr.ph79
 
-.lr.ph79:                                         ; preds = %.preheader.preheader, %.preheader
-  %.sroa.0.0.i4978 = phi ptr [ %i.kl, %.preheader ], [ %i.ju, %.preheader.preheader ] ; 3 uses
+.lr.ph79:                                         ; preds = %.lr.ph79.preheader, %.preheader
+  %.sroa.0.0.i4978 = phi ptr [ %i.kl, %.preheader ], [ %i.ju, %.lr.ph79.preheader ] ; 3 uses
   %i.kl = getelementptr inbounds i8, ptr %.sroa.0.0.i4978, i64 -8 ; 3 uses
   %.val8.i50 = load ptr, ptr %i.kl, align 8, !nonnull !16, !noundef !16 ; 3 uses
-  %7 = load i64, ptr %i.jv, align 8, !noundef !16 ; 2 uses
-  %8 = load i32, ptr %i.jx, align 8, !range !33, !noundef !16
   %i.km = getelementptr inbounds nuw i8, ptr %.val8.i50, i64 40
   %i.kn = load i64, ptr %i.km, align 8, !noundef !16 ; 2 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %.val8.i50, i64 48
@@ -413,7 +419,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchNtNvNtNtNtCsiAynQAjgDuT_10xet_client10cas_client10simulation10xorb_utils29compute_reconstruction_ranges21FetchInfoIntermediateNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1s_11sort_by_keymNCB1u_0E0EB1C_(ptr noalias nofree noundef nonnull align 8 %0, i64 noundef range(i64 0, 384307168202282326) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 384307168202282326) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchNtNvNtNtNtCsiAynQAjgDuT_10xet_client10cas_client10simulation10xorb_utils29compute_reconstruction_ranges21FetchInfoIntermediateNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1s_11sort_by_keymNCB1u_0E0EB1C_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 384307168202282326) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 384307168202282326) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp samesign ult i64 %1, 2
   br i1 %i.a, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort19bidirectional_mergeNtNvNtNtNtCsiAynQAjgDuT_10xet_client10cas_client10simulation10xorb_utils29compute_reconstruction_ranges21FetchInfoIntermediateNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1g_11sort_by_keymNCB1i_0E0EB1q_.exit, label %bb.b
@@ -744,7 +750,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailNtNvNtN
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTReRShENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1s_11sort_by_keyB1t_NCNvNtNtCsiAynQAjgDuT_10xet_client6common11http_client11headers_tags_0E0EB2B_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 288230376151711744) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 288230376151711744) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTReRShENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1s_11sort_by_keyB1t_NCNvNtNtCsiAynQAjgDuT_10xet_client6common11http_client11headers_tags_0E0EB2B_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 288230376151711744) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 288230376151711744) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.6.i = alloca [16 x i8], align 8          ; 8 uses
   %i.a = icmp samesign ult i64 %1, 2

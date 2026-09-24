@@ -204,13 +204,14 @@ bb.b:                                             ; preds = %bb.a
   %i.i = trunc i64 %i.b to i8
   %i.j = lshr i8 %i.i, 1
   %i.k = and i8 %i.j, 1
-  %i.l = add i32 %i.h, 1                          ; 2 uses
+  %i.l = add i32 %i.h, 1                          ; 3 uses
   store i32 %i.l, ptr %i.g, align 4, !tbaa !226, !noalias !1150
   %i.m = icmp eq i32 %i.l, 0
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call fastcc void @_ZN4llvm11ImutAVLTreeINS_16ImutKeyValueInfoIPKN5clang4ento9MemRegionENS_12ImmutableMapIN12_GLOBAL__N_110BindingKeyENS3_4SValENS1_IS9_SA_EEEEEEE7destroyEv(ptr noundef nonnull align 8 dereferenceable(72) %i.e), !noalias !1150, !inline_history !3
+  %.pre = load i32, ptr %i.g, align 4, !tbaa !226
   br label %bb.d
 
 _ZN12_GLOBAL__N_117RegionBindingsRefC2ERKS0_.exit.thread: ; preds = %bb.a
@@ -224,10 +225,10 @@ _ZN12_GLOBAL__N_117RegionBindingsRefC2ERKS0_.exit.thread: ; preds = %bb.a
   br label %_ZN12_GLOBAL__N_124RemoveDeadBindingsWorkerC2ERNS_18RegionStoreManagerERN5clang4ento19ProgramStateManagerENS_17RegionBindingsRefERNS4_12SymbolReaperEPKNS3_10StackFrameE.exit
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %21 = phi i32 [ %.pre, %bb.c ], [ %i.l, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #19
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !86, !nonnull !59, !align !60
-  %21 = load i32, ptr %i.g, align 4, !tbaa !226   ; 2 uses
   %i.t = add i32 %21, 1
   store i32 %i.t, ptr %i.g, align 4, !tbaa !226
   %i.u = getelementptr i8, ptr %i.s, i64 240

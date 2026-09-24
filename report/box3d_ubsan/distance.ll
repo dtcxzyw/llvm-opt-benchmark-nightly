@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.y = load i32, ptr %i.x, align 8, !tbaa !17   ; 2 uses
   %i.z = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.w, i32 %i.y), !nosanitize !11 ; 2 uses
-  %i.aa = extractvalue { i32, i1 } %i.z, 0, !nosanitize !11
+  %i.aa = extractvalue { i32, i1 } %i.z, 0        ; 2 uses
   %i.ab = extractvalue { i32, i1 } %i.z, 1, !nosanitize !11
   br i1 %i.ab, label %bb.d, label %bb.e, !prof !20, !nosanitize !11
 
@@ -607,11 +607,12 @@ b3MakeSeparationFunction.exit:                    ; preds = %bb.n, %bb.o, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9, !noalias !101
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9, !noalias !101
   %.promoted2404 = load i32, ptr %i.cg, align 4
-  %.promoted = load i32, ptr %i.cl, align 4
+  %.promoted = load i32, ptr %i.cl, align 4       ; 3 uses
+  %16 = add i32 %i.aa, %.promoted
   br label %bb.ed
 
 bb.ed:                                            ; preds = %bb.hg, %b3MakeSeparationFunction.exit
-  %i.bce = phi i32 [ %.promoted, %b3MakeSeparationFunction.exit ], [ %16, %bb.hg ] ; 31 uses
+  %i.bce = phi i32 [ %.promoted, %b3MakeSeparationFunction.exit ], [ %18, %bb.hg ] ; 30 uses
   %.lcssa24032405 = phi i32 [ %.promoted2404, %b3MakeSeparationFunction.exit ], [ %i.cst, %bb.hg ] ; 31 uses
   %.0338 = phi float [ %i.af, %b3MakeSeparationFunction.exit ], [ %.3341, %bb.hg ] ; 7 uses
   %.0335 = phi i32 [ 0, %b3MakeSeparationFunction.exit ], [ %i.csy, %bb.hg ]
@@ -902,8 +903,8 @@ bb.eg:                                            ; preds = %b3GetSweepTransform
   br i1 %i.bjn, label %bb.ei, label %bb.eh, !prof !12, !nosanitize !11
 
 bb.eh:                                            ; preds = %bb.eg
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @186, i64 %i.bjk) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -919,8 +920,8 @@ bb.ei:                                            ; preds = %bb.eg
   br i1 %i.bjv, label %bb.ek, label %bb.ej, !prof !12, !nosanitize !11
 
 bb.ej:                                            ; preds = %bb.ei
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @6, i64 %i.bjs) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -947,8 +948,8 @@ bb.el:                                            ; preds = %bb.en, %.lr.ph.i.i
   br i1 %.not.i.i, label %bb.em, label %bb.en, !prof !20, !nosanitize !11
 
 bb.em:                                            ; preds = %bb.el
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @7, i64 %i.bjs, i64 %i.bka) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -987,8 +988,8 @@ b3GetPointSupport.exit.i:                         ; preds = %bb.en, %bb.ek
   br i1 %i.bkt, label %bb.ep, label %bb.eo, !prof !12, !nosanitize !11
 
 bb.eo:                                            ; preds = %b3GetPointSupport.exit.i
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @187, i64 %i.bkq) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1004,8 +1005,8 @@ bb.ep:                                            ; preds = %b3GetPointSupport.e
   br i1 %i.blb, label %bb.er, label %bb.eq, !prof !12, !nosanitize !11
 
 bb.eq:                                            ; preds = %bb.ep
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @6, i64 %i.bky) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1032,8 +1033,8 @@ bb.es:                                            ; preds = %bb.eu, %.lr.ph.i410
   br i1 %.not.i420.i, label %bb.et, label %bb.eu, !prof !20, !nosanitize !11
 
 bb.et:                                            ; preds = %bb.es
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @7, i64 %i.bky, i64 %i.blg) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1076,8 +1077,8 @@ b3GetPointSupport.exit430.i:                      ; preds = %bb.eu, %bb.er
   br i1 %i.bmd, label %bb.ew, label %bb.ev, !prof !12, !nosanitize !11
 
 bb.ev:                                            ; preds = %b3GetPointSupport.exit430.i
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @188, i64 %i.bjs, i64 %i.bly) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1093,8 +1094,8 @@ bb.ew:                                            ; preds = %b3GetPointSupport.e
   br i1 %i.bml, label %bb.ey, label %bb.ex, !prof !12, !nosanitize !11
 
 bb.ex:                                            ; preds = %bb.ew
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @189, i64 %i.bky, i64 %i.bmg) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1310,8 +1311,8 @@ b3Normalize.exit.i531:                            ; preds = %bb.fa, %bb.ez
   br i1 %i.bsn, label %bb.fc, label %bb.fb, !prof !12, !nosanitize !11
 
 bb.fb:                                            ; preds = %b3Normalize.exit.i531
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @190, i64 %i.bsk) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1327,8 +1328,8 @@ bb.fc:                                            ; preds = %b3Normalize.exit.i5
   br i1 %i.bsv, label %bb.fe, label %bb.fd, !prof !12, !nosanitize !11
 
 bb.fd:                                            ; preds = %bb.fc
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @6, i64 %i.bss) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1355,8 +1356,8 @@ bb.ff:                                            ; preds = %bb.fh, %.lr.ph.i509
   br i1 %.not.i519.i, label %bb.fg, label %bb.fh, !prof !20, !nosanitize !11
 
 bb.fg:                                            ; preds = %bb.ff
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @7, i64 %i.bss, i64 %i.bta) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1412,8 +1413,8 @@ b3GetPointSupport.exit529.i:                      ; preds = %bb.fh, %bb.fe
   br i1 %i.buk, label %bb.fj, label %bb.fi, !prof !12, !nosanitize !11
 
 bb.fi:                                            ; preds = %b3GetPointSupport.exit529.i
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @191, i64 %i.buh) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1437,8 +1438,8 @@ bb.fj:                                            ; preds = %b3GetPointSupport.e
   br i1 %i.buw, label %bb.fl, label %bb.fk, !prof !12, !nosanitize !11
 
 bb.fk:                                            ; preds = %bb.fj
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @6, i64 %i.but) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1465,8 +1466,8 @@ bb.fm:                                            ; preds = %bb.fo, %.lr.ph.i549
   br i1 %.not.i559.i, label %bb.fn, label %bb.fo, !prof !20, !nosanitize !11
 
 bb.fn:                                            ; preds = %bb.fm
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @7, i64 %i.but, i64 %i.bvb) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1509,8 +1510,8 @@ b3GetPointSupport.exit569.i:                      ; preds = %bb.fo, %bb.fl
   br i1 %i.bvy, label %bb.fq, label %bb.fp, !prof !12, !nosanitize !11
 
 bb.fp:                                            ; preds = %b3GetPointSupport.exit569.i
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @192, i64 %i.bss, i64 %i.bvt) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1526,8 +1527,8 @@ bb.fq:                                            ; preds = %b3GetPointSupport.e
   br i1 %i.bwg, label %bb.fs, label %bb.fr, !prof !12, !nosanitize !11
 
 bb.fr:                                            ; preds = %bb.fq
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @193, i64 %i.but, i64 %i.bwb) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1702,8 +1703,8 @@ bb.ft:                                            ; preds = %b3GetSweepTransform
   br i1 %i.cbo, label %bb.fv, label %bb.fu, !prof !12, !nosanitize !11
 
 bb.fu:                                            ; preds = %bb.ft
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @194, i64 %i.cbl) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1727,8 +1728,8 @@ bb.fv:                                            ; preds = %bb.ft
   br i1 %i.cca, label %bb.fx, label %bb.fw, !prof !12, !nosanitize !11
 
 bb.fw:                                            ; preds = %bb.fv
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @6, i64 %i.cbx) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1755,8 +1756,8 @@ bb.fy:                                            ; preds = %bb.ga, %.lr.ph.i665
   br i1 %.not.i675.i, label %bb.fz, label %bb.ga, !prof !20, !nosanitize !11
 
 bb.fz:                                            ; preds = %bb.fy
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @7, i64 %i.cbx, i64 %i.ccf) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1797,8 +1798,8 @@ b3GetPointSupport.exit685.i:                      ; preds = %bb.ga, %bb.fx
   br i1 %i.cda, label %bb.gc, label %bb.gb, !prof !12, !nosanitize !11
 
 bb.gb:                                            ; preds = %b3GetPointSupport.exit685.i
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @195, i64 %i.cbx, i64 %i.ccv) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1909,8 +1910,8 @@ bb.gd:                                            ; preds = %b3GetSweepTransform
   br i1 %i.cgh, label %bb.gf, label %bb.ge, !prof !12, !nosanitize !11
 
 bb.ge:                                            ; preds = %bb.gd
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @196, i64 %i.cge) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1934,8 +1935,8 @@ bb.gf:                                            ; preds = %bb.gd
   br i1 %i.cgt, label %bb.gh, label %bb.gg, !prof !12, !nosanitize !11
 
 bb.gg:                                            ; preds = %bb.gf
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @6, i64 %i.cgq) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -1962,8 +1963,8 @@ bb.gi:                                            ; preds = %bb.gk, %.lr.ph.i745
   br i1 %.not.i755.i, label %bb.gj, label %bb.gk, !prof !20, !nosanitize !11
 
 bb.gj:                                            ; preds = %bb.gi
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @7, i64 %i.cgq, i64 %i.cgy) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -2004,8 +2005,8 @@ b3GetPointSupport.exit765.i:                      ; preds = %bb.gk, %bb.gh
   br i1 %i.cht, label %bb.gm, label %bb.gl, !prof !12, !nosanitize !11
 
 bb.gl:                                            ; preds = %b3GetPointSupport.exit765.i
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @197, i64 %i.cgq, i64 %i.cho) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
@@ -2099,7 +2100,6 @@ b3FindMinSeparation.exit:                         ; preds = %b3GetSweepTransform
 
 bb.gn:                                            ; preds = %b3FindMinSeparation.exit
   %i.ckk = shufflevector <2 x float> %.sroa.5649.0.copyload, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  store i32 %i.bce, ptr %i.cl, align 4
   %i.ckl = shufflevector <2 x float> %.sroa.5649.0.copyload, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ckm = insertelement <2 x float> poison, float %.sroa.2206.0.copyload, i64 0
   %i.ckn = insertelement <2 x float> %i.ckm, float %.sroa.2196.0.copyload, i64 1
@@ -2139,6 +2139,7 @@ bb.gn:                                            ; preds = %b3FindMinSeparation
   %i.clv = fsub <2 x float> %i.clt, %i.clu
   %i.clw = fadd <4 x float> %i.cku, %i.clq
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   store i32 4, ptr %0, align 4, !tbaa !98
   %i.clx = load float, ptr %i.ae, align 8, !tbaa !94
   br label %.thread709
@@ -2154,7 +2155,6 @@ bb.gp:                                            ; preds = %bb.go
 
 bb.gq:                                            ; preds = %bb.gp
   %i.cmb = shufflevector <2 x float> %.sroa.5649.0.copyload, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  store i32 %i.bce, ptr %i.cl, align 4
   %i.cmc = shufflevector <2 x float> %.sroa.5649.0.copyload, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cmd = insertelement <2 x float> poison, float %.sroa.2206.0.copyload, i64 0
   %i.cme = insertelement <2 x float> %i.cmd, float %.sroa.2196.0.copyload, i64 1
@@ -2194,6 +2194,7 @@ bb.gq:                                            ; preds = %bb.gp
   %i.cnm = fsub <2 x float> %i.cnk, %i.cnl
   %i.cnn = fadd <4 x float> %i.cml, %i.cnh
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   store i32 1, ptr %0, align 4, !tbaa !98
   br label %.thread709
 
@@ -2208,7 +2209,6 @@ bb.gr:                                            ; preds = %bb.gp
 
 bb.gs:                                            ; preds = %bb.gr
   %i.cnr = shufflevector <2 x float> %.sroa.5649.0.copyload, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  store i32 %i.bce, ptr %i.cl, align 4
   %i.cns = shufflevector <2 x float> %.sroa.5649.0.copyload, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cnt = insertelement <2 x float> poison, float %.sroa.2206.0.copyload, i64 0
   %i.cnu = insertelement <2 x float> %i.cnt, float %.sroa.2196.0.copyload, i64 1
@@ -2248,6 +2248,7 @@ bb.gs:                                            ; preds = %bb.gr
   %i.cpc = fsub <2 x float> %i.cpa, %i.cpb
   %i.cpd = fadd <4 x float> %i.cob, %i.cox
   store i32 %.lcssa24032405, ptr %i.cg, align 4
+  store i32 %i.bce, ptr %i.cl, align 4
   store i32 3, ptr %0, align 4, !tbaa !98
   br label %.thread709
 
@@ -2437,25 +2438,26 @@ b3Normalize.exit.i553:                            ; preds = %bb.hb, %bb.hc
   br i1 %i.csv, label %bb.hd, label %bb.he, !prof !20, !nosanitize !11
 
 bb.hd:                                            ; preds = %.thread695
-  store i32 %i.bce, ptr %i.cl, align 4
   store i32 %i.cst, ptr %i.cg, align 4
+  store i32 2147483647, ptr %i.cl, align 4
   call void @__ubsan_handle_add_overflow_abort(ptr nonnull @60, i64 2147483647, i64 1) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.he:                                            ; preds = %.thread695
-  %16 = extractvalue { i32, i1 } %i.csu, 0, !nosanitize !11 ; 3 uses
   %i.csw = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.0335, i32 1), !nosanitize !11 ; 2 uses
   %i.csx = extractvalue { i32, i1 } %i.csw, 1, !nosanitize !11
   br i1 %i.csx, label %bb.hf, label %bb.hg, !prof !20, !nosanitize !11
 
 bb.hf:                                            ; preds = %bb.he
-  store i32 %16, ptr %i.cl, align 4
+  %17 = xor i32 %.promoted, -2147483648
   store i32 %i.cst, ptr %i.cg, align 4
+  store i32 %17, ptr %i.cl, align 4
   call void @__ubsan_handle_add_overflow_abort(ptr nonnull @61, i64 2147483647, i64 1) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.hg:                                            ; preds = %bb.he
   %i.csy = extractvalue { i32, i1 } %i.csw, 0, !nosanitize !11 ; 2 uses
+  %18 = extractvalue { i32, i1 } %i.csu, 0, !nosanitize !11
   %i.csz = icmp eq i32 %i.csy, %i.aa
   br i1 %i.csz, label %select.unfold698, label %bb.ed
 
@@ -2518,8 +2520,8 @@ select.unfold698:                                 ; preds = %bb.hg, %bb.go
   %i.cup = phi i32 [ %i.bce, %bb.go ], [ %16, %bb.hg ]
   %.lcssa24032476 = phi i32 [ %.lcssa24032405, %bb.go ], [ %i.cst, %bb.hg ]
   %.2.ph = phi float [ %.0338, %bb.go ], [ %.0, %bb.hg ]
-  store i32 %i.cup, ptr %i.cl, align 4
   store i32 %.lcssa24032476, ptr %i.cg, align 4
+  store i32 %i.cup, ptr %i.cl, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #9

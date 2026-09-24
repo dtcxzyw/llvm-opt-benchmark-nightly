@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %_RNvMNtCskKLDkoKarT
   %.sroa.0.0.ph.lcssa105 = phi ptr [ %.sroa.0.0.ph114, %_RNvMNtCskKLDkoKarTP_4core5sliceSTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxE12split_at_mutB1c_.exit ], [ %0, %bb.a ], [ %i.gx, %.outer ] ; 7 uses
   %.sroa.16.0.lcssa = phi i64 [ %.sroa.11.1.lcssa.i, %_RNvMNtCskKLDkoKarTP_4core5sliceSTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxE12split_at_mutB1c_.exit ], [ %1, %bb.a ], [ %i.gi, %.outer ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !538)
+  call void @llvm.experimental.noalias.scope.decl(metadata !539)
   %i.h = icmp samesign ult i64 %.sroa.16.0.lcssa, 2
   br i1 %i.h, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB1y_5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB1y_11collections5btree3mapINtB3y_8BTreeMapB1t_B24_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtB4B_8adapters12GenericShuntINtNtB5w_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB6j_4core7exports6ExportENCNvMNtB28_6parserNtB7R_12ModuleParser15process_exports0EINtNtBa_6result6ResultzNtNtB2a_5error5ErrorEEE0E0EB2a_.exit, label %bb.c
 
@@ -230,8 +231,8 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0.ph.lcssa105, i64 24, i1 false), !alias.scope !539
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !alias.scope !539
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0.ph.lcssa105, i64 24, i1 false), !alias.scope !540
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !alias.scope !540
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -249,16 +250,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.r = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.sroa.05.08.1.i
   %.idx278 = mul nuw nsw i64 %.sroa.05.08.1.i, 24
   %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx278 ; 7 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %i.r, i64 24, i1 false), !alias.scope !539
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %i.r, i64 24, i1 false), !alias.scope !540
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -24 ; 3 uses
-  %.val11.i.1.i = load ptr, ptr %i.s, align 8, !alias.scope !540, !noalias !538, !nonnull !4, !noundef !4 ; 3 uses
+  %.val11.i.1.i = load ptr, ptr %i.s, align 8, !alias.scope !539, !noalias !538, !nonnull !4, !noundef !4 ; 3 uses
   %i.u = getelementptr i8, ptr %i.s, i64 8
-  %.val12.i.1.i = load i64, ptr %i.u, align 8, !alias.scope !540, !noalias !538, !noundef !4 ; 5 uses
-  %.val13.i.1.i = load ptr, ptr %i.t, align 8, !alias.scope !540, !noalias !538, !nonnull !4, !noundef !4
+  %.val12.i.1.i = load i64, ptr %i.u, align 8, !alias.scope !539, !noalias !538, !noundef !4 ; 5 uses
+  %.val13.i.1.i = load ptr, ptr %i.t, align 8, !alias.scope !539, !noalias !538, !nonnull !4, !noundef !4
   %i.v = getelementptr i8, ptr %i.s, i64 -16
-  %.val14.i.1.i = load i64, ptr %i.v, align 8, !alias.scope !540, !noalias !538, !noundef !4 ; 2 uses
+  %.val14.i.1.i = load i64, ptr %i.v, align 8, !alias.scope !539, !noalias !538, !noundef !4 ; 2 uses
   %spec.store.select.i.i.i.i.i30.1.i = call i64 @llvm.umin.i64(i64 %.val12.i.1.i, i64 %.val14.i.1.i)
-  %i.w = call i32 @memcmp(ptr nonnull readonly %.val11.i.1.i, ptr nonnull readonly %.val13.i.1.i, i64 %spec.store.select.i.i.i.i.i30.1.i), !alias.scope !541, !noalias !538 ; 2 uses
+  %i.w = call i32 @memcmp(ptr nonnull readonly %.val11.i.1.i, ptr nonnull readonly %.val13.i.1.i, i64 %spec.store.select.i.i.i.i.i30.1.i), !alias.scope !541, !noalias !540 ; 2 uses
   %i.x = sext i32 %i.w to i64
   %i.y = icmp eq i32 %i.w, 0
   %i.z = sub i64 %.val12.i.1.i, %.val14.i.1.i
@@ -268,24 +269,24 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 bb.i:                                             ; preds = %.lr.ph.1.i
   %.sroa.512.0..sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %.sroa.512.0.copyload.i.1.i = load i64, ptr %.sroa.512.0..sroa_idx.i.1.i, align 8, !alias.scope !540, !noalias !538
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %i.t, i64 24, i1 false), !alias.scope !540, !noalias !538
+  %.sroa.512.0.copyload.i.1.i = load i64, ptr %.sroa.512.0..sroa_idx.i.1.i, align 8, !alias.scope !539, !noalias !538
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %i.t, i64 24, i1 false), !alias.scope !539, !noalias !538
   %i.ab = icmp eq i64 %.sroa.05.08.1.i, 1
   br i1 %i.ab, label %._crit_edge274, label %.lr.ph273
 
 bb.j:                                             ; preds = %.lr.ph273
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0.i32.1.i271, ptr noundef nonnull align 8 dereferenceable(24) %i.ad, i64 24, i1 false), !alias.scope !540, !noalias !538
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0.i32.1.i271, ptr noundef nonnull align 8 dereferenceable(24) %i.ad, i64 24, i1 false), !alias.scope !539, !noalias !538
   %i.ac = icmp eq ptr %i.ad, %i.n
   br i1 %i.ac, label %._crit_edge274, label %.lr.ph273
 
 .lr.ph273:                                        ; preds = %bb.i, %bb.j
   %.sroa.0.0.i32.1.i271 = phi ptr [ %i.ad, %bb.j ], [ %i.t, %bb.i ] ; 4 uses
   %i.ad = getelementptr inbounds i8, ptr %.sroa.0.0.i32.1.i271, i64 -24 ; 4 uses
-  %.val9.i.1.i = load ptr, ptr %i.ad, align 8, !alias.scope !540, !noalias !538, !nonnull !4, !noundef !4
+  %.val9.i.1.i = load ptr, ptr %i.ad, align 8, !alias.scope !539, !noalias !538, !nonnull !4, !noundef !4
   %i.ae = getelementptr i8, ptr %.sroa.0.0.i32.1.i271, i64 -16
-  %.val10.i.1.i = load i64, ptr %i.ae, align 8, !alias.scope !540, !noalias !538, !noundef !4 ; 2 uses
+  %.val10.i.1.i = load i64, ptr %i.ae, align 8, !alias.scope !539, !noalias !538, !noundef !4 ; 2 uses
   %spec.store.select.i.i.i.i15.i.1.i = call i64 @llvm.umin.i64(i64 %.val12.i.1.i, i64 %.val10.i.1.i)
-  %i.af = call i32 @memcmp(ptr nonnull readonly %.val11.i.1.i, ptr nonnull readonly %.val9.i.1.i, i64 %spec.store.select.i.i.i.i15.i.1.i), !alias.scope !542, !noalias !538 ; 2 uses
+  %i.af = call i32 @memcmp(ptr nonnull readonly %.val11.i.1.i, ptr nonnull readonly %.val9.i.1.i, i64 %spec.store.select.i.i.i.i15.i.1.i), !alias.scope !542, !noalias !540 ; 2 uses
   %i.ag = sext i32 %i.af to i64
   %i.ah = icmp eq i32 %i.af, 0
   %i.ai = sub i64 %.val12.i.1.i, %.val10.i.1.i
@@ -295,11 +296,11 @@ bb.j:                                             ; preds = %.lr.ph273
 
 ._crit_edge274:                                   ; preds = %bb.j, %.lr.ph273, %bb.i
   %.sroa.0.0.i32.lcssa.1.i = phi ptr [ %i.n, %bb.i ], [ %i.n, %bb.j ], [ %.sroa.0.0.i32.1.i271, %.lr.ph273 ] ; 3 uses
-  store ptr %.val11.i.1.i, ptr %.sroa.0.0.i32.lcssa.1.i, align 8, !alias.scope !540, !noalias !543
+  store ptr %.val11.i.1.i, ptr %.sroa.0.0.i32.lcssa.1.i, align 8, !alias.scope !539, !noalias !543
   %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i32.lcssa.1.i, i64 8
-  store i64 %.val12.i.1.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !540, !noalias !543
+  store i64 %.val12.i.1.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !539, !noalias !543
   %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i32.lcssa.1.i, i64 16
-  store i64 %.sroa.512.0.copyload.i.1.i, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !540, !noalias !543
+  store i64 %.sroa.512.0.copyload.i.1.i, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !539, !noalias !543
   br label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3e_8BTreeMapB19_B1K_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtB4h_8adapters12GenericShuntINtNtB5c_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5Z_4core7exports6ExportENCNvMNtB1O_6parserNtB7x_12ModuleParser15process_exports0EINtNtBa_6result6ResultzNtNtB1Q_5error5ErrorEEE0E0EB1Q_.exit.1.i
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3e_8BTreeMapB19_B1K_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtB4h_8adapters12GenericShuntINtNtB5c_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5Z_4core7exports6ExportENCNvMNtB1O_6parserNtB7x_12ModuleParser15process_exports0EINtNtBa_6result6ResultzNtNtB1Q_5error5ErrorEEE0E0EB1Q_.exit.1.i: ; preds = %._crit_edge274, %.lr.ph.1.i
@@ -345,7 +346,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtC
   %spec.select.i.i.i.i.i.i = select i1 %i.ay, i64 %i.az, i64 %i.ax ; 2 uses
   %i.ba = icmp sgt i64 %spec.select.i.i.i.i.i.i, -1 ; 2 uses
   %..i21.i.i = select i1 %i.ba, ptr %.sroa.06.08.i.i, ptr %.sroa.011.07.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.010.i.i, ptr noundef nonnull align 8 dereferenceable(24) %..i21.i.i, i64 24, i1 false), !alias.scope !539, !noalias !548
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.010.i.i, ptr noundef nonnull align 8 dereferenceable(24) %..i21.i.i, i64 24, i1 false), !alias.scope !540, !noalias !548
   %spec.select.i.i.i.i.lobit.i.i = lshr i64 %spec.select.i.i.i.i.i.i, 63
   %i.bb = getelementptr inbounds nuw [24 x i8], ptr %.sroa.011.07.i.i, i64 %spec.select.i.i.i.i.lobit.i.i ; 4 uses
   %i.bc = zext i1 %i.ba to i64
@@ -365,7 +366,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtC
   %spec.select.i.i.i.i27.i.i = select i1 %i.bj, i64 %i.bk, i64 %i.bi ; 2 uses
   %i.bl = icmp sgt i64 %spec.select.i.i.i.i27.i.i, -1 ; 2 uses
   %..i.i.i = select i1 %i.bl, ptr %.sroa.017.05.i.i, ptr %.sroa.015.06.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.019.04.i.i, ptr noundef nonnull align 8 dereferenceable(24) %..i.i.i, i64 24, i1 false), !alias.scope !539, !noalias !550
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.019.04.i.i, ptr noundef nonnull align 8 dereferenceable(24) %..i.i.i, i64 24, i1 false), !alias.scope !540, !noalias !550
   %.neg.i.i.i = sext i1 %i.bl to i64
   %i.bm = getelementptr [24 x i8], ptr %.sroa.017.05.i.i, i64 %.neg.i.i.i ; 2 uses
   %spec.select.i.i.i.i27.lobit.i.i = ashr i64 %spec.select.i.i.i.i27.i.i, 63
@@ -377,7 +378,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtC
 bb.k:                                             ; preds = %._crit_edge.i.i
   %i.bp = icmp ult ptr %i.bd, %i.ap               ; 3 uses
   %.sroa.06.0..sroa.011.0.i.i = select i1 %i.bp, ptr %i.bd, ptr %i.bb
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.0..sroa.011.0.i.i, i64 24, i1 false), !alias.scope !539
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.0..sroa.011.0.i.i, i64 24, i1 false), !alias.scope !540
   %i.bq = zext i1 %i.bp to i64
   %i.br = getelementptr inbounds nuw [24 x i8], ptr %i.bd, i64 %i.bq
   %i.bs = xor i1 %i.bp, true
@@ -395,7 +396,7 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge.
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_RNvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #30
-          to label %.noexc.i unwind label %bb.n, !noalias !538
+          to label %.noexc.i unwind label %bb.n, !noalias !540
 
 .noexc.i:                                         ; preds = %bb.m
   unreachable
@@ -404,7 +405,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bx = landingpad { ptr, i32 }
           cleanup
   %i.by = mul nuw nsw i64 %.sroa.16.0.lcssa, 24
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph.lcssa105, ptr nonnull align 8 %2, i64 %i.by, i1 false), !alias.scope !539, !noalias !551
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph.lcssa105, ptr nonnull align 8 %2, i64 %i.by, i1 false), !alias.scope !540, !noalias !551
   resume { ptr, i32 } %i.bx
 
 .lr.ph.i:                                         ; preds = %bb.h, %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3e_8BTreeMapB19_B1K_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtB4h_8adapters12GenericShuntINtNtB5c_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5Z_4core7exports6ExportENCNvMNtB1O_6parserNtB7x_12ModuleParser15process_exports0EINtNtBa_6result6ResultzNtNtB1Q_5error5ErrorEEE0E0EB1Q_.exit.i
@@ -412,16 +413,16 @@ bb.n:                                             ; preds = %bb.m
   %i.bz = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph.lcssa105, i64 %.sroa.05.08.i
   %.idx = mul nuw nsw i64 %.sroa.05.08.i, 24
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 7 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %i.bz, i64 24, i1 false), !alias.scope !539
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %i.bz, i64 24, i1 false), !alias.scope !540
   %i.cb = getelementptr inbounds i8, ptr %i.ca, i64 -24 ; 3 uses
-  %.val11.i.i = load ptr, ptr %i.ca, align 8, !alias.scope !540, !noalias !538, !nonnull !4, !noundef !4 ; 3 uses
+  %.val11.i.i = load ptr, ptr %i.ca, align 8, !alias.scope !539, !noalias !538, !nonnull !4, !noundef !4 ; 3 uses
   %i.cc = getelementptr i8, ptr %i.ca, i64 8
-  %.val12.i.i = load i64, ptr %i.cc, align 8, !alias.scope !540, !noalias !538, !noundef !4 ; 5 uses
-  %.val13.i.i = load ptr, ptr %i.cb, align 8, !alias.scope !540, !noalias !538, !nonnull !4, !noundef !4
+  %.val12.i.i = load i64, ptr %i.cc, align 8, !alias.scope !539, !noalias !538, !noundef !4 ; 5 uses
+  %.val13.i.i = load ptr, ptr %i.cb, align 8, !alias.scope !539, !noalias !538, !nonnull !4, !noundef !4
   %i.cd = getelementptr i8, ptr %i.ca, i64 -16
-  %.val14.i.i = load i64, ptr %i.cd, align 8, !alias.scope !540, !noalias !538, !noundef !4 ; 2 uses
+  %.val14.i.i = load i64, ptr %i.cd, align 8, !alias.scope !539, !noalias !538, !noundef !4 ; 2 uses
   %spec.store.select.i.i.i.i.i30.i = call i64 @llvm.umin.i64(i64 %.val12.i.i, i64 %.val14.i.i)
-  %i.ce = call i32 @memcmp(ptr nonnull readonly %.val11.i.i, ptr nonnull readonly %.val13.i.i, i64 %spec.store.select.i.i.i.i.i30.i), !alias.scope !541, !noalias !538 ; 2 uses
+  %i.ce = call i32 @memcmp(ptr nonnull readonly %.val11.i.i, ptr nonnull readonly %.val13.i.i, i64 %spec.store.select.i.i.i.i.i30.i), !alias.scope !541, !noalias !540 ; 2 uses
   %i.cf = sext i32 %i.ce to i64
   %i.cg = icmp eq i32 %i.ce, 0
   %i.ch = sub i64 %.val12.i.i, %.val14.i.i
@@ -431,24 +432,24 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %.lr.ph.i
   %.sroa.512.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
-  %.sroa.512.0.copyload.i.i = load i64, ptr %.sroa.512.0..sroa_idx.i.i, align 8, !alias.scope !540, !noalias !538
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %i.cb, i64 24, i1 false), !alias.scope !540, !noalias !538
+  %.sroa.512.0.copyload.i.i = load i64, ptr %.sroa.512.0..sroa_idx.i.i, align 8, !alias.scope !539, !noalias !538
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %i.cb, i64 24, i1 false), !alias.scope !539, !noalias !538
   %i.cj = icmp eq i64 %.sroa.05.08.i, 1
   br i1 %i.cj, label %._crit_edge267, label %.lr.ph266
 
 bb.p:                                             ; preds = %.lr.ph266
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0.i32.i264, ptr noundef nonnull align 8 dereferenceable(24) %i.cl, i64 24, i1 false), !alias.scope !540, !noalias !538
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0.i32.i264, ptr noundef nonnull align 8 dereferenceable(24) %i.cl, i64 24, i1 false), !alias.scope !539, !noalias !538
   %i.ck = icmp eq ptr %i.cl, %2
   br i1 %i.ck, label %._crit_edge267, label %.lr.ph266
 
 .lr.ph266:                                        ; preds = %bb.o, %bb.p
   %.sroa.0.0.i32.i264 = phi ptr [ %i.cl, %bb.p ], [ %i.cb, %bb.o ] ; 4 uses
   %i.cl = getelementptr inbounds i8, ptr %.sroa.0.0.i32.i264, i64 -24 ; 4 uses
-  %.val9.i.i = load ptr, ptr %i.cl, align 8, !alias.scope !540, !noalias !538, !nonnull !4, !noundef !4
+  %.val9.i.i = load ptr, ptr %i.cl, align 8, !alias.scope !539, !noalias !538, !nonnull !4, !noundef !4
   %i.cm = getelementptr i8, ptr %.sroa.0.0.i32.i264, i64 -16
-  %.val10.i.i = load i64, ptr %i.cm, align 8, !alias.scope !540, !noalias !538, !noundef !4 ; 2 uses
+  %.val10.i.i = load i64, ptr %i.cm, align 8, !alias.scope !539, !noalias !538, !noundef !4 ; 2 uses
   %spec.store.select.i.i.i.i15.i.i = call i64 @llvm.umin.i64(i64 %.val12.i.i, i64 %.val10.i.i)
-  %i.cn = call i32 @memcmp(ptr nonnull readonly %.val11.i.i, ptr nonnull readonly %.val9.i.i, i64 %spec.store.select.i.i.i.i15.i.i), !alias.scope !542, !noalias !538 ; 2 uses
+  %i.cn = call i32 @memcmp(ptr nonnull readonly %.val11.i.i, ptr nonnull readonly %.val9.i.i, i64 %spec.store.select.i.i.i.i15.i.i), !alias.scope !542, !noalias !540 ; 2 uses
   %i.co = sext i32 %i.cn to i64
   %i.cp = icmp eq i32 %i.cn, 0
   %i.cq = sub i64 %.val12.i.i, %.val10.i.i
@@ -458,11 +459,11 @@ bb.p:                                             ; preds = %.lr.ph266
 
 ._crit_edge267:                                   ; preds = %bb.p, %.lr.ph266, %bb.o
   %.sroa.0.0.i32.lcssa.i = phi ptr [ %2, %bb.o ], [ %2, %bb.p ], [ %.sroa.0.0.i32.i264, %.lr.ph266 ] ; 3 uses
-  store ptr %.val11.i.i, ptr %.sroa.0.0.i32.lcssa.i, align 8, !alias.scope !540, !noalias !543
+  store ptr %.val11.i.i, ptr %.sroa.0.0.i32.lcssa.i, align 8, !alias.scope !539, !noalias !543
   %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i32.lcssa.i, i64 8
-  store i64 %.val12.i.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !540, !noalias !543
+  store i64 %.val12.i.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !539, !noalias !543
   %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i32.lcssa.i, i64 16
-  store i64 %.sroa.512.0.copyload.i.i, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !540, !noalias !543
+  store i64 %.sroa.512.0.copyload.i.i, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !539, !noalias !543
   br label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3e_8BTreeMapB19_B1K_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtB4h_8adapters12GenericShuntINtNtB5c_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5Z_4core7exports6ExportENCNvMNtB1O_6parserNtB7x_12ModuleParser15process_exports0EINtNtBa_6result6ResultzNtNtB1Q_5error5ErrorEEE0E0EB1Q_.exit.i
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3e_8BTreeMapB19_B1K_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtB4h_8adapters12GenericShuntINtNtB5c_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5Z_4core7exports6ExportENCNvMNtB1O_6parserNtB7x_12ModuleParser15process_exports0EINtNtBa_6result6ResultzNtNtB1Q_5error5ErrorEEE0E0EB1Q_.exit.i: ; preds = %._crit_edge267, %.lr.ph.i
@@ -865,15 +866,15 @@ begin_hunk_1_@llvm.memset.p0.i64
 !536 = distinct !{!536, !"_RNvMNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEE13partition_oneB1Z_"}
 !537 = distinct !{!537, !536, !"_RNvMNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEE13partition_oneB1Z_: argument 0"}
 !538 = !{!471}
-!539 = !{!471, !472}
-!540 = !{!472}
+!539 = !{!472}
+!540 = !{!471, !472}
 !541 = !{!475, !474}
 !542 = !{!478, !477}
 !543 = !{!482, !480, !471}
 !544 = !{!484}
 !545 = !{!484, !472}
 !546 = !{!487, !486}
-!547 = !{!484, !471}
+!547 = !{!484, !471, !472}
 !548 = !{!490, !489}
 !549 = !{!493, !492}
 !550 = !{!496, !495}
