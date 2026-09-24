@@ -204,16 +204,14 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not115, label %JS_StackCheck.exit.thread100, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ap = trunc i64 %i.ao to i32                  ; 3 uses
+  %i.ap = trunc i64 %i.ao to i32                  ; 2 uses
   %i.aq = and i32 %i.ap, 1
   %.not82.not = icmp eq i32 %i.aq, 0
   br i1 %.not82.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %4 = icmp sgt i32 %i.ap, 1
-  %5 = zext i1 %4 to i32
-  %.lobit.neg = ashr i32 %i.ap, 31
-  %6 = add nsw i32 %.lobit.neg, %5
+  %.lobit.neg = ashr exact i32 %i.ap, 1
+  %4 = tail call i32 @llvm.scmp.i32.i32(i32 %.lobit.neg, i32 0)
   br label %JS_StackCheck.exit.thread97
 
 bb.h:                                             ; preds = %bb.f
@@ -321,7 +319,7 @@ bb.n:                                             ; preds = %.split125, %JS_IsSt
   br label %JS_StackCheck.exit.thread97
 
 JS_StackCheck.exit.thread97:                      ; preds = %select.unfold, %bb.g, %bb.n
-  %.4 = phi i32 [ %6, %bb.g ], [ %i.cc, %bb.n ], [ %i.aw, %select.unfold ] ; 2 uses
+  %.4 = phi i32 [ %4, %bb.g ], [ %i.cc, %bb.n ], [ %i.aw, %select.unfold ] ; 2 uses
   %.not84 = icmp eq i32 %.4, 0
   br i1 %.not84, label %JS_StackCheck.exit.thread97.JS_StackCheck.exit.thread103_crit_edge, label %JS_StackCheck.exit.thread100
 
