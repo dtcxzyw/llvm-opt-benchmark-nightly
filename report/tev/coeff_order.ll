@@ -204,21 +204,18 @@ vector.ph:                                        ; preds = %bb.i
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %8 = trunc <4 x i64> %vec.ind to <4 x i32>      ; 2 uses
-  %9 = add <4 x i32> %8, splat (i32 1)
-  %10 = trunc <4 x i64> %vec.ind to <4 x i32>     ; 2 uses
-  %i.bg = add <4 x i32> %10, splat (i32 5)
-  %11 = xor <4 x i32> %8, splat (i32 -1)
-  %i.bh = sub <4 x i32> splat (i32 -5), %10
-  %i.bi = and <4 x i32> %9, %11
+  %vec.ind = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
+  %i.bg = add <4 x i32> %vec.ind, splat (i32 4)
+  %8 = sub nsw <4 x i32> zeroinitializer, %vec.ind
+  %i.bh = sub <4 x i32> splat (i32 -4), %vec.ind
+  %i.bi = and <4 x i32> %vec.ind, %8
   %i.bj = and <4 x i32> %i.bg, %i.bh
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %.pr, i64 %index ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
   store <4 x i32> %i.bi, ptr %i.bk, align 4, !tbaa !59, !alias.scope !91, !noalias !93
   store <4 x i32> %i.bj, ptr %i.bl, align 4, !tbaa !59, !alias.scope !91, !noalias !93
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %i.bm = icmp eq i64 %index.next, %n.vec
   br i1 %i.bm, label %.preheader.i.preheader, label %vector.body, !llvm.loop !83
 

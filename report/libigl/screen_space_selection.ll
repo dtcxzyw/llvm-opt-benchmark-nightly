@@ -204,8 +204,8 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind36 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next38, %vector.body ] ; 2 uses
+  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.ind36 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next38, %vector.body ] ; 2 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %index
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %index ; 2 uses
   %wide.vec = load <4 x float>, ptr %i.aa, align 4, !tbaa !90 ; 2 uses
@@ -217,13 +217,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ae = fpext <2 x float> %strided.vec37 to <2 x double>
   store <2 x double> %i.ae, ptr %i.ad, align 8, !tbaa !15
   %i.af = getelementptr [4 x i8], ptr %i.w, i64 %index ; 2 uses
-  store <2 x i32> %vec.ind36, ptr %i.af, align 4, !tbaa !91
+  store <2 x i32> %vec.ind, ptr %i.af, align 4, !tbaa !91
   %i.ag = getelementptr [4 x i8], ptr %i.af, i64 %i.q
-  %8 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %9 = add <2 x i32> %8, splat (i32 1)
-  store <2 x i32> %9, ptr %i.ag, align 4, !tbaa !91
+  store <2 x i32> %vec.ind36, ptr %i.ag, align 4, !tbaa !91
   %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
   %vec.ind.next38 = add <2 x i32> %vec.ind36, splat (i32 2)
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !82

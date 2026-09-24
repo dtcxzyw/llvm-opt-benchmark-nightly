@@ -205,7 +205,7 @@ middle.block1074:                                 ; preds = %vector.body1071
 
 vec.epilog.iter.check1079:                        ; preds = %middle.block1074
   %min.epilog.iters.check1080 = icmp eq i64 %i.yh, 0
-  br i1 %min.epilog.iters.check1080, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit349.preheader1296, label %vec.epilog.ph1081, !prof !35
+  br i1 %min.epilog.iters.check1080, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit349.preheader1296, label %vec.epilog.ph1081, !prof !168
 
 vec.epilog.ph1081:                                ; preds = %vector.main.loop.iter.check1067, %vec.epilog.iter.check1079
   %vec.epilog.resume.val1076 = phi i64 [ %n.vec1070, %vec.epilog.iter.check1079 ], [ 0, %vector.main.loop.iter.check1067 ]
@@ -608,7 +608,7 @@ bb.fk:                                            ; preds = %.loopexit592
   %i.afu = load i32, ptr %i.an, align 4, !tbaa !9
   %i.afv = load ptr, ptr %i.ag, align 8, !tbaa !134
   %i.afw = load ptr, ptr %i.ak, align 8, !tbaa !13
-  %i.afx = load ptr, ptr %i.ba, align 8, !tbaa !169
+  %i.afx = load ptr, ptr %i.ba, align 8, !tbaa !170
   invoke fastcc void @_ZL10componentsPKciPiPPA3_fiPKiPK16gmx_output_env_t(ptr noundef %i.ej, i32 noundef %i.afu, ptr noundef %i.afv, ptr noundef %i.afw, i32 noundef %.0230.lcssa959, ptr noundef %i.aek, ptr noundef %i.afx)
           to label %bb.fl unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -620,7 +620,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.afz = load ptr, ptr %i.ag, align 8, !tbaa !134 ; 3 uses
   %i.aga = load ptr, ptr %i.ak, align 8, !tbaa !13
   %i.agb = load ptr, ptr %i.ax, align 8, !tbaa !15 ; 6 uses
-  %i.agc = load ptr, ptr %i.ba, align 8, !tbaa !169
+  %i.agc = load ptr, ptr %i.ba, align 8, !tbaa !170
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u) #23
   %i.agd = icmp sgt i32 %.0226, 0
   br i1 %i.agd, label %iter.check1105, label %._crit_edge.i
@@ -667,7 +667,7 @@ middle.block1102:                                 ; preds = %vector.body1095
 
 vec.epilog.iter.check1107:                        ; preds = %middle.block1102
   %min.epilog.iters.check1108 = icmp eq i64 %i.age, 0
-  br i1 %min.epilog.iters.check1108, label %.lr.ph.i.preheader, label %vec.epilog.ph1109, !prof !35
+  br i1 %min.epilog.iters.check1108, label %.lr.ph.i.preheader, label %vec.epilog.ph1109, !prof !168
 
 vec.epilog.ph1109:                                ; preds = %vector.main.loop.iter.check1091, %vec.epilog.iter.check1107
   %vec.epilog.resume.val1104 = phi i64 [ %n.vec1094, %vec.epilog.iter.check1107 ], [ 0, %vector.main.loop.iter.check1091 ]
@@ -730,7 +730,7 @@ bb.fo:                                            ; preds = %bb.fn, %.lr.ph.i
 
 iter.check1130:                                   ; preds = %.noexc364
   %wide.trip.count90.i = zext nneg i32 %i.afy to i64 ; 8 uses
-  %min.iters.check1119 = icmp ult i32 %i.afy, 4
+  %min.iters.check1119 = icmp ult i32 %i.afy, 8
   br i1 %min.iters.check1119, label %.lr.ph74.i.preheader, label %vector.main.loop.iter.check1120
 
 vector.main.loop.iter.check1120:                  ; preds = %iter.check1130
@@ -738,22 +738,17 @@ vector.main.loop.iter.check1120:                  ; preds = %iter.check1130
   br i1 %min.iters.check1121, label %vec.epilog.ph1134, label %vector.ph1122
 
 vector.ph1122:                                    ; preds = %vector.main.loop.iter.check1120
-  %i.ahc = and i64 %wide.trip.count90.i, 28
+  %i.ahc = and i64 %wide.trip.count90.i, 24
   %n.vec1123 = and i64 %wide.trip.count90.i, 2147483616 ; 4 uses
   br label %vector.body1124
 
 vector.body1124:                                  ; preds = %vector.ph1122, %vector.body1124
   %index1125 = phi i64 [ 0, %vector.ph1122 ], [ %index.next1126, %vector.body1124 ] ; 2 uses
-  %vec.ind = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph1122 ], [ %vec.ind.next, %vector.body1124 ] ; 5 uses
-  %41 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %42 = add <8 x i32> %41, splat (i32 1)
-  %43 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.ahd = add <8 x i32> %43, splat (i32 9)
-  %44 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.ahe = add <8 x i32> %44, splat (i32 17)
-  %45 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.ahf = add <8 x i32> %45, splat (i32 25)
-  %i.ahg = uitofp nneg <8 x i32> %42 to <8 x float>
+  %vec.ind = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %vector.ph1122 ], [ %vec.ind.next, %vector.body1124 ] ; 5 uses
+  %i.ahd = add <8 x i32> %vec.ind, splat (i32 8)
+  %i.ahe = add <8 x i32> %vec.ind, splat (i32 16)
+  %i.ahf = add <8 x i32> %vec.ind, splat (i32 24)
+  %i.ahg = uitofp nneg <8 x i32> %vec.ind to <8 x float>
   %i.ahh = uitofp nneg <8 x i32> %i.ahd to <8 x float>
   %i.ahi = uitofp nneg <8 x i32> %i.ahe to <8 x float>
   %i.ahj = uitofp nneg <8 x i32> %i.ahf to <8 x float>
@@ -766,7 +761,7 @@ vector.body1124:                                  ; preds = %vector.ph1122, %vec
   store <8 x float> %i.ahi, ptr %i.ahm, align 4, !tbaa !28
   store <8 x float> %i.ahj, ptr %i.ahn, align 4, !tbaa !28
   %index.next1126 = add nuw i64 %index1125, 32    ; 2 uses
-  %vec.ind.next = add nuw <8 x i64> %vec.ind, splat (i64 32)
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 32)
   %i.aho = icmp eq i64 %index.next1126, %n.vec1123
   br i1 %i.aho, label %middle.block1127, label %vector.body1124, !llvm.loop !67
 
@@ -780,22 +775,21 @@ vec.epilog.iter.check1132:                        ; preds = %middle.block1127
 
 vec.epilog.ph1134:                                ; preds = %vector.main.loop.iter.check1120, %vec.epilog.iter.check1132
   %vec.epilog.resume.val1129 = phi i64 [ %n.vec1123, %vec.epilog.iter.check1132 ], [ 0, %vector.main.loop.iter.check1120 ] ; 2 uses
-  %n.vec1135 = and i64 %wide.trip.count90.i, 2147483644 ; 3 uses
-  %broadcast.splatinsert1136 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val1129, i64 0
-  %broadcast.splat1137 = shufflevector <4 x i64> %broadcast.splatinsert1136, <4 x i64> poison, <4 x i32> zeroinitializer
-  %induction = or disjoint <4 x i64> %broadcast.splat1137, <i64 0, i64 1, i64 2, i64 3>
+  %n.vec1135 = and i64 %wide.trip.count90.i, 2147483640 ; 3 uses
+  %41 = trunc nuw nsw i64 %vec.epilog.resume.val1129 to i32
+  %broadcast.splatinsert1136 = insertelement <8 x i32> poison, i32 %41, i64 0
+  %broadcast.splat1137 = shufflevector <8 x i32> %broadcast.splatinsert1136, <8 x i32> poison, <8 x i32> zeroinitializer
+  %induction = or disjoint <8 x i32> %broadcast.splat1137, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br label %vec.epilog.vector.body1138
 
 vec.epilog.vector.body1138:                       ; preds = %vec.epilog.vector.body1138, %vec.epilog.ph1134
   %index1139 = phi i64 [ %vec.epilog.resume.val1129, %vec.epilog.ph1134 ], [ %index.next1141, %vec.epilog.vector.body1138 ] ; 2 uses
-  %vec.ind1140 = phi <4 x i64> [ %induction, %vec.epilog.ph1134 ], [ %vec.ind.next1142, %vec.epilog.vector.body1138 ] ; 2 uses
-  %46 = trunc <4 x i64> %vec.ind1140 to <4 x i32>
-  %47 = add <4 x i32> %46, splat (i32 1)
-  %48 = uitofp nneg <4 x i32> %47 to <4 x float>
+  %vec.ind1140 = phi <8 x i32> [ %induction, %vec.epilog.ph1134 ], [ %vec.ind.next1142, %vec.epilog.vector.body1138 ] ; 2 uses
+  %42 = uitofp nneg <8 x i32> %vec.ind1140 to <8 x float>
   %i.ahp = getelementptr inbounds nuw [4 x i8], ptr %i.aha, i64 %index1139
-  store <4 x float> %48, ptr %i.ahp, align 4, !tbaa !28
-  %index.next1141 = add nuw i64 %index1139, 4     ; 2 uses
-  %vec.ind.next1142 = add nuw nsw <4 x i64> %vec.ind1140, splat (i64 4)
+  store <8 x float> %42, ptr %i.ahp, align 4, !tbaa !28
+  %index.next1141 = add nuw i64 %index1139, 8     ; 2 uses
+  %vec.ind.next1142 = add <8 x i32> %vec.ind1140, splat (i32 8)
   %i.ahq = icmp eq i64 %index.next1141, %n.vec1135
   br i1 %i.ahq, label %vec.epilog.middle.block1143, label %vec.epilog.vector.body1138, !llvm.loop !68
 
@@ -1084,7 +1078,7 @@ bb.fy:                                            ; preds = %bb.fw, %bb.fx
   %i.amg = load ptr, ptr %i.ak, align 8, !tbaa !13 ; 15 uses
   %i.amh = load i8, ptr @_ZZ10gmx_anaeigiPPcE6bSplit, align 1, !tbaa !152, !range !153, !noundef !154
   %i.ami = trunc nuw i8 %i.amh to i1              ; 4 uses
-  %i.amj = load ptr, ptr %i.ba, align 8, !tbaa !169 ; 7 uses
+  %i.amj = load ptr, ptr %i.ba, align 8, !tbaa !170 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -1307,7 +1301,7 @@ middle.block1160:                                 ; preds = %vector.body1152
 
 vec.epilog.iter.check1165:                        ; preds = %middle.block1160
   %min.epilog.iters.check1166 = icmp eq i64 %i.any, 0
-  br i1 %min.epilog.iters.check1166, label %.lr.ph555.i.preheader, label %vec.epilog.ph1167, !prof !170
+  br i1 %min.epilog.iters.check1166, label %.lr.ph555.i.preheader, label %vec.epilog.ph1167, !prof !35
 
 vec.epilog.ph1167:                                ; preds = %vector.main.loop.iter.check1148, %vec.epilog.iter.check1165
   %vec.epilog.resume.val1162 = phi i64 [ %n.vec1151, %vec.epilog.iter.check1165 ], [ 0, %vector.main.loop.iter.check1148 ] ; 2 uses
@@ -1710,7 +1704,7 @@ bb.kk:                                            ; preds = %bb.kj
   %i.cco = load i32, ptr %i.af, align 4, !tbaa !9
   %i.ccp = load ptr, ptr %i.ah, align 8, !tbaa !134
   %i.ccq = load ptr, ptr %i.al, align 8, !tbaa !13
-  %i.ccr = load ptr, ptr %i.ba, align 8, !tbaa !169
+  %i.ccr = load ptr, ptr %i.ba, align 8, !tbaa !170
   invoke fastcc void @_ZL7overlapPKciPPA3_fiPiS3_iS4_PK16gmx_output_env_t(ptr noundef %i.eq, i32 noundef %i.ccm, ptr noundef %i.ccn, i32 noundef %i.cco, ptr noundef %i.ccp, ptr noundef %i.ccq, i32 noundef %.0230.lcssa959, ptr noundef %i.aek, ptr noundef %i.ccr)
           to label %bb.kl unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -1791,7 +1785,7 @@ middle.block1239:                                 ; preds = %vector.body1232
 
 vec.epilog.iter.check1244:                        ; preds = %middle.block1239
   %min.epilog.iters.check1245 = icmp eq i64 %i.cdc, 0
-  br i1 %min.epilog.iters.check1245, label %.lr.ph.i444.preheader, label %vec.epilog.ph1246, !prof !35
+  br i1 %min.epilog.iters.check1245, label %.lr.ph.i444.preheader, label %vec.epilog.ph1246, !prof !168
 
 vec.epilog.ph1246:                                ; preds = %vector.main.loop.iter.check1228, %vec.epilog.iter.check1244
   %vec.epilog.resume.val1241 = phi i64 [ %n.vec1231, %vec.epilog.iter.check1244 ], [ 0, %vector.main.loop.iter.check1228 ]
@@ -2194,7 +2188,7 @@ bb.lj:                                            ; preds = %bb.li
   br label %bb.lk
 
 bb.lk:                                            ; preds = %bb.lj, %bb.li
-  %i.cxk = load ptr, ptr %i.ba, align 8, !tbaa !169
+  %i.cxk = load ptr, ptr %i.ba, align 8, !tbaa !170
   invoke void @_Z8view_allPK16gmx_output_env_tiP8t_filenm(ptr noundef %i.cxk, i32 noundef 16, ptr noundef nonnull %29)
           to label %bb.ll unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -2597,7 +2591,7 @@ bb.a:
 
 iter.check:                                       ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %1 to i64      ; 12 uses
-  %min.iters.check = icmp ult i32 %1, 4
+  %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -2605,22 +2599,17 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check112, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.j = and i64 %wide.trip.count, 28
+  %i.j = and i64 %wide.trip.count, 24
   %n.vec = and i64 %wide.trip.count, 2147483616   ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
-  %8 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %9 = add <8 x i32> %8, splat (i32 1)
-  %10 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.k = add <8 x i32> %10, splat (i32 9)
-  %11 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.l = add <8 x i32> %11, splat (i32 17)
-  %12 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.m = add <8 x i32> %12, splat (i32 25)
-  %i.n = uitofp nneg <8 x i32> %9 to <8 x float>
+  %vec.ind = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
+  %i.k = add <8 x i32> %vec.ind, splat (i32 8)
+  %i.l = add <8 x i32> %vec.ind, splat (i32 16)
+  %i.m = add <8 x i32> %vec.ind, splat (i32 24)
+  %i.n = uitofp nneg <8 x i32> %vec.ind to <8 x float>
   %i.o = uitofp nneg <8 x i32> %i.k to <8 x float>
   %i.p = uitofp nneg <8 x i32> %i.l to <8 x float>
   %i.q = uitofp nneg <8 x i32> %i.m to <8 x float>
@@ -2633,7 +2622,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <8 x float> %i.p, ptr %i.t, align 4, !tbaa !28
   store <8 x float> %i.q, ptr %i.u, align 4, !tbaa !28
   %index.next = add nuw i64 %index, 32            ; 2 uses
-  %vec.ind.next = add nuw <8 x i64> %vec.ind, splat (i64 32)
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 32)
   %i.v = icmp eq i64 %index.next, %n.vec
   br i1 %i.v, label %middle.block, label %vector.body, !llvm.loop !190
 
@@ -2647,22 +2636,21 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %n.vec113 = and i64 %wide.trip.count, 2147483644 ; 3 uses
-  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val, i64 0
-  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
-  %induction = or disjoint <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3>
+  %n.vec113 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %8 = trunc nuw nsw i64 %vec.epilog.resume.val to i32
+  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %8, i64 0
+  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
+  %induction = or disjoint <8 x i32> %broadcast.splat, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index114 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next116, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind115 = phi <4 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next117, %vec.epilog.vector.body ] ; 2 uses
-  %13 = trunc <4 x i64> %vec.ind115 to <4 x i32>
-  %14 = add <4 x i32> %13, splat (i32 1)
-  %15 = uitofp nneg <4 x i32> %14 to <4 x float>
+  %vec.ind115 = phi <8 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next117, %vec.epilog.vector.body ] ; 2 uses
+  %9 = uitofp nneg <8 x i32> %vec.ind115 to <8 x float>
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %index114
-  store <4 x float> %15, ptr %i.w, align 4, !tbaa !28
-  %index.next116 = add nuw i64 %index114, 4       ; 2 uses
-  %vec.ind.next117 = add nuw nsw <4 x i64> %vec.ind115, splat (i64 4)
+  store <8 x float> %9, ptr %i.w, align 4, !tbaa !28
+  %index.next116 = add nuw i64 %index114, 8       ; 2 uses
+  %vec.ind.next117 = add <8 x i32> %vec.ind115, splat (i32 8)
   %i.x = icmp eq i64 %index.next116, %n.vec113
   br i1 %i.x, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !191
 
@@ -3065,7 +3053,7 @@ attributes #29 = { noreturn nounwind }
 !32 = !{!"llvm.loop.unroll.disable"}
 !33 = !{!23, !16, i64 0}
 !34 = !{!24, !17, i64 8}
-!35 = !{!"branch_weights", i32 4, i32 28}
+!35 = !{!"branch_weights", i32 8, i32 24}
 !36 = !{!17, !17, i64 0}
 !37 = !{!"llvm.loop.peeled.count", i32 1}
 !38 = distinct !{!38, !29}
@@ -3198,9 +3186,9 @@ attributes #29 = { noreturn nounwind }
 !165 = !{!"_ZTS6t_atom", !27, i64 0, !27, i64 4, !27, i64 8, !27, i64 12, !163, i64 16, !163, i64 18, !164, i64 20, !6, i64 24, !6, i64 28, !5, i64 32}
 !166 = !{!165, !27, i64 0}
 !167 = !{!161, !156, i64 8}
-!168 = !{!"p1 _ZTS16gmx_output_env_t", !10, i64 0}
-!169 = !{!168, !168, i64 0}
-!170 = !{!"branch_weights", i32 8, i32 24}
+!168 = !{!"branch_weights", i32 4, i32 28}
+!169 = !{!"p1 _ZTS16gmx_output_env_t", !10, i64 0}
+!170 = !{!169, !169, i64 0}
 !171 = !{!"p1 _ZTS11t_trxstatus", !10, i64 0}
 !172 = !{!171, !171, i64 0}
 !173 = !{!161, !158, i64 16}
