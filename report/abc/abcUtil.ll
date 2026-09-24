@@ -205,8 +205,8 @@ bb.bk:                                            ; preds = %bb.bj
 
 ._crit_edge449:                                   ; preds = %.lr.ph448, %bb.bi, %.preheader390
   %.4174.lcssa593607 = phi i32 [ %.4174.lcssa593, %.preheader390 ], [ 0, %bb.bi ], [ %.4174.lcssa593, %.lr.ph448 ]
-  %i.mn = sub nsw i32 %.09.i, %.4174.lcssa593607
-  %i.mo = shl i32 %i.mn, %i.cv
+  %i.mn = sub nuw nsw i32 %.09.i, %.4174.lcssa593607
+  %i.mo = shl nuw nsw i32 %i.mn, %i.cv
   br label %.sink.split
 
 .sink.split:                                      ; preds = %Vec_IntSum.exit291, %._crit_edge449
@@ -585,10 +585,10 @@ bb.by:                                            ; preds = %bb.bx
 
 ._crit_edge470:                                   ; preds = %bb.by, %._crit_edge470.loopexit.split.loop.exit, %.preheader389
   %.5.lcssa = phi i32 [ 0, %.preheader389 ], [ %i.pr, %._crit_edge470.loopexit.split.loop.exit ], [ %.09.i, %bb.by ]
-  %i.ps = sub nsw i32 %.09.i, %.5.lcssa
+  %i.ps = sub nuw nsw i32 %.09.i, %.5.lcssa
   %i.pt = icmp eq i32 %2, 4
   %i.pu = zext i1 %i.pt to i32
-  %i.pv = shl i32 %i.ps, %i.pu                    ; 2 uses
+  %i.pv = shl nuw nsw i32 %i.ps, %i.pu            ; 2 uses
   %i.pw = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.69, i32 noundef %2, i32 noundef %i.pv) ; 0 uses
   %i.px = add nsw i32 %i.pv, %.0156.lcssa
   %i.py = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.70, i32 noundef %i.px) ; 0 uses

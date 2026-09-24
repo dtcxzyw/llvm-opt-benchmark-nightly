@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %.lr.ph321
   %i.de = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %i.df = load i64, ptr %i.de, align 8, !noundef !4
   %..i207 = call noundef i64 @llvm.umax.i64(i64 %i.df, i64 %.sroa.2160.0319) ; 2 uses
-  %i.dg = add nuw nsw i64 %i.cs, 1                ; 2 uses
+  %i.dg = add i64 %i.cs, 1                        ; 2 uses
   %exitcond354.not = icmp eq i64 %i.dg, %i.ci
   br i1 %exitcond354.not, label %._crit_edge322, label %.lr.ph321
 

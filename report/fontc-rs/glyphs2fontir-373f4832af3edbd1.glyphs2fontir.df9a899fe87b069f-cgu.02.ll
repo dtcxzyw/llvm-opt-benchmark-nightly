@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !197
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
@@ -266,11 +266,11 @@ bb.b:                                             ; preds = %.preheader22, %bb.c
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %.sroa.0.0
   %.val.i = load ptr, ptr %1, align 8, !noalias !207, !nonnull !5, !align !6, !noundef !5
   %i.h = tail call noundef zeroext i1 @_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsbZq13ASDQ8l_10font_types3tag3TaguNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE12contains_keyBO_ECsjceHdiZFn9b_13glyphs2fontir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.g)
-  %i.i = add nuw i64 %.sroa.0.0, 1                ; 4 uses
+  %i.i = add nuw nsw i64 %.sroa.0.0, 1            ; 4 uses
   br i1 %i.h, label %bb.c, label %.preheader, !prof !8
 
 .preheader:                                       ; preds = %bb.b
-  %i.j = icmp ult i64 %i.i, %i.b
+  %i.j = icmp samesign ult i64 %i.i, %i.b
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 bb.c:                                             ; preds = %bb.b
@@ -354,8 +354,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !214
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
@@ -430,8 +430,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !220
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
@@ -495,11 +495,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val11 = load i64, ptr %i.g, align 8, !noundef !5
   %.val12 = load i64, ptr %i.h, align 8, !noundef !5
   %i.i = icmp eq i64 %.val11, %.val12
-  %.sroa.5.023 = add nuw i64 %.sroa.0.022, 1      ; 5 uses
+  %.sroa.5.023 = add nuw nsw i64 %.sroa.0.022, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.023, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.023, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -520,12 +520,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.prol
   store i64 %.val.prol, ptr %i.n, align 8
-  %i.q = add i64 %.sroa.0.022, 1
+  %i.q = add nuw i64 %.sroa.0.022, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.q, %bb.d ], [ %.sroa.0.022, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.022, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.022, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader

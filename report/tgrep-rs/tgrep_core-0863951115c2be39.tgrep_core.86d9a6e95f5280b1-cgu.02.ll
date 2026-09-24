@@ -204,8 +204,8 @@ _RNCNvNtCsbzNSmZPCnTx_10tgrep_core5query8simplifys_0B5_.exit: ; preds = %bb.c
   br i1 %.not, label %.thread, label %bb.c
 
 bb.h:                                             ; preds = %bb.g, %.split.i, %bb.f
-  %.sroa.5.023 = add nuw i64 %.sroa.0.022, 1      ; 2 uses
-  %i.w = icmp ult i64 %.sroa.5.023, %i.b
+  %.sroa.5.023 = add nuw nsw i64 %.sroa.0.022, 1  ; 2 uses
+  %i.w = icmp samesign ult i64 %.sroa.5.023, %i.b
   br i1 %i.w, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.h
@@ -372,11 +372,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val11 = load i32, ptr %i.g, align 4, !noundef !7
   %.val12 = load i32, ptr %i.h, align 4, !noundef !7
   %i.i = icmp eq i32 %.val11, %.val12
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 5 uses
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.024, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -398,12 +398,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 bb.d:                                             ; preds = %.lr.ph.prol
   %i.q = load i64, ptr %i.m, align 4
   store i64 %i.q, ptr %i.n, align 4
-  %i.r = add i64 %.sroa.0.023, 1
+  %i.r = add nuw i64 %.sroa.0.023, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.r, %bb.d ], [ %.sroa.0.023, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.023, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.023, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader
@@ -782,11 +782,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val11 = load i32, ptr %i.g, align 4, !noundef !7
   %.val12 = load i32, ptr %i.h, align 4, !noundef !7
   %i.i = icmp eq i32 %.val11, %.val12
-  %.sroa.5.023 = add nuw i64 %.sroa.0.022, 1      ; 5 uses
+  %.sroa.5.023 = add nuw nsw i64 %.sroa.0.022, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.023, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.023, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -807,12 +807,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.prol
   store i32 %.val.prol, ptr %i.n, align 4
-  %i.q = add i64 %.sroa.0.022, 1
+  %i.q = add nuw i64 %.sroa.0.022, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.q, %bb.d ], [ %.sroa.0.022, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.022, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.022, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader

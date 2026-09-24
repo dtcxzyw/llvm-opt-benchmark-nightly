@@ -47,11 +47,11 @@ bb.c:                                             ; preds = %bb.b, %bb.d
   %i.p = fcmp oeq double %.val14, %.val16
   %.sroa.0.0.in.i4.i.i = select i1 %i.n, i1 %i.o, i1 %i.p
   %.sroa.0.0.i.i = select i1 %.sroa.0.0.in.i.i.i, i1 %.sroa.0.0.in.i4.i.i, i1 false
-  %.sroa.5.030 = add nuw i64 %.sroa.0.029, 1      ; 4 uses
+  %.sroa.5.030 = add nuw nsw i64 %.sroa.0.029, 1  ; 4 uses
   br i1 %.sroa.0.0.i.i, label %.preheader, label %bb.d
 
 .preheader:                                       ; preds = %bb.c
-  %i.q = icmp ult i64 %.sroa.5.030, %i.b
+  %i.q = icmp samesign ult i64 %.sroa.5.030, %i.b
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
@@ -135,11 +135,11 @@ bb.c:                                             ; preds = %bb.b, %bb.d
   %i.p = fcmp oeq double %.val14, %.val16
   %.sroa.0.0.in.i4.i.i = select i1 %i.n, i1 %i.o, i1 %i.p
   %.sroa.0.0.i.i = select i1 %.sroa.0.0.in.i.i.i, i1 %.sroa.0.0.in.i4.i.i, i1 false
-  %.sroa.5.030 = add nuw i64 %.sroa.0.029, 1      ; 4 uses
+  %.sroa.5.030 = add nuw nsw i64 %.sroa.0.029, 1  ; 4 uses
   br i1 %.sroa.0.0.i.i, label %.preheader, label %bb.d
 
 .preheader:                                       ; preds = %bb.c
-  %i.q = icmp ult i64 %.sroa.5.030, %i.b
+  %i.q = icmp samesign ult i64 %.sroa.5.030, %i.b
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
@@ -213,11 +213,11 @@ bb.b:                                             ; preds = %.preheader22, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %.val.i, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !24, !noundef !4
   %i.l = tail call noundef zeroext i1 @_RNvXsf_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCsbZq13ASDQ8l_10font_types3tag3TagNtB5_13SliceContains14slice_containsCsgdm2QMcbaeA_10fontdrasil(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.i, i64 noundef %i.k)
-  %i.m = add nuw i64 %.sroa.0.0, 1                ; 4 uses
+  %i.m = add nuw nsw i64 %.sroa.0.0, 1            ; 4 uses
   br i1 %i.l, label %bb.c, label %.preheader, !prof !6
 
 .preheader:                                       ; preds = %bb.b
-  %i.n = icmp ult i64 %i.m, %i.b
+  %i.n = icmp samesign ult i64 %i.m, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 bb.c:                                             ; preds = %bb.b
@@ -378,8 +378,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !41
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d

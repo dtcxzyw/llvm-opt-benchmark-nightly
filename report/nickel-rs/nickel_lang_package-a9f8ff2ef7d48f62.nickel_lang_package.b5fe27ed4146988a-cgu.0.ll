@@ -206,8 +206,8 @@ bb.h:                                             ; preds = %bb.g
   br label %"_ZN4core3ptr57drop_in_place$LT$nickel_lang_package..version..SemVer$GT$17he028fc55a817890dE.exit"
 
 "_ZN4core3ptr57drop_in_place$LT$nickel_lang_package..version..SemVer$GT$17he028fc55a817890dE.exit": ; preds = %bb.g, %bb.h
-  %.sroa.5.033 = add nuw i64 %.sroa.0.032, 1      ; 2 uses
-  %i.ad = icmp ult i64 %.sroa.5.033, %i.b
+  %.sroa.5.033 = add nuw nsw i64 %.sroa.0.032, 1  ; 2 uses
+  %i.ad = icmp samesign ult i64 %.sroa.5.033, %i.b
   br i1 %i.ad, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %"_ZN4core3ptr57drop_in_place$LT$nickel_lang_package..version..SemVer$GT$17he028fc55a817890dE.exit21", %"_ZN4core3ptr57drop_in_place$LT$nickel_lang_package..version..SemVer$GT$17he028fc55a817890dE.exit"

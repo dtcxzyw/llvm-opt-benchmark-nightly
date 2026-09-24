@@ -203,8 +203,8 @@ bb.c:                                             ; preds = %.lr.ph47
 
 ._crit_edge48:                                    ; preds = %bb.c, %._crit_edge48.loopexit.split.loop.exit, %._crit_edge
   %.0.lcssa = phi i32 [ 0, %._crit_edge ], [ %i.h, %._crit_edge48.loopexit.split.loop.exit ], [ %2, %bb.c ] ; 2 uses
-  %i.i = sub nsw i32 %0, %.034.lcssa              ; 4 uses
-  %i.j = sub nsw i32 %2, %.0.lcssa                ; 2 uses
+  %i.i = sub nuw nsw i32 %0, %.034.lcssa          ; 4 uses
+  %i.j = sub nuw nsw i32 %2, %.0.lcssa            ; 2 uses
   %i.k = icmp sgt i32 %i.i, %i.j
   br i1 %i.k, label %.loopexit, label %bb.d
 
@@ -372,8 +372,8 @@ bb.c:                                             ; preds = %.lr.ph47.i
 
 ._crit_edge48.i:                                  ; preds = %bb.c, %._crit_edge48.loopexit.split.loop.exit.i, %._crit_edge.i
   %.0.lcssa.i42 = phi i32 [ 0, %._crit_edge.i ], [ %i.ap, %._crit_edge48.loopexit.split.loop.exit.i ], [ %3, %bb.c ] ; 2 uses
-  %i.aq = sub nsw i32 %0, %.034.lcssa.i           ; 4 uses
-  %i.ar = sub nsw i32 %3, %.0.lcssa.i42           ; 2 uses
+  %i.aq = sub nuw nsw i32 %0, %.034.lcssa.i       ; 4 uses
+  %i.ar = sub nuw nsw i32 %3, %.0.lcssa.i42       ; 2 uses
   %i.as = icmp sgt i32 %i.aq, %i.ar
   br i1 %i.as, label %Cudd_ApaCompare.exit, label %bb.d
 

@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %.preheader22, %bb.d
   %.sroa.0.0 = phi i64 [ %i.i, %bb.d ], [ 0, %.preheader22 ] ; 4 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %.sroa.0.0
   %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7literal15EnumLiteralTypebE15retain_in_orderNCINvMs4_NtB9_3mapINtB2n_8IndexMapBN_bINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCNvMs_NtNtBR_13set_theoretic7builderNtB4u_12UnionElement10try_reduces3_0E0E0BT_(ptr nonnull %1, ptr noalias noundef align 8 dereferenceable(24) %i.g)
-  %i.i = add nuw i64 %.sroa.0.0, 1                ; 4 uses
+  %i.i = add nuw nsw i64 %.sroa.0.0, 1            ; 4 uses
   br i1 %i.h, label %bb.d, label %.preheader, !prof !15
 
 .preheader:                                       ; preds = %bb.b
-  %i.j = icmp ult i64 %i.i, %i.b
+  %i.j = icmp samesign ult i64 %i.i, %i.b
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 bb.c:                                             ; preds = %.lr.ph
@@ -276,11 +276,11 @@ bb.b:                                             ; preds = %.preheader22, %bb.d
   %.sroa.0.0 = phi i64 [ %i.i, %bb.d ], [ 0, %.preheader22 ] ; 4 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %.sroa.0.0
   %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7literal16BytesLiteralTypebE15retain_in_orderNCINvMs4_NtB9_3mapINtB2o_8IndexMapBN_bINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCNvMs_NtNtBR_13set_theoretic7builderNtB4v_12UnionElement10try_reduces2_0E0E0BT_(ptr nonnull %1, ptr noalias noundef align 8 dereferenceable(24) %i.g)
-  %i.i = add nuw i64 %.sroa.0.0, 1                ; 4 uses
+  %i.i = add nuw nsw i64 %.sroa.0.0, 1            ; 4 uses
   br i1 %i.h, label %bb.d, label %.preheader, !prof !15
 
 .preheader:                                       ; preds = %bb.b
-  %i.j = icmp ult i64 %i.i, %i.b
+  %i.j = icmp samesign ult i64 %i.i, %i.b
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 bb.c:                                             ; preds = %.lr.ph
@@ -348,11 +348,11 @@ bb.b:                                             ; preds = %.preheader22, %bb.d
   %.sroa.0.0 = phi i64 [ %i.i, %bb.d ], [ 0, %.preheader22 ] ; 4 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %.sroa.0.0
   %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7literal17StringLiteralTypebE15retain_in_orderNCINvMs4_NtB9_3mapINtB2p_8IndexMapBN_bINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCNvMs_NtNtBR_13set_theoretic7builderNtB4w_12UnionElement10try_reduces1_0E0E0BT_(ptr nonnull %1, ptr noalias noundef align 8 dereferenceable(24) %i.g)
-  %i.i = add nuw i64 %.sroa.0.0, 1                ; 4 uses
+  %i.i = add nuw nsw i64 %.sroa.0.0, 1            ; 4 uses
   br i1 %i.h, label %bb.d, label %.preheader, !prof !15
 
 .preheader:                                       ; preds = %bb.b
-  %i.j = icmp ult i64 %i.i, %i.b
+  %i.j = icmp samesign ult i64 %i.i, %i.b
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 bb.c:                                             ; preds = %.lr.ph
@@ -513,8 +513,8 @@ bb.g:                                             ; preds = %_RNCINvMs_NtCs5e9M2
   br i1 %i.al, label %.loopexit, label %bb.b
 
 _RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuE15retain_in_orderNCINvMs4_NtB9_3mapINtB2s_8IndexMapBN_uINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCINvMs4_NtB9_3setINtB4B_8IndexSetBN_B2V_E6retainNCNCNvMNvMs_NtBR_8genericsNtB5r_14GenericContext29remove_callable_only_typevarsNtB5m_16TypeVarLocations8finalize00E0E0E0BT_.exit.thread: ; preds = %bb.e, %bb.b, %_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuE15retain_in_orderNCINvMs4_NtB9_3mapINtB2s_8IndexMapBN_uINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCINvMs4_NtB9_3setINtB4B_8IndexSetBN_B2V_E6retainNCNCNvMNvMs_NtBR_8genericsNtB5r_14GenericContext29remove_callable_only_typevarsNtB5m_16TypeVarLocations8finalize00E0E0E0BT_.exit, %bb.d
-  %.sroa.7.038 = add nuw i64 %.sroa.0.0, 1        ; 2 uses
-  %i.am = icmp ult i64 %.sroa.7.038, %i.d
+  %.sroa.7.038 = add nuw nsw i64 %.sroa.0.0, 1    ; 2 uses
+  %i.am = icmp samesign ult i64 %.sroa.7.038, %i.d
   br i1 %i.am, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuE15retain_in_orderNCINvMs4_NtB9_3mapINtB2s_8IndexMapBN_uINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCINvMs4_NtB9_3setINtB4B_8IndexSetBN_B2V_E6retainNCNCNvMNvMs_NtBR_8genericsNtB5r_14GenericContext29remove_callable_only_typevarsNtB5m_16TypeVarLocations8finalize00E0E0E0BT_.exit.thread
@@ -582,7 +582,7 @@ bb.l:                                             ; preds = %_RNCINvMs_NtCs5e9M2
 
 _RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuE15retain_in_orderNCINvMs4_NtB9_3mapINtB2s_8IndexMapBN_uINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCINvMs4_NtB9_3setINtB4B_8IndexSetBN_B2V_E6retainNCNCNvMNvMs_NtBR_8genericsNtB5r_14GenericContext29remove_callable_only_typevarsNtB5m_16TypeVarLocations8finalize00E0E0E0BT_.exit13.thread: ; preds = %bb.k, %bb.j, %.noexc, %_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuE15retain_in_orderNCINvMs4_NtB9_3mapINtB2s_8IndexMapBN_uINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCINvMs4_NtB9_3setINtB4B_8IndexSetBN_B2V_E6retainNCNCNvMNvMs_NtBR_8genericsNtB5r_14GenericContext29remove_callable_only_typevarsNtB5m_16TypeVarLocations8finalize00E0E0E0BT_.exit13, %bb.l
   %.sroa.13.1 = phi i64 [ %i.bd, %bb.l ], [ %.sroa.13.039, %_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CoreNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuE15retain_in_orderNCINvMs4_NtB9_3mapINtB2s_8IndexMapBN_uINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCINvMs4_NtB9_3setINtB4B_8IndexSetBN_B2V_E6retainNCNCNvMNvMs_NtBR_8genericsNtB5r_14GenericContext29remove_callable_only_typevarsNtB5m_16TypeVarLocations8finalize00E0E0E0BT_.exit13 ], [ %.sroa.13.039, %.noexc ], [ %.sroa.13.039, %bb.j ], [ %.sroa.13.039, %bb.k ] ; 2 uses
-  %.sroa.7.0 = add nuw nsw i64 %.sroa.7.040, 1    ; 2 uses
+  %.sroa.7.0 = add i64 %.sroa.7.040, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.7.0, %i.d
   br i1 %exitcond.not, label %._crit_edge, label %bb.h
 }
@@ -610,11 +610,11 @@ bb.b:                                             ; preds = %.preheader26, %bb.d
   %i.i = getelementptr i8, ptr %i.g, i64 16
   %.val11 = load i8, ptr %i.i, align 8, !range !22, !noundef !14
   %i.j = tail call fastcc noundef zeroext i1 @_RNCINvMs_NtCs5e9M2GLoJMY_8indexmap5innerINtB7_4CorexbE15retain_in_orderNCINvMs4_NtB9_3mapINtB1g_8IndexMapxbINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE6retainNCNvMs_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types13set_theoretic7builderNtB3l_12UnionElement10try_reduces0_0E0E0B3r_(ptr nonnull %1, i64 %.val10, i8 %.val11)
-  %i.k = add nuw i64 %.sroa.0.0, 1                ; 4 uses
+  %i.k = add nuw nsw i64 %.sroa.0.0, 1            ; 4 uses
   br i1 %i.j, label %bb.d, label %.preheader, !prof !15
 
 .preheader:                                       ; preds = %bb.b
-  %i.l = icmp ult i64 %i.k, %i.b
+  %i.l = icmp samesign ult i64 %i.k, %i.b
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.c:                                             ; preds = %.lr.ph
@@ -1017,11 +1017,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val = load i32, ptr %i.g, align 4, !noundef !14
   %.val11 = load i32, ptr %i.h, align 4, !noundef !14
   %i.i = icmp eq i32 %.val, %.val11
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 5 uses
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.024, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -1042,12 +1042,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.prol
   store i32 %.val12.prol, ptr %i.n, align 4
-  %i.q = add i64 %.sroa.0.023, 1
+  %i.q = add nuw i64 %.sroa.0.023, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.q, %bb.d ], [ %.sroa.0.023, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.023, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.023, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader
@@ -1450,8 +1450,8 @@ bb.d:                                             ; preds = %bb.c
           to label %.preheader unwind label %bb.e
 
 .preheader:                                       ; preds = %bb.d
-  %.sroa.5.028 = add nuw i64 %.sroa.0.027, 1      ; 2 uses
-  %i.p = icmp ult i64 %.sroa.5.028, %i.b
+  %.sroa.5.028 = add nuw nsw i64 %.sroa.0.027, 1  ; 2 uses
+  %i.p = icmp samesign ult i64 %.sroa.5.028, %i.b
   br i1 %i.p, label %.lr.ph, label %._crit_edge
 
 bb.e:                                             ; preds = %bb.d

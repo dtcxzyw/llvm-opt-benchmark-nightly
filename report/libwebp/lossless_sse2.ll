@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.h = load ptr, ptr @VP8LPredictorsAdd_C, align 16, !tbaa !9
   %i.i = zext nneg i32 %.0.lcssa to i64           ; 2 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.i
-  %i.k = sub nsw i32 %2, %.0.lcssa
+  %i.k = sub nuw nsw i32 %2, %.0.lcssa
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.i
   tail call void %i.h(ptr noundef %i.j, ptr noundef null, i32 noundef %i.k, ptr noundef %i.l) #7
   br label %bb.c
@@ -262,7 +262,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.t = zext nneg i32 %.0.lcssa to i64           ; 3 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.t
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.t
-  %i.w = sub nsw i32 %2, %.0.lcssa
+  %i.w = sub nuw nsw i32 %2, %.0.lcssa
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.t
   tail call void %i.s(ptr noundef %i.u, ptr noundef %i.v, i32 noundef %i.w, ptr noundef %i.x) #7
   br label %bb.c
@@ -312,7 +312,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.k = zext nneg i32 %.0.lcssa to i64           ; 3 uses
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.k
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.k
-  %i.n = sub nsw i32 %2, %.0.lcssa
+  %i.n = sub nuw nsw i32 %2, %.0.lcssa
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.k
   tail call void %i.j(ptr noundef %i.l, ptr noundef %i.m, i32 noundef %i.n, ptr noundef %i.o) #7
   br label %bb.c
@@ -363,7 +363,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.l = zext nneg i32 %.0.lcssa to i64           ; 3 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.l
-  %i.o = sub nsw i32 %2, %.0.lcssa
+  %i.o = sub nuw nsw i32 %2, %.0.lcssa
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.l
   tail call void %i.k(ptr noundef %i.m, ptr noundef %i.n, i32 noundef %i.o, ptr noundef %i.p) #7
   br label %bb.c
@@ -414,7 +414,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.l = zext nneg i32 %.0.lcssa to i64           ; 3 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.l
-  %i.o = sub nsw i32 %2, %.0.lcssa
+  %i.o = sub nuw nsw i32 %2, %.0.lcssa
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.l
   tail call void %i.k(ptr noundef %i.m, ptr noundef %i.n, i32 noundef %i.o, ptr noundef %i.p) #7
   br label %bb.c
@@ -631,7 +631,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.t = zext nneg i32 %.0.lcssa to i64           ; 3 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.t
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.t
-  %i.w = sub nsw i32 %2, %.0.lcssa
+  %i.w = sub nuw nsw i32 %2, %.0.lcssa
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.t
   tail call void %i.s(ptr noundef %i.u, ptr noundef %i.v, i32 noundef %i.w, ptr noundef %i.x) #7
   br label %bb.c
@@ -690,7 +690,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.t = zext nneg i32 %.0.lcssa to i64           ; 3 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.t
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.t
-  %i.w = sub nsw i32 %2, %.0.lcssa
+  %i.w = sub nuw nsw i32 %2, %.0.lcssa
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.t
   tail call void %i.s(ptr noundef %i.u, ptr noundef %i.v, i32 noundef %i.w, ptr noundef %i.x) #7
   br label %bb.c
@@ -813,7 +813,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.cd = zext nneg i32 %.0.lcssa to i64          ; 3 uses
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cd
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.cd
-  %i.cg = sub nsw i32 %2, %.0.lcssa
+  %i.cg = sub nuw nsw i32 %2, %.0.lcssa
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.cd
   tail call void %i.cc(ptr noundef %i.ce, ptr noundef %i.cf, i32 noundef %i.cg, ptr noundef %i.ch) #7
   br label %bb.c
@@ -956,7 +956,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.cx = zext nneg i32 %.0.lcssa to i64          ; 3 uses
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cx
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.cx
-  %i.da = sub nsw i32 %2, %.0.lcssa
+  %i.da = sub nuw nsw i32 %2, %.0.lcssa
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.cx
   tail call void %i.cw(ptr noundef %i.cy, ptr noundef %i.cz, i32 noundef %i.da, ptr noundef %i.db) #7
   br label %bb.c
@@ -1056,7 +1056,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.bg = zext nneg i32 %.0.lcssa to i64          ; 3 uses
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bg
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.bg
-  %i.bj = sub nsw i32 %2, %.0.lcssa
+  %i.bj = sub nuw nsw i32 %2, %.0.lcssa
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bg
   tail call void %i.bf(ptr noundef %i.bh, ptr noundef %i.bi, i32 noundef %i.bj, ptr noundef %i.bk) #7
   br label %bb.c
@@ -1173,7 +1173,7 @@ bb.a:
 bb.b:                                             ; preds = %._crit_edge
   %i.m = zext nneg i32 %.0.lcssa to i64           ; 2 uses
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.m
-  %i.o = sub nsw i32 %1, %.0.lcssa
+  %i.o = sub nuw nsw i32 %1, %.0.lcssa
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.m
   tail call void @VP8LAddGreenToBlueAndRed_C(ptr noundef %i.n, i32 noundef %i.o, ptr noundef %i.p) #7
   br label %bb.c
@@ -1261,7 +1261,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 bb.c:                                             ; preds = %._crit_edge
   %i.ax = zext nneg i32 %.0.lcssa to i64          ; 2 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ax
-  %i.az = sub nsw i32 %2, %.0.lcssa
+  %i.az = sub nuw nsw i32 %2, %.0.lcssa
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ax
   tail call void @VP8LTransformColorInverse_C(ptr noundef nonnull %0, ptr noundef %i.ay, i32 noundef %i.az, ptr noundef %i.ba) #7
   br label %bb.d

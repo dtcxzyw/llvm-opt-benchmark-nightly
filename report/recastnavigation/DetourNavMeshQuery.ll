@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.lr.ph.i
   br label %_ZL14insertIntervalP13dtSegIntervalRiissj.exit
 
 bb.g:                                             ; preds = %._crit_edge.i
-  %i.ae = sub nsw i32 %.2, %.0.lcssa.i
+  %i.ae = sub nuw nsw i32 %.2, %.0.lcssa.i
   %i.af = zext nneg i32 %.0.lcssa.i to i64        ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.af ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
@@ -262,7 +262,7 @@ bb.h:                                             ; preds = %.lr.ph.i150
   br label %._crit_edge._crit_edge.i145
 
 bb.i:                                             ; preds = %._crit_edge.i141
-  %i.au = sub nsw i32 %i.an, %.0.lcssa.i142
+  %i.au = sub nuw nsw i32 %i.an, %.0.lcssa.i142
   %i.av = zext nneg i32 %.0.lcssa.i142 to i64     ; 2 uses
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.av ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -393,7 +393,7 @@ bb.m:                                             ; preds = %.lr.ph.i168
   br label %._crit_edge._crit_edge.i163
 
 bb.n:                                             ; preds = %._crit_edge.i159
-  %i.dc = sub nsw i32 %.0182196, %.0.lcssa.i160
+  %i.dc = sub nuw nsw i32 %.0182196, %.0.lcssa.i160
   %i.dd = zext nneg i32 %.0.lcssa.i160 to i64     ; 2 uses
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.dd ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 8

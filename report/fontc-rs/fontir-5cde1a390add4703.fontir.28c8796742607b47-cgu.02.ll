@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !165
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
@@ -278,8 +278,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !171
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
