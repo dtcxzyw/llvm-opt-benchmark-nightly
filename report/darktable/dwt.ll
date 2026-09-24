@@ -191,8 +191,8 @@ vector.ph:                                        ; preds = %.lr.ph
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body.interim, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ]
-  %vec.ind = phi <32 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>, %vector.ph ], [ %vec.ind.next, %vector.body.interim ] ; 3 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ] ; 2 uses
+  %vec.ind = phi <32 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>, %vector.ph ], [ %vec.ind.next, %vector.body.interim ] ; 2 uses
   %i.e = shl nuw <32 x i32> splat (i32 1), %vec.ind
   %i.f = sitofp reassoc nsz arcp contract afn <32 x i32> %i.e to <32 x float>
   %i.g = fmul reassoc nsz arcp contract afn <32 x float> %broadcast.splat, %i.f
@@ -219,8 +219,9 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 
 vector.early.exit:                                ; preds = %vector.body
   %first.active.lane = tail call i64 @llvm.experimental.cttz.elts.i64.v32i1(<32 x i1> %i.i, i1 false)
-  %1 = extractelement <32 x i32> %vec.ind, i64 %first.active.lane
-  %i.l = add i32 %1, 1
+  %1 = trunc i64 %first.active.lane to i32
+  %2 = add i32 %index, %1
+  %i.l = add i32 %2, 1
   br label %_first_scale_visible.exit
 
 bb.b:                                             ; preds = %scalar.ph
