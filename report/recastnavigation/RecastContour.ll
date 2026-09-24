@@ -205,14 +205,9 @@ bb.bo:                                            ; preds = %_ZN12rcVectorBaseIi
   %i.acv = shl i64 %.sroa.75.17.us1046, 2
   %i.acw = tail call noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef %i.acv, i32 noundef 1) #9 ; 4 uses
   %.not.i442.not.us = icmp eq ptr %i.acw, null
-  br i1 %.not.i442.not.us, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit331.i.us.thread, label %.lr.ph.i.i443.us.preheader
+  br i1 %.not.i442.not.us, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit331.i.us.thread, label %.lr.ph.i.i443.preheader.us
 
-.lr.ph.i.i443.us.preheader:                       ; preds = %bb.bo
-  %6 = load i32, ptr %.sroa.104.18.us1047, align 4, !tbaa !12
-  store i32 %6, ptr %i.acw, align 4, !tbaa !12
-  br label %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit331.i.us.thread
-
-_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit331.i.us.thread: ; preds = %bb.bo, %.lr.ph.i.i443.us.preheader
+_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit331.i.us.thread: ; preds = %bb.bo, %.lr.ph.i.i443.preheader.us
   %i.acx = getelementptr inbounds nuw i8, ptr %i.acw, i64 4
   store i32 %.0416.lcssa.i.us, ptr %i.acx, align 4, !tbaa !12
   tail call void @_Z6rcFreePv(ptr noundef nonnull %.sroa.104.18.us1047) #9
@@ -614,6 +609,11 @@ bb.dd:                                            ; preds = %.lr.ph819.us, %bb.d
   %i.axz = load i32, ptr %i.awn, align 8, !tbaa !141
   %i.aya = icmp sgt i32 %i.axz, 0
   br i1 %i.aya, label %.lr.ph817.us, label %.loopexit763.us
+
+.lr.ph.i.i443.preheader.us:                       ; preds = %bb.bo
+  %6 = load i32, ptr %.sroa.104.18.us1047, align 4, !tbaa !12
+  store i32 %6, ptr %i.acw, align 4, !tbaa !12
+  br label %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit331.i.us.thread
 
 .lr.ph817.us:                                     ; preds = %.preheader762.us
   %i.ayb = load ptr, ptr %i.awk, align 8, !tbaa !139

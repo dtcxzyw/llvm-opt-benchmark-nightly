@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %.critedge2.i.i, %.l
   %i.he = fadd double %.1.i.i38, %.250.i.i.prol   ; 3 uses
   %i.hf = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.051.i.i.prol
   store double %i.he, ptr %i.hf, align 8, !tbaa !73
-  %i.hg = add i64 %.051.i.i.prol, 1               ; 2 uses
+  %i.hg = add nuw nsw i64 %.051.i.i.prol, 1       ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph52.i.i.prol.loopexit, label %.lr.ph52.i.i.prol, !llvm.loop !53
@@ -222,18 +222,18 @@ bb.ac:                                            ; preds = %.critedge2.i.i, %.l
   %i.hj = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.051.i.i
   store double %i.hi, ptr %i.hj, align 8, !tbaa !73
   %i.hk = fadd double %.1.i.i38, %i.hi            ; 2 uses
-  %i.hl = getelementptr [8 x i8], ptr %i.gg, i64 %.051.i.i
-  %i.hm = getelementptr i8, ptr %i.hl, i64 8
+  %i.hl = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.051.i.i
+  %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 8
   store double %i.hk, ptr %i.hm, align 8, !tbaa !73
   %i.hn = fadd double %.1.i.i38, %i.hk            ; 2 uses
-  %i.ho = getelementptr [8 x i8], ptr %i.gg, i64 %.051.i.i
-  %i.hp = getelementptr i8, ptr %i.ho, i64 16
+  %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.051.i.i
+  %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 16
   store double %i.hn, ptr %i.hp, align 8, !tbaa !73
-  %i.hq = add i64 %.051.i.i, 3                    ; 2 uses
+  %i.hq = add nuw nsw i64 %.051.i.i, 3            ; 2 uses
   %i.hr = fadd double %.1.i.i38, %i.hn            ; 2 uses
   %i.hs = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %i.hq
   store double %i.hr, ptr %i.hs, align 8, !tbaa !73
-  %i.ht = add i64 %.051.i.i, 4
+  %i.ht = add nuw nsw i64 %.051.i.i, 4
   %exitcond53.not.i.i.3 = icmp eq i64 %i.hq, %spec.select21.i
   br i1 %exitcond53.not.i.i.3, label %getRankseps.exit.i, label %.lr.ph52.i.i, !llvm.loop !54
 
@@ -259,7 +259,7 @@ bb.af:                                            ; preds = %bb.af, %bb.ad
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.01931.i
   %i.hz = load double, ptr %i.hy, align 8, !tbaa !73
   %i.ia = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.hx, ptr noundef nonnull @.str.5, double noundef %i.hz) #14 ; 0 uses
-  %i.ib = add nuw i64 %.01931.i, 1
+  %i.ib = add nuw nsw i64 %.01931.i, 1
   %exitcond.not.i = icmp eq i64 %.01931.i, %spec.select21.i
   br i1 %exitcond.not.i, label %bb.ae, label %bb.af, !llvm.loop !55
 

@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %.noexc.i.i
     #dbg_value(i8 0, !3638, !DIExpression(DW_OP_LLVM_fragment, 128, 8), !2302)
     #dbg_value(ptr poison, !3649, !DIExpression(), !2303)
     #dbg_value(i64 0, !3650, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2304)
-    #dbg_value(i64 1, !3650, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !2304)
+    #dbg_value(i64 0, !3650, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !2304)
     #dbg_value(i8 0, !3650, !DIExpression(DW_OP_LLVM_fragment, 128, 8), !2304)
     #dbg_value(i64 0, !3651, !DIExpression(), !2305)
     #dbg_declare(ptr poison, !3669, !DIExpression(), !2311)

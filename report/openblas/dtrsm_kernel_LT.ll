@@ -205,9 +205,8 @@ bb.t:                                             ; preds = %bb.s
 .split47.us.i222.7:                               ; preds = %bb.t, %bb.s
   %.idx411 = shl nsw i64 %.3128.lcssa, 6
   %i.sv = getelementptr inbounds i8, ptr %.3138.lcssa, i64 %.idx411 ; 36 uses
-  %9 = load double, ptr %i.sv, align 8, !tbaa !43
   %i.sw = getelementptr inbounds [8 x i8], ptr %.0141.lcssa, i64 %.3128.lcssa ; 8 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.sw, i64 8
+  %9 = load double, ptr %i.sv, align 8, !tbaa !43
   %i.sx = load double, ptr %.3132.lcssa, align 8, !tbaa !43
   %i.sy = fmul double %9, %i.sx                   ; 3 uses
   store double %i.sy, ptr %i.sw, align 8, !tbaa !43
@@ -257,11 +256,11 @@ bb.t:                                             ; preds = %bb.s
   store double %i.ub, ptr %gep.us.i231.6359, align 8, !tbaa !43
   %.phi.trans.insert371.a = getelementptr inbounds nuw i8, ptr %i.sv, i64 72
   %.pre372.a = load double, ptr %.phi.trans.insert371.a, align 8, !tbaa !43
-  %i.uc = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 8
-  %i.ud = getelementptr inbounds nuw i8, ptr %i.sw, i64 16
+  %i.uc = getelementptr inbounds nuw i8, ptr %i.sw, i64 8
+  %i.ud = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 8
   %i.ue = fmul double %.pre372.a, %i.td           ; 3 uses
-  store double %i.ue, ptr %10, align 8, !tbaa !43
   store double %i.ue, ptr %i.uc, align 8, !tbaa !43
+  store double %i.ue, ptr %i.ud, align 8, !tbaa !43
   %i.uf = fneg double %i.ue                       ; 6 uses
   %i.ug = getelementptr inbounds nuw i8, ptr %i.sv, i64 80
   %i.uh = load double, ptr %i.ug, align 8, !tbaa !43
@@ -301,11 +300,11 @@ bb.t:                                             ; preds = %bb.s
   store double %i.vd, ptr %gep.us.i231.1322.5, align 8, !tbaa !43
   %.phi.trans.insert374.a = getelementptr inbounds nuw i8, ptr %i.sv, i64 144
   %.pre375.a = load double, ptr %.phi.trans.insert374.a, align 8, !tbaa !43
-  %i.ve = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 16
-  %i.vf = getelementptr inbounds nuw i8, ptr %i.sw, i64 24
+  %i.ve = getelementptr inbounds nuw i8, ptr %i.sw, i64 16
+  %i.vf = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 16
   %i.vg = fmul double %.pre375.a, %i.uj           ; 3 uses
-  store double %i.vg, ptr %i.ud, align 8, !tbaa !43
   store double %i.vg, ptr %i.ve, align 8, !tbaa !43
+  store double %i.vg, ptr %i.vf, align 8, !tbaa !43
   %i.vh = fneg double %i.vg                       ; 5 uses
   %i.vi = getelementptr inbounds nuw i8, ptr %i.sv, i64 152
   %i.vj = load double, ptr %i.vi, align 8, !tbaa !43
@@ -339,11 +338,11 @@ bb.t:                                             ; preds = %bb.s
   store double %i.wb, ptr %gep.us.i231.2332.4, align 8, !tbaa !43
   %.phi.trans.insert377 = getelementptr inbounds nuw i8, ptr %i.sv, i64 216
   %.pre378 = load double, ptr %.phi.trans.insert377, align 8, !tbaa !43
-  %i.wc = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 24
-  %i.wd = getelementptr inbounds nuw i8, ptr %i.sw, i64 32
+  %i.wc = getelementptr inbounds nuw i8, ptr %i.sw, i64 24
+  %i.wd = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 24
   %i.we = fmul double %.pre378, %i.vl             ; 3 uses
-  store double %i.we, ptr %i.vf, align 8, !tbaa !43
   store double %i.we, ptr %i.wc, align 8, !tbaa !43
+  store double %i.we, ptr %i.wd, align 8, !tbaa !43
   %i.wf = fneg double %i.we                       ; 4 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %i.sv, i64 224
   %i.wh = load double, ptr %i.wg, align 8, !tbaa !43
@@ -371,11 +370,11 @@ bb.t:                                             ; preds = %bb.s
   store double %i.wv, ptr %gep.us.i231.3343.3, align 8, !tbaa !43
   %.phi.trans.insert380 = getelementptr inbounds nuw i8, ptr %i.sv, i64 288
   %.pre381 = load double, ptr %.phi.trans.insert380, align 8, !tbaa !43
-  %i.ww = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 32
-  %i.wx = getelementptr inbounds nuw i8, ptr %i.sw, i64 40
+  %i.ww = getelementptr inbounds nuw i8, ptr %i.sw, i64 32
+  %i.wx = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 32
   %i.wy = fmul double %.pre381, %i.wj             ; 3 uses
-  store double %i.wy, ptr %i.wd, align 8, !tbaa !43
   store double %i.wy, ptr %i.ww, align 8, !tbaa !43
+  store double %i.wy, ptr %i.wx, align 8, !tbaa !43
   %i.wz = fneg double %i.wy                       ; 3 uses
   %i.xa = getelementptr inbounds nuw i8, ptr %i.sv, i64 296
   %i.xb = load double, ptr %i.xa, align 8, !tbaa !43
@@ -397,11 +396,11 @@ bb.t:                                             ; preds = %bb.s
   store double %i.xl, ptr %gep.us.i231.4.2, align 8, !tbaa !43
   %.phi.trans.insert383 = getelementptr inbounds nuw i8, ptr %i.sv, i64 360
   %.pre384 = load double, ptr %.phi.trans.insert383, align 8, !tbaa !43
-  %i.xm = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 40
-  %i.xn = getelementptr inbounds nuw i8, ptr %i.sw, i64 48
+  %i.xm = getelementptr inbounds nuw i8, ptr %i.sw, i64 40
+  %i.xn = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 40
   %i.xo = fmul double %.pre384, %i.xd             ; 3 uses
-  store double %i.xo, ptr %i.wx, align 8, !tbaa !43
   store double %i.xo, ptr %i.xm, align 8, !tbaa !43
+  store double %i.xo, ptr %i.xn, align 8, !tbaa !43
   %i.xp = fneg double %i.xo                       ; 2 uses
   %i.xq = getelementptr inbounds nuw i8, ptr %i.sv, i64 368
   %i.xr = load double, ptr %i.xq, align 8, !tbaa !43
@@ -417,11 +416,11 @@ bb.t:                                             ; preds = %bb.s
   store double %i.xx, ptr %gep.us.i231.5.1, align 8, !tbaa !43
   %.phi.trans.insert386 = getelementptr inbounds nuw i8, ptr %i.sv, i64 432
   %.pre387 = load double, ptr %.phi.trans.insert386, align 8, !tbaa !43
-  %i.xy = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 48
-  %i.xz = getelementptr inbounds nuw i8, ptr %i.sw, i64 56
+  %i.xy = getelementptr inbounds nuw i8, ptr %i.sw, i64 48
+  %i.xz = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 48
   %i.ya = fmul double %.pre387, %i.xt             ; 3 uses
-  store double %i.ya, ptr %i.xn, align 8, !tbaa !43
   store double %i.ya, ptr %i.xy, align 8, !tbaa !43
+  store double %i.ya, ptr %i.xz, align 8, !tbaa !43
   %i.yb = fneg double %i.ya
   %i.yc = getelementptr inbounds nuw i8, ptr %i.sv, i64 440
   %i.yd = load double, ptr %i.yc, align 8, !tbaa !43
@@ -432,8 +431,9 @@ bb.t:                                             ; preds = %bb.s
   %.phi.trans.insert389 = getelementptr inbounds nuw i8, ptr %i.sv, i64 504
   %.pre390 = load double, ptr %.phi.trans.insert389, align 8, !tbaa !43
   %i.yg = getelementptr inbounds nuw i8, ptr %.3132.lcssa, i64 56
+  %.us-phi.i223.6 = getelementptr inbounds nuw i8, ptr %i.sw, i64 56
   %i.yh = fmul double %.pre390, %i.yf             ; 2 uses
-  store double %i.yh, ptr %i.xz, align 8, !tbaa !43
+  store double %i.yh, ptr %.us-phi.i223.6, align 8, !tbaa !43
   store double %i.yh, ptr %i.yg, align 8, !tbaa !43
   %.idx412 = shl nsw i64 %2, 6
   %i.yi = getelementptr inbounds i8, ptr %.3138.lcssa, i64 %.idx412
@@ -460,11 +460,10 @@ bb.v:                                             ; preds = %bb.u
 .split47.us.i222.1.3:                             ; preds = %bb.v, %bb.u
   %.idx413 = shl nsw i64 %.5, 5
   %i.yo = getelementptr inbounds i8, ptr %.5140, i64 %.idx413 ; 10 uses
-  %11 = load double, ptr %i.yo, align 8, !tbaa !43
   %i.yp = getelementptr inbounds [8 x i8], ptr %.0141.lcssa, i64 %.5 ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.yp, i64 8
+  %10 = load double, ptr %i.yo, align 8, !tbaa !43
   %i.yq = load double, ptr %.5134, align 8, !tbaa !43
-  %i.yr = fmul double %11, %i.yq                  ; 3 uses
+  %i.yr = fmul double %10, %i.yq                  ; 3 uses
   store double %i.yr, ptr %i.yp, align 8, !tbaa !43
   store double %i.yr, ptr %.5134, align 8, !tbaa !43
   %i.ys = fneg double %i.yr                       ; 3 uses
@@ -488,11 +487,11 @@ bb.v:                                             ; preds = %bb.u
   store double %i.ze, ptr %gep.us.i231.1.2316, align 8, !tbaa !43
   %.phi.trans.insert392 = getelementptr inbounds nuw i8, ptr %i.yo, i64 40
   %.pre393 = load double, ptr %.phi.trans.insert392, align 8, !tbaa !43
-  %i.zf = getelementptr inbounds nuw i8, ptr %.5134, i64 8
-  %i.zg = getelementptr inbounds nuw i8, ptr %i.yp, i64 16
+  %i.zf = getelementptr inbounds nuw i8, ptr %i.yp, i64 8
+  %i.zg = getelementptr inbounds nuw i8, ptr %.5134, i64 8
   %i.zh = fmul double %.pre393, %i.yw             ; 3 uses
-  store double %i.zh, ptr %12, align 8, !tbaa !43
   store double %i.zh, ptr %i.zf, align 8, !tbaa !43
+  store double %i.zh, ptr %i.zg, align 8, !tbaa !43
   %i.zi = fneg double %i.zh                       ; 2 uses
   %i.zj = getelementptr inbounds nuw i8, ptr %i.yo, i64 48
   %i.zk = load double, ptr %i.zj, align 8, !tbaa !43
@@ -508,11 +507,11 @@ bb.v:                                             ; preds = %bb.u
   store double %i.zq, ptr %gep.us.i231.1.1.1, align 8, !tbaa !43
   %.phi.trans.insert395 = getelementptr inbounds nuw i8, ptr %i.yo, i64 80
   %.pre396 = load double, ptr %.phi.trans.insert395, align 8, !tbaa !43
-  %i.zr = getelementptr inbounds nuw i8, ptr %.5134, i64 16
-  %i.zs = getelementptr inbounds nuw i8, ptr %i.yp, i64 24
+  %i.zr = getelementptr inbounds nuw i8, ptr %i.yp, i64 16
+  %i.zs = getelementptr inbounds nuw i8, ptr %.5134, i64 16
   %i.zt = fmul double %.pre396, %i.zm             ; 3 uses
-  store double %i.zt, ptr %i.zg, align 8, !tbaa !43
   store double %i.zt, ptr %i.zr, align 8, !tbaa !43
+  store double %i.zt, ptr %i.zs, align 8, !tbaa !43
   %i.zu = fneg double %i.zt
   %i.zv = getelementptr inbounds nuw i8, ptr %i.yo, i64 88
   %i.zw = load double, ptr %i.zv, align 8, !tbaa !43
@@ -523,8 +522,9 @@ bb.v:                                             ; preds = %bb.u
   %.phi.trans.insert398 = getelementptr inbounds nuw i8, ptr %i.yo, i64 120
   %.pre399 = load double, ptr %.phi.trans.insert398, align 8, !tbaa !43
   %i.zz = getelementptr inbounds nuw i8, ptr %.5134, i64 24
+  %.us-phi.i223.1.2 = getelementptr inbounds nuw i8, ptr %i.yp, i64 24
   %i.aaa = fmul double %.pre399, %i.zy            ; 2 uses
-  store double %i.aaa, ptr %i.zs, align 8, !tbaa !43
+  store double %i.aaa, ptr %.us-phi.i223.1.2, align 8, !tbaa !43
   store double %i.aaa, ptr %i.zz, align 8, !tbaa !43
   %.idx414 = shl nsw i64 %2, 5
   %i.aab = getelementptr inbounds i8, ptr %.5140, i64 %.idx414
@@ -549,14 +549,13 @@ bb.x:                                             ; preds = %bb.w
   br label %.split47.us.i222.2.1
 
 .split47.us.i222.2.1:                             ; preds = %bb.x, %bb.w
+  %11 = getelementptr inbounds [8 x i8], ptr %.0141.lcssa, i64 %.5.1 ; 2 uses
   %.idx415 = shl nsw i64 %.5.1, 4
   %i.aah = getelementptr inbounds i8, ptr %.5140.1, i64 %.idx415 ; 3 uses
   %i.aai = load double, ptr %i.aah, align 8, !tbaa !43
-  %13 = getelementptr inbounds [8 x i8], ptr %.0141.lcssa, i64 %.5.1 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.aaj = load double, ptr %.5134.1, align 8, !tbaa !43
   %i.aak = fmul double %i.aai, %i.aaj             ; 3 uses
-  store double %i.aak, ptr %13, align 8, !tbaa !43
+  store double %i.aak, ptr %11, align 8, !tbaa !43
   store double %i.aak, ptr %.5134.1, align 8, !tbaa !43
   %i.aal = fneg double %i.aak
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aah, i64 8
@@ -568,8 +567,9 @@ bb.x:                                             ; preds = %bb.w
   %.phi.trans.insert401 = getelementptr inbounds nuw i8, ptr %i.aah, i64 24
   %.pre402 = load double, ptr %.phi.trans.insert401, align 8, !tbaa !43
   %i.aaq = getelementptr inbounds nuw i8, ptr %.5134.1, i64 8
+  %.us-phi.i223.2 = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.aar = fmul double %.pre402, %i.aap           ; 2 uses
-  store double %i.aar, ptr %14, align 8, !tbaa !43
+  store double %i.aar, ptr %.us-phi.i223.2, align 8, !tbaa !43
   store double %i.aar, ptr %i.aaq, align 8, !tbaa !43
   %.idx416 = shl nsw i64 %2, 4
   %i.aas = getelementptr inbounds i8, ptr %.5140.1, i64 %.idx416

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvXs6_CsbdtVtHYmo6x_8thin_vecINtB8_7ThinVecpENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4drop18drop_non_singletonNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9UseArgRefEB1T_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.e) #37
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundEBH_.exit.i
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundEBH_.exit.i: ; preds = %bb.d, %bb.b, %bb.c, %bb.a, %.lr.ph.i
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundEBH_.exit.i: ; preds = %bb.b, %bb.d, %.lr.ph.i, %bb.a, %bb.c
   ret void
 }
 
@@ -608,7 +608,7 @@ bb.dg:                                            ; preds = %bb.df
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxSNtNtNtCsileJQcQObtj_7hir_def10expr_store4path21AssociatedTypeBindingEEB1h_(ptr noalias nofree noundef align 8 dereferenceable(16) %i.gz) #39
           to label %.thread341 unwind label %bb.bd
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxSNtNtNtCsileJQcQObtj_7hir_def10expr_store4path21AssociatedTypeBindingEEB1h_.exit: ; preds = %bb.dd, %bb.de
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxSNtNtNtCsileJQcQObtj_7hir_def10expr_store4path21AssociatedTypeBindingEEB1h_.exit: ; preds = %bb.de, %bb.dd
   %i.hi = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.hj = load ptr, ptr %i.hi, align 8, !alias.scope !7126, !noalias !7127, !nonnull !8, !noundef !8
   %i.hk = getelementptr inbounds nuw [40 x i8], ptr %i.hj, i64 %i.hd

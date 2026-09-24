@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @ps_globals, i64 436), align 4, !tbaa !60
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.i, %bb.d
+.lr.ph.i:                                         ; preds = %bb.d, %bb.i
   call void @zval_ptr_dtor(ptr noundef nonnull %4) #8
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.q = load i8, ptr %i.p, align 8, !tbaa !14
@@ -393,7 +393,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @ps_globals, i64 436), align 4, !tbaa !60
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.i, %bb.d
+.lr.ph.i:                                         ; preds = %bb.d, %bb.i
   call void @zval_ptr_dtor(ptr noundef nonnull %2) #8
   %i.p = call fastcc i32 @verify_bool_return_type_userland_calls(ptr noundef %3)
   call void @zval_ptr_dtor(ptr noundef nonnull %3) #8
@@ -449,7 +449,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @ps_globals, i64 436), align 4, !tbaa !60
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.g, %bb.b
+.lr.ph.i:                                         ; preds = %bb.b, %bb.g
   call void @zval_ptr_dtor(ptr noundef nonnull %3) #8
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.l = load i8, ptr %i.k, align 8, !tbaa !14
@@ -632,7 +632,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @ps_globals, i64 436), align 4, !tbaa !60
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.j, %bb.e
+.lr.ph.i:                                         ; preds = %bb.e, %bb.j
   call void @zval_ptr_dtor(ptr noundef nonnull %2) #8
   %i.r = call fastcc i32 @verify_bool_return_type_userland_calls(ptr noundef %3)
   call void @zval_ptr_dtor(ptr noundef nonnull %3) #8

@@ -205,7 +205,6 @@ bb.a:
   store i16 %i.ce, ptr %i.aw, align 2, !tbaa !682
   %i.cf = zext nneg i16 %i.au to i64
   %i.cg = zext i16 %i.n to i64
-  %4 = sext i32 %i.cc to i64
   %i.ch = lshr i32 %i.cc, 8
   %i.ci = trunc i32 %i.ch to i8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.cf ; 2 uses
@@ -213,6 +212,7 @@ bb.a:
   %i.ck = trunc i32 %i.cc to i8
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 1
   store i8 %i.ck, ptr %i.cl, align 1, !tbaa !139
+  %4 = sext i32 %i.cc to i64
   %i.cm = getelementptr inbounds i8, ptr %i.by, i64 %4
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cm, ptr align 1 %i.l, i64 %i.cg, i1 false)
   store i16 1, ptr %i.bw, align 4, !tbaa !662

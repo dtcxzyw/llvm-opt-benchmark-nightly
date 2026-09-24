@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_Z16undo_trail_stac
   store i32 %.0.i.i, ptr %i.ac, align 4, !tbaa !59
   br label %_ZN6vectorIjLb0EjE6shrinkEj.exit.i
 
-_ZN6vectorIjLb0EjE6shrinkEj.exit.i:               ; preds = %bb.f, %_Z16undo_trail_stackR10ptr_vectorI5trailEj.exit.i
+_ZN6vectorIjLb0EjE6shrinkEj.exit.i:               ; preds = %_Z16undo_trail_stackR10ptr_vectorI5trailEj.exit.i, %bb.f
   tail call void @_ZN6region9pop_scopeEv(ptr noundef nonnull align 8 dereferenceable(40) %i.c)
   %i.ad = add nuw i32 %.03, 1                     ; 2 uses
   %exitcond.not = icmp eq i32 %i.ad, %1

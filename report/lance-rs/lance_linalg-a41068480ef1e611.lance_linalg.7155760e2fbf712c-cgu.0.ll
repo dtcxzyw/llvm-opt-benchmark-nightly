@@ -205,7 +205,7 @@ _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_array16GenericByteArrayINtNt
   store i64 7816392313619706465, ptr %.sroa.415.0..sroa_idx.i291, align 8, !noalias !5266
   store i64 7237128888997146477, ptr %.sroa.516.0..sroa_idx.i292, align 8, !noalias !5266
   store i64 8387220255154660723, ptr %.sroa.617.0..sroa_idx.i293, align 8, !noalias !5266
-  %i.ale = icmp ult i64 %i.akm, %i.ajp
+  %i.ale = icmp samesign ult i64 %i.akm, %i.ajp
   call void @llvm.assume(i1 %i.ale)
   %i.alf = getelementptr inbounds nuw [4 x i8], ptr %i.akj, i64 %i.akm
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx.i294, i8 0, i64 40, i1 false), !noalias !5266
@@ -482,7 +482,7 @@ _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_array16GenericByteArrayINtNt
   store i64 7816392313619706465, ptr %.sroa.415.0..sroa_idx.i327, align 8, !noalias !5280
   store i64 7237128888997146477, ptr %.sroa.516.0..sroa_idx.i328, align 8, !noalias !5280
   store i64 8387220255154660723, ptr %.sroa.617.0..sroa_idx.i329, align 8, !noalias !5280
-  %i.apr = icmp ult i64 %i.aoz, %i.aoc
+  %i.apr = icmp samesign ult i64 %i.aoz, %i.aoc
   call void @llvm.assume(i1 %i.apr)
   %i.aps = getelementptr inbounds nuw [8 x i8], ptr %i.aow, i64 %i.aoz
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx.i330, i8 0, i64 40, i1 false), !noalias !5280

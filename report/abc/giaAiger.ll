@@ -205,7 +205,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.lo = icmp slt i64 %indvars.iv.next322, %i.ln
   br i1 %i.lo, label %bb.ca, label %.lr.ph.i267, !llvm.loop !172
 
-.lr.ph.i267:                                      ; preds = %bb.cb, %bb.ca, %.critedge6
+.lr.ph.i267:                                      ; preds = %bb.ca, %bb.cb, %.critedge6
   %i.lp = load i32, ptr %i.ce, align 4, !tbaa !44 ; 7 uses
   %i.lq = load i32, ptr %i.cc, align 8, !tbaa !45
   %i.lr = icmp eq i32 %i.lp, %i.lq

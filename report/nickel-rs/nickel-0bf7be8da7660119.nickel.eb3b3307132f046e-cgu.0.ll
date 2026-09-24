@@ -205,7 +205,7 @@ _ZN4core4iter6traits8iterator8Iterator7collect17hfb2de4d6d0fde083E.exit: ; preds
   store i8 1, ptr %i.i, align 8, !noalias !26271
   br label %"_ZN4core3ptr132drop_in_place$LT$indexmap..map..IndexMap$LT$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$GT$$GT$17h2791d5c43122a13eE.exit"
 
-"_ZN4core3ptr132drop_in_place$LT$indexmap..map..IndexMap$LT$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$GT$$GT$17h2791d5c43122a13eE.exit": ; preds = %._ZN4core3ops8function6FnOnce9call_once17h2017926fa805e40bE.exit_crit_edge.i.i, %.noexc
+"_ZN4core3ptr132drop_in_place$LT$indexmap..map..IndexMap$LT$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$GT$$GT$17h2791d5c43122a13eE.exit": ; preds = %.noexc, %._ZN4core3ops8function6FnOnce9call_once17h2017926fa805e40bE.exit_crit_edge.i.i
   %i.bm = phi i64 [ %.pre.i.i, %._ZN4core3ops8function6FnOnce9call_once17h2017926fa805e40bE.exit_crit_edge.i.i ], [ %i.bj, %.noexc ]
   %i.bn = add i64 %i.bm, 1
   store i64 %i.bn, ptr %i.h, align 8, !noalias !26270
@@ -531,7 +531,7 @@ _ZN4core4iter6traits8iterator8Iterator7collect17h87a1c156078b701aE.exit: ; preds
   store i8 1, ptr %i.u, align 8, !noalias !26384
   br label %"_ZN4core3ptr132drop_in_place$LT$indexmap..map..IndexMap$LT$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$GT$$GT$17h2791d5c43122a13eE.exit"
 
-"_ZN4core3ptr132drop_in_place$LT$indexmap..map..IndexMap$LT$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$GT$$GT$17h2791d5c43122a13eE.exit": ; preds = %._ZN4core3ops8function6FnOnce9call_once17h2017926fa805e40bE.exit_crit_edge.i.i, %.noexc
+"_ZN4core3ptr132drop_in_place$LT$indexmap..map..IndexMap$LT$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$GT$$GT$17h2791d5c43122a13eE.exit": ; preds = %.noexc, %._ZN4core3ops8function6FnOnce9call_once17h2017926fa805e40bE.exit_crit_edge.i.i
   %i.cl = phi i64 [ %.pre.i.i, %._ZN4core3ops8function6FnOnce9call_once17h2017926fa805e40bE.exit_crit_edge.i.i ], [ %i.ci, %.noexc ]
   %i.cm = add i64 %i.cl, 1
   store i64 %i.cm, ptr %i.t, align 8, !noalias !26383

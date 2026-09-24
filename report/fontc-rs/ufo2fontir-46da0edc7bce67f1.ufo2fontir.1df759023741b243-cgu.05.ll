@@ -45,8 +45,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !28
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
@@ -121,8 +121,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !34
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
@@ -197,8 +197,8 @@ bb.d:                                             ; preds = %bb.c
   %.val12 = load double, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %i.g, i64 -8
   store double %.val12, ptr %i.m, align 8, !alias.scope !40
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 2 uses
-  %i.n = icmp ult i64 %.sroa.5.024, %i.b
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 2 uses
+  %i.n = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
@@ -262,11 +262,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val11 = load i16, ptr %i.g, align 2, !noundef !8
   %.val12 = load i16, ptr %i.h, align 2, !noundef !8
   %i.i = icmp eq i16 %.val11, %.val12
-  %.sroa.5.023 = add nuw i64 %.sroa.0.022, 1      ; 5 uses
+  %.sroa.5.023 = add nuw nsw i64 %.sroa.0.022, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.023, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.023, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -287,12 +287,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.prol
   store i16 %.val.prol, ptr %i.n, align 2
-  %i.q = add i64 %.sroa.0.022, 1
+  %i.q = add nuw i64 %.sroa.0.022, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.q, %bb.d ], [ %.sroa.0.022, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.022, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.022, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader

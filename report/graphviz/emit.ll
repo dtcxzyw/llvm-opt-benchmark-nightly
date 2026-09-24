@@ -205,7 +205,7 @@ bb.hc:                                            ; preds = %bb.hc, %.lr.ph.i.i4
   %i.xo = load ptr, ptr %15, align 8, !tbaa !14
   %i.xp = getelementptr inbounds nuw [16 x i8], ptr %i.xo, i64 %i.xn
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.xp, ptr noundef nonnull align 8 dereferenceable(16) %i.up, i64 16, i1 false), !tbaa.struct !120
-  %i.xq = add nuw i64 %.02729.i.i.i, 1
+  %i.xq = add nuw nsw i64 %.02729.i.i.i, 1
   %exitcond.not.i.i.i = icmp eq i64 %.02729.i.i.i, %.03451.i.i
   br i1 %exitcond.not.i.i.i, label %.lr.ph31.i.i.i, label %bb.hc, !llvm.loop !342
 
@@ -218,7 +218,7 @@ bb.hd:                                            ; preds = %bb.hd, %.lr.ph31.i.
   %i.xu = load ptr, ptr %15, align 8, !tbaa !14
   %i.xv = getelementptr inbounds nuw [16 x i8], ptr %i.xu, i64 %i.xt
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.xv, ptr noundef nonnull align 8 dereferenceable(16) %i.up, i64 16, i1 false), !tbaa.struct !120
-  %i.xw = add nuw i64 %.030.i.i.i, 1
+  %i.xw = add nuw nsw i64 %.030.i.i.i, 1
   %exitcond33.not.i.i.i = icmp eq i64 %.030.i.i.i, %.03451.i.i
   br i1 %exitcond33.not.i.i.i, label %map_bspline_poly.exit.loopexit.i.i, label %bb.hd, !llvm.loop !343
 
@@ -621,8 +621,8 @@ gv_calloc.exit84:                                 ; preds = %.thread2, %bb.m
   %i.cd = phi double [ %i.aa, %.thread2 ], [ %i.bq, %bb.m ]
   %i.ce = phi ptr [ %i.bn, %.thread2 ], [ %i.bv, %bb.m ]
   store ptr %i.ce, ptr %1, align 8, !tbaa !199
-  %i.cf = sub nsw i64 %i.b, %.071.lcssa55
-  %i.cg = mul i64 %i.cf, 3
+  %i.cf = sub nuw nsw i64 %i.b, %.071.lcssa55
+  %i.cg = mul nuw i64 %i.cf, 3
   %i.ch = add i64 %i.cg, 1                        ; 7 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i64 %i.ch, ptr %i.ci, align 8, !tbaa !198

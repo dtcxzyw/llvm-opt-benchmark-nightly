@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.kg = icmp eq i32 %i.kf, 0
   br i1 %i.kg, label %.thread, label %bb.ah
 
-bb.ah:                                            ; preds = %bb.af, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %bb.af
   tail call void @__rcu_read_unlock() #16
   tail call void asm sideeffect "2708: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 2708b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 2708) #17, !srcloc !266
   tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str, ptr nonnull @.str.1, i32 6450, i32 2307, i64 16) #17, !srcloc !267

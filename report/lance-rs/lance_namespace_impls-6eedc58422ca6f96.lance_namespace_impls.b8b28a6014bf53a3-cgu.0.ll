@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %_RNvXso_NtCs40k4W9m
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i, i64 noundef %i.h, i64 noundef range(i64 1, -9223372036854775807) 8) #68, !noalias !12319
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs9KQ7US1M400_11lance_table6rowids13RowIdSequenceECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs9KQ7US1M400_11lance_table6rowids13RowIdSequenceECsfR8GmIBoxTX_21lance_namespace_impls.exit.i: ; preds = %bb.a, %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs9KQ7US1M400_11lance_table6rowids13RowIdSequenceECsfR8GmIBoxTX_21lance_namespace_impls.exit.i: ; preds = %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i, %bb.a
   ret void
 }
 
@@ -608,7 +608,7 @@ bb.af:                                            ; preds = %._crit_edge
 bb.ag:                                            ; preds = %.lr.ph, %bb.au
   %i.dv = phi i64 [ 0, %.lr.ph ], [ %i.fz, %bb.au ]
   %.sroa.075.0222 = phi i64 [ 0, %.lr.ph ], [ %i.dw, %bb.au ] ; 7 uses
-  %i.dw = add nuw nsw i64 %.sroa.075.0222, 1      ; 4 uses
+  %i.dw = add nuw i64 %.sroa.075.0222, 1          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   store i64 %.sroa.075.0222, ptr %i.r, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !216945)

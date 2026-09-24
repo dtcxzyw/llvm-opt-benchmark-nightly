@@ -205,7 +205,7 @@ RB_SYMBOL_P.exit.thread.i:                        ; preds = %RB_SYMBOL_P.exit.i,
   br i1 %i.jd, label %iseq_build_kw.exit, label %bb.bd
 
 bb.bd:                                            ; preds = %.thread.i
-  %i.je = sub i32 %i.hi, %.056.lcssa.i            ; 2 uses
+  %i.je = sub nuw i32 %i.hi, %.056.lcssa.i        ; 2 uses
   %i.jf = icmp sgt i32 %i.je, -1
   call void @llvm.assume(i1 %i.jf)
   %i.jg = zext nneg i32 %i.je to i64              ; 2 uses

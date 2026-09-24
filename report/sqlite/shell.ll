@@ -206,7 +206,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !143
   %i.ac = sub i32 %.057.lcssa, %i.h
   %i.ad = add nsw i32 %i.ac, %i.ab
-  %i.ae = sub nsw i32 %.057.lcssa, %.058.lcssa    ; 4 uses
+  %i.ae = sub nuw nsw i32 %.057.lcssa, %.058.lcssa ; 4 uses
   %i.af = sext i32 %i.ae to i64
   %i.ag = add nsw i64 %i.af, 20
   %i.ah = tail call ptr @sqlite3_malloc64(i64 noundef %i.ag) #45 ; 15 uses
@@ -609,108 +609,104 @@ bb.ab:                                            ; preds = %.lr.ph.us, %.crited
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bl, i64 %indvars.iv27 ; 33 uses
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !52
   %i.bq = icmp eq i8 %i.bp, 0
-  br i1 %i.bq, label %bb.ac, label %.critedge.thread.us
+  br i1 %i.bq, label %bb.ac, label %.critedge.thread.loopexit.us
 
 bb.ac:                                            ; preds = %bb.ab
   %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 1
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !52
   %i.bt = icmp eq i8 %i.bs, 0
-  br i1 %i.bt, label %bb.ad, label %.critedge.thread.us
+  br i1 %i.bt, label %bb.ad, label %.critedge.thread.loopexit.us
 
 bb.ad:                                            ; preds = %bb.ac
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bo, i64 2
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !52
   %i.bw = icmp eq i8 %i.bv, 0
-  br i1 %i.bw, label %bb.ae, label %.critedge.thread.us
+  br i1 %i.bw, label %bb.ae, label %.critedge.thread.loopexit.us
 
 bb.ae:                                            ; preds = %bb.ad
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bo, i64 3
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !52
   %i.bz = icmp eq i8 %i.by, 0
-  br i1 %i.bz, label %bb.af, label %.critedge.thread.us
+  br i1 %i.bz, label %bb.af, label %.critedge.thread.loopexit.us
 
 bb.af:                                            ; preds = %bb.ae
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bo, i64 4
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !52
   %i.cc = icmp eq i8 %i.cb, 0
-  br i1 %i.cc, label %bb.ag, label %.critedge.thread.us
+  br i1 %i.cc, label %bb.ag, label %.critedge.thread.loopexit.us
 
 bb.ag:                                            ; preds = %bb.af
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bo, i64 5
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !52
   %i.cf = icmp eq i8 %i.ce, 0
-  br i1 %i.cf, label %bb.ah, label %.critedge.thread.us
+  br i1 %i.cf, label %bb.ah, label %.critedge.thread.loopexit.us
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bo, i64 6
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !52
   %i.ci = icmp eq i8 %i.ch, 0
-  br i1 %i.ci, label %bb.ai, label %.critedge.thread.us
+  br i1 %i.ci, label %bb.ai, label %.critedge.thread.loopexit.us
 
 bb.ai:                                            ; preds = %bb.ah
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bo, i64 7
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !52
   %i.cl = icmp eq i8 %i.ck, 0
-  br i1 %i.cl, label %bb.aj, label %.critedge.thread.us
+  br i1 %i.cl, label %bb.aj, label %.critedge.thread.loopexit.us
 
 bb.aj:                                            ; preds = %bb.ai
   %i.cm = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !52
   %i.co = icmp eq i8 %i.cn, 0
-  br i1 %i.co, label %bb.ak, label %.critedge.thread.us
+  br i1 %i.co, label %bb.ak, label %.critedge.thread.loopexit.us
 
 bb.ak:                                            ; preds = %bb.aj
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bo, i64 9
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !52
   %i.cr = icmp eq i8 %i.cq, 0
-  br i1 %i.cr, label %bb.al, label %.critedge.thread.us
+  br i1 %i.cr, label %bb.al, label %.critedge.thread.loopexit.us
 
 bb.al:                                            ; preds = %bb.ak
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bo, i64 10
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !52
   %i.cu = icmp eq i8 %i.ct, 0
-  br i1 %i.cu, label %bb.am, label %.critedge.thread.us
+  br i1 %i.cu, label %bb.am, label %.critedge.thread.loopexit.us
 
 bb.am:                                            ; preds = %bb.al
   %i.cv = getelementptr inbounds nuw i8, ptr %i.bo, i64 11
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !52
   %i.cx = icmp eq i8 %i.cw, 0
-  br i1 %i.cx, label %bb.an, label %.critedge.thread.us
+  br i1 %i.cx, label %bb.an, label %.critedge.thread.loopexit.us
 
 bb.an:                                            ; preds = %bb.am
   %i.cy = getelementptr inbounds nuw i8, ptr %i.bo, i64 12
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !52
   %i.da = icmp eq i8 %i.cz, 0
-  br i1 %i.da, label %bb.ao, label %.critedge.thread.us
+  br i1 %i.da, label %bb.ao, label %.critedge.thread.loopexit.us
 
 bb.ao:                                            ; preds = %bb.an
   %i.db = getelementptr inbounds nuw i8, ptr %i.bo, i64 13
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !52
   %i.dd = icmp eq i8 %i.dc, 0
-  br i1 %i.dd, label %bb.ap, label %.critedge.thread.us
+  br i1 %i.dd, label %bb.ap, label %.critedge.thread.loopexit.us
 
 bb.ap:                                            ; preds = %bb.ao
   %i.de = getelementptr inbounds nuw i8, ptr %i.bo, i64 14
   %i.df = load i8, ptr %i.de, align 1, !tbaa !52
   %i.dg = icmp eq i8 %i.df, 0
-  br i1 %i.dg, label %bb.aq, label %.critedge.thread.us
+  br i1 %i.dg, label %bb.aq, label %.critedge.thread.loopexit.us
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dh = getelementptr inbounds nuw i8, ptr %i.bo, i64 15
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !52
   %i.dj = icmp eq i8 %i.di, 0
-  br i1 %i.dj, label %.critedge.us, label %.critedge.thread.us
+  br i1 %i.dj, label %.critedge.us, label %.critedge.thread.loopexit.us
 
-.critedge.thread.us:                              ; preds = %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq
-  %.not105.us = icmp eq i32 %.07810.us, 0
-  br i1 %.not105.us, label %bb.ar, label %bb.as
-
-bb.ar:                                            ; preds = %.critedge.thread.us
+bb.ar:                                            ; preds = %.critedge.thread.loopexit.us
   %i.dk = load ptr, ptr %i.ax, align 8, !tbaa !351
   call void (ptr, ptr, ...) @cli_printf(ptr noundef %i.dk, ptr noundef nonnull @.str.1505, i64 noundef %i.bj, i64 noundef %i.bn)
   br label %bb.as
 
-bb.as:                                            ; preds = %bb.ar, %.critedge.thread.us
+bb.as:                                            ; preds = %.critedge.thread.loopexit.us, %bb.ar
   %i.dl = load ptr, ptr %i.ax, align 8, !tbaa !351
   %i.dm = trunc nuw nsw i64 %indvars.iv27 to i32
   call void (ptr, ptr, ...) @cli_printf(ptr noundef %i.dl, ptr noundef nonnull @.str.1506, i32 noundef %i.dm)
@@ -917,6 +913,10 @@ bb.as:                                            ; preds = %bb.ar, %.critedge.t
   %i.js = trunc nuw i64 %indvars.iv.next28 to i32
   %i.jt = icmp sgt i32 %.fr12, %i.js
   br i1 %i.jt, label %bb.ab, label %..loopexit_crit_edge.us, !llvm.loop !1221
+
+.critedge.thread.loopexit.us:                     ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab
+  %.not105.us = icmp eq i32 %.07810.us, 0
+  br i1 %.not105.us, label %bb.ar, label %bb.as
 
 ..loopexit_crit_edge.us:                          ; preds = %.critedge.us
   %i.ju = load ptr, ptr %i.a, align 8, !tbaa !109

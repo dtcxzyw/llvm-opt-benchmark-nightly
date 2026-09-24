@@ -204,6 +204,11 @@ bb.e:                                             ; preds = %bb.d
   %.not15 = icmp eq i32 %i.aa, 0
   br i1 %.not15, label %.thread, label %.preheader
 
+0:                                                ; preds = %bb.h
+  %1 = add nuw nsw i32 %.020, 1                   ; 2 uses
+  %exitcond.not = icmp eq i32 %1, 10000
+  br i1 %exitcond.not, label %bb.i, label %.preheader, !llvm.loop !45
+
 .preheader:                                       ; preds = %bb.e, %0
   %.020 = phi i32 [ %1, %0 ], [ 0, %bb.e ]
   %i.ab = load ptr, ptr %i.a, align 8, !tbaa !17
@@ -231,11 +236,6 @@ bb.h:                                             ; preds = %.preheader
   %i.am = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1090, ptr noundef nonnull @.str.251, i32 noundef %i.al) #10
   %.not17 = icmp eq i32 %i.am, 0
   br i1 %.not17, label %.thread, label %0
-
-0:                                                ; preds = %bb.h
-  %1 = add nuw nsw i32 %.020, 1                   ; 2 uses
-  %exitcond.not = icmp eq i32 %1, 10000
-  br i1 %exitcond.not, label %bb.i, label %.preheader, !llvm.loop !45
 
 bb.i:                                             ; preds = %0
   call void (ptr, i32, ptr, ...) @test_error(ptr noundef nonnull @.str.14, i32 noundef 1095, ptr noundef nonnull @.str.252) #10

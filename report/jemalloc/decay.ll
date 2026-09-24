@@ -204,49 +204,49 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader76:                                     ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
-  br label %bb.c
+  br label %bb.h
 
-bb.c:                                             ; preds = %bb.h, %.preheader76
-  %indvars.iv = phi i64 [ 0, %.preheader76 ], [ %indvars.iv.next.4, %bb.h ] ; 6 uses
+bb.c:                                             ; preds = %bb.h
   %3 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
-  %i.h = load i64, ptr %3, align 8, !tbaa !18
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.h = load i64, ptr %4, align 8, !tbaa !18
   %.not.a = icmp eq i64 %i.h, 0
   br i1 %.not.a, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load i64, ptr %i.j, align 8, !tbaa !18
   %.not.1 = icmp eq i64 %i.k, 0
   br i1 %.not.1, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.n = load i64, ptr %i.m, align 8, !tbaa !18
   %.not.2 = icmp eq i64 %i.n, 0
   br i1 %.not.2, label %bb.f, label %.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 24
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.q = load i64, ptr %i.p, align 8, !tbaa !18
   %.not.3 = icmp eq i64 %i.q, 0
   br i1 %.not.3, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %bb.f
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %6 = load i64, ptr %5, align 8, !tbaa !18
-  %.not.4 = icmp eq i64 %6, 0
-  br i1 %.not.4, label %bb.h, label %.thread
-
-bb.h:                                             ; preds = %bb.g
   %indvars.iv.next.4 = add nuw nsw i64 %indvars.iv, 5 ; 2 uses
-  %exitcond.not.4 = icmp eq i64 %indvars.iv.next.4, 200
-  br i1 %exitcond.not.4, label %.loopexit, label %bb.c, !llvm.loop !32
+  %.not.4 = icmp eq i64 %indvars.iv.next.4, 200
+  br i1 %.not.4, label %.loopexit, label %bb.h, !llvm.loop !32
 
-.thread:                                          ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.b
+bb.h:                                             ; preds = %bb.g, %.preheader76
+  %indvars.iv = phi i64 [ 0, %.preheader76 ], [ %indvars.iv.next.4, %bb.g ] ; 6 uses
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
+  %6 = load i64, ptr %5, align 8, !tbaa !18
+  %exitcond.not.4 = icmp eq i64 %6, 0
+  br i1 %exitcond.not.4, label %bb.c, label %.thread
+
+.thread:                                          ; preds = %bb.h, %bb.c, %bb.d, %bb.e, %bb.f, %bb.b
   %.not60 = icmp ugt i64 %1, %2
   br i1 %.not60, label %.preheader.i.preheader, label %bb.i
 
@@ -499,8 +499,8 @@ decay_npurge_after_interval.exit73:               ; preds = %.lr.ph22.i, %middle
   %i.dv = lshr i64 %i.du, 1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.h, %bb.i, %._crit_edge, %bb.k, %bb.j, %bb.a
-  %.3 = phi i64 [ -1, %bb.a ], [ %i.r, %bb.i ], [ %i.dv, %._crit_edge ], [ %i.bh, %bb.j ], [ %i.bn, %bb.k ], [ -1, %bb.h ]
+.loopexit:                                        ; preds = %bb.g, %bb.i, %._crit_edge, %bb.k, %bb.j, %bb.a
+  %.3 = phi i64 [ -1, %bb.a ], [ %i.r, %bb.i ], [ %i.dv, %._crit_edge ], [ %i.bh, %bb.j ], [ %i.bn, %bb.k ], [ -1, %bb.g ]
   ret i64 %.3
 }
 
