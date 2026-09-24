@@ -202,10 +202,10 @@ bb.j:                                             ; preds = %.loopexit
 bb.k:                                             ; preds = %.loopexit
   %.b52 = load i1, ptr @_ZL9reversein, align 4    ; 2 uses
   %i.ab = load ptr, ptr @_ZL8informat, align 8, !tbaa !36
-  %i.ac = call noundef double %i.ab(ptr noundef nonnull %i.u, ptr noundef nonnull %i.b) ; 2 uses
+  %i.ac = call noundef double %i.ab(ptr noundef nonnull %i.u, ptr noundef nonnull %i.b), !callees !148 ; 2 uses
   %i.ad = load ptr, ptr @_ZL8informat, align 8, !tbaa !36
   %i.ae = load ptr, ptr %i.b, align 8, !tbaa !22
-  %i.af = call noundef double %i.ad(ptr noundef %i.ae, ptr noundef nonnull %i.b) ; 2 uses
+  %i.af = call noundef double %i.ad(ptr noundef %i.ae, ptr noundef nonnull %i.b), !callees !148 ; 2 uses
   %. = select i1 %.b52, double %i.af, double %i.ac
   %i.ag = load ptr, ptr %i.b, align 8, !tbaa !22
   %i.ah = call double @strtod(ptr noundef %i.ag, ptr noundef nonnull %i.b) #27 ; 2 uses
@@ -455,7 +455,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !34
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #27, !inline_history !148
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #27, !inline_history !149
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1, !tbaa !21
   %.not.i = icmp eq i8 %i.e, 0
@@ -480,7 +480,7 @@ bb.d:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %0, align 8, !tbaa !34
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #27, !inline_history !148
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #27, !inline_history !149
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -666,10 +666,10 @@ _ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit.i.i
 
 _ZNSt7__cxx114listISt4pairINS_12basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE5clearEv.exit: ; preds = %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit.i.i, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store ptr %0, ptr %i.o, align 8, !tbaa !149
+  store ptr %0, ptr %i.o, align 8, !tbaa !150
   store ptr %0, ptr %0, align 8, !tbaa !52
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store i64 0, ptr %i.p, align 8, !tbaa !150
+  store i64 0, ptr %i.p, align 8, !tbaa !151
   %i.q = load ptr, ptr %1, align 8, !tbaa !52     ; 2 uses
   %i.r = icmp eq ptr %i.q, %1
   br i1 %i.r, label %bb.b, label %bb.c
@@ -681,18 +681,18 @@ bb.b:                                             ; preds = %_ZNSt7__cxx114listI
 bb.c:                                             ; preds = %_ZNSt7__cxx114listISt4pairINS_12basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE5clearEv.exit
   store ptr %i.q, ptr %0, align 8, !tbaa !52
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !149  ; 2 uses
-  store ptr %i.t, ptr %i.o, align 8, !tbaa !149
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !150  ; 2 uses
+  store ptr %i.t, ptr %i.o, align 8, !tbaa !150
   store ptr %0, ptr %i.t, align 8, !tbaa !52
   %i.u = load ptr, ptr %0, align 8, !tbaa !52
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store ptr %0, ptr %i.v, align 8, !tbaa !149
+  store ptr %0, ptr %i.v, align 8, !tbaa !150
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !150
-  store i64 %i.x, ptr %i.p, align 8, !tbaa !150
-  store ptr %1, ptr %i.s, align 8, !tbaa !149
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !151
+  store i64 %i.x, ptr %i.p, align 8, !tbaa !151
+  store ptr %1, ptr %i.s, align 8, !tbaa !150
   store ptr %1, ptr %1, align 8, !tbaa !52
-  store i64 0, ptr %i.w, align 8, !tbaa !150
+  store i64 0, ptr %i.w, align 8, !tbaa !151
   br label %_ZNSt7__cxx1110_List_baseISt4pairINS_12basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE13_M_move_nodesEOS9_.exit
 
 _ZNSt7__cxx1110_List_baseISt4pairINS_12basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE13_M_move_nodesEOS9_.exit: ; preds = %bb.c, %bb.b
@@ -906,7 +906,8 @@ attributes #35 = { builtin allocsize(0) }
 !145 = distinct !{!145, !26}
 !146 = !{!63, !47, i64 8}
 !147 = distinct !{!147, !26}
-!148 = distinct !{null}
-!149 = !{!50, !49, i64 8}
-!150 = !{!51, !18, i64 16}
+!148 = !{ptr @_Z6dmstorPKcPPc, ptr @strtod}
+!149 = distinct !{null}
+!150 = !{!50, !49, i64 8}
+!151 = !{!51, !18, i64 16}
 end_hunk_0

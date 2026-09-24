@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 .thread29:                                        ; preds = %bb.b, %.thread
   %.sink = phi ptr [ %i.j, %.thread ], [ %_Z32cpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE._Z32cpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE, %bb.b ]
-  tail call void %.sink(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3)
+  tail call void %.sink(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3), !callees !55
   %.not30 = xor i1 %i.c, true
   br label %bb.d
 
@@ -214,7 +214,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond5, label %.thread33, label %bb.d
 
 .thread33:                                        ; preds = %bb.c
-  tail call void %_Z32cpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE._Z32cpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3)
+  tail call void %_Z32cpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE._Z32cpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3), !callees !56
   br label %bb.f
 
 bb.d:                                             ; preds = %.thread29, %bb.c
@@ -224,7 +224,7 @@ bb.d:                                             ; preds = %.thread29, %bb.c
 
 bb.e:                                             ; preds = %bb.d
   tail call void @_Z16gpu_copyGpuToCpu5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %0)
-  tail call void %_Z32cpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE._Z32cpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3)
+  tail call void %_Z32cpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE._Z32cpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3), !callees !56
   tail call void @_Z16gpu_copyCpuToGpu5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %0)
   br label %bb.f
 
@@ -627,7 +627,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %.01218, i64 24 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.019, i64 24 ; 2 uses
   %.not = icmp eq ptr %i.v, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !55
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !57
 
 .loopexit:                                        ; preds = %_ZNSt15__new_allocatorIPFv5QuregSt6vectorIiSaIiEES3_S3_S3_S3_St7complexIdES5_EE8allocateEmPKv.exit.i.i.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -1030,8 +1030,8 @@ _ZNSt6vectorIPFv5QuregS_ISt7complexIdESaIS2_EES_IS0_SaIS0_EEESaIS8_EED2Ev.exit57
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge44, %_ZNSt6vectorIPFv5QuregS_ISt7complexIdESaIS2_EES_IS0_SaIS0_EEESaIS8_EED2Ev.exit57
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !58
-  %i.f = load ptr, ptr %2, align 8, !tbaa !59
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !60
+  %i.f = load ptr, ptr %2, align 8, !tbaa !61
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
@@ -1043,8 +1043,8 @@ bb.b:                                             ; preds = %.critedge44, %_ZNSt
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !27
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 56) #12
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !61   ; 3 uses
-  %i.q = load ptr, ptr %1, align 8, !tbaa !62     ; 3 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !63   ; 3 uses
+  %i.q = load ptr, ptr %1, align 8, !tbaa !64     ; 3 uses
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
@@ -1069,29 +1069,29 @@ bb.d:                                             ; preds = %_ZNSt15__new_alloca
   %i.w = phi ptr [ %i.p, %bb.b ], [ %.pre105, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 2 uses
   %i.x = phi ptr [ %i.q, %bb.b ], [ %.pre, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 2 uses
   %i.y = phi ptr [ null, %bb.b ], [ %i.v, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 4 uses
-  store ptr %i.y, ptr %3, align 8, !tbaa !62
+  store ptr %i.y, ptr %3, align 8, !tbaa !64
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.t
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  store ptr %i.aa, ptr %i.ab, align 8, !tbaa !63
+  store ptr %i.aa, ptr %i.ab, align 8, !tbaa !65
   %.not7.i.i.i.i.i = icmp eq ptr %i.x, %i.w
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.d, %.lr.ph.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.ad, %.lr.ph.i.i.i.i.i ], [ %i.y, %bb.d ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i.i.i ], [ %i.x, %bb.d ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.04.08.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !65
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.04.08.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !67
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ac, %i.w
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !56
+  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !58
 
 _ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %bb.d
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.y, %bb.d ], [ %i.ad, %.lr.ph.i.i.i.i.i ]
-  store ptr %.0.lcssa.i.i.i.i.i, ptr %i.z, align 8, !tbaa !61
+  store ptr %.0.lcssa.i.i.i.i.i, ptr %i.z, align 8, !tbaa !63
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !58 ; 2 uses
-  %i.ag = load ptr, ptr %2, align 8, !tbaa !59    ; 3 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !60 ; 2 uses
+  %i.ag = load ptr, ptr %2, align 8, !tbaa !61    ; 3 uses
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
   %i.ai = ptrtoint ptr %i.ag to i64               ; 2 uses
   %i.aj = sub i64 %i.ah, %i.ai                    ; 3 uses
@@ -1127,11 +1127,11 @@ _ZNSt15__new_allocatorI5QuregE8allocateEmPKv.exit.i.i.i.i..noexc60_crit_edge: ; 
   %.pre-phi = phi i64 [ %.pre108, %_ZNSt15__new_allocatorI5QuregE8allocateEmPKv.exit.i.i.i.i..noexc60_crit_edge ], [ %i.ah, %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit ]
   %i.an = phi ptr [ %.pre106, %_ZNSt15__new_allocatorI5QuregE8allocateEmPKv.exit.i.i.i.i..noexc60_crit_edge ], [ %i.ag, %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit ] ; 2 uses
   %i.ao = phi ptr [ %i.am, %_ZNSt15__new_allocatorI5QuregE8allocateEmPKv.exit.i.i.i.i..noexc60_crit_edge ], [ null, %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit ] ; 5 uses
-  store ptr %i.ao, ptr %4, align 8, !tbaa !59
+  store ptr %i.ao, ptr %4, align 8, !tbaa !61
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.aj
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  store ptr %i.aq, ptr %i.ar, align 8, !tbaa !66
+  store ptr %i.aq, ptr %i.ar, align 8, !tbaa !68
   %i.as = sub i64 %.pre-phi, %.pre-phi110         ; 4 uses
   %i.at = icmp sgt i64 %i.as, 104
   br i1 %i.at, label %bb.f, label %bb.g, !prof !30
@@ -1145,22 +1145,22 @@ bb.g:                                             ; preds = %.noexc60
   br i1 %i.au, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.ao, ptr noundef nonnull align 8 dereferenceable(104) %i.an, i64 104, i1 false), !tbaa.struct !67
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.ao, ptr noundef nonnull align 8 dereferenceable(104) %i.an, i64 104, i1 false), !tbaa.struct !69
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.av = getelementptr inbounds i8, ptr %i.ao, i64 %i.as
-  store ptr %i.av, ptr %i.ap, align 8, !tbaa !58
+  store ptr %i.av, ptr %i.ap, align 8, !tbaa !60
   invoke void %i.n(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr nofree noundef nonnull align 8 dereferenceable(24) %3, ptr nofree noundef nonnull align 8 dereferenceable(24) %4)
           to label %bb.j unwind label %bb.n
 
 bb.j:                                             ; preds = %bb.i
-  %i.aw = load ptr, ptr %4, align 8, !tbaa !59    ; 3 uses
+  %i.aw = load ptr, ptr %4, align 8, !tbaa !61    ; 3 uses
   %.not.i.i.i61 = icmp eq ptr %i.aw, null
   br i1 %.not.i.i.i61, label %_ZNSt6vectorI5QuregSaIS0_EED2Ev.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ax = load ptr, ptr %i.ar, align 8, !tbaa !66
+  %i.ax = load ptr, ptr %i.ar, align 8, !tbaa !68
   %i.ay = ptrtoint ptr %i.ax to i64
   %i.az = ptrtoint ptr %i.aw to i64
   %i.ba = sub i64 %i.ay, %i.az
@@ -1168,12 +1168,12 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZNSt6vectorI5QuregSaIS0_EED2Ev.exit
 
 _ZNSt6vectorI5QuregSaIS0_EED2Ev.exit:             ; preds = %bb.j, %bb.k
-  %i.bb = load ptr, ptr %3, align 8, !tbaa !62    ; 3 uses
+  %i.bb = load ptr, ptr %3, align 8, !tbaa !64    ; 3 uses
   %.not.i.i.i62 = icmp eq ptr %i.bb, null
   br i1 %.not.i.i.i62, label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt6vectorI5QuregSaIS0_EED2Ev.exit
-  %i.bc = load ptr, ptr %i.ab, align 8, !tbaa !63
+  %i.bc = load ptr, ptr %i.ab, align 8, !tbaa !65
   %i.bd = ptrtoint ptr %i.bc to i64
   %i.be = ptrtoint ptr %i.bb to i64
   %i.bf = sub i64 %i.bd, %i.be
@@ -1191,12 +1191,12 @@ bb.m:                                             ; preds = %_ZNSt15__new_alloca
 bb.n:                                             ; preds = %bb.i
   %i.bh = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.bi = load ptr, ptr %4, align 8, !tbaa !59    ; 3 uses
+  %i.bi = load ptr, ptr %4, align 8, !tbaa !61    ; 3 uses
   %.not.i.i.i63 = icmp eq ptr %i.bi, null
   br i1 %.not.i.i.i63, label %_ZNSt6vectorI5QuregSaIS0_EED2Ev.exit64, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.bj = load ptr, ptr %i.ar, align 8, !tbaa !66
+  %i.bj = load ptr, ptr %i.ar, align 8, !tbaa !68
   %i.bk = ptrtoint ptr %i.bj to i64
   %i.bl = ptrtoint ptr %i.bi to i64
   %i.bm = sub i64 %i.bk, %i.bl
@@ -1205,12 +1205,12 @@ bb.o:                                             ; preds = %bb.n
 
 _ZNSt6vectorI5QuregSaIS0_EED2Ev.exit64:           ; preds = %bb.o, %bb.n, %bb.m
   %.pn34 = phi { ptr, i32 } [ %i.bg, %bb.m ], [ %i.bh, %bb.n ], [ %i.bh, %bb.o ]
-  %i.bn = load ptr, ptr %3, align 8, !tbaa !62    ; 3 uses
+  %i.bn = load ptr, ptr %3, align 8, !tbaa !64    ; 3 uses
   %.not.i.i.i65 = icmp eq ptr %i.bn, null
   br i1 %.not.i.i.i65, label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit66, label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt6vectorI5QuregSaIS0_EED2Ev.exit64
-  %i.bo = load ptr, ptr %i.ab, align 8, !tbaa !63
+  %i.bo = load ptr, ptr %i.ab, align 8, !tbaa !65
   %i.bp = ptrtoint ptr %i.bo to i64
   %i.bq = ptrtoint ptr %i.bn to i64
   %i.br = sub i64 %i.bp, %i.bq
@@ -1458,7 +1458,7 @@ bb.a:
   %i.e = load i32, ptr %i.d, align 4, !tbaa !16
   %i.f = icmp ne i32 %i.e, 0                      ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !68   ; 2 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !70   ; 2 uses
   %.not = xor i1 %i.c, true                       ; 2 uses
   %or.cond = select i1 %.not, i1 true, i1 %i.f
   br i1 %or.cond, label %bb.b, label %.thread
@@ -1470,7 +1470,7 @@ bb.a:
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !45   ; 2 uses
   tail call void @_Z16gpu_copyCpuToGpuPSt7complexIdES1_x(ptr noundef %i.j, ptr noundef %i.l, i64 noundef %i.h)
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !69
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !71
   br label %.thread22
 
 bb.b:                                             ; preds = %bb.a
@@ -1481,7 +1481,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !17
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !69   ; 2 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !71   ; 2 uses
   tail call void @_Z16gpu_copyGpuToCpuPSt7complexIdES1_x(ptr noundef %i.n, ptr noundef %i.p, i64 noundef %i.h)
   %.phi.trans.insert26 = getelementptr inbounds nuw i8, ptr %1, i64 96
   %.pre27 = load ptr, ptr %.phi.trans.insert26, align 8, !tbaa !45
@@ -1496,7 +1496,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !69   ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !71   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 4 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !45   ; 2 uses
   %or.cond6 = select i1 %i.c, i1 %i.f, i1 false
@@ -1519,7 +1519,7 @@ bb.e:                                             ; preds = %.thread22, %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !18
-  store ptr %i.af, ptr %i.ad, align 8, !tbaa !69
+  store ptr %i.af, ptr %i.ad, align 8, !tbaa !71
   br label %bb.g
 
 bb.g:                                             ; preds = %.thread24, %bb.f, %bb.e
@@ -1543,7 +1543,7 @@ bb.i:                                             ; preds = %bb.g
   br label %_Z28accel_densmatr_mixQureg_subCd5Quregd.exit
 
 _Z28accel_densmatr_mixQureg_subCd5Quregd.exit:    ; preds = %bb.h, %bb.i
-  store ptr %i.ah, ptr %i.ag, align 8, !tbaa !69
+  store ptr %i.ah, ptr %i.ag, align 8, !tbaa !71
   store ptr %i.aj, ptr %i.ai, align 8, !tbaa !45
   ret void
 }
@@ -1946,11 +1946,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = tail call { double, double } %i.a(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %1)
+  %i.i = tail call { double, double } %i.a(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %1), !callees !72
   br label %bb.l
 
 bb.d:                                             ; preds = %bb.b
-  %i.j = tail call { double, double } %_Z42cpu_densmatr_calcFidelityWithPureState_subILb1EESt7complexIdE5QuregS2_._Z42cpu_densmatr_calcFidelityWithPureState_subILb0EESt7complexIdE5QuregS2_(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %1)
+  %i.j = tail call { double, double } %_Z42cpu_densmatr_calcFidelityWithPureState_subILb1EESt7complexIdE5QuregS2_._Z42cpu_densmatr_calcFidelityWithPureState_subILb0EESt7complexIdE5QuregS2_(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %1), !callees !73
   br label %bb.l
 
 bb.e:                                             ; preds = %bb.a
@@ -1960,7 +1960,7 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %bb.e
   tail call void @_Z16gpu_copyGpuToCpu5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %1)
-  %i.k = tail call { double, double } %_Z42cpu_densmatr_calcFidelityWithPureState_subILb1EESt7complexIdE5QuregS2_._Z42cpu_densmatr_calcFidelityWithPureState_subILb0EESt7complexIdE5QuregS2_(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %1)
+  %i.k = tail call { double, double } %_Z42cpu_densmatr_calcFidelityWithPureState_subILb1EESt7complexIdE5QuregS2_._Z42cpu_densmatr_calcFidelityWithPureState_subILb0EESt7complexIdE5QuregS2_(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %1), !callees !73
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.e
@@ -2014,7 +2014,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   store ptr %i.q, ptr %.sroa.717.0..sroa_idx20, align 8, !tbaa !46
   %.sroa.10.0..sroa_idx24 = getelementptr inbounds nuw i8, ptr %4, i64 88
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.0..sroa_idx24, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.0..sroa_idx, i64 16, i1 false)
-  %i.r = tail call { double, double } %i.a(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %4) ; 2 uses
+  %i.r = tail call { double, double } %i.a(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %4), !callees !72 ; 2 uses
   br i1 %.not36, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -2417,7 +2417,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.sink = phi ptr [ %i.l, %bb.b ], [ %i.k, %bb.d ], [ %i.k, %bb.c ]
-  %i.m = tail call { double, double } %.sink(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3)
+  %i.m = tail call { double, double } %.sink(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3), !callees !74
   ret { double, double } %i.m
 }
 
@@ -2460,11 +2460,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = tail call { double, double } %i.l(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3)
+  %i.n = tail call { double, double } %i.l(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3), !callees !75
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.b
-  %i.o = tail call { double, double } %i.k(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3)
+  %i.o = tail call { double, double } %i.k(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3), !callees !76
   br label %bb.k
 
 bb.e:                                             ; preds = %bb.a
@@ -2473,7 +2473,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = tail call { double, double } %i.k(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3)
+  %i.p = tail call { double, double } %i.k(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %1, double %2, double %3), !callees !76
   br label %bb.k
 
 bb.g:                                             ; preds = %bb.e
@@ -2507,7 +2507,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.6.0..sroa_idx8, ptr noundef nonnull align 4 dereferenceable(68) %.sroa.6.0..sroa_idx, i64 68, i1 false)
   %.sroa.69.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %6, i64 88
   store ptr %i.w, ptr %.sroa.69.0..sroa_idx12, align 8, !tbaa !46
-  %i.x = tail call { double, double } %i.l(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %6, double %2, double %3) ; 2 uses
+  %i.x = tail call { double, double } %i.l(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %6, double %2, double %3), !callees !75 ; 2 uses
   %i.y = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %i.r)
   br i1 %i.y, label %bb.k, label %bb.j
 
@@ -2910,19 +2910,26 @@ attributes #15 = { noreturn nounwind }
 !52 = !{!20, !14, i64 80}
 !53 = distinct !{!53, !37}
 !54 = distinct !{!54, !37}
-!55 = distinct !{!55, !37}
-!56 = distinct !{!56, !37}
-!57 = !{!"_ZTSNSt12_Vector_baseI5QuregSaIS0_EE17_Vector_impl_dataE", !13, i64 0, !13, i64 8, !13, i64 16}
-!58 = !{!57, !13, i64 8}
-!59 = !{!57, !13, i64 0}
-!60 = !{!"_ZTSNSt12_Vector_baseISt7complexIdESaIS1_EE17_Vector_impl_dataE", !14, i64 0, !14, i64 8, !14, i64 16}
-!61 = !{!60, !14, i64 8}
-!62 = !{!60, !14, i64 0}
-!63 = !{!60, !14, i64 16}
-!64 = !{!8, !8, i64 0}
-!65 = !{i64 0, i64 16, !64}
-!66 = !{!57, !13, i64 16}
-!67 = !{i64 0, i64 4, !31, i64 4, i64 4, !31, i64 8, i64 4, !31, i64 12, i64 4, !31, i64 16, i64 4, !31, i64 20, i64 4, !31, i64 24, i64 4, !31, i64 28, i64 4, !31, i64 32, i64 8, !43, i64 40, i64 8, !43, i64 48, i64 8, !43, i64 56, i64 8, !43, i64 64, i64 8, !43, i64 72, i64 8, !46, i64 80, i64 8, !46, i64 88, i64 8, !46, i64 96, i64 8, !46}
-!68 = !{!15, !12, i64 32}
-!69 = !{!15, !14, i64 88}
+!55 = !{ptr @_Z32gpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE, ptr @_Z32gpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE, ptr @_Z32cpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE, ptr @_Z32cpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE}
+!56 = !{ptr @_Z32cpu_statevec_allTargDiagMatr_subILb0EEv5Qureg17FullStateDiagMatrSt7complexIdE, ptr @_Z32cpu_statevec_allTargDiagMatr_subILb1EEv5Qureg17FullStateDiagMatrSt7complexIdE}
+!57 = distinct !{!57, !37}
+!58 = distinct !{!58, !37}
+!59 = !{!"_ZTSNSt12_Vector_baseI5QuregSaIS0_EE17_Vector_impl_dataE", !13, i64 0, !13, i64 8, !13, i64 16}
+!60 = !{!59, !13, i64 8}
+!61 = !{!59, !13, i64 0}
+!62 = !{!"_ZTSNSt12_Vector_baseISt7complexIdESaIS1_EE17_Vector_impl_dataE", !14, i64 0, !14, i64 8, !14, i64 16}
+!63 = !{!62, !14, i64 8}
+!64 = !{!62, !14, i64 0}
+!65 = !{!62, !14, i64 16}
+!66 = !{!8, !8, i64 0}
+!67 = !{i64 0, i64 16, !66}
+!68 = !{!59, !13, i64 16}
+!69 = !{i64 0, i64 4, !31, i64 4, i64 4, !31, i64 8, i64 4, !31, i64 12, i64 4, !31, i64 16, i64 4, !31, i64 20, i64 4, !31, i64 24, i64 4, !31, i64 28, i64 4, !31, i64 32, i64 8, !43, i64 40, i64 8, !43, i64 48, i64 8, !43, i64 56, i64 8, !43, i64 64, i64 8, !43, i64 72, i64 8, !46, i64 80, i64 8, !46, i64 88, i64 8, !46, i64 96, i64 8, !46}
+!70 = !{!15, !12, i64 32}
+!71 = !{!15, !14, i64 88}
+!72 = !{ptr @_Z42gpu_densmatr_calcFidelityWithPureState_subILb0EESt7complexIdE5QuregS2_, ptr @_Z42gpu_densmatr_calcFidelityWithPureState_subILb1EESt7complexIdE5QuregS2_}
+!73 = !{ptr @_Z42cpu_densmatr_calcFidelityWithPureState_subILb0EESt7complexIdE5QuregS2_, ptr @_Z42cpu_densmatr_calcFidelityWithPureState_subILb1EESt7complexIdE5QuregS2_}
+!74 = distinct !{ptr @_Z43cpu_statevec_calcExpecFullStateDiagMatr_subILb0ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, null, ptr @_Z43cpu_statevec_calcExpecFullStateDiagMatr_subILb1ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, ptr @_Z43cpu_statevec_calcExpecFullStateDiagMatr_subILb1ELb1EESt7complexIdE5Qureg17FullStateDiagMatrS1_, ptr @_Z43gpu_statevec_calcExpecFullStateDiagMatr_subILb0ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, null, ptr @_Z43gpu_statevec_calcExpecFullStateDiagMatr_subILb1ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, ptr @_Z43gpu_statevec_calcExpecFullStateDiagMatr_subILb1ELb1EESt7complexIdE5Qureg17FullStateDiagMatrS1_}
+!75 = distinct !{ptr @_Z43gpu_densmatr_calcExpecFullStateDiagMatr_subILb0ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, null, ptr @_Z43gpu_densmatr_calcExpecFullStateDiagMatr_subILb1ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, ptr @_Z43gpu_densmatr_calcExpecFullStateDiagMatr_subILb1ELb1EESt7complexIdE5Qureg17FullStateDiagMatrS1_}
+!76 = distinct !{ptr @_Z43cpu_densmatr_calcExpecFullStateDiagMatr_subILb0ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, null, ptr @_Z43cpu_densmatr_calcExpecFullStateDiagMatr_subILb1ELb0EESt7complexIdE5Qureg17FullStateDiagMatrS1_, ptr @_Z43cpu_densmatr_calcExpecFullStateDiagMatr_subILb1ELb1EESt7complexIdE5Qureg17FullStateDiagMatrS1_}
 end_hunk_5

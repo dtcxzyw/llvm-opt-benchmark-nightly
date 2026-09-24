@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %bb.z
   %i.cn = add nsw i32 %i.cm, -1
   %i.co = zext i32 %i.cn to i64
   %i.cp = icmp eq i64 %indvars.iv.i, %i.co
-  %i.cq = call ptr @textToFileblob(ptr noundef nonnull %.0163258.i, ptr noundef %.2167235256.i, i32 noundef 0) #20 ; 0 uses
+  %i.cq = call ptr @textToFileblob(ptr noundef nonnull %.0163258.i, ptr noundef %.2167235256.i, i32 noundef 0) #20, !callees !50 ; 0 uses
   br i1 %i.cp, label %messageExport.exit, label %bb.ay
 
 .preheader.split.i:                               ; preds = %bb.z, %bb.av

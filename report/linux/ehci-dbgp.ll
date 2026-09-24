@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge
   %.1.lcssa.sink = phi i32 [ %i.al, %bb.m ], [ %.1, %bb.d ] ; 2 uses
   %.0.be = phi i32 [ %i.ao, %bb.m ], [ %i.l, %bb.d ]
   %i.m = load ptr, ptr @set_debug_port, align 8
-  tail call void %i.m(i32 noundef %.1.lcssa.sink) #9
+  tail call void %i.m(i32 noundef %.1.lcssa.sink) #9, !callees !26
   br label %bb.b
 
 bb.e:                                             ; preds = %._crit_edge
@@ -238,7 +238,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.z, label %bb.g, label %dbgp_ehci_controller_reset.exit, !llvm.loop !0
 
 dbgp_ehci_controller_reset.exit.thread:           ; preds = %bb.g, %bb.e
-  %i.aa = tail call fastcc i32 @_dbgp_external_startup() #11, !srcloc !26 ; 2 uses
+  %i.aa = tail call fastcc i32 @_dbgp_external_startup() #11, !srcloc !27 ; 2 uses
   %i.ab = icmp eq i32 %i.aa, -5
   br i1 %i.ab, label %bb.k, label %bb.i
 
@@ -267,7 +267,7 @@ bb.k:                                             ; preds = %dbgp_ehci_controlle
 
 bb.l:                                             ; preds = %bb.k
   %i.an = load ptr, ptr @set_debug_port, align 8
-  tail call void %i.an(i32 noundef %i.al) #9, !callees !27
+  tail call void %i.an(i32 noundef %i.al) #9, !callees !26
   br label %bb.c
 
 bb.m:                                             ; preds = %bb.k
@@ -670,8 +670,8 @@ attributes #11 = { noredzone "no-builtin-wcslen" }
 !23 = !{i64 10099}
 !24 = distinct !{!24, !13}
 !25 = !{i64 19012}
-!26 = !{i64 19924}
-!27 = !{ptr @default_set_debug_port, ptr @nvidia_set_debug_port}
+!26 = !{ptr @default_set_debug_port, ptr @nvidia_set_debug_port}
+!27 = !{i64 19924}
 !28 = distinct !{!28, !13}
 !29 = distinct !{!29, !35}
 !30 = distinct !{!30, !13}

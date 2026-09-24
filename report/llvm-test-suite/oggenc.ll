@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %i.ad = load i8, ptr %i.ac, align 1
   %i.ae = trunc i64 %i.c to i32
   %i.af = zext i8 %i.ad to i64
-  tail call void @oggpack_write(ptr noundef nonnull %0, i64 noundef %i.af, i32 noundef %i.ae) #62, !inline_history !36
+  tail call void @oggpack_write(ptr noundef nonnull %0, i64 noundef %i.af, i32 noundef %i.ae) #62, !callees !48, !inline_history !36
   br label %oggpack_writecopy_helper.exit
 
 oggpack_writecopy_helper.exit:                    ; preds = %.loopexit.i, %.sink.split.i
@@ -290,7 +290,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %i.ag = sub i32 8, %i.ae
   %i.ah = lshr i32 %i.af, %i.ag
   %i.ai = zext nneg i32 %i.ah to i64
-  tail call void @oggpackB_write(ptr noundef nonnull %0, i64 noundef %i.ai, i32 noundef %i.ae) #62, !inline_history !36
+  tail call void @oggpackB_write(ptr noundef nonnull %0, i64 noundef %i.ai, i32 noundef %i.ae) #62, !callees !48, !inline_history !36
   br label %oggpack_writecopy_helper.exit
 
 oggpack_writecopy_helper.exit:                    ; preds = %.loopexit.i, %.sink.split.i

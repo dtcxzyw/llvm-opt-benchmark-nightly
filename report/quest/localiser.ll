@@ -205,7 +205,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.
   %i.jk = getelementptr inbounds i8, ptr %i.je, i64 %i.jg
   store ptr %i.jk, ptr %i.ar, align 8, !tbaa !17
   %i.jl = invoke { double, double } %_Z33getStateVecExpecAllSuffixPauliStr5QuregSt6vectorIiSaIiEES2_S2_._Z37accel_statevec_calcExpecPauliStr_subB5QuregSt6vectorIiSaIiEES2_S2_(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr nofree noundef nonnull align 8 dereferenceable(24) %14, ptr nofree noundef nonnull align 8 dereferenceable(24) %15, ptr nofree noundef nonnull align 8 dereferenceable(24) %16)
-          to label %bb.bo unwind label %bb.cr     ; 2 uses
+          to label %bb.bo unwind label %bb.cr, !callees !225 ; 2 uses
 
 bb.bo:                                            ; preds = %bb.bn
   %i.jm = extractvalue { double, double } %i.jl, 0 ; 3 uses
@@ -608,7 +608,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !98
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !225
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !226
   %i.h = tail call { i8, i64 } @_ZNKSt8__detail20_Prime_rehash_policy14_M_need_rehashEmmm(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 noundef %i.e, i64 noundef %i.g, i64 noundef %4) ; 2 uses
   %i.i = extractvalue { i8, i64 } %i.h, 0
   %i.j = trunc i8 %i.i to i1
@@ -690,9 +690,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %_ZNSt10_HashtableIySt4pairIKySt6vectorISt5tupleIJ8PauliStrSt7complexIdEEESaIS7_EEESaISA_ENSt8__detail10_Select1stESt8equal_toIyESt4hashIyENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb0ELb0ELb1EEEE22_M_insert_bucket_beginEmPNSC_10_Hash_nodeISA_Lb0EEE.exit
 
 _ZNSt10_HashtableIySt4pairIKySt6vectorISt5tupleIJ8PauliStrSt7complexIdEEESaIS7_EEESaISA_ENSt8__detail10_Select1stESt8equal_toIyESt4hashIyENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb0ELb0ELb1EEEE22_M_insert_bucket_beginEmPNSC_10_Hash_nodeISA_Lb0EEE.exit: ; preds = %bb.i, %bb.l
-  %i.ag = load i64, ptr %i.f, align 8, !tbaa !225
+  %i.ag = load i64, ptr %i.f, align 8, !tbaa !226
   %i.ah = add i64 %i.ag, 1
-  store i64 %i.ah, ptr %i.f, align 8, !tbaa !225
+  store i64 %i.ah, ptr %i.f, align 8, !tbaa !226
   ret ptr %3
 }
 
@@ -735,7 +735,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  store ptr null, ptr %i.b, align 8, !tbaa !227
+  store ptr null, ptr %i.b, align 8, !tbaa !228
   br label %_ZNSt10_HashtableIySt4pairIKySt6vectorISt5tupleIJ8PauliStrSt7complexIdEEESaIS7_EEESaISA_ENSt8__detail10_Select1stESt8equal_toIyESt4hashIyENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_allocate_bucketsEm.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -804,7 +804,7 @@ bb.g:                                             ; preds = %.lr.ph
 bb.h:                                             ; preds = %bb.e, %bb.f, %bb.g
   %.1 = phi i64 [ %.031, %bb.g ], [ %i.l, %bb.f ], [ %i.l, %bb.e ]
   %.not = icmp eq ptr %i.i, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !226
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !227
 
 ._crit_edge:                                      ; preds = %bb.h, %_ZNSt10_HashtableIySt4pairIKySt6vectorISt5tupleIJ8PauliStrSt7complexIdEEESaIS7_EEESaISA_ENSt8__detail10_Select1stESt8equal_toIyESt4hashIyENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_allocate_bucketsEm.exit
   %i.t = load ptr, ptr %0, align 8, !tbaa !97     ; 2 uses
@@ -895,7 +895,7 @@ _ZStmlIdESt7complexIT_ERKS2_S4_.exit:             ; preds = %bb.b, %bb.c, %bb.d
   store double %i.ae, ptr %i.a, align 8
   %i.af = add nuw nsw i64 %.06, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.af, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !228
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !229
 
 bb.e:                                             ; preds = %._crit_edge
   call void @_Z14comm_reduceAmpPSt7complexIdE(ptr noundef nonnull %2)
@@ -990,29 +990,29 @@ bb.e:                                             ; preds = %bb.a
   br i1 %or.cond5.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #17, !noalias !231
-  call void @_Z27qureg_populateNonHeapFieldsiiiii(ptr dead_on_unwind nonnull writable sret(%struct.Qureg) align 8 %6, i32 noundef %.sroa.10.0.copyload, i32 noundef %.sroa.879.0.copyload, i32 noundef %.sroa.5.0.copyload, i32 noundef %.sroa.0.sroa.5.0.extract.trunc, i32 noundef %.sroa.4.0.copyload), !noalias !231
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %5, ptr noundef nonnull align 8 dereferenceable(104) %6, i64 104, i1 false), !noalias !231
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #17, !noalias !232
+  call void @_Z27qureg_populateNonHeapFieldsiiiii(ptr dead_on_unwind nonnull writable sret(%struct.Qureg) align 8 %6, i32 noundef %.sroa.10.0.copyload, i32 noundef %.sroa.879.0.copyload, i32 noundef %.sroa.5.0.copyload, i32 noundef %.sroa.0.sroa.5.0.extract.trunc, i32 noundef %.sroa.4.0.copyload), !noalias !232
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %5, ptr noundef nonnull align 8 dereferenceable(104) %6, i64 104, i1 false), !noalias !232
   call void @_Z51assert_localiserDistribQuregSpooferGivenValidQuregs5QuregS_(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %6)
-  %i.l = call noundef i64 @_Z34util_getGlobalIndexOfFirstLocalAmp5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %5), !noalias !231 ; 2 uses
+  %i.l = call noundef i64 @_Z34util_getGlobalIndexOfFirstLocalAmp5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %5), !noalias !232 ; 2 uses
   %i.m = getelementptr inbounds [16 x i8], ptr %.sroa.1180.0.copyload, i64 %i.l
   %.not.i6.i = icmp eq i64 %.sroa.0.sroa.5.0.extract.shift, 0
   %.idx.i7.i = select i1 %.not.i6.i, i64 0, i64 %i.l
   %i.n = getelementptr inbounds [16 x i8], ptr %.sroa.12.0.copyload, i64 %.idx.i7.i
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 88
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i, i8 0, i64 16, i1 false), !noalias !231
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %6, ptr noundef nonnull align 8 dereferenceable(72) %5, i64 72, i1 false), !noalias !231
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i, i8 0, i64 16, i1 false), !noalias !232
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %6, ptr noundef nonnull align 8 dereferenceable(72) %5, i64 72, i1 false), !noalias !232
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 72
-  store ptr %i.m, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !47, !noalias !231
+  store ptr %i.m, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !47, !noalias !232
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 80
-  store ptr %i.n, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !47, !noalias !231
+  store ptr %i.n, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !47, !noalias !232
   %.sroa.12.sroa.0.0.copyload75 = load <5 x ptr>, ptr %.sroa.858.0..sroa_idx, align 8
   %i.o = load i64, ptr %6, align 8
   %.sroa.19.96..sroa_idx43 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.sroa.19.96.copyload44 = load i32, ptr %.sroa.19.96..sroa_idx43, align 8, !tbaa !19
   %.sroa.20.96..sroa_idx48 = getelementptr inbounds nuw i8, ptr %6, i64 12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %.sroa.20, ptr noundef nonnull align 4 dereferenceable(92) %.sroa.20.96..sroa_idx48, i64 92, i1 false), !tbaa.struct !112
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17, !noalias !231
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17, !noalias !232
   br label %_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -1156,29 +1156,29 @@ bb.e:                                             ; preds = %bb.a
   br i1 %or.cond5.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #17, !noalias !234
-  call void @_Z27qureg_populateNonHeapFieldsiiiii(ptr dead_on_unwind nonnull writable sret(%struct.Qureg) align 8 %6, i32 noundef %.sroa.10.0.copyload, i32 noundef %.sroa.879.0.copyload, i32 noundef %.sroa.5.0.copyload, i32 noundef %.sroa.0.sroa.5.0.extract.trunc, i32 noundef %.sroa.4.0.copyload), !noalias !234
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %5, ptr noundef nonnull align 8 dereferenceable(104) %6, i64 104, i1 false), !noalias !234
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #17, !noalias !235
+  call void @_Z27qureg_populateNonHeapFieldsiiiii(ptr dead_on_unwind nonnull writable sret(%struct.Qureg) align 8 %6, i32 noundef %.sroa.10.0.copyload, i32 noundef %.sroa.879.0.copyload, i32 noundef %.sroa.5.0.copyload, i32 noundef %.sroa.0.sroa.5.0.extract.trunc, i32 noundef %.sroa.4.0.copyload), !noalias !235
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %5, ptr noundef nonnull align 8 dereferenceable(104) %6, i64 104, i1 false), !noalias !235
   call void @_Z51assert_localiserDistribQuregSpooferGivenValidQuregs5QuregS_(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %6)
-  %i.l = call noundef i64 @_Z34util_getGlobalIndexOfFirstLocalAmp5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %5), !noalias !234 ; 2 uses
+  %i.l = call noundef i64 @_Z34util_getGlobalIndexOfFirstLocalAmp5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %5), !noalias !235 ; 2 uses
   %i.m = getelementptr inbounds [16 x i8], ptr %.sroa.1180.0.copyload, i64 %i.l
   %.not.i6.i = icmp eq i64 %.sroa.0.sroa.5.0.extract.shift, 0
   %.idx.i7.i = select i1 %.not.i6.i, i64 0, i64 %i.l
   %i.n = getelementptr inbounds [16 x i8], ptr %.sroa.12.0.copyload, i64 %.idx.i7.i
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 88
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i, i8 0, i64 16, i1 false), !noalias !234
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %6, ptr noundef nonnull align 8 dereferenceable(72) %5, i64 72, i1 false), !noalias !234
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i, i8 0, i64 16, i1 false), !noalias !235
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %6, ptr noundef nonnull align 8 dereferenceable(72) %5, i64 72, i1 false), !noalias !235
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 72
-  store ptr %i.m, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !47, !noalias !234
+  store ptr %i.m, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !47, !noalias !235
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 80
-  store ptr %i.n, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !47, !noalias !234
+  store ptr %i.n, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !47, !noalias !235
   %.sroa.12.sroa.0.0.copyload75 = load <5 x ptr>, ptr %.sroa.858.0..sroa_idx, align 8
   %i.o = load i64, ptr %6, align 8
   %.sroa.19.96..sroa_idx43 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.sroa.19.96.copyload44 = load i32, ptr %.sroa.19.96..sroa_idx43, align 8, !tbaa !19
   %.sroa.20.96..sroa_idx48 = getelementptr inbounds nuw i8, ptr %6, i64 12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %.sroa.20, ptr noundef nonnull align 4 dereferenceable(92) %.sroa.20.96..sroa_idx48, i64 92, i1 false), !tbaa.struct !112
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17, !noalias !234
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17, !noalias !235
   br label %_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -1465,7 +1465,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = zext i1 %i.f to i32
   call void @_Z27qureg_populateNonHeapFieldsiiiii(ptr dead_on_unwind nonnull writable sret(%struct.Qureg) align 8 %4, i32 noundef %.sroa.518.0.copyload, i32 noundef 0, i32 noundef 0, i32 noundef %i.h, i32 noundef %i.i)
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 72
-  store <2 x ptr> %.sroa.619.0.copyload, ptr %i.j, align 8, !tbaa !47, !alias.scope !237
+  store <2 x ptr> %.sroa.619.0.copyload, ptr %i.j, align 8, !tbaa !47, !alias.scope !238
   %i.k = call { double, double } @_Z44accel_densmatr_calcFidelityWithPureState_sub5QuregS_b(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.Qureg) align 8 %4, i1 noundef zeroext %2) ; 2 uses
   %i.l = extractvalue { double, double } %i.k, 0
   %i.m = extractvalue { double, double } %i.k, 1
@@ -1868,17 +1868,18 @@ begin_hunk_2_@llvm.vector.reduce.add.v4i32
 !222 = !{!108, !107, i64 8}
 !223 = !{!212, !211}
 !224 = !{!107, !107, i64 0}
-!225 = !{!96, !33, i64 24}
-!226 = distinct !{!226, !22}
-!227 = !{!96, !34, i64 48}
-!228 = distinct !{!228, !22}
-!229 = distinct !{!229, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr"}
-!230 = distinct !{!230, !229, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr: argument 0"}
-!231 = !{!230}
-!232 = distinct !{!232, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr"}
-!233 = distinct !{!233, !232, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr: argument 0"}
-!234 = !{!233}
-!235 = distinct !{!235, !"_Z53getSpoofedLocalStateVecFromDistributedDensMatrBuffers5Qureg"}
-!236 = distinct !{!236, !235, !"_Z53getSpoofedLocalStateVecFromDistributedDensMatrBuffers5Qureg: argument 0"}
-!237 = !{!236}
+!225 = !{ptr @_Z33getStateVecExpecAllSuffixPauliStr5QuregSt6vectorIiSaIiEES2_S2_, ptr @_Z37accel_statevec_calcExpecPauliStr_subB5QuregSt6vectorIiSaIiEES2_S2_}
+!226 = !{!96, !33, i64 24}
+!227 = distinct !{!227, !22}
+!228 = !{!96, !34, i64 48}
+!229 = distinct !{!229, !22}
+!230 = distinct !{!230, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr"}
+!231 = distinct !{!231, !230, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr: argument 0"}
+!232 = !{!231}
+!233 = distinct !{!233, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr"}
+!234 = distinct !{!234, !233, !"_Z47getSpoofedQuregAndMatrWithMatchingDistributions5Qureg17FullStateDiagMatr: argument 0"}
+!235 = !{!234}
+!236 = distinct !{!236, !"_Z53getSpoofedLocalStateVecFromDistributedDensMatrBuffers5Qureg"}
+!237 = distinct !{!237, !236, !"_Z53getSpoofedLocalStateVecFromDistributedDensMatrBuffers5Qureg: argument 0"}
+!238 = !{!237}
 end_hunk_2
