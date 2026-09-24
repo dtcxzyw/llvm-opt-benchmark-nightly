@@ -205,16 +205,16 @@ bb.lj:                                            ; preds = %bb.li, %._crit_edge
   %i.cpx = shl nsw i64 %i.cng, 5
   %scevgep1496 = getelementptr i8, ptr %scevgep, i64 %i.cpx ; 2 uses
   %i.cpy = shl nuw nsw i64 %wide.trip.count593.i, 2
-  %min.iters.check1508 = icmp ult i32 %.0143523.i, 9
+  %min.iters.check1508 = icmp ult i32 %.0143523.i, 5
   %bound0 = icmp ult ptr %i.cpa, %scevgep1497
   %bound1 = icmp ult ptr %i.j, %scevgep1496
   %found.conflict = and i1 %bound0, %bound1
   %min.iters.check1510 = icmp ult i32 %.0143523.i, 33
-  %i.cpz = and i64 %wide.trip.count593.i, 24
+  %i.cpz = and i64 %wide.trip.count593.i, 28
   %n.vec1512 = and i64 %wide.trip.count593.i, 4294967264 ; 4 uses
   %cmp.n1588 = icmp eq i64 %n.vec1512, %wide.trip.count593.i
   %min.epilog.iters.check1593 = icmp eq i64 %i.cpz, 0
-  %n.vec1595 = and i64 %wide.trip.count593.i, 4294967288 ; 3 uses
+  %n.vec1595 = and i64 %wide.trip.count593.i, 4294967292 ; 3 uses
   %cmp.n1622 = icmp eq i64 %n.vec1595, %wide.trip.count593.i
   %xtraiter1786 = and i64 %wide.trip.count593.i, 3 ; 2 uses
   %lcmp.mod1787.not = icmp eq i64 %xtraiter1786, 0
@@ -617,9 +617,8 @@ vector.main.loop.iter.check1509:                  ; preds = %vector.memcheck1495
   br i1 %min.iters.check1510, label %vec.epilog.ph1594, label %vector.body1513
 
 vector.body1513:                                  ; preds = %vector.main.loop.iter.check1509, %bb.ma
-  %index1514 = phi i64 [ %index.next1585, %bb.ma ], [ 0, %vector.main.loop.iter.check1509 ] ; 2 uses
-  %i.cxy = phi i64 [ %i.cym, %bb.ma ], [ 7, %vector.main.loop.iter.check1509 ] ; 2 uses
-  %i.cxz = getelementptr inbounds nuw [4 x i8], ptr %i.cxx, i64 %index1514 ; 4 uses
+  %i.cxy = phi i64 [ %i.cym, %bb.ma ], [ 0, %vector.main.loop.iter.check1509 ] ; 3 uses
+  %i.cxz = getelementptr inbounds nuw [4 x i8], ptr %i.cxx, i64 %i.cxy ; 4 uses
   %i.cya = getelementptr inbounds nuw i8, ptr %i.cxz, i64 32
   %i.cyb = getelementptr inbounds nuw i8, ptr %i.cxz, i64 64
   %i.cyc = getelementptr inbounds nuw i8, ptr %i.cxz, i64 96
@@ -644,33 +643,30 @@ bb.lz:                                            ; preds = %vector.body1513
   br label %bb.ma
 
 bb.ma:                                            ; preds = %vector.body1513, %bb.lz
-  %index.next1585 = add nuw i64 %index1514, 32    ; 2 uses
-  %i.cym = add nuw i64 %i.cxy, 32
-  %i.cyn = icmp eq i64 %index.next1585, %n.vec1512
+  %i.cym = add nuw i64 %i.cxy, 32                 ; 2 uses
+  %i.cyn = icmp eq i64 %i.cym, %n.vec1512
   br i1 %i.cyn, label %middle.block1587, label %vector.body1513, !llvm.loop !513
 
 middle.block1587:                                 ; preds = %bb.ma
   %i.cyo = trunc i64 %i.cxy to i32
-  %i.cyp = add i32 %i.cyo, 25
+  %i.cyp = add i32 %i.cyo, 32
   store i32 %i.cyp, ptr %i.j, align 4, !tbaa !210, !alias.scope !703, !noalias !700
   br i1 %cmp.n1588, label %.loopexit351.i, label %vec.epilog.iter.check1592
 
 vec.epilog.iter.check1592:                        ; preds = %middle.block1587
-  br i1 %min.epilog.iters.check1593, label %vec.epilog.scalar.ph1591.preheader, label %vec.epilog.ph1594, !prof !393
+  br i1 %min.epilog.iters.check1593, label %vec.epilog.scalar.ph1591.preheader, label %vec.epilog.ph1594, !prof !383
 
 vec.epilog.ph1594:                                ; preds = %vector.main.loop.iter.check1509, %vec.epilog.iter.check1592
-  %vec.epilog.resume.val1589 = phi i64 [ %n.vec1512, %vec.epilog.iter.check1592 ], [ 0, %vector.main.loop.iter.check1509 ] ; 2 uses
-  %74 = or disjoint i64 %vec.epilog.resume.val1589, 7
+  %vec.epilog.resume.val1589 = phi i64 [ %n.vec1512, %vec.epilog.iter.check1592 ], [ 0, %vector.main.loop.iter.check1509 ]
   br label %vec.epilog.vector.body1599
 
 vec.epilog.vector.body1599:                       ; preds = %bb.mc, %vec.epilog.ph1594
-  %index1600 = phi i64 [ %vec.epilog.resume.val1589, %vec.epilog.ph1594 ], [ %index.next1619, %bb.mc ] ; 2 uses
-  %i.cyq = phi i64 [ %74, %vec.epilog.ph1594 ], [ %i.cys, %bb.mc ] ; 2 uses
-  %i.cyr = getelementptr inbounds nuw [4 x i8], ptr %i.cxx, i64 %index1600
-  %wide.load1602 = load <8 x i32>, ptr %i.cyr, align 4, !tbaa !210, !alias.scope !700
-  %75 = icmp sgt <8 x i32> %wide.load1602, zeroinitializer
-  %76 = bitcast <8 x i1> %75 to i8
-  %.not1648 = icmp eq i8 %76, 0
+  %i.cyq = phi i64 [ %vec.epilog.resume.val1589, %vec.epilog.ph1594 ], [ %i.cys, %bb.mc ] ; 3 uses
+  %i.cyr = getelementptr inbounds nuw [4 x i8], ptr %i.cxx, i64 %i.cyq
+  %wide.load1593 = load <4 x i32>, ptr %i.cyr, align 4, !tbaa !210, !alias.scope !700
+  %74 = icmp sgt <4 x i32> %wide.load1593, zeroinitializer
+  %75 = bitcast <4 x i1> %74 to i4
+  %.not1648 = icmp eq i4 %75, 0
   br i1 %.not1648, label %bb.mc, label %bb.mb
 
 bb.mb:                                            ; preds = %vec.epilog.vector.body1599
@@ -678,14 +674,13 @@ bb.mb:                                            ; preds = %vec.epilog.vector.b
   br label %bb.mc
 
 bb.mc:                                            ; preds = %vec.epilog.vector.body1599, %bb.mb
-  %index.next1619 = add nuw i64 %index1600, 8     ; 2 uses
-  %i.cys = add nuw nsw i64 %i.cyq, 8
-  %i.cyt = icmp eq i64 %index.next1619, %n.vec1595
+  %i.cys = add nuw i64 %i.cyq, 4                  ; 2 uses
+  %i.cyt = icmp eq i64 %i.cys, %n.vec1595
   br i1 %i.cyt, label %vec.epilog.middle.block1621, label %vec.epilog.vector.body1599, !llvm.loop !514
 
 vec.epilog.middle.block1621:                      ; preds = %bb.mc
   %i.cyu = trunc i64 %i.cyq to i32
-  %i.cyv = add i32 %i.cyu, 1
+  %i.cyv = add i32 %i.cyu, 4
   store i32 %i.cyv, ptr %i.j, align 4, !tbaa !210, !alias.scope !703, !noalias !700
   br i1 %cmp.n1622, label %.loopexit351.i, label %vec.epilog.scalar.ph1591.preheader
 
@@ -1088,22 +1083,22 @@ vector.ph71:                                      ; preds = %vector.memcheck
 
 vector.body75:                                    ; preds = %vector.body75, %vector.ph71
   %index76 = phi i64 [ 0, %vector.ph71 ], [ %index.next80, %vector.body75 ] ; 2 uses
-  %vec.ind77 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph71 ], [ %vec.ind.next81, %vector.body75 ] ; 3 uses
-  %vec.ind78.a = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph71 ], [ %vec.ind.next82, %vector.body75 ] ; 2 uses
-  %i.ih = uitofp nneg <8 x i32> %vec.ind78.a to <8 x float>
+  %vec.ind77 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph71 ], [ %vec.ind.next81, %vector.body75 ] ; 2 uses
+  %vec.ind78 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph71 ], [ %vec.ind.next83, %vector.body75 ] ; 2 uses
+  %vec.ind78.a = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %vector.ph71 ], [ %vec.ind.next82, %vector.body75 ] ; 2 uses
+  %i.ih = uitofp nneg <8 x i32> %vec.ind78 to <8 x float>
   %i.ii = fdiv <8 x float> %i.ih, %broadcast.splat74 ; 2 uses
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.hf, i64 %index76
   store <8 x float> %i.ii, ptr %i.ij, align 4, !tbaa !211, !alias.scope !849, !noalias !850
   %wide.gep = getelementptr inbounds nuw [16 x i8], ptr %i.ie, <8 x i64> %vec.ind77 ; 2 uses
   call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.ii, <8 x ptr> align 4 %wide.gep, <8 x i1> splat (i1 true)), !tbaa !359, !alias.scope !850
-  %6 = trunc <8 x i64> %vec.ind77 to <8 x i32>
-  %7 = add <8 x i32> %6, splat (i32 1)
-  %i.ik = uitofp nneg <8 x i32> %7 to <8 x float>
+  %i.ik = uitofp nneg <8 x i32> %vec.ind78.a to <8 x float>
   %i.il = fdiv <8 x float> %i.ik, %broadcast.splat74
   %wide.gep79 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep, i64 4
   call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.il, <8 x ptr> align 4 %wide.gep79, <8 x i1> splat (i1 true)), !tbaa !360, !alias.scope !850
   %index.next80 = add nuw i64 %index76, 8         ; 2 uses
   %vec.ind.next81 = add nuw nsw <8 x i64> %vec.ind77, splat (i64 8)
+  %vec.ind.next83 = add <8 x i32> %vec.ind78, splat (i32 8)
   %vec.ind.next82 = add <8 x i32> %vec.ind78.a, splat (i32 8)
   %i.im = icmp eq i64 %index.next80, %n.vec72
   br i1 %i.im, label %middle.block83, label %vector.body75, !llvm.loop !844

@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/puzzle?download=true
 inline.NumInlined: 7
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@randInt:bb.a
   %i.d = load i64, ptr @next, align 8, !tbaa !10
   %i.e = mul i64 %i.d, 1103515245
@@ -203,23 +203,20 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.phi.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.f, %vector.body ]
-  %vec.phi14 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.g, %vector.body ]
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.f, %vector.body ]
+  %vec.phi.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.g, %vector.body ]
+  %vec.phi14 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i32> %vec.phi14, splat (i32 4)
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %index ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %wide.load = load <4 x i32>, ptr %i.b, align 4, !tbaa !8
   %wide.load15 = load <4 x i32>, ptr %i.c, align 4, !tbaa !8
-  %i.d = xor <4 x i32> %vec.phi.a, %wide.load
-  %i.e = xor <4 x i32> %vec.phi14, %wide.load15
-  %2 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %3 = add <4 x i32> %2, splat (i32 1)
-  %4 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %5 = add <4 x i32> %4, splat (i32 5)
-  %i.f = xor <4 x i32> %i.d, %3                   ; 2 uses
-  %i.g = xor <4 x i32> %i.e, %5                   ; 2 uses
+  %i.d = xor <4 x i32> %vec.phi, %wide.load
+  %i.e = xor <4 x i32> %vec.phi.a, %wide.load15
+  %i.f = xor <4 x i32> %i.d, %vec.phi14           ; 2 uses
+  %i.g = xor <4 x i32> %i.e, %step.add            ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
+  %vec.ind.next = add <4 x i32> %vec.phi14, splat (i32 8)
   %i.h = icmp eq i64 %index.next, %n.vec
   br i1 %i.h, label %middle.block, label %vector.body, !llvm.loop !16
 
@@ -264,7 +261,7 @@ bb.a:
 
 vector.ph24:                                      ; preds = %bb.a, %bb.b
   %.0715 = phi i32 [ 0, %bb.a ], [ %i.bn, %bb.b ]
-  %i.a = tail call noalias dereferenceable_or_null(2000004) ptr @malloc(i64 noundef 2000004) #10 ; 11 uses
+  %i.a = tail call noalias dereferenceable_or_null(2000004) ptr @malloc(i64 noundef 2000004) #10 ; 12 uses
   br label %vector.body25
 
 vector.body25:                                    ; preds = %vector.body25, %vector.ph24
@@ -361,24 +358,32 @@ vector.ph:                                        ; preds = %.lr.ph.i8, %createR
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.phi.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.bf, %vector.body ]
-  %vec.phi21 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.bg, %vector.body ]
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.bf, %vector.body ]
+  %vec.phi.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.bg, %vector.body ]
+  %vec.phi21 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 5 uses
+  %step.add = add <4 x i32> %vec.phi21, splat (i32 4)
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
   %wide.load = load <4 x i32>, ptr %i.ba, align 4, !tbaa !8
   %wide.load22 = load <4 x i32>, ptr %i.bb, align 4, !tbaa !8
-  %i.bc = xor <4 x i32> %wide.load, %vec.phi.a
-  %i.bd = xor <4 x i32> %wide.load22, %vec.phi21
-  %0 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %i.be = add <4 x i32> %0, splat (i32 1)
-  %1 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %2 = add <4 x i32> %1, splat (i32 5)
-  %i.bf = xor <4 x i32> %i.bc, %i.be              ; 2 uses
-  %i.bg = xor <4 x i32> %i.bd, %2                 ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
+  %0 = xor <4 x i32> %wide.load, %vec.phi
+  %i.bc = xor <4 x i32> %wide.load22, %vec.phi.a
+  %i.bd = xor <4 x i32> %i.bc, %step.add
+  %vec.ind.next = add <4 x i32> %vec.phi21, splat (i32 8)
+  %i.be = add <4 x i32> %vec.phi21, splat (i32 12)
+  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %wide.load.1 = load <4 x i32>, ptr %2, align 4, !tbaa !8
+  %wide.load22.1 = load <4 x i32>, ptr %3, align 4, !tbaa !8
+  %4 = xor <4 x i32> %0, %wide.load.1
+  %5 = xor <4 x i32> %wide.load22.1, %i.bd
+  %6 = xor <4 x i32> %4, %vec.ind.next
+  %i.bf = xor <4 x i32> %6, %vec.phi21            ; 2 uses
+  %i.bg = xor <4 x i32> %5, %i.be                 ; 2 uses
+  %index.next = add nuw nsw i64 %index, 16        ; 2 uses
+  %vec.ind.next.1 = add <4 x i32> %vec.phi21, splat (i32 16)
   %i.bh = icmp eq i64 %index.next, 500000
   br i1 %i.bh, label %.lr.ph.i8, label %vector.body, !llvm.loop !19
 

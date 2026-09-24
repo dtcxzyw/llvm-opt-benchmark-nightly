@@ -204,18 +204,15 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ] ; 4 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 3 uses
-  %1 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %2 = add <2 x i32> %1, splat (i32 1)
-  %i.a = uitofp nneg <2 x i32> %2 to <2 x double> ; 2 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 3 uses
+  %i.a = uitofp nneg <2 x i32> %vec.ind to <2 x double> ; 2 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr @C, i64 %index
   store <2 x double> %i.a, ptr %i.b, align 16, !tbaa !11
   %i.c = fdiv <2 x double> splat (double 1.000000e+00), %i.a
   %i.d = getelementptr inbounds nuw [8 x i8], ptr @D, i64 %index
   store <2 x double> %i.c, ptr %i.d, align 16, !tbaa !11
   %index.next = or disjoint i64 %index, 2         ; 2 uses
-  %3 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.e = add <2 x i32> %3, splat (i32 3)
+  %i.e = add <2 x i32> %vec.ind, splat (i32 2)
   %i.f = uitofp nneg <2 x i32> %i.e to <2 x double> ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @C, i64 %index.next
   store <2 x double> %i.f, ptr %i.g, align 16, !tbaa !11
@@ -223,7 +220,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.i = getelementptr inbounds nuw [8 x i8], ptr @D, i64 %index.next
   store <2 x double> %i.h, ptr %i.i, align 16, !tbaa !11
   %index.next.1 = add nuw nsw i64 %index, 4       ; 2 uses
-  %vec.ind.next.1 = add nuw nsw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next.1 = add <2 x i32> %vec.ind, splat (i32 4)
   %i.j = icmp eq i64 %index.next.1, 2500
   br i1 %i.j, label %middle.block, label %vector.body, !llvm.loop !32
 
@@ -369,18 +366,15 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ] ; 4 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 3 uses
-  %1 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %2 = add <2 x i32> %1, splat (i32 1)
-  %i.a = uitofp nneg <2 x i32> %2 to <2 x double> ; 2 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 3 uses
+  %i.a = uitofp nneg <2 x i32> %vec.ind to <2 x double> ; 2 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr @A, i64 %index
   store <2 x double> %i.a, ptr %i.b, align 16, !tbaa !11
   %i.c = fdiv <2 x double> splat (double 1.000000e+00), %i.a
   %i.d = getelementptr inbounds nuw [8 x i8], ptr @B, i64 %index
   store <2 x double> %i.c, ptr %i.d, align 16, !tbaa !11
   %index.next = or disjoint i64 %index, 2         ; 2 uses
-  %3 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.e = add <2 x i32> %3, splat (i32 3)
+  %i.e = add <2 x i32> %vec.ind, splat (i32 2)
   %i.f = uitofp nneg <2 x i32> %i.e to <2 x double> ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @A, i64 %index.next
   store <2 x double> %i.f, ptr %i.g, align 16, !tbaa !11
@@ -388,7 +382,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.i = getelementptr inbounds nuw [8 x i8], ptr @B, i64 %index.next
   store <2 x double> %i.h, ptr %i.i, align 16, !tbaa !11
   %index.next.1 = add nuw nsw i64 %index, 4       ; 2 uses
-  %vec.ind.next.1 = add nuw nsw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next.1 = add <2 x i32> %vec.ind, splat (i32 4)
   %i.j = icmp eq i64 %index.next.1, 1000
   br i1 %i.j, label %middle.block, label %vector.body, !llvm.loop !36
 
@@ -478,16 +472,13 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 3 uses
-  %1 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %2 = add <2 x i32> %1, splat (i32 1)
-  %i.a = uitofp nneg <2 x i32> %2 to <2 x double> ; 2 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 3 uses
+  %i.a = uitofp nneg <2 x i32> %vec.ind to <2 x double> ; 2 uses
   %i.b = fdiv <2 x double> splat (double 1.000000e+00), %i.a
   %i.c = getelementptr inbounds nuw [16 x i8], ptr @X, i64 %index
   %interleaved.vec = shufflevector <2 x double> %i.a, <2 x double> %i.b, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec, ptr %i.c, align 16, !tbaa !11
-  %3 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.d = add <2 x i32> %3, splat (i32 3)
+  %i.d = add <2 x i32> %vec.ind, splat (i32 2)
   %i.e = uitofp nneg <2 x i32> %i.d to <2 x double> ; 2 uses
   %i.f = fdiv <2 x double> splat (double 1.000000e+00), %i.e
   %i.g = getelementptr inbounds nuw [16 x i8], ptr @X, i64 %index
@@ -495,7 +486,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %interleaved.vec.1 = shufflevector <2 x double> %i.e, <2 x double> %i.f, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec.1, ptr %i.h, align 16, !tbaa !11
   %index.next.1 = add nuw nsw i64 %index, 4       ; 2 uses
-  %vec.ind.next.1 = add nuw nsw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next.1 = add <2 x i32> %vec.ind, splat (i32 4)
   %i.i = icmp eq i64 %index.next.1, 1000
   br i1 %i.i, label %middle.block, label %vector.body, !llvm.loop !39
 

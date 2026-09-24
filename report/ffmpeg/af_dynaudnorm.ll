@@ -204,10 +204,8 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %2 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %3 = add <2 x i32> %2, splat (i32 1)
-  %i.ev = uitofp <2 x i32> %3 to <2 x double>
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %i.ev = uitofp <2 x i32> %vec.ind to <2 x double>
   %i.ew = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat, <2 x double> %i.ev, <2 x double> splat (double 1.000000e+00)) ; 2 uses
   %i.ex = fsub nsz <2 x double> splat (double 1.000000e+00), %i.ew
   %i.ey = fmul nsz <2 x double> %broadcast.splat54, %i.ex
@@ -217,7 +215,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fb = fsub nsz <2 x double> %wide.load, %i.ez
   store <2 x double> %i.fb, ptr %i.fa, align 8, !tbaa !49, !alias.scope !168, !noalias !167
   %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
   %i.fc = icmp eq i64 %index.next, %n.vec
   br i1 %i.fc, label %middle.block, label %vector.body, !llvm.loop !149
 
@@ -620,10 +618,8 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %5 = add <2 x i32> %4, splat (i32 1)
-  %i.cd = uitofp <2 x i32> %5 to <2 x double>
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %i.cd = uitofp <2 x i32> %vec.ind to <2 x double>
   %i.ce = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat, <2 x double> %i.cd, <2 x double> splat (double 1.000000e+00)) ; 2 uses
   %i.cf = fsub nsz <2 x double> splat (double 1.000000e+00), %i.ce
   %i.cg = fmul nsz <2 x double> %broadcast.splat40, %i.cf
@@ -634,7 +630,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %index
   store <2 x double> %i.cj, ptr %i.ck, align 8, !tbaa !49, !alias.scope !183, !noalias !184
   %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
   %i.cl = icmp eq i64 %index.next, %n.vec
   br i1 %i.cl, label %middle.block, label %vector.body, !llvm.loop !179
 

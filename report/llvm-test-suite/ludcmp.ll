@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 14
 inline.NumDeleted: 5
 loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@main:bb.a
   %i.hv = fsub double %i.hp, %i.hu
   %indvars.iv.next155.i80.2 = or disjoint i64 %indvars.iv154.i78, 3 ; 2 uses
@@ -204,22 +204,32 @@ vector.memcheck:
   br i1 %conflict.rdx3, label %scalar.ph, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
-  %index = phi i64 [ %index.next.a, %vector.body ], [ 0, %vector.memcheck ] ; 4 uses
-  %vec.ind = phi <2 x i64> [ %vec.ind.next, %vector.body ], [ <i64 0, i64 1>, %vector.memcheck ] ; 2 uses
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %index
+  %index = phi i64 [ %index.next.a, %vector.body ], [ 0, %vector.memcheck ] ; 5 uses
+  %vec.ind = phi <2 x i32> [ %vec.ind.next.1, %vector.body ], [ <i32 1, i32 2>, %vector.memcheck ] ; 3 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %index
+  store <2 x double> zeroinitializer, ptr %4, align 8, !tbaa !9
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %index
   store <2 x double> zeroinitializer, ptr %i.i, align 8, !tbaa !9
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %index
-  store <2 x double> zeroinitializer, ptr %i.j, align 8, !tbaa !9
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.k = add <2 x i32> %4, splat (i32 1)
+  %5 = uitofp nneg <2 x i32> %vec.ind to <2 x double>
+  %6 = fdiv nnan <2 x double> %5, splat (double 2.000000e+03)
+  %7 = fmul nnan <2 x double> %6, splat (double 5.000000e-01)
+  %8 = fadd <2 x double> %7, splat (double 4.000000e+00)
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index
+  store <2 x double> %8, ptr %i.j, align 8, !tbaa !9
+  %index.next = or disjoint i64 %index, 2         ; 3 uses
+  %i.k = add <2 x i32> %vec.ind, splat (i32 2)
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %index.next
+  store <2 x double> zeroinitializer, ptr %9, align 8, !tbaa !9
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %index.next
+  store <2 x double> zeroinitializer, ptr %10, align 8, !tbaa !9
   %i.l = uitofp nneg <2 x i32> %i.k to <2 x double>
   %i.m = fdiv nnan <2 x double> %i.l, splat (double 2.000000e+03)
   %i.n = fmul nnan <2 x double> %i.m, splat (double 5.000000e-01)
   %i.o = fadd <2 x double> %i.n, splat (double 4.000000e+00)
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index.next
   store <2 x double> %i.o, ptr %i.p, align 8, !tbaa !9
-  %index.next.a = add nuw i64 %index, 2           ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %index.next.a = add nuw nsw i64 %index, 4       ; 2 uses
+  %vec.ind.next.1 = add <2 x i32> %vec.ind, splat (i32 4)
   %i.q = icmp eq i64 %index.next.a, 2000
   br i1 %i.q, label %.preheader87.preheader, label %vector.body, !llvm.loop !41
 
