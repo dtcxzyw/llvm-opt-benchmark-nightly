@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = sext i32 %i.f to i64
   %i.h = shl nsw i64 %i.g, 2
   %i.i = add nsw i64 %i.h, 56
-  %i.j = tail call noalias ptr @zalloc(i64 noundef %i.i) #17 ; 7 uses
+  %i.j = tail call noalias ptr @zalloc(i64 noundef %i.i) #17 ; 9 uses
   %.not72.not = icmp eq ptr %i.j, null
   br i1 %.not72.not, label %.critedge, label %bb.e
 
@@ -262,6 +262,16 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i
   %exitcond28.not.i = icmp eq i32 %i.x, %i.o
   br i1 %exitcond28.not.i, label %procfs_sort_pid.exit, label %.preheader.i, !llvm.loop !11
 
+procfs_sort_pid.exit:                             ; preds = %._crit_edge.i, %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
+  store ptr @.str.20, ptr %3, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 32
+  store i8 0, ptr %4, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  store ptr null, ptr %5, align 8
+  store ptr %i.j, ptr %2, align 8
+  br label %.critedge
+
 bb.h:                                             ; preds = %bb.c
   %i.y = tail call i64 @strlen(ptr noundef nonnull %1) #16 ; 2 uses
   %sext = shl i64 %i.y, 32
@@ -315,7 +325,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ar, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.as = tail call noalias dereferenceable_or_null(48) ptr @zalloc(i64 noundef 48) #17 ; 6 uses
+  %i.as = tail call noalias dereferenceable_or_null(48) ptr @zalloc(i64 noundef 48) #17 ; 9 uses
   %.not69.not = icmp eq ptr %i.as, null
   br i1 %.not69.not, label %.critedge, label %.critedge74.thread78
 
@@ -330,26 +340,22 @@ bb.q:                                             ; preds = %bb.p
   %i.ax = trunc i64 %i.y to i8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 33
   store i8 %i.ax, ptr %i.ay, align 1
-  br label %procfs_sort_pid.exit
+  %6 = getelementptr inbounds nuw i8, ptr %i.as, i64 40
+  store ptr @.str.20, ptr %6, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.as, i64 32
+  store i8 0, ptr %7, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %i.as, i64 24
+  store ptr null, ptr %8, align 8
+  store ptr %i.as, ptr %2, align 8
+  br label %.critedge
 
 bb.r:                                             ; preds = %bb.p, %bb.o
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 12
   br i1 %exitcond.not, label %.critedge, label %bb.i, !llvm.loop !12
 
-procfs_sort_pid.exit:                             ; preds = %._crit_edge.i, %bb.e, %.critedge74.thread78
-  %.sink107 = phi ptr [ %i.as, %.critedge74.thread78 ], [ %i.j, %bb.e ], [ %i.j, %._crit_edge.i ] ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sink107, i64 40
-  store ptr @.str.20, ptr %3, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %.sink107, i64 32
-  store i8 0, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %.sink107, i64 24
-  store ptr null, ptr %5, align 8
-  store ptr %.sink107, ptr %2, align 8
-  br label %.critedge
-
-.critedge:                                        ; preds = %bb.r, %bb.n, %bb.k, %bb.j, %bb.q, %bb.d, %procfs_sort_pid.exit
-  %.4 = phi i32 [ 0, %procfs_sort_pid.exit ], [ -12, %bb.d ], [ -12, %bb.q ], [ 0, %bb.n ], [ %i.aj, %bb.k ], [ -2, %bb.j ], [ -2, %bb.r ]
+.critedge:                                        ; preds = %bb.r, %procfs_sort_pid.exit, %.critedge74.thread78, %bb.n, %bb.k, %bb.j, %bb.q, %bb.d
+  %.4 = phi i32 [ -12, %bb.q ], [ -12, %bb.d ], [ 0, %procfs_sort_pid.exit ], [ 0, %bb.n ], [ %i.aj, %bb.k ], [ -2, %bb.j ], [ 0, %.critedge74.thread78 ], [ -2, %bb.r ]
   ret i32 %.4
 }
 
