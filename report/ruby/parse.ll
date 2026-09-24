@@ -205,21 +205,20 @@ bb.a:
   %i.f = getelementptr i8, ptr %1, i64 24
   %i.g = load i8, ptr %i.f, align 8, !tbaa !354
   %i.h = zext i8 %i.g to i32                      ; 2 uses
+  %3 = sub i32 %i.e, %i.h
   %i.i = getelementptr i8, ptr %1, i64 25
   %i.j = load i8, ptr %i.i, align 1, !tbaa !355
-  %3 = lshr i8 %i.j, 5
-  %i.k = and i8 %3, 1
-  %4 = or disjoint i8 %i.k, 2
-  %5 = zext nneg i8 %4 to i32
-  %i.l = add nuw nsw i32 %i.h, %5
-  %6 = sub i32 %i.e, %i.l
+  %i.k = and i8 %i.j, 32
+  %.not = icmp eq i8 %i.k, 0
+  %.neg = select i1 %.not, i32 -2, i32 -3
+  %i.l = add i32 %3, %.neg
   %i.m = getelementptr i8, ptr %1, i64 20
   %i.n = load i32, ptr %i.m, align 4, !tbaa !356
   %i.o = add i32 %i.h, %i.e
   %i.p = add i32 %i.o, %i.n
   store i32 %i.b, ptr %2, align 4, !tbaa !68
   %i.q = getelementptr i8, ptr %2, i64 4
-  store i32 %6, ptr %i.q, align 4, !tbaa !69
+  store i32 %i.l, ptr %i.q, align 4, !tbaa !69
   %i.r = getelementptr i8, ptr %2, i64 8
   store i32 %i.b, ptr %i.r, align 4, !tbaa !70
   %i.s = getelementptr i8, ptr %2, i64 12
@@ -622,21 +621,20 @@ bb.h:                                             ; preds = %rb_parser_encoding_
   %i.ax = getelementptr i8, ptr %i.ap, i64 32
   %i.ay = load i8, ptr %i.ax, align 8, !tbaa !354
   %i.az = zext i8 %i.ay to i32                    ; 2 uses
-  %2 = getelementptr i8, ptr %i.ap, i64 33
-  %3 = load i8, ptr %2, align 1, !tbaa !355
-  %4 = lshr i8 %3, 5
-  %i.ba = and i8 %4, 1
-  %5 = or disjoint i8 %i.ba, 2
-  %6 = zext nneg i8 %5 to i32
-  %i.bb = add nuw nsw i32 %i.az, %6
-  %7 = sub i32 %i.aw, %i.bb
+  %2 = sub i32 %i.aw, %i.az
+  %3 = getelementptr i8, ptr %i.ap, i64 33
+  %4 = load i8, ptr %3, align 1, !tbaa !355
+  %i.ba = and i8 %4, 32
+  %.not.i = icmp eq i8 %i.ba, 0
+  %.neg.i = select i1 %.not.i, i32 -2, i32 -3
+  %i.bb = add i32 %2, %.neg.i
   %i.bc = getelementptr i8, ptr %i.ap, i64 28
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !356
   %i.be = add i32 %i.az, %i.aw
   %i.bf = add i32 %i.be, %i.bd
   store i32 %i.at, ptr %i.ar, align 4, !tbaa !68
   %i.bg = getelementptr i8, ptr %i.ar, i64 4
-  store i32 %7, ptr %i.bg, align 4, !tbaa !69
+  store i32 %i.bb, ptr %i.bg, align 4, !tbaa !69
   %i.bh = getelementptr i8, ptr %i.ar, i64 8
   store i32 %i.at, ptr %i.bh, align 4, !tbaa !70
   %i.bi = getelementptr i8, ptr %i.ar, i64 12

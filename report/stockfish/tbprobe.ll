@@ -205,14 +205,14 @@ _ZNSt6vectorISt4pairIiN9Stockfish6SquareEESaIS3_EE12emplace_backIJRiRS2_EEERS3_D
   store <4 x i32> zeroinitializer, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_111LeadPawnIdxE, i64 288), align 16, !tbaa !81
   store <16 x i32> <i32 47, i32 35, i32 23, i32 11, i32 10, i32 22, i32 34, i32 46, i32 45, i32 33, i32 21, i32 9, i32 8, i32 20, i32 32, i32 44>, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_18MapPawnsE, i64 32), align 16, !tbaa !81
   store <16 x i32> <i32 43, i32 31, i32 19, i32 7, i32 6, i32 18, i32 30, i32 42, i32 41, i32 29, i32 17, i32 5, i32 4, i32 16, i32 28, i32 40>, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_18MapPawnsE, i64 96), align 16, !tbaa !81
-  %i.jq = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds ([4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 47, i64 35, i64 23, i64 11>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81 ; 4 uses
+  %i.jq = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds (i8, ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 188, i64 140, i64 92, i64 44>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81 ; 4 uses
   %i.jr = extractelement <4 x i32> %i.jq, i64 0
   store i32 %i.jr, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_111LeadPawnIdxE, i64 320), align 16, !tbaa !81
-  %i.js = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds ([4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 45, i64 33, i64 21, i64 9>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81
+  %i.js = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds (i8, ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 180, i64 132, i64 84, i64 36>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81
   %i.jt = add nsw <4 x i32> %i.js, %i.jq          ; 4 uses
   %i.ju = extractelement <4 x i32> %i.jt, i64 0
   store i32 %i.ju, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_111LeadPawnIdxE, i64 352), align 16, !tbaa !81
-  %i.jv = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds ([4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 43, i64 31, i64 19, i64 7>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81
+  %i.jv = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds (i8, ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 172, i64 124, i64 76, i64 28>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81
   %i.jw = add nsw <4 x i32> %i.jv, %i.jt          ; 2 uses
   %i.jx = shufflevector <4 x i32> %i.jq, <4 x i32> poison, <2 x i32> <i32 1, i32 2>
   store <2 x i32> %i.jx, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_111LeadPawnIdxE, i64 324), align 4, !tbaa !81
@@ -223,7 +223,7 @@ _ZNSt6vectorISt4pairIiN9Stockfish6SquareEESaIS3_EE12emplace_backIJRiRS2_EEERS3_D
   %i.ka = extractelement <4 x i32> %i.jt, i64 3
   store i32 %i.ka, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_111LeadPawnIdxE, i64 364), align 4, !tbaa !81
   store <4 x i32> %i.jw, ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish12_GLOBAL__N_111LeadPawnIdxE, i64 384), align 16, !tbaa !81
-  %i.kb = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds ([4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 41, i64 29, i64 17, i64 5>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81
+  %i.kb = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 getelementptr inbounds (i8, ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, <4 x i64> <i64 164, i64 116, i64 68, i64 20>), <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !81
   %i.kc = add nsw <4 x i32> %i.kb, %i.jw          ; 5 uses
   %i.kd = extractelement <4 x i32> %i.kc, i64 0
   %i.ke = add nsw i32 %i.jk, %i.kd                ; 2 uses

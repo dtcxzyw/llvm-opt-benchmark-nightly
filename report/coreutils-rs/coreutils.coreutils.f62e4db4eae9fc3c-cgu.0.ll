@@ -205,13 +205,13 @@ _RNvXNtCs6BhVcHPqRq6_9num_prime9primalityNtNtCsioiJd4mgmsb_10num_bigint7biguint7
 
 bb.gf:                                            ; preds = %_RNvXNtCs6BhVcHPqRq6_9num_prime9primalityNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintNtB2_10LucasUtils12pq_selfridgeCsl8pJiQOn4hA_9coreutils.exit.i.i
   %i.ajv = shl nsw i64 %.sroa.4.1.i.i.i, 2        ; 2 uses
+  %.neg.i.i = add i64 %i.ajv, -1                  ; 2 uses
   %i.ajw = sub i64 1, %i.ajv                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cl), !noalias !31788
   %i.ajx = icmp sgt i64 %i.ajw, 0
   br i1 %i.ajx, label %bb.gk, label %bb.gg
 
 bb.gg:                                            ; preds = %bb.gf
-  %.neg.i.i = add i64 %i.ajv, -1                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ck), !noalias !31788
   %i.ajy = icmp sgt i64 %.neg.i.i, -1
   br i1 %i.ajy, label %_RNvXsa_NtNtCs2FZksNATdrv_11num_modular6bigint11__num_bigintNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintINtB9_15ModularUnaryOpsRBV_E4negm.exit.i.i, label %bb.gh
