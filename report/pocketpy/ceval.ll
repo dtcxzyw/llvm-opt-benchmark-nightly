@@ -202,7 +202,7 @@ bb.au:                                            ; preds = %bb.ar
   %i.cq = sub nsw i64 %i.cc, %i.cd                ; 2 uses
   %i.cr = sdiv i64 %i.cq, 2                       ; 2 uses
   %i.cs = trunc i64 %i.cr to i32
-  %i.ct = sub i64 %i.cq, %i.cr
+  %i.ct = sub nuw nsw i64 %i.cq, %i.cr
   %i.cu = trunc i64 %i.ct to i32
   call void @c11_sbuf__write_pad(ptr noundef nonnull %4, i32 noundef %i.cs, i8 noundef signext %.0115) #11
   %i.cv = call { ptr, i32 } @c11_string__sv(ptr noundef %i.bx) #11 ; 2 uses

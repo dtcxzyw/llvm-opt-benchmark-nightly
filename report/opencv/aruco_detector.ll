@@ -205,9 +205,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58.i: ; preds = %b
 
 bb.t:                                             ; preds = %.lr.ph.preheader.i.i.i.i.i61.i
   store ptr %i.an, ptr %11, align 8, !tbaa !210
+  %14 = getelementptr inbounds nuw [24 x i8], ptr %i.an, i64 %i.ah
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.an, i8 0, i64 %i.ai, i1 false)
   %scevgep.i.i.i.i.i62.i = getelementptr i8, ptr %i.an, i64 %i.ai
-  %14 = getelementptr inbounds nuw [24 x i8], ptr %i.an, i64 %i.ah
   %i.ao = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 3 uses
   store ptr %14, ptr %i.ap, align 8, !tbaa !497
