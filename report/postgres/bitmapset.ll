@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.g, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = add nsw i32 %i.e, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.e, 1                  ; 2 uses
   %i.i = sext i32 %i.h to i64
-  %i.j = shl nsw i64 %i.i, 3
-  %i.k = add nsw i64 %i.j, 8
+  %i.j = shl nuw nsw i64 %i.i, 3
+  %i.k = add nuw nsw i64 %i.j, 8
   %i.l = tail call ptr @palloc0(i64 noundef %i.k) #10 ; 3 uses
   store i32 466, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
@@ -221,10 +221,10 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.p = add nsw i32 %i.e, 1                      ; 2 uses
+  %i.p = add nuw nsw i32 %i.e, 1                  ; 2 uses
   %i.q = sext i32 %i.p to i64
-  %i.r = shl nsw i64 %i.q, 3
-  %i.s = add nsw i64 %i.r, 8
+  %i.r = shl nuw nsw i64 %i.q, 3
+  %i.s = add nuw nsw i64 %i.r, 8
   %i.t = tail call ptr @repalloc(ptr noundef nonnull %0, i64 noundef %i.s) #10 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4 ; 2 uses
   store i32 %i.p, ptr %i.u, align 4

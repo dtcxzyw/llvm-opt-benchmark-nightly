@@ -204,9 +204,9 @@ _ZL9isea_ptddiPN12_GLOBAL__N_17isea_ptE.exit.i:   ; preds = %bb.i
   %storemerge = select i1 %i.fr, <2 x double> %i.gh, <2 x double> %i.gg
   store <2 x double> %storemerge, ptr %5, align 16, !tbaa !38
   %i.gi = sdiv i32 %i.cf, 10
-  %i.gj = mul nsw i32 %i.gi, 5
+  %i.gj = mul nuw nsw i32 %i.gi, 5
   %i.gk = add nuw nsw i32 %i.fp, 1
-  %i.gl = add nsw i32 %i.gk, %i.gj
+  %i.gl = add nuw nsw i32 %i.gk, %i.gj
   %i.gm = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i32 %i.gl, ptr %i.gm, align 8, !tbaa !64
   br label %bb.m

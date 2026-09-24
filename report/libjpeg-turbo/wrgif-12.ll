@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph.split.us
   %i.bn = mul nuw nsw i32 %.076.us, 255
-  %i.bo = add nsw i32 %i.bn, %i.bk
+  %i.bo = add nuw nsw i32 %i.bn, %i.bk
   %i.bp = sdiv i32 %i.bo, %i.bj
   br label %bb.f
 
