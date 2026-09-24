@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader59:                                     ; preds = %.preheader59.lr.ph, %.loopexit58
   %indvars.iv73 = phi i64 [ 0, %.preheader59.lr.ph ], [ %indvars.iv.next74, %.loopexit58 ] ; 3 uses
-  %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv73 ; 9 uses
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !54
+  %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv73 ; 8 uses
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !54    ; 2 uses
   %.not54 = icmp eq i8 %i.n, -1
   br i1 %.not54, label %bb.d, label %.thread
 
@@ -247,52 +247,50 @@ middle.block:                                     ; preds = %vector.body
 
 bb.d:                                             ; preds = %.preheader59
   %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 1
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !54
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !54    ; 2 uses
   %.not54.1 = icmp eq i8 %i.x, -1
   br i1 %.not54.1, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %i.m, i64 2
-  %i.z = load i8, ptr %i.y, align 1, !tbaa !54
+  %i.z = load i8, ptr %i.y, align 1, !tbaa !54    ; 2 uses
   %.not54.2 = icmp eq i8 %i.z, -1
   br i1 %.not54.2, label %bb.f, label %.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %i.m, i64 3
-  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !54
+  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !54  ; 2 uses
   %.not54.3 = icmp eq i8 %i.ab, -1
   br i1 %.not54.3, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 4
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !54
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !54  ; 2 uses
   %.not54.4 = icmp eq i8 %i.ad, -1
   br i1 %.not54.4, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %i.m, i64 5
-  %i.af = load i8, ptr %i.ae, align 1, !tbaa !54
+  %i.af = load i8, ptr %i.ae, align 1, !tbaa !54  ; 2 uses
   %.not54.5 = icmp eq i8 %i.af, -1
   br i1 %.not54.5, label %bb.i, label %.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = getelementptr inbounds nuw i8, ptr %i.m, i64 6
-  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !54
+  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !54  ; 2 uses
   %.not54.6 = icmp eq i8 %i.ah, -1
   br i1 %.not54.6, label %bb.j, label %.thread
 
 bb.j:                                             ; preds = %bb.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.m, i64 7
-  %i.aj = load i8, ptr %i.ai, align 1, !tbaa !54
+  %i.aj = load i8, ptr %i.ai, align 1, !tbaa !54  ; 2 uses
   %.not54.7 = icmp eq i8 %i.aj, -1
   br i1 %.not54.7, label %.loopexit58, label %.thread
 
-.thread:                                          ; preds = %.preheader59, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j
-  %.065.lcssa.wide = phi i64 [ 0, %.preheader59 ], [ 1, %bb.d ], [ 2, %bb.e ], [ 3, %bb.f ], [ 4, %bb.g ], [ 5, %bb.h ], [ 6, %bb.i ], [ 7, %bb.j ]
+.thread:                                          ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %.preheader59
+  %2 = phi i8 [ %i.n, %.preheader59 ], [ %i.x, %bb.d ], [ %i.z, %bb.e ], [ %i.ab, %bb.f ], [ %i.ad, %bb.g ], [ %i.af, %bb.h ], [ %i.ah, %bb.i ], [ %i.aj, %bb.j ]
   %i.ak = load ptr, ptr %i.l, align 8, !tbaa !46
-  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 %.065.lcssa.wide
-  %3 = load i8, ptr %2, align 1, !tbaa !54
-  %i.al = sext i8 %3 to i64
+  %i.al = sext i8 %2 to i64
   %i.am = getelementptr inbounds [72 x i8], ptr %i.ak, i64 %i.al ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !48 ; 2 uses

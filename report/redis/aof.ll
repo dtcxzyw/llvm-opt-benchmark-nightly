@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.ac
   tail call void (i32, ptr, ...) @_serverLog(i32 noundef 3, ptr noundef nonnull @.str.73) #17
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ac, %bb.ad
+bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.ax = tail call i32 @sleep(i32 noundef 1) #17 ; 0 uses
   %i.ay = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6416), align 8, !tbaa !75
   %i.az = icmp sgt i32 %i.ay, 3
@@ -218,7 +218,7 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af
   tail call void @exit(i32 noundef 1) #20
   unreachable
 
-.thread:                                          ; preds = %bb.a, %bb.d, %bb.g, %bb.j, %bb.m, %bb.p, %bb.s, %bb.v, %bb.y, %bb.ab
+.thread:                                          ; preds = %bb.ab, %bb.y, %bb.v, %bb.s, %bb.p, %bb.m, %bb.j, %bb.g, %bb.d, %bb.a
   ret void
 }
 

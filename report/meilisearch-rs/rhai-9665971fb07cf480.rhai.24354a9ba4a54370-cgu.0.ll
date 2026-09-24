@@ -205,29 +205,29 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i.i.i.i.preheader:                     ; preds = %bb.c
   %i.g = icmp ult i128 %i.e, %i.f
-  br i1 %i.g, label %.lr.ph.a, label %.preheader.i.i.i.i._crit_edge
+  br i1 %i.g, label %.preheader.i.i.i.i._crit_edge, label %.lr.ph.a
 
-.preheader.i.i.i.i:                               ; preds = %.lr.ph.a
+.preheader.i.i.i.i:                               ; preds = %.preheader.i.i.i.i._crit_edge
   %i.h = icmp ult i128 %3, %i.f
-  br i1 %i.h, label %.lr.ph.a, label %.preheader.i.i.i.i._crit_edge
+  br i1 %i.h, label %.preheader.i.i.i.i._crit_edge, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader.i.i.i.i.preheader, %.preheader.i.i.i.i
-  %.sroa.01.0.i.i.i.i9.a = phi i64 [ %i.i, %.preheader.i.i.i.i ], [ %1, %.preheader.i.i.i.i.preheader ]
+.lr.ph.a:                                         ; preds = %.preheader.i.i.i.i, %.preheader.i.i.i.i.preheader
+  %.sroa.01.0.i.i.i.i9.a = phi i64 [ %1, %.preheader.i.i.i.i.preheader ], [ %i.j, %.preheader.i.i.i.i ]
+  store i8 1, ptr %i.a, align 16, !alias.scope !14827
+  %i.i = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h318933b393370f35E"(i64 noundef %.sroa.01.0.i.i.i.i9.a, i128 noundef %i.f), !noalias !14827
+  br label %"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h19fa2db74d426ce5E.exit"
+
+.preheader.i.i.i.i._crit_edge:                    ; preds = %.preheader.i.i.i.i.preheader, %.preheader.i.i.i.i
+  %.sroa.01.0.i.i.i.i.lcssa = phi i64 [ %i.j, %.preheader.i.i.i.i ], [ %1, %.preheader.i.i.i.i.preheader ]
   %2 = phi i128 [ %3, %.preheader.i.i.i.i ], [ %i.e, %.preheader.i.i.i.i.preheader ] ; 2 uses
   %3 = add nuw i128 %2, 1                         ; 3 uses
   store i128 %3, ptr %0, align 16, !alias.scope !14827
-  %i.i = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h318933b393370f35E"(i64 noundef %.sroa.01.0.i.i.i.i9.a, i128 noundef %2), !noalias !14827 ; 3 uses
-  %4 = icmp eq i64 %i.i, 0
+  %i.j = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h318933b393370f35E"(i64 noundef %.sroa.01.0.i.i.i.i.lcssa, i128 noundef %2), !noalias !14827 ; 3 uses
+  %4 = icmp eq i64 %i.j, 0
   br i1 %4, label %"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h19fa2db74d426ce5E.exit", label %.preheader.i.i.i.i
 
-.preheader.i.i.i.i._crit_edge:                    ; preds = %.preheader.i.i.i.i, %.preheader.i.i.i.i.preheader
-  %.sroa.01.0.i.i.i.i.lcssa = phi i64 [ %1, %.preheader.i.i.i.i.preheader ], [ %i.i, %.preheader.i.i.i.i ]
-  store i8 1, ptr %i.a, align 16, !alias.scope !14827
-  %i.j = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h318933b393370f35E"(i64 noundef %.sroa.01.0.i.i.i.i.lcssa, i128 noundef %i.f), !noalias !14827
-  br label %"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h19fa2db74d426ce5E.exit"
-
-"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h19fa2db74d426ce5E.exit": ; preds = %.lr.ph.a, %bb.a, %bb.b, %bb.c, %.preheader.i.i.i.i._crit_edge
-  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %i.j, %.preheader.i.i.i.i._crit_edge ], [ %1, %bb.c ], [ %1, %bb.b ], [ 0, %.lr.ph.a ]
+"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h19fa2db74d426ce5E.exit": ; preds = %.preheader.i.i.i.i._crit_edge, %bb.a, %bb.b, %bb.c, %.lr.ph.a
+  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %i.i, %.lr.ph.a ], [ %1, %bb.c ], [ %1, %bb.b ], [ 0, %.preheader.i.i.i.i._crit_edge ]
   ret i64 %.sroa.0.1.i
 }
 
@@ -445,29 +445,29 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i.i.i.i.preheader:                     ; preds = %bb.c
   %i.g = icmp slt i128 %i.e, %i.f
-  br i1 %i.g, label %.lr.ph.a, label %.preheader.i.i.i.i._crit_edge
+  br i1 %i.g, label %.preheader.i.i.i.i._crit_edge, label %.lr.ph.a
 
-.preheader.i.i.i.i:                               ; preds = %.lr.ph.a
+.preheader.i.i.i.i:                               ; preds = %.preheader.i.i.i.i._crit_edge
   %i.h = icmp slt i128 %3, %i.f
-  br i1 %i.h, label %.lr.ph.a, label %.preheader.i.i.i.i._crit_edge
+  br i1 %i.h, label %.preheader.i.i.i.i._crit_edge, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader.i.i.i.i.preheader, %.preheader.i.i.i.i
-  %.sroa.01.0.i.i.i.i9.a = phi i64 [ %i.i, %.preheader.i.i.i.i ], [ %1, %.preheader.i.i.i.i.preheader ]
+.lr.ph.a:                                         ; preds = %.preheader.i.i.i.i, %.preheader.i.i.i.i.preheader
+  %.sroa.01.0.i.i.i.i9.a = phi i64 [ %1, %.preheader.i.i.i.i.preheader ], [ %i.j, %.preheader.i.i.i.i ]
+  store i8 1, ptr %i.a, align 16, !alias.scope !14901
+  %i.i = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h9697bf5c31a97b31E"(i64 noundef %.sroa.01.0.i.i.i.i9.a, i128 noundef %i.f), !noalias !14901
+  br label %"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h885a5be5a6cbec4dE.exit"
+
+.preheader.i.i.i.i._crit_edge:                    ; preds = %.preheader.i.i.i.i.preheader, %.preheader.i.i.i.i
+  %.sroa.01.0.i.i.i.i.lcssa = phi i64 [ %i.j, %.preheader.i.i.i.i ], [ %1, %.preheader.i.i.i.i.preheader ]
   %2 = phi i128 [ %3, %.preheader.i.i.i.i ], [ %i.e, %.preheader.i.i.i.i.preheader ] ; 2 uses
   %3 = add nsw i128 %2, 1                         ; 3 uses
   store i128 %3, ptr %0, align 16, !alias.scope !14901
-  %i.i = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h9697bf5c31a97b31E"(i64 noundef %.sroa.01.0.i.i.i.i9.a, i128 noundef %2), !noalias !14901 ; 3 uses
-  %4 = icmp eq i64 %i.i, 0
+  %i.j = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h9697bf5c31a97b31E"(i64 noundef %.sroa.01.0.i.i.i.i.lcssa, i128 noundef %2), !noalias !14901 ; 3 uses
+  %4 = icmp eq i64 %i.j, 0
   br i1 %4, label %"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h885a5be5a6cbec4dE.exit", label %.preheader.i.i.i.i
 
-.preheader.i.i.i.i._crit_edge:                    ; preds = %.preheader.i.i.i.i, %.preheader.i.i.i.i.preheader
-  %.sroa.01.0.i.i.i.i.lcssa = phi i64 [ %1, %.preheader.i.i.i.i.preheader ], [ %i.i, %.preheader.i.i.i.i ]
-  store i8 1, ptr %i.a, align 16, !alias.scope !14901
-  %i.j = tail call fastcc noundef i64 @"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h9697bf5c31a97b31E"(i64 noundef %.sroa.01.0.i.i.i.i.lcssa, i128 noundef %i.f), !noalias !14901
-  br label %"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h885a5be5a6cbec4dE.exit"
-
-"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h885a5be5a6cbec4dE.exit": ; preds = %.lr.ph.a, %bb.a, %bb.b, %bb.c, %.preheader.i.i.i.i._crit_edge
-  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %i.j, %.preheader.i.i.i.i._crit_edge ], [ %1, %bb.c ], [ %1, %bb.b ], [ 0, %.lr.ph.a ]
+"_ZN87_$LT$I$u20$as$u20$core..iter..traits..iterator..Iterator..advance_by..SpecAdvanceBy$GT$15spec_advance_by17h885a5be5a6cbec4dE.exit": ; preds = %.preheader.i.i.i.i._crit_edge, %bb.a, %bb.b, %bb.c, %.lr.ph.a
+  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %i.i, %.lr.ph.a ], [ %1, %bb.c ], [ %1, %bb.b ], [ 0, %.preheader.i.i.i.i._crit_edge ]
   ret i64 %.sroa.0.1.i
 }
 

@@ -204,14 +204,14 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !183
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 8 uses
+  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 6 uses
   %umin.i = tail call i64 @llvm.umin.i64(i64 %.013.lcssa.i, i64 %0) ; 2 uses
   %i.g = icmp ugt i64 %0, %.013.lcssa.i
-  br i1 %i.g, label %.lr.ph, label %.critedge2.i
+  br i1 %i.g, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
 
 bb.c:                                             ; preds = %.lr.ph
   %i.h = icmp ugt i64 %i.i, %.013.lcssa.i
-  br i1 %i.h, label %.lr.ph, label %.critedge2.i, !llvm.loop !184
+  br i1 %i.h, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !184
 
 .lr.ph:                                           ; preds = %.critedge.i, %bb.c
   %.0.i84 = phi i64 [ %i.i, %bb.c ], [ %0, %.critedge.i ] ; 2 uses
@@ -224,18 +224,10 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not17.i, label %..critedge2.i_crit_edge, label %bb.c, !llvm.loop !184
 
 ..critedge2.i_crit_edge:                          ; preds = %.lr.ph
-  br label %.critedge2.i, !llvm.loop !184
+  br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !184
 
-.critedge2.i:                                     ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
-  %.0.lcssa.i = phi i64 [ %umin.i, %.critedge.i ], [ %.0.i84, %..critedge2.i_crit_edge ], [ %umin.i, %bb.c ]
-  %5 = icmp ugt i64 %.013.lcssa.i, %0
-  br i1 %5, label %6, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
-
-6:                                                ; preds = %.critedge2.i
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.176, ptr noundef nonnull @.str.175, i64 noundef %.013.lcssa.i, i64 noundef %0) #33
-  unreachable
-
-_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %.critedge2.i
+_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
+  %.0.lcssa.i = phi i64 [ %.0.i84, %..critedge2.i_crit_edge ], [ %umin.i, %.critedge.i ], [ %umin.i, %bb.c ]
   %i.n = sub i64 %.0.lcssa.i, %.013.lcssa.i
   %i.o = sub nuw i64 %0, %.013.lcssa.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.o, i64 %i.n) ; 5 uses
@@ -257,7 +249,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.p, i64 1 ; 2 uses
-  %i.y = add i64 %.sroa.speculated.i.i, -2        ; 9 uses
+  %i.y = add i64 %.sroa.speculated.i.i, -2        ; 7 uses
   %.not21.i12 = icmp eq i64 %i.y, 0
   br i1 %.not21.i12, label %.critedge.i17, label %.lr.ph.i13
 
@@ -276,15 +268,15 @@ bb.g:                                             ; preds = %.lr.ph.i13
   br i1 %exitcond.not.i16, label %.critedge.i17, label %.lr.ph.i13, !llvm.loop !183
 
 .critedge.i17:                                    ; preds = %bb.g, %.lr.ph.i13, %bb.f
-  %.013.lcssa.i18 = phi i64 [ 0, %bb.f ], [ %.01318.i14, %.lr.ph.i13 ], [ %i.y, %bb.g ] ; 8 uses
+  %.013.lcssa.i18 = phi i64 [ 0, %bb.f ], [ %.01318.i14, %.lr.ph.i13 ], [ %i.y, %bb.g ] ; 6 uses
   %umin.i19 = tail call i64 @llvm.umin.i64(i64 %.013.lcssa.i18, i64 %i.y) ; 2 uses
   %i.ae = icmp ugt i64 %i.y, %.013.lcssa.i18
-  br i1 %i.ae, label %.lr.ph88, label %.critedge2.i21
+  br i1 %i.ae, label %.lr.ph88, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit27
 
 bb.h:                                             ; preds = %.lr.ph88
   %i.af = add i64 %.0.i2087, -1                   ; 2 uses
   %i.ag = icmp ugt i64 %i.af, %.013.lcssa.i18
-  br i1 %i.ag, label %.lr.ph88, label %.critedge2.i21, !llvm.loop !184
+  br i1 %i.ag, label %.lr.ph88, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit27, !llvm.loop !184
 
 .lr.ph88:                                         ; preds = %.critedge.i17, %bb.h
   %.0.i2087 = phi i64 [ %i.af, %bb.h ], [ %i.y, %.critedge.i17 ] ; 3 uses
@@ -296,19 +288,11 @@ bb.h:                                             ; preds = %.lr.ph88
   br i1 %.not17.i26, label %..critedge2.i21_crit_edge, label %bb.h, !llvm.loop !184
 
 ..critedge2.i21_crit_edge:                        ; preds = %.lr.ph88
-  br label %.critedge2.i21, !llvm.loop !184
+  br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit27, !llvm.loop !184
 
-.critedge2.i21:                                   ; preds = %bb.h, %..critedge2.i21_crit_edge, %.critedge.i17
-  %.0.lcssa.i22 = phi i64 [ %umin.i19, %.critedge.i17 ], [ %.0.i2087, %..critedge2.i21_crit_edge ], [ %umin.i19, %bb.h ]
-  %7 = icmp ugt i64 %.013.lcssa.i18, %i.y
-  br i1 %7, label %8, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit27
-
-8:                                                ; preds = %.critedge2.i21
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.176, ptr noundef nonnull @.str.175, i64 noundef %.013.lcssa.i18, i64 noundef %i.y) #33
-  unreachable
-
-_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit27: ; preds = %.critedge2.i21
-  %i.al = sub i64 %.0.lcssa.i22, %.013.lcssa.i18
+_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit27: ; preds = %bb.h, %..critedge2.i21_crit_edge, %.critedge.i17
+  %.0.lcssa.i21 = phi i64 [ %.0.i2087, %..critedge2.i21_crit_edge ], [ %umin.i19, %.critedge.i17 ], [ %umin.i19, %bb.h ]
+  %i.al = sub i64 %.0.lcssa.i21, %.013.lcssa.i18
   %i.am = sub nuw i64 %i.y, %.013.lcssa.i18
   %.sroa.speculated.i.i23 = tail call i64 @llvm.umin.i64(i64 %i.am, i64 %i.al)
   %i.an = getelementptr inbounds nuw i8, ptr %i.x, i64 %.013.lcssa.i18

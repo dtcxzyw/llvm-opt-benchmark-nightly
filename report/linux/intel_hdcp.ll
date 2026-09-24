@@ -205,7 +205,7 @@ __drm_to_dev.exit8.i.i.i:                         ; preds = %bb.ft, %bb.fs
 .lr.ph.preheader.i.i:                             ; preds = %bb.ga, %.lr.ph396.preheader.i.i
   %indvars.iv416.i.i = phi i64 [ 0, %.lr.ph396.preheader.i.i ], [ %indvars.iv.next417.i.i, %bb.ga ] ; 2 uses
   %.0197395.i.i = phi i32 [ 0, %.lr.ph396.preheader.i.i ], [ %.3.i.i, %bb.ga ] ; 2 uses
-  %.0200394.i.i = phi i32 [ 0, %.lr.ph396.preheader.i.i ], [ %.1201.i.i, %bb.ga ] ; 8 uses
+  %.0200394.i.i = phi i32 [ 0, %.lr.ph396.preheader.i.i ], [ %.1201.i.i, %bb.ga ] ; 9 uses
   %.0207392.i.i = phi i32 [ 0, %.lr.ph396.preheader.i.i ], [ %.1208.i.i, %bb.ga ] ; 2 uses
   %i.qy = mul nuw nsw i64 %indvars.iv416.i.i, 5
   %i.qz = getelementptr i8, ptr %i.oe, i64 %i.qy  ; 6 uses
@@ -315,19 +315,17 @@ bb.fw:                                            ; preds = %intel_write_sha_tex
 
 .lr.ph389.preheader.i.i:                          ; preds = %bb.fw, %intel_write_sha_text.exit.i.i
   %i.ss = add nuw nsw i32 %.0200394.i.i, 1        ; 3 uses
-  %wide.trip.count.i.i = zext i32 %i.ss to i64    ; 2 uses
-  %xtraiter255 = and i64 %wide.trip.count.i.i, 1
   %i.st = icmp eq i32 %.0200394.i.i, 0
   br i1 %i.st, label %.lr.ph389.i.i.epil.preheader, label %.lr.ph389.preheader.i.i.new
 
 .lr.ph389.preheader.i.i.new:                      ; preds = %.lr.ph389.preheader.i.i
-  %unroll_iter259 = and i64 %wide.trip.count.i.i, 4294967294
+  %unroll_iter261 = and i32 %i.ss, -2
   br label %.lr.ph389.i.i
 
 .lr.ph389.i.i:                                    ; preds = %.lr.ph389.i.i, %.lr.ph389.preheader.i.i.new
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph389.preheader.i.i.new ], [ %indvars.iv.next.i.i.1, %.lr.ph389.i.i ] ; 3 uses
   %.2199387.i.i = phi i32 [ 0, %.lr.ph389.preheader.i.i.new ], [ %i.to, %.lr.ph389.i.i ]
-  %niter260 = phi i64 [ 0, %.lr.ph389.preheader.i.i.new ], [ %niter260.next.1, %.lr.ph389.i.i ]
+  %niter262 = phi i32 [ 0, %.lr.ph389.preheader.i.i.new ], [ %niter262.next.1, %.lr.ph389.i.i ]
   %i.su = trunc nuw i64 %indvars.iv.i.i to i32    ; 2 uses
   %i.sv = add i32 %i.ra, %i.su
   %i.sw = zext i32 %i.sv to i64
@@ -335,7 +333,7 @@ bb.fw:                                            ; preds = %intel_write_sha_tex
   %i.sy = load i8, ptr %i.sx, align 1
   %i.sz = zext i8 %i.sy to i32
   %i.ta = shl nuw i32 %i.su, 3
-  %i.tb = sub nuw i32 24, %i.ta
+  %i.tb = sub i32 24, %i.ta
   %i.tc = shl nuw i32 %i.sz, %i.tb
   %i.td = or i32 %i.tc, %.2199387.i.i
   %i.te = trunc i64 %indvars.iv.i.i to i32
@@ -346,17 +344,18 @@ bb.fw:                                            ; preds = %intel_write_sha_tex
   %i.tj = load i8, ptr %i.ti, align 1
   %i.tk = zext i8 %i.tj to i32
   %i.tl = shl nuw i32 %i.tf, 3
-  %i.tm = sub nuw i32 24, %i.tl
-  %i.tn = shl nuw nsw i32 %i.tk, %i.tm
+  %i.tm = sub i32 24, %i.tl
+  %i.tn = shl nuw i32 %i.tk, %i.tm
   %i.to = or i32 %i.tn, %i.td                     ; 3 uses
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
-  %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
-  %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
+  %niter262.next.1 = add i32 %niter262, 2         ; 2 uses
+  %niter260.ncmp.1 = icmp eq i32 %niter262.next.1, %unroll_iter261
   br i1 %niter260.ncmp.1, label %._crit_edge390.i.i.unr-lcssa, label %.lr.ph389.i.i, !llvm.loop !124
 
 ._crit_edge390.i.i.unr-lcssa:                     ; preds = %.lr.ph389.i.i
-  %lcmp.mod256.not = icmp eq i64 %xtraiter255, 0
-  br i1 %lcmp.mod256.not, label %._crit_edge390.i.i, label %.lr.ph389.i.i.epil.preheader
+  %4 = and i32 %.0200394.i.i, 1
+  %lcmp.mod256.not = icmp eq i32 %4, 0
+  br i1 %lcmp.mod256.not, label %.lr.ph389.i.i.epil.preheader, label %._crit_edge390.i.i
 
 .lr.ph389.i.i.epil.preheader:                     ; preds = %._crit_edge390.i.i.unr-lcssa, %.lr.ph389.preheader.i.i
   %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph389.preheader.i.i ], [ %indvars.iv.next.i.i.1, %._crit_edge390.i.i.unr-lcssa ]
@@ -370,7 +369,7 @@ bb.fw:                                            ; preds = %intel_write_sha_tex
   %i.tt = load i8, ptr %i.ts, align 1
   %i.tu = zext i8 %i.tt to i32
   %i.tv = shl nuw i32 %i.tp, 3
-  %i.tw = sub nuw i32 24, %i.tv
+  %i.tw = sub i32 24, %i.tv
   %i.tx = shl nuw i32 %i.tu, %i.tw
   %i.ty = or i32 %i.tx, %.2199387.i.i.epil.init
   br label %._crit_edge390.i.i
@@ -773,9 +772,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.i = load ptr, ptr %i.d, align 8
   %i.j = tail call i32 %i.i(ptr noundef %0, ptr noundef %2) #13 ; 2 uses
   %.not17 = icmp eq i32 %i.j, 0
-  br i1 %.not17, label %intel_hdcp_is_ksv_valid.exit.a, label %.thread
+  br i1 %.not17, label %intel_hdcp_is_ksv_valid.exit.1, label %.thread
 
-intel_hdcp_is_ksv_valid.exit.a:                   ; preds = %bb.c
+3:                                                ; preds = %intel_hdcp_is_ksv_valid.exit.1
+  %4 = load ptr, ptr %i.d, align 8
+  %5 = tail call i32 %4(ptr noundef %0, ptr noundef %2) #13 ; 2 uses
+  %.not17.1 = icmp eq i32 %5, 0
+  br i1 %.not17.1, label %intel_hdcp_is_ksv_valid.exit.a, label %.thread
+
+intel_hdcp_is_ksv_valid.exit.a:                   ; preds = %3
   %i.k = load i8, ptr %2, align 1
   %i.l = zext i8 %i.k to i32
   %i.m = tail call i64 @llvm.read_register.i64(metadata !4)
@@ -819,12 +824,11 @@ intel_hdcp_is_ksv_valid.exit.a:                   ; preds = %bb.c
   br i1 %.not.i.a, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %intel_hdcp_is_ksv_valid.exit.a
-  %i.as = load ptr, ptr %i.d, align 8
-  %3 = tail call i32 %i.as(ptr noundef %0, ptr noundef %2) #13 ; 2 uses
-  %.not17.1.a = icmp eq i32 %3, 0
-  br i1 %.not17.1.a, label %intel_hdcp_is_ksv_valid.exit.1, label %.thread
+  %i.as = load ptr, ptr %i.c, align 8             ; 2 uses
+  %.not17.1.a = icmp eq ptr %i.as, null
+  br i1 %.not17.1.a, label %__drm_to_dev.exit, label %bb.e
 
-intel_hdcp_is_ksv_valid.exit.1:                   ; preds = %bb.d
+intel_hdcp_is_ksv_valid.exit.1:                   ; preds = %bb.c
   %i.at = load i8, ptr %2, align 1
   %i.au = zext i8 %i.at to i32
   %i.av = tail call i64 @llvm.read_register.i64(metadata !4)
@@ -865,25 +869,20 @@ intel_hdcp_is_ksv_valid.exit.1:                   ; preds = %bb.d
   %i.bz = add i32 %i.by, %i.bp
   %i.ca = add i32 %i.bz, %i.bw
   %.not.i.1 = icmp eq i32 %i.ca, 20
-  br i1 %.not.i.1, label %.thread, label %4
+  br i1 %.not.i.1, label %.thread, label %3
 
-4:                                                ; preds = %intel_hdcp_is_ksv_valid.exit.1
-  %5 = load ptr, ptr %i.c, align 8                ; 2 uses
-  %.not.i18 = icmp eq ptr %5, null
-  br i1 %.not.i18, label %__drm_to_dev.exit, label %bb.e
-
-bb.e:                                             ; preds = %4
-  %i.cb = getelementptr i8, ptr %5, i64 8
+bb.e:                                             ; preds = %bb.d
+  %i.cb = getelementptr i8, ptr %i.as, i64 8
   %i.cc = load ptr, ptr %i.cb, align 8
   br label %__drm_to_dev.exit
 
-__drm_to_dev.exit:                                ; preds = %4, %bb.e
-  %i.cd = phi ptr [ %i.cc, %bb.e ], [ null, %4 ]
+__drm_to_dev.exit:                                ; preds = %bb.d, %bb.e
+  %i.cd = phi ptr [ %i.cc, %bb.e ], [ null, %bb.d ]
   tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.cd, i32 noundef 2, ptr noundef nonnull @.str.72) #13
   br label %.thread
 
-.thread:                                          ; preds = %intel_hdcp_is_ksv_valid.exit.a, %bb.c, %bb.d, %intel_hdcp_is_ksv_valid.exit.1, %__drm_to_dev.exit
-  %.014 = phi i32 [ -19, %__drm_to_dev.exit ], [ 0, %intel_hdcp_is_ksv_valid.exit.a ], [ %i.j, %bb.c ], [ %3, %bb.d ], [ 0, %intel_hdcp_is_ksv_valid.exit.1 ]
+.thread:                                          ; preds = %intel_hdcp_is_ksv_valid.exit.1, %bb.c, %3, %intel_hdcp_is_ksv_valid.exit.a, %__drm_to_dev.exit
+  %.014 = phi i32 [ -19, %__drm_to_dev.exit ], [ 0, %intel_hdcp_is_ksv_valid.exit.1 ], [ %i.j, %bb.c ], [ %5, %3 ], [ 0, %intel_hdcp_is_ksv_valid.exit.a ]
   ret i32 %.014
 }
 

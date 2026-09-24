@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   br label %.body
 
-.critedge.thread:                                 ; preds = %bb.z, %bb.ab, %bb.ad, %bb.af, %bb.ah
+.critedge.thread:                                 ; preds = %bb.ah, %bb.af, %bb.ad, %bb.ab, %bb.z
   %i.it = phi i1 [ false, %bb.z ], [ true, %bb.ab ], [ false, %bb.ad ], [ false, %bb.af ], [ false, %bb.ah ]
   %or.cond3 = phi i1 [ %i.he, %bb.z ], [ %i.he, %bb.ab ], [ false, %bb.ad ], [ false, %bb.af ], [ %i.he, %bb.ah ]
   %i.iu = phi i1 [ false, %bb.z ], [ false, %bb.ab ], [ false, %bb.ad ], [ false, %bb.af ], [ true, %bb.ah ]

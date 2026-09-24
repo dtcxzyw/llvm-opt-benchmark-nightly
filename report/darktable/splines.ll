@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.28.0243 = phi ptr [ %.sroa.28.3, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit143 ], [ %i.gg, %.lr.ph.preheader ] ; 3 uses
   %.sroa.22.0242 = phi ptr [ %.sroa.22.2, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit143 ], [ %i.gf, %.lr.ph.preheader ] ; 3 uses
   %.sroa.0.0241 = phi ptr [ %.sroa.0.3, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit143 ], [ %i.gf, %.lr.ph.preheader ] ; 7 uses
-  %i.ho = add nuw i64 %.094244, 1                 ; 3 uses
+  %i.ho = add nuw nsw i64 %.094244, 1             ; 3 uses
   %i.hp = load ptr, ptr %0, align 8, !tbaa !15    ; 2 uses
   %i.hq = getelementptr inbounds nuw [12 x i8], ptr %i.hp, i64 %i.ho
   %i.hr = getelementptr inbounds nuw [12 x i8], ptr %i.hp, i64 %.094244
@@ -399,7 +399,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ad, %bb.ae, %bb.ac
-  %i.lj = add nuw i64 %.0250, 1                   ; 2 uses
+  %i.lj = add nuw nsw i64 %.0250, 1               ; 2 uses
   %exitcond283.not = icmp eq i64 %i.lj, %i.gc
   br i1 %exitcond283.not, label %_ZNSt6vectorIfSaIfEED2Ev.exit145, label %.lr.ph252, !llvm.loop !206
 
@@ -802,7 +802,7 @@ _ZN8interpol31monotone_hermite_spline_variantIfE1GEffff.exit151.prol: ; preds = 
   %.sroa.19.0368 = phi ptr [ %.sroa.19.4, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit149 ], [ %i.ig, %.lr.ph.preheader ] ; 5 uses
   %.sroa.13.0367 = phi ptr [ %.sroa.13.2, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit149 ], [ %i.if, %.lr.ph.preheader ] ; 3 uses
   %.sroa.0178.0366 = phi ptr [ %.sroa.0178.4, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit149 ], [ %i.if, %.lr.ph.preheader ] ; 7 uses
-  %i.ki = add nuw i64 %.050372, 1                 ; 4 uses
+  %i.ki = add nuw nsw i64 %.050372, 1             ; 4 uses
   %i.kj = load ptr, ptr %0, align 8, !tbaa !15    ; 3 uses
   %i.kk = getelementptr inbounds nuw [12 x i8], ptr %i.kj, i64 %i.ki
   %i.kl = load float, ptr %i.kk, align 4, !tbaa !32

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ai = getelementptr inbounds i8, ptr %i.af, i64 %.neg10 ; 3 uses
   br label %_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit
 
-_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit: ; preds = %.preheader.preheader, %bb.c
+_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit: ; preds = %_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit.loopexit, %bb.c
   %i.aj = invoke noundef i64 %.40.val(ptr noundef nonnull %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.sroa.04.06)
           to label %bb.e unwind label %bb.d       ; 3 uses
 
@@ -299,16 +299,7 @@ bb.h:                                             ; preds = %_RNvMsa_NtCs2qDE43x
   %i.cc = getelementptr i8, ptr %i.cb, i64 16
   store i8 %i.bx, ptr %i.cc, align 1
   %i.cd = icmp eq i8 %i.bv, -1
-  br i1 %i.cd, label %bb.i, label %.preheader.preheader
-
-.preheader.preheader:                             ; preds = %bb.h
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !8364)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !8365)
-  %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.ai, align 1, !alias.scope !8364, !noalias !8365
-  %.sroa.02.0.copyload.i.i.i = load i64, ptr %i.bt, align 1, !alias.scope !8365, !noalias !8364
-  store i64 %.sroa.02.0.copyload.i.i.i, ptr %i.ai, align 1, !alias.scope !8364, !noalias !8365
-  store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.bt, align 1, !alias.scope !8365, !noalias !8364
-  br label %_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit
+  br i1 %i.cd, label %bb.i, label %_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit.loopexit
 
 bb.i:                                             ; preds = %bb.h
   %i.ce = add i64 %.sroa.04.06, -16
@@ -324,6 +315,15 @@ bb.i:                                             ; preds = %bb.h
   %i.cm = load i64, ptr %i.ai, align 1
   store i64 %i.cm, ptr %i.bt, align 1
   br label %bb.j
+
+_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit.loopexit: ; preds = %bb.h
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !8364)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !8365)
+  %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.ai, align 1, !alias.scope !8364, !noalias !8365
+  %.sroa.02.0.copyload.i.i.i = load i64, ptr %i.bt, align 1, !alias.scope !8365, !noalias !8364
+  store i64 %.sroa.02.0.copyload.i.i.i, ptr %i.ai, align 1, !alias.scope !8364, !noalias !8365
+  store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.bt, align 1, !alias.scope !8365, !noalias !8364
+  br label %_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes.exit
 
 bb.j:                                             ; preds = %bb.g, %bb.i, %.lr.ph
   %exitcond.not = icmp eq i64 %.sroa.04.06, %.val13

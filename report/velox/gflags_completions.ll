@@ -92,7 +92,6 @@ $_ZN6google19CommandLineFlagInfoD2Ev = comdat any
 @.str.14 = private unnamed_addr constant [4 x i8] c"%s\0A\00", align 1
 @.str.15 = private unnamed_addr constant [21 x i8] c"basic_string::substr\00", align 1
 @.str.16 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
-@.str.18 = private unnamed_addr constant [20 x i8] c"basic_string::erase\00", align 1
 @.str.19 = private unnamed_addr constant [2 x i8] c".\00", align 1
 @.str.20 = private unnamed_addr constant [7 x i8] c"-main.\00", align 1
 @.str.21 = private unnamed_addr constant [7 x i8] c"_main.\00", align 1
@@ -290,7 +289,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   store i64 0, ptr %i.p, align 8, !tbaa !24
   store i8 0, ptr %i.o, align 8, !tbaa !18
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %29, ptr noundef nonnull align 8 dereferenceable(32) %28)
-          to label %.noexc unwind label %.loopexit.split-lp193
+          to label %.noexc unwind label %bb.be
 
 .noexc:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   %i.q = load i64, ptr %i.p, align 8, !tbaa !24   ; 4 uses
@@ -318,7 +317,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 .noexc10.i.i.i.invoke:                            ; preds = %bb.s, %bb.g
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.11) #26
-          to label %.noexc10.i.i.i.cont unwind label %.loopexit.split-lp193
+          to label %.noexc10.i.i.i.cont unwind label %bb.be
 
 .noexc10.i.i.i.cont:                              ; preds = %.noexc10.i.i.i.invoke
   unreachable
@@ -329,14 +328,14 @@ bb.h:                                             ; preds = %bb.g
 
 .noexc11.i.i.i.invoke:                            ; preds = %bb.t, %bb.h
   invoke void @_ZSt17__throw_bad_allocv() #26
-          to label %.noexc11.i.i.i.cont unwind label %.loopexit.split-lp193
+          to label %.noexc11.i.i.i.cont unwind label %bb.be
 
 .noexc11.i.i.i.cont:                              ; preds = %.noexc11.i.i.i.invoke
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i: ; preds = %bb.h
   %i.ab = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #27
-          to label %.noexc17 unwind label %.loopexit.split-lp193 ; 2 uses
+          to label %.noexc17 unwind label %bb.be  ; 2 uses
 
 .noexc17:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i
   store ptr %i.ab, ptr %26, align 8, !tbaa !17, !alias.scope !90
@@ -467,7 +466,7 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.r:                                             ; preds = %bb.q
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.15, i64 noundef 1, i64 noundef 0) #26
-          to label %.noexc18 unwind label %.loopexit.split-lp193
+          to label %.noexc18 unwind label %bb.be
 
 .noexc18:                                         ; preds = %bb.r
   unreachable
@@ -489,7 +488,7 @@ bb.t:                                             ; preds = %bb.s
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i28.i: ; preds = %bb.t
   %i.bl = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.be) #27
-          to label %.noexc21 unwind label %.loopexit192 ; 2 uses
+          to label %.noexc21 unwind label %.loopexit.split-lp193 ; 2 uses
 
 .noexc21:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i28.i
   store ptr %i.bl, ptr %27, align 8, !tbaa !17, !alias.scope !91
@@ -601,67 +600,67 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43.i: ; preds = %_
 
 ._crit_edge.i:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43.i, %bb.p
   %i.ck = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc22 unwind label %.loopexit.split-lp193
+          to label %.noexc22 unwind label %bb.be
 
 .noexc22:                                         ; preds = %._crit_edge.i
   br i1 %i.ck, label %.split.us.i, label %bb.ab
 
 bb.ab:                                            ; preds = %.noexc22
   %i.cl = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 43)
-          to label %.noexc23 unwind label %.loopexit.split-lp193
+          to label %.noexc23 unwind label %bb.be
 
 .noexc23:                                         ; preds = %bb.ab
   br i1 %i.cl, label %.peel.next.i, label %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
 
 .peel.next.i:                                     ; preds = %.noexc23
   %i.cm = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc24 unwind label %.loopexit.split-lp193
+          to label %.noexc24 unwind label %bb.be
 
 .noexc24:                                         ; preds = %.peel.next.i
   br i1 %i.cm, label %.split.us.thread.i, label %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
 
 .split.us.i:                                      ; preds = %.noexc22
   %i.cn = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc25 unwind label %.loopexit.split-lp193
+          to label %.noexc25 unwind label %bb.be
 
 .noexc25:                                         ; preds = %.split.us.i
   br i1 %i.cn, label %.split.us.1.thread.i, label %bb.ac
 
 .split.us.thread.i:                               ; preds = %.noexc24
   %i.co = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc26 unwind label %.loopexit.split-lp193
+          to label %.noexc26 unwind label %bb.be
 
 .noexc26:                                         ; preds = %.split.us.thread.i
   br i1 %i.co, label %.split.us.1.i, label %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
 
 bb.ac:                                            ; preds = %.noexc25
   %i.cp = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 43)
-          to label %.noexc27 unwind label %.loopexit.split-lp193
+          to label %.noexc27 unwind label %bb.be
 
 .noexc27:                                         ; preds = %bb.ac
   br i1 %i.cp, label %.peel.next.1.i, label %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
 
 .peel.next.1.i:                                   ; preds = %.noexc27
   %i.cq = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc28 unwind label %.loopexit.split-lp193
+          to label %.noexc28 unwind label %bb.be
 
 .noexc28:                                         ; preds = %.peel.next.1.i
   br i1 %i.cq, label %.split.us.1.i, label %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
 
 .split.us.1.i:                                    ; preds = %.noexc28, %.noexc26
   %i.cr = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc29 unwind label %.loopexit.split-lp193
+          to label %.noexc29 unwind label %bb.be
 
 .noexc29:                                         ; preds = %.split.us.1.i
   br i1 %i.cr, label %.split.us.2.thread.i, label %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
 
 .split.us.1.thread.i:                             ; preds = %.noexc25
   %i.cs = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc30 unwind label %.loopexit.split-lp193
+          to label %.noexc30 unwind label %bb.be
 
 .noexc30:                                         ; preds = %.split.us.1.thread.i
   %i.ct = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 43)
-          to label %.noexc31 unwind label %.loopexit.split-lp193 ; 2 uses
+          to label %.noexc31 unwind label %bb.be  ; 2 uses
 
 .noexc31:                                         ; preds = %.noexc30
   br i1 %i.cs, label %.split.us.2.i, label %bb.ad
@@ -671,7 +670,7 @@ bb.ad:                                            ; preds = %.noexc31
 
 .peel.next.2.i:                                   ; preds = %bb.ad
   %i.cu = invoke fastcc noundef zeroext i1 @_ZN6google12_GLOBAL__N_118RemoveTrailingCharEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc(ptr noundef nonnull %29, i8 noundef signext 63)
-          to label %.noexc32 unwind label %.loopexit.split-lp193
+          to label %.noexc32 unwind label %bb.be
 
 .noexc32:                                         ; preds = %.peel.next.2.i
   br i1 %i.cu, label %.split.us.2.thread.i, label %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
@@ -703,7 +702,7 @@ _ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112
   %i.da = getelementptr inbounds nuw i8, ptr %31, i64 40 ; 6 uses
   store i64 0, ptr %i.da, align 8, !tbaa !95
   invoke void @_ZN6google11GetAllFlagsEPSt6vectorINS_19CommandLineFlagInfoESaIS1_EE(ptr noundef nonnull %30)
-          to label %bb.ae unwind label %bb.be
+          to label %bb.ae unwind label %.loopexit
 
 bb.ae:                                            ; preds = %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #25
@@ -956,7 +955,7 @@ bb.aw:                                            ; preds = %select.unfold.i.i.i
 _ZNSt8_Rb_treeIPKN6google19CommandLineFlagInfoES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE10_M_insert_IS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit.i.i.i: ; preds = %bb.aw, %select.unfold.i.i.i
   %i.fx = phi i1 [ %i.fw, %bb.aw ], [ true, %select.unfold.i.i.i ]
   %i.fy = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #27
-          to label %.noexc38 unwind label %.loopexit ; 2 uses
+          to label %.noexc38 unwind label %.loopexit.split-lp ; 2 uses
 
 .noexc38:                                         ; preds = %_ZNSt8_Rb_treeIPKN6google19CommandLineFlagInfoES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE10_M_insert_IS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit.i.i.i
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 32
@@ -972,10 +971,10 @@ _ZNSt3setIPKN6google19CommandLineFlagInfoESt4lessIS3_ESaIS3_EE6insertEOS3_.exit.
 
 bb.ax:                                            ; preds = %_ZNSt3setIPKN6google19CommandLineFlagInfoESt4lessIS3_ESaIS3_EE6insertEOS3_.exit.i
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %32, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.023.040.i)
-          to label %_ZN6google12_GLOBAL__N_119DoesSingleFlagMatchERKNS_19CommandLineFlagInfoERKNS0_17CompletionOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i unwind label %.loopexit
+          to label %_ZN6google12_GLOBAL__N_119DoesSingleFlagMatchERKNS_19CommandLineFlagInfoERKNS0_17CompletionOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i unwind label %.loopexit.split-lp
 
 bb.ay:                                            ; preds = %_ZNSt3setIPKN6google19CommandLineFlagInfoESt4lessIS3_ESaIS3_EE6insertEOS3_.exit.i
-  %i.gc = load i64, ptr %i.dc, align 8, !tbaa !24 ; 4 uses
+  %i.gc = load i64, ptr %i.dc, align 8, !tbaa !24 ; 2 uses
   %i.gd = icmp eq i64 %i.gc, 0
   br i1 %i.gd, label %bb.ba, label %bb.az
 
@@ -997,32 +996,21 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   br label %_ZN6google12_GLOBAL__N_119DoesSingleFlagMatchERKNS_19CommandLineFlagInfoERKNS0_17CompletionOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i
 
 bb.bb:                                            ; preds = %bb.bc, %.preheader.i
-  %.039.i = phi i64 [ 0, %.preheader.i ], [ %i.go, %bb.bc ] ; 6 uses
+  %.039.i = phi i64 [ 0, %.preheader.i ], [ %i.go, %bb.bc ] ; 4 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gg, i64 %.039.i
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !18
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gh, i64 %.039.i
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !18
   %i.gn = icmp eq i8 %i.gk, %i.gm
-  br i1 %i.gn, label %bb.bc, label %.critedge.i
+  br i1 %i.gn, label %bb.bc, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit.i
 
 bb.bc:                                            ; preds = %bb.bb
   %i.go = add nuw i64 %.039.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.go, %invariant.umin.i
   br i1 %exitcond.not.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit.i, label %bb.bb, !llvm.loop !51
 
-.critedge.i:                                      ; preds = %bb.bb
-  %38 = icmp ugt i64 %.039.i, %i.gc
-  br i1 %38, label %39, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit.i
-
-39:                                               ; preds = %.critedge.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.18, i64 noundef %.039.i, i64 noundef %i.gc) #26
-          to label %.noexc40 unwind label %.loopexit.split-lp
-
-.noexc40:                                         ; preds = %39
-  unreachable
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit.i: ; preds = %bb.bc, %.critedge.i
-  %.0.lcssa67.i = phi i64 [ %.039.i, %.critedge.i ], [ %invariant.umin.i, %bb.bc ] ; 2 uses
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit.i: ; preds = %bb.bc, %bb.bb
+  %.0.lcssa67.i = phi i64 [ %invariant.umin.i, %bb.bc ], [ %.039.i, %bb.bb ] ; 2 uses
   store i64 %.0.lcssa67.i, ptr %i.dc, align 8, !tbaa !24
   %i.gp = getelementptr inbounds nuw i8, ptr %i.gg, i64 %.0.lcssa67.i
   store i8 0, ptr %i.gp, align 1, !tbaa !18
@@ -1047,27 +1035,22 @@ bb.bd:                                            ; preds = %_ZN6google12_GLOBAL
   %i.gy = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.gw, ptr noundef nonnull @.str.12, ptr noundef %i.gx) #25 ; 0 uses
   br label %bb.mu
 
-.loopexit192:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i28.i
-  %lpad.loopexit194 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.na
-
-.loopexit.split-lp193:                            ; preds = %.noexc11.i.i.i.invoke, %.noexc10.i.i.i.invoke, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i, %bb.r, %._crit_edge.i, %bb.ab, %.peel.next.i, %.split.us.i, %.split.us.thread.i, %bb.ac, %.peel.next.1.i, %.split.us.1.i, %.split.us.1.thread.i, %.noexc30, %.peel.next.2.i
+.loopexit.split-lp193:                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i28.i
   %lpad.loopexit.split-lp195 = landingpad { ptr, i32 }
           cleanup
   br label %bb.na
 
-bb.be:                                            ; preds = %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
+bb.be:                                            ; preds = %.noexc11.i.i.i.invoke, %.noexc10.i.i.i.invoke, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i, %bb.r, %._crit_edge.i, %bb.ab, %.peel.next.i, %.split.us.i, %.split.us.thread.i, %bb.ac, %.peel.next.1.i, %.split.us.1.i, %.split.us.1.thread.i, %.noexc30, %.peel.next.2.i
   %i.gz = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.na
+
+.loopexit:                                        ; preds = %_ZN6google12_GLOBAL__N_138CanonicalizeCursorWordAndSearchOptionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_PNS0_17CompletionOptionsE.exit
+  %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %bb.mz
 
-.loopexit:                                        ; preds = %_ZNSt8_Rb_treeIPKN6google19CommandLineFlagInfoES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE10_M_insert_IS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit.i.i.i, %bb.ax
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.my
-
-.loopexit.split-lp:                               ; preds = %39
+.loopexit.split-lp:                               ; preds = %bb.ax, %_ZNSt8_Rb_treeIPKN6google19CommandLineFlagInfoES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE10_M_insert_IS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit.i.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.my
@@ -1470,8 +1453,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit170: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #25
   br label %bb.my
 
-bb.my:                                            ; preds = %.loopexit, %.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit170
-  %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit170 ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.my:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit170, %.loopexit.split-lp
+  %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit170 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.bhs = load ptr, ptr %32, align 8, !tbaa !17  ; 2 uses
   %i.bht = icmp eq ptr %i.bhs, %i.db
   br i1 %i.bht, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit173, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i171
@@ -1486,16 +1469,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit173: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #25
   br label %bb.mz
 
-bb.mz:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit173, %bb.be
-  %.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit173 ], [ %i.gz, %bb.be ]
+bb.mz:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit173, %.loopexit
+  %.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit173 ], [ %lpad.loopexit, %.loopexit ]
   call void @_ZNSt3setIPKN6google19CommandLineFlagInfoESt4lessIS3_ESaIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %31) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #25
   call void @_ZNSt6vectorIN6google19CommandLineFlagInfoESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %30) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #25
   br label %bb.na
 
-bb.na:                                            ; preds = %.loopexit192, %.loopexit.split-lp193, %bb.mz
-  %.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn.pn, %bb.mz ], [ %lpad.loopexit194, %.loopexit192 ], [ %lpad.loopexit.split-lp195, %.loopexit.split-lp193 ]
+bb.na:                                            ; preds = %.loopexit.split-lp193, %bb.be, %bb.mz
+  %.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn.pn, %bb.mz ], [ %lpad.loopexit.split-lp195, %.loopexit.split-lp193 ], [ %i.gz, %bb.be ]
   %i.bhw = load ptr, ptr %29, align 8, !tbaa !17  ; 2 uses
   %i.bhx = icmp eq ptr %i.bhw, %i.o
   br i1 %i.bhx, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit176, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i174

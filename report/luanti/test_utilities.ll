@@ -204,8 +204,6 @@ begin_hunk_0
 @.str.455 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @.str.457 = private unnamed_addr constant [4 x i8] c"yes\00", align 1
 @.str.458 = private unnamed_addr constant [5 x i8] c"true\00", align 1
-@.str.459 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
-@.str.460 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @.str.461 = private unnamed_addr constant [22 x i8] c"basic_string::replace\00", align 1
 @.str.462 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
 @.str.463 = private unnamed_addr constant [54 x i8] c"isBlockInSight(data[2], cam_pos, cam_dir, fov, range)\00", align 1
@@ -608,7 +606,7 @@ bb.a:                                             ; preds = %.lr.ph
   br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit63, !llvm.loop !1
 
 _Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit63: ; preds = %bb.a, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit63_crit_edge210, %.critedge.i.i53
-  %.0.lcssa.i.i58 = phi i64 [ %.013.lcssa.i.i54, %.critedge.i.i53 ], [ %.0.i.i56209, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit63_crit_edge210 ], [ %.013.lcssa.i.i54, %bb.a ]
+  %.0.lcssa.i.i58 = phi i64 [ %.0.i.i56209, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit63_crit_edge210 ], [ %.013.lcssa.i.i54, %.critedge.i.i53 ], [ %.013.lcssa.i.i54, %bb.a ]
   %i.q = sub i64 %.0.lcssa.i.i58, %.013.lcssa.i.i54
   %i.r = xor i64 %.013.lcssa.i.i54, 15
   %.sroa.speculated.i.i.i59 = tail call i64 @llvm.umin.i64(i64 %i.r, i64 %i.q)
@@ -737,7 +735,7 @@ bb.f:                                             ; preds = %.lr.ph213.a
   br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit86, !llvm.loop !1
 
 _Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit86: ; preds = %bb.f, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit86_crit_edge215, %.critedge.i.i76
-  %.0.lcssa.i.i81 = phi i64 [ %.013.lcssa.i.i77, %.critedge.i.i76 ], [ %.0.i.i79212, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit86_crit_edge215 ], [ %.013.lcssa.i.i77, %bb.f ]
+  %.0.lcssa.i.i81 = phi i64 [ %.0.i.i79212, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit86_crit_edge215 ], [ %.013.lcssa.i.i77, %.critedge.i.i76 ], [ %.013.lcssa.i.i77, %bb.f ]
   %i.bb = sub i64 %.0.lcssa.i.i81, %.013.lcssa.i.i77
   %i.bc = sub nuw nsw i64 21, %.013.lcssa.i.i77
   %.sroa.speculated.i.i.i82 = tail call i64 @llvm.umin.i64(i64 %i.bc, i64 %i.bb)
@@ -839,7 +837,7 @@ bb.k:                                             ; preds = %.lr.ph218.a
   br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit109, !llvm.loop !1
 
 _Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit109: ; preds = %bb.k, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit109_crit_edge220, %.critedge.i.i99
-  %.0.lcssa.i.i104 = phi i64 [ %.013.lcssa.i.i100, %.critedge.i.i99 ], [ %.0.i.i102217, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit109_crit_edge220 ], [ %.013.lcssa.i.i100, %bb.k ]
+  %.0.lcssa.i.i104 = phi i64 [ %.0.i.i102217, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit109_crit_edge220 ], [ %.013.lcssa.i.i100, %.critedge.i.i99 ], [ %.013.lcssa.i.i100, %bb.k ]
   %i.cg = sub i64 %.0.lcssa.i.i104, %.013.lcssa.i.i100
   %i.ch = sub nuw nsw i64 14, %.013.lcssa.i.i100
   %.sroa.speculated.i.i.i105 = tail call i64 @llvm.umin.i64(i64 %i.ch, i64 %i.cg)
@@ -921,7 +919,7 @@ bb.p:                                             ; preds = %.lr.ph223.a
   br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit132, !llvm.loop !1
 
 _Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit132: ; preds = %bb.p, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit132_crit_edge225, %.critedge.i.i122
-  %.0.lcssa.i.i127 = phi i64 [ %.013.lcssa.i.i123, %.critedge.i.i122 ], [ %.0.i.i125222, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit132_crit_edge225 ], [ %.013.lcssa.i.i123, %bb.p ]
+  %.0.lcssa.i.i127 = phi i64 [ %.0.i.i125222, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit132_crit_edge225 ], [ %.013.lcssa.i.i123, %.critedge.i.i122 ], [ %.013.lcssa.i.i123, %bb.p ]
   %i.cz = sub i64 %.0.lcssa.i.i127, %.013.lcssa.i.i123
   %i.da = xor i64 %.013.lcssa.i.i123, 3
   %.sroa.speculated.i.i.i128 = tail call i64 @llvm.umin.i64(i64 %i.da, i64 %i.cz)
@@ -995,7 +993,7 @@ bb.u:                                             ; preds = %.lr.ph228
   br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit155, !llvm.loop !1
 
 _Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit155: ; preds = %bb.u, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit155_crit_edge230, %.lr.ph.i.i141.preheader
-  %.0.lcssa.i.i150 = phi i64 [ %.013.lcssa.i.i146, %.lr.ph.i.i141.preheader ], [ %.0.i.i148227, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit155_crit_edge230 ], [ %.013.lcssa.i.i146, %bb.u ]
+  %.0.lcssa.i.i150 = phi i64 [ %.0.i.i148227, %._Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EEPKS1_.exit155_crit_edge230 ], [ %.013.lcssa.i.i146, %.lr.ph.i.i141.preheader ], [ %.013.lcssa.i.i146, %bb.u ]
   %i.dr = sub i64 %.0.lcssa.i.i150, %.013.lcssa.i.i146
   %i.ds = sub nuw nsw i64 4, %.013.lcssa.i.i146
   %.sroa.speculated.i.i.i151 = tail call i64 @llvm.umin.i64(i64 %i.ds, i64 %i.dr)
@@ -1398,14 +1396,14 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !101
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 8 uses
+  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 6 uses
   %umin.i = tail call i64 @llvm.umin.i64(i64 %.013.lcssa.i, i64 %0) ; 2 uses
   %i.f = icmp ugt i64 %0, %.013.lcssa.i
-  br i1 %i.f, label %.lr.ph, label %.critedge2.i
+  br i1 %i.f, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
 
 bb.c:                                             ; preds = %.lr.ph
   %i.g = icmp ugt i64 %i.h, %.013.lcssa.i
-  br i1 %i.g, label %.lr.ph, label %.critedge2.i, !llvm.loop !1
+  br i1 %i.g, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !1
 
 .lr.ph:                                           ; preds = %.critedge.i, %bb.c
   %.0.i25 = phi i64 [ %i.h, %bb.c ], [ %0, %.critedge.i ] ; 2 uses
@@ -1418,18 +1416,10 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not17.i, label %..critedge2.i_crit_edge, label %bb.c, !llvm.loop !1
 
 ..critedge2.i_crit_edge:                          ; preds = %.lr.ph
-  br label %.critedge2.i, !llvm.loop !1
+  br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !1
 
-.critedge2.i:                                     ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
-  %.0.lcssa.i = phi i64 [ %umin.i, %.critedge.i ], [ %.0.i25, %..critedge2.i_crit_edge ], [ %umin.i, %bb.c ]
-  %3 = icmp ugt i64 %.013.lcssa.i, %0
-  br i1 %3, label %4, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
-
-4:                                                ; preds = %.critedge2.i
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.460, ptr noundef nonnull @.str.459, i64 noundef %.013.lcssa.i, i64 noundef %0) #33
-  unreachable
-
-_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %.critedge2.i
+_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
+  %.0.lcssa.i = phi i64 [ %.0.i25, %..critedge2.i_crit_edge ], [ %umin.i, %.critedge.i ], [ %umin.i, %bb.c ]
   %i.m = sub i64 %.0.lcssa.i, %.013.lcssa.i
   %i.n = sub nuw i64 %0, %.013.lcssa.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.n, i64 %i.m) ; 3 uses

@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.gk = icmp samesign ugt i32 %i.gj, 4072
   br i1 %i.gk, label %.thread342, label %bb.ag
 
-.thread:                                          ; preds = %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af
+.thread:                                          ; preds = %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.x, %bb.y, %bb.z
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.670, i32 noundef %i.y) #20
   br label %.loopexit
 
@@ -354,7 +354,7 @@ bb.an:                                            ; preds = %bb.am
   %i.ko = icmp samesign ugt i32 %i.kn, %i.bv
   br i1 %i.ko, label %.thread345, label %bb.ao
 
-.thread342:                                       ; preds = %.preheader376, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.an
+.thread342:                                       ; preds = %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %.preheader376, %bb.ag, %bb.ah
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.671, i32 noundef %i.y) #20
   br label %.loopexit
 
@@ -472,7 +472,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.nx = icmp samesign ugt i32 %i.nw, %i.bv
   br i1 %i.nx, label %.thread348, label %bb.at
 
-.thread345:                                       ; preds = %.preheader375, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as
+.thread345:                                       ; preds = %bb.as, %bb.ar, %bb.aq, %bb.ap, %.preheader375, %bb.ao
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.672, i32 noundef %i.y) #20
   br label %.loopexit
 
@@ -590,7 +590,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.rg = icmp samesign ugt i32 %i.rf, %i.bv
   br i1 %i.rg, label %.thread351, label %bb.ay
 
-.thread348:                                       ; preds = %.preheader374, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax
+.thread348:                                       ; preds = %bb.ax, %bb.aw, %bb.av, %bb.au, %.preheader374, %bb.at
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.673, i32 noundef %i.y) #20
   br label %.loopexit
 
@@ -708,7 +708,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.up = icmp samesign ugt i32 %i.uo, %i.bv
   br i1 %i.up, label %.thread354, label %bb.bd
 
-.thread351:                                       ; preds = %.preheader373, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc
+.thread351:                                       ; preds = %bb.bc, %bb.bb, %bb.ba, %bb.az, %.preheader373, %bb.ay
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.674, i32 noundef %i.y) #20
   br label %.loopexit
 
@@ -802,10 +802,6 @@ bb.bh:                                            ; preds = %bb.bg
   %i.xf = icmp samesign ugt i32 %i.xd, %i.bv
   br i1 %i.xf, label %.thread354, label %bb.bi
 
-.thread354:                                       ; preds = %.preheader372, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh
-  call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.675, i32 noundef %i.y) #20
-  br label %.loopexit
-
 bb.bi:                                            ; preds = %bb.bh
   %i.xg = getelementptr inbounds nuw i8, ptr %i.ar, i64 116
   %i.xh = load i8, ptr %i.xg, align 1, !tbaa !9
@@ -853,6 +849,10 @@ bb.bi:                                            ; preds = %bb.bh
   %i.yt = icmp samesign ugt i32 %i.yo, 100
   %or.cond = select i1 %i.ys, i1 true, i1 %i.yt
   br i1 %or.cond, label %bb.bj, label %bb.bk
+
+.thread354:                                       ; preds = %bb.bh, %bb.bg, %bb.bf, %bb.be, %.preheader372, %bb.bd
+  call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.675, i32 noundef %i.y) #20
+  br label %.loopexit
 
 bb.bj:                                            ; preds = %bb.bi
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.676, i32 noundef %i.y) #20

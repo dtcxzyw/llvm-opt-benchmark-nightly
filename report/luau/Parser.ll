@@ -205,11 +205,11 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 .lr.ph.i.i:                                       ; preds = %bb.q
+  %13 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.bg = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 noundef 8) ; 2 uses
   store ptr %i.k, ptr %i.bg, align 8, !tbaa !53
-  %13 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
   store ptr %i.bg, ptr %3, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 1, ptr %i.bh, align 8
@@ -533,12 +533,12 @@ bb.at:                                            ; preds = %_ZNK4Luau8Locatione
   br label %_ZNK4Luau8LocationeqERKS0_.exit.thread
 
 _ZNK4Luau8LocationeqERKS0_.exit.thread:           ; preds = %_ZNK4Luau7AstNameeqEPKc.exit61.thread, %bb.at, %_ZNK4Luau8LocationeqERKS0_.exit
+  %14 = getelementptr inbounds nuw i8, ptr %i.cr, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #34
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.fu = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.ft, i64 noundef 8) ; 2 uses
   store ptr %i.cr, ptr %i.fu, align 8, !tbaa !53
-  %14 = getelementptr inbounds nuw i8, ptr %i.cr, i64 12
   store ptr %i.fu, ptr %11, align 8
   %i.fv = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 1, ptr %i.fv, align 8
@@ -941,11 +941,11 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 .lr.ph.i.i:                                       ; preds = %bb.l
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.aw = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.av, i64 noundef 8) ; 2 uses
   store ptr %1, ptr %i.aw, align 8, !tbaa !53
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 12
   store ptr %i.aw, ptr %2, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 1, ptr %i.ax, align 8
@@ -1348,11 +1348,11 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 .lr.ph.i.i:                                       ; preds = %bb.l
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.aw = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.av, i64 noundef 8) ; 2 uses
   store ptr %1, ptr %i.aw, align 8, !tbaa !53
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
   store ptr %i.aw, ptr %3, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 1, ptr %i.ax, align 8
@@ -1755,12 +1755,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.lr.ph.i.i, label %bb.c
 
 .lr.ph.i.i:                                       ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.l = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i64 noundef 8) ; 2 uses
   store ptr %1, ptr %i.l, align 8, !tbaa !53
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
   store ptr %i.l, ptr %2, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 1, ptr %i.m, align 8
@@ -1830,12 +1830,12 @@ _ZN4Luau6Parser16getMatchingClassEPNS_7AstExprE.exit: ; preds = %bb.g
   br i1 %.not.not, label %.thread, label %.lr.ph.i.i23
 
 .lr.ph.i.i23:                                     ; preds = %_ZN4Luau6Parser16getMatchingClassEPNS_7AstExprE.exit
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.au = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.at, i64 noundef 8) ; 2 uses
   store ptr %1, ptr %i.au, align 8, !tbaa !53
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12
   store ptr %i.au, ptr %3, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 1, ptr %i.av, align 8
@@ -1850,12 +1850,12 @@ _ZN4Luau6Parser16getMatchingClassEPNS_7AstExprE.exit: ; preds = %bb.g
   br label %bb.j
 
 .thread:                                          ; preds = %bb.h, %bb.i, %bb.d, %bb.e, %_ZN4Luau6Parser16getMatchingClassEPNS_7AstExprE.exit, %bb.c
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.bf = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.be, i64 noundef 8) ; 2 uses
   store ptr %1, ptr %i.bf, align 8, !tbaa !53
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 12
   store ptr %i.bf, ptr %4, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 1, ptr %i.bg, align 8
@@ -2258,10 +2258,10 @@ _ZN4Luau6Parser9parseTypeEb.exit:                 ; preds = %_ZN4LuauL19shouldPa
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #34
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !336, !nonnull !67, !align !337 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.y, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   %i.ab = call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.aa, i64 noundef 8) ; 2 uses
   store ptr %i.y, ptr %i.ab, align 8, !tbaa !325
-  %22 = getelementptr inbounds nuw i8, ptr %i.y, i64 12
   store ptr %i.ab, ptr %4, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 1, ptr %i.ac, align 8
@@ -2664,12 +2664,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.lr.ph.i.i11, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.g = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 noundef 8) ; 2 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !53
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 12
   store ptr %i.g, ptr %3, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 1, ptr %i.h, align 8
@@ -2680,6 +2680,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i11:                                     ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 132
   %i.l = load i64, ptr %i.j, align 4
   store i64 %i.l, ptr %4, align 8
@@ -2691,7 +2692,6 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !336, !nonnull !67, !align !337
   %i.q = tail call noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.p, i64 noundef 8) ; 2 uses
   store ptr %1, ptr %i.q, align 8, !tbaa !53
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 128
   store ptr %i.q, ptr %5, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 1, ptr %i.r, align 8

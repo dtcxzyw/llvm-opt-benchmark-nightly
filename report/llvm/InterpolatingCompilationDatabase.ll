@@ -204,17 +204,17 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapImiNS_12DenseMapInfoImvEENS_6detail12DenseMa
   br label %bb.x
 
 ._crit_edge.i7.i:                                 ; preds = %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i, %.lr.ph.i.i.i8.i.preheader, %.lr.ph.i.i.i8.i
-  %i.is = icmp eq i64 %.sroa.053.1.i.i, -1
+  %i.is = icmp eq i64 %.sroa.051.1.i.i, -1
   br i1 %i.is, label %._crit_edge.thread.i.i, label %_ZNK5clang7tooling12_GLOBAL__N_19FileIndex10pickWinnerERKN4llvm8DenseMapImiNS3_12DenseMapInfoImvEENS3_6detail12DenseMapPairImiEEEENS3_9StringRefENS_6driver5types2IDE.exit.i
 
 bb.x:                                             ; preds = %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i, %.lr.ph.i3.i
   %.sroa.12.075.i.i = phi i64 [ 0, %.lr.ph.i3.i ], [ %.sroa.12.1.i.i, %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i ] ; 6 uses
   %.pn.i.i = phi i64 [ %i.iq, %.lr.ph.i3.i ], [ %i.kp, %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i ] ; 2 uses
-  %.sroa.053.073.i.i = phi i64 [ -1, %.lr.ph.i3.i ], [ %.sroa.053.1.i.i, %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i ] ; 5 uses
+  %.sroa.053.073.i.i = phi i64 [ -1, %.lr.ph.i3.i ], [ %.sroa.051.1.i.i, %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i ] ; 5 uses
   %.sroa.7.072.i.i = phi i8 [ 0, %.lr.ph.i3.i ], [ %.sroa.7.1.i.i, %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i ] ; 5 uses
-  %.sroa.956.071.i.i = phi i32 [ 0, %.lr.ph.i3.i ], [ %.sroa.956.1.i.i, %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i ] ; 6 uses
+  %.sroa.956.071.i.i = phi i32 [ 0, %.lr.ph.i3.i ], [ %.sroa.954.1.i.i, %_ZN4llvm16DenseMapIteratorImiNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImiEELb1EEppEv.exit.i.i ] ; 6 uses
   %.sroa.050.074.i.i = getelementptr i8, ptr %i.ht, i64 %.pn.i.i ; 2 uses
-  %i.it = load i64, ptr %.sroa.050.074.i.i, align 8, !tbaa !236 ; 6 uses
+  %i.it = load i64, ptr %.sroa.050.074.i.i, align 8, !tbaa !236 ; 7 uses
   br i1 %i.w, label %.thread.i.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -229,9 +229,9 @@ bb.y:                                             ; preds = %bb.x
   br i1 %or.cond.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %bb.y, %bb.x
-  %i.ja = phi i8 [ %i.iy, %bb.y ], [ 1, %bb.x ]   ; 3 uses
+  %i.ja = phi i8 [ %i.iy, %bb.y ], [ 1, %bb.x ]   ; 4 uses
   %.in.i.i = getelementptr inbounds nuw i8, ptr %.sroa.050.074.i.i, i64 8
-  %i.jb = load i32, ptr %.in.i.i, align 8, !tbaa !237 ; 4 uses
+  %i.jb = load i32, ptr %.in.i.i, align 8, !tbaa !237 ; 5 uses
   %i.jc = icmp eq i8 %.sroa.7.072.i.i, %i.ja
   br i1 %i.jc, label %bb.z, label %.thread._crit_edge.i.i
 
@@ -253,7 +253,7 @@ bb.ab:                                            ; preds = %bb.aa
   %.sroa.07.0.copyload.i.i = load ptr, ptr %i.jf, align 8, !tbaa !47
   %.sroa.28.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.jf, i64 8
   %.sroa.28.0.copyload.i.i = load i64, ptr %.sroa.28.0..sroa_idx.i.i, align 8, !tbaa !48
-  %.sroa.speculated.i.i9.i = call i64 @llvm.umin.i64(i64 %.sroa.28.0.copyload.i.i, i64 %i.hs) ; 4 uses
+  %.sroa.speculated.i.i9.i = call i64 @llvm.umin.i64(i64 %.sroa.28.0.copyload.i.i, i64 %i.hs) ; 3 uses
   %.not1117.not.i.i.i = icmp eq i64 %.sroa.speculated.i.i9.i, 0
   br i1 %.not1117.not.i.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i, label %.lr.ph.i.i10.i
 
@@ -264,20 +264,15 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ji = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i, i64 %.0918.i.i.i
   %i.jj = load i8, ptr %i.ji, align 1, !tbaa !46
   %.not.i.i11.i = icmp eq i8 %i.jh, %i.jj
-  br i1 %.not.i.i11.i, label %bb.ac, label %._crit_edge.loopexit.i.i.i
+  br i1 %.not.i.i11.i, label %bb.ac, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i
 
 bb.ac:                                            ; preds = %.lr.ph.i.i10.i
   %i.jk = add nuw i64 %.0918.i.i.i, 1             ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.jk, %.sroa.speculated.i.i9.i
-  br i1 %exitcond.not.i.i.i, label %._crit_edge.loopexit.i.i.i, label %.lr.ph.i.i10.i, !llvm.loop !219
+  br i1 %exitcond.not.i.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i, label %.lr.ph.i.i10.i, !llvm.loop !219
 
-._crit_edge.loopexit.i.i.i:                       ; preds = %bb.ac, %.lr.ph.i.i10.i
-  %.09.lcssa.ph.i.i.i = phi i64 [ %.sroa.speculated.i.i9.i, %bb.ac ], [ %.0918.i.i.i, %.lr.ph.i.i10.i ]
-  %15 = call i64 @llvm.umin.i64(i64 %.09.lcssa.ph.i.i.i, i64 %.sroa.speculated.i.i9.i)
-  br label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i
-
-_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i: ; preds = %._crit_edge.loopexit.i.i.i, %bb.ab
-  %.09.lcssa.i.i.i = phi i64 [ 0, %bb.ab ], [ %15, %._crit_edge.loopexit.i.i.i ] ; 2 uses
+_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i: ; preds = %bb.ac, %.lr.ph.i.i10.i, %bb.ab
+  %.09.lcssa.i.i.i = phi i64 [ 0, %bb.ab ], [ %.sroa.speculated.i.i9.i, %bb.ac ], [ %.0918.i.i.i, %.lr.ph.i.i10.i ] ; 2 uses
   %i.jl = icmp ult i64 %.09.lcssa.i.i.i, %.sroa.12.075.i.i
   br i1 %i.jl, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i, label %bb.ad
 
@@ -293,7 +288,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.aa, %.th
   %.sroa.03.0.copyload.i.i = load ptr, ptr %i.jp, align 8, !tbaa !47
   %.sroa.24.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.jp, i64 8
   %.sroa.24.0.copyload.i.i = load i64, ptr %.sroa.24.0..sroa_idx.i.i, align 8, !tbaa !48
-  %.sroa.speculated.i36.i.i = call i64 @llvm.umin.i64(i64 %.sroa.24.0.copyload.i.i, i64 %i.hs) ; 4 uses
+  %.sroa.speculated.i36.i.i = call i64 @llvm.umin.i64(i64 %.sroa.24.0.copyload.i.i, i64 %i.hs) ; 3 uses
   %.not1117.not.i37.i.i = icmp eq i64 %.sroa.speculated.i36.i.i, 0
   br i1 %.not1117.not.i37.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i, label %.lr.ph.i38.i.i
 
@@ -304,23 +299,18 @@ bb.ae:                                            ; preds = %bb.ad, %bb.aa, %.th
   %i.js = getelementptr inbounds nuw i8, ptr %.sroa.03.0.copyload.i.i, i64 %.0918.i39.i.i
   %i.jt = load i8, ptr %i.js, align 1, !tbaa !46
   %.not.i40.i.i = icmp eq i8 %i.jr, %i.jt
-  br i1 %.not.i40.i.i, label %bb.af, label %._crit_edge.loopexit.i41.i.i
+  br i1 %.not.i40.i.i, label %bb.af, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i
 
 bb.af:                                            ; preds = %.lr.ph.i38.i.i
   %i.ju = add nuw i64 %.0918.i39.i.i, 1           ; 2 uses
   %exitcond.not.i44.i.i = icmp eq i64 %i.ju, %.sroa.speculated.i36.i.i
-  br i1 %exitcond.not.i44.i.i, label %._crit_edge.loopexit.i41.i.i, label %.lr.ph.i38.i.i, !llvm.loop !219
+  br i1 %exitcond.not.i44.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i, label %.lr.ph.i38.i.i, !llvm.loop !219
 
-._crit_edge.loopexit.i41.i.i:                     ; preds = %bb.af, %.lr.ph.i38.i.i
-  %.09.lcssa.ph.i42.i.i = phi i64 [ %.sroa.speculated.i36.i.i, %bb.af ], [ %.0918.i39.i.i, %.lr.ph.i38.i.i ]
-  %16 = call i64 @llvm.umin.i64(i64 %.09.lcssa.ph.i42.i.i, i64 %.sroa.speculated.i36.i.i)
-  br label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i
-
-_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i: ; preds = %._crit_edge.loopexit.i41.i.i, %bb.ae, %bb.ad, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i, %bb.z, %bb.y
-  %.sroa.956.1.i.i = phi i32 [ %.sroa.956.071.i.i, %bb.y ], [ %.sroa.956.071.i.i, %bb.z ], [ %.sroa.956.071.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.956.071.i.i, %bb.ad ], [ %i.jb, %bb.ae ], [ %i.jb, %._crit_edge.loopexit.i41.i.i ]
-  %.sroa.7.1.i.i = phi i8 [ 1, %bb.y ], [ %.sroa.7.072.i.i, %bb.z ], [ %.sroa.7.072.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.7.072.i.i, %bb.ad ], [ %i.ja, %bb.ae ], [ %i.ja, %._crit_edge.loopexit.i41.i.i ]
-  %.sroa.053.1.i.i = phi i64 [ %.sroa.053.073.i.i, %bb.y ], [ %.sroa.053.073.i.i, %bb.z ], [ %.sroa.053.073.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.053.073.i.i, %bb.ad ], [ %i.it, %bb.ae ], [ %i.it, %._crit_edge.loopexit.i41.i.i ] ; 3 uses
-  %.sroa.12.1.i.i = phi i64 [ %.sroa.12.075.i.i, %bb.y ], [ %.sroa.12.075.i.i, %bb.z ], [ %.sroa.12.075.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.12.075.i.i, %bb.ad ], [ 0, %bb.ae ], [ %16, %._crit_edge.loopexit.i41.i.i ]
+_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit45.i.i: ; preds = %bb.af, %.lr.ph.i38.i.i, %bb.ae, %bb.ad, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i, %bb.z, %bb.y
+  %.sroa.954.1.i.i = phi i32 [ %.sroa.956.071.i.i, %bb.y ], [ %.sroa.956.071.i.i, %bb.z ], [ %.sroa.956.071.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.956.071.i.i, %bb.ad ], [ %i.jb, %bb.ae ], [ %i.jb, %.lr.ph.i38.i.i ], [ %i.jb, %bb.af ]
+  %.sroa.7.1.i.i = phi i8 [ 1, %bb.y ], [ %.sroa.7.072.i.i, %bb.z ], [ %.sroa.7.072.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.7.072.i.i, %bb.ad ], [ %i.ja, %bb.ae ], [ %i.ja, %.lr.ph.i38.i.i ], [ %i.ja, %bb.af ]
+  %.sroa.051.1.i.i = phi i64 [ %.sroa.053.073.i.i, %bb.y ], [ %.sroa.053.073.i.i, %bb.z ], [ %.sroa.053.073.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.053.073.i.i, %bb.ad ], [ %i.it, %bb.ae ], [ %i.it, %.lr.ph.i38.i.i ], [ %i.it, %bb.af ] ; 3 uses
+  %.sroa.12.1.i.i = phi i64 [ %.sroa.12.075.i.i, %bb.y ], [ %.sroa.12.075.i.i, %bb.z ], [ %.sroa.12.075.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i ], [ %.sroa.12.075.i.i, %bb.ad ], [ 0, %bb.ae ], [ %.sroa.speculated.i36.i.i, %bb.af ], [ %.0918.i39.i.i, %.lr.ph.i38.i.i ]
   %i.jv = add i64 %.pn.i.i, 16
   %i.jw = ashr exact i64 %i.jv, 4                 ; 3 uses
   %.not.i.i.i6.i = icmp ult i64 %i.jw, %i.ib
@@ -436,7 +426,7 @@ bb.aj:                                            ; preds = %bb.ah
   %.sroa.03.0.copyload.i.i.i = load ptr, ptr %i.lg, align 8, !tbaa !47, !noalias !238
   %.sroa.24.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.lg, i64 8
   %.sroa.24.0.copyload.i.i.i = load i64, ptr %.sroa.24.0..sroa_idx.i.i.i, align 8, !tbaa !48, !noalias !238
-  %.sroa.speculated.i.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.24.0.copyload.i.i.i, i64 %i.hs) ; 4 uses
+  %.sroa.speculated.i.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.24.0.copyload.i.i.i, i64 %i.hs) ; 3 uses
   %.not1117.not.i.i.i.i = icmp eq i64 %.sroa.speculated.i.i.i.i, 0
   br i1 %.not1117.not.i.i.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i, label %.lr.ph.i.i47.i.i
 
@@ -447,25 +437,20 @@ bb.aj:                                            ; preds = %bb.ah
   %i.lo = getelementptr inbounds nuw i8, ptr %.sroa.03.0.copyload.i.i.i, i64 %.0918.i.i.i.i
   %i.lp = load i8, ptr %i.lo, align 1, !tbaa !46, !noalias !238
   %.not.i15.i.i.i = icmp eq i8 %i.ln, %i.lp
-  br i1 %.not.i15.i.i.i, label %bb.ak, label %._crit_edge.loopexit.i.i.i.i
+  br i1 %.not.i15.i.i.i, label %bb.ak, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i
 
 bb.ak:                                            ; preds = %.lr.ph.i.i47.i.i
   %i.lq = add nuw i64 %.0918.i.i.i.i, 1           ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.lq, %.sroa.speculated.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i, label %.lr.ph.i.i47.i.i, !llvm.loop !219
+  br i1 %exitcond.not.i.i.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i, label %.lr.ph.i.i47.i.i, !llvm.loop !219
 
-._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.ak, %.lr.ph.i.i47.i.i
-  %.09.lcssa.ph.i.i.i.i = phi i64 [ %.sroa.speculated.i.i.i.i, %bb.ak ], [ %.0918.i.i.i.i, %.lr.ph.i.i47.i.i ]
-  %17 = call i64 @llvm.umin.i64(i64 %.09.lcssa.ph.i.i.i.i, i64 %.sroa.speculated.i.i.i.i)
-  br label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i
-
-_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i: ; preds = %._crit_edge.loopexit.i.i.i.i, %bb.aj
-  %.09.lcssa.i.i.i.i = phi i64 [ 0, %bb.aj ], [ %17, %._crit_edge.loopexit.i.i.i.i ]
+_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i: ; preds = %bb.ak, %.lr.ph.i.i47.i.i, %bb.aj
+  %.09.lcssa.i.i.i.i = phi i64 [ 0, %bb.aj ], [ %.0918.i.i.i.i, %.lr.ph.i.i47.i.i ], [ %.sroa.speculated.i.i.i.i, %bb.ak ]
   %i.lr = getelementptr inbounds i8, ptr %i.lg, i64 -24 ; 2 uses
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.lr, align 8, !tbaa !47, !noalias !238
   %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds i8, ptr %i.lg, i64 -16
   %.sroa.2.0.copyload.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !tbaa !48, !noalias !238
-  %.sroa.speculated.i16.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.2.0.copyload.i.i.i, i64 %i.hs) ; 4 uses
+  %.sroa.speculated.i16.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.2.0.copyload.i.i.i, i64 %i.hs) ; 3 uses
   %.not1117.not.i17.i.i.i = icmp eq i64 %.sroa.speculated.i16.i.i.i, 0
   br i1 %.not1117.not.i17.i.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit25.i.i.i, label %.lr.ph.i18.i.i.i
 
@@ -476,21 +461,16 @@ _ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i:
   %i.lu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %.0918.i19.i.i.i
   %i.lv = load i8, ptr %i.lu, align 1, !tbaa !46, !noalias !238
   %.not.i20.i.i.i = icmp eq i8 %i.lt, %i.lv
-  br i1 %.not.i20.i.i.i, label %bb.al, label %._crit_edge.loopexit.i21.i.i.i
+  br i1 %.not.i20.i.i.i, label %bb.al, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit25.i.i.i
 
 bb.al:                                            ; preds = %.lr.ph.i18.i.i.i
   %i.lw = add nuw i64 %.0918.i19.i.i.i, 1         ; 2 uses
   %exitcond.not.i24.i.i.i = icmp eq i64 %i.lw, %.sroa.speculated.i16.i.i.i
-  br i1 %exitcond.not.i24.i.i.i, label %._crit_edge.loopexit.i21.i.i.i, label %.lr.ph.i18.i.i.i, !llvm.loop !219
+  br i1 %exitcond.not.i24.i.i.i, label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit25.i.i.i, label %.lr.ph.i18.i.i.i, !llvm.loop !219
 
-._crit_edge.loopexit.i21.i.i.i:                   ; preds = %bb.al, %.lr.ph.i18.i.i.i
-  %.09.lcssa.ph.i22.i.i.i = phi i64 [ %.sroa.speculated.i16.i.i.i, %bb.al ], [ %.0918.i19.i.i.i, %.lr.ph.i18.i.i.i ]
-  %18 = call i64 @llvm.umin.i64(i64 %.09.lcssa.ph.i22.i.i.i, i64 %.sroa.speculated.i16.i.i.i)
-  br label %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit25.i.i.i
-
-_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit25.i.i.i: ; preds = %._crit_edge.loopexit.i21.i.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i
-  %.09.lcssa.i23.i.i.i = phi i64 [ 0, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i ], [ %18, %._crit_edge.loopexit.i21.i.i.i ]
-  %i.lx = icmp ugt i64 %.09.lcssa.i.i.i.i, %.09.lcssa.i23.i.i.i
+_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit25.i.i.i: ; preds = %bb.al, %.lr.ph.i18.i.i.i, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i
+  %.09.lcssa.i21.i.i.i = phi i64 [ 0, %_ZN5clang7tooling12_GLOBAL__N_114matchingPrefixEN4llvm9StringRefES3_.exit.i.i.i ], [ %.0918.i19.i.i.i, %.lr.ph.i18.i.i.i ], [ %.sroa.speculated.i16.i.i.i, %bb.al ]
+  %i.lx = icmp ugt i64 %.09.lcssa.i.i.i.i, %.09.lcssa.i21.i.i.i
   %..i.i.i = select i1 %i.lx, ptr %i.lg, ptr %i.lr
   br label %_ZNK5clang7tooling12_GLOBAL__N_19FileIndex12longestMatchEN4llvm9StringRefENS3_8ArrayRefISt4pairIS4_mEEE.exit.i.i
 
@@ -501,7 +481,7 @@ _ZNK5clang7tooling12_GLOBAL__N_19FileIndex12longestMatchEN4llvm9StringRefENS3_8A
   br label %_ZNK5clang7tooling12_GLOBAL__N_19FileIndex10pickWinnerERKN4llvm8DenseMapImiNS3_12DenseMapInfoImvEENS3_6detail12DenseMapPairImiEEEENS3_9StringRefENS_6driver5types2IDE.exit.i
 
 _ZNK5clang7tooling12_GLOBAL__N_19FileIndex10pickWinnerERKN4llvm8DenseMapImiNS3_12DenseMapInfoImvEENS3_6detail12DenseMapPairImiEEEENS3_9StringRefENS_6driver5types2IDE.exit.i: ; preds = %_ZNK5clang7tooling12_GLOBAL__N_19FileIndex12longestMatchEN4llvm9StringRefENS3_8ArrayRefISt4pairIS4_mEEE.exit.i.i, %._crit_edge.i7.i
-  %.sroa.058.0.i.i = phi i64 [ %.sroa.3.0.copyload.i.i, %_ZNK5clang7tooling12_GLOBAL__N_19FileIndex12longestMatchEN4llvm9StringRefENS3_8ArrayRefISt4pairIS4_mEEE.exit.i.i ], [ %.sroa.053.1.i.i, %._crit_edge.i7.i ]
+  %.sroa.058.0.i.i = phi i64 [ %.sroa.3.0.copyload.i.i, %_ZNK5clang7tooling12_GLOBAL__N_19FileIndex12longestMatchEN4llvm9StringRefENS3_8ArrayRefISt4pairIS4_mEEE.exit.i.i ], [ %.sroa.051.1.i.i, %._crit_edge.i7.i ]
   %i.ly = load ptr, ptr %i.f, align 8, !tbaa !21
   %i.lz = getelementptr inbounds nuw [32 x i8], ptr %i.ly, i64 %.sroa.058.0.i.i ; 2 uses
   %i.ma = load ptr, ptr %i.lz, align 8, !tbaa !42

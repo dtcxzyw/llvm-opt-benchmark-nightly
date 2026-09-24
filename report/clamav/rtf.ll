@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o
 .critedge7:                                       ; preds = %bb.p, %bb.m
   %i.cd = phi i64 [ %i.cc, %bb.p ], [ %i.bq, %bb.m ]
   %.5.lcssa = phi i64 [ %.5209297, %bb.p ], [ %.5294, %bb.m ] ; 2 uses
-  %i.ce = sub i64 %.5209297, %.5.lcssa            ; 2 uses
+  %i.ce = sub nuw i64 %.5209297, %.5.lcssa        ; 2 uses
   %i.cf = icmp eq i64 %i.cd, 8
   br i1 %i.cf, label %bb.q, label %bb.br
 
@@ -315,7 +315,7 @@ bb.ac:                                            ; preds = %bb.ab
 .critedge9:                                       ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.t, %bb.u
   %.6275 = phi i64 [ %.5209297, %bb.u ], [ %i.cj, %bb.t ], [ %i.cj, %bb.v ], [ %.5209297, %bb.w ], [ %i.cj, %bb.x ], [ %.5209297, %bb.y ], [ %i.cj, %bb.z ], [ %.5209297, %bb.aa ], [ %i.cj, %bb.ab ], [ %.5209297, %bb.ac ] ; 2 uses
   %i.dx = phi i64 [ %i.cq, %bb.u ], [ %i.ch, %bb.t ], [ %i.cq, %bb.v ], [ %i.cy, %bb.w ], [ %i.cy, %bb.x ], [ %i.dg, %bb.y ], [ %i.dg, %bb.z ], [ %i.do, %bb.aa ], [ %i.do, %bb.ab ], [ %i.dw, %bb.ac ]
-  %i.dy = sub i64 %.5209297, %.6275               ; 2 uses
+  %i.dy = sub nuw i64 %.5209297, %.6275           ; 2 uses
   %i.dz = icmp eq i64 %i.dx, 4
   br i1 %i.dz, label %bb.ad, label %bb.br
 
@@ -387,7 +387,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.et = phi i64 [ %.pre338, %..critedge11_crit_edge ], [ %i.ej, %bb.ak ]
   %i.eu = phi i64 [ %i.es, %..critedge11_crit_edge ], [ %i.ei, %bb.ak ] ; 3 uses
   %.7.lcssa = phi i64 [ %.5209297, %..critedge11_crit_edge ], [ %.7291, %bb.ak ] ; 2 uses
-  %i.ev = sub i64 %.5209297, %.7.lcssa            ; 3 uses
+  %i.ev = sub nuw i64 %.5209297, %.7.lcssa        ; 3 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %.0213296, i64 %.7.lcssa ; 2 uses
   %i.ex = icmp ult i64 %i.eu, %i.et
   %i.ey = icmp ult i64 %i.eu, 64
@@ -554,7 +554,7 @@ bb.bf:                                            ; preds = %bb.be
 .critedge13:                                      ; preds = %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.aw, %bb.ax
   %.8273 = phi i64 [ %.5209297, %bb.ax ], [ %i.fs, %bb.aw ], [ %i.fs, %bb.ay ], [ %.5209297, %bb.az ], [ %i.fs, %bb.ba ], [ %.5209297, %bb.bb ], [ %i.fs, %bb.bc ], [ %.5209297, %bb.bd ], [ %i.fs, %bb.be ], [ %.5209297, %bb.bf ] ; 2 uses
   %i.hg = phi i64 [ %i.fz, %bb.ax ], [ %i.fq, %bb.aw ], [ %i.fz, %bb.ay ], [ %i.gh, %bb.az ], [ %i.gh, %bb.ba ], [ %i.gp, %bb.bb ], [ %i.gp, %bb.bc ], [ %i.gx, %bb.bd ], [ %i.gx, %bb.be ], [ %i.hf, %bb.bf ]
-  %i.hh = sub i64 %.5209297, %.8273               ; 2 uses
+  %i.hh = sub nuw i64 %.5209297, %.8273           ; 2 uses
   %i.hi = icmp eq i64 %i.hg, 4
   br i1 %i.hi, label %bb.bg, label %bb.br
 

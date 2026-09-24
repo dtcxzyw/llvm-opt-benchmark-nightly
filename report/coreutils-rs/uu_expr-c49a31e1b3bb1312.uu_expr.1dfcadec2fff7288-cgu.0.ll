@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %.lr.ph.i13
   %i.eg = getelementptr inbounds i8, ptr %i.ef, i64 -8
   br label %_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit.i
 
-_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit.i: ; preds = %.preheader.preheader.i, %bb.o
+_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit.i: ; preds = %bb.s, %bb.o
   %i.eh = tail call fastcc noundef i64 @_RINvYNtNtNtCs2vKOLqTMYjT_3std4hash6random11RandomStateNtNtCs6JMX4GRUq9U_4core4hash11BuildHasher8hash_oneRNtCsh036I4OHgIr_6uucore8CharByteECs2zCsf9UsIrc_7uu_expr(i64 %.val.i.i.i, i64 %.val1.i.i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.eg) #24, !noalias !235 ; 3 uses
   %.sroa.0.07.i.i = and i64 %i.eh, %i.f           ; 5 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.val25.i, i64 %.sroa.0.07.i.i
@@ -257,7 +257,7 @@ _RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.ex
   %i.fe = xor i64 %i.fd, %i.fc
   %.unshifted.i = and i64 %i.fe, %i.f
   %i.ff = icmp ult i64 %.unshifted.i, 16
-  br i1 %i.ff, label %bb.r, label %bb.q, !prof !7
+  br i1 %i.ff, label %.preheader.preheader.i, label %bb.q, !prof !7
 
 bb.q:                                             ; preds = %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i
   %i.fg = shl i64 %.sroa.0.0.i5.i.i, 3
@@ -274,9 +274,31 @@ bb.q:                                             ; preds = %_RNvMsa_NtCs7GWc7oq
   %i.fq = getelementptr i8, ptr %i.fp, i64 16
   store i8 %i.fm, ptr %i.fq, align 1, !noalias !234
   %i.fr = icmp eq i8 %i.fk, -1
-  br i1 %i.fr, label %bb.s, label %.preheader.preheader.i
+  br i1 %i.fr, label %bb.r, label %bb.s
 
-.preheader.preheader.i:                           ; preds = %bb.q
+.preheader.preheader.i:                           ; preds = %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i
+  %4 = lshr i64 %i.eh, 57
+  %5 = trunc nuw nsw i64 %4 to i8                 ; 2 uses
+  %6 = add i64 %.sroa.014.04.i, -16
+  %7 = and i64 %6, %i.f
+  store i8 %5, ptr %i.eb, align 1, !noalias !234
+  %8 = getelementptr i8, ptr %.val25.i, i64 %7
+  %9 = getelementptr i8, ptr %8, i64 16
+  store i8 %5, ptr %9, align 1, !noalias !234
+  br label %bb.t
+
+bb.r:                                             ; preds = %bb.q
+  %i.fs = add i64 %.sroa.014.04.i, -16
+  %i.ft = and i64 %i.fs, %i.f
+  store i8 -1, ptr %i.eb, align 1, !noalias !234
+  %i.fu = getelementptr i8, ptr %.val25.i, i64 %i.ft
+  %i.fv = getelementptr i8, ptr %i.fu, i64 16
+  store i8 -1, ptr %i.fv, align 1, !noalias !234
+  %10 = load i64, ptr %i.ed, align 1, !noalias !234
+  store i64 %10, ptr %i.fi, align 1, !noalias !234
+  br label %bb.t
+
+bb.s:                                             ; preds = %bb.q
   tail call void @llvm.experimental.noalias.scope.decl(metadata !237)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !238)
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.ed, align 1, !alias.scope !237, !noalias !239
@@ -285,29 +307,7 @@ bb.q:                                             ; preds = %_RNvMsa_NtCs7GWc7oq
   store i64 %.sroa.0.0.copyload.i.i.i.i, ptr %i.fi, align 1, !alias.scope !238, !noalias !240
   br label %_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit.i
 
-bb.r:                                             ; preds = %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i
-  %4 = lshr i64 %i.eh, 57
-  %5 = trunc nuw nsw i64 %4 to i8                 ; 2 uses
-  %i.fs = add i64 %.sroa.014.04.i, -16
-  %i.ft = and i64 %i.fs, %i.f
-  store i8 %5, ptr %i.eb, align 1, !noalias !234
-  %i.fu = getelementptr i8, ptr %.val25.i, i64 %i.ft
-  %i.fv = getelementptr i8, ptr %i.fu, i64 16
-  store i8 %5, ptr %i.fv, align 1, !noalias !234
-  br label %bb.t
-
-bb.s:                                             ; preds = %bb.q
-  %6 = add i64 %.sroa.014.04.i, -16
-  %7 = and i64 %6, %i.f
-  store i8 -1, ptr %i.eb, align 1, !noalias !234
-  %8 = getelementptr i8, ptr %.val25.i, i64 %7
-  %9 = getelementptr i8, ptr %8, i64 16
-  store i8 -1, ptr %9, align 1, !noalias !234
-  %10 = load i64, ptr %i.ed, align 1, !noalias !234
-  store i64 %10, ptr %i.fi, align 1, !noalias !234
-  br label %bb.t
-
-bb.t:                                             ; preds = %bb.s, %bb.r, %.lr.ph.i13
+bb.t:                                             ; preds = %bb.r, %.preheader.preheader.i, %.lr.ph.i13
   %exitcond.not.i = icmp eq i64 %.sroa.014.04.i, %i.f
   br i1 %exitcond.not.i, label %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, label %.lr.ph.i13
 

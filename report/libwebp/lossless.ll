@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %PredictorAdd1_C.exi
   br label %PredictorAdd2_C.exit.us.i
 
 PredictorAdd2_C.exit.us.i:                        ; preds = %PredictorAdd2_C.exit.us.i, %.lr.ph84.split.us.i
-  %.05679.us.i = phi i32 [ %spec.select.us.i, %PredictorAdd2_C.exit.us.i ], [ 1, %.lr.ph84.split.us.i ] ; 3 uses
-  %.05778.us.i = phi ptr [ %i.el, %PredictorAdd2_C.exit.us.i ], [ %.05883.us.i, %.lr.ph84.split.us.i ] ; 2 uses
+  %.05679.us.i = phi i32 [ 1, %.lr.ph84.split.us.i ], [ %spec.select.us.i, %PredictorAdd2_C.exit.us.i ] ; 3 uses
+  %.05778.us.i = phi ptr [ %.05883.us.i, %.lr.ph84.split.us.i ], [ %i.el, %PredictorAdd2_C.exit.us.i ] ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.05778.us.i, i64 4
   %i.em = load i32, ptr %.05778.us.i, align 4, !tbaa !9
   %i.en = lshr i32 %i.em, 8

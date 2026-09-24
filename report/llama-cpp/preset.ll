@@ -205,19 +205,16 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %._cri
   %i.bi = getelementptr inbounds nuw i8, ptr %.val, i64 %.01.i
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !79, !noalias !614
   %i.bk = icmp eq i8 %i.bj, 45
-  br i1 %i.bk, label %bb.l, label %.critedge.i
+  br i1 %i.bk, label %bb.l, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i
 
 bb.l:                                             ; preds = %.lr.ph.i
   %i.bl = add nuw i64 %.01.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bl, %.val24
   br i1 %exitcond.not.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i, label %.lr.ph.i, !llvm.loop !1
 
-.critedge.i:                                      ; preds = %.lr.ph.i
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i: ; preds = %bb.l, %.lr.ph.i, %bb.k
+  %.0.lcssa5.i = phi i64 [ 0, %bb.k ], [ %.01.i, %.lr.ph.i ], [ %.val24, %bb.l ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !615)
-  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i: ; preds = %bb.l, %.critedge.i, %bb.k
-  %.0.lcssa5.i = phi i64 [ %.01.i, %.critedge.i ], [ 0, %bb.k ], [ %.val24, %bb.l ] ; 2 uses
   store ptr %i.u, ptr %6, align 8, !tbaa !76, !alias.scope !616
   %i.bm = getelementptr inbounds nuw i8, ptr %.val, i64 %.0.lcssa5.i ; 2 uses
   %i.bn = sub nuw i64 %.val24, %.0.lcssa5.i       ; 4 uses
@@ -620,19 +617,16 @@ bb.cd:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ma = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.01.i.i
   %i.mb = load i8, ptr %i.ma, align 1, !tbaa !79, !noalias !639
   %i.mc = icmp eq i8 %i.mb, 45
-  br i1 %i.mc, label %bb.ce, label %.critedge.i42.i
+  br i1 %i.mc, label %bb.ce, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i
 
 bb.ce:                                            ; preds = %.lr.ph.i.i
   %i.md = add nuw i64 %.01.i.i, 1                 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.md, %.val24.i
   br i1 %exitcond.not.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i, label %.lr.ph.i.i, !llvm.loop !1
 
-.critedge.i42.i:                                  ; preds = %.lr.ph.i.i
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i: ; preds = %bb.ce, %.lr.ph.i.i, %bb.cd
+  %.0.lcssa5.i.i = phi i64 [ 0, %bb.cd ], [ %.val24.i, %bb.ce ], [ %.01.i.i, %.lr.ph.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !640)
-  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i: ; preds = %bb.ce, %.critedge.i42.i, %bb.cd
-  %.0.lcssa5.i.i = phi i64 [ %.01.i.i, %.critedge.i42.i ], [ 0, %bb.cd ], [ %.val24.i, %bb.ce ] ; 2 uses
   store ptr %i.ae, ptr %10, align 8, !tbaa !76, !alias.scope !641, !noalias !635
   %i.me = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.0.lcssa5.i.i ; 2 uses
   %i.mf = sub nuw i64 %.val24.i, %.0.lcssa5.i.i   ; 4 uses
@@ -1035,19 +1029,16 @@ bb.eb:                                            ; preds = %bb.ea, %bb.dz, %._c
   %i.tt = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.01.i.i
   %i.tu = load i8, ptr %i.tt, align 1, !tbaa !79, !noalias !785
   %i.tv = icmp eq i8 %i.tu, 45
-  br i1 %i.tv, label %bb.ec, label %.critedge.i.i
+  br i1 %i.tv, label %bb.ec, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i
 
 bb.ec:                                            ; preds = %.lr.ph.i.i
   %i.tw = add nuw i64 %.01.i.i, 1                 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.tw, %.val17.i
   br i1 %exitcond.not.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i, label %.lr.ph.i.i, !llvm.loop !1
 
-.critedge.i.i:                                    ; preds = %.lr.ph.i.i
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i: ; preds = %bb.ec, %.lr.ph.i.i, %bb.eb
+  %.0.lcssa5.i.i = phi i64 [ 0, %bb.eb ], [ %.val17.i, %bb.ec ], [ %.01.i.i, %.lr.ph.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !786)
-  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i: ; preds = %bb.ec, %.critedge.i.i, %bb.eb
-  %.0.lcssa5.i.i = phi i64 [ %.01.i.i, %.critedge.i.i ], [ 0, %bb.eb ], [ %.val17.i, %bb.ec ] ; 2 uses
   store ptr %i.hp, ptr %10, align 8, !tbaa !76, !alias.scope !787, !noalias !783
   %i.tx = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.0.lcssa5.i.i ; 2 uses
   %i.ty = sub nuw i64 %.val17.i, %.0.lcssa5.i.i   ; 4 uses

@@ -205,7 +205,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   %3 = alloca %"class.Eigen::VectorBlock.2174", align 8 ; 12 uses
   %4 = alloca %"class.Eigen::Product.2201", align 8 ; 21 uses
   %5 = alloca %"class.Eigen::VectorBlock.2234", align 8 ; 8 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.sroa.5207.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -242,8 +242,9 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   %i.v = ptrtoint ptr %1 to i64
   %i.w = lshr exact i64 %i.v, 3
   %i.x = and i64 %i.w, 1                          ; 2 uses
-  %.not = icmp eq i64 %i.x, 0
+  %.not = icmp eq i64 %i.x, 0                     ; 2 uses
   %i.y = shl nuw nsw i64 %i.x, 3                  ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
@@ -294,15 +295,14 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:      ; preds = %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %1, i8 0, i64 %i.y, i1 false), !tbaa !74
-  br label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit.a
+  br label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.preheader.i.i.i.i.i: ; preds = %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %scevgep1.i.i.i.i.i = getelementptr i8, ptr %1, i64 %i.y
   store i64 0, ptr %scevgep1.i.i.i.i.i, align 8
-  br label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit.a
+  br label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit
 
-_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit.a: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.preheader.i.i.i.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 56
+_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.preheader.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store double 1.000000e+00, ptr %i.a, align 8, !tbaa !74
   call void @_ZN5Eigen8internal24selfadjoint_product_implINS_5BlockINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEELi17ELb0ENS_13CwiseBinaryOpINS0_17scalar_product_opIddEEKNS_14CwiseNullaryOpINS0_18scalar_constant_opIdEEKNS3_IdLin1ELi1ELi0ELi2ELi1EEEEEKNS2_INS2_IS4_Li2ELi1ELb1EEELin1ELi1ELb0EEEEELi0ELb1EE3runINS2_INS3_IdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEEEvRT_RKS5_RKSJ_RKd(ptr noundef nonnull align 8 dereferenceable(56) %5, ptr noundef nonnull align 8 dereferenceable(192) %4, ptr noundef nonnull align 8 dereferenceable(129) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -310,18 +310,26 @@ _ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0E
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   %7 = load double, ptr %i.c, align 8, !tbaa !74  ; 2 uses
-  %i.aa = fmul double %7, -5.000000e-01
   %8 = load double, ptr %1, align 8, !tbaa !74    ; 2 uses
   %9 = load double, ptr %i.d, align 8, !tbaa !74  ; 2 uses
+  br i1 %.not, label %.lr.ph.i17.i.i.i.i.i.i, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit.a
+
+.lr.ph.i17.i.i.i.i.i.i:                           ; preds = %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit
+  %10 = load double, ptr %i.d, align 8, !tbaa !74
+  br label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit.a
+
+_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit.a: ; preds = %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit, %.lr.ph.i17.i.i.i.i.i.i
+  %.sink = phi double [ %10, %.lr.ph.i17.i.i.i.i.i.i ], [ %9, %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEELin1ELi1ELb0EEEE3dotINS1_INS1_INS2_IdLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit ]
+  %i.aa = fmul double %7, -5.000000e-01
   %i.ab = fmul double %8, %9
   %i.ac = fmul double %i.aa, %i.ab
-  %i.ad = fmul double %i.ac, %9
+  %i.ad = fmul double %i.ac, %.sink
   %i.ae = fadd double %i.ad, %8                   ; 3 uses
   store double %i.ae, ptr %1, align 8, !tbaa !74
-  %.pre = load double, ptr %i.d, align 8, !tbaa !74 ; 2 uses
-  %10 = fneg double %i.ae
-  %i.af = fmul double %.pre, %10
-  %i.ag = fmul double %.pre, %i.ae
+  %11 = fneg double %i.ae
+  %12 = load double, ptr %i.d, align 8, !tbaa !74 ; 2 uses
+  %i.af = fmul double %12, %11
+  %i.ag = fmul double %12, %i.ae
   %i.ah = fsub double %i.af, %i.ag
   %i.ai = load double, ptr %i.n, align 8, !tbaa !74
   %i.aj = fadd double %i.ai, %i.ah

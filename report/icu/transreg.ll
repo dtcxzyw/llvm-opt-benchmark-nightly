@@ -202,13 +202,12 @@ bb.av:                                            ; preds = %bb.au, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   br label %bb.bb
 
-.thread71:                                        ; preds = %_ZN6icu_7810CharStringD2Ev.exit64, %bb.aq
+.thread71:                                        ; preds = %bb.aq, %_ZN6icu_7810CharStringD2Ev.exit64
   call void @_ZN6icu_7814ResourceBundleD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %8) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %6) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
-  %13 = select i1 %i.x, i32 0, i32 %3
   %i.do = call noundef ptr @_ZN6icu_787UMemorynwEm(i64 noundef 104) #15 ; 7 uses
   %i.dp = icmp eq ptr %i.do, null
   br i1 %i.dp, label %.thread72, label %bb.aw
@@ -224,6 +223,7 @@ bb.ax:                                            ; preds = %bb.aw
           to label %bb.ay unwind label %bb.ba     ; 0 uses
 
 bb.ay:                                            ; preds = %bb.ax
+  %13 = select i1 %i.x, i32 0, i32 %3
   %i.ds = getelementptr inbounds nuw i8, ptr %i.do, i64 72
   store i32 %13, ptr %i.ds, align 8, !tbaa !54
   br label %.thread72

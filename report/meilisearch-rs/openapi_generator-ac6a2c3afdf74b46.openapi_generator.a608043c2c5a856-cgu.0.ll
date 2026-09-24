@@ -205,7 +205,7 @@ bb.abr:                                           ; preds = %bb.abq, %.split.i.i
   br i1 %i.czu, label %bb.abs, label %_ZN17openapi_generator26check_query_params_in_file17h5f39b7d75028c088E.exit.i
 
 bb.abs:                                           ; preds = %.noexc144.i
-  %i.czw = add i64 %i.czv, %.sroa.0.0.i.i340      ; 21 uses
+  %i.czw = add i64 %i.czv, %.sroa.0.0.i.i340      ; 22 uses
   %i.czx = add i64 %i.czw, 2                      ; 6 uses
   %i.czy = icmp eq i64 %i.czx, 0
   br i1 %i.czy, label %bb.abv, label %bb.abt
@@ -294,15 +294,18 @@ bb.abz:                                           ; preds = %"_ZN4core3str21_$LT
 
 ._crit_edge.i.i.i362:                             ; preds = %bb.acb
   %i.day = icmp eq i32 %.sroa.011.1.i.i.i, 0
+  %0 = icmp sgt i8 %i.dbc, -65
   br i1 %i.day, label %bb.aca, label %.backedge.i.i
 
 bb.aca:                                           ; preds = %._crit_edge.i.i.i362
-  %0 = icmp slt i8 %i.dbc, -64
   %i.daz = getelementptr inbounds nuw i8, ptr %i.dae, i64 %i.daw ; 3 uses
   %i.dba = load i8, ptr %i.daz, align 1, !alias.scope !8106, !noalias !8100, !noundef !16
-  %1 = icmp slt i8 %i.dba, -64
-  %brmerge.i.i = or i1 %0, %1
-  br i1 %brmerge.i.i, label %.backedge.i.i, label %bb.ace
+  %1 = icmp sgt i8 %i.dba, -65
+  br i1 %1, label %2, label %.backedge.i.i
+
+2:                                                ; preds = %bb.aca
+  %3 = sub nuw i64 %.sroa.015.033.i.i.i, %i.daw   ; 3 uses
+  br i1 %0, label %bb.ace, label %.backedge.i.i
 
 .lr.ph.i.i.i361:                                  ; preds = %bb.abz, %bb.acb
   %.sroa.011.034.i.i.i = phi i32 [ %.sroa.011.1.i.i.i, %bb.acb ], [ 1, %bb.abz ] ; 3 uses
@@ -330,21 +333,20 @@ bb.acd:                                           ; preds = %.lr.ph.i.i.i361
   %i.dbh = add i32 %.sroa.011.034.i.i.i, -1
   br label %bb.acb
 
-bb.ace:                                           ; preds = %bb.aca
-  %2 = sub nuw i64 %.sroa.015.033.i.i.i, %i.daw   ; 3 uses
-  %i.dbi = invoke fastcc noundef zeroext i1 @"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$15is_contained_in17hbec7160a0e3b1a28E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @172, i64 noundef 12, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.daz, i64 noundef %2)
+bb.ace:                                           ; preds = %2
+  %i.dbi = invoke fastcc noundef zeroext i1 @"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$15is_contained_in17hbec7160a0e3b1a28E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @172, i64 noundef 12, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.daz, i64 noundef %3)
           to label %.noexc147.i unwind label %.loopexit.split-lp305.loopexit.split-lp.loopexit.split-lp.loopexit.i
 
 .noexc147.i:                                      ; preds = %bb.ace
   br i1 %i.dbi, label %bb.acf, label %.backedge.i.i
 
-.backedge.i.i:                                    ; preds = %bb.abx, %.noexc146.i, %.preheader.i.i.i.i.i.i, %bb.abw, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i, %bb.adl, %._crit_edge.i90.i.i, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i", %bb.adk, %bb.adj, %.split.i.i85.i.i, %.noexc152.i, %.noexc148.i, %.noexc147.i, %bb.aca, %._crit_edge.i.i.i362, %bb.abz, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i", %bb.abu, %.split.i.i.i.i359
-  %.sroa.0.0.be.in.i.i = phi i64 [ %.sroa.051.0.i.i, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i ], [ %i.czw, %.noexc152.i ], [ %i.czw, %.noexc147.i ], [ %i.czw, %bb.abw ], [ %i.czw, %.noexc148.i ], [ %i.czw, %bb.adl ], [ %i.czw, %bb.aca ], [ %i.czw, %bb.adk ], [ %i.czw, %bb.adj ], [ %i.czw, %._crit_edge.i90.i.i ], [ %i.czw, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i" ], [ %i.czw, %.split.i.i85.i.i ], [ %i.czw, %bb.abu ], [ %i.czw, %bb.abz ], [ %i.czw, %._crit_edge.i.i.i362 ], [ %i.czw, %.split.i.i.i.i359 ], [ %i.czw, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i" ], [ %i.czw, %.preheader.i.i.i.i.i.i ], [ %i.czw, %.noexc146.i ], [ %i.czw, %bb.abx ]
+.backedge.i.i:                                    ; preds = %bb.abx, %.noexc146.i, %.preheader.i.i.i.i.i.i, %bb.abw, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i, %bb.adl, %._crit_edge.i90.i.i, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i", %bb.adk, %bb.adj, %.split.i.i85.i.i, %.noexc152.i, %.noexc148.i, %.noexc147.i, %2, %bb.aca, %._crit_edge.i.i.i362, %bb.abz, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i", %bb.abu, %.split.i.i.i.i359
+  %.sroa.0.0.be.in.i.i = phi i64 [ %.sroa.051.0.i.i, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i ], [ %i.czw, %.noexc152.i ], [ %i.czw, %.noexc147.i ], [ %i.czw, %bb.abw ], [ %i.czw, %.noexc148.i ], [ %i.czw, %bb.adl ], [ %i.czw, %bb.adk ], [ %i.czw, %bb.adj ], [ %i.czw, %._crit_edge.i90.i.i ], [ %i.czw, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i" ], [ %i.czw, %.split.i.i85.i.i ], [ %i.czw, %2 ], [ %i.czw, %bb.aca ], [ %i.czw, %bb.abu ], [ %i.czw, %bb.abz ], [ %i.czw, %._crit_edge.i.i.i362 ], [ %i.czw, %.split.i.i.i.i359 ], [ %i.czw, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i" ], [ %i.czw, %.preheader.i.i.i.i.i.i ], [ %i.czw, %.noexc146.i ], [ %i.czw, %bb.abx ]
   %.sroa.0.0.be.i.i = add i64 %.sroa.0.0.be.in.i.i, 1
   br label %bb.abo
 
 bb.acf:                                           ; preds = %.noexc147.i
-  %i.dbj = invoke fastcc noundef zeroext i1 @"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$15is_contained_in17hbec7160a0e3b1a28E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @173, i64 noundef 5, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.daz, i64 noundef %2)
+  %i.dbj = invoke fastcc noundef zeroext i1 @"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$15is_contained_in17hbec7160a0e3b1a28E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @173, i64 noundef 5, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.daz, i64 noundef %3)
           to label %.noexc148.i unwind label %.loopexit.split-lp305.loopexit.split-lp.loopexit.split-lp.loopexit.i
 
 .noexc148.i:                                      ; preds = %bb.acf
@@ -352,7 +354,7 @@ bb.acf:                                           ; preds = %.noexc147.i
 
 bb.acg:                                           ; preds = %.noexc148.i
   %i.dbk = add i64 %i.czw, 16
-  %i.dbl = add i64 %i.dbk, %2                     ; 7 uses
+  %i.dbl = add i64 %i.dbk, %3                     ; 7 uses
   %i.dbm = icmp eq i64 %i.dbl, 0
   br i1 %i.dbm, label %bb.acj, label %bb.ach
 

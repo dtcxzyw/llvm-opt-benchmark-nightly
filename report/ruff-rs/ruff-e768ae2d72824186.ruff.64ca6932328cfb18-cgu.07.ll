@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %_RNvMs_NtCscdodAO9F
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorEEB1d_(ptr noalias noundef align 8 dereferenceable(24) %i.a) #26
           to label %.body unwind label %bb.l
 
-_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBK_.exit.i: ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorE7reserveBJ_.exit.i, %bb.i
+_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBK_.exit.i: ; preds = %bb.i, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorE7reserveBJ_.exit.i
   %i.bd = phi i64 [ %.pre.i, %bb.i ], [ %i.ar, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorE7reserveBJ_.exit.i ]
   %i.be = add i64 %i.bd, %i.aq
   store i64 %i.be, ptr %i.aj, align 8, !alias.scope !2696
@@ -400,7 +400,7 @@ bb.k:                                             ; preds = %_RNvMs_NtCscdodAO9F
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorEEB1d_(ptr noalias noundef align 8 dereferenceable(24) %i.a) #26
           to label %.body unwind label %bb.l
 
-_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBK_.exit.i: ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorE7reserveBJ_.exit.i, %bb.i
+_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBK_.exit.i: ; preds = %bb.i, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorE7reserveBJ_.exit.i
   %i.bd = phi i64 [ %.pre.i, %bb.i ], [ %i.ar, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs8EvorvD8vmS_4ruff8commands6format18FormatCommandErrorE7reserveBJ_.exit.i ]
   %i.be = add i64 %i.bd, %i.aq
   store i64 %i.be, ptr %i.aj, align 8, !alias.scope !2712

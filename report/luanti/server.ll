@@ -204,8 +204,6 @@ begin_hunk_0
 @.str.329 = private unnamed_addr constant [7 x i8] c" name=\00", align 1
 @.str.330 = private unnamed_addr constant [6 x i8] c" cmd=\00", align 1
 @.str.331 = private unnamed_addr constant [9 x i8] c" offset=\00", align 1
-@.str.333 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
-@.str.334 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @_ZL9hex_chars = internal unnamed_addr constant [17 x i8] c"0123456789abcdef\00", align 16
 @_ZTV17ItemStackMetadata = external constant { [19 x ptr] }, align 8
 @_ZTT17ItemStackMetadata = external unnamed_addr constant [4 x ptr], align 8
@@ -608,7 +606,7 @@ bb.q:                                             ; preds = %bb.f
 bb.r:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94
   %i.co = phi ptr [ %.pre, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit ], [ %.pre224.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94 ] ; 3 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %i.cq = load i64, ptr %i.cp, align 8, !tbaa !552 ; 9 uses
+  %i.cq = load i64, ptr %i.cp, align 8, !tbaa !552 ; 7 uses
   %.not21.i.i = icmp eq i64 %i.cq, 0
   br i1 %.not21.i.i, label %.critedge.i.i, label %.lr.ph.i.i
 
@@ -626,13 +624,13 @@ bb.s:                                             ; preds = %.lr.ph.i.i
   br i1 %exitcond.not.i.i, label %.critedge.i.i, label %.lr.ph.i.i, !llvm.loop !1534
 
 .critedge.i.i:                                    ; preds = %bb.s, %.lr.ph.i.i, %bb.r
-  %.013.lcssa.i.i = phi i64 [ 0, %bb.r ], [ %i.cq, %bb.s ], [ %.01318.i.i, %.lr.ph.i.i ] ; 7 uses
+  %.013.lcssa.i.i = phi i64 [ 0, %bb.r ], [ %i.cq, %bb.s ], [ %.01318.i.i, %.lr.ph.i.i ] ; 5 uses
   %i.cv = icmp ugt i64 %i.cq, %.013.lcssa.i.i
-  br i1 %i.cv, label %.lr.ph, label %.critedge2.i.i
+  br i1 %i.cv, label %.lr.ph, label %bb.u
 
 bb.t:                                             ; preds = %.lr.ph
   %i.cw = icmp ugt i64 %i.cx, %.013.lcssa.i.i
-  br i1 %i.cw, label %.lr.ph, label %.critedge2.i.i, !llvm.loop !1535
+  br i1 %i.cw, label %.lr.ph, label %bb.u, !llvm.loop !1535
 
 .lr.ph:                                           ; preds = %.critedge.i.i, %bb.t
   %.0.i.i301 = phi i64 [ %i.cx, %bb.t ], [ %i.cq, %.critedge.i.i ] ; 2 uses
@@ -644,21 +642,10 @@ bb.t:                                             ; preds = %.lr.ph
   br i1 %.not17.i.i, label %..critedge2.i.i_crit_edge, label %bb.t, !llvm.loop !1535
 
 ..critedge2.i.i_crit_edge:                        ; preds = %.lr.ph
-  br label %.critedge2.i.i, !llvm.loop !1535
+  br label %bb.u, !llvm.loop !1535
 
-.critedge2.i.i:                                   ; preds = %bb.t, %..critedge2.i.i_crit_edge, %.critedge.i.i
+bb.u:                                             ; preds = %bb.t, %..critedge2.i.i_crit_edge, %.critedge.i.i
   %.0.i.i.lcssa = phi i64 [ %.0.i.i301, %..critedge2.i.i_crit_edge ], [ %i.cq, %.critedge.i.i ], [ %i.cx, %bb.t ]
-  %23 = icmp ugt i64 %.013.lcssa.i.i, %i.cq
-  br i1 %23, label %24, label %bb.u
-
-24:                                               ; preds = %.critedge2.i.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.334, ptr noundef nonnull @.str.333, i64 noundef %.013.lcssa.i.i, i64 noundef %i.cq) #35
-          to label %.noexc106 unwind label %bb.x
-
-.noexc106:                                        ; preds = %24
-  unreachable
-
-bb.u:                                             ; preds = %.critedge2.i.i
   %i.db = sub i64 %.0.i.i.lcssa, %.013.lcssa.i.i
   %i.dc = sub nuw i64 %i.cq, %.013.lcssa.i.i
   %.sroa.speculated.i.i.i = call i64 @llvm.umin.i64(i64 %i.dc, i64 %i.db)
@@ -682,7 +669,7 @@ bb.w:                                             ; preds = %bb.v
     i32 0, label %bb.an
   ]
 
-bb.x:                                             ; preds = %bb.u, %24
+bb.x:                                             ; preds = %bb.u
   %i.dh = landingpad { ptr, i32 }
           cleanup
   br label %bb.cl
@@ -1084,9 +1071,6 @@ declare ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #28
-
-; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #11
 
 declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32), i64 noundef) local_unnamed_addr #8
 

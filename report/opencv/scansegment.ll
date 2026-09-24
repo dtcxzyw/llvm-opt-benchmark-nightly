@@ -205,28 +205,28 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit762: ; preds = %bb
 bb.cj:                                            ; preds = %bb.cn, %.preheader891
   %indvars.iv954 = phi i64 [ 0, %.preheader891 ], [ %indvars.iv.next955.3, %bb.cn ] ; 6 uses
   %i.sn = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv954
-  %i.so = load i32, ptr %i.sn, align 16, !tbaa !221
+  %i.so = load i32, ptr %i.sn, align 16, !tbaa !221 ; 2 uses
   %.not = icmp eq i32 %i.so, 0
   br i1 %.not, label %bb.ck, label %.thread863
 
 bb.ck:                                            ; preds = %bb.cj
   %indvars.iv.next955 = or disjoint i64 %indvars.iv954, 1 ; 2 uses
   %i.sp = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv.next955
-  %i.sq = load i32, ptr %i.sp, align 8, !tbaa !221
+  %i.sq = load i32, ptr %i.sp, align 8, !tbaa !221 ; 2 uses
   %.not.1 = icmp eq i32 %i.sq, 0
   br i1 %.not.1, label %bb.cl, label %.thread863
 
 bb.cl:                                            ; preds = %bb.ck
   %indvars.iv.next955.1 = or disjoint i64 %indvars.iv954, 2 ; 2 uses
   %i.sr = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv.next955.1
-  %i.ss = load i32, ptr %i.sr, align 16, !tbaa !221
+  %i.ss = load i32, ptr %i.sr, align 16, !tbaa !221 ; 2 uses
   %.not.2 = icmp eq i32 %i.ss, 0
   br i1 %.not.2, label %bb.cm, label %.thread863
 
 bb.cm:                                            ; preds = %bb.cl
   %indvars.iv.next955.2 = or disjoint i64 %indvars.iv954, 3 ; 2 uses
   %i.st = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv.next955.2
-  %i.su = load i32, ptr %i.st, align 8, !tbaa !221
+  %i.su = load i32, ptr %i.st, align 8, !tbaa !221 ; 2 uses
   %.not.3 = icmp eq i32 %i.su, 0
   br i1 %.not.3, label %bb.cn, label %.thread863
 
@@ -237,6 +237,7 @@ bb.cn:                                            ; preds = %bb.cm
 
 .thread863:                                       ; preds = %bb.cm, %bb.cl, %bb.ck, %bb.cj
   %indvars.iv954.lcssa = phi i64 [ %indvars.iv954, %bb.cj ], [ %indvars.iv.next955, %bb.ck ], [ %indvars.iv.next955.1, %bb.cl ], [ %indvars.iv.next955.2, %bb.cm ]
+  %.lcssa1150 = phi i32 [ %i.so, %bb.cj ], [ %i.sq, %bb.ck ], [ %i.ss, %bb.cl ], [ %i.su, %bb.cm ]
   %i.sv = trunc nuw nsw i64 %indvars.iv954.lcssa to i32
   %i.sw = load ptr, ptr %i.cg, align 8, !tbaa !111
   %i.sx = load ptr, ptr %i.ck, align 8, !tbaa !111
@@ -254,26 +255,25 @@ bb.cn:                                            ; preds = %bb.cm
   %i.tg = shufflevector <2 x i32> %i.tf, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a
 
-_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a: ; preds = %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge, %.thread863
-  %i.th = phi ptr [ %i.qv, %.thread863 ], [ %.be, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ] ; 6 uses
-  %i.ti = phi ptr [ %i.qv, %.thread863 ], [ %.be1126, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ] ; 6 uses
-  %i.tj = phi ptr [ %i.qv, %.thread863 ], [ %.be1127, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ] ; 6 uses
-  %i.tk = phi ptr [ %i.qv, %.thread863 ], [ %.be1128, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ] ; 6 uses
-  %i.tl = phi ptr [ %i.qv, %.thread863 ], [ %.be1129, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ] ; 11 uses
-  %.4592.a = phi i32 [ %.0588.lcssa, %.thread863 ], [ %.4592.be, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ]
-  %.0552.a = phi i32 [ %i.sv, %.thread863 ], [ %.0552.be, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ] ; 4 uses
-  %.0535.a = phi i32 [ 0, %.thread863 ], [ %.4870, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge ] ; 2 uses
-  %44 = sext i32 %.0552.a to i64                  ; 2 uses
-  %45 = getelementptr inbounds [8 x i8], ptr %7, i64 %44
-  %46 = load i32, ptr %45, align 8, !tbaa !221    ; 2 uses
-  %i.tm = icmp eq i32 %46, 0
+_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a: ; preds = %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit, %.thread863
+  %i.th = phi ptr [ %i.qv, %.thread863 ], [ %45, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 6 uses
+  %i.ti = phi ptr [ %i.qv, %.thread863 ], [ %46, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 6 uses
+  %i.tj = phi ptr [ %i.qv, %.thread863 ], [ %47, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 6 uses
+  %i.tk = phi ptr [ %i.qv, %.thread863 ], [ %48, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 6 uses
+  %i.tl = phi ptr [ %i.qv, %.thread863 ], [ %49, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 11 uses
+  %.4592.a = phi i32 [ %.lcssa1150, %.thread863 ], [ %.pre966, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 2 uses
+  %.0552.a = phi i32 [ %.0588.lcssa, %.thread863 ], [ %.13601, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ]
+  %.0535.a = phi i32 [ %i.sv, %.thread863 ], [ %.6, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 4 uses
+  %.0535 = phi i32 [ 0, %.thread863 ], [ %.4870, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit ] ; 2 uses
+  %i.tm = icmp eq i32 %.4592.a, 0
   br i1 %i.tm, label %.preheader.preheader, label %.thread864
 
 .preheader.preheader:                             ; preds = %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a
-  %smax = call i32 @llvm.smax.i32(i32 %.0552.a, i32 255)
+  %44 = sext i32 %.0535.a to i64
+  %smax = call i32 @llvm.smax.i32(i32 %.0535.a, i32 255)
   %wide.trip.count961 = zext nneg i32 %smax to i64
   %indvars.iv.next9591123 = add nsw i64 %44, 1    ; 2 uses
-  %exitcond962.not1124 = icmp sgt i32 %.0552.a, 254
+  %exitcond962.not1124 = icmp sgt i32 %.0535.a, 254
   br i1 %exitcond962.not1124, label %.preheader._crit_edge, label %.lr.ph
 
 .preheader:                                       ; preds = %.lr.ph
@@ -324,8 +324,8 @@ bb.cp:                                            ; preds = %bb.co
   br label %.thread864
 
 .thread864:                                       ; preds = %..thread864_crit_edge, %.thread864.loopexit, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a
-  %i.tx = phi i32 [ %46, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a ], [ %.pre965, %..thread864_crit_edge ], [ %i.to, %.thread864.loopexit ] ; 5 uses
-  %.1553 = phi i32 [ %.0552.a, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a ], [ %i.tq, %..thread864_crit_edge ], [ %i.tw, %.thread864.loopexit ] ; 5 uses
+  %i.tx = phi i32 [ %.4592.a, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a ], [ %.pre965, %..thread864_crit_edge ], [ %i.to, %.thread864.loopexit ] ; 5 uses
+  %.1553 = phi i32 [ %.0535.a, %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a ], [ %i.tq, %..thread864_crit_edge ], [ %i.tw, %.thread864.loopexit ] ; 5 uses
   %i.ty = sext i32 %.1553 to i64
   %i.tz = getelementptr inbounds [8 x i8], ptr %7, i64 %i.ty ; 2 uses
   %i.ua = sext i32 %i.tx to i64                   ; 2 uses
@@ -341,7 +341,7 @@ bb.cq:                                            ; preds = %.thread864
   br label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq, %.thread864
-  store i32 %.4592.a, ptr %i.ub, align 4, !tbaa !119
+  store i32 %.0552.a, ptr %i.ub, align 4, !tbaa !119
   %i.ue = getelementptr inbounds nuw i8, ptr %i.ub, i64 4
   %i.uf = getelementptr inbounds nuw i8, ptr %i.ub, i64 8
   %i.ug = load i32, ptr %i.uf, align 4, !tbaa !218 ; 5 uses
@@ -449,7 +449,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit767: ; preds = %bb
   br label %.body742
 
 bb.cz:                                            ; preds = %bb.cs, %bb.ct, %bb.cr
-  %.1536 = phi i32 [ %i.wh, %bb.ct ], [ %.0535.a, %bb.cs ], [ %.0535.a, %bb.cr ] ; 5 uses
+  %.1536 = phi i32 [ %i.wh, %bb.ct ], [ %.0535, %bb.cs ], [ %.0535, %bb.cr ] ; 5 uses
   %.0534 = phi i32 [ %i.ux, %bb.ct ], [ 0, %bb.cs ], [ 0, %bb.cr ] ; 6 uses
   %i.wp = extractelement <2 x i1> %i.up, i64 0    ; 2 uses
   br i1 %i.wp, label %bb.dq, label %bb.da
@@ -852,23 +852,13 @@ bb.hd:                                            ; preds = %bb.gl, %bb.hc, %bb.
   %i.ast = phi ptr [ %i.arv, %bb.hc ], [ %i.aoq, %bb.gl ], [ %i.aoq, %bb.gk ] ; 2 uses
   %.10598 = phi i32 [ %i.ary, %bb.hc ], [ %.8596, %bb.gl ], [ %.8596, %bb.gk ] ; 4 uses
   %.4556 = phi i32 [ %i.aso, %bb.hc ], [ %.3555, %bb.gl ], [ %.3555, %bb.gk ] ; 4 uses
-  br i1 %or.cond716, label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge, label %bb.he
-
-_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge: ; preds = %bb.hd, %bb.hv, %bb.he
-  %.be = phi ptr [ %i.asp, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.asp, %bb.he ]
-  %.be1126 = phi ptr [ %i.asq, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.asq, %bb.he ]
-  %.be1127 = phi ptr [ %i.asr, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.asr, %bb.he ]
-  %.be1128 = phi ptr [ %i.ass, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.ass, %bb.he ]
-  %.be1129 = phi ptr [ %i.ast, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.ast, %bb.he ]
-  %.4592.be = phi i32 [ %.10598, %bb.hd ], [ %i.avz, %bb.hv ], [ %.10598, %bb.he ]
-  %.0552.be = phi i32 [ %.4556, %bb.hd ], [ %i.awp, %bb.hv ], [ %.4556, %bb.he ]
-  br label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a
+  br i1 %or.cond716, label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit, label %bb.he
 
 bb.he:                                            ; preds = %bb.hd
   %i.asu = getelementptr inbounds i8, ptr %i.us, i64 %i.td ; 2 uses
   %i.asv = load i32, ptr %i.asu, align 4, !tbaa !54
   %i.asw = icmp eq i32 %i.asv, 0
-  br i1 %i.asw, label %bb.hf, label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge
+  br i1 %i.asw, label %bb.hf, label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit
 
 bb.hf:                                            ; preds = %bb.he
   %i.asx = load i8, ptr %i.uu, align 1, !tbaa !80
@@ -1095,7 +1085,20 @@ bb.hv:                                            ; preds = %bb.hu, %bb.ht
   %i.awo = load i32, ptr %i.awn, align 4, !tbaa !54
   %i.awp = sub nsw i32 %.4556, %i.awo
   store i32 -2, ptr %i.asu, align 4, !tbaa !54
-  br label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.backedge
+  br label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit
+
+_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit: ; preds = %bb.hd, %bb.hv, %bb.he
+  %45 = phi ptr [ %i.asp, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.asp, %bb.he ]
+  %46 = phi ptr [ %i.asq, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.asq, %bb.he ]
+  %47 = phi ptr [ %i.asr, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.asr, %bb.he ]
+  %48 = phi ptr [ %i.ass, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.ass, %bb.he ]
+  %49 = phi ptr [ %i.ast, %bb.hd ], [ %i.avw, %bb.hv ], [ %i.ast, %bb.he ]
+  %.13601 = phi i32 [ %.10598, %bb.hd ], [ %i.avz, %bb.hv ], [ %.10598, %bb.he ]
+  %.6 = phi i32 [ %.4556, %bb.hd ], [ %i.awp, %bb.hv ], [ %.4556, %bb.he ] ; 2 uses
+  %.phi.trans.insert964 = sext i32 %.6 to i64
+  %.phi.trans.insert965 = getelementptr inbounds [8 x i8], ptr %7, i64 %.phi.trans.insert964
+  %.pre966 = load i32, ptr %.phi.trans.insert965, align 8, !tbaa !221
+  br label %_ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.a
 
 _ZNSt6vectorIN2cv8ximgproc15ScanSegmentImpl6WSNodeESaIS3_EED2Ev.exit.thread: ; preds = %bb.cn, %bb.cp
   %.pr = phi ptr [ %.pr.pre, %bb.cp ], [ %i.qv, %bb.cn ] ; 3 uses

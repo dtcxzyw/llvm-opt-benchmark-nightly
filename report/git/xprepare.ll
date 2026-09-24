@@ -202,7 +202,7 @@ bb.x:                                             ; preds = %bb.v
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %.thread133.i.i
-  %i.dh = add nuw i64 %.0104145.i.i, 1
+  %i.dh = add nuw nsw i64 %.0104145.i.i, 1
   %exitcond.not.i7.i = icmp eq i64 %.0104145.i.i, %i.cd
   br i1 %exitcond.not.i7.i, label %._crit_edge.i8.i, label %.lr.ph.i6.i, !llvm.loop !51
 
@@ -258,7 +258,7 @@ bb.ae:                                            ; preds = %bb.ac
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %.thread134.i.i
-  %i.dy = add nuw i64 %.1105147.i.i, 1
+  %i.dy = add nuw nsw i64 %.1105147.i.i, 1
   %exitcond160.not.i.i = icmp eq i64 %.1105147.i.i, %i.cf
   br i1 %exitcond160.not.i.i, label %._crit_edge150.i.i, label %.lr.ph149.i.i, !llvm.loop !52
 
@@ -286,7 +286,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.ed, label %.thread137.i.i, label %.thread135.i.i
 
 .thread135.i.i:                                   ; preds = %bb.ah, %bb.ag
-  %i.ee = add nsw i64 %.2152.i.i, %.036.lcssa.i.i
+  %i.ee = add nuw nsw i64 %.2152.i.i, %.036.lcssa.i.i
   %i.ef = load ptr, ptr %i.cm, align 8, !tbaa !18
   %i.eg = load i64, ptr %i.dz, align 8, !tbaa !47 ; 2 uses
   %i.eh = add i64 %i.eg, 1
@@ -307,7 +307,7 @@ bb.ai:                                            ; preds = %bb.ag
   unreachable
 
 bb.aj:                                            ; preds = %.thread137.i.i, %.thread135.i.i
-  %i.em = add nuw i64 %.2152.i.i, 1
+  %i.em = add nuw nsw i64 %.2152.i.i, 1
   %exitcond161.not.i.i = icmp eq i64 %.2152.i.i, %i.cd
   br i1 %exitcond161.not.i.i, label %._crit_edge155.i.i, label %bb.ag, !llvm.loop !53
 
@@ -335,7 +335,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.er, label %.thread142.i.i, label %.thread140.i.i
 
 .thread140.i.i:                                   ; preds = %bb.al, %bb.ak
-  %i.es = add nsw i64 %.3157.i.i, %.036.lcssa.i.i
+  %i.es = add nuw nsw i64 %.3157.i.i, %.036.lcssa.i.i
   %i.et = load ptr, ptr %i.cq, align 8, !tbaa !18
   %i.eu = load i64, ptr %i.en, align 8, !tbaa !47 ; 2 uses
   %i.ev = add i64 %i.eu, 1
@@ -356,7 +356,7 @@ bb.am:                                            ; preds = %bb.ak
   unreachable
 
 bb.an:                                            ; preds = %.thread142.i.i, %.thread140.i.i
-  %i.fa = add nuw i64 %.3157.i.i, 1
+  %i.fa = add nuw nsw i64 %.3157.i.i, 1
   %exitcond162.not.i.i = icmp eq i64 %.3157.i.i, %i.cf
   br i1 %exitcond162.not.i.i, label %.critedge, label %bb.ak, !llvm.loop !54
 

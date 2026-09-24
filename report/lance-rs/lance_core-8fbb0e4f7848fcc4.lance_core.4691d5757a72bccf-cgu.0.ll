@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_RINvNtCscI6d9CVNmL
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i5.i.i, i64 noundef %.val.i4.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #65, !noalias !1261
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTNtNtCs40k4W9msRzi_5alloc6string6StringBC_EECs63DIHKhvmTb_10lance_core.exit.i
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTNtNtCs40k4W9msRzi_5alloc6string6StringBC_EECs63DIHKhvmTb_10lance_core.exit.i: ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs63DIHKhvmTb_10lance_core.exit.i.i
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTNtNtCs40k4W9msRzi_5alloc6string6StringBC_EECs63DIHKhvmTb_10lance_core.exit.i: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs63DIHKhvmTb_10lance_core.exit.i.i, %bb.c
   ret void
 }
 

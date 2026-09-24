@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge.i, %.pr
   %i.cq = fptrunc double %.fr160 to float         ; 6 uses
   %i.cr = mul i64 %.25478.i, %i.bk
   %i.cs = getelementptr i8, ptr %1, i64 %i.cr     ; 2 uses
-  %i.ct = fcmp olt double %.fr160, f0xBFF0000010000000 ; 3 uses
+  %i.ct = fcmp olt double %.fr160, f0xBFF0000010000000 ; 2 uses
   %i.cu = fpext float %i.cq to double             ; 2 uses
   %i.cv = fcmp ogt double %i.cu, 1.000000e+00
   %i.cw = select i1 %i.cv, double 1.000000e+00, double %i.cu
@@ -229,7 +229,6 @@ bb.g:                                             ; preds = %._crit_edge.i, %.pr
   %i.dn = trunc i32 %i.dm to i8                   ; 2 uses
   %i.do = lshr i32 %spec.select79.i, 16
   %i.dp = trunc i32 %i.do to i8                   ; 2 uses
-  %spec.select.i = select i1 %i.ct, i8 0, i8 %i.dk ; 2 uses
   br i1 %i.ct, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
 .lr.ph.i.split.us:                                ; preds = %.lr.ph.i, %ma_pcm_convert.exit.i.us
@@ -262,7 +261,7 @@ bb.h:                                             ; preds = %.lr.ph.i.split.us
   br label %ma_pcm_convert.exit.i.us
 
 ma_dither_f32.exit.i.preheader.i.us:              ; preds = %.lr.ph.i.split.us
-  store i8 %spec.select.i, ptr %i.dr, align 1, !tbaa !119
+  store i8 0, ptr %i.dr, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i.us
 
 ma_pcm_convert.exit.loopexit.i.us:                ; preds = %.lr.ph.i.split.us
@@ -284,12 +283,24 @@ ma_pcm_convert.exit.i.us:                         ; preds = %bb.h, %ma_pcm_conve
   switch i32 %i.eb, label %ma_pcm_convert.exit.i [
     i32 5, label %ma_pcm_convert.exit.loopexit.i
     i32 1, label %ma_dither_f32.exit.i.preheader.i
-    i32 2, label %bb.i
-    i32 3, label %.lr.ph.i134.i.preheader.i
-    i32 4, label %.lr.ph.i138.i.preheader.i
+    i32 2, label %.lr.ph.i138.i.preheader.i
+    i32 3, label %bb.i
+    i32 4, label %.lr.ph.i134.i.preheader.i
   ]
 
 .lr.ph.i134.i.preheader.i:                        ; preds = %.lr.ph.i.split
+  store i32 %i.cy, ptr %i.ea, align 4, !tbaa !118
+  br label %ma_pcm_convert.exit.i
+
+ma_dither_f32.exit.i.preheader.i:                 ; preds = %.lr.ph.i.split
+  store i8 %i.dk, ptr %i.ea, align 1, !tbaa !119
+  br label %ma_pcm_convert.exit.i
+
+.lr.ph.i138.i.preheader.i:                        ; preds = %.lr.ph.i.split
+  store i16 %i.dh, ptr %i.ea, align 2, !tbaa !122
+  br label %ma_pcm_convert.exit.i
+
+bb.i:                                             ; preds = %.lr.ph.i.split
   store i8 %i.dl, ptr %i.ea, align 1, !tbaa !119
   %4 = getelementptr i8, ptr %i.ea, i64 1
   store i8 %i.dn, ptr %4, align 1, !tbaa !119
@@ -297,23 +308,11 @@ ma_pcm_convert.exit.i.us:                         ; preds = %bb.h, %ma_pcm_conve
   store i8 %i.dp, ptr %5, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i
 
-ma_dither_f32.exit.i.preheader.i:                 ; preds = %.lr.ph.i.split
-  store i8 %spec.select.i, ptr %i.ea, align 1, !tbaa !119
-  br label %ma_pcm_convert.exit.i
-
-.lr.ph.i138.i.preheader.i:                        ; preds = %.lr.ph.i.split
-  store i32 %i.cy, ptr %i.ea, align 4, !tbaa !118
-  br label %ma_pcm_convert.exit.i
-
-bb.i:                                             ; preds = %.lr.ph.i.split
-  store i16 %i.dh, ptr %i.ea, align 2, !tbaa !122
-  br label %ma_pcm_convert.exit.i
-
 ma_pcm_convert.exit.loopexit.i:                   ; preds = %.lr.ph.i.split
   store float %i.cq, ptr %i.ea, align 1
   br label %ma_pcm_convert.exit.i
 
-ma_pcm_convert.exit.i:                            ; preds = %bb.i, %ma_pcm_convert.exit.loopexit.i, %.lr.ph.i138.i.preheader.i, %ma_dither_f32.exit.i.preheader.i, %.lr.ph.i134.i.preheader.i, %.lr.ph.i.split
+ma_pcm_convert.exit.i:                            ; preds = %.lr.ph.i138.i.preheader.i, %ma_pcm_convert.exit.loopexit.i, %bb.i, %ma_dither_f32.exit.i.preheader.i, %.lr.ph.i134.i.preheader.i, %.lr.ph.i.split
   %i.ec = add nuw nsw i64 %.277.i, 1              ; 2 uses
   %i.ed = load i32, ptr %i.g, align 4, !tbaa !855 ; 2 uses
   %i.ee = zext i32 %i.ed to i64
@@ -652,7 +651,7 @@ bb.l:                                             ; preds = %._crit_edge.i67, %.
   %i.ix = fptrunc double %.fr to float            ; 6 uses
   %i.iy = mul i64 %.25478.i58, %i.ho
   %i.iz = getelementptr i8, ptr %1, i64 %i.iy     ; 2 uses
-  %i.ja = fcmp olt double %.fr, f0xBFF0000010000000 ; 3 uses
+  %i.ja = fcmp olt double %.fr, f0xBFF0000010000000 ; 2 uses
   %i.jb = fpext float %i.ix to double             ; 2 uses
   %i.jc = fcmp ogt double %i.jb, 1.000000e+00
   %i.jd = select i1 %i.jc, double 1.000000e+00, double %i.jb
@@ -676,7 +675,6 @@ bb.l:                                             ; preds = %._crit_edge.i67, %.
   %i.ju = trunc i32 %i.jt to i8                   ; 2 uses
   %i.jv = lshr i32 %spec.select79.i61, 16
   %i.jw = trunc i32 %i.jv to i8                   ; 2 uses
-  %spec.select.i62 = select i1 %i.ja, i8 0, i8 %i.jr ; 2 uses
   br i1 %i.ja, label %.lr.ph.i60.split.us, label %.lr.ph.i60.split
 
 .lr.ph.i60.split.us:                              ; preds = %.lr.ph.i60, %ma_pcm_convert.exit.i66.us
@@ -709,7 +707,7 @@ bb.m:                                             ; preds = %.lr.ph.i60.split.us
   br label %ma_pcm_convert.exit.i66.us
 
 ma_dither_f32.exit.i.preheader.i78.us:            ; preds = %.lr.ph.i60.split.us
-  store i8 %spec.select.i62, ptr %i.jy, align 1, !tbaa !119
+  store i8 0, ptr %i.jy, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i66.us
 
 ma_pcm_convert.exit.loopexit.i79.us:              ; preds = %.lr.ph.i60.split.us
@@ -731,12 +729,24 @@ ma_pcm_convert.exit.i66.us:                       ; preds = %bb.m, %ma_pcm_conve
   switch i32 %i.ki, label %ma_pcm_convert.exit.i66 [
     i32 5, label %ma_pcm_convert.exit.loopexit.i79
     i32 1, label %ma_dither_f32.exit.i.preheader.i78
-    i32 2, label %bb.n
-    i32 3, label %.lr.ph.i134.i.preheader.i70
-    i32 4, label %.lr.ph.i138.i.preheader.i64
+    i32 2, label %.lr.ph.i138.i.preheader.i64
+    i32 3, label %bb.n
+    i32 4, label %.lr.ph.i134.i.preheader.i70
   ]
 
 .lr.ph.i134.i.preheader.i70:                      ; preds = %.lr.ph.i60.split
+  store i32 %i.jf, ptr %i.kh, align 4, !tbaa !118
+  br label %ma_pcm_convert.exit.i66
+
+ma_dither_f32.exit.i.preheader.i78:               ; preds = %.lr.ph.i60.split
+  store i8 %i.jr, ptr %i.kh, align 1, !tbaa !119
+  br label %ma_pcm_convert.exit.i66
+
+.lr.ph.i138.i.preheader.i64:                      ; preds = %.lr.ph.i60.split
+  store i16 %i.jo, ptr %i.kh, align 2, !tbaa !122
+  br label %ma_pcm_convert.exit.i66
+
+bb.n:                                             ; preds = %.lr.ph.i60.split
   store i8 %i.js, ptr %i.kh, align 1, !tbaa !119
   %6 = getelementptr i8, ptr %i.kh, i64 1
   store i8 %i.ju, ptr %6, align 1, !tbaa !119
@@ -744,23 +754,11 @@ ma_pcm_convert.exit.i66.us:                       ; preds = %bb.m, %ma_pcm_conve
   store i8 %i.jw, ptr %7, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i66
 
-ma_dither_f32.exit.i.preheader.i78:               ; preds = %.lr.ph.i60.split
-  store i8 %spec.select.i62, ptr %i.kh, align 1, !tbaa !119
-  br label %ma_pcm_convert.exit.i66
-
-.lr.ph.i138.i.preheader.i64:                      ; preds = %.lr.ph.i60.split
-  store i32 %i.jf, ptr %i.kh, align 4, !tbaa !118
-  br label %ma_pcm_convert.exit.i66
-
-bb.n:                                             ; preds = %.lr.ph.i60.split
-  store i16 %i.jo, ptr %i.kh, align 2, !tbaa !122
-  br label %ma_pcm_convert.exit.i66
-
 ma_pcm_convert.exit.loopexit.i79:                 ; preds = %.lr.ph.i60.split
   store float %i.ix, ptr %i.kh, align 1
   br label %ma_pcm_convert.exit.i66
 
-ma_pcm_convert.exit.i66:                          ; preds = %bb.n, %ma_pcm_convert.exit.loopexit.i79, %.lr.ph.i138.i.preheader.i64, %ma_dither_f32.exit.i.preheader.i78, %.lr.ph.i134.i.preheader.i70, %.lr.ph.i60.split
+ma_pcm_convert.exit.i66:                          ; preds = %.lr.ph.i138.i.preheader.i64, %ma_pcm_convert.exit.loopexit.i79, %bb.n, %ma_dither_f32.exit.i.preheader.i78, %.lr.ph.i134.i.preheader.i70, %.lr.ph.i60.split
   %i.kj = add nuw nsw i64 %.277.i63, 1            ; 2 uses
   %i.kk = load i32, ptr %i.eu, align 4, !tbaa !855 ; 2 uses
   %i.kl = zext i32 %i.kk to i64
@@ -1077,7 +1075,7 @@ bb.p:                                             ; preds = %._crit_edge.i118, %
   %i.om = fptrunc double %.fr159 to float         ; 6 uses
   %i.on = mul i64 %.25478.i109, %i.nh
   %i.oo = getelementptr i8, ptr %1, i64 %i.on     ; 2 uses
-  %i.op = fcmp olt double %.fr159, f0xBFF0000010000000 ; 3 uses
+  %i.op = fcmp olt double %.fr159, f0xBFF0000010000000 ; 2 uses
   %i.oq = fpext float %i.om to double             ; 2 uses
   %i.or = fcmp ogt double %i.oq, 1.000000e+00
   %i.os = select i1 %i.or, double 1.000000e+00, double %i.oq
@@ -1101,7 +1099,6 @@ bb.p:                                             ; preds = %._crit_edge.i118, %
   %i.pj = trunc i32 %i.pi to i8                   ; 2 uses
   %i.pk = lshr i32 %spec.select79.i112, 16
   %i.pl = trunc i32 %i.pk to i8                   ; 2 uses
-  %spec.select.i113 = select i1 %i.op, i8 0, i8 %i.pg ; 2 uses
   br i1 %i.op, label %.lr.ph.i111.split.us, label %.lr.ph.i111.split
 
 .lr.ph.i111.split.us:                             ; preds = %.lr.ph.i111, %ma_pcm_convert.exit.i117.us
@@ -1134,7 +1131,7 @@ bb.q:                                             ; preds = %.lr.ph.i111.split.u
   br label %ma_pcm_convert.exit.i117.us
 
 ma_dither_f32.exit.i.preheader.i129.us:           ; preds = %.lr.ph.i111.split.us
-  store i8 %spec.select.i113, ptr %i.pn, align 1, !tbaa !119
+  store i8 0, ptr %i.pn, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i117.us
 
 ma_pcm_convert.exit.loopexit.i130.us:             ; preds = %.lr.ph.i111.split.us
@@ -1156,12 +1153,24 @@ ma_pcm_convert.exit.i117.us:                      ; preds = %bb.q, %ma_pcm_conve
   switch i32 %i.px, label %ma_pcm_convert.exit.i117 [
     i32 5, label %ma_pcm_convert.exit.loopexit.i130
     i32 1, label %ma_dither_f32.exit.i.preheader.i129
-    i32 2, label %bb.r
-    i32 3, label %.lr.ph.i134.i.preheader.i121
-    i32 4, label %.lr.ph.i138.i.preheader.i115
+    i32 2, label %.lr.ph.i138.i.preheader.i115
+    i32 3, label %bb.r
+    i32 4, label %.lr.ph.i134.i.preheader.i121
   ]
 
 .lr.ph.i134.i.preheader.i121:                     ; preds = %.lr.ph.i111.split
+  store i32 %i.ou, ptr %i.pw, align 4, !tbaa !118
+  br label %ma_pcm_convert.exit.i117
+
+ma_dither_f32.exit.i.preheader.i129:              ; preds = %.lr.ph.i111.split
+  store i8 %i.pg, ptr %i.pw, align 1, !tbaa !119
+  br label %ma_pcm_convert.exit.i117
+
+.lr.ph.i138.i.preheader.i115:                     ; preds = %.lr.ph.i111.split
+  store i16 %i.pd, ptr %i.pw, align 2, !tbaa !122
+  br label %ma_pcm_convert.exit.i117
+
+bb.r:                                             ; preds = %.lr.ph.i111.split
   store i8 %i.ph, ptr %i.pw, align 1, !tbaa !119
   %8 = getelementptr i8, ptr %i.pw, i64 1
   store i8 %i.pj, ptr %8, align 1, !tbaa !119
@@ -1169,23 +1178,11 @@ ma_pcm_convert.exit.i117.us:                      ; preds = %bb.q, %ma_pcm_conve
   store i8 %i.pl, ptr %9, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i117
 
-ma_dither_f32.exit.i.preheader.i129:              ; preds = %.lr.ph.i111.split
-  store i8 %spec.select.i113, ptr %i.pw, align 1, !tbaa !119
-  br label %ma_pcm_convert.exit.i117
-
-.lr.ph.i138.i.preheader.i115:                     ; preds = %.lr.ph.i111.split
-  store i32 %i.ou, ptr %i.pw, align 4, !tbaa !118
-  br label %ma_pcm_convert.exit.i117
-
-bb.r:                                             ; preds = %.lr.ph.i111.split
-  store i16 %i.pd, ptr %i.pw, align 2, !tbaa !122
-  br label %ma_pcm_convert.exit.i117
-
 ma_pcm_convert.exit.loopexit.i130:                ; preds = %.lr.ph.i111.split
   store float %i.om, ptr %i.pw, align 1
   br label %ma_pcm_convert.exit.i117
 
-ma_pcm_convert.exit.i117:                         ; preds = %bb.r, %ma_pcm_convert.exit.loopexit.i130, %.lr.ph.i138.i.preheader.i115, %ma_dither_f32.exit.i.preheader.i129, %.lr.ph.i134.i.preheader.i121, %.lr.ph.i111.split
+ma_pcm_convert.exit.i117:                         ; preds = %.lr.ph.i138.i.preheader.i115, %ma_pcm_convert.exit.loopexit.i130, %bb.r, %ma_dither_f32.exit.i.preheader.i129, %.lr.ph.i134.i.preheader.i121, %.lr.ph.i111.split
   %i.py = add nuw nsw i64 %.277.i114, 1           ; 2 uses
   %i.pz = load i32, ptr %i.kv, align 4, !tbaa !855 ; 2 uses
   %i.qa = zext i32 %i.pz to i64
@@ -1551,44 +1548,42 @@ bb.b:                                             ; preds = %.preheader, %._crit
   %i.dn = trunc i32 %i.dm to i8
   %i.do = lshr i32 %spec.select83, 16
   %i.dp = trunc i32 %i.do to i8
-  %spec.select = select i1 %i.ct, i8 0, i8 %i.dk
   %i.dq = load i32, ptr %i.a, align 4
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %ma_pcm_convert.exit
   %.281 = phi i64 [ 0, %.lr.ph ], [ %i.dx, %ma_pcm_convert.exit ] ; 2 uses
   %i.dr = mul nuw i64 %.281, %i.bm
-  %i.ds = getelementptr i8, ptr %i.cs, i64 %i.dr  ; 12 uses
+  %i.ds = getelementptr i8, ptr %i.cs, i64 %i.dr  ; 13 uses
   %i.dt = load i32, ptr %i.b, align 8, !tbaa !854
   switch i32 %i.dt, label %ma_pcm_convert.exit [
     i32 5, label %ma_pcm_convert.exit.loopexit
-    i32 1, label %ma_dither_f32.exit.i.preheader.a
+    i32 1, label %.lr.ph.i138.i.preheader.a
     i32 2, label %bb.d
-    i32 3, label %.lr.ph.i134.i.preheader
-    i32 4, label %.lr.ph.i138.i.preheader.a
+    i32 3, label %.lr.ph71.i.us.preheader
+    i32 4, label %.lr.ph.i138.i.preheader
   ]
 
-.lr.ph.i134.i.preheader:                          ; preds = %bb.c
-  store i8 %i.dl, ptr %i.ds, align 1, !tbaa !119
-  %4 = getelementptr i8, ptr %i.ds, i64 1
-  store i8 %i.dn, ptr %4, align 1, !tbaa !119
-  %5 = getelementptr i8, ptr %i.ds, i64 2
-  store i8 %i.dp, ptr %5, align 1, !tbaa !119
-  br label %ma_pcm_convert.exit
+.lr.ph.i138.i.preheader:                          ; preds = %bb.c
+  br i1 %i.ct, label %ma_dither_f32.exit.i.preheader.a, label %.lr.ph.i134.i.preheader
 
-ma_dither_f32.exit.i.preheader.a:                 ; preds = %bb.c
-  store i8 %spec.select, ptr %i.ds, align 1, !tbaa !119
-  br label %ma_pcm_convert.exit
-
-.lr.ph.i138.i.preheader.a:                        ; preds = %bb.c
-  br i1 %i.ct, label %.lr.ph.i138.i.us.preheader, label %.lr.ph.i138.i.preheader95
-
-.lr.ph.i138.i.preheader95:                        ; preds = %.lr.ph.i138.i.preheader.a
+.lr.ph.i134.i.preheader:                          ; preds = %.lr.ph.i138.i.preheader
   store i32 %i.cy, ptr %i.ds, align 4, !tbaa !118
   br label %ma_pcm_convert.exit
 
-.lr.ph.i138.i.us.preheader:                       ; preds = %.lr.ph.i138.i.preheader.a
+ma_dither_f32.exit.i.preheader.a:                 ; preds = %.lr.ph.i138.i.preheader
   store i32 -2147483647, ptr %i.ds, align 4, !tbaa !118
+  br label %ma_pcm_convert.exit
+
+.lr.ph.i138.i.preheader.a:                        ; preds = %bb.c
+  br i1 %i.ct, label %.lr.ph.i138.i.preheader95, label %.lr.ph.i138.i.us.preheader
+
+.lr.ph.i138.i.preheader95:                        ; preds = %.lr.ph.i138.i.preheader.a
+  store i8 0, ptr %i.ds, align 1, !tbaa !119
+  br label %ma_pcm_convert.exit
+
+.lr.ph.i138.i.us.preheader:                       ; preds = %.lr.ph.i138.i.preheader.a
+  store i8 %i.dk, ptr %i.ds, align 1, !tbaa !119
   br label %ma_pcm_convert.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -1596,35 +1591,43 @@ bb.d:                                             ; preds = %bb.c
   %i.dv = or i64 %i.du, %i.bn
   %i.dw = and i64 %i.dv, 15
   %or.cond.i.i = icmp eq i64 %i.dw, 0
-  br i1 %or.cond.i.i, label %.lr.ph71.i.preheader.a, label %.lr.ph63.i.preheader
+  br i1 %or.cond.i.i, label %.lr.ph71.i.preheader, label %.lr.ph63.i.preheader
 
 .lr.ph63.i.preheader:                             ; preds = %bb.d
-  br i1 %i.ct, label %.lr.ph63.i.us.preheader, label %.lr.ph63.i.preheader91
+  br i1 %i.ct, label %.lr.ph63.i.preheader91, label %.lr.ph71.i.preheader.a
 
 .lr.ph63.i.preheader91:                           ; preds = %.lr.ph63.i.preheader
-  store i16 %i.dh, ptr %i.ds, align 2, !tbaa !122
-  br label %ma_pcm_convert.exit
-
-.lr.ph63.i.us.preheader:                          ; preds = %.lr.ph63.i.preheader
   store i16 -32767, ptr %i.ds, align 2, !tbaa !122
   br label %ma_pcm_convert.exit
 
-.lr.ph71.i.preheader.a:                           ; preds = %bb.d
-  br i1 %i.ct, label %.lr.ph71.i.us.preheader, label %.lr.ph71.i.preheader88
+.lr.ph71.i.preheader:                             ; preds = %bb.d
+  br i1 %i.ct, label %.lr.ph63.i.us.preheader, label %.lr.ph71.i.preheader88
 
-.lr.ph71.i.preheader88:                           ; preds = %.lr.ph71.i.preheader.a
+.lr.ph63.i.us.preheader:                          ; preds = %.lr.ph71.i.preheader
+  store i16 -32767, ptr %i.ds, align 2, !tbaa !122
+  br label %ma_pcm_convert.exit
+
+.lr.ph71.i.preheader.a:                           ; preds = %.lr.ph63.i.preheader
   store i16 %i.dh, ptr %i.ds, align 2, !tbaa !122
   br label %ma_pcm_convert.exit
 
-.lr.ph71.i.us.preheader:                          ; preds = %.lr.ph71.i.preheader.a
-  store i16 -32767, ptr %i.ds, align 2, !tbaa !122
+.lr.ph71.i.preheader88:                           ; preds = %.lr.ph71.i.preheader
+  store i16 %i.dh, ptr %i.ds, align 2, !tbaa !122
+  br label %ma_pcm_convert.exit
+
+.lr.ph71.i.us.preheader:                          ; preds = %bb.c
+  store i8 %i.dl, ptr %i.ds, align 1, !tbaa !119
+  %4 = getelementptr i8, ptr %i.ds, i64 1
+  store i8 %i.dn, ptr %4, align 1, !tbaa !119
+  %5 = getelementptr i8, ptr %i.ds, i64 2
+  store i8 %i.dp, ptr %5, align 1, !tbaa !119
   br label %ma_pcm_convert.exit
 
 ma_pcm_convert.exit.loopexit:                     ; preds = %bb.c
   store i32 %i.dq, ptr %i.ds, align 1
   br label %ma_pcm_convert.exit
 
-ma_pcm_convert.exit:                              ; preds = %.lr.ph.i138.i.preheader95, %.lr.ph.i138.i.us.preheader, %.lr.ph.i134.i.preheader, %.lr.ph63.i.preheader91, %.lr.ph63.i.us.preheader, %.lr.ph71.i.preheader88, %.lr.ph71.i.us.preheader, %ma_dither_f32.exit.i.preheader.a, %ma_pcm_convert.exit.loopexit, %bb.c
+ma_pcm_convert.exit:                              ; preds = %.lr.ph.i134.i.preheader, %ma_dither_f32.exit.i.preheader.a, %ma_pcm_convert.exit.loopexit, %.lr.ph71.i.preheader.a, %.lr.ph63.i.preheader91, %.lr.ph71.i.preheader88, %.lr.ph63.i.us.preheader, %.lr.ph.i138.i.us.preheader, %.lr.ph.i138.i.preheader95, %.lr.ph71.i.us.preheader, %bb.c
   %i.dx = add nuw nsw i64 %.281, 1                ; 2 uses
   %i.dy = load i32, ptr %i.d, align 4, !tbaa !855 ; 2 uses
   %i.dz = zext i32 %i.dy to i64

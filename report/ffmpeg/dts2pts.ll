@@ -36,7 +36,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal range(i32 -2147483648, 1) i32 @dts2pts_init(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 9 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !16
@@ -53,7 +53,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a, %.fold.split
   %.lcssa = phi ptr [ @func_tab, %bb.a ], [ getelementptr inbounds nuw (i8, ptr @func_tab, i64 40), %.fold.split ] ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.lcssa, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !92
   %i.l = load <2 x ptr>, ptr %i.h, align 8, !tbaa !93
@@ -63,25 +63,21 @@ bb.b:                                             ; preds = %bb.a, %.fold.split
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store ptr %i.n, ptr %i.o, align 8, !tbaa !30
   %i.p = getelementptr inbounds nuw i8, ptr %.lcssa, i64 32
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !95
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !95   ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   store i64 %i.q, ptr %i.r, align 8, !tbaa !31
-  %.not.a = icmp eq ptr %i.k, null
-  br i1 %.not.a, label %bb.c, label %1
+  %.not = icmp eq ptr %i.k, null
+  %.not.a = icmp eq i64 %i.q, 0
+  %or.cond = select i1 %.not, i1 true, i1 %.not.a
+  br i1 %or.cond, label %bb.c, label %bb.d
 
-1:                                                ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %3 = load i64, ptr %2, align 8, !tbaa !31       ; 2 uses
-  %.not45 = icmp eq i64 %3, 0
-  br i1 %.not45, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %1, %bb.b
+bb.c:                                             ; preds = %bb.b
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 634) #12
   tail call void @abort() #13
   unreachable
 
-bb.d:                                             ; preds = %1
-  %i.s = tail call ptr @av_fifo_alloc2(i64 noundef %3, i64 noundef 24, i32 noundef 0) #12 ; 2 uses
+bb.d:                                             ; preds = %bb.b
+  %i.s = tail call ptr @av_fifo_alloc2(i64 noundef %i.q, i64 noundef 24, i32 noundef 0) #12 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.s, ptr %i.t, align 8, !tbaa !32
   %.not46 = icmp eq ptr %i.s, null
@@ -104,8 +100,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ab, label %bb.m, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.ac = load ptr, ptr %4, align 8, !tbaa !96    ; 2 uses
+  %i.ac = load ptr, ptr %i.i, align 8, !tbaa !96  ; 2 uses
   %.not48 = icmp eq ptr %i.ac, null
   br i1 %.not48, label %bb.i, label %bb.h
 
