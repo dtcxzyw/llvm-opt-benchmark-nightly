@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN7rocksdb12_GLOBAL__N_121GetPropertyNameAndArgERKNS_5SliceE.exit: ; preds = %bb.b, %bb.c, %bb.a
   %.0.lcssa.i = phi i64 [ 0, %bb.a ], [ %.017.i, %bb.b ], [ %.sroa.4.0.copyload.i, %bb.c ] ; 2 uses
-  %i.g = sub i64 %.sroa.4.0.copyload.i, %.0.lcssa.i ; 2 uses
+  %i.g = sub nuw i64 %.sroa.4.0.copyload.i, %.0.lcssa.i ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.013.0.copyload.i, i64 %i.g
   store ptr %.sroa.013.0.copyload.i, ptr %2, align 8, !tbaa !398, !alias.scope !989
   %.sroa.4.0..sroa_idx15.i = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -311,7 +311,7 @@ bb.e:                                             ; preds = %_ZN7rocksdb12_GLOBA
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = phi ptr [ %i.m, %bb.d ], [ %i.n, %bb.e ]
-  %i.p = sub i64 %.sroa.4.0.copyload.i, %.0.lcssa.i
+  %i.p = sub nuw i64 %.sroa.4.0.copyload.i, %.0.lcssa.i
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.013.0.copyload.i, i64 %i.p
   %i.r = tail call noundef zeroext i1 %i.o(ptr noundef nonnull align 8 dereferenceable(2016) %i.h, ptr noundef %3, ptr %i.q, i64 %.0.lcssa.i)
   ret i1 %i.r
@@ -372,7 +372,7 @@ bb.e:                                             ; preds = %_ZN7rocksdb12_GLOBA
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = phi ptr [ %i.m, %bb.d ], [ %i.n, %bb.e ]
-  %i.p = sub i64 %.sroa.4.0.copyload.i, %.0.lcssa.i
+  %i.p = sub nuw i64 %.sroa.4.0.copyload.i, %.0.lcssa.i
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.013.0.copyload.i, i64 %i.p
   %i.r = tail call noundef zeroext i1 %i.o(ptr noundef nonnull align 8 dereferenceable(2016) %i.h, ptr noundef %3, ptr %i.q, i64 %.0.lcssa.i)
   ret i1 %i.r

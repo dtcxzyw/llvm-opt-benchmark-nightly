@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %exitcond.not, label %bb.f, label %bb.d, !llvm.loop !173
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %.073.lcssa = phi i64 [ %.07394, %bb.d ], [ %1, %bb.e ]
-  %i.k = sub i64 %1, %.073.lcssa                  ; 2 uses
-  %4 = icmp uge i64 %i.k, %1
+  %.073.lcssa = phi i64 [ %.07394, %bb.d ], [ %1, %bb.e ] ; 2 uses
+  %i.k = sub nuw i64 %1, %.073.lcssa
+  %4 = icmp eq i64 %.073.lcssa, 0
   %or.cond.not = or i1 %.080121, %4
   %not.or.cond.not = xor i1 %or.cond.not, true
   %i.l = zext i1 %not.or.cond.not to i64

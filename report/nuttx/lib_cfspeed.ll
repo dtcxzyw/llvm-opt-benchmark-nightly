@@ -19,27 +19,27 @@ bb.b:                                             ; preds = %bb.a
   tail call void @__assert(ptr noundef nonnull @.str, i32 noundef 150, ptr noundef nonnull @.str.1) #2
   unreachable
 
-.preheader:                                       ; preds = %bb.a, %bb.c
-  %.026 = phi i64 [ %4, %bb.c ], [ 0, %bb.a ]     ; 2 uses
+2:                                                ; preds = %bb.c
+  %3 = add nuw nsw i64 %.026, 1                   ; 2 uses
+  %exitcond.not = icmp eq i64 %3, 31
+  br i1 %exitcond.not, label %.thread, label %.preheader, !llvm.loop !8
+
+.preheader:                                       ; preds = %bb.a, %2
+  %.026 = phi i64 [ %3, %2 ], [ 0, %bb.a ]        ; 2 uses
   %i.a = getelementptr inbounds nuw [16 x i8], ptr @g_baud_table, i64 %.026 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load i64, ptr %i.b, align 8              ; 2 uses
   %i.d = icmp eq i64 %1, %i.c
   %i.e = load i64, ptr %i.a, align 16             ; 2 uses
-  br i1 %i.d, label %.thread, label %2
+  br i1 %i.d, label %.thread, label %bb.c
 
-2:                                                ; preds = %.preheader
-  %3 = icmp eq i64 %1, %i.e
-  br i1 %3, label %.thread, label %bb.c
+bb.c:                                             ; preds = %.preheader
+  %exitcond.not.a = icmp eq i64 %1, %i.e
+  br i1 %exitcond.not.a, label %.thread, label %2
 
-bb.c:                                             ; preds = %2
-  %4 = add nuw nsw i64 %.026, 1                   ; 2 uses
-  %exitcond.not.a = icmp eq i64 %4, 31
-  br i1 %exitcond.not.a, label %.thread, label %.preheader, !llvm.loop !8
-
-.thread:                                          ; preds = %bb.c, %2, %.preheader
-  %.sink = phi i64 [ %i.e, %.preheader ], [ %1, %2 ], [ %1, %bb.c ]
-  %.1 = phi i64 [ %1, %.preheader ], [ %i.c, %2 ], [ 4096, %bb.c ]
+.thread:                                          ; preds = %2, %bb.c, %.preheader
+  %.sink = phi i64 [ %i.e, %.preheader ], [ %1, %bb.c ], [ %1, %2 ]
+  %.1 = phi i64 [ %1, %.preheader ], [ %i.c, %bb.c ], [ 4096, %2 ]
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %.sink, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses

@@ -94,7 +94,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str.3, i32 noundef 136, ptr noundef nonnull @__func__.qemu_fsdev_add, ptr noundef nonnull @.str.6) #5
   br label %bb.l
 
-.thread:                                          ; preds = %.preheader.preheader, %.preheader.1
+.thread:                                          ; preds = %.preheader.1, %.preheader.preheader
   %.lcssa = phi i64 [ 0, %.preheader.preheader ], [ 1, %.preheader.1 ]
   %i.k = getelementptr inbounds nuw [24 x i8], ptr @FsDrivers, i64 %.lcssa ; 2 uses
   %i.l = tail call i32 @qemu_opt_foreach(ptr noundef %0, ptr noundef nonnull @validate_opt, ptr noundef nonnull %i.k, ptr noundef %1) #5

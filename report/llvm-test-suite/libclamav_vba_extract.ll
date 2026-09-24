@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.t
   %i.ci = call i32 @close(i32 noundef %i.j) #11   ; 0 uses
   br label %bb.cr
 
-.thread:                                          ; preds = %.preheader174, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s
+.thread:                                          ; preds = %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %.preheader174
   %.0113208.lcssa.wide = phi i64 [ 0, %.preheader174 ], [ 1, %bb.g ], [ 2, %bb.h ], [ 3, %bb.i ], [ 4, %bb.j ], [ 5, %bb.k ], [ 6, %bb.l ], [ 7, %bb.m ], [ 8, %bb.n ], [ 9, %bb.o ], [ 10, %bb.p ], [ 11, %bb.q ], [ 12, %bb.r ], [ 13, %bb.s ]
   %i.cj = getelementptr inbounds nuw [24 x i8], ptr @vba_version, i64 %.0113208.lcssa.wide ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 8

@@ -202,9 +202,6 @@ bb.d:                                             ; preds = %.lr.ph21
   tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #16, !noalias !719
   unreachable
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs7fP0opQOXdx_5rayon4iter7collect8consumer13CollectResultTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEECskVIURZGHVHJ_12tensor_tools.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i, %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs7fP0opQOXdx_5rayon4iter7collect8consumer13CollectResultTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEECskVIURZGHVHJ_12tensor_tools.exit14
-  ret void
-
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs7fP0opQOXdx_5rayon4iter7collect8consumer13CollectResultTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEECskVIURZGHVHJ_12tensor_tools.exit14: ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.u = load i64, ptr %i.t, align 8, !noundef !8
@@ -218,6 +215,9 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs7fP0opQOXdx_5rayon4iter7colle
   store i64 %i.y, ptr %i.b, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs7fP0opQOXdx_5rayon4iter7collect8consumer13CollectResultTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEECskVIURZGHVHJ_12tensor_tools.exit
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs7fP0opQOXdx_5rayon4iter7collect8consumer13CollectResultTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEECskVIURZGHVHJ_12tensor_tools.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i, %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs7fP0opQOXdx_5rayon4iter7collect8consumer13CollectResultTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEECskVIURZGHVHJ_12tensor_tools.exit14
+  ret void
 
 .body:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEECskVIURZGHVHJ_12tensor_tools.exit7.i.i.i, %bb.c
   resume { ptr, i32 } %i.o
@@ -246,9 +246,6 @@ bb.c:                                             ; preds = %bb.b
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs7fP0opQOXdx_5rayon3vec13DrainProducerTNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorEEECskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef align 8 dereferenceable(16) %i.a) #15
           to label %common.resume unwind label %bb.d
 
-common.resume:                                    ; preds = %bb.c
-  resume { ptr, i32 } %i.c
-
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs7fP0opQOXdx_5rayon3vec13DrainProducerTNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorEEECskVIURZGHVHJ_12tensor_tools.exit: ; preds = %bb.a
   %i.d = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %3
   %i.e = sub nuw nsw i64 %2, %3
@@ -260,6 +257,9 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs7fP0opQOXdx_5rayon3vec13DrainProd
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.e, ptr %i.h, align 8
   ret void
+
+common.resume:                                    ; preds = %bb.c
+  resume { ptr, i32 } %i.c
 
 bb.d:                                             ; preds = %bb.c
   %i.i = landingpad { ptr, i32 }

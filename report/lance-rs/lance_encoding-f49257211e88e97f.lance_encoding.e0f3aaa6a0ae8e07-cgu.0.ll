@@ -205,7 +205,7 @@ bb.cx:                                            ; preds = %_RNvYINtNtNtCs4ytUT
 bb.cy:                                            ; preds = %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_array16GenericByteArrayINtNtB9_5types17GenericBinaryTypexEENtB7_5Array7is_nullCsjjpCCFGI3ul_14lance_encoding.exit.thread
   call void @llvm.experimental.noalias.scope.decl(metadata !86489)
   %i.jq = load ptr, ptr %i.fj, align 8, !alias.scope !86490, !noundef !75 ; 2 uses
-  %i.jr = icmp ult i64 %i.fr, %i.jk
+  %i.jr = icmp samesign ult i64 %i.fr, %i.jk
   call void @llvm.assume(i1 %i.jr)
   %i.js = getelementptr inbounds nuw [8 x i8], ptr %i.jq, i64 %i.fr
   %i.jt = load i64, ptr %i.js, align 8, !noalias !86490, !noundef !75 ; 2 uses

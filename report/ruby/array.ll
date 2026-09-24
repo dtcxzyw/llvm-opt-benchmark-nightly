@@ -205,8 +205,8 @@ bb.au:                                            ; preds = %bb.as, %bb.at
   %.1171.lcssa = phi i64 [ %.1171294, %bb.as ], [ %i.dw, %bb.at ] ; 2 uses
   %i.ec = getelementptr [8 x i8], ptr %i.h, i64 %.2.lcssa ; 3 uses
   %i.ed = getelementptr i8, ptr %i.ec, i64 8
-  %i.ee = sub nsw i64 %.3295, %.2.lcssa
-  %i.ef = shl i64 %i.ee, 3
+  %i.ee = sub nuw nsw i64 %.3295, %.2.lcssa
+  %i.ef = shl nuw nsw i64 %i.ee, 3
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 %i.ed, ptr noundef nonnull align 8 %i.ec, i64 noundef %i.ef, i1 noundef false) #24
   %i.eg = getelementptr [8 x i8], ptr %i.f, i64 %.3295
   store i64 %.1171.lcssa, ptr %i.eg, align 8, !tbaa !27

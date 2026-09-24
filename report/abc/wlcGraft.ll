@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %Vec_MemHashLookup.e
   %.pre = load i32, ptr %i.d, align 8, !tbaa !71
   br label %bb.w
 
-Vec_MemHashLookup.exit.thread:                    ; preds = %bb.r, %Vec_MemHashKey.exit.i, %Vec_MemHashLookup.exit
+Vec_MemHashLookup.exit.thread:                    ; preds = %bb.r, %Vec_MemHashLookup.exit, %Vec_MemHashKey.exit.i
   %i.qm = load i64, ptr %i.nc, align 8, !tbaa !57 ; 3 uses
   %i.qn = xor i64 %i.qm, -1
   store i64 %i.qn, ptr %i.nc, align 8, !tbaa !57

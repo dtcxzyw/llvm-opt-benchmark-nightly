@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %._cri
 
 bb.z:                                             ; preds = %.critedge2.i
   %i.dk = getelementptr inbounds nuw i8, ptr %i.bm, i64 %.119.lcssa.i ; 2 uses
-  %i.dl = sub i64 %i.bo, %.119.lcssa.i            ; 4 uses
+  %i.dl = sub nuw i64 %i.bo, %.119.lcssa.i        ; 4 uses
   store ptr %i.ak, ptr %7, align 8, !tbaa !60, !alias.scope !1907
   %i.dm = icmp eq ptr %i.bm, null
   br i1 %i.dm, label %.noexc28.i.invoke, label %bb.aa

@@ -205,7 +205,7 @@ mxf_write_multi_descriptor.exit.i:                ; preds = %.lr.ph.i153.i, %mxf
   %i.ul = getelementptr inbounds nuw i8, ptr %i.io, i64 16 ; 2 uses
   br label %mxf_lookup_local_tag.exit.i163
 
-mxf_lookup_local_tag.exit.i163:                   ; preds = %.lr.ph186.i, %.thread163.i
+mxf_lookup_local_tag.exit.i163:                   ; preds = %.thread163.i, %.lr.ph186.i
   %indvars.iv.i84 = phi i64 [ 0, %.lr.ph186.i ], [ %indvars.iv.next.i85, %.thread163.i ] ; 2 uses
   %i.um = load ptr, ptr %i.im, align 8, !tbaa !32
   %i.un = getelementptr inbounds nuw [8 x i8], ptr %i.um, i64 %indvars.iv.i84

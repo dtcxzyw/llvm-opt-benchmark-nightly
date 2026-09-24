@@ -204,6 +204,12 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.49.0..sroa_idx.i, i64 16, i1 false), !noalias !4429
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout12ConditionSetECscScJTt9VrQp_6fea_rs.exit.i
 
+2:                                                ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i
+  %3 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXsg_NtCsbDKHzkXHCUM_9hashbrown3rawINtB5_8RawTableTtINtNtCsgCecv3eZDcN_5alloc3vec3VectEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.r)
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i unwind label %bb.x, !noalias !4429
+
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout12ConditionSetECscScJTt9VrQp_6fea_rs.exit.i: ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i
   %.sroa.03.0.i = phi i64 [ %.sroa.08.0.copyload.i, %bb.c ], [ -1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !4429
@@ -455,21 +461,15 @@ bb.w:                                             ; preds = %bb.i, %bb.f
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout12ConditionSetEECscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef align 8 dereferenceable(24) %i.p) #21
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i unwind label %bb.x, !noalias !4429
 
-bb.x:                                             ; preds = %2, %.body13.thread.i
+bb.x:                                             ; preds = %.body13.thread.i, %2
   %i.bi = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #22, !noalias !4429
   unreachable
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i: ; preds = %2, %.body13.thread.i
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i: ; preds = %.body13.thread.i, %2
   %.pn13.i = phi { ptr, i32 } [ %3, %2 ], [ %eh.lpad-body1417.i, %.body13.thread.i ]
   resume { ptr, i32 } %.pn13.i
-
-2:                                                ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  invoke void @_RNvXsg_NtCsbDKHzkXHCUM_9hashbrown3rawINtB5_8RawTableTtINtNtCsgCecv3eZDcN_5alloc3vec3VectEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.r)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i unwind label %bb.x, !noalias !4429
 
 _RNCNvMsd_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsINtB7_13PosSubBuilderNtB7_14PositionLookupE9build_raws0_0Bb_.exit: ; preds = %bb.h, %_RNvXNtNtCsgCecv3eZDcN_5alloc3vec11spec_extendINtB4_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout30FeatureTableSubstitutionRecordEINtB2_10SpecExtendBR_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map8IntoItertIBI_tEENCNCNvMsd_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsINtB4w_13PosSubBuilderNtB4w_14PositionLookupE9build_raws0_00EE11spec_extendB4A_.exit.i.i.i
   %.sroa.6.0.i = phi i64 [ %.sroa.6.0.copyload6.i, %_RNvXNtNtCsgCecv3eZDcN_5alloc3vec11spec_extendINtB4_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout30FeatureTableSubstitutionRecordEINtB2_10SpecExtendBR_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map8IntoItertIBI_tEENCNCNvMsd_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsINtB4w_13PosSubBuilderNtB4w_14PositionLookupE9build_raws0_00EE11spec_extendB4A_.exit.i.i.i ], [ 0, %bb.h ]
@@ -553,6 +553,12 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.49.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.49.0..sroa_idx.i, i64 16, i1 false), !noalias !4471
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout12ConditionSetECscScJTt9VrQp_6fea_rs.exit.i
+
+2:                                                ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i
+  %3 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXsg_NtCsbDKHzkXHCUM_9hashbrown3rawINtB5_8RawTableTtINtNtCsgCecv3eZDcN_5alloc3vec3VectEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.r)
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i unwind label %bb.x, !noalias !4471
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout12ConditionSetECscScJTt9VrQp_6fea_rs.exit.i: ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i
   %.sroa.03.0.i = phi i64 [ %.sroa.08.0.copyload.i, %bb.c ], [ -1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i ]
@@ -805,21 +811,15 @@ bb.w:                                             ; preds = %bb.i, %bb.f
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout12ConditionSetEECscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef align 8 dereferenceable(24) %i.p) #21
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i unwind label %bb.x, !noalias !4471
 
-bb.x:                                             ; preds = %2, %.body13.thread.i
+bb.x:                                             ; preds = %.body13.thread.i, %2
   %i.bi = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #22, !noalias !4471
   unreachable
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i: ; preds = %2, %.body13.thread.i
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i: ; preds = %.body13.thread.i, %2
   %.pn13.i = phi { ptr, i32 } [ %3, %2 ], [ %eh.lpad-body1417.i, %.body13.thread.i ]
   resume { ptr, i32 } %.pn13.i
-
-2:                                                ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtCs6WnK4nVnpEz_11write_fonts7offsets12OffsetMarkerNtNtNtB1d_6tables6layout9ConditionKj4_EEECscScJTt9VrQp_6fea_rs.exit.i.i
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  invoke void @_RNvXsg_NtCsbDKHzkXHCUM_9hashbrown3rawINtB5_8RawTableTtINtNtCsgCecv3eZDcN_5alloc3vec3VectEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.r)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMaptINtNtCsgCecv3eZDcN_5alloc3vec3VectEEECscScJTt9VrQp_6fea_rs.exit.i unwind label %bb.x, !noalias !4471
 
 _RNCNvMsd_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsINtB7_13PosSubBuilderNtB7_18SubstitutionLookupE9build_raws0_0Bb_.exit: ; preds = %bb.h, %_RNvXNtNtCsgCecv3eZDcN_5alloc3vec11spec_extendINtB4_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout30FeatureTableSubstitutionRecordEINtB2_10SpecExtendBR_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map8IntoItertIBI_tEENCNCNvMsd_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsINtB4w_13PosSubBuilderNtB4w_18SubstitutionLookupE9build_raws0_00EE11spec_extendB4A_.exit.i.i.i
   %.sroa.6.0.i = phi i64 [ %.sroa.6.0.copyload6.i, %_RNvXNtNtCsgCecv3eZDcN_5alloc3vec11spec_extendINtB4_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout30FeatureTableSubstitutionRecordEINtB2_10SpecExtendBR_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map8IntoItertIBI_tEENCNCNvMsd_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsINtB4w_13PosSubBuilderNtB4w_18SubstitutionLookupE9build_raws0_00EE11spec_extendB4A_.exit.i.i.i ], [ 0, %bb.h ]

@@ -205,22 +205,22 @@ bb.f:                                             ; preds = %.lr.ph20
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #52, !dbg !238406, !noalias !238398
   unreachable, !dbg !238406
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.c, %bb.b, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEECseeLknQCOKOd_13polars_python.exit12
-  ret void, !dbg !238407
-
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEECseeLknQCOKOd_13polars_python.exit12: ; preds = %bb.a
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !238408
-  %i.s = load i64, ptr %i.r, align 8, !dbg !238408, !noundef !4270
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !238409 ; 2 uses
-  %i.u = load i64, ptr %i.t, align 8, !dbg !238409, !noundef !4270
-  %i.v = add i64 %i.u, %i.s, !dbg !238409
-  store i64 %i.v, ptr %i.t, align 8, !dbg !238409
-  %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !238410
-  %.sroa.413.0.copyload = load i64, ptr %.sroa.413.0..sroa_idx, align 8, !dbg !238410
-  %i.w = add i64 %.sroa.413.0.copyload, %i.c, !dbg !238411
-  store i64 %i.w, ptr %i.b, align 8, !dbg !238411
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !238407
+  %i.s = load i64, ptr %i.r, align 8, !dbg !238407, !noundef !4270
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !238408 ; 2 uses
+  %i.u = load i64, ptr %i.t, align 8, !dbg !238408, !noundef !4270
+  %i.v = add i64 %i.u, %i.s, !dbg !238408
+  store i64 %i.v, ptr %i.t, align 8, !dbg !238408
+  %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !238409
+  %.sroa.413.0.copyload = load i64, ptr %.sroa.413.0..sroa_idx, align 8, !dbg !238409
+  %i.w = add i64 %.sroa.413.0.copyload, %i.c, !dbg !238410
+  store i64 %i.w, ptr %i.b, align 8, !dbg !238410
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !dbg !238404
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEECseeLknQCOKOd_13polars_python.exit, !dbg !238405
+
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.c, %bb.b, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEECseeLknQCOKOd_13polars_python.exit12
+  ret void, !dbg !238411
 
 .body:                                            ; preds = %bb.d, %bb.e
   resume { ptr, i32 } %i.n, !dbg !238412
@@ -624,11 +624,11 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !238404 = !DILocation(line: 182, column: 13, scope: !238391)
 !238405 = !DILocation(line: 184, column: 5, scope: !238389)
 !238406 = !DILocation(line: 810, column: 1, scope: !1396, inlinedAt: !238394)
-!238407 = !DILocation(line: 184, column: 6, scope: !238389)
-!238408 = !DILocation(line: 179, column: 35, scope: !238391)
-!238409 = !DILocation(line: 179, column: 17, scope: !238391)
-!238410 = !DILocation(line: 180, column: 41, scope: !238391)
-!238411 = !DILocation(line: 180, column: 17, scope: !238391)
+!238407 = !DILocation(line: 179, column: 35, scope: !238391)
+!238408 = !DILocation(line: 179, column: 17, scope: !238391)
+!238409 = !DILocation(line: 180, column: 41, scope: !238391)
+!238410 = !DILocation(line: 180, column: 17, scope: !238391)
+!238411 = !DILocation(line: 184, column: 6, scope: !238389)
 !238412 = !DILocation(line: 168, column: 5, scope: !238389)
 !238413 = distinct !DISubprogram(name: "index_mut<polars_utils::cache::LruKey, polars_utils::cache::LruEntry<polars_utils::pl_str::PlSmallStr, polars_utils::pl_str::PlSmallStr>>", linkageName: "_RNvXs7_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyINtBP_8LruEntryNtNtBR_6pl_str10PlSmallStrB1L_EEINtNtNtCscgRAwXFJnXP_4core3ops5index8IndexMutBN_E9index_mutCseeLknQCOKOd_13polars_python", scope: !238429, file: !4631, line: 1007, type: !4271, scopeLine: 1007, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !4270)
 !238414 = distinct !{!238414, !"_RNvMs3_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyINtBP_8LruEntryNtNtBR_6pl_str10PlSmallStrB1L_EE7get_mutCseeLknQCOKOd_13polars_python"}

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph372, %.loopex
 
 .lr.ph.i.i.preheader:                             ; preds = %.noexc
   %.promoted = load i16, ptr %i.c, align 2, !tbaa !129 ; 2 uses
-  %i.be = call i16 @llvm.bswap.i16(i16 %.promoted) ; 2 uses
+  %i.be = call noundef i16 @llvm.bswap.i16(i16 %.promoted) ; 2 uses
   store i16 %i.be, ptr %i.c, align 2, !tbaa !129
   %i.bf = zext i16 %i.be to i64                   ; 8 uses
   %i.bg = ptrtoint ptr %.sroa.12.0370 to i64      ; 2 uses

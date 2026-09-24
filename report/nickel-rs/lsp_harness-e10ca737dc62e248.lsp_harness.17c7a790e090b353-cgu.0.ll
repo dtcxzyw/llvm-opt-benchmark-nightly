@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %"_ZN5alloc3vec16Vec
   %i.y = invoke fastcc noundef ptr @_ZN11lsp_harness7jsonrpc6Server4send17h0f2670fecb7a5d35E(ptr %.val, ptr %.val13, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(112) %i.a)
           to label %"_ZN4core3ptr96drop_in_place$LT$lsp_harness..jsonrpc..SendRequest$LT$lsp_types..request..ExecuteCommand$GT$$GT$17h631640771b7e908fE.exit" unwind label %bb.d
 
-common.resume:                                    ; preds = %bb.d
-  resume { ptr, i32 } %i.q
-
 "_ZN4core3ptr96drop_in_place$LT$lsp_harness..jsonrpc..SendRequest$LT$lsp_types..request..ExecuteCommand$GT$$GT$17h631640771b7e908fE.exit": ; preds = %bb.e
   tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.o, i64 noundef 5, i64 noundef range(i64 1, -9223372036854775807) 1) #41, !noalias !20845
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.y
+
+common.resume:                                    ; preds = %bb.d
+  resume { ptr, i32 } %i.q
 
 bb.f:                                             ; preds = %bb.d
   %i.z = landingpad { ptr, i32 }

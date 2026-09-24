@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   store i32 -2, ptr %i.bh, align 4, !tbaa !32
   br label %bb.y
 
-.thread76:                                        ; preds = %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u
+.thread76:                                        ; preds = %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o
   %.080.lcssa = phi i64 [ 0, %bb.o ], [ 1, %bb.p ], [ 2, %bb.q ], [ 3, %bb.r ], [ 4, %bb.s ], [ 5, %bb.t ], [ 6, %bb.u ]
   %i.bi = icmp eq i32 %0, 2
   %i.bj = getelementptr inbounds nuw [16 x i8], ptr @fix_rsa_padding_mode.str_value_map, i64 %.080.lcssa
@@ -345,7 +345,7 @@ bb.o:                                             ; preds = %bb.n
   %i.au = trunc i64 %i.at to i32
   br label %bb.p
 
-.thread66:                                        ; preds = %bb.l, %bb.m, %bb.n
+.thread66:                                        ; preds = %bb.n, %bb.m, %bb.l
   %.072.lcssa = phi i64 [ 0, %bb.l ], [ 1, %bb.m ], [ 2, %bb.n ]
   %i.av = getelementptr inbounds nuw [16 x i8], ptr @fix_rsa_pss_saltlen.str_value_map, i64 %.072.lcssa
   %i.aw = load i32, ptr %i.av, align 16, !tbaa !62
@@ -450,7 +450,7 @@ bb.j:                                             ; preds = %bb.i
   %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %.thread55, label %.critedge
 
-.thread55:                                        ; preds = %bb.h, %bb.i, %bb.j
+.thread55:                                        ; preds = %bb.j, %bb.i, %bb.h
   %.062.lcssa = phi i64 [ 0, %bb.h ], [ 1, %bb.i ], [ 2, %bb.j ]
   %i.ag = icmp eq i32 %0, 2
   br i1 %i.ag, label %bb.l, label %bb.k

@@ -204,9 +204,6 @@ bb.g:                                             ; preds = %.lr.ph41
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #13, !noalias !142
   unreachable
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs3uS0LcqId4h_5rayon4iter7collect8consumer13CollectResultNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEEB1H_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEBD_.exit.i.i.i, %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs3uS0LcqId4h_5rayon4iter7collect8consumer13CollectResultNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEEB1H_.exit16
-  ret void
-
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs3uS0LcqId4h_5rayon4iter7collect8consumer13CollectResultNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEEB1H_.exit16: ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.w = load i64, ptr %i.v, align 8, !noundef !7
@@ -220,6 +217,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs3uS0LcqId4h_5rayon4iter7colle
   store i64 %i.aa, ptr %i.b, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs3uS0LcqId4h_5rayon4iter7collect8consumer13CollectResultNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEEB1H_.exit
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs3uS0LcqId4h_5rayon4iter7collect8consumer13CollectResultNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEEB1H_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEBD_.exit.i.i.i, %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs3uS0LcqId4h_5rayon4iter7collect8consumer13CollectResultNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEEB1H_.exit16
+  ret void
 
 .body:                                            ; preds = %bb.e, %.body.i.i.i
   resume { ptr, i32 } %eh.lpad-body.i.i.i
