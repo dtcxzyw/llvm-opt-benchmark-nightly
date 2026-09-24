@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %get_setup_template.
 }
 
 ; Function Attrs: nofree nounwind memory(readwrite, target_mem: none) uwtable
-define dso_local range(i32 -131, 1) i32 @vorbis_encode_setup_init(ptr nofree noundef %0) local_unnamed_addr #27 {
+define dso_local range(i32 -131, 1) i32 @vorbis_encode_setup_init(ptr nofree noundef captures(none) %0) local_unnamed_addr #27 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 33 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 43 uses
@@ -608,7 +608,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %5, i8 0, i64 16, i1 false)
-  %i.e = tail call noalias dereferenceable_or_null(256) ptr @malloc(i64 noundef 256) #69 ; 32 uses
+  %i.e = tail call noalias dereferenceable_or_null(256) ptr @malloc(i64 noundef 256) #69 ; 30 uses
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 47 uses
   store ptr %i.e, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 140 uses
@@ -625,7 +625,7 @@ oggpack_write.exit92:                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 94 uses
   store <8 x i8> <i8 1, i8 118, i8 111, i8 114, i8 98, i8 105, i8 115, i8 0>, ptr %i.e, align 1
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store i32 0, ptr %i.l, align 1
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.l, i8 0, i64 3, i1 false)
   store i64 11, ptr %5, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 11 ; 2 uses
   store ptr %i.m, ptr %i.g, align 8
@@ -634,8 +634,6 @@ oggpack_write.exit92:                             ; preds = %bb.b
   %i.o = load i32, ptr %i.n, align 4
   %i.p = trunc i32 %i.o to i8
   store i8 %i.p, ptr %i.m, align 1
-  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  store i8 0, ptr %6, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 12 ; 2 uses
   store ptr %i.q, ptr %i.g, align 8
   store i32 0, ptr %i.k, align 8
@@ -655,8 +653,6 @@ oggpack_write.exit92:                             ; preds = %bb.b
   %i.ab = trunc i64 %i.aa to i8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 15
   store i8 %i.ab, ptr %i.ac, align 1
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store i8 0, ptr %7, align 1
   %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   store ptr %i.ad, ptr %i.g, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -1059,7 +1055,7 @@ begin_hunk_2_@vorbis_encode_noisebias_setup:bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -131, 1) i32 @vorbis_encode_init_vbr(ptr noundef %0, i64 noundef %1, i64 noundef %2, float noundef %3) local_unnamed_addr #0 {
+define dso_local range(i32 -131, 1) i32 @vorbis_encode_init_vbr(ptr nofree noundef captures(none) %0, i64 noundef %1, i64 noundef %2, float noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i32 @vorbis_encode_setup_vbr(ptr noundef %0, i64 noundef %1, i64 noundef %2, float noundef %3) ; 2 uses
   %.not = icmp eq i32 %i.a, 0
@@ -1081,7 +1077,7 @@ bb.c:                                             ; preds = %.sink.split, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -131, 1) i32 @vorbis_encode_init(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) local_unnamed_addr #0 {
+define dso_local range(i32 -131, 1) i32 @vorbis_encode_init(ptr nofree noundef captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i32 @vorbis_encode_setup_managed(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) ; 2 uses
   %.not = icmp eq i32 %i.a, 0
@@ -1473,7 +1469,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -138, 1) i32 @_ov_open2(ptr noundef %0) unnamed_addr #0 {
+define internal fastcc range(i32 -138, 1) i32 @_ov_open2(ptr nofree noundef %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.ogg_page, align 8           ; 8 uses
   %2 = alloca %struct.ogg_page, align 8           ; 6 uses
@@ -1876,7 +1872,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -138, 1) i32 @ov_raw_seek(ptr nofree noundef %0, i64 noundef %1) #0 {
+define dso_local range(i32 -138, 1) i32 @ov_raw_seek(ptr nofree noundef captures(address_is_null) %0, i64 noundef %1) #0 {
 bb.a:
   %2 = alloca %struct.ogg_stream_state, align 8   ; 25 uses
   %3 = alloca %struct.ogg_page, align 8           ; 7 uses
@@ -2279,7 +2275,7 @@ bb.ac:                                            ; preds = %bb.i, %bb.ab
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i32 @ov_pcm_seek_page(ptr noundef %0, i64 noundef %1) #0 {
+define dso_local i32 @ov_pcm_seek_page(ptr nofree noundef captures(address_is_null) %0, i64 noundef %1) #0 {
 bb.a:
   %2 = alloca %struct.ogg_page, align 8           ; 6 uses
   %3 = alloca %struct.ogg_page, align 8           ; 10 uses
@@ -2682,7 +2678,7 @@ bb.f:                                             ; preds = %bb.c, %bb.b, %bb.a,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i32 @ov_time_seek_page(ptr noundef %0, double noundef %1) #0 {
+define dso_local i32 @ov_time_seek_page(ptr nofree noundef captures(address_is_null) %0, double noundef %1) #0 {
 bb.a:
   %i.a = tail call i64 @ov_pcm_total(ptr noundef %0, i32 noundef -1) ; 2 uses
   %i.b = tail call double @ov_time_total(ptr noundef %0, i32 noundef -1) ; 3 uses
@@ -3085,7 +3081,7 @@ bb.bc:                                            ; preds = %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %oggpack_read.exit.i31
   %indvars.iv.i34 = phi i64 [ 0, %oggpack_read.exit.i31 ], [ %indvars.iv.next.i36, %bb.bc ] ; 2 uses
-  %4 = call noalias dereferenceable_or_null(96) ptr @calloc(i64 noundef 1, i64 noundef 96) #71 ; 2 uses
+  %4 = tail call noalias dereferenceable_or_null(96) ptr @calloc(i64 noundef 1, i64 noundef 96) #71 ; 2 uses
   %i.kx = getelementptr inbounds nuw [8 x i8], ptr %i.kt, i64 %indvars.iv.i34
   store ptr %4, ptr %i.kx, align 8
   %i.ky = call i32 @vorbis_staticbook_unpack(ptr noundef nonnull %3, ptr noundef %4)
@@ -3488,7 +3484,7 @@ bb.g:                                             ; preds = %.sink.split, %bb.d,
 declare i64 @llvm.abs.i64(i64, i1 immarg) #50
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define dso_local range(i32 -1, 1) i32 @vorbis_staticbook_unpack(ptr nofree noundef %0, ptr nofree noundef captures(none) initializes((0, 96)) %1) local_unnamed_addr #14 {
+define dso_local range(i32 -1, 1) i32 @vorbis_staticbook_unpack(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) initializes((0, 96)) %1) local_unnamed_addr #14 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %1, i8 0, i64 96, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88

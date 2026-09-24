@@ -205,7 +205,6 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %or.cond245, label %bb.be, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECsileJQcQObtj_7hir_def.exit194
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECsileJQcQObtj_7hir_def.exit194: ; preds = %bb.bf, %bb.bd
-  store i32 -2, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.bh
 

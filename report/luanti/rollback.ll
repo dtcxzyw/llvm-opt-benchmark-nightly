@@ -202,8 +202,8 @@ bb.a:
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 272 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 296 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 298
-  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 304 ; 3 uses
-  %i.ai = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTT17ItemStackMetadata, i64 8), align 8 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 304 ; 2 uses
+  %i.ai = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTT17ItemStackMetadata, i64 8), align 8
   %i.aj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTT17ItemStackMetadata, i64 16), align 8
   %i.ak = getelementptr i8, ptr %i.ai, i64 -80
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 312 ; 2 uses
@@ -266,7 +266,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.q
   store i8 0, ptr %i.ad, align 8, !tbaa !53
   store i16 0, ptr %i.af, align 8, !tbaa !149
   store i16 0, ptr %i.ag, align 2, !tbaa !166
-  store ptr %i.ai, ptr %i.ah, align 8, !tbaa !21
   %i.be = load i64, ptr %i.ak, align 8
   %i.bf = getelementptr inbounds i8, ptr %i.ah, i64 %i.be
   store ptr %i.aj, ptr %i.bf, align 8, !tbaa !21

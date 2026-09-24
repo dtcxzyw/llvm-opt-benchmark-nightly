@@ -97,21 +97,21 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local zeroext i1 @rust_demangle_with_callback(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 sub_0:
   %i.a = alloca i8, align 1                       ; 4 uses
-  %i.b = alloca [9 x i8], align 1                 ; 6 uses
+  %i.b = alloca [9 x i8], align 1                 ; 9 uses
   %4 = alloca %struct.rust_mangled_ident, align 8 ; 8 uses
   %5 = alloca %struct.rust_demangler, align 8     ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 8 uses
   store i64 0, ptr %i.c, align 8, !tbaa !20
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 19 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 18 uses
   store ptr %3, ptr %i.d, align 8, !tbaa !21
-  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 19 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 18 uses
   store ptr %2, ptr %i.e, align 8, !tbaa !22
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 7 uses
   store i64 0, ptr %i.f, align 8, !tbaa !23
-  %i.g = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 24 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 21 uses
   store i8 0, ptr %i.g, align 8, !tbaa !24
-  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 41 ; 21 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 41 ; 19 uses
   store i8 0, ptr %i.h, align 1, !tbaa !25
   %i.i = trunc i32 %1 to i8
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 42 ; 2 uses
@@ -191,14 +191,16 @@ bb.a:                                             ; preds = %.tail74, %sub_0, %.
   %.not43171 = phi i1 [ true, %.thread ], [ false, %bb.a ]
   %i.ak = phi ptr [ %i.aj, %.thread ], [ %i.ag, %bb.a ]
   %i.al = phi i8 [ %.pr, %.thread ], [ %i.ah, %bb.a ]
+  %.promoted = load i64, ptr %i.c, align 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %6 = phi i64 [ %i.ar, %bb.d ], [ %.promoted, %.lr.ph.preheader ] ; 2 uses
   %i.am = phi i8 [ %i.at, %bb.d ], [ %i.al, %.lr.ph.preheader ] ; 2 uses
   %.021109 = phi ptr [ %i.as, %bb.d ], [ %i.ak, %.lr.ph.preheader ] ; 2 uses
   %i.an = phi i64 [ %i.ar, %bb.d ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.not32 = icmp sgt i8 %i.am, -1
-  br i1 %.not32, label %bb.b, label %.loopexit
+  br i1 %.not32, label %bb.b, label %.loopexit.loopexit239
 
 bb.b:                                             ; preds = %.lr.ph
   %i.ao = icmp eq i8 %i.am, 46
@@ -210,15 +212,16 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.aq, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.ar = add i64 %i.an, 1                        ; 3 uses
-  store i64 %i.ar, ptr %i.c, align 8, !tbaa !20
+  %i.ar = add i64 %i.an, 1                        ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.021109, i64 1 ; 2 uses
   %i.at = load i8, ptr %i.as, align 1, !tbaa !30  ; 2 uses
   %.not31 = icmp eq i8 %i.at, 0
   br i1 %.not31, label %.critedge, label %.lr.ph, !llvm.loop !45
 
 .critedge:                                        ; preds = %bb.d, %bb.c
+  %7 = phi i64 [ %i.ar, %bb.d ], [ %6, %bb.c ]
   %i.au = phi i64 [ %i.ar, %bb.d ], [ %i.an, %bb.c ]
+  store i64 %7, ptr %i.c, align 1
   br i1 %.not43171, label %.critedge.thread, label %bb.ay
 
 .critedge.thread:                                 ; preds = %.thread, %.critedge
@@ -299,12 +302,12 @@ peek.exit.i12.i:                                  ; preds = %.preheader.i.i, %bb
   br label %eat.exit13.thread.i
 
 is_rust_hash.exit.i:                              ; preds = %.lr.ph.i.i, %bb.h, %peek.exit.i, %bb.g, %bb.f
-  %.pre67.i = load i8, ptr %i.g, align 8, !tbaa !24, !range !32 ; 2 uses
+  %.pre67.i = load i8, ptr %i.g, align 8, !tbaa !24, !range !32
+  %.pre145 = trunc nuw i8 %.pre67.i to i1         ; 2 uses
   br i1 %.010.i, label %print_str.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %is_rust_hash.exit.i
-  %6 = trunc nuw i8 %.pre67.i to i1
-  br i1 %6, label %print_legacy_ident.exit.thread.i, label %bb.k
+  br i1 %.pre145, label %print_legacy_ident.exit.thread.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.bw = load i8, ptr %i.h, align 1, !tbaa !25, !range !32, !noundef !33
@@ -315,15 +318,12 @@ bb.l:                                             ; preds = %bb.k
   %i.by = load ptr, ptr %i.e, align 8, !tbaa !22
   %i.bz = load ptr, ptr %i.d, align 8, !tbaa !21
   call void %i.by(ptr noundef nonnull @.str.7, i64 noundef 2, ptr noundef %i.bz) #12, !inline_history !47
-  %.pre.i = load i8, ptr %i.g, align 8, !tbaa !24, !range !32
-  br label %print_str.exit.i
+  br label %bb.m
 
-print_str.exit.i:                                 ; preds = %bb.l, %is_rust_hash.exit.i
-  %7 = phi i8 [ %.pre.i, %bb.l ], [ %.pre67.i, %is_rust_hash.exit.i ]
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %print_legacy_ident.exit.thread.i, label %bb.m
+print_str.exit.i:                                 ; preds = %is_rust_hash.exit.i
+  br i1 %.pre145, label %print_legacy_ident.exit.thread.i, label %bb.m
 
-bb.m:                                             ; preds = %print_str.exit.i
+bb.m:                                             ; preds = %print_str.exit.i, %bb.l
   %.sroa.6.0.copyload.i = load i64, ptr %i.aw, align 8 ; 2 uses
   %.pre139 = load i8, ptr %i.h, align 1, !tbaa !25, !range !32
   %i.ca = trunc nuw i8 %.pre139 to i1
@@ -709,48 +709,33 @@ print_str.exit102.i.i:                            ; preds = %bb.as, %bb.ar
 .thread239.i.i:                                   ; preds = %bb.aq, %.critedge.preheader.i..thread239.i_crit_edge.i
   %i.hh = phi i8 [ %.pre141, %bb.aq ], [ %.pre140, %.critedge.preheader.i..thread239.i_crit_edge.i ]
   %i.hi = phi i8 [ %.pre69.i, %bb.aq ], [ %.pre68.i, %.critedge.preheader.i..thread239.i_crit_edge.i ]
-  %.075.lcssa238242.i.i = phi i32 [ %.lcssa, %bb.aq ], [ 0, %.critedge.preheader.i..thread239.i_crit_edge.i ]
+  %.075.lcssa238242.i.i = phi i32 [ %.lcssa, %bb.aq ], [ 0, %.critedge.preheader.i..thread239.i_crit_edge.i ] ; 2 uses
   %i.hj = trunc nuw i8 %i.hi to i1
   %i.hk = trunc nuw i8 %i.hh to i1
   %or.cond67 = select i1 %i.hj, i1 true, i1 %i.hk
-  br i1 %or.cond67, label %print_str.exit103.i.i, label %9
+  br i1 %or.cond67, label %print_str.exit103.i.i, label %print_str.exit104.i.i
 
-9:                                                ; preds = %.thread239.i.i
-  %10 = load ptr, ptr %i.e, align 8, !tbaa !22
-  %11 = load ptr, ptr %i.d, align 8, !tbaa !21
-  call void %10(ptr noundef nonnull @.str.25, i64 noundef 3, ptr noundef %11) #12, !inline_history !48
-  br label %print_str.exit103.i.i
-
-print_str.exit103.i.i:                            ; preds = %9, %.thread239.i.i
+print_str.exit103.i.i:                            ; preds = %.thread239.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.b, i8 0, i64 9, i1 false)
   %i.hl = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(1) @.str.26, i32 noundef %.075.lcssa238242.i.i) #12 ; 0 uses
-  %12 = load i8, ptr %i.g, align 8, !tbaa !24, !range !32, !noundef !33
-  %13 = trunc nuw i8 %12 to i1
-  %14 = load i8, ptr %i.h, align 1, !range !32
-  %15 = trunc nuw i8 %14 to i1
-  %or.cond69 = select i1 %13, i1 true, i1 %15
-  br i1 %or.cond69, label %print_str.exit105.i.i, label %print_str.exit104.i.i
-
-print_str.exit104.i.i:                            ; preds = %print_str.exit103.i.i
-  %16 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #13
-  %i.hm = load ptr, ptr %i.e, align 8, !tbaa !22
-  %i.hn = load ptr, ptr %i.d, align 8, !tbaa !21
-  call void %i.hm(ptr noundef nonnull %i.b, i64 noundef %16, ptr noundef %i.hn) #12, !inline_history !48
-  %.pre.i.i = load i8, ptr %i.g, align 8, !tbaa !24, !range !32
-  %17 = trunc nuw i8 %.pre.i.i to i1
-  %.pre70.i = load i8, ptr %i.h, align 1, !range !32
-  %18 = trunc nuw i8 %.pre70.i to i1
-  %or.cond70 = select i1 %17, i1 true, i1 %18
-  br i1 %or.cond70, label %print_str.exit105.i.i, label %19
-
-19:                                               ; preds = %print_str.exit104.i.i
-  %20 = load ptr, ptr %i.e, align 8, !tbaa !22
-  %21 = load ptr, ptr %i.d, align 8, !tbaa !21
-  call void %20(ptr noundef nonnull @.str.27, i64 noundef 1, ptr noundef %21) #12, !inline_history !48
   br label %print_str.exit105.i.i
 
-print_str.exit105.i.i:                            ; preds = %19, %print_str.exit104.i.i, %print_str.exit103.i.i
+print_str.exit104.i.i:                            ; preds = %.thread239.i.i
+  %i.hm = load ptr, ptr %i.e, align 8, !tbaa !22
+  %i.hn = load ptr, ptr %i.d, align 8, !tbaa !21
+  call void %i.hm(ptr noundef nonnull @.str.25, i64 noundef 3, ptr noundef %i.hn) #12, !inline_history !48
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.b, i8 0, i64 9, i1 false)
+  %8 = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(1) @.str.26, i32 noundef %.075.lcssa238242.i.i) #12 ; 0 uses
+  %9 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #13
+  %10 = load ptr, ptr %i.e, align 8, !tbaa !22    ; 2 uses
+  %11 = load ptr, ptr %i.d, align 8, !tbaa !21    ; 2 uses
+  call void %10(ptr noundef nonnull %i.b, i64 noundef %9, ptr noundef %11) #12, !inline_history !48
+  call void %10(ptr noundef nonnull @.str.27, i64 noundef 1, ptr noundef %11) #12, !inline_history !48
+  br label %print_str.exit105.i.i
+
+print_str.exit105.i.i:                            ; preds = %print_str.exit103.i.i, %print_str.exit104.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   br label %.thread.i.i
 
@@ -912,8 +897,12 @@ bb.bf:                                            ; preds = %._crit_edge
   %i.jp = xor i1 %i.jo, true
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.bd, %demangle_legacy_path.exit, %bb.bb, %._crit_edge, %bb.bf, %bb.a, %.tail83.thread
-  %.2 = phi i1 [ false, %bb.bd ], [ false, %demangle_legacy_path.exit ], [ false, %bb.a ], [ false, %.tail83.thread ], [ %i.jp, %bb.bf ], [ true, %._crit_edge ], [ true, %bb.bb ], [ false, %.lr.ph ]
+.loopexit.loopexit239:                            ; preds = %.lr.ph
+  store i64 %6, ptr %i.c, align 1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.bd, %.loopexit.loopexit239, %demangle_legacy_path.exit, %bb.bb, %._crit_edge, %bb.bf, %bb.a, %.tail83.thread
+  %.2 = phi i1 [ false, %.loopexit.loopexit239 ], [ false, %demangle_legacy_path.exit ], [ false, %bb.a ], [ false, %.tail83.thread ], [ %i.jp, %bb.bf ], [ true, %._crit_edge ], [ true, %bb.bb ], [ false, %bb.bd ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   ret i1 %.2
 }

@@ -204,7 +204,7 @@ _kzalloc_noprof.exit:                             ; preds = %bb.a, %bb.b
   %i.f = getelementptr [112 x i8], ptr @kmalloc_caches, i64 %.0.i2.i
   %i.g = getelementptr i8, ptr %i.f, i64 80
   %i.h = load ptr, ptr %i.g, align 16
-  %i.i = tail call noalias align 8 dereferenceable_or_null(624) ptr @__kmalloc_cache_noprof(ptr noundef %i.h, i32 noundef %i.a, i64 noundef 624) #16 ; 54 uses
+  %i.i = tail call noalias align 8 dereferenceable_or_null(624) ptr @__kmalloc_cache_noprof(ptr noundef %i.h, i32 noundef %i.a, i64 noundef 624) #16 ; 48 uses
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %bb.av, label %bb.c
 
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %_kzalloc_noprof.exi
   %i.m = getelementptr i8, ptr %i.i, i64 8
   %i.n = zext i1 %i.l to i8
   store i8 %i.n, ptr %i.m, align 8
-  %i.o = getelementptr i8, ptr %0, i64 24
+  %i.o = getelementptr i8, ptr %0, i64 24         ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8              ; 21 uses
   %i.q = getelementptr i8, ptr %i.p, i64 8
   %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
@@ -330,12 +330,10 @@ gt_record_global_nonguc_regs.exit:                ; preds = %bb.d, %bb.f, %.preh
   store i32 %i.by, ptr %i.bz, align 4
   %i.ca = and i32 %2, 1
   %.not19 = icmp eq i32 %i.ca, 0
-  %.pre33 = load ptr, ptr %i.i, align 8           ; 2 uses
   br i1 %.not19, label %bb.k, label %gt_record_global_regs.exit
 
 bb.k:                                             ; preds = %gt_record_global_nonguc_regs.exit
-  %3 = getelementptr i8, ptr %.pre33, i64 24
-  %i.cb = load ptr, ptr %3, align 8               ; 31 uses
+  %i.cb = load ptr, ptr %i.o, align 8             ; 31 uses
   %i.cc = getelementptr i8, ptr %i.cb, i64 8
   %i.cd = load ptr, ptr %i.cc, align 8            ; 3 uses
   %i.ce = getelementptr i8, ptr %i.cd, i64 1664
@@ -365,12 +363,11 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.ct, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.cu = load ptr, ptr %i.i, align 8
+  %i.cu = load ptr, ptr %i.i, align 8             ; 2 uses
   %i.cv = tail call i32 @intel_gt_mcr_read_any(ptr noundef %i.cu, i32 52920) #14
   %i.cw = getelementptr i8, ptr %i.i, i64 276
   store i32 %i.cv, ptr %i.cw, align 4
-  %4 = load ptr, ptr %i.i, align 8
-  %i.cx = tail call i32 @intel_gt_mcr_read_any(ptr noundef %4, i32 52924) #14
+  %i.cx = tail call i32 @intel_gt_mcr_read_any(ptr noundef %i.cu, i32 52924) #14
   br label %.sink.split.i
 
 bb.o:                                             ; preds = %bb.m
@@ -523,13 +520,13 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.fs = phi i8 [ %.pre92.i, %bb.ad ], [ %i.fm, %bb.ac ]
   %i.ft = icmp ugt i8 %i.fs, 11
-  %.pre32 = load ptr, ptr %i.i, align 8           ; 5 uses
+  %.pre32 = load ptr, ptr %i.i, align 8           ; 7 uses
   br i1 %i.ft, label %.preheader.i20, label %gt_record_global_regs.exit
 
 .preheader.i20:                                   ; preds = %bb.ae
   %i.fu = getelementptr i8, ptr %i.cb, i64 144    ; 5 uses
   %i.fv = getelementptr i8, ptr %i.i, i64 324
-  %i.fw = getelementptr i8, ptr %.pre32, i64 4949
+  %i.fw = getelementptr i8, ptr %.pre32, i64 4949 ; 4 uses
   %i.fx = load i8, ptr %i.fw, align 1
   %i.fy = zext i8 %i.fx to i64                    ; 3 uses
   %i.fz = and i64 %i.fy, 1
@@ -547,21 +544,18 @@ bb.ag:                                            ; preds = %bb.af
   %i.ge = load ptr, ptr %i.fu, align 8
   %i.gf = tail call i32 %i.ge(ptr noundef %i.cb, i32 1884160, i1 noundef zeroext true) #14, !inline_history !104
   store i32 %i.gf, ptr %i.fv, align 4
-  %.pre93.i = load ptr, ptr %i.i, align 8         ; 2 uses
-  %.phi.trans.insert.i = getelementptr i8, ptr %.pre93.i, i64 4949
-  %.pre94.i = load i8, ptr %.phi.trans.insert.i, align 1
+  %.pre94.i = load i8, ptr %i.fw, align 1
   %.pre101.i = zext i8 %.pre94.i to i64
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %.preheader.i20
   %.pre-phi.i = phi i64 [ %i.fy, %.preheader.i20 ], [ %i.fy, %bb.af ], [ %.pre101.i, %bb.ag ] ; 3 uses
-  %5 = phi ptr [ %.pre32, %.preheader.i20 ], [ %.pre32, %bb.af ], [ %.pre93.i, %bb.ag ] ; 3 uses
   %i.gg = and i64 %.pre-phi.i, 2
   %i.gh = icmp eq i64 %i.gg, 0
   br i1 %i.gh, label %bb.ak, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.gi = getelementptr i8, ptr %5, i64 4940
+  %i.gi = getelementptr i8, ptr %.pre32, i64 4940
   %i.gj = load i32, ptr %i.gi, align 4
   %i.gk = and i32 %i.gj, 4096
   %.not.1.i = icmp eq i32 %i.gk, 0
@@ -572,21 +566,18 @@ bb.aj:                                            ; preds = %bb.ai
   %i.gm = tail call i32 %i.gl(ptr noundef %i.cb, i32 1888256, i1 noundef zeroext true) #14, !inline_history !104
   %i.gn = getelementptr i8, ptr %i.i, i64 328
   store i32 %i.gm, ptr %i.gn, align 8
-  %.pre95.i = load ptr, ptr %i.i, align 8         ; 2 uses
-  %.phi.trans.insert96.i = getelementptr i8, ptr %.pre95.i, i64 4949
-  %.pre97.i = load i8, ptr %.phi.trans.insert96.i, align 1
+  %.pre97.i = load i8, ptr %i.fw, align 1
   %.pre102.i = zext i8 %.pre97.i to i64
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.ah
   %.pre-phi103.i = phi i64 [ %.pre102.i, %bb.aj ], [ %.pre-phi.i, %bb.ai ], [ %.pre-phi.i, %bb.ah ] ; 3 uses
-  %6 = phi ptr [ %.pre95.i, %bb.aj ], [ %5, %bb.ai ], [ %5, %bb.ah ] ; 3 uses
   %i.go = and i64 %.pre-phi103.i, 4
   %i.gp = icmp eq i64 %i.go, 0
   br i1 %i.gp, label %bb.an, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.gq = getelementptr i8, ptr %6, i64 4940
+  %i.gq = getelementptr i8, ptr %.pre32, i64 4940
   %i.gr = load i32, ptr %i.gq, align 4
   %i.gs = and i32 %i.gr, 16384
   %.not.2.i = icmp eq i32 %i.gs, 0
@@ -597,21 +588,18 @@ bb.am:                                            ; preds = %bb.al
   %i.gu = tail call i32 %i.gt(ptr noundef %i.cb, i32 1892352, i1 noundef zeroext true) #14, !inline_history !104
   %i.gv = getelementptr i8, ptr %i.i, i64 332
   store i32 %i.gu, ptr %i.gv, align 4
-  %.pre98.i = load ptr, ptr %i.i, align 8         ; 2 uses
-  %.phi.trans.insert99.i = getelementptr i8, ptr %.pre98.i, i64 4949
-  %.pre100.i = load i8, ptr %.phi.trans.insert99.i, align 1
+  %.pre100.i = load i8, ptr %i.fw, align 1
   %.pre104.i = zext i8 %.pre100.i to i64
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al, %bb.ak
   %.pre-phi105.i = phi i64 [ %.pre104.i, %bb.am ], [ %.pre-phi103.i, %bb.al ], [ %.pre-phi103.i, %bb.ak ]
-  %7 = phi ptr [ %.pre98.i, %bb.am ], [ %6, %bb.al ], [ %6, %bb.ak ]
   %i.gw = and i64 %.pre-phi105.i, 8
   %i.gx = icmp eq i64 %i.gw, 0
   br i1 %i.gx, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.gy = getelementptr i8, ptr %7, i64 4940
+  %i.gy = getelementptr i8, ptr %.pre32, i64 4940
   %i.gz = load i32, ptr %i.gy, align 4
   %i.ha = and i32 %i.gz, 65536
   %.not.3.i = icmp eq i32 %i.ha, 0
@@ -629,11 +617,10 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.
   %i.hf = tail call i32 %i.he(ptr noundef %i.cb, i32 53096, i1 noundef zeroext true) #14, !inline_history !104
   %i.hg = getelementptr i8, ptr %i.i, i64 312
   store i32 %i.hf, ptr %i.hg, align 8
-  %.pre31 = load ptr, ptr %i.i, align 8
   br label %gt_record_global_regs.exit
 
 gt_record_global_regs.exit:                       ; preds = %bb.aq, %bb.ae, %gt_record_global_nonguc_regs.exit
-  %i.hh = phi ptr [ %.pre31, %bb.aq ], [ %.pre32, %bb.ae ], [ %.pre33, %gt_record_global_nonguc_regs.exit ] ; 2 uses
+  %i.hh = phi ptr [ %.pre32, %bb.aq ], [ %.pre32, %bb.ae ], [ %0, %gt_record_global_nonguc_regs.exit ] ; 2 uses
   %i.hi = getelementptr i8, ptr %i.hh, i64 32
   %i.hj = load ptr, ptr %i.hi, align 8            ; 2 uses
   %i.hk = getelementptr i8, ptr %i.hh, i64 24

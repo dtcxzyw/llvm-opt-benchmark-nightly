@@ -204,7 +204,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvMs0_NtCs3NyA1pFSltE_9candle_nn10batch_normNtB5_9BatchNorm13forward_train(ptr dead_on_unwind noalias nofree noundef writable sret([80 x i8]) align 8 captures(address) dereferenceable(80) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @_RNvMs0_NtCs3NyA1pFSltE_9candle_nn10batch_normNtB5_9BatchNorm13forward_train(ptr dead_on_unwind noalias nofree noundef writable sret([80 x i8]) align 8 captures(none) dereferenceable(80) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [80 x i8], align 8                ; 7 uses
   %i.b = alloca [8 x i8], align 8                 ; 9 uses
@@ -258,13 +258,11 @@ bb.a:
   %i.ax = alloca [8 x i8], align 8                ; 18 uses
   %i.ay = alloca [32 x i8], align 8               ; 7 uses
   %i.az = alloca [8 x i8], align 8                ; 4 uses
-  %3 = alloca [80 x i8], align 8                  ; 5 uses
-  %i.ba = alloca [80 x i8], align 8               ; 4 uses
+  %i.ba = alloca [80 x i8], align 8               ; 5 uses
   %i.bb = alloca [80 x i8], align 8               ; 7 uses
   %i.bc = alloca [16 x i8], align 8               ; 5 uses
   %i.bd = alloca [8 x i8], align 8                ; 4 uses
-  %4 = alloca [80 x i8], align 8                  ; 5 uses
-  %i.be = alloca [80 x i8], align 8               ; 4 uses
+  %i.be = alloca [80 x i8], align 8               ; 5 uses
   %i.bf = alloca [80 x i8], align 8               ; 7 uses
   %i.bg = alloca [8 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg)
@@ -313,7 +311,6 @@ bb.d:                                             ; preds = %bb.c
 
 .split559:                                        ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.be)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd)
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
   store ptr %i.bu, ptr %i.bd, align 8
@@ -321,14 +318,12 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.bd, ptr %i.bc, align 8
   %.sroa.4299.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store ptr @_RNvXs1g_NtCsf3Ta7LF998c_4core3fmtRNtNtCsltEA4u8Pgfu_11candle_core5shape5ShapeNtB6_5Debug3fmtCs3NyA1pFSltE_9candle_nn, ptr %.sroa.4299.0..sroa_idx, align 8
-  %i.bv = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   call void @_RNvNvNtCsgCecv3eZDcN_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.bv, ptr noundef nonnull @13, ptr noundef nonnull %i.bc)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bd)
-  store i64 -9223372036854775766, ptr %4, align 8
-  call void @_RNvMs_NtCsltEA4u8Pgfu_11candle_core5errorNtB4_5Error2bt(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.be, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(80) %i.be, i64 80, i1 false)
+  store i64 -9223372036854775766, ptr %i.be, align 8
+  call void @_RNvMs_NtCsltEA4u8Pgfu_11candle_core5errorNtB4_5Error2bt(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %i.be)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be)
   br label %bb.io
 
@@ -359,7 +354,6 @@ bb.g:                                             ; preds = %bb.f
 
 .split:                                           ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba)
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
   store ptr %i.bz, ptr %i.az, align 8
@@ -371,14 +365,12 @@ bb.g:                                             ; preds = %bb.f
   store ptr %i.bg, ptr %i.ca, align 8
   %.sroa.4318.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
   store ptr @_RNvXsi_NtNtNtCsf3Ta7LF998c_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.4318.0..sroa_idx, align 8
-  %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   call void @_RNvNvNtCsgCecv3eZDcN_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.cb, ptr noundef nonnull @12, ptr noundef nonnull %i.ay)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.az)
-  store i64 -9223372036854775766, ptr %3, align 8
-  call void @_RNvMs_NtCsltEA4u8Pgfu_11candle_core5errorNtB4_5Error2bt(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.ba, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(80) %i.ba, i64 80, i1 false)
+  store i64 -9223372036854775766, ptr %i.ba, align 8
+  call void @_RNvMs_NtCsltEA4u8Pgfu_11candle_core5errorNtB4_5Error2bt(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %i.ba)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba)
   br label %bb.io
 

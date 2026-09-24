@@ -205,13 +205,15 @@ bb.a:
     i64 7, label %bb.y
     i64 8, label %bb.z
     i64 9, label %bb.aa
-    i64 10, label %2
+    i64 10, label %bb.b
   ]
 
 default.unreachable4:                             ; preds = %bb.a
   unreachable
 
-bb.b:                                             ; preds = %2, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s
+bb.b:                                             ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  tail call void @_RNvMs5_NtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_treeINtB5_3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtB5_10H10BucketsB1q_ENtB5_16H10DefaultParamsE4freeCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %2, ptr noalias nofree noundef nonnull %1)
   %.pr = load i64, ptr %0, align 8, !alias.scope !1247
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1247)
   switch i64 %.pr, label %bb.c [
@@ -256,31 +258,31 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19back
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2.i29.i, i64 noundef range(i64 1, -9223372036854775808) %i.i, i64 noundef 4) #15, !noalias !1247
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %bb.s, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i = load i64, ptr %i.j, align 8, !alias.scope !1247, !noundef !6 ; 2 uses
   %i.k = icmp eq i64 %.val1.i, 0
   br i1 %i.k, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.f:                                             ; preds = %bb.b
+bb.f:                                             ; preds = %bb.t, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val3.i = load i64, ptr %i.l, align 8, !alias.scope !1247, !noundef !6 ; 2 uses
   %i.m = icmp eq i64 %.val3.i, 0
   br i1 %i.m, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.g:                                             ; preds = %bb.b
+bb.g:                                             ; preds = %bb.u, %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val5.i = load i64, ptr %i.n, align 8, !alias.scope !1247, !noundef !6 ; 2 uses
   %i.o = icmp eq i64 %.val5.i, 0
   br i1 %i.o, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.h:                                             ; preds = %bb.b
+bb.h:                                             ; preds = %bb.v, %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val7.i = load i64, ptr %i.p, align 8, !alias.scope !1247, !noundef !6 ; 2 uses
   %i.q = icmp eq i64 %.val7.i, 0
   br i1 %i.q, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.i:                                             ; preds = %bb.b
+bb.i:                                             ; preds = %bb.w, %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1250)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i8.i = load i64, ptr %i.r, align 8, !alias.scope !1251, !noundef !6 ; 2 uses
@@ -300,7 +302,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_
   %i.w = icmp eq i64 %.val3.i.i, 0
   br i1 %i.w, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.k:                                             ; preds = %bb.b
+bb.k:                                             ; preds = %bb.x, %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1252)
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i10.i = load i64, ptr %i.x, align 8, !alias.scope !1253, !noundef !6 ; 2 uses
@@ -320,7 +322,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_
   %i.ac = icmp eq i64 %.val3.i13.i, 0
   br i1 %i.ac, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.m:                                             ; preds = %bb.b
+bb.m:                                             ; preds = %bb.y, %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1254)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i15.i = load i64, ptr %i.ad, align 8, !alias.scope !1255, !noundef !6 ; 2 uses
@@ -340,7 +342,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_
   %i.ai = icmp eq i64 %.val3.i18.i, 0
   br i1 %i.ai, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.o:                                             ; preds = %bb.b
+bb.o:                                             ; preds = %bb.z, %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1256)
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i20.i = load i64, ptr %i.aj, align 8, !alias.scope !1257, !noundef !6 ; 2 uses
@@ -360,7 +362,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_
   %i.ao = icmp eq i64 %.val3.i23.i, 0
   br i1 %i.ao, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i
 
-bb.q:                                             ; preds = %bb.b
+bb.q:                                             ; preds = %bb.aa, %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1258)
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i25.i = load i64, ptr %i.ap, align 8, !alias.scope !1259, !noundef !6 ; 2 uses
@@ -391,7 +393,7 @@ bb.s:                                             ; preds = %bb.a
   store ptr %i.aw, ptr %i.ay, align 8
   store i64 %i.ax, ptr %i.ba, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.az, i64 noundef %i.bb)
-  br label %bb.b
+  br label %bb.e
 
 bb.t:                                             ; preds = %bb.a
   %i.bc = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxmENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -404,7 +406,7 @@ bb.t:                                             ; preds = %bb.a
   store ptr %i.bd, ptr %i.bf, align 8
   store i64 %i.be, ptr %i.bh, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.bg, i64 noundef %i.bi)
-  br label %bb.b
+  br label %bb.f
 
 bb.u:                                             ; preds = %bb.a
   %i.bj = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxmENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -417,7 +419,7 @@ bb.u:                                             ; preds = %bb.a
   store ptr %i.bk, ptr %i.bm, align 8
   store i64 %i.bl, ptr %i.bo, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.bn, i64 noundef %i.bp)
-  br label %bb.b
+  br label %bb.g
 
 bb.v:                                             ; preds = %bb.a
   %i.bq = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxmENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -430,7 +432,7 @@ bb.v:                                             ; preds = %bb.a
   store ptr %i.br, ptr %i.bt, align 8
   store i64 %i.bs, ptr %i.bv, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.bu, i64 noundef %i.bw)
-  br label %bb.b
+  br label %bb.h
 
 bb.w:                                             ; preds = %bb.a
   %i.bx = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxtENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -453,7 +455,7 @@ bb.w:                                             ; preds = %bb.a
   store ptr %i.cf, ptr %i.ch, align 8
   store i64 %i.cg, ptr %i.cj, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.ci, i64 noundef %i.ck)
-  br label %bb.b
+  br label %bb.i
 
 bb.x:                                             ; preds = %bb.a
   %i.cl = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxtENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -476,7 +478,7 @@ bb.x:                                             ; preds = %bb.a
   store ptr %i.ct, ptr %i.cv, align 8
   store i64 %i.cu, ptr %i.cx, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.cw, i64 noundef %i.cy)
-  br label %bb.b
+  br label %bb.k
 
 bb.y:                                             ; preds = %bb.a
   %i.cz = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxtENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -499,7 +501,7 @@ bb.y:                                             ; preds = %bb.a
   store ptr %i.dh, ptr %i.dj, align 8
   store i64 %i.di, ptr %i.dl, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.dk, i64 noundef %i.dm)
-  br label %bb.b
+  br label %bb.m
 
 bb.z:                                             ; preds = %bb.a
   %i.dn = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxtENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -522,7 +524,7 @@ bb.z:                                             ; preds = %bb.a
   store ptr %i.dv, ptr %i.dx, align 8
   store i64 %i.dw, ptr %i.dz, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.dy, i64 noundef %i.ea)
-  br label %bb.b
+  br label %bb.o
 
 bb.aa:                                            ; preds = %bb.a
   %i.eb = tail call { ptr, i64 } @_RNvXs0_NtCsc389t4z7aPt_12alloc_stdlib10heap_allocINtB5_7WrapBoxtENtNtCskKLDkoKarTP_4core7default7Default7defaultCskeugdADtBsi_12pingora_core() ; 2 uses
@@ -545,12 +547,7 @@ bb.aa:                                            ; preds = %bb.a
   store ptr %i.ej, ptr %i.el, align 8
   store i64 %i.ek, ptr %i.en, align 8
   tail call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %1, ptr noalias noundef nonnull align 4 %i.em, i64 noundef %i.eo)
-  br label %bb.b
-
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  tail call void @_RNvMs5_NtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_treeINtB5_3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtB5_10H10BucketsB1q_ENtB5_16H10DefaultParamsE4freeCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %3, ptr noalias nofree noundef nonnull %1)
-  br label %bb.b
+  br label %bb.q
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references11UnionHasherNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit: ; preds = %bb.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_alloc7WrapBoxtEECskeugdADtBsi_12pingora_core.exit.i27.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_alloc7WrapBoxtEECskeugdADtBsi_12pingora_core.exit.i22.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_alloc7WrapBoxtEECskeugdADtBsi_12pingora_core.exit.i17.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_alloc7WrapBoxtEECskeugdADtBsi_12pingora_core.exit.i12.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsc389t4z7aPt_12alloc_stdlib10heap_alloc7WrapBoxtEECskeugdADtBsi_12pingora_core.exit.i.i, %bb.h, %bb.g, %bb.f, %bb.e, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree3H10NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocINtBE_10H10BucketsB1T_ENtBE_16H10DefaultParamsEECskeugdADtBsi_12pingora_core.exit.sink.split.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references19hash_to_binary_tree10H10BucketsNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core.exit.i.i, %bb.b
   store i64 0, ptr %0, align 8

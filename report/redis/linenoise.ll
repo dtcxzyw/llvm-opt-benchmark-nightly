@@ -202,10 +202,10 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %2 = alloca %struct.winsize, align 2            ; 4 uses
   %i.b = alloca [32 x i8], align 16               ; 5 uses
-  %3 = alloca %struct.linenoiseState, align 8     ; 55 uses
+  %3 = alloca %struct.linenoiseState, align 8     ; 51 uses
   %i.c = alloca i8, align 1                       ; 8 uses
   %i.d = alloca [3 x i8], align 1                 ; 8 uses
-  %i.e = alloca [4096 x i8], align 16             ; 19 uses
+  %i.e = alloca [4096 x i8], align 16             ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.e, i8 0, i64 4096, i1 false)
   %i.f = tail call ptr @getenv(ptr noundef nonnull @.str.7) #24
@@ -343,16 +343,14 @@ isUnsupportedTerm.exit.thread:                    ; preds = %bb.l, %bb.k, %bb.j
 
 bb.n:                                             ; preds = %isUnsupportedTerm.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
   store <2 x i32> <i32 0, i32 1>, ptr %3, align 8, !tbaa !10
-  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store ptr %i.e, ptr %i.ar, align 8, !tbaa !24
-  %i.as = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
-  store i64 4096, ptr %i.as, align 8, !tbaa !29
+  %i.as = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 7 uses
   store ptr %0, ptr %i.at, align 8, !tbaa !33
-  %i.au = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #25
-  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
+  %i.au = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #25 ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i64 %i.au, ptr %i.av, align 8, !tbaa !31
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 35 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 21 uses
@@ -413,26 +411,20 @@ getColumns.exit.i.i:                              ; preds = %bb.u, %bb.t, %bb.s,
   store i64 0, ptr %i.br, align 8, !tbaa !34
   %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 88
   store i32 0, ptr %i.bs, align 8, !tbaa !41
-  %5 = load ptr, ptr %i.ar, align 8, !tbaa !24
-  store i8 0, ptr %5, align 1, !tbaa !25
-  %6 = load i64, ptr %i.as, align 8, !tbaa !29
-  %7 = add i64 %6, -1
-  store i64 %7, ptr %i.as, align 8, !tbaa !29
+  store i8 0, ptr %i.e, align 16, !tbaa !25
+  store i64 4095, ptr %i.as, align 8, !tbaa !29
   %i.bt = call i32 @linenoiseHistoryAdd(ptr noundef nonnull @.str.27, i32 noundef 0) #29 ; 0 uses
-  %8 = load i32, ptr %4, align 4, !tbaa !32
-  %9 = load i64, ptr %i.av, align 8, !tbaa !31
-  %i.bu = call i64 @write(i32 noundef %8, ptr noundef nonnull %0, i64 noundef %9) #24
+  %i.bu = call i64 @write(i32 noundef 1, ptr noundef nonnull %0, i64 noundef %i.au) #24
   %i.bv = icmp eq i64 %i.bu, -1
   br i1 %i.bv, label %linenoiseEdit.exit.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %getColumns.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #28
-  %10 = load i32, ptr %3, align 8, !tbaa !63
-  %i.bw = call i64 @read(i32 noundef %10, ptr noundef nonnull %i.c, i64 noundef 1) #24
+  %i.bw = call i64 @read(i32 noundef 0, ptr noundef nonnull %i.c, i64 noundef 1) #24
   %i.bx = trunc i64 %i.bw to i32
   %i.by = icmp slt i32 %i.bx, 1
-  br i1 %i.by, label %._crit_edge.i.i, label %.lr.ph.i.i
+  br i1 %i.by, label %.thread.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
@@ -441,7 +433,7 @@ getColumns.exit.i.i:                              ; preds = %bb.u, %bb.t, %bb.s,
   %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
   br label %bb.v
 
-._crit_edge.i.i:                                  ; preds = %linenoiseEditMoveLeft.exit.i.i, %.preheader.i.i
+._crit_edge.i.i:                                  ; preds = %linenoiseEditMoveLeft.exit.i.i
   %i.cd = load i64, ptr %i.ax, align 8, !tbaa !22
   %i.ce = trunc i64 %i.cd to i32
   br label %.thread.i.i
@@ -482,8 +474,8 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %.preheader.i.i.i
   %.sroa.3.0.copyload.i.i.i = load ptr, ptr %i.ar, align 8, !tbaa !20
-  %.sroa.41.0.copyload.i.i.i = load i64, ptr %i.aw, align 8, !tbaa !64
-  %.sroa.52.0.copyload.i.i.i = load i64, ptr %i.ax, align 8, !tbaa !64
+  %.sroa.41.0.copyload.i.i.i = load i64, ptr %i.aw, align 8, !tbaa !63
+  %.sroa.52.0.copyload.i.i.i = load i64, ptr %i.ax, align 8, !tbaa !63
   %i.cr = load ptr, ptr %i.bz, align 8, !tbaa !17
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %.03338.i.i.i
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !20 ; 2 uses
@@ -502,7 +494,7 @@ bb.z:                                             ; preds = %.preheader.i.i.i
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %i.cv = load i32, ptr %3, align 8, !tbaa !63
+  %i.cv = load i32, ptr %3, align 8, !tbaa !64
   %i.cw = call i64 @read(i32 noundef %i.cv, ptr noundef nonnull %i.a, i64 noundef 1) #24
   %i.cx = trunc i64 %i.cw to i32
   %i.cy = icmp slt i32 %i.cx, 1
@@ -839,14 +831,13 @@ bb.bo:                                            ; preds = %thread-pre-split.i.
   br label %linenoiseEditMoveLeft.exit.i.i
 
 bb.bp:                                            ; preds = %thread-pre-split.i.i
-  %i.fx = load i32, ptr %3, align 8, !tbaa !63
+  %i.fx = load i32, ptr %3, align 8, !tbaa !64    ; 3 uses
   %i.fy = call i64 @read(i32 noundef %i.fx, ptr noundef nonnull %i.d, i64 noundef 1) #24
   %i.fz = icmp eq i64 %i.fy, -1
   br i1 %i.fz, label %linenoiseEditMoveLeft.exit.i.i, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %11 = load i32, ptr %3, align 8, !tbaa !63
-  %i.ga = call i64 @read(i32 noundef %11, ptr noundef nonnull %i.ca, i64 noundef 1) #24
+  %i.ga = call i64 @read(i32 noundef %i.fx, ptr noundef nonnull %i.ca, i64 noundef 1) #24
   %i.gb = icmp eq i64 %i.ga, -1
   br i1 %i.gb, label %linenoiseEditMoveLeft.exit.i.i, label %bb.br
 
@@ -880,8 +871,7 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %or.cond7.i.i, label %bb.bv, label %bb.bx
 
 bb.bv:                                            ; preds = %bb.bu
-  %12 = load i32, ptr %3, align 8, !tbaa !63
-  %i.gg = call i64 @read(i32 noundef %12, ptr noundef nonnull %i.cb, i64 noundef 1) #24
+  %i.gg = call i64 @read(i32 noundef %i.fx, ptr noundef nonnull %i.cb, i64 noundef 1) #24
   %i.gh = icmp ne i64 %i.gg, -1
   %i.gi = load i8, ptr %i.cb, align 1
   %i.gj = icmp eq i8 %i.gi, 126
@@ -1035,8 +1025,8 @@ bb.cv:                                            ; preds = %thread-pre-split.i.
   call void @linenoiseEditDeletePrevWord(ptr noundef nonnull %3) #29
   br label %linenoiseEditMoveLeft.exit.i.i
 
-.thread.i.i:                                      ; preds = %bb.cn, %bb.ba, %bb.aw, %bb.at, %bb.aj, %._crit_edge.i.i
-  %.1.ph.i.i = phi i32 [ %i.ce, %._crit_edge.i.i ], [ %i.ef, %bb.aj ], [ -1, %bb.ba ], [ -1, %bb.aw ], [ %i.et, %bb.at ], [ -1, %bb.cn ]
+.thread.i.i:                                      ; preds = %bb.cn, %bb.ba, %bb.aw, %bb.at, %bb.aj, %._crit_edge.i.i, %.preheader.i.i
+  %.1.ph.i.i = phi i32 [ 0, %.preheader.i.i ], [ %i.ef, %bb.aj ], [ -1, %bb.ba ], [ -1, %bb.aw ], [ %i.et, %bb.at ], [ %i.ce, %._crit_edge.i.i ], [ -1, %bb.cn ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
   %i.he = icmp eq i32 %.1.ph.i.i, -1
@@ -1047,7 +1037,7 @@ linenoiseEditMoveLeft.exit.i.i:                   ; preds = %bb.cv, %bb.cu, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #28
-  %i.hf = load i32, ptr %3, align 8, !tbaa !63
+  %i.hf = load i32, ptr %3, align 8, !tbaa !64
   %i.hg = call i64 @read(i32 noundef %i.hf, ptr noundef nonnull %i.c, i64 noundef 1) #24
   %i.hh = trunc i64 %i.hg to i32
   %i.hi = icmp slt i32 %i.hh, 1
@@ -1450,8 +1440,8 @@ attributes #31 = { nounwind optsize willreturn memory(none) }
 !60 = distinct !{null, null, null}
 !61 = distinct !{!61, !35}
 !62 = distinct !{!62, !35}
-!63 = !{!21, !9, i64 0}
-!64 = !{!13, !13, i64 0}
+!63 = !{!13, !13, i64 0}
+!64 = !{!21, !9, i64 0}
 !65 = distinct !{!65, !35}
 !66 = distinct !{!66, !35}
 !67 = distinct !{!67, !35}

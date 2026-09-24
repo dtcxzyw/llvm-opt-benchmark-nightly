@@ -204,21 +204,21 @@ bb.a:
   %i.cr = alloca [16 x i8], align 8               ; 7 uses
   %i.cs = alloca [32 x i8], align 8               ; 92 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cu = load i64, ptr %i.ct, align 8, !noundef !4 ; 4 uses
+  %i.cu = load i64, ptr %i.ct, align 8, !noundef !4 ; 9 uses
   %i.cv = icmp ult i64 %i.cu, 288230376151711744
   tail call void @llvm.assume(i1 %i.cv)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cs)
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.cx = load ptr, ptr %i.cw, align 8, !nonnull !4, !noundef !4 ; 6 uses
+  %i.cx = load ptr, ptr %i.cw, align 8, !nonnull !4, !noundef !4 ; 16 uses
   %i.cy = load i64, ptr %1, align 8, !range !5, !noundef !4
   %.idx = shl nuw nsw i64 %i.cu, 5
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.idx
   store ptr %i.cx, ptr %i.cs, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8 ; 13 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8 ; 8 uses
   store ptr %i.cx, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   store i64 %i.cy, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 24 ; 7 uses
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 24 ; 2 uses
   store ptr %i.cz, ptr %.sroa.6.0..sroa_idx, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !560)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !561)
@@ -229,7 +229,7 @@ bb.a:
   br i1 %i.da, label %bb.f, label %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i.i
 
 _RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i.i: ; preds = %bb.a
-  %i.db = getelementptr inbounds nuw i8, ptr %i.cx, i64 32
+  %i.db = getelementptr inbounds nuw i8, ptr %i.cx, i64 32 ; 2 uses
   store ptr %i.db, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !565, !noalias !566
   %.sroa.0.0.copyload2.i.i.i.i = load i8, ptr %i.cx, align 8, !noalias !567 ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i.i, -1
@@ -265,20 +265,18 @@ bb.d:                                             ; preds = %.noexc
   call void @llvm.experimental.noalias.scope.decl(metadata !570)
   call void @llvm.experimental.noalias.scope.decl(metadata !571)
   call void @llvm.experimental.noalias.scope.decl(metadata !572)
-  %2 = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !573, !noalias !574, !nonnull !4, !noundef !4
-  %3 = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !573, !noalias !574, !nonnull !4, !noundef !4 ; 4 uses
-  %i.di = icmp eq ptr %3, %2
+  %i.di = icmp eq i64 %i.cu, 1
   br i1 %i.di, label %bb.j, label %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i725.i
 
 _RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i725.i: ; preds = %bb.d
-  %i.dj = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.cx, i64 64 ; 2 uses
   store ptr %i.dj, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !573, !noalias !574
-  %.sroa.0.0.copyload2.i.i.i726.i = load i8, ptr %3, align 8, !noalias !575 ; 2 uses
+  %.sroa.0.0.copyload2.i.i.i726.i = load i8, ptr %i.db, align 8, !noalias !575 ; 2 uses
   %.not.i.i.i727.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i726.i, -1
   br i1 %.not.i.i.i727.i, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i725.i
-  %.sroa.7.0..sroa_idx3.i.i.i728.i = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %.sroa.7.0..sroa_idx3.i.i.i728.i = getelementptr inbounds nuw i8, ptr %i.cx, i64 33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !576
   store i8 %.sroa.0.0.copyload2.i.i.i726.i, ptr %i.j, align 8, !noalias !576
   %.sroa.7.0..sroa_idx.i.i.i729.i = getelementptr inbounds nuw i8, ptr %i.j, i64 1
@@ -317,20 +315,18 @@ bb.h:                                             ; preds = %.noexc7
   call void @llvm.experimental.noalias.scope.decl(metadata !578)
   call void @llvm.experimental.noalias.scope.decl(metadata !579)
   call void @llvm.experimental.noalias.scope.decl(metadata !580)
-  %4 = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !581, !noalias !582, !nonnull !4, !noundef !4
-  %5 = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !581, !noalias !582, !nonnull !4, !noundef !4 ; 4 uses
-  %i.ds = icmp eq ptr %5, %4
+  %i.ds = icmp eq i64 %i.cu, 2
   br i1 %i.ds, label %bb.n, label %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i733.i
 
 _RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i733.i: ; preds = %bb.h
-  %i.dt = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.dt = getelementptr inbounds nuw i8, ptr %i.cx, i64 96 ; 2 uses
   store ptr %i.dt, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !581, !noalias !582
-  %.sroa.0.0.copyload2.i.i.i734.i = load i8, ptr %5, align 8, !noalias !583 ; 2 uses
+  %.sroa.0.0.copyload2.i.i.i734.i = load i8, ptr %i.dj, align 8, !noalias !583 ; 2 uses
   %.not.i.i.i735.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i734.i, -1
   br i1 %.not.i.i.i735.i, label %bb.n, label %bb.i
 
 bb.i:                                             ; preds = %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i733.i
-  %.sroa.7.0..sroa_idx3.i.i.i736.i = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %.sroa.7.0..sroa_idx3.i.i.i736.i = getelementptr inbounds nuw i8, ptr %i.cx, i64 65
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !584
   store i8 %.sroa.0.0.copyload2.i.i.i734.i, ptr %i.h, align 8, !noalias !584
   %.sroa.7.0..sroa_idx.i.i.i737.i = getelementptr inbounds nuw i8, ptr %i.h, i64 1
@@ -369,20 +365,18 @@ bb.l:                                             ; preds = %.noexc9
   call void @llvm.experimental.noalias.scope.decl(metadata !586)
   call void @llvm.experimental.noalias.scope.decl(metadata !587)
   call void @llvm.experimental.noalias.scope.decl(metadata !588)
-  %6 = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !589, !noalias !590, !nonnull !4, !noundef !4
-  %7 = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !589, !noalias !590, !nonnull !4, !noundef !4 ; 4 uses
-  %i.ec = icmp eq ptr %7, %6
+  %i.ec = icmp eq i64 %i.cu, 3
   br i1 %i.ec, label %bb.r, label %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i741.i
 
 _RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i741.i: ; preds = %bb.l
-  %i.ed = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %i.ed = getelementptr inbounds nuw i8, ptr %i.cx, i64 128 ; 2 uses
   store ptr %i.ed, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !589, !noalias !590
-  %.sroa.0.0.copyload2.i.i.i742.i = load i8, ptr %7, align 8, !noalias !591 ; 2 uses
+  %.sroa.0.0.copyload2.i.i.i742.i = load i8, ptr %i.dt, align 8, !noalias !591 ; 2 uses
   %.not.i.i.i743.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i742.i, -1
   br i1 %.not.i.i.i743.i, label %bb.r, label %bb.m
 
 bb.m:                                             ; preds = %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i741.i
-  %.sroa.7.0..sroa_idx3.i.i.i744.i = getelementptr inbounds nuw i8, ptr %7, i64 1
+  %.sroa.7.0..sroa_idx3.i.i.i744.i = getelementptr inbounds nuw i8, ptr %i.cx, i64 97
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !592
   store i8 %.sroa.0.0.copyload2.i.i.i742.i, ptr %i.f, align 8, !noalias !592
   %.sroa.7.0..sroa_idx.i.i.i745.i = getelementptr inbounds nuw i8, ptr %i.f, i64 1
@@ -421,20 +415,18 @@ bb.p:                                             ; preds = %.noexc11
   call void @llvm.experimental.noalias.scope.decl(metadata !594)
   call void @llvm.experimental.noalias.scope.decl(metadata !595)
   call void @llvm.experimental.noalias.scope.decl(metadata !596)
-  %8 = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !597, !noalias !598, !nonnull !4, !noundef !4
-  %9 = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !597, !noalias !598, !nonnull !4, !noundef !4 ; 4 uses
-  %i.em = icmp eq ptr %9, %8
+  %i.em = icmp eq i64 %i.cu, 4
   br i1 %i.em, label %bb.v, label %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i749.i
 
 _RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i749.i: ; preds = %bb.p
-  %i.en = getelementptr inbounds nuw i8, ptr %9, i64 32
+  %i.en = getelementptr inbounds nuw i8, ptr %i.cx, i64 160 ; 2 uses
   store ptr %i.en, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !597, !noalias !598
-  %.sroa.0.0.copyload2.i.i.i750.i = load i8, ptr %9, align 8, !noalias !599 ; 2 uses
+  %.sroa.0.0.copyload2.i.i.i750.i = load i8, ptr %i.ed, align 8, !noalias !599 ; 2 uses
   %.not.i.i.i751.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i750.i, -1
   br i1 %.not.i.i.i751.i, label %bb.v, label %bb.q
 
 bb.q:                                             ; preds = %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i749.i
-  %.sroa.7.0..sroa_idx3.i.i.i752.i = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %.sroa.7.0..sroa_idx3.i.i.i752.i = getelementptr inbounds nuw i8, ptr %i.cx, i64 129
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !600
   store i8 %.sroa.0.0.copyload2.i.i.i750.i, ptr %i.d, align 8, !noalias !600
   %.sroa.7.0..sroa_idx.i.i.i753.i = getelementptr inbounds nuw i8, ptr %i.d, i64 1
@@ -473,20 +465,18 @@ bb.t:                                             ; preds = %.noexc13
   call void @llvm.experimental.noalias.scope.decl(metadata !602)
   call void @llvm.experimental.noalias.scope.decl(metadata !603)
   call void @llvm.experimental.noalias.scope.decl(metadata !604)
-  %10 = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !605, !noalias !606, !nonnull !4, !noundef !4
-  %11 = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !605, !noalias !606, !nonnull !4, !noundef !4 ; 4 uses
-  %i.ew = icmp eq ptr %11, %10
+  %i.ew = icmp eq i64 %i.cu, 5
   br i1 %i.ew, label %bb.y, label %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i757.i
 
 _RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i757.i: ; preds = %bb.t
-  %i.ex = getelementptr inbounds nuw i8, ptr %11, i64 32
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.cx, i64 192
   store ptr %i.ex, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !605, !noalias !606
-  %.sroa.0.0.copyload2.i.i.i758.i = load i8, ptr %11, align 8, !noalias !607 ; 2 uses
+  %.sroa.0.0.copyload2.i.i.i758.i = load i8, ptr %i.en, align 8, !noalias !607 ; 2 uses
   %.not.i.i.i759.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i758.i, -1
   br i1 %.not.i.i.i759.i, label %bb.y, label %bb.u
 
 bb.u:                                             ; preds = %_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdMEyVxnODSb_10serde_json5value5ValueENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs5XgW7KoffLW_12opendal_core.exit.i.i.i757.i
-  %.sroa.7.0..sroa_idx3.i.i.i760.i = getelementptr inbounds nuw i8, ptr %11, i64 1
+  %.sroa.7.0..sroa_idx3.i.i.i760.i = getelementptr inbounds nuw i8, ptr %i.cx, i64 161
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !608
   store i8 %.sroa.0.0.copyload2.i.i.i758.i, ptr %i.b, align 8, !noalias !608
   %.sroa.7.0..sroa_idx.i.i.i761.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -889,49 +879,49 @@ begin_hunk_1_@llvm.memset.p0.i64
 !564 = !{!499}
 !565 = !{!499, !497, !495, !493}
 !566 = !{!504, !503, !502, !501, !492}
-!567 = !{!499, !503, !497, !502, !495, !501}
+!567 = !{!499, !503, !497, !502, !495, !501, !493}
 !568 = !{!503, !497, !502, !495, !501, !492, !493}
-!569 = !{!503, !497, !502, !495, !501}
+!569 = !{!503, !497, !502, !495, !501, !493}
 !570 = !{!506}
 !571 = !{!508}
 !572 = !{!510}
 !573 = !{!510, !508, !506, !493}
 !574 = !{!515, !514, !513, !512, !492}
-!575 = !{!510, !514, !508, !513, !506, !512}
+!575 = !{!510, !514, !508, !513, !506, !512, !493}
 !576 = !{!514, !508, !513, !506, !512, !492, !493}
-!577 = !{!514, !508, !513, !506, !512}
+!577 = !{!514, !508, !513, !506, !512, !493}
 !578 = !{!517}
 !579 = !{!519}
 !580 = !{!521}
 !581 = !{!521, !519, !517, !493}
 !582 = !{!526, !525, !524, !523, !492}
-!583 = !{!521, !525, !519, !524, !517, !523}
+!583 = !{!521, !525, !519, !524, !517, !523, !493}
 !584 = !{!525, !519, !524, !517, !523, !492, !493}
-!585 = !{!525, !519, !524, !517, !523}
+!585 = !{!525, !519, !524, !517, !523, !493}
 !586 = !{!528}
 !587 = !{!530}
 !588 = !{!532}
 !589 = !{!532, !530, !528, !493}
 !590 = !{!537, !536, !535, !534, !492}
-!591 = !{!532, !536, !530, !535, !528, !534}
+!591 = !{!532, !536, !530, !535, !528, !534, !493}
 !592 = !{!536, !530, !535, !528, !534, !492, !493}
-!593 = !{!536, !530, !535, !528, !534}
+!593 = !{!536, !530, !535, !528, !534, !493}
 !594 = !{!539}
 !595 = !{!541}
 !596 = !{!543}
 !597 = !{!543, !541, !539, !493}
 !598 = !{!548, !547, !546, !545, !492}
-!599 = !{!543, !547, !541, !546, !539, !545}
+!599 = !{!543, !547, !541, !546, !539, !545, !493}
 !600 = !{!547, !541, !546, !539, !545, !492, !493}
-!601 = !{!547, !541, !546, !539, !545}
+!601 = !{!547, !541, !546, !539, !545, !493}
 !602 = !{!550}
 !603 = !{!552}
 !604 = !{!554}
 !605 = !{!554, !552, !550, !493}
 !606 = !{!559, !558, !557, !556, !492}
-!607 = !{!554, !558, !552, !557, !550, !556}
+!607 = !{!554, !558, !552, !557, !550, !556, !493}
 !608 = !{!558, !552, !557, !550, !556, !492, !493}
-!609 = !{!558, !552, !557, !550, !556}
+!609 = !{!558, !552, !557, !550, !556, !493}
 !610 = !{!492, !493}
 !611 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !612 = distinct !{!612, !"_RINvNtCsgxBkk5gSRhY_4core3ptr10swap_chunkKj8_ECs5XgW7KoffLW_12opendal_core"}

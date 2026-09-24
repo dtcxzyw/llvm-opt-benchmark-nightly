@@ -205,7 +205,7 @@ define dso_local noundef ptr @nvgCreateInternal(ptr nofree noundef readonly capt
 bb.a:
   %1 = alloca %struct.FONSparams, align 8         ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #40
-  %i.a = tail call noalias dereferenceable_or_null(8920) ptr @malloc(i64 noundef 8920) #42 ; 44 uses
+  %i.a = tail call noalias dereferenceable_or_null(8920) ptr @malloc(i64 noundef 8920) #42 ; 43 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.k, label %bb.b
 
@@ -333,7 +333,7 @@ nvgSave.exit:                                     ; preds = %bb.f
   store <4 x float> <float 2.500000e-01, float f0x3C23D70A, float 1.000000e+00, float 1.000000e+00>, ptr %i.ao, align 8, !tbaa !81
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !443
-  %i.ar = load ptr, ptr %i.a, align 8, !tbaa !235
+  %i.ar = load ptr, ptr %i.a, align 8, !tbaa !235 ; 2 uses
   %i.as = tail call i32 %i.aq(ptr noundef %i.ar) #40
   %i.at = icmp eq i32 %i.as, 0
   br i1 %i.at, label %bb.k, label %bb.h
@@ -358,9 +358,8 @@ bb.h:                                             ; preds = %nvgSave.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %2 = load ptr, ptr %i.bc, align 8, !tbaa !237
-  %i.bd = load ptr, ptr %i.a, align 8, !tbaa !235
-  %i.be = tail call i32 %2(ptr noundef %i.bd, i32 noundef 1, i32 noundef 512, i32 noundef 512, i32 noundef 0, ptr noundef null) #40 ; 2 uses
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !237
+  %i.be = tail call i32 %i.bd(ptr noundef %i.ar, i32 noundef 1, i32 noundef 512, i32 noundef 512, i32 noundef 0, ptr noundef null) #40 ; 2 uses
   store i32 %i.be, ptr %i.d, align 8, !tbaa !70
   %i.bf = icmp eq i32 %i.be, 0
   br i1 %i.bf, label %bb.k, label %bb.j
@@ -763,7 +762,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define internal fastcc nonnull ptr @nvg__bevelJoin(ptr nofree noundef nonnull writeonly initializes((0, 36)) %0, float %.8.val, float %.12.val, ptr nofree noundef readonly captures(none) %1, float noundef %2, float noundef %3, float noundef %4, float noundef %5) unnamed_addr #9 {
+define internal fastcc nonnull ptr @nvg__bevelJoin(ptr nofree noundef nonnull writeonly captures(ret: address, provenance) initializes((0, 36)) %0, float %.8.val, float %.12.val, ptr nofree noundef readonly captures(none) %1, float noundef %2, float noundef %3, float noundef %4, float noundef %5) unnamed_addr #9 {
 bb.a:
   %i.a = fneg float %.8.val                       ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8

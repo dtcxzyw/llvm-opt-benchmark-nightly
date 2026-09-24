@@ -205,19 +205,18 @@ bb.oq:                                            ; preds = %bb.op, %bb.oo
   %i.lwj = mul nuw i32 %.08821189.i, 112          ; 4 uses
   %i.lwk = add nuw nsw i32 %i.lwj, 128
   %i.lwl = tail call i32 @llvm.smin.i32(i32 %i.lwk, i32 %i.axl) ; 2 uses
-  %i.lwm = sub nsw i32 %i.lwl, %i.lwj             ; 6 uses
+  %i.lwm = sub nsw i32 %i.lwl, %i.lwj             ; 5 uses
   %i.lwn = add nsw i32 %i.lwm, 8
   %i.lwo = icmp sgt i32 %i.lwm, 0                 ; 3 uses
   %i.lwp = icmp sgt i32 %i.lwm, -4
   %i.lwq = add i32 %i.lwj, -4
   %i.lwr = icmp sgt i32 %i.lwm, -8
-  %6 = icmp sgt i32 %i.lwm, -6
+  %6 = icmp slt i32 %i.lwm, -5                    ; 2 uses
   %i.lws = icmp eq i32 %.08821189.i, 0            ; 2 uses
   %i.lwt = select i1 %i.lws, i32 6, i32 0         ; 3 uses
   %i.lwu = icmp eq i32 %.08821189.i, %i.lvu       ; 2 uses
   %.neg949.i = select i1 %i.lwu, i32 -6, i32 0    ; 2 uses
   %i.lwv = add nsw i32 %i.lwn, %.neg949.i         ; 2 uses
-  %7 = icmp slt i32 %i.lwm, -5
   %i.lww = add nsw i32 %i.lwv, -1
   %i.lwx = icmp slt i32 %i.lwt, %i.lww
   %i.lwy = add nuw nsw i32 %i.lwt, 2
@@ -620,7 +619,7 @@ scalar.ph4230:                                    ; preds = %scalar.ph4230.prehe
   br i1 %i.nga, label %scalar.ph4230, label %._crit_edge1057.i, !llvm.loop !342
 
 .preheader1023.i:                                 ; preds = %._crit_edge1067.i, %.lr.ph1071.i
-  br i1 %6, label %.lr.ph1077.i, label %._crit_edge1085.i
+  br i1 %6, label %._crit_edge1085.i, label %.lr.ph1077.i
 
 .lr.ph1077.i:                                     ; preds = %.preheader1023.i
   %i.ngb = add nsw i32 %i.lzg, 7                  ; 3 uses
@@ -1023,9 +1022,9 @@ scalar.ph4196:                                    ; preds = %scalar.ph4196.prehe
   %invariant.gep1137.i = getelementptr inbounds nuw [4 x i8], ptr %i.lvo, i64 %i.nnw
   %i.nnx = add nsw i32 %i.nnu, -1                 ; 3 uses
   %i.nny = icmp slt i32 %i.nns, %i.nnx            ; 2 uses
-  %brmerge.i556 = select i1 %7, i1 true, i1 %i.nnv
   %i.nnz = add nsw i32 %i.lzg, 6                  ; 3 uses
   %i.noa = sext i32 %i.nnz to i64                 ; 6 uses
+  %brmerge.i556 = select i1 %6, i1 true, i1 %i.nnv
   %i.nob = shl nuw nsw i64 %i.nnw, 2              ; 4 uses
   %scevgep3938 = getelementptr i8, ptr %scevgep3937, i64 %i.nob ; 2 uses
   %i.noc = add nsw i32 %.neg.i554, 6

@@ -202,13 +202,13 @@ bb.a:
 define dso_local noalias noundef ptr @getMemoryOverheadData() local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @zmalloc_used_memory() #13 ; 5 uses
-  %i.b = tail call noalias dereferenceable_or_null(256) ptr @zcalloc(i64 noundef 256) #15 ; 37 uses
+  %i.b = tail call noalias dereferenceable_or_null(256) ptr @zcalloc(i64 noundef 256) #15 ; 35 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.a, ptr %i.c, align 8, !tbaa !97
-  %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 208), align 8, !tbaa !172 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 208), align 8, !tbaa !172 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.d, ptr %i.e, align 8, !tbaa !98
-  %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2720), align 8, !tbaa !173
+  %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2720), align 8, !tbaa !173 ; 2 uses
   store i64 %i.f, ptr %i.b, align 8, !tbaa !99
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 144
@@ -277,7 +277,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sink = phi i64 [ 0, %bb.a ], [ %spec.select, %bb.b ] ; 2 uses
-  %.pre.sink = phi i64 [ %.pre, %bb.a ], [ %spec.select136, %bb.b ] ; 2 uses
+  %.pre.sink = phi i64 [ %.pre, %bb.a ], [ %spec.select136, %bb.b ] ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i64 %.sink, ptr %i.bc, align 8, !tbaa !114
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -295,23 +295,19 @@ bb.d:                                             ; preds = %bb.c
   %i.bk = tail call i64 @raxSize(ptr noundef %i.bg) #13
   %i.bl = shl i64 %i.bk, 3
   %i.bm = add i64 %i.bl, %i.bj
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
-  %0 = load i64, ptr %i.bn, align 8, !tbaa !115
-  %i.bo = add i64 %i.bm, %0                       ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %i.bo = add i64 %i.bm, %.pre.sink               ; 2 uses
   store i64 %i.bo, ptr %i.bn, align 8, !tbaa !115
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %.pre131 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !114
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %1 = phi i64 [ %.pre131, %bb.d ], [ %.sink, %bb.c ]
   %i.bp = phi i64 [ %i.bo, %bb.d ], [ %.pre.sink, %bb.c ]
   %i.bq = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7304), align 8, !tbaa !184 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   store i64 %i.bq, ptr %i.br, align 8, !tbaa !116
   %i.bs = add i64 %i.bq, %i.d
   %i.bt = add i64 %i.bs, %i.bp
-  %i.bu = add i64 %i.bt, %1
+  %i.bu = add i64 %i.bt, %.sink
   %i.bv = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 3072), align 8, !tbaa !19
   %i.bw = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 3064), align 8, !tbaa !19
   %i.bx = add i64 %i.bw, %i.bv
@@ -349,7 +345,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cq = tail call i64 @evalScriptsMemoryVM() #13
   %i.cr = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %i.cs = tail call i64 @functionsMemoryVM() #13
-  %i.ct = add i64 %i.cq, %i.cs                    ; 2 uses
+  %i.ct = add i64 %i.cs, %i.cq                    ; 2 uses
   store i64 %i.ct, ptr %i.cr, align 8, !tbaa !122
   %i.cu = add i64 %i.cp, %i.ct
   %i.cv = tail call i64 @asmGetImportInputBufferSize() #13 ; 2 uses
@@ -358,16 +354,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cx = tail call i64 @asmGetMigrateOutputBufferSize() #13 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.b, i64 240
   store i64 %i.cx, ptr %i.cy, align 8, !tbaa !189
-  %i.cz = add i64 %i.cu, %i.cx
-  %i.da = add i64 %i.cz, %i.cv                    ; 2 uses
+  %i.cz = add i64 %i.cu, %i.cv
+  %i.da = add i64 %i.cz, %i.cx                    ; 2 uses
   %i.db = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6516), align 4, !tbaa !190
   %i.dc = icmp sgt i32 %i.db, 0
   br i1 %i.dc, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.g
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 112 ; 2 uses
-  %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 248 ; 4 uses
-  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 200 ; 4 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 248 ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 200 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 208 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.b, i64 216 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 224 ; 2 uses
@@ -390,33 +386,27 @@ bb.i:                                             ; preds = %bb.h
   %i.dq = add i64 %i.dp, %i.do
   store i64 %i.dq, ptr %i.dd, align 8, !tbaa !125
   %i.dr = load ptr, ptr %i.de, align 8, !tbaa !96
-  %i.ds = load i64, ptr %i.df, align 8, !tbaa !126 ; 2 uses
+  %i.ds = load i64, ptr %i.df, align 8, !tbaa !126 ; 3 uses
   %i.dt = mul i64 %i.ds, 24
   %i.du = add i64 %i.dt, 24
   %i.dv = tail call ptr @zrealloc(ptr noundef %i.dr, i64 noundef %i.du) #17 ; 2 uses
   store ptr %i.dv, ptr %i.de, align 8, !tbaa !96
-  %i.dw = getelementptr inbounds nuw [24 x i8], ptr %i.dv, i64 %i.ds
+  %i.dw = getelementptr inbounds nuw [24 x i8], ptr %i.dv, i64 %i.ds ; 3 uses
   store i64 %indvars.iv, ptr %i.dw, align 8, !tbaa !128
   %i.dx = load ptr, ptr %i.dk, align 8, !tbaa !192
   %i.dy = tail call i64 @kvstoreMemUsage(ptr noundef %i.dx) #13
   %i.dz = shl i64 %i.do, 4
   %i.ea = add i64 %i.dy, %i.dz                    ; 2 uses
-  %2 = load ptr, ptr %i.de, align 8, !tbaa !96
-  %3 = load i64, ptr %i.df, align 8, !tbaa !126
-  %4 = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %3
-  %i.eb = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   store i64 %i.ea, ptr %i.eb, align 8, !tbaa !129
   %i.ec = add i64 %i.ea, %.0117128
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dk, i64 8 ; 4 uses
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !193
   %i.ef = tail call i64 @kvstoreMemUsage(ptr noundef %i.ee) #13 ; 2 uses
-  %5 = load ptr, ptr %i.de, align 8, !tbaa !96
-  %6 = load i64, ptr %i.df, align 8, !tbaa !126   ; 2 uses
-  %7 = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %6
-  %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.dw, i64 16
   store i64 %i.ef, ptr %i.eg, align 8, !tbaa !130
   %i.eh = add i64 %i.ec, %i.ef
-  %i.ei = add i64 %6, 1
+  %i.ei = add i64 %i.ds, 1
   store i64 %i.ei, ptr %i.df, align 8, !tbaa !126
   %i.ej = load ptr, ptr %i.dk, align 8, !tbaa !192
   %i.ek = tail call i64 @kvstoreOverheadHashtableLut(ptr noundef %i.ej) #13
@@ -424,7 +414,7 @@ bb.i:                                             ; preds = %bb.h
   %i.em = add i64 %i.el, %i.ek
   %i.en = load ptr, ptr %i.ed, align 8, !tbaa !193
   %i.eo = tail call i64 @kvstoreOverheadHashtableLut(ptr noundef %i.en) #13
-  %i.ep = add i64 %i.em, %i.eo
+  %i.ep = add i64 %i.eo, %i.em
   store i64 %i.ep, ptr %i.dg, align 8, !tbaa !131
   %i.eq = load ptr, ptr %i.dk, align 8, !tbaa !192
   %i.er = tail call i64 @kvstoreOverheadHashtableRehashing(ptr noundef %i.eq) #13
@@ -432,7 +422,7 @@ bb.i:                                             ; preds = %bb.h
   %i.et = add i64 %i.es, %i.er
   %i.eu = load ptr, ptr %i.ed, align 8, !tbaa !193
   %i.ev = tail call i64 @kvstoreOverheadHashtableRehashing(ptr noundef %i.eu) #13
-  %i.ew = add i64 %i.et, %i.ev
+  %i.ew = add i64 %i.ev, %i.et
   store i64 %i.ew, ptr %i.dh, align 8, !tbaa !132
   %i.ex = load ptr, ptr %i.dk, align 8, !tbaa !192
   %i.ey = tail call i64 @kvstoreDictRehashingCount(ptr noundef %i.ex) #13
@@ -440,7 +430,7 @@ bb.i:                                             ; preds = %bb.h
   %i.fa = add i64 %i.ez, %i.ey
   %i.fb = load ptr, ptr %i.ed, align 8, !tbaa !193
   %i.fc = tail call i64 @kvstoreDictRehashingCount(ptr noundef %i.fb) #13
-  %i.fd = add i64 %i.fa, %i.fc
+  %i.fd = add i64 %i.fc, %i.fa
   store i64 %i.fd, ptr %i.di, align 8, !tbaa !133
   br label %bb.j
 
@@ -462,11 +452,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %i.fl = sub i64 %i.a, %i.fj                     ; 3 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   store i64 %i.fl, ptr %i.fm, align 8, !tbaa !135
-  %8 = load i64, ptr %i.b, align 8, !tbaa !99
-  %i.fn = uitofp i64 %8 to float
-  %9 = load i64, ptr %i.e, align 8, !tbaa !98     ; 2 uses
-  %i.fo = icmp ugt i64 %i.a, %9
-  %i.fp = sub nuw i64 %i.a, %9
+  %i.fn = uitofp i64 %i.f to float
+  %i.fo = icmp ugt i64 %i.a, %i.d
+  %i.fp = sub nuw i64 %i.a, %i.d
   %i.fq = uitofp i64 %i.fp to float
   %.0 = select i1 %i.fo, float %i.fq, float 1.000000e+00
   %i.fr = getelementptr inbounds nuw i8, ptr %i.b, i64 128

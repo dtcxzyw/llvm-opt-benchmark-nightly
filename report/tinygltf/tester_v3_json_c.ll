@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
 
 .lr.ph:                                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 30 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 20 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 41 uses
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 19 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -326,15 +326,13 @@ tg3json__reserve_bytes_parser.exit.i:             ; preds = %bb.q, %.tg3json__re
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 %.pre348.pre
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bb, ptr readonly align 1 %.063335, i64 %.pre351, i1 false)
   %i.bc = add i64 %.pre348.pre, %.pre351          ; 2 uses
-  store i64 %i.bc, ptr %i.m, align 8, !tbaa !49
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.bc
   store i8 0, ptr %i.bd, align 1, !tbaa !30
   %.pre346 = load ptr, ptr %0, align 8, !tbaa !31
-  %.pre347 = load i64, ptr %i.m, align 8, !tbaa !49
   br label %.thread307
 
 .thread307:                                       ; preds = %._crit_edge349, %tg3json__reserve_bytes_parser.exit.i
-  %i.be = phi i64 [ %.pre348.pre, %._crit_edge349 ], [ %.pre347, %tg3json__reserve_bytes_parser.exit.i ]
+  %i.be = phi i64 [ %.pre348.pre, %._crit_edge349 ], [ %i.bc, %tg3json__reserve_bytes_parser.exit.i ]
   %i.bf = phi ptr [ %i.r, %._crit_edge349 ], [ %.pre346, %tg3json__reserve_bytes_parser.exit.i ]
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 1
   store ptr %i.bg, ptr %0, align 8, !tbaa !31
@@ -569,13 +567,12 @@ bb.an:                                            ; preds = %bb.am, %bb.al
 
 tg3json__buf_putc.exit:                           ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i118, %bb.an
   %i.eb = phi ptr [ %.pre.i119, %.tg3json__reserve_bytes_parser.exit_crit_edge.i118 ], [ %i.dv, %bb.an ]
-  %i.ec = add i64 %i.da, 1
+  %i.ec = add i64 %i.da, 1                        ; 2 uses
   store i64 %i.ec, ptr %i.m, align 8, !tbaa !49
   %i.ed = getelementptr inbounds nuw i8, ptr %i.eb, i64 %i.da
   store i8 34, ptr %i.ed, align 1, !tbaa !30
   %i.ee = load ptr, ptr %i.n, align 8, !tbaa !48
-  %4 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 %4
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 %i.ec
   store i8 0, ptr %i.ef, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 
@@ -666,13 +663,12 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
 
 tg3json__buf_putc.exit154:                        ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i136, %bb.ax
   %i.fi = phi ptr [ %.pre.i137, %.tg3json__reserve_bytes_parser.exit_crit_edge.i136 ], [ %i.fc, %bb.ax ]
-  %i.fj = add i64 %i.eh, 1
+  %i.fj = add i64 %i.eh, 1                        ; 2 uses
   store i64 %i.fj, ptr %i.m, align 8, !tbaa !49
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fi, i64 %i.eh
   store i8 92, ptr %i.fk, align 1, !tbaa !30
   %i.fl = load ptr, ptr %i.n, align 8, !tbaa !48
-  %5 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 %5
+  %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 %i.fj
   store i8 0, ptr %i.fm, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 
@@ -763,13 +759,12 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
 
 tg3json__buf_putc.exit174:                        ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i156, %bb.bh
   %i.gp = phi ptr [ %.pre.i157, %.tg3json__reserve_bytes_parser.exit_crit_edge.i156 ], [ %i.gj, %bb.bh ]
-  %i.gq = add i64 %i.fo, 1
+  %i.gq = add i64 %i.fo, 1                        ; 2 uses
   store i64 %i.gq, ptr %i.m, align 8, !tbaa !49
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gp, i64 %i.fo
   store i8 47, ptr %i.gr, align 1, !tbaa !30
   %i.gs = load ptr, ptr %i.n, align 8, !tbaa !48
-  %6 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 %6
+  %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 %i.gq
   store i8 0, ptr %i.gt, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 
@@ -860,13 +855,12 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
 
 tg3json__buf_putc.exit194:                        ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i176, %bb.br
   %i.hw = phi ptr [ %.pre.i177, %.tg3json__reserve_bytes_parser.exit_crit_edge.i176 ], [ %i.hq, %bb.br ]
-  %i.hx = add i64 %i.gv, 1
+  %i.hx = add i64 %i.gv, 1                        ; 2 uses
   store i64 %i.hx, ptr %i.m, align 8, !tbaa !49
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hw, i64 %i.gv
   store i8 8, ptr %i.hy, align 1, !tbaa !30
   %i.hz = load ptr, ptr %i.n, align 8, !tbaa !48
-  %7 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.hz, i64 %7
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.hz, i64 %i.hx
   store i8 0, ptr %i.ia, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 
@@ -957,13 +951,12 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
 
 tg3json__buf_putc.exit214:                        ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i196, %bb.cb
   %i.jd = phi ptr [ %.pre.i197, %.tg3json__reserve_bytes_parser.exit_crit_edge.i196 ], [ %i.ix, %bb.cb ]
-  %i.je = add i64 %i.ic, 1
+  %i.je = add i64 %i.ic, 1                        ; 2 uses
   store i64 %i.je, ptr %i.m, align 8, !tbaa !49
   %i.jf = getelementptr inbounds nuw i8, ptr %i.jd, i64 %i.ic
   store i8 12, ptr %i.jf, align 1, !tbaa !30
   %i.jg = load ptr, ptr %i.n, align 8, !tbaa !48
-  %8 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 %8
+  %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 %i.je
   store i8 0, ptr %i.jh, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 
@@ -1054,13 +1047,12 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
 
 tg3json__buf_putc.exit234:                        ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i216, %bb.cl
   %i.kk = phi ptr [ %.pre.i217, %.tg3json__reserve_bytes_parser.exit_crit_edge.i216 ], [ %i.ke, %bb.cl ]
-  %i.kl = add i64 %i.jj, 1
+  %i.kl = add i64 %i.jj, 1                        ; 2 uses
   store i64 %i.kl, ptr %i.m, align 8, !tbaa !49
   %i.km = getelementptr inbounds nuw i8, ptr %i.kk, i64 %i.jj
   store i8 10, ptr %i.km, align 1, !tbaa !30
   %i.kn = load ptr, ptr %i.n, align 8, !tbaa !48
-  %9 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 %9
+  %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 %i.kl
   store i8 0, ptr %i.ko, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 
@@ -1151,13 +1143,12 @@ bb.cv:                                            ; preds = %bb.cu, %bb.ct
 
 tg3json__buf_putc.exit254:                        ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i236, %bb.cv
   %i.lr = phi ptr [ %.pre.i237, %.tg3json__reserve_bytes_parser.exit_crit_edge.i236 ], [ %i.ll, %bb.cv ]
-  %i.ls = add i64 %i.kq, 1
+  %i.ls = add i64 %i.kq, 1                        ; 2 uses
   store i64 %i.ls, ptr %i.m, align 8, !tbaa !49
   %i.lt = getelementptr inbounds nuw i8, ptr %i.lr, i64 %i.kq
   store i8 13, ptr %i.lt, align 1, !tbaa !30
   %i.lu = load ptr, ptr %i.n, align 8, !tbaa !48
-  %10 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 %10
+  %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 %i.ls
   store i8 0, ptr %i.lv, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 
@@ -1248,13 +1239,12 @@ bb.df:                                            ; preds = %bb.de, %bb.dd
 
 tg3json__buf_putc.exit274:                        ; preds = %.tg3json__reserve_bytes_parser.exit_crit_edge.i256, %bb.df
   %i.my = phi ptr [ %.pre.i257, %.tg3json__reserve_bytes_parser.exit_crit_edge.i256 ], [ %i.ms, %bb.df ]
-  %i.mz = add i64 %i.lx, 1
+  %i.mz = add i64 %i.lx, 1                        ; 2 uses
   store i64 %i.mz, ptr %i.m, align 8, !tbaa !49
   %i.na = getelementptr inbounds nuw i8, ptr %i.my, i64 %i.lx
   store i8 9, ptr %i.na, align 1, !tbaa !30
   %i.nb = load ptr, ptr %i.n, align 8, !tbaa !48
-  %11 = load i64, ptr %i.m, align 8, !tbaa !49
-  %i.nc = getelementptr inbounds nuw i8, ptr %i.nb, i64 %11
+  %i.nc = getelementptr inbounds nuw i8, ptr %i.nb, i64 %i.mz
   store i8 0, ptr %i.nc, align 1, !tbaa !30
   br label %tg3json__buf_append.exit116.thread.jt0
 

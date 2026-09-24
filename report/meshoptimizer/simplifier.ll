@@ -30,13 +30,14 @@ define dso_local noundef i64 @_Z20meshopt_simplifyEdgePjPKjmPKfmmS3_mS3_mPKhmfjP
 bb.a:
   %i.a = alloca [2560 x i32], align 16            ; 14 uses
   %15 = alloca [32 x %"struct.meshopt::QuadricGrad"], align 16 ; 12 uses
-  %16 = alloca %class.meshopt_Allocator, align 8  ; 31 uses
+  %16 = alloca %class.meshopt_Allocator, align 8  ; 32 uses
   %17 = alloca %"struct.meshopt::EdgeAdjacency", align 8 ; 8 uses
   %i.b = alloca [3 x float], align 4              ; 11 uses
   %i.c = alloca [32 x i32], align 16              ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(200) %16, i8 0, i64 200, i1 false)
   %.not = icmp eq ptr %0, %1
+  %.sroa.gep1419 = getelementptr inbounds nuw i8, ptr %16, i64 16
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -57,12 +58,9 @@ bb.d:                                             ; preds = %bb.c
           to label %.noexc unwind label %bb.h, !inline_history !57 ; 9 uses
 
 .noexc:                                           ; preds = %bb.d
-  %i.j = getelementptr inbounds nuw i8, ptr %16, i64 192 ; 8 uses
-  %18 = load i64, ptr %i.j, align 8, !tbaa !26    ; 2 uses
-  %19 = add nuw nsw i64 %18, 1
-  store i64 %19, ptr %i.j, align 8, !tbaa !26
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %18
-  store ptr %i.i, ptr %20, align 8, !tbaa !27
+  %i.j = getelementptr inbounds nuw i8, ptr %16, i64 192 ; 4 uses
+  store i64 1, ptr %i.j, align 8, !tbaa !26
+  store ptr %i.i, ptr %16, align 8, !tbaa !27
   %.not.i = icmp eq i64 %2, 0                     ; 2 uses
   br i1 %.not.i, label %._crit_edge.thread.i, label %.lr.ph.i.preheader
 
@@ -187,11 +185,9 @@ bb.d:                                             ; preds = %bb.c
           to label %.noexc434 unwind label %bb.h, !inline_history !57 ; 4 uses
 
 .noexc434:                                        ; preds = %._crit_edge.thread.i
-  %21 = load i64, ptr %i.j, align 8, !tbaa !26    ; 2 uses
-  %22 = add nuw nsw i64 %21, 1
-  store i64 %22, ptr %i.j, align 8, !tbaa !26
-  %23 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %21
-  store ptr %i.bk, ptr %23, align 8, !tbaa !27
+  store i64 2, ptr %i.j, align 8, !tbaa !26
+  %18 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  store ptr %i.bk, ptr %18, align 8, !tbaa !27
   %i.bl = lshr i64 %.051.lcssa88.i, 2
   %i.bm = add i64 %i.bl, %.051.lcssa88.i
   br label %bb.e
@@ -211,11 +207,9 @@ _ZN7meshoptL12hashBuckets2Em.exit.i:              ; preds = %bb.e
           to label %.noexc435 unwind label %bb.h, !inline_history !57 ; 6 uses
 
 .noexc435:                                        ; preds = %_ZN7meshoptL12hashBuckets2Em.exit.i
-  %24 = load i64, ptr %i.j, align 8, !tbaa !26    ; 2 uses
-  %25 = add nuw nsw i64 %24, 1
-  store i64 %25, ptr %i.j, align 8, !tbaa !26
-  %26 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %24
-  store ptr %i.bt, ptr %26, align 8, !tbaa !27
+  store i64 3, ptr %i.j, align 8, !tbaa !26
+  %19 = getelementptr inbounds nuw i8, ptr %16, i64 16
+  store ptr %i.bt, ptr %19, align 8, !tbaa !27
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.bt, i8 -1, i64 %i.br, i1 false)
   br i1 %.not.i, label %._crit_edge75.i, label %.lr.ph74.i
 
@@ -325,9 +319,7 @@ _ZN7meshoptL11hashLookup2IjNS_11RemapHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.i: ; pre
   br i1 %exitcond81.not.i, label %._crit_edge75.i, label %bb.f, !llvm.loop !61
 
 _ZN7meshoptL16buildSparseRemapEPjmmPmR17meshopt_Allocator.exit: ; preds = %._crit_edge75.i
-  %27 = load i64, ptr %i.j, align 8, !tbaa !26
-  %28 = add i64 %27, -1
-  store i64 %28, ptr %i.j, align 8, !tbaa !26
+  store i64 2, ptr %i.j, align 8, !tbaa !26
   br label %bb.i
 
 bb.h:                                             ; preds = %._crit_edge75.i, %_ZN7meshoptL12hashBuckets2Em.exit.i, %._crit_edge.thread.i, %bb.d
@@ -336,6 +328,8 @@ bb.h:                                             ; preds = %._crit_edge75.i, %_
   br label %bb.jl
 
 bb.i:                                             ; preds = %_ZN7meshoptL16buildSparseRemapEPjmmPmR17meshopt_Allocator.exit, %bb.c
+  %.sroa.phi = phi ptr [ %16, %bb.c ], [ %.sroa.gep1419, %_ZN7meshoptL16buildSparseRemapEPjmmPmR17meshopt_Allocator.exit ]
+  %20 = phi i64 [ 0, %bb.c ], [ 2, %_ZN7meshoptL16buildSparseRemapEPjmmPmR17meshopt_Allocator.exit ] ; 4 uses
   %.0702 = phi i64 [ %4, %bb.c ], [ %.051.lcssa88.i, %_ZN7meshoptL16buildSparseRemapEPjmmPmR17meshopt_Allocator.exit ] ; 69 uses
   %.0379 = phi ptr [ null, %bb.c ], [ %i.bk, %_ZN7meshoptL16buildSparseRemapEPjmmPmR17meshopt_Allocator.exit ] ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #14
@@ -348,12 +342,10 @@ bb.i:                                             ; preds = %_ZN7meshoptL16build
           to label %.noexc437 unwind label %bb.bq, !inline_history !62 ; 19 uses
 
 .noexc437:                                        ; preds = %bb.i
-  %i.eh = getelementptr inbounds nuw i8, ptr %16, i64 192 ; 39 uses
-  %29 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %30 = add nuw nsw i64 %29, 1
-  store i64 %30, ptr %i.eh, align 8, !tbaa !26
-  %31 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %29
-  store ptr %i.eg, ptr %31, align 8, !tbaa !27
+  %i.eh = getelementptr inbounds nuw i8, ptr %16, i64 192 ; 23 uses
+  %21 = or disjoint i64 %20, 1                    ; 2 uses
+  store i64 %21, ptr %i.eh, align 8, !tbaa !26
+  store ptr %i.eg, ptr %.sroa.phi, align 8, !tbaa !27
   store ptr %i.eg, ptr %17, align 8, !tbaa !36
   %i.ei = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.ej = icmp ugt i64 %2, 2305843009213693951
@@ -363,10 +355,9 @@ bb.i:                                             ; preds = %_ZN7meshoptL16build
           to label %bb.j unwind label %bb.bq, !inline_history !62 ; 15 uses
 
 bb.j:                                             ; preds = %.noexc437
-  %32 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.en = add nuw nsw i64 %32, 1
+  %i.en = add nuw nsw i64 %20, 2                  ; 2 uses
   store i64 %i.en, ptr %i.eh, align 8, !tbaa !26
-  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %32
+  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %21
   store ptr %i.em, ptr %i.eo, align 8, !tbaa !27
   %i.ep = getelementptr inbounds nuw i8, ptr %17, i64 8
   store ptr %i.em, ptr %i.ep, align 8, !tbaa !37
@@ -585,20 +576,18 @@ _ZN7meshoptL19updateEdgeAdjacencyERNS_13EdgeAdjacencyEPKjmmS3_.exit: ; preds = %
           to label %bb.k unwind label %bb.br, !inline_history !4 ; 58 uses
 
 bb.k:                                             ; preds = %_ZN7meshoptL19updateEdgeAdjacencyERNS_13EdgeAdjacencyEPKjmmS3_.exit
-  %33 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.is = add nuw nsw i64 %33, 1
+  %i.is = add nuw nsw i64 %20, 3                  ; 2 uses
   store i64 %i.is, ptr %i.eh, align 8, !tbaa !26
-  %i.it = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %33
+  %i.it = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.en
   store ptr %i.ir, ptr %i.it, align 8, !tbaa !27
   %i.iu = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.iv = invoke noundef ptr %i.iu(i64 noundef %i.iq)
           to label %bb.l unwind label %bb.bs, !inline_history !4 ; 23 uses
 
 bb.l:                                             ; preds = %bb.k
-  %34 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %35 = add nuw nsw i64 %34, 1
-  store i64 %35, ptr %i.eh, align 8, !tbaa !26
-  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %34
+  %22 = or disjoint i64 %20, 4
+  store i64 %22, ptr %i.eh, align 8, !tbaa !26
+  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.is
   store ptr %i.iv, ptr %i.iw, align 8, !tbaa !27
   invoke fastcc void @_ZN7meshoptL18buildPositionRemapEPjS0_PKfmmPKjR17meshopt_Allocator(ptr noundef %i.ir, ptr noundef %i.iv, ptr noundef %3, i64 noundef %.0702, i64 noundef %5, ptr noundef %.0379, ptr noundef nonnull align 8 dereferenceable(200) %16)
           to label %bb.m unwind label %bb.bs
@@ -609,8 +598,8 @@ bb.m:                                             ; preds = %bb.l
           to label %bb.n unwind label %bb.bt, !inline_history !65 ; 87 uses
 
 bb.n:                                             ; preds = %bb.m
-  %i.iz = load i64, ptr %i.eh, align 8, !tbaa !26 ; 2 uses
-  %i.ja = add nuw nsw i64 %i.iz, 1
+  %i.iz = load i64, ptr %i.eh, align 8, !tbaa !26 ; 6 uses
+  %i.ja = add nuw nsw i64 %i.iz, 1                ; 2 uses
   store i64 %i.ja, ptr %i.eh, align 8, !tbaa !26
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.iz
   store ptr %i.iy, ptr %i.jb, align 8, !tbaa !27
@@ -619,20 +608,18 @@ bb.n:                                             ; preds = %bb.m
           to label %bb.o unwind label %bb.bu, !inline_history !4 ; 22 uses
 
 bb.o:                                             ; preds = %bb.n
-  %36 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.je = add nuw nsw i64 %36, 1
+  %i.je = add nuw nsw i64 %i.iz, 2                ; 2 uses
   store i64 %i.je, ptr %i.eh, align 8, !tbaa !26
-  %i.jf = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %36
+  %i.jf = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.ja
   store ptr %i.jd, ptr %i.jf, align 8, !tbaa !27
   %i.jg = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.jh = invoke noundef ptr %i.jg(i64 noundef %i.iq)
           to label %bb.p unwind label %bb.bv, !inline_history !4 ; 21 uses
 
 bb.p:                                             ; preds = %bb.o
-  %37 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.ji = add nuw nsw i64 %37, 1
+  %i.ji = add nuw nsw i64 %i.iz, 3                ; 2 uses
   store i64 %i.ji, ptr %i.eh, align 8, !tbaa !26
-  %i.jj = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %37
+  %i.jj = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.je
   store ptr %i.jh, ptr %i.jj, align 8, !tbaa !27
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.jd, i8 -1, i64 %i.es, i1 false)
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.jh, i8 -1, i64 %i.es, i1 false)
@@ -1035,10 +1022,9 @@ _ZN7meshoptL16classifyVerticesEPhPjS1_mRKNS_13EdgeAdjacencyEPKjS6_PKhS6_j.exit: 
           to label %bb.bo unwind label %bb.bw, !inline_history !5 ; 37 uses
 
 bb.bo:                                            ; preds = %_ZN7meshoptL16classifyVerticesEPhPjS1_mRKNS_13EdgeAdjacencyEPKjS6_PKhS6_j.exit
-  %38 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.za = add nuw nsw i64 %38, 1
+  %i.za = add nuw nsw i64 %i.iz, 4                ; 3 uses
   store i64 %i.za, ptr %i.eh, align 8, !tbaa !26
-  %i.zb = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %38
+  %i.zb = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.ji
   store ptr %i.yz, ptr %i.zb, align 8, !tbaa !27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.b, i8 0, i64 12, i1 false)
@@ -1161,10 +1147,9 @@ bb.bz:                                            ; preds = %bb.by, %.preheader7
   br i1 %niter1312.ncmp.1, label %.unr-lcssa, label %.preheader729, !llvm.loop !81
 
 bb.ca:                                            ; preds = %.epilog-lcssa
-  %39 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.aal = add nuw nsw i64 %39, 1
+  %i.aal = add nuw nsw i64 %i.iz, 5               ; 5 uses
   store i64 %i.aal, ptr %i.eh, align 8, !tbaa !26
-  %i.aam = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %39
+  %i.aam = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.za
   store ptr %i.zp, ptr %i.aam, align 8, !tbaa !27
   %i.aan = lshr i64 %7, 2                         ; 2 uses
   br i1 %.not88.i, label %_ZN7meshoptL17rescaleAttributesEPfPKfmmS2_mPKjS4_.exit, label %.lr.ph29.i
@@ -1323,6 +1308,7 @@ bb.cb:                                            ; preds = %.epilog-lcssa
   br label %bb.jj
 
 _ZN7meshoptL17rescaleAttributesEPfPKfmmS2_mPKjS4_.exit: ; preds = %._crit_edge.us.i, %._crit_edge.us.us.i, %.lr.ph29.i, %bb.ca, %bb.bo
+  %23 = phi i64 [ %i.za, %bb.bo ], [ %i.aal, %bb.ca ], [ %i.aal, %.lr.ph29.i ], [ %i.aal, %._crit_edge.us.us.i ], [ %i.aal, %._crit_edge.us.i ] ; 5 uses
   %.0352 = phi ptr [ null, %bb.bo ], [ %i.zp, %bb.ca ], [ %i.zp, %.lr.ph29.i ], [ %i.zp, %._crit_edge.us.us.i ], [ %i.zp, %._crit_edge.us.i ] ; 15 uses
   %.0330 = phi i64 [ 0, %bb.bo ], [ %.1351.lcssa, %bb.ca ], [ 0, %.lr.ph29.i ], [ %.1351.lcssa, %._crit_edge.us.us.i ], [ %.1351.lcssa, %._crit_edge.us.i ] ; 58 uses
   %i.adl = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
@@ -1333,10 +1319,9 @@ _ZN7meshoptL17rescaleAttributesEPfPKfmmS2_mPKjS4_.exit: ; preds = %._crit_edge.u
           to label %bb.cc unwind label %bb.ci, !inline_history !7 ; 14 uses
 
 bb.cc:                                            ; preds = %_ZN7meshoptL17rescaleAttributesEPfPKfmmS2_mPKjS4_.exit
-  %40 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.adq = add nuw nsw i64 %40, 1
+  %i.adq = add nuw nsw i64 %23, 1                 ; 2 uses
   store i64 %i.adq, ptr %i.eh, align 8, !tbaa !26
-  %i.adr = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %40
+  %i.adr = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %23
   store ptr %i.adp, ptr %i.adr, align 8, !tbaa !27
   call void @llvm.memset.p0.i64(ptr align 4 %i.adp, i8 0, i64 %i.adn, i1 false)
   %.not403 = icmp eq i64 %.0330, 0                ; 7 uses
@@ -1348,10 +1333,9 @@ bb.cd:                                            ; preds = %bb.cc
           to label %bb.ce unwind label %bb.cj, !inline_history !7 ; 4 uses
 
 bb.ce:                                            ; preds = %bb.cd
-  %41 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.adu = add nuw nsw i64 %41, 1
+  %i.adu = add nuw nsw i64 %23, 2                 ; 2 uses
   store i64 %i.adu, ptr %i.eh, align 8, !tbaa !26
-  %i.adv = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %41
+  %i.adv = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.adq
   store ptr %i.adt, ptr %i.adv, align 8, !tbaa !27
   call void @llvm.memset.p0.i64(ptr align 4 %i.adt, i8 0, i64 %i.adn, i1 false)
   %i.adw = mul i64 %.0330, %.0702                 ; 2 uses
@@ -1363,10 +1347,9 @@ bb.ce:                                            ; preds = %bb.cd
           to label %bb.cf unwind label %bb.cj, !inline_history !84 ; 4 uses
 
 bb.cf:                                            ; preds = %bb.ce
-  %42 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.aec = add nuw nsw i64 %42, 1
+  %i.aec = add nuw nsw i64 %23, 3                 ; 2 uses
   store i64 %i.aec, ptr %i.eh, align 8, !tbaa !26
-  %i.aed = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %42
+  %i.aed = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.adu
   store ptr %i.aeb, ptr %i.aed, align 8, !tbaa !27
   call void @llvm.memset.p0.i64(ptr align 4 %i.aeb, i8 0, i64 %i.adz, i1 false)
   %i.aee = and i32 %13, 536870912
@@ -1382,10 +1365,9 @@ bb.cg:                                            ; preds = %bb.cf
           to label %bb.ch unwind label %bb.cj, !inline_history !84 ; 3 uses
 
 bb.ch:                                            ; preds = %bb.cg
-  %43 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.aek = add nuw nsw i64 %43, 1
+  %i.aek = add nuw nsw i64 %23, 4
   store i64 %i.aek, ptr %i.eh, align 8, !tbaa !26
-  %i.ael = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %43
+  %i.ael = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.aec
   store ptr %i.aej, ptr %i.ael, align 8, !tbaa !27
   call void @llvm.memset.p0.i64(ptr align 4 %i.aej, i8 0, i64 %i.aeh, i1 false)
   br label %bb.ck
@@ -1788,8 +1770,8 @@ bb.dg:                                            ; preds = %_ZN7meshoptL21fillA
           to label %bb.dh unwind label %bb.dj, !inline_history !4 ; 6 uses
 
 bb.dh:                                            ; preds = %bb.dg
-  %i.bbg = load i64, ptr %i.eh, align 8, !tbaa !26 ; 2 uses
-  %i.bbh = add nuw nsw i64 %i.bbg, 1
+  %i.bbg = load i64, ptr %i.eh, align 8, !tbaa !26 ; 3 uses
+  %i.bbh = add nuw nsw i64 %i.bbg, 1              ; 2 uses
   store i64 %i.bbh, ptr %i.eh, align 8, !tbaa !26
   %i.bbi = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bbg
   store ptr %i.bbf, ptr %i.bbi, align 8, !tbaa !27
@@ -1800,10 +1782,9 @@ bb.dh:                                            ; preds = %bb.dg
           to label %bb.di unwind label %bb.dj, !inline_history !6 ; 10 uses
 
 bb.di:                                            ; preds = %bb.dh
-  %44 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.bbn = add nuw nsw i64 %44, 1
+  %i.bbn = add nuw nsw i64 %i.bbg, 2
   store i64 %i.bbn, ptr %i.eh, align 8, !tbaa !26
-  %i.bbo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %44
+  %i.bbo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bbh
   store ptr %i.bbm, ptr %i.bbo, align 8, !tbaa !27
   call fastcc void @_ZN7meshoptL17measureComponentsEPfmPKjPKNS_7Vector3Em(ptr noundef %i.bbm, i64 noundef %i.bbj, ptr noundef %i.bbf, ptr noundef %i.yz, i64 noundef %.0702)
   %.not832 = icmp eq i64 %i.bbj, 0
@@ -1975,8 +1956,8 @@ _ZN7meshoptL18boundEdgeCollapsesERKNS_13EdgeAdjacencyEmmPh.exit: ; preds = %.loo
           to label %bb.dk unwind label %bb.em, !inline_history !96 ; 13 uses
 
 bb.dk:                                            ; preds = %_ZN7meshoptL18boundEdgeCollapsesERKNS_13EdgeAdjacencyEmmPh.exit
-  %i.beb = load i64, ptr %i.eh, align 8, !tbaa !26 ; 2 uses
-  %i.bec = add nuw nsw i64 %i.beb, 1
+  %i.beb = load i64, ptr %i.eh, align 8, !tbaa !26 ; 5 uses
+  %i.bec = add nuw nsw i64 %i.beb, 1              ; 2 uses
   store i64 %i.bec, ptr %i.eh, align 8, !tbaa !26
   %i.bed = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.beb
   store ptr %i.bea, ptr %i.bed, align 8, !tbaa !27
@@ -1988,30 +1969,27 @@ bb.dk:                                            ; preds = %_ZN7meshoptL18bound
           to label %bb.dl unwind label %bb.en, !inline_history !4 ; 6 uses
 
 bb.dl:                                            ; preds = %bb.dk
-  %45 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.bej = add nuw nsw i64 %45, 1
+  %i.bej = add nuw nsw i64 %i.beb, 2              ; 2 uses
   store i64 %i.bej, ptr %i.eh, align 8, !tbaa !26
-  %i.bek = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %45
+  %i.bek = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bec
   store ptr %i.bei, ptr %i.bek, align 8, !tbaa !27
   %i.bel = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.bem = invoke noundef ptr %i.bel(i64 noundef %i.iq)
           to label %bb.dm unwind label %bb.eo, !inline_history !4 ; 16 uses
 
 bb.dm:                                            ; preds = %bb.dl
-  %46 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.ben = add nuw nsw i64 %46, 1
+  %i.ben = add nuw nsw i64 %i.beb, 3              ; 2 uses
   store i64 %i.ben, ptr %i.eh, align 8, !tbaa !26
-  %i.beo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %46
+  %i.beo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bej
   store ptr %i.bem, ptr %i.beo, align 8, !tbaa !27
   %i.bep = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.beq = invoke noundef ptr %i.bep(i64 noundef %.0702)
           to label %bb.dn unwind label %bb.ep, !inline_history !65 ; 17 uses
 
 bb.dn:                                            ; preds = %bb.dm
-  %47 = load i64, ptr %i.eh, align 8, !tbaa !26   ; 2 uses
-  %i.ber = add nuw nsw i64 %47, 1
+  %i.ber = add nuw nsw i64 %i.beb, 4
   store i64 %i.ber, ptr %i.eh, align 8, !tbaa !26
-  %i.bes = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %47
+  %i.bes = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.ben
   store ptr %i.beq, ptr %i.bes, align 8, !tbaa !27
   %i.bet = and i32 %13, 4
   %.not406 = icmp eq i32 %i.bet, 0

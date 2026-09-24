@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_ZN11procfs_core7keyring3Key9from_line17hd7df97abccecffbfE(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([112 x i8]) align 8 captures(address) dereferenceable(112) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @_ZN11procfs_core7keyring3Key9from_line17hd7df97abccecffbfE(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([112 x i8]) align 8 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 8 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -608,7 +608,7 @@ bb.l:                                             ; preds = %bb.i
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_ZN11procfs_core7keyring7KeyUser8from_str17hf6994ce1ceec79a0E(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(address) dereferenceable(48) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @_ZN11procfs_core7keyring7KeyUser8from_str17hf6994ce1ceec79a0E(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 10 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -1011,7 +1011,7 @@ bb.ce:                                            ; preds = %bb.cd
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: write, target_mem: none) uwtable
-define internal fastcc noundef range(i32 0, 128) i32 @_ZN11procfs_core7keyring8KeyFlags8from_str17he0df25ee570e0033E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #5 {
+define internal fastcc noundef range(i32 0, 128) i32 @_ZN11procfs_core7keyring8KeyFlags8from_str17he0df25ee570e0033E(ptr noalias noundef nonnull readonly align 1 captures(address) %0, i64 noundef %1) unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 24 uses
   %i.b = icmp samesign eq i64 %1, 0
@@ -1414,7 +1414,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_ZN11procfs_core7process5mount9MountInfo9from_line17ha1873a9b89bbdaddE(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([248 x i8]) align 8 captures(address) dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @_ZN11procfs_core7process5mount9MountInfo9from_line17ha1873a9b89bbdaddE(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([248 x i8]) align 8 captures(none) dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -1817,7 +1817,7 @@ bb.f:                                             ; preds = %_ZN4core3str11valid
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN77_$LT$procfs_core..process..FDTarget$u20$as$u20$core..str..traits..FromStr$GT$8from_str17h8c85920c345884f3E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(address) dereferenceable(48) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN77_$LT$procfs_core..process..FDTarget$u20$as$u20$core..str..traits..FromStr$GT$8from_str17h8c85920c345884f3E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 5 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -1829,15 +1829,13 @@ bb.a:
   %i.h = alloca [48 x i8], align 8                ; 8 uses
   %i.i = alloca [48 x i8], align 8                ; 8 uses
   %i.j = alloca [48 x i8], align 8                ; 8 uses
-  %.sroa.0212 = alloca [24 x i8], align 8         ; 4 uses
   %i.k = alloca [16 x i8], align 8                ; 5 uses
   %i.l = alloca [24 x i8], align 8                ; 2 uses
   %i.m = alloca [1 x i8], align 1                 ; 4 uses
   %i.n = alloca [16 x i8], align 8                ; 5 uses
   %i.o = alloca [24 x i8], align 8                ; 2 uses
   %i.p = alloca [16 x i8], align 8                ; 5 uses
-  %3 = alloca [24 x i8], align 8                  ; 2 uses
-  %.sroa.5146 = alloca [24 x i8], align 8         ; 5 uses
+  %.sroa.5146 = alloca [24 x i8], align 8         ; 2 uses
   %i.q = alloca [16 x i8], align 8                ; 5 uses
   %i.r = alloca [24 x i8], align 8                ; 2 uses
   %i.s = alloca [1 x i8], align 1                 ; 4 uses
@@ -2240,7 +2238,6 @@ bb.ai:                                            ; preds = %bb.h
   br i1 %i.ez, label %bb.aj, label %bb.am
 
 bb.aj:                                            ; preds = %bb.ai
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5146)
   %i.fa = call fastcc { ptr, i64 } @"_ZN4core3str4iter22SplitInternal$LT$P$GT$4next17h63b945dbfb19965bE"(ptr noalias noundef align 8 dereferenceable(72) %i.al) ; 2 uses
   %i.fb = extractvalue { ptr, i64 } %i.fa, 0      ; 2 uses
   %.not349 = icmp eq ptr %i.fb, null
@@ -2261,28 +2258,25 @@ bb.ak:                                            ; preds = %bb.aj
   store i64 1, ptr %.sroa.6449.0..sroa_idx, align 8, !noalias !6114
   %.sroa.7450.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   store ptr null, ptr %.sroa.7450.0..sroa_idx, align 8, !noalias !6114
-  call void @_ZN5alloc3fmt6format12format_inner17hce37e7516f243f46E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %3, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.d)
+  call void @_ZN5alloc3fmt6format12format_inner17hce37e7516f243f46E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %.sroa.5146, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !6113
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5146, i64 24, i1 false)
   %.sroa.4161.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr @249, ptr %.sroa.4161.0..sroa_idx, align 8
   %.sroa.5162.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 106, ptr %.sroa.5162.0..sroa_idx, align 8
   %.sroa.6163.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 742, ptr %.sroa.6163.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5146)
   br label %bb.r
 
 bb.al:                                            ; preds = %bb.aj
   %i.fc = extractvalue { ptr, i64 } %i.fa, 1
-  call fastcc void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7fb4e59b56c4d0bdE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %.sroa.5146, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.fb, i64 noundef %i.fc)
-  %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 -9223372036854775804, ptr %i.fd, align 8
-  %.sroa.5146.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5146.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5146, i64 24, i1 false)
+  %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 16
+  tail call fastcc void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7fb4e59b56c4d0bdE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.fd, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.fb, i64 noundef %i.fc)
+  %.sroa.5146.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 -9223372036854775804, ptr %.sroa.5146.0..sroa_idx, align 8
   store i64 -9223372036854775803, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5146)
   br label %bb.q
 
 bb.am:                                            ; preds = %bb.ai, %bb.aa, %bb.s, %bb.i, %bb.h
@@ -2578,14 +2572,11 @@ bb.bf:                                            ; preds = %.lr.ph
 
 "_ZN4core3num21_$LT$impl$u20$u64$GT$16from_ascii_radix17h72ad40eebc575d6aE.exit": ; preds = %.preheader57.split.us.i, %bb.bc, %.preheader57.i
   %.sroa.9.0494 = phi i64 [ %i.hf, %bb.bc ], [ 0, %.preheader57.i ], [ %i.ht, %.preheader57.split.us.i ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0212)
-  call fastcc void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7fb4e59b56c4d0bdE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %.sroa.0212, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %.sroa.4.1.i)
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hu, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0212, i64 24, i1 false)
+  tail call fastcc void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7fb4e59b56c4d0bdE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.hu, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %.sroa.4.1.i)
   %.sroa.4213.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %.sroa.9.0494, ptr %.sroa.4213.0..sroa_idx, align 8
   store i64 -9223372036854775803, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0212)
   br label %bb.q
 
 bb.bg:                                            ; preds = %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7fb4e59b56c4d0bdE.exit", %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7fb4e59b56c4d0bdE.exit409", %bb.q, %bb.r
@@ -2988,7 +2979,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN88_$LT$procfs_core..sys..kernel..SemaphoreLimits$u20$as$u20$core..str..traits..FromStr$GT$8from_str17h52169e380a97c9fbE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN88_$LT$procfs_core..sys..kernel..SemaphoreLimits$u20$as$u20$core..str..traits..FromStr$GT$8from_str17h52169e380a97c9fbE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 1 captures(address) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7233)

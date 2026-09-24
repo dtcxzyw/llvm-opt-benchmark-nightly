@@ -202,7 +202,7 @@ _ZN7testing8internal8EqHelper7CompareIjjTnPNSt9enable_ifIXoontsr3std11is_integra
   %i.o = alloca i32, align 4                      ; 4 uses
   %50 = alloca %"class.testing::Message", align 8 ; 7 uses
   %51 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
-  %i.p = alloca i32, align 4                      ; 8 uses
+  %i.p = alloca i32, align 4                      ; 7 uses
   %52 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
   %53 = alloca %"class.testing::Message", align 8 ; 7 uses
   %54 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
@@ -605,14 +605,13 @@ _ZN7testing7MessageD2Ev.exit772:                  ; preds = %_ZNKSt14default_del
 bb.nv:                                            ; preds = %bb.nl, %_ZN7testing7MessageD2Ev.exit769
   call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %106) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %106) #20
+  br label %.critedge363
+
+.critedge363:                                     ; preds = %_ZN7testing7MessageD2Ev.exit761, %_ZN7testing7MessageD2Ev.exit753, %_ZN7testing7MessageD2Ev.exit745, %_ZN7testing7MessageD2Ev.exit737, %_ZN7testing7MessageD2Ev.exit729, %_ZN7testing7MessageD2Ev.exit721, %_ZN7testing7MessageD2Ev.exit713, %_ZN7testing7MessageD2Ev.exit705, %_ZN7testing7MessageD2Ev.exit697, %_ZN7testing7MessageD2Ev.exit689, %_ZN7testing7MessageD2Ev.exit681, %_ZN7testing7MessageD2Ev.exit673, %_ZN7testing7MessageD2Ev.exit665, %_ZN7testing7MessageD2Ev.exit657, %_ZN7testing7MessageD2Ev.exit649, %_ZN7testing7MessageD2Ev.exit641, %_ZN7testing7MessageD2Ev.exit633, %_ZN7testing7MessageD2Ev.exit625, %bb.nv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #20
   br label %bb.nw
 
-.critedge363:                                     ; preds = %_ZN7testing7MessageD2Ev.exit761, %_ZN7testing7MessageD2Ev.exit753, %_ZN7testing7MessageD2Ev.exit745, %_ZN7testing7MessageD2Ev.exit737, %_ZN7testing7MessageD2Ev.exit729, %_ZN7testing7MessageD2Ev.exit721, %_ZN7testing7MessageD2Ev.exit713, %_ZN7testing7MessageD2Ev.exit705, %_ZN7testing7MessageD2Ev.exit697, %_ZN7testing7MessageD2Ev.exit689, %_ZN7testing7MessageD2Ev.exit681, %_ZN7testing7MessageD2Ev.exit673, %_ZN7testing7MessageD2Ev.exit665, %_ZN7testing7MessageD2Ev.exit657, %_ZN7testing7MessageD2Ev.exit649, %_ZN7testing7MessageD2Ev.exit641, %_ZN7testing7MessageD2Ev.exit633, %_ZN7testing7MessageD2Ev.exit625
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #20
-  br label %bb.nw
-
-bb.nw:                                            ; preds = %_ZN7testing7MessageD2Ev.exit617, %_ZN7testing7MessageD2Ev.exit609, %_ZN7testing7MessageD2Ev.exit601, %_ZN7testing7MessageD2Ev.exit593, %_ZN7testing7MessageD2Ev.exit584, %_ZN7testing15AssertionResultD2Ev.exit570, %_ZN7testing15AssertionResultD2Ev.exit551, %_ZN7testing15AssertionResultD2Ev.exit532, %_ZN7testing15AssertionResultD2Ev.exit513, %_ZN7testing15AssertionResultD2Ev.exit494, %_ZN7testing15AssertionResultD2Ev.exit476, %_ZN7testing15AssertionResultD2Ev.exit458, %_ZN7testing15AssertionResultD2Ev.exit439, %_ZN7testing15AssertionResultD2Ev.exit421, %_ZN7testing15AssertionResultD2Ev.exit402, %_ZN7testing15AssertionResultD2Ev.exit382, %_ZN7testing15AssertionResultD2Ev.exit, %bb.nv, %.critedge363
+bb.nw:                                            ; preds = %_ZN7testing7MessageD2Ev.exit617, %_ZN7testing7MessageD2Ev.exit609, %_ZN7testing7MessageD2Ev.exit601, %_ZN7testing7MessageD2Ev.exit593, %_ZN7testing7MessageD2Ev.exit584, %_ZN7testing15AssertionResultD2Ev.exit570, %_ZN7testing15AssertionResultD2Ev.exit551, %_ZN7testing15AssertionResultD2Ev.exit532, %_ZN7testing15AssertionResultD2Ev.exit513, %_ZN7testing15AssertionResultD2Ev.exit494, %_ZN7testing15AssertionResultD2Ev.exit476, %_ZN7testing15AssertionResultD2Ev.exit458, %_ZN7testing15AssertionResultD2Ev.exit439, %_ZN7testing15AssertionResultD2Ev.exit421, %_ZN7testing15AssertionResultD2Ev.exit402, %_ZN7testing15AssertionResultD2Ev.exit382, %_ZN7testing15AssertionResultD2Ev.exit, %.critedge363
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20

@@ -205,10 +205,8 @@ bb.ca:                                            ; preds = %bb.bz
   invoke void @__cxa_end_catch()
           to label %.lr.ph.i.preheader.i644 unwind label %bb.cf
 
-.lr.ph.i.preheader.i644:                          ; preds = %bb.cc, %bb.ca
-  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i645 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41 ; 2 uses
-  %5 = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i645, -5
-  store i32 %5, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
+.lr.ph.i.preheader.i644:                          ; preds = %bb.ca, %bb.cc
+  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i645 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.ms = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i645, -15
   store i32 %i.ms, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   ret void

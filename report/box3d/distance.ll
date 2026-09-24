@@ -204,7 +204,7 @@ bb.a:
   %.sroa.28.0..sroa_idx954 = getelementptr inbounds nuw i8, ptr %7, i64 136
   %.sroa.32.0..sroa_idx959 = getelementptr inbounds nuw i8, ptr %7, i64 144
   %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 176 ; 11 uses
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 160 ; 16 uses
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 160 ; 11 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %7, i64 164 ; 5 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 172 ; 4 uses
   %i.br = fsub float %i.ag, %i.ah                 ; 2 uses
@@ -487,7 +487,7 @@ b3GetSweepTransform.exit421:                      ; preds = %b3GetSweepTransform
   %i.jp = fmul <2 x float> %i.jl, splat (float 2.000000e+00)
   %i.jq = fadd <2 x float> %.sroa.0218.0.copyload, %i.jp ; 20 uses
   %i.jr = fmul float %i.jo, 2.000000e+00
-  %i.js = fadd float %.sroa.2219.0.copyload, %i.jr ; 15 uses
+  %i.js = fadd float %.sroa.2219.0.copyload, %i.jr ; 19 uses
   %.sroa.0207.0.copyload = load <2 x float>, ptr %6, align 8 ; 22 uses
   %.sroa.2208.0.copyload = load float, ptr %.sroa.2208.0..sroa_idx, align 8 ; 19 uses
   %.sroa.0197.0.copyload = load <2 x float>, ptr %i.bh, align 4 ; 22 uses
@@ -890,7 +890,7 @@ bb.w:                                             ; preds = %bb.v
 
 b3Normalize.exit723.i:                            ; preds = %bb.w, %bb.v
   %.sroa.018.0.i717.i = phi <2 x float> [ %i.xv, %bb.w ], [ zeroinitializer, %bb.v ] ; 10 uses
-  %.sroa.5.0.i718.i = phi float [ %i.xw, %bb.w ], [ 0.000000e+00, %bb.v ] ; 6 uses
+  %.sroa.5.0.i718.i = phi float [ %i.xw, %bb.w ], [ 0.000000e+00, %bb.v ] ; 7 uses
   %i.xx = shufflevector <2 x float> %.sroa.018.0.i717.i, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
   %.sroa.03.0.vec.extract.i.i.i576 = extractelement <2 x float> %.sroa.018.0.i717.i, i64 0
   %foldExtExtBinop2545 = fmul <2 x float> %.sroa.4.0.i.i.i702, %.sroa.018.0.i717.i
@@ -1180,7 +1180,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 b3Normalize.exit705.i:                            ; preds = %bb.ad, %bb.ac
   %.sroa.018.0.i699.i = phi <2 x float> [ %i.afz, %bb.ad ], [ zeroinitializer, %bb.ac ] ; 2 uses
-  %.sroa.5.0.i700.i = phi float [ %i.aga, %bb.ad ], [ 0.000000e+00, %bb.ac ]
+  %.sroa.5.0.i700.i = phi float [ %i.aga, %bb.ad ], [ 0.000000e+00, %bb.ac ] ; 2 uses
   store <2 x float> %.sroa.018.0.i699.i, ptr %i.bl, align 8, !alias.scope !89
   store float %.sroa.5.0.i700.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !16, !alias.scope !89
   br label %b3MakeSeparationFunction.exit
@@ -1374,7 +1374,7 @@ b3Normalize.exit696.i:                            ; preds = %bb.ai, %bb.ah
   %i.aky = fneg <2 x float> %.sroa.018.0.i690.i
   %i.akz = fneg float %.sroa.5.0.i691.i
   %.sroa.0402.0.i = select i1 %i.akx, <2 x float> %i.aky, <2 x float> %.sroa.018.0.i690.i ; 2 uses
-  %.sroa.9405.0.i = select i1 %i.akx, float %i.akz, float %.sroa.5.0.i691.i
+  %.sroa.9405.0.i = select i1 %i.akx, float %i.akz, float %.sroa.5.0.i691.i ; 2 uses
   store i32 3, ptr %i.bp, align 8, !tbaa !39, !alias.scope !89
   store <2 x float> %.sroa.0402.0.i, ptr %i.bl, align 8, !alias.scope !89
   store float %.sroa.9405.0.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !16, !alias.scope !89
@@ -1558,7 +1558,7 @@ b3Normalize.exit687.i:                            ; preds = %bb.al, %bb.ak
   %i.apy = fneg <2 x float> %.sroa.018.0.i681.i
   %i.apz = fneg float %.sroa.5.0.i682.i
   %.sroa.0266.0.i = select i1 %i.apx, <2 x float> %i.apy, <2 x float> %.sroa.018.0.i681.i ; 2 uses
-  %.sroa.9269.0.i = select i1 %i.apx, float %i.apz, float %.sroa.5.0.i682.i
+  %.sroa.9269.0.i = select i1 %i.apx, float %i.apz, float %.sroa.5.0.i682.i ; 2 uses
   store i32 4, ptr %i.bp, align 8, !tbaa !39, !alias.scope !89
   store <2 x float> %.sroa.0266.0.i, ptr %i.bl, align 8, !alias.scope !89
   store float %.sroa.9269.0.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !16, !alias.scope !89
@@ -1602,7 +1602,7 @@ bb.an:                                            ; preds = %bb.am
 
 b3Normalize.exit678.i:                            ; preds = %bb.an, %bb.am
   %.sroa.018.0.i672.i = phi <2 x float> [ %i.aqq, %bb.an ], [ zeroinitializer, %bb.am ] ; 10 uses
-  %.sroa.5.0.i673.i = phi float [ %i.aqr, %bb.an ], [ 0.000000e+00, %bb.am ] ; 6 uses
+  %.sroa.5.0.i673.i = phi float [ %i.aqr, %bb.an ], [ 0.000000e+00, %bb.am ] ; 7 uses
   %i.aqs = shufflevector <2 x float> %.sroa.018.0.i672.i, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
   %.sroa.03.0.vec.extract.i.i1054.i = extractelement <2 x float> %.sroa.018.0.i672.i, i64 0
   %foldExtExtBinop2659 = fmul <2 x float> %.sroa.4.0.i.i.i702, %.sroa.018.0.i672.i
@@ -1894,7 +1894,7 @@ bb.au:                                            ; preds = %bb.at
 
 b3Normalize.exit.i:                               ; preds = %bb.au, %bb.at
   %.sroa.018.0.i.i = phi <2 x float> [ %i.ayv, %bb.au ], [ zeroinitializer, %bb.at ] ; 2 uses
-  %.sroa.5.0.i.i = phi float [ %i.ayw, %bb.au ], [ 0.000000e+00, %bb.at ]
+  %.sroa.5.0.i.i = phi float [ %i.ayw, %bb.au ], [ 0.000000e+00, %bb.at ] ; 2 uses
   store <2 x float> %.sroa.018.0.i.i, ptr %i.bl, align 8, !alias.scope !89
   store float %.sroa.5.0.i.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !16, !alias.scope !89
   br label %b3MakeSeparationFunction.exit
@@ -1910,6 +1910,7 @@ bb.av:                                            ; preds = %bb.as
 b3MakeSeparationFunction.exit:                    ; preds = %b3GetSweepTransform.exit688, %bb.t, %bb.y, %b3Normalize.exit705.i, %bb.ae, %bb.af, %b3Normalize.exit696.i, %b3Normalize.exit687.i, %bb.ap, %b3Normalize.exit.i, %bb.av
   %.sroa.216.0.copyload.i2138.a = phi float [ 0.000000e+00, %b3GetSweepTransform.exit688 ], [ 0.000000e+00, %bb.t ], [ 0.000000e+00, %bb.y ], [ 0.000000e+00, %b3Normalize.exit705.i ], [ %.sroa.10.0.i, %bb.ae ], [ 0.000000e+00, %bb.af ], [ %i.aim, %b3Normalize.exit696.i ], [ %i.anm, %b3Normalize.exit687.i ], [ 0.000000e+00, %bb.ap ], [ 0.000000e+00, %b3Normalize.exit.i ], [ %.sroa.8.0.i, %bb.av ] ; 3 uses
   %.sroa.015.0.copyload.i2134.a = phi <2 x float> [ zeroinitializer, %b3GetSweepTransform.exit688 ], [ zeroinitializer, %bb.t ], [ zeroinitializer, %bb.y ], [ zeroinitializer, %b3Normalize.exit705.i ], [ %i.adq, %bb.ae ], [ zeroinitializer, %bb.af ], [ %i.ahj, %b3Normalize.exit696.i ], [ %i.amm, %b3Normalize.exit687.i ], [ zeroinitializer, %bb.ap ], [ zeroinitializer, %b3Normalize.exit.i ], [ %i.awm, %bb.av ] ; 3 uses
+  %.sroa.249.0..sroa_idx.i.promoted = phi float [ 0.000000e+00, %b3GetSweepTransform.exit688 ], [ %i.js, %bb.t ], [ %i.js, %bb.y ], [ %.sroa.5.0.i700.i, %b3Normalize.exit705.i ], [ %.sroa.5.0.i718.i, %bb.ae ], [ %i.js, %bb.af ], [ %.sroa.9405.0.i, %b3Normalize.exit696.i ], [ %.sroa.9269.0.i, %b3Normalize.exit687.i ], [ %i.js, %bb.ap ], [ %.sroa.5.0.i.i, %b3Normalize.exit.i ], [ %.sroa.5.0.i673.i, %bb.av ]
   %.promoted1163 = phi <2 x float> [ zeroinitializer, %b3GetSweepTransform.exit688 ], [ %i.jq, %bb.t ], [ %i.jq, %bb.y ], [ %.sroa.018.0.i699.i, %b3Normalize.exit705.i ], [ %.sroa.018.0.i717.i, %bb.ae ], [ %i.jq, %bb.af ], [ %.sroa.0402.0.i, %b3Normalize.exit696.i ], [ %.sroa.0266.0.i, %b3Normalize.exit687.i ], [ %i.jq, %bb.ap ], [ %.sroa.018.0.i.i, %b3Normalize.exit.i ], [ %.sroa.018.0.i672.i, %bb.av ]
   %.promoted1162 = phi i32 [ 0, %b3GetSweepTransform.exit688 ], [ 1, %bb.t ], [ 1, %bb.y ], [ 1, %b3Normalize.exit705.i ], [ 2, %bb.ae ], [ 1, %bb.af ], [ 3, %b3Normalize.exit696.i ], [ 4, %b3Normalize.exit687.i ], [ 1, %bb.ap ], [ 1, %b3Normalize.exit.i ], [ 2, %bb.av ]
   %i.ayx = load ptr, ptr %2, align 8              ; 11 uses
@@ -1934,6 +1935,7 @@ bb.aw:                                            ; preds = %.thread1067, %b3Mak
   %.sroa.015.0.copyload.i = phi <2 x float> [ %.sroa.015.0.copyload.i2134.a, %b3MakeSeparationFunction.exit ], [ %.sroa.015.0.copyload.i2133, %.thread1067 ] ; 8 uses
   %i.aze = phi i32 [ %i.cu, %b3MakeSeparationFunction.exit ], [ %i.ckt, %.thread1067 ] ; 5 uses
   %.lcssa11611167 = phi i32 [ %.lcssa116111701984, %b3MakeSeparationFunction.exit ], [ %i.ckr, %.thread1067 ] ; 6 uses
+  %.sroa.249.0.copyload.i1167 = phi float [ %.sroa.249.0..sroa_idx.i.promoted, %b3MakeSeparationFunction.exit ], [ %.sroa.249.0.copyload.i1166, %.thread1067 ] ; 19 uses
   %.sroa.048.0.copyload.i1165 = phi <2 x float> [ %.promoted1163, %b3MakeSeparationFunction.exit ], [ %.sroa.048.0.copyload.i1164, %.thread1067 ] ; 25 uses
   %i.azf = phi i32 [ %.promoted1162, %b3MakeSeparationFunction.exit ], [ %i.cks, %.thread1067 ] ; 4 uses
   %.0332 = phi i32 [ 0, %b3MakeSeparationFunction.exit ], [ %i.cku, %.thread1067 ]
@@ -2096,12 +2098,11 @@ b3GetSweepTransform.exit774:                      ; preds = %b3GetSweepTransform
   ]
 
 bb.az:                                            ; preds = %b3GetSweepTransform.exit774
-  %.sroa.6.0.copyload.i = load float, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !16 ; 3 uses
   %.sroa.03.4.vec.extract.i.i.i593 = extractelement <2 x float> %.sroa.048.0.copyload.i1165, i64 1 ; 4 uses
   %i.bdi = shufflevector <2 x float> %.sroa.048.0.copyload.i1165, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.bdj = insertelement <2 x float> %i.bdi, float %.sroa.6.0.copyload.i, i64 0 ; 6 uses
+  %i.bdj = insertelement <2 x float> %i.bdi, float %.sroa.249.0.copyload.i1167, i64 0 ; 6 uses
   %i.bdk = fmul <2 x float> %i.bbb, %i.bdj
-  %i.bdl = insertelement <2 x float> %i.bdi, float %.sroa.6.0.copyload.i, i64 1 ; 3 uses
+  %i.bdl = insertelement <2 x float> %i.bdi, float %.sroa.249.0.copyload.i1167, i64 1 ; 3 uses
   %i.bdm = fmul <2 x float> %i.bal, %i.bdl
   %i.bdn = fmul <2 x float> %i.bal, %.sroa.048.0.copyload.i1165
   %i.bdo = fmul <2 x float> %.sroa.010.0.i.i.i787, %i.bdj
@@ -2124,7 +2125,7 @@ bb.az:                                            ; preds = %b3GetSweepTransform
   %i.beb = fadd float %.sroa.03.4.vec.extract.i.i.i593, %i.bea
   %i.bec = fadd <2 x float> %i.bdj, %i.bdz
   %i.bed = fmul float %.sroa.3.8.vec.extract.i.i760, %.sroa.03.4.vec.extract.i.i.i593
-  %i.bee = fmul float %.sroa.011.4.vec.extract.i.i.i761, %.sroa.6.0.copyload.i
+  %i.bee = fmul float %.sroa.011.4.vec.extract.i.i.i761, %.sroa.249.0.copyload.i1167
   %i.bef = fmul <2 x float> %.sroa.010.0.i.i.i744, %i.bdj ; 2 uses
   %i.beg = fmul <2 x float> %i.bcj, %.sroa.048.0.copyload.i1165 ; 2 uses
   %i.beh = shufflevector <2 x float> %i.bef, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
@@ -2314,17 +2315,16 @@ b3GetPointSupport.exit407.i:                      ; preds = %b3GetPointSupport.e
   br label %b3FindMinSeparation.exit
 
 bb.bc:                                            ; preds = %b3GetSweepTransform.exit774
-  %.sroa.2224.0.copyload.i = load float, ptr %.sroa.6.0..sroa_idx.i, align 8 ; 4 uses
   %.sroa.03.0.vec.extract.i.i451.i = extractelement <2 x float> %.sroa.048.0.copyload.i1165, i64 0
   %i.bit = shufflevector <2 x float> %.sroa.017.0.copyload.i605, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
-  %i.biu = fmul float %.sroa.011.0.vec.extract.i.i.i807, %.sroa.2224.0.copyload.i
+  %i.biu = fmul float %.sroa.011.0.vec.extract.i.i.i807, %.sroa.249.0.copyload.i1167
   %i.biv = shufflevector <2 x float> %.sroa.048.0.copyload.i1165, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.biw = insertelement <2 x float> %i.biv, float %.sroa.2224.0.copyload.i, i64 1
+  %i.biw = insertelement <2 x float> %i.biv, float %.sroa.249.0.copyload.i1167, i64 1
   %i.bix = fmul <2 x float> %.sroa.010.0.i.i.i787, %i.biw
   %i.biy = fmul <2 x float> %i.bbb, %.sroa.048.0.copyload.i1165
   %i.biz = fsub <2 x float> %i.bix, %i.biy
   %i.bja = fmul float %.sroa.3.12.vec.extract.i.i808, %.sroa.03.0.vec.extract.i.i451.i
-  %i.bjb = fmul float %.sroa.3.12.vec.extract.i.i808, %.sroa.2224.0.copyload.i
+  %i.bjb = fmul float %.sroa.3.12.vec.extract.i.i808, %.sroa.249.0.copyload.i1167
   %i.bjc = fmul <2 x float> %.sroa.4.0.i.i.i788, %.sroa.048.0.copyload.i1165 ; 2 uses
   %i.bjd = extractelement <2 x float> %i.bjc, i64 0
   %i.bje = fsub float %i.bjd, %i.biu
@@ -2347,7 +2347,7 @@ bb.bc:                                            ; preds = %b3GetSweepTransform
   %i.bjs = fmul <2 x float> %i.bjq, splat (float 2.000000e+00)
   %i.bjt = fmul float %i.bjr, 2.000000e+00
   %i.bju = fadd <2 x float> %.sroa.048.0.copyload.i1165, %i.bjs ; 3 uses
-  %i.bjv = fadd float %.sroa.2224.0.copyload.i, %i.bjt ; 2 uses
+  %i.bjv = fadd float %.sroa.249.0.copyload.i1167, %i.bjt ; 2 uses
   %foldExtExtBinop2772 = fmul <2 x float> %.sroa.4.0.i.i.i745, %.sroa.017.0.copyload.i605
   %i.bjw = fmul float %.sroa.011.4.vec.extract.i.i.i761, %.sroa.218.0.copyload.i607
   %i.bjx = insertelement <2 x float> %i.bit, float %.sroa.218.0.copyload.i607, i64 1 ; 2 uses
@@ -2629,14 +2629,13 @@ b3GetPointSupport.exit545.i:                      ; preds = %b3GetPointSupport.e
   br label %b3FindMinSeparation.exit
 
 bb.bg:                                            ; preds = %b3GetSweepTransform.exit774
-  %.sroa.2105.0.copyload.i = load float, ptr %.sroa.6.0..sroa_idx.i, align 8 ; 3 uses
-  %i.brb = fmul float %.sroa.011.4.vec.extract.i.i.i804, %.sroa.2105.0.copyload.i
+  %i.brb = fmul float %.sroa.011.4.vec.extract.i.i.i804, %.sroa.249.0.copyload.i1167
   %.sroa.03.4.vec.extract.i.i596.i = extractelement <2 x float> %.sroa.048.0.copyload.i1165, i64 1 ; 2 uses
   %i.brc = fmul float %.sroa.3.8.vec.extract.i.i803, %.sroa.03.4.vec.extract.i.i596.i
   %.sroa.03.4.vec.extract.i.i606.i = extractelement <2 x float> %.sroa.096.0.copyload.i, i64 1 ; 2 uses
   %i.brd = fmul <2 x float> %i.bal, %.sroa.048.0.copyload.i1165 ; 2 uses
   %i.bre = shufflevector <2 x float> %.sroa.048.0.copyload.i1165, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.brf = insertelement <2 x float> %i.bre, float %.sroa.2105.0.copyload.i, i64 0 ; 2 uses
+  %i.brf = insertelement <2 x float> %i.bre, float %.sroa.249.0.copyload.i1167, i64 0 ; 2 uses
   %i.brg = fmul <2 x float> %.sroa.010.0.i.i.i787, %i.brf ; 2 uses
   %i.brh = shufflevector <2 x float> %i.brd, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.bri = insertelement <2 x float> %i.brh, float %i.brb, i64 0
@@ -2645,7 +2644,7 @@ bb.bg:                                            ; preds = %b3GetSweepTransform
   %i.brl = fsub <2 x float> %i.bri, %i.brk
   %i.brm = fsub <2 x float> %i.brd, %i.brg
   %i.brn = fmul <2 x float> %i.bau, %.sroa.048.0.copyload.i1165
-  %i.bro = insertelement <2 x float> %i.bre, float %.sroa.2105.0.copyload.i, i64 1
+  %i.bro = insertelement <2 x float> %i.bre, float %.sroa.249.0.copyload.i1167, i64 1
   %i.brp = fmul <2 x float> %i.bau, %i.bro
   %i.brq = fadd <2 x float> %i.brn, %i.brl        ; 2 uses
   %i.brr = fadd <2 x float> %i.brp, %i.brm        ; 2 uses
@@ -2810,13 +2809,12 @@ b3GetPointSupport.exit660.i:                      ; preds = %bb.bg, %b3GetPointS
   br label %b3FindMinSeparation.exit
 
 bb.bi:                                            ; preds = %b3GetSweepTransform.exit774
-  %.sroa.249.0.copyload.i = load float, ptr %.sroa.6.0..sroa_idx.i, align 8 ; 3 uses
   %.sroa.03.4.vec.extract.i.i693.i = extractelement <2 x float> %.sroa.048.0.copyload.i1165, i64 1 ; 2 uses
-  %i.bvx = fmul float %.sroa.011.4.vec.extract.i.i.i761, %.sroa.249.0.copyload.i
+  %i.bvx = fmul float %.sroa.011.4.vec.extract.i.i.i761, %.sroa.249.0.copyload.i1167
   %i.bvy = fmul float %.sroa.3.8.vec.extract.i.i760, %.sroa.03.4.vec.extract.i.i693.i
   %i.bvz = fmul <2 x float> %i.bcj, %.sroa.048.0.copyload.i1165 ; 2 uses
   %i.bwa = shufflevector <2 x float> %.sroa.048.0.copyload.i1165, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.bwb = insertelement <2 x float> %i.bwa, float %.sroa.249.0.copyload.i, i64 0 ; 2 uses
+  %i.bwb = insertelement <2 x float> %i.bwa, float %.sroa.249.0.copyload.i1167, i64 0 ; 2 uses
   %i.bwc = fmul <2 x float> %.sroa.010.0.i.i.i744, %i.bwb ; 2 uses
   %i.bwd = shufflevector <2 x float> %i.bvz, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.bwe = insertelement <2 x float> %i.bwd, float %i.bvx, i64 0
@@ -2825,7 +2823,7 @@ bb.bi:                                            ; preds = %b3GetSweepTransform
   %i.bwh = fsub <2 x float> %i.bwe, %i.bwg
   %i.bwi = fsub <2 x float> %i.bvz, %i.bwc
   %i.bwj = fmul <2 x float> %i.bcs, %.sroa.048.0.copyload.i1165
-  %i.bwk = insertelement <2 x float> %i.bwa, float %.sroa.249.0.copyload.i, i64 1
+  %i.bwk = insertelement <2 x float> %i.bwa, float %.sroa.249.0.copyload.i1167, i64 1
   %i.bwl = fmul <2 x float> %i.bcs, %i.bwk
   %i.bwm = fadd <2 x float> %i.bwj, %i.bwh        ; 2 uses
   %i.bwn = fadd <2 x float> %i.bwl, %i.bwi        ; 2 uses
@@ -3228,17 +3226,16 @@ b3GetSweepTransform.exit860:                      ; preds = %b3GetSweepTransform
   %.sroa.010.0.i.i.i830 = phi <2 x float> [ %i.cho, %bb.bx ], [ zeroinitializer, %b3GetSweepTransform.exit903 ] ; 5 uses
   %.sroa.4.0.i.i.i831 = phi <2 x float> [ %i.chp, %bb.bx ], [ <float 0.000000e+00, float 1.000000e+00>, %b3GetSweepTransform.exit903 ] ; 5 uses
   %.sroa.011.4.vec.extract.i.i.i847 = extractelement <2 x float> %.sroa.010.0.i.i.i830, i64 1
-  %.sroa.226.0.copyload.i = load float, ptr %.sroa.6.0..sroa_idx.i, align 8 ; 4 uses
   %i.chq = shufflevector <2 x float> %.sroa.017.0.copyload.i605, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
-  %i.chr = fmul float %.sroa.011.0.vec.extract.i.i.i893, %.sroa.226.0.copyload.i
+  %i.chr = fmul float %.sroa.011.0.vec.extract.i.i.i893, %.sroa.249.0.copyload.i1167
   %i.chs = shufflevector <2 x float> %.sroa.048.0.copyload.i1165, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.cht = insertelement <2 x float> %i.chs, float %.sroa.226.0.copyload.i, i64 1
+  %i.cht = insertelement <2 x float> %i.chs, float %.sroa.249.0.copyload.i1167, i64 1
   %i.chu = fmul <2 x float> %.sroa.010.0.i.i.i873, %i.cht
   %i.chv = shufflevector <2 x float> %.sroa.010.0.i.i.i873, <2 x float> %.sroa.4.0.i.i.i874, <2 x i32> <i32 1, i32 2> ; 2 uses
   %i.chw = fmul <2 x float> %i.chv, %.sroa.048.0.copyload.i1165
   %i.chx = fsub <2 x float> %i.chu, %i.chw
   %i.chy = shufflevector <2 x float> %.sroa.4.0.i.i.i874, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.chz = insertelement <2 x float> %i.chs, float %.sroa.226.0.copyload.i, i64 0
+  %i.chz = insertelement <2 x float> %i.chs, float %.sroa.249.0.copyload.i1167, i64 0
   %i.cia = fmul <2 x float> %i.chy, %i.chz
   %i.cib = fmul <2 x float> %.sroa.4.0.i.i.i874, %.sroa.048.0.copyload.i1165 ; 2 uses
   %i.cic = extractelement <2 x float> %i.cib, i64 0
@@ -3260,7 +3257,7 @@ b3GetSweepTransform.exit860:                      ; preds = %b3GetSweepTransform
   %i.cip = fmul <2 x float> %i.cin, splat (float 2.000000e+00)
   %i.ciq = fmul float %i.cio, 2.000000e+00
   %i.cir = fadd <2 x float> %.sroa.048.0.copyload.i1165, %i.cip ; 3 uses
-  %i.cis = fadd float %.sroa.226.0.copyload.i, %i.ciq ; 2 uses
+  %i.cis = fadd float %.sroa.249.0.copyload.i1167, %i.ciq ; 2 uses
   %foldExtExtBinop2888 = fmul <2 x float> %.sroa.4.0.i.i.i831, %.sroa.017.0.copyload.i605
   %i.cit = fmul float %.sroa.011.4.vec.extract.i.i.i847, %.sroa.218.0.copyload.i607
   %i.ciu = shufflevector <2 x float> %.sroa.4.0.i.i.i831, <2 x float> %.sroa.010.0.i.i.i830, <2 x i32> <i32 0, i32 2> ; 2 uses
@@ -3328,7 +3325,7 @@ bb.by:                                            ; preds = %b3GetSweepTransform
 
 b3ForceFixedAxis.exit:                            ; preds = %b3GetSweepTransform.exit860, %bb.by
   %.sroa.018.0.i.i609 = phi <2 x float> [ %.sroa.018.4.vec.insert.i.i613, %bb.by ], [ zeroinitializer, %b3GetSweepTransform.exit860 ] ; 2 uses
-  %.sroa.5.0.i.i610 = phi float [ %i.ckq, %bb.by ], [ 0.000000e+00, %b3GetSweepTransform.exit860 ]
+  %.sroa.5.0.i.i610 = phi float [ %i.ckq, %bb.by ], [ 0.000000e+00, %b3GetSweepTransform.exit860 ] ; 2 uses
   store i32 1, ptr %i.bp, align 8, !tbaa !39
   store <2 x float> %.sroa.018.0.i.i609, ptr %i.bl, align 8
   store float %.sroa.5.0.i.i610, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !16
@@ -3343,6 +3340,7 @@ b3ForceFixedAxis.exit:                            ; preds = %b3GetSweepTransform
   %.sroa.216.0.copyload.i2137 = phi float [ 0.000000e+00, %b3ForceFixedAxis.exit ], [ %.sroa.216.0.copyload.i2135, %bb.bu ], [ %.sroa.216.0.copyload.i2135, %bb.bt ]
   %.sroa.015.0.copyload.i2133 = phi <2 x float> [ zeroinitializer, %b3ForceFixedAxis.exit ], [ %.sroa.015.0.copyload.i2131, %bb.bu ], [ %.sroa.015.0.copyload.i2131, %bb.bt ]
   %i.ckr = phi i32 [ %i.cgb, %b3ForceFixedAxis.exit ], [ %i.cgb, %bb.bu ], [ %i.ced, %bb.bt ] ; 2 uses
+  %.sroa.249.0.copyload.i1166 = phi float [ %.sroa.5.0.i.i610, %b3ForceFixedAxis.exit ], [ %.sroa.249.0.copyload.i1167, %bb.bu ], [ %.sroa.249.0.copyload.i1167, %bb.bt ]
   %.sroa.048.0.copyload.i1164 = phi <2 x float> [ %.sroa.018.0.i.i609, %b3ForceFixedAxis.exit ], [ %.sroa.048.0.copyload.i1165, %bb.bu ], [ %.sroa.048.0.copyload.i1165, %bb.bt ]
   %i.cks = phi i32 [ 1, %b3ForceFixedAxis.exit ], [ %i.azf, %bb.bu ], [ %i.azf, %bb.bt ]
   %.3329 = phi float [ %i.cgl, %b3ForceFixedAxis.exit ], [ %.0348, %bb.bu ], [ %.0326, %bb.bt ]

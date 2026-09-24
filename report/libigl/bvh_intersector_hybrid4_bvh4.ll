@@ -204,11 +204,11 @@ _ZNK6embree7SubGrid6gatherERNS_4Vec3INS_11vfloat_implILi4EEEEES5_S5_S5_PKNS_8Gri
   %i.nz = getelementptr inbounds nuw i8, ptr %i.nu, i64 4
   %i.oa = load i32, ptr %i.nz, align 4            ; 5 uses
   %i.ob = load ptr, ptr %7, align 8
-  %i.oc = zext i32 %i.ny to i64                   ; 3 uses
-  %i.od = getelementptr inbounds nuw i8, ptr %i.ob, i64 488 ; 2 uses
+  %i.oc = zext i32 %i.ny to i64                   ; 2 uses
+  %i.od = getelementptr inbounds nuw i8, ptr %i.ob, i64 488
   %i.oe = load ptr, ptr %i.od, align 8
   %i.of = getelementptr inbounds nuw [8 x i8], ptr %i.oe, i64 %i.oc
-  %i.og = load ptr, ptr %i.of, align 8            ; 4 uses
+  %i.og = load ptr, ptr %i.of, align 8            ; 9 uses
   %i.oh = zext i32 %i.oa to i64
   %i.oi = getelementptr inbounds nuw i8, ptr %i.og, i64 88
   %i.oj = load ptr, ptr %i.oi, align 8
@@ -410,10 +410,7 @@ bb.m:                                             ; preds = %bb.l
   store <4 x float> %i.sa, ptr %i.cd, align 16
   store <4 x float> %i.sd, ptr %i.ce, align 16
   store <4 x float> %i.sg, ptr %i.cf, align 16
-  %20 = load ptr, ptr %i.od, align 8
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %20, i64 %i.oc
-  %22 = load ptr, ptr %21, align 8                ; 5 uses
-  %i.vp = getelementptr inbounds nuw i8, ptr %22, i64 52
+  %i.vp = getelementptr inbounds nuw i8, ptr %i.og, i64 52
   %i.vq = load i32, ptr %i.vp, align 4
   %i.vr = load i32, ptr %i.ch, align 4
   %i.vs = and i32 %i.vr, %i.vq
@@ -491,7 +488,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not1160, label %bb.o, label %.critedge.i, !prof !69
 
 bb.o:                                             ; preds = %bb.n
-  %i.yc = getelementptr inbounds nuw i8, ptr %22, i64 64
+  %i.yc = getelementptr inbounds nuw i8, ptr %i.og, i64 64
   %i.yd = load ptr, ptr %i.yc, align 16
   %.not1161 = icmp eq ptr %i.yd, null
   br i1 %.not1161, label %bb.aa, label %.critedge.i, !prof !69
@@ -502,9 +499,9 @@ bb.o:                                             ; preds = %bb.n
   %i.yg = insertelement <4 x i32> poison, i32 %i.oa, i64 0
   %i.yh = shufflevector <4 x i32> %i.yg, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.yi = load <2 x i64>, ptr %i.cw, align 16     ; 2 uses
-  %i.yj = getelementptr inbounds nuw i8, ptr %22, i64 24
-  %i.yk = getelementptr inbounds nuw i8, ptr %22, i64 64
-  %i.yl = getelementptr inbounds nuw i8, ptr %22, i64 60
+  %i.yj = getelementptr inbounds nuw i8, ptr %i.og, i64 24
+  %i.yk = getelementptr inbounds nuw i8, ptr %i.og, i64 64
+  %i.yl = getelementptr inbounds nuw i8, ptr %i.og, i64 60
   %.pre = load float, ptr %i.bf, align 4
   %i.ym = bitcast <2 x i64> %i.yi to <4 x i32>
   br label %.preheader1192

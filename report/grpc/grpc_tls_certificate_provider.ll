@@ -202,12 +202,14 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 32 uses
   %i.v = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 33 uses
   %.promoted233 = load ptr, ptr %i.s, align 8
   %.promoted265 = load ptr, ptr %i.u, align 8
+  %.promoted297 = load i8, ptr %i.w, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %.thread
+  %20 = phi i8 [ %.promoted297, %bb.a ], [ %24, %.thread ] ; 30 uses
   %i.x = phi ptr [ %.promoted265, %bb.a ], [ %i.gf, %.thread ] ; 30 uses
   %i.y = phi ptr [ %.promoted233, %bb.a ], [ %i.gg, %.thread ] ; 30 uses
   %.048232 = phi i32 [ 0, %bb.a ], [ %i.gi, %.thread ]
@@ -231,6 +233,7 @@ bb.d:                                             ; preds = %bb.c
           catch ptr null
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   %i.af = extractvalue { ptr, i32 } %i.ae, 0
   call void @__clang_call_terminate(ptr %i.af) #37
@@ -271,6 +274,7 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20250
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %8) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #34
@@ -296,6 +300,7 @@ bb.j:                                             ; preds = %bb.i
           catch ptr null
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   %i.ap = extractvalue { ptr, i32 } %i.ao, 0
   call void @__clang_call_terminate(ptr %i.ap) #37
@@ -336,6 +341,7 @@ bb.m:                                             ; preds = %_ZN4absl12lts_20250
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %9) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #34
@@ -387,6 +393,7 @@ bb.s:                                             ; preds = %bb.o
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.u
 
@@ -395,6 +402,7 @@ bb.t:                                             ; preds = %_ZN4absl12lts_20250
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %11) #36
   br label %bb.u
@@ -453,6 +461,7 @@ bb.ab:                                            ; preds = %bb.v
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.cg
 
@@ -461,6 +470,7 @@ bb.ac:                                            ; preds = %bb.x
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.ae
 
@@ -469,6 +479,7 @@ bb.ad:                                            ; preds = %_ZN4absl12lts_20250
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %13) #36
   br label %bb.ae
@@ -487,6 +498,7 @@ bb.af:                                            ; preds = %bb.w
 bb.ag:                                            ; preds = %bb.af
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   invoke void @_ZN4absl12lts_2025051217internal_statusor6Helper5CrashERKNS0_6StatusE(ptr noundef nonnull align 8 dereferenceable(40) %10) #40
           to label %.noexc unwind label %bb.bb
@@ -511,6 +523,7 @@ bb.ah:                                            ; preds = %bb.af
 bb.ai:                                            ; preds = %bb.ah
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.32) #40
           to label %.noexc87 unwind label %.loopexit.split-lp
@@ -565,6 +578,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %._c
 bb.an:                                            ; preds = %bb.am
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   invoke void @_ZN4absl12lts_2025051217internal_statusor6Helper5CrashERKNS0_6StatusE(ptr noundef nonnull align 8 dereferenceable(40) %12) #40
           to label %.noexc89 unwind label %bb.bc
@@ -589,6 +603,7 @@ bb.ao:                                            ; preds = %bb.am
 bb.ap:                                            ; preds = %bb.ao
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.32) #40
           to label %.noexc100 unwind label %.loopexit.split-lp148
@@ -663,6 +678,7 @@ bb.aw:                                            ; preds = %bb.av
           catch ptr null
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   %i.cx = extractvalue { ptr, i32 } %i.cw, 0
   call void @__clang_call_terminate(ptr %i.cx) #37
@@ -711,6 +727,7 @@ bb.bb:                                            ; preds = %bb.ag
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit125
 
@@ -729,6 +746,7 @@ bb.bc:                                            ; preds = %bb.an
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit122
 
@@ -742,6 +760,7 @@ bb.bd:                                            ; preds = %bb.at
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.bx
 
@@ -750,6 +769,7 @@ bb.be:                                            ; preds = %bb.au
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.bx
 
@@ -758,6 +778,7 @@ bb.bf:                                            ; preds = %bb.ay
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.bh
 
@@ -766,6 +787,7 @@ bb.bg:                                            ; preds = %_ZN4absl12lts_20250
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %17) #36
   br label %bb.bh
@@ -798,6 +820,7 @@ bb.bk:                                            ; preds = %bb.bj
           catch ptr null
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   %i.dl = extractvalue { ptr, i32 } %i.dk, 0
   call void @__clang_call_terminate(ptr %i.dl) #37
@@ -841,6 +864,7 @@ bb.bp:                                            ; preds = %bb.bi
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.bx
 
@@ -849,6 +873,7 @@ bb.bq:                                            ; preds = %bb.bm
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   br label %bb.bs
 
@@ -857,6 +882,7 @@ bb.br:                                            ; preds = %_ZN4absl12lts_20250
           cleanup
   store ptr %i.y, ptr %i.s, align 8
   store ptr %i.x, ptr %i.u, align 8
+  store i8 %20, ptr %i.w, align 8
   store ptr %i.z, ptr %0, align 8
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %18) #36
   br label %bb.bs
@@ -871,10 +897,10 @@ bb.bt:                                            ; preds = %bb.bl
   %i.ds = load ptr, ptr %i.t, align 8, !tbaa !101
   %i.dt = load ptr, ptr %i.v, align 8, !tbaa !102
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, i8 0, i64 24, i1 false)
-  store i8 1, ptr %i.w, align 8, !tbaa !84
   br label %bb.bu
 
 bb.bu:                                            ; preds = %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit116, %bb.bt, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit108
+  %21 = phi i8 [ %20, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit108 ], [ %20, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit116 ], [ 1, %bb.bt ] ; 2 uses
   %i.du = phi ptr [ %i.x, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit108 ], [ %i.x, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit116 ], [ %i.dt, %bb.bt ] ; 2 uses
   %i.dv = phi ptr [ %i.y, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit108 ], [ %i.y, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit116 ], [ %i.ds, %bb.bt ] ; 2 uses
   %i.dw = phi ptr [ %i.z, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit108 ], [ %i.z, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit116 ], [ %i.dr, %bb.bt ] ; 2 uses
@@ -902,6 +928,7 @@ bb.bw:                                            ; preds = %bb.bu
           catch ptr null
   store ptr %i.dv, ptr %i.s, align 8
   store ptr %i.du, ptr %i.u, align 8
+  store i8 %21, ptr %i.w, align 8
   store ptr %i.dw, ptr %0, align 8
   %i.eg = extractvalue { ptr, i32 } %i.ef, 0
   call void @__clang_call_terminate(ptr %i.eg) #37
@@ -968,6 +995,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit125: ; preds = %_Z
   br label %bb.cf
 
 bb.by:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit86
+  %22 = phi i8 [ %21, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119 ], [ %20, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit86 ] ; 3 uses
   %i.ex = phi ptr [ %i.du, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119 ], [ %i.x, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit86 ] ; 3 uses
   %i.ey = phi ptr [ %i.dv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119 ], [ %i.y, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit86 ] ; 3 uses
   %i.ez = phi ptr [ %i.dw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119 ], [ %i.z, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit86 ] ; 3 uses
@@ -997,6 +1025,7 @@ bb.cb:                                            ; preds = %bb.ca
           catch ptr null
   store ptr %i.ey, ptr %i.s, align 8
   store ptr %i.ex, ptr %i.u, align 8
+  store i8 %22, ptr %i.w, align 8
   store ptr %i.ez, ptr %0, align 8
   %i.fj = extractvalue { ptr, i32 } %i.fi, 0
   call void @__clang_call_terminate(ptr %i.fj) #37
@@ -1016,6 +1045,7 @@ bb.ce:                                            ; preds = %bb.cd
           catch ptr null
   store ptr %i.ey, ptr %i.s, align 8
   store ptr %i.ex, ptr %i.u, align 8
+  store i8 %22, ptr %i.w, align 8
   store ptr %i.ez, ptr %0, align 8
   %i.fn = extractvalue { ptr, i32 } %i.fm, 0
   call void @__clang_call_terminate(ptr %i.fn) #37
@@ -1036,6 +1066,7 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ab
   br label %bb.co
 
 bb.ch:                                            ; preds = %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN9grpc_core5SliceEED2Ev.exit, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit82
+  %23 = phi i8 [ %22, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN9grpc_core5SliceEED2Ev.exit ], [ %20, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit82 ] ; 4 uses
   %i.fo = phi ptr [ %i.ex, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN9grpc_core5SliceEED2Ev.exit ], [ %i.x, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit82 ] ; 4 uses
   %i.fp = phi ptr [ %i.ey, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN9grpc_core5SliceEED2Ev.exit ], [ %i.y, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit82 ] ; 4 uses
   %i.fq = phi ptr [ %i.ez, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN9grpc_core5SliceEED2Ev.exit ], [ %i.z, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit82 ] ; 4 uses
@@ -1065,6 +1096,7 @@ bb.ck:                                            ; preds = %bb.cj
           catch ptr null
   store ptr %i.fp, ptr %i.s, align 8
   store ptr %i.fo, ptr %i.u, align 8
+  store i8 %23, ptr %i.w, align 8
   store ptr %i.fq, ptr %0, align 8
   %i.ga = extractvalue { ptr, i32 } %i.fz, 0
   call void @__clang_call_terminate(ptr %i.ga) #37
@@ -1084,6 +1116,7 @@ bb.cn:                                            ; preds = %bb.cm
           catch ptr null
   store ptr %i.fp, ptr %i.s, align 8
   store ptr %i.fo, ptr %i.u, align 8
+  store i8 %23, ptr %i.w, align 8
   store ptr %i.fq, ptr %0, align 8
   %i.ge = extractvalue { ptr, i32 } %i.gd, 0
   call void @__clang_call_terminate(ptr %i.ge) #37
@@ -1100,6 +1133,7 @@ bb.cp:                                            ; preds = %bb.cm, %bb.cl, %bb.
   br i1 %.344, label %.thread, label %.loopexit152
 
 .thread:                                          ; preds = %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit80, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit, %bb.cp
+  %24 = phi i8 [ %20, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit80 ], [ %20, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit ], [ %23, %bb.cp ] ; 2 uses
   %i.gf = phi ptr [ %i.x, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit80 ], [ %i.x, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit ], [ %i.fo, %bb.cp ] ; 2 uses
   %i.gg = phi ptr [ %i.y, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit80 ], [ %i.y, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit ], [ %i.fp, %bb.cp ] ; 2 uses
   %i.gh = phi ptr [ %i.z, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit80 ], [ %i.z, %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit ], [ %i.fq, %bb.cp ] ; 2 uses
@@ -1110,6 +1144,7 @@ bb.cp:                                            ; preds = %bb.cm, %bb.cl, %bb.
 bb.cq:                                            ; preds = %.thread
   store ptr %i.gg, ptr %i.s, align 8
   store ptr %i.gf, ptr %i.u, align 8
+  store i8 %24, ptr %i.w, align 8
   store ptr %i.gh, ptr %0, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #34
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageC1EPKciNS2_8ErrorTagE(ptr noundef nonnull align 8 dereferenceable(16) %19, ptr noundef nonnull @.str, i32 noundef 409) #35
@@ -1136,6 +1171,7 @@ bb.cr:                                            ; preds = %_ZN4absl12lts_20250
 .loopexit152:                                     ; preds = %bb.cp
   store ptr %i.fp, ptr %i.s, align 8
   store ptr %i.fo, ptr %i.u, align 8
+  store i8 %23, ptr %i.w, align 8
   store ptr %i.fq, ptr %0, align 8
   br label %bb.cs
 

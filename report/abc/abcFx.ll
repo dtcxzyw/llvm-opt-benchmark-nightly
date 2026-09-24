@@ -204,9 +204,9 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   br i1 %.not, label %Fx_PrintDivisors.exit, label %bb.c
 
 bb.c:                                             ; preds = %Abc_Clock.exit
-  %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !63
-  %i.n = getelementptr i8, ptr %i.m, i64 4
+  %i.n = getelementptr i8, ptr %i.m, i64 4        ; 2 uses
   %.val4.i = load i32, ptr %i.n, align 4, !tbaa !65
   %i.o = icmp sgt i32 %.val4.i, 0
   br i1 %i.o, label %.lr.ph.i, label %Fx_PrintDivisors.exit
@@ -215,9 +215,7 @@ bb.c:                                             ; preds = %Abc_Clock.exit
   %.05.i = phi i32 [ %i.p, %.lr.ph.i ], [ 0, %bb.c ] ; 2 uses
   call fastcc void @Fx_PrintDiv(ptr noundef nonnull readonly %i.i, i32 noundef %.05.i)
   %i.p = add nuw nsw i32 %.05.i, 1                ; 2 uses
-  %11 = load ptr, ptr %i.l, align 8, !tbaa !63
-  %12 = getelementptr i8, ptr %11, i64 4
-  %.val.i = load i32, ptr %12, align 4, !tbaa !65
+  %.val.i = load i32, ptr %i.n, align 4, !tbaa !65
   %i.q = icmp slt i32 %i.p, %.val.i
   br i1 %i.q, label %.lr.ph.i, label %Fx_PrintDivisors.exit, !llvm.loop !129
 
@@ -620,7 +618,7 @@ bb.ap:                                            ; preds = %bb.an
 }
 
 ; Function Attrs: nounwind uwtable
-define void @Fx_ManUpdate(ptr nofree noundef %0, i32 noundef %1, ptr nofree readnone captures(none) %2) local_unnamed_addr #0 {
+define void @Fx_ManUpdate(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr nofree readnone captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !81   ; 9 uses

@@ -204,13 +204,11 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c, %bb.c
-  %i.z = call noalias dereferenceable_or_null(80) ptr @calloc(i64 noundef 1, i64 noundef 80) #25 ; 27 uses
+  %i.z = call noalias dereferenceable_or_null(80) ptr @calloc(i64 noundef 1, i64 noundef 80) #25 ; 26 uses
   %.not113 = icmp eq ptr %i.z, null
   br i1 %.not113, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %3 = getelementptr inbounds nuw i8, ptr %i.z, i64 56
-  store ptr null, ptr %3, align 8
   %.not114 = icmp eq ptr %i.o, null               ; 2 uses
   br i1 %.not114, label %bb.g, label %bb.f
 

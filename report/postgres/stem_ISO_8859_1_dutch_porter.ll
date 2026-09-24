@@ -202,7 +202,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %.not485.i, label %bb.au, label %r_standard_suffix.exit
 
 bb.au:                                            ; preds = %bb.at, %bb.as, %bb.aq, %bb.ao, %r_e_ending.exit.thread.i
-  %.11270.i = phi i32 [ %.5264.i, %r_e_ending.exit.thread.i ], [ %.10269.i, %bb.at ], [ %.5264.i, %bb.as ], [ %.5264.i, %bb.ao ], [ %.5264.i, %bb.aq ]
+  %.11270.i = phi i32 [ %.5264.i, %r_e_ending.exit.thread.i ], [ %.10269.i, %bb.at ], [ %.5264.i, %bb.as ], [ %.5264.i, %bb.ao ], [ %.5264.i, %bb.aq ] ; 2 uses
   %i.dz = load i32, ptr %i.d, align 4             ; 3 uses
   store i32 %i.dz, ptr %i.a, align 8
   store i32 %i.dz, ptr %i.e, align 8
@@ -293,9 +293,15 @@ bb.bg:                                            ; preds = %bb.be, %bb.bc, %bb.
   %i.fa = load i32, ptr %i.d, align 4
   %i.fb = add i32 %.neg352.i, %i.fa
   store i32 %i.fb, ptr %i.a, align 8
-  %i.fc = tail call fastcc i32 @r_undouble(ptr noundef nonnull %0) ; 2 uses
-  %1 = icmp slt i32 %i.fc, 0
-  br i1 %1, label %r_standard_suffix.exit.thread, label %.thread430.i
+  %i.fc = tail call fastcc i32 @r_undouble(ptr noundef nonnull %0) ; 4 uses
+  %1 = icmp eq i32 %i.fc, 0
+  br i1 %1, label %.thread430.i, label %2
+
+2:                                                ; preds = %bb.bg
+  %3 = icmp slt i32 %i.fc, 0
+  %..12272..i = select i1 %3, i32 %i.fc, i32 %.11270.i
+  %cond.i = icmp sgt i32 %i.fc, -1
+  br i1 %cond.i, label %.thread430.i, label %r_standard_suffix.exit
 
 bb.bh:                                            ; preds = %bb.ay
   %.val387.i = load i32, ptr %i.bi, align 8
@@ -363,7 +369,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.ft = icmp sgt i32 %i.fs, -1
   br i1 %i.ft, label %.thread430.i, label %r_standard_suffix.exit.thread
 
-.thread430.i:                                     ; preds = %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bl, %bb.bk, %bb.bj, %bb.bh, %bb.bg, %bb.bf, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au
+.thread430.i:                                     ; preds = %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bl, %bb.bk, %bb.bj, %bb.bh, %2, %bb.bg, %bb.bf, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au
   %i.fu = load i32, ptr %i.d, align 4
   store i32 %i.fu, ptr %i.a, align 8
   %i.fv = tail call i32 @out_grouping_b(ptr noundef nonnull %0, ptr noundef nonnull @g_v_I, i32 noundef 73, i32 noundef 232, i32 noundef 0) #4
@@ -423,8 +429,8 @@ bb.bz:                                            ; preds = %bb.by
   %i.gp = icmp sgt i32 %i.go, -1
   br i1 %i.gp, label %r_standard_suffix.exit.thread59, label %r_standard_suffix.exit.thread
 
-r_standard_suffix.exit:                           ; preds = %bb.at, %bb.bn
-  %.34.i = phi i32 [ %.24283.i, %bb.bn ], [ %.10269.i, %bb.at ] ; 2 uses
+r_standard_suffix.exit:                           ; preds = %bb.at, %2, %bb.bn
+  %.34.i = phi i32 [ %..12272..i, %2 ], [ %.10269.i, %bb.at ], [ %.24283.i, %bb.bn ] ; 2 uses
   %i.gq = icmp sgt i32 %.34.i, -1
   br i1 %i.gq, label %r_standard_suffix.exit.thread59, label %r_standard_suffix.exit.thread
 
@@ -497,8 +503,8 @@ bb.ci:                                            ; preds = %bb.cf
   store i32 %i.gr, ptr %i.a, align 8
   br label %r_standard_suffix.exit.thread
 
-r_standard_suffix.exit.thread:                    ; preds = %bb.f, %bb.j, %bb.i, %bb.h, %bb.g, %bb.t, %bb.r, %bb.cd, %bb.ce, %bb.bg, %bb.ba, %bb.bp, %bb.bs, %bb.bk, %bb.bm, %bb.ae, %bb.af, %bb.ai, %r_e_ending.exit.i, %bb.an, %bb.bf, %bb.ar, %bb.bz, %bb.ci, %.split.i, %r_standard_suffix.exit
-  %.440 = phi i32 [ %.34.i, %r_standard_suffix.exit ], [ %i.ds, %bb.ar ], [ %i.cp, %bb.af ], [ %i.cs, %bb.ai ], [ %i.dh, %r_e_ending.exit.i ], [ %i.df, %bb.an ], [ %i.ha, %bb.cd ], [ %i.ey, %bb.bf ], [ %i.ak, %.split.i ], [ %i.bc, %bb.t ], [ 1, %bb.ci ], [ %i.go, %bb.bz ], [ %i.fc, %bb.bg ], [ %i.em, %bb.ba ], [ %i.fp, %bb.bp ], [ %i.fs, %bb.bs ], [ %i.fj, %bb.bk ], [ %i.fl, %bb.bm ], [ %i.cn, %bb.ae ], [ %i.hc, %bb.ce ], [ %i.az, %bb.r ], [ %i.t, %bb.g ], [ %i.v, %bb.h ], [ %i.r, %bb.f ], [ %i.x, %bb.i ], [ %i.z, %bb.j ]
+r_standard_suffix.exit.thread:                    ; preds = %bb.f, %bb.j, %bb.i, %bb.h, %bb.g, %bb.t, %bb.r, %bb.cd, %bb.ce, %bb.ba, %bb.bp, %bb.bs, %bb.bk, %bb.bm, %bb.ae, %bb.af, %bb.ai, %r_e_ending.exit.i, %bb.an, %bb.bf, %bb.ar, %bb.bz, %bb.ci, %.split.i, %r_standard_suffix.exit
+  %.440 = phi i32 [ %.34.i, %r_standard_suffix.exit ], [ %i.ds, %bb.ar ], [ %i.cp, %bb.af ], [ %i.cs, %bb.ai ], [ %i.dh, %r_e_ending.exit.i ], [ %i.df, %bb.an ], [ %i.ha, %bb.cd ], [ %i.ey, %bb.bf ], [ %i.ak, %.split.i ], [ %i.bc, %bb.t ], [ 1, %bb.ci ], [ %i.go, %bb.bz ], [ %i.em, %bb.ba ], [ %i.fp, %bb.bp ], [ %i.fs, %bb.bs ], [ %i.fj, %bb.bk ], [ %i.fl, %bb.bm ], [ %i.cn, %bb.ae ], [ %i.hc, %bb.ce ], [ %i.az, %bb.r ], [ %i.t, %bb.g ], [ %i.v, %bb.h ], [ %i.r, %bb.f ], [ %i.x, %bb.i ], [ %i.z, %bb.j ]
   ret i32 %.440
 }
 

@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %.lr.ph16.i
 
 .critedge2.i:                                     ; preds = %bb.y, %.lr.ph16.i, %.preheader.i
   %i.fq = phi i32 [ 0, %.preheader.i ], [ %.06415.i, %.lr.ph16.i ], [ 0, %bb.y ] ; 10 uses
-  %i.fr = zext i32 %i.fq to i64                   ; 8 uses
+  %i.fr = zext i32 %i.fq to i64                   ; 9 uses
   %i.fs = add nuw nsw i64 %i.fr, 1                ; 4 uses
   %min.iters.check400 = icmp ult i32 %i.fq, 7
   br i1 %min.iters.check400, label %scalar.ph399.preheader, label %vector.ph401
@@ -285,7 +285,7 @@ scalar.ph399:                                     ; preds = %scalar.ph399.prehea
 
 ZS_Histograms_computeO1.exit:                     ; preds = %scalar.ph399, %middle.block408
   %.lcssa394 = phi i32 [ %i.hg, %middle.block408 ], [ %i.hm, %scalar.ph399 ]
-  %i.ho = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 2 uses
+  %i.ho = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   store i32 %i.fq, ptr %i.ho, align 4, !tbaa !28
   store i32 %.lcssa394, ptr %i.j, align 8, !tbaa !28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
@@ -688,9 +688,7 @@ bb.bu:                                            ; preds = %bb.bs
 
 bb.bv:                                            ; preds = %bb.bt, %bb.bu
   %indvars.iv.next345 = add nuw nsw i64 %indvars.iv344, 1
-  %7 = load i32, ptr %i.ho, align 4, !tbaa !28
-  %8 = zext i32 %7 to i64
-  %.not202.not = icmp samesign ult i64 %indvars.iv344, %8
+  %.not202.not = icmp samesign ult i64 %indvars.iv344, %i.fr
   br i1 %.not202.not, label %bb.bs, label %bb.br, !llvm.loop !61
 
 bb.bw:                                            ; preds = %bb.br

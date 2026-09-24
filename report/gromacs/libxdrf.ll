@@ -54,7 +54,7 @@ bb.a:
   %i.f = alloca [3 x i32], align 8                ; 11 uses
   %i.g = alloca [3 x i32], align 4                ; 13 uses
   %i.h = alloca i32, align 4                      ; 19 uses
-  %i.i = alloca [30 x i32], align 16              ; 7 uses
+  %i.i = alloca [30 x i32], align 16              ; 8 uses
   %i.j = alloca i32, align 4                      ; 7 uses
   %5 = alloca %struct.DataBuffer, align 8         ; 65 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
@@ -157,7 +157,7 @@ bb.m:                                             ; preds = %bb.l
   %.0422 = phi ptr [ %i.aj, %bb.l ], [ %i.a, %bb.k ] ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 12 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 11 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 5 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   store i32 2147483647, ptr %i.as, align 8, !tbaa !14
   %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 5 uses
@@ -560,6 +560,7 @@ bb.cz:                                            ; preds = %.critedge
   %i.iu = sdiv i32 %i.il, 2
   %i.iv = sdiv i32 %i.ii, 2
   %i.iw = getelementptr inbounds nuw i8, ptr %i.i, i64 4
+  %6 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.ix = icmp eq i32 %.0379, 0
   %i.iy = icmp samesign ugt i32 %.sroa.0244.0, 7
   %i.iz = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 14 uses
@@ -658,18 +659,22 @@ bb.dj:                                            ; preds = %bb.di
   br label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dg, %bb.dh, %bb.di, %bb.dj, %bb.df
-  %i.kt = phi i32 [ %i.kb, %bb.dj ], [ %.pre679.pre.pre, %bb.di ], [ %.pre679.pre.pre, %bb.dh ], [ %.pre679.pre.pre, %bb.dg ], [ %.pre679.pre.pre, %bb.df ]
+  %i.kt = phi i32 [ %i.kb, %bb.dj ], [ %.pre679.pre.pre, %bb.di ], [ %.pre679.pre.pre, %bb.dh ], [ %.pre679.pre.pre, %bb.dg ], [ %.pre679.pre.pre, %bb.df ] ; 3 uses
   %or.cond10 = phi i1 [ false, %bb.dj ], [ %i.jx, %bb.di ], [ %i.jx, %bb.dh ], [ %i.jx, %bb.dg ], [ %i.jx, %bb.df ]
   %.not647 = phi i1 [ false, %bb.dj ], [ true, %bb.di ], [ true, %bb.dh ], [ true, %bb.dg ], [ true, %bb.df ]
   %i.ku = load i32, ptr %i.c, align 8, !tbaa !14
   %i.kv = sub nsw i32 %i.kt, %i.ku                ; 3 uses
   store i32 %i.kv, ptr %i.i, align 16, !tbaa !14
   %i.kw = getelementptr inbounds nuw i8, ptr %i.jf, i64 4 ; 2 uses
-  %i.kx = getelementptr inbounds nuw i8, ptr %i.jf, i64 8
-  %6 = load <2 x i32>, ptr %i.kw, align 4, !tbaa !14
-  %7 = load <2 x i32>, ptr %i.at, align 4, !tbaa !14
-  %8 = sub nsw <2 x i32> %6, %7                   ; 5 uses
-  store <2 x i32> %8, ptr %i.iw, align 4, !tbaa !14
+  %7 = load i32, ptr %i.kw, align 4, !tbaa !14    ; 3 uses
+  %8 = load i32, ptr %i.at, align 4, !tbaa !14
+  %9 = sub nsw i32 %7, %8                         ; 3 uses
+  store i32 %9, ptr %i.iw, align 4, !tbaa !14
+  %i.kx = getelementptr inbounds nuw i8, ptr %i.jf, i64 8 ; 2 uses
+  %10 = load i32, ptr %i.kx, align 4, !tbaa !14   ; 3 uses
+  %11 = load i32, ptr %i.as, align 8, !tbaa !14
+  %12 = sub nsw i32 %10, %11                      ; 3 uses
+  store i32 %12, ptr %6, align 8, !tbaa !14
   br i1 %i.ix, label %bb.dl, label %bb.dy
 
 bb.dl:                                            ; preds = %bb.dk
@@ -743,15 +748,11 @@ bb.dp:                                            ; preds = %bb.do
 _ZL8sendbitsP10DataBufferii.exit:                 ; preds = %bb.do, %bb.dp
   %i.me = phi i32 [ %.1.i, %bb.do ], [ %.pre681, %bb.dp ] ; 2 uses
   %i.mf = phi i32 [ %.0.i, %bb.do ], [ %.pre680, %bb.dp ] ; 3 uses
-  br i1 %i.ja, label %.lr.ph.i485.preheader, label %._crit_edge.i480
+  br i1 %i.ja, label %.lr.ph.i485, label %._crit_edge.i480
 
-.lr.ph.i485.preheader:                            ; preds = %_ZL8sendbitsP10DataBufferii.exit
-  %9 = extractelement <2 x i32> %8, i64 0
-  br label %.lr.ph.i485
-
-.lr.ph.i485:                                      ; preds = %.lr.ph.i485.preheader, %.lr.ph.i485
-  %.03136.i486 = phi i32 [ %i.mj, %.lr.ph.i485 ], [ %i.me, %.lr.ph.i485.preheader ]
-  %.03235.i487 = phi i32 [ %i.mh, %.lr.ph.i485 ], [ %.sroa.7.0, %.lr.ph.i485.preheader ] ; 2 uses
+.lr.ph.i485:                                      ; preds = %_ZL8sendbitsP10DataBufferii.exit, %.lr.ph.i485
+  %.03136.i486 = phi i32 [ %i.mj, %.lr.ph.i485 ], [ %i.me, %_ZL8sendbitsP10DataBufferii.exit ]
+  %.03235.i487 = phi i32 [ %i.mh, %.lr.ph.i485 ], [ %.sroa.7.0, %_ZL8sendbitsP10DataBufferii.exit ] ; 2 uses
   %i.mg = shl i32 %.03136.i486, 8
   %i.mh = add nsw i32 %.03235.i487, -8            ; 3 uses
   %i.mi = ashr i32 %9, %i.mh
@@ -775,8 +776,7 @@ _ZL8sendbitsP10DataBufferii.exit:                 ; preds = %bb.do, %bb.dp
 
 bb.dq:                                            ; preds = %._crit_edge.i480
   %i.ms = shl i32 %.031.lcssa.i482, %.032.lcssa.i481
-  %10 = extractelement <2 x i32> %8, i64 0
-  %i.mt = or i32 %i.ms, %10                       ; 3 uses
+  %i.mt = or i32 %i.ms, %9                        ; 3 uses
   %i.mu = add nsw i32 %.032.lcssa.i481, %i.mf     ; 3 uses
   %i.mv = icmp sgt i32 %i.mu, 7
   br i1 %i.mv, label %bb.dr, label %bb.ds
@@ -816,18 +816,14 @@ bb.dt:                                            ; preds = %bb.ds
 _ZL8sendbitsP10DataBufferii.exit488:              ; preds = %bb.ds, %bb.dt
   %i.nk = phi i32 [ %.1.i483, %bb.ds ], [ %.pre683, %bb.dt ] ; 2 uses
   %i.nl = phi i32 [ %.0.i484, %bb.ds ], [ %.pre682, %bb.dt ] ; 3 uses
-  br i1 %i.jb, label %.lr.ph.i494.preheader, label %._crit_edge.i489
+  br i1 %i.jb, label %.lr.ph.i494, label %._crit_edge.i489
 
-.lr.ph.i494.preheader:                            ; preds = %_ZL8sendbitsP10DataBufferii.exit488
-  %11 = extractelement <2 x i32> %8, i64 1
-  br label %.lr.ph.i494
-
-.lr.ph.i494:                                      ; preds = %.lr.ph.i494.preheader, %.lr.ph.i494
-  %.03136.i495 = phi i32 [ %i.np, %.lr.ph.i494 ], [ %i.nk, %.lr.ph.i494.preheader ]
-  %.03235.i496 = phi i32 [ %i.nn, %.lr.ph.i494 ], [ %.sroa.12.0, %.lr.ph.i494.preheader ] ; 2 uses
+.lr.ph.i494:                                      ; preds = %_ZL8sendbitsP10DataBufferii.exit488, %.lr.ph.i494
+  %.03136.i495 = phi i32 [ %i.np, %.lr.ph.i494 ], [ %i.nk, %_ZL8sendbitsP10DataBufferii.exit488 ]
+  %.03235.i496 = phi i32 [ %i.nn, %.lr.ph.i494 ], [ %.sroa.12.0, %_ZL8sendbitsP10DataBufferii.exit488 ] ; 2 uses
   %i.nm = shl i32 %.03136.i495, 8
   %i.nn = add nsw i32 %.03235.i496, -8            ; 3 uses
-  %i.no = ashr i32 %11, %i.nn
+  %i.no = ashr i32 %12, %i.nn
   %i.np = or i32 %i.no, %i.nm                     ; 3 uses
   %i.nq = lshr i32 %i.np, %i.nl
   %i.nr = trunc i32 %i.nq to i8
@@ -848,7 +844,6 @@ _ZL8sendbitsP10DataBufferii.exit488:              ; preds = %bb.ds, %bb.dt
 
 bb.du:                                            ; preds = %._crit_edge.i489
   %i.ny = shl i32 %.031.lcssa.i491, %.032.lcssa.i490
-  %12 = extractelement <2 x i32> %8, i64 1
   %i.nz = or i32 %i.ny, %12                       ; 3 uses
   %i.oa = add nsw i32 %.032.lcssa.i490, %i.nl     ; 3 uses
   %i.ob = icmp sgt i32 %i.oa, 7
@@ -886,12 +881,15 @@ bb.dx:                                            ; preds = %bb.dw
 
 bb.dy:                                            ; preds = %bb.dk
   call fastcc void @_ZL8sendintsP10DataBufferiiPjS1_(ptr noundef %5, i32 noundef %.0379, ptr noundef %i.f, ptr noundef %i.i)
+  %.pre684 = load i32, ptr %i.jf, align 4, !tbaa !14
+  %.pre685 = load i32, ptr %i.kw, align 4, !tbaa !14
+  %.pre686 = load i32, ptr %i.kx, align 4, !tbaa !14
   br label %_ZL8sendbitsP10DataBufferii.exit497
 
 _ZL8sendbitsP10DataBufferii.exit497:              ; preds = %bb.dx, %bb.dw, %bb.dy
-  %13 = load i32, ptr %i.jf, align 4, !tbaa !14   ; 2 uses
-  %14 = load i32, ptr %i.kw, align 4, !tbaa !14   ; 2 uses
-  %15 = load i32, ptr %i.kx, align 4, !tbaa !14   ; 2 uses
+  %13 = phi i32 [ %10, %bb.dx ], [ %10, %bb.dw ], [ %.pre686, %bb.dy ] ; 2 uses
+  %14 = phi i32 [ %7, %bb.dx ], [ %7, %bb.dw ], [ %.pre685, %bb.dy ] ; 2 uses
+  %15 = phi i32 [ %i.kt, %bb.dx ], [ %i.kt, %bb.dw ], [ %.pre684, %bb.dy ] ; 2 uses
   %i.oq = load i32, ptr %i.h, align 4, !tbaa !14
   %i.or = add nsw i32 %i.oq, 1                    ; 2 uses
   store i32 %i.or, ptr %i.h, align 4, !tbaa !14
@@ -906,9 +904,9 @@ _ZL8sendbitsP10DataBufferii.exit497:              ; preds = %bb.dx, %bb.dw, %bb.
 
 bb.dz:                                            ; preds = %.lr.ph614, %bb.ee
   %indvars.iv = phi i64 [ 0, %.lr.ph614 ], [ %indvars.iv.next, %bb.ee ] ; 3 uses
-  %.sroa.0.1613 = phi i32 [ %13, %.lr.ph614 ], [ %.pre684.a, %bb.ee ] ; 2 uses
+  %.sroa.0.1613 = phi i32 [ %15, %.lr.ph614 ], [ %.pre684.a, %bb.ee ] ; 2 uses
   %.sroa.16.1612 = phi i32 [ %14, %.lr.ph614 ], [ %i.pk, %bb.ee ] ; 2 uses
-  %.sroa.30.1611 = phi i32 [ %15, %.lr.ph614 ], [ %i.pj, %bb.ee ] ; 2 uses
+  %.sroa.30.1611 = phi i32 [ %13, %.lr.ph614 ], [ %i.pj, %bb.ee ] ; 2 uses
   %.0381610 = phi ptr [ %i.os, %.lr.ph614 ], [ %i.pv, %bb.ee ] ; 8 uses
   %.1396608 = phi i32 [ %spec.store.select, %.lr.ph614 ], [ %.2397, %bb.ee ] ; 2 uses
   %i.ov = phi i32 [ %i.or, %.lr.ph614 ], [ %i.pu, %bb.ee ]
@@ -995,9 +993,9 @@ bb.ee:                                            ; preds = %bb.ed
 bb.ef:                                            ; preds = %._crit_edge615, %_ZL8sendbitsP10DataBufferii.exit497
   %.1396.lcssa = phi i32 [ %.2397, %._crit_edge615 ], [ %spec.store.select, %_ZL8sendbitsP10DataBufferii.exit497 ] ; 5 uses
   %.0392.lcssa = phi i32 [ %i.qn, %._crit_edge615 ], [ 0, %_ZL8sendbitsP10DataBufferii.exit497 ] ; 7 uses
-  %.sroa.30.1.lcssa = phi i32 [ %i.pj, %._crit_edge615 ], [ %15, %_ZL8sendbitsP10DataBufferii.exit497 ]
+  %.sroa.30.1.lcssa = phi i32 [ %i.pj, %._crit_edge615 ], [ %13, %_ZL8sendbitsP10DataBufferii.exit497 ]
   %.sroa.16.1.lcssa = phi i32 [ %i.pk, %._crit_edge615 ], [ %14, %_ZL8sendbitsP10DataBufferii.exit497 ]
-  %.sroa.0.1.lcssa = phi i32 [ %.pre684.a, %._crit_edge615 ], [ %13, %_ZL8sendbitsP10DataBufferii.exit497 ]
+  %.sroa.0.1.lcssa = phi i32 [ %.pre684.a, %._crit_edge615 ], [ %15, %_ZL8sendbitsP10DataBufferii.exit497 ]
   %i.qo = icmp ne i32 %.0392.lcssa, %.0390627
   %i.qp = icmp ne i32 %.1396.lcssa, 0             ; 2 uses
   %or.cond12 = select i1 %i.qo, i1 true, i1 %i.qp

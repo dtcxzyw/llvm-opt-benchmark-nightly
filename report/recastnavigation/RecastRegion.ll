@@ -205,7 +205,7 @@ _ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backER
 bb.aj:                                            ; preds = %bb.ab
   %i.td = zext nneg i32 %i.qq to i64
   %i.te = getelementptr [24 x i8], ptr %5, i64 %i.td ; 8 uses
-  %i.tf = getelementptr i8, ptr %i.te, i64 -24    ; 2 uses
+  %i.tf = getelementptr i8, ptr %i.te, i64 -24
   %.val14.i = load i64, ptr %i.tf, align 8, !tbaa !116 ; 2 uses
   %i.tg = icmp sgt i64 %.val14.i, 0
   br i1 %i.tg, label %.lr.ph.i231, label %_ZL16sortCellsByLeveltR20rcCompactHeightfieldPKtjP12rcTempVectorIN12_GLOBAL__N_115LevelStackEntryEEt.exit
@@ -214,13 +214,12 @@ bb.aj:                                            ; preds = %bb.ab
   %i.th = getelementptr i8, ptr %i.te, i64 -8
   %i.ti = getelementptr inbounds nuw i8, ptr %i.te, i64 8 ; 2 uses
   %i.tj = getelementptr inbounds nuw i8, ptr %i.te, i64 16 ; 3 uses
+  %.val13.i.pre = load ptr, ptr %i.th, align 8, !tbaa !114
   br label %bb.ak
 
 bb.ak:                                            ; preds = %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit.i234, %.lr.ph.i231
-  %.val.i297 = phi i64 [ %.val14.i, %.lr.ph.i231 ], [ %.val.i, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit.i234 ] ; 3 uses
   %indvars.iv.i232 = phi i64 [ 0, %.lr.ph.i231 ], [ %indvars.iv.next.i235, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit.i234 ] ; 2 uses
-  %.val13.i = load ptr, ptr %i.th, align 8, !tbaa !114
-  %i.tk = getelementptr inbounds nuw [12 x i8], ptr %.val13.i, i64 %indvars.iv.i232 ; 3 uses
+  %i.tk = getelementptr inbounds nuw [12 x i8], ptr %.val13.i.pre, i64 %indvars.iv.i232 ; 3 uses
   %i.tl = getelementptr inbounds nuw i8, ptr %i.tk, i64 8
   %i.tm = load i32, ptr %i.tl, align 4, !tbaa !119 ; 2 uses
   %i.tn = icmp slt i32 %i.tm, 0
@@ -262,13 +261,11 @@ bb.ao:                                            ; preds = %bb.am
   %i.ud = load ptr, ptr %i.tj, align 8, !tbaa !114
   tail call void @_Z6rcFreePv(ptr noundef %i.ud) #8
   store ptr %i.ua, ptr %i.tj, align 8, !tbaa !114
-  %.val.i.pre = load i64, ptr %i.tf, align 8, !tbaa !116
   br label %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit.i234
 
 _ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit.i234: ; preds = %bb.ao, %bb.an, %bb.al, %bb.ak
-  %.val.i = phi i64 [ %.val.i.pre, %bb.ao ], [ %.val.i297, %bb.an ], [ %.val.i297, %bb.al ], [ %.val.i297, %bb.ak ] ; 2 uses
   %indvars.iv.next.i235 = add nuw nsw i64 %indvars.iv.i232, 1 ; 2 uses
-  %i.ue = icmp sgt i64 %.val.i, %indvars.iv.next.i235
+  %i.ue = icmp sgt i64 %.val14.i, %indvars.iv.next.i235
   br i1 %i.ue, label %bb.ak, label %_ZL16sortCellsByLeveltR20rcCompactHeightfieldPKtjP12rcTempVectorIN12_GLOBAL__N_115LevelStackEntryEEt.exit
 
 _ZL16sortCellsByLeveltR20rcCompactHeightfieldPKtjP12rcTempVectorIN12_GLOBAL__N_115LevelStackEntryEEt.exit: ; preds = %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit.i234, %._crit_edge57.i, %bb.aj, %.preheader.lr.ph.i216, %bb.ac

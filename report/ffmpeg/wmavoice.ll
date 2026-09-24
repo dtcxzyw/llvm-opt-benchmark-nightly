@@ -205,7 +205,7 @@ define internal fastcc range(i32 -2147483648, 1) i32 @synth_superframe(ptr nound
 bb.a:
   %i.a = alloca [9 x i16], align 16               ; 13 uses
   %i.b = alloca [80 x float], align 16            ; 6 uses
-  %3 = alloca %struct.AMRFixed, align 4           ; 38 uses
+  %3 = alloca %struct.AMRFixed, align 4           ; 34 uses
   %i.c = alloca [16 x double], align 16           ; 9 uses
   %i.d = ptrtoaddr ptr %i.c to i64
   %i.e = alloca [16 x float], align 16            ; 5 uses
@@ -224,8 +224,8 @@ bb.a:
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !28   ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #12
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 76 ; 6 uses
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !44   ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 76 ; 5 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !44   ; 6 uses
   %i.t = icmp eq i32 %i.s, 16
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 84
   %i.v = load i32, ptr %i.u, align 4, !tbaa !43
@@ -346,14 +346,13 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #12
-  %5 = load i32, ptr %i.r, align 4, !tbaa !44     ; 4 uses
-  %i.cc = icmp sgt i32 %5, 0
+  %i.cc = icmp sgt i32 %i.s, 0
   br i1 %i.cc, label %.lr.ph, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %bb.i
   %i.cd = getelementptr inbounds nuw i8, ptr %i.q, i64 496 ; 2 uses
-  %wide.trip.count = zext nneg i32 %5 to i64      ; 3 uses
-  %min.iters.check = icmp ult i32 %5, 4
+  %wide.trip.count = zext nneg i32 %i.s to i64    ; 3 uses
+  %min.iters.check = icmp ult i32 %i.s, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -402,7 +401,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !90
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block
-  %i.ct = icmp eq i32 %5, 10
+  %i.ct = icmp eq i32 %i.s, 10
   br i1 %i.ct, label %dequant_lsp10r.exit, label %._crit_edge.thread
 
 dequant_lsp10r.exit:                              ; preds = %._crit_edge
@@ -805,7 +804,6 @@ bb.dl:                                            ; preds = %bb.cg
   store i32 %i.blq, ptr %i.at, align 8, !tbaa !52
   %i.blr = mul nuw nsw i32 %i.blo, 5
   store i32 %i.blr, ptr %i.afs, align 4, !tbaa !56
-  store i32 1, ptr %3, align 4, !tbaa !150
   store float %i.blg, ptr %i.aft, align 4, !tbaa !37
   br i1 %.not160.i.i.not.i, label %bb.dm, label %bb.dn
 
@@ -826,7 +824,6 @@ bb.dm:                                            ; preds = %bb.dl
   %i.bmd = icmp samesign ult i32 %i.blo, %i.blz
   %i.bme = fneg nsz float %i.blg
   %i.bmf = select nsz i1 %i.bmd, float %i.bme, float %i.blg
-  store i32 2, ptr %3, align 4, !tbaa !150
   store float %i.bmf, ptr %i.afv, align 4, !tbaa !37
   br label %bb.dn
 
@@ -863,8 +860,7 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dl
   %i.bnf = zext nneg i32 %i.bmg to i64            ; 2 uses
   %i.bng = getelementptr inbounds nuw [4 x i8], ptr %i.afs, i64 %i.bnf
   store i32 %i.bne, ptr %i.bng, align 4, !tbaa !56
-  %i.bnh = add nuw nsw i32 %i.bmg, 1              ; 3 uses
-  store i32 %i.bnh, ptr %3, align 4, !tbaa !150
+  %i.bnh = add nuw nsw i32 %i.bmg, 1              ; 2 uses
   %i.bni = getelementptr inbounds nuw [4 x i8], ptr %i.aft, i64 %i.bnf
   store float %i.bms, ptr %i.bni, align 4, !tbaa !37
   br i1 %.not183.i, label %bb.dp, label %bb.do
@@ -889,8 +885,7 @@ bb.do:                                            ; preds = %bb.dn
   %i.bnx = icmp samesign ult i32 %i.bna, %i.bnq
   %i.bny = fneg nsz float %i.bms
   %i.bnz = select nsz i1 %i.bnx, float %i.bny, float %i.bms
-  %i.boa = add nuw nsw i32 %i.bmg, 2              ; 2 uses
-  store i32 %i.boa, ptr %3, align 4, !tbaa !150
+  %i.boa = add nuw nsw i32 %i.bmg, 2
   %i.bob = getelementptr inbounds nuw [4 x i8], ptr %i.aft, i64 %i.bnv
   store float %i.bnz, ptr %i.bob, align 4, !tbaa !37
   br label %bb.dp

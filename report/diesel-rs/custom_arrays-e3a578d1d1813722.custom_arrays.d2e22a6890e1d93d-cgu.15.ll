@@ -204,6 +204,7 @@ bb.a:
   %i.a = alloca [768 x i8], align 8               ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !64)
   %i.b = icmp samesign ult i64 %1, 2
   br i1 %i.b, label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB27_2pg7backend2PgEEL_ENCINvMB8_SB1s_16sort_unstable_byNCINvYNtNtB2Q_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB2M_E18pending_migrationsNtNtB4u_19embedded_migrations18EmbeddedMigrationsEs_0E0ECsi6wIvn64oUH_13custom_arrays.exit, label %bb.b
 
@@ -241,8 +242,8 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !alias.scope !64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !alias.scope !64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !alias.scope !65
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !alias.scope !65
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
@@ -262,44 +263,44 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.05.010.1.i
   %.idx59 = shl nuw nsw i64 %.sroa.05.010.1.i, 4
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx59 ; 6 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, ptr noundef nonnull align 8 dereferenceable(16) %i.r, i64 16, i1 false), !alias.scope !64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, ptr noundef nonnull align 8 dereferenceable(16) %i.r, i64 16, i1 false), !alias.scope !65
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -16 ; 3 uses
-  %.val11.i.1.i = load ptr, ptr %i.s, align 8, !alias.scope !65, !noalias !63, !nonnull !4, !noundef !4 ; 4 uses
+  %.val11.i.1.i = load ptr, ptr %i.s, align 8, !alias.scope !64, !noalias !63, !nonnull !4, !noundef !4 ; 4 uses
   %i.u = getelementptr i8, ptr %i.s, i64 8
-  %.val12.i.1.i = load ptr, ptr %i.u, align 8, !alias.scope !65, !noalias !63, !nonnull !4, !align !5, !noundef !4 ; 4 uses
-  %.val13.i.1.i = load ptr, ptr %i.t, align 8, !alias.scope !65, !noalias !63
+  %.val12.i.1.i = load ptr, ptr %i.u, align 8, !alias.scope !64, !noalias !63, !nonnull !4, !align !5, !noundef !4 ; 4 uses
+  %.val13.i.1.i = load ptr, ptr %i.t, align 8, !alias.scope !64, !noalias !63
   %i.v = getelementptr i8, ptr %i.s, i64 -8
-  %.val14.i.1.i = load ptr, ptr %i.v, align 8, !alias.scope !65, !noalias !63
-  %i.w = call fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.val11.i.1.i, ptr nonnull %.val12.i.1.i, ptr %.val13.i.1.i, ptr %.val14.i.1.i), !noalias !63
+  %.val14.i.1.i = load ptr, ptr %i.v, align 8, !alias.scope !64, !noalias !63
+  %i.w = call fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.val11.i.1.i, ptr nonnull %.val12.i.1.i, ptr %.val13.i.1.i, ptr %.val14.i.1.i), !noalias !65
   br i1 %i.w, label %.preheader.1.i.preheader, label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1N_2pg7backend2PgEEL_ENCINvMB8_SB18_16sort_unstable_byNCINvYNtNtB2w_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB2s_E18pending_migrationsNtNtB4a_19embedded_migrations18EmbeddedMigrationsEs_0E0ECsi6wIvn64oUH_13custom_arrays.exit.1.i
 
 .preheader.1.i.preheader:                         ; preds = %.noexc33.1.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, ptr noundef nonnull align 8 dereferenceable(16) %i.t, i64 16, i1 false), !alias.scope !65, !noalias !63
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, ptr noundef nonnull align 8 dereferenceable(16) %i.t, i64 16, i1 false), !alias.scope !64, !noalias !63
   %i.x = icmp eq i64 %.sroa.05.010.1.i, 1
   br i1 %i.x, label %._crit_edge56, label %.lr.ph55
 
 .preheader.1.i:                                   ; preds = %bb.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i32.1.i54, ptr noundef nonnull align 8 dereferenceable(16) %i.z, i64 16, i1 false), !alias.scope !65, !noalias !63
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i32.1.i54, ptr noundef nonnull align 8 dereferenceable(16) %i.z, i64 16, i1 false), !alias.scope !64, !noalias !63
   %i.y = icmp eq ptr %i.z, %i.p
   br i1 %i.y, label %._crit_edge56, label %.lr.ph55
 
 .lr.ph55:                                         ; preds = %.preheader.1.i.preheader, %.preheader.1.i
   %.sroa.0.0.i32.1.i54 = phi ptr [ %i.z, %.preheader.1.i ], [ %i.t, %.preheader.1.i.preheader ] ; 5 uses
   %i.z = getelementptr inbounds i8, ptr %.sroa.0.0.i32.1.i54, i64 -16 ; 4 uses
-  %.val9.i.1.i = load ptr, ptr %i.z, align 8, !alias.scope !65, !noalias !63
+  %.val9.i.1.i = load ptr, ptr %i.z, align 8, !alias.scope !64, !noalias !63
   %i.aa = getelementptr i8, ptr %.sroa.0.0.i32.1.i54, i64 -8
-  %.val10.i.1.i = load ptr, ptr %i.aa, align 8, !alias.scope !65, !noalias !63
+  %.val10.i.1.i = load ptr, ptr %i.aa, align 8, !alias.scope !64, !noalias !63
   %i.ab = invoke fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.val11.i.1.i, ptr nonnull %.val12.i.1.i, ptr %.val9.i.1.i, ptr %.val10.i.1.i)
-          to label %bb.j unwind label %.loopexit.split-lp23.i, !noalias !63
+          to label %bb.j unwind label %.loopexit.split-lp23.i, !noalias !65
 
 bb.j:                                             ; preds = %.lr.ph55
   br i1 %i.ab, label %.preheader.1.i, label %._crit_edge56
 
 ._crit_edge56:                                    ; preds = %.preheader.1.i, %bb.j, %.preheader.1.i.preheader
   %.sroa.0.0.i32.lcssa.1.i = phi ptr [ %i.p, %.preheader.1.i.preheader ], [ %i.p, %.preheader.1.i ], [ %.sroa.0.0.i32.1.i54, %bb.j ] ; 2 uses
-  store ptr %.val11.i.1.i, ptr %.sroa.0.0.i32.lcssa.1.i, align 8, !alias.scope !65, !noalias !66
+  store ptr %.val11.i.1.i, ptr %.sroa.0.0.i32.lcssa.1.i, align 8, !alias.scope !64, !noalias !66
   %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i32.lcssa.1.i, i64 8
-  store ptr %.val12.i.1.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !65, !noalias !66
+  store ptr %.val12.i.1.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !64, !noalias !66
   br label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1N_2pg7backend2PgEEL_ENCINvMB8_SB18_16sort_unstable_byNCINvYNtNtB2w_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB2s_E18pending_migrationsNtNtB4a_19embedded_migrations18EmbeddedMigrationsEs_0E0ECsi6wIvn64oUH_13custom_arrays.exit.1.i
 
 _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1N_2pg7backend2PgEEL_ENCINvMB8_SB18_16sort_unstable_byNCINvYNtNtB2w_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB2s_E18pending_migrationsNtNtB4a_19embedded_migrations18EmbeddedMigrationsEs_0E0ECsi6wIvn64oUH_13custom_arrays.exit.1.i: ; preds = %._crit_edge56, %.noexc33.1.i
@@ -337,11 +338,11 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
   %i.an = getelementptr i8, ptr %.sroa.06.08.i.i, i64 8
   %.sroa.06.0.val25.i.i = load ptr, ptr %i.an, align 8, !alias.scope !67, !noalias !63
   %i.ao = invoke fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.sroa.011.0.val.i.i, ptr nonnull %.sroa.011.0.val24.i.i, ptr %.sroa.06.0.val.i.i, ptr %.sroa.06.0.val25.i.i)
-          to label %.noexc.i unwind label %.loopexit.i, !noalias !63 ; 3 uses
+          to label %.noexc.i unwind label %.loopexit.i, !noalias !65 ; 3 uses
 
 .noexc.i:                                         ; preds = %.lr.ph.i.i
   %..i23.i.i = select i1 %i.ao, ptr %.sroa.011.07.i.i, ptr %.sroa.06.08.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.010.i.i, ptr noundef nonnull align 8 dereferenceable(16) %..i23.i.i, i64 16, i1 false), !alias.scope !64, !noalias !68
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.010.i.i, ptr noundef nonnull align 8 dereferenceable(16) %..i23.i.i, i64 16, i1 false), !alias.scope !65, !noalias !68
   %.sroa.017.0.val.i.i = load ptr, ptr %.sroa.017.05.i.i, align 8, !alias.scope !67, !noalias !63, !nonnull !4, !noundef !4
   %i.ap = getelementptr i8, ptr %.sroa.017.05.i.i, i64 8
   %.sroa.017.0.val26.i.i = load ptr, ptr %i.ap, align 8, !alias.scope !67, !noalias !63, !nonnull !4, !align !5, !noundef !4
@@ -349,7 +350,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
   %i.aq = getelementptr i8, ptr %.sroa.015.06.i.i, i64 8
   %.sroa.015.0.val27.i.i = load ptr, ptr %i.aq, align 8, !alias.scope !67, !noalias !63
   %i.ar = invoke fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.sroa.017.0.val.i.i, ptr nonnull %.sroa.017.0.val26.i.i, ptr %.sroa.015.0.val.i.i, ptr %.sroa.015.0.val27.i.i)
-          to label %.noexc30.i unwind label %.loopexit.i, !noalias !63 ; 3 uses
+          to label %.noexc30.i unwind label %.loopexit.i, !noalias !65 ; 3 uses
 
 .noexc30.i:                                       ; preds = %.noexc.i
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 16 ; 2 uses
@@ -359,7 +360,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
   %.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.011.07.i.i, i64 %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx ; 4 uses
   %..i.i.i = select i1 %i.ar, ptr %.sroa.015.06.i.i, ptr %.sroa.017.05.i.i
   %i.at = xor i1 %i.ar, true
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.019.04.i.i, ptr noundef nonnull align 8 dereferenceable(16) %..i.i.i, i64 16, i1 false), !alias.scope !64, !noalias !69
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.019.04.i.i, ptr noundef nonnull align 8 dereferenceable(16) %..i.i.i, i64 16, i1 false), !alias.scope !65, !noalias !69
   %.neg.i.i.i = sext i1 %i.at to i64
   %i.au = getelementptr [16 x i8], ptr %.sroa.017.05.i.i, i64 %.neg.i.i.i ; 2 uses
   %.neg15.i.i.i = sext i1 %i.ar to i64
@@ -371,7 +372,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
 bb.k:                                             ; preds = %._crit_edge.i.i
   %.not = icmp ult ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, %i.ah ; 3 uses
   %.sroa.06.0..sroa.011.0.i.i = select i1 %.not, ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, ptr %.sroa.sel.idx.sroa.sel.idx.sroa.sel
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.06.0..sroa.011.0.i.i, i64 16, i1 false), !alias.scope !64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.06.0..sroa.011.0.i.i, i64 16, i1 false), !alias.scope !65
   %.sroa.sel28.idx.sroa.sel.idx = select i1 %.not, i64 16, i64 0
   %.sroa.sel28.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, i64 %.sroa.sel28.idx.sroa.sel.idx
   %.sroa.sel.idx.sroa.sel.idx = select i1 %.not, i64 0, i64 16
@@ -388,7 +389,7 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge.
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_RNvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #19
-          to label %.noexc31.i unwind label %.loopexit.split-lp.i, !noalias !63
+          to label %.noexc31.i unwind label %.loopexit.split-lp.i, !noalias !65
 
 .noexc31.i:                                       ; preds = %bb.m
   unreachable
@@ -406,7 +407,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
   %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   %i.az = shl nuw nsw i64 %1, 4
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.a, i64 %i.az, i1 false), !alias.scope !64, !noalias !70
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.a, i64 %i.az, i1 false), !alias.scope !65, !noalias !70
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.p, %bb.n
@@ -418,44 +419,44 @@ bb.n:                                             ; preds = %.loopexit.split-lp.
   %i.ba = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.05.010.i
   %.idx = shl nuw nsw i64 %.sroa.05.010.i, 4
   %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx ; 6 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bb, ptr noundef nonnull align 8 dereferenceable(16) %i.ba, i64 16, i1 false), !alias.scope !64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bb, ptr noundef nonnull align 8 dereferenceable(16) %i.ba, i64 16, i1 false), !alias.scope !65
   %i.bc = getelementptr inbounds i8, ptr %i.bb, i64 -16 ; 3 uses
-  %.val11.i.i = load ptr, ptr %i.bb, align 8, !alias.scope !65, !noalias !63, !nonnull !4, !noundef !4 ; 4 uses
+  %.val11.i.i = load ptr, ptr %i.bb, align 8, !alias.scope !64, !noalias !63, !nonnull !4, !noundef !4 ; 4 uses
   %i.bd = getelementptr i8, ptr %i.bb, i64 8
-  %.val12.i.i = load ptr, ptr %i.bd, align 8, !alias.scope !65, !noalias !63, !nonnull !4, !align !5, !noundef !4 ; 4 uses
-  %.val13.i.i = load ptr, ptr %i.bc, align 8, !alias.scope !65, !noalias !63
+  %.val12.i.i = load ptr, ptr %i.bd, align 8, !alias.scope !64, !noalias !63, !nonnull !4, !align !5, !noundef !4 ; 4 uses
+  %.val13.i.i = load ptr, ptr %i.bc, align 8, !alias.scope !64, !noalias !63
   %i.be = getelementptr i8, ptr %i.bb, i64 -8
-  %.val14.i.i = load ptr, ptr %i.be, align 8, !alias.scope !65, !noalias !63
-  %i.bf = call fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.val11.i.i, ptr nonnull %.val12.i.i, ptr %.val13.i.i, ptr %.val14.i.i), !noalias !63
+  %.val14.i.i = load ptr, ptr %i.be, align 8, !alias.scope !64, !noalias !63
+  %i.bf = call fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.val11.i.i, ptr nonnull %.val12.i.i, ptr %.val13.i.i, ptr %.val14.i.i), !noalias !65
   br i1 %i.bf, label %.preheader.i.preheader, label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1N_2pg7backend2PgEEL_ENCINvMB8_SB18_16sort_unstable_byNCINvYNtNtB2w_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB2s_E18pending_migrationsNtNtB4a_19embedded_migrations18EmbeddedMigrationsEs_0E0ECsi6wIvn64oUH_13custom_arrays.exit.i
 
 .preheader.i.preheader:                           ; preds = %.noexc33.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bb, ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i64 16, i1 false), !alias.scope !65, !noalias !63
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bb, ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i64 16, i1 false), !alias.scope !64, !noalias !63
   %i.bg = icmp eq i64 %.sroa.05.010.i, 1
   br i1 %i.bg, label %._crit_edge, label %.lr.ph
 
 .preheader.i:                                     ; preds = %bb.o
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i32.i52, ptr noundef nonnull align 8 dereferenceable(16) %i.bi, i64 16, i1 false), !alias.scope !65, !noalias !63
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i32.i52, ptr noundef nonnull align 8 dereferenceable(16) %i.bi, i64 16, i1 false), !alias.scope !64, !noalias !63
   %i.bh = icmp eq ptr %i.bi, %i.a
   br i1 %i.bh, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.i.preheader, %.preheader.i
   %.sroa.0.0.i32.i52 = phi ptr [ %i.bi, %.preheader.i ], [ %i.bc, %.preheader.i.preheader ] ; 5 uses
   %i.bi = getelementptr inbounds i8, ptr %.sroa.0.0.i32.i52, i64 -16 ; 4 uses
-  %.val9.i.i = load ptr, ptr %i.bi, align 8, !alias.scope !65, !noalias !63
+  %.val9.i.i = load ptr, ptr %i.bi, align 8, !alias.scope !64, !noalias !63
   %i.bj = getelementptr i8, ptr %.sroa.0.0.i32.i52, i64 -8
-  %.val10.i.i = load ptr, ptr %i.bj, align 8, !alias.scope !65, !noalias !63
+  %.val10.i.i = load ptr, ptr %i.bj, align 8, !alias.scope !64, !noalias !63
   %i.bk = invoke fastcc noundef zeroext i1 @_RNCINvMNtCscI6d9CVNmLh_4core5sliceSINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1c_2pg7backend2PgEEL_E16sort_unstable_byNCINvYNtNtB1V_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB1R_E18pending_migrationsNtNtB3l_19embedded_migrations18EmbeddedMigrationsEs_0E0Csi6wIvn64oUH_13custom_arrays(ptr nonnull %.val11.i.i, ptr nonnull %.val12.i.i, ptr %.val9.i.i, ptr %.val10.i.i)
-          to label %bb.o unwind label %.loopexit22.i, !noalias !63
+          to label %bb.o unwind label %.loopexit22.i, !noalias !65
 
 bb.o:                                             ; preds = %.lr.ph
   br i1 %i.bk, label %.preheader.i, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.preheader.i, %bb.o, %.preheader.i.preheader
   %.sroa.0.0.i32.lcssa.i = phi ptr [ %i.a, %.preheader.i.preheader ], [ %i.a, %.preheader.i ], [ %.sroa.0.0.i32.i52, %bb.o ] ; 2 uses
-  store ptr %.val11.i.i, ptr %.sroa.0.0.i32.lcssa.i, align 8, !alias.scope !65, !noalias !66
+  store ptr %.val11.i.i, ptr %.sroa.0.0.i32.lcssa.i, align 8, !alias.scope !64, !noalias !66
   %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i32.lcssa.i, i64 8
-  store ptr %.val12.i.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !65, !noalias !66
+  store ptr %.val12.i.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !64, !noalias !66
   br label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1N_2pg7backend2PgEEL_ENCINvMB8_SB18_16sort_unstable_byNCINvYNtNtB2w_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB2s_E18pending_migrationsNtNtB4a_19embedded_migrations18EmbeddedMigrationsEs_0E0ECsi6wIvn64oUH_13custom_arrays.exit.i
 
 .loopexit22.i:                                    ; preds = %.lr.ph
@@ -473,9 +474,9 @@ bb.p:                                             ; preds = %.loopexit.split-lp2
   %.val12.i.lcssa.i = phi ptr [ %.val12.i.i, %.loopexit22.i ], [ %.val12.i.1.i, %.loopexit.split-lp23.i ]
   %.sroa.0.0.i32.lcssa17.i = phi ptr [ %.sroa.0.0.i32.i52, %.loopexit22.i ], [ %.sroa.0.0.i32.1.i54, %.loopexit.split-lp23.i ] ; 2 uses
   %lpad.phi30.i = phi { ptr, i32 } [ %lpad.loopexit28.i, %.loopexit22.i ], [ %lpad.loopexit.split-lp29.i, %.loopexit.split-lp23.i ]
-  store ptr %.val11.i.lcssa.i, ptr %.sroa.0.0.i32.lcssa17.i, align 8, !alias.scope !65, !noalias !71
+  store ptr %.val11.i.lcssa.i, ptr %.sroa.0.0.i32.lcssa17.i, align 8, !alias.scope !64, !noalias !71
   %.sroa.5.0..sroa.0.0.lcssa7.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i32.lcssa17.i, i64 8
-  store ptr %.val12.i.lcssa.i, ptr %.sroa.5.0..sroa.0.0.lcssa7.sroa_idx.i.i, align 8, !alias.scope !65, !noalias !71
+  store ptr %.val12.i.lcssa.i, ptr %.sroa.5.0..sroa.0.0.lcssa7.sroa_idx.i.i, align 8, !alias.scope !64, !noalias !71
   br label %.body.i
 
 _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1N_2pg7backend2PgEEL_ENCINvMB8_SB18_16sort_unstable_byNCINvYNtNtB2w_10connection12PgConnectionINtNtCskLp0vI1JK7v_17diesel_migrations17migration_harness16MigrationHarnessB2s_E18pending_migrationsNtNtB4a_19embedded_migrations18EmbeddedMigrationsEs_0E0ECsi6wIvn64oUH_13custom_arrays.exit.i: ; preds = %._crit_edge, %.noexc33.i
@@ -878,8 +879,8 @@ attributes #19 = { noreturn }
 !61 = distinct !{!61, !"_RNvXs5_NtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsortINtB5_10CopyOnDropINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1V_2pg7backend2PgEEL_EENtNtNtBd_3ops4drop4Drop4dropCsi6wIvn64oUH_13custom_arrays"}
 !62 = distinct !{!62, !61, !"_RNvXs5_NtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsortINtB5_10CopyOnDropINtNtCs40k4W9msRzi_5alloc5boxed3BoxDINtNtCsjRvGck33osM_6diesel9migration9MigrationNtNtNtB1V_2pg7backend2PgEEL_EENtNtNtBd_3ops4drop4Drop4dropCsi6wIvn64oUH_13custom_arrays: argument 0"}
 !63 = !{!41}
-!64 = !{!41, !42}
-!65 = !{!42}
+!64 = !{!42}
+!65 = !{!41, !42}
 !66 = !{!46, !44, !41}
 !67 = !{!48, !42}
 !68 = !{!51, !50}

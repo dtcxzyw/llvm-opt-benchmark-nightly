@@ -204,11 +204,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.not590 = icmp eq ptr %3, null                 ; 7 uses
-  %.pre926 = load i8, ptr %i.c, align 1, !tbaa !52 ; 2 uses
   br i1 %.not590, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not591 = icmp eq i8 %.pre926, 82
+  %8 = load i8, ptr %i.c, align 1, !tbaa !52
+  %.not591 = icmp eq i8 %8, 82
   br i1 %.not591, label %.thread1006, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -236,13 +236,12 @@ var_push.exit:                                    ; preds = %bb.d, %bb.e
   store i64 %i.n, ptr %.0.i712, align 8, !tbaa !51
   %i.o = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.l
   store ptr %0, ptr %i.o, align 8, !tbaa !101
-  %.pre = load i8, ptr %i.c, align 1, !tbaa !52
   br label %bb.f
 
 bb.f:                                             ; preds = %var_push.exit, %bb.b
-  %8 = phi i8 [ %.pre, %var_push.exit ], [ %.pre926, %bb.b ] ; 2 uses
+  %.pr = load i8, ptr %i.c, align 1, !tbaa !52    ; 2 uses
   %i.p = ptrtoint ptr %2 to i64                   ; 6 uses
-  switch i8 %8, label %zend_string_release_ex.exit [
+  switch i8 %.pr, label %zend_string_release_ex.exit [
     i8 67, label %bb.g
     i8 79, label %bb.g
     i8 69, label %bb.h
@@ -645,7 +644,7 @@ bb.di:                                            ; preds = %bb.bv
   br i1 %.not590, label %zend_string_release_ex.exit694, label %.lr.ph.i723.preheader
 
 .lr.ph.i723.preheader:                            ; preds = %bb.di
-  %i.kf = icmp eq i8 %8, 67
+  %i.kf = icmp eq i8 %.pr, 67
   br label %.lr.ph.i723
 
 .lr.ph.i723:                                      ; preds = %.lr.ph.i723.preheader, %.lr.ph.i723

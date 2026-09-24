@@ -205,15 +205,16 @@ define hidden void @_RNvMsn_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtNtCsbNLsQi0Ju
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !6, !noundef !6 ; 50 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1305)
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 288 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1306)
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 288 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1307)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1308)
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 576 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1309)
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 576 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1310)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1311)
-  %i.d = load ptr, ptr %i.c, align 8, !alias.scope !1312, !nonnull !6, !noundef !6
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1312)
+  %i.d = load ptr, ptr %i.c, align 8, !alias.scope !1313, !nonnull !6, !noundef !6
   %i.e = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !1313
   %i.f = icmp eq i64 %i.e, 1
   br i1 %i.f, label %bb.b, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep.exit.i.i.i.i
@@ -616,22 +617,22 @@ begin_hunk_1_@llvm.memset.p0.i64
 !1268 = distinct !{!1268, !"_RNvMse_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB5_7NodeRefNtNtB5_6marker5ImmutjNtNtB7_7set_val9SetValZSTNtB19_14LeafOrInternalE6ascendCsbNLsQi0JuJ4_5tgrep"}
 !1269 = distinct !{!1269, !1268, !"_RNvMse_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB5_7NodeRefNtNtB5_6marker5ImmutjNtNtB7_7set_val9SetValZSTNtB19_14LeafOrInternalE6ascendCsbNLsQi0JuJ4_5tgrep: argument 0"}
 !1270 = !{!1269}
-!1271 = distinct !{!1271, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep"}
-!1272 = distinct !{!1272, !1271, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep: argument 0"}
-!1273 = distinct !{!1273, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep"}
-!1274 = distinct !{!1274, !1273, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep: argument 0"}
-!1275 = distinct !{!1275, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexECsbNLsQi0JuJ4_5tgrep"}
-!1276 = distinct !{!1276, !1275, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexECsbNLsQi0JuJ4_5tgrep: argument 0"}
-!1277 = distinct !{!1277, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep"}
-!1278 = distinct !{!1278, !1277, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep: argument 0"}
-!1279 = distinct !{!1279, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep"}
-!1280 = distinct !{!1280, !1279, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep: argument 0"}
-!1281 = distinct !{!1281, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEECsbNLsQi0JuJ4_5tgrep"}
-!1282 = distinct !{!1282, !1281, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEECsbNLsQi0JuJ4_5tgrep: argument 0"}
-!1283 = distinct !{!1283, !"_RNvXsE_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep"}
-!1284 = distinct !{!1284, !1283, !"_RNvXsE_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep: argument 0"}
-!1285 = distinct !{!1285, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbNLsQi0JuJ4_5tgrep5serve11ServerStateEBF_"}
-!1286 = distinct !{!1286, !1285, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbNLsQi0JuJ4_5tgrep5serve11ServerStateEBF_: argument 0"}
+!1271 = distinct !{!1271, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbNLsQi0JuJ4_5tgrep5serve11ServerStateEBF_"}
+!1272 = distinct !{!1272, !1271, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbNLsQi0JuJ4_5tgrep5serve11ServerStateEBF_: argument 0"}
+!1273 = distinct !{!1273, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep"}
+!1274 = distinct !{!1274, !1273, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep: argument 0"}
+!1275 = distinct !{!1275, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep"}
+!1276 = distinct !{!1276, !1275, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexEECsbNLsQi0JuJ4_5tgrep: argument 0"}
+!1277 = distinct !{!1277, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexECsbNLsQi0JuJ4_5tgrep"}
+!1278 = distinct !{!1278, !1277, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsbzNSmZPCnTx_10tgrep_core6hybrid11HybridIndexECsbNLsQi0JuJ4_5tgrep: argument 0"}
+!1279 = distinct !{!1279, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep"}
+!1280 = distinct !{!1280, !1279, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6rwlock6RwLockINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep: argument 0"}
+!1281 = distinct !{!1281, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep"}
+!1282 = distinct !{!1282, !1281, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEEECsbNLsQi0JuJ4_5tgrep: argument 0"}
+!1283 = distinct !{!1283, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEECsbNLsQi0JuJ4_5tgrep"}
+!1284 = distinct !{!1284, !1283, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderEECsbNLsQi0JuJ4_5tgrep: argument 0"}
+!1285 = distinct !{!1285, !"_RNvXsE_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep"}
+!1286 = distinct !{!1286, !1285, !"_RNvXsE_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtNtCsbzNSmZPCnTx_10tgrep_core6reader11IndexReaderENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep: argument 0"}
 !1287 = distinct !{!1287, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex5MutexINtNtB4_6option6OptionINtNtNtNtBK_11collections4hash3map7HashMapNtNtBK_4path7PathBufbEEEECsbNLsQi0JuJ4_5tgrep"}
 !1288 = distinct !{!1288, !1287, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex5MutexINtNtB4_6option6OptionINtNtNtNtBK_11collections4hash3map7HashMapNtNtBK_4path7PathBufbEEEECsbNLsQi0JuJ4_5tgrep: argument 0"}
 !1289 = distinct !{!1289, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtB4_6option6OptionINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtNtB1v_4path7PathBufbEEEECsbNLsQi0JuJ4_5tgrep"}
@@ -657,14 +658,14 @@ begin_hunk_1_@llvm.memset.p0.i64
 !1309 = !{!1280}
 !1310 = !{!1282}
 !1311 = !{!1284}
-!1312 = !{!1284, !1282, !1280, !1278, !1276, !1274, !1272, !1286}
-!1313 = !{!1284, !1282, !1280, !1278, !1276, !1274, !1272}
-!1314 = !{!1292, !1290, !1288, !1286}
-!1315 = !{!1298, !1296, !1294, !1286}
+!1312 = !{!1286}
+!1313 = !{!1286, !1284, !1282, !1280, !1278, !1276, !1274, !1272}
+!1314 = !{!1292, !1290, !1288, !1272}
+!1315 = !{!1298, !1296, !1294, !1272}
 !1316 = !{!1300}
 !1317 = !{!1302}
 !1318 = !{!1304}
-!1319 = !{!1304, !1302, !1300, !1286}
+!1319 = !{!1304, !1302, !1300, !1272}
 !1320 = !{!1304, !1302, !1300}
 !1321 = distinct !{!1321, !9}
 !1322 = distinct !{!1322, !9}

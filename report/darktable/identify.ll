@@ -205,7 +205,7 @@ declare void @_ZN6LibRaw14parse_broadcomEv(ptr noundef nonnull align 8 dereferen
 declare void @_ZN6LibRaw17broadcom_load_rawEv(ptr noundef nonnull align 8 dereferenceable(768512)) #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @_ZN6LibRaw24identify_finetune_pentaxEv(ptr nofree noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #10 align 2 {
+define void @_ZN6LibRaw24identify_finetune_pentaxEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(768512) %0) local_unnamed_addr #10 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 532
   %i.b = load i32, ptr %i.a, align 4, !tbaa !131
@@ -608,11 +608,10 @@ bb.ok:                                            ; preds = %bb.oj
   br label %bb.ol
 
 bb.ol:                                            ; preds = %bb.oj, %bb.ok
-  %i.ata = phi { i64, i64 } [ %i.asz, %bb.ok ], [ { i64 ptrtoint (ptr @_ZN6LibRaw18eight_bit_load_rawEv to i64), i64 0 }, %bb.oj ] ; 2 uses
+  %i.ata = phi { i64, i64 } [ %i.asz, %bb.ok ], [ { i64 ptrtoint (ptr @_ZN6LibRaw18eight_bit_load_rawEv to i64), i64 0 }, %bb.oj ]
   %.elt = extractvalue { i64, i64 } %i.ata, 0
   store i64 %.elt, ptr %i.aeu, align 8, !tbaa !119
-  %.elt311 = extractvalue { i64, i64 } %i.ata, 1
-  store i64 %.elt311, ptr %.elt278, align 8, !tbaa !119
+  store i64 0, ptr %.elt278, align 8, !tbaa !119
   %i.atb = getelementptr inbounds nuw i8, ptr %0, i64 381836 ; 2 uses
   %i.atc = load i32, ptr %i.atb, align 4, !tbaa !127
   %i.atd = icmp ugt i32 %i.atc, 16

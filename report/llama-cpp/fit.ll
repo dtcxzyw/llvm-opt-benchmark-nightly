@@ -205,13 +205,13 @@ bb.a:
   %24 = alloca %"class.std::allocator.18", align 1 ; 4 uses
   %25 = alloca %"class.std::vector.0", align 8    ; 10 uses
   %26 = alloca %"class.std::vector.53", align 8   ; 28 uses
-  %27 = alloca %"class.std::vector.58", align 8   ; 37 uses
+  %27 = alloca %"class.std::vector.58", align 8   ; 38 uses
   %28 = alloca %"class.std::vector.40", align 8   ; 33 uses
   %29 = alloca %"class.std::vector.58", align 8   ; 9 uses
   %30 = alloca %"class.std::vector.40", align 8   ; 15 uses
   %31 = alloca %"class.std::vector.58", align 8   ; 7 uses
   %32 = alloca %"class.std::vector.40", align 8   ; 8 uses
-  %33 = alloca %"class.std::vector.58", align 8   ; 16 uses
+  %33 = alloca %"class.std::vector.58", align 8   ; 15 uses
   %34 = alloca %"class.std::vector.40", align 8   ; 15 uses
   %35 = alloca %"class.std::vector.58", align 8   ; 11 uses
   %36 = alloca %"class.std::vector.40", align 8   ; 7 uses
@@ -614,7 +614,7 @@ bb.mj:                                            ; preds = %bb.mh, %bb.mf
 .lr.ph1582:                                       ; preds = %bb.mj
   %i.api = getelementptr inbounds nuw i8, ptr %33, i64 8 ; 3 uses
   %i.apj = getelementptr inbounds nuw i8, ptr %33, i64 16 ; 6 uses
-  %i.apk = getelementptr inbounds nuw i8, ptr %35, i64 8 ; 2 uses
+  %i.apk = getelementptr inbounds nuw i8, ptr %35, i64 8
   %i.apl = getelementptr inbounds nuw i8, ptr %35, i64 16 ; 4 uses
   %i.apm = getelementptr inbounds nuw i8, ptr %27, i64 16 ; 2 uses
   %i.apn = getelementptr inbounds nuw i8, ptr %36, i64 8 ; 2 uses
@@ -623,7 +623,7 @@ bb.mj:                                            ; preds = %bb.mh, %bb.mf
   %i.apq = getelementptr inbounds nuw i8, ptr %34, i64 16 ; 4 uses
   %i.apr = getelementptr inbounds nuw i8, ptr %34, i64 8 ; 3 uses
   %i.aps = getelementptr inbounds nuw i8, ptr %36, i64 16 ; 2 uses
-  %i.apt = getelementptr inbounds nuw i8, ptr %37, i64 8 ; 2 uses
+  %i.apt = getelementptr inbounds nuw i8, ptr %37, i64 8
   %i.apu = getelementptr inbounds nuw i8, ptr %37, i64 16
   %i.apv = getelementptr inbounds nuw i8, ptr %26, i64 8
   %i.apw = getelementptr inbounds nuw i8, ptr %38, i64 8 ; 2 uses
@@ -697,7 +697,7 @@ _ZNSt15__new_allocatorIZL22common_params_fit_implPKcP18llama_model_paramsP20llam
   br i1 %.not.i.i.i.i.i810, label %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EEC2ERKSG_.exit815, label %.lr.ph.i.i.i.i.i807, !llvm.loop !186
 
 _ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EEC2ERKSG_.exit815: ; preds = %.lr.ph.i.i.i.i.i807, %.noexc814.thread
-  %i.aqp = phi ptr [ null, %.noexc814.thread ], [ %i.aql, %.lr.ph.i.i.i.i.i807 ] ; 4 uses
+  %i.aqp = phi ptr [ null, %.noexc814.thread ], [ %i.aql, %.lr.ph.i.i.i.i.i807 ] ; 5 uses
   %.0.lcssa.i.i.i.i.i811 = phi ptr [ null, %.noexc814.thread ], [ %i.aqo, %.lr.ph.i.i.i.i.i807 ]
   store ptr %.0.lcssa.i.i.i.i.i811, ptr %i.api, align 8, !tbaa !137
   %i.aqq = icmp ult i64 %.11578, %i.aqe
@@ -768,8 +768,9 @@ bb.mo:                                            ; preds = %bb.mn
   br i1 %i.ars, label %.lr.ph1576, label %.loopexit1247
 
 .lr.ph1576:                                       ; preds = %bb.mo, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930
-  %.val5311723 = phi ptr [ %.val531, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930 ], [ %.val10.i800, %bb.mo ] ; 15 uses
-  %.val11.i819 = phi ptr [ %.val11.i8191718, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930 ], [ %.val11.i801, %bb.mo ] ; 6 uses
+  %.val36.i886 = phi ptr [ %.val532, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930 ], [ %i.aqp, %bb.mo ] ; 7 uses
+  %.val5311723 = phi ptr [ %.val11.i8191718, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930 ], [ %.val11.i801, %bb.mo ] ; 6 uses
+  %.val11.i819 = phi ptr [ %.val531, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930 ], [ %.val10.i800, %bb.mo ] ; 13 uses
   %.03131574 = phi i32 [ %i.ayr, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930 ], [ %i.arr, %bb.mo ] ; 2 uses
   %.21573 = phi i64 [ %.3, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit930 ], [ %.11578, %bb.mo ] ; 5 uses
   %i.art = zext i32 %.03131574 to i64
@@ -789,11 +790,11 @@ bb.mo:                                            ; preds = %bb.mn
   %i.asg = add i32 %.03131574, -1
   %.sroa.speculated1018 = call i32 @llvm.umin.i32(i32 %i.asg, i32 %.sroa.speculated1023)
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #24
-  %i.ash = ptrtoint ptr %.val11.i819 to i64
-  %i.asi = ptrtoint ptr %.val5311723 to i64       ; 2 uses
+  %i.ash = ptrtoint ptr %.val5311723 to i64
+  %i.asi = ptrtoint ptr %.val11.i819 to i64       ; 2 uses
   %i.asj = sub i64 %i.ash, %i.asi                 ; 8 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %35, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i820 = icmp eq ptr %.val11.i819, %.val5311723
+  %.not.i.i.i.i820 = icmp eq ptr %.val5311723, %.val11.i819
   br i1 %.not.i.i.i.i820, label %.noexc832.thread, label %bb.mp
 
 .noexc832.thread:                                 ; preds = %.lr.ph1576
@@ -816,22 +817,21 @@ bb.mp:                                            ; preds = %.lr.ph1576
 
 _ZNSt15__new_allocatorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tE8allocateEmPKv.exit.i.i.i.i821: ; preds = %bb.mp
   %i.asn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.asj) #26
-          to label %.noexc832 unwind label %.loopexit1248 ; 5 uses
+          to label %.noexc832 unwind label %.loopexit1248 ; 4 uses
 
 .noexc832:                                        ; preds = %_ZNSt15__new_allocatorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tE8allocateEmPKv.exit.i.i.i.i821
   store ptr %i.asn, ptr %35, align 8, !tbaa !132
-  store ptr %i.asn, ptr %i.apk, align 8, !tbaa !137
   %i.aso = getelementptr inbounds nuw i8, ptr %i.asn, i64 %i.asj ; 2 uses
   store ptr %i.aso, ptr %i.apl, align 8, !tbaa !133
   br label %.lr.ph.i.i.i.i.i825
 
 .lr.ph.i.i.i.i.i825:                              ; preds = %.noexc832, %.lr.ph.i.i.i.i.i825
   %.09.i.i.i.i.i826 = phi ptr [ %i.asq, %.lr.ph.i.i.i.i.i825 ], [ %i.asn, %.noexc832 ] ; 2 uses
-  %.sroa.06.08.i.i.i.i.i827 = phi ptr [ %i.asp, %.lr.ph.i.i.i.i.i825 ], [ %.val5311723, %.noexc832 ] ; 2 uses
+  %.sroa.06.08.i.i.i.i.i827 = phi ptr [ %i.asp, %.lr.ph.i.i.i.i.i825 ], [ %.val11.i819, %.noexc832 ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.09.i.i.i.i.i826, ptr noundef nonnull readonly align 4 dereferenceable(12) %.sroa.06.08.i.i.i.i.i827, i64 12, i1 false), !tbaa.struct !141
   %i.asp = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i.i.i.i827, i64 12 ; 2 uses
   %i.asq = getelementptr i8, ptr %.09.i.i.i.i.i826, i64 12 ; 2 uses
-  %.not.i.i.i.i.i828 = icmp eq ptr %i.asp, %.val11.i819
+  %.not.i.i.i.i.i828 = icmp eq ptr %i.asp, %.val5311723
   br i1 %.not.i.i.i.i.i828, label %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EEC2ERKSG_.exit833, label %.lr.ph.i.i.i.i.i825, !llvm.loop !186
 
 _ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EEC2ERKSG_.exit833: ; preds = %.lr.ph.i.i.i.i.i825, %.noexc832.thread
@@ -939,11 +939,11 @@ _ZNSt12_Vector_baseIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_c
   br label %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKSE_SG_EEEEPSE_mT_SO_.exit.i854
 
 _ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKSE_SG_EEEEPSE_mT_SO_.exit.i854: ; preds = %.lr.ph.i.i.i.i.preheader.i.i853, %.noexc858
-  %.not.i.i855 = icmp eq ptr %.val5311723, null
+  %.not.i.i855 = icmp eq ptr %.val11.i819, null
   br i1 %.not.i.i855, label %_ZNSt12_Vector_baseIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE13_M_deallocateEPSE_m.exit.i856, label %bb.mw
 
 bb.mw:                                            ; preds = %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKSE_SG_EEEEPSE_mT_SO_.exit.i854
-  call void @_ZdlPvm(ptr noundef nonnull %.val5311723, i64 noundef %i.atq) #27
+  call void @_ZdlPvm(ptr noundef nonnull %.val11.i819, i64 noundef %i.atq) #27
   br label %_ZNSt12_Vector_baseIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE13_M_deallocateEPSE_m.exit.i856
 
 _ZNSt12_Vector_baseIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE13_M_deallocateEPSE_m.exit.i856: ; preds = %bb.mw, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKSE_SG_EEEEPSE_mT_SO_.exit.i854
@@ -961,7 +961,7 @@ bb.my:                                            ; preds = %bb.mx
   br i1 %i.atz, label %bb.mz, label %bb.na, !prof !145
 
 bb.mz:                                            ; preds = %bb.my
-  call void @llvm.memmove.p0.p0.i64(ptr align 4 %.val5311723, ptr align 4 %i.ass, i64 %i.ato, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 4 %.val11.i819, ptr align 4 %i.ass, i64 %i.ato, i1 false)
   br label %.loopexit1246
 
 bb.na:                                            ; preds = %bb.my
@@ -969,7 +969,7 @@ bb.na:                                            ; preds = %bb.my
   br i1 %i.aua, label %bb.nb, label %.loopexit1246
 
 bb.nb:                                            ; preds = %bb.na
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.val5311723, ptr noundef nonnull readonly align 4 dereferenceable(12) %i.ass, i64 12, i1 false), !tbaa.struct !141
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.val11.i819, ptr noundef nonnull readonly align 4 dereferenceable(12) %i.ass, i64 12, i1 false), !tbaa.struct !141
   br label %.loopexit1246
 
 bb.nc:                                            ; preds = %bb.mx
@@ -977,7 +977,7 @@ bb.nc:                                            ; preds = %bb.mx
   br i1 %i.aub, label %bb.nd, label %bb.ne, !prof !145
 
 bb.nd:                                            ; preds = %bb.nc
-  call void @llvm.memmove.p0.p0.i64(ptr align 4 %.val5311723, ptr align 4 %i.ass, i64 %i.asj, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 4 %.val11.i819, ptr align 4 %i.ass, i64 %i.asj, i1 false)
   br label %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843
 
 bb.ne:                                            ; preds = %bb.nc
@@ -985,7 +985,7 @@ bb.ne:                                            ; preds = %bb.nc
   br i1 %i.auc, label %bb.nf, label %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843
 
 bb.nf:                                            ; preds = %bb.ne
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.val5311723, ptr noundef nonnull readonly align 4 dereferenceable(12) %i.ass, i64 12, i1 false), !tbaa.struct !141
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.val11.i819, ptr noundef nonnull readonly align 4 dereferenceable(12) %i.ass, i64 12, i1 false), !tbaa.struct !141
   br label %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843
 
 _ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843: ; preds = %bb.nf, %bb.ne, %bb.nd
@@ -993,7 +993,7 @@ _ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_pa
   br i1 %.not9.i.i.i.i.i846, label %.loopexit1246, label %.lr.ph.i.i.i.i.i847
 
 .lr.ph.i.i.i.i.i847:                              ; preds = %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843, %.lr.ph.i.i.i.i.i847
-  %.011.i.i.i.i.i848 = phi ptr [ %i.aue, %.lr.ph.i.i.i.i.i847 ], [ %.val11.i819, %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843 ] ; 2 uses
+  %.011.i.i.i.i.i848 = phi ptr [ %i.aue, %.lr.ph.i.i.i.i.i847 ], [ %.val5311723, %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843 ] ; 2 uses
   %.0810.i.i.i.i.i849 = phi ptr [ %i.aud, %.lr.ph.i.i.i.i.i847 ], [ %i.asr, %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843 ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.011.i.i.i.i.i848, ptr noundef nonnull readonly align 4 dereferenceable(12) %.0810.i.i.i.i.i849, i64 12, i1 false), !tbaa.struct !141
   %i.aud = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i849, i64 12 ; 2 uses
@@ -1006,7 +1006,7 @@ _ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_pa
   br label %.loopexit1246
 
 .loopexit1246:                                    ; preds = %.loopexit1246.loopexit, %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843, %bb.nb, %bb.na, %bb.mz, %_ZNSt12_Vector_baseIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE13_M_deallocateEPSE_m.exit.i856
-  %.val5311722 = phi ptr [ %.pre1720, %.loopexit1246.loopexit ], [ %.val5311723, %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843 ], [ %.val5311723, %bb.nb ], [ %.val5311723, %bb.na ], [ %.val5311723, %bb.mz ], [ %i.atu, %_ZNSt12_Vector_baseIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE13_M_deallocateEPSE_m.exit.i856 ] ; 4 uses
+  %.val5311722 = phi ptr [ %.pre1720, %.loopexit1246.loopexit ], [ %.val11.i819, %_ZSt4copyIPZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSF_ET0_T_SH_SG_.exit.i843 ], [ %.val11.i819, %bb.nb ], [ %.val11.i819, %bb.na ], [ %.val11.i819, %bb.mz ], [ %i.atu, %_ZNSt12_Vector_baseIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EE13_M_deallocateEPSE_m.exit.i856 ] ; 2 uses
   %i.auf = getelementptr inbounds nuw i8, ptr %.val5311722, i64 %i.ato ; 3 uses
   store ptr %i.auf, ptr %i.aca, align 8, !tbaa !137
   %i.aug = load ptr, ptr %i.apn, align 8, !tbaa !146
@@ -1177,7 +1177,6 @@ _ZNSt6vectorIlSaIlEED2Ev.exit881:                 ; preds = %_ZNSt6vectorIlSaIlE
   br label %bb.pk
 
 bb.oc:                                            ; preds = %bb.mt
-  %.val36.i886 = load ptr, ptr %33, align 8, !tbaa !132 ; 7 uses
   %.val37.i887 = load ptr, ptr %i.apj, align 8, !tbaa !133
   %i.awa = ptrtoint ptr %.val37.i887 to i64
   %i.awb = ptrtoint ptr %.val36.i886 to i64       ; 2 uses
@@ -1420,14 +1419,14 @@ bb.pi:                                            ; preds = %bb.ph
 
 _ZNSt6vectorIlSaIlEED2Ev.exit928:                 ; preds = %bb.pg, %bb.pi, %bb.ny, %bb.oa
   %.pre-phi = phi i64 [ %i.awy, %bb.pg ], [ %i.awy, %bb.pi ], [ %i.aui, %bb.ny ], [ %i.aui, %bb.oa ]
-  %.val531 = phi ptr [ %.val5311723, %bb.pg ], [ %.val5311723, %bb.pi ], [ %.val5311722, %bb.ny ], [ %.val5311722, %bb.oa ] ; 3 uses
-  %.val11.i8191718 = phi ptr [ %.val11.i819, %bb.pg ], [ %.val11.i819, %bb.pi ], [ %i.auf, %bb.ny ], [ %i.auf, %bb.oa ]
+  %.val11.i8191718 = phi ptr [ %.val5311723, %bb.pg ], [ %.val5311723, %bb.pi ], [ %i.auf, %bb.ny ], [ %i.auf, %bb.oa ]
   %.3 = phi i64 [ %.21573, %bb.pg ], [ %.21573, %bb.pi ], [ %.0312.lcssa, %bb.ny ], [ %.0312.lcssa, %bb.oa ] ; 2 uses
-  %.val532 = load ptr, ptr %33, align 8, !tbaa !132
+  %.val532 = load ptr, ptr %33, align 8, !tbaa !132 ; 2 uses
   %i.ayl = getelementptr inbounds nuw [12 x i8], ptr %.val532, i64 %.03151579 ; 2 uses
   %.val504 = load i32, ptr %i.ayl, align 4, !tbaa !138
   %i.aym = getelementptr i8, ptr %i.ayl, i64 4
   %.val505 = load i32, ptr %i.aym, align 4, !tbaa !142
+  %.val531 = load ptr, ptr %27, align 8, !tbaa !132 ; 3 uses
   %i.ayn = getelementptr inbounds nuw [12 x i8], ptr %.val531, i64 %.03151579 ; 2 uses
   %.val = load i32, ptr %i.ayn, align 4, !tbaa !138
   %i.ayo = getelementptr i8, ptr %i.ayn, i64 4
@@ -1548,11 +1547,10 @@ bb.pt:                                            ; preds = %.loopexit1247
 
 _ZNSt15__new_allocatorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tE8allocateEmPKv.exit.i.i.i.i936: ; preds = %bb.pt
   %i.azy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.azv) #26
-          to label %.noexc947 unwind label %.loopexit1257 ; 8 uses
+          to label %.noexc947 unwind label %.loopexit1257 ; 7 uses
 
 .noexc947:                                        ; preds = %_ZNSt15__new_allocatorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tE8allocateEmPKv.exit.i.i.i.i936
   store ptr %i.azy, ptr %37, align 8, !tbaa !132
-  store ptr %i.azy, ptr %i.apt, align 8, !tbaa !137
   %i.azz = getelementptr inbounds nuw i8, ptr %i.azy, i64 %i.azv
   store ptr %i.azz, ptr %i.apu, align 8, !tbaa !133
   br label %.lr.ph.i.i.i.i.i940

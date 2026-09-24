@@ -205,7 +205,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gd
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define internal fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr nofree noundef nonnull readonly %0, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 64)) %1) unnamed_addr #9 personality ptr @rust_eh_personality {
+define internal fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr nofree noundef nonnull readonly captures(none) %0, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 64)) %1) unnamed_addr #9 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !337)
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.l, %._crit_edge.
 
 bb.n:                                             ; preds = %bb.m
   invoke void @_RNvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #36
-          to label %.noexc.i unwind label %bb.o, !noalias !537
+          to label %.noexc.i unwind label %bb.o, !noalias !539
 
 .noexc.i:                                         ; preds = %bb.n
   unreachable
@@ -676,7 +676,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort18small_sort_generalNtNtCscScJTt9VrQp_6fea_rs10diagnostic10DiagnosticNCINvMB8_SB1f_20sort_unstable_by_keyNtB1h_5LevelNCNvMs0_B1h_NtB1h_13DiagnosticSet18split_off_warnings0E0EB1j_(ptr noalias nofree noundef nonnull align 8 %0, i64 noundef range(i64 0, 192153584101141163) %1, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %2) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort18small_sort_generalNtNtCscScJTt9VrQp_6fea_rs10diagnostic10DiagnosticNCINvMB8_SB1f_20sort_unstable_by_keyNtB1h_5LevelNCNvMs0_B1h_NtB1h_13DiagnosticSet18split_off_warnings0E0EB1j_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 192153584101141163) %1, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %2) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [2304 x i8], align 8              ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -940,7 +940,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
 
 bb.l:                                             ; preds = %bb.k
   invoke void @_RNvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #36
-          to label %.noexc.i unwind label %bb.m
+          to label %.noexc.i unwind label %bb.m, !noalias !569
 
 .noexc.i:                                         ; preds = %bb.l
   unreachable
@@ -1240,7 +1240,7 @@ bb.m:                                             ; preds = %bb.l, %._crit_edge.
 
 bb.n:                                             ; preds = %bb.m
   invoke void @_RNvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #36
-          to label %.noexc.i unwind label %bb.o, !noalias !594
+          to label %.noexc.i unwind label %bb.o, !noalias !596
 
 .noexc.i:                                         ; preds = %bb.n
   unreachable
@@ -1546,7 +1546,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
 
 bb.l:                                             ; preds = %bb.k
   invoke void @_RNvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #36
-          to label %.noexc.i unwind label %bb.m, !noalias !623
+          to label %.noexc.i unwind label %bb.m, !noalias !625
 
 .noexc.i:                                         ; preds = %bb.l
   unreachable
@@ -1877,7 +1877,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
 
 bb.l:                                             ; preds = %bb.k
   invoke void @_RNvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #36
-          to label %.noexc.i unwind label %bb.m, !noalias !652
+          to label %.noexc.i unwind label %bb.m, !noalias !654
 
 .noexc.i:                                         ; preds = %bb.l
   unreachable
@@ -2280,7 +2280,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailNtNtNtC
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB1s_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull align 8 %0, i64 noundef range(i64 0, 576460752303423488) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 576460752303423488) %3, ptr noalias nofree noundef nonnull readnone captures(none) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB1s_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 576460752303423488) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 576460752303423488) %3, ptr noalias nofree noundef nonnull readnone captures(none) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp samesign ult i64 %1, 2
   br i1 %i.a, label %bb.s, label %bb.b
@@ -2307,18 +2307,18 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %1 ; 5 uses
-  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef nonnull %0, ptr noundef nonnull %i.i)
+  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef nonnull readonly %0, ptr noundef nonnull %i.i)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 64
-  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef %i.j, ptr noundef %i.k)
+  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef readonly %i.j, ptr noundef %i.k)
   tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort19bidirectional_mergeNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB1g_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.i, i64 noundef 8, ptr noundef nonnull %2)
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.d ; 2 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.d
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 128 ; 2 uses
-  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef nonnull %i.l, ptr noundef nonnull %i.n)
+  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef nonnull readonly %i.l, ptr noundef nonnull %i.n)
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 64
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 192
-  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef %i.o, ptr noundef %i.p)
+  tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12sort4_stableNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB19_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noundef readonly %i.o, ptr noundef %i.p)
   tail call fastcc void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort19bidirectional_mergeNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordNvYB1g_NtNtBa_3cmp10PartialOrd2ltECscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.n, i64 noundef 8, ptr noundef nonnull %i.m)
   br label %bb.i
 
@@ -2721,7 +2721,11 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   %i.ea = ptrtoint ptr %.val10.i.1 to i64
   store i64 %i.ea, ptr %i.ds, align 8
   %i.eb = icmp eq i64 %.sroa.05.054.1, 1
-  br i1 %i.eb, label %._crit_edge79, label %.lr.ph78
+  br i1 %i.eb, label %._crit_edge79, label %.lr.ph78.preheader
+
+.lr.ph78.preheader:                               ; preds = %.preheader.1.preheader
+  %5 = load i16, ptr %i.dv, align 4, !noundef !4
+  br label %.lr.ph78
 
 .preheader.1:                                     ; preds = %.lr.ph78
   %i.ec = ptrtoint ptr %.val8.i46.1 to i64
@@ -2729,11 +2733,10 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   %i.ed = icmp eq ptr %i.ee, %i.dp
   br i1 %i.ed, label %._crit_edge79, label %.lr.ph78
 
-.lr.ph78:                                         ; preds = %.preheader.1.preheader, %.preheader.1
-  %.sroa.0.0.i45.177 = phi ptr [ %i.ee, %.preheader.1 ], [ %i.du, %.preheader.1.preheader ] ; 3 uses
+.lr.ph78:                                         ; preds = %.lr.ph78.preheader, %.preheader.1
+  %.sroa.0.0.i45.177 = phi ptr [ %i.ee, %.preheader.1 ], [ %i.du, %.lr.ph78.preheader ] ; 3 uses
   %i.ee = getelementptr inbounds i8, ptr %.sroa.0.0.i45.177, i64 -8 ; 3 uses
   %.val8.i46.1 = load ptr, ptr %i.ee, align 8, !nonnull !4, !align !12, !noundef !4 ; 2 uses
-  %5 = load i16, ptr %i.dv, align 4, !noundef !4
   %i.ef = getelementptr inbounds nuw i8, ptr %.val8.i46.1, i64 28
   %i.eg = load i16, ptr %i.ef, align 4, !noundef !4
   %i.eh = icmp ult i16 %5, %i.eg
@@ -2866,7 +2869,11 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort19bidirectional_merg
   %i.gi = ptrtoint ptr %.val10.i to i64
   store i64 %i.gi, ptr %i.ga, align 8
   %i.gj = icmp eq i64 %.sroa.05.054, 1
-  br i1 %i.gj, label %._crit_edge, label %.lr.ph75
+  br i1 %i.gj, label %._crit_edge, label %.lr.ph75.preheader
+
+.lr.ph75.preheader:                               ; preds = %.preheader.preheader
+  %6 = load i16, ptr %i.gd, align 4, !noundef !4
+  br label %.lr.ph75
 
 .preheader:                                       ; preds = %.lr.ph75
   %i.gk = ptrtoint ptr %.val8.i46 to i64
@@ -2874,11 +2881,10 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort19bidirectional_merg
   %i.gl = icmp eq ptr %i.gm, %2
   br i1 %i.gl, label %._crit_edge, label %.lr.ph75
 
-.lr.ph75:                                         ; preds = %.preheader.preheader, %.preheader
-  %.sroa.0.0.i4574 = phi ptr [ %i.gm, %.preheader ], [ %i.gc, %.preheader.preheader ] ; 3 uses
+.lr.ph75:                                         ; preds = %.lr.ph75.preheader, %.preheader
+  %.sroa.0.0.i4574 = phi ptr [ %i.gm, %.preheader ], [ %i.gc, %.lr.ph75.preheader ] ; 3 uses
   %i.gm = getelementptr inbounds i8, ptr %.sroa.0.0.i4574, i64 -8 ; 3 uses
   %.val8.i46 = load ptr, ptr %i.gm, align 8, !nonnull !4, !align !12, !noundef !4 ; 2 uses
-  %6 = load i16, ptr %i.gd, align 4, !noundef !4
   %i.gn = getelementptr inbounds nuw i8, ptr %.val8.i46, i64 28
   %i.go = load i16, ptr %i.gn, align 4, !noundef !4
   %i.gp = icmp ult i16 %6, %i.go
@@ -2896,7 +2902,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailRNtNtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16NtNtCscScJTt9VrQp_6fea_rs6common10GlyphIdentENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB37_11collections5btree3mapINtB3U_8BTreeMapB1t_B2g_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4X_8adapters5chain5ChainINtNtB5U_3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameB1t_ENCNvMNtB2i_9glyph_mapNtB8o_8GlyphMap11reverse_map0EIB6m_IB6D_tB1t_ENCB8l_s_0EEE0E0EB2k_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 288230376151711744) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 288230376151711744) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16NtNtCscScJTt9VrQp_6fea_rs6common10GlyphIdentENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB37_11collections5btree3mapINtB3U_8BTreeMapB1t_B2g_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4X_8adapters5chain5ChainINtNtB5U_3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameB1t_ENCNvMNtB2i_9glyph_mapNtB8o_8GlyphMap11reverse_map0EIB6m_IB6D_tB1t_ENCB8l_s_0EEE0E0EB2k_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 288230376151711744) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 288230376151711744) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.5.i = alloca [30 x i8], align 2          ; 8 uses
   %i.a = icmp samesign ult i64 %1, 2
@@ -3200,7 +3206,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2q_11collections5btree3mapINtB3d_8BTreeMapB1t_tEINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4d_8adapters6filter6FilterINtNtB5a_3map3MapINtB3d_4IterB1t_tENCNCNvMNtNtNtCscScJTt9VrQp_6fea_rs7compile6tables4gdefNtB6j_11GdefBuilder27build_mark_attach_class_def00ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB82_19ClassDefBuilderImplIB47_B1s_E9from_iterB5D_E0EE0E0EB6p_(ptr noalias nofree noundef nonnull align 2 captures(none) %0, i64 noundef range(i64 0, 2305843009213693952) %1, ptr noalias nofree noundef nonnull align 2 %2, i64 noundef range(i64 0, 2305843009213693952) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2q_11collections5btree3mapINtB3d_8BTreeMapB1t_tEINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4d_8adapters6filter6FilterINtNtB5a_3map3MapINtB3d_4IterB1t_tENCNCNvMNtNtNtCscScJTt9VrQp_6fea_rs7compile6tables4gdefNtB6j_11GdefBuilder27build_mark_attach_class_def00ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB82_19ClassDefBuilderImplIB47_B1s_E9from_iterB5D_E0EE0E0EB6p_(ptr noalias nofree noundef nonnull align 2 captures(none) %0, i64 noundef range(i64 0, 2305843009213693952) %1, ptr noalias nofree noundef nonnull align 2 captures(address) %2, i64 noundef range(i64 0, 2305843009213693952) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp samesign ult i64 %1, 2
   br i1 %i.a, label %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort19bidirectional_mergeTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1g_7sort_byNCINvXs1o_NtNtNtB2e_11collections5btree3mapINtB31_8BTreeMapB1h_tEINtNtNtNtBa_4iter6traits7collect12FromIteratorB1g_E9from_iterINtNtNtB41_8adapters6filter6FilterINtNtB4Y_3map3MapINtB31_4IterB1h_tENCNCNvMNtNtNtCscScJTt9VrQp_6fea_rs7compile6tables4gdefNtB67_11GdefBuilder27build_mark_attach_class_def00ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB7Q_19ClassDefBuilderImplIB3V_B1g_E9from_iterB5r_E0EE0E0EB6d_.exit, label %bb.b
@@ -3524,7 +3530,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2q_11collections5btree3mapINtB3d_8BTreeMapB1t_tEINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4d_8adapters6filter6FilterINtNtB5a_3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4IterB1t_NtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNCNvMNtNtNtCscScJTt9VrQp_6fea_rs7compile6tables4gdefNtB7V_11GdefBuilder15build_class_def00ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB9s_19ClassDefBuilderImplIB47_B1s_E9from_iterB5D_E0EE0E0EB81_(ptr noalias nofree noundef nonnull align 2 captures(none) %0, i64 noundef range(i64 0, 2305843009213693952) %1, ptr noalias nofree noundef nonnull align 2 %2, i64 noundef range(i64 0, 2305843009213693952) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2q_11collections5btree3mapINtB3d_8BTreeMapB1t_tEINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4d_8adapters6filter6FilterINtNtB5a_3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4IterB1t_NtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNCNvMNtNtNtCscScJTt9VrQp_6fea_rs7compile6tables4gdefNtB7V_11GdefBuilder15build_class_def00ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB9s_19ClassDefBuilderImplIB47_B1s_E9from_iterB5D_E0EE0E0EB81_(ptr noalias nofree noundef nonnull align 2 captures(none) %0, i64 noundef range(i64 0, 2305843009213693952) %1, ptr noalias nofree noundef nonnull align 2 captures(address) %2, i64 noundef range(i64 0, 2305843009213693952) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp samesign ult i64 %1, 2
   br i1 %i.a, label %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort19bidirectional_mergeTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1g_7sort_byNCINvXs1o_NtNtNtB2e_11collections5btree3mapINtB31_8BTreeMapB1h_tEINtNtNtNtBa_4iter6traits7collect12FromIteratorB1g_E9from_iterINtNtNtB41_8adapters6filter6FilterINtNtB4Y_3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4IterB1h_NtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCNCNvMNtNtNtCscScJTt9VrQp_6fea_rs7compile6tables4gdefNtB7J_11GdefBuilder15build_class_def00ENCINvXsb_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables6layout8buildersNtB9g_19ClassDefBuilderImplIB3V_B1g_E9from_iterB5r_E0EE0E0EB7P_.exit, label %bb.b
@@ -3848,7 +3854,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile14feature_writer14InsertionPointINtNtCsgCecv3eZDcN_5alloc3vec3VecTNtNtB1x_7lookups8LookupIdNtB38_14PositionLookupEEENCINvMNtB2D_5sliceSB1s_11sort_by_keyB1t_NCNvMs1_B1v_NtB1v_8MergeCtx13finalize_gpos0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 192153584101141163) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 192153584101141163) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile14feature_writer14InsertionPointINtNtCsgCecv3eZDcN_5alloc3vec3VecTNtNtB1x_7lookups8LookupIdNtB38_14PositionLookupEEENCINvMNtB2D_5sliceSB1s_11sort_by_keyB1t_NCNvMs1_B1v_NtB1v_8MergeCtx13finalize_gpos0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 192153584101141163) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 192153584101141163) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.7.i = alloca [24 x i8], align 8          ; 8 uses
   %i.a = icmp samesign ult i64 %1, 2
@@ -4251,7 +4257,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdNtB1v_14PositionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_11sort_by_keyB1t_NCNvMs1_NtB1x_14feature_writerNtB3I_8MergeCtx13finalize_gposs_0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 164703072086692426) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 164703072086692426) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdNtB1v_14PositionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_11sort_by_keyB1t_NCNvMs1_NtB1x_14feature_writerNtB3I_8MergeCtx13finalize_gposs_0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 164703072086692426) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 164703072086692426) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.6.i = alloca [40 x i8], align 8          ; 8 uses
   %i.a = icmp samesign ult i64 %1, 2
@@ -4654,7 +4660,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdNtB1v_14PositionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2O_11collections5btree3mapINtB3B_8BTreeMapB1t_B2j_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4E_8adapters6cloned6ClonedINtNtB8_4iter4IterB1s_EEE0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 164703072086692426) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 164703072086692426) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdNtB1v_14PositionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2O_11collections5btree3mapINtB3B_8BTreeMapB1t_B2j_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4E_8adapters6cloned6ClonedINtNtB8_4iter4IterB1s_EEE0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 164703072086692426) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 164703072086692426) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.6.i = alloca [40 x i8], align 8          ; 8 uses
   %i.a = icmp samesign ult i64 %1, 2
@@ -5057,7 +5063,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdNtB1v_18SubstitutionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2S_11collections5btree3mapINtB3F_8BTreeMapB1t_B2j_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4I_8adapters6cloned6ClonedINtNtB8_4iter4IterB1s_EEE0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 164703072086692426) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 164703072086692426) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdNtB1v_18SubstitutionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_7sort_byNCINvXs1o_NtNtNtB2S_11collections5btree3mapINtB3F_8BTreeMapB1t_B2j_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1s_E9from_iterINtNtNtB4I_8adapters6cloned6ClonedINtNtB8_4iter4IterB1s_EEE0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 164703072086692426) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 164703072086692426) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.6.i = alloca [40 x i8], align 8          ; 8 uses
   %i.a = icmp samesign ult i64 %1, 2
@@ -5460,7 +5466,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdRNtB1v_18SubstitutionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_11sort_by_keyB1t_NCNvMNtB1x_8featuresNtB3K_11AllFeatures13finalize_aalts0_0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 384307168202282326) %1, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef range(i64 0, 384307168202282326) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdRNtB1v_18SubstitutionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1s_11sort_by_keyB1t_NCNvMNtB1x_8featuresNtB3K_11AllFeatures13finalize_aalts0_0E0EB1z_(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 384307168202282326) %1, ptr noalias nofree noundef nonnull align 8 captures(address) %2, i64 noundef range(i64 0, 384307168202282326) %3, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp samesign ult i64 %1, 2
   br i1 %i.a, label %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort19bidirectional_mergeTNtNtNtCscScJTt9VrQp_6fea_rs7compile7lookups8LookupIdRNtB1j_18SubstitutionLookupENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB1g_11sort_by_keyB1h_NCNvMNtB1l_8featuresNtB3y_11AllFeatures13finalize_aalts0_0E0EB1n_.exit, label %bb.b

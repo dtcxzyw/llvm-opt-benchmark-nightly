@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.h
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6pylint5rules20useless_else_on_loop20useless_else_on_loop(ptr nofree noundef nonnull readonly align 8 captures(none) %0, ptr noundef nonnull align 8 %1, ptr noundef nonnull align 8 captures(address, read_provenance) %2, i64 noundef range(i64 0, 104811045873349726) %3, ptr nofree noundef nonnull readonly align 8 %4, i64 noundef range(i64 0, 104811045873349726) %5) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6pylint5rules20useless_else_on_loop20useless_else_on_loop(ptr nofree noundef nonnull readonly align 8 captures(none) %0, ptr noundef nonnull align 8 %1, ptr noundef nonnull align 8 captures(address, read_provenance) %2, i64 noundef range(i64 0, 104811045873349726) %3, ptr nofree noundef nonnull readonly align 8 captures(none) %4, i64 noundef range(i64 0, 104811045873349726) %5) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
@@ -607,10 +607,9 @@ define void @_RNvXs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules15flake8_simplify5ru
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvXs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5rules15unittest_assertNtB4_14UnittestAssertINtNtCs4NRVxsYgnAr_4core7convert7TryFromReE8try_from(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 9)) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define void @_RNvXs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5rules15unittest_assertNtB4_14UnittestAssertINtNtCs4NRVxsYgnAr_4core7convert7TryFromReE8try_from(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
-  %3 = alloca [24 x i8], align 8                  ; 2 uses
   %i.b = alloca [16 x i8], align 8                ; 3 uses
   store ptr %1, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -1013,9 +1012,8 @@ bb.cd:                                            ; preds = %bb.a
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs1i_NtCs4NRVxsYgnAr_4core3fmtReNtB6_7Display3fmtCsEhZmuQNqkz_11ruff_linter, ptr %.sroa.42.0..sroa_idx, align 8
-  call void @_RNvNvNtCscdodAO9FK5_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %3, ptr noundef nonnull @562, ptr noundef nonnull %i.a)
+  call void @_RNvNvNtCscdodAO9FK5_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull @562, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
   br label %bb.cf
 
 bb.ce:                                            ; preds = %bb.cd

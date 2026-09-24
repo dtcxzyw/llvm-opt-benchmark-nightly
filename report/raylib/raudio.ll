@@ -205,7 +205,7 @@ ma_free.exit:                                     ; preds = %bb.l, %bb.k, %bb.j,
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 -2, 1) i32 @ma_spatializer_process_pcm_frames(ptr nofree noundef %0, ptr nofree noundef captures(address) %1, ptr nofree noundef captures(address) %2, ptr nofree noundef readonly captures(address) %3, i64 noundef %4) local_unnamed_addr #36 {
+define hidden range(i32 -2, 1) i32 @ma_spatializer_process_pcm_frames(ptr nofree noundef captures(address) %0, ptr nofree noundef captures(address) %1, ptr nofree noundef captures(address) %2, ptr nofree noundef readonly captures(address) %3, i64 noundef %4) local_unnamed_addr #36 {
 bb.a:
   %5 = alloca %struct.ma_vec3f, align 8           ; 10 uses
   %6 = alloca %struct.ma_vec3f, align 8           ; 7 uses
@@ -608,7 +608,7 @@ ma_free.exit:                                     ; preds = %bb.g, %bb.f, %bb.e,
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden range(i32 -3, 1) i32 @ma_channel_converter_process_pcm_frames(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, i64 noundef %3) local_unnamed_addr #18 {
+define hidden range(i32 -3, 1) i32 @ma_channel_converter_process_pcm_frames(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef captures(address_is_null) %1, ptr nofree noundef readonly captures(address_is_null) %2, i64 noundef %3) local_unnamed_addr #18 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %1, null
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden void @stb_vorbis_close(ptr noundef %0) local_unnamed_addr #8 {
+define hidden void @stb_vorbis_close(ptr noundef captures(address_is_null) %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %setup_free.exit, label %bb.b
@@ -1032,7 +1032,7 @@ setup_free.exit:                                  ; preds = %bb.c, %bb.b, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @vorbis_deinit(ptr nofree noundef nonnull readonly %0) unnamed_addr #8 {
+define internal fastcc void @vorbis_deinit(ptr nofree noundef nonnull readonly captures(none) %0) unnamed_addr #8 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 128        ; 34 uses
   %.val120 = load ptr, ptr %i.a, align 8          ; 2 uses
@@ -1435,7 +1435,7 @@ bb.k:                                             ; preds = %bb.i, %bb.a, %bb.j,
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define hidden range(i32 0, -1) i32 @stb_vorbis_stream_length_in_samples(ptr nofree noundef %0) local_unnamed_addr #9 {
+define hidden range(i32 0, -1) i32 @stb_vorbis_stream_length_in_samples(ptr nofree noundef captures(none) %0) local_unnamed_addr #9 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 6 uses
@@ -1838,7 +1838,7 @@ get8.exit18:                                      ; preds = %bb.r, %bb.s, %bb.u,
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define hidden float @stb_vorbis_stream_length_in_seconds(ptr noundef %0) local_unnamed_addr #9 {
+define hidden float @stb_vorbis_stream_length_in_seconds(ptr nofree noundef captures(none) %0) local_unnamed_addr #9 {
 bb.a:
   %i.a = tail call i32 @stb_vorbis_stream_length_in_samples(ptr noundef %0)
   %i.b = uitofp i32 %i.a to float
@@ -2241,8 +2241,6 @@ define void @LoadMusicStream(ptr dead_on_unwind noalias nofree writable sret(%st
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
-  %2 = alloca %struct.AudioStream, align 8        ; 4 uses
-  %3 = alloca %struct.AudioStream, align 8        ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, i8 0, i64 56, i1 false)
   %i.c = tail call zeroext i1 @IsFileExtension(ptr noundef %1, ptr noundef nonnull @.str.235) #61
   br i1 %i.c, label %bb.b, label %bb.j
@@ -2351,7 +2349,7 @@ LoadAudioStream.exit:                             ; preds = %bb.g, %bb.h
   store i32 0, ptr %.sroa.895.0..sroa_idx, align 4
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 128
   %i.ar = load i64, ptr %i.aq, align 8
-  %i.as = trunc i64 %i.ar to i32
+  %i.as = trunc i64 %i.ar to i32                  ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.as, ptr %i.at, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -2379,14 +2377,14 @@ stb_vorbis_open_filename.exit:                    ; preds = %bb.k
   %i.bb = sub i64 %i.az, %i.ax
   %i.bc = trunc i64 %i.bb to i32
   %i.bd = tail call i32 @fseek(ptr noundef nonnull %i.aw, i64 noundef %i.ba, i32 noundef 0) ; 0 uses
-  %i.be = tail call ptr @stb_vorbis_open_file_section(ptr noundef nonnull %i.aw, i32 noundef 1, ptr noundef null, ptr noundef readonly null, i32 noundef %i.bc) ; 4 uses
+  %i.be = tail call ptr @stb_vorbis_open_file_section(ptr noundef nonnull %i.aw, i32 noundef 1, ptr noundef null, ptr noundef readonly null, i32 noundef %i.bc) ; 5 uses
   %.not54.not = icmp eq ptr %i.be, null
   br i1 %.not54.not, label %.thread, label %bb.l
 
 bb.l:                                             ; preds = %stb_vorbis_open_filename.exit
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 2, ptr %i.bf, align 8
-  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.be, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 4
   %i.bi = load i32, ptr %i.bh, align 4, !noalias !1170 ; 3 uses
@@ -2438,8 +2436,7 @@ LoadAudioStream.exit60:                           ; preds = %bb.o, %bb.p
   store i32 %i.bi, ptr %.sroa.783.0..sroa_idx, align 8
   %.sroa.884.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 0, ptr %.sroa.884.0..sroa_idx, align 4
-  %4 = load ptr, ptr %i.bg, align 8
-  %i.bz = tail call i32 @stb_vorbis_stream_length_in_samples(ptr noundef %4)
+  %i.bz = tail call i32 @stb_vorbis_stream_length_in_samples(ptr noundef nonnull %i.be) ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.bz, ptr %i.ca, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -2543,7 +2540,7 @@ bb.z:                                             ; preds = %bb.x
 drmp3_get_pcm_frame_count.exit:                   ; preds = %bb.y, %bb.z
   %.0.i66 = phi i64 [ %spec.select22.i, %bb.y ], [ %spec.select.i67, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #61
-  %i.dm = trunc i64 %.0.i66 to i32
+  %i.dm = trunc i64 %.0.i66 to i32                ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.dm, ptr %i.dn, align 8
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -2619,7 +2616,7 @@ LoadAudioStream.exit71:                           ; preds = %bb.ag, %bb.ah
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 0, ptr %.sroa.8.0..sroa_idx, align 4
   %i.el = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
-  %i.em = load i32, ptr %i.el, align 8
+  %i.em = load i32, ptr %i.el, align 8            ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.em, ptr %i.en, align 8
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -2664,13 +2661,10 @@ bb.ao:                                            ; preds = %bb.an
   store i32 7, ptr %i.ez, align 8
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.ew, ptr %i.fa, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #61
   %i.fb = load i32, ptr getelementptr inbounds nuw (i8, ptr @AUDIO, i64 1036), align 4
-  call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %3, i32 noundef %i.fb, i32 noundef 16, i32 noundef 2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #61
+  tail call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %0, i32 noundef %i.fb, i32 noundef 16, i32 noundef 2)
   %i.fc = tail call i64 @jar_mod_max_samples(ptr noundef %i.ew)
-  %i.fd = trunc i64 %i.fc to i32
+  %i.fd = trunc i64 %i.fc to i32                  ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.fd, ptr %i.fe, align 8
   %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -2698,13 +2692,10 @@ bb.aq:                                            ; preds = %bb.aj
   store ptr %i.fh, ptr %i.fi, align 8
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fh, i64 409
   store i8 0, ptr %i.fj, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #61
   %i.fk = load i32, ptr getelementptr inbounds nuw (i8, ptr @AUDIO, i64 1036), align 4
-  call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %2, i32 noundef %i.fk, i32 noundef 32, i32 noundef 2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #61
+  tail call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %0, i32 noundef %i.fk, i32 noundef 32, i32 noundef 2)
   %i.fl = tail call i64 @jar_xm_get_remaining_samples(ptr noundef %i.fh)
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc i64 %i.fl to i32                  ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.fm, ptr %i.fn, align 8
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -2718,6 +2709,7 @@ bb.aq:                                            ; preds = %bb.aj
   br label %bb.ar
 
 .thread102:                                       ; preds = %LoadAudioStream.exit71, %drmp3_get_pcm_frame_count.exit, %LoadAudioStream.exit60, %LoadAudioStream.exit, %bb.ao, %bb.aq
+  %2 = phi i32 [ %i.em, %LoadAudioStream.exit71 ], [ %i.dm, %drmp3_get_pcm_frame_count.exit ], [ %i.bz, %LoadAudioStream.exit60 ], [ %i.as, %LoadAudioStream.exit ], [ %i.fd, %bb.ao ], [ %i.fm, %bb.aq ]
   call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.285, ptr noundef %1) #61
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fq = load i32, ptr %i.fp, align 8
@@ -2732,9 +2724,7 @@ bb.aq:                                            ; preds = %bb.aj
   %i.fx = select i1 %i.fw, ptr @.str.290, ptr @.str.291
   %i.fy = select i1 %i.fv, ptr @.str.289, ptr %i.fx
   call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.288, i32 noundef %i.fu, ptr noundef nonnull %i.fy) #61
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %6 = load i32, ptr %5, align 8
-  call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.292, i32 noundef %6) #61
+  call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.292, i32 noundef %2) #61
   br label %bb.ar
 
 bb.ar:                                            ; preds = %.thread102, %.thread
@@ -2801,8 +2791,6 @@ define void @LoadMusicStreamFromMemory(ptr dead_on_unwind noalias nofree writabl
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
-  %4 = alloca %struct.AudioStream, align 8        ; 4 uses
-  %5 = alloca %struct.AudioStream, align 8        ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, i8 0, i64 56, i1 false)
   %i.c = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(5) @.str.235) #73
   %i.d = icmp eq i32 %i.c, 0
@@ -2913,7 +2901,7 @@ LoadAudioStream.exit:                             ; preds = %bb.g, %bb.h
   store i32 0, ptr %.sroa.8131.0..sroa_idx, align 4
   %i.au = getelementptr inbounds nuw i8, ptr %i.g, i64 128
   %i.av = load i64, ptr %i.au, align 8
-  %i.aw = trunc i64 %i.av to i32
+  %i.aw = trunc i64 %i.av to i32                  ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.aw, ptr %i.ax, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -2936,14 +2924,14 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bd, label %bb.k, label %bb.q
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.be = tail call ptr @stb_vorbis_open_memory(ptr noundef %2, i32 noundef %3, ptr noundef null, ptr noundef null) ; 4 uses
+  %i.be = tail call ptr @stb_vorbis_open_memory(ptr noundef %2, i32 noundef %3, ptr noundef null, ptr noundef null) ; 5 uses
   %.not89.not = icmp eq ptr %i.be, null
   br i1 %.not89.not, label %.thread143, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 2, ptr %i.bf, align 8
-  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.be, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 4
   %i.bi = load i32, ptr %i.bh, align 4, !noalias !1185 ; 3 uses
@@ -2995,8 +2983,7 @@ LoadAudioStream.exit94:                           ; preds = %bb.o, %bb.p
   store i32 %i.bi, ptr %.sroa.7119.0..sroa_idx, align 8
   %.sroa.8120.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 0, ptr %.sroa.8120.0..sroa_idx, align 4
-  %6 = load ptr, ptr %i.bg, align 8
-  %i.bz = tail call i32 @stb_vorbis_stream_length_in_samples(ptr noundef %6)
+  %i.bz = tail call i32 @stb_vorbis_stream_length_in_samples(ptr noundef nonnull %i.be) ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.bz, ptr %i.ca, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -3124,7 +3111,7 @@ bb.ac:                                            ; preds = %bb.aa
 drmp3_get_pcm_frame_count.exit:                   ; preds = %bb.ab, %bb.ac
   %.0.i = phi i64 [ %spec.select22.i, %bb.ab ], [ %spec.select.i102, %bb.ac ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #61
-  %i.dy = trunc i64 %.0.i to i32
+  %i.dy = trunc i64 %.0.i to i32                  ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.dy, ptr %i.dz, align 8
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -3247,7 +3234,7 @@ LoadAudioStream.exit107:                          ; preds = %bb.ap, %bb.aq
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 0, ptr %.sroa.8.0..sroa_idx, align 4
   %i.fn = getelementptr inbounds nuw i8, ptr %i.es, i64 8
-  %i.fo = load i32, ptr %i.fn, align 8
+  %i.fo = load i32, ptr %i.fn, align 8            ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.fo, ptr %i.fp, align 8
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -3326,13 +3313,10 @@ bb.ba:                                            ; preds = %bb.az
   store i32 7, ptr %i.gq, align 8
   %i.gr = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.gf, ptr %i.gr, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #61
   %i.gs = load i32, ptr getelementptr inbounds nuw (i8, ptr @AUDIO, i64 1036), align 4
-  call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %5, i32 noundef %i.gs, i32 noundef 16, i32 noundef 2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #61
+  tail call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %0, i32 noundef %i.gs, i32 noundef 16, i32 noundef 2)
   %i.gt = tail call i64 @jar_mod_max_samples(ptr noundef nonnull %i.gf)
-  %i.gu = trunc i64 %i.gt to i32
+  %i.gu = trunc i64 %i.gt to i32                  ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.gu, ptr %i.gv, align 8
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -3360,13 +3344,10 @@ bb.bb:                                            ; preds = %bb.at
   store ptr %i.gy, ptr %i.gz, align 8
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gy, i64 409
   store i8 0, ptr %i.ha, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #61
   %i.hb = load i32, ptr getelementptr inbounds nuw (i8, ptr @AUDIO, i64 1036), align 4
-  call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %4, i32 noundef %i.hb, i32 noundef 32, i32 noundef 2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 32, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #61
+  tail call void @LoadAudioStream(ptr dead_on_unwind nonnull writable sret(%struct.AudioStream) align 8 %0, i32 noundef %i.hb, i32 noundef 32, i32 noundef 2)
   %i.hc = tail call i64 @jar_xm_get_remaining_samples(ptr noundef %i.gy)
-  %i.hd = trunc i64 %i.hc to i32
+  %i.hd = trunc i64 %i.hc to i32                  ; 2 uses
   %i.he = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.hd, ptr %i.he, align 8
   %i.hf = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -3380,6 +3361,7 @@ bb.bb:                                            ; preds = %bb.at
   br label %bb.bc
 
 .thread146:                                       ; preds = %LoadAudioStream.exit107, %drmp3_get_pcm_frame_count.exit, %LoadAudioStream.exit94, %LoadAudioStream.exit, %bb.ba, %bb.bb
+  %4 = phi i32 [ %i.fo, %LoadAudioStream.exit107 ], [ %i.dy, %drmp3_get_pcm_frame_count.exit ], [ %i.bz, %LoadAudioStream.exit94 ], [ %i.aw, %LoadAudioStream.exit ], [ %i.gu, %bb.ba ], [ %i.hd, %bb.bb ]
   call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.297) #61
   %i.hg = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.hh = load i32, ptr %i.hg, align 8
@@ -3394,9 +3376,7 @@ bb.bb:                                            ; preds = %bb.at
   %i.ho = select i1 %i.hn, ptr @.str.290, ptr @.str.291
   %i.hp = select i1 %i.hm, ptr @.str.289, ptr %i.ho
   call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.288, i32 noundef %i.hl, ptr noundef nonnull %i.hp) #61
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %8 = load i32, ptr %7, align 8
-  call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.292, i32 noundef %8) #61
+  call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.292, i32 noundef %4) #61
   br label %bb.bc
 
 bb.bc:                                            ; preds = %.thread146, %.thread143
@@ -3799,7 +3779,7 @@ bb.v:                                             ; preds = %bb.e, %bb.b, %bb.a,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 -401, 1) i32 @ma_device_init__alsa(ptr noundef initializes((3424, 3480)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(address_is_null) %2, ptr nofree noundef captures(address_is_null) %3) #8 {
+define internal range(i32 -401, 1) i32 @ma_device_init__alsa(ptr nofree noundef captures(none) initializes((3424, 3480)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(address_is_null) %2, ptr nofree noundef captures(address_is_null) %3) #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3424
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.a, i8 0, i64 56, i1 false)
@@ -4202,7 +4182,7 @@ ma_is_standard_sample_rate.exit:                  ; preds = %bb.j, %bb.j, %bb.j,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -401, 1) i32 @ma_device_init_by_type__alsa(ptr nofree noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(address_is_null) %2, i32 noundef range(i32 1, 3) %3) unnamed_addr #8 {
+define internal fastcc range(i32 -401, 1) i32 @ma_device_init_by_type__alsa(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(address_is_null) %2, i32 noundef range(i32 1, 3) %3) unnamed_addr #8 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca [254 x i8], align 16              ; 12 uses
@@ -4605,7 +4585,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.a,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i64 @drwav__metadata_process_chunk(ptr nofree noundef nonnull %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #8 {
+define internal fastcc i64 @drwav__metadata_process_chunk(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #8 {
 bb.a:
   %i.a = alloca [24 x i8], align 16               ; 11 uses
   %i.b = alloca [7 x i8], align 1                 ; 10 uses
@@ -5008,7 +4988,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c, %bb.a,
 declare i64 @llvm.bswap.i64(i64) #33
 
 ; Function Attrs: nofree nounwind uwtable
-define internal fastcc range(i32 0, 2) i32 @vorbis_decode_initial(ptr nofree noundef initializes((1892, 1900)) %0, ptr nofree noundef nonnull writeonly captures(none) %1, ptr nofree noundef nonnull writeonly captures(none) %2, ptr nofree noundef nonnull writeonly captures(none) %3, ptr nofree noundef nonnull writeonly captures(none) %4, ptr nofree noundef nonnull writeonly captures(none) %5) unnamed_addr #9 {
+define internal fastcc range(i32 0, 2) i32 @vorbis_decode_initial(ptr nofree noundef captures(none) initializes((1892, 1900)) %0, ptr nofree noundef nonnull writeonly captures(none) %1, ptr nofree noundef nonnull writeonly captures(none) %2, ptr nofree noundef nonnull writeonly captures(none) %3, ptr nofree noundef nonnull writeonly captures(none) %4, ptr nofree noundef nonnull writeonly captures(none) %5) unnamed_addr #9 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1896
   store i32 0, ptr %i.a, align 8

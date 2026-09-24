@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %Abc_TtReadHex.exit
 Vec_WecStart.exit.i:                              ; preds = %bb.v, %Abc_TtReadHex.exit
   %i.gj = phi ptr [ %i.gi, %bb.v ], [ null, %Abc_TtReadHex.exit ]
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gf, i64 4 ; 9 uses
-  %i.gl = getelementptr i8, ptr %i.gf, i64 8      ; 13 uses
+  %i.gl = getelementptr inbounds nuw i8, ptr %i.gf, i64 8 ; 13 uses
   store ptr %i.gj, ptr %i.gl, align 8, !tbaa !15
   store i32 %i.fx, ptr %i.gk, align 4, !tbaa !16
   %i.gm = getelementptr inbounds nuw i8, ptr %i.fm, i64 131400 ; 3 uses
@@ -608,6 +608,7 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph170.i
   br i1 %i.sl, label %.lr.ph174.i.i, label %Exa7_ManMarkup.exit.i, !llvm.loop !77
 
 Exa7_ManMarkup.exit.i:                            ; preds = %.critedge3.i.i, %bb.cv, %bb.cu, %bb.cr, %bb.cp
+  %5 = load i32, ptr %i.gp, align 8, !tbaa !173
   %i.sm = load i32, ptr %i.gd, align 4, !tbaa !170 ; 2 uses
   %i.sn = add nsw i32 %i.qx, 1
   %i.so = mul nsw i32 %i.sm, %i.sn                ; 4 uses
@@ -863,7 +864,6 @@ Exa7_ManVarReserve.exit.i:                        ; preds = %bb.de, %bb.dd
   %.pre-phi76.i = phi i32 [ %.pre75.i, %bb.dd ], [ %i.wa, %bb.de ]
   %i.wb = phi i32 [ %i.vx, %bb.dd ], [ %i.wa, %bb.de ]
   %i.wc = shl nuw i32 1, %i.ta
-  %5 = load i32, ptr %i.gp, align 8, !tbaa !173
   %i.wd = sext i32 %5 to i64
   %i.we = sext i32 %i.wb to i64
   %i.wf = sext i32 %i.wc to i64
@@ -1266,7 +1266,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.s = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #21 ; 13 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 11 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 10 uses
   store i32 0, ptr %i.t, align 4, !tbaa !218
   store i32 100, ptr %i.s, align 8, !tbaa !219
   %i.u = tail call noalias dereferenceable_or_null(100) ptr @malloc(i64 noundef 100) #21 ; 3 uses
@@ -1285,8 +1285,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %._crit_edge246, %bb.f
   %i.z = phi ptr [ %storemerge206254, %._crit_edge246 ], [ %i.u, %bb.f ] ; 6 uses
-  %i.aa = phi i32 [ %spec.select.sink.i110250, %._crit_edge246 ], [ 100, %bb.f ] ; 6 uses
-  %i.ab = phi i32 [ %i.y, %._crit_edge246 ], [ 0, %bb.f ] ; 2 uses
+  %i.aa = phi i32 [ %spec.select.sink.i110250, %._crit_edge246 ], [ 100, %bb.f ] ; 5 uses
+  %i.ab = phi i32 [ %i.y, %._crit_edge246 ], [ 0, %bb.f ] ; 3 uses
   %.lcssa = phi i32 [ %i.bk, %._crit_edge246 ], [ %i.w, %bb.f ] ; 2 uses
   %i.ac = add i32 %.lcssa, -1
   %i.ad = load i32, ptr %0, align 8, !tbaa !40
@@ -1337,15 +1337,13 @@ Vec_StrGrow.exit11.sink.split.i:                  ; preds = %bb.n, %bb.o, %bb.j,
   %spec.select.sink.i = phi i32 [ 16, %bb.k ], [ 16, %bb.j ], [ %spec.select.i, %bb.n ], [ %spec.select.i, %bb.o ]
   store ptr %storemerge200, ptr %i.v, align 8, !tbaa !220
   store i32 %spec.select.sink.i, ptr %i.s, align 8, !tbaa !219
-  %.pre332 = load i32, ptr %i.t, align 4, !tbaa !218
   br label %Vec_StrPush.exit
 
 Vec_StrPush.exit:                                 ; preds = %bb.g, %bb.l, %Vec_StrGrow.exit11.sink.split.i
-  %1 = phi i32 [ %i.ab, %bb.g ], [ %i.aa, %bb.l ], [ %.pre332, %Vec_StrGrow.exit11.sink.split.i ] ; 2 uses
   %i.ap = phi ptr [ %i.z, %bb.g ], [ %i.z, %bb.l ], [ %storemerge200, %Vec_StrGrow.exit11.sink.split.i ]
-  %i.aq = add nsw i32 %1, 1
+  %i.aq = add nsw i32 %i.ab, 1
   store i32 %i.aq, ptr %i.t, align 4, !tbaa !218
-  %i.ar = sext i32 %1 to i64
+  %i.ar = sext i32 %i.ab to i64
   %i.as = getelementptr inbounds i8, ptr %i.ap, i64 %i.ar
   store i8 95, ptr %i.as, align 1, !tbaa !25
   %i.at = icmp sgt i32 %i.ae, 0

@@ -204,7 +204,7 @@ bb.bc:                                            ; preds = %bb.g
 bb.bd:                                            ; preds = %.noexc53
   %i.le = getelementptr inbounds nuw i8, ptr %i.kx, i64 4
   %i.lf = load i32, ptr %i.le, align 4, !noalias !12625
-  %i.lg = invoke noundef nonnull ptr @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext14lower_lifetime(ptr noalias nofree noundef nonnull align 8 dereferenceable(272) %1, i32 noundef %i.lf)
+  %i.lg = invoke noundef nonnull ptr @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext14lower_lifetime(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(272) %1, i32 noundef %i.lf)
           to label %..noexc54_crit_edge unwind label %bb.b
 
 ..noexc54_crit_edge:                              ; preds = %bb.bd
@@ -607,7 +607,7 @@ bb.gv:                                            ; preds = %.thread254, %_RINvN
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext14lower_lifetime(ptr noalias nofree noundef align 8 captures(address, read_provenance) dereferenceable(272) %0, i32 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden noundef nonnull ptr @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext14lower_lifetime(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %0, i32 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [20 x i8], align 4                ; 5 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
@@ -1010,7 +1010,7 @@ _RNvMs_NtCs8K4cjrcxBsw_6hir_ty8genericsNtB4_8Generics5owner.exit: ; preds = %bb.
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { i32, i1 } @_RNvMs_NtCs8K4cjrcxBsw_6hir_ty8genericsNtB4_8Generics18lifetime_param_idx(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(72) %0, ptr noalias nofree noundef readonly align 4 captures(address) dead_on_return dereferenceable(16) %1, i1 noundef zeroext %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden { i32, i1 } @_RNvMs_NtCs8K4cjrcxBsw_6hir_ty8genericsNtB4_8Generics18lifetime_param_idx(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(72) %0, ptr noalias nofree noundef readonly align 4 captures(address) dead_on_return dereferenceable(16) %1, i1 noundef zeroext %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
@@ -1413,7 +1413,7 @@ bb.x:                                             ; preds = %bb.w
   %lpad.loopexit.i.i = landingpad { ptr, i32 }
           cleanup
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 %i.eb, ptr %i.aa, align 8, !noalias !15270
   br label %.thread325.i.i
@@ -1486,10 +1486,12 @@ bb.y:                                             ; preds = %bb.w, %bb.u, %bb.q
   br label %bb.aa
 
 .loopexit.i.i:                                    ; preds = %.backedge.i.i, %bb.aa
-  %.lcssa736738.i.i = phi i32 [ %.lcssa736739.i.i, %bb.aa ], [ %i.ef, %.backedge.i.i ] ; 3 uses
-  %.val2.i.i587.i.i = phi ptr [ %.val2.i.i588.i.i, %bb.aa ], [ %.val4.i.i135465.i.i, %.backedge.i.i ] ; 3 uses
-  %.sroa.6284.sroa.0.0.copyload582.i.i = phi i32 [ %.sroa.6284.sroa.0.0.copyload583.i.i, %bb.aa ], [ %.val1.i.i130437.i.i, %.backedge.i.i ] ; 3 uses
-  %.lcssa420.i.i = phi i64 [ %.lcssa420779.i.i, %bb.aa ], [ %i.eh, %.backedge.i.i ] ; 4 uses
+  %.lcssa805807.i.i = phi i32 [ %.lcssa805808.i.i, %bb.aa ], [ %i.ef, %.backedge.i.i ]
+  %.lcssa736738.i.i = phi i32 [ %.lcssa736739.i.i, %bb.aa ], [ %.val.i.i129655.i.i, %.backedge.i.i ] ; 3 uses
+  %.val2.i.i647.i.i = phi ptr [ %.val2.i.i648.i.i, %bb.aa ], [ %.val4.i.i135465.i.i, %.backedge.i.i ] ; 3 uses
+  %.val2.i.i587.i.i = phi ptr [ %.val2.i.i588.i.i, %bb.aa ], [ %.val4.i.i135465.i.i, %.backedge.i.i ]
+  %.sroa.6284.sroa.0.0.copyload582.i.i = phi i32 [ %.sroa.6284.sroa.0.0.copyload583.i.i, %bb.aa ], [ %i.eg, %.backedge.i.i ] ; 3 uses
+  %.lcssa420.i.i = phi i64 [ %.sroa.67.0.idx492.i.i, %bb.aa ], [ %i.eh, %.backedge.i.i ] ; 4 uses
   %i.dn = icmp eq i64 %.sroa.67.0.add.i.i, 16
   br i1 %i.dn, label %._crit_edge.i.i, label %bb.aa
 
@@ -1520,12 +1522,14 @@ bb.z:                                             ; preds = %._crit_edge.i.i
   br i1 %.not.i.i95.i.i, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs8K4cjrcxBsw_6hir_ty5lower28AssocTypeShorthandResolutionE7or_elseNCNCNvNvXs0_NvBK_s6_1__NtB22_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s0_0EBM_.exit.i.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5lower28AssocTypeShorthandResolutionEBF_.exit.i.i
 
 bb.aa:                                            ; preds = %.loopexit.i.i, %.lr.ph493.i.i
-  %.lcssa420779.i.i = phi i64 [ -1, %.lr.ph493.i.i ], [ %.lcssa420.i.i, %.loopexit.i.i ] ; 2 uses
-  %.lcssa736739.i.i = phi i32 [ undef, %.lr.ph493.i.i ], [ %.lcssa736738.i.i, %.loopexit.i.i ] ; 3 uses
+  %.lcssa805808.i.i = phi i32 [ undef, %.lr.ph493.i.i ], [ %.lcssa805807.i.i, %.loopexit.i.i ] ; 2 uses
+  %.lcssa736739.i.i = phi i32 [ undef, %.lr.ph493.i.i ], [ %.lcssa736738.i.i, %.loopexit.i.i ] ; 2 uses
+  %.val2.i.i648.i.i = phi ptr [ undef, %.lr.ph493.i.i ], [ %.val2.i.i647.i.i, %.loopexit.i.i ]
   %.val2.i.i588.i.i = phi ptr [ undef, %.lr.ph493.i.i ], [ %.val2.i.i587.i.i, %.loopexit.i.i ] ; 2 uses
   %.sroa.6284.sroa.0.0.copyload583.i.i = phi i32 [ undef, %.lr.ph493.i.i ], [ %.sroa.6284.sroa.0.0.copyload582.i.i, %.loopexit.i.i ] ; 2 uses
-  %.sroa.67.0.idx492.i.i = phi i64 [ %.add.i.i, %.lr.ph493.i.i ], [ %.sroa.67.0.add.i.i, %.loopexit.i.i ]
-  %.sroa.67.0.add.i.i = add nsw i64 %.sroa.67.0.idx492.i.i, -32 ; 3 uses
+  %.sroa.67.0.idx508.i.i = phi i64 [ %.add.i.i, %.lr.ph493.i.i ], [ %.sroa.67.0.add.i.i, %.loopexit.i.i ]
+  %.sroa.67.0.idx492.i.i = phi i64 [ -1, %.lr.ph493.i.i ], [ %.lcssa420.i.i, %.loopexit.i.i ] ; 2 uses
+  %.sroa.67.0.add.i.i = add nsw i64 %.sroa.67.0.idx508.i.i, -32 ; 3 uses
   %.ptr.i.i = getelementptr inbounds i8, ptr %i.ag, i64 %.sroa.67.0.add.i.i ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !15281)
   call void @llvm.experimental.noalias.scope.decl(metadata !15282)
@@ -1546,12 +1550,12 @@ bb.aa:                                            ; preds = %.loopexit.i.i, %.lr
   br i1 %i.dz, label %.loopexit.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.aa, %.backedge.i.i
-  %i.ea = phi i32 [ %i.ef, %.backedge.i.i ], [ %.lcssa736739.i.i, %bb.aa ] ; 37 uses
+  %i.ea = phi i32 [ %i.ef, %.backedge.i.i ], [ %.lcssa805808.i.i, %bb.aa ] ; 37 uses
+  %.val1.i.i138.i.i = phi i32 [ %.val.i.i129655.i.i, %.backedge.i.i ], [ %.lcssa736739.i.i, %bb.aa ] ; 29 uses
   %.val4.i.i135466.i.i = phi ptr [ %.val4.i.i135465.i.i, %.backedge.i.i ], [ %.val2.i.i588.i.i, %bb.aa ] ; 46 uses
-  %.val1.i.i130438.i.i = phi i32 [ %.val1.i.i130437.i.i, %.backedge.i.i ], [ %.sroa.6284.sroa.0.0.copyload583.i.i, %bb.aa ] ; 38 uses
-  %.val1.i.i138.i.i.a = phi i32 [ %i.eg, %.backedge.i.i ], [ %.lcssa736739.i.i, %bb.aa ] ; 29 uses
+  %.val1.i.i138.i.i.a = phi i32 [ %i.eg, %.backedge.i.i ], [ %.sroa.6284.sroa.0.0.copyload583.i.i, %bb.aa ] ; 38 uses
   %.sroa.011.0434.i.i = phi ptr [ %i.ec, %.backedge.i.i ], [ %i.dv, %bb.aa ] ; 6 uses
-  %i.eb = phi i64 [ %i.eh, %.backedge.i.i ], [ %.lcssa420779.i.i, %bb.aa ] ; 37 uses
+  %i.eb = phi i64 [ %i.eh, %.backedge.i.i ], [ %.sroa.67.0.idx492.i.i, %bb.aa ] ; 37 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.sroa.011.0434.i.i, i64 32 ; 2 uses
   %i.ed = load i32, ptr %.sroa.011.0434.i.i, align 8, !range !49, !noalias !15273, !noundef !11
   %i.ee = trunc nuw i32 %i.ed to i1
@@ -1559,9 +1563,9 @@ bb.aa:                                            ; preds = %.loopexit.i.i, %.lr
 
 .backedge.i.i:                                    ; preds = %bb.bc, %bb.bb, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i, %bb.cn, %bb.cm, %bb.cj, %bb.ci, %bb.ca, %bb.by, %bb.bg, %bb.az, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i, %bb.ak, %bb.aj, %.noexc102.i.i, %bb.ag, %bb.ae, %bb.ac, %bb.ab, %.lr.ph.i.i
   %i.ef = phi i32 [ %i.ea, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %i.ea, %.lr.ph.i.i ], [ %i.ea, %bb.ab ], [ %i.hp, %bb.by ], [ %i.ea, %bb.ac ], [ %i.ea, %bb.an ], [ %i.ea, %bb.as ], [ %i.ea, %bb.ar ], [ %i.ea, %bb.aq ], [ %i.ea, %bb.ap ], [ %i.ea, %bb.ao ], [ %i.ea, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %i.ea, %bb.at ], [ %i.ea, %bb.ak ], [ %i.ea, %bb.ae ], [ %i.ea, %bb.aj ], [ %i.ea, %.noexc102.i.i ], [ %i.ea, %bb.ag ], [ %i.ea, %bb.az ], [ %i.ea, %bb.bg ], [ %i.ea, %bb.ca ], [ %i.ea, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %i.ea, %bb.cn ], [ %i.ea, %bb.ci ], [ %i.ea, %bb.cj ], [ %i.ea, %bb.cm ], [ %i.ea, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %i.ea, %bb.bb ], [ %i.ea, %bb.bc ] ; 2 uses
-  %.val4.i.i135465.i.i = phi ptr [ %.val4.i.i135466.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %.val4.i.i135466.i.i, %.lr.ph.i.i ], [ %.val4.i.i135466.i.i, %bb.ab ], [ %i.hu, %bb.by ], [ %.val4.i.i135466.i.i, %bb.ac ], [ %.val4.i.i135466.i.i, %bb.an ], [ %.val4.i.i135466.i.i, %bb.as ], [ %.val4.i.i135466.i.i, %bb.ar ], [ %.val4.i.i135466.i.i, %bb.aq ], [ %.val4.i.i135466.i.i, %bb.ap ], [ %.val4.i.i135466.i.i, %bb.ao ], [ %.val4.i.i135466.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %.val4.i.i135466.i.i, %bb.at ], [ %.val4.i.i135466.i.i, %bb.ak ], [ %.val4.i.i135466.i.i, %bb.ae ], [ %.val4.i.i135466.i.i, %bb.aj ], [ %.val4.i.i135466.i.i, %.noexc102.i.i ], [ %.val4.i.i135466.i.i, %bb.ag ], [ %.val4.i.i135466.i.i, %bb.az ], [ %.val4.i.i135466.i.i, %bb.bg ], [ %.val4.i.i135466.i.i, %bb.ca ], [ %.val4.i.i135466.i.i, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %.val4.i.i135466.i.i, %bb.cn ], [ %.val4.i.i135466.i.i, %bb.ci ], [ %.val4.i.i135466.i.i, %bb.cj ], [ %.val4.i.i135466.i.i, %bb.cm ], [ %.val4.i.i135466.i.i, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %.val4.i.i135466.i.i, %bb.bb ], [ %.val4.i.i135466.i.i, %bb.bc ] ; 2 uses
-  %.val1.i.i130437.i.i = phi i32 [ %.val1.i.i130438.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %.val1.i.i130438.i.i, %.lr.ph.i.i ], [ %.val1.i.i130438.i.i, %bb.ab ], [ %i.hr, %bb.by ], [ %.val1.i.i130438.i.i, %bb.ac ], [ %.val1.i.i130438.i.i, %bb.an ], [ %.val1.i.i130438.i.i, %bb.as ], [ %.val1.i.i130438.i.i, %bb.ar ], [ %.val1.i.i130438.i.i, %bb.aq ], [ %.val1.i.i130438.i.i, %bb.ap ], [ %.val1.i.i130438.i.i, %bb.ao ], [ %.val1.i.i130438.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %.val1.i.i130438.i.i, %bb.at ], [ %.val1.i.i130438.i.i, %bb.ak ], [ %.val1.i.i130438.i.i, %bb.ae ], [ %.val1.i.i130438.i.i, %bb.aj ], [ %.val1.i.i130438.i.i, %.noexc102.i.i ], [ %.val1.i.i130438.i.i, %bb.ag ], [ %.val1.i.i130438.i.i, %bb.az ], [ %.val1.i.i130438.i.i, %bb.bg ], [ %.val1.i.i130438.i.i, %bb.ca ], [ %.val1.i.i130438.i.i, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %.val1.i.i130438.i.i, %bb.cn ], [ %.val1.i.i130438.i.i, %bb.ci ], [ %.val1.i.i130438.i.i, %bb.cj ], [ %.val1.i.i130438.i.i, %bb.cm ], [ %.val1.i.i130438.i.i, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %.val1.i.i130438.i.i, %bb.bb ], [ %.val1.i.i130438.i.i, %bb.bc ] ; 2 uses
-  %i.eg = phi i32 [ %.val1.i.i138.i.i.a, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %.val1.i.i138.i.i.a, %.lr.ph.i.i ], [ %.val1.i.i138.i.i.a, %bb.ab ], [ %i.hp, %bb.by ], [ %.val1.i.i138.i.i.a, %bb.ac ], [ %.val1.i.i138.i.i.a, %bb.an ], [ %.val1.i.i138.i.i.a, %bb.as ], [ %.val1.i.i138.i.i.a, %bb.ar ], [ %.val1.i.i138.i.i.a, %bb.aq ], [ %.val1.i.i138.i.i.a, %bb.ap ], [ %.val1.i.i138.i.i.a, %bb.ao ], [ %.val1.i.i138.i.i.a, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %.val1.i.i138.i.i.a, %bb.at ], [ %.val1.i.i138.i.i.a, %bb.ak ], [ %.val1.i.i138.i.i.a, %bb.ae ], [ %.val1.i.i138.i.i.a, %bb.aj ], [ %.val1.i.i138.i.i.a, %.noexc102.i.i ], [ %.val1.i.i138.i.i.a, %bb.ag ], [ %.val1.i.i138.i.i.a, %bb.az ], [ %.val1.i.i138.i.i.a, %bb.bg ], [ %.val1.i.i138.i.i.a, %bb.ca ], [ %.val1.i.i138.i.i.a, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %.val1.i.i138.i.i.a, %bb.cn ], [ %.val1.i.i138.i.i.a, %bb.ci ], [ %.val1.i.i138.i.i.a, %bb.cj ], [ %.val1.i.i138.i.i.a, %bb.cm ], [ %.val1.i.i138.i.i.a, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %.val1.i.i138.i.i.a, %bb.bb ], [ %.val1.i.i138.i.i.a, %bb.bc ]
+  %.val.i.i129655.i.i = phi i32 [ %.val1.i.i138.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %.val1.i.i138.i.i, %.lr.ph.i.i ], [ %.val1.i.i138.i.i, %bb.ab ], [ %i.hp, %bb.by ], [ %.val1.i.i138.i.i, %bb.ac ], [ %.val1.i.i138.i.i, %bb.an ], [ %.val1.i.i138.i.i, %bb.as ], [ %.val1.i.i138.i.i, %bb.ar ], [ %.val1.i.i138.i.i, %bb.aq ], [ %.val1.i.i138.i.i, %bb.ap ], [ %.val1.i.i138.i.i, %bb.ao ], [ %.val1.i.i138.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %.val1.i.i138.i.i, %bb.at ], [ %.val1.i.i138.i.i, %bb.ak ], [ %.val1.i.i138.i.i, %bb.ae ], [ %.val1.i.i138.i.i, %bb.aj ], [ %.val1.i.i138.i.i, %.noexc102.i.i ], [ %.val1.i.i138.i.i, %bb.ag ], [ %.val1.i.i138.i.i, %bb.az ], [ %.val1.i.i138.i.i, %bb.bg ], [ %.val1.i.i138.i.i, %bb.ca ], [ %.val1.i.i138.i.i, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %.val1.i.i138.i.i, %bb.cn ], [ %.val1.i.i138.i.i, %bb.ci ], [ %.val1.i.i138.i.i, %bb.cj ], [ %.val1.i.i138.i.i, %bb.cm ], [ %.val1.i.i138.i.i, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %.val1.i.i138.i.i, %bb.bb ], [ %.val1.i.i138.i.i, %bb.bc ] ; 2 uses
+  %.val4.i.i135465.i.i = phi ptr [ %.val4.i.i135466.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %.val4.i.i135466.i.i, %.lr.ph.i.i ], [ %.val4.i.i135466.i.i, %bb.ab ], [ %i.hu, %bb.by ], [ %.val4.i.i135466.i.i, %bb.ac ], [ %.val4.i.i135466.i.i, %bb.an ], [ %.val4.i.i135466.i.i, %bb.as ], [ %.val4.i.i135466.i.i, %bb.ar ], [ %.val4.i.i135466.i.i, %bb.aq ], [ %.val4.i.i135466.i.i, %bb.ap ], [ %.val4.i.i135466.i.i, %bb.ao ], [ %.val4.i.i135466.i.i, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %.val4.i.i135466.i.i, %bb.at ], [ %.val4.i.i135466.i.i, %bb.ak ], [ %.val4.i.i135466.i.i, %bb.ae ], [ %.val4.i.i135466.i.i, %bb.aj ], [ %.val4.i.i135466.i.i, %.noexc102.i.i ], [ %.val4.i.i135466.i.i, %bb.ag ], [ %.val4.i.i135466.i.i, %bb.az ], [ %.val4.i.i135466.i.i, %bb.bg ], [ %.val4.i.i135466.i.i, %bb.ca ], [ %.val4.i.i135466.i.i, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %.val4.i.i135466.i.i, %bb.cn ], [ %.val4.i.i135466.i.i, %bb.ci ], [ %.val4.i.i135466.i.i, %bb.cj ], [ %.val4.i.i135466.i.i, %bb.cm ], [ %.val4.i.i135466.i.i, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %.val4.i.i135466.i.i, %bb.bb ], [ %.val4.i.i135466.i.i, %bb.bc ] ; 3 uses
+  %i.eg = phi i32 [ %.val1.i.i138.i.i.a, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %.val1.i.i138.i.i.a, %.lr.ph.i.i ], [ %.val1.i.i138.i.i.a, %bb.ab ], [ %i.hr, %bb.by ], [ %.val1.i.i138.i.i.a, %bb.ac ], [ %.val1.i.i138.i.i.a, %bb.an ], [ %.val1.i.i138.i.i.a, %bb.as ], [ %.val1.i.i138.i.i.a, %bb.ar ], [ %.val1.i.i138.i.i.a, %bb.aq ], [ %.val1.i.i138.i.i.a, %bb.ap ], [ %.val1.i.i138.i.i.a, %bb.ao ], [ %.val1.i.i138.i.i.a, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %.val1.i.i138.i.i.a, %bb.at ], [ %.val1.i.i138.i.i.a, %bb.ak ], [ %.val1.i.i138.i.i.a, %bb.ae ], [ %.val1.i.i138.i.i.a, %bb.aj ], [ %.val1.i.i138.i.i.a, %.noexc102.i.i ], [ %.val1.i.i138.i.i.a, %bb.ag ], [ %.val1.i.i138.i.i.a, %bb.az ], [ %.val1.i.i138.i.i.a, %bb.bg ], [ %.val1.i.i138.i.i.a, %bb.ca ], [ %.val1.i.i138.i.i.a, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %.val1.i.i138.i.i.a, %bb.cn ], [ %.val1.i.i138.i.i.a, %bb.ci ], [ %.val1.i.i138.i.i.a, %bb.cj ], [ %.val1.i.i138.i.i.a, %bb.cm ], [ %.val1.i.i138.i.i.a, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %.val1.i.i138.i.i.a, %bb.bb ], [ %.val1.i.i138.i.i.a, %bb.bc ] ; 2 uses
   %i.eh = phi i64 [ %i.eb, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.i.i ], [ %i.eb, %.lr.ph.i.i ], [ %i.eb, %bb.ab ], [ %i.ij, %bb.by ], [ %i.eb, %bb.ac ], [ %i.eb, %bb.an ], [ %i.eb, %bb.as ], [ %i.eb, %bb.ar ], [ %i.eb, %bb.aq ], [ %i.eb, %bb.ap ], [ %i.eb, %bb.ao ], [ %i.eb, %_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB5_17TyLoweringContext19lower_ty_only_param.exit.thread341.i.i ], [ %i.eb, %bb.at ], [ %i.eb, %bb.ak ], [ %i.eb, %bb.ae ], [ %i.eb, %bb.aj ], [ %i.eb, %.noexc102.i.i ], [ %i.eb, %bb.ag ], [ %i.eb, %bb.az ], [ %i.eb, %bb.bg ], [ %i.eb, %bb.ca ], [ %i.eb, %_RNCNCNvNvXs0_NvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__NtBb_54resolve_type_param_assoc_type_shorthand_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_0s1_0Bf_.exit.i.i ], [ %i.eb, %bb.cn ], [ %i.eb, %bb.ci ], [ %i.eb, %bb.cj ], [ %i.eb, %bb.cm ], [ %i.eb, %_RNvXs8E_CsileJQcQObtj_7hir_defNtB6_12GenericDefIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i ], [ %i.eb, %bb.bb ], [ %i.eb, %bb.bc ] ; 2 uses
   %i.ei = icmp eq ptr %i.ec, %i.dy
   br i1 %i.ei, label %.loopexit.i.i, label %.lr.ph.i.i
@@ -1760,7 +1764,7 @@ bb.av:                                            ; preds = %bb.au
   %i.gk = phi i64 [ %i.et, %bb.ad ], [ %.val81.i.i, %bb.au ]
   %i.gl = phi ptr [ @218, %bb.ad ], [ @170, %bb.au ]
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 %i.eb, ptr %i.aa, align 8, !noalias !15270
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.gj, i64 noundef %i.gk, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gl) #47
@@ -1771,7 +1775,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 %i.eb, ptr %i.aa, align 8, !noalias !15270
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @679, ptr noundef nonnull inttoptr (i64 167 to ptr), ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @170) #47
@@ -1902,14 +1906,14 @@ bb.bk:                                            ; preds = %bb.bi
 
 bb.bl:                                            ; preds = %bb.bi
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 3, ptr %i.am, align 8, !alias.scope !15268, !noalias !15298
   br label %bb.cc
 
 bb.bm:                                            ; preds = %bb.bk
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   %i.hi = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   store i32 %.sroa.0.2.i.i, ptr %i.hi, align 8, !alias.scope !15268, !noalias !15298
@@ -1976,7 +1980,7 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bq
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 %i.eb, ptr %i.aa, align 8, !noalias !15270
   invoke void @_RNvNtCscAsMj0W7j8b_3std7process5abort() #50
@@ -2005,7 +2009,7 @@ _RNvXsa_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6binderINtB5_17StoredEarlyBinderTN
 
 _RNvXsa_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6binderINtB5_17StoredEarlyBinderTNtCsileJQcQObtj_7hir_def11TypeAliasIdNtNtB7_11generic_arg17StoredGenericArgsEENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB9_.exit.thread.i.i: ; preds = %_RNvXsa_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6binderINtB5_17StoredEarlyBinderTNtCsileJQcQObtj_7hir_def11TypeAliasIdNtNtB7_11generic_arg17StoredGenericArgsEENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB9_.exit.i.i, %bb.bt
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 %i.eb, ptr %i.aa, align 8, !noalias !15270
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.16.2.i.i) ]
@@ -2056,7 +2060,7 @@ bb.by:                                            ; preds = %bb.bu
 
 _RNvXsa_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6binderINtB5_17StoredEarlyBinderTNtCsileJQcQObtj_7hir_def11TypeAliasIdNtNtB7_11generic_arg17StoredGenericArgsEENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB9_.exit137.thread.i.i: ; preds = %bb.bz
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 %i.eb, ptr %i.aa, align 8, !noalias !15270
   %i.ik = getelementptr inbounds nuw i8, ptr %i.am, i64 8
@@ -2064,8 +2068,8 @@ _RNvXsa_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6binderINtB5_17StoredEarlyBinderTN
   br label %bb.bw
 
 bb.bz:                                            ; preds = %bb.bu
-  %i.il = icmp eq i32 %.val1.i.i130438.i.i, %i.hr
-  %i.im = icmp eq i32 %.val1.i.i138.i.i.a, %i.hp
+  %i.il = icmp eq i32 %.val1.i.i138.i.i.a, %i.hr
+  %i.im = icmp eq i32 %.val1.i.i138.i.i, %i.hp
   %.sroa.0.0.i.i.i133.i.i = select i1 %i.il, i1 %i.im, i1 false
   %i.in = icmp eq ptr %.val4.i.i135466.i.i, %i.hu
   %or.cond373.i.i = select i1 %.sroa.0.0.i.i.i133.i.i, i1 %i.in, i1 false
@@ -2116,7 +2120,7 @@ bb.ce:                                            ; preds = %bb.cc
 
 bb.cf:                                            ; preds = %bb.by
   store i32 %i.ea, ptr %i.dj, align 8, !noalias !15270
-  store i32 %.val1.i.i130438.i.i, ptr %i.dk, align 4, !noalias !15270
+  store i32 %.val1.i.i138.i.i.a, ptr %i.dk, align 4, !noalias !15270
   store ptr %.val4.i.i135466.i.i, ptr %i.dl, align 8, !noalias !15270
   store i64 -1, ptr %i.aa, align 8, !noalias !15270
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @171, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @172) #50
@@ -2250,7 +2254,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5lower28AssocTy
   %.sroa.6277.1.ph.i.i = phi i32 [ %.lcssa736738.i.i, %.noexc97.i.i ], [ %.lcssa736738.i.i, %bb.z ], [ %.sroa.0.2.i.i, %._crit_edge.thread.i.i ]
   %.sroa.0275.0.ph.i.i = phi i64 [ %.lcssa420.i.i, %.noexc97.i.i ], [ %.lcssa420.i.i, %bb.z ], [ 0, %._crit_edge.thread.i.i ]
   %.sroa.7280.sroa.0.1.ph.i.i = phi i32 [ %.sroa.6284.sroa.0.0.copyload582.i.i, %.noexc97.i.i ], [ %.sroa.6284.sroa.0.0.copyload582.i.i, %bb.z ], [ %.sroa.14.0.i.i, %._crit_edge.thread.i.i ]
-  %.sroa.7280.sroa.5.1.ph.i.i = phi ptr [ %.val2.i.i587.i.i, %.noexc97.i.i ], [ %.val2.i.i587.i.i, %bb.z ], [ %.sroa.16.2.i.i, %._crit_edge.thread.i.i ]
+  %.sroa.7280.sroa.5.1.ph.i.i = phi ptr [ %.val2.i.i647.i.i, %.noexc97.i.i ], [ %.val2.i.i647.i.i, %bb.z ], [ %.sroa.16.2.i.i, %._crit_edge.thread.i.i ]
   store i64 %.sroa.0275.0.ph.i.i, ptr %i.am, align 8, !alias.scope !15268, !noalias !15298
   %.sroa.6277.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   store i32 %.sroa.6277.1.ph.i.i, ptr %.sroa.6277.0..sroa_idx.i.i, align 8, !alias.scope !15268, !noalias !15298

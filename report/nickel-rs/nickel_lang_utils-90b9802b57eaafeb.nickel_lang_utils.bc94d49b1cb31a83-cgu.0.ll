@@ -205,7 +205,7 @@ bb.gj:                                            ; preds = %.lr.ph, %bb.gr
 bb.gk:                                            ; preds = %bb.jm
   %i.bt = landingpad { ptr, i32 }
           cleanup
-  call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull align 8 dereferenceable(304) %i.j)
+  call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(304) %i.j)
   br label %.thread
 
 .loopexit:                                        ; preds = %bb.hm
@@ -608,7 +608,7 @@ bb.je:                                            ; preds = %bb.jd
   %.sroa.0.07.i = phi i64 [ %i.im, %.lr.ph.i ], [ 0, %bb.je ] ; 2 uses
   %i.il = getelementptr inbounds nuw [304 x i8], ptr %i.ij, i64 %.sroa.0.07.i
   %i.im = add nuw i64 %.sroa.0.07.i, 1            ; 2 uses
-  call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull align 8 dereferenceable(304) %i.il)
+  call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(304) %i.il)
   %i.in = icmp eq i64 %i.im, %i.ih
   br i1 %i.in, label %"_ZN4core3ptr107drop_in_place$LT$$u5b$$LP$usize$C$nickel_lang_parser..grammar..__parse__Term..__Symbol$C$usize$RP$$u5d$$GT$17h78793caccc51f185E.exit.loopexit", label %.lr.ph.i
 
@@ -689,7 +689,7 @@ bb.jm:                                            ; preds = %bb.jl
 bb.jn:                                            ; preds = %bb.jm, %bb.jl
   %i.jj = load ptr, ptr %i.gu, align 8, !alias.scope !4491, !noalias !4492, !nonnull !15, !noundef !15
   %i.jk = getelementptr inbounds nuw [304 x i8], ptr %i.jj, i64 %i.jg
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(304) %i.jk, ptr noundef nonnull align 8 dereferenceable(304) %i.j, i64 304, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(304) %i.jk, ptr noundef nonnull readonly align 8 dereferenceable(304) %i.j, i64 304, i1 false)
   %i.jl = add i64 %i.jg, 1
   store i64 %i.jl, ptr %i.gv, align 8, !alias.scope !4491, !noalias !4492
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
@@ -1092,7 +1092,7 @@ bb.v:                                             ; preds = %.noexc10.i.i.i.i.i
 .body.i.i.i.i.i.i:                                ; preds = %bb.x
   %i.bu = landingpad { ptr, i32 }
           cleanup
-  call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull align 8 dereferenceable(304) %i.d), !noalias !16561
+  call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(304) %i.d), !noalias !16561
   br label %.body.i.i.i.i.i
 
 bb.w:                                             ; preds = %bb.v, %.noexc10.i.i.i.i.i
@@ -1117,7 +1117,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x, %bb.w
   %i.cc = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !16564, !noalias !16565, !nonnull !15, !noundef !15
   %i.cd = getelementptr inbounds nuw [304 x i8], ptr %i.cc, i64 %i.bz
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(304) %i.cd, ptr noundef nonnull align 8 dereferenceable(304) %i.d, i64 304, i1 false), !noalias !16561
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(304) %i.cd, ptr noundef nonnull readonly align 8 dereferenceable(304) %i.d, i64 304, i1 false), !noalias !16561
   %i.ce = add i64 %i.bz, 1
   store i64 %i.ce, ptr %.sroa.5.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !16564, !noalias !16565
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !16557
@@ -1520,12 +1520,12 @@ bb.d:                                             ; preds = %bb.c
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %bb.aa, %bb.d
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.ao, %bb.d ], [ %i.cj, %bb.aa ] ; 2 uses
+.body.i:                                          ; preds = %..body.i_crit_edge, %bb.d
+  %.val1.i90 = phi i64 [ 0, %bb.d ], [ %.val1.i90.pre, %..body.i_crit_edge ] ; 4 uses
+  %.val.i89 = phi ptr [ inttoptr (i64 8 to ptr), %bb.d ], [ %.val.i89.pre, %..body.i_crit_edge ] ; 4 uses
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.ao, %bb.d ], [ %i.cj, %..body.i_crit_edge ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !16823)
   call void @llvm.experimental.noalias.scope.decl(metadata !16824)
-  %.val.i89 = load ptr, ptr %.sroa.46.0..sroa_idx, align 8, !alias.scope !16824, !noalias !16819, !nonnull !15, !noundef !15 ; 4 uses
-  %.val1.i90 = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !16824, !noalias !16819, !noundef !15 ; 4 uses
   %i.ap = icmp eq i64 %.val1.i90, 0
   br i1 %i.ap, label %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h731cb1ff9a52bde9E.exit.i96", label %.lr.ph
 
@@ -1769,7 +1769,12 @@ bb.aa:                                            ; preds = %bb.z
   %i.cj = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @"_ZN4core3ptr60drop_in_place$LT$nickel_lang_core..program..BuilderInput$GT$17h3c2ae2bbbf48e324E"(ptr noalias noundef nonnull readonly align 8 dereferenceable(48) %i.t) #43
-          to label %.body.i unwind label %bb.ab, !noalias !16848
+          to label %..body.i_crit_edge unwind label %bb.ab, !noalias !16848
+
+..body.i_crit_edge:                               ; preds = %bb.aa
+  %.val.i89.pre = load ptr, ptr %.sroa.46.0..sroa_idx, align 8, !alias.scope !16824, !noalias !16819
+  %.val1.i90.pre = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !16824, !noalias !16819
+  br label %.body.i
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ck = landingpad { ptr, i32 }
@@ -2172,7 +2177,7 @@ bb.e:                                             ; preds = %"_ZN4core3ptr906dro
   %.sroa.0.07.i.i.i = phi i64 [ %i.q, %.lr.ph.i.i.i ], [ 0, %"_ZN4core3ptr47drop_in_place$LT$alloc..vec..Vec$LT$i16$GT$$GT$17h4517b63e800ae7f6E.exit5" ] ; 2 uses
   %i.p = getelementptr inbounds nuw [304 x i8], ptr %.val.i, i64 %.sroa.0.07.i.i.i
   %i.q = add nuw i64 %.sroa.0.07.i.i.i, 1         ; 2 uses
-  tail call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull align 8 dereferenceable(304) %i.p), !noalias !18889
+  tail call fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(304) %i.p), !noalias !18889
   %i.r = icmp eq i64 %i.q, %.val1.i
   br i1 %i.r, label %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hbc6e445a8ba85791E.exit.i", label %.lr.ph.i.i.i
 
@@ -2575,7 +2580,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(288) %0) unnamed_addr #6 personality ptr @rust_eh_personality {
+define internal fastcc void @"_ZN4core3ptr73drop_in_place$LT$nickel_lang_parser..grammar..__parse__Term..__Symbol$GT$17hbb325c02e41945baE"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(288) %0) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i8, ptr %0, align 8, !range !22687, !noundef !15
   switch i8 %i.a, label %bb.b [
