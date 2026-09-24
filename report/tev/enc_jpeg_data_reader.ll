@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
 
 .preheader432:                                    ; preds = %.thread349.thread, %.critedge196
   %i.gw = phi i32 [ %i.gu, %.critedge196 ], [ 1, %.thread349.thread ] ; 5 uses
-  %i.gx = phi i32 [ %i.gt, %.critedge196 ], [ 63, %.thread349.thread ] ; 9 uses
+  %i.gx = phi i32 [ %i.gt, %.critedge196 ], [ 63, %.thread349.thread ] ; 8 uses
   %i.gy = phi i1 [ %i.gs, %.critedge196 ], [ true, %.thread349.thread ]
   %i.gz = phi i32 [ %i.gr, %.critedge196 ], [ 0, %.thread349.thread ] ; 4 uses
   %i.ha = phi i32 [ %i.gq, %.critedge196 ], [ 0, %.thread349.thread ] ; 4 uses
@@ -608,14 +608,15 @@ bb.bh:                                            ; preds = %bb.bg, %_ZN3jxl4jpe
   %i.op = phi i32 [ %i.ok, %_ZN3jxl4jpeg12_GLOBAL__N_114BitReaderState8ReadBitsEi.exit159.i.us.us ], [ %i.ni, %bb.bg ]
   %.0102.i.us.us = phi i32 [ %i.oo, %_ZN3jxl4jpeg12_GLOBAL__N_114BitReaderState8ReadBitsEi.exit159.i.us.us ], [ 0, %bb.bg ] ; 3 uses
   %i.oq = sext i32 %.010640.i.us.us to i64
-  %smax.i.us.us = call i32 @llvm.smax.i32(i32 %.010640.i.us.us, i32 %i.gx)
-  %i.or = add i32 %smax.i.us.us, 1                ; 2 uses
+  %smax.i.us.us = call i32 @llvm.smax.i32(i32 %.010640.i.us.us, i32 %i.gx) ; 2 uses
+  %i.or = add i32 %smax.i.us.us, 1
+  %smax68.i.us.us = sext i32 %smax.i.us.us to i64
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bu, %bb.bh
   %.promoted.i.i141.i.us.us744.a = phi i64 [ %.promoted.i.i141.i.us.us742.a, %bb.bu ], [ %.promoted.i.i141.i.us.us745.a, %bb.bh ] ; 4 uses
   %.promoted.i.i164.i.us.us = phi i64 [ %.pre.i16178.i.us.us, %bb.bu ], [ %.promoted.i.i141.i.us.us745.a, %bb.bh ] ; 3 uses
-  %indvars.iv.i.us.us = phi i64 [ %indvars.iv.next.i.us.us, %bb.bu ], [ %i.oq, %bb.bh ] ; 3 uses
+  %indvars.iv.i.us.us = phi i64 [ %indvars.iv.next.i.us.us, %bb.bu ], [ %i.oq, %bb.bh ] ; 4 uses
   %i.os = phi i32 [ %i.qe, %bb.bu ], [ %i.op, %bb.bh ] ; 6 uses
   %.0103.i.us.us = phi i32 [ %.1104.i.us.us, %bb.bu ], [ %i.nn, %bb.bh ] ; 3 uses
   %i.ot = getelementptr inbounds [4 x i8], ptr @_ZN3jxl4jpegL17kJPEGNaturalOrderE, i64 %indvars.iv.i.us.us
@@ -723,9 +724,8 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %.pre.i16178.i.us.us = phi i64 [ %.pre.i16179.i.us.us, %bb.bs ], [ %.promoted.i.i164.i.us.us, %bb.bt ]
   %i.qe = phi i32 [ %i.pu, %bb.bs ], [ %i.os, %bb.bt ] ; 2 uses
   %.1104.i.us.us = phi i32 [ %.0103.i.us.us, %bb.bs ], [ %i.qc, %bb.bt ]
-  %indvars.iv.next.i.us.us = add nsw i64 %indvars.iv.i.us.us, 1 ; 2 uses
-  %lftr.wideiv.i.us.us = trunc i64 %indvars.iv.next.i.us.us to i32
-  %exitcond.not.i213.us.us = icmp eq i32 %i.or, %lftr.wideiv.i.us.us
+  %indvars.iv.next.i.us.us = add nsw i64 %indvars.iv.i.us.us, 1
+  %exitcond.not.i213.us.us = icmp eq i64 %indvars.iv.i.us.us, %smax68.i.us.us
   br i1 %exitcond.not.i213.us.us, label %.loopexit17.thread.i.us.us, label %bb.bi, !llvm.loop !188
 
 .loopexit17.thread.i.us.us:                       ; preds = %bb.bu
@@ -733,23 +733,19 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   br i1 %.not132128.i.us.us, label %bb.bw, label %.loopexit
 
 .loopexit17.i.us.us:                              ; preds = %bb.bt
-  %i.qf = trunc nsw i64 %indvars.iv.i.us.us to i32 ; 3 uses
+  %i.qf = trunc nsw i64 %indvars.iv.i.us.us to i32 ; 2 uses
   %.not132.i.us.us = icmp eq i32 %.0102.i.us.us, 0
-  br i1 %.not132.i.us.us, label %bb.bw, label %10
+  br i1 %.not132.i.us.us, label %bb.bw, label %bb.bv
 
-10:                                               ; preds = %.loopexit17.i.us.us
-  %.not1319.i.us.us = icmp slt i32 %i.gx, %i.qf
-  br i1 %.not1319.i.us.us, label %.loopexit, label %bb.bv
-
-bb.bv:                                            ; preds = %10
+bb.bv:                                            ; preds = %.loopexit17.i.us.us
   %i.qg = trunc i32 %.0102.i.us.us to i16
   store i16 %i.qg, ptr %i.ow, align 2, !tbaa !110
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv, %.loopexit17.i.us.us, %.loopexit17.thread.i.us.us
-  %.promoted.i.i141.i.us.us741 = phi i64 [ %.promoted.i.i141.i.us.us742.a, %.loopexit17.thread.i.us.us ], [ %.promoted.i.i141.i.us.us744.a, %.loopexit17.i.us.us ], [ %.promoted.i.i141.i.us.us744.a, %bb.bv ]
-  %.210811131.i.us.us = phi i32 [ %i.or, %.loopexit17.thread.i.us.us ], [ %i.qf, %.loopexit17.i.us.us ], [ %i.qf, %bb.bv ] ; 2 uses
-  %i.qh = phi i32 [ %i.qe, %.loopexit17.thread.i.us.us ], [ %i.os, %.loopexit17.i.us.us ], [ %i.os, %bb.bv ]
+  %.promoted.i.i141.i.us.us741 = phi i64 [ %.promoted.i.i141.i.us.us744.a, %.loopexit17.i.us.us ], [ %.promoted.i.i141.i.us.us742.a, %.loopexit17.thread.i.us.us ], [ %.promoted.i.i141.i.us.us744.a, %bb.bv ]
+  %.210811131.i.us.us = phi i32 [ %i.qf, %.loopexit17.i.us.us ], [ %i.or, %.loopexit17.thread.i.us.us ], [ %i.qf, %bb.bv ] ; 2 uses
+  %i.qh = phi i32 [ %i.os, %.loopexit17.i.us.us ], [ %i.qe, %.loopexit17.thread.i.us.us ], [ %i.os, %bb.bv ]
   %i.qi = add nsw i32 %.210811131.i.us.us, 1      ; 2 uses
   %.not.not.i.us.us = icmp slt i32 %.210811131.i.us.us, %i.gx
   br i1 %.not.not.i.us.us, label %bb.ar, label %.loopexit19.i.us.us, !llvm.loop !189
@@ -1152,14 +1148,14 @@ bb.er:                                            ; preds = %._crit_edge641.thre
   %spec.select421 = zext i1 %i.afp to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.v, %bb.ad, %bb.by, %_ZN3jxl4jpeg12_GLOBAL__N_114BitReaderState8ReadBitsEi.exit.us.us, %.loopexit19.i.us.us, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i.us.us, %bb.df, %bb.eb, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i211.us.us, %bb.az, %.loopexit17.thread.i.us.us, %10, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit139.i.us.us, %bb.dq, %bb.er, %._crit_edge641.thread, %._crit_edge641, %.split.us647, %.critedge196
-  %.sroa.0297.16 = phi i32 [ 1, %.critedge196 ], [ 1, %bb.by ], [ 1, %bb.ad ], [ 1, %._crit_edge641.thread ], [ %spec.select421, %bb.er ], [ 1, %._crit_edge641 ], [ 1, %.split.us647 ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i211.us.us ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit139.i.us.us ], [ 1, %bb.dq ], [ 1, %10 ], [ 1, %.loopexit17.thread.i.us.us ], [ 1, %bb.az ], [ 1, %bb.eb ], [ 1, %bb.df ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i.us.us ], [ 1, %.loopexit19.i.us.us ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_114BitReaderState8ReadBitsEi.exit.us.us ], [ 1, %bb.v ]
+.loopexit:                                        ; preds = %bb.v, %bb.ad, %bb.by, %_ZN3jxl4jpeg12_GLOBAL__N_114BitReaderState8ReadBitsEi.exit.us.us, %.loopexit19.i.us.us, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i.us.us, %bb.df, %bb.eb, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i211.us.us, %bb.az, %.loopexit17.thread.i.us.us, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit139.i.us.us, %bb.dq, %bb.er, %._crit_edge641.thread, %._crit_edge641, %.split.us647, %.critedge196
+  %.sroa.0298.16 = phi i32 [ 1, %.critedge196 ], [ 1, %bb.by ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit139.i.us.us ], [ 1, %._crit_edge641.thread ], [ %spec.select421, %bb.er ], [ 1, %._crit_edge641 ], [ 1, %.split.us647 ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i211.us.us ], [ 1, %bb.ad ], [ 1, %bb.dq ], [ 1, %.loopexit17.thread.i.us.us ], [ 1, %bb.az ], [ 1, %bb.eb ], [ 1, %bb.df ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ReadSymbolEPKNS0_17HuffmanTableEntryEPNS1_14BitReaderStateE.exit.i.us.us ], [ 1, %.loopexit19.i.us.us ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_114BitReaderState8ReadBitsEi.exit.us.us ], [ 1, %bb.v ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   br label %_ZN3jxl4jpeg12_GLOBAL__N_110ProcessSOSEPKhmPmPNS0_8JPEGDataE.exit.thread
 
 _ZN3jxl4jpeg12_GLOBAL__N_110ProcessSOSEPKhmPmPNS0_8JPEGDataE.exit.thread: ; preds = %bb.b, %bb.c, %bb.a, %_ZN3jxl4jpeg12_GLOBAL__N_110ProcessSOSEPKhmPmPNS0_8JPEGDataE.exit, %.loopexit
-  %.sroa.0297.17 = phi i32 [ %.sroa.0297.16, %.loopexit ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ProcessSOSEPKhmPmPNS0_8JPEGDataE.exit ], [ 1, %bb.a ], [ 1, %bb.c ], [ 1, %bb.b ]
+  %.sroa.0297.17 = phi i32 [ %.sroa.0298.16, %.loopexit ], [ 1, %_ZN3jxl4jpeg12_GLOBAL__N_110ProcessSOSEPKhmPmPNS0_8JPEGDataE.exit ], [ 1, %bb.a ], [ 1, %bb.c ], [ 1, %bb.b ]
   ret i32 %.sroa.0297.17
 }
 

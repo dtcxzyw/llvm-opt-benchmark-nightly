@@ -205,20 +205,17 @@ bb.d:                                             ; preds = %_ZN4mlir9transform1
 _ZN4mlir9transform18TestFuseAndYieldOp13getODSResultsEj.exit: ; preds = %bb.d
   %i.am = load ptr, ptr %0, align 8, !tbaa !47    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 36
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152 ; 2 uses
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152
   %i.ap = getelementptr inbounds i8, ptr %i.am, i64 -16
   %i.aq = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 noundef 1) #27
-  %.not120128 = icmp eq i32 %i.ao, 1
-  br i1 %.not120128, label %.thread105, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN4mlir9transform18TestFuseAndYieldOp13getODSResultsEj.exit
   %4 = zext i32 %i.ao to i64
-  %5 = add nsw i64 %4, -2
-  br label %.lr.ph
+  %5 = add nsw i64 %4, -1                         ; 2 uses
+  %.not120128 = icmp eq i64 %5, 0
+  br i1 %.not120128, label %.thread105, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %_ZN4mlir9transform18TestFuseAndYieldOp13getODSResultsEj.exit, %bb.e
+  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %_ZN4mlir9transform18TestFuseAndYieldOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %_ZN4mlir9transform18TestFuseAndYieldOp13getODSResultsEj.exit ] ; 2 uses
   %i.ar = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.aq, i64 noundef %.sroa.4.0129) #27
   %i.as = load ptr, ptr %0, align 8, !tbaa !47
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
@@ -231,8 +228,8 @@ _ZN4mlir9transform18TestFuseAndYieldOp13getODSResultsEj.exit: ; preds = %bb.d
 
 bb.e:                                             ; preds = %.lr.ph
   %i.ay = add i32 %.2130, 1
-  %i.az = add nuw nsw i64 %.sroa.4.0129, 1
-  %.not120 = icmp eq i64 %.sroa.4.0129, %5
+  %i.az = add nuw nsw i64 %.sroa.4.0129, 1        ; 2 uses
+  %.not120 = icmp eq i64 %i.az, %5
   br i1 %.not120, label %.thread105, label %.lr.ph
 
 .thread105:                                       ; preds = %.lr.ph, %bb.e, %_ZN4mlir9transform18TestFuseAndYieldOp14getODSOperandsEj.exit, %bb.d, %_ZN4mlir9transform18TestFuseAndYieldOp13getODSResultsEj.exit, %bb.c, %bb.b, %bb.a
@@ -635,22 +632,22 @@ _ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit: ; preds = %bb.a
 
 _ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit57: ; preds = %.lr.ph.i.i.preheader
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 68
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !118  ; 2 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !118
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 72
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !94
   %i.ab = zext i32 %i.y to i64
-  %.not158168 = icmp eq i32 %i.y, 1
+  %2 = add nsw i64 %i.ab, -1                      ; 2 uses
+  %.not158168 = icmp eq i64 %2, 0
   br i1 %.not158168, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.i.i.preheader, %_ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit57
-  %2 = phi i64 [ %i.ab, %_ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit57 ], [ 0, %.lr.ph.i.i.preheader ]
   %.sroa.0.0.i.i.i.i54188 = phi ptr [ %i.aa, %_ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit57 ], [ null, %.lr.ph.i.i.preheader ]
-  %3 = add nsw i64 %2, -2
+  %3 = phi i64 [ %2, %_ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit57 ], [ -1, %.lr.ph.i.i.preheader ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %.245170 = phi i32 [ %i.ak, %bb.b ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.4114.0169 = phi i64 [ %i.al, %bb.b ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.4114.0169 = phi i64 [ %i.al, %bb.b ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.ac = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.i.i.i.i54188, i64 %.sroa.4114.0169
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 56
   %.sroa.0.0.copyload.i.i.i62 = load ptr, ptr %i.ad, align 8, !tbaa !96
@@ -665,8 +662,8 @@ _ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit57: ; preds = %.lr.
 
 bb.b:                                             ; preds = %.lr.ph
   %i.ak = add i32 %.245170, 1
-  %i.al = add nuw nsw i64 %.sroa.4114.0169, 1
-  %.not158 = icmp eq i64 %.sroa.4114.0169, %3
+  %i.al = add nuw nsw i64 %.sroa.4114.0169, 1     ; 2 uses
+  %.not158 = icmp eq i64 %i.al, %3
   br i1 %.not158, label %._crit_edge.loopexit, label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.b
@@ -689,20 +686,17 @@ bb.b:                                             ; preds = %.lr.ph
 _ZN4mlir9transform18TestFuseConsumerOp13getODSResultsEj.exit: ; preds = %._crit_edge
   %i.av = load ptr, ptr %0, align 8, !tbaa !47    ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 36
-  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !152 ; 2 uses
+  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !152
   %i.ay = getelementptr inbounds i8, ptr %i.av, i64 -16
   %i.az = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ay, i64 noundef 1) #27
-  %.not160173 = icmp eq i32 %i.ax, 1
-  br i1 %.not160173, label %.thread140, label %.lr.ph176.preheader
-
-.lr.ph176.preheader:                              ; preds = %_ZN4mlir9transform18TestFuseConsumerOp13getODSResultsEj.exit
   %4 = zext i32 %i.ax to i64
-  %5 = add nsw i64 %4, -2
-  br label %.lr.ph176
+  %5 = add nsw i64 %4, -1                         ; 2 uses
+  %.not160173 = icmp eq i64 %5, 0
+  br i1 %.not160173, label %.thread140, label %.lr.ph176
 
-.lr.ph176:                                        ; preds = %.lr.ph176.preheader, %bb.c
-  %.248175 = phi i32 [ %i.bh, %bb.c ], [ 1, %.lr.ph176.preheader ] ; 2 uses
-  %.sroa.4.0174 = phi i64 [ %i.bi, %bb.c ], [ 0, %.lr.ph176.preheader ] ; 3 uses
+.lr.ph176:                                        ; preds = %_ZN4mlir9transform18TestFuseConsumerOp13getODSResultsEj.exit, %bb.c
+  %.248175 = phi i32 [ %i.bh, %bb.c ], [ 1, %_ZN4mlir9transform18TestFuseConsumerOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0174 = phi i64 [ %i.bi, %bb.c ], [ 0, %_ZN4mlir9transform18TestFuseConsumerOp13getODSResultsEj.exit ] ; 2 uses
   %i.ba = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.az, i64 noundef %.sroa.4.0174) #27
   %i.bb = load ptr, ptr %0, align 8, !tbaa !47
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
@@ -715,8 +709,8 @@ _ZN4mlir9transform18TestFuseConsumerOp13getODSResultsEj.exit: ; preds = %._crit_
 
 bb.c:                                             ; preds = %.lr.ph176
   %i.bh = add i32 %.248175, 1
-  %i.bi = add nuw nsw i64 %.sroa.4.0174, 1
-  %.not160 = icmp eq i64 %.sroa.4.0174, %5
+  %i.bi = add nuw nsw i64 %.sroa.4.0174, 1        ; 2 uses
+  %.not160 = icmp eq i64 %i.bi, %5
   br i1 %.not160, label %.thread140, label %.lr.ph176
 
 .thread140:                                       ; preds = %.lr.ph, %.lr.ph176, %bb.c, %_ZN4mlir9transform18TestFuseConsumerOp14getODSOperandsEj.exit, %._crit_edge, %_ZN4mlir9transform18TestFuseConsumerOp13getODSResultsEj.exit, %bb.a
@@ -1119,20 +1113,17 @@ bb.d:                                             ; preds = %_ZN4mlir9transform2
 _ZN4mlir9transform21TestFuseUsingForallOp13getODSResultsEj.exit: ; preds = %bb.d
   %i.am = load ptr, ptr %0, align 8, !tbaa !47    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 36
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152 ; 2 uses
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152
   %i.ap = getelementptr inbounds i8, ptr %i.am, i64 -16
   %i.aq = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 noundef 1) #27
-  %.not120128 = icmp eq i32 %i.ao, 1
-  br i1 %.not120128, label %.thread105, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN4mlir9transform21TestFuseUsingForallOp13getODSResultsEj.exit
   %4 = zext i32 %i.ao to i64
-  %5 = add nsw i64 %4, -2
-  br label %.lr.ph
+  %5 = add nsw i64 %4, -1                         ; 2 uses
+  %.not120128 = icmp eq i64 %5, 0
+  br i1 %.not120128, label %.thread105, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %_ZN4mlir9transform21TestFuseUsingForallOp13getODSResultsEj.exit, %bb.e
+  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %_ZN4mlir9transform21TestFuseUsingForallOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %_ZN4mlir9transform21TestFuseUsingForallOp13getODSResultsEj.exit ] ; 2 uses
   %i.ar = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.aq, i64 noundef %.sroa.4.0129) #27
   %i.as = load ptr, ptr %0, align 8, !tbaa !47
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
@@ -1145,8 +1136,8 @@ _ZN4mlir9transform21TestFuseUsingForallOp13getODSResultsEj.exit: ; preds = %bb.d
 
 bb.e:                                             ; preds = %.lr.ph
   %i.ay = add i32 %.2130, 1
-  %i.az = add nuw nsw i64 %.sroa.4.0129, 1
-  %.not120 = icmp eq i64 %.sroa.4.0129, %5
+  %i.az = add nuw nsw i64 %.sroa.4.0129, 1        ; 2 uses
+  %.not120 = icmp eq i64 %i.az, %5
   br i1 %.not120, label %.thread105, label %.lr.ph
 
 .thread105:                                       ; preds = %.lr.ph, %bb.e, %_ZN4mlir9transform21TestFuseUsingForallOp14getODSOperandsEj.exit, %bb.d, %_ZN4mlir9transform21TestFuseUsingForallOp13getODSResultsEj.exit, %bb.c, %bb.b, %bb.a
@@ -1549,20 +1540,17 @@ bb.d:                                             ; preds = %_ZN4mlir9transform4
 _ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp13getODSResultsEj.exit: ; preds = %bb.d
   %i.am = load ptr, ptr %0, align 8, !tbaa !47    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 36
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152 ; 2 uses
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152
   %i.ap = getelementptr inbounds i8, ptr %i.am, i64 -16
   %i.aq = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 noundef 1) #27
-  %.not120128 = icmp eq i32 %i.ao, 1
-  br i1 %.not120128, label %.thread105, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp13getODSResultsEj.exit
   %4 = zext i32 %i.ao to i64
-  %5 = add nsw i64 %4, -2
-  br label %.lr.ph
+  %5 = add nsw i64 %4, -1                         ; 2 uses
+  %.not120128 = icmp eq i64 %5, 0
+  br i1 %.not120128, label %.thread105, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %_ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp13getODSResultsEj.exit, %bb.e
+  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %_ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %_ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp13getODSResultsEj.exit ] ; 2 uses
   %i.ar = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.aq, i64 noundef %.sroa.4.0129) #27
   %i.as = load ptr, ptr %0, align 8, !tbaa !47
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
@@ -1575,8 +1563,8 @@ _ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp13getODSResult
 
 bb.e:                                             ; preds = %.lr.ph
   %i.ay = add i32 %.2130, 1
-  %i.az = add nuw nsw i64 %.sroa.4.0129, 1
-  %.not120 = icmp eq i64 %.sroa.4.0129, %5
+  %i.az = add nuw nsw i64 %.sroa.4.0129, 1        ; 2 uses
+  %.not120 = icmp eq i64 %i.az, %5
   br i1 %.not120, label %.thread105, label %.lr.ph
 
 .thread105:                                       ; preds = %.lr.ph, %bb.e, %_ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp14getODSOperandsEj.exit, %bb.d, %_ZN4mlir9transform46TestTileAndFuseOuterParallelPartialReductionOp13getODSResultsEj.exit, %bb.c, %bb.b, %bb.a
@@ -1979,20 +1967,17 @@ bb.b:                                             ; preds = %_ZN4mlir9transform2
 _ZN4mlir9transform25TestTileUsingCustomLoopOp13getODSResultsEj.exit: ; preds = %bb.b
   %i.ac = load ptr, ptr %0, align 8, !tbaa !47    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 36
-  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !152 ; 2 uses
+  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !152
   %i.af = getelementptr inbounds i8, ptr %i.ac, i64 -16
   %i.ag = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.af, i64 noundef 1) #27
-  %.not106114 = icmp eq i32 %i.ae, 1
-  br i1 %.not106114, label %.thread91, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN4mlir9transform25TestTileUsingCustomLoopOp13getODSResultsEj.exit
   %2 = zext i32 %i.ae to i64
-  %3 = add nsw i64 %2, -2
-  br label %.lr.ph
+  %3 = add nsw i64 %2, -1                         ; 2 uses
+  %.not106114 = icmp eq i64 %3, 0
+  br i1 %.not106114, label %.thread91, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %.237116 = phi i32 [ %i.ao, %bb.c ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.4.0115 = phi i64 [ %i.ap, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %_ZN4mlir9transform25TestTileUsingCustomLoopOp13getODSResultsEj.exit, %bb.c
+  %.237116 = phi i32 [ %i.ao, %bb.c ], [ 1, %_ZN4mlir9transform25TestTileUsingCustomLoopOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0115 = phi i64 [ %i.ap, %bb.c ], [ 0, %_ZN4mlir9transform25TestTileUsingCustomLoopOp13getODSResultsEj.exit ] ; 2 uses
   %i.ah = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, i64 noundef %.sroa.4.0115) #27
   %i.ai = load ptr, ptr %0, align 8, !tbaa !47
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
@@ -2005,8 +1990,8 @@ _ZN4mlir9transform25TestTileUsingCustomLoopOp13getODSResultsEj.exit: ; preds = %
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ao = add i32 %.237116, 1
-  %i.ap = add nuw nsw i64 %.sroa.4.0115, 1
-  %.not106 = icmp eq i64 %.sroa.4.0115, %3
+  %i.ap = add nuw nsw i64 %.sroa.4.0115, 1        ; 2 uses
+  %.not106 = icmp eq i64 %i.ap, %3
   br i1 %.not106, label %.thread91, label %.lr.ph
 
 .thread91:                                        ; preds = %.lr.ph, %bb.c, %_ZN4mlir9transform25TestTileUsingCustomLoopOp14getODSOperandsEj.exit, %bb.b, %_ZN4mlir9transform25TestTileUsingCustomLoopOp13getODSResultsEj.exit, %bb.a
@@ -2409,20 +2394,17 @@ bb.d:                                             ; preds = %_ZN4mlir9transform2
 _ZN4mlir9transform21TestTileUsingForallOp13getODSResultsEj.exit: ; preds = %bb.d
   %i.am = load ptr, ptr %0, align 8, !tbaa !47    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 36
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152 ; 2 uses
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !152
   %i.ap = getelementptr inbounds i8, ptr %i.am, i64 -16
   %i.aq = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 noundef 1) #27
-  %.not120128 = icmp eq i32 %i.ao, 1
-  br i1 %.not120128, label %.thread105, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN4mlir9transform21TestTileUsingForallOp13getODSResultsEj.exit
   %4 = zext i32 %i.ao to i64
-  %5 = add nsw i64 %4, -2
-  br label %.lr.ph
+  %5 = add nsw i64 %4, -1                         ; 2 uses
+  %.not120128 = icmp eq i64 %5, 0
+  br i1 %.not120128, label %.thread105, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %_ZN4mlir9transform21TestTileUsingForallOp13getODSResultsEj.exit, %bb.e
+  %.2130 = phi i32 [ %i.ay, %bb.e ], [ 1, %_ZN4mlir9transform21TestTileUsingForallOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0129 = phi i64 [ %i.az, %bb.e ], [ 0, %_ZN4mlir9transform21TestTileUsingForallOp13getODSResultsEj.exit ] ; 2 uses
   %i.ar = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.aq, i64 noundef %.sroa.4.0129) #27
   %i.as = load ptr, ptr %0, align 8, !tbaa !47
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
@@ -2435,8 +2417,8 @@ _ZN4mlir9transform21TestTileUsingForallOp13getODSResultsEj.exit: ; preds = %bb.d
 
 bb.e:                                             ; preds = %.lr.ph
   %i.ay = add i32 %.2130, 1
-  %i.az = add nuw nsw i64 %.sroa.4.0129, 1
-  %.not120 = icmp eq i64 %.sroa.4.0129, %5
+  %i.az = add nuw nsw i64 %.sroa.4.0129, 1        ; 2 uses
+  %.not120 = icmp eq i64 %i.az, %5
   br i1 %.not120, label %.thread105, label %.lr.ph
 
 .thread105:                                       ; preds = %.lr.ph, %bb.e, %_ZN4mlir9transform21TestTileUsingForallOp14getODSOperandsEj.exit, %bb.d, %_ZN4mlir9transform21TestTileUsingForallOp13getODSResultsEj.exit, %bb.c, %bb.b, %bb.a

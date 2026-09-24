@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !54
   %i.e = tail call i32 @fgetc(ptr noundef %i.d)   ; 2 uses
   %.not = icmp eq i32 %i.e, -1
-  br i1 %.not, label %_ZNSt11unique_lockISt5mutexED2Ev.exit.loopexit, label %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
+  br i1 %.not, label %_ZNSt11unique_lockISt5mutexED2Ev.exit, label %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %.lr.ph
   %i.f = trunc i32 %i.e to i8
@@ -210,15 +210,10 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %.lr.ph
   store i8 %i.f, ptr %i.g, align 1, !tbaa !26
   %i.h = add nuw i64 %.01421, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.h, %2
-  br i1 %exitcond.not, label %_ZNSt11unique_lockISt5mutexED2Ev.exit.loopexit, label %.lr.ph, !llvm.loop !128
+  br i1 %exitcond.not, label %_ZNSt11unique_lockISt5mutexED2Ev.exit, label %.lr.ph, !llvm.loop !128
 
-_ZNSt11unique_lockISt5mutexED2Ev.exit.loopexit:   ; preds = %.lr.ph, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %.014.lcssa.ph = phi i64 [ %2, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ %.01421, %.lr.ph ]
-  %3 = tail call i64 @llvm.umin.i64(i64 %.014.lcssa.ph, i64 %2)
-  br label %_ZNSt11unique_lockISt5mutexED2Ev.exit
-
-_ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %_ZNSt11unique_lockISt5mutexED2Ev.exit.loopexit, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.preheader
-  %.014.lcssa = phi i64 [ 0, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.preheader ], [ %3, %_ZNSt11unique_lockISt5mutexED2Ev.exit.loopexit ]
+_ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %.lr.ph, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.preheader
+  %.014.lcssa = phi i64 [ 0, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.preheader ], [ %.01421, %.lr.ph ], [ %2, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ]
   %i.i = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #23 ; 0 uses
   ret i64 %.014.lcssa
 }
@@ -620,9 +615,6 @@ bb.g:                                             ; preds = %bb.a, %_ZNSt7__cxx1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #21
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
