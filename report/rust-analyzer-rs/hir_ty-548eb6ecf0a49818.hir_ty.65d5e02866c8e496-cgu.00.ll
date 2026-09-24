@@ -205,8 +205,8 @@ _RNCNvMs5_NtCsbSS6DM8SDEO_5alloc3vecINtB7_3VecINtNtCs1nWGUjlayfI_19ra_ap_rustc_t
   br i1 %i.bd, label %.preheader, label %_RNCNvMs5_NtCsbSS6DM8SDEO_5alloc3vecINtB7_3VecINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtBM_9predicate20ExistentialPredicateB1z_EEE5dedup0B1F_.exit.thread
 
 .preheader:                                       ; preds = %_RNCNvMs5_NtCsbSS6DM8SDEO_5alloc3vecINtB7_3VecINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtBM_9predicate20ExistentialPredicateB1z_EEE5dedup0B1F_.exit
-  %.sroa.5.050 = add nuw i64 %.sroa.0.049, 1      ; 2 uses
-  %i.be = icmp ult i64 %.sroa.5.050, %i.b
+  %.sroa.5.050 = add nuw nsw i64 %.sroa.0.049, 1  ; 2 uses
+  %i.be = icmp samesign ult i64 %.sroa.5.050, %i.b
   br i1 %i.be, label %.lr.ph, label %._crit_edge
 
 _RNCNvMs5_NtCsbSS6DM8SDEO_5alloc3vecINtB7_3VecINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtBM_9predicate20ExistentialPredicateB1z_EEE5dedup0B1F_.exit.thread: ; preds = %bb.i, %bb.g, %bb.j, %.split.i.i.i.i, %bb.k, %_RNvXs3b_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_16TraitAssocTermIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i.i, %bb.f, %bb.c, %.split.i.i, %.split3.i.i, %_RNvXs1w_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicateINtB6_20ExistentialPredicateNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1p_.exit.i.i, %_RNCNvMs5_NtCsbSS6DM8SDEO_5alloc3vecINtB7_3VecINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtBM_9predicate20ExistentialPredicateB1z_EEE5dedup0B1F_.exit
@@ -609,11 +609,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val11 = load i32, ptr %i.g, align 4, !noundef !10
   %.val12 = load i32, ptr %i.h, align 4, !noundef !10
   %i.i = icmp eq i32 %.val11, %.val12
-  %.sroa.5.023 = add nuw i64 %.sroa.0.022, 1      ; 5 uses
+  %.sroa.5.023 = add nuw nsw i64 %.sroa.0.022, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.023, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.023, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -634,12 +634,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.prol
   store i32 %.val.prol, ptr %i.n, align 4
-  %i.q = add i64 %.sroa.0.022, 1
+  %i.q = add nuw i64 %.sroa.0.022, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.q, %bb.d ], [ %.sroa.0.022, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.022, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.022, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader

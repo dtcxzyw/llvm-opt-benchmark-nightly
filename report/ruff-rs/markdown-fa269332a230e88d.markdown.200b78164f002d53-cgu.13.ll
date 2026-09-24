@@ -204,7 +204,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ba
   br i1 %i.iz, label %.lr.ph84.preheader, label %._crit_edge.i
 
 .lr.ph84.preheader:                               ; preds = %.lr.ph.preheader.i
-  %i.ja = add nsw i64 %.sroa.01.098.i, 2          ; 2 uses
+  %i.ja = add i64 %.sroa.01.098.i, 2              ; 2 uses
   %exitcond.not.i139 = icmp eq i64 %i.ja, %i.ii
   br i1 %exitcond.not.i139, label %._crit_edge.i, label %.lr.ph.i
 
@@ -239,7 +239,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ba
   br i1 %i.jl, label %.lr.ph84, label %._crit_edge.i.loopexit.split.loop.exit128
 
 .lr.ph84:                                         ; preds = %.lr.ph.i
-  %i.jm = add nsw i64 %i.jg, 1                    ; 2 uses
+  %i.jm = add i64 %i.jg, 1                        ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.jm, %i.ii
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i
 

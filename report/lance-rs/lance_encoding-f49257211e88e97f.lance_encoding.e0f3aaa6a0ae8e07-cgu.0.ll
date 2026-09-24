@@ -205,11 +205,11 @@ bb.ay:                                            ; preds = %bb.ba, %bb.ax
   %.val.i214 = load i64, ptr %i.ga, align 8, !noalias !83275, !noundef !75
   %.val11.i = load i64, ptr %i.gb, align 8, !noalias !83275, !noundef !75
   %i.gc = icmp eq i64 %.val.i214, %.val11.i
-  %.sroa.5.024.i = add nuw i64 %.sroa.0.023.i, 1  ; 5 uses
+  %.sroa.5.024.i = add nuw nsw i64 %.sroa.0.023.i, 1 ; 5 uses
   br i1 %i.gc, label %.preheader.i216, label %bb.ba
 
 .preheader.i216:                                  ; preds = %bb.ay
-  %i.gd = icmp ult i64 %.sroa.5.024.i, %i.fz
+  %i.gd = icmp samesign ult i64 %.sroa.5.024.i, %i.fz
   br i1 %i.gd, label %.lr.ph.i217.preheader, label %._crit_edge.i
 
 .lr.ph.i217.preheader:                            ; preds = %.preheader.i216
@@ -230,12 +230,12 @@ bb.ay:                                            ; preds = %bb.ba, %bb.ax
 
 bb.az:                                            ; preds = %.lr.ph.i217.prol
   store i64 %.val12.i.prol, ptr %i.gh, align 8, !noalias !83275
-  %i.gk = add i64 %.sroa.0.023.i, 1
+  %i.gk = add nuw i64 %.sroa.0.023.i, 1
   br label %.lr.ph.i217.prol.loopexit.unr-lcssa
 
 .lr.ph.i217.prol.loopexit.unr-lcssa:              ; preds = %bb.az, %.lr.ph.i217.prol
   %.sroa.11.1.i.prol = phi i64 [ %i.gk, %bb.az ], [ %.sroa.0.023.i, %.lr.ph.i217.prol ] ; 2 uses
-  %.sroa.5.0.i.prol = add nuw i64 %.sroa.0.023.i, 2
+  %.sroa.5.0.i.prol = add nuw nsw i64 %.sroa.0.023.i, 2
   br label %.lr.ph.i217.prol.loopexit
 
 .lr.ph.i217.prol.loopexit:                        ; preds = %.lr.ph.i217.prol.loopexit.unr-lcssa, %.lr.ph.i217.preheader

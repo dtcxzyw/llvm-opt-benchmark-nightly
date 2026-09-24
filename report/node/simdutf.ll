@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %.lr.ph
-  %i.ah = phi i64 [ %i.ao, %.lr.ph ], [ 64, %bb.c ] ; 3 uses
+  %i.ah = phi i64 [ %i.ao, %.lr.ph ], [ 64, %bb.c ] ; 2 uses
   %.0132 = phi i64 [ %i.an, %.lr.ph ], [ %i.a, %bb.c ]
   %.3131 = phi i64 [ %i.ah, %.lr.ph ], [ 0, %bb.c ]
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 %.3131
@@ -215,12 +215,16 @@ bb.c:                                             ; preds = %bb.a
   %i.am = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.al)
   %i.an = add i64 %i.am, %.0132                   ; 2 uses
   %i.ao = add nuw nsw i64 %i.ah, 64               ; 2 uses
-  %.not78 = icmp ugt i64 %i.ao, %2
-  br i1 %.not78, label %.loopexit, label %.lr.ph, !llvm.loop !395
+  %.not78 = icmp samesign ugt i64 %i.ao, %2
+  br i1 %.not78, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !395
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.c, %bb.b
-  %.4 = phi i64 [ %.2.lcssa, %bb.b ], [ 0, %bb.c ], [ %i.ah, %.lr.ph ] ; 3 uses
-  %.1 = phi i64 [ %i.ag, %bb.b ], [ 0, %bb.c ], [ %i.an, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %3 = and i64 %2, 1984
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.c, %bb.b
+  %.4 = phi i64 [ %.2.lcssa, %bb.b ], [ 0, %bb.c ], [ %3, %.loopexit.loopexit ] ; 3 uses
+  %.1 = phi i64 [ %i.ag, %bb.b ], [ 0, %bb.c ], [ %i.an, %.loopexit.loopexit ]
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 %.4 ; 3 uses
   %i.aq = sub i64 %2, %.4                         ; 9 uses
   %.not151 = icmp eq i64 %2, %.4
@@ -623,7 +627,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %.lr.ph
-  %i.ad = phi i64 [ %i.al, %.lr.ph ], [ 32, %bb.c ] ; 3 uses
+  %i.ad = phi i64 [ %i.al, %.lr.ph ], [ 32, %bb.c ] ; 2 uses
   %.0130 = phi i64 [ %i.ak, %.lr.ph ], [ %i.a, %bb.c ]
   %.3129 = phi i64 [ %i.ad, %.lr.ph ], [ 0, %bb.c ]
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 %.3129
@@ -634,12 +638,16 @@ bb.c:                                             ; preds = %bb.a
   %i.aj = zext nneg i32 %i.ai to i64
   %i.ak = add i64 %.0130, %i.aj                   ; 2 uses
   %i.al = add nuw nsw i64 %i.ad, 32               ; 2 uses
-  %.not66 = icmp ugt i64 %i.al, %2
-  br i1 %.not66, label %.loopexit, label %.lr.ph, !llvm.loop !863
+  %.not66 = icmp samesign ugt i64 %i.al, %2
+  br i1 %.not66, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !863
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.c, %bb.b
-  %.4 = phi i64 [ %.2.lcssa, %bb.b ], [ 0, %bb.c ], [ %i.ad, %.lr.ph ] ; 3 uses
-  %.1 = phi i64 [ %op.rdx, %bb.b ], [ 0, %bb.c ], [ %i.ak, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %3 = and i64 %2, 2016
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.c, %bb.b
+  %.4 = phi i64 [ %.2.lcssa, %bb.b ], [ 0, %bb.c ], [ %3, %.loopexit.loopexit ] ; 3 uses
+  %.1 = phi i64 [ %op.rdx, %bb.b ], [ 0, %bb.c ], [ %i.ak, %.loopexit.loopexit ]
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 %.4 ; 3 uses
   %i.an = sub i64 %2, %.4                         ; 9 uses
   %.not149 = icmp eq i64 %2, %.4
@@ -1042,15 +1050,19 @@ bb.c:                                             ; preds = %bb.a
   %.not7995 = icmp samesign ult i64 %2, 32
   br i1 %.not7995, label %.preheader92, label %.lr.ph
 
-.preheader92:                                     ; preds = %.lr.ph, %.preheader93
-  %.3.lcssa = phi i64 [ 0, %.preheader93 ], [ %i.ah, %.lr.ph ] ; 3 uses
-  %.0.lcssa = phi i64 [ %i.a, %.preheader93 ], [ %i.av, %.lr.ph ] ; 2 uses
+.preheader92.loopexit:                            ; preds = %.lr.ph
+  %3 = and i64 %2, 2016
+  br label %.preheader92
+
+.preheader92:                                     ; preds = %.preheader92.loopexit, %.preheader93
+  %.3.lcssa = phi i64 [ 0, %.preheader93 ], [ %3, %.preheader92.loopexit ] ; 3 uses
+  %.0.lcssa = phi i64 [ %i.a, %.preheader93 ], [ %i.av, %.preheader92.loopexit ] ; 2 uses
   %i.ag = or disjoint i64 %.3.lcssa, 16           ; 2 uses
   %.not8099 = icmp samesign ugt i64 %i.ag, %2
   br i1 %.not8099, label %.loopexit, label %.lr.ph102
 
 .lr.ph:                                           ; preds = %.preheader93, %.lr.ph
-  %i.ah = phi i64 [ %i.aw, %.lr.ph ], [ 32, %.preheader93 ] ; 3 uses
+  %i.ah = phi i64 [ %i.aw, %.lr.ph ], [ 32, %.preheader93 ] ; 2 uses
   %.097 = phi i64 [ %i.av, %.lr.ph ], [ %i.a, %.preheader93 ]
   %.396 = phi i64 [ %i.ah, %.lr.ph ], [ 0, %.preheader93 ]
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 %.396 ; 2 uses
@@ -1069,7 +1081,7 @@ bb.c:                                             ; preds = %bb.a
   %i.av = add i64 %i.ao, %i.au                    ; 2 uses
   %i.aw = add nuw nsw i64 %i.ah, 32               ; 2 uses
   %.not79 = icmp samesign ugt i64 %i.aw, %2
-  br i1 %.not79, label %.preheader92, label %.lr.ph, !llvm.loop !1260
+  br i1 %.not79, label %.preheader92.loopexit, label %.lr.ph, !llvm.loop !1260
 
 .lr.ph102:                                        ; preds = %.preheader92, %.lr.ph102
   %i.ax = phi i64 [ %i.bf, %.lr.ph102 ], [ %i.ag, %.preheader92 ] ; 3 uses

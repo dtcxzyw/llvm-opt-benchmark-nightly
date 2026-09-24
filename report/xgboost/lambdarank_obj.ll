@@ -205,8 +205,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !799
 
@@ -221,7 +221,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -624,8 +624,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !903
 
@@ -640,7 +640,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -1043,8 +1043,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1005
 
@@ -1059,7 +1059,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -1462,8 +1462,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1073
 
@@ -1478,7 +1478,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -1881,8 +1881,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1175
 
@@ -1897,7 +1897,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -2300,8 +2300,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1241
 
@@ -2316,7 +2316,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -2719,8 +2719,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1341
 
@@ -2735,7 +2735,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -3138,8 +3138,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1407
 
@@ -3154,7 +3154,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -3557,8 +3557,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1671
 
@@ -3573,7 +3573,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -3976,8 +3976,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1736
 
@@ -3992,7 +3992,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -4395,8 +4395,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1800
 
@@ -4411,7 +4411,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -4814,8 +4814,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !1860
 
@@ -4830,7 +4830,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -5233,8 +5233,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !2121
 
@@ -5249,7 +5249,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -5652,8 +5652,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !2189
 
@@ -5668,7 +5668,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -6071,8 +6071,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !2257
 
@@ -6087,7 +6087,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 
@@ -6490,8 +6490,8 @@ bb.t:                                             ; preds = %bb.r
 .critedge:                                        ; preds = %bb.p, %..critedge_crit_edge158, %.preheader114
   %.045.in.lcssa = phi i64 [ %i.bu, %.preheader114 ], [ %.045.in154, %..critedge_crit_edge158 ], [ %i.bu, %bb.p ] ; 2 uses
   %.045.lcssa = phi i64 [ %umax, %.preheader114 ], [ %.045155, %..critedge_crit_edge158 ], [ %umax, %bb.p ] ; 4 uses
-  %i.cr = sub i64 %i.bk, %.045.lcssa
-  %i.cs = add i64 %i.cr, %.046122                 ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.bk, %.045.lcssa
+  %i.cs = add nuw nsw i64 %i.cr, %.046122         ; 2 uses
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.loopexit113, label %bb.u, !llvm.loop !2323
 
@@ -6506,7 +6506,7 @@ bb.u:                                             ; preds = %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader112
   %.not60119 = icmp ugt i64 %.046122, %.045.in.lcssa
-  %i.cw = add i64 %i.cs, -1
+  %i.cw = add nsw i64 %i.cs, -1
   %i.cx = sub i64 %.045.lcssa, %.046122
   br i1 %.not60119, label %.loopexit113, label %.preheader
 

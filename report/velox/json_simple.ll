@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %._crit_edge
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
   %.1 = phi i64 [ %.082.lcssa, %._crit_edge ], [ %spec.select, %bb.b ] ; 2 uses
-  %i.t = sub nsw i32 %1, %.083.lcssa
+  %i.t = sub nuw nsw i32 %1, %.083.lcssa
   %i.u = icmp eq i32 %1, %.083.lcssa
   %i.v = select i1 %i.u, i64 0, i64 4
   %i.w = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.1, i1 true) ; 3 uses

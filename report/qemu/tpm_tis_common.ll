@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/tpm_tis_common?download=true
 inline.NumInlined: 50
 inline.NumDeleted: 18
-loop-unroll.NumCompletelyUnrolled: 10
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@tpm_tis_mmio_read:bb.a
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local zeroext i16 @tpm_tis_get_checksum(ptr noundef %0) local_unnamed_addr #0 {
@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.m
 
 bb.u:                                             ; preds = %.thread, %bb.s, %bb.t, %bb.l
   %.1209 = phi i8 [ %i.af, %bb.l ], [ %i.af, %bb.t ], [ %i.g, %bb.s ], [ -1, %.thread ] ; 3 uses
-  %.1 = phi i32 [ 1, %bb.l ], [ 1, %bb.t ], [ 0, %bb.s ], [ 1, %.thread ] ; 7 uses
+  %.1 = phi i32 [ 1, %bb.l ], [ 1, %bb.t ], [ 0, %bb.s ], [ 1, %.thread ] ; 4 uses
   %i.bc = and i64 %spec.select, 16
   %.not238 = icmp eq i64 %i.bc, 0
   br i1 %.not238, label %bb.w, label %bb.v
@@ -231,56 +231,25 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond256, label %.critedge, label %.loopexit
 
 .critedge:                                        ; preds = %bb.x
-  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 4376 ; 4 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 4376 ; 2 uses
   %i.bn = and i64 %i.e, 7
   %i.bo = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %i.bn
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 4 ; 3 uses
   %i.bq = load i8, ptr %i.bp, align 4             ; 2 uses
   %i.br = and i8 %i.bq, 8
   %.not240 = icmp eq i8 %i.br, 0
-  br i1 %.not240, label %.preheader.preheader, label %.loopexit
+  br i1 %.not240, label %.lr.ph296.2, label %.loopexit
 
-.preheader.preheader:                             ; preds = %.critedge
-  %4 = and i64 %i.e, 7                            ; 7 uses
-  %5 = icmp samesign ult i64 %4, 4
-  br i1 %5, label %.lr.ph296, label %.critedge246.preheader
+.lr.ph296.2:                                      ; preds = %.critedge
+  %4 = and i64 %i.e, 7                            ; 2 uses
+  %.not241.2 = icmp eq i64 %4, 4
+  br i1 %.not241.2, label %.critedge246.preheader, label %.lr.ph296
 
-.preheader:                                       ; preds = %.lr.ph296
-  %.not299 = icmp eq i64 %4, 3
-  br i1 %.not299, label %.critedge246.preheader, label %.lr.ph296.1
+.lr.ph296.3:                                      ; preds = %.lr.ph296
+  %.not241.3 = icmp eq i64 %indvars.iv.next, 4
+  br i1 %.not241.3, label %.critedge246.preheader, label %.lr.ph296, !llvm.loop !13
 
-.lr.ph296.1:                                      ; preds = %.preheader
-  %6 = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %4
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 52
-  %8 = load i8, ptr %7, align 4
-  %9 = and i8 %8, 8
-  %.not241.1 = icmp eq i8 %9, 0
-  br i1 %.not241.1, label %.preheader.1, label %.loopexit, !llvm.loop !13
-
-.preheader.1:                                     ; preds = %.lr.ph296.1
-  %10 = icmp samesign ult i64 %4, 2
-  br i1 %10, label %.lr.ph296.2, label %.critedge246.preheader
-
-.lr.ph296.2:                                      ; preds = %.preheader.1
-  %11 = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %4
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 76
-  %13 = load i8, ptr %12, align 4
-  %14 = and i8 %13, 8
-  %.not241.2 = icmp eq i8 %14, 0
-  br i1 %.not241.2, label %.preheader.2, label %.loopexit, !llvm.loop !13
-
-.preheader.2:                                     ; preds = %.lr.ph296.2
-  %15 = icmp eq i64 %4, 0
-  br i1 %15, label %.lr.ph296.3, label %.critedge246.preheader
-
-.lr.ph296.3:                                      ; preds = %.preheader.2
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 4476
-  %17 = load i8, ptr %16, align 4
-  %18 = and i8 %17, 8
-  %.not241.3 = icmp eq i8 %18, 0
-  br i1 %.not241.3, label %.critedge246.preheader, label %.loopexit, !llvm.loop !13
-
-.critedge246.preheader:                           ; preds = %.preheader, %.preheader.1, %.preheader.2, %.lr.ph296.3, %.preheader.preheader
+.critedge246.preheader:                           ; preds = %.lr.ph296.3, %.lr.ph296.2
   %.not = icmp eq i8 %i.g, 0
   br i1 %.not, label %.critedge246._crit_edge, label %.critedge246.preheader270
 
@@ -293,13 +262,15 @@ bb.x:                                             ; preds = %bb.w
   %exitcond.not = icmp eq i64 %wide.trip.count, 1
   br i1 %exitcond.not, label %.critedge246._crit_edge.loopexit, label %.critedge246.1
 
-.lr.ph296:                                        ; preds = %.preheader.preheader
-  %i.bv = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %4
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 28
+.lr.ph296:                                        ; preds = %.lr.ph296.2, %.lr.ph296.3
+  %indvars.iv298 = phi i64 [ %indvars.iv.next, %.lr.ph296.3 ], [ %4, %.lr.ph296.2 ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv298, 1 ; 3 uses
+  %i.bv = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %indvars.iv.next
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
   %i.bx = load i8, ptr %i.bw, align 4
   %i.by = and i8 %i.bx, 8
   %.not241 = icmp eq i8 %i.by, 0
-  br i1 %.not241, label %.preheader, label %.loopexit, !llvm.loop !13
+  br i1 %.not241, label %.lr.ph296.3, label %.loopexit, !llvm.loop !13
 
 .critedge246.1:                                   ; preds = %.critedge246.preheader270
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 4404 ; 2 uses
@@ -362,8 +333,8 @@ bb.x:                                             ; preds = %bb.w
   tail call fastcc void @tpm_tis_prep_abort(ptr noundef nonnull %0, i8 noundef zeroext %i.ct, i8 noundef zeroext %i.g)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph296, %.lr.ph296.1, %.lr.ph296.2, %.lr.ph296.3, %bb.x, %.critedge246._crit_edge, %.critedge, %bb.w
-  %.3 = phi i32 [ %.1, %bb.w ], [ %.1, %bb.x ], [ 0, %.critedge246._crit_edge ], [ %.1, %.critedge ], [ %.1, %.lr.ph296.3 ], [ %.1, %.lr.ph296.2 ], [ %.1, %.lr.ph296.1 ], [ %.1, %.lr.ph296 ]
+.loopexit:                                        ; preds = %.lr.ph296, %bb.x, %.critedge246._crit_edge, %.critedge, %bb.w
+  %.3 = phi i32 [ %.1, %bb.w ], [ %.1, %bb.x ], [ 0, %.critedge246._crit_edge ], [ %.1, %.critedge ], [ %.1, %.lr.ph296 ]
   %i.cu = and i64 %spec.select, 2
   %.not242 = icmp eq i64 %i.cu, 0
   br i1 %.not242, label %bb.ab, label %bb.y

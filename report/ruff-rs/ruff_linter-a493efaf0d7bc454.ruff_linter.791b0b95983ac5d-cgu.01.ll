@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val = load i32, ptr %i.g, align 4, !noundef !28
   %.val11 = load i32, ptr %i.h, align 4, !noundef !28
   %i.i = icmp eq i32 %.val, %.val11
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 5 uses
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.024, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -230,12 +230,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.prol
   store i32 %.val12.prol, ptr %i.n, align 4
-  %i.q = add i64 %.sroa.0.023, 1
+  %i.q = add nuw i64 %.sroa.0.023, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.q, %bb.d ], [ %.sroa.0.023, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.023, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.023, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader
@@ -551,8 +551,8 @@ bb.g:                                             ; preds = %split
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs5MAO5oZTZb8_16ruff_diagnostics4edit4EditECsEhZmuQNqkz_11ruff_linter.exit
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs5MAO5oZTZb8_16ruff_diagnostics4edit4EditECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %_RNCNvMs4_NtCscdodAO9FK5_5alloc3vecINtB7_3VecNtNtCs5MAO5oZTZb8_16ruff_diagnostics4edit4EditE5dedup0CsEhZmuQNqkz_11ruff_linter.exit, %split, %bb.g
-  %.sroa.5.035 = add nuw i64 %.sroa.0.034, 1      ; 2 uses
-  %i.ad = icmp ult i64 %.sroa.5.035, %i.b
+  %.sroa.5.035 = add nuw nsw i64 %.sroa.0.034, 1  ; 2 uses
+  %i.ad = icmp samesign ult i64 %.sroa.5.035, %i.b
   br i1 %i.ad, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs5MAO5oZTZb8_16ruff_diagnostics4edit4EditECsEhZmuQNqkz_11ruff_linter.exit21, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs5MAO5oZTZb8_16ruff_diagnostics4edit4EditECsEhZmuQNqkz_11ruff_linter.exit

@@ -204,7 +204,7 @@ _ZL7mk_greyN3gmx8ArrayRefI5egColEEPK7t_graphPiiNS0_I5t_sidEE.exit.i: ; preds = %
   br i1 %i.ga, label %.lr.ph.i, label %.loopexit136.i, !llvm.loop !41
 
 ._crit_edge.i:                                    ; preds = %.loopexit136.i, %bb.n
-  %.046.lcssa.i = phi i32 [ 0, %bb.n ], [ %i.cg, %.loopexit136.i ] ; 14 uses
+  %.046.lcssa.i = phi i32 [ 0, %bb.n ], [ %i.cg, %.loopexit136.i ] ; 11 uses
   %i.gb = load ptr, ptr @debug, align 8, !tbaa !60 ; 2 uses
   %.not61.i = icmp eq ptr %i.gb, null
   br i1 %.not61.i, label %bb.bf, label %bb.be
@@ -607,7 +607,7 @@ bb.cl:                                            ; preds = %bb.ch, %_ZNSt10file
   br label %.preheader184.i
 
 .preheader184.i:                                  ; preds = %.preheader184.i.preheader, %._crit_edge232.i
-  %.058235.i = phi i32 [ %spec.select.i58, %._crit_edge232.i ], [ 0, %.preheader184.i.preheader ] ; 8 uses
+  %.058235.i = phi i32 [ %spec.select.pre-phi.i, %._crit_edge232.i ], [ 0, %.preheader184.i.preheader ] ; 7 uses
   %storemerge79228.i = add nsw i32 %.058235.i, 1  ; 2 uses
   %i.ni = icmp slt i32 %storemerge79228.i, %.046.lcssa.i
   br i1 %i.ni, label %.lr.ph231.preheader.i, label %._crit_edge232.i
@@ -653,7 +653,7 @@ bb.cm:                                            ; preds = %.lr.ph231.i.prol
   %indvars.iv285.i.unr = phi i64 [ %i.nk, %.lr.ph231.preheader.i ], [ %indvars.iv.next286.i.prol, %.lr.ph231.i.prol.loopexit.unr-lcssa ]
   %.1229.i.unr = phi i32 [ %.058235.i, %.lr.ph231.preheader.i ], [ %.2.i69.prol, %.lr.ph231.i.prol.loopexit.unr-lcssa ]
   %i.oa = icmp eq i32 %i.nh, %.058235.i
-  br i1 %i.oa, label %._crit_edge232.i, label %.lr.ph231.i
+  br i1 %i.oa, label %._crit_edge232.loopexit.i, label %.lr.ph231.i
 
 .lr.ph231.i:                                      ; preds = %.lr.ph231.i.prol.loopexit, %bb.cp
   %indvars.iv285.i = phi i64 [ %indvars.iv.next286.i.1, %bb.cp ], [ %indvars.iv285.i.unr, %.lr.ph231.i.prol.loopexit ] ; 4 uses
@@ -710,15 +710,16 @@ bb.cp:                                            ; preds = %bb.co, %.lr.ph231.i
   %indvars.iv.next286.i.1 = add nsw i64 %indvars.iv285.i, 2 ; 2 uses
   %lftr.wideiv.i70.1 = trunc i64 %indvars.iv.next286.i.1 to i32
   %exitcond288.not.i.1 = icmp eq i32 %.046.lcssa.i, %lftr.wideiv.i70.1
-  br i1 %exitcond288.not.i.1, label %._crit_edge232.i, label %.lr.ph231.i, !llvm.loop !50
+  br i1 %exitcond288.not.i.1, label %._crit_edge232.loopexit.i, label %.lr.ph231.i, !llvm.loop !50
 
-._crit_edge232.i:                                 ; preds = %.lr.ph231.i.prol.loopexit, %bb.cp, %.preheader184.i
-  %.1.lcssa.i = phi i32 [ %.058235.i, %.preheader184.i ], [ %.2.i69.lcssa.unr, %.lr.ph231.i.prol.loopexit ], [ %.2.i69.1, %bb.cp ]
-  %storemerge79.lcssa.i = phi i32 [ %storemerge79228.i, %.preheader184.i ], [ %.046.lcssa.i, %bb.cp ], [ %.046.lcssa.i, %.lr.ph231.i.prol.loopexit ]
-  %12 = icmp eq i32 %storemerge79.lcssa.i, %.046.lcssa.i
-  %13 = zext i1 %12 to i32
-  %spec.select.i58 = add nsw i32 %.1.lcssa.i, %13 ; 2 uses
-  %i.pb = icmp slt i32 %spec.select.i58, %.046.lcssa.i
+._crit_edge232.loopexit.i:                        ; preds = %bb.cp, %.lr.ph231.i.prol.loopexit
+  %.2.i67.lcssa = phi i32 [ %.2.i69.lcssa.unr, %.lr.ph231.i.prol.loopexit ], [ %.2.i69.1, %bb.cp ]
+  %.pre.i69 = add nsw i32 %.2.i67.lcssa, 1
+  br label %._crit_edge232.i
+
+._crit_edge232.i:                                 ; preds = %._crit_edge232.loopexit.i, %.preheader184.i
+  %spec.select.pre-phi.i = phi i32 [ %.pre.i69, %._crit_edge232.loopexit.i ], [ %storemerge79228.i, %.preheader184.i ] ; 2 uses
+  %i.pb = icmp slt i32 %spec.select.pre-phi.i, %.046.lcssa.i
   br i1 %i.pb, label %.preheader184.i, label %.preheader182.i, !llvm.loop !51
 
 .preheader182.i:                                  ; preds = %._crit_edge232.i, %.critedge.i

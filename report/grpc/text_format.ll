@@ -205,12 +205,12 @@ bb.a:
   br label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.lr.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
-  %.sroa.0.039 = phi i64 [ %0, %.lr.ph.i.preheader.lr.ph ], [ %i.ao, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ] ; 9 uses
+  %.sroa.0.039 = phi i64 [ %0, %.lr.ph.i.preheader.lr.ph ], [ %i.ao, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ] ; 8 uses
   %.sroa.10.038 = phi ptr [ %1, %.lr.ph.i.preheader.lr.ph ], [ %i.an, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ] ; 5 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.thread.i
-  %.02561.i = phi i64 [ %i.v, %.thread.i ], [ 0, %.lr.ph.i.preheader ] ; 12 uses
+  %.02561.i = phi i64 [ %i.v, %.thread.i ], [ 0, %.lr.ph.i.preheader ] ; 11 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.10.038, i64 %.02561.i ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !67    ; 3 uses
   %i.i = icmp slt i8 %i.h, 0
@@ -252,11 +252,9 @@ _ZN6google8protobuf12_GLOBAL__N_121DefinitelyNeedsEscapeEh.exit.i: ; preds = %.l
 
 _ZN6google8protobuf12_GLOBAL__N_121DefinitelyNeedsEscapeEh.exit.i._crit_edge: ; preds = %_ZN6google8protobuf12_GLOBAL__N_121DefinitelyNeedsEscapeEh.exit.i, %._crit_edge, %_ZN6google8protobuf12_GLOBAL__N_121DefinitelyNeedsEscapeEh.exit.preheader.i
   %.029.lcssa.i = phi i64 [ %.029.i54, %._crit_edge ], [ %umax.i, %_ZN6google8protobuf12_GLOBAL__N_121DefinitelyNeedsEscapeEh.exit.preheader.i ], [ %umax.i, %_ZN6google8protobuf12_GLOBAL__N_121DefinitelyNeedsEscapeEh.exit.i ]
-  %4 = sub nuw i64 %.029.lcssa.i, %.02561.i       ; 2 uses
-  %i.r = sub nuw i64 %.sroa.0.039, %.02561.i
-  %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.r, i64 %4)
-  %i.s = call noundef i64 @utf8_range_ValidPrefix(ptr noundef nonnull %i.g, i64 noundef %.sroa.speculated.i.i) ; 3 uses
-  %.not.i = icmp eq i64 %i.s, %4
+  %i.r = sub nuw i64 %.029.lcssa.i, %.02561.i     ; 2 uses
+  %i.s = call noundef i64 @utf8_range_ValidPrefix(ptr noundef nonnull %i.g, i64 noundef %i.r) ; 3 uses
+  %.not.i = icmp eq i64 %i.s, %i.r
   %i.t = add i64 %.02561.i, -1
   %i.u = add i64 %i.t, %i.s
   br i1 %.not.i, label %.thread.i, label %.thread51.split.loop.exit57.i
