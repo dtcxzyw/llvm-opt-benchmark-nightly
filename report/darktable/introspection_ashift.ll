@@ -205,11 +205,11 @@ vec.epilog.scalar.ph916:                          ; preds = %vec.epilog.scalar.p
   br i1 %.not372, label %bb.ao, label %.sink.split705
 
 .sink.split705:                                   ; preds = %._crit_edge478, %._crit_edge482
-  tail call void %6(ptr noundef %i.m, i32 noundef %2) #34
+  tail call void %6(ptr noundef %i.m, i32 noundef %2) #34, !callees !523
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.sink.split705, %._crit_edge478, %._crit_edge482
-  %i.aaf = tail call reassoc nsz arcp contract afn double %0(ptr noundef %i.m, ptr noundef nonnull %7) #34 ; 2 uses
+  %i.aaf = tail call reassoc nsz arcp contract afn double %0(ptr noundef %i.m, ptr noundef nonnull %7) #34, !callees !524 ; 2 uses
   %i.aag = fcmp reassoc nsz arcp contract afn olt double %i.aaf, %i.vp
   br i1 %i.aag, label %.preheader401, label %.preheader402
 

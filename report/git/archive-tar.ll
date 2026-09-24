@@ -204,7 +204,7 @@ write_if_needed.exit.i.i7.sink.split.i:           ; preds = %bb.w, %bb.v
   %.019.i.i9.ph.i = phi i64 [ %i.az, %bb.v ], [ %i.bw, %bb.w ]
   %.018.i.i10.ph.i = phi ptr [ %i.bb, %bb.v ], [ %i.by, %bb.w ]
   %i.ca = load ptr, ptr @write_block, align 8, !tbaa !61
-  call void %i.ca(ptr noundef nonnull @block) #10, !inline_history !88
+  call void %i.ca(ptr noundef nonnull @block) #10, !callees !62, !inline_history !88
   store i64 0, ptr @offset, align 8, !tbaa !27
   br label %write_if_needed.exit.i.i7.i
 
