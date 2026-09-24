@@ -204,7 +204,7 @@ bb.a:
   %i.y = load ptr, ptr %i.x, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 72
   %i.aa = load ptr, ptr %i.z, align 8
-  %i.ab = tail call i32 %i.aa(ptr noundef %1, i1 noundef zeroext false) #14, !inline_history !26 ; 2 uses
+  %i.ab = tail call i32 %i.aa(ptr noundef %1, i1 noundef zeroext false) #14, !inline_history !29 ; 2 uses
   %or.cond.i = icmp ult i32 %i.ab, 22
   tail call void @llvm.assume(i1 %or.cond.i)
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 156
@@ -607,7 +607,7 @@ bb.aj:                                            ; preds = %bb.ai, %.thread296.
   store i8 -1, ptr %i.ef, align 8
   %i.eg = getelementptr inbounds nuw i8, ptr %2, i64 193 ; 6 uses
   store i8 %i.al, ptr %i.eg, align 1
-  call void %.2293.i(ptr noundef nonnull %0, ptr noundef nonnull %i.i, ptr noundef nonnull %2, ptr noundef nonnull %i.eg) #14, !callees !31, !inline_history !27
+  call void %.2293.i(ptr noundef nonnull %0, ptr noundef nonnull %i.i, ptr noundef nonnull %2, ptr noundef nonnull %i.eg) #14, !callees !34, !inline_history !30
   %i.eh = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
   %i.ei = load i16, ptr %i.eh, align 8            ; 2 uses
   %i.ej = and i16 %i.ei, 512
@@ -619,11 +619,11 @@ bb.aj:                                            ; preds = %bb.ai, %.thread296.
   %i.el = and i16 %i.ek, -513
   store i16 %i.el, ptr %i.eh, align 8
   %i.em = load ptr, ptr %2, align 8
-  call void %i.em(ptr noundef nonnull %0, ptr noundef nonnull %i.i, ptr noundef nonnull %2, ptr noundef nonnull %i.eg) #14, !inline_history !27
+  call void %i.em(ptr noundef nonnull %0, ptr noundef nonnull %i.i, ptr noundef nonnull %2, ptr noundef nonnull %i.eg) #14, !inline_history !30
   %i.en = load i16, ptr %i.eh, align 8            ; 2 uses
   %i.eo = and i16 %i.en, 512
   %.not.i.i = icmp eq i16 %i.eo, 0
-  br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !28
+  br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !31
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.aj
   %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
@@ -1026,7 +1026,7 @@ bb.fs:                                            ; preds = %bb.fq
   %i.vo = load ptr, ptr %i.vn, align 8
   call fastcc void @gen_load(ptr noundef nonnull %0, ptr noundef %2, i32 noundef 2, ptr noundef %i.vo)
   %i.vp = load ptr, ptr %2, align 8
-  call void %i.vp(ptr noundef nonnull %0, ptr noundef nonnull %2) #14, !inline_history !29
+  call void %i.vp(ptr noundef nonnull %0, ptr noundef nonnull %2) #14, !inline_history !32
   br label %bb.fx
 
 bb.ft:                                            ; preds = %bb.fp
@@ -1054,7 +1054,7 @@ bb.fw:                                            ; preds = %bb.fv, %bb.fu, %bb.
   %i.vw = load ptr, ptr %i.vv, align 8
   call fastcc void @gen_load(ptr noundef nonnull %0, ptr noundef %2, i32 noundef 2, ptr noundef %i.vw)
   %i.vx = load ptr, ptr %2, align 8
-  call void %i.vx(ptr noundef nonnull %0, ptr noundef nonnull %2) #14, !inline_history !29
+  call void %i.vx(ptr noundef nonnull %0, ptr noundef nonnull %2) #14, !inline_history !32
   %i.vy = load ptr, ptr %i.vt, align 8
   call fastcc void @gen_writeback(ptr noundef nonnull %0, ptr noundef nonnull %2, i32 noundef 0, ptr noundef %i.vy)
   br label %bb.fx
@@ -1254,7 +1254,7 @@ bb.gt:                                            ; preds = %bb.gs
   %i.yz = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef nonnull %i.ys, i32 noundef 1, ptr noundef nonnull @.str.835, i32 noundef %i.yy) #14 ; 0 uses
   %i.za = add i64 %.015.i.i, 1                    ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.za, %i.yu
-  br i1 %exitcond.not.i.i, label %._crit_edge.i245.i, label %.lr.ph.i246.i, !llvm.loop !30
+  br i1 %exitcond.not.i.i, label %._crit_edge.i245.i, label %.lr.ph.i246.i, !llvm.loop !33
 
 ._crit_edge.i245.i:                               ; preds = %.lr.ph.i246.i, %bb.gt
   %i.zb = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef nonnull %i.ys, i32 noundef 1, ptr noundef nonnull @.str.836) #14 ; 0 uses
@@ -1657,7 +1657,7 @@ gen_lea_ss_ofs.exit.i:                            ; preds = %bb.g, %bb.d
   tail call void @tcg_gen_qemu_st_i64_chk(ptr noundef %i.w, ptr noundef %i.ab, i64 noundef range(i64 -2147483648, 2147483648) %i.y, i32 noundef %i.b, i32 noundef 1) #14
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 8
-  br i1 %exitcond.not.i, label %bb.h, label %bb.b, !llvm.loop !32
+  br i1 %exitcond.not.i, label %bb.h, label %bb.b, !llvm.loop !35
 
 bb.h:                                             ; preds = %gen_lea_ss_ofs.exit.i
   %i.ac = shl i32 -8, %i.b
@@ -1770,7 +1770,7 @@ gen_lea_ss_ofs.exit.i:                            ; preds = %bb.h, %bb.e
 bb.i:                                             ; preds = %gen_lea_ss_ofs.exit.i, %bb.b
   %i.ad = add nuw nsw i32 %.022.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ad, 8
-  br i1 %exitcond.not.i, label %bb.j, label %bb.b, !llvm.loop !33
+  br i1 %exitcond.not.i, label %bb.j, label %bb.b, !llvm.loop !36
 
 bb.j:                                             ; preds = %bb.i
   %i.ae = shl i32 8, %i.b
@@ -2173,7 +2173,7 @@ gen_lea_ss_ofs.exit82.i:                          ; preds = %bb.n, %bb.k
   tail call void @tcg_gen_qemu_st_i64_chk(ptr noundef %i.ak, ptr noundef %i.br, i64 noundef range(i64 -2147483648, 2147483648) %i.bo, i32 noundef %.0.i.i, i32 noundef 1) #14
   %i.bs = add nuw nsw i32 %.093.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bs, %i.aj
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !34
+  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !37
 
 .loopexit.i:                                      ; preds = %gen_lea_ss_ofs.exit82.i, %gen_lea_ss_ofs.exit.i
   %i.bt = load ptr, ptr %i.q, align 8             ; 7 uses
@@ -2576,18 +2576,18 @@ bb.i:                                             ; preds = %bb.f, %cc_op_size.e
   ]
 
 bb.j:                                             ; preds = %bb.i, %bb.i
-  %i.z = load ptr, ptr @cpu_cc_src2, align 8, !noalias !45
+  %i.z = load ptr, ptr @cpu_cc_src2, align 8, !noalias !48
   br label %gen_prepare_eflags_o.exit
 
 bb.k:                                             ; preds = %bb.i, %bb.i, %bb.i, %bb.i
-  %i.aa = load ptr, ptr @cpu_cc_src, align 8, !noalias !45
+  %i.aa = load ptr, ptr @cpu_cc_src, align 8, !noalias !48
   br label %gen_prepare_eflags_o.exit
 
 bb.l:                                             ; preds = %bb.i
-  %i.ab = load ptr, ptr @cpu_cc_src, align 8, !noalias !45
-  tail call fastcc void @gen_mov_eflags(ptr noundef nonnull %1, ptr noundef %i.ab), !noalias !45
-  tail call fastcc void @set_cc_op_1(ptr noundef nonnull %1, i32 noundef 0, i1 noundef zeroext true), !noalias !45
-  %i.ac = load ptr, ptr @cpu_cc_src, align 8, !noalias !45
+  %i.ab = load ptr, ptr @cpu_cc_src, align 8, !noalias !48
+  tail call fastcc void @gen_mov_eflags(ptr noundef nonnull %1, ptr noundef %i.ab), !noalias !48
+  tail call fastcc void @set_cc_op_1(ptr noundef nonnull %1, i32 noundef 0, i1 noundef zeroext true), !noalias !48
+  %i.ac = load ptr, ptr @cpu_cc_src, align 8, !noalias !48
   br label %gen_prepare_eflags_o.exit
 
 gen_prepare_eflags_o.exit:                        ; preds = %bb.i, %bb.i, %bb.i, %bb.i, %bb.i, %bb.i, %bb.j, %bb.k, %bb.l
@@ -2657,31 +2657,31 @@ bb.m:                                             ; preds = %bb.f, %cc_op_size.e
 bb.n:                                             ; preds = %bb.m, %bb.m, %bb.m, %bb.m
   %i.ae = add nsw i32 %i.e, -16                   ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 2 uses
-  %i.ag = load ptr, ptr %i.af, align 8, !noalias !46 ; 2 uses
+  %i.ag = load ptr, ptr %i.af, align 8, !noalias !49 ; 2 uses
   tail call void @tcg_gen_ext_i64(ptr noundef %i.ag, ptr noundef %i.ag, i32 noundef %i.ae) #14
-  %i.ah = load ptr, ptr @cpu_cc_src, align 8, !noalias !46 ; 2 uses
+  %i.ah = load ptr, ptr @cpu_cc_src, align 8, !noalias !49 ; 2 uses
   tail call void @tcg_gen_ext_i64(ptr noundef %i.ah, ptr noundef %i.ah, i32 noundef %i.ae) #14
-  %i.ai = load ptr, ptr %i.af, align 8, !noalias !46
-  %i.aj = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.ai = load ptr, ptr %i.af, align 8, !noalias !49
+  %i.aj = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   br label %gen_prepare_eflags_c.exit
 
 cc_op_size.exit.i:                                ; preds = %bb.m, %bb.m, %bb.m, %bb.m
   %i.ak = and i32 %i.e, 3                         ; 2 uses
-  %i.al = load ptr, ptr @cpu_cc_dst, align 8, !noalias !46 ; 2 uses
+  %i.al = load ptr, ptr @cpu_cc_dst, align 8, !noalias !49 ; 2 uses
   tail call void @tcg_gen_ext_i64(ptr noundef %i.al, ptr noundef %i.al, i32 noundef %i.ak) #14
-  %i.am = load ptr, ptr @cpu_cc_src, align 8, !noalias !46 ; 2 uses
+  %i.am = load ptr, ptr @cpu_cc_src, align 8, !noalias !49 ; 2 uses
   tail call void @tcg_gen_ext_i64(ptr noundef %i.am, ptr noundef %i.am, i32 noundef %i.ak) #14
-  %i.an = load ptr, ptr @cpu_cc_dst, align 8, !noalias !46
-  %i.ao = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.an = load ptr, ptr @cpu_cc_dst, align 8, !noalias !49
+  %i.ao = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   br label %gen_prepare_eflags_c.exit
 
 bb.o:                                             ; preds = %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m
-  %i.ap = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.ap = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   br label %gen_prepare_eflags_c.exit
 
 cc_op_size.exit21.i:                              ; preds = %bb.m, %bb.m, %bb.m, %bb.m
   %i.aq = and i32 %i.e, 3                         ; 2 uses
-  %i.ar = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.ar = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   %i.as = icmp eq i32 %i.aq, 3                    ; 2 uses
   %i.at = shl nuw nsw i32 8, %i.aq
   %i.au = add nsw i32 %i.at, -1
@@ -2692,12 +2692,12 @@ cc_op_size.exit21.i:                              ; preds = %bb.m, %bb.m, %bb.m,
   br label %gen_prepare_eflags_c.exit
 
 bb.p:                                             ; preds = %bb.m, %bb.m, %bb.m, %bb.m
-  %i.ax = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.ax = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   br label %gen_prepare_eflags_c.exit
 
 cc_op_size.exit23.i:                              ; preds = %bb.m, %bb.m, %bb.m, %bb.m
   %i.ay = and i32 %i.e, 3                         ; 2 uses
-  %i.az = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.az = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   %i.ba = icmp eq i32 %i.ay, 3                    ; 2 uses
   %.neg.i.i = shl nsw i32 -8, %i.ay
   %i.bb = add nsw i32 %.neg.i.i, 64
@@ -2709,7 +2709,7 @@ cc_op_size.exit23.i:                              ; preds = %bb.m, %bb.m, %bb.m,
 
 cc_op_size.exit26.i:                              ; preds = %bb.m, %bb.m, %bb.m, %bb.m
   %i.be = and i32 %i.e, 3                         ; 2 uses
-  %i.bf = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.bf = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   %i.bg = icmp eq i32 %i.be, 3                    ; 2 uses
   %.neg.i27.i = shl nsw i32 -8, %i.be
   %i.bh = add nsw i32 %.neg.i27.i, 64
@@ -2720,27 +2720,27 @@ cc_op_size.exit26.i:                              ; preds = %bb.m, %bb.m, %bb.m,
   br label %gen_prepare_eflags_c.exit
 
 bb.q:                                             ; preds = %bb.m
-  %i.bk = load ptr, ptr @cpu_cc_dst, align 8, !noalias !46
+  %i.bk = load ptr, ptr @cpu_cc_dst, align 8, !noalias !49
   br label %gen_prepare_eflags_c.exit
 
 bb.r:                                             ; preds = %bb.m, %bb.m
-  %i.bl = load ptr, ptr @cpu_cc_dst, align 8, !noalias !46
+  %i.bl = load ptr, ptr @cpu_cc_dst, align 8, !noalias !49
   br label %gen_prepare_eflags_c.exit
 
 bb.s:                                             ; preds = %bb.m, %bb.m, %bb.m, %bb.m, %bb.m
-  %i.bm = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
+  %i.bm = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
   br label %gen_prepare_eflags_c.exit
 
 bb.t:                                             ; preds = %bb.m
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 151 ; 2 uses
-  %i.bo = load i8, ptr %i.bn, align 1, !range !18, !noalias !46, !noundef !19
+  %i.bo = load i8, ptr %i.bn, align 1, !range !18, !noalias !49, !noundef !19
   %i.bp = trunc nuw i8 %i.bo to i1
   br i1 %i.bp, label %bb.u, label %gen_update_cc_op.exit.i
 
 bb.u:                                             ; preds = %bb.t
-  %i.bq = load ptr, ptr @cpu_cc_op, align 8, !noalias !46
+  %i.bq = load ptr, ptr @cpu_cc_op, align 8, !noalias !49
   tail call void @tcg_gen_movi_i32(ptr noundef %i.bq, i32 noundef %i.e) #14
-  store i8 0, ptr %i.bn, align 1, !noalias !46
+  store i8 0, ptr %i.bn, align 1, !noalias !49
   br label %gen_update_cc_op.exit.i
 
 gen_update_cc_op.exit.i:                          ; preds = %bb.u, %bb.t
@@ -2753,13 +2753,13 @@ bb.v:                                             ; preds = %gen_update_cc_op.ex
 
 bb.w:                                             ; preds = %bb.v, %gen_update_cc_op.exit.i
   %.0.i = phi ptr [ %3, %gen_update_cc_op.exit.i ], [ %i.br, %bb.v ] ; 2 uses
-  %i.bs = load ptr, ptr @cpu_cc_dst, align 8, !noalias !46
-  %i.bt = load ptr, ptr @cpu_cc_src, align 8, !noalias !46
-  %i.bu = load ptr, ptr @cpu_cc_src2, align 8, !noalias !46
-  %i.bv = load ptr, ptr @cpu_cc_op, align 8, !noalias !46
-  %i.bw = load ptr, ptr @helper_info_cc_compute_c, align 8, !noalias !46
+  %i.bs = load ptr, ptr @cpu_cc_dst, align 8, !noalias !49
+  %i.bt = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
+  %i.bu = load ptr, ptr @cpu_cc_src2, align 8, !noalias !49
+  %i.bv = load ptr, ptr @cpu_cc_op, align 8, !noalias !49
+  %i.bw = load ptr, ptr @helper_info_cc_compute_c, align 8, !noalias !49
   %i.bx = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
-  %i.by = load ptr, ptr %i.bx, align 8, !noalias !46 ; 5 uses
+  %i.by = load ptr, ptr %i.bx, align 8, !noalias !49 ; 5 uses
   %i.bz = ptrtoint ptr %.0.i to i64
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.bz
   %i.cb = ptrtoint ptr %i.bs to i64
@@ -2803,19 +2803,19 @@ gen_prepare_eflags_c.exit:                        ; preds = %bb.m, %bb.m, %bb.m,
   ]
 
 bb.x:                                             ; preds = %.thread182, %.thread182, %.thread182, %.thread182
-  %i.cj = load ptr, ptr @cpu_cc_src, align 8, !noalias !47
+  %i.cj = load ptr, ptr @cpu_cc_src, align 8, !noalias !50
   br label %gen_prepare_eflags_z.exit
 
 bb.y:                                             ; preds = %.thread182
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 151 ; 2 uses
-  %i.cl = load i8, ptr %i.ck, align 1, !range !18, !noalias !47, !noundef !19
+  %i.cl = load i8, ptr %i.ck, align 1, !range !18, !noalias !50, !noundef !19
   %i.cm = trunc nuw i8 %i.cl to i1
   br i1 %i.cm, label %bb.z, label %gen_update_cc_op.exit.i100
 
 bb.z:                                             ; preds = %bb.y
-  %i.cn = load ptr, ptr @cpu_cc_op, align 8, !noalias !47
-  tail call void @tcg_gen_movi_i32(ptr noundef %i.cn, i32 noundef 60) #14, !noalias !47
-  store i8 0, ptr %i.ck, align 1, !noalias !47
+  %i.cn = load ptr, ptr @cpu_cc_op, align 8, !noalias !50
+  tail call void @tcg_gen_movi_i32(ptr noundef %i.cn, i32 noundef 60) #14, !noalias !50
+  store i8 0, ptr %i.ck, align 1, !noalias !50
   br label %gen_update_cc_op.exit.i100
 
 gen_update_cc_op.exit.i100:                       ; preds = %bb.z, %bb.y
@@ -2823,17 +2823,17 @@ gen_update_cc_op.exit.i100:                       ; preds = %bb.z, %bb.y
   br i1 %.not.i101, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %gen_update_cc_op.exit.i100
-  %i.co = tail call ptr @tcg_temp_new_i64() #14, !noalias !47
+  %i.co = tail call ptr @tcg_temp_new_i64() #14, !noalias !50
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %gen_update_cc_op.exit.i100
   %.0.i102 = phi ptr [ %3, %gen_update_cc_op.exit.i100 ], [ %i.co, %bb.aa ] ; 2 uses
-  %i.cp = load ptr, ptr @cpu_cc_dst, align 8, !noalias !47
-  %i.cq = load ptr, ptr @cpu_cc_src, align 8, !noalias !47
-  %i.cr = load ptr, ptr @cpu_cc_op, align 8, !noalias !47
-  %i.cs = load ptr, ptr @helper_info_cc_compute_nz, align 8, !noalias !47
+  %i.cp = load ptr, ptr @cpu_cc_dst, align 8, !noalias !50
+  %i.cq = load ptr, ptr @cpu_cc_src, align 8, !noalias !50
+  %i.cr = load ptr, ptr @cpu_cc_op, align 8, !noalias !50
+  %i.cs = load ptr, ptr @helper_info_cc_compute_nz, align 8, !noalias !50
   %i.ct = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
-  %i.cu = load ptr, ptr %i.ct, align 8, !noalias !47 ; 4 uses
+  %i.cu = load ptr, ptr %i.ct, align 8, !noalias !50 ; 4 uses
   %i.cv = ptrtoint ptr %.0.i102 to i64
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.cv
   %i.cx = ptrtoint ptr %i.cp to i64
@@ -2842,11 +2842,11 @@ bb.ab:                                            ; preds = %bb.aa, %gen_update_
   %i.da = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.cz
   %i.db = ptrtoint ptr %i.cr to i64
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.db
-  tail call void @tcg_gen_call3(ptr noundef %i.cs, ptr noundef nonnull @helper_info_cc_compute_nz, ptr noundef %i.cw, ptr noundef %i.cy, ptr noundef %i.da, ptr noundef %i.dc) #14, !noalias !47
+  tail call void @tcg_gen_call3(ptr noundef %i.cs, ptr noundef nonnull @helper_info_cc_compute_nz, ptr noundef %i.cw, ptr noundef %i.cy, ptr noundef %i.da, ptr noundef %i.dc) #14, !noalias !50
   br label %gen_prepare_eflags_z.exit
 
 bb.ac:                                            ; preds = %.thread182
-  %i.dd = load ptr, ptr @cpu_cc_dst, align 8, !noalias !47
+  %i.dd = load ptr, ptr @cpu_cc_dst, align 8, !noalias !50
   br label %gen_prepare_eflags_z.exit
 
 bb.ad:                                            ; preds = %.thread182
@@ -2855,13 +2855,13 @@ bb.ad:                                            ; preds = %.thread182
   br i1 %or.cond.i.i, label %cc_op_size.exit.i103, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  tail call void @__assert_fail(ptr noundef nonnull @.str.804, ptr noundef nonnull @.str.805, i32 noundef 1634, ptr noundef nonnull @__PRETTY_FUNCTION__.cc_op_size) #16, !noalias !47
+  tail call void @__assert_fail(ptr noundef nonnull @.str.804, ptr noundef nonnull @.str.805, i32 noundef 1634, ptr noundef nonnull @__PRETTY_FUNCTION__.cc_op_size) #16, !noalias !50
   unreachable
 
 cc_op_size.exit.i103:                             ; preds = %.thread193, %bb.ad
   %.088185192196 = phi i32 [ %i.u, %.thread193 ], [ %i.a, %bb.ad ]
   %i.df = and i32 %i.e, 3                         ; 2 uses
-  %i.dg = load ptr, ptr @cpu_cc_dst, align 8, !noalias !47
+  %i.dg = load ptr, ptr @cpu_cc_dst, align 8, !noalias !50
   %i.dh = icmp eq i32 %i.df, 3                    ; 2 uses
   %.neg.i.i104 = shl nsw i32 -8, %i.df
   %i.di = add nsw i32 %.neg.i.i104, 64
@@ -2922,13 +2922,13 @@ bb.af:                                            ; preds = %bb.h
   ]
 
 bb.ag:                                            ; preds = %.thread186
-  %i.dn = load ptr, ptr @cpu_cc_src, align 8, !noalias !48
-  tail call fastcc void @gen_mov_eflags(ptr noundef nonnull %1, ptr noundef %i.dn), !noalias !48
-  tail call fastcc void @set_cc_op_1(ptr noundef nonnull %1, i32 noundef 0, i1 noundef zeroext true), !noalias !48
+  %i.dn = load ptr, ptr @cpu_cc_src, align 8, !noalias !51
+  tail call fastcc void @gen_mov_eflags(ptr noundef nonnull %1, ptr noundef %i.dn), !noalias !51
+  tail call fastcc void @set_cc_op_1(ptr noundef nonnull %1, i32 noundef 0, i1 noundef zeroext true), !noalias !51
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %.thread186, %.thread186, %.thread186, %.thread186
-  %i.do = load ptr, ptr @cpu_cc_src, align 8, !noalias !48
+  %i.do = load ptr, ptr @cpu_cc_src, align 8, !noalias !51
   br label %gen_prepare_eflags_s.exit
 
 bb.ai:                                            ; preds = %.thread186
@@ -2937,11 +2937,11 @@ bb.ai:                                            ; preds = %.thread186
   br i1 %or.cond.i.i107, label %cc_op_size.exit.i108, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  tail call void @__assert_fail(ptr noundef nonnull @.str.804, ptr noundef nonnull @.str.805, i32 noundef 1634, ptr noundef nonnull @__PRETTY_FUNCTION__.cc_op_size) #16, !noalias !48
+  tail call void @__assert_fail(ptr noundef nonnull @.str.804, ptr noundef nonnull @.str.805, i32 noundef 1634, ptr noundef nonnull @__PRETTY_FUNCTION__.cc_op_size) #16, !noalias !51
   unreachable
 
 cc_op_size.exit.i108:                             ; preds = %bb.ai
-  %i.dq = load ptr, ptr @cpu_cc_dst, align 8, !noalias !48
+  %i.dq = load ptr, ptr @cpu_cc_dst, align 8, !noalias !51
   %i.dr = and i32 %i.e, 3                         ; 2 uses
   %i.ds = icmp eq i32 %i.dr, 3                    ; 2 uses
   %i.dt = shl nuw nsw i32 8, %i.dr
@@ -2970,10 +2970,10 @@ gen_prepare_eflags_s.exit:                        ; preds = %.thread186, %bb.ah,
   br label %bb.ar
 
 bb.ak:                                            ; preds = %bb.f, %cc_op_size.exit, %bb.h
-  %i.dx = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
-  tail call fastcc void @gen_mov_eflags(ptr noundef nonnull %1, ptr noundef %i.dx), !noalias !49
-  tail call fastcc void @set_cc_op_1(ptr noundef nonnull %1, i32 noundef 0, i1 noundef zeroext true), !noalias !49
-  %i.dy = load ptr, ptr @cpu_cc_src, align 8, !noalias !49
+  %i.dx = load ptr, ptr @cpu_cc_src, align 8, !noalias !52
+  tail call fastcc void @gen_mov_eflags(ptr noundef nonnull %1, ptr noundef %i.dx), !noalias !52
+  tail call fastcc void @set_cc_op_1(ptr noundef nonnull %1, i32 noundef 0, i1 noundef zeroext true), !noalias !52
+  %i.dy = load ptr, ptr @cpu_cc_src, align 8, !noalias !52
   store i32 13, ptr %0, align 8
   %.sroa.4.0..sroa_idx111 = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %.sroa.4.0..sroa_idx111, align 4
@@ -3376,7 +3376,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   tail call void @gen_set_label(ptr noundef %i.h) #14
-  tail call void %2(ptr noundef nonnull %0, i32 noundef %1, ptr noundef %i.a) #14, !inline_history !50
+  tail call void %2(ptr noundef nonnull %0, i32 noundef %1, ptr noundef %i.a) #14, !inline_history !53
   %i.am = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cpu_regs, i64 8), align 8
   tail call void @tcg_gen_mov_i64(ptr noundef %i.am, ptr noundef %i.o) #14
   %i.an = load i8, ptr %i.z, align 1, !range !18, !noundef !19
@@ -3470,7 +3470,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %bb.q
   tail call void @gen_set_label(ptr noundef %i.g) #14
   tail call fastcc void @set_cc_op_1(ptr noundef nonnull %0, i32 noundef 60, i1 noundef zeroext false)
-  tail call void %2(ptr noundef nonnull %0, i32 noundef %1, ptr noundef %i.a) #14, !inline_history !50
+  tail call void %2(ptr noundef nonnull %0, i32 noundef %1, ptr noundef %i.a) #14, !inline_history !53
   %i.bq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cpu_regs, i64 8), align 8
   tail call void @tcg_gen_mov_i64(ptr noundef %i.bq, ptr noundef %i.o) #14
   %i.br = load i8, ptr %i.z, align 1, !range !18, !noundef !19
@@ -3873,7 +3873,7 @@ bb.a:
   %i.i = select i1 %.not10, ptr %i.d, ptr %i.e
   %i.j = load ptr, ptr @tcg_env, align 8
   %i.k = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.i(ptr noundef %i.a, ptr noundef %i.j, ptr noundef %i.k) #14, !callees !51
+  tail call void %i.i(ptr noundef %i.a, ptr noundef %i.j, ptr noundef %i.k) #14, !callees !54
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.m = load ptr, ptr %i.l, align 8
   tail call void @tcg_gen_extu_i32_i64(ptr noundef %i.m, ptr noundef %i.a) #14
@@ -4276,7 +4276,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.n = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.o = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.l(ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o, ptr noundef %i.d) #14, !callees !52
+  tail call void %i.l(ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o, ptr noundef %i.d) #14, !callees !55
   ret void
 }
 
@@ -4679,7 +4679,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.aa = icmp samesign ugt i64 %indvars.iv, 16
-  br i1 %i.aa, label %.lr.ph, label %._crit_edge, !llvm.loop !53
+  br i1 %i.aa, label %.lr.ph, label %._crit_edge, !llvm.loop !56
 
 ._crit_edge:                                      ; preds = %bb.g, %xmm_offset.exit
   ret void
@@ -5082,7 +5082,7 @@ bb.e:                                             ; preds = %bb.a
   %i.y = load ptr, ptr @tcg_env, align 8
   %i.z = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 2)
   %..i = select i1 %.not.i, ptr @gen_helper_cvttss2si, ptr @gen_helper_cvttsd2si
-  tail call void %..i(ptr noundef %i.u, ptr noundef %i.y, ptr noundef %i.z) #14, !inline_history !2
+  tail call void %..i(ptr noundef %i.u, ptr noundef %i.y, ptr noundef %i.z) #14, !callees !23, !inline_history !2
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void @tcg_gen_extu_i32_i64(ptr noundef %i.ab, ptr noundef %i.u) #14
@@ -5200,7 +5200,7 @@ bb.e:                                             ; preds = %bb.a
   %i.y = load ptr, ptr @tcg_env, align 8
   %i.z = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 2)
   %..i = select i1 %.not.i, ptr @gen_helper_cvtss2si, ptr @gen_helper_cvtsd2si
-  tail call void %..i(ptr noundef %i.u, ptr noundef %i.y, ptr noundef %i.z) #14, !inline_history !2
+  tail call void %..i(ptr noundef %i.u, ptr noundef %i.y, ptr noundef %i.z) #14, !callees !23, !inline_history !2
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void @tcg_gen_extu_i32_i64(ptr noundef %i.ab, ptr noundef %i.u) #14
@@ -5253,7 +5253,7 @@ bb.a:
   %i.e = load ptr, ptr @tcg_env, align 8
   %i.f = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.g = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g) #14, !callees !54
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g) #14, !callees !57
   tail call fastcc void @set_cc_op_1(ptr noundef %0, i32 noundef 0, i1 noundef zeroext false)
   ret void
 }
@@ -5269,7 +5269,7 @@ bb.a:
   %i.e = load ptr, ptr @tcg_env, align 8
   %i.f = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.g = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g) #14, !callees !55
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g) #14, !callees !58
   tail call fastcc void @set_cc_op_1(ptr noundef %0, i32 noundef 0, i1 noundef zeroext false)
   ret void
 }
@@ -5420,7 +5420,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.j = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.f(ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !57, !inline_history !56
+  tail call void %i.f(ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !60, !inline_history !59
   br label %gen_unary_fp_sse.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -5435,7 +5435,7 @@ bb.c:                                             ; preds = %bb.a
   %i.q = load ptr, ptr @tcg_env, align 8
   %i.r = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.s = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.p(ptr noundef %i.q, ptr noundef %i.r, ptr noundef %i.s) #14, !callees !58, !inline_history !56
+  tail call void %i.p(ptr noundef %i.q, ptr noundef %i.r, ptr noundef %i.s) #14, !callees !61, !inline_history !59
   br label %gen_unary_fp_sse.exit
 
 gen_unary_fp_sse.exit:                            ; preds = %bb.b, %bb.c
@@ -5484,7 +5484,7 @@ bb.d:                                             ; preds = %bb.b
   %i.x = load ptr, ptr @tcg_env, align 8
   %i.y = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.z = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.w(ptr noundef %i.x, ptr noundef %i.y, ptr noundef %i.z) #14, !callees !23, !inline_history !3
+  tail call void %i.w(ptr noundef %i.x, ptr noundef %i.y, ptr noundef %i.z) #14, !callees !24, !inline_history !3
   br label %gen_unary_fp32_sse.exit
 
 bb.e:                                             ; preds = %bb.a
@@ -5563,7 +5563,7 @@ bb.d:                                             ; preds = %bb.b
   %i.x = load ptr, ptr @tcg_env, align 8
   %i.y = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.z = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
-  tail call void %i.w(ptr noundef %i.x, ptr noundef %i.y, ptr noundef %i.z) #14, !callees !23, !inline_history !3
+  tail call void %i.w(ptr noundef %i.x, ptr noundef %i.y, ptr noundef %i.z) #14, !callees !24, !inline_history !3
   br label %gen_unary_fp32_sse.exit
 
 bb.e:                                             ; preds = %bb.a
@@ -5966,7 +5966,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.g = load ptr, ptr %i.f, align 8
   %..i = select i1 %.not.i, ptr @gen_helper_vpmaskmovd_st_xmm, ptr @gen_helper_vpmaskmovd_st_ymm
-  tail call void %..i(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.g) #14, !inline_history !6
+  tail call void %..i(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.g) #14, !callees !25, !inline_history !6
   ret void
 }
 
@@ -5982,7 +5982,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.g = load ptr, ptr %i.f, align 8
   %..i = select i1 %.not.i, ptr @gen_helper_vpmaskmovq_st_xmm, ptr @gen_helper_vpmaskmovq_st_ymm
-  tail call void %..i(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.g) #14, !inline_history !6
+  tail call void %..i(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.g) #14, !callees !25, !inline_history !6
   ret void
 }
 
@@ -6385,7 +6385,7 @@ bb.a:
   %..i.i6 = select i1 %.not.i.i, ptr @gen_helper_vpmaskmovd_st_xmm, ptr @gen_helper_vpmaskmovd_st_ymm
   %..i.i = select i1 %.not.i.i, ptr @gen_helper_vpmaskmovq_st_xmm, ptr @gen_helper_vpmaskmovq_st_ymm
   %..i.i6.sink = select i1 %i.c, ptr %..i.i, ptr %..i.i6
-  tail call void %..i.i6.sink(ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.j) #14
+  tail call void %..i.i6.sink(ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.j) #14, !callees !25
   ret void
 }
 
@@ -6422,7 +6422,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6445,7 +6445,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6468,7 +6468,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6485,7 +6485,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6508,7 +6508,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6525,7 +6525,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6548,7 +6548,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 2) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6565,7 +6565,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 2) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6588,7 +6588,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 3) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6605,7 +6605,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 1)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 3) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6628,7 +6628,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6651,7 +6651,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6674,7 +6674,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6691,7 +6691,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6714,7 +6714,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6731,7 +6731,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6754,7 +6754,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 2) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6771,7 +6771,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 2) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6794,7 +6794,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 3) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6811,7 +6811,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 3) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6834,7 +6834,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6857,7 +6857,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6880,7 +6880,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6897,7 +6897,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6920,7 +6920,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6937,7 +6937,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 1) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -6960,7 +6960,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 2) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -6977,7 +6977,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 2) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -7000,7 +7000,7 @@ bb.a:
   %i.m = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.n = tail call ptr @tcg_constant_i32(i32 noundef 3) #14
   %i.o = tail call ptr @tcg_constant_i32(i32 noundef 0) #14
-  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !24
+  tail call void %i.h(ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.k, ptr noundef %i.l, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #14, !callees !26
   ret void
 }
 
@@ -7017,7 +7017,7 @@ bb.a:
   %i.h = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 2)
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef %1, i32 noundef 0)
   %i.j = tail call ptr @tcg_constant_i32(i32 noundef 3) #14
-  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !25
+  tail call void %i.d(ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g, ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j) #14, !callees !27
   ret void
 }
 
@@ -7420,7 +7420,7 @@ bb.a:
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 0)
   %i.j = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 1)
   %..i = select i1 %.not.i, ptr @gen_helper_roundps_xmm, ptr @gen_helper_roundps_ymm
-  tail call void %..i(ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.e) #14, !inline_history !9
+  tail call void %..i(ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.e) #14, !callees !28, !inline_history !9
   ret void
 }
 
@@ -7439,7 +7439,7 @@ bb.a:
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 0)
   %i.j = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 1)
   %..i = select i1 %.not.i, ptr @gen_helper_roundpd_xmm, ptr @gen_helper_roundpd_ymm
-  tail call void %..i(ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.e) #14, !inline_history !9
+  tail call void %..i(ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.e) #14, !callees !28, !inline_history !9
   ret void
 }
 
@@ -7842,7 +7842,7 @@ bb.a:
   %i.i = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 0)
   %i.j = tail call fastcc ptr @op_ptr(ptr noundef nonnull %1, i32 noundef 1)
   %..i = select i1 %.not.i, ptr @gen_helper_cvtps2ph_xmm, ptr @gen_helper_cvtps2ph_ymm
-  tail call void %..i(ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.e) #14, !inline_history !9
+  tail call void %..i(ptr noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.e) #14, !callees !28, !inline_history !9
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.l = load i8, ptr %i.k, align 4, !range !18, !noundef !19
   %i.m = trunc nuw i8 %i.l to i1
@@ -8245,40 +8245,43 @@ attributes #16 = { noreturn nounwind }
 !20 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !21 = !{!"llvm.loop.mustprogress"}
 !22 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!23 = !{ptr @gen_helper_rcpps_xmm, ptr @gen_helper_rcpps_ymm, ptr @gen_helper_rsqrtps_xmm, ptr @gen_helper_rsqrtps_ymm}
-!24 = !{ptr @gen_helper_fma4pd_xmm, ptr @gen_helper_fma4pd_ymm, ptr @gen_helper_fma4ps_xmm, ptr @gen_helper_fma4ps_ymm}
-!25 = !{ptr @gen_helper_fma4sd, ptr @gen_helper_fma4ss}
-!26 = distinct !{null}
-!27 = distinct !{null, null}
-!28 = distinct !{!28, !21}
+!23 = !{ptr @gen_helper_cvtss2si, ptr @gen_helper_cvttss2si, ptr @gen_helper_cvtsd2si, ptr @gen_helper_cvttsd2si}
+!24 = !{ptr @gen_helper_rcpps_xmm, ptr @gen_helper_rcpps_ymm, ptr @gen_helper_rsqrtps_xmm, ptr @gen_helper_rsqrtps_ymm}
+!25 = !{ptr @gen_helper_vpmaskmovd_st_ymm, ptr @gen_helper_vpmaskmovq_st_ymm, ptr @gen_helper_vpmaskmovd_st_xmm, ptr @gen_helper_vpmaskmovq_st_xmm}
+!26 = !{ptr @gen_helper_fma4pd_xmm, ptr @gen_helper_fma4pd_ymm, ptr @gen_helper_fma4ps_xmm, ptr @gen_helper_fma4ps_ymm}
+!27 = !{ptr @gen_helper_fma4sd, ptr @gen_helper_fma4ss}
+!28 = !{ptr @gen_helper_cvtps2ph_ymm, ptr @gen_helper_roundpd_ymm, ptr @gen_helper_roundps_ymm, ptr @gen_helper_cvtps2ph_xmm, ptr @gen_helper_roundpd_xmm, ptr @gen_helper_roundps_xmm}
 !29 = distinct !{null}
-!30 = distinct !{!30, !21}
-!31 = !{ptr @decode_0F, ptr @decode_0F38, ptr @decode_0F3A, ptr @decode_root}
-!32 = distinct !{!32, !21}
+!30 = distinct !{null, null}
+!31 = distinct !{!31, !21}
+!32 = distinct !{null}
 !33 = distinct !{!33, !21}
-!34 = distinct !{!34, !21}
-!35 = distinct !{!35, !"gen_prepare_eflags_o"}
-!36 = distinct !{!36, !35, !"gen_prepare_eflags_o: argument 0"}
-!37 = distinct !{!37, !"gen_prepare_eflags_c"}
-!38 = distinct !{!38, !37, !"gen_prepare_eflags_c: argument 0"}
-!39 = distinct !{!39, !"gen_prepare_eflags_z"}
-!40 = distinct !{!40, !39, !"gen_prepare_eflags_z: argument 0"}
-!41 = distinct !{!41, !"gen_prepare_eflags_s"}
-!42 = distinct !{!42, !41, !"gen_prepare_eflags_s: argument 0"}
-!43 = distinct !{!43, !"gen_prepare_eflags_p"}
-!44 = distinct !{!44, !43, !"gen_prepare_eflags_p: argument 0"}
-!45 = !{!36}
-!46 = !{!38}
-!47 = !{!40}
-!48 = !{!42}
-!49 = !{!44}
-!50 = distinct !{null}
-!51 = !{ptr @gen_helper_movmskpd_xmm, ptr @gen_helper_movmskpd_ymm, ptr @gen_helper_movmskps_xmm, ptr @gen_helper_movmskps_ymm}
-!52 = !{ptr @gen_helper_shufpd_xmm, ptr @gen_helper_shufpd_ymm, ptr @gen_helper_shufps_xmm, ptr @gen_helper_shufps_ymm}
-!53 = distinct !{!53, !21}
-!54 = !{ptr @gen_helper_ucomisd, ptr @gen_helper_ucomiss}
-!55 = !{ptr @gen_helper_comisd, ptr @gen_helper_comiss}
-!56 = distinct !{null}
-!57 = !{ptr @gen_helper_sqrtsd, ptr @gen_helper_sqrtss}
-!58 = !{ptr @gen_helper_sqrtpd_xmm, ptr @gen_helper_sqrtpd_ymm, ptr @gen_helper_sqrtps_xmm, ptr @gen_helper_sqrtps_ymm}
+!34 = !{ptr @decode_0F, ptr @decode_0F38, ptr @decode_0F3A, ptr @decode_root}
+!35 = distinct !{!35, !21}
+!36 = distinct !{!36, !21}
+!37 = distinct !{!37, !21}
+!38 = distinct !{!38, !"gen_prepare_eflags_o"}
+!39 = distinct !{!39, !38, !"gen_prepare_eflags_o: argument 0"}
+!40 = distinct !{!40, !"gen_prepare_eflags_c"}
+!41 = distinct !{!41, !40, !"gen_prepare_eflags_c: argument 0"}
+!42 = distinct !{!42, !"gen_prepare_eflags_z"}
+!43 = distinct !{!43, !42, !"gen_prepare_eflags_z: argument 0"}
+!44 = distinct !{!44, !"gen_prepare_eflags_s"}
+!45 = distinct !{!45, !44, !"gen_prepare_eflags_s: argument 0"}
+!46 = distinct !{!46, !"gen_prepare_eflags_p"}
+!47 = distinct !{!47, !46, !"gen_prepare_eflags_p: argument 0"}
+!48 = !{!39}
+!49 = !{!41}
+!50 = !{!43}
+!51 = !{!45}
+!52 = !{!47}
+!53 = distinct !{null}
+!54 = !{ptr @gen_helper_movmskpd_xmm, ptr @gen_helper_movmskpd_ymm, ptr @gen_helper_movmskps_xmm, ptr @gen_helper_movmskps_ymm}
+!55 = !{ptr @gen_helper_shufpd_xmm, ptr @gen_helper_shufpd_ymm, ptr @gen_helper_shufps_xmm, ptr @gen_helper_shufps_ymm}
+!56 = distinct !{!56, !21}
+!57 = !{ptr @gen_helper_ucomisd, ptr @gen_helper_ucomiss}
+!58 = !{ptr @gen_helper_comisd, ptr @gen_helper_comiss}
+!59 = distinct !{null}
+!60 = !{ptr @gen_helper_sqrtsd, ptr @gen_helper_sqrtss}
+!61 = !{ptr @gen_helper_sqrtpd_xmm, ptr @gen_helper_sqrtpd_ymm, ptr @gen_helper_sqrtps_xmm, ptr @gen_helper_sqrtps_ymm}
 end_hunk_15

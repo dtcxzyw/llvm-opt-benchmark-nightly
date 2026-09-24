@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %.sink = phi ptr [ %i.a, %bb.b ], [ null, %.lr.ph ]
-  %i.h = call ptr %1(ptr noundef %.sink) #15      ; 4 uses
+  %i.h = call ptr %1(ptr noundef %.sink) #15, !callees !65 ; 4 uses
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !19   ; 3 uses
   %i.j = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(1) %i.i) #14
   %.not36 = icmp eq i32 %i.j, 0
@@ -439,4 +439,5 @@ attributes #18 = { nounwind willreturn memory(none) }
 !62 = !{!"double", !9, i64 0}
 !63 = !{!62, !62, i64 0}
 !64 = !{!54, !10, i64 28}
+!65 = distinct !{null, ptr @posix_dirname}
 end_hunk_0
