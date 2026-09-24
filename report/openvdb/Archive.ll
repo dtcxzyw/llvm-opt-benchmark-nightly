@@ -205,397 +205,394 @@ declare void @_ZN3tbb6detail2r17destroyERNS0_2d118task_group_contextE(ptr nounde
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr noundef i32 @_ZNK7openvdb5v13_04util8NodeMaskILj4EE11findFirstOnEv(ptr noundef nonnull align 8 dereferenceable(512) %0) local_unnamed_addr #7 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !83
+  %i.a = load i64, ptr %0, align 8, !tbaa !83     ; 2 uses
   %.not = icmp eq i64 %i.a, 0
   br i1 %.not, label %bb.b, label %.critedge.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !83
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !83   ; 2 uses
   %.not.1 = icmp eq i64 %i.c, 0
   br i1 %.not.1, label %bb.c, label %.critedge.thread
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !83
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !83   ; 2 uses
   %.not.2 = icmp eq i64 %i.e, 0
   br i1 %.not.2, label %bb.d, label %.critedge.thread
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !83
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !83   ; 2 uses
   %.not.3 = icmp eq i64 %i.g, 0
   br i1 %.not.3, label %bb.e, label %.critedge.thread
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !83
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !83   ; 2 uses
   %.not.4 = icmp eq i64 %i.i, 0
   br i1 %.not.4, label %bb.f, label %.critedge.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !83
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !83   ; 2 uses
   %.not.5 = icmp eq i64 %i.k, 0
   br i1 %.not.5, label %bb.g, label %.critedge.thread
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !83
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !83   ; 2 uses
   %.not.6 = icmp eq i64 %i.m, 0
   br i1 %.not.6, label %bb.h, label %.critedge.thread
 
 bb.h:                                             ; preds = %bb.g
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !83
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !83   ; 2 uses
   %.not.7 = icmp eq i64 %i.o, 0
   br i1 %.not.7, label %bb.i, label %.critedge.thread
 
 bb.i:                                             ; preds = %bb.h
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !83
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !83   ; 2 uses
   %.not.8 = icmp eq i64 %i.q, 0
   br i1 %.not.8, label %bb.j, label %.critedge.thread
 
 bb.j:                                             ; preds = %bb.i
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !83
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !83   ; 2 uses
   %.not.9 = icmp eq i64 %i.s, 0
   br i1 %.not.9, label %bb.k, label %.critedge.thread
 
 bb.k:                                             ; preds = %bb.j
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !83
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !83   ; 2 uses
   %.not.10 = icmp eq i64 %i.u, 0
   br i1 %.not.10, label %bb.l, label %.critedge.thread
 
 bb.l:                                             ; preds = %bb.k
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %i.w = load i64, ptr %i.v, align 8, !tbaa !83
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %i.w = load i64, ptr %i.v, align 8, !tbaa !83   ; 2 uses
   %.not.11 = icmp eq i64 %i.w, 0
   br i1 %.not.11, label %bb.m, label %.critedge.thread
 
 bb.m:                                             ; preds = %bb.l
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !83
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !83   ; 2 uses
   %.not.12 = icmp eq i64 %i.y, 0
   br i1 %.not.12, label %bb.n, label %.critedge.thread
 
 bb.n:                                             ; preds = %bb.m
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !83
+  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !83  ; 2 uses
   %.not.13 = icmp eq i64 %i.aa, 0
   br i1 %.not.13, label %bb.o, label %.critedge.thread
 
 bb.o:                                             ; preds = %bb.n
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !83
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !83 ; 2 uses
   %.not.14 = icmp eq i64 %i.ac, 0
   br i1 %.not.14, label %bb.p, label %.critedge.thread
 
 bb.p:                                             ; preds = %bb.o
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !83
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 120
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !83 ; 2 uses
   %.not.15 = icmp eq i64 %i.ae, 0
   br i1 %.not.15, label %bb.q, label %.critedge.thread
 
 bb.q:                                             ; preds = %bb.p
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %i.ag = load i64, ptr %i.af, align 8, !tbaa !83
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %i.ag = load i64, ptr %i.af, align 8, !tbaa !83 ; 2 uses
   %.not.16 = icmp eq i64 %i.ag, 0
   br i1 %.not.16, label %bb.r, label %.critedge.thread
 
 bb.r:                                             ; preds = %bb.q
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !83
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 136
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !83 ; 2 uses
   %.not.17 = icmp eq i64 %i.ai, 0
   br i1 %.not.17, label %bb.s, label %.critedge.thread
 
 bb.s:                                             ; preds = %bb.r
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !83
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !83 ; 2 uses
   %.not.18 = icmp eq i64 %i.ak, 0
   br i1 %.not.18, label %bb.t, label %.critedge.thread
 
 bb.t:                                             ; preds = %bb.s
-  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
-  %i.am = load i64, ptr %i.al, align 8, !tbaa !83
+  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 152
+  %i.am = load i64, ptr %i.al, align 8, !tbaa !83 ; 2 uses
   %.not.19 = icmp eq i64 %i.am, 0
   br i1 %.not.19, label %bb.u, label %.critedge.thread
 
 bb.u:                                             ; preds = %bb.t
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
-  %i.ao = load i64, ptr %i.an, align 8, !tbaa !83
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 160
+  %i.ao = load i64, ptr %i.an, align 8, !tbaa !83 ; 2 uses
   %.not.20 = icmp eq i64 %i.ao, 0
   br i1 %.not.20, label %bb.v, label %.critedge.thread
 
 bb.v:                                             ; preds = %bb.u
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
-  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !83
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !83 ; 2 uses
   %.not.21 = icmp eq i64 %i.aq, 0
   br i1 %.not.21, label %bb.w, label %.critedge.thread
 
 bb.w:                                             ; preds = %bb.v
-  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
-  %i.as = load i64, ptr %i.ar, align 8, !tbaa !83
+  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.as = load i64, ptr %i.ar, align 8, !tbaa !83 ; 2 uses
   %.not.22 = icmp eq i64 %i.as, 0
   br i1 %.not.22, label %bb.x, label %.critedge.thread
 
 bb.x:                                             ; preds = %bb.w
-  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !83
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 184
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !83 ; 2 uses
   %.not.23 = icmp eq i64 %i.au, 0
   br i1 %.not.23, label %bb.y, label %.critedge.thread
 
 bb.y:                                             ; preds = %bb.x
-  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
-  %i.aw = load i64, ptr %i.av, align 8, !tbaa !83
+  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 192
+  %i.aw = load i64, ptr %i.av, align 8, !tbaa !83 ; 2 uses
   %.not.24 = icmp eq i64 %i.aw, 0
   br i1 %.not.24, label %bb.z, label %.critedge.thread
 
 bb.z:                                             ; preds = %bb.y
-  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
-  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !83
+  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !83 ; 2 uses
   %.not.25 = icmp eq i64 %i.ay, 0
   br i1 %.not.25, label %bb.aa, label %.critedge.thread
 
 bb.aa:                                            ; preds = %bb.z
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !83
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !83 ; 2 uses
   %.not.26 = icmp eq i64 %i.ba, 0
   br i1 %.not.26, label %bb.ab, label %.critedge.thread
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
-  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !83
+  %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 216
+  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !83 ; 2 uses
   %.not.27 = icmp eq i64 %i.bc, 0
   br i1 %.not.27, label %bb.ac, label %.critedge.thread
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
-  %i.be = load i64, ptr %i.bd, align 8, !tbaa !83
+  %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 224
+  %i.be = load i64, ptr %i.bd, align 8, !tbaa !83 ; 2 uses
   %.not.28 = icmp eq i64 %i.be, 0
   br i1 %.not.28, label %bb.ad, label %.critedge.thread
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
-  %i.bg = load i64, ptr %i.bf, align 8, !tbaa !83
+  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 232
+  %i.bg = load i64, ptr %i.bf, align 8, !tbaa !83 ; 2 uses
   %.not.29 = icmp eq i64 %i.bg, 0
   br i1 %.not.29, label %bb.ae, label %.critedge.thread
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
-  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !83
+  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 240
+  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !83 ; 2 uses
   %.not.30 = icmp eq i64 %i.bi, 0
   br i1 %.not.30, label %bb.af, label %.critedge.thread
 
 bb.af:                                            ; preds = %bb.ae
-  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
-  %i.bk = load i64, ptr %i.bj, align 8, !tbaa !83
+  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 248
+  %i.bk = load i64, ptr %i.bj, align 8, !tbaa !83 ; 2 uses
   %.not.31 = icmp eq i64 %i.bk, 0
   br i1 %.not.31, label %bb.ag, label %.critedge.thread
 
 bb.ag:                                            ; preds = %bb.af
-  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
-  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !83
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 256
+  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !83 ; 2 uses
   %.not.32 = icmp eq i64 %i.bm, 0
   br i1 %.not.32, label %bb.ah, label %.critedge.thread
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !83
+  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 264
+  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !83 ; 2 uses
   %.not.33 = icmp eq i64 %i.bo, 0
   br i1 %.not.33, label %bb.ai, label %.critedge.thread
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
-  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !83
+  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 272
+  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !83 ; 2 uses
   %.not.34 = icmp eq i64 %i.bq, 0
   br i1 %.not.34, label %bb.aj, label %.critedge.thread
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.br = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
-  %i.bs = load i64, ptr %i.br, align 8, !tbaa !83
+  %i.br = getelementptr inbounds nuw i8, ptr %0, i64 280
+  %i.bs = load i64, ptr %i.br, align 8, !tbaa !83 ; 2 uses
   %.not.35 = icmp eq i64 %i.bs, 0
   br i1 %.not.35, label %bb.ak, label %.critedge.thread
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
-  %i.bu = load i64, ptr %i.bt, align 8, !tbaa !83
+  %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 288
+  %i.bu = load i64, ptr %i.bt, align 8, !tbaa !83 ; 2 uses
   %.not.36 = icmp eq i64 %i.bu, 0
   br i1 %.not.36, label %bb.al, label %.critedge.thread
 
 bb.al:                                            ; preds = %bb.ak
-  %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
-  %i.bw = load i64, ptr %i.bv, align 8, !tbaa !83
+  %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 296
+  %i.bw = load i64, ptr %i.bv, align 8, !tbaa !83 ; 2 uses
   %.not.37 = icmp eq i64 %i.bw, 0
   br i1 %.not.37, label %bb.am, label %.critedge.thread
 
 bb.am:                                            ; preds = %bb.al
-  %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
-  %i.by = load i64, ptr %i.bx, align 8, !tbaa !83
+  %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 304
+  %i.by = load i64, ptr %i.bx, align 8, !tbaa !83 ; 2 uses
   %.not.38 = icmp eq i64 %i.by, 0
   br i1 %.not.38, label %bb.an, label %.critedge.thread
 
 bb.an:                                            ; preds = %bb.am
-  %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
-  %i.ca = load i64, ptr %i.bz, align 8, !tbaa !83
+  %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 312
+  %i.ca = load i64, ptr %i.bz, align 8, !tbaa !83 ; 2 uses
   %.not.39 = icmp eq i64 %i.ca, 0
   br i1 %.not.39, label %bb.ao, label %.critedge.thread
 
 bb.ao:                                            ; preds = %bb.an
-  %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
-  %i.cc = load i64, ptr %i.cb, align 8, !tbaa !83
+  %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 320
+  %i.cc = load i64, ptr %i.cb, align 8, !tbaa !83 ; 2 uses
   %.not.40 = icmp eq i64 %i.cc, 0
   br i1 %.not.40, label %bb.ap, label %.critedge.thread
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 2 uses
-  %i.ce = load i64, ptr %i.cd, align 8, !tbaa !83
+  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 328
+  %i.ce = load i64, ptr %i.cd, align 8, !tbaa !83 ; 2 uses
   %.not.41 = icmp eq i64 %i.ce, 0
   br i1 %.not.41, label %bb.aq, label %.critedge.thread
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
-  %i.cg = load i64, ptr %i.cf, align 8, !tbaa !83
+  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 336
+  %i.cg = load i64, ptr %i.cf, align 8, !tbaa !83 ; 2 uses
   %.not.42 = icmp eq i64 %i.cg, 0
   br i1 %.not.42, label %bb.ar, label %.critedge.thread
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
-  %i.ci = load i64, ptr %i.ch, align 8, !tbaa !83
+  %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 344
+  %i.ci = load i64, ptr %i.ch, align 8, !tbaa !83 ; 2 uses
   %.not.43 = icmp eq i64 %i.ci, 0
   br i1 %.not.43, label %bb.as, label %.critedge.thread
 
 bb.as:                                            ; preds = %bb.ar
-  %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
-  %i.ck = load i64, ptr %i.cj, align 8, !tbaa !83
+  %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.ck = load i64, ptr %i.cj, align 8, !tbaa !83 ; 2 uses
   %.not.44 = icmp eq i64 %i.ck, 0
   br i1 %.not.44, label %bb.at, label %.critedge.thread
 
 bb.at:                                            ; preds = %bb.as
-  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
-  %i.cm = load i64, ptr %i.cl, align 8, !tbaa !83
+  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %i.cm = load i64, ptr %i.cl, align 8, !tbaa !83 ; 2 uses
   %.not.45 = icmp eq i64 %i.cm, 0
   br i1 %.not.45, label %bb.au, label %.critedge.thread
 
 bb.au:                                            ; preds = %bb.at
-  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 2 uses
-  %i.co = load i64, ptr %i.cn, align 8, !tbaa !83
+  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 368
+  %i.co = load i64, ptr %i.cn, align 8, !tbaa !83 ; 2 uses
   %.not.46 = icmp eq i64 %i.co, 0
   br i1 %.not.46, label %bb.av, label %.critedge.thread
 
 bb.av:                                            ; preds = %bb.au
-  %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 2 uses
-  %i.cq = load i64, ptr %i.cp, align 8, !tbaa !83
+  %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 376
+  %i.cq = load i64, ptr %i.cp, align 8, !tbaa !83 ; 2 uses
   %.not.47 = icmp eq i64 %i.cq, 0
   br i1 %.not.47, label %bb.aw, label %.critedge.thread
 
 bb.aw:                                            ; preds = %bb.av
-  %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
-  %i.cs = load i64, ptr %i.cr, align 8, !tbaa !83
+  %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %i.cs = load i64, ptr %i.cr, align 8, !tbaa !83 ; 2 uses
   %.not.48 = icmp eq i64 %i.cs, 0
   br i1 %.not.48, label %bb.ax, label %.critedge.thread
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
-  %i.cu = load i64, ptr %i.ct, align 8, !tbaa !83
+  %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 392
+  %i.cu = load i64, ptr %i.ct, align 8, !tbaa !83 ; 2 uses
   %.not.49 = icmp eq i64 %i.cu, 0
   br i1 %.not.49, label %bb.ay, label %.critedge.thread
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
-  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !83
+  %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 400
+  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !83 ; 2 uses
   %.not.50 = icmp eq i64 %i.cw, 0
   br i1 %.not.50, label %bb.az, label %.critedge.thread
 
 bb.az:                                            ; preds = %bb.ay
-  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 2 uses
-  %i.cy = load i64, ptr %i.cx, align 8, !tbaa !83
+  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 408
+  %i.cy = load i64, ptr %i.cx, align 8, !tbaa !83 ; 2 uses
   %.not.51 = icmp eq i64 %i.cy, 0
   br i1 %.not.51, label %bb.ba, label %.critedge.thread
 
 bb.ba:                                            ; preds = %bb.az
-  %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
-  %i.da = load i64, ptr %i.cz, align 8, !tbaa !83
+  %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 416
+  %i.da = load i64, ptr %i.cz, align 8, !tbaa !83 ; 2 uses
   %.not.52 = icmp eq i64 %i.da, 0
   br i1 %.not.52, label %bb.bb, label %.critedge.thread
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.db = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 2 uses
-  %i.dc = load i64, ptr %i.db, align 8, !tbaa !83
+  %i.db = getelementptr inbounds nuw i8, ptr %0, i64 424
+  %i.dc = load i64, ptr %i.db, align 8, !tbaa !83 ; 2 uses
   %.not.53 = icmp eq i64 %i.dc, 0
   br i1 %.not.53, label %bb.bc, label %.critedge.thread
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 2 uses
-  %i.de = load i64, ptr %i.dd, align 8, !tbaa !83
+  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 432
+  %i.de = load i64, ptr %i.dd, align 8, !tbaa !83 ; 2 uses
   %.not.54 = icmp eq i64 %i.de, 0
   br i1 %.not.54, label %bb.bd, label %.critedge.thread
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 440 ; 2 uses
-  %i.dg = load i64, ptr %i.df, align 8, !tbaa !83
+  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 440
+  %i.dg = load i64, ptr %i.df, align 8, !tbaa !83 ; 2 uses
   %.not.55 = icmp eq i64 %i.dg, 0
   br i1 %.not.55, label %bb.be, label %.critedge.thread
 
 bb.be:                                            ; preds = %bb.bd
-  %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 2 uses
-  %i.di = load i64, ptr %i.dh, align 8, !tbaa !83
+  %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 448
+  %i.di = load i64, ptr %i.dh, align 8, !tbaa !83 ; 2 uses
   %.not.56 = icmp eq i64 %i.di, 0
   br i1 %.not.56, label %bb.bf, label %.critedge.thread
 
 bb.bf:                                            ; preds = %bb.be
-  %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 2 uses
-  %i.dk = load i64, ptr %i.dj, align 8, !tbaa !83
+  %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 456
+  %i.dk = load i64, ptr %i.dj, align 8, !tbaa !83 ; 2 uses
   %.not.57 = icmp eq i64 %i.dk, 0
   br i1 %.not.57, label %bb.bg, label %.critedge.thread
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
-  %i.dm = load i64, ptr %i.dl, align 8, !tbaa !83
+  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 464
+  %i.dm = load i64, ptr %i.dl, align 8, !tbaa !83 ; 2 uses
   %.not.58 = icmp eq i64 %i.dm, 0
   br i1 %.not.58, label %bb.bh, label %.critedge.thread
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
-  %i.do = load i64, ptr %i.dn, align 8, !tbaa !83
+  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %i.do = load i64, ptr %i.dn, align 8, !tbaa !83 ; 2 uses
   %.not.59 = icmp eq i64 %i.do, 0
   br i1 %.not.59, label %bb.bi, label %.critedge.thread
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 480 ; 2 uses
-  %i.dq = load i64, ptr %i.dp, align 8, !tbaa !83
+  %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 480
+  %i.dq = load i64, ptr %i.dp, align 8, !tbaa !83 ; 2 uses
   %.not.60 = icmp eq i64 %i.dq, 0
   br i1 %.not.60, label %bb.bj, label %.critedge.thread
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 2 uses
-  %i.ds = load i64, ptr %i.dr, align 8, !tbaa !83
+  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 488
+  %i.ds = load i64, ptr %i.dr, align 8, !tbaa !83 ; 2 uses
   %.not.61 = icmp eq i64 %i.ds, 0
   br i1 %.not.61, label %bb.bk, label %.critedge.thread
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 496 ; 2 uses
-  %i.du = load i64, ptr %i.dt, align 8, !tbaa !83
+  %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 496
+  %i.du = load i64, ptr %i.dt, align 8, !tbaa !83 ; 2 uses
   %.not.62 = icmp eq i64 %i.du, 0
   br i1 %.not.62, label %bb.bl, label %.critedge.thread
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 504 ; 2 uses
-  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !83
+  %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 504
+  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !83 ; 2 uses
   %.not.63 = icmp eq i64 %i.dw, 0
   br i1 %.not.63, label %.critedge, label %.critedge.thread
 
-.critedge.thread:                                 ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl
-  %.013.lcssa = phi ptr [ %0, %bb.a ], [ %i.b, %bb.b ], [ %i.d, %bb.c ], [ %i.f, %bb.d ], [ %i.h, %bb.e ], [ %i.j, %bb.f ], [ %i.l, %bb.g ], [ %i.n, %bb.h ], [ %i.p, %bb.i ], [ %i.r, %bb.j ], [ %i.t, %bb.k ], [ %i.v, %bb.l ], [ %i.x, %bb.m ], [ %i.z, %bb.n ], [ %i.ab, %bb.o ], [ %i.ad, %bb.p ], [ %i.af, %bb.q ], [ %i.ah, %bb.r ], [ %i.aj, %bb.s ], [ %i.al, %bb.t ], [ %i.an, %bb.u ], [ %i.ap, %bb.v ], [ %i.ar, %bb.w ], [ %i.at, %bb.x ], [ %i.av, %bb.y ], [ %i.ax, %bb.z ], [ %i.az, %bb.aa ], [ %i.bb, %bb.ab ], [ %i.bd, %bb.ac ], [ %i.bf, %bb.ad ], [ %i.bh, %bb.ae ], [ %i.bj, %bb.af ], [ %i.bl, %bb.ag ], [ %i.bn, %bb.ah ], [ %i.bp, %bb.ai ], [ %i.br, %bb.aj ], [ %i.bt, %bb.ak ], [ %i.bv, %bb.al ], [ %i.bx, %bb.am ], [ %i.bz, %bb.an ], [ %i.cb, %bb.ao ], [ %i.cd, %bb.ap ], [ %i.cf, %bb.aq ], [ %i.ch, %bb.ar ], [ %i.cj, %bb.as ], [ %i.cl, %bb.at ], [ %i.cn, %bb.au ], [ %i.cp, %bb.av ], [ %i.cr, %bb.aw ], [ %i.ct, %bb.ax ], [ %i.cv, %bb.ay ], [ %i.cx, %bb.az ], [ %i.cz, %bb.ba ], [ %i.db, %bb.bb ], [ %i.dd, %bb.bc ], [ %i.df, %bb.bd ], [ %i.dh, %bb.be ], [ %i.dj, %bb.bf ], [ %i.dl, %bb.bg ], [ %i.dn, %bb.bh ], [ %i.dp, %bb.bi ], [ %i.dr, %bb.bj ], [ %i.dt, %bb.bk ], [ %i.dv, %bb.bl ]
+.critedge.thread:                                 ; preds = %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %1 = phi i64 [ %i.a, %bb.a ], [ %i.c, %bb.b ], [ %i.e, %bb.c ], [ %i.g, %bb.d ], [ %i.i, %bb.e ], [ %i.k, %bb.f ], [ %i.m, %bb.g ], [ %i.o, %bb.h ], [ %i.q, %bb.i ], [ %i.s, %bb.j ], [ %i.u, %bb.k ], [ %i.w, %bb.l ], [ %i.y, %bb.m ], [ %i.aa, %bb.n ], [ %i.ac, %bb.o ], [ %i.ae, %bb.p ], [ %i.ag, %bb.q ], [ %i.ai, %bb.r ], [ %i.ak, %bb.s ], [ %i.am, %bb.t ], [ %i.ao, %bb.u ], [ %i.aq, %bb.v ], [ %i.as, %bb.w ], [ %i.au, %bb.x ], [ %i.aw, %bb.y ], [ %i.ay, %bb.z ], [ %i.ba, %bb.aa ], [ %i.bc, %bb.ab ], [ %i.be, %bb.ac ], [ %i.bg, %bb.ad ], [ %i.bi, %bb.ae ], [ %i.bk, %bb.af ], [ %i.bm, %bb.ag ], [ %i.bo, %bb.ah ], [ %i.bq, %bb.ai ], [ %i.bs, %bb.aj ], [ %i.bu, %bb.ak ], [ %i.bw, %bb.al ], [ %i.by, %bb.am ], [ %i.ca, %bb.an ], [ %i.cc, %bb.ao ], [ %i.ce, %bb.ap ], [ %i.cg, %bb.aq ], [ %i.ci, %bb.ar ], [ %i.ck, %bb.as ], [ %i.cm, %bb.at ], [ %i.co, %bb.au ], [ %i.cq, %bb.av ], [ %i.cs, %bb.aw ], [ %i.cu, %bb.ax ], [ %i.cw, %bb.ay ], [ %i.cy, %bb.az ], [ %i.da, %bb.ba ], [ %i.dc, %bb.bb ], [ %i.de, %bb.bc ], [ %i.dg, %bb.bd ], [ %i.di, %bb.be ], [ %i.dk, %bb.bf ], [ %i.dm, %bb.bg ], [ %i.do, %bb.bh ], [ %i.dq, %bb.bi ], [ %i.ds, %bb.bj ], [ %i.du, %bb.bk ], [ %i.dw, %bb.bl ]
   %.0712.lcssa = phi i32 [ 0, %bb.a ], [ 64, %bb.b ], [ 128, %bb.c ], [ 192, %bb.d ], [ 256, %bb.e ], [ 320, %bb.f ], [ 384, %bb.g ], [ 448, %bb.h ], [ 512, %bb.i ], [ 576, %bb.j ], [ 640, %bb.k ], [ 704, %bb.l ], [ 768, %bb.m ], [ 832, %bb.n ], [ 896, %bb.o ], [ 960, %bb.p ], [ 1024, %bb.q ], [ 1088, %bb.r ], [ 1152, %bb.s ], [ 1216, %bb.t ], [ 1280, %bb.u ], [ 1344, %bb.v ], [ 1408, %bb.w ], [ 1472, %bb.x ], [ 1536, %bb.y ], [ 1600, %bb.z ], [ 1664, %bb.aa ], [ 1728, %bb.ab ], [ 1792, %bb.ac ], [ 1856, %bb.ad ], [ 1920, %bb.ae ], [ 1984, %bb.af ], [ 2048, %bb.ag ], [ 2112, %bb.ah ], [ 2176, %bb.ai ], [ 2240, %bb.aj ], [ 2304, %bb.ak ], [ 2368, %bb.al ], [ 2432, %bb.am ], [ 2496, %bb.an ], [ 2560, %bb.ao ], [ 2624, %bb.ap ], [ 2688, %bb.aq ], [ 2752, %bb.ar ], [ 2816, %bb.as ], [ 2880, %bb.at ], [ 2944, %bb.au ], [ 3008, %bb.av ], [ 3072, %bb.aw ], [ 3136, %bb.ax ], [ 3200, %bb.ay ], [ 3264, %bb.az ], [ 3328, %bb.ba ], [ 3392, %bb.bb ], [ 3456, %bb.bc ], [ 3520, %bb.bd ], [ 3584, %bb.be ], [ 3648, %bb.bf ], [ 3712, %bb.bg ], [ 3776, %bb.bh ], [ 3840, %bb.bi ], [ 3904, %bb.bj ], [ 3968, %bb.bk ], [ 4032, %bb.bl ]
-  %1 = load i64, ptr %.013.lcssa, align 8, !tbaa !83 ; 2 uses
   %i.dx = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %1, i1 true)
   %i.dy = trunc nuw nsw i64 %i.dx to i32
-  %2 = icmp eq i64 %1, 0
-  %3 = select i1 %2, i32 0, i32 %i.dy, !prof !132
-  %i.dz = or disjoint i32 %3, %.0712.lcssa
+  %i.dz = or disjoint i32 %.0712.lcssa, %i.dy
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.bl, %.critedge.thread

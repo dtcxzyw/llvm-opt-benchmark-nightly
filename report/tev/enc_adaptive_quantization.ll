@@ -205,7 +205,7 @@ _ZN3jxl11ImageMinMaxIfEEvRKNS_5PlaneIT_EEPS2_S6_.exit.i: ; preds = %._crit_edge.
 bb.bp:                                            ; preds = %_ZN3jxl11ImageMinMaxIfEEvRKNS_5PlaneIT_EEPS2_S6_.exit.i
   %i.xb = load i32, ptr %i.rq, align 4, !tbaa !428
   %i.xc = icmp slt i32 %i.xb, 2
-  %spec.store.select.i = select i1 %i.xc, i64 4, i64 2 ; 2 uses
+  %spec.store.select.i = select i1 %i.xc, i64 4, i64 2
   %i.xd = getelementptr inbounds nuw i8, ptr %19, i64 504 ; 3 uses
   %i.xe = getelementptr inbounds nuw i8, ptr %21, i64 4 ; 2 uses
   %i.xf = getelementptr inbounds nuw i8, ptr %21, i64 40 ; 2 uses
@@ -246,7 +246,7 @@ bb.bp:                                            ; preds = %_ZN3jxl11ImageMinMa
   br label %bb.bq
 
 bb.bq:                                            ; preds = %_ZN3jxl8StatusOrINS_11ImageBundleEED2Ev.exit.i24, %bb.bp
-  %indvars.iv.i = phi i64 [ 0, %bb.bp ], [ %indvars.iv.next.i, %_ZN3jxl8StatusOrINS_11ImageBundleEED2Ev.exit.i24 ] ; 6 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.bp ], [ %indvars.iv.next.i, %_ZN3jxl8StatusOrINS_11ImageBundleEED2Ev.exit.i24 ] ; 5 uses
   %i.yn = call i32 @_ZN3jxl9Quantizer13SetQuantFieldEfRKNS_5PlaneIfEEPNS1_IiEE(ptr noundef nonnull align 8 dereferenceable(72) %i.se, float noundef %.sroa.speculated.i.i, ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef nonnull %i.sf) #27 ; 2 uses
   %i.yo = icmp eq i32 %i.yn, 0
   br i1 %i.yo, label %bb.br, label %.thread284.i
@@ -633,7 +633,7 @@ bb.cc:                                            ; preds = %bb.cb
   br label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc, %bb.cb
-  %i.adl = icmp eq i64 %indvars.iv.i, %spec.store.select.i
+  %i.adl = icmp eq i64 %indvars.iv.i, %spec.store.select.i ; 2 uses
   br i1 %i.adl, label %bb.cs, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
@@ -972,8 +972,7 @@ bb.cw:                                            ; preds = %.loopexit386.i
 _ZN3jxl8StatusOrINS_11ImageBundleEED2Ev.exit.i24: ; preds = %bb.cv, %bb.cu
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #28
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
-  %exitcond = icmp eq i64 %indvars.iv.i, %spec.store.select.i
-  br i1 %exitcond, label %.thread288.i, label %bb.bq, !llvm.loop !398
+  br i1 %i.adl, label %.thread288.i, label %bb.bq, !llvm.loop !398
 
 _ZN3jxl8StatusOrINS_11ImageBundleEED2Ev.exit.jt1.i: ; preds = %bb.cw, %.loopexit386.i
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #28

@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %_RNvMs_NtCscdodAO9F
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTINtNtB4_6result6ResultNtNtCshFZivb7RUAJ_8ruff_dev10format_dev10StatisticsNtB1w_14CheckFileErrorENtNtCs2AWtUsOyxgP_3std4path7PathBufEEEB1y_(ptr noalias noundef align 8 dereferenceable(24) %i.a) #21
           to label %.body unwind label %bb.i
 
-_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecTINtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCshFZivb7RUAJ_8ruff_dev10format_dev10StatisticsNtB1j_14CheckFileErrorENtNtCs2AWtUsOyxgP_3std4path7PathBufEENtNtNtBK_3ops4drop4Drop4dropB1l_.exit: ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTINtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCshFZivb7RUAJ_8ruff_dev10format_dev10StatisticsNtB1i_14CheckFileErrorENtNtCs2AWtUsOyxgP_3std4path7PathBufEE7reserveB1k_.exit.i, %bb.g
+_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecTINtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCshFZivb7RUAJ_8ruff_dev10format_dev10StatisticsNtB1j_14CheckFileErrorENtNtCs2AWtUsOyxgP_3std4path7PathBufEENtNtNtBK_3ops4drop4Drop4dropB1l_.exit: ; preds = %bb.g, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTINtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCshFZivb7RUAJ_8ruff_dev10format_dev10StatisticsNtB1i_14CheckFileErrorENtNtCs2AWtUsOyxgP_3std4path7PathBufEE7reserveB1k_.exit.i
   %i.ax = phi i64 [ %.pre.i, %bb.g ], [ %i.al, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTINtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCshFZivb7RUAJ_8ruff_dev10format_dev10StatisticsNtB1i_14CheckFileErrorENtNtCs2AWtUsOyxgP_3std4path7PathBufEE7reserveB1k_.exit.i ]
   %i.ay = add i64 %i.ax, %i.ak
   store i64 %i.ay, ptr %i.ad, align 8, !alias.scope !5821

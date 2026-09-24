@@ -204,17 +204,14 @@ bb.a:
 _ZN4test14AsmInterfaceOp13getODSResultsEj.exit:   ; preds = %bb.a
   %i.j = load ptr, ptr %0, align 8, !tbaa !93     ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 36
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !134  ; 2 uses
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !134
   %i.m = getelementptr inbounds i8, ptr %i.j, i64 -16
   %i.n = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i64 noundef 1) #27
-  %.not107115 = icmp eq i32 %i.l, 2
-  br i1 %.not107115, label %.lr.ph.i.i44.preheader, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZN4test14AsmInterfaceOp13getODSResultsEj.exit
   %.narrow = add i32 %i.l, -1
   %1 = zext i32 %.narrow to i64
-  %2 = add nsw i64 %1, -2
-  br label %.lr.ph
+  %2 = add nsw i64 %1, -1                         ; 2 uses
+  %.not107115 = icmp eq i64 %2, 0
+  br i1 %.not107115, label %.lr.ph.i.i44.preheader, label %.lr.ph
 
 .lr.ph.i.i44.preheader:                           ; preds = %bb.b, %_ZN4test14AsmInterfaceOp13getODSResultsEj.exit
   %.2.lcssa = phi i32 [ 1, %_ZN4test14AsmInterfaceOp13getODSResultsEj.exit ], [ %i.ab, %bb.b ]
@@ -227,9 +224,9 @@ _ZN4test14AsmInterfaceOp13getODSResultsEj.exit:   ; preds = %bb.a
   %i.t = icmp eq i32 %i.r, 0
   br i1 %i.t, label %_ZN4test14AsmInterfaceOp13getODSResultsEj.exit55, label %bb.c
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %.2117 = phi i32 [ %i.ab, %bb.b ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.474.0116 = phi i64 [ %i.ac, %bb.b ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %_ZN4test14AsmInterfaceOp13getODSResultsEj.exit, %bb.b
+  %.2117 = phi i32 [ %i.ab, %bb.b ], [ 1, %_ZN4test14AsmInterfaceOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.474.0116 = phi i64 [ %i.ac, %bb.b ], [ 0, %_ZN4test14AsmInterfaceOp13getODSResultsEj.exit ] ; 2 uses
   %i.u = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.n, i64 noundef %.sroa.474.0116) #27
   %i.v = load ptr, ptr %0, align 8, !tbaa !93
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 8
@@ -242,8 +239,8 @@ _ZN4test14AsmInterfaceOp13getODSResultsEj.exit:   ; preds = %bb.a
 
 bb.b:                                             ; preds = %.lr.ph
   %i.ab = add i32 %.2117, 1                       ; 2 uses
-  %i.ac = add nuw nsw i64 %.sroa.474.0116, 1
-  %.not107 = icmp eq i64 %.sroa.474.0116, %2
+  %i.ac = add nuw nsw i64 %.sroa.474.0116, 1      ; 2 uses
+  %.not107 = icmp eq i64 %i.ac, %2
   br i1 %.not107, label %.lr.ph.i.i44.preheader, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph.i.i44.preheader

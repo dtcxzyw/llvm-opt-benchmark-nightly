@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
   %i.he = getelementptr inbounds i8, ptr %i.hd, i64 -8
   br label %_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit
 
-_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit: ; preds = %.preheader.i.preheader, %bb.w
+_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit: ; preds = %bb.ae, %bb.w
   %.val2.i17 = load i64, ptr %i.he, align 8, !range !8, !noalias !105, !noundef !4
   %.val.i.i.i19 = load ptr, ptr %i.go, align 8, !noalias !105, !nonnull !4, !noundef !4
   %.val1.i.i.i20 = load i64, ptr %i.gp, align 8, !noalias !105, !noundef !4
@@ -411,7 +411,7 @@ _RNvMsa_NtCs1y2vtkYNekJ_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.ex
   %i.lf = xor i64 %i.le, %i.ld
   %.unshifted.i = and i64 %i.lf, %i.f
   %i.lg = icmp ult i64 %.unshifted.i, 16
-  br i1 %i.lg, label %bb.ad, label %bb.ac, !prof !11
+  br i1 %i.lg, label %.preheader.i.preheader, label %bb.ac, !prof !11
 
 bb.ac:                                            ; preds = %_RNvMsa_NtCs1y2vtkYNekJ_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit56
   %i.lh = shl i64 %.sroa.0.0.i5.i48, 3
@@ -428,9 +428,31 @@ bb.ac:                                            ; preds = %_RNvMsa_NtCs1y2vtkY
   %i.lr = getelementptr i8, ptr %i.lq, i64 16
   store i8 %i.ln, ptr %i.lr, align 1, !noalias !88
   %i.ls = icmp eq i8 %i.ll, -1
-  br i1 %i.ls, label %bb.ae, label %.preheader.i.preheader
+  br i1 %i.ls, label %bb.ad, label %bb.ae
 
-.preheader.i.preheader:                           ; preds = %bb.ac
+.preheader.i.preheader:                           ; preds = %_RNvMsa_NtCs1y2vtkYNekJ_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit56
+  %4 = lshr i64 %i.ki, 57
+  %5 = trunc nuw nsw i64 %4 to i8                 ; 2 uses
+  %6 = add i64 %.sroa.04.0.i88, -16
+  %7 = and i64 %6, %i.f
+  store i8 %5, ptr %i.gz, align 1, !noalias !88
+  %8 = getelementptr i8, ptr %.val9, i64 %7
+  %9 = getelementptr i8, ptr %8, i64 16
+  store i8 %5, ptr %9, align 1, !noalias !88
+  br label %bb.af
+
+bb.ad:                                            ; preds = %bb.ac
+  %i.lt = add i64 %.sroa.04.0.i88, -16
+  %i.lu = and i64 %i.lt, %i.f
+  store i8 -1, ptr %i.gz, align 1, !noalias !88
+  %i.lv = getelementptr i8, ptr %.val9, i64 %i.lu
+  %i.lw = getelementptr i8, ptr %i.lv, i64 16
+  store i8 -1, ptr %i.lw, align 1, !noalias !88
+  %10 = load i64, ptr %i.hb, align 1, !noalias !88
+  store i64 %10, ptr %i.lj, align 1, !noalias !88
+  br label %bb.af
+
+bb.ae:                                            ; preds = %bb.ac
   tail call void @llvm.experimental.noalias.scope.decl(metadata !109), !noalias !88
   tail call void @llvm.experimental.noalias.scope.decl(metadata !110), !noalias !88
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.hb, align 1, !alias.scope !109, !noalias !111
@@ -439,29 +461,7 @@ bb.ac:                                            ; preds = %_RNvMsa_NtCs1y2vtkY
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.lj, align 1, !alias.scope !110, !noalias !112
   br label %_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit
 
-bb.ad:                                            ; preds = %_RNvMsa_NtCs1y2vtkYNekJ_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit56
-  %4 = lshr i64 %i.ki, 57
-  %5 = trunc nuw nsw i64 %4 to i8                 ; 2 uses
-  %i.lt = add i64 %.sroa.04.0.i88, -16
-  %i.lu = and i64 %i.lt, %i.f
-  store i8 %5, ptr %i.gz, align 1, !noalias !88
-  %i.lv = getelementptr i8, ptr %.val9, i64 %i.lu
-  %i.lw = getelementptr i8, ptr %i.lv, i64 16
-  store i8 %5, ptr %i.lw, align 1, !noalias !88
-  br label %bb.af
-
-bb.ae:                                            ; preds = %bb.ac
-  %6 = add i64 %.sroa.04.0.i88, -16
-  %7 = and i64 %6, %i.f
-  store i8 -1, ptr %i.gz, align 1, !noalias !88
-  %8 = getelementptr i8, ptr %.val9, i64 %7
-  %9 = getelementptr i8, ptr %8, i64 16
-  store i8 -1, ptr %9, align 1, !noalias !88
-  %10 = load i64, ptr %i.hb, align 1, !noalias !88
-  store i64 %10, ptr %i.lj, align 1, !noalias !88
-  br label %bb.af
-
-bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.v
+bb.af:                                            ; preds = %bb.ad, %.preheader.i.preheader, %bb.v
   %exitcond.not = icmp eq i64 %.sroa.04.0.i88, %i.f
   br i1 %exitcond.not, label %_RNvMsa_NtCs1y2vtkYNekJ_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, label %bb.v
 

@@ -205,11 +205,6 @@ bb.au:                                            ; preds = %bb.at
   invoke void @_RNvMsn_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_E9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.e)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i unwind label %bb.aw, !noalias !229
 
-.body.i:                                          ; preds = %bb.bh, %.body.i68.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i
-  %.pn48.pn.i = phi { ptr, i32 } [ %.pn48.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i ], [ %i.eq, %bb.bh ], [ %i.eq, %.body.i68.i ]
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferEECsaSXGKSfiU2E_10lance_file(ptr noalias noundef align 8 dereferenceable(24) %i.u) #50
-          to label %.thread112.i unwind label %bb.aw, !noalias !229
-
 bb.av:                                            ; preds = %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !229
   %.sroa.051.0.copyload52 = load i8, ptr %i.w, align 8, !noalias !231 ; 2 uses
@@ -239,6 +234,11 @@ bb.av:                                            ; preds = %bb.as
   %i.du = insertelement <2 x ptr> poison, ptr %i.dm, i64 0
   %i.dv = insertelement <2 x ptr> %i.du, ptr %i.dn, i64 1
   br i1 %i.dt, label %bb.br, label %bb.bv, !prof !68
+
+.body.i:                                          ; preds = %bb.bh, %.body.i68.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i
+  %.pn48.pn.i = phi { ptr, i32 } [ %.pn48.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i ], [ %i.eq, %bb.bh ], [ %i.eq, %.body.i68.i ]
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferEECsaSXGKSfiU2E_10lance_file(ptr noalias noundef align 8 dereferenceable(24) %i.u) #50
+          to label %.thread112.i unwind label %bb.aw, !noalias !229
 
 bb.aw:                                            ; preds = %bb.bq, %bb.bp, %bb.bj, %bb.bb, %.body.i, %bb.au, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i
   %i.dw = landingpad { ptr, i32 }
@@ -642,11 +642,6 @@ bb.au:                                            ; preds = %bb.at
   invoke void @_RNvMsn_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_E9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.e)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i unwind label %bb.aw, !noalias !320
 
-.body.i:                                          ; preds = %bb.bh, %.body.i68.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i
-  %.pn48.pn.i = phi { ptr, i32 } [ %.pn48.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i ], [ %i.eq, %bb.bh ], [ %i.eq, %.body.i68.i ]
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferEECsaSXGKSfiU2E_10lance_file(ptr noalias noundef align 8 dereferenceable(24) %i.u) #50
-          to label %.thread112.i unwind label %bb.aw, !noalias !320
-
 bb.av:                                            ; preds = %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !320
   %.sroa.051.0.copyload52 = load i8, ptr %i.w, align 8, !noalias !322 ; 2 uses
@@ -676,6 +671,11 @@ bb.av:                                            ; preds = %bb.as
   %i.du = insertelement <2 x ptr> poison, ptr %i.dm, i64 0
   %i.dv = insertelement <2 x ptr> %i.du, ptr %i.dn, i64 1
   br i1 %i.dt, label %bb.br, label %bb.bv, !prof !68
+
+.body.i:                                          ; preds = %bb.bh, %.body.i68.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i
+  %.pn48.pn.i = phi { ptr, i32 } [ %.pn48.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i ], [ %i.eq, %bb.bh ], [ %i.eq, %.body.i68.i ]
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferEECsaSXGKSfiU2E_10lance_file(ptr noalias noundef align 8 dereferenceable(24) %i.u) #50
+          to label %.thread112.i unwind label %bb.aw, !noalias !320
 
 bb.aw:                                            ; preds = %bb.bq, %bb.bp, %bb.bj, %bb.bb, %.body.i, %bb.au, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit77.i
   %i.dw = landingpad { ptr, i32 }

@@ -30,9 +30,9 @@ define dso_local noundef ptr @mktemp(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [6 x i8], align 1                 ; 4 uses
   %1 = alloca %struct.stat, align 8               ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
-  %i.b = tail call i64 @strlen(ptr noundef %0) #10 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #8
+  %i.b = tail call i64 @strlen(ptr noundef %0) #9 ; 2 uses
   %.not47 = icmp eq i64 %i.b, 0
   br i1 %.not47, label %.critedge.thread, label %.lr.ph.preheader
 
@@ -83,14 +83,14 @@ bb.b:                                             ; preds = %.lr.ph
 
 .lr.ph46:                                         ; preds = %.preheader, %.critedge.thread58, %.loopexit
   %.12965 = phi i32 [ %i.m, %.loopexit ], [ 62, %.preheader ], [ -1, %.critedge.thread58 ]
-  %narrow.i = tail call i32 @llvm.usub.sat.i32(i32 6, i32 range(i32 1, 0) %.025.lcssa62)
+  %narrow.i = sub nuw nsw i32 6, %.025.lcssa62
   %.07.idx.i = zext nneg i32 %narrow.i to i64
   %.07.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.07.idx.i
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph46, %bb.o
   %.245 = phi i32 [ %.12965, %.lr.ph46 ], [ %i.an, %bb.o ]
-  %i.n = tail call i32 @nxsem_wait(ptr noundef nonnull @g_b62lock) #11 ; 0 uses
+  %i.n = tail call i32 @nxsem_wait(ptr noundef nonnull @g_b62lock) #10 ; 0 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.a, ptr noundef nonnull align 1 dereferenceable(6) @g_base62, i64 6, i1 false)
   br label %bb.d
 
@@ -114,7 +114,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not.i.i, label %.lr.ph.preheader.i, label %bb.d, !llvm.loop !9
 
 .lr.ph.preheader.i:                               ; preds = %bb.f, %bb.e
-  %i.u = tail call i32 @nxsem_post(ptr noundef nonnull @g_b62lock) #11 ; 0 uses
+  %i.u = tail call i32 @nxsem_post(ptr noundef nonnull @g_b62lock) #10 ; 0 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %base62_to_char.exit.i, %.lr.ph.preheader.i
@@ -143,7 +143,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.ab, label %bb.k, label %bb.l, !prof !13
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @__assert(ptr noundef nonnull @.str, i32 noundef 96, ptr noundef nonnull @.str.2) #12
+  tail call void @__assert(ptr noundef nonnull @.str, i32 noundef 96, ptr noundef nonnull @.str.2) #11
   unreachable
 
 bb.l:                                             ; preds = %bb.j
@@ -159,18 +159,18 @@ base62_to_char.exit.i:                            ; preds = %bb.l, %bb.i, %bb.g
   br i1 %i.af, label %.lr.ph.i, label %copy_base62.exit, !llvm.loop !10
 
 copy_base62.exit:                                 ; preds = %base62_to_char.exit.i
-  %i.ag = call i32 @stat(ptr noundef %0, ptr noundef nonnull %1) #10
+  %i.ag = call i32 @stat(ptr noundef %0, ptr noundef nonnull %1) #9
   %i.ah = icmp slt i32 %i.ag, 0
   br i1 %i.ah, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %copy_base62.exit
-  %i.ai = tail call ptr @__errno() #11
+  %i.ai = tail call ptr @__errno() #10
   %i.aj = load i32, ptr %i.ai, align 4
   %i.ak = icmp eq i32 %i.aj, 2
   br i1 %i.ak, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.al = tail call i8 asm sideeffect "movb %gs:(${1:c}), $0", "=qr,i,~{dirflag},~{fpsr},~{flags}"(i64 6) #9, !srcloc !14
+  %i.al = tail call i8 asm sideeffect "movb %gs:(${1:c}), $0", "=qr,i,~{dirflag},~{fpsr},~{flags}"(i64 6) #8, !srcloc !14
   %i.am = trunc i8 %i.al to i1
   br i1 %i.am, label %.critedge.thread, label %.critedge.thread.sink.split
 
@@ -180,21 +180,21 @@ bb.o:                                             ; preds = %bb.m, %copy_base62.
   br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %bb.o, %.loopexit
-  %i.ao = tail call i8 asm sideeffect "movb %gs:(${1:c}), $0", "=qr,i,~{dirflag},~{fpsr},~{flags}"(i64 6) #9, !srcloc !14
+  %i.ao = tail call i8 asm sideeffect "movb %gs:(${1:c}), $0", "=qr,i,~{dirflag},~{fpsr},~{flags}"(i64 6) #8, !srcloc !14
   %i.ap = trunc i8 %i.ao to i1
   br i1 %i.ap, label %.critedge.thread, label %.critedge.thread.sink.split
 
 .critedge.thread.sink.split:                      ; preds = %._crit_edge, %bb.n
   %.sink = phi i32 [ 0, %bb.n ], [ 22, %._crit_edge ]
   %.030.ph = phi ptr [ %0, %bb.n ], [ null, %._crit_edge ]
-  %i.aq = tail call ptr @__errno() #11
+  %i.aq = tail call ptr @__errno() #10
   store i32 %.sink, ptr %i.aq, align 4
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %.critedge.thread.sink.split, %bb.a, %._crit_edge, %bb.n, %.critedge
   %.030 = phi ptr [ %0, %bb.n ], [ %0, %.critedge ], [ null, %._crit_edge ], [ %0, %bb.a ], [ %.030.ph, %.critedge.thread.sink.split ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret ptr %.030
 }
 
@@ -222,9 +222,6 @@ declare dso_local i32 @nxsem_post(ptr noundef) local_unnamed_addr #6
 ; Function Attrs: noredzone noreturn optsize
 declare dso_local void @__assert(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #7
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #8
-
 attributes #0 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-builtin-memcpy" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-builtin-memset" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -233,11 +230,10 @@ attributes #4 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-
 attributes #5 = { nofree noredzone nounwind optsize "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { noredzone optsize "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { noredzone noreturn optsize "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nounwind }
-attributes #10 = { noredzone optsize }
-attributes #11 = { noredzone nounwind optsize }
-attributes #12 = { noredzone noreturn nounwind optsize }
+attributes #8 = { nounwind }
+attributes #9 = { noredzone optsize }
+attributes #10 = { noredzone nounwind optsize }
+attributes #11 = { noredzone noreturn nounwind optsize }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

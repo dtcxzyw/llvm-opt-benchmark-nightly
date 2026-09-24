@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x
   store ptr %.5, ptr %1, align 8, !tbaa !101
   br label %.thread170
 
-.critedge4.thread:                                ; preds = %bb.m, %bb.n, %bb.o
+.critedge4.thread:                                ; preds = %bb.o, %bb.n, %bb.m
   %.1130193.lcssa.wide.neg = phi i64 [ 0, %bb.m ], [ -1, %bb.n ], [ -2, %bb.o ]
   %.3192.lcssa = phi ptr [ %i.am, %bb.m ], [ %i.ar, %bb.n ], [ %i.av, %bb.o ]
   %i.cc = getelementptr inbounds i8, ptr %.3192.lcssa, i64 %.1130193.lcssa.wide.neg ; 3 uses

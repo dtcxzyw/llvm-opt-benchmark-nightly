@@ -205,20 +205,20 @@ bb.c:                                             ; preds = %bb.b
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCse67t6KqNqGQ_5rayon3vec13DrainProducerNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8group_by21LocalGroupBySinkStateEEB1u_(ptr noalias noundef align 8 dereferenceable(16) %i.a) #37
           to label %common.resume unwind label %bb.d, !dbg !132868
 
-common.resume:                                    ; preds = %bb.c
-  resume { ptr, i32 } %i.c, !dbg !132869
-
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCse67t6KqNqGQ_5rayon3vec13DrainProducerNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8group_by21LocalGroupBySinkStateEEB1u_.exit: ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw [216 x i8], ptr %1, i64 %3, !dbg !132870
-  %i.e = sub nuw nsw i64 %2, %3, !dbg !132871
-  store ptr %1, ptr %0, align 8, !dbg !132872
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !132872
-  store i64 %3, ptr %i.f, align 8, !dbg !132872
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !132872
-  store ptr %i.d, ptr %i.g, align 8, !dbg !132872
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !132872
-  store i64 %i.e, ptr %i.h, align 8, !dbg !132872
-  ret void, !dbg !132873
+  %i.d = getelementptr inbounds nuw [216 x i8], ptr %1, i64 %3, !dbg !132869
+  %i.e = sub nuw nsw i64 %2, %3, !dbg !132870
+  store ptr %1, ptr %0, align 8, !dbg !132871
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !132871
+  store i64 %3, ptr %i.f, align 8, !dbg !132871
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !132871
+  store ptr %i.d, ptr %i.g, align 8, !dbg !132871
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !132871
+  store i64 %i.e, ptr %i.h, align 8, !dbg !132871
+  ret void, !dbg !132872
+
+common.resume:                                    ; preds = %bb.c
+  resume { ptr, i32 } %i.c, !dbg !132873
 
 bb.d:                                             ; preds = %bb.c
   %i.i = landingpad { ptr, i32 }
@@ -621,11 +621,11 @@ begin_hunk_1_@llvm.abs.i128
 !132866 = !DILocation(line: 2193, column: 12, scope: !2558, inlinedAt: !132859)
 !132867 = !DILocation(line: 1989, column: 21, scope: !2559, inlinedAt: !132858)
 !132868 = !DILocation(line: 232, column: 5, scope: !132853)
-!132869 = !DILocation(line: 0, scope: !132853)
-!132870 = !DILocation(line: 961, column: 18, scope: !2560, inlinedAt: !132861)
-!132871 = !DILocation(line: 2109, column: 50, scope: !2563, inlinedAt: !132860)
-!132872 = !DILocation(line: 231, column: 18, scope: !132862)
-!132873 = !DILocation(line: 232, column: 6, scope: !132853)
+!132869 = !DILocation(line: 961, column: 18, scope: !2560, inlinedAt: !132861)
+!132870 = !DILocation(line: 2109, column: 50, scope: !2563, inlinedAt: !132860)
+!132871 = !DILocation(line: 231, column: 18, scope: !132862)
+!132872 = !DILocation(line: 232, column: 6, scope: !132853)
+!132873 = !DILocation(line: 0, scope: !132853)
 !132874 = !DILocation(line: 227, column: 5, scope: !132853)
 !132875 = distinct !DISubprogram(name: "fmt<chrono::offset::utc::Utc>", linkageName: "_RNvXsA_NtCs9o5SvTbM2BP_6chrono8datetimeINtB5_8DateTimeNtNtNtB7_6offset3utc3UtcENtNtCscgRAwXFJnXP_4core3fmt7Display3fmtCs2g09Ig8GZd6_13polars_stream", scope: !132881, file: !132878, line: 1869, type: !2596, scopeLine: 1869, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !2595)
 !132876 = distinct !DISubprogram(name: "overflowing_naive_local<chrono::offset::utc::Utc>", linkageName: "_RNvMNtCs9o5SvTbM2BP_6chrono8datetimeINtB2_8DateTimeNtNtNtB4_6offset3utc3UtcE23overflowing_naive_localCs2g09Ig8GZd6_13polars_stream", scope: !132882, file: !132878, line: 589, type: !2596, scopeLine: 589, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !2595)

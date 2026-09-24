@@ -205,7 +205,7 @@ _ZN2cv11xfeatures2dL21computeIntegralImagesIhiEEvRKNS_3MatERS2_S5_S5_i.exit.i: ;
   %i.aug = sub nsw i32 0, %i.auf
   store i32 %i.aug, ptr %i.aue, align 4, !tbaa !28
   %i.auh = getelementptr inbounds [4 x i8], ptr @_ZZN2cv11xfeatures2dL28StarDetectorComputeResponsesIdEEiRKNS_3MatERS2_S5_iiE6sizes0, i64 %i.aud
-  %i.aui = load i32, ptr %i.auh, align 4, !tbaa !28 ; 2 uses
+  %i.aui = load i32, ptr %i.auh, align 4, !tbaa !28 ; 3 uses
   %min.iters.check312 = icmp samesign ult i64 %.0176.lcssa.i, 4
   br i1 %min.iters.check312, label %.lr.ph391.i.preheader, label %vector.ph313
 
@@ -384,8 +384,8 @@ bb.bg:                                            ; preds = %bb.bg, %.lr.ph.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %bb.bg, !llvm.loop !77
 
 .preheader377.i:                                  ; preds = %.lr.ph391.i, %middle.block319
-  %i.azo = sdiv i32 %i.aui, 2
-  %i.azp = add i32 %i.azo, %i.aui                 ; 8 uses
+  %i.azo = sdiv i32 %i.aui, 2                     ; 2 uses
+  %i.azp = add nsw i32 %i.azo, %i.aui             ; 8 uses
   %i.azq = icmp sgt i32 %i.azp, 0
   br i1 %i.azq, label %.lr.ph393.i, label %.preheader376.i
 
@@ -433,14 +433,17 @@ bb.bg:                                            ; preds = %bb.bg, %.lr.ph.i
   %i.bar = getelementptr inbounds nuw i8, ptr %29, i64 128
   %i.bas = getelementptr inbounds nuw i8, ptr %30, i64 24
   %i.bat = getelementptr inbounds nuw i8, ptr %30, i64 128
-  %i.bau = sext i32 %i.azp to i64                 ; 6 uses
+  %i.bau = sext i32 %i.azp to i64                 ; 3 uses
   %i.bav = shl nsw i64 %i.bau, 2                  ; 2 uses
   %i.baw = shl nsw i64 %i.bau, 1                  ; 2 uses
   %i.bax = sext i32 %i.an to i64                  ; 2 uses
   %i.bay = sub nsw i64 0, %i.bau                  ; 2 uses
-  %i.baz = sub i32 %i.an, %i.azp                  ; 2 uses
+  %i.baz = sub nsw i32 %i.an, %i.azp              ; 2 uses
   %i.bba = icmp slt i32 %i.azp, %i.baz
   %i.bbb = add i32 %i.cp, 1
+  %31 = sext i32 %i.aui to i64
+  %32 = sext i32 %i.azo to i64
+  %33 = add nsw i64 %32, %31                      ; 3 uses
   %sext.i = shl i64 %i.att, 32
   %i.bbc = ashr exact i64 %sext.i, 32
   %wide.trip.count470.i = sext i32 %i.bao to i64
@@ -475,7 +478,7 @@ bb.bh:                                            ; preds = %bb.bh, %.lr.ph393.i
   br i1 %exitcond433.not.i, label %.preheader376.i, label %bb.bh, !llvm.loop !79
 
 bb.bi:                                            ; preds = %._crit_edge407.i, %.lr.ph409.i
-  %indvars.iv467.i = phi i64 [ %i.bau, %.lr.ph409.i ], [ %indvars.iv.next468.i, %._crit_edge407.i ] ; 4 uses
+  %indvars.iv467.i = phi i64 [ %33, %.lr.ph409.i ], [ %indvars.iv.next468.i, %._crit_edge407.i ] ; 4 uses
   %i.bbt = load ptr, ptr %i.baq, align 8, !tbaa !140
   %i.bbu = load i64, ptr %i.bar, align 8, !tbaa !30
   %i.bbv = mul i64 %i.bbu, %indvars.iv467.i
@@ -499,14 +502,14 @@ bb.bi:                                            ; preds = %._crit_edge407.i, %
   br i1 %.not189387.i, label %.preheader.us.us.i, label %.lr.ph397.i
 
 .preheader.us.us.i:                               ; preds = %.lr.ph406.i, %._crit_edge402.us.us.i
-  %indvars.iv454.i = phi i64 [ %indvars.iv.next455.i, %._crit_edge402.us.us.i ], [ %i.bau, %.lr.ph406.i ] ; 3 uses
+  %indvars.iv454.i = phi i64 [ %indvars.iv.next455.i, %._crit_edge402.us.us.i ], [ %33, %.lr.ph406.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bl, %.preheader.us.us.i
-  %indvars.iv449.i = phi i64 [ %indvars.iv.next450.i, %bb.bl ], [ 0, %.preheader.us.us.i ] ; 3 uses
-  %.0170399.us.us.i = phi i32 [ %.1.us.us.i, %bb.bl ], [ 0, %.preheader.us.us.i ]
-  %.0171398.us.us.i = phi float [ %.1172.us.us.i, %bb.bl ], [ 0.000000e+00, %.preheader.us.us.i ] ; 2 uses
+  %indvars.iv449.i = phi i64 [ 0, %.preheader.us.us.i ], [ %indvars.iv.next450.i, %bb.bl ] ; 3 uses
+  %.0170399.us.us.i = phi i32 [ 0, %.preheader.us.us.i ], [ %.1.us.us.i, %bb.bl ]
+  %.0171398.us.us.i = phi float [ 0.000000e+00, %.preheader.us.us.i ], [ %.1172.us.us.i, %bb.bl ] ; 2 uses
   %i.bcg = getelementptr inbounds nuw [8 x i8], ptr @_ZZN2cv11xfeatures2dL28StarDetectorComputeResponsesIdEEiRKNS_3MatERS2_S5_iiE5pairs, i64 %indvars.iv449.i ; 2 uses
   %i.bch = getelementptr inbounds nuw i8, ptr %i.bcg, i64 4
   %i.bci = load i32, ptr %i.bch, align 4, !tbaa !28
@@ -556,7 +559,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   br i1 %exitcond458.not.i, label %._crit_edge407.i, label %.preheader.us.us.i, !llvm.loop !81
 
 .lr.ph397.i:                                      ; preds = %.lr.ph406.i, %._crit_edge402.i.a
-  %indvars.iv444.i = phi i64 [ %indvars.iv.next445.i, %._crit_edge402.i.a ], [ %i.bau, %.lr.ph406.i ] ; 4 uses
+  %indvars.iv444.i = phi i64 [ %indvars.iv.next445.i, %._crit_edge402.i.a ], [ %33, %.lr.ph406.i ] ; 4 uses
   %i.bdi = add nsw i64 %indvars.iv444.i, %i.bcf   ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
   br label %bb.bm
@@ -959,7 +962,7 @@ _ZN2cv11xfeatures2dL21computeIntegralImagesIhdEEvRKNS_3MatERS2_S5_S5_i.exit.i: ;
   %i.ctb = sub nsw i32 0, %i.cta
   store i32 %i.ctb, ptr %i.csz, align 4, !tbaa !28
   %i.ctc = getelementptr inbounds [4 x i8], ptr @_ZZN2cv11xfeatures2dL28StarDetectorComputeResponsesIdEEiRKNS_3MatERS2_S5_iiE6sizes0, i64 %i.csy
-  %i.ctd = load i32, ptr %i.ctc, align 4, !tbaa !28 ; 2 uses
+  %i.ctd = load i32, ptr %i.ctc, align 4, !tbaa !28 ; 3 uses
   %min.iters.check = icmp samesign ult i64 %.0176.lcssa.i50, 4
   br i1 %min.iters.check, label %.lr.ph340.i.preheader, label %vector.ph
 
@@ -1138,8 +1141,8 @@ bb.dd:                                            ; preds = %bb.dd, %.lr.ph.i51
   br i1 %exitcond.not.i54, label %._crit_edge.loopexit.i55, label %bb.dd, !llvm.loop !96
 
 .preheader328.i:                                  ; preds = %.lr.ph340.i, %middle.block
-  %i.cyj = sdiv i32 %i.ctd, 2
-  %i.cyk = add i32 %i.cyj, %i.ctd                 ; 8 uses
+  %i.cyj = sdiv i32 %i.ctd, 2                     ; 2 uses
+  %i.cyk = add nsw i32 %i.cyj, %i.ctd             ; 8 uses
   %i.cyl = icmp sgt i32 %i.cyk, 0
   br i1 %i.cyl, label %.lr.ph342.i, label %.preheader327.i
 
@@ -1187,14 +1190,17 @@ bb.dd:                                            ; preds = %bb.dd, %.lr.ph.i51
   %i.czm = getelementptr inbounds nuw i8, ptr %29, i64 128
   %i.czn = getelementptr inbounds nuw i8, ptr %30, i64 24
   %i.czo = getelementptr inbounds nuw i8, ptr %30, i64 128
-  %i.czp = sext i32 %i.cyk to i64                 ; 6 uses
+  %i.czp = sext i32 %i.cyk to i64                 ; 3 uses
   %i.czq = shl nsw i64 %i.czp, 2                  ; 2 uses
   %i.czr = shl nsw i64 %i.czp, 1                  ; 2 uses
   %i.czs = sext i32 %i.bgd to i64                 ; 2 uses
   %i.czt = sub nsw i64 0, %i.czp                  ; 2 uses
-  %i.czu = sub i32 %i.bgd, %i.cyk                 ; 2 uses
+  %i.czu = sub nsw i32 %i.bgd, %i.cyk             ; 2 uses
   %i.czv = icmp slt i32 %i.cyk, %i.czu
   %i.czw = add i32 %i.bif, 1
+  %34 = sext i32 %i.ctd to i64
+  %35 = sext i32 %i.cyj to i64
+  %36 = add nsw i64 %35, %34                      ; 3 uses
   %i.czx = sext i32 %.pre-phi430.i to i64
   %wide.trip.count417.i = sext i32 %i.czj to i64
   %wide.trip.count394.i = sext i32 %i.czu to i64  ; 2 uses
@@ -1228,7 +1234,7 @@ bb.de:                                            ; preds = %bb.de, %.lr.ph342.i
   br i1 %exitcond380.not.i, label %.preheader327.i, label %bb.de, !llvm.loop !98
 
 bb.df:                                            ; preds = %._crit_edge356.i, %.lr.ph358.i
-  %indvars.iv414.i = phi i64 [ %i.czp, %.lr.ph358.i ], [ %indvars.iv.next415.i, %._crit_edge356.i ] ; 4 uses
+  %indvars.iv414.i = phi i64 [ %36, %.lr.ph358.i ], [ %indvars.iv.next415.i, %._crit_edge356.i ] ; 4 uses
   %i.dao = load ptr, ptr %i.czl, align 8, !tbaa !140
   %i.dap = load i64, ptr %i.czm, align 8, !tbaa !30
   %i.daq = mul i64 %i.dap, %indvars.iv414.i
@@ -1252,14 +1258,14 @@ bb.df:                                            ; preds = %._crit_edge356.i, %
   br i1 %.not189336.i, label %.preheader.us.us.i59, label %.lr.ph346.i
 
 .preheader.us.us.i59:                             ; preds = %.lr.ph355.i, %._crit_edge351.us.us.i
-  %indvars.iv401.i = phi i64 [ %indvars.iv.next402.i, %._crit_edge351.us.us.i ], [ %i.czp, %.lr.ph355.i ] ; 3 uses
+  %indvars.iv401.i = phi i64 [ %indvars.iv.next402.i, %._crit_edge351.us.us.i ], [ %36, %.lr.ph355.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.di, %.preheader.us.us.i59
-  %indvars.iv396.i = phi i64 [ %indvars.iv.next397.i, %bb.di ], [ 0, %.preheader.us.us.i59 ] ; 3 uses
-  %.0170348.us.us.i = phi i32 [ %.1.us.us.i61, %bb.di ], [ 0, %.preheader.us.us.i59 ]
-  %.0171347.us.us.i = phi float [ %.1172.us.us.i60, %bb.di ], [ 0.000000e+00, %.preheader.us.us.i59 ] ; 2 uses
+  %indvars.iv396.i = phi i64 [ 0, %.preheader.us.us.i59 ], [ %indvars.iv.next397.i, %bb.di ] ; 3 uses
+  %.0170348.us.us.i = phi i32 [ 0, %.preheader.us.us.i59 ], [ %.1.us.us.i61, %bb.di ]
+  %.0171347.us.us.i = phi float [ 0.000000e+00, %.preheader.us.us.i59 ], [ %.1172.us.us.i60, %bb.di ] ; 2 uses
   %i.dbb = getelementptr inbounds nuw [8 x i8], ptr @_ZZN2cv11xfeatures2dL28StarDetectorComputeResponsesIdEEiRKNS_3MatERS2_S5_iiE5pairs, i64 %indvars.iv396.i ; 2 uses
   %i.dbc = getelementptr inbounds nuw i8, ptr %i.dbb, i64 4
   %i.dbd = load i32, ptr %i.dbc, align 4, !tbaa !28
@@ -1309,7 +1315,7 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
   br i1 %exitcond405.not.i, label %._crit_edge356.i, label %.preheader.us.us.i59, !llvm.loop !100
 
 .lr.ph346.i:                                      ; preds = %.lr.ph355.i, %._crit_edge351.i.a
-  %indvars.iv391.i = phi i64 [ %indvars.iv.next392.i, %._crit_edge351.i.a ], [ %i.czp, %.lr.ph355.i ] ; 4 uses
+  %indvars.iv391.i = phi i64 [ %indvars.iv.next392.i, %._crit_edge351.i.a ], [ %36, %.lr.ph355.i ] ; 4 uses
   %i.dcd = add nsw i64 %indvars.iv391.i, %i.dba   ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   br label %bb.dj

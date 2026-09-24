@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
-  %i.j = and i32 %i.h, -4                         ; 6 uses
+  %i.j = and i32 %i.h, -4                         ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !62
   %i.m = shl i32 %i.i, 6
@@ -241,8 +241,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.0357.i = phi i32 [ %i.ah, %bb.d ], [ %i.aa, %bb.c ], [ %i.aa, %bb.b ] ; 8 uses
-  %.0356.i = phi i32 [ %i.ag, %bb.d ], [ %i.x, %bb.c ], [ %i.x, %bb.b ] ; 7 uses
+  %.0357.i = phi i32 [ %i.ah, %bb.d ], [ %i.aa, %bb.c ], [ %i.aa, %bb.b ] ; 7 uses
+  %.0356.i = phi i32 [ %i.ag, %bb.d ], [ %i.x, %bb.c ], [ %i.x, %bb.b ] ; 9 uses
   store ptr %i.d, ptr %2, align 16, !tbaa !64
   store ptr %i.d, ptr %4, align 16, !tbaa !66
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 21
@@ -299,7 +299,6 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   store i64 %i.be, ptr %5, align 16
   %i.bf = call i64 asm "bswapq $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.be) #8, !srcloc !68 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 728
-  %6 = add i32 %i.j, -1
   %i.bh = load i32, ptr %i.bg, align 8, !tbaa !8  ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 732
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !8  ; 2 uses
@@ -325,14 +324,16 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 776
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 777
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 778
-  %7 = zext i32 %6 to i64
-  %8 = add nsw i64 %wide.trip.count.i, -2
+  %6 = add nsw i64 %wide.trip.count.i, -2
+  %7 = lshr i32 %.0356.i, 8
+  %8 = trunc i32 %7 to i8
+  %9 = trunc i32 %.0356.i to i8
+  %10 = add i32 %.0356.i, -51
+  %11 = lshr i32 %10, 6
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph383.split.i
-  %indvars.iv419.i = phi i64 [ 0, %.lr.ph383.split.i ], [ %indvars.iv.next420.i, %bb.g ] ; 15 uses
-  %9 = icmp eq i64 %indvars.iv419.i, %7
-  %10 = select i1 %9, i32 %.0357.i, i32 %.0356.i  ; 3 uses
+  %indvars.iv419.i = phi i64 [ 0, %.lr.ph383.split.i ], [ %indvars.iv.next420.i, %bb.g ] ; 14 uses
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv419.i
   store i32 %i.bh, ptr %i.cg, align 4, !tbaa !8
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %indvars.iv419.i
@@ -362,29 +363,24 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph383.sp
   %i.cv = load i8, ptr %i.cf, align 2, !tbaa !18  ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 10
   store i8 %i.cv, ptr %i.cw, align 2, !tbaa !18
-  %11 = lshr i32 %10, 8
-  %12 = trunc i32 %11 to i8
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cq, i64 11
-  store i8 %12, ptr %i.cx, align 1, !tbaa !18
-  %13 = trunc i32 %10 to i8
+  store i8 %8, ptr %i.cx, align 1, !tbaa !18
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cq, i64 12
-  store i8 %13, ptr %i.cy, align 4, !tbaa !18
+  store i8 %9, ptr %i.cy, align 4, !tbaa !18
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cq, i64 13
   %i.da = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv419.i ; 3 uses
   %i.db = load ptr, ptr %i.da, align 16, !tbaa !64 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(51) %i.cz, ptr noundef nonnull align 1 dereferenceable(51) %i.db, i64 51, i1 false)
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 51
   store ptr %i.dc, ptr %i.da, align 16, !tbaa !64
-  %14 = add i32 %10, -51
-  %15 = lshr i32 %14, 6
   %i.dd = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  store i32 %15, ptr %i.dd, align 8, !tbaa !70
+  store i32 %11, ptr %i.dd, align 8, !tbaa !70
   %i.de = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %indvars.iv419.i ; 2 uses
   store ptr %i.cq, ptr %i.de, align 16, !tbaa !64
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   store i32 1, ptr %i.df, align 8, !tbaa !70
   %indvars.iv.next420.i = add nuw nsw i64 %indvars.iv419.i, 1 ; 13 uses
-  %exitcond423.not.i = icmp eq i64 %indvars.iv419.i, %8
+  %exitcond423.not.i = icmp eq i64 %indvars.iv419.i, %6
   br i1 %exitcond423.not.i, label %._crit_edge384.loopexit.peel.begin.i, label %bb.g, !llvm.loop !54
 
 ._crit_edge384.loopexit.peel.begin.i:             ; preds = %bb.g

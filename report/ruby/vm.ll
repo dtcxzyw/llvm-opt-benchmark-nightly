@@ -205,6 +205,10 @@ bb.a:
   %.not.i = icmp ugt ptr %i.u, %i.y
   br i1 %.not.i, label %.lr.ph.i.preheader, label %3, !prof !109
 
+3:                                                ; preds = %bb.a
+  tail call fastcc void @vm_stackoverflow() #58
+  unreachable
+
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.z = getelementptr i8, ptr %i.p, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !177
@@ -235,10 +239,6 @@ bb.a:
   fence syncscope("singlethread") seq_cst
   store ptr %i.u, ptr %i.s, align 8, !tbaa !107
   ret i64 36
-
-3:                                                ; preds = %bb.a
-  tail call fastcc void @vm_stackoverflow() #58
-  unreachable
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
@@ -641,6 +641,10 @@ bb.a:
   %.not.i = icmp ugt ptr %i.v, %i.z
   br i1 %.not.i, label %.lr.ph.i.preheader, label %3, !prof !109
 
+3:                                                ; preds = %bb.a
+  tail call fastcc void @vm_stackoverflow() #58
+  unreachable
+
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.aa = getelementptr i8, ptr %i.q, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !177
@@ -671,10 +675,6 @@ bb.a:
   fence syncscope("singlethread") seq_cst
   store ptr %i.v, ptr %i.t, align 8, !tbaa !107
   ret i64 36
-
-3:                                                ; preds = %bb.a
-  tail call fastcc void @vm_stackoverflow() #58
-  unreachable
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
@@ -1077,6 +1077,10 @@ bb.a:
   %.not.i = icmp ugt ptr %i.v, %i.z
   br i1 %.not.i, label %.lr.ph.i.preheader, label %3, !prof !109
 
+3:                                                ; preds = %bb.a
+  tail call fastcc void @vm_stackoverflow() #58
+  unreachable
+
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.aa = getelementptr i8, ptr %i.q, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !177
@@ -1107,10 +1111,6 @@ bb.a:
   fence syncscope("singlethread") seq_cst
   store ptr %i.v, ptr %i.t, align 8, !tbaa !107
   ret i64 36
-
-3:                                                ; preds = %bb.a
-  tail call fastcc void @vm_stackoverflow() #58
-  unreachable
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
@@ -1513,6 +1513,10 @@ bb.a:
   %.not.i = icmp ugt ptr %i.v, %i.z
   br i1 %.not.i, label %.lr.ph.i.preheader, label %3, !prof !109
 
+3:                                                ; preds = %bb.a
+  tail call fastcc void @vm_stackoverflow() #58
+  unreachable
+
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.aa = getelementptr i8, ptr %i.q, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !177
@@ -1543,10 +1547,6 @@ bb.a:
   fence syncscope("singlethread") seq_cst
   store ptr %i.v, ptr %i.t, align 8, !tbaa !107
   ret i64 36
-
-3:                                                ; preds = %bb.a
-  tail call fastcc void @vm_stackoverflow() #58
-  unreachable
 }
 
 ; Function Attrs: nounwind sspstrong uwtable

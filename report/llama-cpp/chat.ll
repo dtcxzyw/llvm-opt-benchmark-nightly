@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %6 = alloca %"struct.autoparser::generation_params", align 8 ; 16 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #32
   call void @_ZN10autoparser17generation_paramsC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(421) %6, ptr noundef nonnull align 8 dereferenceable(421) %2)
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 152 ; 2 uses
@@ -226,24 +226,24 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.e = load i64, ptr %i.d, align 8, !tbaa !57
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !57   ; 4 uses
-  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.g, i64 %i.e) ; 4 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !57   ; 2 uses
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.g, i64 %i.e) ; 3 uses
   %.not = icmp eq i64 %.sroa.speculated, 0
+  %.pre = load ptr, ptr %8, align 8, !tbaa !61    ; 2 uses
   br i1 %.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
-  %9 = load ptr, ptr %7, align 8, !tbaa !61
-  %i.h = load ptr, ptr %8, align 8, !tbaa !61
+  %i.h = load ptr, ptr %7, align 8, !tbaa !61
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.e
-  %.034 = phi i64 [ 0, %.lr.ph ], [ %i.n, %bb.e ] ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %9, i64 %.034
+  %.034 = phi i64 [ 0, %.lr.ph ], [ %i.n, %bb.e ] ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %.034
   %i.j = load i8, ptr %i.i, align 1, !tbaa !63
-  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 %.034
+  %i.k = getelementptr inbounds nuw i8, ptr %.pre, i64 %.034
   %i.l = load i8, ptr %i.k, align 1, !tbaa !63
   %i.m = icmp eq i8 %i.j, %i.l
-  br i1 %i.m, label %bb.e, label %.critedge
+  br i1 %i.m, label %bb.e, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.e:                                             ; preds = %bb.d
   %i.n = add nuw i64 %.034, 1                     ; 2 uses
@@ -260,24 +260,12 @@ bb.g:                                             ; preds = %bb.b
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit27
 
-.critedge:                                        ; preds = %bb.d
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.d, %bb.e, %bb.c
+  %.0.lcssa49 = phi i64 [ 0, %bb.c ], [ %.sroa.speculated, %bb.e ], [ %.034, %bb.d ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !558)
-  %10 = icmp ugt i64 %.034, %i.g
-  br i1 %10, label %11, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-
-11:                                               ; preds = %.critedge
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.223, ptr noundef nonnull @.str.439, i64 noundef %.034, i64 noundef %i.g) #33
-          to label %.noexc unwind label %bb.k
-
-.noexc:                                           ; preds = %11
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.e, %bb.c, %.critedge
-  %.0.lcssa49 = phi i64 [ %.034, %.critedge ], [ %.sroa.speculated, %bb.c ], [ %.sroa.speculated, %bb.e ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.q, ptr %0, align 8, !tbaa !60, !alias.scope !558
-  %12 = load ptr, ptr %8, align 8, !tbaa !61, !noalias !558
-  %i.r = getelementptr inbounds nuw i8, ptr %12, i64 %.0.lcssa49 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.pre, i64 %.0.lcssa49 ; 2 uses
   %i.s = sub nuw i64 %i.g, %.0.lcssa49            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32, !noalias !558
   store i64 %i.s, ptr %i.a, align 8, !tbaa !62, !noalias !558
@@ -369,7 +357,7 @@ _ZN10autoparser17generation_paramsD2Ev.exit:      ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #32
   ret void
 
-bb.k:                                             ; preds = %.noexc10.i.i, %11
+bb.k:                                             ; preds = %.noexc10.i.i
   %i.aw = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ax = load ptr, ptr %8, align 8, !tbaa !61    ; 2 uses

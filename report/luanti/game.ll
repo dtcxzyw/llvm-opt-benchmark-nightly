@@ -204,8 +204,6 @@ begin_hunk_0
 @__PRETTY_FUNCTION__._ZN15RenderingEngine18getLastPointerTypeEv = private unnamed_addr constant [57 x i8] c"static PointerType RenderingEngine::getLastPointerType()\00", align 1
 @.str.221 = private unnamed_addr constant [4 x i8] c"yes\00", align 1
 @.str.222 = private unnamed_addr constant [5 x i8] c"true\00", align 1
-@.str.223 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
-@.str.224 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @.str.225 = private unnamed_addr constant [11 x i8] c"Selected \22\00", align 1
 @.str.226 = private unnamed_addr constant [2 x i8] c"\22\00", align 1
 @.str.227 = private unnamed_addr constant [10 x i8] c"(nothing)\00", align 1
@@ -608,14 +606,14 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !1368
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 8 uses
+  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 6 uses
   %umin.i = tail call i64 @llvm.umin.i64(i64 %.013.lcssa.i, i64 %0) ; 2 uses
   %i.f = icmp ugt i64 %0, %.013.lcssa.i
-  br i1 %i.f, label %.lr.ph, label %.critedge2.i
+  br i1 %i.f, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
 
 bb.c:                                             ; preds = %.lr.ph
   %i.g = icmp ugt i64 %i.h, %.013.lcssa.i
-  br i1 %i.g, label %.lr.ph, label %.critedge2.i, !llvm.loop !1369
+  br i1 %i.g, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !1369
 
 .lr.ph:                                           ; preds = %.critedge.i, %bb.c
   %.0.i25 = phi i64 [ %i.h, %bb.c ], [ %0, %.critedge.i ] ; 2 uses
@@ -628,18 +626,10 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not17.i, label %..critedge2.i_crit_edge, label %bb.c, !llvm.loop !1369
 
 ..critedge2.i_crit_edge:                          ; preds = %.lr.ph
-  br label %.critedge2.i, !llvm.loop !1369
+  br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !1369
 
-.critedge2.i:                                     ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
-  %.0.lcssa.i = phi i64 [ %umin.i, %.critedge.i ], [ %.0.i25, %..critedge2.i_crit_edge ], [ %umin.i, %bb.c ]
-  %3 = icmp ugt i64 %.013.lcssa.i, %0
-  br i1 %3, label %4, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
-
-4:                                                ; preds = %.critedge2.i
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.224, ptr noundef nonnull @.str.223, i64 noundef %.013.lcssa.i, i64 noundef %0) #37
-  unreachable
-
-_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %.critedge2.i
+_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
+  %.0.lcssa.i = phi i64 [ %.0.i25, %..critedge2.i_crit_edge ], [ %umin.i, %.critedge.i ], [ %umin.i, %bb.c ]
   %i.m = sub i64 %.0.lcssa.i, %.013.lcssa.i
   %i.n = sub nuw i64 %0, %.013.lcssa.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.n, i64 %i.m) ; 3 uses
@@ -1041,9 +1031,6 @@ declare i32 @tolower(i32 noundef) local_unnamed_addr #28
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
 declare i32 @isspace(i32 noundef) local_unnamed_addr #28
-
-; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #20
 
 ; Function Attrs: nounwind
 declare i64 @__isoc23_strtol(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #9

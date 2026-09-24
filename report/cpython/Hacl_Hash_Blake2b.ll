@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
   %i.an = sub i64 %i.ag, %i.am                    ; 3 uses
   %i.ao = add i64 %i.an, 128
   %i.ap = sub i64 -129, %i.an
-  %i.aq = and i64 %i.an, %i.ap
+  %i.aq = and i64 %i.ap, %i.an
   %i.ar = lshr i64 %i.aq, 63
   tail call fastcc void @update_block(ptr noundef %.sroa.451.0.copyload, ptr noundef %.sroa.5.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 %i.ao, i64 %i.ar, ptr noundef readonly %.sroa.466.0.copyload)
   br label %_Py_LibHacl_Hacl_Hash_Blake2b_update_multi.exit213

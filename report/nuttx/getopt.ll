@@ -200,7 +200,7 @@ bb.a:
   store ptr null, ptr %i.a, align 8
   %i.b = tail call i32 @getopt(i32 noundef %1, ptr noundef nonnull %2, ptr noundef nonnull @.str.39) #12 ; 2 uses
   %.not12 = icmp eq i32 %i.b, -1
-  br i1 %.not12, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not12, label %bb.m, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = zext nneg i32 %0 to i64
@@ -295,22 +295,16 @@ bb.l:                                             ; preds = %bb.h, %.thread
   %i.ao = icmp ne i32 %i.an, -1
   %i.ap = icmp samesign ult i64 %indvars.iv.next, %i.c
   %i.aq = select i1 %i.ao, i1 %i.ap, i1 false
-  br i1 %i.aq, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !8
+  br i1 %i.aq, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
-._crit_edge.loopexit:                             ; preds = %bb.l
-  %4 = trunc nuw nsw i64 %indvars.iv.next to i32
-  br label %._crit_edge
+._crit_edge:                                      ; preds = %bb.l
+  %4 = trunc nuw nsw i64 %indvars.iv.next to i32  ; 2 uses
+  %.not37 = icmp eq i32 %0, %4
+  br i1 %.not37, label %bb.n, label %bb.m
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %4, %._crit_edge.loopexit ] ; 3 uses
-  %.not = icmp eq i32 %.0.lcssa, %0
-  %5 = add nuw nsw i32 %0, 1
-  %.not37 = icmp eq i32 %.0.lcssa, %5
-  %or.cond = select i1 %.not, i1 true, i1 %.not37
-  br i1 %or.cond, label %bb.n, label %bb.m
-
-bb.m:                                             ; preds = %._crit_edge
-  %i.ar = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i32 noundef %.0.lcssa, i32 noundef %0) #11 ; 0 uses
+bb.m:                                             ; preds = %bb.a, %._crit_edge
+  %.0.lcssa34 = phi i32 [ %4, %._crit_edge ], [ 0, %bb.a ]
+  %i.ar = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i32 noundef %.0.lcssa34, i32 noundef %0) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 245, ptr noundef nonnull @.str.34) #13
   unreachable
 

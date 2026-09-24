@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = icmp eq i32 %1, %i.z
   br i1 %i.aa, label %.thread, label %bb.q
 
-.thread:                                          ; preds = %bb.a, %bb.b, %bb.c, %bb.d
+.thread:                                          ; preds = %bb.d, %bb.c, %bb.b, %bb.a
   %.lcssa = phi ptr [ %i.h, %bb.a ], [ %i.m, %bb.b ], [ %i.r, %bb.c ], [ %i.w, %bb.d ] ; 10 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.lcssa, i64 32 ; 4 uses
   %i.ac = load ptr, ptr %i.ab, align 8            ; 2 uses

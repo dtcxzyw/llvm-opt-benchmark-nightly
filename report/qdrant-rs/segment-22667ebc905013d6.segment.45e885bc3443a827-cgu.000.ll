@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.b, %bb.d
   %i.h = getelementptr i8, ptr %i.g, i64 -8
   %.val10 = load i64, ptr %i.h, align 8, !noundef !14
   %i.i = tail call noundef zeroext i1 @_RNvMs6_NtNtNtCs607s0NAIaWN_7segment5index11field_index8geo_hashNtB5_7GeoHash11starts_with(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g, i64 noundef %.val10)
-  %.sroa.5.024 = add nuw i64 %.sroa.0.023, 1      ; 4 uses
+  %.sroa.5.024 = add nuw nsw i64 %.sroa.0.023, 1  ; 4 uses
   br i1 %i.i, label %.preheader, label %bb.d
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.024, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.024, %i.b
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
@@ -612,8 +612,8 @@ _RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaW
 
 .preheader.i:                                     ; preds = %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.thread.us53.i.2, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.thread.us53.i.1, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.thread.us53.i, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.us49.i, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.us49.i.epil, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.loopexit.i
   %.us-phi60.i = phi i64 [ %.sroa.0.0.i, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.loopexit.i ], [ %i.q, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.thread.us53.i.2 ], [ %.sroa.0.0.us47.i, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.us49.i ], [ %i.m, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.thread.us53.i ], [ %i.o, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.thread.us53.i.1 ], [ %.sroa.0.0.us47.i.epil, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit.us49.i.epil ] ; 12 uses
-  %.sroa.7.062.i = add nuw i64 %.us-phi60.i, 1    ; 4 uses
-  %i.ad = icmp ult i64 %.sroa.7.062.i, %i.b
+  %.sroa.7.062.i = add nuw nsw i64 %.us-phi60.i, 1 ; 4 uses
+  %i.ad = icmp samesign ult i64 %.sroa.7.062.i, %i.b
   br i1 %i.ad, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
@@ -644,7 +644,7 @@ _RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaW
 
 .lr.ph.i.us7.prol.loopexit.unr-lcssa:             ; preds = %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit20.thread.i.us15.prol, %.lr.ph.i.us7.prol
   %.sroa.13.1.i.us16.prol = phi i64 [ %i.aj, %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaWN_7segment10id_tracker18mutable_id_tracker9read_only11live_reloadNtBV_16LiveReloadResult5merge0E0B13_.exit20.thread.i.us15.prol ], [ %.us-phi60.i, %.lr.ph.i.us7.prol ] ; 2 uses
-  %.sroa.7.0.i.us17.prol = add nuw i64 %.us-phi60.i, 2
+  %.sroa.7.0.i.us17.prol = add nuw nsw i64 %.us-phi60.i, 2
   br label %.lr.ph.i.us7.prol.loopexit
 
 .lr.ph.i.us7.prol.loopexit:                       ; preds = %.lr.ph.i.us7.prol.loopexit.unr-lcssa, %.lr.ph.i.us7.preheader
@@ -802,11 +802,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.val11 = load i32, ptr %i.g, align 4, !noundef !14
   %.val12 = load i32, ptr %i.h, align 4, !noundef !14
   %i.i = icmp eq i32 %.val11, %.val12
-  %.sroa.5.023 = add nuw i64 %.sroa.0.022, 1      ; 5 uses
+  %.sroa.5.023 = add nuw nsw i64 %.sroa.0.022, 1  ; 5 uses
   br i1 %i.i, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.c
-  %i.j = icmp ult i64 %.sroa.5.023, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.5.023, %i.b
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -827,12 +827,12 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.prol
   store i32 %.val.prol, ptr %i.n, align 4
-  %i.q = add i64 %.sroa.0.022, 1
+  %i.q = add nuw i64 %.sroa.0.022, 1
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.d, %.lr.ph.prol
   %.sroa.11.1.prol = phi i64 [ %i.q, %bb.d ], [ %.sroa.0.022, %.lr.ph.prol ] ; 2 uses
-  %.sroa.5.0.prol = add nuw i64 %.sroa.0.022, 2
+  %.sroa.5.0.prol = add nuw nsw i64 %.sroa.0.022, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader

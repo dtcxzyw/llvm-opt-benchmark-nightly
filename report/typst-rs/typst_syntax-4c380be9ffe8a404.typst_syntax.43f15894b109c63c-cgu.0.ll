@@ -205,7 +205,7 @@ _RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode8children.exit.i56: ;
   %i.iq = ptrtoint ptr %.sroa.3.0.i.i57 to i64
   %i.ir = ptrtoint ptr %.sroa.0.0.i.i58 to i64
   %i.is = sub i64 %i.iq, %i.ir
-  %i.it = lshr i64 %i.is, 5                       ; 14 uses
+  %i.it = lshr i64 %i.is, 5                       ; 13 uses
   %i.iu = tail call i64 @llvm.usub.sat.i64(i64 %4, i64 %3)
   %i.iv = sub i64 %5, %i.iu
   %i.iw = getelementptr inbounds nuw i8, ptr %i.c, i64 80 ; 3 uses
@@ -358,7 +358,7 @@ _RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit.thread.i: ; preds = %_RN
   br i1 %.not.i70, label %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit.thread159.i, label %.lr.ph.i
 
 _RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.thread162.i: ; preds = %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.thread.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.i, %.loopexit.i64.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit.thread159.i
-  %.sroa.018.0.lcssa.i = phi i64 [ %..i52.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit.thread159.i ], [ %i.it, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.thread.i ], [ %.sroa.018.0299.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.i ], [ %.sroa.018.0299.i, %.loopexit.i64.i ] ; 6 uses
+  %.sroa.018.0.lcssa.i = phi i64 [ %..i52.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit.thread159.i ], [ %i.it, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.thread.i ], [ %.sroa.018.0299.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.i ], [ %.sroa.018.0299.i, %.loopexit.i64.i ] ; 5 uses
   br i1 %.not.lcssa.i, label %.thread455.i, label %bb.db
 
 .thread455.i:                                     ; preds = %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser6expand.exit73.thread162.i
@@ -761,9 +761,7 @@ _RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser12next_nesting.exit.i: ; preds = %bb.
   %.sroa.0141.0.lcssa.i = phi i8 [ 1, %bb.df ], [ %storemerge.i.i, %._crit_edge.loopexit.i ], [ 1, %.thread455.i ] ; 3 uses
   %.sroa.024.0.lcssa.i = phi i64 [ 0, %bb.df ], [ %i.ni, %._crit_edge.loopexit.i ], [ 0, %.thread455.i ]
   %i.qn = icmp ult i64 %.sroa.018.0.lcssa.i, %.sroa.07.1166458.i
-  %.not46.i = icmp samesign ugt i64 %.sroa.018.0.lcssa.i, %i.it
-  %or.cond.i = select i1 %i.qn, i1 true, i1 %.not46.i, !prof !49
-  br i1 %or.cond.i, label %bb.ec, label %bb.ed, !prof !49
+  br i1 %i.qn, label %bb.ec, label %bb.ed, !prof !49
 
 bb.ec:                                            ; preds = %._crit_edge.i
   call void @_RNvNtNtCs3oUPovFnLWP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.07.1166458.i, i64 noundef %.sroa.018.0.lcssa.i, i64 noundef %i.it, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @534) #62, !noalias !9784

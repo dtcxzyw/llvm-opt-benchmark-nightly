@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %._crit_edge400, %bb.d, %bb.c, %bb.b
   %.sroa.6286.0.copyload = phi i32 [ %.sroa.6286.0.copyload.pre, %._crit_edge400 ], [ %i.m, %bb.d ], [ %i.m, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %.sroa.0284.0.copyload = phi ptr [ %.sroa.0284.0.copyload.pre, %._crit_edge400 ], [ %i.i, %bb.d ], [ %i.i, %bb.c ], [ %i.i, %bb.b ] ; 3 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 12 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 11 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0284.0.copyload, i64 24
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !468
   %i.ay = add i32 %i.ax, -53
@@ -570,11 +570,11 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   br i1 %.not361, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.fz = load ptr, ptr %i.av, align 8, !tbaa !638 ; 2 uses
+  %i.fz = load ptr, ptr %i.av, align 8, !tbaa !638 ; 3 uses
   %.sroa.0238.0.copyload = load ptr, ptr %i.fz, align 8, !tbaa !465 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fz, i64 8
   %i.ga = getelementptr inbounds nuw i8, ptr %.sroa.0238.0.copyload, i64 40
-  %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !638 ; 3 uses
+  %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !638 ; 4 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 40
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !472
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 88
@@ -586,10 +586,10 @@ bb.ai:                                            ; preds = %bb.ah
   %i.gk = load ptr, ptr %i.gg, align 8
   %spec.select.i.i.i.i.i = select i1 %i.gj, ptr %i.gg, ptr %i.gk
   %.0.i.i.i.i.i = load i64, ptr %spec.select.i.i.i.i.i, align 8, !tbaa !357 ; 2 uses
-  %i.gl = load ptr, ptr %i.gb, align 8, !tbaa !472
+  %i.gl = load ptr, ptr %i.gb, align 8, !tbaa !472 ; 2 uses
   %i.gm = icmp eq ptr %i.gl, %.sroa.0249.0.copyload
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gb, i64 8
-  %i.go = load i32, ptr %i.gn, align 8
+  %i.go = load i32, ptr %i.gn, align 8            ; 2 uses
   %i.gp = icmp eq i32 %i.go, %.sroa.18.0.copyload
   %.not3.i196.not = select i1 %i.gm, i1 %i.gp, i1 false
   %i.gq = and i64 %.0.i.i.i.i.i, 4294967295
@@ -603,12 +603,12 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %.not361.1, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.gr = load ptr, ptr %i.av, align 8, !tbaa !638 ; 2 uses
+  %i.gr = load ptr, ptr %i.av, align 8, !tbaa !638 ; 3 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 40
   %.sroa.0238.0.copyload.1 = load ptr, ptr %i.gs, align 8, !tbaa !465 ; 2 uses
   %.sroa.8.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.gr, i64 48
   %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.0238.0.copyload.1, i64 40
-  %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !638 ; 3 uses
+  %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !638 ; 4 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 40
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !472
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 88
@@ -620,10 +620,10 @@ bb.ak:                                            ; preds = %bb.aj
   %i.hd = load ptr, ptr %i.gz, align 8
   %spec.select.i.i.i.i.i.1 = select i1 %i.hc, ptr %i.gz, ptr %i.hd
   %.0.i.i.i.i.i.1 = load i64, ptr %spec.select.i.i.i.i.i.1, align 8, !tbaa !357 ; 2 uses
-  %i.he = load ptr, ptr %i.gu, align 8, !tbaa !472
+  %i.he = load ptr, ptr %i.gu, align 8, !tbaa !472 ; 2 uses
   %i.hf = icmp eq ptr %i.he, %.sroa.0249.0.copyload
   %i.hg = getelementptr inbounds nuw i8, ptr %i.gu, i64 8
-  %i.hh = load i32, ptr %i.hg, align 8
+  %i.hh = load i32, ptr %i.hg, align 8            ; 2 uses
   %i.hi = icmp eq i32 %i.hh, %.sroa.18.0.copyload
   %.not3.i196.not.1 = select i1 %i.hf, i1 %i.hi, i1 false
   %i.hj = and i64 %.0.i.i.i.i.i.1, 4294967295
@@ -638,12 +638,12 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %.not361.2, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  %i.hl = load ptr, ptr %i.av, align 8, !tbaa !638 ; 2 uses
+  %i.hl = load ptr, ptr %i.av, align 8, !tbaa !638 ; 3 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 80
   %.sroa.0238.0.copyload.2 = load ptr, ptr %i.hm, align 8, !tbaa !465 ; 2 uses
   %.sroa.8.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.hl, i64 88
   %i.hn = getelementptr inbounds nuw i8, ptr %.sroa.0238.0.copyload.2, i64 40
-  %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !638 ; 3 uses
+  %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !638 ; 4 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 40
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !472
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 88
@@ -655,10 +655,10 @@ bb.am:                                            ; preds = %bb.al
   %i.hx = load ptr, ptr %i.ht, align 8
   %spec.select.i.i.i.i.i.2 = select i1 %i.hw, ptr %i.ht, ptr %i.hx
   %.0.i.i.i.i.i.2 = load i64, ptr %spec.select.i.i.i.i.i.2, align 8, !tbaa !357 ; 2 uses
-  %i.hy = load ptr, ptr %i.ho, align 8, !tbaa !472
+  %i.hy = load ptr, ptr %i.ho, align 8, !tbaa !472 ; 2 uses
   %i.hz = icmp eq ptr %i.hy, %.sroa.0249.0.copyload
   %i.ia = getelementptr inbounds nuw i8, ptr %i.ho, i64 8
-  %i.ib = load i32, ptr %i.ia, align 8
+  %i.ib = load i32, ptr %i.ia, align 8            ; 2 uses
   %i.ic = icmp eq i32 %i.ib, %.sroa.18.0.copyload
   %.not3.i196.not.2 = select i1 %i.hz, i1 %i.ic, i1 false
   %i.id = and i64 %.0.i.i.i.i.i.2, 4294967295
@@ -673,12 +673,12 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %.not361.3, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  %i.if = load ptr, ptr %i.av, align 8, !tbaa !638 ; 2 uses
+  %i.if = load ptr, ptr %i.av, align 8, !tbaa !638 ; 3 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 120
   %.sroa.0238.0.copyload.3 = load ptr, ptr %i.ig, align 8, !tbaa !465 ; 2 uses
   %.sroa.8.0..sroa_idx.3 = getelementptr inbounds nuw i8, ptr %i.if, i64 128
   %i.ih = getelementptr inbounds nuw i8, ptr %.sroa.0238.0.copyload.3, i64 40
-  %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !638 ; 3 uses
+  %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !638 ; 4 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 40
   %i.ik = load ptr, ptr %i.ij, align 8, !tbaa !472
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 88
@@ -690,10 +690,10 @@ bb.ao:                                            ; preds = %bb.an
   %i.ir = load ptr, ptr %i.in, align 8
   %spec.select.i.i.i.i.i.3 = select i1 %i.iq, ptr %i.in, ptr %i.ir
   %.0.i.i.i.i.i.3 = load i64, ptr %spec.select.i.i.i.i.i.3, align 8, !tbaa !357 ; 2 uses
-  %i.is = load ptr, ptr %i.ii, align 8, !tbaa !472
+  %i.is = load ptr, ptr %i.ii, align 8, !tbaa !472 ; 2 uses
   %i.it = icmp eq ptr %i.is, %.sroa.0249.0.copyload
   %i.iu = getelementptr inbounds nuw i8, ptr %i.ii, i64 8
-  %i.iv = load i32, ptr %i.iu, align 8
+  %i.iv = load i32, ptr %i.iu, align 8            ; 2 uses
   %i.iw = icmp eq i32 %i.iv, %.sroa.18.0.copyload
   %.not3.i196.not.3 = select i1 %i.it, i1 %i.iw, i1 false
   %i.ix = and i64 %.0.i.i.i.i.i.3, 4294967295
@@ -759,46 +759,41 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #39
   br label %._crit_edge.thread416
 
-.thread348:                                       ; preds = %bb.ai, %bb.ak, %bb.am, %bb.ao
-  %i.jm = phi i1 [ true, %bb.ai ], [ true, %bb.ak ], [ true, %bb.am ], [ false, %bb.ao ]
-  %.0178386.lcssa.wide = phi i32 [ 0, %bb.ai ], [ 1, %bb.ak ], [ 2, %bb.am ], [ 3, %bb.ao ] ; 3 uses
-  %.sroa.0238.0.copyload.lcssa = phi ptr [ %.sroa.0238.0.copyload, %bb.ai ], [ %.sroa.0238.0.copyload.1, %bb.ak ], [ %.sroa.0238.0.copyload.2, %bb.am ], [ %.sroa.0238.0.copyload.3, %bb.ao ] ; 2 uses
+.thread348:                                       ; preds = %bb.ao, %bb.am, %bb.ak, %bb.ai
+  %17 = phi ptr [ %i.fz, %bb.ai ], [ %i.gr, %bb.ak ], [ %i.hl, %bb.am ], [ %i.if, %bb.ao ]
+  %.sroa.7.0.copyload = phi i32 [ %i.go, %bb.ai ], [ %i.hh, %bb.ak ], [ %i.ib, %bb.am ], [ %i.iv, %bb.ao ] ; 3 uses
+  %.sroa.0223.0.copyload = phi ptr [ %i.gl, %bb.ai ], [ %i.he, %bb.ak ], [ %i.hy, %bb.am ], [ %i.is, %bb.ao ] ; 3 uses
+  %18 = phi ptr [ %i.gb, %bb.ai ], [ %i.gu, %bb.ak ], [ %i.ho, %bb.am ], [ %i.ii, %bb.ao ]
+  %i.jm = phi i1 [ false, %bb.ai ], [ false, %bb.ak ], [ false, %bb.am ], [ true, %bb.ao ]
+  %.0178386.lcssa.wide = phi i64 [ 0, %bb.ai ], [ 1, %bb.ak ], [ 2, %bb.am ], [ 3, %bb.ao ] ; 3 uses
+  %.sroa.0238.0.copyload.lcssa = phi ptr [ %.sroa.0238.0.copyload, %bb.ai ], [ %.sroa.0238.0.copyload.1, %bb.ak ], [ %.sroa.0238.0.copyload.2, %bb.am ], [ %.sroa.0238.0.copyload.3, %bb.ao ]
   %.sroa.8.0.copyload.lcssa.in = phi ptr [ %.sroa.8.0..sroa_idx, %bb.ai ], [ %.sroa.8.0..sroa_idx.1, %bb.ak ], [ %.sroa.8.0..sroa_idx.2, %bb.am ], [ %.sroa.8.0..sroa_idx.3, %bb.ao ]
   %.lcssa.in = phi i64 [ %.0.i.i.i.i.i, %bb.ai ], [ %.0.i.i.i.i.i.1, %bb.ak ], [ %.0.i.i.i.i.i.2, %bb.am ], [ %.0.i.i.i.i.i.3, %bb.ao ]
-  %.lcssa = trunc i64 %.lcssa.in to i32
   %i.jn = load i32, ptr %i.b, align 8, !tbaa !342
   %i.jo = icmp sgt i32 %i.jn, 4
   br i1 %i.jo, label %bb.av, label %._crit_edge.thread416
 
 bb.av:                                            ; preds = %.thread348
-  %.sroa.8.0.copyload.lcssa = load i32, ptr %.sroa.8.0.copyload.lcssa.in, align 8, !tbaa !240
-  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0238.0.copyload.lcssa, i64 40
-  %18 = load ptr, ptr %17, align 8, !tbaa !638    ; 3 uses
-  %.sroa.0223.0.copyload = load ptr, ptr %18, align 8, !tbaa !465 ; 3 uses
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %.sroa.7.0.copyload.a = load i32, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !240 ; 3 uses
+  %19 = trunc nuw nsw i64 %.0178386.lcssa.wide to i32
+  %.sroa.7.0.copyload.a = load i32, ptr %.sroa.8.0.copyload.lcssa.in, align 8, !tbaa !240
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %18, i64 12
   %.sroa.10.0.copyload = load i32, ptr %.sroa.10.0..sroa_idx, align 4
   %i.jp = icmp eq ptr %.sroa.0238.0.copyload.lcssa, %.sroa.0273.3.3
-  %i.jq = icmp eq i32 %.sroa.8.0.copyload.lcssa, %.sroa.7276.3.3
+  %i.jq = icmp eq i32 %.sroa.7.0.copyload.a, %.sroa.7276.3.3
   %i.jr = select i1 %i.jp, i1 %i.jq, i1 false
-  %i.js = icmp eq i32 %.0178386.lcssa.wide, %.4.3
-  %or.cond189 = and i1 %i.jr, %i.js               ; 2 uses
+  %i.js = icmp eq i32 %.4.3, %19
+  %or.cond189 = select i1 %i.jr, i1 %i.js, i1 false ; 2 uses
   %spec.select = select i1 %or.cond189, ptr null, ptr %.sroa.0249.0.copyload ; 2 uses
   %spec.select358 = select i1 %or.cond189, i32 0, i32 %.sroa.18.0.copyload ; 2 uses
-  br i1 %i.jm, label %.lr.ph, label %._crit_edge.thread
-
-.lr.ph:                                           ; preds = %bb.av
-  %19 = zext nneg i32 %.0178386.lcssa.wide to i64
-  br label %bb.aw
+  br i1 %i.jm, label %._crit_edge.thread, label %bb.aw
 
 ._crit_edge:                                      ; preds = %_ZNK4llvm5APInteqEm.exit
   br i1 %.1180, label %._crit_edge.thread, label %._crit_edge.thread416
 
-bb.aw:                                            ; preds = %.lr.ph, %_ZNK4llvm5APInteqEm.exit
-  %indvars.iv = phi i64 [ %19, %.lr.ph ], [ %indvars.iv.next, %_ZNK4llvm5APInteqEm.exit ] ; 3 uses
-  %.sroa.18.2390 = phi i32 [ %spec.select358, %.lr.ph ], [ %.sroa.18.4, %_ZNK4llvm5APInteqEm.exit ] ; 2 uses
-  %.sroa.0249.2389 = phi ptr [ %spec.select, %.lr.ph ], [ %.sroa.0249.4, %_ZNK4llvm5APInteqEm.exit ] ; 3 uses
+bb.aw:                                            ; preds = %bb.av, %_ZNK4llvm5APInteqEm.exit
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK4llvm5APInteqEm.exit ], [ %.0178386.lcssa.wide, %bb.av ] ; 3 uses
+  %.sroa.18.2390 = phi i32 [ %.sroa.18.4, %_ZNK4llvm5APInteqEm.exit ], [ %spec.select358, %bb.av ] ; 2 uses
+  %.sroa.0249.2389 = phi ptr [ %.sroa.0249.4, %_ZNK4llvm5APInteqEm.exit ], [ %spec.select, %bb.av ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.jt = shl nuw nsw i64 2, %indvars.iv
   %i.ju = and i64 %i.jt, %.sroa.0321.1.3
@@ -806,8 +801,7 @@ bb.aw:                                            ; preds = %.lr.ph, %_ZNK4llvm5
   br i1 %.not368, label %bb.ax, label %_ZNK4llvm5APInteqEm.exit
 
 bb.ax:                                            ; preds = %bb.aw
-  %20 = load ptr, ptr %i.av, align 8, !tbaa !638
-  %i.jv = getelementptr inbounds nuw [40 x i8], ptr %20, i64 %indvars.iv.next
+  %i.jv = getelementptr inbounds nuw [40 x i8], ptr %17, i64 %indvars.iv.next
   %.sroa.0216.0.copyload = load ptr, ptr %i.jv, align 8, !tbaa !465
   %i.jw = getelementptr inbounds nuw i8, ptr %.sroa.0216.0.copyload, i64 40
   %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !638 ; 3 uses
@@ -876,26 +870,25 @@ bb.bb:                                            ; preds = %bb.ba, %._crit_edge
   %.sroa.18.5 = phi i32 [ %.fca.1.extract25, %bb.ba ], [ %.sroa.18.2.lcssa412, %._crit_edge.thread ]
   %i.kw = getelementptr inbounds nuw i8, ptr %.sroa.0223.0.copyload, i64 48
   %i.kx = load ptr, ptr %i.kw, align 8, !tbaa !469
-  %i.ky = zext i32 %.sroa.7.0.copyload.a to i64
+  %i.ky = zext i32 %.sroa.7.0.copyload to i64
   %i.kz = getelementptr inbounds nuw [16 x i8], ptr %i.kx, i64 %i.ky
   %.sroa.0.0.copyload.i.i.i200 = load i16, ptr %i.kz, align 8, !tbaa !345
   %.not367 = icmp eq i16 %.sroa.0.0.copyload.i.i.i200, 136
   br i1 %.not367, label %bb.bd, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.la = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG10getBitcastENS_3EVTENS_7SDValueE(ptr noundef nonnull align 8 dereferenceable(920) %3, i16 136, ptr null, ptr nonnull %.sroa.0223.0.copyload, i32 %.sroa.7.0.copyload.a) #39 ; 2 uses
+  %i.la = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG10getBitcastENS_3EVTENS_7SDValueE(ptr noundef nonnull align 8 dereferenceable(920) %3, i16 136, ptr null, ptr nonnull %.sroa.0223.0.copyload, i32 %.sroa.7.0.copyload) #39 ; 2 uses
   %.fca.0.extract15 = extractvalue { ptr, i32 } %i.la, 0
   %.fca.1.extract16 = extractvalue { ptr, i32 } %i.la, 1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
-  %.sroa.7.0 = phi i32 [ %.fca.1.extract16, %bb.bc ], [ %.sroa.7.0.copyload.a, %bb.bb ]
+  %.sroa.7.0 = phi i32 [ %.fca.1.extract16, %bb.bc ], [ %.sroa.7.0.copyload, %bb.bb ]
   %.sroa.0223.0 = phi ptr [ %.fca.0.extract15, %bb.bc ], [ %.sroa.0223.0.copyload, %bb.bb ]
-  %21 = trunc nuw nsw i64 %.sroa.0321.1.3 to i32
-  %22 = shl i32 %.lcssa, 6
-  %23 = shl nuw nsw i32 %.0178386.lcssa.wide, 4
-  %24 = or i32 %23, %21
-  %25 = or i32 %24, %22
+  %20 = shl i64 %.lcssa.in, 6
+  %21 = shl nuw nsw i64 %.0178386.lcssa.wide, 4
+  %22 = or disjoint i64 %21, %20
+  %23 = or i64 %22, %.sroa.0321.1.3
   store ptr %.sroa.0249.5, ptr %14, align 8, !tbaa !465
   %.sroa.18.0..sroa_idx256 = getelementptr inbounds nuw i8, ptr %14, i64 8
   store i32 %.sroa.18.5, ptr %.sroa.18.0..sroa_idx256, align 8, !tbaa !240
@@ -906,8 +899,8 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   store i32 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx225, align 8, !tbaa !240
   %.sroa.10.0..sroa_idx227 = getelementptr inbounds nuw i8, ptr %15, i64 12
   store i32 %.sroa.10.0.copyload, ptr %.sroa.10.0..sroa_idx227, align 4
-  %26 = zext i32 %25 to i64
-  %i.lb = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %3, i64 noundef %26, ptr noundef nonnull align 8 dereferenceable(12) %2, i16 5, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #39 ; 2 uses
+  %24 = and i64 %23, 4294967295
+  %i.lb = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %3, i64 noundef %24, ptr noundef nonnull align 8 dereferenceable(12) %2, i16 5, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #39 ; 2 uses
   %.fca.0.extract9 = extractvalue { ptr, i32 } %i.lb, 0
   %.fca.1.extract10 = extractvalue { ptr, i32 } %i.lb, 1
   store ptr %.fca.0.extract9, ptr %16, align 8

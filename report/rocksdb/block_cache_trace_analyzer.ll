@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %_ZNSt14_Function_ba
 
 _ZN7rocksdb12_GLOBAL__N_117print_break_linesEj.exit: ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit29
   %.sroa.062.068 = phi ptr [ %i.ae, %.lr.ph ], [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit29 ] ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.062.068, i64 32
   %i.be = load ptr, ptr @stdout, align 8, !tbaa !214
   %fwrite.i = call i64 @fwrite(ptr nonnull @_ZN7rocksdb12_GLOBAL__N_110kBreakLineE, i64 64, i64 1, ptr %i.be) ; 0 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.062.068, i64 32
   %i.bf = load ptr, ptr @stdout, align 8, !tbaa !214
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   %i.bg = load i8, ptr %10, align 8, !tbaa !348
@@ -371,9 +371,9 @@ bb.s:                                             ; preds = %.lr.ph75, %._crit_e
 
 .lr.ph71:                                         ; preds = %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50
   %.sroa.054.069 = phi ptr [ %i.di, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50 ], [ %i.cl, %bb.s ] ; 3 uses
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.054.069, i64 32
   %i.cq = load ptr, ptr @stdout, align 8, !tbaa !214
   %fwrite.i34 = call i64 @fwrite(ptr nonnull @_ZN7rocksdb12_GLOBAL__N_110kBreakLineE, i64 64, i64 1, ptr %i.cq) ; 0 uses
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.054.069, i64 32
   %i.cr = load ptr, ptr @stdout, align 8, !tbaa !214
   %i.cs = load ptr, ptr %i.cj, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
@@ -776,9 +776,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit602: ; preds = %bb
 
 _ZN7rocksdb12_GLOBAL__N_117print_break_linesEj.exit: ; preds = %.lr.ph1825, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit614
   %.sroa.01119.01823 = phi ptr [ %i.awx, %.lr.ph1825 ], [ %i.ayi, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit614 ] ; 3 uses
+  %28 = getelementptr inbounds nuw i8, ptr %.sroa.01119.01823, i64 32
   %i.axr = load ptr, ptr @stdout, align 8, !tbaa !214
   %fwrite.i = call i64 @fwrite(ptr nonnull @_ZN7rocksdb12_GLOBAL__N_110kBreakLineE, i64 64, i64 1, ptr %i.axr) ; 0 uses
-  %28 = getelementptr inbounds nuw i8, ptr %.sroa.01119.01823, i64 32
   %i.axs = load ptr, ptr @stdout, align 8, !tbaa !214
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #30
   %i.axt = load i8, ptr %28, align 8, !tbaa !348
@@ -955,9 +955,9 @@ bb.nv:                                            ; preds = %.lr.ph1833, %._crit
 
 .lr.ph1829:                                       ; preds = %bb.nv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit635
   %.sroa.01111.01827 = phi ptr [ %i.azy, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit635 ], [ %i.azb, %bb.nv ] ; 3 uses
+  %29 = getelementptr inbounds nuw i8, ptr %.sroa.01111.01827, i64 32
   %i.azg = load ptr, ptr @stdout, align 8, !tbaa !214
   %fwrite.i619 = call i64 @fwrite(ptr nonnull @_ZN7rocksdb12_GLOBAL__N_110kBreakLineE, i64 64, i64 1, ptr %i.azg) ; 0 uses
-  %29 = getelementptr inbounds nuw i8, ptr %.sroa.01111.01827, i64 32
   %i.azh = load ptr, ptr @stdout, align 8, !tbaa !214
   %i.azi = load ptr, ptr %i.ayz, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #30
@@ -1360,9 +1360,9 @@ bb.w:                                             ; preds = %_ZNSt14_Function_ba
 
 _ZN7rocksdb12_GLOBAL__N_117print_break_linesEj.exit39: ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit42
   %.sroa.0108.0115 = phi ptr [ %i.ay, %.lr.ph ], [ %i.by, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit42 ] ; 3 uses
+  %24 = getelementptr inbounds nuw i8, ptr %.sroa.0108.0115, i64 32
   %i.bo = load ptr, ptr @stdout, align 8, !tbaa !214
   %fwrite.i37 = call i64 @fwrite(ptr nonnull @_ZN7rocksdb12_GLOBAL__N_110kBreakLineE, i64 64, i64 1, ptr %i.bo) ; 0 uses
-  %24 = getelementptr inbounds nuw i8, ptr %.sroa.0108.0115, i64 32
   %i.bp = load ptr, ptr @stdout, align 8, !tbaa !214
   %i.bq = load ptr, ptr %24, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #30
@@ -1435,9 +1435,9 @@ bb.aa:                                            ; preds = %.preheader114
 
 _ZN7rocksdb12_GLOBAL__N_117print_break_linesEj.exit53: ; preds = %.lr.ph117, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56
   %.sroa.0104.0116 = phi ptr [ %i.ci, %.lr.ph117 ], [ %i.cy, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56 ] ; 3 uses
+  %25 = getelementptr inbounds nuw i8, ptr %.sroa.0104.0116, i64 32
   %i.co = load ptr, ptr @stdout, align 8, !tbaa !214
   %fwrite.i51 = call i64 @fwrite(ptr nonnull @_ZN7rocksdb12_GLOBAL__N_110kBreakLineE, i64 64, i64 1, ptr %i.co) ; 0 uses
-  %25 = getelementptr inbounds nuw i8, ptr %.sroa.0104.0116, i64 32
   %i.cp = load ptr, ptr @stdout, align 8, !tbaa !214
   %i.cq = load ptr, ptr %25, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #30
@@ -1510,9 +1510,9 @@ bb.ae:                                            ; preds = %.preheader113
 
 _ZN7rocksdb12_GLOBAL__N_117print_break_linesEj.exit67: ; preds = %.lr.ph119, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit70
   %.sroa.0100.0118 = phi ptr [ %i.di, %.lr.ph119 ], [ %i.dy, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit70 ] ; 3 uses
+  %26 = getelementptr inbounds nuw i8, ptr %.sroa.0100.0118, i64 32
   %i.do = load ptr, ptr @stdout, align 8, !tbaa !214
   %fwrite.i65 = call i64 @fwrite(ptr nonnull @_ZN7rocksdb12_GLOBAL__N_110kBreakLineE, i64 64, i64 1, ptr %i.do) ; 0 uses
-  %26 = getelementptr inbounds nuw i8, ptr %.sroa.0100.0118, i64 32
   %i.dp = load ptr, ptr @stdout, align 8, !tbaa !214
   %i.dq = load ptr, ptr %26, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #30

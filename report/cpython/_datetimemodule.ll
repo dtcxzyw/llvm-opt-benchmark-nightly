@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %.not39 = icmp eq i8 %i.be, 45
   br i1 %.not39, label %.lr.ph.i46, label %parse_digits.exit.thread
 
-.lr.ph.i46:                                       ; preds = %bb.d, %bb.c
+.lr.ph.i46:                                       ; preds = %bb.c, %bb.d
   %.1 = phi ptr [ %i.bd, %bb.d ], [ %scevgep, %bb.c ] ; 2 uses
   %i.bf = load i8, ptr %.1, align 1, !tbaa !35
   %i.bg = sext i8 %i.bf to i32
@@ -281,8 +281,8 @@ bb.h:                                             ; preds = %.lr.ph.i56.1
   %i.cq = sext i1 %i.cp to i32
   br label %parse_digits.exit.thread
 
-parse_digits.exit.thread:                         ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i51.preheader, %.lr.ph.i51.1, %.lr.ph.i41, %.lr.ph.i41.1, %.lr.ph.i46, %.lr.ph.i56, %.lr.ph.i56.1, %bb.h, %bb.e, %parse_digits.exit45, %bb.d, %parse_digits.exit55, %bb.g, %parse_digits.exit
-  %.3 = phi i32 [ -1, %parse_digits.exit ], [ -3, %.lr.ph.i41 ], [ -2, %bb.g ], [ -1, %parse_digits.exit55 ], [ -1, %.lr.ph.i51.preheader ], [ %.032, %bb.e ], [ -3, %parse_digits.exit45 ], [ -2, %bb.d ], [ -1, %.lr.ph.i ], [ -1, %.lr.ph.i56.1 ], [ -4, %.lr.ph.i46 ], [ -1, %.lr.ph.i56 ], [ %i.cq, %bb.h ], [ -3, %.lr.ph.i41.1 ], [ -1, %.lr.ph.i51.1 ], [ -1, %.lr.ph.i.3 ], [ -1, %.lr.ph.i.2 ], [ -1, %.lr.ph.i.1 ]
+parse_digits.exit.thread:                         ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i51.preheader, %.lr.ph.i51.1, %.lr.ph.i41, %.lr.ph.i41.1, %.lr.ph.i56, %.lr.ph.i56.1, %bb.h, %.lr.ph.i46, %bb.e, %parse_digits.exit45, %bb.d, %parse_digits.exit55, %bb.g, %parse_digits.exit
+  %.3 = phi i32 [ -1, %parse_digits.exit ], [ -4, %.lr.ph.i46 ], [ -2, %bb.g ], [ -1, %parse_digits.exit55 ], [ -1, %.lr.ph.i51.preheader ], [ %.032, %bb.e ], [ -3, %parse_digits.exit45 ], [ -2, %bb.d ], [ -1, %.lr.ph.i ], [ -3, %.lr.ph.i41 ], [ -1, %.lr.ph.i56.1 ], [ -1, %.lr.ph.i56 ], [ %i.cq, %bb.h ], [ -3, %.lr.ph.i41.1 ], [ -1, %.lr.ph.i51.1 ], [ -1, %.lr.ph.i.3 ], [ -1, %.lr.ph.i.2 ], [ -1, %.lr.ph.i.1 ]
   ret i32 %.3
 }
 

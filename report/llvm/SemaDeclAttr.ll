@@ -204,7 +204,7 @@ _ZNK4llvm9StringRef9ends_withES0_.exit.thread.i:  ; preds = %_ZNK4llvm9StringRef
   br label %_ZL13normalizeNameRN4llvm9StringRefE.exit
 
 _ZL13normalizeNameRN4llvm9StringRefE.exit:        ; preds = %bb.a, %_ZNK4llvm9StringRef11starts_withES0_.exit.i, %_ZNK4llvm9StringRef9ends_withES0_.exit.i, %_ZNK4llvm9StringRef9ends_withES0_.exit.thread.i
-  %.sroa.10.0 = phi i64 [ %i.y, %_ZNK4llvm9StringRef9ends_withES0_.exit.thread.i ], [ %i.l, %_ZNK4llvm9StringRef9ends_withES0_.exit.i ], [ %i.l, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ %i.l, %bb.a ] ; 6 uses
+  %.sroa.10.0 = phi i64 [ %i.y, %_ZNK4llvm9StringRef9ends_withES0_.exit.thread.i ], [ %i.l, %_ZNK4llvm9StringRef9ends_withES0_.exit.i ], [ %i.l, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ %i.l, %bb.a ] ; 5 uses
   %.sroa.0170.0 = phi ptr [ %i.x, %_ZNK4llvm9StringRef9ends_withES0_.exit.thread.i ], [ %i.j, %_ZNK4llvm9StringRef9ends_withES0_.exit.i ], [ %i.j, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ %i.j, %bb.a ] ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.z, align 8, !tbaa !66 ; 9 uses
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %_ZL13normalizeNameR
   br i1 %i.ad, label %.preheader.preheader, label %_ZN4llvm5APIntaSEm.exit
 
 .preheader.preheader:                             ; preds = %bb.b
-  %i.ae = add nsw i64 %.sroa.10.0, -1             ; 4 uses
+  %i.ae = add nsw i64 %.sroa.10.0, -1             ; 3 uses
   %exitcond.not302 = icmp eq i64 %i.ae, 0
   br i1 %exitcond.not302, label %.critedge.thread, label %.lr.ph304
 
@@ -258,12 +258,11 @@ bb.b:                                             ; preds = %_ZL13normalizeNameR
 
 bb.c:                                             ; preds = %.critedge.thread, %.critedge
   %.0233 = phi i64 [ %i.ae, %.critedge.thread ], [ %.0303, %.critedge ]
-  %i.aj = phi i64 [ %.sroa.10.0, %.critedge.thread ], [ %i.af, %.critedge ]
+  %i.aj = phi i64 [ %.sroa.10.0, %.critedge.thread ], [ %i.af, %.critedge ] ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0170.0, i64 1
-  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.ae, i64 %.0233)
   store ptr %i.ak, ptr %6, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store i64 %.sroa.speculated.i, ptr %i.al, align 8
+  store i64 %.0233, ptr %i.al, align 8
   %i.am = call noundef zeroext i1 @_ZNK4llvm9StringRef12getAsIntegerEjRNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %6, i32 noundef 10, ptr noundef nonnull align 8 dereferenceable(12) %5) #23
   %.pr.pre.pre = load i32, ptr %i.aa, align 8, !tbaa !835 ; 3 uses
   br i1 %i.am, label %bb.h, label %bb.d
@@ -289,9 +288,8 @@ _ZNK4llvm5APInt10isPowerOf2Ev.exit:               ; preds = %bb.e
   br i1 %i.ar, label %bb.f, label %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i
 
 bb.f:                                             ; preds = %.split, %_ZNK4llvm5APInt10isPowerOf2Ev.exit
-  %.sroa.speculated4.i97 = call i64 @llvm.umin.i64(i64 %.sroa.10.0, i64 %i.aj) ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0170.0, i64 %.sroa.speculated4.i97
-  %i.at = sub nuw nsw i64 %.sroa.10.0, %.sroa.speculated4.i97
+  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0170.0, i64 %i.aj
+  %i.at = sub nuw i64 %.sroa.10.0, %i.aj
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 232
   %.val93 = load ptr, ptr %i.au, align 8
   call fastcc void @_ZL16parseModeAttrArgRN5clang4SemaEN4llvm9StringRefERjRbS5_RNS_13FloatModeKindE(ptr %.val93, ptr nonnull %i.as, i64 %i.at, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 1 dereferenceable(1) %i.c, ptr noundef nonnull align 1 dereferenceable(1) %i.d, ptr noundef nonnull align 4 dereferenceable(4) %i.e)

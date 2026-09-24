@@ -205,22 +205,22 @@ bb.h:                                             ; preds = %.lr.ph40
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #34, !dbg !129822, !noalias !129814
   unreachable, !dbg !129822
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEEECsfcROwRM8ZtH_11polars_plan.exit: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEECsfcROwRM8ZtH_11polars_plan.exit.i.i.i, %bb.b, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEEECsfcROwRM8ZtH_11polars_plan.exit15
-  ret void, !dbg !129826
-
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEEECsfcROwRM8ZtH_11polars_plan.exit15: ; preds = %bb.a
-  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !129827
-  %i.u = load i64, ptr %i.t, align 8, !dbg !129827, !noundef !3672
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !129828 ; 2 uses
-  %i.w = load i64, ptr %i.v, align 8, !dbg !129828, !noundef !3672
-  %i.x = add i64 %i.w, %i.u, !dbg !129828
-  store i64 %i.x, ptr %i.v, align 8, !dbg !129828
-  %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !129829
-  %.sroa.416.0.copyload = load i64, ptr %.sroa.416.0..sroa_idx, align 8, !dbg !129829
-  %i.y = add i64 %.sroa.416.0.copyload, %i.c, !dbg !129830
-  store i64 %i.y, ptr %i.b, align 8, !dbg !129830
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !129826
+  %i.u = load i64, ptr %i.t, align 8, !dbg !129826, !noundef !3672
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !129827 ; 2 uses
+  %i.w = load i64, ptr %i.v, align 8, !dbg !129827, !noundef !3672
+  %i.x = add i64 %i.w, %i.u, !dbg !129827
+  store i64 %i.x, ptr %i.v, align 8, !dbg !129827
+  %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !129828
+  %.sroa.416.0.copyload = load i64, ptr %.sroa.416.0..sroa_idx, align 8, !dbg !129828
+  %i.y = add i64 %.sroa.416.0.copyload, %i.c, !dbg !129829
+  store i64 %i.y, ptr %i.b, align 8, !dbg !129829
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !dbg !129820
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEEECsfcROwRM8ZtH_11polars_plan.exit, !dbg !129821
+
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEEECsfcROwRM8ZtH_11polars_plan.exit: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEECsfcROwRM8ZtH_11polars_plan.exit.i.i.i, %bb.b, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCse67t6KqNqGQ_5rayon4iter7collect8consumer13CollectResultINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashEEECsfcROwRM8ZtH_11polars_plan.exit15
+  ret void, !dbg !129830
 
 .body:                                            ; preds = %bb.f, %.body.i.i.i
   resume { ptr, i32 } %eh.lpad-body.i.i.i, !dbg !129831
@@ -624,11 +624,11 @@ begin_hunk_1_@llvm.abs.i32
 !129823 = !DILocation(line: 810, column: 1, scope: !1017, inlinedAt: !129810)
 !129824 = !DILocation(line: 810, column: 1, scope: !1018, inlinedAt: !129811)
 !129825 = !DILocation(line: 810, column: 1, scope: !1018, inlinedAt: !129812)
-!129826 = !DILocation(line: 184, column: 6, scope: !129802)
-!129827 = !DILocation(line: 179, column: 35, scope: !129804)
-!129828 = !DILocation(line: 179, column: 17, scope: !129804)
-!129829 = !DILocation(line: 180, column: 41, scope: !129804)
-!129830 = !DILocation(line: 180, column: 17, scope: !129804)
+!129826 = !DILocation(line: 179, column: 35, scope: !129804)
+!129827 = !DILocation(line: 179, column: 17, scope: !129804)
+!129828 = !DILocation(line: 180, column: 41, scope: !129804)
+!129829 = !DILocation(line: 180, column: 17, scope: !129804)
+!129830 = !DILocation(line: 184, column: 6, scope: !129802)
 !129831 = !DILocation(line: 168, column: 5, scope: !129802)
 !129832 = !DILocation(line: 177, column: 41, scope: !2040)
 !129833 = !DILocation(line: 177, column: 28, scope: !2040)

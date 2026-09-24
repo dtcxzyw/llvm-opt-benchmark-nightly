@@ -205,11 +205,11 @@ bb.ay:                                            ; preds = %bb.ba, %bb.ax
   %.val.i214 = load i64, ptr %i.ga, align 8, !noalias !83247, !noundef !75
   %.val11.i = load i64, ptr %i.gb, align 8, !noalias !83247, !noundef !75
   %i.gc = icmp eq i64 %.val.i214, %.val11.i
-  %.sroa.5.024.i = add nuw i64 %.sroa.0.023.i, 1  ; 5 uses
+  %.sroa.5.024.i = add nuw nsw i64 %.sroa.0.023.i, 1 ; 5 uses
   br i1 %i.gc, label %.preheader.i216, label %bb.ba
 
 .preheader.i216:                                  ; preds = %bb.ay
-  %i.gd = icmp ult i64 %.sroa.5.024.i, %i.fz
+  %i.gd = icmp samesign ult i64 %.sroa.5.024.i, %i.fz
   br i1 %i.gd, label %.lr.ph.i217.preheader, label %._crit_edge.i
 
 .lr.ph.i217.preheader:                            ; preds = %.preheader.i216
@@ -230,12 +230,12 @@ bb.ay:                                            ; preds = %bb.ba, %bb.ax
 
 bb.az:                                            ; preds = %.lr.ph.i217.prol
   store i64 %.val12.i.prol, ptr %i.gh, align 8, !noalias !83247
-  %i.gk = add i64 %.sroa.0.023.i, 1
+  %i.gk = add nuw i64 %.sroa.0.023.i, 1
   br label %.lr.ph.i217.prol.loopexit.unr-lcssa
 
 .lr.ph.i217.prol.loopexit.unr-lcssa:              ; preds = %bb.az, %.lr.ph.i217.prol
   %.sroa.11.1.i.prol = phi i64 [ %i.gk, %bb.az ], [ %.sroa.0.023.i, %.lr.ph.i217.prol ] ; 2 uses
-  %.sroa.5.0.i.prol = add nuw i64 %.sroa.0.023.i, 2
+  %.sroa.5.0.i.prol = add nuw nsw i64 %.sroa.0.023.i, 2
   br label %.lr.ph.i217.prol.loopexit
 
 .lr.ph.i217.prol.loopexit:                        ; preds = %.lr.ph.i217.prol.loopexit.unr-lcssa, %.lr.ph.i217.preheader
@@ -638,7 +638,7 @@ bb.cx:                                            ; preds = %_RNvYINtNtNtCs4ytUT
 bb.cy:                                            ; preds = %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_array16GenericByteArrayINtNtB9_5types17GenericBinaryTypexEENtB7_5Array7is_nullCsjjpCCFGI3ul_14lance_encoding.exit.thread
   call void @llvm.experimental.noalias.scope.decl(metadata !86461)
   %i.jq = load ptr, ptr %i.fj, align 8, !alias.scope !86462, !noundef !75 ; 2 uses
-  %i.jr = icmp ult i64 %i.fr, %i.jk
+  %i.jr = icmp samesign ult i64 %i.fr, %i.jk
   call void @llvm.assume(i1 %i.jr)
   %i.js = getelementptr inbounds nuw [8 x i8], ptr %i.jq, i64 %i.fr
   %i.jt = load i64, ptr %i.js, align 8, !noalias !86462, !noundef !75 ; 2 uses

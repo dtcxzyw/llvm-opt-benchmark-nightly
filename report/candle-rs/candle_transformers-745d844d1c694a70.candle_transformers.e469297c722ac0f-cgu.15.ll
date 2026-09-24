@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_RNvMsn_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtNtCsltEA4u8Pgfu_11candle_core6tensor7Tensor_E9drop_slowBK_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.e) #26
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core7indexer13TensorIndexerECs1dZk1kIfPhr_19candle_transformers.exit.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core7indexer13TensorIndexerECs1dZk1kIfPhr_19candle_transformers.exit.i: ; preds = %bb.d, %bb.b, %bb.c, %bb.a, %bb.a
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core7indexer13TensorIndexerECs1dZk1kIfPhr_19candle_transformers.exit.i: ; preds = %bb.b, %bb.d, %bb.a, %bb.a, %bb.c
   ret void
 }
 
