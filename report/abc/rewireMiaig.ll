@@ -205,8 +205,8 @@ define void @_ZN6Rewire5Miaig6rewireEifiiiiiiiiiiiP12Gia_ChMan_t_i(ptr dead_on_u
   %24 = alloca %"class.std::vector", align 8      ; 14 uses
   %25 = alloca [1 x %"class.Rewire::Miaig"], align 16 ; 6 uses
   %26 = alloca %"class.Rewire::Miaig", align 8    ; 5 uses
-  %27 = alloca %"class.Rewire::Miaig", align 16   ; 40 uses
-  %28 = alloca %"class.Rewire::Miaig", align 16   ; 11 uses
+  %27 = alloca %"class.Rewire::Miaig", align 16   ; 41 uses
+  %28 = alloca %"class.Rewire::Miaig", align 16   ; 17 uses
   %29 = alloca %"class.Rewire::Miaig", align 16   ; 9 uses
   %30 = alloca %"class.Rewire::Miaig", align 16   ; 7 uses
   %31 = alloca %"class.Rewire::Miaig", align 16   ; 6 uses
@@ -334,9 +334,8 @@ _ZN6Rewire5MiaigC2ERKS0_.exit206:                 ; preds = %_ZL10Time_Clockv.ex
   %.not174 = icmp eq i32 %13, 0                   ; 8 uses
   %i.am = select i1 %.not174, { i64, i64 } { i64 ptrtoint (ptr @_ZN6Rewire5Miaig9countAnd2Eiii to i64), i64 0 }, { i64, i64 } { i64 ptrtoint (ptr @_ZN6Rewire5Miaig10countLevelEiii to i64), i64 0 }
   %i.an = select i1 %.not174, { i64, i64 } { i64 ptrtoint (ptr @_ZN6Rewire5Miaig15countMappedAreaEiii to i64), i64 0 }, { i64, i64 } { i64 ptrtoint (ptr @_ZN6Rewire5Miaig16countMappedDelayEiii to i64), i64 0 }
-  %i.ao = select i1 %i.al, { i64, i64 } %i.am, { i64, i64 } %i.an ; 2 uses
+  %i.ao = select i1 %i.al, { i64, i64 } %i.am, { i64, i64 } %i.an
   %.fca.0.extract = extractvalue { i64, i64 } %i.ao, 0 ; 7 uses
-  %.fca.1.extract = extractvalue { i64, i64 } %i.ao, 1 ; 2 uses
   %i.ap = fcmp une float %3, 0.000000e+00
   br i1 %i.ap, label %bb.f, label %_ZN6Rewire5MiaigC2ERKS0_.exit206..thread_crit_edge
 
@@ -493,13 +492,12 @@ scalar.ph505:                                     ; preds = %scalar.ph505.prehea
   %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 136
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !88 ; 3 uses
-  %47 = getelementptr inbounds i8, ptr %28, i64 %.fca.1.extract ; 7 uses
   %i.cy = and i64 %.fca.0.extract, 1
   %.not175 = icmp eq i64 %i.cy, 0                 ; 3 uses
   br i1 %.not175, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.thread
-  %i.cz = load ptr, ptr %47, align 8, !tbaa !199
+  %i.cz = load ptr, ptr %28, align 16, !tbaa !199
   %i.da = getelementptr i8, ptr %i.cz, i64 %.fca.0.extract
   %i.db = getelementptr i8, ptr %i.da, i64 -1
   %i.dc = load ptr, ptr %i.db, align 8, !nosanitize !200
@@ -511,7 +509,7 @@ bb.j:                                             ; preds = %.thread
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.de = phi ptr [ %i.dc, %bb.i ], [ %i.dd, %bb.j ]
-  %i.df = call noundef float %i.de(ptr noundef nonnull align 8 dereferenceable(16) %47, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37 ; 5 uses
+  %i.df = call noundef float %i.de(ptr noundef nonnull align 8 dereferenceable(16) %28, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37 ; 5 uses
   %i.dg = icmp ne i32 %16, 0                      ; 5 uses
   %or.cond = and i1 %i.dg, %i.cr
   br i1 %or.cond, label %.thread359, label %bb.l
@@ -716,7 +714,6 @@ bb.n:                                             ; preds = %_ZN6Rewire5Miaig10c
   %i.hb = getelementptr inbounds nuw i8, ptr %27, i64 8 ; 6 uses
   %i.hc = icmp sgt i32 %16, 1
   %i.hd = zext i1 %i.hc to i32                    ; 3 uses
-  %48 = getelementptr inbounds i8, ptr %27, i64 %.fca.1.extract ; 2 uses
   %i.he = sitofp i32 %i.cs to float               ; 2 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %29, i64 8
   %i.hg = getelementptr inbounds nuw i8, ptr %19, i64 8
@@ -748,7 +745,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not175, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.hw = load ptr, ptr %47, align 8, !tbaa !199
+  %i.hw = load ptr, ptr %28, align 16, !tbaa !199
   %i.hx = getelementptr i8, ptr %i.hw, i64 %.fca.0.extract
   %i.hy = getelementptr i8, ptr %i.hx, i64 -1
   %i.hz = load ptr, ptr %i.hy, align 8, !nosanitize !200
@@ -756,7 +753,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p, %bb.q
   %i.ia = phi ptr [ %i.hz, %bb.q ], [ %i.gy, %bb.p ]
-  %i.ib = call noundef float %i.ia(ptr noundef nonnull align 8 dereferenceable(16) %47, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37
+  %i.ib = call noundef float %i.ia(ptr noundef nonnull align 8 dereferenceable(16) %28, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37
   %i.ic = fpext float %i.ib to double
   %i.id = load ptr, ptr %i.ag, align 8, !tbaa !78 ; 4 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %i.id, i64 12
@@ -1045,25 +1042,25 @@ _ZN6Rewire5MiaigaSERKS0_.exit248:                 ; preds = %bb.ad, %bb.ae
   br i1 %.not175, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %_ZN6Rewire5MiaigaSERKS0_.exit248
-  %i.mt = load ptr, ptr %47, align 8, !tbaa !199
+  %i.mt = load ptr, ptr %28, align 16, !tbaa !199
   %i.mu = getelementptr i8, ptr %i.mt, i64 %.fca.0.extract
   %i.mv = getelementptr i8, ptr %i.mu, i64 -1
   %i.mw = load ptr, ptr %i.mv, align 8, !nosanitize !200
-  %i.mx = call noundef float %i.mw(ptr noundef nonnull align 8 dereferenceable(16) %47, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37
-  %i.my = load ptr, ptr %48, align 8, !tbaa !199
+  %i.mx = call noundef float %i.mw(ptr noundef nonnull align 8 dereferenceable(16) %28, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37
+  %i.my = load ptr, ptr %27, align 16, !tbaa !199
   %i.mz = getelementptr i8, ptr %i.my, i64 %.fca.0.extract
   %i.na = getelementptr i8, ptr %i.mz, i64 -1
   %i.nb = load ptr, ptr %i.na, align 8, !nosanitize !200
   br label %bb.ah
 
 bb.ag:                                            ; preds = %_ZN6Rewire5MiaigaSERKS0_.exit248
-  %i.nc = call noundef float %i.gy(ptr noundef nonnull align 8 dereferenceable(16) %47, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37
+  %i.nc = call noundef float %i.gy(ptr noundef nonnull align 8 dereferenceable(16) %28, i32 noundef 0, i32 noundef %10, i32 noundef %12) #37
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.nd = phi float [ %i.mx, %bb.af ], [ %i.nc, %bb.ag ] ; 3 uses
   %i.ne = phi ptr [ %i.nb, %bb.af ], [ %i.gy, %bb.ag ]
-  %i.nf = call noundef float %i.ne(ptr noundef nonnull align 8 dereferenceable(16) %48, i32 noundef 1, i32 noundef %10, i32 noundef %12) #37 ; 8 uses
+  %i.nf = call noundef float %i.ne(ptr noundef nonnull align 8 dereferenceable(16) %27, i32 noundef 1, i32 noundef %10, i32 noundef %12) #37 ; 8 uses
   br i1 %i.cr, label %bb.ai, label %.critedge
 
 bb.ai:                                            ; preds = %bb.ah
