@@ -204,7 +204,7 @@ bb.bp:                                            ; preds = %bb.bn
   %.213453021 = phi i8 [ %.01343, %.preheader2558.lr.ph ], [ %.31346, %.thread4164 ] ; 2 uses
   %.213513020 = phi i8 [ %.01349, %.preheader2558.lr.ph ], [ %.31352, %.thread4164 ] ; 2 uses
   %.014553019 = phi ptr [ %i.kk, %.preheader2558.lr.ph ], [ %i.wp, %.thread4164 ]
-  %.sroa.0.03018 = phi i8 [ 0, %.preheader2558.lr.ph ], [ %.sroa.0.2, %.thread4164 ]
+  %.sroa.0.03018 = phi i8 [ 0, %.preheader2558.lr.ph ], [ %spec.select2448.a, %.thread4164 ]
   %i.ld = call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.lc, ptr noundef nonnull dereferenceable(4) @.str.346) #14
   %i.le = icmp eq i32 %i.ld, 0
   br i1 %i.le, label %bb.dc, label %bb.bq
@@ -607,7 +607,7 @@ bb.gi:                                            ; preds = %bb.gh, %opt_found.e
 bb.gj:                                            ; preds = %bb.gi
   %i.vl = call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.lc, ptr noundef nonnull dereferenceable(6) @.str.431) #14
   %i.vm = icmp eq i32 %i.vl, 0
-  br i1 %i.vm, label %bb.gk, label %opt_found.exit1931.thread
+  br i1 %i.vm, label %bb.gk, label %bb.gl
 
 bb.gk:                                            ; preds = %bb.gj, %bb.gi
   %.0911.i1928.lcssa = phi ptr [ @eddsa_choices, %bb.gi ], [ getelementptr inbounds nuw (i8, ptr @eddsa_choices, i64 16), %bb.gj ]
@@ -616,28 +616,22 @@ bb.gk:                                            ; preds = %bb.gj, %bb.gi
   %i.vp = zext i32 %i.vo to i64
   %i.vq = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.vp
   store i8 2, ptr %i.vq, align 1, !tbaa !32
-  br label %opt_found.exit1931.thread
+  br label %bb.gl
 
-opt_found.exit1931.thread:                        ; preds = %bb.gj, %bb.gk
+bb.gl:                                            ; preds = %bb.gj, %bb.gk
   %.17 = phi i32 [ 1, %bb.gk ], [ %.16, %bb.gj ]
-  %26 = call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.lc, ptr noundef nonnull dereferenceable(9) @.str.433) #14
-  %27 = icmp eq i32 %26, 0
-  br i1 %27, label %opt_found.exit1936.thread, label %bb.gl
-
-bb.gl:                                            ; preds = %opt_found.exit1931.thread
   %i.vr = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.lc, ptr noundef nonnull dereferenceable(4) @.str.137) #14
   %i.vs = icmp eq i32 %i.vr, 0                    ; 2 uses
-  %spec.select2449 = select i1 %i.vs, i32 1, i32 %.17
-  %spec.select2448.a = select i1 %i.vs, i8 1, i8 %.sroa.0.03018
-  br label %opt_found.exit1936.thread
-
-opt_found.exit1936.thread:                        ; preds = %bb.gl, %opt_found.exit1931.thread
-  %.sroa.0.2 = phi i8 [ %spec.select2448.a, %bb.gl ], [ 2, %opt_found.exit1931.thread ] ; 2 uses
-  %.19 = phi i32 [ %spec.select2449, %bb.gl ], [ 1, %opt_found.exit1931.thread ] ; 2 uses
+  %spec.select2448 = select i1 %i.vs, i8 1, i8 %.sroa.0.03018
+  %26 = call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.lc, ptr noundef nonnull dereferenceable(9) @.str.433) #14
+  %27 = icmp eq i32 %26, 0                        ; 2 uses
+  %spec.select2448.a = select i1 %27, i8 2, i8 %spec.select2448 ; 2 uses
+  %28 = select i1 %27, i1 true, i1 %i.vs
+  %spec.select3246 = select i1 %28, i32 1, i32 %.17 ; 2 uses
   br i1 %.not.i1937, label %kem_locate.exit.thread, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %opt_found.exit1936.thread, %bb.gm
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.gm ], [ 0, %opt_found.exit1936.thread ] ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.gl, %bb.gm
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.gm ], [ 0, %bb.gl ] ; 3 uses
   %i.vt = getelementptr inbounds nuw [8 x i8], ptr @kems_algname, i64 %indvars.iv.i
   %i.vu = load ptr, ptr %i.vt, align 8, !tbaa !27
   %i.vv = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.vu, ptr noundef nonnull readonly dereferenceable(1) %i.lc) #14
@@ -656,9 +650,9 @@ bb.gn:                                            ; preds = %.lr.ph.i
   store i8 %i.vz, ptr %i.vx, align 1, !tbaa !32
   br label %kem_locate.exit.thread
 
-kem_locate.exit.thread:                           ; preds = %bb.gm, %opt_found.exit1936.thread, %bb.gn
-  %.31352 = phi i8 [ 1, %bb.gn ], [ %.213513020, %opt_found.exit1936.thread ], [ %.213513020, %bb.gm ] ; 2 uses
-  %.20 = phi i32 [ 1, %bb.gn ], [ %.19, %opt_found.exit1936.thread ], [ %.19, %bb.gm ] ; 2 uses
+kem_locate.exit.thread:                           ; preds = %bb.gm, %bb.gl, %bb.gn
+  %.31352 = phi i8 [ 1, %bb.gn ], [ %.213513020, %bb.gl ], [ %.213513020, %bb.gm ] ; 2 uses
+  %.20 = phi i32 [ 1, %bb.gn ], [ %spec.select3246, %bb.gl ], [ %spec.select3246, %bb.gm ] ; 2 uses
   br i1 %.not.i1938, label %sig_locate.exit.thread, label %.lr.ph.i1939
 
 .lr.ph.i1939:                                     ; preds = %kem_locate.exit.thread, %bb.go
@@ -720,7 +714,7 @@ bb.gs:                                            ; preds = %bb.gr
   br i1 %.not1646, label %._crit_edge3022, label %.preheader2558, !llvm.loop !64
 
 ._crit_edge3022:                                  ; preds = %.thread4164, %.preheader2559
-  %.sroa.0.0.lcssa = phi i8 [ 0, %.preheader2559 ], [ %.sroa.0.2, %.thread4164 ] ; 2 uses
+  %.sroa.0.0.lcssa = phi i8 [ 0, %.preheader2559 ], [ %spec.select2448.a, %.thread4164 ] ; 2 uses
   %.21351.lcssa = phi i8 [ %.01349, %.preheader2559 ], [ %.31352, %.thread4164 ] ; 3 uses
   %.21345.lcssa = phi i8 [ %.01343, %.preheader2559 ], [ %.31346, %.thread4164 ] ; 3 uses
   %.b1641 = load i1, ptr @aead, align 4

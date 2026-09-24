@@ -204,20 +204,20 @@ _ZN2v88internal4Zone3NewINS0_8compiler15LoadElimination13AbstractStateEJRKS5_EEE
   br i1 %i.r, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN2v88internal4Zone3NewINS0_8compiler15LoadElimination13AbstractStateEJRKS5_EEEPT_DpOT0_.exit
-  %5 = add nuw nsw i64 %.03155, 1
   %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 532 ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.h
-  %i.t = phi i64 [ %5, %.lr.ph ], [ %6, %bb.h ]   ; 3 uses
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.t ; 2 uses
+  %i.t = phi i64 [ %.03155, %.lr.ph ], [ %5, %bb.h ]
+  %5 = add nuw nsw i64 %i.t, 1                    ; 4 uses
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %5 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8              ; 2 uses
   %.not44 = icmp eq ptr %i.v, null
   br i1 %.not44, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.w = call noundef ptr @_ZNK2v88internal8compiler15LoadElimination13AbstractField4KillERKNS2_14AliasStateInfoENS0_11MaybeHandleINS0_4NameEEEPNS0_4ZoneE(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr %2, ptr noundef nonnull %3) ; 2 uses
-  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.t
+  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %5
   store ptr %i.w, ptr %i.x, align 8
   %i.y = load ptr, ptr %i.u, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 48
@@ -233,8 +233,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %6 = add nuw nsw i64 %i.t, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %6, 32
+  %exitcond.not = icmp eq i64 %5, 31
   br i1 %exitcond.not, label %.loopexit, label %bb.f, !llvm.loop !46
 
 .thread:                                          ; preds = %bb.c, %bb.b

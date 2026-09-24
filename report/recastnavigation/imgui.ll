@@ -205,7 +205,7 @@ bb.a:
   %1 = alloca %struct.ImFontStackData, align 8    ; 5 uses
   %i.b = alloca [5 x i8], align 1                 ; 13 uses
   %2 = alloca %struct.ImVec2, align 8             ; 4 uses
-  %i.c = alloca [5 x i8], align 4                 ; 11 uses
+  %i.c = alloca [5 x i8], align 1                 ; 9 uses
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = alloca i32, align 4                      ; 4 uses
   %i.f = load ptr, ptr @GImGui, align 8, !tbaa !245
@@ -214,9 +214,8 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 10 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !1070 ; 2 uses
   %.not.i = icmp eq i32 %i.j, 0
-  %.0.i.i156.sroa.gep = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 3 uses
-  %.0.i.i156.sroa.gep160.a = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
-  %.0.i.i156.sroa.gep161 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %.0.i.i156.sroa.gep160.a = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 3 uses
+  %.0.i.i156.sroa.gep161 = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
   %.0.i.i156.sroa.gep162 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
   %.0.i.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 6 uses
   %.0.i.i.sroa.gep163 = getelementptr inbounds nuw i8, ptr %i.b, i64 3 ; 2 uses
@@ -619,69 +618,48 @@ bb.ba:                                            ; preds = %_ZL14ImCountSetBits
   br label %bb.bf
 
 .lr.ph176:                                        ; preds = %bb.ba, %_Z16ImTextCharToUtf8Pcj.exit157
-  %.0117174 = phi i32 [ %i.nv, %_Z16ImTextCharToUtf8Pcj.exit157 ], [ %.0119181, %bb.ba ] ; 16 uses
+  %.0117174 = phi i32 [ %i.nv, %_Z16ImTextCharToUtf8Pcj.exit157 ], [ %.0119181, %bb.ba ] ; 11 uses
   %i.nc = icmp samesign ult i32 %.0117174, 128
   br i1 %i.nc, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %.lr.ph176
   %i.nd = trunc nuw nsw i32 %.0117174 to i8
-  store i8 %i.nd, ptr %i.c, align 4, !tbaa !240
+  store i8 %i.nd, ptr %i.c, align 1, !tbaa !240
   br label %_Z16ImTextCharToUtf8Pcj.exit157
 
 bb.bc:                                            ; preds = %.lr.ph176
   %i.ne = icmp samesign ult i32 %.0117174, 2048
-  br i1 %i.ne, label %bb.bd, label %3
+  br i1 %i.ne, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %bb.bc
   %i.nf = lshr i32 %.0117174, 6
   %i.ng = trunc nuw nsw i32 %i.nf to i8
   %i.nh = or disjoint i8 %i.ng, -64
-  store i8 %i.nh, ptr %i.c, align 4, !tbaa !240
+  store i8 %i.nh, ptr %i.c, align 1, !tbaa !240
   %i.ni = trunc i32 %.0117174 to i8
   %i.nj = and i8 %i.ni, 63
   %i.nk = or disjoint i8 %i.nj, -128
-  store i8 %i.nk, ptr %.0.i.i156.sroa.gep, align 1, !tbaa !240
+  store i8 %i.nk, ptr %.0.i.i156.sroa.gep160.a, align 1, !tbaa !240
   br label %_Z16ImTextCharToUtf8Pcj.exit157
 
-3:                                                ; preds = %bb.bc
-  %4 = icmp samesign ult i32 %.0117174, 65536
-  br i1 %4, label %bb.be, label %5
-
-bb.be:                                            ; preds = %3
+bb.be:                                            ; preds = %bb.bc
   %i.nl = lshr i32 %.0117174, 12
   %i.nm = trunc nuw nsw i32 %i.nl to i8
   %i.nn = or disjoint i8 %i.nm, -32
-  store i8 %i.nn, ptr %i.c, align 4, !tbaa !240
+  store i8 %i.nn, ptr %i.c, align 1, !tbaa !240
   %i.no = lshr i32 %.0117174, 6
   %i.np = trunc i32 %i.no to i8
   %i.nq = and i8 %i.np, 63
   %i.nr = or disjoint i8 %i.nq, -128
-  store i8 %i.nr, ptr %.0.i.i156.sroa.gep, align 1, !tbaa !240
+  store i8 %i.nr, ptr %.0.i.i156.sroa.gep160.a, align 1, !tbaa !240
   %i.ns = trunc i32 %.0117174 to i8
   %i.nt = and i8 %i.ns, 63
   %i.nu = or disjoint i8 %i.nt, -128
-  store i8 %i.nu, ptr %.0.i.i156.sroa.gep160.a, align 2, !tbaa !240
+  store i8 %i.nu, ptr %.0.i.i156.sroa.gep161, align 1, !tbaa !240
   br label %_Z16ImTextCharToUtf8Pcj.exit157
 
-5:                                                ; preds = %3
-  %6 = lshr i32 %.0117174, 6
-  %7 = lshr i32 %.0117174, 12
-  %8 = lshr i32 %.0117174, 18
-  %9 = trunc i32 %.0117174 to i8
-  %10 = trunc i32 %6 to i8
-  %11 = trunc i32 %7 to i8
-  %12 = trunc nsw i32 %8 to i8
-  %13 = insertelement <4 x i8> poison, i8 %12, i64 0
-  %14 = insertelement <4 x i8> %13, i8 %11, i64 1
-  %15 = insertelement <4 x i8> %14, i8 %10, i64 2
-  %16 = insertelement <4 x i8> %15, i8 %9, i64 3
-  %17 = and <4 x i8> %16, <i8 -1, i8 63, i8 63, i8 63>
-  %18 = or disjoint <4 x i8> %17, <i8 -16, i8 -128, i8 -128, i8 -128>
-  store <4 x i8> %18, ptr %i.c, align 4, !tbaa !240
-  br label %_Z16ImTextCharToUtf8Pcj.exit157
-
-_Z16ImTextCharToUtf8Pcj.exit157:                  ; preds = %bb.bb, %bb.bd, %bb.be, %5
-  %.0.i.i156.sroa.phi = phi ptr [ %.0.i.i156.sroa.gep, %bb.bb ], [ %.0.i.i156.sroa.gep162, %bb.be ], [ %.0.i.i156.sroa.gep160.a, %bb.bd ], [ %.0.i.i156.sroa.gep161, %5 ]
+_Z16ImTextCharToUtf8Pcj.exit157:                  ; preds = %bb.bb, %bb.bd, %bb.be
+  %.0.i.i156.sroa.phi = phi ptr [ %.0.i.i156.sroa.gep160.a, %bb.bb ], [ %.0.i.i156.sroa.gep162, %bb.be ], [ %.0.i.i156.sroa.gep161, %bb.bd ]
   store i8 0, ptr %.0.i.i156.sroa.phi, align 1, !tbaa !240
   call void (ptr, ...) @_ZN5ImGui10BulletTextEPKcz(ptr noundef nonnull @.str.464, i32 noundef %.0117174, ptr noundef nonnull %i.c) #35
   %i.nv = add nuw nsw i32 %.0117174, 1

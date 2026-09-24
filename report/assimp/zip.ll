@@ -205,11 +205,7 @@ bb.h:                                             ; preds = %.epil.preheader189
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false)
   %.not.i = icmp eq i32 %.1.lcssa, 0
-  br i1 %.not.i, label %.critedge.preheader.split.split.i.preheader, label %.lr.ph.preheader.i
-
-.critedge.preheader.split.split.i.preheader:      ; preds = %.epilog-lcssa
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
-  br label %bb.j
+  br i1 %.not.i, label %.critedge.preheader.split.split.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.epilog-lcssa
   %wide.trip.count.i = zext i32 %.1.lcssa to i64  ; 7 uses
@@ -411,14 +407,18 @@ bb.i:                                             ; preds = %bb.i, %.critedge.pr
   %exitcond72.not.i = icmp eq i64 %indvars.iv.next69.i, %spec.select.i
   br i1 %exitcond72.not.i, label %tdefl_radix_sort_syms.exit, label %.critedge.preheader.split.split.us.i
 
+.critedge.preheader.split.split.i:                ; preds = %.epilog-lcssa
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
+  br label %bb.j
+
 tdefl_radix_sort_syms.exit.thread:                ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #36
   br label %tdefl_huffman_enforce_max_code_size.exit
 
-bb.j:                                             ; preds = %bb.j, %.critedge.preheader.split.split.i.preheader
-  %indvars.iv73.i = phi i64 [ 0, %.critedge.preheader.split.split.i.preheader ], [ %indvars.iv.next74.i.3, %bb.j ] ; 6 uses
-  %.03748.i = phi i32 [ 0, %.critedge.preheader.split.split.i.preheader ], [ %i.fu, %bb.j ] ; 2 uses
+bb.j:                                             ; preds = %bb.j, %.critedge.preheader.split.split.i
+  %indvars.iv73.i = phi i64 [ 0, %.critedge.preheader.split.split.i ], [ %indvars.iv.next74.i.3, %bb.j ] ; 6 uses
+  %.03748.i = phi i32 [ 0, %.critedge.preheader.split.split.i ], [ %i.fu, %bb.j ] ; 2 uses
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv73.i
   store i32 %.03748.i, ptr %i.ff, align 16
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv73.i
@@ -821,7 +821,6 @@ bb.d:                                             ; preds = %.lr.ph
 .critedge2:                                       ; preds = %bb.c, %bb.d, %.critedge2.loopexit.split.loop.exit133, %.critedge
   %.1.lcssa116 = phi i32 [ %i.l, %.critedge ], [ %i.l, %.critedge2.loopexit.split.loop.exit133 ], [ %i.l, %bb.d ], [ %smax, %bb.c ] ; 2 uses
   %.2.lcssa = phi i32 [ %i.l, %.critedge ], [ %i.p, %.critedge2.loopexit.split.loop.exit133 ], [ %2, %bb.d ], [ %smax, %bb.c ] ; 4 uses
-  %.lcssa = phi i1 [ false, %.critedge ], [ true, %.critedge2.loopexit.split.loop.exit133 ], [ false, %bb.d ], [ false, %bb.c ] ; 2 uses
   %i.q = icmp eq i32 %.1.lcssa116, %2
   br i1 %i.q, label %zip_central_dir_move.exit, label %bb.e
 
@@ -843,7 +842,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ac = zext i32 %i.ab to i64                   ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.ac ; 2 uses
   %i.ae = load i64, ptr %i.c, align 8
-  %i.af = sub i64 %i.ae, %i.ac                    ; 11 uses
+  %i.af = sub i64 %i.ae, %i.ac                    ; 9 uses
   %gepdiff.i = sub i32 %i.ab, %i.v                ; 10 uses
   %i.ag = icmp ne ptr %i.r, null                  ; 2 uses
   %i.ah = icmp eq i32 %i.v, 0
@@ -855,17 +854,14 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = load ptr, ptr %0, align 8
   %i.aj = tail call ptr @realloc(ptr noundef %i.ai, i64 noundef %i.af) #38
   store ptr %i.aj, ptr %0, align 8
-  br i1 %.lcssa, label %.lr.ph.i.preheader, label %.thread66.i
-
-.lr.ph.i.preheader:                               ; preds = %bb.g
   %3 = sub nsw i64 %i.d, %i.z
   %xtraiter27 = and i64 %3, 3                     ; 2 uses
   %lcmp.mod28.not = icmp eq i64 %xtraiter27, 0
   br i1 %lcmp.mod28.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
-  %indvars.iv.i.prol = phi i64 [ %indvars.iv.next.i.prol, %.lr.ph.i.prol ], [ %i.z, %.lr.ph.i.preheader ] ; 2 uses
-  %prol.iter29 = phi i64 [ %prol.iter29.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
+.lr.ph.i.prol:                                    ; preds = %bb.g, %.lr.ph.i.prol
+  %indvars.iv.i.prol = phi i64 [ %indvars.iv.next.i.prol, %.lr.ph.i.prol ], [ %i.z, %bb.g ] ; 2 uses
+  %prol.iter29 = phi i64 [ %prol.iter29.next, %.lr.ph.i.prol ], [ 0, %bb.g ]
   %i.ak = load ptr, ptr %i.b, align 8
   %i.al = getelementptr inbounds [4 x i8], ptr %i.ak, i64 %indvars.iv.i.prol ; 2 uses
   %i.am = load i32, ptr %i.al, align 4
@@ -876,8 +872,8 @@ bb.g:                                             ; preds = %bb.f
   %prol.iter29.cmp.not = icmp eq i64 %prol.iter29.next, %xtraiter27
   br i1 %prol.iter29.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !53
 
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
-  %indvars.iv.i.unr = phi i64 [ %i.z, %.lr.ph.i.preheader ], [ %indvars.iv.next.i.prol, %.lr.ph.i.prol ]
+.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %bb.g
+  %indvars.iv.i.unr = phi i64 [ %i.z, %bb.g ], [ %indvars.iv.next.i.prol, %.lr.ph.i.prol ]
   %i.ao = sub nsw i64 %i.z, %i.d
   %i.ap = icmp ugt i64 %i.ao, -4
   br i1 %i.ap, label %.thread66.i, label %.lr.ph.i
@@ -915,13 +911,10 @@ bb.g:                                             ; preds = %bb.f
   %i.bj = mul i64 %i.af, %i.w
   %.not.i = icmp ne i64 %i.bj, 0
   %or.cond58.not.i = select i1 %i.ag, i1 %.not.i, i1 false
-  br i1 %or.cond58.not.i, label %4, label %.thread66.i
+  br i1 %or.cond58.not.i, label %.lr.ph76.i.preheader, label %.thread66.i
 
-4:                                                ; preds = %.loopexit.i
+.lr.ph76.i.preheader:                             ; preds = %.loopexit.i
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.x, ptr nonnull align 1 %i.ad, i64 %i.af, i1 false)
-  br i1 %.lcssa, label %.lr.ph76.i.preheader, label %.thread66.i
-
-.lr.ph76.i.preheader:                             ; preds = %4
   %i.bk = sub nsw i64 %i.d, %i.z
   %xtraiter = and i64 %i.bk, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -975,8 +968,8 @@ bb.g:                                             ; preds = %bb.f
   %exitcond82.not.i.3 = icmp eq i64 %indvars.iv.next79.i.3, %wide.trip.count81.i
   br i1 %exitcond82.not.i.3, label %.thread66.i, label %.lr.ph76.i
 
-.thread66.i:                                      ; preds = %.lr.ph76.i.prol.loopexit, %.lr.ph76.i, %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.g, %4, %.loopexit.i, %bb.e
-  %.0526373.i = phi i64 [ %i.af, %.loopexit.i ], [ 0, %bb.e ], [ %i.af, %4 ], [ %i.af, %.lr.ph.i.prol.loopexit ], [ %i.af, %bb.g ], [ %i.af, %.lr.ph.i ], [ %i.af, %.lr.ph76.i ], [ %i.af, %.lr.ph76.i.prol.loopexit ]
+.thread66.i:                                      ; preds = %.lr.ph76.i.prol.loopexit, %.lr.ph76.i, %.lr.ph.i.prol.loopexit, %.lr.ph.i, %.loopexit.i, %bb.e
+  %.0526373.i = phi i64 [ %i.af, %.loopexit.i ], [ 0, %bb.e ], [ %i.af, %.lr.ph.i.prol.loopexit ], [ %i.af, %.lr.ph.i ], [ %i.af, %.lr.ph76.i ], [ %i.af, %.lr.ph76.i.prol.loopexit ]
   %i.ck = add i64 %.0526373.i, %i.w
   store i64 %i.ck, ptr %i.c, align 8
   br label %zip_central_dir_move.exit

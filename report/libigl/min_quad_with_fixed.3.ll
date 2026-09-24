@@ -205,11 +205,11 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.preheader: ; preds = %.
   br i1 %i.bc, label %.lr.ph, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.preheader
-  %i.bd = add nsw i64 %.lcssa133, -1              ; 5 uses
+  %i.bd = add nsw i64 %.lcssa133, -1              ; 6 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bd ; 55 uses
   %.idx.i.i.i.i.i = shl nuw nsw i64 %.lcssa133, 5
   %invariant.gep = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i.i ; 18 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 5 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 6 uses
   %i.bg = icmp eq i64 %.lcssa133, 4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 8 ; 11 uses
   %i.bi = icmp samesign ult i64 %.lcssa133, 3     ; 5 uses
@@ -227,7 +227,7 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us: ; preds = %.lr.ph
   %i.bo = load double, ptr %1, align 16, !tbaa !11 ; 2 uses
   store double %i.bn, ptr %1, align 16, !tbaa !11
   store double %i.bo, ptr %i.be, align 8, !tbaa !11
-  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.bq = load double, ptr %i.bp, align 8, !tbaa !11 ; 2 uses
   store double %i.bo, ptr %i.bp, align 8, !tbaa !11
   store double %i.bq, ptr %i.be, align 8, !tbaa !11
@@ -236,11 +236,10 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us: ; preds = %.lr.ph
   %i.bt = fsub double 1.000000e+00, %i.bs
   %i.bu = fmul double %i.bt, %i.bq                ; 2 uses
   store double %i.bu, ptr %i.be, align 8, !tbaa !11
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.bv = load double, ptr %2, align 8, !tbaa !11 ; 2 uses
-  store double %i.bu, ptr %2, align 8, !tbaa !11
+  %i.bv = load double, ptr %i.bp, align 8, !tbaa !11 ; 2 uses
+  store double %i.bu, ptr %i.bp, align 8, !tbaa !11
   store double %i.bv, ptr %i.be, align 8, !tbaa !11
-  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.bx = load double, ptr %i.bw, align 16, !tbaa !11 ; 2 uses
   store double %i.bv, ptr %i.bw, align 16, !tbaa !11
   store double %i.bx, ptr %i.be, align 8, !tbaa !11
@@ -249,12 +248,11 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us: ; preds = %.lr.ph
   %i.ca = fsub double 1.000000e+00, %i.bz
   %i.cb = fmul double %i.ca, %i.bx                ; 2 uses
   store double %i.cb, ptr %i.be, align 8, !tbaa !11
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.cc = load double, ptr %3, align 16, !tbaa !11 ; 2 uses
-  store double %i.cb, ptr %3, align 16, !tbaa !11
+  %i.cc = load double, ptr %i.bw, align 16, !tbaa !11 ; 2 uses
+  store double %i.cb, ptr %i.bw, align 16, !tbaa !11
   store double %i.cc, ptr %i.be, align 8, !tbaa !11
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 376
-  %i.cd = load double, ptr %4, align 8, !tbaa !11
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.bd
+  %i.cd = load double, ptr %2, align 8, !tbaa !11
   %i.ce = fsub double 1.000000e+00, %i.cd
   %i.cf = fmul double %i.ce, %i.cc
   br label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit._crit_edge.sink.split
@@ -657,11 +655,11 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.preheader: ; preds = %.
   br i1 %i.bc, label %.lr.ph, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.preheader
-  %i.bd = add nsw i64 %.lcssa129, -1              ; 2 uses
+  %i.bd = add nsw i64 %.lcssa129, -1              ; 3 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bd ; 20 uses
   %.idx.i.i.i.i.i = shl nuw nsw i64 %.lcssa129, 4
   %invariant.gep = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i.i ; 4 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 6 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 8 ; 4 uses
   switch i64 %.lcssa129, label %.lr.ph.split.split.preheader.split [
     i64 2, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.peel
@@ -684,7 +682,7 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.peel: ; preds = %.lr
   %i.bn = load double, ptr %1, align 16, !tbaa !11 ; 2 uses
   store double %i.bm, ptr %1, align 16, !tbaa !11
   store double %i.bn, ptr %i.be, align 8, !tbaa !11
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 184
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.bd
   %i.bo = load double, ptr %2, align 8, !tbaa !11
   %i.bp = fsub double 1.000000e+00, %i.bo
   %i.bq = fmul double %i.bp, %i.bn

@@ -205,17 +205,14 @@ define void @_Z12string_stripRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIc
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !67   ; 9 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !67   ; 7 uses
   %.not21 = icmp eq i64 %i.c, 0
-  br i1 %.not21, label %.critedge, label %.lr.ph
+  %.pre.pre.pre = load ptr, ptr %1, align 8, !tbaa !66 ; 3 uses
+  br i1 %.not21, label %.critedge, label %bb.b
 
-.lr.ph:                                           ; preds = %bb.a
-  %2 = load ptr, ptr %1, align 8, !tbaa !66
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %.01618 = phi i64 [ 0, %.lr.ph ], [ %i.h, %bb.c ] ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 %.01618
+bb.b:                                             ; preds = %bb.a, %bb.c
+  %.01618 = phi i64 [ %i.h, %bb.c ], [ 0, %bb.a ] ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %.pre.pre.pre, i64 %.01618
   %i.e = load i8, ptr %i.d, align 1, !tbaa !68
   %i.f = sext i8 %i.e to i32
   %i.g = tail call i32 @isspace(i32 noundef %i.f) #50
@@ -228,23 +225,19 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !674
 
 .critedge:                                        ; preds = %bb.b, %bb.c, %bb.a
-  %.016.lcssa = phi i64 [ 0, %bb.a ], [ %i.c, %bb.c ], [ %.01618, %bb.b ] ; 8 uses
+  %.016.lcssa = phi i64 [ 0, %bb.a ], [ %i.c, %bb.c ], [ %.01618, %bb.b ] ; 6 uses
   %umin = tail call i64 @llvm.umin.i64(i64 %.016.lcssa, i64 %i.c) ; 2 uses
   %i.i = icmp ugt i64 %i.c, %.016.lcssa
-  br i1 %i.i, label %.lr.ph25.preheader, label %.critedge2
-
-.lr.ph25.preheader:                               ; preds = %.critedge
-  %3 = load ptr, ptr %1, align 8, !tbaa !66
-  br label %.lr.ph25
+  br i1 %i.i, label %.lr.ph25, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.d:                                             ; preds = %.lr.ph25
   %i.j = icmp ugt i64 %i.k, %.016.lcssa
-  br i1 %i.j, label %.lr.ph25, label %.critedge2, !llvm.loop !675
+  br i1 %i.j, label %.lr.ph25, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, !llvm.loop !675
 
-.lr.ph25:                                         ; preds = %.lr.ph25.preheader, %bb.d
-  %.024 = phi i64 [ %i.k, %bb.d ], [ %i.c, %.lr.ph25.preheader ] ; 2 uses
+.lr.ph25:                                         ; preds = %.critedge, %bb.d
+  %.024 = phi i64 [ %i.k, %bb.d ], [ %i.c, %.critedge ] ; 2 uses
   %i.k = add i64 %.024, -1                        ; 3 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 %i.k
+  %i.l = getelementptr inbounds nuw i8, ptr %.pre.pre.pre, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !68
   %i.n = sext i8 %i.m to i32
   %i.o = tail call i32 @isspace(i32 noundef %i.n) #50
@@ -252,24 +245,15 @@ bb.d:                                             ; preds = %.lr.ph25
   br i1 %.not17, label %..critedge2_crit_edge26, label %bb.d, !llvm.loop !675
 
 ..critedge2_crit_edge26:                          ; preds = %.lr.ph25
-  br label %.critedge2, !llvm.loop !675
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, !llvm.loop !675
 
-.critedge2:                                       ; preds = %bb.d, %..critedge2_crit_edge26, %.critedge
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.d, %..critedge2_crit_edge26, %.critedge
   %.0.lcssa = phi i64 [ %umin, %.critedge ], [ %.024, %..critedge2_crit_edge26 ], [ %umin, %bb.d ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !678)
-  %4 = icmp ugt i64 %.016.lcssa, %i.c
-  br i1 %4, label %5, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-
-5:                                                ; preds = %.critedge2
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.132, ptr noundef nonnull @.str.133, i64 noundef %.016.lcssa, i64 noundef %i.c) #48, !noalias !678
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %.critedge2
   %i.p = sub i64 %.0.lcssa, %.016.lcssa
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.q, ptr %0, align 8, !tbaa !64, !alias.scope !678
-  %6 = load ptr, ptr %1, align 8, !tbaa !66, !noalias !678
-  %i.r = getelementptr inbounds nuw i8, ptr %6, i64 %.016.lcssa ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.pre.pre.pre, i64 %.016.lcssa ; 2 uses
   %i.s = sub nuw i64 %i.c, %.016.lcssa
   %spec.select.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.p, i64 %i.s) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #47, !noalias !678

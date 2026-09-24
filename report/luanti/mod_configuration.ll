@@ -204,8 +204,6 @@ $_ZSt19piecewise_construct = comdat any
 @.str.34 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 @.str.36 = private unnamed_addr constant [4 x i8] c"yes\00", align 1
 @.str.37 = private unnamed_addr constant [5 x i8] c"true\00", align 1
-@.str.38 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
-@.str.39 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @_ZTV8ModError = linkonce_odr dso_local constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTI8ModError, ptr @_ZN13BaseExceptionD2Ev, ptr @_ZN8ModErrorD0Ev, ptr @_ZNK13BaseException4whatEv] }, comdat, align 8
 @_ZTV13BaseException = linkonce_odr dso_local constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTI13BaseException, ptr @_ZN13BaseExceptionD2Ev, ptr @_ZN13BaseExceptionD0Ev, ptr @_ZNK13BaseException4whatEv] }, comdat, align 8
 @_ZTTNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE = external unnamed_addr constant [4 x ptr], align 8
@@ -608,14 +606,14 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !236
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 8 uses
+  %.013.lcssa.i = phi i64 [ 0, %bb.a ], [ %.01318.i, %.lr.ph.i ], [ %0, %bb.b ] ; 6 uses
   %umin.i = tail call i64 @llvm.umin.i64(i64 %.013.lcssa.i, i64 %0) ; 2 uses
   %i.f = icmp ugt i64 %0, %.013.lcssa.i
-  br i1 %i.f, label %.lr.ph, label %.critedge2.i
+  br i1 %i.f, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
 
 bb.c:                                             ; preds = %.lr.ph
   %i.g = icmp ugt i64 %i.h, %.013.lcssa.i
-  br i1 %i.g, label %.lr.ph, label %.critedge2.i, !llvm.loop !237
+  br i1 %i.g, label %.lr.ph, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !237
 
 .lr.ph:                                           ; preds = %.critedge.i, %bb.c
   %.0.i28 = phi i64 [ %i.h, %bb.c ], [ %0, %.critedge.i ] ; 2 uses
@@ -628,18 +626,10 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not17.i, label %..critedge2.i_crit_edge, label %bb.c, !llvm.loop !237
 
 ..critedge2.i_crit_edge:                          ; preds = %.lr.ph
-  br label %.critedge2.i, !llvm.loop !237
+  br label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit, !llvm.loop !237
 
-.critedge2.i:                                     ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
-  %.0.lcssa.i = phi i64 [ %umin.i, %.critedge.i ], [ %.0.i28, %..critedge2.i_crit_edge ], [ %umin.i, %bb.c ]
-  %3 = icmp ugt i64 %.013.lcssa.i, %0
-  br i1 %3, label %4, label %_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit
-
-4:                                                ; preds = %.critedge2.i
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.39, ptr noundef nonnull @.str.38, i64 noundef %.013.lcssa.i, i64 noundef %0) #23
-  unreachable
-
-_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %.critedge2.i
+_Z4trimIcESt17basic_string_viewIT_St11char_traitsIS1_EES4_.exit: ; preds = %bb.c, %..critedge2.i_crit_edge, %.critedge.i
+  %.0.lcssa.i = phi i64 [ %.0.i28, %..critedge2.i_crit_edge ], [ %umin.i, %.critedge.i ], [ %umin.i, %bb.c ]
   %i.m = sub i64 %.0.lcssa.i, %.013.lcssa.i
   %i.n = sub nuw i64 %0, %.013.lcssa.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.n, i64 %i.m) ; 3 uses

@@ -134,8 +134,8 @@ bb.a:
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
-  %i.o = lshr exact i64 %i.n, 2                   ; 2 uses
-  %i.p = trunc i64 %i.o to i32                    ; 4 uses
+  %i.o = lshr exact i64 %i.n, 2                   ; 3 uses
+  %i.p = trunc i64 %i.o to i32                    ; 3 uses
   %i.q = icmp eq i32 %i.p, 0
   br i1 %i.q, label %bb.b, label %bb.g
 
@@ -210,7 +210,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
   %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %bb.i ] ; 2 uses
-  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 5 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !32
   %i.am = icmp eq i32 %i.al, 0
@@ -223,7 +223,7 @@ bb.i:                                             ; preds = %.lr.ph
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph, !llvm.loop !45
 
 .critedge:                                        ; preds = %.lr.ph
-  %i.an = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
+  %i.an = trunc nuw nsw i64 %indvars.iv to i32
   %i.ao = icmp eq i32 %i.an, %i.p
   br i1 %i.ao, label %.critedge.thread, label %bb.t
 
@@ -323,40 +323,27 @@ bb.t:                                             ; preds = %.critedge
           to label %bb.u unwind label %bb.z       ; 10 uses
 
 bb.u:                                             ; preds = %bb.t
-  %6 = sub nsw i32 %i.p, %i.an                    ; 2 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8 ; 6 uses
+  %6 = sub nsw i64 %i.o, %indvars.iv
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8 ; 5 uses
   store i32 0, ptr %i.bu, align 8, !tbaa !12
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5zxing5ArrayIiEE, i64 16), ptr %i.bt, align 8, !tbaa !14
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 16 ; 2 uses
-  %7 = sext i32 %6 to i64                         ; 2 uses
-  %8 = icmp slt i32 %6, 0
-  br i1 %8, label %.noexc.i, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
-
-.noexc.i:                                         ; preds = %bb.u
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #16
-          to label %.noexc unwind label %bb.aa
-
-.noexc:                                           ; preds = %.noexc.i
-  unreachable
-
-_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.u
+  %7 = and i64 %6, 4294967295                     ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bv, i8 0, i64 24, i1 false)
-  %9 = shl nuw nsw i64 %7, 2                      ; 3 uses
-  %10 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %9) #15
+  %8 = shl nuw nsw i64 %7, 2                      ; 3 uses
+  %9 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %8) #15
           to label %.noexc47 unwind label %bb.aa  ; 4 uses
 
-.noexc47:                                         ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
-  store ptr %10, ptr %i.bv, align 8, !tbaa !23
-  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %7
+.noexc47:                                         ; preds = %bb.u
+  store ptr %9, ptr %i.bv, align 8, !tbaa !23
+  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %7
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bt, i64 32
   store ptr %i.bw, ptr %i.bx, align 8, !tbaa !37
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %10, i8 0, i64 %9, i1 false), !tbaa !32
-  %i.by = getelementptr inbounds nuw i8, ptr %10, i64 %9
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %9, i8 0, i64 %8, i1 false), !tbaa !32
+  %i.by = getelementptr inbounds nuw i8, ptr %9, i64 %8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bt, i64 24
   store ptr %i.by, ptr %i.bz, align 8, !tbaa !22
-  %11 = load i32, ptr %i.bu, align 8, !tbaa !12
-  %12 = add i32 %11, 2
-  store i32 %12, ptr %i.bu, align 8, !tbaa !12
+  store i32 2, ptr %i.bu, align 8, !tbaa !12
   %i.ca = load ptr, ptr %i.e, align 8, !tbaa !19  ; 4 uses
   %.not5.i.i.i49 = icmp eq ptr %i.ca, null
   br i1 %.not5.i.i.i49, label %bb.x, label %bb.v
@@ -477,7 +464,7 @@ bb.z:                                             ; preds = %bb.t
           cleanup
   br label %bb.ab
 
-bb.aa:                                            ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i, %.noexc.i
+bb.aa:                                            ; preds = %bb.u
   %i.dq = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZdlPvm(ptr noundef nonnull %i.bt, i64 noundef 40) #14
