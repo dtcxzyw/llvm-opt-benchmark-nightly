@@ -204,7 +204,7 @@ bb.a:
   %i.z = getelementptr inbounds nuw i8, ptr %i.i, i64 184
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !65
   %i.ab = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #24 ; 18 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4 ; 24 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4 ; 23 uses
   store i32 0, ptr %i.ac, align 4, !tbaa !49
   store i32 16, ptr %i.ab, align 8, !tbaa !50
   %i.ad = tail call noalias dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #24 ; 4 uses
@@ -565,15 +565,13 @@ Vec_PtrGrow.exit12.sink.split.i:                  ; preds = %bb.ak, %bb.al, %bb.
   %spec.select.sink.i294 = phi i32 [ 16, %bb.ah ], [ 16, %bb.ag ], [ %spec.select.i293, %bb.ak ], [ %spec.select.i293, %bb.al ]
   store ptr %storemerge526, ptr %i.ae, align 8, !tbaa !25
   store i32 %spec.select.sink.i294, ptr %i.ab, align 8, !tbaa !50
-  %.pre692 = load i32, ptr %i.ac, align 4, !tbaa !49
   br label %Vec_PtrPush.exit
 
 Vec_PtrPush.exit:                                 ; preds = %bb.ad, %bb.ai, %Vec_PtrGrow.exit12.sink.split.i
-  %2 = phi i32 [ %i.eo, %bb.ad ], [ %i.eo, %bb.ai ], [ %.pre692, %Vec_PtrGrow.exit12.sink.split.i ] ; 2 uses
   %i.fa = phi ptr [ %i.du, %bb.ad ], [ %i.du, %bb.ai ], [ %storemerge526, %Vec_PtrGrow.exit12.sink.split.i ] ; 3 uses
-  %i.fb = add nsw i32 %2, 1
+  %i.fb = add nsw i32 %i.eo, 1
   store i32 %i.fb, ptr %i.ac, align 4, !tbaa !49
-  %i.fc = sext i32 %2 to i64
+  %i.fc = sext i32 %i.eo to i64
   %i.fd = getelementptr inbounds [8 x i8], ptr %i.fa, i64 %i.fc
   store ptr %i.en, ptr %i.fd, align 8, !tbaa !26
   br label %bb.av

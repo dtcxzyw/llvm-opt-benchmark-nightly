@@ -205,9 +205,8 @@ bb.d:                                             ; preds = %"_ZN4llvm10TypeSwit
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   store ptr %0, ptr %1, align 8
   %i.r = call ptr @_ZNK4mlir10VectorType14getElementTypeEv(ptr noundef nonnull align 8 dereferenceable(8) %1) #16, !inline_history !510
-  %i.s = call { i64, i8 } @_ZN4mlir4LLVM26getPrimitiveTypeSizeInBitsENS_4TypeE(ptr %i.r), !inline_history !510 ; 2 uses
+  %i.s = call { i64, i8 } @_ZN4mlir4LLVM26getPrimitiveTypeSizeInBitsENS_4TypeE(ptr %i.r), !inline_history !510
   %.fca.0.extract.i.i = extractvalue { i64, i8 } %i.s, 0
-  %.fca.1.extract.i.i = extractvalue { i64, i8 } %i.s, 1
   %i.t = call { ptr, i64 } @_ZNK4mlir10VectorType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %1) #16 ; 2 uses
   %i.u = extractvalue { ptr, i64 } %i.t, 0
   %i.v = extractvalue { ptr, i64 } %i.t, 1
@@ -218,9 +217,8 @@ bb.d:                                             ; preds = %"_ZN4llvm10TypeSwit
 
 bb.e:                                             ; preds = %bb.d, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float80TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_3EERS4_OT0_.exit", %bb.c, %bb.b, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float64TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_2EERS4_OT0_.exit", %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float32TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_1EERS4_OT0_.exit", %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float16TypeERZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_0EERS4_OT0_.exit", %bb.a, %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIN4mlir4TypeENS_8TypeSizeEEES4_E4CaseIZNS3_4LLVM26getPrimitiveTypeSizeInBitsES4_E3$_6EERS6_OT_.exit"
   %.sroa.13.10.ph = phi i64 [ 128, %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIN4mlir4TypeENS_8TypeSizeEEES4_E4CaseIZNS3_4LLVM26getPrimitiveTypeSizeInBitsES4_E3$_6EERS6_OT_.exit" ], [ 16, %bb.a ], [ %i.x, %bb.d ], [ 32, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float16TypeERZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_0EERS4_OT0_.exit" ], [ 64, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float32TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_1EERS4_OT0_.exit" ], [ 80, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float64TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_2EERS4_OT0_.exit" ], [ %i.k, %bb.b ], [ %i.o, %bb.c ], [ 128, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float80TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_3EERS4_OT0_.exit" ]
-  %.sroa.24.10.ph = phi i8 [ 0, %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIN4mlir4TypeENS_8TypeSizeEEES4_E4CaseIZNS3_4LLVM26getPrimitiveTypeSizeInBitsES4_E3$_6EERS6_OT_.exit" ], [ 0, %bb.a ], [ %.fca.1.extract.i.i, %bb.d ], [ 0, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float16TypeERZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_0EERS4_OT0_.exit" ], [ 0, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float32TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_1EERS4_OT0_.exit" ], [ 0, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float64TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_2EERS4_OT0_.exit" ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_11Float80TypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_3EERS4_OT0_.exit" ]
   %i.y = insertvalue { i64, i8 } poison, i64 %.sroa.13.10.ph, 0
-  %i.z = insertvalue { i64, i8 } %i.y, i8 %.sroa.24.10.ph, 1
+  %i.z = insertvalue { i64, i8 } %i.y, i8 0, 1
   br label %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_10VectorTypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_8EERS4_OT0_.exit"
 
 "_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_10VectorTypeEZNS1_4LLVM26getPrimitiveTypeSizeInBitsES2_E3$_8EERS4_OT0_.exit": ; preds = %"_ZN4llvm10TypeSwitchIN4mlir4TypeENS_8TypeSizeEE4CaseINS1_4LLVM16LLVMPPCFP128TypeEZNS6_26getPrimitiveTypeSizeInBitsES2_E3$_7EERS4_OT0_.exit", %bb.e

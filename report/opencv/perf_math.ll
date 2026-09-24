@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %5 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 41 uses
+  %5 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 40 uses
   %6 = alloca %"class.testing::internal::linked_ptr.196", align 8 ; 10 uses
   %7 = alloca %"class.testing::internal::ParamGenerator.70", align 8 ; 9 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
@@ -255,7 +255,7 @@ bb.a:
   %i.ac = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 32), align 8 ; 2 uses
   %i.ad = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 40), align 8
   %i.ae = getelementptr i8, ptr %i.ac, i64 -24
-  %i.af = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 8), align 8 ; 2 uses
+  %i.af = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 8), align 8
   %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 48), align 8
   %i.ah = getelementptr i8, ptr %i.af, i64 -24
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 7 uses
@@ -658,7 +658,6 @@ bb.ce:                                            ; preds = %.noexc.i213
   br label %.body.i212
 
 bb.cf:                                            ; preds = %.noexc.i213
-  store ptr %i.af, ptr %5, align 8, !tbaa !119
   %i.ms = load i64, ptr %i.ah, align 8
   %i.mt = getelementptr inbounds i8, ptr %5, i64 %i.ms
   store ptr %i.ag, ptr %i.mt, align 8, !tbaa !119

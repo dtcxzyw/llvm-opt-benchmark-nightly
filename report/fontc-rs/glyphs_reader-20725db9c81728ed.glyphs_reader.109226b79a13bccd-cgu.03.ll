@@ -204,9 +204,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.o,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvXs6_NtCs1qcNTItuk7F_13glyphs_reader9glyphdataNtB5_11SubcategoryNtNtNtCsf3Ta7LF998c_4core3str6traits7FromStr8from_str(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 2)) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @_RNvXs6_NtCs1qcNTItuk7F_13glyphs_reader9glyphdataNtB5_11SubcategoryNtNtNtCsf3Ta7LF998c_4core3str6traits7FromStr8from_str(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %3 = alloca [24 x i8], align 8                  ; 4 uses
   switch i64 %2, label %bb.bq [
     i64 7, label %bb.b
     i64 4, label %bb.f
@@ -609,10 +608,7 @@ bb.bp:                                            ; preds = %bb.ax
   br i1 %i.kn, label %bb.br, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bh, %bb.bf, %bb.az, %bb.ar, %bb.ap, %bb.ah, %bb.af, %bb.bn, %bb.d, %bb.a, %bb.bp
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @_RNvMsB_Cs9NoVXegZYB5_8smol_strNtB5_4Repr3new(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2), !noalias !5
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  tail call void @_RNvMsB_Cs9NoVXegZYB5_8smol_strNtB5_4Repr3new(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2)
   br label %bb.bs
 
 bb.br:                                            ; preds = %bb.bp

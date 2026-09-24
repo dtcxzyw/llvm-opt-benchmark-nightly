@@ -205,9 +205,9 @@ bb.a:
   %23 = alloca %"class.std::shared_ptr", align 16 ; 6 uses
   %24 = alloca %"class.std::shared_ptr.192", align 8 ; 6 uses
   %25 = alloca %"class.std::shared_ptr.57", align 8 ; 6 uses
-  %26 = alloca %"class.arrow::NumericBuilder", align 8 ; 25 uses
-  %27 = alloca %"class.arrow::NumericBuilder", align 8 ; 25 uses
-  %28 = alloca %"class.arrow::NumericBuilder", align 8 ; 25 uses
+  %26 = alloca %"class.arrow::NumericBuilder", align 8 ; 26 uses
+  %27 = alloca %"class.arrow::NumericBuilder", align 8 ; 26 uses
+  %28 = alloca %"class.arrow::NumericBuilder", align 8 ; 26 uses
   %29 = alloca %"struct.arrow::util::(anonymous namespace)::GetByteRangesArray", align 8 ; 10 uses
   %30 = alloca %"class.arrow::Status", align 8    ; 8 uses
   %31 = alloca %"class.arrow::Status", align 8    ; 5 uses
@@ -429,11 +429,11 @@ bb.q:                                             ; preds = %bb.o, %bb.n, %.noex
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !132
   store i64 %i.cf, ptr %i.cd, align 8, !tbaa !133
-  %i.cg = getelementptr inbounds nuw i8, ptr %29, i64 24 ; 2 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %29, i64 24
   store ptr %26, ptr %i.cg, align 8, !tbaa !134
-  %i.ch = getelementptr inbounds nuw i8, ptr %29, i64 32 ; 2 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %29, i64 32
   store ptr %27, ptr %i.ch, align 8, !tbaa !135
-  %i.ci = getelementptr inbounds nuw i8, ptr %29, i64 40 ; 2 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %29, i64 40
   store ptr %28, ptr %i.ci, align 8, !tbaa !136
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #20
@@ -506,8 +506,7 @@ _ZN5arrow6StatusD2Ev.exit31:                      ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false), !noalias !270
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20, !noalias !270
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20, !noalias !270
-  %32 = load ptr, ptr %i.cg, align 8, !tbaa !134, !noalias !270
-  invoke void @_ZN5arrow12ArrayBuilder6FinishEPSt10shared_ptrINS_5ArrayEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %6, ptr noundef nonnull align 8 dereferenceable(144) %32, ptr noundef nonnull %2)
+  invoke void @_ZN5arrow12ArrayBuilder6FinishEPSt10shared_ptrINS_5ArrayEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %6, ptr noundef nonnull align 8 dereferenceable(144) %26, ptr noundef nonnull %2)
           to label %_ZN5arrow6StatusD2Ev.exit.i unwind label %bb.aa, !noalias !270
 
 _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %_ZN5arrow6StatusD2Ev.exit31
@@ -548,8 +547,7 @@ _ZN5arrow6StatusD2Ev.exit72.i:                    ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20, !noalias !270
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20, !noalias !270
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20, !noalias !270
-  %33 = load ptr, ptr %i.ch, align 8, !tbaa !135, !noalias !270
-  invoke void @_ZN5arrow12ArrayBuilder6FinishEPSt10shared_ptrINS_5ArrayEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %8, ptr noundef nonnull align 8 dereferenceable(144) %33, ptr noundef nonnull %3)
+  invoke void @_ZN5arrow12ArrayBuilder6FinishEPSt10shared_ptrINS_5ArrayEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %8, ptr noundef nonnull align 8 dereferenceable(144) %27, ptr noundef nonnull %3)
           to label %_ZN5arrow6StatusD2Ev.exit74.i unwind label %bb.ae
 
 _ZN5arrow6StatusD2Ev.exit74.i:                    ; preds = %_ZN5arrow6StatusD2Ev.exit72.i
@@ -590,8 +588,7 @@ _ZN5arrow6StatusD2Ev.exit80.i:                    ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20, !noalias !270
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20, !noalias !270
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20, !noalias !270
-  %34 = load ptr, ptr %i.ci, align 8, !tbaa !136, !noalias !270
-  invoke void @_ZN5arrow12ArrayBuilder6FinishEPSt10shared_ptrINS_5ArrayEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %10, ptr noundef nonnull align 8 dereferenceable(144) %34, ptr noundef nonnull %4)
+  invoke void @_ZN5arrow12ArrayBuilder6FinishEPSt10shared_ptrINS_5ArrayEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %10, ptr noundef nonnull align 8 dereferenceable(144) %28, ptr noundef nonnull %4)
           to label %_ZN5arrow6StatusD2Ev.exit82.i unwind label %bb.ai
 
 _ZN5arrow6StatusD2Ev.exit82.i:                    ; preds = %_ZN5arrow6StatusD2Ev.exit80.i
@@ -994,7 +991,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare noundef ptr @_ZN5arrow19default_memory_poolEv() local_unnamed_addr #9
 
 ; Function Attrs: inlinehint mustprogress uwtable
-define internal fastcc void @_ZN5arrow15VisitTypeInlineINS_4util12_GLOBAL__N_118GetByteRangesArrayEJEEENS_6StatusERKNS_8DataTypeEPT_DpOT0_(ptr dead_on_unwind noalias nonnull writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nofree noundef nonnull readonly %2) unnamed_addr #11 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN5arrow15VisitTypeInlineINS_4util12_GLOBAL__N_118GetByteRangesArrayEJEEENS_6StatusERKNS_8DataTypeEPT_DpOT0_(ptr dead_on_unwind noalias nonnull writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #11 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.arrow::Status", align 8     ; 5 uses
   %4 = alloca %"class.arrow::Status", align 8     ; 5 uses

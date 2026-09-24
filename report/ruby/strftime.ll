@@ -66,7 +66,7 @@ define internal fastcc noundef i64 @rb_strftime_with_timespec(i64 noundef %0, pt
 bb.a:
   %10 = alloca %struct.tm, align 8                ; 13 uses
   %11 = alloca %struct.tm, align 8                ; 13 uses
-  %i.a = alloca ptr, align 8                      ; 143 uses
+  %i.a = alloca ptr, align 8                      ; 116 uses
   %i.b = alloca ptr, align 8                      ; 143 uses
   %i.c = alloca [100 x i8], align 16              ; 4 uses
   %i.d = alloca [2 x i64], align 16               ; 5 uses
@@ -469,7 +469,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %RSTRING_PTR.exit2356
 
 RSTRING_PTR.exit2356:                             ; preds = %bb.ak, %bb.al
-  %i.fa = phi ptr [ %i.ez, %bb.al ], [ %i.m, %bb.ak ] ; 4 uses
+  %i.fa = phi ptr [ %i.ez, %bb.al ], [ %i.m, %bb.ak ] ; 5 uses
   %i.fb = load i64, ptr %i.i, align 8, !tbaa !89  ; 2 uses
   %i.fc = sub i64 %i.fb, %i.ev                    ; 25 uses
   store ptr %i.fa, ptr %i.a, align 8, !tbaa !18
@@ -872,8 +872,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %._crit_edge3719, %bb.as
   %.pre-phi3729 = phi i64 [ %.pre3728, %._crit_edge3719 ], [ %i.nb, %bb.as ]
-  %12 = load ptr, ptr %i.a, align 8, !tbaa !18
-  %i.ne = ptrtoint ptr %12 to i64
+  %i.ne = ptrtoint ptr %i.fa to i64
   %i.nf = sub i64 %.pre-phi3729, %i.ne            ; 5 uses
   %i.ng = shl nsw i64 %i.mw, 1
   %i.nh = add i64 %i.nf, %i.ng
@@ -991,10 +990,9 @@ bb.bd:                                            ; preds = %bb.bc
   br label %resize_buffer.exit2371
 
 resize_buffer.exit2371:                           ; preds = %bb.bc, %bb.bd
-  %i.pd = phi ptr [ %i.pc, %bb.bd ], [ %i.m, %bb.bc ] ; 3 uses
+  %i.pd = phi ptr [ %i.pc, %bb.bd ], [ %i.m, %bb.bc ] ; 2 uses
   %i.pe = getelementptr i8, ptr %i.pd, i64 %.0.i2366
   store ptr %i.pe, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.pd, ptr %i.a, align 8, !tbaa !18
   %i.pf = getelementptr i8, ptr %i.pd, i64 %i.om
   %.not.i2372 = icmp eq ptr %i.pf, null
   br i1 %.not.i2372, label %resize_buffer.exit2371.thread, label %buffer_size_check.exit2373
@@ -1090,10 +1088,9 @@ bb.bk:                                            ; preds = %bb.bj
   br label %resize_buffer.exit2381
 
 resize_buffer.exit2381:                           ; preds = %bb.bj, %bb.bk
-  %i.qx = phi ptr [ %i.qw, %bb.bk ], [ %i.m, %bb.bj ] ; 3 uses
+  %i.qx = phi ptr [ %i.qw, %bb.bk ], [ %i.m, %bb.bj ] ; 2 uses
   %i.qy = getelementptr i8, ptr %i.qx, i64 %.0.i2376
   store ptr %i.qy, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.qx, ptr %i.a, align 8, !tbaa !18
   %i.qz = getelementptr i8, ptr %i.qx, i64 %i.qg
   %.not.i2382 = icmp eq ptr %i.qz, null
   br i1 %.not.i2382, label %resize_buffer.exit2381.thread, label %buffer_size_check.exit2383
@@ -1194,10 +1191,9 @@ bb.br:                                            ; preds = %bb.bq
   br label %resize_buffer.exit2391
 
 resize_buffer.exit2391:                           ; preds = %bb.bq, %bb.br
-  %i.su = phi ptr [ %i.st, %bb.br ], [ %i.m, %bb.bq ] ; 3 uses
+  %i.su = phi ptr [ %i.st, %bb.br ], [ %i.m, %bb.bq ] ; 2 uses
   %i.sv = getelementptr i8, ptr %i.su, i64 %.0.i2386
   store ptr %i.sv, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.su, ptr %i.a, align 8, !tbaa !18
   %i.sw = getelementptr i8, ptr %i.su, i64 %i.sd
   %.not.i2392 = icmp eq ptr %i.sw, null
   br i1 %.not.i2392, label %resize_buffer.exit2391.thread, label %buffer_size_check.exit2393
@@ -1293,10 +1289,9 @@ bb.by:                                            ; preds = %bb.bx
   br label %resize_buffer.exit2401
 
 resize_buffer.exit2401:                           ; preds = %bb.bx, %bb.by
-  %i.uo = phi ptr [ %i.un, %bb.by ], [ %i.m, %bb.bx ] ; 3 uses
+  %i.uo = phi ptr [ %i.un, %bb.by ], [ %i.m, %bb.bx ] ; 2 uses
   %i.up = getelementptr i8, ptr %i.uo, i64 %.0.i2396
   store ptr %i.up, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.uo, ptr %i.a, align 8, !tbaa !18
   %i.uq = getelementptr i8, ptr %i.uo, i64 %i.tx
   %.not.i2402 = icmp eq ptr %i.uq, null
   br i1 %.not.i2402, label %resize_buffer.exit2401.thread, label %buffer_size_check.exit2403
@@ -1393,10 +1388,9 @@ bb.cf:                                            ; preds = %bb.ce
   br label %resize_buffer.exit2411
 
 resize_buffer.exit2411:                           ; preds = %bb.ce, %bb.cf
-  %i.wj = phi ptr [ %i.wi, %bb.cf ], [ %i.m, %bb.ce ] ; 3 uses
+  %i.wj = phi ptr [ %i.wi, %bb.cf ], [ %i.m, %bb.ce ] ; 2 uses
   %i.wk = getelementptr i8, ptr %i.wj, i64 %.0.i2406
   store ptr %i.wk, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.wj, ptr %i.a, align 8, !tbaa !18
   %i.wl = getelementptr i8, ptr %i.wj, i64 %i.vs
   %.not.i2412 = icmp eq ptr %i.wl, null
   br i1 %.not.i2412, label %resize_buffer.exit2411.thread, label %buffer_size_check.exit2413
@@ -1492,10 +1486,9 @@ bb.cm:                                            ; preds = %bb.cl
   br label %resize_buffer.exit2421
 
 resize_buffer.exit2421:                           ; preds = %bb.cl, %bb.cm
-  %i.yd = phi ptr [ %i.yc, %bb.cm ], [ %i.m, %bb.cl ] ; 3 uses
+  %i.yd = phi ptr [ %i.yc, %bb.cm ], [ %i.m, %bb.cl ] ; 2 uses
   %i.ye = getelementptr i8, ptr %i.yd, i64 %.0.i2416
   store ptr %i.ye, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.yd, ptr %i.a, align 8, !tbaa !18
   %i.yf = getelementptr i8, ptr %i.yd, i64 %i.xm
   %.not.i2422 = icmp eq ptr %i.yf, null
   br i1 %.not.i2422, label %resize_buffer.exit2421.thread, label %buffer_size_check.exit2423
@@ -1617,10 +1610,9 @@ bb.cz:                                            ; preds = %bb.cy
   br label %resize_buffer.exit2431
 
 resize_buffer.exit2431:                           ; preds = %bb.cy, %bb.cz
-  %i.aac = phi ptr [ %i.aab, %bb.cz ], [ %i.m, %bb.cy ] ; 3 uses
+  %i.aac = phi ptr [ %i.aab, %bb.cz ], [ %i.m, %bb.cy ] ; 2 uses
   %i.aad = getelementptr i8, ptr %i.aac, i64 %.0.i2426
   store ptr %i.aad, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.aac, ptr %i.a, align 8, !tbaa !18
   %i.aae = getelementptr i8, ptr %i.aac, i64 %i.zk
   %.not.i2432 = icmp eq ptr %i.aae, null
   br i1 %.not.i2432, label %resize_buffer.exit2431.thread, label %buffer_size_check.exit2433
@@ -1872,10 +1864,9 @@ bb.dw:                                            ; preds = %bb.dv
   br label %resize_buffer.exit2446
 
 resize_buffer.exit2446:                           ; preds = %bb.dv, %bb.dw
-  %i.aei = phi ptr [ %i.aeh, %bb.dw ], [ %i.m, %bb.dv ] ; 3 uses
+  %i.aei = phi ptr [ %i.aeh, %bb.dw ], [ %i.m, %bb.dv ] ; 2 uses
   %i.aej = getelementptr i8, ptr %i.aei, i64 %.0.i2441
   store ptr %i.aej, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.aei, ptr %i.a, align 8, !tbaa !18
   %i.aek = getelementptr i8, ptr %i.aei, i64 %i.adr
   %.not.i2447 = icmp eq ptr %i.aek, null
   br i1 %.not.i2447, label %resize_buffer.exit2446.thread, label %buffer_size_check.exit2448
@@ -1966,10 +1957,9 @@ bb.ed:                                            ; preds = %bb.ec
   br label %resize_buffer.exit2456
 
 resize_buffer.exit2456:                           ; preds = %bb.ec, %bb.ed
-  %i.afx = phi ptr [ %i.afw, %bb.ed ], [ %i.m, %bb.ec ] ; 3 uses
+  %i.afx = phi ptr [ %i.afw, %bb.ed ], [ %i.m, %bb.ec ] ; 2 uses
   %i.afy = getelementptr i8, ptr %i.afx, i64 %.0.i2451
   store ptr %i.afy, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.afx, ptr %i.a, align 8, !tbaa !18
   %i.afz = getelementptr i8, ptr %i.afx, i64 %i.afg
   %.not.i2457 = icmp eq ptr %i.afz, null
   br i1 %.not.i2457, label %resize_buffer.exit2456.thread, label %buffer_size_check.exit2458
@@ -2078,10 +2068,9 @@ bb.el:                                            ; preds = %bb.ek
   br label %resize_buffer.exit2466
 
 resize_buffer.exit2466:                           ; preds = %bb.ek, %bb.el
-  %i.aic = phi ptr [ %i.aib, %bb.el ], [ %i.m, %bb.ek ] ; 3 uses
+  %i.aic = phi ptr [ %i.aib, %bb.el ], [ %i.m, %bb.ek ] ; 2 uses
   %i.aid = getelementptr i8, ptr %i.aic, i64 %.0.i2461
   store ptr %i.aid, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.aic, ptr %i.a, align 8, !tbaa !18
   %i.aie = getelementptr i8, ptr %i.aic, i64 %i.ahk
   %.not.i2467 = icmp eq ptr %i.aie, null
   br i1 %.not.i2467, label %resize_buffer.exit2466.thread, label %buffer_size_check.exit2468
@@ -2172,10 +2161,9 @@ bb.es:                                            ; preds = %bb.er
   br label %resize_buffer.exit2476
 
 resize_buffer.exit2476:                           ; preds = %bb.er, %bb.es
-  %i.ajr = phi ptr [ %i.ajq, %bb.es ], [ %i.m, %bb.er ] ; 3 uses
+  %i.ajr = phi ptr [ %i.ajq, %bb.es ], [ %i.m, %bb.er ] ; 2 uses
   %i.ajs = getelementptr i8, ptr %i.ajr, i64 %.0.i2471
   store ptr %i.ajs, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.ajr, ptr %i.a, align 8, !tbaa !18
   %i.ajt = getelementptr i8, ptr %i.ajr, i64 %i.aja
   %.not.i2477 = icmp eq ptr %i.ajt, null
   br i1 %.not.i2477, label %resize_buffer.exit2476.thread, label %buffer_size_check.exit2478
@@ -2250,7 +2238,7 @@ bb.ew:                                            ; preds = %bb.ev
   br label %RSTRING_PTR.exit2485
 
 RSTRING_PTR.exit2485:                             ; preds = %bb.ev, %bb.ew
-  %i.ald = phi ptr [ %i.alc, %bb.ew ], [ %i.m, %bb.ev ] ; 4 uses
+  %i.ald = phi ptr [ %i.alc, %bb.ew ], [ %i.m, %bb.ev ] ; 5 uses
   %i.ale = load i64, ptr %i.i, align 8, !tbaa !89 ; 2 uses
   %i.alf = sub i64 %i.ale, %i.aky                 ; 25 uses
   store ptr %i.ald, ptr %i.a, align 8, !tbaa !18
@@ -2653,8 +2641,7 @@ bb.fd:                                            ; preds = %bb.fc
 
 bb.fe:                                            ; preds = %._crit_edge3708, %bb.fd
   %.pre-phi3751 = phi i64 [ %.pre3750, %._crit_edge3708 ], [ %i.ate, %bb.fd ]
-  %13 = load ptr, ptr %i.a, align 8, !tbaa !18
-  %i.ath = ptrtoint ptr %13 to i64
+  %i.ath = ptrtoint ptr %i.ald to i64
   %i.ati = sub i64 %.pre-phi3751, %i.ath          ; 5 uses
   %i.atj = shl nsw i64 %i.asz, 1
   %i.atk = add i64 %i.ati, %i.atj
@@ -2734,7 +2721,7 @@ bb.fl:                                            ; preds = %bb.fk
   br label %RSTRING_PTR.exit2505
 
 RSTRING_PTR.exit2505:                             ; preds = %bb.fk, %bb.fl
-  %i.aul = phi ptr [ %i.auk, %bb.fl ], [ %i.m, %bb.fk ] ; 4 uses
+  %i.aul = phi ptr [ %i.auk, %bb.fl ], [ %i.m, %bb.fk ] ; 5 uses
   %i.aum = load i64, ptr %i.i, align 8, !tbaa !89 ; 2 uses
   %i.aun = sub i64 %i.aum, %i.aug                 ; 25 uses
   store ptr %i.aul, ptr %i.a, align 8, !tbaa !18
@@ -3137,8 +3124,7 @@ bb.fs:                                            ; preds = %bb.fr
 
 bb.ft:                                            ; preds = %._crit_edge3707, %bb.fs
   %.pre-phi3753 = phi i64 [ %.pre3752, %._crit_edge3707 ], [ %i.bcm, %bb.fs ]
-  %14 = load ptr, ptr %i.a, align 8, !tbaa !18
-  %i.bcp = ptrtoint ptr %14 to i64
+  %i.bcp = ptrtoint ptr %i.aul to i64
   %i.bcq = sub i64 %.pre-phi3753, %i.bcp          ; 5 uses
   %i.bcr = shl nsw i64 %i.bch, 1
   %i.bcs = add i64 %i.bcq, %i.bcr
@@ -3267,10 +3253,9 @@ bb.gf:                                            ; preds = %bb.ge
   br label %resize_buffer.exit2530
 
 resize_buffer.exit2530:                           ; preds = %bb.ge, %bb.gf
-  %i.bep = phi ptr [ %i.beo, %bb.gf ], [ %i.m, %bb.ge ] ; 3 uses
+  %i.bep = phi ptr [ %i.beo, %bb.gf ], [ %i.m, %bb.ge ] ; 2 uses
   %i.beq = getelementptr i8, ptr %i.bep, i64 %.0.i2525
   store ptr %i.beq, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.bep, ptr %i.a, align 8, !tbaa !18
   %i.ber = getelementptr i8, ptr %i.bep, i64 %i.bdy
   %.not.i2531 = icmp eq ptr %i.ber, null
   br i1 %.not.i2531, label %resize_buffer.exit2530.thread, label %buffer_size_check.exit2532
@@ -3369,10 +3354,9 @@ bb.gn:                                            ; preds = %bb.gm
   br label %resize_buffer.exit2540
 
 resize_buffer.exit2540:                           ; preds = %bb.gm, %bb.gn
-  %i.bgj = phi ptr [ %i.bgi, %bb.gn ], [ %i.m, %bb.gm ] ; 3 uses
+  %i.bgj = phi ptr [ %i.bgi, %bb.gn ], [ %i.m, %bb.gm ] ; 2 uses
   %i.bgk = getelementptr i8, ptr %i.bgj, i64 %.0.i2535
   store ptr %i.bgk, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.bgj, ptr %i.a, align 8, !tbaa !18
   %i.bgl = getelementptr i8, ptr %i.bgj, i64 %i.bfs
   %.not.i2541 = icmp eq ptr %i.bgl, null
   br i1 %.not.i2541, label %resize_buffer.exit2540.thread, label %buffer_size_check.exit2542
@@ -3775,7 +3759,7 @@ bb.jv:                                            ; preds = %bb.ju
   br label %RSTRING_PTR.exit2584
 
 RSTRING_PTR.exit2584:                             ; preds = %bb.ju, %bb.jv
-  %i.bsi = phi ptr [ %i.bsh, %bb.jv ], [ %i.m, %bb.ju ] ; 4 uses
+  %i.bsi = phi ptr [ %i.bsh, %bb.jv ], [ %i.m, %bb.ju ] ; 5 uses
   %i.bsj = load i64, ptr %i.i, align 8, !tbaa !89 ; 2 uses
   %i.bsk = sub i64 %i.bsj, %i.bsd                 ; 25 uses
   store ptr %i.bsi, ptr %i.a, align 8, !tbaa !18
@@ -4178,8 +4162,7 @@ bb.kc:                                            ; preds = %bb.kb
 
 bb.kd:                                            ; preds = %._crit_edge3698, %bb.kc
   %.pre-phi3773 = phi i64 [ %.pre3772, %._crit_edge3698 ], [ %i.caj, %bb.kc ]
-  %15 = load ptr, ptr %i.a, align 8, !tbaa !18
-  %i.cam = ptrtoint ptr %15 to i64
+  %i.cam = ptrtoint ptr %i.bsi to i64
   %i.can = sub i64 %.pre-phi3773, %i.cam          ; 5 uses
   %i.cao = shl nsw i64 %i.cae, 1
   %i.cap = add i64 %i.can, %i.cao
@@ -4292,10 +4275,9 @@ bb.kn:                                            ; preds = %bb.km
   br label %resize_buffer.exit2608
 
 resize_buffer.exit2608:                           ; preds = %bb.km, %bb.kn
-  %i.ccg = phi ptr [ %i.ccf, %bb.kn ], [ %i.m, %bb.km ] ; 3 uses
+  %i.ccg = phi ptr [ %i.ccf, %bb.kn ], [ %i.m, %bb.km ] ; 2 uses
   %i.cch = getelementptr i8, ptr %i.ccg, i64 %.0.i2603
   store ptr %i.cch, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.ccg, ptr %i.a, align 8, !tbaa !18
   %i.cci = getelementptr i8, ptr %i.ccg, i64 %i.cbp
   %.not.i2609 = icmp eq ptr %i.cci, null
   br i1 %.not.i2609, label %resize_buffer.exit2608.thread, label %buffer_size_check.exit2610
@@ -4356,7 +4338,7 @@ bb.kr:                                            ; preds = %bb.kq
   br label %RSTRING_PTR.exit2614
 
 RSTRING_PTR.exit2614:                             ; preds = %bb.kq, %bb.kr
-  %i.cdj = phi ptr [ %i.cdi, %bb.kr ], [ %i.m, %bb.kq ] ; 4 uses
+  %i.cdj = phi ptr [ %i.cdi, %bb.kr ], [ %i.m, %bb.kq ] ; 5 uses
   %i.cdk = load i64, ptr %i.i, align 8, !tbaa !89 ; 2 uses
   %i.cdl = sub i64 %i.cdk, %i.cde                 ; 25 uses
   store ptr %i.cdj, ptr %i.a, align 8, !tbaa !18
@@ -4759,8 +4741,7 @@ bb.ky:                                            ; preds = %bb.kx
 
 bb.kz:                                            ; preds = %._crit_edge3696, %bb.ky
   %.pre-phi3777 = phi i64 [ %.pre3776, %._crit_edge3696 ], [ %i.clk, %bb.ky ]
-  %16 = load ptr, ptr %i.a, align 8, !tbaa !18
-  %i.cln = ptrtoint ptr %16 to i64
+  %i.cln = ptrtoint ptr %i.cdj to i64
   %i.clo = sub i64 %.pre-phi3777, %i.cln          ; 5 uses
   %i.clp = shl nsw i64 %i.clf, 1
   %i.clq = add i64 %i.clo, %i.clp
@@ -5163,10 +5144,9 @@ bb.mn:                                            ; preds = %bb.mm
   br label %resize_buffer.exit2678
 
 resize_buffer.exit2678:                           ; preds = %bb.mm, %bb.mn
-  %i.dge = phi ptr [ %i.dgd, %bb.mn ], [ %i.m, %bb.mm ] ; 3 uses
+  %i.dge = phi ptr [ %i.dgd, %bb.mn ], [ %i.m, %bb.mm ] ; 2 uses
   %i.dgf = getelementptr i8, ptr %i.dge, i64 %.0.i2673
   store ptr %i.dgf, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.dge, ptr %i.a, align 8, !tbaa !18
   %i.dgg = getelementptr i8, ptr %i.dge, i64 %i.dfn
   %.not.i2679 = icmp eq ptr %i.dgg, null
   br i1 %.not.i2679, label %resize_buffer.exit2678.thread, label %buffer_size_check.exit2680
@@ -5265,10 +5245,9 @@ bb.mu:                                            ; preds = %bb.mt
   br label %resize_buffer.exit2688
 
 resize_buffer.exit2688:                           ; preds = %bb.mt, %bb.mu
-  %i.dia = phi ptr [ %i.dhz, %bb.mu ], [ %i.m, %bb.mt ] ; 3 uses
+  %i.dia = phi ptr [ %i.dhz, %bb.mu ], [ %i.m, %bb.mt ] ; 2 uses
   %i.dib = getelementptr i8, ptr %i.dia, i64 %.0.i2683
   store ptr %i.dib, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.dia, ptr %i.a, align 8, !tbaa !18
   %i.dic = getelementptr i8, ptr %i.dia, i64 %i.dhj
   %.not.i2689 = icmp eq ptr %i.dic, null
   br i1 %.not.i2689, label %resize_buffer.exit2688.thread, label %buffer_size_check.exit2690
@@ -5324,7 +5303,7 @@ bb.my:                                            ; preds = %bb.mx
   br label %RSTRING_PTR.exit2694
 
 RSTRING_PTR.exit2694:                             ; preds = %bb.mx, %bb.my
-  %i.diy = phi ptr [ %i.dix, %bb.my ], [ %i.m, %bb.mx ] ; 4 uses
+  %i.diy = phi ptr [ %i.dix, %bb.my ], [ %i.m, %bb.mx ] ; 5 uses
   %i.diz = load i64, ptr %i.i, align 8, !tbaa !89 ; 2 uses
   %i.dja = sub i64 %i.diz, %i.dit                 ; 25 uses
   store ptr %i.diy, ptr %i.a, align 8, !tbaa !18
@@ -5727,8 +5706,7 @@ bb.nf:                                            ; preds = %bb.ne
 
 bb.ng:                                            ; preds = %._crit_edge3691, %bb.nf
   %.pre-phi3787 = phi i64 [ %.pre3786, %._crit_edge3691 ], [ %i.dqz, %bb.nf ]
-  %17 = load ptr, ptr %i.a, align 8, !tbaa !18
-  %i.drc = ptrtoint ptr %17 to i64
+  %i.drc = ptrtoint ptr %i.diy to i64
   %i.drd = sub i64 %.pre-phi3787, %i.drc          ; 5 uses
   %i.dre = shl nsw i64 %i.dqu, 1
   %i.drf = add i64 %i.drd, %i.dre
@@ -5859,10 +5837,9 @@ bb.nr:                                            ; preds = %bb.nq
   br label %resize_buffer.exit2724
 
 resize_buffer.exit2724:                           ; preds = %bb.nq, %bb.nr
-  %i.dta = phi ptr [ %i.dsz, %bb.nr ], [ %i.m, %bb.nq ] ; 3 uses
+  %i.dta = phi ptr [ %i.dsz, %bb.nr ], [ %i.m, %bb.nq ] ; 2 uses
   %i.dtb = getelementptr i8, ptr %i.dta, i64 %.0.i2719
   store ptr %i.dtb, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.dta, ptr %i.a, align 8, !tbaa !18
   %i.dtc = getelementptr i8, ptr %i.dta, i64 %i.dsj
   %.not.i2725 = icmp eq ptr %i.dtc, null
   br i1 %.not.i2725, label %resize_buffer.exit2724.thread, label %buffer_size_check.exit2726
@@ -6265,10 +6242,9 @@ bb.oy:                                            ; preds = %bb.ox
   br label %resize_buffer.exit2758
 
 resize_buffer.exit2758:                           ; preds = %bb.ox, %bb.oy
-  %i.dzw = phi ptr [ %i.dzv, %bb.oy ], [ %i.m, %bb.ox ] ; 3 uses
+  %i.dzw = phi ptr [ %i.dzv, %bb.oy ], [ %i.m, %bb.ox ] ; 2 uses
   %i.dzx = getelementptr i8, ptr %i.dzw, i64 %.0.i2753
   store ptr %i.dzx, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.dzw, ptr %i.a, align 8, !tbaa !18
   %i.dzy = getelementptr i8, ptr %i.dzw, i64 %i.dze
   %.not.i2759 = icmp eq ptr %i.dzy, null
   br i1 %.not.i2759, label %resize_buffer.exit2758.thread, label %buffer_size_check.exit2760
@@ -6435,10 +6411,9 @@ bb.pj:                                            ; preds = %bb.pi
   br label %resize_buffer.exit2777
 
 resize_buffer.exit2777:                           ; preds = %bb.pi, %bb.pj
-  %i.edd = phi ptr [ %i.edc, %bb.pj ], [ %i.m, %bb.pi ] ; 3 uses
+  %i.edd = phi ptr [ %i.edc, %bb.pj ], [ %i.m, %bb.pi ] ; 2 uses
   %i.ede = getelementptr i8, ptr %i.edd, i64 %.0.i2772
   store ptr %i.ede, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.edd, ptr %i.a, align 8, !tbaa !18
   %i.edf = getelementptr i8, ptr %i.edd, i64 %i.ecm
   %.not.i2778 = icmp eq ptr %i.edf, null
   br i1 %.not.i2778, label %resize_buffer.exit2777.thread, label %buffer_size_check.exit2779
@@ -6686,10 +6661,9 @@ bb.qe:                                            ; preds = %bb.qd
   br label %resize_buffer.exit2801
 
 resize_buffer.exit2801:                           ; preds = %bb.qd, %bb.qe
-  %i.ehe = phi ptr [ %i.ehd, %bb.qe ], [ %i.m, %bb.qd ] ; 3 uses
+  %i.ehe = phi ptr [ %i.ehd, %bb.qe ], [ %i.m, %bb.qd ] ; 2 uses
   %i.ehf = getelementptr i8, ptr %i.ehe, i64 %.0.i2796
   store ptr %i.ehf, ptr %i.b, align 8, !tbaa !18
-  store ptr %i.ehe, ptr %i.a, align 8, !tbaa !18
   %i.ehg = getelementptr i8, ptr %i.ehe, i64 %i.egn
   %.not.i2802 = icmp eq ptr %i.ehg, null
   br i1 %.not.i2802, label %resize_buffer.exit2801.thread, label %buffer_size_check.exit2803
@@ -7003,8 +6977,8 @@ bb.qv:                                            ; preds = %bb.qu
   br label %RSTRING_PTR.exit2821
 
 RSTRING_PTR.exit2821:                             ; preds = %bb.qu, %bb.qv
-  %i.elc = phi ptr [ %i.elb, %bb.qv ], [ %i.m, %bb.qu ] ; 4 uses
-  %i.eld = load i64, ptr %i.i, align 8, !tbaa !89 ; 2 uses
+  %i.elc = phi ptr [ %i.elb, %bb.qv ], [ %i.m, %bb.qu ] ; 5 uses
+  %i.eld = load i64, ptr %i.i, align 8, !tbaa !89 ; 8 uses
   %i.ele = sub i64 %i.eld, %i.ekx                 ; 25 uses
   store ptr %i.elc, ptr %i.a, align 8, !tbaa !18
   %i.elf = call i64 @rb_str_capacity(i64 noundef %0) #12
@@ -7407,33 +7381,25 @@ bb.ra:                                            ; preds = %bb.qz, %.preheader2
 case_conv.exit2831:                               ; preds = %bb.ra, %bb.qy, %middle.block6479, %vec.epilog.middle.block6505, %middle.block6392, %vec.epilog.middle.block6418, %bb.qw, %RSTRING_PTR.exit2821
   %i.esy = sext i32 %.019283304 to i64            ; 5 uses
   %i.esz = icmp slt i64 %i.ele, %i.esy
-  %i.eta = getelementptr i8, ptr %i.elc, i64 %i.eld ; 5 uses
+  %i.eta = getelementptr i8, ptr %i.elc, i64 %i.eld ; 3 uses
   br i1 %i.esz, label %bb.rb, label %case_conv.exit2868
 
 bb.rb:                                            ; preds = %case_conv.exit2831
   %i.etb = load ptr, ptr %i.b, align 8, !tbaa !18 ; 2 uses
   %.not2110 = icmp ult ptr %i.eta, %i.etb
-  br i1 %.not2110, label %bb.rc, label %._crit_edge3683
-
-._crit_edge3683:                                  ; preds = %bb.rb
-  %.pre3804 = ptrtoint ptr %i.eta to i64
-  br label %bb.rd
+  br i1 %.not2110, label %bb.rc, label %bb.rd
 
 bb.rc:                                            ; preds = %bb.rb
   %i.etc = ptrtoint ptr %i.etb to i64
-  %i.etd = ptrtoint ptr %i.eta to i64             ; 2 uses
+  %i.etd = ptrtoint ptr %i.eta to i64
   %i.ete = xor i64 %i.etd, -1
   %i.etf = add i64 %i.etc, %i.ete
   %.not2111 = icmp sgt i64 %i.etf, %i.esy
   br i1 %.not2111, label %buffer_size_check.exit2839, label %bb.rd
 
-bb.rd:                                            ; preds = %._crit_edge3683, %bb.rc
-  %.pre-phi3805 = phi i64 [ %.pre3804, %._crit_edge3683 ], [ %i.etd, %bb.rc ]
-  %18 = load ptr, ptr %i.a, align 8, !tbaa !18
-  %19 = ptrtoint ptr %18 to i64
-  %20 = sub i64 %.pre-phi3805, %19                ; 5 uses
+bb.rd:                                            ; preds = %bb.rc, %bb.rb
   %i.etg = shl nsw i64 %i.esy, 1
-  %i.eth = add i64 %20, %i.etg
+  %i.eth = add i64 %i.eld, %i.etg
   %i.eti = call i64 @rb_str_capacity(i64 noundef %0) #12
   br label %bb.re
 
@@ -7444,14 +7410,14 @@ bb.re:                                            ; preds = %bb.re, %bb.rd
   br i1 %i.etj, label %bb.re, label %bb.rf, !llvm.loop !0
 
 bb.rf:                                            ; preds = %bb.re
-  %i.etl = icmp ult i64 %.0.i2832, %20
+  %i.etl = icmp ult i64 %.0.i2832, %i.eld
   %i.etm = icmp ugt i64 %.0.i2832, %9
   %or.cond.i2833 = or i1 %i.etl, %i.etm
   br i1 %or.cond.i2833, label %resize_buffer.exit2837.thread, label %bb.rg
 
 bb.rg:                                            ; preds = %bb.rf
-  call void @rb_str_set_len(i64 noundef %0, i64 noundef %20) #11
-  %i.etn = sub nuw i64 %.0.i2832, %20
+  call void @rb_str_set_len(i64 noundef %0, i64 noundef %i.eld) #11
+  %i.etn = sub nuw i64 %.0.i2832, %i.eld
   call void @rb_str_modify_expand(i64 noundef %0, i64 noundef %i.etn) #11
   %i.eto = load i64, ptr %i.h, align 8, !tbaa !14
   %i.etp = and i64 %i.eto, 8192
@@ -7463,11 +7429,11 @@ bb.rh:                                            ; preds = %bb.rg
   br label %resize_buffer.exit2837
 
 resize_buffer.exit2837:                           ; preds = %bb.rg, %bb.rh
-  %i.etr = phi ptr [ %i.etq, %bb.rh ], [ %i.m, %bb.rg ] ; 3 uses
+  %i.etr = phi ptr [ %i.etq, %bb.rh ], [ %i.m, %bb.rg ] ; 4 uses
   %i.ets = getelementptr i8, ptr %i.etr, i64 %.0.i2832
   store ptr %i.ets, ptr %i.b, align 8, !tbaa !18
   store ptr %i.etr, ptr %i.a, align 8, !tbaa !18
-  %i.ett = getelementptr i8, ptr %i.etr, i64 %20  ; 2 uses
+  %i.ett = getelementptr i8, ptr %i.etr, i64 %i.eld
   %.not.i2838 = icmp eq ptr %i.ett, null
   br i1 %.not.i2838, label %resize_buffer.exit2837.thread, label %buffer_size_check.exit2839
 
@@ -7477,9 +7443,10 @@ resize_buffer.exit2837.thread:                    ; preds = %bb.rf, %resize_buff
   unreachable
 
 buffer_size_check.exit2839:                       ; preds = %resize_buffer.exit2837, %bb.rc
-  %.34 = phi ptr [ %i.eta, %bb.rc ], [ %i.ett, %resize_buffer.exit2837 ]
+  %.34 = phi ptr [ %i.elc, %bb.rc ], [ %i.etr, %resize_buffer.exit2837 ]
+  %12 = getelementptr i8, ptr %.34, i64 %i.eld
   %i.etv = sub i64 0, %i.ele                      ; 2 uses
-  %i.etw = getelementptr i8, ptr %.34, i64 %i.etv ; 3 uses
+  %i.etw = getelementptr i8, ptr %12, i64 %i.etv  ; 3 uses
   %i.etx = getelementptr i8, ptr %i.etw, i64 %i.esy ; 2 uses
   %i.ety = getelementptr i8, ptr %i.etx, i64 %i.etv
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.ety, ptr noundef nonnull align 1 %i.etw, i64 noundef range(i64 -9223372036854775808, 2147483647) %i.ele, i1 noundef false) #11

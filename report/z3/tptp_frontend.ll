@@ -205,8 +205,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1232)
   %.val5.i.i = load ptr, ptr %.val, align 8, !tbaa !359, !noalias !1232 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 29 uses
-  %i.c = getelementptr i8, ptr %.val5.i.i, i64 8  ; 2 uses
-  %.val5.val.i.i = load i64, ptr %i.c, align 8, !tbaa !140, !noalias !1232 ; 10 uses
+  %i.c = getelementptr i8, ptr %.val5.i.i, i64 8
+  %.val5.val.i.i = load i64, ptr %i.c, align 8, !tbaa !140, !noalias !1232 ; 22 uses
   %.val653.i.i = load i64, ptr %i.b, align 8, !tbaa !262, !noalias !1232 ; 4 uses
   %.not4354.i.i = icmp ult i64 %.val653.i.i, %.val5.val.i.i
   br i1 %.not4354.i.i, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit.lr.ph.i.i, label %._ZN12_GLOBAL__N_15lexer16skip_ws_commentsEv.exit_crit_edge.i
@@ -418,8 +418,7 @@ _ZN12_GLOBAL__N_15lexer16skip_ws_commentsEv.exit.i: ; preds = %_ZNK12_GLOBAL__N_
   store i32 %i.bf, ptr %i.bj, align 8, !tbaa !162, !alias.scope !1232
   %i.bn = getelementptr inbounds nuw i8, ptr %.val, i64 20 ; 20 uses
   store i32 %i.be, ptr %i.bk, align 4, !tbaa !163, !alias.scope !1232
-  %.val55.val.i = load i64, ptr %i.c, align 8, !tbaa !140 ; 12 uses
-  %.not203.i = icmp ult i64 %.val56.i, %.val55.val.i
+  %.not203.i = icmp ult i64 %.val56.i, %.val5.val.i.i
   br i1 %.not203.i, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit.i, label %_ZN12_GLOBAL__N_15lexer4nextEv.exit
 
 bb.n:                                             ; preds = %_ZN12_GLOBAL__N_15lexer3getEv.exit27.invoke
@@ -449,11 +448,11 @@ _ZN12_GLOBAL__N_15lexer3getEv.exit.i:             ; preds = %_ZNK12_GLOBAL__N_15
   %i.bt = icmp eq i8 %i.br, 34
   %i.bu = zext i1 %i.bt to i8
   store i8 %i.bu, ptr %i.bl, align 8, !tbaa !164, !alias.scope !1232
-  %.not207230.i = icmp ult i64 %.pre254.i, %.val55.val.i
+  %.not207230.i = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %.not207230.i, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %_ZN12_GLOBAL__N_15lexer3getEv.exit.i, %bb.an
-  %.val47.val233.i = phi i64 [ %.val47.val.i, %bb.an ], [ %.val55.val.i, %_ZN12_GLOBAL__N_15lexer3getEv.exit.i ]
+  %.val47.val233.i = phi i64 [ %.val47.val.i, %bb.an ], [ %.val5.val.i.i, %_ZN12_GLOBAL__N_15lexer3getEv.exit.i ]
   %.val48232.i = phi i64 [ %.val48.i, %bb.an ], [ %.pre254.i, %_ZN12_GLOBAL__N_15lexer3getEv.exit.i ] ; 2 uses
   %.val47231.i = phi ptr [ %.val47.i, %bb.an ], [ %.val5.i.i, %_ZN12_GLOBAL__N_15lexer3getEv.exit.i ]
   %i.bv = load ptr, ptr %.val47231.i, align 8, !tbaa !225
@@ -856,7 +855,7 @@ bb.ar:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %.loopexit.split-lp.i
 
 bb.as:                                            ; preds = %_ZNK12_GLOBAL__N_15lexer4peekEj.exit.i
-  %i.fx = icmp ult i64 %.pre254.i, %.val55.val.i
+  %i.fx = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %i.fx, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit131.i, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit152.thread.thread295.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit131.i:        ; preds = %bb.as
@@ -869,7 +868,7 @@ _ZNK12_GLOBAL__N_15lexer4peekEj.exit131.i:        ; preds = %bb.as
 
 bb.at:                                            ; preds = %_ZNK12_GLOBAL__N_15lexer4peekEj.exit131.i
   %i.ga = add nuw i64 %.val56.i, 2                ; 2 uses
-  %i.gb = icmp ult i64 %i.ga, %.val55.val.i
+  %i.gb = icmp ult i64 %i.ga, %.val5.val.i.i
   br i1 %i.gb, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit132.i, label %.invoke.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit132.i:        ; preds = %bb.at
@@ -880,7 +879,7 @@ _ZNK12_GLOBAL__N_15lexer4peekEj.exit132.i:        ; preds = %bb.at
 
 bb.au:                                            ; preds = %_ZNK12_GLOBAL__N_15lexer4peekEj.exit131.i
   %i.gf = add nuw i64 %.val56.i, 2                ; 2 uses
-  %i.gg = icmp ult i64 %i.gf, %.val55.val.i
+  %i.gg = icmp ult i64 %i.gf, %.val5.val.i.i
   br i1 %i.gg, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit135.i, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit152.thread.thread295.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit135.i:        ; preds = %bb.au
@@ -890,7 +889,7 @@ _ZNK12_GLOBAL__N_15lexer4peekEj.exit135.i:        ; preds = %bb.au
   br i1 %i.gj, label %.invoke.sink.split.i, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit152.thread.thread295.i
 
 bb.av:                                            ; preds = %_ZNK12_GLOBAL__N_15lexer4peekEj.exit.i
-  %i.gk = icmp ult i64 %.pre254.i, %.val55.val.i
+  %i.gk = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %i.gk, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit137.i, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit152.thread.thread295.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit137.i:        ; preds = %bb.av
@@ -925,7 +924,7 @@ _ZN12_GLOBAL__N_15lexer3getEv.exit143.i:          ; preds = %bb.ay, %bb.ax
   br label %_ZN12_GLOBAL__N_15lexer3getEv.exit27.invoke
 
 bb.az:                                            ; preds = %_ZNK12_GLOBAL__N_15lexer4peekEj.exit.i
-  %i.gu = icmp ult i64 %.pre254.i, %.val55.val.i
+  %i.gu = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %i.gu, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit148.i, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit152.thread.thread295.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit148.i:        ; preds = %bb.az
@@ -941,7 +940,7 @@ _ZNK12_GLOBAL__N_15lexer4peekEj.exit152.thread.thread295.i: ; preds = %_ZNK12_GL
   br label %_ZN12_GLOBAL__N_15lexer3getEv.exit155.i
 
 bb.ba:                                            ; preds = %_ZNK12_GLOBAL__N_15lexer4peekEj.exit.i
-  %i.gx = icmp ult i64 %.pre254.i, %.val55.val.i
+  %i.gx = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %i.gx, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit152.i, label %_ZN12_GLOBAL__N_15lexer3getEv.exit155.thread297.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit152.i:        ; preds = %bb.ba
@@ -1134,7 +1133,7 @@ bb.bq:                                            ; preds = %_ZN12_GLOBAL__N_15l
   br label %.critedge45.sink.split.i
 
 bb.br:                                            ; preds = %_ZN12_GLOBAL__N_15lexer3getEv.exit155.i, %_ZN12_GLOBAL__N_15lexer3getEv.exit155.thread297.i
-  %i.ii = icmp ult i64 %.pre254.i, %.val55.val.i
+  %i.ii = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %i.ii, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit156.i, label %.critedge45.sink.split.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit156.i:        ; preds = %bb.br
@@ -1150,7 +1149,7 @@ bb.bs:                                            ; preds = %_ZNK12_GLOBAL__N_15
   br label %.critedge45.sink.split.i
 
 bb.bt:                                            ; preds = %_ZN12_GLOBAL__N_15lexer3getEv.exit155.i
-  %i.il = icmp ult i64 %.pre254.i, %.val55.val.i
+  %i.il = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %i.il, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit158.i, label %.critedge45.sink.split.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit158.i:        ; preds = %bb.bt
@@ -1184,7 +1183,7 @@ bb.ca:                                            ; preds = %_ZN12_GLOBAL__N_15l
   br label %.critedge45.sink.split.i
 
 bb.cb:                                            ; preds = %_ZN12_GLOBAL__N_15lexer3getEv.exit155.i
-  %i.io = icmp ult i64 %.pre254.i, %.val55.val.i
+  %i.io = icmp ult i64 %.pre254.i, %.val5.val.i.i
   br i1 %i.io, label %_ZNK12_GLOBAL__N_15lexer4peekEj.exit160.i, label %.critedge45.sink.split.i
 
 _ZNK12_GLOBAL__N_15lexer4peekEj.exit160.i:        ; preds = %bb.cb

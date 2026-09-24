@@ -205,7 +205,7 @@ bb.a:
   %i.co = getelementptr inbounds nuw i8, ptr %16, i64 3 ; 2 uses
   %i.cp = zext i1 %i.cn to i8
   store i8 %i.cp, ptr %i.co, align 1, !tbaa !241
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 4 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !218
   %i.cs = getelementptr inbounds nuw i8, ptr %i.r, i64 20 ; 4 uses
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !219
@@ -441,47 +441,46 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.hk, label %bb.iy, label %bb.r
 
 bb.r:                                             ; preds = %.loopexit556
-  %i.hl = getelementptr inbounds nuw i8, ptr %i.r, i64 48 ; 4 uses
-  %i.hm = load i32, ptr %i.hl, align 4, !tbaa !236
-  %i.hn = getelementptr inbounds nuw i8, ptr %i.r, i64 52 ; 5 uses
-  %21 = getelementptr inbounds nuw i8, ptr %i.r, i64 56
-  %22 = add nsw i32 %i.hm, -1
-  %23 = load <2 x i32>, ptr %i.hn, align 4, !tbaa !42
+  %i.hl = getelementptr inbounds nuw i8, ptr %i.r, i64 48 ; 3 uses
+  %i.hm = load i32, ptr %i.hl, align 4, !tbaa !236 ; 3 uses
+  %i.hn = getelementptr inbounds nuw i8, ptr %i.r, i64 52 ; 3 uses
+  %21 = load i32, ptr %i.hn, align 4, !tbaa !235  ; 3 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.r, i64 56 ; 2 uses
+  %23 = load i32, ptr %22, align 4, !tbaa !222    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %17, i8 0, i64 64, i1 false), !tbaa !234
-  %24 = add nsw <2 x i32> %23, splat (i32 -1)
+  %24 = add nsw i32 %i.hm, -1
+  %25 = add nsw i32 %21, -1
+  %26 = add nsw i32 %23, -1
   %i.ho = load i32, ptr %i.b, align 4, !tbaa !42  ; 3 uses
   %i.hp = load i32, ptr %i.r, align 4, !tbaa !214
   %i.hq = sub nsw i32 %i.ho, %i.hp
-  %25 = load i32, ptr %i.hl, align 4, !tbaa !236  ; 2 uses
-  %i.hr = srem i32 %i.hq, %25                     ; 3 uses
-  %i.hs = load i32, ptr %i.c, align 4, !tbaa !42  ; 2 uses
-  %i.ht = load i32, ptr %i.d, align 4, !tbaa !42  ; 2 uses
-  %26 = load <2 x i32>, ptr %i.cf, align 4, !tbaa !42
-  %27 = insertelement <2 x i32> poison, i32 %i.hs, i64 0
-  %28 = insertelement <2 x i32> %27, i32 %i.ht, i64 1 ; 2 uses
-  %29 = sub nsw <2 x i32> %28, %26
-  %30 = load <2 x i32>, ptr %i.hn, align 4, !tbaa !42
-  %31 = load i32, ptr %i.hn, align 4, !tbaa !235
-  %32 = srem <2 x i32> %29, %30                   ; 4 uses
-  %i.hu = icmp ne i32 %i.hr, %22
+  %i.hr = srem i32 %i.hq, %i.hm                   ; 3 uses
+  %i.hs = load i32, ptr %i.c, align 4, !tbaa !42  ; 3 uses
+  %i.ht = load i32, ptr %i.cf, align 4, !tbaa !216
+  %27 = sub nsw i32 %i.hs, %i.ht
+  %28 = srem i32 %27, %21                         ; 3 uses
+  %29 = load i32, ptr %i.d, align 4, !tbaa !42    ; 3 uses
+  %30 = load i32, ptr %i.cq, align 4, !tbaa !218
+  %31 = sub nsw i32 %29, %30
+  %32 = srem i32 %31, %23                         ; 3 uses
+  %i.hu = icmp ne i32 %i.hr, %24
   %i.hv = add nsw i32 %i.ho, 1
   %i.hw = load i32, ptr %i.bo, align 4, !tbaa !42
   %i.hx = icmp eq i32 %i.hv, %i.hw
   %i.hy = and i1 %i.hu, %i.hx
+  %33 = icmp ne i32 %28, %25
   %i.hz = add nsw i32 %i.hs, 1
   %i.ia = load i32, ptr %i.bq, align 4, !tbaa !42
   %i.ib = icmp eq i32 %i.hz, %i.ia
-  %33 = icmp ne <2 x i32> %32, %24                ; 2 uses
-  %34 = extractelement <2 x i1> %33, i64 0
-  %35 = and i1 %34, %i.ib
-  %i.ic = add nsw i32 %i.ht, 1
+  %34 = and i1 %33, %i.ib
+  %35 = icmp ne i32 %32, %26
+  %i.ic = add nsw i32 %29, 1
   %i.id = load i32, ptr %i.bs, align 4, !tbaa !42
   %i.ie = icmp eq i32 %i.ic, %i.id
-  %36 = extractelement <2 x i1> %33, i64 1
-  %i.if = and i1 %36, %i.ie
-  %i.ig = and i1 %i.hy, %35
+  %i.if = and i1 %35, %i.ie
+  %i.ig = and i1 %i.hy, %34
   %i.ih = and i1 %i.ig, %i.if
   %i.ii = load i32, ptr %i.f, align 4, !tbaa !130 ; 2 uses
   %i.ij = sext i32 %i.ii to i64
@@ -514,7 +513,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   store i32 0, ptr %18, align 8, !tbaa !242
   %i.jb = getelementptr inbounds nuw i8, ptr %18, i64 4 ; 3 uses
   store i32 0, ptr %i.jb, align 4, !tbaa !243
-  %i.jc = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 2 uses
+  %i.jc = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 3 uses
   store i32 0, ptr %i.jc, align 8, !tbaa !224
   %i.jd = getelementptr inbounds nuw i8, ptr %18, i64 12 ; 3 uses
   store i32 %i.ii, ptr %i.jd, align 4, !tbaa !225
@@ -572,9 +571,11 @@ _ZN11OpenImageIO4v3_16TileIDC2ERNS0_14ImageCacheFileEiiiiiiii.exit: ; preds = %b
 
 bb.v:                                             ; preds = %_ZN11OpenImageIO4v3_16TileIDC2ERNS0_14ImageCacheFileEiiiiiiii.exit
   %i.kk = sub nsw i32 %i.ho, %i.hr
-  %37 = sub nsw <2 x i32> %28, %32
+  %36 = sub nsw i32 %i.hs, %28
+  %37 = sub nsw i32 %29, %32
   store i32 %i.kk, ptr %18, align 8, !tbaa !242
-  store <2 x i32> %37, ptr %i.jb, align 4, !tbaa !42
+  store i32 %36, ptr %i.jb, align 4, !tbaa !243
+  store i32 %37, ptr %i.jc, align 8, !tbaa !224
   %i.kl = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.km = load ptr, ptr %i.kl, align 8, !tbaa !63
   %i.kn = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_114ImageCacheImpl9find_tileERKNS0_6TileIDEPNS0_23ImageCachePerThreadInfoEb(ptr noundef nonnull align 64 dereferenceable(25240) %i.km, ptr noundef nonnull align 8 dereferenceable(40) %18, ptr noundef %4, i1 noundef zeroext true)
@@ -657,11 +658,9 @@ bb.ae:                                            ; preds = %bb.ad
   %i.lk = load i32, ptr %i.is, align 4, !tbaa !220
   %i.ll = getelementptr inbounds nuw i8, ptr %i.le, i64 48
   %i.lm = load ptr, ptr %i.ll, align 8, !tbaa !131
-  %38 = extractelement <2 x i32> %32, i64 1
-  %i.ln = mul nsw i32 %i.li, %38
+  %i.ln = mul nsw i32 %i.li, %32
   %i.lo = sext i32 %i.ln to i64
-  %39 = extractelement <2 x i32> %32, i64 0
-  %i.lp = sext i32 %39 to i64
+  %i.lp = sext i32 %28 to i64
   %i.lq = add nsw i64 %i.lo, %i.lp
   %i.lr = sext i32 %i.lj to i64                   ; 2 uses
   %i.ls = mul nsw i64 %i.lq, %i.lr
@@ -701,8 +700,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.critedge374
 
 .preheader554:                                    ; preds = %.preheader555, %.critedge372.thread545
-  %i.ms = phi i32 [ %31, %.preheader555 ], [ %i.tl, %.critedge372.thread545 ]
-  %i.mt = phi i32 [ %25, %.preheader555 ], [ %i.tm, %.critedge372.thread545 ]
+  %i.ms = phi i32 [ %21, %.preheader555 ], [ %i.tl, %.critedge372.thread545 ]
+  %i.mt = phi i32 [ %i.hm, %.preheader555 ], [ %i.tm, %.critedge372.thread545 ]
   %.not586 = phi i1 [ true, %.preheader555 ], [ false, %.critedge372.thread545 ]
   %indvars.iv595.sroa.phi = phi ptr [ %17, %.preheader555 ], [ %indvars.iv595.sroa.gep1045, %.critedge372.thread545 ]
   %indvars.iv595.sroa.phi1046 = phi ptr [ %i.e, %.preheader555 ], [ %indvars.iv595.sroa.gep1048, %.critedge372.thread545 ]
@@ -758,7 +757,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.nq = load i32, ptr %indvars.iv595.sroa.phi1050, align 4, !tbaa !42 ; 2 uses
   %i.nr = load i32, ptr %i.cq, align 4, !tbaa !218
   %i.ns = sub nsw i32 %i.nq, %i.nr
-  %i.nt = load i32, ptr %21, align 4, !tbaa !222
+  %i.nt = load i32, ptr %22, align 4, !tbaa !222
   %i.nu = srem i32 %i.ns, %i.nt                   ; 2 uses
   %i.nv = sub nsw i32 %i.ni, %i.nl                ; 3 uses
   %i.nw = sub nsw i32 %i.nm, %i.np                ; 3 uses

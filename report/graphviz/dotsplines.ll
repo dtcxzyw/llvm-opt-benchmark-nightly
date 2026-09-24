@@ -205,7 +205,7 @@ bb.gg:                                            ; preds = %bb.cm
   store ptr %10, ptr %i.nn, align 8, !tbaa !44
   store ptr %11, ptr %i.no, align 8, !tbaa !44
   store ptr %12, ptr %i.np, align 8, !tbaa !44
-  %i.bmj = load ptr, ptr %i.acw, align 8, !tbaa !65 ; 23 uses
+  %i.bmj = load ptr, ptr %i.acw, align 8, !tbaa !65 ; 22 uses
   %i.bmk = load i32, ptr %i.bmj, align 8          ; 2 uses
   %i.bml = and i32 %i.bmk, 3                      ; 2 uses
   %i.bmm = icmp eq i32 %i.bml, 3
@@ -363,7 +363,7 @@ bb.go:                                            ; preds = %bb.gn
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %13, ptr noundef nonnull align 8 dereferenceable(64) %i.bmj, i64 64, i1 false), !tbaa.struct !106
   store ptr %10, ptr %i.nn, align 8, !tbaa !93
   %i.bpv = load i32, ptr %i.bmj, align 8
-  %i.bpw = and i32 %i.bpv, 3
+  %i.bpw = and i32 %i.bpv, 3                      ; 2 uses
   %i.bpx = icmp eq i32 %i.bpw, 2
   %i.bpy = select i1 %i.bpx, i64 56, i64 -8
   %i.bpz = getelementptr inbounds i8, ptr %i.bmj, i64 %i.bpy
@@ -373,9 +373,7 @@ bb.go:                                            ; preds = %bb.gn
   %i.bqd = icmp eq i32 %i.bqc, 3
   %.sroa.sel559.i = select i1 %i.bqd, ptr %.sroa.gep557.i, ptr %.sroa.gep558.i
   store ptr %i.bqa, ptr %.sroa.sel559.i, align 8, !tbaa !80
-  %36 = load i32, ptr %i.bmj, align 8
-  %37 = and i32 %36, 3
-  %i.bqe = icmp eq i32 %37, 3
+  %i.bqe = icmp eq i32 %i.bpw, 3
   %i.bqf = select i1 %i.bqe, i64 56, i64 120
   %i.bqg = getelementptr inbounds nuw i8, ptr %i.bmj, i64 %i.bqf
   %i.bqh = load ptr, ptr %i.bqg, align 8, !tbaa !80

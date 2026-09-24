@@ -202,9 +202,7 @@ bb.a:
   %i.l = alloca [40 x i8], align 8                ; 8 uses
   %i.m = alloca [48 x i8], align 8                ; 7 uses
   %i.n = alloca [24 x i8], align 8                ; 11 uses
-  %3 = alloca [112 x i8], align 8                 ; 4 uses
   %i.o = alloca [112 x i8], align 8               ; 20 uses
-  %.sroa.4192 = alloca [32 x i8], align 8         ; 4 uses
   %.sroa.7183 = alloca [7 x i8], align 1          ; 2 uses
   %i.p = alloca [96 x i8], align 8                ; 11 uses
   %i.q = alloca [72 x i8], align 8                ; 3 uses
@@ -490,12 +488,9 @@ bb.j:                                             ; preds = %bb.c
   store i32 %.sroa.16.sroa.16.sroa.0.sroa.12.0.copyload, ptr %.sroa.16.sroa.16.sroa.0.sroa.12.0..sroa.16.sroa.16.0..sroa.16.8..sroa_idx15.sroa_idx.sroa_idx, align 4
   %.sroa.16.sroa.16.sroa.0.sroa.13.0..sroa.16.sroa.16.0..sroa.16.8..sroa_idx15.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 %.sroa.16.sroa.16.sroa.0.sroa.13.0.copyload, ptr %.sroa.16.sroa.16.sroa.0.sroa.13.0..sroa.16.sroa.16.0..sroa.16.8..sroa_idx15.sroa_idx.sroa_idx, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4192)
-  call void @_RNvXs4_NtNtCs5QaNqjAn6vc_5shard5query11conversionsNtB7_14FusionInternalINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCshMzyYDJGtjv_3api4rest6schema3RrfE4from(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %.sroa.4192, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.c)
-  store i64 -9223372036854775790, ptr %0, align 8
   %.sroa.4192.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.4192.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.4192, i64 32, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4192)
+  call void @_RNvXs4_NtNtCs5QaNqjAn6vc_5shard5query11conversionsNtB7_14FusionInternalINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCshMzyYDJGtjv_3api4rest6schema3RrfE4from(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %.sroa.4192.0..sroa_idx, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.c)
+  store i64 -9223372036854775790, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.bd
 
@@ -534,10 +529,7 @@ bb.k:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.19.sroa.12.0..sroa.19.8..sroa_idx30.sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.19.sroa.12.0..sroa.19.0..sroa_idx.sroa_idx, i64 7, i1 false)
   %.sroa.19.sroa.13.0..sroa.19.8..sroa_idx30.sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.19.sroa.13.0..sroa.19.8..sroa_idx30.sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.19.sroa.13.0..sroa.19.0..sroa_idx.sroa_idx, i64 40, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @_RNvXsj_NtNtCs5QaNqjAn6vc_5shard5query11conversionsNtNtB7_7formula15FormulaInternalINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCshMzyYDJGtjv_3api4rest6schema12FormulaQueryE4from(ptr noalias nofree noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %3, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(112) %i.o)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(112) %3, i64 112, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @_RNvXsj_NtNtCs5QaNqjAn6vc_5shard5query11conversionsNtNtB7_7formula15FormulaInternalINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtCshMzyYDJGtjv_3api4rest6schema12FormulaQueryE4from(ptr noalias nofree noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(112) %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %bb.bd
 

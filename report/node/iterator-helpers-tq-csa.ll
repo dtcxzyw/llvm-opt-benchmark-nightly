@@ -202,7 +202,7 @@ bb.a:
   %55 = alloca %"class.std::vector.0", align 8    ; 6 uses
   %56 = alloca %"class.v8::internal::TNode.18", align 8 ; 4 uses
   %57 = alloca [1 x %"class.v8::internal::TNode.18"], align 8 ; 4 uses
-  %58 = alloca %"class.v8::internal::compiler::CodeAssembler", align 8 ; 111 uses
+  %58 = alloca %"class.v8::internal::compiler::CodeAssembler", align 8 ; 110 uses
   %59 = alloca %"class.v8::internal::TNode.16", align 8 ; 4 uses
   %60 = alloca %"class.v8::internal::TNode.59", align 8 ; 2 uses
   %61 = alloca %"class.v8::internal::TNode.107", align 8 ; 2 uses
@@ -322,7 +322,7 @@ bb.a:
   %175 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 5 uses
   %176 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 5 uses
   %177 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 5 uses
-  %i.a = load ptr, ptr %0, align 8                ; 36 uses
+  %i.a = load ptr, ptr %0, align 8                ; 37 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #10
   store ptr %i.a, ptr %58, align 8
   %i.b = tail call noundef ptr @_ZN2v88internal8compiler13CodeAssembler16UntypedParameterEi(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef 1) #10, !noalias !1831
@@ -368,8 +368,7 @@ bb.a:
   call void @_ZN2v88internal8compiler13CodeAssemblerD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %67) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %67) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #10
-  %178 = load ptr, ptr %58, align 8
-  store ptr %178, ptr %70, align 8
+  store ptr %i.a, ptr %70, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %70, i64 8 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %70, i64 56 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.o, i8 0, i64 48, i1 false)

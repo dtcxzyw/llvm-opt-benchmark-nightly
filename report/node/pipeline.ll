@@ -205,7 +205,7 @@ _ZN2v88internal8compiler12MachineGraph4DeadEv.exit: ; preds = %bb.b, %bb.c
   %i.bx = getelementptr inbounds nuw i8, ptr %10, i64 624
   store ptr %2, ptr %i.bx, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %10, i64 632 ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %10, i64 640 ; 2 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %10, i64 640
   %i.ca = getelementptr inbounds nuw i8, ptr %10, i64 648
   %.not.i.i.i = icmp eq i32 %i.bw, 0
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.by, i8 0, i64 24, i1 false)
@@ -233,7 +233,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cl = add i64 %i.cj, %i.cc
   store i64 %i.cl, ptr %i.cf, align 8
   store ptr %i.ck, ptr %i.by, align 8
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.cc ; 2 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.cc ; 3 uses
   store ptr %i.cm, ptr %i.ca, align 8
   store ptr %i.cm, ptr %i.bz, align 8
   br label %.lr.ph.i.i.i
@@ -242,8 +242,7 @@ bb.e:                                             ; preds = %bb.d
   %.09.i.i.i = phi ptr [ %i.cn, %.lr.ph.i.i.i ], [ %i.ck, %.lr.ph.preheader.i.i.i ] ; 2 uses
   store ptr null, ptr %.09.i.i.i, align 8
   %i.cn = getelementptr inbounds nuw i8, ptr %.09.i.i.i, i64 8 ; 2 uses
-  %18 = load ptr, ptr %i.bz, align 8
-  %i.co = icmp ult ptr %i.cn, %18
+  %i.co = icmp ult ptr %i.cn, %i.cm
   br i1 %i.co, label %.lr.ph.i.i.i, label %_ZN2v88internal8compiler18CsaLoadEliminationC2EPNS1_15AdvancedReducer6EditorEPNS1_7JSGraphEPNS0_4ZoneE.exit, !llvm.loop !829
 
 _ZN2v88internal8compiler18CsaLoadEliminationC2EPNS1_15AdvancedReducer6EditorEPNS1_7JSGraphEPNS0_4ZoneE.exit: ; preds = %.lr.ph.i.i.i, %_ZN2v88internal8compiler12MachineGraph4DeadEv.exit

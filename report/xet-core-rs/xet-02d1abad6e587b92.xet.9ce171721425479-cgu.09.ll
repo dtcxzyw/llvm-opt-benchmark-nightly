@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.l, %bb.k
   %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 24 ; 2 uses
   store i64 %.sroa.14.0.ph.i, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644
   %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 32 ; 2 uses
-  %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 40 ; 4 uses
+  %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 40 ; 3 uses
   store <2 x i64> %i.co, ptr %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 48 ; 2 uses
   store i64 %.sroa.17.0.ph.i, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !4644
@@ -217,7 +217,7 @@ bb.n:                                             ; preds = %bb.l, %bb.k
   %.sroa.258.sroa.3.0..sroa.258.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 80 ; 2 uses
   store i64 %.sroa.1428.0.ph.i, ptr %.sroa.258.sroa.3.0..sroa.258.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644
   %.sroa.258.sroa.4.0..sroa.258.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 88 ; 2 uses
-  %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 96 ; 4 uses
+  %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 96 ; 3 uses
   store <2 x i64> %i.cz, ptr %.sroa.258.sroa.4.0..sroa.258.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644
   %.sroa.359.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 104 ; 2 uses
   store i64 %.sroa.1734.0.ph.i, ptr %.sroa.359.0..sroa_idx.i, align 8, !noalias !4644
@@ -225,7 +225,7 @@ bb.n:                                             ; preds = %bb.l, %bb.k
   %.sroa.5425.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %.sroa.6426.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.at, i64 16 ; 2 uses
   %.sroa.7427.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.at, i64 24
-  %i.db = getelementptr inbounds nuw i8, ptr %i.av, i64 44 ; 3 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %i.av, i64 44
   %.sroa.3157.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.dc = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %.sroa.4474.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
@@ -234,7 +234,7 @@ bb.n:                                             ; preds = %bb.l, %bb.k
   %.sroa.2169.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %.sroa.3170.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 36
   %.sroa.4171.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 40
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.av, i64 100 ; 3 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.av, i64 100
   %i.de = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %.sroa.4487.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   %.sroa.4188.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
@@ -637,8 +637,8 @@ bb.bw:                                            ; preds = %bb.ae
 
 bb.bx:                                            ; preds = %bb.bw
   %i.jl = load i32, ptr %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644, !noundef !18 ; 3 uses
-  %.not644.i = icmp slt i32 %i.jl, 0              ; 5 uses
-  %i.jm = load i32, ptr %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644 ; 2 uses
+  %.not644.i = icmp slt i32 %i.jl, 0              ; 4 uses
+  %i.jm = load i32, ptr %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644 ; 3 uses
   %i.jn = icmp slt i32 %i.jm, 0
   %.sroa.0151.0.i = select i1 %.not644.i, i1 true, i1 %i.jn ; 2 uses
   %i.jo = and i32 %i.jl, 1073741824               ; 2 uses
@@ -650,7 +650,7 @@ bb.bx:                                            ; preds = %bb.bw
   %.sroa.0155.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !4644 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !4644
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.3157.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx.i, i64 24, i1 false), !noalias !4644
-  %i.jr = load i32, ptr %i.db, align 4, !noalias !4644, !noundef !18 ; 4 uses
+  %i.jr = load i32, ptr %i.db, align 4, !noalias !4644, !noundef !18 ; 5 uses
   store i64 %.sroa.0155.0.copyload.i, ptr %i.i, align 8, !noalias !4644
   invoke void @_RINvMNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structsNtB3_22FileDataSequenceHeader3newmECsQbU2fm3lSD_3xet(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.am, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.i, i32 noundef %i.jr, i1 noundef zeroext %.sroa.0151.0.i, i1 noundef zeroext %.sroa.0153.0.i)
           to label %bb.by unwind label %.loopexit.split-lp238.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !4643
@@ -685,7 +685,7 @@ bb.cb:                                            ; preds = %bb.bz
   %i.ka = mul nuw nsw i64 %i.jz, 48
   %i.kb = add i64 %i.ka, %.sroa.0.1515.i
   %i.kc = add i64 %i.kb, %i.jx                    ; 3 uses
-  %i.kd = load i32, ptr %i.dd, align 4, !noalias !4644, !noundef !18
+  %i.kd = load i32, ptr %i.dd, align 4, !noalias !4644, !noundef !18 ; 3 uses
   %i.ke = zext i32 %i.kd to i64
   %i.kf = mul nuw nsw i64 %i.ke, 48
   %i.kg = invoke { i64, ptr } @_RNvXs4_NtNtCskKLDkoKarTP_4core2io6cursorINtB5_6CursorRINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_4seek4Seek4seekCsQbU2fm3lSD_3xet(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %4, i64 noundef 2, i64 noundef %i.kf)
@@ -724,9 +724,7 @@ bb.cf:                                            ; preds = %bb.cj, %._crit_edge
 bb.cg:                                            ; preds = %bb.ce
   %.lobit.i = lshr i32 %i.jl, 31
   %.658.i = zext nneg i32 %.lobit.i to i64
-  %.sroa.gep11.sroa.gep.val.i = load i32, ptr %i.db, align 4, !noalias !4644
-  %.sroa.gep.sroa.gep.val.i = load i32, ptr %i.dd, align 4, !noalias !4644
-  %i.kn = select i1 %.not644.i, i32 %.sroa.gep11.sroa.gep.val.i, i32 %.sroa.gep.sroa.gep.val.i ; 2 uses
+  %i.kn = select i1 %.not644.i, i32 %i.jr, i32 %i.kd ; 2 uses
   %.not546.i = icmp eq i32 %i.kn, 0
   br i1 %.not546.i, label %._crit_edge506.i, label %.lr.ph505.i
 
@@ -736,11 +734,9 @@ bb.cg:                                            ; preds = %bb.ce
 
 ._crit_edge506.i:                                 ; preds = %bb.dl, %bb.cg
   %.sroa.0.6.lcssa.i = phi i64 [ %i.kc, %bb.cg ], [ %i.nn, %bb.dl ] ; 2 uses
-  %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.val.i = load i32, ptr %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644
-  %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.val.i = load i32, ptr %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.i, align 8, !noalias !4644
-  %6 = select i1 %.not644.i, i32 %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.val.i, i32 %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.val.i
-  %.not647.i = icmp sgt i32 %6, -1
-  br i1 %.not647.i, label %bb.cf, label %bb.ci
+  %.not647.i620 = icmp slt i32 %i.jm, 0
+  %.not647.i.not = select i1 %.not644.i, i1 %.not647.i620, i1 false
+  br i1 %.not647.i.not, label %bb.ci, label %bb.cf
 
 bb.ch:                                            ; preds = %bb.dl, %.lr.ph505.i
   %.sroa.0.6503.i = phi i64 [ %i.kc, %.lr.ph505.i ], [ %i.nn, %bb.dl ]
@@ -754,10 +750,7 @@ bb.ch:                                            ; preds = %bb.dl, %.lr.ph505.i
 bb.ci:                                            ; preds = %._crit_edge506.i
   %i.kq = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %.658.i
   %i.kr = load ptr, ptr %i.kq, align 8, !alias.scope !4643, !noalias !4655, !nonnull !18, !align !22, !noundef !18
-  %.sroa.gep.sroa.gep.val224.i = load i32, ptr %i.dd, align 4, !noalias !4644
-  %.sroa.gep11.sroa.gep.val225.i = load i32, ptr %i.db, align 4, !noalias !4644
-  %7 = select i1 %.not644.i, i32 %.sroa.gep.sroa.gep.val224.i, i32 %.sroa.gep11.sroa.gep.val225.i
-  %i.ks = zext i32 %7 to i64
+  %i.ks = zext i32 %i.kd to i64
   %i.kt = mul nuw nsw i64 %i.ks, 48
   %i.ku = invoke { i64, ptr } @_RNvXs4_NtNtCskKLDkoKarTP_4core2io6cursorINtB5_6CursorRINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_4seek4Seek4seekCsQbU2fm3lSD_3xet(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.kr, i64 noundef 2, i64 noundef %i.kt)
           to label %bb.cj unwind label %.loopexit.split-lp238.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !4643 ; 2 uses

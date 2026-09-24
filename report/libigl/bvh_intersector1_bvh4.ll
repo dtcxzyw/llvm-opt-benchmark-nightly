@@ -204,11 +204,11 @@ _ZNK6embree7SubGrid6gatherERNS_4Vec3INS_11vfloat_implILi4EEEEES5_S5_S5_PKNS_8Gri
   %i.mq = getelementptr inbounds nuw i8, ptr %i.ml, i64 4
   %i.mr = load i32, ptr %i.mq, align 4            ; 5 uses
   %i.ms = load ptr, ptr %2, align 8
-  %i.mt = zext i32 %i.mp to i64                   ; 3 uses
-  %i.mu = getelementptr inbounds nuw i8, ptr %i.ms, i64 488 ; 2 uses
+  %i.mt = zext i32 %i.mp to i64                   ; 2 uses
+  %i.mu = getelementptr inbounds nuw i8, ptr %i.ms, i64 488
   %i.mv = load ptr, ptr %i.mu, align 8
   %i.mw = getelementptr inbounds nuw [8 x i8], ptr %i.mv, i64 %i.mt
-  %i.mx = load ptr, ptr %i.mw, align 8            ; 4 uses
+  %i.mx = load ptr, ptr %i.mw, align 8            ; 9 uses
   %i.my = zext i32 %i.mr to i64
   %i.mz = getelementptr inbounds nuw i8, ptr %i.mx, i64 88
   %i.na = load ptr, ptr %i.mz, align 8
@@ -403,10 +403,7 @@ bb.n:                                             ; preds = %bb.m
   store <4 x float> %i.qr, ptr %i.bd, align 16
   store <4 x float> %i.qu, ptr %i.be, align 16
   store <4 x float> %i.qx, ptr %i.bf, align 16
-  %13 = load ptr, ptr %i.mu, align 8
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.mt
-  %15 = load ptr, ptr %14, align 8                ; 5 uses
-  %i.ty = getelementptr inbounds nuw i8, ptr %15, i64 52
+  %i.ty = getelementptr inbounds nuw i8, ptr %i.mx, i64 52
   %i.tz = load i32, ptr %i.ty, align 4
   %i.ua = load i32, ptr %i.bg, align 4
   %i.ub = and i32 %i.ua, %i.tz
@@ -490,7 +487,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not1055, label %bb.p, label %.critedge.i, !prof !24
 
 bb.p:                                             ; preds = %bb.o
-  %i.wq = getelementptr inbounds nuw i8, ptr %15, i64 64
+  %i.wq = getelementptr inbounds nuw i8, ptr %i.mx, i64 64
   %i.wr = load ptr, ptr %i.wq, align 16
   %.not1056 = icmp eq ptr %i.wr, null
   br i1 %.not1056, label %bb.z, label %.critedge.i, !prof !24
@@ -498,9 +495,9 @@ bb.p:                                             ; preds = %bb.o
 .critedge.i:                                      ; preds = %bb.p, %bb.o
   %i.ws = load ptr, ptr %i.bl, align 8            ; 3 uses
   %i.wt = getelementptr inbounds nuw i8, ptr %i.ws, i64 4
-  %i.wu = getelementptr inbounds nuw i8, ptr %15, i64 24
-  %i.wv = getelementptr inbounds nuw i8, ptr %15, i64 64
-  %i.ww = getelementptr inbounds nuw i8, ptr %15, i64 60
+  %i.wu = getelementptr inbounds nuw i8, ptr %i.mx, i64 24
+  %i.wv = getelementptr inbounds nuw i8, ptr %i.mx, i64 64
+  %i.ww = getelementptr inbounds nuw i8, ptr %i.mx, i64 60
   %.pre = load float, ptr %i.l, align 16
   %i.wx = insertelement <2 x ptr> %i.cv, ptr %i.ws, i64 0
   br label %bb.q
@@ -903,11 +900,11 @@ _ZN6embree4sse226SubGridIntersector1MoellerILi4ELb1EE8occludedERKNS0_39SubGridQu
   %i.iw = getelementptr inbounds nuw i8, ptr %i.ir, i64 4
   %i.ix = load i32, ptr %i.iw, align 4            ; 3 uses
   %i.iy = load ptr, ptr %2, align 8
-  %i.iz = zext i32 %i.iv to i64                   ; 3 uses
-  %i.ja = getelementptr inbounds nuw i8, ptr %i.iy, i64 488 ; 3 uses
+  %i.iz = zext i32 %i.iv to i64                   ; 2 uses
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.iy, i64 488 ; 2 uses
   %i.jb = load ptr, ptr %i.ja, align 8
   %i.jc = getelementptr inbounds nuw [8 x i8], ptr %i.jb, i64 %i.iz
-  %i.jd = load ptr, ptr %i.jc, align 8            ; 4 uses
+  %i.jd = load ptr, ptr %i.jc, align 8            ; 9 uses
   %i.je = zext i32 %i.ix to i64
   %i.jf = getelementptr inbounds nuw i8, ptr %i.jd, i64 88
   %i.jg = load ptr, ptr %i.jf, align 8
@@ -1139,10 +1136,7 @@ bb.g:                                             ; preds = %bb.f
   %i.rm = insertelement <4 x float> poison, float %i.rc, i64 0
   %i.rn = shufflevector <4 x float> %i.rm, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ro = fmul <4 x float> %i.rl, %i.rn
-  %9 = load ptr, ptr %i.ja, align 8
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.iz
-  %11 = load ptr, ptr %10, align 8                ; 5 uses
-  %i.rp = getelementptr inbounds nuw i8, ptr %11, i64 52
+  %i.rp = getelementptr inbounds nuw i8, ptr %i.jd, i64 52
   %i.rq = load i32, ptr %i.rp, align 4
   %i.rr = load i32, ptr %i.bh, align 4
   %i.rs = and i32 %i.rr, %i.rq
@@ -1157,7 +1151,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not, label %bb.i, label %.lr.ph861, !prof !24
 
 bb.i:                                             ; preds = %bb.h
-  %i.rx = getelementptr inbounds nuw i8, ptr %11, i64 72
+  %i.rx = getelementptr inbounds nuw i8, ptr %i.jd, i64 72
   %i.ry = load ptr, ptr %i.rx, align 8
   %.not835 = icmp eq ptr %i.ry, null
   br i1 %.not835, label %_ZN6embree4sse226SubGridIntersector1MoellerILi4ELb1EE8occludedILb0EEEbPKNS_5Accel12IntersectorsERNS0_39SubGridQuadMIntersector1MoellerTrumboreILi4ELb1EEERNS_4RayKILi1EEEPNS_15RayQueryContextEPKNS_12SubGridQBVHNILi4EEEmRKNS0_7TravRayILi4EXT_EEERm.exit, label %.lr.ph861, !prof !24
@@ -1178,9 +1172,9 @@ bb.i:                                             ; preds = %bb.h
   %i.si = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %i.sh) #11, !srcloc !23
   %i.sj = load ptr, ptr %i.bm, align 8            ; 3 uses
   %i.sk = getelementptr inbounds nuw i8, ptr %i.sj, i64 4
-  %i.sl = getelementptr inbounds nuw i8, ptr %11, i64 24
-  %i.sm = getelementptr inbounds nuw i8, ptr %11, i64 72
-  %i.sn = getelementptr inbounds nuw i8, ptr %11, i64 60
+  %i.sl = getelementptr inbounds nuw i8, ptr %i.jd, i64 24
+  %i.sm = getelementptr inbounds nuw i8, ptr %i.jd, i64 72
+  %i.sn = getelementptr inbounds nuw i8, ptr %i.jd, i64 60
   %i.so = insertelement <2 x ptr> %i.cl, ptr %i.sj, i64 0
   br label %bb.j
 

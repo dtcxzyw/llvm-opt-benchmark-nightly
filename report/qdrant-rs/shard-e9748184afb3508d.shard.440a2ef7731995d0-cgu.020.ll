@@ -202,9 +202,7 @@ bb.a:
   %i.aj = alloca [64 x i8], align 8               ; 4 uses
   %i.ak = alloca [64 x i8], align 8               ; 5 uses
   %i.al = alloca [32 x i8], align 8               ; 7 uses
-  %2 = alloca [24 x i8], align 8                  ; 4 uses
   %i.am = alloca [32 x i8], align 8               ; 7 uses
-  %3 = alloca [24 x i8], align 8                  ; 4 uses
   %i.an = load i64, ptr %1, align 8, !range !13, !noundef !6 ; 3 uses
   %i.ao = icmp ne i64 %i.an, -9223372036854775805
   tail call void @llvm.assume(i1 %i.ao)
@@ -288,7 +286,6 @@ bb.i:                                             ; preds = %bb.a
   %i.bk = load i64, ptr %i.bh, align 8, !range !16, !noundef !6
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bm = load i64, ptr %i.bl, align 8, !noundef !6 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am)
   %i.bn = icmp ult i64 %i.bm, 144115188075855872
   tail call void @llvm.assume(i1 %i.bn)
@@ -300,12 +297,10 @@ bb.i:                                             ; preds = %bb.a
   store i64 %i.bk, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   store ptr %i.bo, ptr %.sroa.6.0..sroa_idx, align 8
-  call void @_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtNtCshMzyYDJGtjv_3api4rest6schema10ExpressionENvYNtNtNtCs5QaNqjAn6vc_5shard5query7formula18ExpressionInternalINtNtB1f_7convert4FromB2l_E4fromEB3b_EB3h_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %3, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.am)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtNtCshMzyYDJGtjv_3api4rest6schema10ExpressionENvYNtNtNtCs5QaNqjAn6vc_5shard5query7formula18ExpressionInternalINtNtB1f_7convert4FromB2l_E4fromEB3b_EB3h_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %2, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.am)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
   store i64 -9223372036854775802, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.v
 
 bb.j:                                             ; preds = %bb.a
@@ -315,7 +310,6 @@ bb.j:                                             ; preds = %bb.a
   %i.bs = load i64, ptr %i.bp, align 8, !range !16, !noundef !6
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bu = load i64, ptr %i.bt, align 8, !noundef !6 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
   %i.bv = icmp ult i64 %i.bu, 144115188075855872
   tail call void @llvm.assume(i1 %i.bv)
@@ -327,12 +321,10 @@ bb.j:                                             ; preds = %bb.a
   store i64 %i.bs, ptr %.sroa.53.0..sroa_idx, align 8
   %.sroa.64.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.al, i64 24
   store ptr %i.bw, ptr %.sroa.64.0..sroa_idx, align 8
-  call void @_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtNtCshMzyYDJGtjv_3api4rest6schema10ExpressionENvYNtNtNtCs5QaNqjAn6vc_5shard5query7formula18ExpressionInternalINtNtB1f_7convert4FromB2l_E4fromEB3b_EB3h_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %2, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.al)
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtNtCshMzyYDJGtjv_3api4rest6schema10ExpressionENvYNtNtNtCs5QaNqjAn6vc_5shard5query7formula18ExpressionInternalINtNtB1f_7convert4FromB2l_E4fromEB3b_EB3h_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %3, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.al)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
   store i64 -9223372036854775801, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   br label %bb.v
 
 bb.k:                                             ; preds = %bb.a

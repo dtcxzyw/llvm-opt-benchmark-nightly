@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %._crit_edge
   store <4 x i8> <i8 73, i8 68, i8 65, i8 84>, ptr %i.jb, align 1, !tbaa !34
   %i.jc = getelementptr inbounds nuw i8, ptr %i.dl, i64 41 ; 2 uses
   %i.jd = sext i32 %i.di to i64                   ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.jc, ptr nonnull align 1 %i.dh, i64 %i.jd, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.jc, ptr nonnull align 1 %i.dh, i64 %i.jd, i1 false)
   %i.je = getelementptr inbounds i8, ptr %i.jc, i64 %i.jd ; 6 uses
   tail call void @free(ptr noundef nonnull %i.dh) #33
   %i.jf = icmp sgt i32 %i.di, -4
@@ -608,7 +608,7 @@ vector.ph:
   %i.n = alloca i8, align 1                       ; 4 uses
   %i.o = alloca i8, align 1                       ; 4 uses
   %i.p = alloca i8, align 1                       ; 4 uses
-  %i.q = alloca [64 x i32], align 16              ; 70 uses
+  %i.q = alloca [64 x i32], align 16              ; 69 uses
   %i.r = load i16, ptr %7, align 2, !tbaa !41     ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %7, i64 2
   %i.t = load i16, ptr %i.s, align 2, !tbaa !41   ; 2 uses
@@ -915,7 +915,7 @@ vector.body328:                                   ; preds = %vector.body
   br i1 %exitcond264.not.1, label %bb.a, label %.preheader213, !llvm.loop !715
 
 bb.a:                                             ; preds = %.preheader213
-  %i.jg = load i32, ptr %i.q, align 16, !tbaa !24 ; 2 uses
+  %i.jg = load i32, ptr %i.q, align 16, !tbaa !24 ; 3 uses
   %i.jh = icmp eq i32 %i.jg, %5
   br i1 %i.jh, label %bb.b, label %bb.f
 
@@ -1318,9 +1318,8 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   br label %bb.cm
 
 bb.cm:                                            ; preds = %.sink.split, %._crit_edge239
-  %.0104 = load i32, ptr %i.q, align 16, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #33
-  ret i32 %.0104
+  ret i32 %i.jg
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)

@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %_ZN4pstd8optionalIN
 bb.j:                                             ; preds = %.lr.ph, %.thread1411
   %.03341454 = phi float [ %i.ft, %.lr.ph ], [ %.4338, %.thread1411 ] ; 5 uses
   %.03391453 = phi i32 [ 0, %.lr.ph ], [ %i.yu, %.thread1411 ] ; 2 uses
-  %.sroa.01118.01451 = phi <2 x float> [ %.sroa.01118.0.copyload, %.lr.ph ], [ %.sroa.01118.4, %.thread1411 ] ; 8 uses
-  %.sroa.30.01449 = phi float [ %i.ed, %.lr.ph ], [ %.sroa.30.4, %.thread1411 ] ; 15 uses
+  %.sroa.01118.01451 = phi <2 x float> [ %.sroa.01118.0.copyload, %.lr.ph ], [ %.sroa.01118.4, %.thread1411 ] ; 7 uses
+  %.sroa.30.01449 = phi float [ %i.ed, %.lr.ph ], [ %.sroa.30.4, %.thread1411 ] ; 14 uses
   %.sroa.01181.01448 = phi <2 x float> [ %i.gf, %.lr.ph ], [ %.sroa.01181.5, %.thread1411 ] ; 5 uses
   %.sroa.32.01447 = phi <2 x float> [ %i.gd, %.lr.ph ], [ %.sroa.32.5, %.thread1411 ] ; 5 uses
   %.sroa.01298.21446 = phi <2 x float> [ %.sroa.01298.11463, %.lr.ph ], [ %.sroa.01298.10, %.thread1411 ] ; 7 uses
@@ -351,11 +351,11 @@ bb.u:                                             ; preds = %bb.t
   %i.ju = call noundef i32 @_ZNK4pbrt15TopOrBottomBxDFINS_14DielectricBxDFENS_11DiffuseBxDFEE5FlagsEv(ptr noundef nonnull align 8 dereferenceable(16) %6)
   %i.jv = and i32 %i.ju, 16
   %.not1425 = icmp eq i32 %i.jv, 0
+  %13 = fneg <2 x float> %.sroa.01118.01451       ; 3 uses
+  %14 = fneg float %.sroa.30.01449                ; 3 uses
   br i1 %.not1425, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
-  %13 = fneg <2 x float> %.sroa.01118.01451
-  %14 = fneg float %.sroa.30.01449
   %i.jw = call noundef float @_ZNK4pbrt15HGPhaseFunction3PDFENS_7Vector3IfEES2_(ptr noundef nonnull align 4 dereferenceable(4) %10, <2 x float> %13, float %14, <2 x float> %i.gi, float %i.gg) ; 2 uses
   br i1 %i.gn, label %bb.x, label %bb.w
 
@@ -366,9 +366,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
-  %.0340 = phi float [ 1.000000e+00, %bb.u ], [ %i.jz, %bb.w ], [ 1.000000e+00, %bb.v ]
-  %15 = fneg <2 x float> %.sroa.01118.01451       ; 2 uses
-  %16 = fneg float %.sroa.30.01449                ; 2 uses
+  %.0340 = phi float [ %i.jz, %bb.w ], [ 1.000000e+00, %bb.v ], [ 1.000000e+00, %bb.u ]
   %i.ka = fsub float %i.jq, %i.z                  ; 2 uses
   %i.kb = load <2 x float>, ptr %i.cg, align 4, !tbaa !20
   %i.kc = fmul <2 x float> %.sroa.32.1, %i.kb
@@ -376,7 +374,7 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
   %i.ke = shufflevector <2 x float> %i.kd, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.kf = load <2 x float>, ptr %i.cf, align 4, !tbaa !20
   %i.kg = fmul <2 x float> %.sroa.01181.1, %i.kf
-  %i.kh = call noundef float @_ZNK4pbrt15HGPhaseFunction1pENS_7Vector3IfEES2_(ptr noundef nonnull align 4 dereferenceable(4) %10, <2 x float> %15, float %16, <2 x float> %i.gi, float %i.gg)
+  %i.kh = call noundef float @_ZNK4pbrt15HGPhaseFunction1pENS_7Vector3IfEES2_(ptr noundef nonnull align 4 dereferenceable(4) %10, <2 x float> %13, float %14, <2 x float> %i.gi, float %i.gg)
   %i.ki = insertelement <2 x float> poison, float %i.kh, i64 0
   %i.kj = shufflevector <2 x float> %i.ki, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.kk = fmul <2 x float> %i.kg, %i.kj
@@ -413,7 +411,7 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
   %i.lp = select <2 x i1> %i.lo, <2 x float> %i.ln, <2 x float> splat (float f0x3F7FFFFF)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31, !noalias !225
   %i.lq = load float, ptr %10, align 4, !tbaa !65, !noalias !225
-  %i.lr = call { <2 x float>, float } @_ZN4pbrt22SampleHenyeyGreensteinENS_7Vector3IfEEfNS_6Point2IfEEPf(<2 x float> %15, float %16, float noundef %i.lq, <2 x float> %i.lp, ptr noundef nonnull %i.a) ; 2 uses
+  %i.lr = call { <2 x float>, float } @_ZN4pbrt22SampleHenyeyGreensteinENS_7Vector3IfEEfNS_6Point2IfEEPf(<2 x float> %13, float %14, float noundef %i.lq, <2 x float> %i.lp, ptr noundef nonnull %i.a) ; 2 uses
   %.fca.0.extract.i = extractvalue { <2 x float>, float } %i.lr, 0 ; 6 uses
   %.fca.1.extract.i = extractvalue { <2 x float>, float } %i.lr, 1 ; 9 uses
   %i.ls = load float, ptr %i.a, align 4, !tbaa !20, !noalias !225 ; 4 uses
@@ -816,8 +814,8 @@ bb.i:                                             ; preds = %_ZN4pstd8optionalIN
 bb.j:                                             ; preds = %.lr.ph, %.thread1318
   %.03321371 = phi float [ %i.gb, %.lr.ph ], [ %.4336, %.thread1318 ] ; 5 uses
   %.03371370 = phi i32 [ 0, %.lr.ph ], [ %i.xw, %.thread1318 ] ; 2 uses
-  %.sroa.01025.01368 = phi <2 x float> [ %.sroa.01025.0.copyload, %.lr.ph ], [ %.sroa.01025.4, %.thread1318 ] ; 7 uses
-  %.sroa.30.01366 = phi float [ %i.el, %.lr.ph ], [ %.sroa.30.4, %.thread1318 ] ; 10 uses
+  %.sroa.01025.01368 = phi <2 x float> [ %.sroa.01025.0.copyload, %.lr.ph ], [ %.sroa.01025.4, %.thread1318 ] ; 6 uses
+  %.sroa.30.01366 = phi float [ %i.el, %.lr.ph ], [ %.sroa.30.4, %.thread1318 ] ; 9 uses
   %.sroa.01088.01365 = phi <2 x float> [ %i.gn, %.lr.ph ], [ %.sroa.01088.5, %.thread1318 ] ; 5 uses
   %.sroa.32.01364 = phi <2 x float> [ %i.gl, %.lr.ph ], [ %.sroa.32.5, %.thread1318 ] ; 5 uses
   %.sroa.01205.21363 = phi <2 x float> [ %.sroa.01205.11380, %.lr.ph ], [ %.sroa.01205.10, %.thread1318 ] ; 7 uses
@@ -962,11 +960,11 @@ bb.u:                                             ; preds = %bb.t
   %i.kb = call noundef i32 @_ZNK4pbrt15TopOrBottomBxDFINS_14DielectricBxDFENS_13ConductorBxDFEE5FlagsEv(ptr noundef nonnull align 8 dereferenceable(16) %6)
   %i.kc = and i32 %i.kb, 16
   %.not1332 = icmp eq i32 %i.kc, 0
+  %13 = fneg <2 x float> %.sroa.01025.01368       ; 3 uses
+  %14 = fneg float %.sroa.30.01366                ; 3 uses
   br i1 %.not1332, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
-  %13 = fneg <2 x float> %.sroa.01025.01368
-  %14 = fneg float %.sroa.30.01366
   %i.kd = call noundef float @_ZNK4pbrt15HGPhaseFunction3PDFENS_7Vector3IfEES2_(ptr noundef nonnull align 4 dereferenceable(4) %10, <2 x float> %13, float %14, <2 x float> %i.gp, float %i.gq) ; 2 uses
   br i1 %i.gt, label %bb.x, label %bb.w
 
@@ -977,9 +975,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
-  %.0338 = phi float [ 1.000000e+00, %bb.u ], [ %i.kg, %bb.w ], [ 1.000000e+00, %bb.v ]
-  %15 = fneg <2 x float> %.sroa.01025.01368       ; 2 uses
-  %16 = fneg float %.sroa.30.01366                ; 2 uses
+  %.0338 = phi float [ %i.kg, %bb.w ], [ 1.000000e+00, %bb.v ], [ 1.000000e+00, %bb.u ]
   %i.kh = fsub float %i.jx, %i.z                  ; 2 uses
   %i.ki = load <2 x float>, ptr %i.cg, align 4, !tbaa !20
   %i.kj = fmul <2 x float> %.sroa.32.1, %i.ki
@@ -987,7 +983,7 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
   %i.kl = shufflevector <2 x float> %i.kk, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.km = load <2 x float>, ptr %i.cf, align 4, !tbaa !20
   %i.kn = fmul <2 x float> %.sroa.01088.1, %i.km
-  %i.ko = call noundef float @_ZNK4pbrt15HGPhaseFunction1pENS_7Vector3IfEES2_(ptr noundef nonnull align 4 dereferenceable(4) %10, <2 x float> %15, float %16, <2 x float> %i.gp, float %i.gq)
+  %i.ko = call noundef float @_ZNK4pbrt15HGPhaseFunction1pENS_7Vector3IfEES2_(ptr noundef nonnull align 4 dereferenceable(4) %10, <2 x float> %13, float %14, <2 x float> %i.gp, float %i.gq)
   %i.kp = insertelement <2 x float> poison, float %i.ko, i64 0
   %i.kq = shufflevector <2 x float> %i.kp, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.kr = fmul <2 x float> %i.kn, %i.kq
@@ -1024,7 +1020,7 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
   %i.lw = select <2 x i1> %i.lv, <2 x float> %i.lu, <2 x float> splat (float f0x3F7FFFFF)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31, !noalias !276
   %i.lx = load float, ptr %10, align 4, !tbaa !65, !noalias !276
-  %i.ly = call { <2 x float>, float } @_ZN4pbrt22SampleHenyeyGreensteinENS_7Vector3IfEEfNS_6Point2IfEEPf(<2 x float> %15, float %16, float noundef %i.lx, <2 x float> %i.lw, ptr noundef nonnull %i.a) ; 2 uses
+  %i.ly = call { <2 x float>, float } @_ZN4pbrt22SampleHenyeyGreensteinENS_7Vector3IfEEfNS_6Point2IfEEPf(<2 x float> %13, float %14, float noundef %i.lx, <2 x float> %i.lw, ptr noundef nonnull %i.a) ; 2 uses
   %.fca.0.extract.i = extractvalue { <2 x float>, float } %i.ly, 0 ; 6 uses
   %.fca.1.extract.i = extractvalue { <2 x float>, float } %i.ly, 1 ; 9 uses
   %i.lz = load float, ptr %i.a, align 4, !tbaa !20, !noalias !276 ; 4 uses

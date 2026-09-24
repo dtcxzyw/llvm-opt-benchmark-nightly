@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1417: ; preds = %_
   %i.abj = getelementptr inbounds nuw i8, ptr %34, i64 34
   store i16 0, ptr %i.abj, align 2, !tbaa !268, !alias.scope !260
   %i.abk = getelementptr inbounds nuw i8, ptr %34, i64 40 ; 3 uses
-  %i.abl = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTT17ItemStackMetadata, i64 8), align 8, !noalias !260 ; 58 uses
+  %i.abl = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTT17ItemStackMetadata, i64 8), align 8, !noalias !260 ; 54 uses
   store ptr %i.abl, ptr %i.abk, align 8, !tbaa !17, !alias.scope !260
   %i.abm = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTT17ItemStackMetadata, i64 16), align 8, !noalias !260 ; 57 uses
   %i.abn = getelementptr i8, ptr %i.abl, i64 -80  ; 57 uses
@@ -607,8 +607,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1550: ; preds = %_
   store i16 0, ptr %i.auc, align 8, !tbaa !267, !alias.scope !271
   %i.aud = getelementptr inbounds nuw i8, ptr %43, i64 34
   store i16 0, ptr %i.aud, align 2, !tbaa !268, !alias.scope !271
-  %i.aue = getelementptr inbounds nuw i8, ptr %43, i64 40 ; 3 uses
-  store ptr %i.abl, ptr %i.aue, align 8, !tbaa !17, !alias.scope !271
+  %i.aue = getelementptr inbounds nuw i8, ptr %43, i64 40 ; 2 uses
   %i.auf = load i64, ptr %i.abn, align 8
   %i.aug = getelementptr inbounds i8, ptr %i.aue, i64 %i.auf
   store ptr %i.abm, ptr %i.aug, align 8, !tbaa !17, !alias.scope !271
@@ -658,8 +657,7 @@ bb.ci:                                            ; preds = %_ZNSt7__cxx1112basi
   store i16 0, ptr %i.aux, align 8, !tbaa !267, !alias.scope !272
   %i.auy = getelementptr inbounds nuw i8, ptr %43, i64 330
   store i16 0, ptr %i.auy, align 2, !tbaa !268, !alias.scope !272
-  %i.auz = getelementptr inbounds nuw i8, ptr %43, i64 336 ; 3 uses
-  store ptr %i.abl, ptr %i.auz, align 8, !tbaa !17, !alias.scope !272
+  %i.auz = getelementptr inbounds nuw i8, ptr %43, i64 336 ; 2 uses
   %i.ava = load i64, ptr %i.abn, align 8
   %i.avb = getelementptr inbounds i8, ptr %i.auz, i64 %i.ava
   store ptr %i.abm, ptr %i.avb, align 8, !tbaa !17, !alias.scope !272
@@ -1062,8 +1060,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1753: ; preds = %_
   store i16 0, ptr %i.biy, align 8, !tbaa !267, !alias.scope !276
   %i.biz = getelementptr inbounds nuw i8, ptr %62, i64 34
   store i16 0, ptr %i.biz, align 2, !tbaa !268, !alias.scope !276
-  %i.bja = getelementptr inbounds nuw i8, ptr %62, i64 40 ; 3 uses
-  store ptr %i.abl, ptr %i.bja, align 8, !tbaa !17, !alias.scope !276
+  %i.bja = getelementptr inbounds nuw i8, ptr %62, i64 40 ; 2 uses
   %i.bjb = load i64, ptr %i.abn, align 8
   %i.bjc = getelementptr inbounds i8, ptr %i.bja, i64 %i.bjb
   store ptr %i.abm, ptr %i.bjc, align 8, !tbaa !17, !alias.scope !276
@@ -1113,8 +1110,7 @@ bb.ed:                                            ; preds = %_ZNSt7__cxx1112basi
   store i16 0, ptr %i.bjt, align 8, !tbaa !267, !alias.scope !277
   %i.bju = getelementptr inbounds nuw i8, ptr %62, i64 330
   store i16 0, ptr %i.bju, align 2, !tbaa !268, !alias.scope !277
-  %i.bjv = getelementptr inbounds nuw i8, ptr %62, i64 336 ; 3 uses
-  store ptr %i.abl, ptr %i.bjv, align 8, !tbaa !17, !alias.scope !277
+  %i.bjv = getelementptr inbounds nuw i8, ptr %62, i64 336 ; 2 uses
   %i.bjw = load i64, ptr %i.abn, align 8
   %i.bjx = getelementptr inbounds i8, ptr %i.bjv, i64 %i.bjw
   store ptr %i.abm, ptr %i.bjx, align 8, !tbaa !17, !alias.scope !277

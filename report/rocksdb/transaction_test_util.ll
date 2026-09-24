@@ -204,15 +204,12 @@ bb.a:
   store ptr null, ptr %i.c, align 8, !tbaa !60
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 6, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
-  invoke void @_ZN7rocksdb10WriteBatchC2Emmmm(ptr noundef nonnull align 8 dereferenceable(160) %6, i64 noundef 0, i64 noundef 0, i64 noundef 0, i64 noundef 0)
-          to label %_ZN7rocksdb10WriteBatchC2Emm.exit unwind label %48
-
-_ZN7rocksdb10WriteBatchC2Emm.exit:                ; preds = %bb.a
+  call void @_ZN7rocksdb10WriteBatchC2Emmmm(ptr noundef nonnull align 8 dereferenceable(160) %6, i64 noundef 0, i64 noundef 0, i64 noundef 0, i64 noundef 0)
   %46 = load ptr, ptr %0, align 8, !tbaa !47
   %47 = invoke noundef i64 @_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEclEv(ptr noundef nonnull align 8 dereferenceable(2504) %46)
           to label %_ZN7rocksdb8Random644NextEv.exit unwind label %bb.c
 
-_ZN7rocksdb8Random644NextEv.exit:                 ; preds = %_ZN7rocksdb10WriteBatchC2Emm.exit
+_ZN7rocksdb8Random644NextEv.exit:                 ; preds = %bb.a
   %i.d = urem i64 %47, 100
   %i.e = add nuw nsw i64 %i.d, 1                  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
@@ -384,15 +381,10 @@ _ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtEvT_S7_T0_.exit: 
   %i.br = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 4 uses
   br label %bb.f
 
-48:                                               ; preds = %bb.a
-  %49 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.fe
-
-bb.c:                                             ; preds = %_ZN7rocksdb10WriteBatchC2Emm.exit
+bb.c:                                             ; preds = %bb.a
   %i.bs = landingpad { ptr, i32 }
           cleanup
-  br label %50
+  br label %bb.fe
 
 bb.d:                                             ; preds = %bb.b
   %i.bt = landingpad { ptr, i32 }
@@ -795,17 +787,13 @@ bb.fd:                                            ; preds = %.loopexit.split-lp
 _ZNSt6vectorItSaItEED2Ev.exit304:                 ; preds = %bb.fd, %.loopexit.split-lp, %bb.d
   %.pn120.pn = phi { ptr, i32 } [ %i.bt, %bb.d ], [ %.pn120, %.loopexit.split-lp ], [ %.pn120, %bb.fd ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  br label %50
-
-50:                                               ; preds = %_ZNSt6vectorItSaItEED2Ev.exit304, %bb.c
-  %.pn120.pn.pn = phi { ptr, i32 } [ %.pn120.pn, %_ZNSt6vectorItSaItEED2Ev.exit304 ], [ %i.bs, %bb.c ]
-  call void @_ZN7rocksdb10WriteBatchD1Ev(ptr noundef nonnull align 8 dead_on_return(160) dereferenceable(160) %6) #23
   br label %bb.fe
 
-bb.fe:                                            ; preds = %50, %48
-  %.pn120.pn.pn.pn = phi { ptr, i32 } [ %.pn120.pn.pn, %50 ], [ %49, %48 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
+bb.fe:                                            ; preds = %bb.c, %_ZNSt6vectorItSaItEED2Ev.exit304
+  %.pn120.pn.pn.pn = phi { ptr, i32 } [ %.pn120.pn, %_ZNSt6vectorItSaItEED2Ev.exit304 ], [ %i.bs, %bb.c ]
+  call void @_ZN7rocksdb10WriteBatchD1Ev(ptr noundef nonnull align 8 dead_on_return(160) dereferenceable(160) %6) #23
   %i.vv = load ptr, ptr %i.c, align 8, !tbaa !59  ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %.not.i.i305 = icmp eq ptr %i.vv, null
   br i1 %.not.i.i305, label %_ZN7rocksdb6StatusD2Ev.exit307, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i306
 

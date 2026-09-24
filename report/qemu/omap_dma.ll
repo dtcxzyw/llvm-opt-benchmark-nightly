@@ -121,7 +121,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local ptr @omap_dma_init(i64 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #0 {
 .preheader72:
-  %i.a = tail call noalias dereferenceable_or_null(9712) ptr @g_malloc0(i64 noundef 9712) #9 ; 60 uses
+  %i.a = tail call noalias dereferenceable_or_null(9712) ptr @g_malloc0(i64 noundef 9712) #9 ; 57 uses
   %i.b = getelementptr i8, ptr %i.a, i64 288
   store ptr %4, ptr %i.b, align 16
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 296 ; 3 uses
@@ -132,17 +132,14 @@ define dso_local ptr @omap_dma_init(i64 noundef %0, ptr nofree noundef readonly 
   store ptr %4, ptr %i.e, align 16
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 396 ; 3 uses
   store i32 9, ptr %i.f, align 4
-  %i.g = tail call ptr @soc_dma_init(i32 noundef 9) #8
+  %i.g = tail call ptr @soc_dma_init(i32 noundef 9) #8 ; 4 uses
   store ptr %i.g, ptr %i.a, align 16
   %i.h = tail call i64 @omap_clk_getrate(ptr noundef %5) #8
-  %6 = load ptr, ptr %i.a, align 16
-  %i.i = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store i64 %i.h, ptr %i.i, align 8
-  %7 = load ptr, ptr %i.a, align 16
-  %i.j = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   store ptr @omap_dma_transfer_generic, ptr %i.j, align 8
-  %8 = load ptr, ptr %i.a, align 16
-  %i.k = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   store ptr @omap_dma_transfer_setup, ptr %i.k, align 8
   %i.l = tail call ptr @qemu_allocate_irqs(ptr noundef nonnull @omap_dma_request, ptr noundef nonnull %i.a, i32 noundef 32) #8
   %i.m = load ptr, ptr %i.a, align 16
@@ -545,7 +542,7 @@ bb.cb:                                            ; preds = %bb.bz, %bb.ca, %bb.
 declare ptr @qemu_allocate_irqs(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @omap_dma_request(ptr noundef %0, i32 noundef %1, i32 noundef %2) #0 {
+define internal void @omap_dma_request(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) #0 {
 bb.a:
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.l, label %bb.b
@@ -745,7 +742,7 @@ declare void @physical_memory_write(i64 noundef, ptr noundef, i64 noundef) local
 declare i32 @__printf_chk(i32 noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @omap_dma_channel_load(ptr nofree noundef initializes((200, 216), (244, 252)) %0) unnamed_addr #0 {
+define internal fastcc void @omap_dma_channel_load(ptr nofree noundef captures(none) initializes((200, 216), (244, 252)) %0) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
@@ -1112,7 +1109,7 @@ declare void @soc_dma_ch_update(ptr noundef) local_unnamed_addr #2
 declare void @qemu_set_irq(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 0, 4294967296) i64 @omap_dma_read(ptr nofree noundef %0, i64 noundef %1, i32 noundef %2) #0 {
+define internal range(i64 0, 4294967296) i64 @omap_dma_read(ptr nofree noundef captures(none) %0, i64 noundef %1, i32 noundef %2) #0 {
 bb.a:
   %.not = icmp eq i32 %2, 2
   br i1 %.not, label %bb.d, label %bb.b
@@ -1512,7 +1509,7 @@ bb.at:                                            ; preds = %omap_dma_3_1_lcd_re
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @omap_dma_write(ptr noundef %0, i64 noundef %1, i64 noundef %2, i32 noundef %3) #0 {
+define internal void @omap_dma_write(ptr nofree noundef %0, i64 noundef %1, i64 noundef %2, i32 noundef %3) #0 {
 bb.a:
   %.not = icmp eq i32 %3, 2
   br i1 %.not, label %bb.d, label %bb.b

@@ -205,7 +205,6 @@ bb.a:
   %3 = alloca %"struct.duckdb::(anonymous namespace)::SortKeyChunk", align 8 ; 7 uses
   %4 = alloca %"struct.duckdb::(anonymous namespace)::SortKeyChunk", align 8 ; 7 uses
   %5 = alloca %"struct.duckdb::(anonymous namespace)::SortKeyChunk", align 8 ; 8 uses
-  %.sroa.8 = alloca [7 x i8], align 1             ; 4 uses
   %6 = alloca %"struct.duckdb::string_t", align 8 ; 14 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
@@ -608,8 +607,6 @@ bb.ce:                                            ; preds = %bb.a
   %.sroa.4858.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.4858.0.copyload = load i8, ptr %.sroa.4858.0..sroa_idx, align 8, !tbaa !156 ; 2 uses
   %.sroa.5859.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 25
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5859.0..sroa_idx, i64 7, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.bis = icmp ult i64 %.sroa.0855.0.copyload, %.sroa.2856.0.copyload
   br i1 %i.bis, label %.lr.ph1030, label %._crit_edge
@@ -694,14 +691,13 @@ bb.cf:                                            ; preds = %.lr.ph1034, %bb.cf
   store i64 %.sroa.2856.0.copyload, ptr %.sroa.5845.0..sroa_idx, align 8, !tbaa !31
   store i64 %.sroa.3857.0.copyload, ptr %.sroa.6848.0..sroa_idx, align 8, !tbaa !31
   store i8 %.sroa.4858.0.copyload, ptr %.sroa.7851.0..sroa_idx, align 8, !tbaa !156
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8, i64 7, i1 false), !tbaa.struct !155
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5859.0..sroa_idx, i64 7, i1 false)
   tail call fastcc void @_ZN6duckdb12_GLOBAL__N_125GetSortKeyLengthRecursiveERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_17SortKeyLengthInfoE(ptr noundef nonnull align 8 dereferenceable(122) %.val13.i, ptr noundef nonnull byval(%"struct.duckdb::(anonymous namespace)::SortKeyChunk") align 8 %5, ptr noundef nonnull align 8 dereferenceable(32) %2), !inline_history !705
   %i.bkb = getelementptr inbounds nuw i8, ptr %.sroa.0861.01032, i64 8 ; 2 uses
   %.not898 = icmp eq ptr %i.bkb, %.val.i665
   br i1 %.not898, label %_ZN6duckdb12_GLOBAL__N_122GetSortKeyLengthStructERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_17SortKeyLengthInfoE.exit, label %bb.cf
 
 _ZN6duckdb12_GLOBAL__N_122GetSortKeyLengthStructERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_17SortKeyLengthInfoE.exit: ; preds = %bb.cf, %._crit_edge
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   br label %_ZN6duckdb12_GLOBAL__N_125TemplatedGetSortKeyLengthINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_17SortKeyLengthInfoE.exit
 
@@ -1104,7 +1100,6 @@ bb.a:
   %4 = alloca %"struct.duckdb::(anonymous namespace)::SortKeyChunk", align 8 ; 7 uses
   %5 = alloca %"struct.duckdb::(anonymous namespace)::SortKeyChunk", align 8 ; 7 uses
   %6 = alloca %"struct.duckdb::(anonymous namespace)::SortKeyChunk", align 8 ; 8 uses
-  %.sroa.9 = alloca [7 x i8], align 1             ; 4 uses
   %7 = alloca %"struct.duckdb::string_t", align 8 ; 5 uses
   %8 = alloca %"struct.duckdb::string_t", align 8 ; 5 uses
   %9 = alloca %"struct.duckdb::string_t", align 8 ; 5 uses
@@ -1507,8 +1502,6 @@ bb.nr:                                            ; preds = %bb.a
   %.sroa.41063.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.41063.0.copyload = load i8, ptr %.sroa.41063.0..sroa_idx, align 8, !tbaa !156
   %.sroa.51064.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 25
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.9, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.51064.0..sroa_idx, i64 7, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.ecs = trunc nuw i8 %.sroa.41063.0.copyload to i1 ; 3 uses
@@ -1632,14 +1625,13 @@ bb.ny:                                            ; preds = %.lr.ph1265, %bb.ny
   store i64 %.sroa.21061.0.copyload, ptr %.sroa.51051.0..sroa_idx, align 8, !tbaa !31
   store i64 %.sroa.31062.0.copyload, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !31
   store i8 0, ptr %.sroa.71056.0..sroa_idx, align 8, !tbaa !156
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.9.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.9, i64 7, i1 false), !tbaa.struct !155
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.9.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.51064.0..sroa_idx, i64 7, i1 false)
   tail call fastcc void @_ZN6duckdb12_GLOBAL__N_125ConstructSortKeyRecursiveERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE(ptr noundef nonnull align 8 dereferenceable(122) %.val41.i, ptr noundef nonnull byval(%"struct.duckdb::(anonymous namespace)::SortKeyChunk") align 8 %6, ptr noundef nonnull align 8 dereferenceable(25) %2), !inline_history !886
   %i.eeg = getelementptr inbounds nuw i8, ptr %.sroa.01066.01263, i64 8 ; 2 uses
   %.not1112 = icmp eq ptr %i.eeg, %.val.i
   br i1 %.not1112, label %_ZN6duckdb12_GLOBAL__N_122ConstructSortKeyStructERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %bb.ny
 
 _ZN6duckdb12_GLOBAL__N_122ConstructSortKeyStructERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit: ; preds = %bb.ny, %bb.nx, %._crit_edge
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   br label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit

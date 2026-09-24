@@ -204,7 +204,7 @@ define hidden void @je_prof_tctx_try_destroy(ptr noundef %0, ptr noundef %1) loc
 bb.a:
   %2 = alloca %struct.rtree_ctx_s, align 8        ; 4 uses
   %3 = alloca %struct.rtree_contents_s, align 8   ; 4 uses
-  %4 = alloca [128 x %struct.tctx_tree_path_entry_t], align 16 ; 14 uses
+  %4 = alloca [128 x %struct.tctx_tree_path_entry_t], align 16 ; 16 uses
   %5 = alloca %struct.rtree_ctx_s, align 8        ; 4 uses
   %6 = alloca %struct.rtree_contents_s, align 8   ; 6 uses
   %7 = alloca %struct.rtree_ctx_s, align 8        ; 4 uses
@@ -340,9 +340,9 @@ malloc_mutex_lock.exit.i:                         ; preds = %bb.l, %bb.k
   br i1 %i.av, label %bb.m, label %bb.bw
 
 bb.m:                                             ; preds = %malloc_mutex_lock.exit.i
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 9 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !79 ; 3 uses
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !79 ; 8 uses
   store ptr %i.ax, ptr %4, align 16, !tbaa !81
   %.not374.i.i = icmp eq ptr %i.ax, null
   br i1 %.not374.i.i, label %.loopexit.i.i, label %.lr.ph.i.i
@@ -471,7 +471,7 @@ bb.u:                                             ; preds = %.loopexit.i.i
   br i1 %i.dk, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.dl = load ptr, ptr %.2274.i.i, align 8, !tbaa !81
+  %i.dl = load ptr, ptr %.2274.i.i, align 8, !tbaa !81 ; 2 uses
   store ptr %i.dl, ptr %i.aw, align 8, !tbaa !79
   br label %bb.af
 
@@ -515,11 +515,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.eh = inttoptr i64 %i.eg to ptr
   store ptr %i.eh, ptr %i.ed, align 8, !tbaa !87
   %i.ei = icmp eq ptr %i.ck, %4
-  br i1 %i.ei, label %9, label %bb.ab
-
-9:                                                ; preds = %bb.aa
-  store ptr %i.ec, ptr %i.aw, align 8, !tbaa !79
-  br label %tctx_tree_remove.exit.i
+  br i1 %i.ei, label %tctx_tree_remove.exit.i.thread, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ej = getelementptr inbounds i8, ptr %.3.i.i, i64 -32 ; 2 uses
@@ -548,13 +544,10 @@ bb.ad:                                            ; preds = %bb.ab
 
 bb.ae:                                            ; preds = %bb.z
   %i.ex = icmp eq ptr %i.ck, %4
-  br i1 %i.ex, label %10, label %bb.af
-
-10:                                               ; preds = %bb.ae
-  store ptr null, ptr %i.aw, align 8, !tbaa !79
-  br label %tctx_tree_remove.exit.i
+  br i1 %i.ex, label %bb.bu, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.y, %bb.x, %bb.v
+  %.val.i152.i = phi ptr [ %i.ax, %bb.ae ], [ %i.dl, %bb.v ], [ %i.ax, %bb.y ], [ %i.ax, %bb.x ] ; 12 uses
   %i.ey = phi ptr [ %i.cl, %bb.ae ], [ %1, %bb.v ], [ %1, %bb.y ], [ %1, %bb.x ]
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 120
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !87
@@ -704,11 +697,7 @@ bb.as:                                            ; preds = %bb.ar
   store ptr %i.ia, ptr %i.fo, align 8, !tbaa !87
   store ptr %i.fm, ptr %i.hv, align 8, !tbaa !86
   %i.ib = icmp eq ptr %.4388.i.i, %4
-  br i1 %i.ib, label %11, label %bb.at
-
-11:                                               ; preds = %bb.as
-  store ptr %i.hj, ptr %i.aw, align 8, !tbaa !79
-  br label %tctx_tree_remove.exit.i
+  br i1 %i.ib, label %tctx_tree_remove.exit.i.thread, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.ic = getelementptr inbounds i8, ptr %.4388.i.i, i64 -16
@@ -832,11 +821,7 @@ bb.ba:                                            ; preds = %bb.ay, %bb.ax
 bb.bb:                                            ; preds = %bb.ba, %bb.az
   %.0271.i.i = phi ptr [ %i.ju, %bb.az ], [ %i.ja, %bb.ba ] ; 3 uses
   %i.ky = icmp eq ptr %.4388.i.i, %4
-  br i1 %i.ky, label %12, label %bb.bc
-
-12:                                               ; preds = %bb.bb
-  store ptr %.0271.i.i, ptr %i.aw, align 8, !tbaa !79
-  br label %tctx_tree_remove.exit.i
+  br i1 %i.ky, label %tctx_tree_remove.exit.i.thread, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.kz = getelementptr inbounds i8, ptr %.4388.i.i, i64 -16 ; 2 uses
@@ -972,11 +957,7 @@ bb.bo:                                            ; preds = %bb.bn
   %i.nx = inttoptr i64 %i.nw to ptr
   store ptr %i.nx, ptr %i.jc, align 8, !tbaa !87
   %i.ny = icmp eq ptr %.4388.i.i, %4
-  br i1 %i.ny, label %13, label %bb.bp
-
-13:                                               ; preds = %bb.bo
-  store ptr %i.ja, ptr %i.aw, align 8, !tbaa !79
-  br label %tctx_tree_remove.exit.i
+  br i1 %i.ny, label %tctx_tree_remove.exit.i.thread, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
   %i.nz = getelementptr inbounds i8, ptr %.4388.i.i, i64 -16 ; 2 uses
@@ -1015,22 +996,33 @@ bb.bt:                                            ; preds = %bb.bs, %.critedge31
   br i1 %.not302.i.i, label %._crit_edge.i.i, label %.lr.ph390.i.i, !llvm.loop !63
 
 ._crit_edge.i.i:                                  ; preds = %bb.bt, %bb.ah
-  %i.oq = load ptr, ptr %4, align 16, !tbaa !81
+  %i.oq = load ptr, ptr %4, align 16, !tbaa !81   ; 2 uses
   store ptr %i.oq, ptr %i.aw, align 8, !tbaa !79
   br label %tctx_tree_remove.exit.i
 
-tctx_tree_remove.exit.i:                          ; preds = %._crit_edge.i.i, %bb.br, %bb.bq, %13, %bb.bl, %bb.bk, %bb.bj, %bb.be, %bb.bd, %12, %bb.av, %bb.au, %11, %bb.ap, %bb.ao, %bb.ag, %10, %bb.ad, %bb.ac, %9
+tctx_tree_remove.exit.i.thread:                   ; preds = %bb.bo, %bb.bb, %bb.as, %bb.aa
+  %.sink = phi ptr [ %.0271.i.i, %bb.bb ], [ %i.ec, %bb.aa ], [ %i.hj, %bb.as ], [ %i.ja, %bb.bo ]
+  store ptr %.sink, ptr %i.aw, align 8, !tbaa !79
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  br label %.thread49.i
+
+tctx_tree_remove.exit.i:                          ; preds = %._crit_edge.i.i, %bb.br, %bb.bq, %bb.bl, %bb.bk, %bb.bj, %bb.be, %bb.bd, %bb.av, %bb.au, %bb.ap, %bb.ao, %bb.ag, %bb.ad, %bb.ac
+  %.val.i.i = phi ptr [ %.val.i152.i, %bb.bl ], [ %i.ax, %bb.ac ], [ %i.ax, %bb.ad ], [ %i.oq, %._crit_edge.i.i ], [ %.val.i152.i, %bb.ag ], [ %.val.i152.i, %bb.ao ], [ %.val.i152.i, %bb.ap ], [ %.val.i152.i, %bb.br ], [ %.val.i152.i, %bb.au ], [ %.val.i152.i, %bb.av ], [ %.val.i152.i, %bb.bq ], [ %.val.i152.i, %bb.bd ], [ %.val.i152.i, %bb.be ], [ %.val.i152.i, %bb.bj ], [ %.val.i152.i, %bb.bk ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   %i.or = load i8, ptr @je_opt_prof_accum, align 1, !tbaa !19, !range !20, !noundef !21
   %i.os = trunc nuw i8 %i.or to i1
-  br i1 %i.os, label %.thread49.i, label %bb.bu
+  %9 = icmp ne ptr %.val.i.i, null
+  %or.cond.not.i = select i1 %i.os, i1 true, i1 %9
+  br i1 %or.cond.not.i, label %.thread49.i, label %prof_gctx_should_destroy.exit.i
 
-bb.bu:                                            ; preds = %tctx_tree_remove.exit.i
-  %.val.i.i = load ptr, ptr %i.aw, align 8, !tbaa !79
-  %14 = icmp eq ptr %.val.i.i, null
-  br i1 %14, label %prof_gctx_should_destroy.exit.i, label %.thread49.i
+bb.bu:                                            ; preds = %bb.ae
+  store ptr null, ptr %i.aw, align 8, !tbaa !79
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %10 = load i8, ptr @je_opt_prof_accum, align 1, !tbaa !19, !range !20, !noundef !21
+  %11 = trunc nuw i8 %10 to i1
+  br i1 %11, label %.thread49.i, label %prof_gctx_should_destroy.exit.i
 
-prof_gctx_should_destroy.exit.i:                  ; preds = %bb.bu
+prof_gctx_should_destroy.exit.i:                  ; preds = %bb.bu, %tctx_tree_remove.exit.i
   %i.ot = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %i.ou = load i32, ptr %i.ot, align 8, !tbaa !88
   %.not.i38.i = icmp eq i32 %i.ou, 0
@@ -1045,7 +1037,7 @@ bb.bv:                                            ; preds = %prof_gctx_should_de
   %i.oy = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.ox) #11 ; 0 uses
   unreachable
 
-.thread49.i:                                      ; preds = %prof_gctx_should_destroy.exit.i, %bb.bu, %tctx_tree_remove.exit.i
+.thread49.i:                                      ; preds = %tctx_tree_remove.exit.i.thread, %prof_gctx_should_destroy.exit.i, %bb.bu, %tctx_tree_remove.exit.i
   %i.oz = load ptr, ptr %i.k, align 8, !tbaa !77  ; 2 uses
   %i.pa = getelementptr inbounds nuw i8, ptr %i.oz, i64 64
   store atomic i8 0, ptr %i.pa monotonic, align 1
