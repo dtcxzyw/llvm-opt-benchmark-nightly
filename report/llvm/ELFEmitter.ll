@@ -204,7 +204,7 @@ bb.lb:                                            ; preds = %bb.la
   br i1 %.not122.i.i, label %._crit_edge.loopexit.i308.i, label %.lr.ph.i307.i
 
 ._crit_edge.loopexit.i308.i:                      ; preds = %.lr.ph.i307.i
-  %i.cgq = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cgo, i1 false)
+  %i.cgq = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cgo, i1 true)
   br label %.thread.i309.i
 
 .thread.i309.i:                                   ; preds = %._crit_edge.loopexit.i308.i, %bb.lb
@@ -607,7 +607,7 @@ bb.ld:                                            ; preds = %bb.lc
   br i1 %.not122.i.i, label %._crit_edge.loopexit.i308.i, label %.lr.ph.i307.i
 
 ._crit_edge.loopexit.i308.i:                      ; preds = %.lr.ph.i307.i
-  %i.cig = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cie, i1 false)
+  %i.cig = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cie, i1 true)
   br label %.thread.i309.i
 
 .thread.i309.i:                                   ; preds = %._crit_edge.loopexit.i308.i, %bb.ld
@@ -1010,7 +1010,7 @@ bb.lb:                                            ; preds = %bb.la
   br i1 %.not113.i.i, label %._crit_edge.loopexit.i309.i, label %.lr.ph.i308.i
 
 ._crit_edge.loopexit.i309.i:                      ; preds = %.lr.ph.i308.i
-  %i.chx = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.chv, i1 false)
+  %i.chx = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.chv, i1 true)
   br label %.thread.i310.i
 
 .thread.i310.i:                                   ; preds = %._crit_edge.loopexit.i309.i, %bb.lb
@@ -1413,7 +1413,7 @@ bb.ld:                                            ; preds = %bb.lc
   br i1 %.not113.i.i, label %._crit_edge.loopexit.i309.i, label %.lr.ph.i308.i
 
 ._crit_edge.loopexit.i309.i:                      ; preds = %.lr.ph.i308.i
-  %i.cjn = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.cjl, i1 false)
+  %i.cjn = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.cjl, i1 true)
   br label %.thread.i310.i
 
 .thread.i310.i:                                   ; preds = %._crit_edge.loopexit.i309.i, %bb.ld

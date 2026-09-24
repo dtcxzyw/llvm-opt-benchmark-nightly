@@ -205,7 +205,7 @@ _ZZL10encodeCrelILb1EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf1
 
 ._crit_edge.loopexit.i:                           ; preds = %_ZZL10encodeCrelILb1EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil, %._crit_edge.loopexit.i.unr-lcssa
   %.lcssa = phi i64 [ %i.ba, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.o, %_ZZL10encodeCrelILb1EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil ]
-  %i.q = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa, i1 false)
+  %i.q = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa, i1 true)
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.a
@@ -608,7 +608,7 @@ _ZZL10encodeCrelILb0EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf1
 
 ._crit_edge.loopexit.i:                           ; preds = %_ZZL10encodeCrelILb0EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil, %._crit_edge.loopexit.i.unr-lcssa
   %.lcssa = phi i32 [ %i.bb, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.o, %_ZZL10encodeCrelILb0EEN4llvm11SmallVectorIcLj0EEENS0_8ArrayRefINS0_7objcopy3elf10RelocationEEEENKUlRKS6_E_clES9_.exit.i.epil ]
-  %i.q = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.lcssa, i1 false)
+  %i.q = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.lcssa, i1 true)
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.a

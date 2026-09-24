@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.2 = phi i32 [ %i.bd, %bb.i ], [ %.1, %bb.h ]
-  %i.bf = add i32 %i.ak, %i.al
-  %i.bg = add i32 %i.bf, %i.aj
+  %i.bf = add i32 %i.aj, %i.ak
+  %i.bg = add i32 %i.bf, %i.al
   %i.bh = add i32 %i.bg, %.2
   %i.bi = sitofp i32 %i.bh to float
   %i.bj = fdiv float %i.bi, 1.800000e+01

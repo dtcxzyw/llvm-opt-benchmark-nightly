@@ -206,13 +206,13 @@ bb.b:                                             ; preds = %.lr.ph187, %.loopex
   %i.o = shl i64 %indvar, 2
   %i.p = sub i64 %i.l, %i.o
   %i.q = load i64, ptr %i.f, align 8, !tbaa !100  ; 2 uses
+  %.neg = add nuw nsw i64 %.047186, 1             ; 4 uses
   %i.r = xor i64 %.047186, -1                     ; 2 uses
   %i.s = add i64 %i.c, %i.r                       ; 10 uses
   %.not193 = icmp eq i64 %i.s, 0
   br i1 %.not193, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.neg = add nuw nsw i64 %.047186, 1             ; 4 uses
   %i.t = add i64 %i.q, %i.r                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23)
   %i.u = load ptr, ptr %2, align 8, !tbaa !118
@@ -615,13 +615,13 @@ bb.b:                                             ; preds = %.lr.ph187, %.loopex
   %i.o = shl i64 %indvar, 2
   %i.p = sub i64 %i.l, %i.o
   %i.q = load i64, ptr %i.f, align 8, !tbaa !100  ; 2 uses
+  %.neg = add nuw nsw i64 %.047186, 1             ; 4 uses
   %i.r = xor i64 %.047186, -1                     ; 2 uses
   %i.s = add i64 %i.c, %i.r                       ; 10 uses
   %.not193 = icmp eq i64 %i.s, 0
   br i1 %.not193, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.neg = add nuw nsw i64 %.047186, 1             ; 4 uses
   %i.t = add i64 %i.q, %i.r                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23)
   %i.u = load ptr, ptr %2, align 8, !tbaa !118
@@ -1024,13 +1024,13 @@ bb.b:                                             ; preds = %.lr.ph184, %.loopex
   %i.p = add i64 %i.l, %i.o
   %i.q = add i64 %i.k, %i.o
   %i.r = load i64, ptr %i.f, align 8, !tbaa !100  ; 2 uses
+  %.neg = add nuw nsw i64 %.047183, 1             ; 4 uses
   %i.s = xor i64 %.047183, -1                     ; 2 uses
   %i.t = add i64 %i.c, %i.s                       ; 9 uses
   %.not190 = icmp eq i64 %i.t, 0
   br i1 %.not190, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.neg = add nuw nsw i64 %.047183, 1             ; 4 uses
   %i.u = add i64 %i.r, %i.s                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23)
   %i.v = load ptr, ptr %2, align 8, !tbaa !338
@@ -1433,13 +1433,13 @@ bb.b:                                             ; preds = %.lr.ph184, %.loopex
   %i.p = add i64 %i.l, %i.o
   %i.q = add i64 %i.k, %i.o
   %i.r = load i64, ptr %i.f, align 8, !tbaa !100  ; 2 uses
+  %.neg = add nuw nsw i64 %.047183, 1             ; 4 uses
   %i.s = xor i64 %.047183, -1                     ; 2 uses
   %i.t = add i64 %i.c, %i.s                       ; 9 uses
   %.not190 = icmp eq i64 %i.t, 0
   br i1 %.not190, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.neg = add nuw nsw i64 %.047183, 1             ; 4 uses
   %i.u = add i64 %i.r, %i.s                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23)
   %i.v = load ptr, ptr %2, align 8, !tbaa !338

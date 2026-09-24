@@ -204,11 +204,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIfNS0_15MaskPolicyFloatIfEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -611,11 +611,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIhNS0_13MaskPolicyIntIhEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -1018,11 +1018,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIaNS0_13MaskPolicyIntIaEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -1425,11 +1425,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxItNS0_13MaskPolicyIntItEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -1832,11 +1832,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIsNS0_13MaskPolicyIntIsEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -2239,11 +2239,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIjNS0_13MaskPolicyIntIjEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -2646,11 +2646,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIiNS0_13MaskPolicyIntIiEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -3053,11 +3053,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxImNS0_13MaskPolicyIntImEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -3460,11 +3460,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIlNS0_13MaskPolicyIntIlEEEEvRNS_3MatERKS4_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
@@ -3867,11 +3867,11 @@ bb.k:                                             ; preds = %_ZN2cv8MatShapeixEm
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31 ; 11 uses
+  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 4
   br i1 %i.bb, label %_ZZN2cv3dnn17run_fused_softmaxIfNS0_14MaskPolicyNoneEEEvRNS_3MatERKS3_fbffbENKUliE_clEi.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = add nsw i32 %i.ba, -4                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
