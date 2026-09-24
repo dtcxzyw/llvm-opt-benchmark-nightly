@@ -204,18 +204,16 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.ai, %bb.ak
   %i.az = phi { i64, i64 } [ %i.ay, %bb.ak ], [ { i64 ptrtoint (ptr @_ZN2cv8freetype13FreeType2Impl19putPixel_8UC4_blendERNS_3MatEiiPKhh to i64), i64 0 }, %bb.ai ]
-  %.fr = freeze { i64, i64 } %i.az                ; 2 uses
+  %.fr = freeze { i64, i64 } %i.az
   %.fca.0.extract = extractvalue { i64, i64 } %.fr, 0 ; 3 uses
   %i.ba = load i32, ptr %i.a, align 4, !tbaa !40
   %.not133 = icmp eq i32 %i.ba, 0
   br i1 %.not133, label %._crit_edge124, label %.lr.ph123
 
 .lr.ph123:                                        ; preds = %bb.al
-  %.fca.1.extract = extractvalue { i64, i64 } %.fr, 1
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
-  %22 = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 2 uses
-  %i.bd = getelementptr inbounds i8, ptr %0, i64 %.fca.1.extract ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 2 uses
   %i.be = and i64 %.fca.0.extract, 1
   %.not85 = icmp eq i64 %i.be, 0
   %i.bf = inttoptr i64 %.fca.0.extract to ptr
@@ -281,7 +279,7 @@ bb.aq:                                            ; preds = %.loopexit.us.us, %.
   br i1 %i.cj, label %.loopexit.us.us, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.ck = load i32, ptr %22, align 8, !tbaa !103
+  %i.ck = load i32, ptr %i.bc, align 8, !tbaa !103
   %.not83.us.us = icmp slt i32 %i.ci, %i.ck
   br i1 %.not83.us.us, label %.preheader.us.us, label %._crit_edge.split.us.us.loopexit
 
@@ -308,12 +306,12 @@ bb.as:                                            ; preds = %.lr.ph.us.us
   br i1 %i.cw, label %bb.av, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.cx = load i32, ptr %i.bc, align 4, !tbaa !106
+  %i.cx = load i32, ptr %i.bd, align 4, !tbaa !106
   %.not84.us.us.us = icmp slt i32 %i.cv, %i.cx
   br i1 %.not84.us.us.us, label %bb.au, label %.loopexit.us.us.loopexit
 
 bb.au:                                            ; preds = %bb.at
-  invoke void %i.bf(ptr noundef nonnull align 8 dereferenceable(88) %i.bd, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.cv, ptr noundef nonnull %i.b, i8 noundef zeroext %i.ct)
+  invoke void %i.bf(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.cv, ptr noundef nonnull %i.b, i8 noundef zeroext %i.ct)
           to label %._crit_edge146 unwind label %.split.us.split.us.split.us
 
 ._crit_edge146:                                   ; preds = %bb.au
@@ -519,7 +517,7 @@ bb.bj:                                            ; preds = %.lr.ph116, %.loopex
   br i1 %i.fn, label %.loopexit, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.fo = load i32, ptr %22, align 8, !tbaa !103
+  %i.fo = load i32, ptr %i.bc, align 8, !tbaa !103
   %.not83 = icmp slt i32 %i.fm, %i.fo
   br i1 %.not83, label %.preheader, label %._crit_edge.split.loopexit
 
@@ -546,16 +544,16 @@ bb.bl:                                            ; preds = %.lr.ph
   br i1 %i.ga, label %bb.bo, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.gb = load i32, ptr %i.bc, align 4, !tbaa !106
+  %i.gb = load i32, ptr %i.bd, align 4, !tbaa !106
   %.not84 = icmp slt i32 %i.fz, %i.gb
   br i1 %.not84, label %bb.bn, label %.loopexit.loopexit
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.gc = load ptr, ptr %i.bd, align 8, !tbaa !10
+  %i.gc = load ptr, ptr %0, align 8, !tbaa !10
   %i.gd = getelementptr i8, ptr %i.gc, i64 %.fca.0.extract
   %i.ge = getelementptr i8, ptr %i.gd, i64 -1
   %i.gf = load ptr, ptr %i.ge, align 8, !nosanitize !36
-  invoke void %i.gf(ptr noundef nonnull align 8 dereferenceable(88) %i.bd, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.fm, i32 noundef %i.fz, ptr noundef nonnull %i.b, i8 noundef zeroext %i.fx)
+  invoke void %i.gf(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.fm, i32 noundef %i.fz, ptr noundef nonnull %i.b, i8 noundef zeroext %i.fx)
           to label %._crit_edge unwind label %.split
 
 ._crit_edge:                                      ; preds = %bb.bn
@@ -903,18 +901,16 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.ai, %bb.ak
   %i.ay = phi { i64, i64 } [ %i.ax, %bb.ak ], [ { i64 ptrtoint (ptr @_ZN2cv8freetype13FreeType2Impl18putPixel_8UC4_monoERNS_3MatEiiPKh to i64), i64 0 }, %bb.ai ]
-  %.fr = freeze { i64, i64 } %i.ay                ; 2 uses
+  %.fr = freeze { i64, i64 } %i.ay
   %.fca.0.extract = extractvalue { i64, i64 } %.fr, 0 ; 10 uses
   %i.az = load i32, ptr %i.a, align 4, !tbaa !40
   %.not144 = icmp eq i32 %i.az, 0
   br i1 %.not144, label %._crit_edge135, label %.lr.ph134
 
 .lr.ph134:                                        ; preds = %bb.al
-  %.fca.1.extract = extractvalue { i64, i64 } %.fr, 1
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
-  %22 = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 16 uses
-  %i.bc = getelementptr inbounds i8, ptr %0, i64 %.fca.1.extract ; 24 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 16 uses
   %i.bd = and i64 %.fca.0.extract, 1
   %.not94 = icmp eq i64 %i.bd, 0
   %i.be = inttoptr i64 %.fca.0.extract to ptr     ; 8 uses
@@ -981,7 +977,7 @@ bb.aq:                                            ; preds = %.loopexit120.us.us,
   br i1 %i.cj, label %.loopexit120.us.us, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.ck = load i32, ptr %22, align 8, !tbaa !103
+  %i.ck = load i32, ptr %i.bb, align 8, !tbaa !103
   %.not91.us.us = icmp slt i32 %i.ci, %i.ck
   br i1 %.not91.us.us, label %.preheader119.us.us, label %._crit_edge.split.us.us.loopexit
 
@@ -1011,7 +1007,7 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %i.cy, label %bb.av, label %bb.as
 
 bb.as:                                            ; preds = %.preheader.us.us.us
-  %i.cz = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.cz = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.us.us.us.us = icmp slt i32 %i.cx, %i.cz
   br i1 %.not92.us.us.us.us, label %bb.at, label %.loopexit.split.us.us.us.us.loopexit
 
@@ -1020,7 +1016,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %.not93.us.us.us.us, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.cx, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.cx, ptr noundef nonnull %i.b)
           to label %bb.av unwind label %.split.us.split.us.split.us.split.us
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %.preheader.us.us.us
@@ -1029,7 +1025,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %.pr
   br i1 %i.db, label %bb.az, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.dc = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.dc = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.us.us.us.us.1 = icmp slt i32 %i.da, %i.dc
   br i1 %.not92.us.us.us.us.1, label %bb.ax, label %.loopexit.split.us.us.us.us.loopexit
 
@@ -1039,7 +1035,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not93.us.us.us.us.1, label %.thread, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.da, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.da, ptr noundef nonnull %i.b)
           to label %.thread unwind label %.split.us.split.us.split.us.split.us
 
 .thread:                                          ; preds = %bb.ay, %bb.ax
@@ -1052,7 +1048,7 @@ bb.az:                                            ; preds = %bb.av
 
 bb.ba:                                            ; preds = %.thread, %bb.az
   %i.dg = phi i32 [ %i.de, %.thread ], [ 0, %bb.az ] ; 2 uses
-  %i.dh = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.dh = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.us.us.us.us.2 = icmp slt i32 %i.dg, %i.dh
   br i1 %.not92.us.us.us.us.2, label %bb.bb, label %.loopexit.split.us.us.us.us.loopexit
 
@@ -1062,7 +1058,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %.not93.us.us.us.us.2, label %bb.bd, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dg, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dg, ptr noundef nonnull %i.b)
           to label %bb.bd unwind label %.split.us.split.us.split.us.split.us
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.az
@@ -1071,7 +1067,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.
   br i1 %i.dk, label %bb.bh, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.dl = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.dl = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.us.us.us.us.3 = icmp slt i32 %i.dj, %i.dl
   br i1 %.not92.us.us.us.us.3, label %bb.bf, label %.loopexit.split.us.us.us.us.loopexit
 
@@ -1081,7 +1077,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not93.us.us.us.us.3, label %.thread204, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dj, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dj, ptr noundef nonnull %i.b)
           to label %.thread204 unwind label %.split.us.split.us.split.us.split.us
 
 .thread204:                                       ; preds = %bb.bg, %bb.bf
@@ -1094,7 +1090,7 @@ bb.bh:                                            ; preds = %bb.bd
 
 bb.bi:                                            ; preds = %.thread204, %bb.bh
   %i.dp = phi i32 [ %i.dn, %.thread204 ], [ 0, %bb.bh ] ; 2 uses
-  %i.dq = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.dq = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.us.us.us.us.4 = icmp slt i32 %i.dp, %i.dq
   br i1 %.not92.us.us.us.us.4, label %bb.bj, label %.loopexit.split.us.us.us.us.loopexit
 
@@ -1104,7 +1100,7 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %.not93.us.us.us.us.4, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dp, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dp, ptr noundef nonnull %i.b)
           to label %bb.bl unwind label %.split.us.split.us.split.us.split.us
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.bh
@@ -1113,7 +1109,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.
   br i1 %i.dt, label %bb.bp, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.du = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.du = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.us.us.us.us.5 = icmp slt i32 %i.ds, %i.du
   br i1 %.not92.us.us.us.us.5, label %bb.bn, label %.loopexit.split.us.us.us.us.loopexit
 
@@ -1123,7 +1119,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %.not93.us.us.us.us.5, label %.thread206, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.ds, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.ds, ptr noundef nonnull %i.b)
           to label %.thread206 unwind label %.split.us.split.us.split.us.split.us
 
 .thread206:                                       ; preds = %bb.bo, %bb.bn
@@ -1136,7 +1132,7 @@ bb.bp:                                            ; preds = %bb.bl
 
 bb.bq:                                            ; preds = %.thread206, %bb.bp
   %i.dy = phi i32 [ %i.dw, %.thread206 ], [ 0, %bb.bp ] ; 2 uses
-  %i.dz = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.dz = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.us.us.us.us.6 = icmp slt i32 %i.dy, %i.dz
   br i1 %.not92.us.us.us.us.6, label %bb.br, label %.loopexit.split.us.us.us.us.loopexit
 
@@ -1146,12 +1142,12 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %.not93.us.us.us.us.6, label %bb.bt, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dy, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %i.dy, ptr noundef nonnull %i.b)
           to label %bb.bt unwind label %.split.us.split.us.split.us.split.us
 
 bb.bt:                                            ; preds = %bb.bs, %bb.br, %bb.bp
   %i.eb = icmp slt i32 %reass.sub.us.us.us, 0
-  %i.ec = load i32, ptr %i.bb, align 4
+  %i.ec = load i32, ptr %i.bc, align 4
   %.not92.us.us.us.us.7 = icmp sge i32 %reass.sub.us.us.us, %i.ec
   %or.cond.not222 = select i1 %i.eb, i1 true, i1 %.not92.us.us.us.us.7
   %i.ed = and i32 %i.cu, 1
@@ -1160,7 +1156,7 @@ bb.bt:                                            ; preds = %bb.bs, %bb.br, %bb.
   br i1 %or.cond216, label %.loopexit.split.us.us.us.us.loopexit, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
-  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %reass.sub.us.us.us, ptr noundef nonnull %i.b)
+  invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.ci, i32 noundef %reass.sub.us.us.us, ptr noundef nonnull %i.b)
           to label %.loopexit.split.us.us.us.us.loopexit unwind label %.split.us.split.us.split.us.split.us
 
 .loopexit.split.us.us.us.us.loopexit:             ; preds = %bb.bt, %bb.bu, %bb.bq, %bb.bm, %bb.bi, %bb.be, %bb.ba, %bb.aw, %bb.as
@@ -1367,7 +1363,7 @@ bb.ci:                                            ; preds = %.lr.ph127, %.loopex
   br i1 %i.gu, label %.loopexit120, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.gv = load i32, ptr %22, align 8, !tbaa !103
+  %i.gv = load i32, ptr %i.bb, align 8, !tbaa !103
   %.not91 = icmp slt i32 %i.gt, %i.gv
   br i1 %.not91, label %.preheader119, label %._crit_edge.split.loopexit
 
@@ -1397,7 +1393,7 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.hj, label %bb.cn, label %bb.ck
 
 bb.ck:                                            ; preds = %.preheader
-  %i.hk = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.hk = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92 = icmp slt i32 %i.hi, %i.hk
   br i1 %.not92, label %bb.cl, label %.loopexit.split.loopexit
 
@@ -1406,11 +1402,11 @@ bb.cl:                                            ; preds = %bb.ck
   br i1 %.not93, label %bb.cn, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.hl = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.hl = load ptr, ptr %0, align 8, !tbaa !10
   %i.hm = getelementptr i8, ptr %i.hl, i64 %.fca.0.extract
   %i.hn = getelementptr i8, ptr %i.hm, i64 -1
   %i.ho = load ptr, ptr %i.hn, align 8, !nosanitize !36
-  invoke void %i.ho(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.hi, ptr noundef nonnull %i.b)
+  invoke void %i.ho(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.hi, ptr noundef nonnull %i.b)
           to label %bb.cn unwind label %.split
 
 .split:                                           ; preds = %bb.dm, %bb.dk, %bb.dg, %bb.dc, %bb.cy, %bb.cu, %bb.cq, %bb.cm
@@ -1424,7 +1420,7 @@ bb.cn:                                            ; preds = %bb.cl, %bb.cm, %.pr
   br i1 %i.hr, label %bb.cr, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn
-  %i.hs = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.hs = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.1 = icmp slt i32 %i.hq, %i.hs
   br i1 %.not92.1, label %bb.cp, label %.loopexit.split.loopexit
 
@@ -1434,11 +1430,11 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %.not93.1, label %.thread208, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.hu = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.hu = load ptr, ptr %0, align 8, !tbaa !10
   %i.hv = getelementptr i8, ptr %i.hu, i64 %.fca.0.extract
   %i.hw = getelementptr i8, ptr %i.hv, i64 -1
   %i.hx = load ptr, ptr %i.hw, align 8, !nosanitize !36
-  invoke void %i.hx(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.hq, ptr noundef nonnull %i.b)
+  invoke void %i.hx(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.hq, ptr noundef nonnull %i.b)
           to label %.thread208 unwind label %.split
 
 .thread208:                                       ; preds = %bb.cq, %bb.cp
@@ -1451,7 +1447,7 @@ bb.cr:                                            ; preds = %bb.cn
 
 bb.cs:                                            ; preds = %.thread208, %bb.cr
   %i.ia = phi i32 [ %i.hy, %.thread208 ], [ 0, %bb.cr ] ; 2 uses
-  %i.ib = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.ib = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.2 = icmp slt i32 %i.ia, %i.ib
   br i1 %.not92.2, label %bb.ct, label %.loopexit.split.loopexit
 
@@ -1461,11 +1457,11 @@ bb.ct:                                            ; preds = %bb.cs
   br i1 %.not93.2, label %bb.cv, label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.id = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.id = load ptr, ptr %0, align 8, !tbaa !10
   %i.ie = getelementptr i8, ptr %i.id, i64 %.fca.0.extract
   %i.if = getelementptr i8, ptr %i.ie, i64 -1
   %i.ig = load ptr, ptr %i.if, align 8, !nosanitize !36
-  invoke void %i.ig(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ia, ptr noundef nonnull %i.b)
+  invoke void %i.ig(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ia, ptr noundef nonnull %i.b)
           to label %bb.cv unwind label %.split
 
 bb.cv:                                            ; preds = %bb.cu, %bb.ct, %bb.cr
@@ -1474,7 +1470,7 @@ bb.cv:                                            ; preds = %bb.cu, %bb.ct, %bb.
   br i1 %i.ii, label %bb.cz, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
-  %i.ij = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.ij = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.3 = icmp slt i32 %i.ih, %i.ij
   br i1 %.not92.3, label %bb.cx, label %.loopexit.split.loopexit
 
@@ -1484,11 +1480,11 @@ bb.cx:                                            ; preds = %bb.cw
   br i1 %.not93.3, label %.thread210, label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx
-  %i.il = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.il = load ptr, ptr %0, align 8, !tbaa !10
   %i.im = getelementptr i8, ptr %i.il, i64 %.fca.0.extract
   %i.in = getelementptr i8, ptr %i.im, i64 -1
   %i.io = load ptr, ptr %i.in, align 8, !nosanitize !36
-  invoke void %i.io(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ih, ptr noundef nonnull %i.b)
+  invoke void %i.io(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ih, ptr noundef nonnull %i.b)
           to label %.thread210 unwind label %.split
 
 .thread210:                                       ; preds = %bb.cy, %bb.cx
@@ -1501,7 +1497,7 @@ bb.cz:                                            ; preds = %bb.cv
 
 bb.da:                                            ; preds = %.thread210, %bb.cz
   %i.ir = phi i32 [ %i.ip, %.thread210 ], [ 0, %bb.cz ] ; 2 uses
-  %i.is = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.is = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.4 = icmp slt i32 %i.ir, %i.is
   br i1 %.not92.4, label %bb.db, label %.loopexit.split.loopexit
 
@@ -1511,11 +1507,11 @@ bb.db:                                            ; preds = %bb.da
   br i1 %.not93.4, label %bb.dd, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
-  %i.iu = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.iu = load ptr, ptr %0, align 8, !tbaa !10
   %i.iv = getelementptr i8, ptr %i.iu, i64 %.fca.0.extract
   %i.iw = getelementptr i8, ptr %i.iv, i64 -1
   %i.ix = load ptr, ptr %i.iw, align 8, !nosanitize !36
-  invoke void %i.ix(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ir, ptr noundef nonnull %i.b)
+  invoke void %i.ix(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ir, ptr noundef nonnull %i.b)
           to label %bb.dd unwind label %.split
 
 bb.dd:                                            ; preds = %bb.dc, %bb.db, %bb.cz
@@ -1524,7 +1520,7 @@ bb.dd:                                            ; preds = %bb.dc, %bb.db, %bb.
   br i1 %i.iz, label %bb.dh, label %bb.de
 
 bb.de:                                            ; preds = %bb.dd
-  %i.ja = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.ja = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.5 = icmp slt i32 %i.iy, %i.ja
   br i1 %.not92.5, label %bb.df, label %.loopexit.split.loopexit
 
@@ -1534,11 +1530,11 @@ bb.df:                                            ; preds = %bb.de
   br i1 %.not93.5, label %.thread212, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
-  %i.jc = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.jc = load ptr, ptr %0, align 8, !tbaa !10
   %i.jd = getelementptr i8, ptr %i.jc, i64 %.fca.0.extract
   %i.je = getelementptr i8, ptr %i.jd, i64 -1
   %i.jf = load ptr, ptr %i.je, align 8, !nosanitize !36
-  invoke void %i.jf(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.iy, ptr noundef nonnull %i.b)
+  invoke void %i.jf(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.iy, ptr noundef nonnull %i.b)
           to label %.thread212 unwind label %.split
 
 .thread212:                                       ; preds = %bb.dg, %bb.df
@@ -1551,7 +1547,7 @@ bb.dh:                                            ; preds = %bb.dd
 
 bb.di:                                            ; preds = %.thread212, %bb.dh
   %i.ji = phi i32 [ %i.jg, %.thread212 ], [ 0, %bb.dh ] ; 2 uses
-  %i.jj = load i32, ptr %i.bb, align 4, !tbaa !106
+  %i.jj = load i32, ptr %i.bc, align 4, !tbaa !106
   %.not92.6 = icmp slt i32 %i.ji, %i.jj
   br i1 %.not92.6, label %bb.dj, label %.loopexit.split.loopexit
 
@@ -1561,16 +1557,16 @@ bb.dj:                                            ; preds = %bb.di
   br i1 %.not93.6, label %bb.dl, label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj
-  %i.jl = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.jl = load ptr, ptr %0, align 8, !tbaa !10
   %i.jm = getelementptr i8, ptr %i.jl, i64 %.fca.0.extract
   %i.jn = getelementptr i8, ptr %i.jm, i64 -1
   %i.jo = load ptr, ptr %i.jn, align 8, !nosanitize !36
-  invoke void %i.jo(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ji, ptr noundef nonnull %i.b)
+  invoke void %i.jo(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %i.ji, ptr noundef nonnull %i.b)
           to label %bb.dl unwind label %.split
 
 bb.dl:                                            ; preds = %bb.dk, %bb.dj, %bb.dh
   %i.jp = icmp slt i32 %reass.sub, 0
-  %i.jq = load i32, ptr %i.bb, align 4
+  %i.jq = load i32, ptr %i.bc, align 4
   %.not92.7 = icmp sge i32 %reass.sub, %i.jq
   %or.cond217.not220 = select i1 %i.jp, i1 true, i1 %.not92.7
   %i.jr = and i32 %i.hf, 1
@@ -1579,11 +1575,11 @@ bb.dl:                                            ; preds = %bb.dk, %bb.dj, %bb.
   br i1 %or.cond218, label %.loopexit.split.loopexit, label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl
-  %i.js = load ptr, ptr %i.bc, align 8, !tbaa !10
+  %i.js = load ptr, ptr %0, align 8, !tbaa !10
   %i.jt = getelementptr i8, ptr %i.js, i64 %.fca.0.extract
   %i.ju = getelementptr i8, ptr %i.jt, i64 -1
   %i.jv = load ptr, ptr %i.ju, align 8, !nosanitize !36
-  invoke void %i.jv(ptr noundef nonnull align 8 dereferenceable(88) %i.bc, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %reass.sub, ptr noundef nonnull %i.b)
+  invoke void %i.jv(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef %i.gt, i32 noundef %reass.sub, ptr noundef nonnull %i.b)
           to label %.loopexit.split.loopexit unwind label %.split
 
 .loopexit.split.loopexit:                         ; preds = %bb.dl, %bb.dm, %bb.di, %bb.de, %bb.da, %bb.cw, %bb.cs, %bb.co, %bb.ck

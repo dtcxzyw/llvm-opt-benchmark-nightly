@@ -205,11 +205,10 @@ bb.ok:                                            ; preds = %bb.oj
   br label %bb.ol
 
 bb.ol:                                            ; preds = %bb.oj, %bb.ok
-  %i.ata = phi { i64, i64 } [ %i.asz, %bb.ok ], [ { i64 ptrtoint (ptr @_ZN6LibRaw18eight_bit_load_rawEv to i64), i64 0 }, %bb.oj ] ; 2 uses
+  %i.ata = phi { i64, i64 } [ %i.asz, %bb.ok ], [ { i64 ptrtoint (ptr @_ZN6LibRaw18eight_bit_load_rawEv to i64), i64 0 }, %bb.oj ]
   %.elt = extractvalue { i64, i64 } %i.ata, 0
   store i64 %.elt, ptr %i.aeu, align 8, !tbaa !119
-  %.elt311 = extractvalue { i64, i64 } %i.ata, 1
-  store i64 %.elt311, ptr %.elt278, align 8, !tbaa !119
+  store i64 0, ptr %.elt278, align 8, !tbaa !119
   %i.atb = getelementptr inbounds nuw i8, ptr %0, i64 381836 ; 2 uses
   %i.atc = load i32, ptr %i.atb, align 4, !tbaa !127
   %i.atd = icmp ugt i32 %i.atc, 16
