@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.lr.ph640.i
   br label %bb.ee
 
 bb.j:                                             ; preds = %.lr.ph640.i
-  %i.ad = add nuw i64 %.2193639.i, 1              ; 24 uses
+  %i.ad = add nuw i64 %.2193639.i, 1              ; 23 uses
   %.not254.i = icmp ult i64 %i.ad, %0
   br i1 %.not254.i, label %bb.m, label %bb.k
 
@@ -608,16 +608,14 @@ bb.bf:                                            ; preds = %bb.be
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #15
-  %i.gz = sub nuw i64 %.5196.lcssa.ph.i, %.2193639.i
-  %20 = sub nuw i64 %0, %i.ad
-  %.sroa.speculated.i281.i = tail call i64 @llvm.umin.i64(i64 %20, i64 %i.gz) ; 8 uses
+  %i.gz = sub nuw i64 %.5196.lcssa.ph.i, %.2193639.i ; 8 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 5 uses
   store ptr %i.ha, ptr %9, align 8
-  %i.hb = icmp ugt i64 %.sroa.speculated.i281.i, 15
+  %i.hb = icmp ugt i64 %i.gz, 15
   br i1 %i.hb, label %bb.bg, label %._crit_edge.i.i.i.i289.i
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.hc = icmp slt i64 %.sroa.speculated.i281.i, 0
+  %i.hc = icmp slt i64 %i.gz, 0
   br i1 %i.hc, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
@@ -625,7 +623,7 @@ bb.bh:                                            ; preds = %bb.bg
   unreachable
 
 bb.bi:                                            ; preds = %bb.bg
-  %i.hd = add nuw i64 %.sroa.speculated.i281.i, 1 ; 2 uses
+  %i.hd = add nuw i64 %i.gz, 1                    ; 2 uses
   %i.he = icmp slt i64 %i.hd, 0
   br i1 %i.he, label %bb.bj, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i290.i, !prof !6
 
@@ -636,12 +634,12 @@ bb.bj:                                            ; preds = %bb.bi
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i290.i: ; preds = %bb.bi
   %i.hf = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hd) #16 ; 2 uses
   store ptr %i.hf, ptr %9, align 8
-  store i64 %.sroa.speculated.i281.i, ptr %i.ha, align 8
+  store i64 %i.gz, ptr %i.ha, align 8
   br label %._crit_edge.i.i.i.i289.i
 
 ._crit_edge.i.i.i.i289.i:                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i290.i, %bb.bf
   %i.hg = phi ptr [ %i.hf, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i290.i ], [ %i.ha, %bb.bf ] ; 3 uses
-  switch i64 %.sroa.speculated.i281.i, label %bb.bl [
+  switch i64 %i.gz, label %bb.bl [
     i64 1, label %bb.bk
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_.exit291.i
   ]
@@ -652,13 +650,13 @@ bb.bk:                                            ; preds = %._crit_edge.i.i.i.i
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_.exit291.i
 
 bb.bl:                                            ; preds = %._crit_edge.i.i.i.i289.i
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.hg, ptr nonnull align 1 %i.ah, i64 %.sroa.speculated.i281.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.hg, ptr nonnull align 1 %i.ah, i64 %i.gz, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_.exit291.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_.exit291.i: ; preds = %bb.bl, %bb.bk, %._crit_edge.i.i.i.i289.i
   %i.hi = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 %.sroa.speculated.i281.i, ptr %i.hi, align 8
-  %i.hj = getelementptr inbounds nuw i8, ptr %i.hg, i64 %.sroa.speculated.i281.i
+  store i64 %i.gz, ptr %i.hi, align 8
+  %i.hj = getelementptr inbounds nuw i8, ptr %i.hg, i64 %i.gz
   store i8 0, ptr %i.hj, align 1
   call void @llvm.experimental.noalias.scope.decl(metadata !29)
   %i.hk = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %9, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.1, i64 noundef 10), !noalias !29 ; 6 uses
