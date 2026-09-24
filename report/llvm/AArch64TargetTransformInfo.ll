@@ -205,15 +205,13 @@ vector.body.interim.1:                            ; preds = %vector.body.interim
   br i1 %.not724.2, label %.lr.ph.i.i, label %vector.early.exit.check
 
 vector.early.exit.check:                          ; preds = %vector.body.interim.1, %vector.body.interim, %vector.ph
-  %index.lcssa = phi i64 [ 0, %vector.ph ], [ 8, %vector.body.interim ], [ 16, %vector.body.interim.1 ]
+  %index.lcssa = phi i64 [ 0, %vector.ph ], [ 8, %vector.body.interim ], [ 16, %vector.body.interim.1 ] ; 2 uses
   %.lcssa738 = phi <8 x i1> [ %i.qn, %vector.ph ], [ %i.re, %vector.body.interim ], [ %i.rv, %vector.body.interim.1 ]
   %.lcssa736 = phi <8 x i64> [ <i64 6, i64 30, i64 54, i64 78, i64 102, i64 126, i64 150, i64 174>, %vector.ph ], [ <i64 198, i64 222, i64 246, i64 270, i64 294, i64 318, i64 342, i64 366>, %vector.body.interim ], [ <i64 390, i64 414, i64 438, i64 462, i64 486, i64 510, i64 534, i64 558>, %vector.body.interim.1 ]
   %.lcssa734 = phi <8 x i1> [ %i.qq, %vector.ph ], [ %i.rh, %vector.body.interim ], [ %i.ry, %vector.body.interim.1 ]
-  %.lcssa732 = phi <8 x i64> [ <i64 12, i64 36, i64 60, i64 84, i64 108, i64 132, i64 156, i64 180>, %vector.ph ], [ <i64 204, i64 228, i64 252, i64 276, i64 300, i64 324, i64 348, i64 372>, %vector.body.interim ], [ <i64 396, i64 420, i64 444, i64 468, i64 492, i64 516, i64 540, i64 564>, %vector.body.interim.1 ]
   %.lcssa730 = phi <8 x i1> [ %i.qt, %vector.ph ], [ %i.rk, %vector.body.interim ], [ %i.sb, %vector.body.interim.1 ]
-  %.lcssa728 = phi <8 x i64> [ <i64 18, i64 42, i64 66, i64 90, i64 114, i64 138, i64 162, i64 186>, %vector.ph ], [ <i64 210, i64 234, i64 258, i64 282, i64 306, i64 330, i64 354, i64 378>, %vector.body.interim ], [ <i64 402, i64 426, i64 450, i64 474, i64 498, i64 522, i64 546, i64 570>, %vector.body.interim.1 ]
   %.lcssa = phi <8 x i1> [ %i.ra, %vector.ph ], [ %i.rr, %vector.body.interim ], [ %i.si, %vector.body.interim.1 ]
-  %first.active.lane = call i64 @llvm.experimental.cttz.elts.i64.v8i1(<8 x i1> %.lcssa, i1 false) ; 7 uses
+  %first.active.lane = call i64 @llvm.experimental.cttz.elts.i64.v8i1(<8 x i1> %.lcssa, i1 false) ; 6 uses
   %i.sk = extractelement <8 x i1> %.lcssa738, i64 %first.active.lane
   br i1 %i.sk, label %vector.early.exit.0, label %vector.early.exit.check.0
 
@@ -223,14 +221,16 @@ vector.early.exit.check.0:                        ; preds = %vector.early.exit.c
 
 vector.early.exit.check.1:                        ; preds = %vector.early.exit.check.0
   %i.sm = extractelement <8 x i1> %.lcssa730, i64 %first.active.lane
+  %19 = add i64 %index.lcssa, %first.active.lane
+  %20 = mul i64 %19, 24                           ; 2 uses
   br i1 %i.sm, label %vector.early.exit.2, label %vector.early.exit.3
 
 vector.early.exit.3:                              ; preds = %vector.early.exit.check.1
-  %19 = extractelement <8 x i64> %.lcssa728, i64 %first.active.lane
+  %21 = add i64 %20, 18
   br label %_ZN4llvm15CostTableLookupILm110EtEEPKNS_13CostTblEntryTIT0_EERAT__S4_iNS_3MVTE.exit.thread703
 
 vector.early.exit.2:                              ; preds = %vector.early.exit.check.1
-  %20 = extractelement <8 x i64> %.lcssa732, i64 %first.active.lane
+  %22 = add i64 %20, 12
   br label %_ZN4llvm15CostTableLookupILm110EtEEPKNS_13CostTblEntryTIT0_EERAT__S4_iNS_3MVTE.exit
 
 vector.early.exit.1:                              ; preds = %vector.early.exit.check.0
@@ -326,12 +326,12 @@ bb.da:                                            ; preds = %._crit_edge.loopexi
   br i1 %i.ue, label %_ZN4llvm15CostTableLookupILm110EtEEPKNS_13CostTblEntryTIT0_EERAT__S4_iNS_3MVTE.exit.thread, label %.critedge243
 
 _ZN4llvm15CostTableLookupILm110EtEEPKNS_13CostTblEntryTIT0_EERAT__S4_iNS_3MVTE.exit.thread703: ; preds = %bb.ct, %bb.cr, %.lr.ph.i.i, %.lr.ph.i.i.1, %bb.cu, %bb.cw, %.lr.ph.i.i.2, %bb.cx, %bb.cz, %vector.early.exit.3, %vector.early.exit.1, %vector.early.exit.0
-  %.028.i.i.idx.ph = phi i64 [ %i.sp, %vector.early.exit.0 ], [ %i.sn, %vector.early.exit.1 ], [ %19, %vector.early.exit.3 ], [ 576, %.lr.ph.i.i ], [ 582, %bb.cr ], [ 594, %bb.ct ], [ 600, %.lr.ph.i.i.1 ], [ 606, %bb.cu ], [ 618, %bb.cw ], [ 624, %.lr.ph.i.i.2 ], [ 630, %bb.cx ], [ 642, %bb.cz ]
+  %.028.i.i.idx.ph = phi i64 [ %i.sp, %vector.early.exit.0 ], [ %i.sn, %vector.early.exit.1 ], [ %21, %vector.early.exit.3 ], [ 576, %.lr.ph.i.i ], [ 582, %bb.cr ], [ 594, %bb.ct ], [ 600, %.lr.ph.i.i.1 ], [ 606, %bb.cu ], [ 618, %bb.cw ], [ 624, %.lr.ph.i.i.2 ], [ 630, %bb.cx ], [ 642, %bb.cz ]
   %.028.i.i.ptr705 = getelementptr inbounds nuw i8, ptr @_ZZNK4llvm14AArch64TTIImpl14getShuffleCostENS_19TargetTransformInfo11ShuffleKindEPNS_10VectorTypeES4_NS_8ArrayRefIiEENS1_14TargetCostKindEiS4_NS5_IPKNS_5ValueEEEPKNS_11InstructionEE10ShuffleTbl, i64 %.028.i.i.idx.ph
   br label %_ZN4llvm15CostTableLookupILm110EtEEPKNS_13CostTblEntryTIT0_EERAT__S4_iNS_3MVTE.exit.thread
 
 _ZN4llvm15CostTableLookupILm110EtEEPKNS_13CostTblEntryTIT0_EERAT__S4_iNS_3MVTE.exit: ; preds = %bb.cs, %bb.cv, %bb.cy, %vector.early.exit.2
-  %.02952.i.i.add.lcssa = phi i64 [ %20, %vector.early.exit.2 ], [ 588, %bb.cs ], [ 612, %bb.cv ], [ 636, %bb.cy ] ; 2 uses
+  %.02952.i.i.add.lcssa = phi i64 [ %22, %vector.early.exit.2 ], [ 588, %bb.cs ], [ 612, %bb.cv ], [ 636, %bb.cy ] ; 2 uses
   %.028.i.i.ptr = getelementptr inbounds nuw i8, ptr @_ZZNK4llvm14AArch64TTIImpl14getShuffleCostENS_19TargetTransformInfo11ShuffleKindEPNS_10VectorTypeES4_NS_8ArrayRefIiEENS1_14TargetCostKindEiS4_NS5_IPKNS_5ValueEEEPKNS_11InstructionEE10ShuffleTbl, i64 %.02952.i.i.add.lcssa
   %.not.i.i385 = icmp eq i64 %.02952.i.i.add.lcssa, 660
   br i1 %.not.i.i385, label %.critedge243, label %_ZN4llvm15CostTableLookupILm110EtEEPKNS_13CostTblEntryTIT0_EERAT__S4_iNS_3MVTE.exit.thread
