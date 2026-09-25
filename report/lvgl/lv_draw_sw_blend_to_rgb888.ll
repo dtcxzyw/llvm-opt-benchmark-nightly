@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   br i1 %exitcond300.not, label %.loopexit, label %bb.e, !llvm.loop !142
 
 .loopexit205:                                     ; preds = %._crit_edge220.us, %bb.b
-  %.2184 = phi ptr [ %i.i, %bb.b ], [ %i.ba, %._crit_edge220.us ] ; 2 uses
+  %.2184 = phi ptr [ %i.i, %bb.b ], [ %i.ba, %._crit_edge220.us ] ; 3 uses
   %.2178 = phi ptr [ %i.m, %bb.b ], [ %i.bb, %._crit_edge220.us ] ; 2 uses
   %i.bk = icmp ult i8 %i.h, -3                    ; 2 uses
   %or.cond5 = select i1 %i.ae, i1 %i.bk, i1 false
@@ -214,29 +214,42 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
 
 .preheader201.lr.ph:                              ; preds = %.loopexit205
   %i.bm = icmp slt i32 %i.d, 1
-  %i.bn = zext i8 %i.h to i32                     ; 3 uses
+  %i.bn = zext i8 %i.h to i32                     ; 6 uses
   %i.bo = xor i8 %i.h, -1
-  %i.bp = zext i8 %i.bo to i32                    ; 3 uses
-  %i.bq = sext i32 %i.k to i64
+  %i.bp = zext i8 %i.bo to i32                    ; 6 uses
+  %i.bq = sext i32 %i.k to i64                    ; 2 uses
   %i.br = sext i32 %i.o to i64
   %i.bs = icmp eq i8 %i.h, 0
   %or.cond365 = select i1 %i.bm, i1 true, i1 %i.bs
   br i1 %or.cond365, label %.loopexit, label %.preheader201.us.preheader
 
 .preheader201.us.preheader:                       ; preds = %.preheader201.lr.ph
-  %i.bt = zext i8 %1 to i64
-  %i.bu = zext nneg i32 %i.d to i64
+  %i.bt = zext i8 %1 to i64                       ; 3 uses
+  %i.bu = zext nneg i32 %i.d to i64               ; 3 uses
+  %3 = add nsw i64 %i.bu, -1
+  %ident.check = icmp ne i8 %1, 1
+  %4 = udiv i64 %3, %i.bt                         ; 2 uses
+  %5 = trunc i64 %4 to i32
+  %mul = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %2, i32 %5) ; 2 uses
+  %mul.result = extractvalue { i32, i1 } %mul, 0
+  %mul.overflow = extractvalue { i32, i1 } %mul, 1
+  %6 = icmp slt i32 %mul.result, 0
+  %7 = or i1 %6, %mul.overflow
+  %8 = icmp ugt i64 %4, 4294967295
+  %9 = or i1 %7, %8
+  %10 = or i1 %ident.check, %9
   br label %lv_color_24_24_mix.exit.us.ph.lver.orig
 
-lv_color_24_24_mix.exit.us.ph.lver.orig:          ; preds = %._crit_edge234.us, %.preheader201.us.preheader
-  %.2237.us = phi i32 [ %i.dh, %._crit_edge234.us ], [ 0, %.preheader201.us.preheader ]
-  %.3179236.us = phi ptr [ %i.dg, %._crit_edge234.us ], [ %.2178, %.preheader201.us.preheader ] ; 2 uses
-  %.3185235.us = phi ptr [ %i.df, %._crit_edge234.us ], [ %.2184, %.preheader201.us.preheader ] ; 2 uses
-  br label %lv_color_24_24_mix.exit.us.lver.orig
+lv_color_24_24_mix.exit.us.ph.lver.orig:          ; preds = %.preheader201.us.preheader, %._crit_edge234.us
+  %indvar = phi i64 [ 0, %.preheader201.us.preheader ], [ %indvar.next, %._crit_edge234.us ] ; 2 uses
+  %.2237.us = phi i32 [ 0, %.preheader201.us.preheader ], [ %i.dh, %._crit_edge234.us ]
+  %.3179236.us = phi ptr [ %.2178, %.preheader201.us.preheader ], [ %i.dg, %._crit_edge234.us ] ; 3 uses
+  %.3185235.us = phi ptr [ %.2184, %.preheader201.us.preheader ], [ %i.df, %._crit_edge234.us ] ; 3 uses
+  br i1 %10, label %lv_color_24_24_mix.exit.us.lver.orig, label %lv_color_24_24_mix.exit.us.ph
 
-lv_color_24_24_mix.exit.us.lver.orig:             ; preds = %lv_color_24_24_mix.exit.us.lver.orig, %lv_color_24_24_mix.exit.us.ph.lver.orig
-  %indvars.iv303.lver.orig = phi i64 [ 0, %lv_color_24_24_mix.exit.us.ph.lver.orig ], [ %indvars.iv.next304.lver.orig, %lv_color_24_24_mix.exit.us.lver.orig ] ; 2 uses
-  %.1162232.us.lver.orig = phi i32 [ 0, %lv_color_24_24_mix.exit.us.ph.lver.orig ], [ %i.dd, %lv_color_24_24_mix.exit.us.lver.orig ] ; 2 uses
+lv_color_24_24_mix.exit.us.lver.orig:             ; preds = %lv_color_24_24_mix.exit.us.ph.lver.orig, %lv_color_24_24_mix.exit.us.lver.orig
+  %indvars.iv303.lver.orig = phi i64 [ %indvars.iv.next304.lver.orig, %lv_color_24_24_mix.exit.us.lver.orig ], [ 0, %lv_color_24_24_mix.exit.us.ph.lver.orig ] ; 2 uses
+  %.1162232.us.lver.orig = phi i32 [ %i.dd, %lv_color_24_24_mix.exit.us.lver.orig ], [ 0, %lv_color_24_24_mix.exit.us.ph.lver.orig ] ; 2 uses
   %i.bv = sext i32 %.1162232.us.lver.orig to i64
   %i.bw = getelementptr inbounds i8, ptr %.3179236.us, i64 %i.bv ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.3185235.us, i64 %indvars.iv303.lver.orig ; 4 uses
@@ -279,11 +292,64 @@ lv_color_24_24_mix.exit.us.lver.orig:             ; preds = %lv_color_24_24_mix.
   %i.de = icmp samesign ult i64 %indvars.iv.next304.lver.orig, %i.bu
   br i1 %i.de, label %lv_color_24_24_mix.exit.us.lver.orig, label %._crit_edge234.us, !llvm.loop !143
 
-._crit_edge234.us:                                ; preds = %lv_color_24_24_mix.exit.us.lver.orig
+lv_color_24_24_mix.exit.us.ph:                    ; preds = %lv_color_24_24_mix.exit.us.ph.lver.orig
+  %11 = mul i64 %indvar, %i.bq
+  %12 = getelementptr i8, ptr %.2184, i64 %11
+  %scevgep = getelementptr i8, ptr %12, i64 1
+  %load_initial = load i8, ptr %scevgep, align 1
+  br label %lv_color_24_24_mix.exit.us
+
+lv_color_24_24_mix.exit.us:                       ; preds = %lv_color_24_24_mix.exit.us.ph, %lv_color_24_24_mix.exit.us
+  %store_forwarded = phi i8 [ %load_initial, %lv_color_24_24_mix.exit.us.ph ], [ %45, %lv_color_24_24_mix.exit.us ]
+  %indvars.iv303 = phi i64 [ 0, %lv_color_24_24_mix.exit.us.ph ], [ %indvars.iv.next304, %lv_color_24_24_mix.exit.us ] ; 2 uses
+  %.1162232.us = phi i32 [ 0, %lv_color_24_24_mix.exit.us.ph ], [ %46, %lv_color_24_24_mix.exit.us ] ; 2 uses
+  %13 = sext i32 %.1162232.us to i64
+  %14 = getelementptr inbounds i8, ptr %.3179236.us, i64 %13 ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %.3185235.us, i64 %indvars.iv303 ; 4 uses
+  %16 = load i8, ptr %14, align 1, !tbaa !11
+  %17 = zext i8 %16 to i32
+  %18 = mul nuw nsw i32 %17, %i.bn
+  %19 = load i8, ptr %15, align 1, !tbaa !11
+  %20 = zext i8 %19 to i32
+  %21 = mul nuw nsw i32 %20, %i.bp
+  %22 = add nuw nsw i32 %21, %18
+  %23 = lshr i32 %22, 8
+  %24 = trunc i32 %23 to i8
+  store i8 %24, ptr %15, align 1, !tbaa !11
+  %25 = getelementptr inbounds nuw i8, ptr %14, i64 1
+  %26 = load i8, ptr %25, align 1, !tbaa !11
+  %27 = zext i8 %26 to i32
+  %28 = mul nuw nsw i32 %27, %i.bn
+  %29 = getelementptr inbounds nuw i8, ptr %15, i64 1
+  %30 = zext i8 %store_forwarded to i32
+  %31 = mul nuw nsw i32 %30, %i.bp
+  %32 = add nuw nsw i32 %31, %28
+  %33 = lshr i32 %32, 8
+  %34 = trunc i32 %33 to i8
+  store i8 %34, ptr %29, align 1, !tbaa !11
+  %35 = getelementptr inbounds nuw i8, ptr %14, i64 2
+  %36 = load i8, ptr %35, align 1, !tbaa !11
+  %37 = zext i8 %36 to i32
+  %38 = mul nuw nsw i32 %37, %i.bn
+  %39 = getelementptr inbounds nuw i8, ptr %15, i64 2 ; 2 uses
+  %40 = load i8, ptr %39, align 1, !tbaa !11
+  %41 = zext i8 %40 to i32
+  %42 = mul nuw nsw i32 %41, %i.bp
+  %43 = add nuw nsw i32 %42, %38
+  %44 = lshr i32 %43, 8
+  %45 = trunc i32 %44 to i8                       ; 2 uses
+  store i8 %45, ptr %39, align 1, !tbaa !11
+  %indvars.iv.next304 = add nuw nsw i64 %indvars.iv303, %i.bt ; 2 uses
+  %46 = add i32 %.1162232.us, %2
+  %47 = icmp samesign ult i64 %indvars.iv.next304, %i.bu
+  br i1 %47, label %lv_color_24_24_mix.exit.us, label %._crit_edge234.us, !llvm.loop !143
+
+._crit_edge234.us:                                ; preds = %lv_color_24_24_mix.exit.us, %lv_color_24_24_mix.exit.us.lver.orig
   %i.df = getelementptr inbounds i8, ptr %.3185235.us, i64 %i.bq ; 2 uses
   %i.dg = getelementptr inbounds i8, ptr %.3179236.us, i64 %i.br ; 2 uses
   %i.dh = add nuw nsw i32 %.2237.us, 1            ; 2 uses
   %exitcond306.not = icmp eq i32 %i.dh, %i.f
+  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond306.not, label %.loopexit203, label %lv_color_24_24_mix.exit.us.ph.lver.orig, !llvm.loop !144
 
 .loopexit203:                                     ; preds = %._crit_edge234.us, %.loopexit205
@@ -685,6 +751,9 @@ declare i64 @llvm.umax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

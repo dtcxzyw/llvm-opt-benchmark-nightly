@@ -204,9 +204,9 @@ define internal fastcc void @rgb888_image_blend(ptr nofree noundef readonly capt
 bb.a:
   %2 = alloca %struct.lv_color_mix_alpha_cache_t, align 4 ; 27 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !22   ; 13 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !22   ; 14 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !23   ; 11 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !23   ; 12 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.f = load i8, ptr %i.e, align 8, !tbaa !24
   %.fr434 = freeze i8 %i.f                        ; 8 uses
@@ -258,7 +258,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.ai = icmp eq ptr %i.o, null                  ; 2 uses
-  %i.aj = zext i8 %.fr434 to i32                  ; 5 uses
+  %i.aj = zext i8 %.fr434 to i32                  ; 6 uses
   %i.ak = icmp ugt i8 %.fr434, -4                 ; 2 uses
   %or.cond = and i1 %i.ai, %i.ak
   br i1 %or.cond, label %bb.c, label %.loopexit350
@@ -384,8 +384,8 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   br i1 %exitcond475.not, label %.loopexit, label %bb.e, !llvm.loop !165
 
 .loopexit350:                                     ; preds = %._crit_edge365.us, %bb.b
-  %.2236 = phi ptr [ %i.g, %bb.b ], [ %i.bx, %._crit_edge365.us ] ; 3 uses
-  %.2230 = phi ptr [ %i.k, %bb.b ], [ %i.by, %._crit_edge365.us ] ; 3 uses
+  %.2236 = phi ptr [ %i.g, %bb.b ], [ %i.bx, %._crit_edge365.us ] ; 5 uses
+  %.2230 = phi ptr [ %i.k, %bb.b ], [ %i.by, %._crit_edge365.us ] ; 5 uses
   %i.ci = icmp ult i8 %.fr434, -3                 ; 2 uses
   %or.cond5 = and i1 %i.ai, %i.ci
   %i.cj = icmp sgt i32 %i.d, 0                    ; 3 uses
@@ -401,25 +401,111 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %i.co = zext i8 %.fr434 to i16
   %.lhs.trunc.i = mul nuw i16 %i.co, 255
   %i.cp = getelementptr inbounds nuw i8, ptr %2, i64 11 ; 2 uses
-  %i.cq = zext i32 %i.i to i64                    ; 2 uses
-  %i.cr = zext i32 %i.m to i64                    ; 2 uses
+  %i.cq = zext i32 %i.i to i64                    ; 3 uses
+  %i.cr = zext i32 %i.m to i64                    ; 3 uses
   br i1 %i.ck, label %.preheader347.lr.ph.split.us, label %.loopexit
 
 .preheader347.lr.ph.split.us:                     ; preds = %.preheader347.lr.ph
   %i.cs = icmp ult i8 %.fr434, 3
-  %i.ct = zext nneg i8 %1 to i64                  ; 2 uses
-  %wide.trip.count495 = zext nneg i32 %i.b to i64 ; 2 uses
-  br i1 %i.cs, label %.preheader347.us.us, label %.preheader347.us
+  %i.ct = zext nneg i8 %1 to i64                  ; 8 uses
+  %wide.trip.count495 = zext nneg i32 %i.b to i64 ; 6 uses
+  br i1 %i.cs, label %.preheader347.us.us.preheader, label %.preheader347.us
 
-.preheader347.us.us:                              ; preds = %.preheader347.lr.ph.split.us, %._crit_edge380.split.us.us.us
-  %.2385.us.us = phi i32 [ %i.df, %._crit_edge380.split.us.us.us ], [ 0, %.preheader347.lr.ph.split.us ]
-  %.3231383.us.us = phi ptr [ %i.de, %._crit_edge380.split.us.us.us ], [ %.2230, %.preheader347.lr.ph.split.us ] ; 2 uses
-  %.3237381.us.us = phi ptr [ %i.dd, %._crit_edge380.split.us.us.us ], [ %.2236, %.preheader347.lr.ph.split.us ] ; 2 uses
+.preheader347.us.us.preheader:                    ; preds = %.preheader347.lr.ph.split.us
+  %3 = add nsw i32 %i.d, -1
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %5 = mul nuw i64 %i.cq, %4
+  %6 = shl nuw nsw i64 %wide.trip.count495, 2
+  %7 = getelementptr i8, ptr %.2236, i64 %5
+  %scevgep = getelementptr i8, ptr %7, i64 %6
+  %8 = add nsw i64 %wide.trip.count495, -1
+  %9 = mul nsw i64 %8, %i.ct
+  %10 = mul nuw i64 %i.cr, %4
+  %11 = getelementptr i8, ptr %.2230, i64 %9
+  %12 = getelementptr i8, ptr %11, i64 %10
+  %scevgep575 = getelementptr i8, ptr %12, i64 3
+  %min.iters.check = icmp ult i32 %i.b, 4
+  %bound0 = icmp ult ptr %.2236, %scevgep575
+  %bound1 = icmp ult ptr %.2230, %scevgep
+  %found.conflict = and i1 %bound0, %bound1
+  %n.vec = and i64 %wide.trip.count495, 2147483644 ; 4 uses
+  %13 = mul nuw nsw i64 %n.vec, %i.ct
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.aj, i64 0
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count495
+  br label %.preheader347.us.us
+
+.preheader347.us.us:                              ; preds = %.preheader347.us.us.preheader, %._crit_edge380.split.us.us.us
+  %.2385.us.us = phi i32 [ %i.df, %._crit_edge380.split.us.us.us ], [ 0, %.preheader347.us.us.preheader ]
+  %.3231383.us.us = phi ptr [ %i.de, %._crit_edge380.split.us.us.us ], [ %.2230, %.preheader347.us.us.preheader ] ; 6 uses
+  %.3237381.us.us = phi ptr [ %i.dd, %._crit_edge380.split.us.us.us ], [ %.2236, %.preheader347.us.us.preheader ] ; 3 uses
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %found.conflict
+  br i1 %brmerge, label %lv_color_32_32_mix.exit.us.us.us.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %.preheader347.us.us
+  %invariant.gep = getelementptr i8, ptr %.3231383.us.us, i64 %i.ct
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
+  %14 = mul i64 %index, %i.ct                     ; 2 uses
+  %15 = or disjoint i64 %index, 2
+  %16 = mul i64 %15, %i.ct
+  %17 = or disjoint i64 %index, 3
+  %18 = mul i64 %17, %i.ct
+  %19 = getelementptr inbounds nuw i8, ptr %.3231383.us.us, i64 %14 ; 2 uses
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %14 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %.3231383.us.us, i64 %16 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %.3231383.us.us, i64 %18 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %19, i64 2
+  %23 = getelementptr inbounds nuw i8, ptr %gep, i64 2
+  %24 = getelementptr inbounds nuw i8, ptr %20, i64 2
+  %25 = getelementptr inbounds nuw i8, ptr %21, i64 2
+  %26 = load i8, ptr %22, align 1, !tbaa !19, !alias.scope !179
+  %27 = load i8, ptr %23, align 1, !tbaa !19, !alias.scope !179
+  %28 = load i8, ptr %24, align 1, !tbaa !19, !alias.scope !179
+  %29 = load i8, ptr %25, align 1, !tbaa !19, !alias.scope !179
+  %30 = insertelement <4 x i8> poison, i8 %26, i64 0
+  %31 = insertelement <4 x i8> %30, i8 %27, i64 1
+  %32 = insertelement <4 x i8> %31, i8 %28, i64 2
+  %33 = insertelement <4 x i8> %32, i8 %29, i64 3
+  %34 = load i16, ptr %19, align 1, !alias.scope !179
+  %35 = load i16, ptr %gep, align 1, !alias.scope !179
+  %36 = load i16, ptr %20, align 1, !alias.scope !179
+  %37 = load i16, ptr %21, align 1, !alias.scope !179
+  %38 = insertelement <4 x i16> poison, i16 %34, i64 0
+  %39 = insertelement <4 x i16> %38, i16 %35, i64 1
+  %40 = insertelement <4 x i16> %39, i16 %36, i64 2
+  %41 = insertelement <4 x i16> %40, i16 %37, i64 3
+  %42 = zext <4 x i16> %41 to <4 x i32>
+  %43 = getelementptr inbounds nuw [4 x i8], ptr %.3237381.us.us, i64 %index ; 2 uses
+  %44 = zext <4 x i8> %33 to <4 x i32>
+  %45 = shl nuw nsw <4 x i32> %44, splat (i32 16)
+  %46 = or disjoint <4 x i32> %45, %42
+  %wide.load = load <4 x i32>, ptr %43, align 1, !alias.scope !180, !noalias !179 ; 3 uses
+  %47 = lshr <4 x i32> %wide.load, splat (i32 24)
+  %48 = icmp ult <4 x i32> %wide.load, splat (i32 50331648) ; 2 uses
+  %49 = select <4 x i1> %48, <4 x i32> %46, <4 x i32> %wide.load
+  %50 = select <4 x i1> %48, <4 x i32> %broadcast.splat, <4 x i32> %47
+  %51 = shl nuw <4 x i32> %50, splat (i32 24)
+  %52 = and <4 x i32> %49, splat (i32 16777215)
+  %53 = or disjoint <4 x i32> %51, %52
+  store <4 x i32> %53, ptr %43, align 1, !alias.scope !180, !noalias !179
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %54 = icmp eq i64 %index.next, %n.vec
+  br i1 %54, label %middle.block, label %vector.body, !llvm.loop !169
+
+middle.block:                                     ; preds = %vector.body
+  br i1 %cmp.n, label %._crit_edge380.split.us.us.us, label %lv_color_32_32_mix.exit.us.us.us.preheader
+
+lv_color_32_32_mix.exit.us.us.us.preheader:       ; preds = %.preheader347.us.us, %middle.block
+  %indvars.iv490.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %.preheader347.us.us ]
+  %indvars.iv488.ph = phi i64 [ %13, %middle.block ], [ 0, %.preheader347.us.us ]
   br label %lv_color_32_32_mix.exit.us.us.us
 
-lv_color_32_32_mix.exit.us.us.us:                 ; preds = %lv_color_32_32_mix.exit.us.us.us, %.preheader347.us.us
-  %indvars.iv490 = phi i64 [ %indvars.iv.next491, %lv_color_32_32_mix.exit.us.us.us ], [ 0, %.preheader347.us.us ] ; 2 uses
-  %indvars.iv488 = phi i64 [ %indvars.iv.next489, %lv_color_32_32_mix.exit.us.us.us ], [ 0, %.preheader347.us.us ] ; 2 uses
+lv_color_32_32_mix.exit.us.us.us:                 ; preds = %lv_color_32_32_mix.exit.us.us.us.preheader, %lv_color_32_32_mix.exit.us.us.us
+  %indvars.iv490 = phi i64 [ %indvars.iv.next491, %lv_color_32_32_mix.exit.us.us.us ], [ %indvars.iv490.ph, %lv_color_32_32_mix.exit.us.us.us.preheader ] ; 2 uses
+  %indvars.iv488 = phi i64 [ %indvars.iv.next489, %lv_color_32_32_mix.exit.us.us.us ], [ %indvars.iv488.ph, %lv_color_32_32_mix.exit.us.us.us.preheader ] ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.3231383.us.us, i64 %indvars.iv488 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 2
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !19
@@ -441,14 +527,14 @@ lv_color_32_32_mix.exit.us.us.us:                 ; preds = %lv_color_32_32_mix.
   %indvars.iv.next491 = add nuw nsw i64 %indvars.iv490, 1 ; 2 uses
   %indvars.iv.next489 = add nuw nsw i64 %indvars.iv488, %i.ct
   %exitcond496.not = icmp eq i64 %indvars.iv.next491, %wide.trip.count495
-  br i1 %exitcond496.not, label %._crit_edge380.split.us.us.us, label %lv_color_32_32_mix.exit.us.us.us, !llvm.loop !166
+  br i1 %exitcond496.not, label %._crit_edge380.split.us.us.us, label %lv_color_32_32_mix.exit.us.us.us, !llvm.loop !170
 
-._crit_edge380.split.us.us.us:                    ; preds = %lv_color_32_32_mix.exit.us.us.us
+._crit_edge380.split.us.us.us:                    ; preds = %lv_color_32_32_mix.exit.us.us.us, %middle.block
   %i.dd = getelementptr inbounds nuw i8, ptr %.3237381.us.us, i64 %i.cq ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.3231383.us.us, i64 %i.cr ; 2 uses
   %i.df = add nuw nsw i32 %.2385.us.us, 1         ; 2 uses
   %exitcond497.not = icmp eq i32 %i.df, %i.d
-  br i1 %exitcond497.not, label %.loopexit349, label %.preheader347.us.us, !llvm.loop !167
+  br i1 %exitcond497.not, label %.loopexit349, label %.preheader347.us.us, !llvm.loop !171
 
 .preheader347.us:                                 ; preds = %.preheader347.lr.ph.split.us, %._crit_edge380.split.us403
   %.2385.us = phi i32 [ %i.em, %._crit_edge380.split.us403 ], [ 0, %.preheader347.lr.ph.split.us ]
@@ -552,14 +638,14 @@ lv_color_32_32_mix.exit.us397:                    ; preds = %bb.n, %bb.m, %bb.f
   %indvars.iv.next481 = add nuw nsw i64 %indvars.iv480, 1 ; 2 uses
   %indvars.iv.next479 = add nuw nsw i64 %indvars.iv478, %i.ct
   %exitcond486.not = icmp eq i64 %indvars.iv.next481, %wide.trip.count495
-  br i1 %exitcond486.not, label %._crit_edge380.split.us403, label %bb.f, !llvm.loop !166
+  br i1 %exitcond486.not, label %._crit_edge380.split.us403, label %bb.f, !llvm.loop !172
 
 ._crit_edge380.split.us403:                       ; preds = %lv_color_32_32_mix.exit.us397
   %i.ek = getelementptr inbounds nuw i8, ptr %.3237381.us, i64 %i.cq ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.3231383.us, i64 %i.cr ; 2 uses
   %i.em = add nuw nsw i32 %.2385.us, 1            ; 2 uses
   %exitcond487.not = icmp eq i32 %i.em, %i.d
-  br i1 %exitcond487.not, label %.loopexit349, label %.preheader347.us, !llvm.loop !167
+  br i1 %exitcond487.not, label %.loopexit349, label %.preheader347.us, !llvm.loop !171
 
 .loopexit349:                                     ; preds = %._crit_edge380.split.us403, %._crit_edge380.split.us.us.us, %.loopexit350
   %.4238 = phi ptr [ %.2236, %.loopexit350 ], [ %i.dd, %._crit_edge380.split.us.us.us ], [ %i.ek, %._crit_edge380.split.us403 ] ; 3 uses
@@ -712,7 +798,7 @@ lv_color_32_32_mix.exit274.us:                    ; preds = %bb.x, %bb.w, %bb.p,
   %indvars.iv.next504 = add nuw nsw i64 %indvars.iv503, 1 ; 2 uses
   %indvars.iv.next502 = add nuw nsw i64 %indvars.iv501, %i.ez
   %exitcond509.not = icmp eq i64 %indvars.iv.next504, %wide.trip.count508
-  br i1 %exitcond509.not, label %._crit_edge411.us, label %bb.o, !llvm.loop !168
+  br i1 %exitcond509.not, label %._crit_edge411.us, label %bb.o, !llvm.loop !173
 
 ._crit_edge411.us:                                ; preds = %lv_color_32_32_mix.exit274.us
   %i.gj = getelementptr inbounds nuw i8, ptr %.5239412.us, i64 %i.es ; 2 uses
@@ -720,7 +806,7 @@ lv_color_32_32_mix.exit274.us:                    ; preds = %bb.x, %bb.w, %bb.p,
   %i.gl = getelementptr inbounds i8, ptr %.0223414.us, i64 %i.eu ; 2 uses
   %i.gm = add nuw nsw i32 %.3415.us, 1            ; 2 uses
   %exitcond510.not = icmp eq i32 %i.gm, %i.d
-  br i1 %exitcond510.not, label %.loopexit346, label %.preheader344.us, !llvm.loop !169
+  br i1 %exitcond510.not, label %.loopexit346, label %.preheader344.us, !llvm.loop !174
 
 .loopexit346:                                     ; preds = %._crit_edge411.us, %.preheader344.preheader, %.loopexit349
   %.6240 = phi ptr [ %.4238, %.loopexit349 ], [ %scevgep498, %.preheader344.preheader ], [ %i.gj, %._crit_edge411.us ]
@@ -867,7 +953,7 @@ lv_color_32_32_mix.exit302:                       ; preds = %bb.y, %bb.z, %bb.ab
   %indvars.iv.next514 = add nuw nsw i64 %indvars.iv513, 1 ; 2 uses
   %indvars.iv.next512 = add nuw nsw i64 %indvars.iv511, %i.gv
   %exitcond519.not = icmp eq i64 %indvars.iv.next514, %wide.trip.count518
-  br i1 %exitcond519.not, label %._crit_edge425, label %bb.y, !llvm.loop !170
+  br i1 %exitcond519.not, label %._crit_edge425, label %bb.y, !llvm.loop !175
 
 ._crit_edge425:                                   ; preds = %lv_color_32_32_mix.exit302
   %i.ik = getelementptr inbounds nuw i8, ptr %.7241426, i64 %i.gs
@@ -875,7 +961,7 @@ lv_color_32_32_mix.exit302:                       ; preds = %bb.y, %bb.z, %bb.ab
   %i.im = getelementptr inbounds i8, ptr %.2225428, i64 %i.gu
   %i.in = add nuw nsw i32 %.4429, 1               ; 2 uses
   %exitcond520.not = icmp eq i32 %i.in, %i.d
-  br i1 %exitcond520.not, label %.loopexit, label %.preheader, !llvm.loop !171
+  br i1 %exitcond520.not, label %.loopexit, label %.preheader, !llvm.loop !176
 
 .preheader354:                                    ; preds = %.preheader354.preheader, %._crit_edge
   %.5362 = phi i32 [ %i.mk, %._crit_edge ], [ 0, %.preheader354.preheader ]
@@ -1099,7 +1185,7 @@ blend_non_normal_pixel.exit:                      ; preds = %bb.ak, %lv_color_32
   %indvars.iv.next459 = add nuw nsw i64 %indvars.iv458, 1 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.ah
   %exitcond.not = icmp eq i64 %indvars.iv.next459, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.ai, !llvm.loop !172
+  br i1 %exitcond.not, label %._crit_edge, label %bb.ai, !llvm.loop !177
 
 ._crit_edge:                                      ; preds = %blend_non_normal_pixel.exit
   %i.mh = getelementptr inbounds i8, ptr %.3226361, i64 %i.ae
@@ -1108,7 +1194,7 @@ blend_non_normal_pixel.exit:                      ; preds = %bb.ak, %lv_color_32
   %i.mj = getelementptr inbounds nuw i8, ptr %.8360, i64 %i.ag
   %i.mk = add nuw nsw i32 %.5362, 1               ; 2 uses
   %exitcond463.not = icmp eq i32 %i.mk, %i.d
-  br i1 %exitcond463.not, label %.loopexit, label %.preheader354, !llvm.loop !173
+  br i1 %exitcond463.not, label %.loopexit, label %.preheader354, !llvm.loop !178
 
 .loopexit:                                        ; preds = %._crit_edge, %._crit_edge425, %bb.e, %.preheader352, %bb.d, %.preheader351.lr.ph, %.preheader347.lr.ph, %.preheader355, %.preheader354.lr.ph, %.preheader.lr.ph, %.loopexit346
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
@@ -1326,12 +1412,19 @@ attributes #7 = { nounwind }
 !163 = distinct !{!163, !15}
 !164 = distinct !{!164, !15}
 !165 = distinct !{!165, !15}
-!166 = distinct !{!166, !15}
-!167 = distinct !{!167, !15}
-!168 = distinct !{!168, !15}
-!169 = distinct !{!169, !15}
-!170 = distinct !{!170, !15}
+!166 = distinct !{!166, !"LVerDomain"}
+!167 = distinct !{!167, !166}
+!168 = distinct !{!168, !166}
+!169 = distinct !{!169, !15, !17, !16}
+!170 = distinct !{!170, !15, !17}
 !171 = distinct !{!171, !15}
 !172 = distinct !{!172, !15}
 !173 = distinct !{!173, !15}
+!174 = distinct !{!174, !15}
+!175 = distinct !{!175, !15}
+!176 = distinct !{!176, !15}
+!177 = distinct !{!177, !15}
+!178 = distinct !{!178, !15}
+!179 = !{!167}
+!180 = !{!168}
 end_hunk_0
