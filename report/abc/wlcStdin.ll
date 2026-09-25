@@ -204,18 +204,16 @@ Vec_StrFree.exit:                                 ; preds = %Wlc_ComputeSum.exit
   %.pre-phi86 = phi i64 [ %.pre85, %Vec_StrStart.exit.Vec_StrFree.exit_crit_edge ], [ %wide.trip.count.i, %Wlc_ComputeSum.exit61 ] ; 2 uses
   tail call void @free(ptr noundef nonnull %i.i) #18
   %smin = tail call i32 @llvm.smin.i32(i32 %2, i32 0)
-  %i.bl = trunc nuw i64 %.pre-phi86 to i32        ; 3 uses
+  %i.bl = trunc nuw i64 %.pre-phi86 to i32        ; 2 uses
   %i.bm = icmp sgt i32 %i.bl, 0
   br i1 %i.bm, label %.lr.ph106, label %Vec_StrReverseOrder.exit
 
 bb.d:                                             ; preds = %.lr.ph106
   %i.bn = trunc nuw i64 %indvars.iv.next to i32   ; 2 uses
   %i.bo = icmp sgt i32 %i.bn, 0
-  %indvar.next = add i32 %indvar, 1
   br i1 %i.bo, label %.lr.ph106, label %Vec_StrReverseOrder.exit, !llvm.loop !25
 
 .lr.ph106:                                        ; preds = %Vec_StrFree.exit, %bb.d
-  %indvar = phi i32 [ %indvar.next, %bb.d ], [ 0, %Vec_StrFree.exit ] ; 2 uses
   %i.bp = phi i32 [ %i.bn, %bb.d ], [ %i.bl, %Vec_StrFree.exit ] ; 3 uses
   %indvars.iv105 = phi i64 [ %indvars.iv.next, %bb.d ], [ %.pre-phi86, %Vec_StrFree.exit ] ; 7 uses
   %indvars.iv.next = add nsw i64 %indvars.iv105, -1 ; 4 uses
@@ -227,18 +225,13 @@ bb.d:                                             ; preds = %.lr.ph106
 
 iter.check:                                       ; preds = %.lr.ph106
   store i32 %i.bp, ptr %i.f, align 4, !tbaa !17
-  %i.bt = and i64 %indvars.iv.next, 4294967295    ; 5 uses
-  %4 = xor i32 %indvar, -1
-  %5 = add i32 %4, %i.bl                          ; 2 uses
-  %smin107 = tail call i32 @llvm.smin.i32(i32 %5, i32 0)
-  %6 = sub i32 %5, %smin107                       ; 3 uses
-  %7 = zext i32 %6 to i64
-  %i.bu = add nuw nsw i64 %7, 1                   ; 5 uses
-  %min.iters.check = icmp ult i32 %6, 7
+  %i.bt = and i64 %indvars.iv.next, 4294967295    ; 8 uses
+  %i.bu = add nuw nsw i64 %i.bt, 1                ; 5 uses
+  %min.iters.check = icmp samesign ult i64 %i.bt, 7
   br i1 %min.iters.check, label %.lr.ph78.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check108 = icmp ult i32 %6, 31
+  %min.iters.check108 = icmp samesign ult i64 %i.bt, 31
   br i1 %min.iters.check108, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

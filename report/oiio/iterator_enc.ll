@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 22
 inline.NumDeleted: 7
 loop-unroll.NumCompletelyUnrolled: 11
-loop-unroll.NumRuntimeUnrolled: 16
-loop-unroll.NumUnrolled: 27
+loop-unroll.NumRuntimeUnrolled: 17
+loop-unroll.NumUnrolled: 28
 begin_hunk_0_@VP8IteratorImport:bb.a
 vec.epilog.ph290:                                 ; preds = %vector.main.loop.iter.check273, %vec.epilog.iter.check288
   %vec.epilog.resume.val285 = phi i64 [ %n.vec276, %vec.epilog.iter.check288 ], [ 0, %vector.main.loop.iter.check273 ]
@@ -205,9 +205,9 @@ define hidden void @VP8IteratorExport(ptr nofree noundef readonly captures(none)
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !105
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !106
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !108
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !109
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %ExportBlock.exit52, label %bb.b
 
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !17   ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !50   ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !50   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -240,9 +240,9 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %i.n, i64 12
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !63
   %i.ag = shl nsw i32 %i.h, 4
-  %i.ah = sub nsw i32 %i.af, %i.ag                ; 2 uses
+  %i.ah = sub nsw i32 %i.af, %i.ag                ; 3 uses
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.ad, i32 16) ; 2 uses
-  %spec.store.select1 = tail call i32 @llvm.smin.i32(i32 %i.ah, i32 16) ; 2 uses
+  %spec.store.select1 = tail call i32 @llvm.smin.i32(i32 %i.ah, i32 16) ; 4 uses
   %i.ai = icmp sgt i32 %i.ah, 0
   br i1 %i.ai, label %.lr.ph.i, label %ExportBlock.exit
 
@@ -255,23 +255,54 @@ bb.b:                                             ; preds = %bb.a
   %i.ao = add nsw i32 %i.an, %i.f
   %i.ap = shl nsw i32 %i.ao, 4
   %i.aq = sext i32 %i.ap to i64
-  %i.ar = getelementptr inbounds i8, ptr %i.ak, i64 %i.aq
-  %i.as = sext i32 %spec.store.select to i64
-  %i.at = sext i32 %i.am to i64
-  br label %bb.c
+  %i.ar = getelementptr inbounds i8, ptr %i.ak, i64 %i.aq ; 2 uses
+  %i.as = sext i32 %spec.store.select to i64      ; 5 uses
+  %i.at = sext i32 %i.am to i64                   ; 5 uses
+  %xtraiter = and i32 %spec.store.select1, 3      ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 
-bb.c:                                             ; preds = %bb.c, %.lr.ph.i
-  %.010.i = phi i32 [ %spec.store.select1, %.lr.ph.i ], [ %i.au, %bb.c ] ; 2 uses
-  %.069.i = phi ptr [ %i.j, %.lr.ph.i ], [ %i.aw, %bb.c ] ; 2 uses
-  %.078.i = phi ptr [ %i.ar, %.lr.ph.i ], [ %i.av, %bb.c ] ; 2 uses
-  %i.au = add nsw i32 %.010.i, -1
+.prol.preheader:                                  ; preds = %.lr.ph.i, %.prol.preheader
+  %.010.i.prol = phi i32 [ %1, %.prol.preheader ], [ %spec.store.select1, %.lr.ph.i ]
+  %.069.i.prol = phi ptr [ %3, %.prol.preheader ], [ %i.j, %.lr.ph.i ] ; 2 uses
+  %.078.i.prol = phi ptr [ %2, %.prol.preheader ], [ %i.ar, %.lr.ph.i ] ; 2 uses
+  %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph.i ]
+  %1 = add nsw i32 %.010.i.prol, -1               ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.078.i.prol, ptr align 1 %.069.i.prol, i64 %i.as, i1 false)
+  %2 = getelementptr inbounds i8, ptr %.078.i.prol, i64 %i.at ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.069.i.prol, i64 32 ; 2 uses
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !103
+
+.prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph.i
+  %.010.i.unr = phi i32 [ %spec.store.select1, %.lr.ph.i ], [ %1, %.prol.preheader ]
+  %.069.i.unr = phi ptr [ %i.j, %.lr.ph.i ], [ %3, %.prol.preheader ]
+  %.078.i.unr = phi ptr [ %i.ar, %.lr.ph.i ], [ %2, %.prol.preheader ]
+  %4 = icmp slt i32 %i.ah, 4
+  br i1 %4, label %ExportBlock.exit, label %bb.c
+
+bb.c:                                             ; preds = %.prol.loopexit, %bb.c
+  %.010.i = phi i32 [ %i.au, %bb.c ], [ %.010.i.unr, %.prol.loopexit ] ; 2 uses
+  %.069.i = phi ptr [ %i.aw, %bb.c ], [ %.069.i.unr, %.prol.loopexit ] ; 5 uses
+  %.078.i = phi ptr [ %i.av, %bb.c ], [ %.078.i.unr, %.prol.loopexit ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.078.i, ptr align 1 %.069.i, i64 %i.as, i1 false)
-  %i.av = getelementptr inbounds i8, ptr %.078.i, i64 %i.at
-  %i.aw = getelementptr inbounds nuw i8, ptr %.069.i, i64 32
-  %1 = icmp samesign ugt i32 %.010.i, 1
-  br i1 %1, label %bb.c, label %ExportBlock.exit, !llvm.loop !103
+  %5 = getelementptr inbounds i8, ptr %.078.i, i64 %i.at ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.069.i, i64 32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %5, ptr nonnull align 1 %6, i64 %i.as, i1 false)
+  %7 = getelementptr inbounds i8, ptr %5, i64 %i.at ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.069.i, i64 64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %7, ptr nonnull align 1 %8, i64 %i.as, i1 false)
+  %9 = getelementptr inbounds i8, ptr %7, i64 %i.at ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.069.i, i64 96
+  %i.au = add nsw i32 %.010.i, -4
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %9, ptr nonnull align 1 %10, i64 %i.as, i1 false)
+  %i.av = getelementptr inbounds i8, ptr %9, i64 %i.at
+  %i.aw = getelementptr inbounds nuw i8, ptr %.069.i, i64 128
+  %11 = icmp sgt i32 %.010.i, 4
+  br i1 %11, label %bb.c, label %ExportBlock.exit, !llvm.loop !104
 
-ExportBlock.exit:                                 ; preds = %bb.c, %bb.b
+ExportBlock.exit:                                 ; preds = %.prol.loopexit, %bb.c, %bb.b
   %i.ax = add nsw i32 %spec.store.select1, 1
   %i.ay = ashr i32 %i.ax, 1                       ; 6 uses
   %i.az = icmp sgt i32 %i.ay, 0
@@ -298,7 +329,7 @@ ExportBlock.exit:                                 ; preds = %bb.c, %bb.b
   %i.bh = getelementptr inbounds nuw i8, ptr %.069.i45.prol, i64 32 ; 2 uses
   %prol.iter.next.a = add i32 %prol.iter.a, 1     ; 2 uses
   %prol.iter.cmp.not.a = icmp eq i32 %prol.iter.next.a, %xtraiter.a
-  br i1 %prol.iter.cmp.not.a, label %.prol.loopexit.a, label %.prol.preheader.a, !llvm.loop !104
+  br i1 %prol.iter.cmp.not.a, label %.prol.loopexit.a, label %.prol.preheader.a, !llvm.loop !105
 
 .prol.loopexit.a:                                 ; preds = %.prol.preheader.a, %.lr.ph.i43
   %.010.i44.unr = phi i32 [ %i.ay, %.lr.ph.i43 ], [ %i.bf, %.prol.preheader.a ]
@@ -325,7 +356,7 @@ ExportBlock.exit:                                 ; preds = %bb.c, %bb.b
   %i.bq = getelementptr inbounds i8, ptr %i.bn, i64 %i.be
   %i.br = getelementptr inbounds nuw i8, ptr %.069.i45, i64 128
   %i.bs = icmp sgt i32 %.010.i44, 4
-  br i1 %i.bs, label %.lr.ph.i43.new, label %.lr.ph.i48, !llvm.loop !103
+  br i1 %i.bs, label %.lr.ph.i43.new, label %.lr.ph.i48, !llvm.loop !104
 
 .lr.ph.i48:                                       ; preds = %.lr.ph.i43.new, %.prol.loopexit.a
   %i.bt = load i32, ptr %i.q, align 4, !tbaa !60
@@ -341,7 +372,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i48
   %i.bw = getelementptr inbounds i8, ptr %.078.i51, i64 %i.bu
   %i.bx = getelementptr inbounds nuw i8, ptr %.069.i50, i64 32
   %i.by = icmp samesign ugt i32 %.010.i49, 1
-  br i1 %i.by, label %bb.d, label %ExportBlock.exit52, !llvm.loop !103
+  br i1 %i.by, label %bb.d, label %ExportBlock.exit52, !llvm.loop !104
 
 ExportBlock.exit52:                               ; preds = %bb.d, %ExportBlock.exit, %bb.a
   ret void
@@ -744,7 +775,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !68
   %i.c = sext i32 %i.b to i64
   %i.d = getelementptr inbounds [2 x i8], ptr @VP8Scan, i64 %i.c
-  %i.e = load i16, ptr %i.d, align 2, !tbaa !110
+  %i.e = load i16, ptr %i.d, align 2, !tbaa !111
   %i.f = zext i16 %i.e to i64
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
@@ -942,12 +973,13 @@ attributes #12 = { nounwind }
 !100 = !{!"llvm.loop.isvectorized", i32 1}
 !101 = !{!"llvm.loop.unroll.runtime.disable"}
 !102 = !{!"branch_weights", i32 4, i32 28}
-!103 = distinct !{!103, !64}
-!104 = distinct !{!104, !65}
-!105 = !{!30, !18, i64 0}
-!106 = !{!"float", !4, i64 0}
-!107 = !{!"WebPConfig", !5, i64 0, !106, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !106, i64 20, !5, i64 24, !5, i64 28, !5, i64 32, !5, i64 36, !5, i64 40, !5, i64 44, !5, i64 48, !5, i64 52, !5, i64 56, !5, i64 60, !5, i64 64, !5, i64 68, !5, i64 72, !5, i64 76, !5, i64 80, !5, i64 84, !5, i64 88, !5, i64 92, !5, i64 96, !5, i64 100, !5, i64 104, !5, i64 108, !5, i64 112}
-!108 = !{!107, !5, i64 64}
-!109 = !{!"short", !4, i64 0}
-!110 = !{!109, !109, i64 0}
+!103 = distinct !{!103, !65}
+!104 = distinct !{!104, !64}
+!105 = distinct !{!105, !65}
+!106 = !{!30, !18, i64 0}
+!107 = !{!"float", !4, i64 0}
+!108 = !{!"WebPConfig", !5, i64 0, !107, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !107, i64 20, !5, i64 24, !5, i64 28, !5, i64 32, !5, i64 36, !5, i64 40, !5, i64 44, !5, i64 48, !5, i64 52, !5, i64 56, !5, i64 60, !5, i64 64, !5, i64 68, !5, i64 72, !5, i64 76, !5, i64 80, !5, i64 84, !5, i64 88, !5, i64 92, !5, i64 96, !5, i64 100, !5, i64 104, !5, i64 108, !5, i64 112}
+!109 = !{!108, !5, i64 64}
+!110 = !{!"short", !4, i64 0}
+!111 = !{!110, !110, i64 0}
 end_hunk_1

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2345
 inline.NumDeleted: 743
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@_ZN10ClipperLib13ClipperOffset8DoOffsetEd:bb.a
 .noexc.i.i.i:                                     ; preds = %bb.i
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #31
@@ -205,7 +205,7 @@ _ZNSt6vectorIS_IN10ClipperLib8IntPointESaIS1_EESaIS3_EE7reserveEm.exit171: ; pre
   %i.fc = fcmp ugt double %1, 0.000000e+00
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 29 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 33 uses
-  %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 19 uses
+  %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 23 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 13 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 12 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
@@ -608,7 +608,7 @@ _ZNSt12_Vector_baseIN10ClipperLib11DoublePointESaIS1_EE13_M_deallocateEPS1_m.exi
 
 _ZNSt6vectorIN10ClipperLib11DoublePointESaIS1_EE7reserveEm.exit: ; preds = %bb.ap, %_ZNSt12_Vector_baseIN10ClipperLib11DoublePointESaIS1_EE13_M_deallocateEPS1_m.exit.i
   %i.lm = phi ptr [ %i.kp, %bb.ap ], [ %i.lk, %_ZNSt12_Vector_baseIN10ClipperLib11DoublePointESaIS1_EE13_M_deallocateEPS1_m.exit.i ] ; 2 uses
-  %i.ln = add i32 %i.fy, -1                       ; 14 uses
+  %i.ln = add i32 %i.fy, -1                       ; 16 uses
   %i.lo = icmp sgt i32 %i.fy, 1                   ; 3 uses
   br i1 %i.lo, label %.lr.ph.preheader, label %._crit_edge
 
@@ -1011,11 +1011,28 @@ _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE5clearEv.exit292: ; preds = %_ZNSt6v
   %i.rz = load ptr, ptr %i.ff, align 8            ; 2 uses
   %i.sa = getelementptr inbounds nuw [16 x i8], ptr %i.rz, i64 %i.ry
   %i.sb = load <2 x double>, ptr %i.sa, align 8   ; 2 uses
-  br i1 %i.lo, label %.lr.ph473.preheader.a, label %._crit_edge474
+  br i1 %i.lo, label %.lr.ph473.preheader, label %._crit_edge474
 
-.lr.ph473.preheader.a:                            ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE5clearEv.exit292
-  %2 = zext nneg i32 %i.ln to i64
-  br label %.lr.ph473
+.lr.ph473.preheader:                              ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE5clearEv.exit292
+  %2 = zext i32 %i.ln to i64                      ; 4 uses
+  %xtraiter = and i64 %2, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph473.prol.loopexit, label %.lr.ph473.preheader.a
+
+.lr.ph473.preheader.a:                            ; preds = %.lr.ph473.preheader
+  %indvars.iv.next524.prol = add nsw i64 %2, -1   ; 2 uses
+  %3 = load ptr, ptr %i.ff, align 8               ; 2 uses
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %indvars.iv.next524.prol
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %2
+  %6 = load <2 x double>, ptr %4, align 8
+  %7 = fneg <2 x double> %6
+  store <2 x double> %7, ptr %5, align 8
+  br label %.lr.ph473.prol.loopexit
+
+.lr.ph473.prol.loopexit:                          ; preds = %.lr.ph473.preheader.a, %.lr.ph473.preheader
+  %indvars.iv523.unr = phi i64 [ %2, %.lr.ph473.preheader ], [ %indvars.iv.next524.prol, %.lr.ph473.preheader.a ]
+  %8 = icmp eq i32 %i.ln, 1
+  br i1 %8, label %._crit_edge474.thread, label %.lr.ph473
 
 bb.bp:                                            ; preds = %.lr.ph470, %bb.bp
   %.0135468 = phi i32 [ 0, %.lr.ph470 ], [ %i.sd, %bb.bp ] ; 2 uses
@@ -1025,7 +1042,7 @@ bb.bp:                                            ; preds = %.lr.ph470, %bb.bp
   %exitcond522.not = icmp eq i32 %i.sd, %i.fy
   br i1 %exitcond522.not, label %._crit_edge471, label %bb.bp, !llvm.loop !216
 
-._crit_edge474.thread:                            ; preds = %.lr.ph473
+._crit_edge474.thread:                            ; preds = %.lr.ph473, %.lr.ph473.prol.loopexit
   %.pre539 = load ptr, ptr %i.ff, align 8
   %i.se = fneg <2 x double> %i.sb
   store <2 x double> %i.se, ptr %.pre539, align 8
@@ -1042,17 +1059,24 @@ bb.bp:                                            ; preds = %.lr.ph470, %bb.bp
   %i.sg = getelementptr inbounds nuw i8, ptr %i.fp, i64 72
   br label %bb.bu
 
-.lr.ph473:                                        ; preds = %.lr.ph473.preheader.a, %.lr.ph473
-  %indvars.iv523 = phi i64 [ %2, %.lr.ph473.preheader.a ], [ %indvars.iv.next524.a, %.lr.ph473 ] ; 3 uses
-  %indvars.iv.next524.a = add nsw i64 %indvars.iv523, -1 ; 2 uses
+.lr.ph473:                                        ; preds = %.lr.ph473.prol.loopexit, %.lr.ph473
+  %indvars.iv523 = phi i64 [ %indvars.iv.next524.a, %.lr.ph473 ], [ %indvars.iv523.unr, %.lr.ph473.prol.loopexit ] ; 4 uses
+  %indvars.iv.next524 = add nsw i64 %indvars.iv523, -1 ; 2 uses
+  %9 = load ptr, ptr %i.ff, align 8               ; 2 uses
+  %10 = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %indvars.iv.next524
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %indvars.iv523
+  %12 = load <2 x double>, ptr %10, align 8
+  %13 = fneg <2 x double> %12
+  store <2 x double> %13, ptr %11, align 8
+  %indvars.iv.next524.a = add nsw i64 %indvars.iv523, -2 ; 2 uses
   %i.sh = load ptr, ptr %i.ff, align 8            ; 2 uses
   %i.si = getelementptr inbounds nuw [16 x i8], ptr %i.sh, i64 %indvars.iv.next524.a
-  %i.sj = getelementptr inbounds nuw [16 x i8], ptr %i.sh, i64 %indvars.iv523
+  %i.sj = getelementptr inbounds nuw [16 x i8], ptr %i.sh, i64 %indvars.iv.next524
   %i.sk = load <2 x double>, ptr %i.si, align 8
   %i.sl = fneg <2 x double> %i.sk
   store <2 x double> %i.sl, ptr %i.sj, align 8
-  %3 = icmp samesign ugt i64 %indvars.iv523, 1
-  br i1 %3, label %.lr.ph473, label %._crit_edge474.thread, !llvm.loop !217
+  %14 = icmp sgt i64 %indvars.iv523, 2
+  br i1 %14, label %.lr.ph473, label %._crit_edge474.thread, !llvm.loop !217
 
 ._crit_edge478:                                   ; preds = %bb.bu, %._crit_edge474
   %i.sm = load ptr, ptr %i.f, align 8             ; 6 uses
@@ -1274,7 +1298,7 @@ bb.cc:                                            ; preds = %_ZNSt6vectorIN10Cli
   %i.vo = load ptr, ptr %i.fe, align 8
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vo, i64 16
   store ptr %i.vp, ptr %i.fe, align 8
-  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a
+  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332
 
 bb.cd:                                            ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit
   %i.vq = load ptr, ptr %i.fd, align 8            ; 5 uses
@@ -1331,7 +1355,7 @@ _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gn
   store ptr %i.wf, ptr %i.fe, align 8
   %i.wj = getelementptr inbounds nuw [16 x i8], ptr %i.wb, i64 %i.vz
   store ptr %i.wj, ptr %i.fj, align 8
-  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a
+  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332
 
 bb.cg:                                            ; preds = %._crit_edge486
   %i.wk = add nsw i32 %i.fy, -2                   ; 2 uses
@@ -1348,20 +1372,37 @@ bb.cg:                                            ; preds = %._crit_edge486
 
 bb.ch:                                            ; preds = %bb.cg
   tail call void @_ZN10ClipperLib13ClipperOffset8DoSquareEii(ptr noundef nonnull align 8 dereferenceable(256) %0, i32 noundef %i.ln, i32 noundef %i.wk)
-  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a
+  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332
 
 bb.ci:                                            ; preds = %bb.cg
   tail call void @_ZN10ClipperLib13ClipperOffset7DoRoundEii(ptr noundef nonnull align 8 dereferenceable(256) %0, i32 noundef %i.ln, i32 noundef %i.wk)
-  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a
+  br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332
 
-_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a: ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i331, %bb.cc, %bb.ch, %bb.ci
-  br i1 %i.lo, label %.lr.ph488.preheader, label %._crit_edge489
+_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332: ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i331, %bb.cc, %bb.ch, %bb.ci
+  br i1 %i.lo, label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a, label %._crit_edge489
+
+_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a: ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332
+  %15 = zext i32 %i.ln to i64                     ; 4 uses
+  %xtraiter715 = and i64 %15, 1
+  %lcmp.mod716.not = icmp eq i64 %xtraiter715, 0
+  br i1 %lcmp.mod716.not, label %.lr.ph488.prol.loopexit, label %.lr.ph488.preheader
 
 .lr.ph488.preheader:                              ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a
-  %4 = zext nneg i32 %i.ln to i64
-  br label %.lr.ph488
+  %indvars.iv.next529.prol = add nsw i64 %15, -1  ; 2 uses
+  %16 = load ptr, ptr %i.ff, align 8              ; 2 uses
+  %17 = getelementptr inbounds nuw [16 x i8], ptr %16, i64 %indvars.iv.next529.prol
+  %18 = getelementptr inbounds nuw [16 x i8], ptr %16, i64 %15
+  %19 = load <2 x double>, ptr %17, align 8
+  %20 = fneg <2 x double> %19
+  store <2 x double> %20, ptr %18, align 8
+  br label %.lr.ph488.prol.loopexit
 
-._crit_edge489:                                   ; preds = %.lr.ph488, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a
+.lr.ph488.prol.loopexit:                          ; preds = %.lr.ph488.preheader, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a
+  %indvars.iv528.unr = phi i64 [ %15, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a ], [ %indvars.iv.next529.prol, %.lr.ph488.preheader ]
+  %21 = icmp eq i32 %i.ln, 1
+  br i1 %21, label %._crit_edge489, label %.lr.ph488
+
+._crit_edge489:                                   ; preds = %.lr.ph488.prol.loopexit, %.lr.ph488, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332
   %i.ws = load ptr, ptr %i.ff, align 8            ; 2 uses
   %i.wt = getelementptr inbounds nuw i8, ptr %i.ws, i64 16
   %i.wu = load <2 x double>, ptr %i.wt, align 8
@@ -1375,17 +1416,24 @@ _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit332.a: ; preds 
   %i.wx = getelementptr inbounds nuw i8, ptr %i.fp, i64 72
   br label %bb.cj
 
-.lr.ph488:                                        ; preds = %.lr.ph488.preheader, %.lr.ph488
-  %indvars.iv528 = phi i64 [ %4, %.lr.ph488.preheader ], [ %indvars.iv.next529.a, %.lr.ph488 ] ; 3 uses
-  %indvars.iv.next529.a = add nsw i64 %indvars.iv528, -1 ; 2 uses
+.lr.ph488:                                        ; preds = %.lr.ph488.prol.loopexit, %.lr.ph488
+  %indvars.iv528 = phi i64 [ %indvars.iv.next529.a, %.lr.ph488 ], [ %indvars.iv528.unr, %.lr.ph488.prol.loopexit ] ; 4 uses
+  %indvars.iv.next529 = add nsw i64 %indvars.iv528, -1 ; 2 uses
+  %22 = load ptr, ptr %i.ff, align 8              ; 2 uses
+  %23 = getelementptr inbounds nuw [16 x i8], ptr %22, i64 %indvars.iv.next529
+  %24 = getelementptr inbounds nuw [16 x i8], ptr %22, i64 %indvars.iv528
+  %25 = load <2 x double>, ptr %23, align 8
+  %26 = fneg <2 x double> %25
+  store <2 x double> %26, ptr %24, align 8
+  %indvars.iv.next529.a = add nsw i64 %indvars.iv528, -2 ; 2 uses
   %i.wy = load ptr, ptr %i.ff, align 8            ; 2 uses
   %i.wz = getelementptr inbounds nuw [16 x i8], ptr %i.wy, i64 %indvars.iv.next529.a
-  %i.xa = getelementptr inbounds nuw [16 x i8], ptr %i.wy, i64 %indvars.iv528
+  %i.xa = getelementptr inbounds nuw [16 x i8], ptr %i.wy, i64 %indvars.iv.next529
   %i.xb = load <2 x double>, ptr %i.wz, align 8
   %i.xc = fneg <2 x double> %i.xb
   store <2 x double> %i.xc, ptr %i.xa, align 8
-  %5 = icmp samesign ugt i64 %indvars.iv528, 1
-  br i1 %5, label %.lr.ph488, label %._crit_edge489, !llvm.loop !226
+  %27 = icmp sgt i64 %indvars.iv528, 2
+  br i1 %27, label %.lr.ph488, label %._crit_edge489, !llvm.loop !226
 
 ._crit_edge493:                                   ; preds = %bb.cj, %._crit_edge489
   %i.xd = load i32, ptr %i.lq, align 4

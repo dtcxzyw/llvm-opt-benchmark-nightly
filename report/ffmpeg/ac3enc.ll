@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 131
 inline.NumDeleted: 36
 loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 17
+loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumUnrolled: 19
 begin_hunk_0_@ff_ac3_encode_frame:bb.a
   %.pre.i43 = load i32, ptr %i.dr, align 4, !tbaa !28 ; 2 uses
   br label %.thread84.us.i.i
@@ -205,17 +205,19 @@ compute_exp_strategy.exit.i:                      ; preds = %bb.r, %.loopexit.i.
   %i.jf = sext i32 %i.je to i64
   %i.jg = getelementptr inbounds i8, ptr %i.jd, i64 %i.jf
   %i.jh = getelementptr inbounds nuw [6 x i8], ptr %i.ip, i64 %indvars.iv76.i.i ; 2 uses
-  %i.ji = zext i1 %i.iz to i64                    ; 9 uses
+  %i.ji = zext i1 %i.iz to i64                    ; 13 uses
   %i.jj = getelementptr inbounds nuw [768 x i8], ptr @exponent_group_tab, i64 %i.ji
   %i.jk = xor i32 %i.ja, 1
   %i.jl = zext nneg i32 %i.jk to i64              ; 2 uses
   %invariant.op = sub i64 1, %i.ji
   %invariant.op571 = sub i64 1, %i.ji
+  %5 = xor i64 %i.ji, -1
+  %6 = xor i64 %i.ji, -1
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.ag, %.lr.ph66.i.i
   %i.jm = phi i32 [ %i.iv, %.lr.ph66.i.i ], [ %i.os, %bb.ag ]
-  %.065.i.i = phi ptr [ %i.jg, %.lr.ph66.i.i ], [ %.1.i.i, %bb.ag ] ; 28 uses
+  %.065.i.i = phi ptr [ %i.jg, %.lr.ph66.i.i ], [ %.1.i.i, %bb.ag ] ; 36 uses
   %.05464.i.i = phi i32 [ 0, %.lr.ph66.i.i ], [ %.155.i.i, %bb.ag ] ; 5 uses
   %i.jn = sext i32 %.05464.i.i to i64             ; 3 uses
   %i.jo = getelementptr inbounds [648 x i8], ptr %i.im, i64 %i.jn ; 2 uses
@@ -505,25 +507,52 @@ bb.ae:                                            ; preds = %bb.ad
 .lr.ph151.preheader.i.i.i:                        ; preds = %bb.ae
   %i.nt = mul nuw nsw i32 %i.kz, 6
   %i.nu = sub nuw nsw i32 %i.nt, %i.ja
-  %i.nv = zext nneg i32 %i.nu to i64
+  %i.nv = zext nneg i32 %i.nu to i64              ; 3 uses
   %i.nw = zext i8 %i.ky to i64
-  %i.nx = mul nuw nsw i64 %i.nw, 3
+  %i.nx = mul nuw nsw i64 %i.nw, 3                ; 4 uses
+  %xtraiter512 = and i64 %i.nx, 1
+  %lcmp.mod513.not = icmp eq i64 %xtraiter512, 0
+  br i1 %lcmp.mod513.not, label %.lr.ph151.preheader.i.i.i.new, label %.lr.ph151.i.i.i.prol
+
+.lr.ph151.i.i.i.prol:                             ; preds = %.lr.ph151.preheader.i.i.i
+  %7 = sub nuw nsw i64 %i.nx, %i.ji
+  %8 = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %7
+  %9 = load i8, ptr %8, align 1, !tbaa !31        ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %i.nv ; 2 uses
+  store i8 %9, ptr %10, align 1, !tbaa !31
+  %indvars.iv.next186.i.i.i.prol = add nsw i64 %i.nv, -2
+  %11 = getelementptr i8, ptr %10, i64 -1
+  store i8 %9, ptr %11, align 1, !tbaa !31
+  %indvars.iv.next188.i.i.i.prol = add nsw i64 %i.nx, -1
+  br label %.lr.ph151.preheader.i.i.i.new
+
+.lr.ph151.preheader.i.i.i.new:                    ; preds = %.lr.ph151.preheader.i.i.i, %.lr.ph151.i.i.i.prol
+  %indvars.iv187.i.i.i.unr = phi i64 [ %i.nx, %.lr.ph151.preheader.i.i.i ], [ %indvars.iv.next188.i.i.i.prol, %.lr.ph151.i.i.i.prol ]
+  %indvars.iv185.i.i.i.unr = phi i64 [ %i.nv, %.lr.ph151.preheader.i.i.i ], [ %indvars.iv.next186.i.i.i.prol, %.lr.ph151.i.i.i.prol ]
+  %invariant.gep577 = getelementptr i8, ptr %.065.i.i, i64 %6
   br label %.lr.ph151.i.i.i
 
-.lr.ph151.i.i.i:                                  ; preds = %.lr.ph151.i.i.i, %.lr.ph151.preheader.i.i.i
-  %indvars.iv187.i.i.i = phi i64 [ %i.nx, %.lr.ph151.preheader.i.i.i ], [ %indvars.iv.next188.i.i.i, %.lr.ph151.i.i.i ] ; 3 uses
-  %indvars.iv185.i.i.i = phi i64 [ %i.nv, %.lr.ph151.preheader.i.i.i ], [ %indvars.iv.next186.i.i.i, %.lr.ph151.i.i.i ] ; 2 uses
+.lr.ph151.i.i.i:                                  ; preds = %.lr.ph151.i.i.i, %.lr.ph151.preheader.i.i.i.new
+  %indvars.iv187.i.i.i = phi i64 [ %indvars.iv187.i.i.i.unr, %.lr.ph151.preheader.i.i.i.new ], [ %indvars.iv.next188.i.i.i, %.lr.ph151.i.i.i ] ; 4 uses
+  %indvars.iv185.i.i.i = phi i64 [ %indvars.iv185.i.i.i.unr, %.lr.ph151.preheader.i.i.i.new ], [ %indvars.iv.next186.i.i.i, %.lr.ph151.i.i.i ] ; 3 uses
   %i.ny = sub nuw nsw i64 %indvars.iv187.i.i.i, %i.ji
-  %i.nz = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %i.ny
+  %12 = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %i.ny
+  %13 = load i8, ptr %12, align 1, !tbaa !31      ; 2 uses
+  %14 = getelementptr inbounds i8, ptr %.065.i.i, i64 %indvars.iv185.i.i.i ; 2 uses
+  store i8 %13, ptr %14, align 1, !tbaa !31
+  %15 = getelementptr i8, ptr %14, i64 -1
+  store i8 %13, ptr %15, align 1, !tbaa !31
+  %i.nz = getelementptr i8, ptr %invariant.gep577, i64 %indvars.iv187.i.i.i
   %i.oa = load i8, ptr %i.nz, align 1, !tbaa !31  ; 2 uses
-  %i.ob = getelementptr inbounds i8, ptr %.065.i.i, i64 %indvars.iv185.i.i.i ; 2 uses
+  %16 = getelementptr i8, ptr %.065.i.i, i64 %indvars.iv185.i.i.i ; 2 uses
+  %i.ob = getelementptr i8, ptr %16, i64 -2
   store i8 %i.oa, ptr %i.ob, align 1, !tbaa !31
-  %indvars.iv.next186.i.i.i = add nsw i64 %indvars.iv185.i.i.i, -2
-  %i.oc = getelementptr i8, ptr %i.ob, i64 -1
+  %indvars.iv.next186.i.i.i = add nsw i64 %indvars.iv185.i.i.i, -4
+  %i.oc = getelementptr i8, ptr %16, i64 -3
   store i8 %i.oa, ptr %i.oc, align 1, !tbaa !31
-  %indvars.iv.next188.i.i.i = add nsw i64 %indvars.iv187.i.i.i, -1
-  %5 = icmp samesign ugt i64 %indvars.iv187.i.i.i, 1
-  br i1 %5, label %.lr.ph151.i.i.i, label %encode_exponents_blk_ch.exit.i.i, !llvm.loop !148
+  %indvars.iv.next188.i.i.i = add nsw i64 %indvars.iv187.i.i.i, -2
+  %17 = icmp sgt i64 %indvars.iv187.i.i.i, 2
+  br i1 %17, label %.lr.ph151.i.i.i, label %encode_exponents_blk_ch.exit.i.i, !llvm.loop !148
 
 bb.af:                                            ; preds = %bb.ad
   br i1 %.not124137.i.i.i, label %encode_exponents_blk_ch.exit.i.i, label %.lr.ph147.preheader.i.i.i
@@ -531,26 +560,54 @@ bb.af:                                            ; preds = %bb.ad
 .lr.ph147.preheader.i.i.i:                        ; preds = %bb.af
   %i.od = mul nuw nsw i32 %i.kz, 12
   %i.oe = sub nuw nsw i32 %i.od, %i.ja
-  %i.of = zext nneg i32 %i.oe to i64
+  %i.of = zext nneg i32 %i.oe to i64              ; 3 uses
   %i.og = zext i8 %i.ky to i64
-  %i.oh = mul nuw nsw i64 %i.og, 3
+  %i.oh = mul nuw nsw i64 %i.og, 3                ; 4 uses
+  %xtraiter510 = and i64 %i.oh, 1
+  %lcmp.mod511.not = icmp eq i64 %xtraiter510, 0
+  br i1 %lcmp.mod511.not, label %.lr.ph147.preheader.i.i.i.new, label %.lr.ph147.i.i.i.prol
+
+.lr.ph147.i.i.i.prol:                             ; preds = %.lr.ph147.preheader.i.i.i
+  %18 = sub nuw nsw i64 %i.oh, %i.ji
+  %19 = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %18
+  %20 = load i8, ptr %19, align 1, !tbaa !31
+  %21 = getelementptr i8, ptr %.065.i.i, i64 %i.of
+  %22 = getelementptr i8, ptr %21, i64 -3
+  %23 = insertelement <4 x i8> poison, i8 %20, i64 0
+  %24 = shufflevector <4 x i8> %23, <4 x i8> poison, <4 x i32> zeroinitializer
+  store <4 x i8> %24, ptr %22, align 1, !tbaa !31
+  %indvars.iv.next179.i.i.i.prol = add nsw i64 %i.of, -4
+  %indvars.iv.next181.i.i.i.prol = add nsw i64 %i.oh, -1
+  br label %.lr.ph147.preheader.i.i.i.new
+
+.lr.ph147.preheader.i.i.i.new:                    ; preds = %.lr.ph147.preheader.i.i.i, %.lr.ph147.i.i.i.prol
+  %indvars.iv180.i.i.i.unr = phi i64 [ %i.oh, %.lr.ph147.preheader.i.i.i ], [ %indvars.iv.next181.i.i.i.prol, %.lr.ph147.i.i.i.prol ]
+  %indvars.iv178.i.i.i.unr = phi i64 [ %i.of, %.lr.ph147.preheader.i.i.i ], [ %indvars.iv.next179.i.i.i.prol, %.lr.ph147.i.i.i.prol ]
+  %invariant.gep = getelementptr i8, ptr %.065.i.i, i64 %5
   br label %.lr.ph147.i.i.i
 
-.lr.ph147.i.i.i:                                  ; preds = %.lr.ph147.i.i.i, %.lr.ph147.preheader.i.i.i
-  %indvars.iv180.i.i.i = phi i64 [ %i.oh, %.lr.ph147.preheader.i.i.i ], [ %indvars.iv.next181.i.i.i, %.lr.ph147.i.i.i ] ; 3 uses
-  %indvars.iv178.i.i.i = phi i64 [ %i.of, %.lr.ph147.preheader.i.i.i ], [ %indvars.iv.next179.i.i.i, %.lr.ph147.i.i.i ] ; 2 uses
+.lr.ph147.i.i.i:                                  ; preds = %.lr.ph147.i.i.i, %.lr.ph147.preheader.i.i.i.new
+  %indvars.iv180.i.i.i = phi i64 [ %indvars.iv180.i.i.i.unr, %.lr.ph147.preheader.i.i.i.new ], [ %indvars.iv.next181.i.i.i, %.lr.ph147.i.i.i ] ; 4 uses
+  %indvars.iv178.i.i.i = phi i64 [ %indvars.iv178.i.i.i.unr, %.lr.ph147.preheader.i.i.i.new ], [ %indvars.iv.next179.i.i.i, %.lr.ph147.i.i.i ] ; 3 uses
   %i.oi = sub nuw nsw i64 %indvars.iv180.i.i.i, %i.ji
-  %i.oj = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %i.oi
+  %25 = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %i.oi
+  %26 = load i8, ptr %25, align 1, !tbaa !31
+  %27 = getelementptr i8, ptr %.065.i.i, i64 %indvars.iv178.i.i.i
+  %28 = getelementptr i8, ptr %27, i64 -3
+  %29 = insertelement <4 x i8> poison, i8 %26, i64 0
+  %30 = shufflevector <4 x i8> %29, <4 x i8> poison, <4 x i32> zeroinitializer
+  store <4 x i8> %30, ptr %28, align 1, !tbaa !31
+  %i.oj = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv180.i.i.i
   %i.ok = load i8, ptr %i.oj, align 1, !tbaa !31
   %i.ol = getelementptr i8, ptr %.065.i.i, i64 %indvars.iv178.i.i.i
-  %i.om = getelementptr i8, ptr %i.ol, i64 -3
+  %i.om = getelementptr i8, ptr %i.ol, i64 -7
   %i.on = insertelement <4 x i8> poison, i8 %i.ok, i64 0
   %i.oo = shufflevector <4 x i8> %i.on, <4 x i8> poison, <4 x i32> zeroinitializer
   store <4 x i8> %i.oo, ptr %i.om, align 1, !tbaa !31
-  %indvars.iv.next179.i.i.i = add nsw i64 %indvars.iv178.i.i.i, -4
-  %indvars.iv.next181.i.i.i = add nsw i64 %indvars.iv180.i.i.i, -1
-  %6 = icmp samesign ugt i64 %indvars.iv180.i.i.i, 1
-  br i1 %6, label %.lr.ph147.i.i.i, label %encode_exponents_blk_ch.exit.i.i, !llvm.loop !149
+  %indvars.iv.next179.i.i.i = add nsw i64 %indvars.iv178.i.i.i, -8
+  %indvars.iv.next181.i.i.i = add nsw i64 %indvars.iv180.i.i.i, -2
+  %31 = icmp sgt i64 %indvars.iv180.i.i.i, 2
+  br i1 %31, label %.lr.ph147.i.i.i, label %encode_exponents_blk_ch.exit.i.i, !llvm.loop !149
 
 encode_exponents_blk_ch.exit.i.i:                 ; preds = %.lr.ph147.i.i.i, %.lr.ph151.i.i.i, %bb.af, %bb.ae, %bb.ad
   %i.op = shl nuw nsw i32 %i.kk, 8
