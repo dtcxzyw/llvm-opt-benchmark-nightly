@@ -204,12 +204,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.al = fmul double %i.ab, %i.ak                ; 2 uses
   %i.am = fcmp ogt double %i.al, %i.y
   %i.an = select i1 %i.am, double %i.al, double %i.y
-  %12 = fmul double %i.x, %i.ab                   ; 9 uses
-  %13 = fdiv double %i.an, %i.ab                  ; 3 uses
+  %12 = fdiv double %i.an, %i.ab                  ; 3 uses
+  %13 = fmul double %i.x, %i.ab                   ; 9 uses
   %i.ao = insertelement <2 x double> poison, double %13, i64 0
   %i.ap = insertelement <2 x double> %i.ao, double %12, i64 1
   %i.aq = fdiv <2 x double> splat (double 1.000000e+00), %i.ap ; 3 uses
-  %i.ar = extractelement <2 x double> %i.aq, i64 0 ; 10 uses
+  %i.ar = extractelement <2 x double> %i.aq, i64 1 ; 10 uses
   %i.as = load double, ptr %i.h, align 8, !tbaa !213 ; 2 uses
   %i.at = fcmp oeq double %i.as, 0.000000e+00
   br i1 %i.at, label %bb.e, label %bb.f
@@ -220,7 +220,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.av, label %select.unfold.i, label %bb.p
 
 bb.f:                                             ; preds = %bb.d
-  %i.aw = extractelement <2 x double> %i.aq, i64 1 ; 3 uses
+  %i.aw = extractelement <2 x double> %i.aq, i64 0 ; 3 uses
   %i.ax = fmul double %i.aw, %i.ar                ; 3 uses
   %i.ay = fdiv double 1.000000e+00, %i.ax         ; 2 uses
   %i.az = fcmp ogt double %i.ay, %i.ax
@@ -237,8 +237,8 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.bd, label %bb.k, label %bb.r
 
 select.unfold.i:                                  ; preds = %bb.g, %bb.e
-  %i.be = fcmp olt double %i.ar, %12
-  %i.bf = select i1 %i.be, double %i.ar, double %12 ; 6 uses
+  %i.be = fcmp olt double %i.ar, %13
+  %i.bf = select i1 %i.be, double %i.ar, double %13 ; 6 uses
   %i.bg = fdiv double 5.000000e-01, %i.bf         ; 2 uses
   tail call void @N_VLinearSum(double noundef %i.bf, ptr noundef %i.n, double noundef 1.000000e+00, ptr noundef %2, ptr noundef %9) #14
   tail call void @N_VLinearSum(double noundef %i.bf, ptr noundef %i.p, double noundef 1.000000e+00, ptr noundef %3, ptr noundef %10) #14
@@ -278,9 +278,8 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.u
 
 bb.k:                                             ; preds = %bb.h
-  %i.bz = insertelement <2 x double> poison, double %12, i64 0
-  %14 = shufflevector <2 x double> %i.bz, <2 x double> %i.aq, <2 x i32> <i32 0, i32 2>
-  %i.ca = fdiv <2 x double> splat (double 5.000000e-01), %14 ; 2 uses
+  %i.bz = insertelement <2 x double> %i.aq, double %13, i64 0
+  %i.ca = fdiv <2 x double> splat (double 5.000000e-01), %i.bz ; 2 uses
   tail call void @N_VLinearSum(double noundef %i.ar, ptr noundef %i.n, double noundef 1.000000e+00, ptr noundef %2, ptr noundef %9) #14
   tail call void @N_VLinearSum(double noundef %i.ar, ptr noundef %i.p, double noundef 1.000000e+00, ptr noundef %3, ptr noundef %10) #14
   %i.cb = load ptr, ptr %i.j, align 8, !tbaa !49
@@ -309,7 +308,7 @@ bb.m:                                             ; preds = %bb.l
   %i.cm = extractelement <2 x double> %i.ca, i64 1 ; 2 uses
   %i.cn = fneg double %i.cm
   tail call void @N_VLinearSum(double noundef %i.cm, ptr noundef %i.r, double noundef %i.cn, ptr noundef %11, ptr noundef %i.r) #14
-  %i.co = fadd double %12, %i.ai
+  %i.co = fadd double %13, %i.ai
   %i.cp = load ptr, ptr %i.f, align 8, !tbaa !47
   %i.cq = getelementptr inbounds [8 x i8], ptr %i.cp, i64 %i.ag
   store double %i.co, ptr %i.cq, align 8, !tbaa !24
@@ -323,7 +322,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not263.i, label %bb.n, label %IDASensRes1DQ.exit.thread
 
 bb.n:                                             ; preds = %bb.m
-  %i.cw = fsub double %i.ai, %12
+  %i.cw = fsub double %i.ai, %13
   %i.cx = load ptr, ptr %i.f, align 8, !tbaa !47
   %i.cy = getelementptr inbounds [8 x i8], ptr %i.cx, i64 %i.ag
   store double %i.cw, ptr %i.cy, align 8, !tbaa !24
@@ -344,8 +343,8 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.u
 
 bb.p:                                             ; preds = %bb.g, %bb.e
-  %i.dg = fcmp olt double %i.ar, %12
-  %i.dh = select i1 %i.dg, double %i.ar, double %12 ; 4 uses
+  %i.dg = fcmp olt double %i.ar, %13
+  %i.dh = select i1 %i.dg, double %i.ar, double %13 ; 4 uses
   tail call void @N_VLinearSum(double noundef %i.dh, ptr noundef %i.n, double noundef 1.000000e+00, ptr noundef %2, ptr noundef %9) #14
   tail call void @N_VLinearSum(double noundef %i.dh, ptr noundef %i.p, double noundef 1.000000e+00, ptr noundef %3, ptr noundef %10) #14
   %i.di = fadd double %i.ai, %i.dh
@@ -380,9 +379,9 @@ bb.r:                                             ; preds = %bb.h
   br i1 %.not.i, label %bb.s, label %IDASensRes1DQ.exit.thread
 
 bb.s:                                             ; preds = %bb.r
-  %i.dx = fneg double %13
-  tail call void @N_VLinearSum(double noundef %13, ptr noundef %i.r, double noundef %i.dx, ptr noundef %4, ptr noundef %i.r) #14
-  %i.dy = fadd double %12, %i.ai
+  %i.dx = fneg double %12
+  tail call void @N_VLinearSum(double noundef %12, ptr noundef %i.r, double noundef %i.dx, ptr noundef %4, ptr noundef %i.r) #14
+  %i.dy = fadd double %13, %i.ai
   %i.dz = load ptr, ptr %i.f, align 8, !tbaa !47
   %i.ea = getelementptr inbounds [8 x i8], ptr %i.dz, i64 %i.ag
   store double %i.dy, ptr %i.ea, align 8, !tbaa !24
@@ -785,13 +784,13 @@ bb.ee:                                            ; preds = %bb.ed, %._crit_edge
 
 bb.ef:                                            ; preds = %bb.ee
   %i.ack = load double, ptr %i.im, align 8, !tbaa !181 ; 2 uses
-  %i.acl = load double, ptr %i.jj, align 8, !tbaa !27 ; 2 uses
-  %6 = fsub double 1.000000e+00, %i.acl
-  %7 = load double, ptr %i.jf, align 8, !tbaa !305
-  %i.acm = fadd double %i.acl, 1.000000e+00
-  %i.acn = fdiv double %6, %i.acm
+  %i.acl = load double, ptr %i.jf, align 8, !tbaa !305
+  %6 = load double, ptr %i.jj, align 8, !tbaa !27 ; 2 uses
+  %7 = fsub double 1.000000e+00, %6
+  %i.acm = fadd double %6, 1.000000e+00
+  %i.acn = fdiv double %7, %i.acm
   %i.aco = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.ack, i64 0
-  %i.acp = insertelement <2 x double> poison, double %7, i64 0
+  %i.acp = insertelement <2 x double> poison, double %i.acl, i64 0
   %i.acq = insertelement <2 x double> %i.acp, double %i.acn, i64 1 ; 2 uses
   %i.acr = fdiv <2 x double> %i.aco, %i.acq       ; 3 uses
   %i.acs = extractelement <2 x double> %i.acr, i64 0

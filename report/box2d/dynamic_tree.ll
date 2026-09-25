@@ -204,11 +204,11 @@ b2Normalize.exit:                                 ; preds = %bb.b, %bb.c
   %i.n = extractelement <2 x float> %.sroa.012.0.i, i64 1 ; 3 uses
   %i.o = fneg float %i.n
   %.sroa.0.4.vec.extract.i97 = extractelement <2 x float> %.sroa.012.0.i, i64 0 ; 3 uses
-  %6 = fcmp olt float %.sroa.0.4.vec.extract.i97, 0.000000e+00
-  %7 = fcmp ogt float %i.n, 0.000000e+00
-  %8 = select i1 %7, float %i.n, float %i.o
+  %6 = fcmp ogt float %i.n, 0.000000e+00
+  %7 = select i1 %6, float %i.n, float %i.o
+  %8 = fcmp olt float %.sroa.0.4.vec.extract.i97, 0.000000e+00
   %i.p = fneg float %.sroa.0.4.vec.extract.i97
-  %i.q = select i1 %6, float %i.p, float %.sroa.0.4.vec.extract.i97
+  %i.q = select i1 %8, float %i.p, float %.sroa.0.4.vec.extract.i97
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.s = load float, ptr %i.r, align 4, !tbaa !58 ; 2 uses
   %i.t = insertelement <2 x float> poison, float %i.s, i64 0
@@ -227,7 +227,7 @@ b2Normalize.exit:                                 ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %5, ptr noundef nonnull align 4 dereferenceable(20) %1, i64 16, i1 false), !tbaa.struct !59
   %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.af = insertelement <2 x float> poison, float %8, i64 0
+  %i.af = insertelement <2 x float> poison, float %7, i64 0
   %i.ag = insertelement <2 x float> %i.af, float %i.q, i64 1
   br label %bb.d
 
@@ -405,11 +405,11 @@ bb.b:                                             ; preds = %bb.a
   %i.j = fmul <2 x float> %i.i, splat (float 5.000000e-01)
   %i.k = extractelement <2 x float> %.sroa.057.0.copyload, i64 1 ; 3 uses
   %i.l = fneg float %i.k
-  %6 = fcmp olt float %.sroa.0.4.vec.extract.i111, 0.000000e+00
-  %7 = fcmp ogt float %i.k, 0.000000e+00
-  %8 = select i1 %7, float %i.k, float %i.l
+  %6 = fcmp ogt float %i.k, 0.000000e+00
+  %7 = select i1 %6, float %i.k, float %i.l
+  %8 = fcmp olt float %.sroa.0.4.vec.extract.i111, 0.000000e+00
   %i.m = fneg float %.sroa.0.4.vec.extract.i111
-  %i.n = select i1 %6, float %i.m, float %.sroa.0.4.vec.extract.i111
+  %i.n = select i1 %8, float %i.m, float %.sroa.0.4.vec.extract.i111
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.p = load float, ptr %i.o, align 4, !tbaa !62 ; 2 uses
   %i.q = insertelement <2 x float> poison, float %i.p, i64 0
@@ -429,7 +429,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !15
   store i32 %i.ab, ptr %i.a, align 16, !tbaa !36
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.ad = insertelement <2 x float> poison, float %8, i64 0
+  %i.ad = insertelement <2 x float> poison, float %7, i64 0
   %i.ae = insertelement <2 x float> %i.ad, float %i.n, i64 1
   br label %bb.c
 

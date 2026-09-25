@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 144
   %i.ae = load i64, ptr %i.aa, align 8, !tbaa !531
   %i.af = load <2 x i64>, ptr %i.ab, align 8, !tbaa !533
-  %i.ag = load i64, ptr %i.ad, align 8, !tbaa !1043 ; 2 uses
-  %i.ah = load i64, ptr %i.ac, align 8, !tbaa !1045
-  %i.ai = sub i64 %i.ah, %i.ag                    ; 2 uses
+  %i.ag = load i64, ptr %i.ac, align 8, !tbaa !1045
+  %i.ah = load i64, ptr %i.ad, align 8, !tbaa !1043 ; 2 uses
+  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
   %i.aj = load <4 x i64>, ptr %i.e, align 8, !tbaa !533
   %i.ak = insertelement <4 x i64> poison, i64 %i.ae, i64 0
   %i.al = shufflevector <2 x i64> %i.af, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ao = add <4 x i64> %i.aj, %i.an
   store <4 x i64> %i.ao, ptr %i.e, align 8, !tbaa !533
   %i.ap = load <4 x i64>, ptr %i.f, align 8, !tbaa !533
-  %i.aq = insertelement <4 x i64> <i64 poison, i64 poison, i64 poison, i64 1>, i64 %i.ag, i64 0
+  %i.aq = insertelement <4 x i64> <i64 poison, i64 poison, i64 poison, i64 1>, i64 %i.ah, i64 0
   %i.ar = insertelement <4 x i64> %i.aq, i64 %i.ai, i64 1
   %i.as = shufflevector <4 x i64> %i.ar, <4 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
   %i.at = add <4 x i64> %i.ap, %i.as
@@ -563,13 +563,13 @@ declare void @_ZNK7rocksdb6Status8ToStringB5cxx11Ev(ptr dead_on_unwind writable 
 define void @_ZN7rocksdb18VersionStorageInfo22UpdateAccumulatedStatsEPNS_12FileMetaDataE(ptr nofree noundef nonnull align 16 captures(none) dereferenceable(4288) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #20 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %2 = load i64, ptr %i.a, align 8, !tbaa !531
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4152 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 144
-  %2 = load i64, ptr %i.a, align 8, !tbaa !531
-  %i.f = load i64, ptr %i.d, align 8, !tbaa !1045
   %3 = load <2 x i64>, ptr %i.c, align 8, !tbaa !533
+  %i.f = load i64, ptr %i.d, align 8, !tbaa !1045
   %i.g = load i64, ptr %i.e, align 8, !tbaa !1043 ; 2 uses
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = load <4 x i64>, ptr %i.b, align 8, !tbaa !533

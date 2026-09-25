@@ -121,19 +121,19 @@ bb.a:
   %i.y = getelementptr i8, ptr %0, i64 56         ; 2 uses
   %i.z = getelementptr i8, ptr %0, i64 60         ; 2 uses
   %i.aa = getelementptr i8, ptr %0, i64 16        ; 3 uses
-  %i.ab = getelementptr i8, ptr %0, i64 4         ; 2 uses
+  %i.ab = getelementptr i8, ptr %0, i64 4         ; 3 uses
   %i.ac = getelementptr i8, ptr %0, i64 20        ; 2 uses
-  %i.ad = getelementptr i8, ptr %0, i64 8         ; 2 uses
+  %i.ad = getelementptr i8, ptr %0, i64 8         ; 3 uses
   %i.ae = getelementptr i8, ptr %0, i64 24        ; 2 uses
-  %i.af = getelementptr i8, ptr %0, i64 12        ; 2 uses
+  %i.af = getelementptr i8, ptr %0, i64 12        ; 3 uses
   %i.ag = getelementptr i8, ptr %0, i64 28        ; 2 uses
   %i.ah = getelementptr i8, ptr %0, i64 32        ; 3 uses
   %i.ai = getelementptr i8, ptr %0, i64 36        ; 2 uses
   %i.aj = getelementptr i8, ptr %0, i64 40        ; 2 uses
   %i.ak = getelementptr i8, ptr %0, i64 44        ; 2 uses
   %i.al = getelementptr i8, ptr %1, i64 16        ; 3 uses
-  %.val12598.a = load i32, ptr %i.o, align 1      ; 10 uses
-  %.val12599 = load i32, ptr %i.n, align 1        ; 10 uses
+  %.val12598.a = load i32, ptr %i.n, align 1      ; 10 uses
+  %.val12599 = load i32, ptr %i.o, align 1        ; 10 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(64) %1, i64 64, i1 false)
   %i.am = load i32, ptr %i.w, align 4, !tbaa !10
   %i.an = xor i32 %i.am, %i.t
@@ -216,7 +216,7 @@ bb.a:
   %i.dm = add i32 %i.dj, %i.co
   %i.dn = add i32 %i.cp, %i.dg
   %i.do = add i32 %i.dk, %.val12601               ; 2 uses
-  %i.dp = add i32 %i.dl, %.val12599               ; 2 uses
+  %i.dp = add i32 %i.dl, %.val12598.a             ; 2 uses
   %i.dq = add i32 %i.dm, %.val12597               ; 2 uses
   %i.dr = add i32 %i.dn, %.val12595               ; 2 uses
   %i.ds = xor i32 %i.do, %i.cx                    ; 2 uses
@@ -244,7 +244,7 @@ bb.a:
   %i.eo = add i32 %i.ek, %i.dq
   %i.ep = add i32 %i.el, %i.dr
   %i.eq = add i32 %i.em, %.val12600               ; 2 uses
-  %i.er = add i32 %i.en, %.val12598.a             ; 2 uses
+  %i.er = add i32 %i.en, %.val12599               ; 2 uses
   %i.es = add i32 %i.eo, %.val12596               ; 2 uses
   %i.et = add i32 %i.ep, %.val                    ; 2 uses
   %i.eu = xor i32 %i.eq, %i.dw                    ; 2 uses
@@ -299,7 +299,7 @@ bb.a:
   %i.gr = add i32 %i.gn, %i.ft
   %i.gs = add i32 %i.go, %i.fu
   %i.gt = add i32 %i.gp, %i.fv
-  %i.gu = add i32 %i.gq, %.val12599               ; 2 uses
+  %i.gu = add i32 %i.gq, %.val12598.a             ; 2 uses
   %i.gv = add i32 %i.gr, %.val12601               ; 2 uses
   %i.gw = add i32 %i.gs, %.val                    ; 2 uses
   %i.gx = add i32 %i.gt, %.val12603               ; 2 uses
@@ -329,7 +329,7 @@ bb.a:
   %i.hv = add i32 %i.gx, %i.ho
   %i.hw = add i32 %i.hs, %.val12608               ; 2 uses
   %i.hx = add i32 %i.ht, %.val12609               ; 2 uses
-  %i.hy = add i32 %i.hu, %.val12598.a             ; 2 uses
+  %i.hy = add i32 %i.hu, %.val12599               ; 2 uses
   %i.hz = add i32 %i.hv, %.val12604               ; 2 uses
   %i.ia = xor i32 %i.hw, %i.hf                    ; 2 uses
   %i.ib = xor i32 %i.hx, %i.hc                    ; 2 uses
@@ -383,7 +383,7 @@ bb.a:
   %i.jx = add i32 %i.js, %i.iz
   %i.jy = add i32 %i.jt, %i.ja
   %i.jz = add i32 %i.ju, %i.jb
-  %i.ka = add i32 %i.jw, %.val12598.a             ; 2 uses
+  %i.ka = add i32 %i.jw, %.val12599               ; 2 uses
   %i.kb = add i32 %i.jx, %.val12597               ; 2 uses
   %i.kc = add i32 %i.jy, %.val12604               ; 2 uses
   %i.kd = add i32 %i.jz, %.val                    ; 2 uses
@@ -439,7 +439,7 @@ bb.a:
   %i.mb = add i32 %i.ly, %i.ld
   %i.mc = add i32 %i.lz, %i.le
   %i.md = add i32 %i.lf, %i.lw
-  %i.me = add i32 %i.ma, %.val12599               ; 2 uses
+  %i.me = add i32 %i.ma, %.val12598.a             ; 2 uses
   %i.mf = add i32 %i.mb, %.val12606               ; 2 uses
   %i.mg = add i32 %i.mc, %.val12602               ; 2 uses
   %i.mh = add i32 %i.md, %.val12600               ; 2 uses
@@ -498,7 +498,7 @@ bb.a:
   %i.oi = add i32 %i.oe, %.val12602               ; 2 uses
   %i.oj = add i32 %i.of, %.val12606               ; 2 uses
   %i.ok = add i32 %i.og, %.val12596               ; 2 uses
-  %i.ol = add i32 %i.oh, %.val12598.a             ; 2 uses
+  %i.ol = add i32 %i.oh, %.val12599               ; 2 uses
   %i.om = xor i32 %i.oi, %i.np                    ; 2 uses
   %i.on = xor i32 %i.oj, %i.nq                    ; 2 uses
   %i.oo = xor i32 %i.ok, %i.nr                    ; 2 uses
@@ -580,7 +580,7 @@ bb.a:
   %i.rm = add i32 %i.ri, %i.qo
   %i.rn = add i32 %i.rj, %i.qp
   %i.ro = add i32 %i.rk, %.val12603               ; 2 uses
-  %i.rp = add i32 %i.rl, %.val12599               ; 2 uses
+  %i.rp = add i32 %i.rl, %.val12598.a             ; 2 uses
   %i.rq = add i32 %i.rm, %.val12609               ; 2 uses
   %i.rr = add i32 %i.rn, %.val12601               ; 2 uses
   %i.rs = xor i32 %i.ro, %i.qu                    ; 2 uses
@@ -610,7 +610,7 @@ bb.a:
   %i.sq = add i32 %i.sm, %.val12600               ; 2 uses
   %i.sr = add i32 %i.sn, %.val12604               ; 2 uses
   %i.ss = add i32 %i.so, %.val12607               ; 2 uses
-  %i.st = add i32 %i.sp, %.val12599               ; 2 uses
+  %i.st = add i32 %i.sp, %.val12598.a             ; 2 uses
   %i.su = xor i32 %i.sq, %i.rx                    ; 2 uses
   %i.sv = xor i32 %i.sr, %i.ry                    ; 2 uses
   %i.sw = xor i32 %i.ss, %i.rz                    ; 2 uses
@@ -664,7 +664,7 @@ bb.a:
   %i.us = add i32 %i.up, %i.tu
   %i.ut = add i32 %i.um, %i.tv
   %i.uu = add i32 %i.uq, %.val12595               ; 2 uses
-  %i.uv = add i32 %i.ur, %.val12598.a             ; 2 uses
+  %i.uv = add i32 %i.ur, %.val12599               ; 2 uses
   %i.uw = add i32 %i.us, %.val12603               ; 2 uses
   %i.ux = add i32 %i.ut, %.val12606               ; 2 uses
   %i.uy = xor i32 %i.uu, %i.ud                    ; 2 uses
@@ -748,8 +748,8 @@ bb.a:
   %i.xy = add i32 %i.xu, %i.xa
   %i.xz = add i32 %i.xv, %i.xb
   %i.ya = add i32 %i.xw, %.val12597               ; 2 uses
-  %i.yb = add i32 %i.xx, %.val12599               ; 2 uses
-  %i.yc = add i32 %i.xy, %.val12598.a             ; 2 uses
+  %i.yb = add i32 %i.xx, %.val12598.a             ; 2 uses
+  %i.yc = add i32 %i.xy, %.val12599               ; 2 uses
   %i.yd = add i32 %i.xz, %.val12606               ; 2 uses
   %i.ye = xor i32 %i.ya, %i.xg                    ; 2 uses
   %i.yf = xor i32 %i.yb, %i.xh                    ; 2 uses
@@ -862,7 +862,7 @@ bb.a:
   %i.aci = add i32 %i.ace, %.val12604             ; 2 uses
   %i.acj = add i32 %i.acf, %.val                  ; 2 uses
   %i.ack = add i32 %i.acg, %.val12596             ; 2 uses
-  %i.acl = add i32 %i.ach, %.val12599             ; 2 uses
+  %i.acl = add i32 %i.ach, %.val12598.a           ; 2 uses
   %i.acm = xor i32 %i.aci, %i.abo                 ; 2 uses
   %i.acn = xor i32 %i.acj, %i.abp                 ; 2 uses
   %i.aco = xor i32 %i.ack, %i.abq                 ; 2 uses
@@ -918,7 +918,7 @@ bb.a:
   %i.aem = add i32 %i.aei, %.val12602             ; 2 uses
   %i.aen = add i32 %i.aej, %.val12606             ; 2 uses
   %i.aeo = add i32 %i.aek, %.val12607             ; 2 uses
-  %i.aep = add i32 %i.ael, %.val12598.a           ; 2 uses
+  %i.aep = add i32 %i.ael, %.val12599             ; 2 uses
   %i.aeq = xor i32 %i.aem, %i.ads                 ; 2 uses
   %i.aer = xor i32 %i.aen, %i.adt                 ; 2 uses
   %i.aes = xor i32 %i.aeo, %i.adu                 ; 2 uses
@@ -971,7 +971,7 @@ bb.a:
   %i.agn = add i32 %i.agj, %i.afp
   %i.ago = add i32 %i.agk, %i.afq
   %i.agp = add i32 %i.agl, %i.afr
-  %i.agq = add i32 %i.agm, %.val12598.a           ; 2 uses
+  %i.agq = add i32 %i.agm, %.val12599             ; 2 uses
   %i.agr = add i32 %i.agn, %.val12595             ; 2 uses
   %i.ags = add i32 %i.ago, %.val12608             ; 2 uses
   %i.agt = add i32 %i.agp, %.val12600             ; 2 uses
@@ -1030,7 +1030,7 @@ bb.a:
   %i.aiu = add i32 %i.aiq, %.val12609             ; 2 uses
   %i.aiv = add i32 %i.air, %.val12605             ; 2 uses
   %i.aiw = add i32 %i.ais, %.val12603             ; 2 uses
-  %i.aix = add i32 %i.ait, %.val12599             ; 2 uses
+  %i.aix = add i32 %i.ait, %.val12598.a           ; 2 uses
   %i.aiy = xor i32 %i.aiu, %i.aia                 ; 2 uses
   %i.aiz = xor i32 %i.aiv, %i.aib                 ; 2 uses
   %i.aja = xor i32 %i.aiw, %i.aic                 ; 2 uses
@@ -1057,7 +1057,7 @@ bb.a:
   %i.ajv = add i32 %i.ajq, %i.aix
   %i.ajw = add i32 %i.ajs, %.val12603             ; 2 uses
   %i.ajx = add i32 %i.ajt, %.val12595             ; 2 uses
-  %i.ajy = add i32 %i.aju, %.val12598.a           ; 2 uses
+  %i.ajy = add i32 %i.aju, %.val12599             ; 2 uses
   %i.ajz = add i32 %i.ajv, %.val12609             ; 2 uses
   %i.aka = xor i32 %i.ajw, %i.ajd                 ; 2 uses
   %i.akb = xor i32 %i.ajx, %i.aje                 ; 2 uses
@@ -1114,7 +1114,7 @@ bb.a:
   %i.ama = add i32 %i.alw, %.val12597             ; 2 uses
   %i.amb = add i32 %i.alx, %.val12596             ; 2 uses
   %i.amc = add i32 %i.aly, %.val12608             ; 2 uses
-  %i.amd = add i32 %i.alz, %.val12599             ; 2 uses
+  %i.amd = add i32 %i.alz, %.val12598.a           ; 2 uses
   %i.ame = xor i32 %i.ama, %i.alj                 ; 2 uses
   %i.amf = xor i32 %i.amb, %i.alg                 ; 2 uses
   %i.amg = xor i32 %i.amc, %i.alh                 ; 2 uses
@@ -1167,7 +1167,7 @@ bb.a:
   %i.aob = add i32 %i.anw, %i.and
   %i.aoc = add i32 %i.anx, %i.ane
   %i.aod = add i32 %i.any, %i.anf
-  %i.aoe = add i32 %i.aoa, %.val12599             ; 2 uses
+  %i.aoe = add i32 %i.aoa, %.val12598.a           ; 2 uses
   %i.aof = add i32 %i.aob, %.val12601             ; 2 uses
   %i.aog = add i32 %i.aoc, %.val12602             ; 2 uses
   %i.aoh = add i32 %i.aod, %.val12608             ; 2 uses
@@ -1251,18 +1251,18 @@ bb.a:
   %i.arh = add i32 %i.ard, %i.aqj
   %i.ari = add i32 %i.are, %i.aqk
   %i.arj = add i32 %i.arf, %i.aql
-  %i.ark = add i32 %i.arh, %.val12595             ; 3 uses
-  store i32 %i.ark, ptr %i.ab, align 4, !tbaa !10
-  %i.arl = add i32 %i.ari, %.val12597             ; 3 uses
-  store i32 %i.arl, ptr %i.ad, align 4, !tbaa !10
-  %i.arm = add i32 %i.arj, %.val12609             ; 3 uses
-  store i32 %i.arm, ptr %i.af, align 4, !tbaa !10
-  %i.arn = add i32 %i.arg, %.val12598.a           ; 3 uses
-  store i32 %i.arn, ptr %0, align 4, !tbaa !10
-  %i.aro = xor i32 %i.arn, %i.aqq                 ; 2 uses
-  %i.arp = xor i32 %i.ark, %i.aqr                 ; 2 uses
-  %i.arq = xor i32 %i.arl, %i.aqs                 ; 2 uses
-  %i.arr = xor i32 %i.arm, %i.aqt                 ; 2 uses
+  %i.ark = add i32 %i.arg, %.val12599             ; 3 uses
+  store i32 %i.ark, ptr %0, align 4, !tbaa !10
+  %i.arl = add i32 %i.arh, %.val12595             ; 2 uses
+  store i32 %i.arl, ptr %i.ab, align 4, !tbaa !10
+  %i.arm = add i32 %i.ari, %.val12597             ; 2 uses
+  store i32 %i.arm, ptr %i.ad, align 4, !tbaa !10
+  %i.arn = add i32 %i.arj, %.val12609             ; 2 uses
+  store i32 %i.arn, ptr %i.af, align 4, !tbaa !10
+  %i.aro = xor i32 %i.ark, %i.aqq                 ; 2 uses
+  %i.arp = xor i32 %i.arl, %i.aqr                 ; 2 uses
+  %i.arq = xor i32 %i.arm, %i.aqs                 ; 2 uses
+  %i.arr = xor i32 %i.arn, %i.aqt                 ; 2 uses
   %i.ars = tail call i32 @llvm.fshl.i32(i32 %i.aro, i32 %i.aro, i32 24) ; 2 uses
   %i.art = tail call i32 @llvm.fshl.i32(i32 %i.arp, i32 %i.arp, i32 24) ; 2 uses
   %i.aru = tail call i32 @llvm.fshl.i32(i32 %i.arq, i32 %i.arq, i32 24) ; 2 uses
@@ -1291,11 +1291,14 @@ bb.a:
   store i32 %i.aru, ptr %i.x, align 4, !tbaa !10
   store i32 %i.arv, ptr %i.y, align 4, !tbaa !10
   store i32 %i.ars, ptr %i.z, align 4, !tbaa !10
+  %6 = load i32, ptr %i.ab, align 4, !tbaa !10
+  %7 = load i32, ptr %i.ad, align 4, !tbaa !10
   %i.asi = load <4 x i32>, ptr %1, align 4, !tbaa !10
-  %i.asj = insertelement <4 x i32> poison, i32 %i.arn, i64 0
-  %i.ask = insertelement <4 x i32> %i.asj, i32 %i.ark, i64 1
-  %i.asl = insertelement <4 x i32> %i.ask, i32 %i.arl, i64 2
-  %i.asm = insertelement <4 x i32> %i.asl, i32 %i.arm, i64 3
+  %8 = load i32, ptr %i.af, align 4, !tbaa !10
+  %i.asj = insertelement <4 x i32> poison, i32 %i.ark, i64 0
+  %i.ask = insertelement <4 x i32> %i.asj, i32 %6, i64 1
+  %i.asl = insertelement <4 x i32> %i.ask, i32 %7, i64 2
+  %i.asm = insertelement <4 x i32> %i.asl, i32 %8, i64 3
   %i.asn = xor <4 x i32> %i.asm, %i.asi           ; 2 uses
   store <4 x i32> %i.asn, ptr %1, align 4, !tbaa !10
   %i.aso = load <4 x i32>, ptr %i.ah, align 4, !tbaa !10

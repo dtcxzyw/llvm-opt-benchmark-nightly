@@ -204,11 +204,11 @@ bb.ew:                                            ; preds = %.noexc136.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dv), !dbg !13386, !noalias !12525
   %i.sv = icmp ult i32 %i.sf, 1000000000, !dbg !13387
   call void @llvm.assume(i1 %i.sv), !dbg !13387
-  %i.sw = uitofp nneg i32 %i.sf to double, !dbg !13388
-  %i.sx = uitofp nneg i32 %i.su to double, !dbg !13389
-  %i.sy = insertelement <2 x double> poison, double %i.sx, i64 0, !dbg !13389
-  %i.sz = insertelement <2 x double> %i.sy, double %i.sw, i64 1, !dbg !13389
-  %i.ta = fdiv <2 x double> %i.sz, splat (double 1.000000e+09), !dbg !13389
+  %i.sw = uitofp nneg i32 %i.su to double, !dbg !13388
+  %i.sx = uitofp nneg i32 %i.sf to double, !dbg !13389
+  %i.sy = insertelement <2 x double> poison, double %i.sw, i64 0, !dbg !13388
+  %i.sz = insertelement <2 x double> %i.sy, double %i.sx, i64 1, !dbg !13388
+  %i.ta = fdiv <2 x double> %i.sz, splat (double 1.000000e+09), !dbg !13388
   %i.tb = insertelement <2 x i64> %i.st, i64 %i.se, i64 1, !dbg !13390
   %i.tc = uitofp <2 x i64> %i.tb to <2 x double>, !dbg !13390
   %i.td = fadd <2 x double> %i.ta, %i.tc, !dbg !13390 ; 2 uses
@@ -611,11 +611,11 @@ bb.jv:                                            ; preds = %.noexc72.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !dbg !13707, !noalias !12743
   %i.abu = icmp ult i32 %i.abd, 1000000000, !dbg !13708
   call void @llvm.assume(i1 %i.abu), !dbg !13708
-  %i.abv = uitofp nneg i32 %i.abd to double, !dbg !13709
-  %i.abw = uitofp nneg i32 %i.abt to double, !dbg !13710
-  %i.abx = insertelement <2 x double> poison, double %i.abw, i64 0, !dbg !13710
-  %i.aby = insertelement <2 x double> %i.abx, double %i.abv, i64 1, !dbg !13710
-  %i.abz = fdiv <2 x double> %i.aby, splat (double 1.000000e+09), !dbg !13710
+  %i.abv = uitofp nneg i32 %i.abt to double, !dbg !13709
+  %i.abw = uitofp nneg i32 %i.abd to double, !dbg !13710
+  %i.abx = insertelement <2 x double> poison, double %i.abv, i64 0, !dbg !13709
+  %i.aby = insertelement <2 x double> %i.abx, double %i.abw, i64 1, !dbg !13709
+  %i.abz = fdiv <2 x double> %i.aby, splat (double 1.000000e+09), !dbg !13709
   %i.aca = insertelement <2 x i64> poison, i64 %i.abr, i64 0, !dbg !13711
   %i.acb = insertelement <2 x i64> %i.aca, i64 %i.abc, i64 1, !dbg !13711
   %i.acc = uitofp <2 x i64> %i.acb to <2 x double>, !dbg !13711
@@ -1018,8 +1018,8 @@ begin_hunk_2_@llvm.umin.i32
 !13385 = !DILocation(line: 33, column: 9, scope: !11067, inlinedAt: !11068)
 !13386 = !DILocation(line: 480, column: 28, scope: !11053, inlinedAt: !11052)
 !13387 = !DILocation(line: 49, column: 26, scope: !11069, inlinedAt: !11072)
-!13388 = !DILocation(line: 867, column: 30, scope: !11070, inlinedAt: !11071)
-!13389 = !DILocation(line: 867, column: 30, scope: !11070, inlinedAt: !11073)
+!13388 = !DILocation(line: 867, column: 30, scope: !11070, inlinedAt: !11073)
+!13389 = !DILocation(line: 867, column: 30, scope: !11070, inlinedAt: !11071)
 !13390 = !DILocation(line: 867, column: 9, scope: !11070, inlinedAt: !11073)
 !13391 = !DILocation(line: 867, column: 9, scope: !11070, inlinedAt: !11071)
 !13392 = !DILocation(line: 461, column: 9, scope: !12534, inlinedAt: !11052)
@@ -1339,8 +1339,8 @@ begin_hunk_2_@llvm.umin.i32
 !13706 = !DILocation(line: 33, column: 9, scope: !11590, inlinedAt: !11591)
 !13707 = !DILocation(line: 480, column: 28, scope: !11576, inlinedAt: !11575)
 !13708 = !DILocation(line: 49, column: 26, scope: !11592, inlinedAt: !11595)
-!13709 = !DILocation(line: 867, column: 30, scope: !11593, inlinedAt: !11594)
-!13710 = !DILocation(line: 867, column: 30, scope: !11593, inlinedAt: !11596)
+!13709 = !DILocation(line: 867, column: 30, scope: !11593, inlinedAt: !11596)
+!13710 = !DILocation(line: 867, column: 30, scope: !11593, inlinedAt: !11594)
 !13711 = !DILocation(line: 867, column: 9, scope: !11593, inlinedAt: !11596)
 !13712 = !DILocation(line: 867, column: 9, scope: !11593, inlinedAt: !11594)
 !13713 = !DILocation(line: 461, column: 9, scope: !12747, inlinedAt: !11575)

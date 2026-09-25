@@ -165,17 +165,17 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 13
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 11
   %i.y = load i8, ptr %i.u, align 2
-  %3 = load i8, ptr %i.w, align 1
-  %i.z = load i8, ptr %i.x, align 1
-  %4 = load i8, ptr %i.v, align 1
-  %5 = zext i8 %i.y to i16
-  %i.aa = zext i8 %4 to i16
-  %6 = zext i8 %3 to i16
-  %i.ab = zext i8 %i.z to i16
-  %i.ac = insertelement <4 x i16> poison, i16 %i.aa, i64 0
+  %3 = zext i8 %i.y to i16
+  %i.z = load i8, ptr %i.v, align 1
+  %4 = zext i8 %i.z to i16
+  %5 = load i8, ptr %i.w, align 1
+  %i.aa = zext i8 %5 to i16
+  %6 = load i8, ptr %i.x, align 1
+  %i.ab = zext i8 %6 to i16
+  %i.ac = insertelement <4 x i16> poison, i16 %4, i64 0
   %i.ad = insertelement <4 x i16> %i.ac, i16 %i.ab, i64 1
-  %i.ae = insertelement <4 x i16> %i.ad, i16 %6, i64 2
-  %i.af = insertelement <4 x i16> %i.ae, i16 %5, i64 3
+  %i.ae = insertelement <4 x i16> %i.ad, i16 %i.aa, i64 2
+  %i.af = insertelement <4 x i16> %i.ae, i16 %3, i64 3
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.g, %.preheader91.preheader.i

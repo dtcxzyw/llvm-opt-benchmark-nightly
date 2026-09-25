@@ -204,6 +204,8 @@ bb.ar:                                            ; preds = %_ZN4llvm11raw_ostre
 
 _ZN4llvm11raw_ostreamlsEPKc.exit127:              ; preds = %bb.ar, %bb.aq, %_ZN4llvm4bolt9CallGraph7findArcEmm.exit
   %i.nf = uitofp i64 %.0226 to double
+  %29 = fadd double %i.ii, %i.nf
+  %30 = fptoui double %29 to i64                  ; 2 uses
   %i.ng = insertelement <2 x double> poison, double %i.ii, i64 0
   %i.nh = shufflevector <2 x double> %i.ng, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ni = fadd <2 x double> %i.gk, %i.nh
@@ -216,9 +218,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit127:              ; preds = %bb.ar, %bb.aq, %_ZN
   %.3211 = select i1 %i.nn, double %i.no, double %.2210222 ; 2 uses
   %i.np = load double, ptr %i.ih, align 8, !tbaa !506 ; 2 uses
   %i.nq = uitofp i64 %.070225 to double
-  %29 = fadd double %i.ii, %i.nf
   %i.nr = call double @llvm.fmuladd.f64(double %i.np, double %i.ig, double %i.nq)
-  %30 = fptoui double %29 to i64                  ; 2 uses
   %i.ns = fptoui double %i.nr to i64              ; 2 uses
   br i1 %i.c, label %bb.as, label %bb.at
 

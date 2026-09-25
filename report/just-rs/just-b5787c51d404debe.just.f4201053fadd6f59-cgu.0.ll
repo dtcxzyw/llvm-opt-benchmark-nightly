@@ -205,8 +205,8 @@ bb.cy:                                            ; preds = %bb.cx
   %.sroa.14.8.copyload521 = load i64, ptr %i.ab, align 8, !noalias !36856
   %.sroa.25.8..sroa_idx527 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %.sroa.30.8..sroa_idx535 = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %.sroa.30.8.copyload536.a = load i64, ptr %.sroa.30.8..sroa_idx535, align 8, !noalias !36856
-  %.sroa.25.8.copyload528 = load i64, ptr %.sroa.25.8..sroa_idx527, align 8, !noalias !36856
+  %.sroa.30.8.copyload536.a = load i64, ptr %.sroa.25.8..sroa_idx527, align 8, !noalias !36856
+  %.sroa.25.8.copyload528 = load i64, ptr %.sroa.30.8..sroa_idx535, align 8, !noalias !36856
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !36857
   br label %bb.ec
 
@@ -498,8 +498,8 @@ bb.eb:                                            ; preds = %bb.dp
   %.sroa.14.8.copyload520 = load i64, ptr %i.ag, align 8, !noalias !36856
   %.sroa.25.8..sroa_idx525 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %.sroa.30.8..sroa_idx533 = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.sroa.30.8.copyload534.a = load i64, ptr %.sroa.30.8..sroa_idx533, align 8, !noalias !36856
-  %.sroa.25.8.copyload526 = load i64, ptr %.sroa.25.8..sroa_idx525, align 8, !noalias !36856
+  %.sroa.30.8.copyload534.a = load i64, ptr %.sroa.25.8..sroa_idx525, align 8, !noalias !36856
+  %.sroa.25.8.copyload526 = load i64, ptr %.sroa.30.8..sroa_idx533, align 8, !noalias !36856
   %.sroa.33.8..sroa_idx540 = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %i.wz = load i64, ptr %.sroa.33.8..sroa_idx540, align 8, !noalias !36856
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !36857
@@ -507,8 +507,8 @@ bb.eb:                                            ; preds = %bb.dp
 
 bb.ec:                                            ; preds = %bb.eb, %bb.ea, %bb.cy, %bb.cw, %bb.bu
   %.sroa.33.sroa.0.0 = phi i64 [ undef, %bb.bu ], [ %.sroa.33.sroa.0.0.copyload1664, %bb.ea ], [ %i.wz, %bb.eb ], [ undef, %bb.cy ], [ undef, %bb.cw ] ; 2 uses
-  %.sroa.30.0 = phi i64 [ %i.pm, %bb.bu ], [ %.sroa.6.0.copyload.i, %bb.ea ], [ %.sroa.30.8.copyload534.a, %bb.eb ], [ %.sroa.30.8.copyload536.a, %bb.cy ], [ undef, %bb.cw ] ; 2 uses
-  %.sroa.25.0 = phi i64 [ %i.px, %bb.bu ], [ %i.wy, %bb.ea ], [ %.sroa.25.8.copyload526, %bb.eb ], [ %.sroa.25.8.copyload528, %bb.cy ], [ %i.qy, %bb.cw ] ; 2 uses
+  %.sroa.30.0 = phi i64 [ %i.pm, %bb.bu ], [ %.sroa.6.0.copyload.i, %bb.ea ], [ %.sroa.25.8.copyload526, %bb.eb ], [ %.sroa.25.8.copyload528, %bb.cy ], [ undef, %bb.cw ] ; 2 uses
+  %.sroa.25.0 = phi i64 [ %i.px, %bb.bu ], [ %i.wy, %bb.ea ], [ %.sroa.30.8.copyload534.a, %bb.eb ], [ %.sroa.30.8.copyload536.a, %bb.cy ], [ %i.qy, %bb.cw ] ; 2 uses
   %.sroa.14.0 = phi i64 [ %i.qo, %bb.bu ], [ %.sroa.03.0.copyload.i, %bb.ea ], [ %.sroa.14.8.copyload520, %bb.eb ], [ %.sroa.14.8.copyload521, %bb.cy ], [ %i.ul, %bb.cw ] ; 2 uses
   %.sroa.0.0 = phi i64 [ 32, %bb.bu ], [ 93, %bb.ea ], [ 64, %bb.eb ], [ 45, %bb.cy ], [ -1, %bb.cw ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !36907)

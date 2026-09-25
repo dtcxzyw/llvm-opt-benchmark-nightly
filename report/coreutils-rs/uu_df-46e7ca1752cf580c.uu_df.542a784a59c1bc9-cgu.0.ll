@@ -205,29 +205,29 @@ bb.bg:                                            ; preds = %bb.ap
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.eb, ptr noundef nonnull align 8 dereferenceable(24) %i.fa, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ec, ptr noundef nonnull align 8 dereferenceable(24) %i.fb, i64 24, i1 false)
   %.sroa.0.0.i50 = zext i1 %i.fi to i64
-  %.sroa.17.0.copyload.a = load i64, ptr %.sroa.17.0..sroa_idx, align 8 ; 4 uses
-  %.sroa.18.0.copyload.a = load i64, ptr %.sroa.18.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.15.0.copyload = load i64, ptr %.sroa.15.0..sroa_idx, align 8
-  %i.id = call i64 @llvm.usub.sat.i64(i64 %.sroa.17.0.copyload.a, i64 %.sroa.18.0.copyload.a) ; 2 uses
-  %i.ie = call i64 @llvm.usub.sat.i64(i64 %i.fh, i64 %.sroa.15.0.copyload) ; 3 uses
-  %i.if = add i64 %i.ie, %.sroa.16.0.copyload
-  %i.ig = icmp ne i64 %.sroa.17.0.copyload.a, 0
-  %i.ih = insertelement <2 x i64> poison, i64 %i.ie, i64 0
-  %i.ii = insertelement <2 x i64> %i.ih, i64 %i.id, i64 1
+  %.sroa.17.0.copyload.a = load i64, ptr %.sroa.15.0..sroa_idx, align 8
+  %.sroa.18.0.copyload.a = load i64, ptr %.sroa.17.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.15.0.copyload = load i64, ptr %.sroa.18.0..sroa_idx, align 8 ; 2 uses
+  %i.id = call i64 @llvm.usub.sat.i64(i64 %i.fh, i64 %.sroa.17.0.copyload.a) ; 3 uses
+  %i.ie = call i64 @llvm.usub.sat.i64(i64 %.sroa.18.0.copyload.a, i64 %.sroa.15.0.copyload) ; 2 uses
+  %i.if = add i64 %i.id, %.sroa.16.0.copyload
+  %3 = uitofp i64 %i.if to double
+  %i.ig = icmp ne i64 %.sroa.18.0.copyload.a, 0
+  %i.ih = insertelement <2 x i64> poison, i64 %i.id, i64 0
+  %i.ii = insertelement <2 x i64> %i.ih, i64 %i.ie, i64 1
   %i.ij = uitofp <2 x i64> %i.ii to <2 x double>
-  %3 = uitofp i64 %.sroa.17.0.copyload.a to double
-  %i.ik = uitofp i64 %i.if to double
-  %i.il = insertelement <2 x double> poison, double %i.ik, i64 0
-  %i.im = insertelement <2 x double> %i.il, double %3, i64 1
+  %i.ik = uitofp i64 %.sroa.18.0.copyload.a to double
+  %i.il = insertelement <2 x double> poison, double %3, i64 0
+  %i.im = insertelement <2 x double> %i.il, double %i.ik, i64 1
   %i.in = fdiv <2 x double> %i.ij, %i.im          ; 2 uses
   %.sroa.01.0.i = zext i1 %i.ig to i64
-  %i.io = zext i64 %.sroa.18.0.copyload.a to i128
-  %i.ip = zext i64 %i.id to i128
-  %i.iq = zext i64 %.sroa.17.0.copyload.a to i128
-  %i.ir = mul i64 %i.ie, %.sroa.13.0.copyload     ; 2 uses
-  %i.is = mul i64 %.sroa.16.0.copyload, %.sroa.13.0.copyload ; 2 uses
-  %i.it = insertelement <2 x i64> poison, i64 %i.is, i64 0
-  %i.iu = insertelement <2 x i64> %i.it, i64 %i.ir, i64 1
+  %i.io = zext i64 %.sroa.15.0.copyload to i128
+  %i.ip = zext i64 %i.ie to i128
+  %i.iq = zext i64 %.sroa.18.0.copyload.a to i128
+  %i.ir = mul i64 %.sroa.16.0.copyload, %.sroa.13.0.copyload ; 2 uses
+  %i.is = mul i64 %i.id, %.sroa.13.0.copyload     ; 2 uses
+  %i.it = insertelement <2 x i64> poison, i64 %i.ir, i64 0
+  %i.iu = insertelement <2 x i64> %i.it, i64 %i.is, i64 1
   %i.iv = uitofp <2 x i64> %i.iu to <2 x double>
   %i.iw = fdiv <2 x double> %i.iv, %i.fd          ; 2 uses
   %i.ix = extractelement <2 x double> %i.iw, i64 0
@@ -243,9 +243,9 @@ bb.bg:                                            ; preds = %bb.ap
   %i.jh = call i64 @llvm.fptoui.sat.i64.f64(double %i.jg)
   store i64 %i.jd, ptr %i.ee, align 16, !alias.scope !2647, !noalias !2648
   store i64 %i.jh, ptr %i.ef, align 8, !alias.scope !2647, !noalias !2648
-  store i64 %i.ir, ptr %i.eg, align 16, !alias.scope !2647, !noalias !2648
+  store i64 %i.is, ptr %i.eg, align 16, !alias.scope !2647, !noalias !2648
   store i64 %i.jc, ptr %i.eh, align 8, !alias.scope !2647, !noalias !2648
-  store i64 %i.is, ptr %i.ei, align 16, !alias.scope !2647, !noalias !2648
+  store i64 %i.ir, ptr %i.ei, align 16, !alias.scope !2647, !noalias !2648
   store i64 %i.iz, ptr %i.ej, align 8, !alias.scope !2647, !noalias !2648
   store i64 %.sroa.0.0.i50, ptr %i.q, align 16, !alias.scope !2647, !noalias !2648
   %i.ji = extractelement <2 x double> %i.in, i64 0

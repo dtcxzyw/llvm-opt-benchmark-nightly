@@ -204,10 +204,10 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.an = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.am)
   %i.ao = fptosi <2 x float> %i.an to <2 x i32>   ; 2 uses
   store <2 x i32> %i.ao, ptr %3, align 4, !tbaa !28
-  %i.ap = trunc i32 %i.ah to i16
-  %i.aq = trunc i32 %i.ag to i16
-  %i.ar = insertelement <2 x i16> poison, i16 %i.aq, i64 0
-  %i.as = insertelement <2 x i16> %i.ar, i16 %i.ap, i64 1
+  %i.ap = trunc i32 %i.ag to i16
+  %i.aq = trunc i32 %i.ah to i16
+  %i.ar = insertelement <2 x i16> poison, i16 %i.ap, i64 0
+  %i.as = insertelement <2 x i16> %i.ar, i16 %i.aq, i64 1
   %i.at = sitofp <2 x i16> %i.as to <2 x float>
   %i.au = fmul <2 x float> %i.ai, %i.at
   %i.av = tail call <2 x float> @llvm.ceil.v2f32(<2 x float> %i.au)

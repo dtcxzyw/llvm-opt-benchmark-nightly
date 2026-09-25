@@ -205,17 +205,17 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.am, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.an = lshr i32 %0, 6
-  %2 = lshr i32 %0, 12
-  %i.ao = lshr i32 %0, 18
-  %i.ap = trunc i32 %0 to i8
-  %3 = trunc i32 %i.an to i8
-  %i.aq = trunc i32 %2 to i8
-  %i.ar = trunc nuw nsw i32 %i.ao to i8
-  %i.as = insertelement <4 x i8> poison, i8 %i.ar, i64 0
-  %i.at = insertelement <4 x i8> %i.as, i8 %i.aq, i64 1
-  %i.au = insertelement <4 x i8> %i.at, i8 %3, i64 2
-  %i.av = insertelement <4 x i8> %i.au, i8 %i.ap, i64 3
+  %i.an = lshr i32 %0, 18
+  %2 = trunc nuw nsw i32 %i.an to i8
+  %i.ao = lshr i32 %0, 12
+  %i.ap = trunc i32 %i.ao to i8
+  %3 = lshr i32 %0, 6
+  %i.aq = trunc i32 %3 to i8
+  %i.ar = trunc i32 %0 to i8
+  %i.as = insertelement <4 x i8> poison, i8 %2, i64 0
+  %i.at = insertelement <4 x i8> %i.as, i8 %i.ap, i64 1
+  %i.au = insertelement <4 x i8> %i.at, i8 %i.aq, i64 2
+  %i.av = insertelement <4 x i8> %i.au, i8 %i.ar, i64 3
   %i.aw = and <4 x i8> %i.av, <i8 -1, i8 63, i8 63, i8 63>
   %i.ax = or disjoint <4 x i8> %i.aw, <i8 -16, i8 -128, i8 -128, i8 -128>
   store <4 x i8> %i.ax, ptr %1, align 1, !tbaa !184

@@ -205,12 +205,12 @@ bb.g:                                             ; preds = %bb.f
   %i.db = uitofp i32 %i.da to double, !dbg !38231
     #dbg_value(double %i.db, !37580, !DIExpression(), !36085)
   %i.dc = uitofp i32 %i.cx to double, !dbg !38232 ; 5 uses
-    #dbg_value(double %i.dd, !37581, !DIExpression(), !36085)
-    #dbg_value(double %i.de, !37375, !DIExpression(), !36086)
-  %7 = uitofp i32 %i.cy to double, !dbg !38233    ; 4 uses
   %i.dd = fmul nnan double %i.dc, f0x3FD2BEC333018868, !dbg !38232
-  %i.de = tail call nsz double @llvm.minimumnum.f64(double %i.db, double %i.dd), !dbg !38234
-  %i.df = fsub double %i.dc, %i.de, !dbg !38235   ; 5 uses
+    #dbg_value(double %i.dd, !37581, !DIExpression(), !36085)
+  %i.de = tail call nsz double @llvm.minimumnum.f64(double %i.db, double %i.dd), !dbg !38233
+    #dbg_value(double %i.de, !37375, !DIExpression(), !36086)
+  %i.df = fsub double %i.dc, %i.de, !dbg !38234   ; 5 uses
+  %7 = uitofp i32 %i.cy to double, !dbg !38235    ; 4 uses
   %i.dg = fsub double %i.df, %7, !dbg !38236
     #dbg_value(double %i.dg, !37576, !DIExpression(), !36074)
   %i.dh = tail call nsz double @llvm.maximumnum.f64(double %i.dg, double 0.000000e+00), !dbg !38237 ; 2 uses
@@ -613,9 +613,9 @@ begin_hunk_1_@llvm.ceil.v4f64
 !38230 = !DILocation(line: 130, column: 15, scope: !35874, inlinedAt: !35912)
 !38231 = !DILocation(line: 130, column: 14, scope: !35874, inlinedAt: !35912)
 !38232 = !DILocation(line: 130, column: 49, scope: !35874, inlinedAt: !35912)
-!38233 = !DILocation(line: 131, column: 38, scope: !35875, inlinedAt: !35912)
-!38234 = !DILocation(line: 1086, column: 9, scope: !36083, inlinedAt: !36084)
-!38235 = !DILocation(line: 131, column: 15, scope: !35875, inlinedAt: !35912)
+!38233 = !DILocation(line: 1086, column: 9, scope: !36083, inlinedAt: !36084)
+!38234 = !DILocation(line: 131, column: 15, scope: !35875, inlinedAt: !35912)
+!38235 = !DILocation(line: 131, column: 38, scope: !35875, inlinedAt: !35912)
 !38236 = !DILocation(line: 131, column: 14, scope: !35875, inlinedAt: !35912)
 !38237 = !DILocation(line: 1059, column: 9, scope: !36072, inlinedAt: !36073)
 !38238 = !DILocation(line: 20, column: 13, scope: !37587, inlinedAt: !35912)

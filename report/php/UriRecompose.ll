@@ -202,10 +202,10 @@ bb.ah:                                            ; preds = %.thread646, %bb.ag,
 
 bb.ai:                                            ; preds = %.lr.ph
   %i.df = urem i8 %i.de, 100
-  %i.dg = udiv i8 %i.df, 10
-  %i.dh = udiv i8 %i.de, 100
-  %i.di = insertelement <2 x i8> poison, i8 %i.dh, i64 0
-  %i.dj = insertelement <2 x i8> %i.di, i8 %i.dg, i64 1
+  %i.dg = udiv i8 %i.de, 100
+  %i.dh = udiv i8 %i.df, 10
+  %i.di = insertelement <2 x i8> poison, i8 %i.dg, i64 0
+  %i.dj = insertelement <2 x i8> %i.di, i8 %i.dh, i64 1
   %i.dk = or disjoint <2 x i8> %i.dj, splat (i8 48)
   %i.dl = zext nneg <2 x i8> %i.dk to <2 x i32>
   store <2 x i32> %i.dl, ptr %i.a, align 16, !tbaa !12

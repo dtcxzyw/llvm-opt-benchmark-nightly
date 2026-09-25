@@ -204,19 +204,19 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.3.0.i.i = phi ptr [ %.val17.i, %bb.f ], [ undef, %bb.e ]
   %.sroa.0.0.i.i = phi ptr [ %i.au, %bb.f ], [ null, %bb.e ] ; 2 uses
   %.not.i18.i = icmp eq ptr %.sroa.0.0.i.i, null  ; 2 uses
-  %spec.select5.i.i.a = select i1 %.not.i18.i, ptr @41, ptr %.sroa.3.0.i.i ; 2 uses
-  %spec.select.i.i = select i1 %.not.i18.i, ptr inttoptr (i64 1 to ptr), ptr %.sroa.0.0.i.i ; 2 uses
+  %spec.select5.i.i.a = select i1 %.not.i18.i, ptr inttoptr (i64 1 to ptr), ptr %.sroa.0.0.i.i ; 2 uses
+  %spec.select.i.i = select i1 %.not.i18.i, ptr @41, ptr %.sroa.3.0.i.i ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   store ptr %i.aj, ptr %i.av, align 8, !noalias !4259
   %.sroa.854.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 64
-  store ptr %spec.select.i.i, ptr %.sroa.854.0..sroa_idx.i, align 8, !noalias !4259
+  store ptr %spec.select5.i.i.a, ptr %.sroa.854.0..sroa_idx.i, align 8, !noalias !4259
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 72
-  store ptr %spec.select5.i.i.a, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !4259
+  store ptr %spec.select.i.i, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !4259
   %.sroa.1156.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 352 ; 2 uses
   store i8 0, ptr %.sroa.1156.0..sroa_idx.i, align 8, !noalias !4259
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !4259
-  %i.aw = insertelement <2 x ptr> poison, ptr %spec.select.i.i, i64 0
-  %i.ax = insertelement <2 x ptr> %i.aw, ptr %spec.select5.i.i.a, i64 1
+  %i.aw = insertelement <2 x ptr> poison, ptr %spec.select5.i.i.a, i64 0
+  %i.ax = insertelement <2 x ptr> %i.aw, ptr %spec.select.i.i, i64 1
   br label %.thread.i.i
 
 bb.g:                                             ; preds = %bb.d

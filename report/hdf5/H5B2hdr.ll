@@ -146,14 +146,14 @@ bb.f:                                             ; preds = %bb.d
   %i.ap = udiv i32 %i.an, %i.ao                   ; 4 uses
   store i32 %i.ap, ptr %i.ag, align 8, !tbaa !70
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
-  %i.ar = load i8, ptr %i.m, align 1, !tbaa !64
-  %4 = load i8, ptr %i.j, align 8, !tbaa !62
-  %5 = zext i8 %i.ar to i32
-  %6 = zext i8 %4 to i32
-  %7 = mul i32 %i.ap, %5
-  %i.as = mul i32 %i.ap, %6
-  %i.at = insertelement <2 x i32> poison, i32 %i.as, i64 0
-  %i.au = insertelement <2 x i32> %i.at, i32 %7, i64 1
+  %i.ar = load i8, ptr %i.j, align 8, !tbaa !62
+  %4 = zext i8 %i.ar to i32
+  %5 = mul i32 %i.ap, %4
+  %6 = load i8, ptr %i.m, align 1, !tbaa !64
+  %7 = zext i8 %6 to i32
+  %i.as = mul i32 %i.ap, %7
+  %i.at = insertelement <2 x i32> poison, i32 %5, i64 0
+  %i.au = insertelement <2 x i32> %i.at, i32 %i.as, i64 1
   %i.av = udiv <2 x i32> %i.au, splat (i32 100)
   store <2 x i32> %i.av, ptr %i.aq, align 4, !tbaa !65
   %i.aw = zext i32 %i.ap to i64                   ; 2 uses
@@ -377,14 +377,14 @@ bb.p:                                             ; preds = %.preheader, %bb.o
   %i.ej = getelementptr inbounds nuw [48 x i8], ptr %i.dt, i64 %indvars.iv141 ; 4 uses
   store i32 %i.ei, ptr %i.ej, align 8, !tbaa !70
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 4
-  %i.el = load i8, ptr %i.m, align 1, !tbaa !64
-  %8 = load i8, ptr %i.j, align 8, !tbaa !62
-  %9 = zext i8 %i.el to i32
-  %10 = zext i8 %8 to i32
-  %11 = mul i32 %i.ei, %9
-  %i.em = mul i32 %i.ei, %10
-  %i.en = insertelement <2 x i32> poison, i32 %i.em, i64 0
-  %i.eo = insertelement <2 x i32> %i.en, i32 %11, i64 1
+  %i.el = load i8, ptr %i.j, align 8, !tbaa !62
+  %8 = zext i8 %i.el to i32
+  %9 = mul i32 %i.ei, %8
+  %10 = load i8, ptr %i.m, align 1, !tbaa !64
+  %11 = zext i8 %10 to i32
+  %i.em = mul i32 %i.ei, %11
+  %i.en = insertelement <2 x i32> poison, i32 %9, i64 0
+  %i.eo = insertelement <2 x i32> %i.en, i32 %i.em, i64 1
   %i.ep = udiv <2 x i32> %i.eo, splat (i32 100)
   store <2 x i32> %i.ep, ptr %i.ek, align 4, !tbaa !65
   %i.eq = add i32 %i.ei, 1

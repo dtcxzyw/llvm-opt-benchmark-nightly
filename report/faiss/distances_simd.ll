@@ -205,8 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
   %i.az = load <4 x float>, ptr %.sroa.0112.sroa.96.0..sroa_idx, align 4
   %i.ba = load <4 x float>, ptr %.sroa.0112.sroa.112.0..sroa_idx, align 16
   %.sroa.0112.sroa.128.0.copyload = load float, ptr %.sroa.0112.sroa.128.0..sroa_idx, align 4
-  %.sroa.0112.sroa.160.0.copyload.a = load float, ptr %.sroa.0112.sroa.160.0..sroa_idx, align 4
-  %.sroa.0112.sroa.144.0.copyload = load float, ptr %.sroa.0112.sroa.144.0..sroa_idx, align 8
+  %.sroa.0112.sroa.160.0.copyload.a = load float, ptr %.sroa.0112.sroa.144.0..sroa_idx, align 8
+  %.sroa.0112.sroa.144.0.copyload = load float, ptr %.sroa.0112.sroa.160.0..sroa_idx, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   %.sroa.0112.sroa.64.0.copyload373 = load float, ptr %.sroa.0112.sroa.64.0..sroa_idx, align 4
@@ -303,7 +303,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
   %i.ck = insertelement <4 x float> %i.bd, float %.sroa.0112.sroa.128.0.copyload501, i64 1
   %i.cl = insertelement <4 x float> %i.ck, float %.sroa.0112.sroa.112.0.copyload473, i64 2
   %i.cm = insertelement <4 x float> %i.cl, float %.sroa.0112.sroa.128.0.copyload505, i64 3
-  %i.cn = insertelement <4 x float> poison, float %.sroa.0112.sroa.160.0.copyload.a, i64 0
+  %i.cn = insertelement <4 x float> poison, float %.sroa.0112.sroa.144.0.copyload, i64 0
   %i.co = insertelement <4 x float> %i.cn, float %.sroa.0112.sroa.160.0.copyload553, i64 1
   %i.cp = insertelement <4 x float> %i.co, float %.sroa.0112.sroa.160.0.copyload555, i64 2
   %i.cq = insertelement <4 x float> %i.cp, float %.sroa.0112.sroa.160.0.copyload557, i64 3
@@ -315,7 +315,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
   %i.cw = insertelement <4 x float> %i.cv, float %.sroa.0112.sroa.160.0.copyload561, i64 1
   %i.cx = insertelement <4 x float> %i.cw, float %.sroa.0112.sroa.160.0.copyload563, i64 2
   %i.cy = insertelement <4 x float> %i.cx, float %.sroa.0112.sroa.160.0.copyload565, i64 3
-  %i.cz = insertelement <2 x float> poison, float %.sroa.0112.sroa.144.0.copyload, i64 0
+  %i.cz = insertelement <2 x float> poison, float %.sroa.0112.sroa.160.0.copyload.a, i64 0
   %i.da = insertelement <2 x float> %i.cz, float %.sroa.0112.sroa.144.0.copyload523, i64 1
   br label %.preheader
 
@@ -382,8 +382,8 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   %i.eb = load <2 x float>, ptr %i.b, align 32    ; 2 uses
   %i.ec = load <2 x float>, ptr %.sroa.0112.sroa.80.0..sroa_idx400, align 8 ; 2 uses
   %i.ed = load <2 x float>, ptr %.sroa.0112.sroa.112.0..sroa_idx460, align 16 ; 2 uses
-  %.sroa.0112.sroa.160.0.copyload551.a = load float, ptr %.sroa.0112.sroa.160.0..sroa_idx550, align 4
-  %.sroa.0112.sroa.144.0.copyload521 = load float, ptr %.sroa.0112.sroa.144.0..sroa_idx520, align 8
+  %.sroa.0112.sroa.160.0.copyload551.a = load float, ptr %.sroa.0112.sroa.144.0..sroa_idx520, align 8
+  %.sroa.0112.sroa.144.0.copyload521 = load float, ptr %.sroa.0112.sroa.160.0..sroa_idx550, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   %i.ee = shl i64 %i.ax, 1
@@ -786,7 +786,7 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
   %i.nv = shufflevector <4 x float> %i.nu, <4 x float> %i.lg, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
   %i.nw = shufflevector <4 x float> %i.nv, <4 x float> %i.ml, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   %i.nx = shufflevector <2 x float> %i.fi, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %i.ny = insertelement <4 x float> %i.nx, float %.sroa.0112.sroa.160.0.copyload551.a, i64 0
+  %i.ny = insertelement <4 x float> %i.nx, float %.sroa.0112.sroa.144.0.copyload521, i64 0
   %i.nz = shufflevector <2 x float> %i.gn, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.oa = shufflevector <4 x float> %i.ny, <4 x float> %i.nz, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
   %i.ob = shufflevector <2 x float> %i.hs, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
@@ -802,7 +802,7 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
   %i.ol = shufflevector <4 x float> %i.ok, <4 x float> %i.og, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
   %i.om = shufflevector <4 x float> %i.ol, <4 x float> %i.oi, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   %i.on = shufflevector <2 x float> %i.fi, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %i.oo = insertelement <2 x float> %i.on, float %.sroa.0112.sroa.144.0.copyload521, i64 0
+  %i.oo = insertelement <2 x float> %i.on, float %.sroa.0112.sroa.160.0.copyload551.a, i64 0
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader140.split.preheader, %._crit_edge.us.7

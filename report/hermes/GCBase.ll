@@ -205,10 +205,10 @@ bb.a:
   %.sroa.0.0.copyload.i2.i = load i64, ptr %i.i, align 8, !tbaa !80
   %i.j = sub nsw i64 %i.h, %.sroa.0.0.copyload.i2.i
   %i.k = tail call i64 @_ZN6hermes8oscompat15thread_cpu_timeEv() #31
-  %i.l = sitofp i64 %i.k to double
-  %i.m = sitofp i64 %i.j to double
-  %i.n = insertelement <2 x double> poison, double %i.m, i64 0
-  %i.o = insertelement <2 x double> %i.n, double %i.l, i64 1
+  %i.l = sitofp i64 %i.j to double
+  %i.m = sitofp i64 %i.k to double
+  %i.n = insertelement <2 x double> poison, double %i.l, i64 0
+  %i.o = insertelement <2 x double> %i.n, double %i.m, i64 1
   %i.p = fdiv <2 x double> %i.o, <double 1.000000e+09, double 1.000000e+06> ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.r = load i64, ptr %i.q, align 8, !tbaa !260

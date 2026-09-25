@@ -204,18 +204,18 @@ begin_hunk_0_@ristretto255_frombytes:bb.a
   %i.nc = load i64, ptr %i.nb, align 8
   %i.nd = shl i64 %i.nc, 1                        ; 2 uses
   %i.ne = getelementptr i8, ptr %0, i64 16        ; 2 uses
+  %2 = load i64, ptr %i.ne, align 8
   %i.nf = getelementptr i8, ptr %0, i64 24        ; 2 uses
+  %3 = load i64, ptr %i.nf, align 8
   %i.ng = getelementptr i8, ptr %0, i64 32        ; 4 uses
+  %4 = load i64, ptr %i.ng, align 8
   store i64 %i.nd, ptr %i.nb, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
-  %2 = load i64, ptr %i.ng, align 8
-  %3 = load i64, ptr %i.ne, align 8
-  %i.nh = shl i64 %3, 1                           ; 2 uses
+  %i.nh = shl i64 %2, 1                           ; 2 uses
   store i64 %i.nh, ptr %i.ne, align 8
   %i.ni = shl i64 %i.na, 1                        ; 3 uses
-  %4 = load i64, ptr %i.nf, align 8
-  %i.nj = shl i64 %4, 1                           ; 2 uses
-  %i.nk = shl i64 %2, 1                           ; 2 uses
+  %i.nj = shl i64 %3, 1                           ; 2 uses
+  %i.nk = shl i64 %4, 1                           ; 2 uses
   store i64 %i.ni, ptr %0, align 8
   store i64 %i.nj, ptr %i.nf, align 8
   store i64 %i.nk, ptr %i.ng, align 8

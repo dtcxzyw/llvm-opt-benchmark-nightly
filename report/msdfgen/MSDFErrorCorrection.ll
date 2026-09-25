@@ -204,11 +204,11 @@ bb.a:
   %i.d = fcmp ult <2 x double> %i.c, zeroinitializer
   %i.e = fcmp ogt double %2, 0.000000e+00
   %i.f = fcmp ogt double %3, 0.000000e+00
+  %4 = uitofp i1 %i.e to double
   %i.g = load <2 x i32>, ptr %i.a, align 8, !tbaa !52 ; 3 uses
   %i.h = sitofp <2 x i32> %i.g to <2 x double>    ; 2 uses
   %i.i = fcmp ugt <2 x double> %i.c, %i.h
   %i.j = or <2 x i1> %i.d, %i.i
-  %4 = uitofp i1 %i.e to double
   %i.k = uitofp i1 %i.f to double
   %i.l = insertelement <2 x double> poison, double %4, i64 0
   %i.m = insertelement <2 x double> %i.l, double %i.k, i64 1
@@ -611,11 +611,11 @@ bb.a:
   %i.d = fcmp ult <2 x double> %i.c, zeroinitializer
   %i.e = fcmp ogt double %2, 0.000000e+00
   %i.f = fcmp ogt double %3, 0.000000e+00
+  %4 = uitofp i1 %i.e to double
   %i.g = load <2 x i32>, ptr %i.a, align 8, !tbaa !52 ; 3 uses
   %i.h = sitofp <2 x i32> %i.g to <2 x double>    ; 2 uses
   %i.i = fcmp ugt <2 x double> %i.c, %i.h
   %i.j = or <2 x i1> %i.d, %i.i
-  %4 = uitofp i1 %i.e to double
   %i.k = uitofp i1 %i.f to double
   %i.l = insertelement <2 x double> poison, double %4, i64 0
   %i.m = insertelement <2 x double> %i.l, double %i.k, i64 1

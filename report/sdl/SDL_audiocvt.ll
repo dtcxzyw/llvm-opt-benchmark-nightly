@@ -204,13 +204,13 @@ middle.block:                                     ; preds = %vector.body
   %i.dt = tail call float @llvm.fmuladd.f32(float %i.dm, float f0x3D23D70B, float %i.ds)
   %i.du = getelementptr inbounds nuw i8, ptr %.02731, i64 4
   %i.dv = getelementptr inbounds nuw i8, ptr %.032, i64 4
+  %3 = fmul float %i.do, 3.273600e-01
   %i.dw = load <2 x float>, ptr %i.dp, align 4    ; 3 uses
   %i.dx = shufflevector <2 x float> %i.dw, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.dy = extractelement <2 x float> %i.dw, i64 0
   %i.dz = tail call float @llvm.fmuladd.f32(float %i.dy, float 1.689600e-01, float %i.dt)
   store float %i.dz, ptr %.032, align 4
   %i.ea = load float, ptr %i.du, align 4
-  %3 = fmul float %i.do, 3.273600e-01
   %i.eb = tail call float @llvm.fmuladd.f32(float %i.ea, float 4.636800e-01, float %i.dr)
   %i.ec = insertelement <2 x float> poison, float %i.dm, i64 0
   %i.ed = shufflevector <2 x float> %i.ec, <2 x float> poison, <2 x i32> zeroinitializer

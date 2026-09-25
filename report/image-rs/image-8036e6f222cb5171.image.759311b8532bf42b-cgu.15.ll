@@ -205,32 +205,32 @@ bb.c:                                             ; preds = %bb.a
   %i.h = lshr i64 %2, 4                           ; 15 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %i.i, i8 0, i64 6, i1 false)
-  %i.j = load i8, ptr %i.d, align 1, !noundef !5
-  %i.k = load i8, ptr %i.c, align 1, !noundef !5
-  %i.l = load i8, ptr %i.b, align 1, !noundef !5
-  %i.m = load i8, ptr %0, align 1, !noundef !5
-  %i.n = zext i8 %i.k to i16                      ; 2 uses
-  %i.o = zext i8 %i.j to i16                      ; 2 uses
-  %4 = zext i8 %i.m to i16                        ; 2 uses
-  %5 = zext i8 %i.l to i16                        ; 2 uses
-  %6 = shl nuw i16 %5, 8
-  %7 = or disjoint i16 %6, %4                     ; 2 uses
-  %i.p = shl nuw i16 %i.o, 8
-  %i.q = or disjoint i16 %i.p, %i.n               ; 2 uses
-  %i.r = lshr i16 %7, 5
-  %i.s = lshr i16 %5, 3
-  %i.t = lshr i16 %i.q, 5
-  %8 = lshr i16 %i.o, 3
-  %i.u = insertelement <4 x i16> poison, i16 %i.s, i64 0
-  %i.v = insertelement <4 x i16> %i.u, i16 %i.r, i64 1
-  %i.w = insertelement <4 x i16> %i.v, i16 %4, i64 2
-  %9 = insertelement <4 x i16> %i.w, i16 %8, i64 3 ; 2 uses
-  %10 = and <4 x i16> %9, <i16 -1, i16 63, i16 31, i16 -1>
-  %i.x = shufflevector <4 x i16> %9, <4 x i16> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 0>
-  %i.y = insertelement <4 x i16> %i.x, i16 %i.t, i64 1
-  %i.z = insertelement <4 x i16> %i.y, i16 %i.n, i64 2
+  %i.j = load i8, ptr %0, align 1, !noundef !5
+  %i.k = load i8, ptr %i.b, align 1, !noundef !5
+  %i.l = load i8, ptr %i.c, align 1, !noundef !5
+  %i.m = load i8, ptr %i.d, align 1, !noundef !5
+  %i.n = zext i8 %i.j to i16                      ; 2 uses
+  %i.o = zext i8 %i.k to i16                      ; 2 uses
+  %4 = shl nuw i16 %i.o, 8
+  %5 = or disjoint i16 %4, %i.n                   ; 2 uses
+  %6 = zext i8 %i.l to i16                        ; 2 uses
+  %7 = zext i8 %i.m to i16                        ; 2 uses
+  %i.p = shl nuw i16 %7, 8
+  %i.q = or disjoint i16 %i.p, %6                 ; 2 uses
+  %i.r = lshr i16 %i.o, 3
+  %i.s = lshr i16 %5, 5
+  %i.t = lshr i16 %7, 3
+  %8 = insertelement <4 x i16> poison, i16 %i.r, i64 0
+  %i.u = insertelement <4 x i16> %8, i16 %i.s, i64 1
+  %i.v = insertelement <4 x i16> %i.u, i16 %i.n, i64 2
+  %i.w = insertelement <4 x i16> %i.v, i16 %i.t, i64 3 ; 2 uses
+  %9 = and <4 x i16> %i.w, <i16 -1, i16 63, i16 31, i16 -1>
+  %10 = lshr i16 %i.q, 5
+  %i.x = shufflevector <4 x i16> %i.w, <4 x i16> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 0>
+  %i.y = insertelement <4 x i16> %i.x, i16 %10, i64 1
+  %i.z = insertelement <4 x i16> %i.y, i16 %6, i64 2
   %i.aa = and <4 x i16> %i.z, <i16 -1, i16 63, i16 31, i16 -1>
-  %i.ab = mul nuw nsw <4 x i16> %10, <i16 255, i16 85, i16 255, i16 255>
+  %i.ab = mul nuw nsw <4 x i16> %9, <i16 255, i16 85, i16 255, i16 255>
   %i.ac = mul nuw nsw <4 x i16> %i.aa, <i16 255, i16 85, i16 255, i16 255>
   %i.ad = udiv <4 x i16> %i.ab, <i16 31, i16 21, i16 31, i16 31> ; 5 uses
   %i.ae = udiv <4 x i16> %i.ac, <i16 31, i16 21, i16 31, i16 31> ; 9 uses
@@ -245,7 +245,7 @@ bb.c:                                             ; preds = %bb.a
   store i8 %i.ag, ptr %.sroa.42.0..sroa_idx, align 4
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   store i8 %i.ai, ptr %.sroa.53.0..sroa_idx, align 1
-  %i.al = icmp ule i16 %7, %i.q
+  %i.al = icmp ule i16 %5, %i.q
   %brmerge.not = and i1 %3, %i.al
   br i1 %brmerge.not, label %.preheader, label %.preheader22
 
@@ -648,8 +648,8 @@ bb.a:
   store ptr %1, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 9 ; 2 uses
   store i8 1, ptr %i.o, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 9 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

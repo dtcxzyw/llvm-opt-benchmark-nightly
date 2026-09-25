@@ -202,11 +202,11 @@ bb.ay:                                            ; preds = %bb.ax
   %i.gv = add i32 %i.gp, %i.gt
   %i.gw = sub i32 %i.gu, %i.gv
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  %i.gx = sdiv i32 %i.gw, 2
-  %i.gy = sdiv i32 %i.m, 8
+  %i.gx = sdiv i32 %i.m, 8
+  %i.gy = sdiv i32 %i.gw, 2
   %i.gz = add <2 x i32> %i.gq, <i32 0, i32 1>
-  %i.ha = insertelement <2 x i32> poison, i32 %i.gy, i64 0
-  %i.hb = insertelement <2 x i32> %i.ha, i32 %i.gx, i64 1
+  %i.ha = insertelement <2 x i32> poison, i32 %i.gx, i64 0
+  %i.hb = insertelement <2 x i32> %i.ha, i32 %i.gy, i64 1
   %i.hc = add <2 x i32> %i.gz, %i.hb
   %i.hd = sitofp <2 x i32> %i.hc to <2 x double>
   %i.he = fadd <2 x double> %i.hd, splat (double 5.000000e-01)

@@ -205,17 +205,17 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.
 bb.bo:                                            ; preds = %bb.bn
   %i.jm = extractvalue { double, double } %i.jl, 0 ; 3 uses
   %i.jn = extractvalue { double, double } %i.jl, 1 ; 3 uses
-  %i.jo = fmul double %i.hg, %i.jn
+  %i.jo = fmul double %i.hg, %i.jm
   %i.jp = fmul double %i.hh, %i.jn
-  %i.jq = fmul double %i.hh, %i.jm
-  %i.jr = fmul double %i.hg, %i.jm
-  %17 = fadd double %i.jq, %i.jo                  ; 3 uses
-  %18 = fsub double %i.jr, %i.jp                  ; 3 uses
-  %i.js = fcmp uno double %18, 0.000000e+00
+  %i.jq = fmul double %i.hg, %i.jn
+  %i.jr = fmul double %i.hh, %i.jm
+  %17 = fsub double %i.jo, %i.jp                  ; 3 uses
+  %18 = fadd double %i.jr, %i.jq                  ; 3 uses
+  %i.js = fcmp uno double %17, 0.000000e+00
   br i1 %i.js, label %bb.bp, label %bb.br, !prof !93
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.jt = fcmp uno double %17, 0.000000e+00
+  %i.jt = fcmp uno double %18, 0.000000e+00
   br i1 %i.jt, label %bb.bq, label %bb.br, !prof !93
 
 bb.bq:                                            ; preds = %bb.bp
@@ -225,8 +225,8 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.bo
-  %i.jx = phi double [ %18, %bb.bo ], [ %18, %bb.bp ], [ %i.jv, %bb.bq ] ; 2 uses
-  %i.jy = phi double [ %17, %bb.bo ], [ %17, %bb.bp ], [ %i.jw, %bb.bq ] ; 2 uses
+  %i.jx = phi double [ %17, %bb.bo ], [ %17, %bb.bp ], [ %i.jv, %bb.bq ] ; 2 uses
+  %i.jy = phi double [ %18, %bb.bo ], [ %18, %bb.bp ], [ %i.jw, %bb.bq ] ; 2 uses
   %i.jz = load ptr, ptr %16, align 8, !tbaa !18   ; 3 uses
   %.not.i.i.i122 = icmp eq ptr %i.jz, null
   br i1 %.not.i.i.i122, label %_ZNSt6vectorIiSaIiEED2Ev.exit123, label %bb.bs

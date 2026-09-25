@@ -202,15 +202,15 @@ _ZN8rawspeed12_GLOBAL__N_121pana_cs6_page_decoderILi14EEC2ENS_10ByteStreamE.exit
   %i.bn = and <4 x i16> %i.bm, <i16 1023, i16 1023, i16 3, i16 -1>
   store <4 x i16> %i.bn, ptr %i.ak, align 16, !tbaa !118
   %i.bo = load <2 x i32>, ptr %i.az, align 1      ; 3 uses
-  %5 = extractelement <2 x i32> %i.bo, i64 0      ; 2 uses
-  %6 = lshr i32 %5, 14
   %i.bp = lshr <2 x i32> %i.ba, splat (i32 24)
   %i.bq = shl <2 x i32> %i.bo, splat (i32 8)
   %i.br = and <2 x i32> %i.bq, splat (i32 768)
   %i.bs = or disjoint <2 x i32> %i.br, %i.bp      ; 2 uses
   %i.bt = bitcast <2 x i32> %i.bs to <4 x i16>
   %i.bu = shufflevector <4 x i16> %i.bt, <4 x i16> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %5 = extractelement <2 x i32> %i.bo, i64 0      ; 2 uses
   %i.bv = trunc i32 %5 to i16
+  %6 = lshr i32 %5, 14
   %i.bw = trunc i32 %6 to i16
   %i.bx = shufflevector <2 x i32> %i.bo, <2 x i32> %i.bs, <4 x i32> <i32 1, i32 1, i32 1, i32 3>
   %i.by = lshr <4 x i32> %i.bx, <i32 18, i32 4, i32 0, i32 0>

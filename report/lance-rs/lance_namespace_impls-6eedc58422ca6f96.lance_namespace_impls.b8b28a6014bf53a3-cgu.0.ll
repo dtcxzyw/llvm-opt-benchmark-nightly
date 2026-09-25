@@ -205,8 +205,8 @@ bb.id:                                            ; preds = %bb.ia
 bb.ie:                                            ; preds = %bb.ia
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !203495
   %.sroa.5111.0..sroa_idx112.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 1
-  %.sroa.5111.i.sroa.0.0.copyload1039.a = load i8, ptr %.sroa.5111.0..sroa_idx112.i, align 1, !noalias !203495 ; 2 uses
-  %.sroa.0109.0.copyload110.i = load i8, ptr %i.ae, align 8, !noalias !203495 ; 2 uses
+  %.sroa.5111.i.sroa.0.0.copyload1039.a = load i8, ptr %i.ae, align 8, !noalias !203495 ; 2 uses
+  %.sroa.0109.0.copyload110.i = load i8, ptr %.sroa.5111.0..sroa_idx112.i, align 1, !noalias !203495 ; 2 uses
   %.sroa.5111.i.sroa.6.0..sroa.5111.0..sroa_idx112.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.sroa.5111.i.sroa.6, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.5111.i.sroa.6.0..sroa.5111.0..sroa_idx112.i.sroa_idx, i64 6, i1 false), !noalias !203495
   %.sroa.7113.0..sroa_idx114.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
@@ -245,8 +245,8 @@ bb.ig:                                            ; preds = %bb.if, %bb.ie
 
 .lr.ph.i.i.i56.preheader.i:                       ; preds = %.thread150.i, %bb.ig
   %.sroa.8116.i.sroa.10.1 = phi i64 [ %.sroa.8116.i.sroa.10.0.copyload, %bb.ig ], [ %.sroa.8116.i.sroa.10.0.copyload1036, %.thread150.i ]
-  %.sroa.5111.i.sroa.0.1 = phi i8 [ %.sroa.5111.i.sroa.0.0.copyload1039.a, %bb.ig ], [ %.sroa.5111.i.sroa.0.0.copyload1040, %.thread150.i ]
-  %.sroa.0109.1160.i = phi i8 [ %.sroa.0109.0.copyload110.i, %bb.ig ], [ %.pr.i219, %.thread150.i ]
+  %.sroa.5111.i.sroa.0.1 = phi i8 [ %.sroa.0109.0.copyload110.i, %bb.ig ], [ %.sroa.5111.i.sroa.0.0.copyload1040, %.thread150.i ]
+  %.sroa.0109.1160.i = phi i8 [ %.sroa.5111.i.sroa.0.0.copyload1039.a, %bb.ig ], [ %.pr.i219, %.thread150.i ]
   %.sroa.7113.1158.i = phi i64 [ %.sroa.7113.0.copyload115.i, %bb.ig ], [ %.sroa.888.0.copyload90.i, %.thread150.i ]
   %.val.i54156.i = phi ptr [ %.val.i54.pre.i, %bb.ig ], [ %.val32.i.cast, %.thread150.i ] ; 2 uses
   %i.aal = phi <2 x i64> [ %i.aah, %bb.ig ], [ %i.abg, %.thread150.i ]
@@ -306,8 +306,8 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_re
 
 _RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsfR8GmIBoxTX_21lance_namespace_impls.exit.i64.i: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i, %bb.ig
   %.sroa.8116.i.sroa.10.2 = phi i64 [ %.sroa.8116.i.sroa.10.0.copyload, %bb.ig ], [ %.sroa.8116.i.sroa.10.1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ]
-  %.sroa.5111.i.sroa.0.2 = phi i8 [ %.sroa.5111.i.sroa.0.0.copyload1039.a, %bb.ig ], [ %.sroa.5111.i.sroa.0.1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ]
-  %.sroa.0109.1161.i = phi i8 [ %.sroa.0109.0.copyload110.i, %bb.ig ], [ %.sroa.0109.1160.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ] ; 2 uses
+  %.sroa.5111.i.sroa.0.2 = phi i8 [ %.sroa.0109.0.copyload110.i, %bb.ig ], [ %.sroa.5111.i.sroa.0.1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ]
+  %.sroa.0109.1161.i = phi i8 [ %.sroa.5111.i.sroa.0.0.copyload1039.a, %bb.ig ], [ %.sroa.0109.1160.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ] ; 2 uses
   %.sroa.7113.1159.i = phi i64 [ %.sroa.7113.0.copyload115.i, %bb.ig ], [ %.sroa.7113.1158.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ]
   %.val.i54157.i = phi ptr [ %.val.i54.pre.i, %bb.ig ], [ %.val.i54156.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ]
   %i.abb = phi <2 x i64> [ %i.aah, %bb.ig ], [ %i.aal, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs1H4IRjoHvx7_30lance_namespace_reqwest_client6models13table_version12TableVersionECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i63.i ]

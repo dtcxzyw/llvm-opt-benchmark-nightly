@@ -202,10 +202,10 @@ bb.a:
   %i.s = call noundef zeroext i1 %i.r(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.c, i32 noundef 1), !inline_history !28 ; 0 uses
   %i.t = load i8, ptr %i.c, align 1, !tbaa !17    ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = lshr i8 %i.t, 4
-  %5 = and i8 %i.t, 15
-  %i.v = insertelement <2 x i8> poison, i8 %5, i64 0
-  %i.w = insertelement <2 x i8> %i.v, i8 %4, i64 1
+  %4 = and i8 %i.t, 15
+  %5 = lshr i8 %i.t, 4
+  %i.v = insertelement <2 x i8> poison, i8 %4, i64 0
+  %i.w = insertelement <2 x i8> %i.v, i8 %5, i64 1
   %i.x = call <2 x i8> @llvm.umin.v2i8(<2 x i8> %i.w, <2 x i8> <i8 3, i8 2>)
   %i.y = zext nneg <2 x i8> %i.x to <2 x i32>
   store <2 x i32> %i.y, ptr %i.u, align 8, !tbaa !17

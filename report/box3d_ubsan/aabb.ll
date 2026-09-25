@@ -88,15 +88,15 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.a
   %i.ai = fdiv float 1.000000e+00, %sqrt.i        ; 3 uses
-  %i.aj = fmul float %i.a, %i.ai                  ; 2 uses
+  %7 = extractelement <2 x float> %i.b, i64 0
+  %i.aj = fmul float %7, %i.ai                    ; 2 uses
   %i.ak = extractelement <2 x float> %i.b, i64 1
   %i.al = fmul float %i.ak, %i.ai                 ; 2 uses
-  %7 = extractelement <2 x float> %i.b, i64 0
-  %i.am = fmul float %7, %i.ai                    ; 2 uses
+  %i.am = fmul float %i.a, %i.ai                  ; 2 uses
   %i.an = load float, ptr %0, align 8, !tbaa !13  ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ap = load float, ptr %i.ao, align 4, !tbaa !19 ; 2 uses
-  %i.aq = tail call float @llvm.fabs.f32(float %i.am)
+  %i.aq = tail call float @llvm.fabs.f32(float %i.aj)
   %i.ar = fcmp olt float %i.aq, f0x34000000
   br i1 %i.ar, label %bb.j, label %bb.k
 
@@ -112,7 +112,7 @@ bb.k:                                             ; preds = %bb.i
   %i.aw = insertelement <2 x float> %i.av, float %i.an, i64 1
   %i.ax = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ay = fsub <2 x float> %i.aw, %i.ax
-  %i.az = insertelement <2 x float> poison, float %i.am, i64 0
+  %i.az = insertelement <2 x float> poison, float %i.aj, i64 0
   %i.ba = shufflevector <2 x float> %i.az, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bb = fdiv <2 x float> %i.ay, %i.ba           ; 4 uses
   %i.bc = extractelement <2 x float> %i.bb, i64 0
@@ -181,7 +181,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   %i.da = load float, ptr %i.cz, align 8, !tbaa !15 ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.dc = load float, ptr %i.db, align 4, !tbaa !21 ; 2 uses
-  %i.dd = tail call float @llvm.fabs.f32(float %i.aj)
+  %i.dd = tail call float @llvm.fabs.f32(float %i.am)
   %i.de = fcmp olt float %i.dd, f0x34000000
   br i1 %i.de, label %bb.p, label %bb.q
 
@@ -197,7 +197,7 @@ bb.q:                                             ; preds = %bb.o
   %i.dj = insertelement <2 x float> poison, float %2, i64 0
   %i.dk = shufflevector <2 x float> %i.dj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dl = fsub <2 x float> %i.di, %i.dk
-  %i.dm = insertelement <2 x float> poison, float %i.aj, i64 0
+  %i.dm = insertelement <2 x float> poison, float %i.am, i64 0
   %i.dn = shufflevector <2 x float> %i.dm, <2 x float> poison, <2 x i32> zeroinitializer
   %i.do = fdiv <2 x float> %i.dl, %i.dn           ; 4 uses
   %i.dp = extractelement <2 x float> %i.do, i64 0

@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !47
   %i.ar = add nsw i32 %i.aq, -1
   %i.as = sitofp i32 %i.ar to float               ; 2 uses
-  %2 = fcmp ogt float %i.al, %i.as
   %i.at = fcmp olt float %i.ak, 0.000000e+00
   %spec.store.select.i = select i1 %i.at, float 0.000000e+00, float %i.ak
+  %2 = fcmp ogt float %i.al, %i.as
   %spec.select.i = select i1 %2, float %i.as, float %i.al
   br label %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl13initCellRangeEPKfPiS4_i.exit
 

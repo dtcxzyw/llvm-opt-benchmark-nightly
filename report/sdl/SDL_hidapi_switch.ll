@@ -204,8 +204,8 @@ bb.bc:                                            ; preds = %bb.bb
   store i32 32806, ptr %3, align 4
   store i8 20, ptr %i.ll, align 4
   %i.me = call fastcc zeroext i1 @WriteSubcommand(ptr noundef nonnull %i.i, i32 noundef 16, ptr noundef nonnull %3, i8 noundef zeroext 5, ptr noundef nonnull %i.d)
-  %7 = shufflevector <2 x i16> %i.lx, <2 x i16> poison, <4 x i32> <i32 0, i32 poison, i32 1, i32 poison>
-  %i.mf = insertelement <4 x i16> %7, i16 %i.lp, i64 1
+  %7 = shufflevector <2 x i16> %i.lx, <2 x i16> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %i.mf = insertelement <4 x i16> %7, i16 %i.lp, i64 0
   %i.mg = insertelement <4 x i16> %i.mf, i16 %i.lz, i64 3 ; 2 uses
   br i1 %i.me, label %bb.bd, label %bb.bf
 
@@ -224,8 +224,8 @@ bb.be:                                            ; preds = %bb.bd
   %i.mp = load <2 x i16>, ptr %i.mo, align 1
   %i.mq = getelementptr i8, ptr %i.mj, i64 37
   %i.mr = load i16, ptr %i.mq, align 1
-  %8 = shufflevector <2 x i16> %i.mp, <2 x i16> poison, <4 x i32> <i32 0, i32 poison, i32 1, i32 poison>
-  %i.ms = insertelement <4 x i16> %8, i16 %i.ml, i64 1
+  %8 = shufflevector <2 x i16> %i.mp, <2 x i16> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %i.ms = insertelement <4 x i16> %8, i16 %i.ml, i64 0
   %i.mt = insertelement <4 x i16> %i.ms, i16 %i.mr, i64 3
   br label %bb.bf
 
@@ -233,23 +233,22 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd, %bb.
   %i.mu = phi <2 x i16> [ %i.mn, %bb.be ], [ %i.lu, %bb.bd ], [ %i.lu, %bb.bc ]
   %i.mv = phi <4 x i16> [ %i.mt, %bb.be ], [ %i.mg, %bb.bd ], [ %i.mg, %bb.bc ]
   %i.mw = sitofp i16 %i.lt to float
+  %9 = sitofp <4 x i16> %i.mv to <4 x float>
   %i.mx = getelementptr inbounds nuw i8, ptr %i.i, i64 344
   %i.my = sitofp <2 x i16> %i.lv to <2 x float>
-  %9 = sitofp i16 %i.mb to float
-  %10 = sitofp <4 x i16> %i.mv to <4 x float>
-  %11 = sitofp <2 x i16> %i.mu to <2 x float>
-  %i.mz = fsub nnan <2 x float> %i.my, %11
+  %10 = sitofp <2 x i16> %i.mu to <2 x float>
+  %11 = sitofp i16 %i.mb to float
+  %i.mz = fsub nnan <2 x float> %i.my, %10
   %i.na = shufflevector <2 x float> %i.mz, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.nb = getelementptr inbounds nuw i8, ptr %i.i, i64 360
   %i.nc = shufflevector <2 x i16> %i.md, <2 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
   %i.nd = sitofp <4 x i16> %i.nc to <4 x float>
-  %i.ne = insertelement <4 x float> %i.nd, float %9, i64 0
-  %i.nf = insertelement <4 x float> %i.ne, float %i.mw, i64 1
-  %i.ng = fsub nnan <4 x float> %i.nf, %10        ; 3 uses
-  %i.nh = extractelement <4 x float> %i.ng, i64 0
+  %i.ne = insertelement <4 x float> %i.nd, float %i.mw, i64 0
+  %i.nf = insertelement <4 x float> %i.ne, float %11, i64 1
+  %i.ng = fsub nnan <4 x float> %i.nf, %9         ; 3 uses
+  %i.nh = extractelement <4 x float> %i.ng, i64 1
   %i.ni = fdiv nnan float 9.360000e+02, %i.nh
-  %12 = shufflevector <4 x float> %i.ng, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %i.nj = shufflevector <4 x float> %12, <4 x float> %i.na, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.nj = shufflevector <4 x float> %i.ng, <4 x float> %i.na, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
   %i.nk = insertelement <4 x float> %i.nj, float %i.ni, i64 3 ; 2 uses
   %i.nl = fdiv nnan <4 x float> <float 4.000000e+00, float 4.000000e+00, float 4.000000e+00, float poison>, %i.nk
   %i.nm = fmul nnan <4 x float> %i.nk, <float poison, float poison, float poison, float f0x40490FDB>
