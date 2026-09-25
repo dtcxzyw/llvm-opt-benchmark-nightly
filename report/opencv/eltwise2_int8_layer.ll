@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.y
           to label %.noexc184 unwind label %.loopexit.split-lp
 
 .noexc184:                                        ; preds = %bb.z
-  %i.ea = load i32, ptr %21, align 4, !tbaa !116, !noalias !211 ; 10 uses
+  %i.ea = load i32, ptr %21, align 4, !tbaa !116, !noalias !211 ; 9 uses
   %narrow.i.i = call i32 @llvm.smax.i32(i32 %i.ea, i32 0) ; 7 uses
   %spec.select.i.i = zext nneg i32 %narrow.i.i to i64 ; 4 uses
   %i.eb = load i32, ptr %12, align 4, !tbaa !116, !noalias !211
@@ -276,7 +276,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc66.i
   br label %.lr.ph118.i
 
 .lr.ph118.i:                                      ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc66.i
-  %i.er = add nsw i32 %narrow.i.i, -1             ; 3 uses
+  %i.er = add nsw i32 %narrow.i.i, -1             ; 4 uses
   %i.es = load i32, ptr %21, align 4, !tbaa !116, !noalias !211
   %narrow.i72.i = call i32 @llvm.smax.i32(i32 %i.es, i32 1)
   %i.et = zext i32 %i.er to i64                   ; 5 uses
@@ -413,7 +413,7 @@ bb.ah:                                            ; preds = %.lr.ph118.i.split
 
 .lr.ph121.i.split.preheader:                      ; preds = %.lr.ph121.i
   %xtraiter505 = and i32 %narrow.i.i, 1
-  %i.ge = icmp eq i32 %i.ea, 1
+  %i.ge = icmp eq i32 %i.er, 0
   br i1 %i.ge, label %.lr.ph121.i.split.epil.preheader, label %.lr.ph121.i.split.preheader.new
 
 .lr.ph121.i.split.preheader.new:                  ; preds = %.lr.ph121.i.split.preheader
