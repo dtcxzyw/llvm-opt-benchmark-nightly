@@ -205,12 +205,19 @@ _ZN4llvm13IRBuilderBase19CreateInsertElementEPNS_5ValueES2_S2_RKNS_5TwineE.exit3
 bb.bc:                                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.ms = getelementptr inbounds i8, ptr %.val2, i64 -32
-  %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !172 ; 2 uses
+  %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !172 ; 3 uses
   %.pre.pre.i.i.i.i = load i8, ptr %i.mt, align 8, !tbaa !105
   %i.mu = icmp eq i8 %.pre.pre.i.i.i.i, 14        ; 2 uses
-  br i1 %i.mu, label %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i.a, label %36
+  br i1 %i.mu, label %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.sink.split.i.i.i
 
-_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i.a: ; preds = %bb.bc
+_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bc
+  %36 = getelementptr inbounds nuw i8, ptr %i.mt, i64 32
+  %37 = load i32, ptr %36, align 8
+  %38 = and i32 %37, 8192
+  %.not.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %38, 0
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.sink.split.i.i.i, label %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i.a
+
+_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i.a: ; preds = %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mt, i64 36
   %i.mw = load i32, ptr %i.mv, align 4, !tbaa !209 ; 2 uses
   switch i32 %i.mw, label %_ZN4llvm14CastIsPossibleINS_10MemSetInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i [
@@ -416,10 +423,6 @@ bb.bq:                                            ; preds = %bb.bi, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   br label %_ZL25promoteAllocaUserToVectorPN4llvm11InstructionERKNS_10DataLayoutERN12_GLOBAL__N_114AllocaAnalysisEjjNS_12function_refIFPNS_5ValueEvEEE.exit.i.i.i
 
-36:                                               ; preds = %bb.bc
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
-  br label %_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i
-
 _ZN4llvm14CastIsPossibleINS_10MemSetInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i: ; preds = %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   %i.ql = and i32 %i.mw, -3
@@ -507,7 +510,11 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %34) #20
   br label %_ZL25promoteAllocaUserToVectorPN4llvm11InstructionERKNS_10DataLayoutERN12_GLOBAL__N_114AllocaAnalysisEjjNS_12function_refIFPNS_5ValueEvEEE.exit.i.i.i
 
-_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i: ; preds = %_ZN4llvm14CastIsPossibleINS_10MemSetInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i, %36
+_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.sink.split.i.i.i: ; preds = %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bc
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
+  br label %_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i
+
+_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i: ; preds = %_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.sink.split.i.i.i, %_ZN4llvm14CastIsPossibleINS_10MemSetInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i.i.i.i
   call void @llvm.assume(i1 %i.mu)
   %i.ry = load ptr, ptr %i.aa, align 8, !tbaa !100
   %i.rz = getelementptr inbounds nuw i8, ptr %i.ry, i64 8
