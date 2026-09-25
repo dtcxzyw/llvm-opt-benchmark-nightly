@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 7
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -32,25 +32,36 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.a, %vector.body ] ; 4 uses
-  %vec.ind.a = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next.a, %vector.body ] ; 3 uses
+  %vec.ind = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 5 uses
+  %vec.ind.a = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next.a, %vector.body ] ; 5 uses
+  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
   %step.add.a = add <4 x i8> %vec.ind.a, splat (i8 4)
-  %1 = insertelement <4 x i64> poison, i64 %index, i64 0
-  %2 = shufflevector <4 x i64> %1, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr @char_to_index, i64 %index ; 2 uses
-  %4 = trunc <4 x i64> %2 to <4 x i32>
-  %5 = or disjoint <4 x i32> %4, <i32 1, i32 2, i32 3, i32 4>
-  %6 = trunc <4 x i64> %2 to <4 x i32>
-  %i.a = add <4 x i32> %6, <i32 5, i32 6, i32 7, i32 8>
-  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <4 x i32> %5, ptr %3, align 16, !tbaa !7
+  %1 = getelementptr inbounds nuw [4 x i8], ptr @char_to_index, i64 %index ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  store <4 x i32> %vec.ind, ptr %1, align 16, !tbaa !7
+  store <4 x i32> %step.add, ptr %2, align 16, !tbaa !7
+  %3 = getelementptr inbounds nuw i8, ptr @index_to_char, i64 %index ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 5
+  store <4 x i8> %vec.ind.a, ptr %4, align 1, !tbaa !15
+  store <4 x i8> %step.add.a, ptr %5, align 1, !tbaa !15
+  %index.next = or disjoint i64 %index, 8         ; 2 uses
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
+  %vec.ind.next87 = add <4 x i8> %vec.ind.a, splat (i8 8)
+  %i.a = add <4 x i32> %vec.ind, splat (i32 12)
+  %step.add86.1 = add <4 x i8> %vec.ind.a, splat (i8 12)
+  %6 = getelementptr inbounds nuw [4 x i8], ptr @char_to_index, i64 %index.next ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 16
+  store <4 x i32> %vec.ind.next, ptr %6, align 16, !tbaa !7
   store <4 x i32> %i.a, ptr %i.b, align 16, !tbaa !7
-  %i.c = getelementptr inbounds nuw i8, ptr @index_to_char, i64 %index ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr @index_to_char, i64 %index.next ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 5
-  store <4 x i8> %vec.ind.a, ptr %i.d, align 1, !tbaa !15
-  store <4 x i8> %step.add.a, ptr %i.e, align 1, !tbaa !15
-  %index.next.a = add nuw i64 %index, 8           ; 2 uses
-  %vec.ind.next.a = add <4 x i8> %vec.ind.a, splat (i8 8)
+  store <4 x i8> %vec.ind.next87, ptr %i.d, align 1, !tbaa !15
+  store <4 x i8> %step.add86.1, ptr %i.e, align 1, !tbaa !15
+  %index.next.a = add nuw nsw i64 %index, 16      ; 2 uses
+  %vec.ind.next.1 = add <4 x i32> %vec.ind, splat (i32 16)
+  %vec.ind.next.a = add <4 x i8> %vec.ind.a, splat (i8 16)
   %i.f = icmp eq i64 %index.next.a, 256
   br i1 %i.f, label %vector.body86, label %vector.body, !llvm.loop !8
 
