@@ -205,10 +205,10 @@ bb.bo:                                            ; preds = %bb.bn
   %.val.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.br, align 8, !alias.scope !834, !noalias !823, !nonnull !5, !align !18, !noundef !5
   %.val3.i.i.i.i.i.i.i.i.i.i = load i16, ptr %i.hn, align 2, !noalias !835, !noundef !5
   %i.hu = load i16, ptr %.val.i.i.i.i.i.i.i.i.i.i, align 2, !noalias !835, !noundef !5
-  %i.hv = zext i16 %.val3.i.i.i.i.i.i.i.i.i.i to i32
-  %3 = shl nuw i32 %i.hv, 16
-  %4 = zext i16 %i.hu to i32
-  %i.hw = or disjoint i32 %3, %4
+  %i.hv = zext i16 %i.hu to i32
+  %3 = zext i16 %.val3.i.i.i.i.i.i.i.i.i.i to i32
+  %4 = shl nuw i32 %3, 16
+  %i.hw = or disjoint i32 %4, %i.hv
   %.sroa.3.0.insert.ext.i.le.i.i.i.i.i.i.i = zext i32 %i.hw to i48
   %.sroa.3.0.insert.shift.i.le.i.i.i.i.i.i.i = shl nuw i48 %.sroa.3.0.insert.ext.i.le.i.i.i.i.i.i.i, 16
   %.sroa.0.0.insert.insert.i.le.i.i.i.i.i.i.i = or disjoint i48 %.sroa.3.0.insert.shift.i.le.i.i.i.i.i.i.i, 1
@@ -246,10 +246,10 @@ _RNvYNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtBe_5slice4iter4
   %.val.i.i.i8.i.i.i.i.i.i.i = load ptr, ptr %i.bu, align 8, !alias.scope !843, !noalias !823, !nonnull !5, !align !18, !noundef !5
   %.val3.i.i.i9.i.i.i.i.i.i.i = load i16, ptr %i.ib, align 2, !noalias !844, !noundef !5
   %i.if = load i16, ptr %.val.i.i.i8.i.i.i.i.i.i.i, align 2, !noalias !844, !noundef !5
-  %i.ig = zext i16 %.val3.i.i.i9.i.i.i.i.i.i.i to i32
-  %5 = shl nuw i32 %i.ig, 16
-  %6 = zext i16 %i.if to i32
-  %i.ih = or disjoint i32 %5, %6
+  %i.ig = zext i16 %i.if to i32
+  %5 = zext i16 %.val3.i.i.i9.i.i.i.i.i.i.i to i32
+  %6 = shl nuw i32 %5, 16
+  %i.ih = or disjoint i32 %6, %i.ig
   br label %_RINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters7flatten17and_then_or_clearINtNtB4_3map3MapINtNtNtB8_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs3_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gsub8buildersNtB2K_19AlternateSubBuilder10iter_pairs00ETB1M_B1M_ENvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECscScJTt9VrQp_6fea_rs.exit16.i.i.i.i.i.i.i
 
 bb.bs:                                            ; preds = %bb.br
@@ -367,10 +367,10 @@ bb.ca:                                            ; preds = %bb.bz
   %.val.i.i.i.i.i.i.i10.i.i.i = load ptr, ptr %i.bx, align 8, !alias.scope !862, !noalias !823, !nonnull !5, !align !18, !noundef !5
   %.val3.i.i.i.i.i.i.i11.i.i.i = load i16, ptr %i.it, align 2, !noalias !863, !noundef !5
   %i.ja = load i16, ptr %.val.i.i.i.i.i.i.i10.i.i.i, align 2, !noalias !863, !noundef !5
-  %i.jb = zext i16 %.val3.i.i.i.i.i.i.i11.i.i.i to i32
-  %7 = shl nuw i32 %i.jb, 16
-  %8 = zext i16 %i.ja to i32
-  %i.jc = or disjoint i32 %7, %8
+  %i.jb = zext i16 %i.ja to i32
+  %7 = zext i16 %.val3.i.i.i.i.i.i.i11.i.i.i to i32
+  %8 = shl nuw i32 %7, 16
+  %i.jc = or disjoint i32 %8, %i.jb
   %.sroa.3.0.insert.ext.i.le.i.i.i.i12.i.i.i = zext i32 %i.jc to i48
   %.sroa.3.0.insert.shift.i.le.i.i.i.i13.i.i.i = shl nuw i48 %.sroa.3.0.insert.ext.i.le.i.i.i.i12.i.i.i, 16
   %.sroa.0.0.insert.insert.i.le.i.i.i.i14.i.i.i = or disjoint i48 %.sroa.3.0.insert.shift.i.le.i.i.i.i13.i.i.i, 1
@@ -408,10 +408,10 @@ _RNvYNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtBe_5slice4iter4
   %.val.i.i.i8.i.i.i.i34.i.i.i = load ptr, ptr %i.ca, align 8, !alias.scope !871, !noalias !823, !nonnull !5, !align !18, !noundef !5
   %.val3.i.i.i9.i.i.i.i35.i.i.i = load i16, ptr %i.jh, align 2, !noalias !872, !noundef !5
   %i.jl = load i16, ptr %.val.i.i.i8.i.i.i.i34.i.i.i, align 2, !noalias !872, !noundef !5
-  %i.jm = zext i16 %.val3.i.i.i9.i.i.i.i35.i.i.i to i32
-  %9 = shl nuw i32 %i.jm, 16
-  %10 = zext i16 %i.jl to i32
-  %i.jn = or disjoint i32 %9, %10
+  %i.jm = zext i16 %i.jl to i32
+  %9 = zext i16 %.val3.i.i.i9.i.i.i.i35.i.i.i to i32
+  %10 = shl nuw i32 %9, 16
+  %i.jn = or disjoint i32 %10, %i.jm
   br label %_RINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters7flatten17and_then_or_clearINtNtB4_3map3MapINtNtNtB8_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs3_NtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gsub8buildersNtB2K_19AlternateSubBuilder10iter_pairs00ETB1M_B1M_ENvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECscScJTt9VrQp_6fea_rs.exit16.i.i.i.i36.i.i.i
 
 bb.ce:                                            ; preds = %bb.cd
