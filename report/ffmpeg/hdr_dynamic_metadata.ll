@@ -205,12 +205,12 @@ bb.c:                                             ; preds = %bb.b
   %i.c = trunc i64 %2 to i32                      ; 2 uses
   %or.cond.i = icmp ugt i32 %i.c, 268435455
   %i.d = shl nuw nsw i32 %i.c, 3
-  %i.e = select i1 %or.cond.i, i32 -8, i32 %i.d   ; 14 uses
-  %or.cond.i.i = icmp ugt i32 %i.e, 2147483134    ; 2 uses
-  %.013.i.i = select i1 %or.cond.i.i, i32 0, i32 %i.e ; 9 uses
+  %i.e = select i1 %or.cond.i, i32 -8, i32 %i.d   ; 3 uses
+  %or.cond.i.i = icmp ugt i32 %i.e, 2147483134
+  %.013.i.i = select i1 %or.cond.i.i, i32 0, i32 %i.e ; 21 uses
   %i.f = add nuw nsw i32 %.013.i.i, 8             ; 27 uses
-  %3 = icmp eq i32 %.013.i.i, 0
-  %or.cond = or i1 %or.cond.i.i, %3
+  %3 = add i32 %i.e, -2147483136
+  %or.cond = icmp ult i32 %3, -2147483134
   br i1 %or.cond, label %.thread435, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -224,20 +224,24 @@ bb.d:                                             ; preds = %bb.c
   %i.m = and i8 %i.l, 7
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %i.m, ptr %i.n, align 1, !tbaa !56
-  %4 = and i32 %i.h, 50331648
-  %.not214 = icmp ne i32 %4, 0
-  %5 = icmp samesign ult i32 %i.e, 9
-  %or.cond439 = select i1 %.not214, i1 true, i1 %5
+  %4 = icmp eq i32 %.013.i.i, 0
+  br i1 %4, label %.thread435, label %5
+
+5:                                                ; preds = %bb.d
+  %6 = and i32 %i.h, 50331648
+  %.not214 = icmp ne i32 %6, 0
+  %7 = icmp samesign ult i32 %.013.i.i, 9
+  %or.cond439 = select i1 %.not214, i1 true, i1 %7
   br i1 %or.cond439, label %.thread435, label %bb.e
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %5
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %i.p = load i32, ptr %i.o, align 1, !tbaa !21   ; 2 uses
   %i.q = trunc i32 %i.p to i8                     ; 3 uses
   %i.r = lshr i8 %i.q, 7
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i8 %i.r, ptr %i.s, align 2, !tbaa !57
-  %i.t = icmp samesign ult i32 %i.e, 10
+  %i.t = icmp samesign ult i32 %.013.i.i, 10
   br i1 %i.t, label %.thread435, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -245,7 +249,7 @@ bb.f:                                             ; preds = %bb.e
   %i.v = and i8 %i.u, 1                           ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 3
   store i8 %i.v, ptr %i.w, align 1, !tbaa !58
-  %i.x = icmp samesign ugt i32 %i.e, 15
+  %i.x = icmp samesign ugt i32 %.013.i.i, 15
   %i.y = and i32 %i.p, 63
   %.not215 = icmp eq i32 %i.y, 0
   %or.cond573 = select i1 %i.x, i1 %.not215, i1 false
@@ -256,7 +260,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not216, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.z = icmp samesign ult i32 %i.e, 32
+  %i.z = icmp samesign ult i32 %.013.i.i, 32
   br i1 %i.z, label %.thread435, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -275,7 +279,7 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   br i1 %.not217, label %.thread435, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ag = sub nsw i32 %i.e, %.sroa.29.0
+  %i.ag = sub nsw i32 %.013.i.i, %.sroa.29.0
   %i.ah = icmp slt i32 %i.ag, 16
   br i1 %i.ah, label %.thread435, label %bb.l
 
@@ -290,7 +294,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ap = trunc nuw i32 %i.an to i16
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i16 %i.ap, ptr %i.aq, align 2, !tbaa !60
-  %.not443 = icmp samesign ult i32 %i.ao, %i.e
+  %.not443 = icmp samesign ult i32 %i.ao, %.013.i.i
   br i1 %.not443, label %bb.m, label %.thread435
 
 bb.m:                                             ; preds = %bb.l
@@ -327,7 +331,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bh = trunc nuw nsw i32 %i.bf to i8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %i.bh, ptr %i.bi, align 2, !tbaa !63
-  %.not444 = icmp samesign ugt i32 %i.e, %i.bg
+  %.not444 = icmp samesign ugt i32 %.013.i.i, %i.bg
   br i1 %.not444, label %bb.q, label %.thread435
 
 bb.q:                                             ; preds = %bb.p
@@ -342,7 +346,7 @@ bb.q:                                             ; preds = %bb.p
   %i.br = trunc nuw nsw i32 %i.bp to i8
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 11
   store i8 %i.br, ptr %i.bs, align 1, !tbaa !64
-  %.not445 = icmp samesign ugt i32 %i.e, %i.bq
+  %.not445 = icmp samesign ugt i32 %.013.i.i, %i.bq
   br i1 %.not445, label %bb.r, label %.thread435
 
 bb.r:                                             ; preds = %bb.q
@@ -358,7 +362,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i8 %i.cb, ptr %i.cc, align 2, !tbaa !65
   %i.cd = icmp eq i32 %i.bf, 3
-  %invariant.op = add nsw i32 %i.e, -16           ; 18 uses
+  %invariant.op = add nsw i32 %.013.i.i, -16      ; 18 uses
   br i1 %i.cd, label %.preheader459, label %.thread
 
 .preheader459:                                    ; preds = %bb.r
@@ -498,9 +502,9 @@ bb.y:                                             ; preds = %bb.x
 
 .thread:                                          ; preds = %bb.r, %.thread.loopexit
   %.sroa.29.2 = phi i32 [ %i.fx, %.thread.loopexit ], [ %i.ca, %bb.r ]
-  %invariant.op488 = add nsw i32 %i.e, -2         ; 2 uses
-  %invariant.op489 = add nsw i32 %i.e, -6
-  %invariant.op490 = add nsw i32 %i.e, -5
+  %invariant.op488 = add nsw i32 %.013.i.i, -2    ; 2 uses
+  %invariant.op489 = add nsw i32 %.013.i.i, -6
+  %invariant.op490 = add nsw i32 %.013.i.i, -5
   %.not510 = icmp eq i32 %i.ba, 0
   br i1 %.not510, label %.thread435, label %.lr.ph
 
@@ -903,8 +907,8 @@ bb.bm:                                            ; preds = %bb.bl
   %exitcond.not = icmp eq i64 %indvars.iv.next538, %wide.trip.count
   br i1 %exitcond.not, label %.thread435, label %bb.z, !llvm.loop !121
 
-.thread435:                                       ; preds = %.thread432, %bb.ae, %bb.bc, %bb.bd, %bb.be, %bb.z, %bb.ab, %bb.ad, %bb.bf, %.preheader454, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.an, %bb.aq, %bb.at, %bb.aw, %bb.az, %bb.bg, %bb.bi, %bb.bl, %.preheader459, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %.thread, %bb.q, %bb.p, %bb.o, %bb.l, %bb.k, %bb.j, %bb.h, %bb.f, %bb.e, %bb.d, %bb.c, %bb.n
-  %.12 = phi i32 [ -1094995529, %bb.c ], [ -1094995529, %bb.h ], [ -1094995529, %bb.w ], [ -1094995529, %bb.q ], [ -1094995529, %bb.v ], [ -1094995529, %bb.d ], [ -1094995529, %bb.u ], [ -1094995529, %bb.e ], [ -1094995529, %bb.f ], [ -1094995529, %bb.bi ], [ 0, %bb.j ], [ -1094995529, %bb.k ], [ -1094995529, %bb.l ], [ %i.ay, %bb.n ], [ -1094995529, %bb.t ], [ 0, %.thread ], [ -1094995529, %bb.o ], [ -1094995529, %.preheader459 ], [ -1094995529, %bb.p ], [ -1094995529, %bb.bg ], [ -1094995529, %bb.s ], [ -1094995529, %bb.bl ], [ -1094995529, %bb.y ], [ -1094995529, %bb.x ], [ -1094995529, %bb.bd ], [ -1094995529, %bb.bc ], [ -1094995529, %bb.ae ], [ 0, %.thread432 ], [ -1094995529, %bb.ab ], [ -1094995529, %bb.ad ], [ -1094995529, %bb.be ], [ -1094995529, %bb.z ], [ -1094995529, %bb.af ], [ -1094995529, %bb.ag ], [ -1094995529, %bb.ah ], [ -1094995529, %bb.ai ], [ -1094995529, %bb.aj ], [ -1094995529, %bb.an ], [ -1094995529, %bb.aq ], [ -1094995529, %bb.at ], [ -1094995529, %bb.aw ], [ -1094995529, %bb.az ], [ -1094995529, %bb.bf ], [ -1094995529, %.preheader454 ], [ -1094995529, %bb.ak ]
+.thread435:                                       ; preds = %.thread432, %bb.ae, %bb.bc, %bb.bd, %bb.be, %bb.z, %bb.ab, %bb.ad, %bb.bf, %.preheader454, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.an, %bb.aq, %bb.at, %bb.aw, %bb.az, %bb.bg, %bb.bi, %bb.bl, %.preheader459, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %.thread, %bb.q, %bb.p, %bb.o, %bb.l, %bb.k, %bb.j, %bb.h, %bb.f, %bb.e, %5, %bb.d, %bb.c, %bb.n
+  %.12 = phi i32 [ -1094995529, %bb.c ], [ -1094995529, %bb.h ], [ -1094995529, %bb.v ], [ -1094995529, %bb.u ], [ -1094995529, %bb.d ], [ -1094995529, %5 ], [ -1094995529, %bb.q ], [ -1094995529, %bb.e ], [ -1094995529, %bb.f ], [ -1094995529, %bb.bi ], [ 0, %bb.j ], [ -1094995529, %bb.k ], [ -1094995529, %bb.l ], [ %i.ay, %bb.n ], [ -1094995529, %bb.t ], [ 0, %.thread ], [ -1094995529, %bb.o ], [ -1094995529, %bb.w ], [ -1094995529, %bb.p ], [ -1094995529, %bb.bg ], [ -1094995529, %.preheader459 ], [ -1094995529, %bb.s ], [ -1094995529, %bb.bl ], [ -1094995529, %bb.y ], [ -1094995529, %bb.x ], [ -1094995529, %bb.bd ], [ -1094995529, %bb.bc ], [ -1094995529, %bb.ae ], [ 0, %.thread432 ], [ -1094995529, %bb.ab ], [ -1094995529, %bb.ad ], [ -1094995529, %bb.z ], [ -1094995529, %bb.be ], [ -1094995529, %bb.af ], [ -1094995529, %bb.ag ], [ -1094995529, %bb.ah ], [ -1094995529, %bb.ai ], [ -1094995529, %bb.aj ], [ -1094995529, %bb.an ], [ -1094995529, %bb.aq ], [ -1094995529, %bb.at ], [ -1094995529, %bb.aw ], [ -1094995529, %bb.az ], [ -1094995529, %bb.bf ], [ -1094995529, %.preheader454 ], [ -1094995529, %bb.ak ]
   tail call void @av_free(ptr noundef nonnull %i.b) #10
   br label %bb.bn
 

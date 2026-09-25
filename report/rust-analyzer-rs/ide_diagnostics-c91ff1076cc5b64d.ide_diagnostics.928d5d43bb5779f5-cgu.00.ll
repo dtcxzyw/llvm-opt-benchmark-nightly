@@ -204,7 +204,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6op
   %i.ah = lshr exact i64 %i.ag, 5
   %.sroa.8.0.i.i.i.i = select i1 %.not53.i.i.i.i, i64 0, i64 %i.ah
   %i.ai = add nuw nsw i64 %.sroa.8.0.i.i.i.i, %.sroa.7.0.i.i.i.i
-  %..i.i.i = tail call i64 @llvm.umin.i64(i64 %i.s, i64 %i.ai)
+  %..i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.s, i64 %i.ai)
   %i.aj = tail call i64 @llvm.umax.i64(i64 %..i.i.i, i64 3)
   %i.ak = add nuw nsw i64 %i.aj, 1
   br label %bb.f
@@ -403,7 +403,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6op
   %i.bx = lshr exact i64 %i.bw, 5
   %.sroa.8.0.i.i.i.i.i.i = select i1 %.not53.i.i.i.i.i.i, i64 0, i64 %i.bx
   %i.by = add nuw nsw i64 %.sroa.7.0.i.i.i.i.i.i, %.sroa.8.0.i.i.i.i.i.i
-  %..i.i.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.33.0, i64 %i.by)
+  %..i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.sroa.33.0, i64 %i.by)
   %i.bz = add nuw nsw i64 %..i.i.i.i.i, 1
   br label %_RNvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB5_3MapINtNtB7_4take4TakeINtNtB7_7flatten7FlattenINtNtBb_6option8IntoIterRSNtNtCsjJXvCMGntp8_6syntax12syntax_error11SyntaxErrorEEENCNvCscA5P7HRgTCP_15ide_diagnostics18syntax_diagnostics0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2Z_.exit.i.i
 

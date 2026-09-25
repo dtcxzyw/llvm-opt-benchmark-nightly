@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.4.0.i.i.i = select i1 %i.a, i32 %5, i32 undef ; 2 uses
   %i.c = or i32 %.sroa.4.0.i.i.i, %5
   %i.d = icmp sgt i32 %i.c, -1                    ; 2 uses
-  %or.cond.i.i = select i1 %i.a, i1 %i.d, i1 false ; 4 uses
-  %i.e = zext nneg i32 %.sroa.4.0.i.i.i to i64    ; 8 uses
+  %or.cond.i.i = select i1 %i.a, i1 %i.d, i1 false ; 3 uses
+  %i.e = zext nneg i32 %.sroa.4.0.i.i.i to i64    ; 9 uses
   %i.f = trunc nuw i32 %2 to i1                   ; 11 uses
   br i1 %or.cond.i.i, label %bb.c, label %bb.d
 
@@ -463,8 +463,7 @@ _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthT
   br label %bb.an
 
 bb.v:                                             ; preds = %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.thread.i.i.i
-  %.sroa.4.0.i.i.i.i = select i1 %or.cond.i.i, i64 %i.e, i64 undef ; 2 uses
-  %7 = icmp ugt i64 %.sroa.4.0.i.i.i.i, %i.br
+  %7 = icmp ult i64 %i.br, %i.e
   %or.cond172.i.i.i = select i1 %or.cond.i.i, i1 %7, i1 false
   br i1 %or.cond172.i.i.i, label %bb.x, label %bb.w
 
@@ -474,7 +473,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %or.cond399.i.i.i, label %bb.y, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread
 
 bb.x:                                             ; preds = %bb.v
-  %i.ck = sub nuw nsw i64 %.sroa.4.0.i.i.i.i, %i.br
+  %i.ck = sub nuw nsw i64 %i.e, %i.br
   %.not.i5.i.i.i.i.i = icmp eq i64 %i.bn, 0
   %.sink9.i7.i.i.i.i.i = select i1 %.not.i5.i.i.i.i.i, i64 0, i64 %i.bo
   %i.cl = sub i64 %.sink9.i7.i.i.i.i.i, %i.br

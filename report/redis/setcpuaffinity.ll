@@ -56,15 +56,13 @@ bb.e:                                             ; preds = %next_num.exit
   br i1 %.not.i46, label %.preheader.preheader, label %next_token.exit55
 
 next_token.exit55:                                ; preds = %bb.e
-  %i.o = call ptr @strchr(ptr noundef nonnull readonly dereferenceable(1) %i.n, i32 noundef 45) #7 ; 2 uses
+  %i.o = call ptr @strchr(ptr noundef nonnull readonly dereferenceable(1) %i.n, i32 noundef 45) #7 ; 3 uses
   %.not7.i48 = icmp ne ptr %i.o, null
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 4 uses
-  %i.q = call ptr @strchr(ptr noundef nonnull readonly dereferenceable(1) %i.n, i32 noundef 44) #7 ; 2 uses
-  %.not7.i53 = icmp eq ptr %i.q, null             ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.q, i64 1
-  %spec.select.i54 = select i1 %.not7.i53, ptr null, ptr %2 ; 2 uses
-  %i.r = icmp ult ptr %i.p, %spec.select.i54
-  %or.cond = select i1 %.not7.i53, i1 true, i1 %i.r
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 3 uses
+  %i.q = call ptr @strchr(ptr noundef nonnull readonly dereferenceable(1) %i.n, i32 noundef 44) #7 ; 3 uses
+  %.not7.i53 = icmp eq ptr %i.q, null             ; 2 uses
+  %i.r = icmp ult ptr %i.o, %i.q
+  %or.cond = or i1 %.not7.i53, %i.r
   %or.cond106 = select i1 %.not7.i48, i1 %or.cond, i1 false
   br i1 %or.cond106, label %bb.f, label %.preheader.preheader
 
@@ -99,11 +97,12 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not36, label %next_token.exit55.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ad = call ptr @strchr(ptr noundef nonnull readonly dereferenceable(1) %i.ab, i32 noundef 58) #7 ; 2 uses
+  %i.ad = call ptr @strchr(ptr noundef nonnull readonly dereferenceable(1) %i.ab, i32 noundef 58) #7 ; 3 uses
   %.not7.i62 = icmp ne ptr %i.ad, null            ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 1 ; 4 uses
-  %spec.select.i63 = select i1 %.not7.i62, ptr %i.ae, ptr null
-  %3 = icmp ult ptr %spec.select.i63, %spec.select.i54
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 1 ; 3 uses
+  %2 = icmp ult ptr %i.ad, %i.q
+  %not..not7.i62 = xor i1 %.not7.i62, true
+  %3 = select i1 %not..not7.i62, i1 true, i1 %2
   %or.cond40 = or i1 %.not7.i53, %3
   %or.cond41 = select i1 %.not7.i62, i1 %or.cond40, i1 false
   br i1 %or.cond41, label %bb.k, label %next_token.exit55.thread

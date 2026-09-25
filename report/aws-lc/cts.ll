@@ -48,16 +48,17 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.b, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.c = and i64 %2, 15                           ; 2 uses
-  %i.d = icmp eq i64 %i.c, 0
-  %spec.store.select = select i1 %i.d, i64 16, i64 %i.c ; 5 uses
+  %i.c = and i64 %2, 15                           ; 3 uses
+  %i.d = icmp eq i64 %i.c, 0                      ; 2 uses
+  %spec.store.select = select i1 %i.d, i64 16, i64 %i.c ; 4 uses
   %i.e = sub nuw i64 %2, %spec.store.select       ; 3 uses
   tail call void %5(ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef %i.e, ptr noundef nonnull %3, ptr noundef nonnull %4, i32 noundef 1) #4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.e
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.e ; 2 uses
-  %i.h = sub nuw nsw i64 16, %spec.store.select
+  %i.h = sub nuw nsw i64 16, %i.c
+  %6 = select i1 %i.d, i64 0, i64 %i.h
   %i.i = getelementptr i8, ptr %i.a, i64 %spec.store.select
-  call void @llvm.memset.p0.i64(ptr align 1 %i.i, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.i, i8 0, i64 %6, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.f, i64 range(i64 0, 33) %spec.store.select, i1 false)
   %i.j = getelementptr inbounds i8, ptr %i.g, i64 -16 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.g, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.j, i64 range(i64 0, 33) %spec.store.select, i1 false)

@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %.lr.ph.i.i49.i
   br i1 %.not53.i.i53.i, label %_RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i30.i, label %.lr.ph.i.i49.i
 
 _RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i30.i: ; preds = %bb.w, %.preheader56.i.i41.i.preheader, %.preheader56.i.i41.i, %bb.x, %.lr.ph.i.i49.i, %.preheader.i.i47.i, %bb.u, %bb.u, %bb.t
-  %.sroa.102.0.i31.i = phi i64 [ undef, %bb.u ], [ 0, %.preheader.i.i47.i ], [ undef, %bb.t ], [ undef, %bb.u ], [ undef, %.lr.ph.i.i49.i ], [ %i.dc, %bb.x ], [ undef, %bb.w ], [ %i.cs, %.preheader56.i.i41.i ], [ undef, %.preheader56.i.i41.i.preheader ]
+  %.sroa.102.0.i31.i = phi i64 [ undef, %bb.u ], [ 0, %.preheader.i.i47.i ], [ undef, %bb.t ], [ undef, %bb.u ], [ undef, %.lr.ph.i.i49.i ], [ %i.dc, %bb.x ], [ undef, %bb.w ], [ %i.cs, %.preheader56.i.i41.i ], [ undef, %.preheader56.i.i41.i.preheader ] ; 2 uses
   %.sink.i.i32.i = phi i1 [ true, %bb.u ], [ false, %.preheader.i.i47.i ], [ true, %bb.t ], [ true, %bb.u ], [ %i.cx, %bb.x ], [ %i.cx, %.lr.ph.i.i49.i ], [ true, %bb.w ], [ false, %.preheader56.i.i41.i ], [ true, %.preheader56.i.i41.i.preheader ] ; 2 uses
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.f)
           to label %_RNCNvMs2_Csa5n7gMT4fih_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0CsltEA4u8Pgfu_11candle_core.exit.i unwind label %bb.y
@@ -226,10 +226,10 @@ _RNCNvMs2_Csa5n7gMT4fih_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_
           to label %.noexc68 unwind label %bb.ag
 
 .noexc68:                                         ; preds = %_RNCNvMs2_Csa5n7gMT4fih_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0CsltEA4u8Pgfu_11candle_core.exit.i
-  %.sroa.3.0.i36.i = select i1 %.sink.i.i32.i, i64 undef, i64 %.sroa.102.0.i31.i ; 2 uses
+  %.sroa.3.0.i36.i = select i1 %.sink.i.i32.i, i64 undef, i64 %.sroa.102.0.i31.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.715.i)
-  %i.df = icmp eq i64 %.sroa.3.0.i36.i, 0
+  %i.df = icmp eq i64 %.sroa.102.0.i31.i, 0
   %or.cond.not.i = select i1 %.sink.i.i32.i, i1 true, i1 %i.df
   br i1 %or.cond.not.i, label %bb.ab, label %_RNvMs2_Csa5n7gMT4fih_10rayon_coreNtB5_17ThreadPoolBuilder15get_num_threadsCsltEA4u8Pgfu_11candle_core.exit
 
@@ -632,7 +632,7 @@ _RINvMNtNtCs5Xr050g3D4S_3std4sync9once_lockINtB3_8OnceLockNtNtCsltEA4u8Pgfu_11ca
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef range(i64 1, 0) i64 @_RNvNtCsltEA4u8Pgfu_11candle_core5utils15get_num_threads() unnamed_addr #0 personality ptr @rust_eh_personality {
+define noundef i64 @_RNvNtCsltEA4u8Pgfu_11candle_core5utils15get_num_threads() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
@@ -743,7 +743,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i
   br i1 %.not53.i.i.i, label %_RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %.lr.ph.i.i.i
 
 _RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i.i: ; preds = %bb.f, %.preheader56.i.i.i.preheader, %.preheader56.i.i.i, %bb.g, %.lr.ph.i.i.i, %.preheader.i.i.i, %bb.d, %bb.d, %bb.c
-  %.sroa.102.0.i.i = phi i64 [ undef, %bb.d ], [ 0, %.preheader.i.i.i ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %.lr.ph.i.i.i ], [ %i.ag, %bb.g ], [ undef, %bb.f ], [ %i.w, %.preheader56.i.i.i ], [ undef, %.preheader56.i.i.i.preheader ]
+  %.sroa.102.0.i.i = phi i64 [ undef, %bb.d ], [ 0, %.preheader.i.i.i ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %.lr.ph.i.i.i ], [ %i.ag, %bb.g ], [ undef, %bb.f ], [ %i.w, %.preheader56.i.i.i ], [ undef, %.preheader56.i.i.i.preheader ] ; 2 uses
   %.sink.i.i.i = phi i1 [ true, %bb.d ], [ false, %.preheader.i.i.i ], [ true, %bb.c ], [ true, %bb.d ], [ %i.ab, %bb.g ], [ %i.ab, %.lr.ph.i.i.i ], [ true, %bb.f ], [ false, %.preheader56.i.i.i ], [ true, %.preheader56.i.i.i.preheader ] ; 2 uses
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.j unwind label %bb.h
@@ -768,11 +768,11 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc7raw_vec6RawVec
   br label %bb.k
 
 bb.j:                                             ; preds = %_RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i.i
-  %.sroa.3.0.i.i = select i1 %.sink.i.i.i, i64 undef, i64 %.sroa.102.0.i.i ; 2 uses
+  %.sroa.3.0.i.i = select i1 %.sink.i.i.i, i64 undef, i64 %.sroa.102.0.i.i
   call void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
-  %.not.i.i = icmp eq i64 %.sroa.3.0.i.i, 0
+  %.not.i.i = icmp eq i64 %.sroa.102.0.i.i, 0
   %narrow.i.not.i = select i1 %.sink.i.i.i, i1 true, i1 %.not.i.i
   br i1 %narrow.i.not.i, label %bb.k, label %_RNvNtCsltEA4u8Pgfu_11candle_core5utils17rayon_num_threads.exit
 
@@ -898,7 +898,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i
   br i1 %.not53.i.i, label %_RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i, label %.lr.ph.i.i
 
 _RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i: ; preds = %bb.f, %.preheader56.i.i.preheader, %.preheader56.i.i, %bb.g, %.lr.ph.i.i, %.preheader.i.i, %bb.d, %bb.d, %bb.c
-  %.sroa.102.0.i = phi i64 [ undef, %bb.d ], [ 0, %.preheader.i.i ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %.lr.ph.i.i ], [ %i.ag, %bb.g ], [ undef, %bb.f ], [ undef, %.preheader56.i.i.preheader ], [ %i.w, %.preheader56.i.i ]
+  %.sroa.102.0.i = phi i64 [ undef, %bb.d ], [ 0, %.preheader.i.i ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %.lr.ph.i.i ], [ %i.ag, %bb.g ], [ undef, %bb.f ], [ undef, %.preheader56.i.i.preheader ], [ %i.w, %.preheader56.i.i ] ; 2 uses
   %.sink.i.i = phi i1 [ true, %bb.d ], [ false, %.preheader.i.i ], [ true, %bb.c ], [ true, %bb.d ], [ %i.ab, %bb.g ], [ %i.ab, %.lr.ph.i.i ], [ true, %bb.f ], [ true, %.preheader56.i.i.preheader ], [ false, %.preheader56.i.i ] ; 2 uses
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.j unwind label %bb.h
@@ -923,11 +923,11 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc7raw_vec6RawVec
   br label %bb.k
 
 bb.j:                                             ; preds = %_RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i
-  %.sroa.3.0.i = select i1 %.sink.i.i, i64 undef, i64 %.sroa.102.0.i ; 2 uses
+  %.sroa.3.0.i = select i1 %.sink.i.i, i64 undef, i64 %.sroa.102.0.i
   call void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
-  %.not.i = icmp eq i64 %.sroa.3.0.i, 0
+  %.not.i = icmp eq i64 %.sroa.102.0.i, 0
   %narrow.i.not = select i1 %.sink.i.i, i1 true, i1 %.not.i
   br i1 %narrow.i.not, label %bb.k, label %bb.l
 

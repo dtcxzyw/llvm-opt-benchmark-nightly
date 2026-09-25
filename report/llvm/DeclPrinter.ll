@@ -204,15 +204,11 @@ bb.ez:                                            ; preds = %_ZN4llvm11raw_ostre
 
 bb.fa:                                            ; preds = %bb.ez, %_ZN4llvm11raw_ostreamlsEPKc.exit65.i
   %.087.i = phi ptr [ %i.aes, %_ZN4llvm11raw_ostreamlsEPKc.exit65.i ], [ %i.afi, %bb.ez ]
-  %i.afj = call noundef ptr @_ZN5clang4Expr12IgnoreParensEv(ptr noundef nonnull align 8 dereferenceable(16) %.087.i) #16 ; 6 uses
+  %i.afj = call noundef ptr @_ZN5clang4Expr12IgnoreParensEv(ptr noundef nonnull align 8 dereferenceable(16) %.087.i) #16 ; 4 uses
   %i.afk = load i16, ptr %i.afj, align 8
   %i.afl = and i16 %i.afk, 511                    ; 3 uses
   %.not97.i = icmp eq i16 %i.afl, 19
-  br i1 %.not97.i, label %38, label %bb.fb
-
-38:                                               ; preds = %bb.fa
-  %39 = getelementptr inbounds nuw i8, ptr %i.afj, i64 24
-  br label %bb.fd
+  br i1 %.not97.i, label %bb.fd, label %bb.fb
 
 bb.fb:                                            ; preds = %bb.fa
   %i.afm = add nsw i16 %i.afl, -119
@@ -220,24 +216,22 @@ bb.fb:                                            ; preds = %bb.fa
   br i1 %spec.select.i.i.i.i.i.i.i.i.i243, label %bb.fe, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb
-  %.not.i.i.i244 = icmp eq i16 %i.afl, 118        ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i244, ptr %i.afj, ptr null
-  %40 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %41 = getelementptr inbounds nuw i8, ptr %i.afj, i64 40
-  %spec.select.i.i68.i = select i1 %.not.i.i.i244, ptr %40, ptr %41
+  %.not.i.i.i244 = icmp eq i16 %i.afl, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i244, i64 48, i64 40
   br label %bb.fd
 
-bb.fd:                                            ; preds = %bb.fc, %38
-  %.sink.i = phi i64 [ 32, %bb.fc ], [ 4, %38 ]
-  %.143.i = phi ptr [ %spec.select.i.i68.i, %bb.fc ], [ %39, %38 ] ; 2 uses
+bb.fd:                                            ; preds = %bb.fc, %bb.fa
+  %.sink.i = phi i64 [ 32, %bb.fc ], [ 4, %bb.fa ]
+  %38 = phi i64 [ %spec.select.v.i.i.i, %bb.fc ], [ 24, %bb.fa ]
   %i.afn = getelementptr inbounds nuw i8, ptr %i.afj, i64 %.sink.i
   %.1.i245 = load i32, ptr %i.afn, align 4, !tbaa !17 ; 3 uses
+  %39 = getelementptr inbounds nuw i8, ptr %i.afj, i64 %38 ; 2 uses
   %.not57100.i = icmp eq i32 %.1.i245, 0
   br i1 %.not57100.i, label %.loopexit.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.fd
   %i.afo = zext i32 %.1.i245 to i64
-  %i.afp = load ptr, ptr %.143.i, align 8, !tbaa !55 ; 2 uses
+  %i.afp = load ptr, ptr %39, align 8, !tbaa !55  ; 2 uses
   %i.afq = load i16, ptr %i.afp, align 8
   %i.afr = and i16 %i.afq, 511
   %i.afs = icmp eq i16 %i.afr, 116
@@ -264,7 +258,7 @@ bb.fe:                                            ; preds = %bb.fb
 
 .lr.ph.i:                                         ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit71.peel.i, %_ZN4llvm11raw_ostreamlsEPKc.exit71.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_ZN4llvm11raw_ostreamlsEPKc.exit71.i ], [ 1, %_ZN4llvm11raw_ostreamlsEPKc.exit71.peel.i ] ; 2 uses
-  %i.afw = getelementptr inbounds nuw [8 x i8], ptr %.143.i, i64 %indvars.iv.i ; 2 uses
+  %i.afw = getelementptr inbounds nuw [8 x i8], ptr %39, i64 %indvars.iv.i ; 2 uses
   %i.afx = load ptr, ptr %i.afw, align 8, !tbaa !55
   %i.afy = load i16, ptr %i.afx, align 8
   %i.afz = and i16 %i.afy, 511
@@ -667,7 +661,7 @@ bb.az:                                            ; preds = %_ZNSt14_Optional_ba
   br i1 %i.iz, label %.critedge, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.jb = call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull align 8 dereferenceable(16) %i.in) #16 ; 5 uses
+  %i.jb = call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull align 8 dereferenceable(16) %i.in) #16 ; 4 uses
   %i.jc = load i16, ptr %i.jb, align 8
   %i.jd = and i16 %i.jc, 511
   %i.je = add nsw i16 %i.jd, -117
@@ -691,12 +685,10 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %bb.bc
   %i.jm = and i32 %i.jh, 511
-  %.not.i.i.i73 = icmp eq i32 %i.jm, 118          ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i73, ptr %i.jb, ptr null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.jn = getelementptr inbounds nuw i8, ptr %i.jb, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i73, ptr %8, ptr %i.jn
-  %i.jo = load ptr, ptr %spec.select.i.i.i, align 8, !tbaa !55
+  %.not.i.i.i73 = icmp eq i32 %i.jm, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i73, i64 48, i64 40
+  %i.jn = getelementptr inbounds nuw i8, ptr %i.jb, i64 %spec.select.v.i.i.i
+  %i.jo = load ptr, ptr %i.jn, align 8, !tbaa !55
   %i.jp = call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.jo) #17
   br i1 %i.jp, label %.critedge, label %..critedge23_crit_edge
 

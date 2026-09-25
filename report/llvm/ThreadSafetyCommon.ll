@@ -204,12 +204,10 @@ bb.n:                                             ; preds = %bb.m
   %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.bp = load i32, ptr %i.bo, align 8, !tbaa !482
   store i32 %i.bp, ptr %i.e, align 8, !tbaa !231
-  %.not.i.i.i = icmp eq i16 %i.i, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %4, ptr null
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %7, ptr %i.bq
-  %i.br = ptrtoint ptr %spec.select.i.i.i to i64
+  %.not.i.i.i = icmp eq i16 %i.i, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 %spec.select.v.i.i.i
+  %i.br = ptrtoint ptr %i.bq to i64
   store i64 %i.br, ptr %i.f, align 8
   br label %bb.o
 

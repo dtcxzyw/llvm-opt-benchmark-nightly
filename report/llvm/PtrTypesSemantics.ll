@@ -204,21 +204,19 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = load i16, ptr %1, align 8
   %i.c = and i16 %i.b, 511
-  %.not.i.i.i.i = icmp eq i16 %i.c, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %2, ptr %i.d ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.c, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.f = load i32, ptr %i.e, align 8, !tbaa !652  ; 2 uses
   %i.g = zext i32 %i.f to i64
   %.idx = shl nuw nsw i64 %i.g, 3
-  %i.h = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 %.idx
+  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx
   %.not1819 = icmp eq i32 %i.f, 0
   br i1 %.not1819, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.critedge
-  %.sroa.013.020 = phi ptr [ %i.k, %.critedge ], [ %spec.select.i.i.i.i, %bb.a ] ; 2 uses
+  %.sroa.013.020 = phi ptr [ %i.k, %.critedge ], [ %i.d, %bb.a ] ; 2 uses
   %i.i = load ptr, ptr %.sroa.013.020, align 8, !tbaa !248 ; 2 uses
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %.critedge, label %bb.b

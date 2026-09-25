@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   %.0266 = phi i32 [ 0, %bb.a ], [ %.0266.be, %.backedge ] ; 35 uses
   %.0261 = phi ptr [ null, %bb.a ], [ %.0261.be, %.backedge ] ; 70 uses
   %.0256 = phi ptr [ null, %bb.a ], [ %.0256.be, %.backedge ] ; 70 uses
-  %.0252 = phi i32 [ 0, %bb.a ], [ %.0252.be, %.backedge ] ; 33 uses
+  %.0252 = phi i32 [ 0, %bb.a ], [ %.0252.be, %.backedge ] ; 34 uses
   %i.o = call i32 @opt_next() #10                 ; 3 uses
   switch i32 %i.o, label %.backedge [
     i32 0, label %bb.ap
@@ -462,7 +462,6 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq
   %i.bj = icmp ne ptr %.0270, null                ; 3 uses
-  %spec.select = select i1 %i.bj, i32 1, i32 %.0252 ; 2 uses
   %.not348 = icmp eq ptr %.0272, null
   br i1 %.not348, label %bb.at, label %bb.as
 
@@ -524,8 +523,8 @@ bb.ba:                                            ; preds = %bb.ax
   ]
 
 bb.bb:                                            ; preds = %bb.ba, %bb.ba
-  %i.cc = call fastcc i32 @only_nomd(ptr noundef %i.br)
-  %.not350 = icmp ne i32 %i.cc, 0                 ; 2 uses
+  %i.cc = call fastcc i32 @only_nomd(ptr noundef %i.br) ; 2 uses
+  %.not350 = icmp ne i32 %i.cc, 0
   %brmerge.not = select i1 %.not350, i1 %i.bj, i1 false
   br i1 %brmerge.not, label %bb.bc, label %bb.bd
 
@@ -540,13 +539,14 @@ bb.bc:                                            ; preds = %bb.bb
 .thread:                                          ; preds = %bb.ay, %bb.ba
   %or.cond10380 = phi i1 [ %or.cond10, %bb.ba ], [ false, %bb.ay ]
   %i.ch = phi i1 [ %i.cb, %bb.ba ], [ false, %bb.ay ]
-  %i.ci = icmp ne i32 %spec.select, 0
+  %i.ci = icmp ne i32 %.0252, 0
   %or.cond12 = or i1 %i.bj, %i.ci
   br i1 %or.cond12, label %.loopexit476.sink.split, label %.split318
 
 bb.bd:                                            ; preds = %bb.bb
-  %i.cj = icmp ne i32 %spec.select, 0
-  %i.ck = select i1 %.not350, i1 true, i1 %i.cj   ; 2 uses
+  %3 = or i32 %.0252, %i.cc
+  %i.cj = icmp ne i32 %3, 0
+  %i.ck = select i1 %i.cj, i1 true, i1 %i.bj      ; 2 uses
   %i.cl = icmp ne i8 %.0289, 0
   %or.cond15 = and i1 %i.ck, %i.cl
   br i1 %or.cond15, label %.loopexit476.sink.split, label %bb.be

@@ -205,16 +205,14 @@ bb.aa:                                            ; preds = %bb.x
           to label %bb.ab unwind label %.loopexit.split-lp.loopexit ; 2 uses
 
 bb.ab:                                            ; preds = %bb.aa
-  %4 = trunc i64 %i.ea to i1                      ; 2 uses
-  %.sroa.572.0.extract.shift = lshr i64 %i.ea, 32
-  %.sroa.572.0.extract.trunc = trunc nuw i64 %.sroa.572.0.extract.shift to i32
-  %.sroa.516.0 = select i1 %4, i32 undef, i32 %.sroa.572.0.extract.trunc ; 2 uses
-  %5 = icmp slt i32 %.sroa.516.0, 0
-  %narrow.i.not = select i1 %4, i1 true, i1 %5
-  br i1 %narrow.i.not, label %bb.ac, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtB4_3num7nonzero7NonZeromENtNtBM_5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
+  %4 = and i64 %i.ea, -9223372036854775807
+  %narrow.i.not.not = icmp eq i64 %4, 0
+  br i1 %narrow.i.not.not, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtB4_3num7nonzero7NonZeromENtNtBM_5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit, label %bb.ac
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtB4_3num7nonzero7NonZeromENtNtBM_5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit: ; preds = %bb.ab
-  %i.eb = invoke noundef ptr @_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser11job_with_id(ptr noundef nonnull align 8 %0, i32 noundef %.sroa.516.0)
+  %.sroa.572.0.extract.shift = lshr i64 %i.ea, 32
+  %.sroa.572.0.extract.trunc = trunc nuw nsw i64 %.sroa.572.0.extract.shift to i32
+  %i.eb = invoke noundef ptr @_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser11job_with_id(ptr noundef nonnull align 8 %0, i32 noundef %.sroa.572.0.extract.trunc)
           to label %bb.al unwind label %.loopexit.split-lp.loopexit
 
 bb.ac:                                            ; preds = %bb.ab
@@ -328,7 +326,7 @@ bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   br label %.loopexit163
 
-.loopexit.split-lp165.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ae, %bb.bq, %bb.bf, %.body, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %bb.ah, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit126, %bb.bi, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit132, %bb.bt, %bb.bw, %bb.ba
+.loopexit.split-lp165.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bf, %bb.bq, %bb.ae, %.body, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %bb.ah, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit126, %bb.bi, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit132, %bb.bt, %bb.bw, %bb.ba
   %lpad.loopexit.split-lp410 = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #36

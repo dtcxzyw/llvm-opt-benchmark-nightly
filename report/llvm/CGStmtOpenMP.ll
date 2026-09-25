@@ -205,12 +205,16 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
 .lr.ph106:                                        ; preds = %.critedge.preheader, %.critedge
   %.fr4.i.i.i105 = phi i16 [ %.fr4.i.i.i, %.critedge ], [ %.fr4.i.i.i103, %.critedge.preheader ] ; 3 uses
   %.tr7684104 = phi i32 [ %i.al, %.critedge ], [ %4, %.critedge.preheader ]
-  %i.x = phi ptr [ %i.ao, %.critedge ], [ %i.a, %.critedge.preheader ] ; 3 uses
+  %i.x = phi ptr [ %i.ao, %.critedge ], [ %i.a, %.critedge.preheader ] ; 4 uses
   %i.y = and i16 %.fr4.i.i.i105, 511              ; 3 uses
-  %i.z = and i16 %.fr4.i.i.i105, 506              ; 2 uses
+  %i.z = and i16 %.fr4.i.i.i105, 506
   %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i16 %i.z, 226
-  %.not90 = icmp eq i16 %i.y, 238                 ; 2 uses
-  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i, label %select.unfold.a, label %switch.early.test.i.i.i
+  %.not90 = icmp eq i16 %i.y, 238
+  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.thread, label %switch.early.test.i.i.i
+
+.thread:                                          ; preds = %.lr.ph106
+  %7 = getelementptr inbounds nuw i8, ptr %i.x, i64 40
+  br label %select.unfold
 
 switch.early.test.i.i.i:                          ; preds = %.lr.ph106
   switch i16 %i.y, label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveEKNS1_4StmtEEEDcPT0_.exit [
@@ -218,23 +222,23 @@ switch.early.test.i.i.i:                          ; preds = %.lr.ph106
     i16 228, label %select.unfold.a
   ]
 
-select.unfold.a:                                  ; preds = %switch.early.test.i.i.i, %switch.early.test.i.i.i, %.lr.ph106
-  %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i16 %i.z, 226
-  %7 = icmp ne i16 %i.y, 228
-  %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i = and i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i, %7 ; 2 uses
-  %spec.select.i.i.i3.i.i.i = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i, ptr null, ptr %i.x
-  %i.aa = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i3.i.i.i, i64 40
-  %spec.select.i.i12.i.i.i.i = select i1 %.not90, ptr %i.x, ptr null
-  %i.ab = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i.i, i64 32
+select.unfold.a:                                  ; preds = %switch.early.test.i.i.i, %switch.early.test.i.i.i
+  %.not74 = icmp eq i16 %i.y, 228
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 40
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 32
   %.1.i.i.i.i = select i1 %.not90, ptr %i.ab, ptr undef
-  %spec.select = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i, ptr %.1.i.i.i.i, ptr %i.aa
-  %8 = tail call noundef ptr @_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv(ptr noundef nonnull align 8 dereferenceable(16) %spec.select) #21 ; 2 uses
+  %spec.select = select i1 %.not74, ptr %i.aa, ptr %.1.i.i.i.i
+  br label %select.unfold
+
+select.unfold:                                    ; preds = %select.unfold.a, %.thread
+  %.0.i.i.i.ph = phi ptr [ %7, %.thread ], [ %spec.select, %select.unfold.a ]
+  %8 = tail call noundef ptr @_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv(ptr noundef nonnull align 8 dereferenceable(16) %.0.i.i.i.ph) #21 ; 2 uses
   %.pre = load i16, ptr %8, align 8
   br label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveEKNS1_4StmtEEEDcPT0_.exit
 
-_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveEKNS1_4StmtEEEDcPT0_.exit: ; preds = %switch.early.test.i.i.i, %select.unfold.a
-  %i.ac = phi i16 [ %.pre, %select.unfold.a ], [ %.fr4.i.i.i105, %switch.early.test.i.i.i ] ; 2 uses
-  %.047 = phi ptr [ %8, %select.unfold.a ], [ %i.x, %switch.early.test.i.i.i ] ; 2 uses
+_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveEKNS1_4StmtEEEDcPT0_.exit: ; preds = %switch.early.test.i.i.i, %select.unfold
+  %i.ac = phi i16 [ %.pre, %select.unfold ], [ %.fr4.i.i.i105, %switch.early.test.i.i.i ] ; 2 uses
+  %.047 = phi ptr [ %8, %select.unfold ], [ %i.x, %switch.early.test.i.i.i ] ; 2 uses
   %i.ad = and i16 %i.ac, 511
   %.not70 = icmp eq i16 %i.ad, 244
   br i1 %.not70, label %bb.b, label %bb.c

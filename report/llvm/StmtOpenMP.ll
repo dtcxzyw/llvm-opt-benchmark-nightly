@@ -204,34 +204,39 @@ _ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exi
   br label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i.i
 
 _ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i.i: ; preds = %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader.i.i
-  %.133.i.i = phi ptr [ %.2.i.i.i, %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i.i ], [ %.03263.i.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader.i.i ] ; 6 uses
+  %.133.i.i = phi ptr [ %.2.i.i.i, %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i.i ], [ %.03263.i.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader.i.i ] ; 7 uses
   %i.aa = load i16, ptr %.133.i.i, align 8
   %.fr4.i.i.i.i = freeze i16 %i.aa                ; 4 uses
   %i.ab = and i16 %.fr4.i.i.i.i, 511              ; 6 uses
-  %i.ac = and i16 %.fr4.i.i.i.i, 506              ; 2 uses
+  %i.ac = and i16 %.fr4.i.i.i.i, 506
   %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i16 %i.ac, 226
   %i.ad = icmp eq i16 %i.ab, 238
-  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %select.unfold.i.i, label %switch.early.test.i.i.i.i
+  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.thread.i.i, label %switch.early.test.i.i.i.i
+
+.thread.i.i:                                      ; preds = %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i.i
+  %1 = getelementptr inbounds nuw i8, ptr %.133.i.i, i64 40
+  br label %select.unfold.i.i
 
 switch.early.test.i.i.i.i:                        ; preds = %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i.i
   switch i16 %i.ab, label %.loopexit [
-    i16 238, label %select.unfold.i.i
-    i16 228, label %select.unfold.i.i
+    i16 238, label %2
+    i16 228, label %2
     i16 244, label %.loopexit1
   ]
 
-select.unfold.i.i:                                ; preds = %switch.early.test.i.i.i.i, %switch.early.test.i.i.i.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i.i
-  %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i16 %i.ac, 226
-  %1 = icmp ne i16 %i.ab, 228
-  %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i.i = and i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i, %1 ; 2 uses
-  %spec.select.i.i.i3.i.i.i.i = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i.i, ptr null, ptr %.133.i.i
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i3.i.i.i.i, i64 40
+2:                                                ; preds = %switch.early.test.i.i.i.i, %switch.early.test.i.i.i.i
+  %.not.i.i = icmp eq i16 %i.ab, 228
+  %3 = getelementptr inbounds nuw i8, ptr %.133.i.i, i64 40
   %spec.select.i.i12.i.i.i.i.i = select i1 %i.ad, ptr %.133.i.i, ptr null ; 2 uses
   %.not11.i.i.i.i.i = icmp eq ptr %spec.select.i.i12.i.i.i.i.i, null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i.i.i, i64 32
-  %.1.i.i.i.i.i = select i1 %.not11.i.i.i.i.i, ptr undef, ptr %3
-  %spec.select57.i.i = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i.i, ptr %.1.i.i.i.i.i, ptr %2 ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %spec.select57.i.i, i64 8
+  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i.i.i, i64 32
+  %.1.i.i.i.i.i = select i1 %.not11.i.i.i.i.i, ptr undef, ptr %4
+  %spec.select62.i.i = select i1 %.not.i.i, ptr %3, ptr %.1.i.i.i.i.i
+  br label %select.unfold.i.i
+
+select.unfold.i.i:                                ; preds = %2, %.thread.i.i
+  %.0.i.i.ph.i.i = phi ptr [ %1, %.thread.i.i ], [ %spec.select62.i.i, %2 ] ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %.0.i.i.ph.i.i, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !38 ; 2 uses
   %i.ag = load i16, ptr %i.af, align 8            ; 2 uses
   %i.ah = and i16 %i.ag, 511                      ; 2 uses
@@ -258,7 +263,7 @@ _ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i.i: ; pre
   br i1 %.not41.i.i, label %bb.c, label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i.i
 
 bb.c:                                             ; preds = %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i.i
-  %i.aq = load i32, ptr %spec.select57.i.i, align 8, !tbaa !39
+  %i.aq = load i32, ptr %.0.i.i.ph.i.i, align 8, !tbaa !39
   %i.ar = icmp eq i32 %i.aq, 0
   br i1 %i.ar, label %select.unfold48.i.i, label %_ZN5clang21OMPLoopBasedDirective19doForAllLoopsBodiesEPNS_4StmtEbjN4llvm12function_refIFvjS2_S2_EEE.exit
 
@@ -661,36 +666,41 @@ _ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exi
   br label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit
 
 _ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit: ; preds = %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader, %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit
-  %.133 = phi ptr [ %.2.i, %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit ], [ %.03263, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader ] ; 6 uses
+  %.133 = phi ptr [ %.2.i, %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit ], [ %.03263, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader ] ; 7 uses
   %i.d = load i16, ptr %.133, align 8
   %.fr4.i.i = freeze i16 %i.d                     ; 3 uses
   %i.e = and i16 %.fr4.i.i, 511                   ; 3 uses
-  %i.f = and i16 %.fr4.i.i, 506                   ; 2 uses
+  %i.f = and i16 %.fr4.i.i, 506
   %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i16 %i.f, 226
   %i.g = icmp eq i16 %i.e, 238
-  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i, label %select.unfold, label %switch.early.test.i.i
+  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i, label %.thread, label %switch.early.test.i.i
+
+.thread:                                          ; preds = %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit
+  %6 = getelementptr inbounds nuw i8, ptr %.133, i64 40
+  br label %select.unfold
 
 switch.early.test.i.i:                            ; preds = %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit
   switch i16 %i.e, label %select.unfold48 [
-    i16 238, label %select.unfold
-    i16 228, label %select.unfold
+    i16 238, label %7
+    i16 228, label %7
   ]
 
-select.unfold:                                    ; preds = %switch.early.test.i.i, %switch.early.test.i.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit
-  %or.cond5.i.i.i.i.i.i.i.i.i.i.i = icmp ne i16 %i.f, 226
-  %6 = icmp ne i16 %i.e, 228
-  %spec.select.i.i.i.i.i.i.i.i.not.i.i.i = and i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i, %6 ; 2 uses
-  %spec.select.i.i.i3.i.i = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i, ptr null, ptr %.133
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i3.i.i, i64 40
+7:                                                ; preds = %switch.early.test.i.i, %switch.early.test.i.i
+  %.not = icmp eq i16 %i.e, 228
+  %8 = getelementptr inbounds nuw i8, ptr %.133, i64 40
   %spec.select.i.i12.i.i.i = select i1 %i.g, ptr %.133, ptr null ; 2 uses
   %.not11.i.i.i = icmp eq ptr %spec.select.i.i12.i.i.i, null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i, i64 32
-  %.1.i.i.i = select i1 %.not11.i.i.i, ptr undef, ptr %8
-  %spec.select57 = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i, ptr %.1.i.i.i, ptr %7 ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i, i64 32
+  %.1.i.i.i = select i1 %.not11.i.i.i, ptr undef, ptr %9
+  %spec.select62 = select i1 %.not, ptr %8, ptr %.1.i.i.i
+  br label %select.unfold
+
+select.unfold:                                    ; preds = %7, %.thread
+  %.0.i.i.ph = phi ptr [ %6, %.thread ], [ %spec.select62, %7 ] ; 3 uses
   %i.h = load ptr, ptr %5, align 8, !tbaa !133
   %i.i = load i64, ptr %i.c, align 8, !tbaa !134
-  tail call void %i.h(i64 noundef %i.i, ptr noundef nonnull %spec.select57) #14, !inline_history !130
-  %i.j = getelementptr inbounds nuw i8, ptr %spec.select57, i64 8
+  tail call void %i.h(i64 noundef %i.i, ptr noundef nonnull %.0.i.i.ph) #14, !inline_history !130
+  %i.j = getelementptr inbounds nuw i8, ptr %.0.i.i.ph, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !38   ; 2 uses
   %i.l = load i16, ptr %i.k, align 8              ; 2 uses
   %i.m = and i16 %i.l, 511                        ; 2 uses
@@ -717,7 +727,7 @@ _ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit: ; preds =
   br i1 %.not41, label %bb.c, label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit
 
 bb.c:                                             ; preds = %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit
-  %i.v = load i32, ptr %spec.select57, align 8, !tbaa !39
+  %i.v = load i32, ptr %.0.i.i.ph, align 8, !tbaa !39
   %i.w = icmp eq i32 %i.v, 0
   br i1 %i.w, label %.select.unfold48_crit_edge, label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.thread54
 
@@ -800,34 +810,39 @@ _ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exi
   br label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i
 
 _ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i: ; preds = %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader.i
-  %.133.i = phi ptr [ %.2.i.i, %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i ], [ %.03263.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader.i ] ; 6 uses
+  %.133.i = phi ptr [ %.2.i.i, %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i ], [ %.03263.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.preheader.i ] ; 7 uses
   %i.c = load i16, ptr %.133.i, align 8
   %.fr4.i.i.i = freeze i16 %i.c                   ; 2 uses
   %i.d = and i16 %.fr4.i.i.i, 511                 ; 6 uses
-  %i.e = and i16 %.fr4.i.i.i, 506                 ; 2 uses
+  %i.e = and i16 %.fr4.i.i.i, 506
   %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i16 %i.e, 226
   %i.f = icmp eq i16 %i.d, 238
-  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i, label %select.unfold.i, label %switch.early.test.i.i.i
+  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.thread.i, label %switch.early.test.i.i.i
+
+.thread.i:                                        ; preds = %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %.133.i, i64 40
+  br label %select.unfold.i
 
 switch.early.test.i.i.i:                          ; preds = %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i
   switch i16 %i.d, label %.loopexit [
-    i16 238, label %select.unfold.i
-    i16 228, label %select.unfold.i
+    i16 238, label %6
+    i16 228, label %6
     i16 244, label %.loopexit34
   ]
 
-select.unfold.i:                                  ; preds = %switch.early.test.i.i.i, %switch.early.test.i.i.i, %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i
-  %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i16 %i.e, 226
-  %5 = icmp ne i16 %i.d, 228
-  %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i = and i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i, %5 ; 2 uses
-  %spec.select.i.i.i3.i.i.i = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i, ptr null, ptr %.133.i
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i3.i.i.i, i64 40
+6:                                                ; preds = %switch.early.test.i.i.i, %switch.early.test.i.i.i
+  %.not.i = icmp eq i16 %i.d, 228
+  %7 = getelementptr inbounds nuw i8, ptr %.133.i, i64 40
   %spec.select.i.i12.i.i.i.i = select i1 %i.f, ptr %.133.i, ptr null ; 2 uses
   %.not11.i.i.i.i = icmp eq ptr %spec.select.i.i12.i.i.i.i, null
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i.i, i64 32
-  %.1.i.i.i.i = select i1 %.not11.i.i.i.i, ptr undef, ptr %7
-  %spec.select57.i = select i1 %spec.select.i.i.i.i.i.i.i.i.not.i.i.i.i, ptr %.1.i.i.i.i, ptr %6 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %spec.select57.i, i64 8
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i.i, i64 32
+  %.1.i.i.i.i = select i1 %.not11.i.i.i.i, ptr undef, ptr %8
+  %spec.select62.i = select i1 %.not.i, ptr %7, ptr %.1.i.i.i.i
+  br label %select.unfold.i
+
+select.unfold.i:                                  ; preds = %6, %.thread.i
+  %.0.i.i.ph.i = phi ptr [ %5, %.thread.i ], [ %spec.select62.i, %6 ] ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0.i.i.ph.i, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !38   ; 2 uses
   %i.i = load i16, ptr %i.h, align 8              ; 2 uses
   %i.j = and i16 %i.i, 511                        ; 2 uses
@@ -854,7 +869,7 @@ _ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i: ; preds
   br i1 %.not41.i, label %bb.c, label %_ZN4llvm8dyn_castIN5clang30OMPLoopTransformationDirectiveENS1_4StmtEEEDcPT0_.exit.i
 
 bb.c:                                             ; preds = %_ZNK5clang30OMPLoopTransformationDirective18getTransformedStmtEv.exit.i
-  %i.s = load i32, ptr %spec.select57.i, align 8, !tbaa !39
+  %i.s = load i32, ptr %.0.i.i.ph.i, align 8, !tbaa !39
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %select.unfold48.i, label %_ZN5clang21OMPLoopBasedDirective13doForAllLoopsEPNS_4StmtEbjN4llvm12function_refIFbjS2_EEENS4_IFvPNS_30OMPLoopTransformationDirectiveEEEE.exit
 

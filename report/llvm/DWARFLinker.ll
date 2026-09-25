@@ -205,12 +205,12 @@ bb.d:                                             ; preds = %.lr.ph, %bb.q
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !118, !nonnull !122, !align !123 ; 4 uses
   call void @_ZN4llvm9DWARFUnit19extractDIEsIfNeededEb(ptr noundef nonnull align 8 dereferenceable(448) %i.ag, i1 noundef zeroext true) #26
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 288
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !125 ; 2 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !125 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 296
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !125
-  %.not92 = icmp eq ptr %i.ai, %i.ak              ; 2 uses
-  %spec.select.i = select i1 %.not92, ptr null, ptr %i.ag
-  %spec.select1.i = select i1 %.not92, ptr null, ptr %i.ai ; 2 uses
+  %11 = icmp ne ptr %i.ai, %i.ak                  ; 3 uses
+  %spec.select.i = select i1 %11, ptr %i.ag, ptr null
+  %spec.select1.i = select i1 %11, ptr %i.ai, ptr null
   store ptr %spec.select.i, ptr %5, align 8
   store ptr %spec.select1.i, ptr %i.p, align 8
   %i.al = load ptr, ptr %.sroa.083.0112, align 8, !tbaa !75 ; 9 uses
@@ -227,8 +227,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN4llvm12dwarf_linker7classic11CompileUnit14setStartOffsetEm.exit
 
 _ZN4llvm12dwarf_linker7classic11CompileUnit14setStartOffsetEm.exit: ; preds = %bb.d, %bb.e
-  %.not93 = icmp eq ptr %spec.select1.i, null
-  br i1 %.not93, label %bb.f, label %bb.g
+  %12 = icmp ne ptr %i.ai, null
+  %13 = and i1 %12, %11
+  br i1 %13, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4llvm12dwarf_linker7classic11CompileUnit14setStartOffsetEm.exit
   %i.ar = call noundef i64 @_ZN4llvm12dwarf_linker7classic11CompileUnit21computeNextUnitOffsetEt(ptr noundef nonnull align 8 dereferenceable(672) %i.al, i16 noundef zeroext %i.ac) #26
@@ -631,16 +632,17 @@ bb.j:                                             ; preds = %bb.i
 _ZNSt6vectorIN4llvm12dwarf_linker7classic11CompileUnit7DIEInfoESaIS4_EE6resizeEm.exit: ; preds = %bb.g, %bb.h, %bb.i, %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   call void @_ZN4llvm9DWARFUnit19extractDIEsIfNeededEb(ptr noundef nonnull align 8 dereferenceable(448) %1, i1 noundef zeroext false) #26
-  %i.bm = load ptr, ptr %i.as, align 8, !tbaa !125 ; 2 uses
+  %i.bm = load ptr, ptr %i.as, align 8, !tbaa !125 ; 3 uses
   %i.bn = load ptr, ptr %i.at, align 8, !tbaa !125
-  %.not = icmp eq ptr %i.bm, %i.bn                ; 2 uses
-  %spec.select.i = select i1 %.not, ptr null, ptr %1
-  %spec.select1.i = select i1 %.not, ptr null, ptr %i.bm ; 2 uses
+  %7 = icmp ne ptr %i.bm, %i.bn                   ; 3 uses
+  %spec.select.i = select i1 %7, ptr %1, ptr null
+  %spec.select1.i = select i1 %7, ptr %i.bm, ptr null
   store ptr %spec.select.i, ptr %6, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %spec.select1.i, ptr %i.bo, align 8
-  %.not12 = icmp eq ptr %spec.select1.i, null
-  br i1 %.not12, label %switch.lookup, label %bb.k
+  %8 = icmp ne ptr %i.bm, null
+  %9 = and i1 %8, %7
+  br i1 %9, label %bb.k, label %switch.lookup
 
 bb.k:                                             ; preds = %_ZNSt6vectorIN4llvm12dwarf_linker7classic11CompileUnit7DIEInfoESaIS4_EE6resizeEm.exit
   %i.bp = call { i64, i8 } @_ZNK4llvm8DWARFDie11getLanguageEv(ptr noundef nonnull align 8 dereferenceable(16) %6) #26 ; 2 uses

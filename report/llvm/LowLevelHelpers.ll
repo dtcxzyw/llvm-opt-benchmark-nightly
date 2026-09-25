@@ -202,7 +202,6 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %_ZNK5
   %i.ds = getelementptr inbounds nuw i8, ptr %.3102.i, i64 16
   %i.dt = getelementptr inbounds nuw i8, ptr %.3102.i, i64 48
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   br i1 %.not47103.i, label %.lr.ph.split.us.i, label %.lr.ph.split.preheader.i
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i
@@ -244,11 +243,10 @@ bb.r:                                             ; preds = %.lr.ph.split.us.spl
   %.sroa.0.0.us.i = load i64, ptr %i.ei, align 8, !tbaa !11
   %i.ej = load i16, ptr %0, align 8
   %i.ek = and i16 %i.ej, 511
-  %.not.i.i.i.i74.us.i = icmp eq i16 %i.ek, 118   ; 2 uses
-  %spec.select.i.i.i.i.i.i.us.i = select i1 %.not.i.i.i.i74.us.i, ptr %0, ptr null
-  %i.el = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.us.i, i64 48
-  %spec.select.i.i.i.i75.us.i = select i1 %.not.i.i.i.i74.us.i, ptr %i.el, ptr %3
-  %i.em = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i75.us.i, i64 %indvars.iv121.i
+  %.not.i.i.i.i74.us.i = icmp eq i16 %i.ek, 118
+  %spec.select.v.i.i.i.i.us.i = select i1 %.not.i.i.i.i74.us.i, i64 48, i64 40
+  %i.el = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i.us.i
+  %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.el, i64 %indvars.iv121.i
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !63
   %i.eo = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.en) #5
   tail call void %1(i64 noundef %2, i64 %.sroa.0.0.us.i, ptr noundef %i.eo) #4, !inline_history !69
@@ -296,11 +294,10 @@ bb.w:                                             ; preds = %.critedge.i, %bb.t
   %.sroa.0.0.i = load i64, ptr %.sroa.0.0.in.i, align 8, !tbaa !11
   %i.fb = load i16, ptr %0, align 8
   %i.fc = and i16 %i.fb, 511
-  %.not.i.i.i.i74.i = icmp eq i16 %i.fc, 118      ; 2 uses
-  %spec.select.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i74.i, ptr %0, ptr null
-  %i.fd = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i75.i = select i1 %.not.i.i.i.i74.i, ptr %i.fd, ptr %3
-  %i.fe = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i75.i, i64 %indvars.iv.i
+  %.not.i.i.i.i74.i = icmp eq i16 %i.fc, 118
+  %spec.select.v.i.i.i.i.i = select i1 %.not.i.i.i.i74.i, i64 48, i64 40
+  %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i.i
+  %i.fe = getelementptr inbounds nuw [8 x i8], ptr %i.fd, i64 %indvars.iv.i
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !63
   %i.fg = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ff) #5
   tail call void %1(i64 noundef %2, i64 %.sroa.0.0.i, ptr noundef %i.fg) #4, !inline_history !69

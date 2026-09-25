@@ -204,12 +204,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
   %i.dl = load i16, ptr %0, align 8
   %i.dm = and i16 %i.dl, 511
-  %.not.i.i.i.i.i.i = icmp eq i16 %i.dm, 118      ; 2 uses
-  %spec.select.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr %0, ptr null
-  %11 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i.i, i64 48
-  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr %11, ptr %i.dn
-  %i.do = load ptr, ptr %spec.select.i.i.i.i.i.i, align 8, !tbaa !215
+  %.not.i.i.i.i.i.i = icmp eq i16 %i.dm, 118
+  %spec.select.v.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 48, i64 40
+  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i.i.i
+  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !215
   %i.dp = call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.do) #24 ; 4 uses
   store ptr %i.dp, ptr %i.d, align 8, !tbaa !215
   %i.dq = call fastcc noundef i32 @_ZNK12_GLOBAL__N_125RetainPtrCtorAdoptChecker7isOwnedEPKN5clang4ExprE(ptr noundef nonnull align 8 dereferenceable(264) %.0.val, ptr noundef %i.dp)

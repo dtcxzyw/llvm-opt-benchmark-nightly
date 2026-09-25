@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.219.i = phi i32 [ %.118.i, %bb.d ], [ %.01725.i, %bb.c ] ; 2 uses
+  %.219.i = phi i32 [ %.118.i, %bb.d ], [ %.01725.i, %bb.c ] ; 3 uses
   %.2.i = phi i32 [ %.1.i, %bb.d ], [ %.026.i, %bb.c ] ; 3 uses
   %i.n = add nuw nsw i32 %.02024.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.n, 20
@@ -246,11 +246,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 determine_best_coding_triple.exit:                ; preds = %bb.h
   %.not = icmp eq i32 %.2.i, -1                   ; 4 uses
-  %.048 = select i1 %.not, i32 -1, i32 %.219.i    ; 2 uses
   %.0 = select i1 %.not, i32 -1, i32 1
   %i.u = icmp ne i32 %.2.i65, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
-  %i.v = icmp slt i32 %.219.i64, %.048
+  %i.v = icmp slt i32 %.219.i64, %.219.i
   %or.cond = select i1 %.not, i1 true, i1 %i.v
   %or.cond123 = select i1 %i.u, i1 %or.cond, i1 false ; 4 uses
   %.146 = select i1 %or.cond123, i32 %.2.i65, i32 %.2.i ; 2 uses
@@ -260,6 +259,7 @@ determine_best_coding_triple.exit:                ; preds = %bb.h
   br i1 %i.w, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %determine_best_coding_triple.exit
+  %.048 = select i1 %.not, i32 -1, i32 %.219.i
   %.149 = select i1 %or.cond123, i32 %.219.i64, i32 %.048
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   store i32 %i.h, ptr %i.c, align 4, !tbaa !16

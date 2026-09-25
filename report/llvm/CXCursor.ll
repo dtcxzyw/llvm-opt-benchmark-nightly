@@ -202,7 +202,7 @@ _ZN4llvm16dyn_cast_or_nullIN5clang12FunctionDeclEKNS1_4DeclEEEDaPT0_.exit: ; pre
 
 _ZN5clang8cxcursor13getCursorExprE8CXCursor.exit: ; preds = %.thread89
   %.sroa.268.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.268.0.copyload = load ptr, ptr %.sroa.268.0..sroa_idx, align 8, !nonnull !55, !noundef !55 ; 7 uses
+  %.sroa.268.0.copyload = load ptr, ptr %.sroa.268.0..sroa_idx, align 8, !nonnull !55, !noundef !55 ; 6 uses
   %.sroa.369.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.z = add i32 %i.a, -43
   %or.cond5.i.i = icmp ult i32 %i.z, -3
@@ -247,13 +247,11 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.as, label %bb.i, label %.thread92
 
 bb.i:                                             ; preds = %bb.h
-  %.not.i.i.i.i = icmp eq i16 %i.ab, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.sroa.268.0.copyload, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.268.0.copyload, i64 40
-  %spec.select.i.i.i.i55 = select i1 %.not.i.i.i.i, ptr %3, ptr %i.at
+  %.not.i.i.i.i = icmp eq i16 %i.ab, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.268.0.copyload, i64 %spec.select.v.i.i.i.i
   %i.au = zext i32 %2 to i64
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i55, i64 %i.au
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.au
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !488
   %.sroa.158.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.158.0.copyload = load ptr, ptr %.sroa.158.0..sroa_idx, align 8

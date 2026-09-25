@@ -202,10 +202,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not.i, label %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph164.i
-  %i.cn = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %i.cj, i32 noundef 0) #8 ; 6 uses
-  %i.co = icmp eq ptr %i.cn, null                 ; 2 uses
+  %i.cn = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %i.cj, i32 noundef 0) #8 ; 7 uses
+  %i.co = icmp eq ptr %i.cn, null
   %i.cp = getelementptr inbounds i8, ptr %i.cn, i64 -16 ; 2 uses
-  %i.cq = select i1 %i.co, ptr null, ptr %i.cp    ; 4 uses
+  %i.cq = select i1 %i.co, ptr null, ptr %i.cp    ; 3 uses
   %i.cr = icmp eq ptr %i.cq, %.sroa.0112.0162.i
   br i1 %i.cr, label %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i, label %bb.q
 
@@ -608,9 +608,7 @@ _ZN6hermes10pred_emptyEPKNS_10BasicBlockE.exit.i: ; preds = %bb.ay, %.lr.ph.i.i.
   br i1 %i.ky, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %_ZN6hermes10pred_emptyEPKNS_10BasicBlockE.exit.i
-  %9 = getelementptr inbounds nuw i8, ptr %i.cq, i64 16
-  %spec.select.i = select i1 %i.co, ptr null, ptr %9
-  call void @_ZN6hermes5Value18replaceAllUsesWithEPS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.cu, ptr noundef %spec.select.i) #8
+  call void @_ZN6hermes5Value18replaceAllUsesWithEPS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.cu, ptr noundef %i.cn) #8
   br label %_ZL32attemptBranchRemovalFromPhiNodesPN6hermes10BasicBlockE.exit.thread.i
 
 bb.ba:                                            ; preds = %_ZN6hermes10pred_emptyEPKNS_10BasicBlockE.exit.i, %.loopexit.i

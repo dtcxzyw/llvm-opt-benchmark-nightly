@@ -205,14 +205,11 @@ bb.sv:                                            ; preds = %bb.su
   %i.dhx = getelementptr inbounds nuw i8, ptr %i.dhw, i64 48
   %i.dhy = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i.i106, i64 8
   %i.dhz = load ptr, ptr %i.dhy, align 8, !tbaa !130 ; 2 uses
-  %i.dia = icmp eq ptr %i.dhz, %i.dhx             ; 2 uses
-  %72 = getelementptr inbounds i8, ptr %i.dhz, i64 -24
-  %spec.select.i.i.i.i107 = select i1 %i.dia, ptr null, ptr %72
+  %i.dia = icmp eq ptr %i.dhz, %i.dhx
   %i.dib = load ptr, ptr %i.i, align 8, !tbaa !116
   %i.dic = getelementptr inbounds nuw i8, ptr %i.dib, i64 48
   %i.did = load ptr, ptr %i.dic, align 8, !tbaa !110 ; 2 uses
-  %73 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i107, i64 24
-  %spec.select.i.i.i.i.i.i108 = select i1 %i.dia, ptr null, ptr %73 ; 2 uses
+  %spec.select.i.i.i.i.i.i108 = select i1 %i.dia, ptr null, ptr %i.dhz ; 2 uses
   %.not29.i78.i.i = icmp eq ptr %spec.select.i.i.i.i.i.i108, %i.did
   br i1 %.not29.i78.i.i, label %_ZL19isCleanupBlockEmptyN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit88.i.i, label %.lr.ph.i79.i.i
 
@@ -441,11 +438,8 @@ bb.tl:                                            ; preds = %bb.tk
   %i.dll = getelementptr inbounds nuw i8, ptr %i.dlk, i64 48
   %i.dlm = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i18.i, i64 8
   %i.dln = load ptr, ptr %i.dlm, align 8, !tbaa !130 ; 2 uses
-  %i.dlo = icmp eq ptr %i.dln, %i.dll             ; 2 uses
-  %74 = getelementptr inbounds i8, ptr %i.dln, i64 -24
-  %spec.select.i.i.i19.i = select i1 %i.dlo, ptr null, ptr %74
-  %75 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i19.i, i64 24
-  %spec.select.i.i.i.i.i20.i = select i1 %i.dlo, ptr null, ptr %75 ; 2 uses
+  %i.dlo = icmp eq ptr %i.dln, %i.dll
+  %spec.select.i.i.i.i.i20.i = select i1 %i.dlo, ptr null, ptr %i.dln ; 2 uses
   %.not29.i.i21.i = icmp eq ptr %spec.select.i.i.i.i.i20.i, %i.cuk
   br i1 %.not29.i.i21.i, label %_ZL19isCleanupBlockEmptyN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit.i30.i, label %.lr.ph.i.i22.i
 
@@ -607,11 +601,8 @@ bb.tv:                                            ; preds = %_ZNK4llvm5Value9has
   %i.doh = getelementptr inbounds nuw i8, ptr %i.dob, i64 48
   %i.doi = getelementptr inbounds nuw i8, ptr %i.dnz, i64 32
   %i.doj = load ptr, ptr %i.doi, align 8, !tbaa !130 ; 2 uses
-  %i.dok = icmp eq ptr %i.doj, %i.doh             ; 2 uses
-  %76 = getelementptr inbounds i8, ptr %i.doj, i64 -24
-  %spec.select.i.i.i.i = select i1 %i.dok, ptr null, ptr %76
-  %77 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 24
-  %spec.select.i.i.i.i.i.i = select i1 %i.dok, ptr null, ptr %77 ; 2 uses
+  %i.dok = icmp eq ptr %i.doj, %i.doh
+  %spec.select.i.i.i.i.i.i = select i1 %i.dok, ptr null, ptr %i.doj ; 2 uses
   %.not29.i.i.i = icmp eq ptr %spec.select.i.i.i.i.i.i, %i.cuk
   br i1 %.not29.i.i.i, label %_ZL19isCleanupBlockEmptyN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit.i.i, label %.lr.ph.i.i.i56
 

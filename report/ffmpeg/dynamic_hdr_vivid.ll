@@ -16,14 +16,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %or.cond.i = icmp ugt i32 %2, 268435455
   %i.a = shl nuw nsw i32 %2, 3
-  %i.b = select i1 %or.cond.i, i32 -8, i32 %i.a   ; 2 uses
+  %i.b = select i1 %or.cond.i, i32 -8, i32 %i.a   ; 3 uses
   %or.cond.i.i = icmp ugt i32 %i.b, 2147483134
   %i.c = icmp eq ptr %1, null
   %or.cond3.i.i.not = or i1 %i.c, %or.cond.i.i    ; 2 uses
-  %.013.i.i = select i1 %or.cond3.i.i.not, i32 0, i32 %i.b ; 11 uses
+  %.013.i.i = select i1 %or.cond3.i.i.not, i32 0, i32 %i.b ; 10 uses
   %i.d = add nuw nsw i32 %.013.i.i, 8             ; 34 uses
-  %i.e = icmp eq i32 %.013.i.i, 0
-  %or.cond324 = or i1 %or.cond3.i.i.not, %i.e
+  %i.e = icmp eq i32 %i.b, 0
+  %or.cond324 = or i1 %i.e, %or.cond3.i.i.not
   br i1 %or.cond324, label %.thread321, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

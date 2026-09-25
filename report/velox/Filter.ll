@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %_ZNSt8optionalISt17
   br i1 %i.iw, label %._crit_edge.i, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.ks = icmp eq i64 %i.ko, %i.jp
+  %i.ks = icmp eq i64 %i.jp, %i.ko
   %or.cond = select i1 %i.km, i1 %i.ks, i1 false
   br i1 %or.cond, label %bb.ba, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit.thread.i
 

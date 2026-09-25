@@ -205,7 +205,7 @@ _ZN12_GLOBAL__N_123ignoreImplicitSemaNodesEPN5clang4ExprE.exit: ; preds = %bb.e,
   br i1 %.not.i.i, label %_ZN5clang15IgnoreExprNodesIJRFPNS_4ExprES2_EEEEPKS1_S6_DpOT_.exit, label %.lr.ph.i.i, !llvm.loop !1
 
 _ZN5clang15IgnoreExprNodesIJRFPNS_4ExprES2_EEEEPKS1_S6_DpOT_.exit: ; preds = %bb.k, %bb.j, %_ZN12_GLOBAL__N_123ignoreImplicitSemaNodesEPN5clang4ExprE.exit, %bb.c
-  %.06.lcssa.i.i = phi ptr [ null, %bb.c ], [ %.068.i.i, %bb.k ], [ %.068.i.i, %bb.j ], [ %.4.i, %_ZN12_GLOBAL__N_123ignoreImplicitSemaNodesEPN5clang4ExprE.exit ] ; 7 uses
+  %.06.lcssa.i.i = phi ptr [ null, %bb.c ], [ %.068.i.i, %bb.k ], [ %.068.i.i, %bb.j ], [ %.4.i, %_ZN12_GLOBAL__N_123ignoreImplicitSemaNodesEPN5clang4ExprE.exit ] ; 6 uses
   %i.w = load i32, ptr %.033, align 8
   %i.x = lshr i32 %i.w, 19
   %i.y = and i32 %i.x, 127
@@ -217,12 +217,10 @@ _ZN5clang15IgnoreExprNodesIJRFPNS_4ExprES2_EEEEPKS1_S6_DpOT_.exit: ; preds = %bb
 bb.l:                                             ; preds = %_ZN5clang15IgnoreExprNodesIJRFPNS_4ExprES2_EEEEPKS1_S6_DpOT_.exit
   %i.z = load i16, ptr %.06.lcssa.i.i, align 8
   %i.aa = and i16 %i.z, 511
-  %.not.i.i.i.i = icmp eq i16 %i.aa, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.06.lcssa.i.i, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.ab = getelementptr inbounds nuw i8, ptr %.06.lcssa.i.i, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr %i.ab
-  %i.ac = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !114, !nonnull !141, !noundef !141
+  %.not.i.i.i.i = icmp eq i16 %i.aa, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.ab = getelementptr inbounds nuw i8, ptr %.06.lcssa.i.i, i64 %spec.select.v.i.i.i.i
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !114, !nonnull !141, !noundef !141
   br label %.lr.ph.i.i15
 
 .lr.ph.i.i15:                                     ; preds = %bb.l, %_ZN12_GLOBAL__N_123ignoreImplicitSemaNodesEPN5clang4ExprE.exit26
@@ -625,7 +623,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %tailrecurse.backedge
   %i.e = phi i24 [ %i.a, %.lr.ph ], [ %i.z, %tailrecurse.backedge ]
   %i.f = phi i16 [ %i.c, %.lr.ph ], [ %i.ab, %tailrecurse.backedge ]
-  %.tr497 = phi ptr [ %0, %.lr.ph ], [ %.tr.be, %tailrecurse.backedge ] ; 94 uses
+  %.tr497 = phi ptr [ %0, %.lr.ph ], [ %.tr.be, %tailrecurse.backedge ] ; 93 uses
   %i.g = and i16 %i.f, 511
   switch i16 %i.g, label %bb.c [
     i16 20, label %bb.d
@@ -1028,16 +1026,14 @@ bb.ak:                                            ; preds = %_ZNK5clang4Type18ge
 bb.al:                                            ; preds = %bb.ak
   %i.hh = load i16, ptr %.tr497, align 8
   %i.hi = and i16 %i.hh, 511
-  %.not.i.i.i.i = icmp eq i16 %i.hi, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.tr497, ptr null
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.hj = getelementptr inbounds nuw i8, ptr %.tr497, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %7, ptr %i.hj ; 2 uses
-  %i.hk = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !114
+  %.not.i.i.i.i = icmp eq i16 %i.hi, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.hj = getelementptr inbounds nuw i8, ptr %.tr497, i64 %spec.select.v.i.i.i.i ; 2 uses
+  %i.hk = load ptr, ptr %i.hj, align 8, !tbaa !114
   %i.hl = tail call i32 @_ZNK5clang4Stmt11getBeginLocEv(ptr noundef nonnull align 8 dereferenceable(8) %i.hk) #29
   %i.hm = add i32 %i.hg, -1
   %i.hn = zext i32 %i.hm to i64
-  %i.ho = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.hn
+  %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.hj, i64 %i.hn
   %i.hp = load ptr, ptr %i.ho, align 8, !tbaa !114
   %i.hq = tail call i32 @_ZNK5clang4Stmt9getEndLocEv(ptr noundef nonnull align 8 dereferenceable(8) %i.hp) #29
   %.sroa.4.0.insert.ext = zext i32 %i.hq to i64
@@ -1440,7 +1436,7 @@ bb.k:                                             ; preds = %_ZN5clang34IgnoreIm
 
 _ZN5clang26IgnoreParensOnlySingleStepEPNS_4ExprE.exit: ; preds = %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit, %bb.k
   %i.ak = phi i16 [ %.pre, %bb.k ], [ %i.ag, %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit ]
-  %spec.select.i = phi ptr [ %i.aj, %bb.k ], [ %.2.i5, %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit ] ; 14 uses
+  %spec.select.i = phi ptr [ %i.aj, %bb.k ], [ %.2.i5, %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit ] ; 12 uses
   %i.al = and i16 %i.ak, 511                      ; 4 uses
   %.not.i10 = icmp eq i16 %i.al, 88
   br i1 %.not.i10, label %bb.l, label %.thread.i
@@ -1468,25 +1464,20 @@ bb.m:                                             ; preds = %.thread.i
   ]
 
 bb.n:                                             ; preds = %bb.m
-  %.not.i.i.i.i = icmp eq i16 %i.al, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %spec.select.i, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr %2
-  %i.at = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 8
+  %.not.i.i.i.i = icmp eq i16 %i.al, 118
+  %1 = select i1 %.not.i.i.i.i, i64 56, i64 48
+  %i.at = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 %1
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !114
   %i.av = load i16, ptr %i.au, align 8
   %i.aw = and i16 %i.av, 511
   %i.ax = icmp eq i16 %i.aw, 116
   br i1 %i.ax, label %.critedge.i, label %"_ZZN5clang4Expr27IgnoreUnlessSpelledInSourceEvENK3$_0clEPS0_.exit"
 
-.critedge.i:                                      ; preds = %bb.m, %bb.n
-  %.not.i.i.i45.i = icmp eq i16 %i.al, 118        ; 2 uses
-  %spec.select.i.i.i.i.i46.i = select i1 %.not.i.i.i45.i, ptr %spec.select.i, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i46.i, i64 48
-  %i.ay = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 40
-  %spec.select.i.i.i47.i = select i1 %.not.i.i.i45.i, ptr %3, ptr %i.ay
-  %i.az = load ptr, ptr %spec.select.i.i.i47.i, align 8, !tbaa !114 ; 3 uses
+.critedge.i:                                      ; preds = %bb.n, %bb.m
+  %.not.i.i.i45.i = icmp eq i16 %i.al, 118
+  %spec.select.v.i.i.i46.i = select i1 %.not.i.i.i45.i, i64 48, i64 40
+  %i.ay = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 %spec.select.v.i.i.i46.i
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !114 ; 3 uses
   %i.ba = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.az) #29
   %i.bb = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull readonly align 8 dereferenceable(8) %spec.select.i) #29
   %i.bc = icmp eq i64 %i.ba, %i.bb
@@ -1889,7 +1880,7 @@ bb.a:
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %tailrecurse.backedge, %bb.a
-  %.tr = phi ptr [ %0, %bb.a ], [ %.tr.be, %tailrecurse.backedge ] ; 51 uses
+  %.tr = phi ptr [ %0, %bb.a ], [ %.tr.be, %tailrecurse.backedge ] ; 50 uses
   %.tr292 = phi i1 [ %2, %bb.a ], [ %.tr292.be, %tailrecurse.backedge ]
   %i.a = load i16, ptr %.tr, align 8
   %i.b = and i16 %i.a, 511                        ; 2 uses
@@ -2049,12 +2040,10 @@ bb.q:                                             ; preds = %_ZN5clang13CXXMetho
 bb.r:                                             ; preds = %bb.q
   %i.ar = load i16, ptr %.tr, align 8
   %i.as = and i16 %i.ar, 511
-  %.not.i.i.i.i = icmp eq i16 %i.as, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.tr, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.at = getelementptr inbounds nuw i8, ptr %.tr, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %6, ptr %i.at
-  %i.au = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !114
+  %.not.i.i.i.i = icmp eq i16 %i.as, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.at = getelementptr inbounds nuw i8, ptr %.tr, i64 %spec.select.v.i.i.i.i
+  %i.au = load ptr, ptr %i.at, align 8, !tbaa !114
   br label %tailrecurse.backedge
 
 bb.s:                                             ; preds = %bb.k
@@ -2457,18 +2446,16 @@ bb.f:                                             ; preds = %bb.d
   br label %_ZNK5clang24MaterializeTemporaryExpr10getSubExprEv.exit
 
 _ZNK5clang24MaterializeTemporaryExpr10getSubExprEv.exit: ; preds = %bb.f, %bb.e, %bb.c
-  %.1 = phi ptr [ %.011, %bb.c ], [ %i.j, %bb.e ], [ %i.n, %bb.f ] ; 3 uses
+  %.1 = phi ptr [ %.011, %bb.c ], [ %i.j, %bb.e ], [ %i.n, %bb.f ] ; 2 uses
   %i.o = load i16, ptr %.1, align 8
   %i.p = and i16 %i.o, 511
-  %.not.i.i.i.i = icmp eq i16 %i.p, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.1, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.q = getelementptr inbounds nuw i8, ptr %.1, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr %i.q
+  %.not.i.i.i.i = icmp eq i16 %i.p, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %.1, i64 %spec.select.v.i.i.i.i
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %_ZNK5clang24MaterializeTemporaryExpr10getSubExprEv.exit
-  %.2.in = phi ptr [ %spec.select.i.i.i.i, %_ZNK5clang24MaterializeTemporaryExpr10getSubExprEv.exit ], [ %i.t, %bb.g ]
+  %.2.in = phi ptr [ %i.q, %_ZNK5clang24MaterializeTemporaryExpr10getSubExprEv.exit ], [ %i.t, %bb.g ]
   %.2 = load ptr, ptr %.2.in, align 8, !tbaa !74  ; 3 uses
   %i.r = load i16, ptr %.2, align 8
   %i.s = and i16 %i.r, 511
@@ -2871,7 +2858,7 @@ bb.l:                                             ; preds = %_ZN5clang34IgnoreIm
 
 _ZN5clang26IgnoreParensOnlySingleStepEPNS_4ExprE.exit: ; preds = %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit, %bb.l
   %i.be = phi i16 [ %.pre14, %bb.l ], [ %i.ba, %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit ]
-  %spec.select.i25 = phi ptr [ %i.bd, %bb.l ], [ %.2.i, %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit ] ; 14 uses
+  %spec.select.i25 = phi ptr [ %i.bd, %bb.l ], [ %.2.i, %_ZN5clang34IgnoreImplicitCastsExtraSingleStepEPNS_4ExprE.exit ] ; 12 uses
   %i.bf = and i16 %i.be, 511                      ; 4 uses
   %.not.i22 = icmp eq i16 %i.bf, 88
   br i1 %.not.i22, label %bb.m, label %.thread.i
@@ -2899,25 +2886,20 @@ bb.n:                                             ; preds = %.thread.i
   ]
 
 bb.o:                                             ; preds = %bb.n
-  %.not.i.i.i.i = icmp eq i16 %i.bf, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %spec.select.i25, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i25, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr %2
-  %i.bn = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 8
+  %.not.i.i.i.i = icmp eq i16 %i.bf, 118
+  %1 = select i1 %.not.i.i.i.i, i64 56, i64 48
+  %i.bn = getelementptr inbounds nuw i8, ptr %spec.select.i25, i64 %1
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !114
   %i.bp = load i16, ptr %i.bo, align 8
   %i.bq = and i16 %i.bp, 511
   %i.br = icmp eq i16 %i.bq, 116
   br i1 %i.br, label %.critedge.i, label %"_ZZN5clang4Expr27IgnoreUnlessSpelledInSourceEvENK3$_0clEPS0_.exit"
 
-.critedge.i:                                      ; preds = %bb.n, %bb.o
-  %.not.i.i.i45.i = icmp eq i16 %i.bf, 118        ; 2 uses
-  %spec.select.i.i.i.i.i46.i = select i1 %.not.i.i.i45.i, ptr %spec.select.i25, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i46.i, i64 48
-  %i.bs = getelementptr inbounds nuw i8, ptr %spec.select.i25, i64 40
-  %spec.select.i.i.i47.i = select i1 %.not.i.i.i45.i, ptr %3, ptr %i.bs
-  %i.bt = load ptr, ptr %spec.select.i.i.i47.i, align 8, !tbaa !114 ; 3 uses
+.critedge.i:                                      ; preds = %bb.o, %bb.n
+  %.not.i.i.i45.i = icmp eq i16 %i.bf, 118
+  %spec.select.v.i.i.i46.i = select i1 %.not.i.i.i45.i, i64 48, i64 40
+  %i.bs = getelementptr inbounds nuw i8, ptr %spec.select.i25, i64 %spec.select.v.i.i.i46.i
+  %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !114 ; 3 uses
   %i.bu = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bt) #29
   %i.bv = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull readonly align 8 dereferenceable(8) %spec.select.i25) #29
   %i.bw = icmp eq i64 %i.bu, %i.bv

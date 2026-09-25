@@ -205,10 +205,10 @@ bb.aa:                                            ; preds = %bb.y
   %i.lp = udiv i16 %.lhs.trunc.i.i, 48
   %.zext.i.i = zext nneg i16 %i.lp to i64         ; 4 uses
   %i.lq = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.lr = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.lq, i1 true, i1 %i.lr ; 2 uses
+  %i.lr = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.lq, i1 true, i1 %i.lr
   %i.ls = add nsw i64 %.zext.i.i, -128            ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.ls, i64 %.zext.i.i
+  %.sroa.060.0.i.i = select i1 %i.lr, i64 %i.ls, i64 %.zext.i.i
   %.sroa.060.0.mux.i.i = select i1 %i.lq, i64 %i.ls, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.lq, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.z, label %bb.ab
@@ -611,10 +611,10 @@ bb.aa:                                            ; preds = %bb.y
   %i.md = udiv i16 %.lhs.trunc.i.i, 48
   %.zext.i.i = zext nneg i16 %i.md to i64         ; 4 uses
   %i.me = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.mf = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.me, i1 true, i1 %i.mf ; 2 uses
+  %i.mf = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.me, i1 true, i1 %i.mf
   %i.mg = add nsw i64 %.zext.i.i, -128            ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.mg, i64 %.zext.i.i
+  %.sroa.060.0.i.i = select i1 %i.mf, i64 %i.mg, i64 %.zext.i.i
   %.sroa.060.0.mux.i.i = select i1 %i.me, i64 %i.mg, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.me, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.z, label %bb.ab
@@ -1017,10 +1017,10 @@ bb.v:                                             ; preds = %bb.x, %bb.w, %bb.u
 bb.w:                                             ; preds = %bb.u
   %i.es = lshr i64 %i.eo, 4                       ; 3 uses
   %i.et = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.eu = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.et, i1 true, i1 %i.eu ; 2 uses
+  %i.eu = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.et, i1 true, i1 %i.eu
   %i.ev = add nsw i64 %i.es, -128                 ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.ev, i64 %i.es
+  %.sroa.060.0.i.i = select i1 %i.eu, i64 %i.ev, i64 %i.es
   %.sroa.060.0.mux.i.i = select i1 %i.et, i64 %i.ev, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.et, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.v, label %bb.x
@@ -1423,10 +1423,10 @@ bb.v:                                             ; preds = %bb.x, %bb.w, %bb.u
 bb.w:                                             ; preds = %bb.u
   %i.do = lshr i64 %i.dk, 5                       ; 3 uses
   %i.dp = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.dq = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.dp, i1 true, i1 %i.dq ; 2 uses
+  %i.dq = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.dp, i1 true, i1 %i.dq
   %i.dr = add nsw i64 %i.do, -128                 ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.dr, i64 %i.do
+  %.sroa.060.0.i.i = select i1 %i.dq, i64 %i.dr, i64 %i.do
   %.sroa.060.0.mux.i.i = select i1 %i.dp, i64 %i.dr, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.dp, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.v, label %bb.x
@@ -1829,10 +1829,8 @@ bb.h:                                             ; preds = %._crit_edge.i.i.i16
 
 _RINvMs6_NtCs3sCKvcUjPpt_9hashbrown3rawINtB6_8RawTableTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexjEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_jE0ECskcxRuJ53GpR_9rustworkx.exit.i.i17: ; preds = %._crit_edge.i.i.i16, %.lr.ph.i.i.i12
   %i.br = phi ptr [ %i.bh, %.lr.ph.i.i.i12 ], [ null, %._crit_edge.i.i.i16 ] ; 2 uses
-  %.not.i.i18 = icmp eq ptr %i.br, null           ; 3 uses
-  %0 = getelementptr inbounds i8, ptr %i.br, i64 -16
-  %.sroa.0.0.i.i19 = select i1 %.not.i.i18, ptr null, ptr %0
-  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i19, i64 8 ; 2 uses
+  %.not.i.i18 = icmp eq ptr %i.br, null           ; 2 uses
+  %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -8 ; 2 uses
   %.sroa.0.0.i2217 = select i1 %.not.i.i18, ptr null, ptr %i.bs
   br i1 %.not.i.i, label %_RNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB2t_5types3any5PyAnyEB2o_EE0CskcxRuJ53GpR_9rustworkx.exit23.thread, label %bb.i
 
@@ -1990,10 +1988,8 @@ bb.h:                                             ; preds = %._crit_edge.i.i.i16
 
 _RINvMs6_NtCs3sCKvcUjPpt_9hashbrown3rawINtB6_8RawTableTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexjEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_jE0ECskcxRuJ53GpR_9rustworkx.exit.i.i17: ; preds = %._crit_edge.i.i.i16, %.lr.ph.i.i.i12
   %i.br = phi ptr [ %i.bh, %.lr.ph.i.i.i12 ], [ null, %._crit_edge.i.i.i16 ] ; 2 uses
-  %.not.i.i18 = icmp eq ptr %i.br, null           ; 3 uses
-  %0 = getelementptr inbounds i8, ptr %i.br, i64 -16
-  %.sroa.0.0.i.i19 = select i1 %.not.i.i18, ptr null, ptr %0
-  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i19, i64 8 ; 2 uses
+  %.not.i.i18 = icmp eq ptr %i.br, null           ; 2 uses
+  %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -8 ; 2 uses
   %.sroa.0.0.i2217 = select i1 %.not.i.i18, ptr null, ptr %i.bs
   br i1 %.not.i.i, label %_RNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB2t_5types3any5PyAnyEB2o_NtB1o_10UndirectedEE0CskcxRuJ53GpR_9rustworkx.exit23.thread, label %bb.i
 
@@ -2396,9 +2392,8 @@ select.unfold:                                    ; preds = %bb.b, %bb.a
           to label %_RINvMNtCslwFuT2d6ECx_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs87CvPiUlf0m_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECskcxRuJ53GpR_9rustworkx.exit unwind label %bb.c
 
 _RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_E8get_nodeCskcxRuJ53GpR_9rustworkx.exit: ; preds = %bb.b
-  %i.aq = trunc nuw i64 %3 to i1                  ; 3 uses
-  %i.ar = trunc i64 %4 to i32
-  %.sroa.4.0 = select i1 %i.aq, i32 %i.ar, i32 undef ; 2 uses
+  %i.aq = trunc nuw i64 %3 to i1                  ; 2 uses
+  %i.ar = trunc i64 %4 to i32                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae)
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.at = load i64, ptr %i.as, align 8, !noundef !67
@@ -2801,7 +2796,7 @@ _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSe
   br i1 %i.eg, label %.backedge305.i, label %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i
 
 _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i: ; preds = %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.i, %bb.ae
-  %i.eh = icmp eq i32 %.sroa.4.0, %i.dy
+  %i.eh = icmp eq i32 %i.dy, %i.ar
   %or.cond.i = select i1 %i.aq, i1 %i.eh, i1 false
   br i1 %or.cond.i, label %._crit_edge361.i, label %bb.af
 
@@ -3204,7 +3199,7 @@ _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSe
   br i1 %i.tz, label %.backedge310.i, label %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i146
 
 _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i146: ; preds = %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.i210, %bb.db
-  %i.ua = icmp eq i32 %.sroa.4.0, %i.tr
+  %i.ua = icmp eq i32 %i.tr, %i.ar
   %or.cond.i147 = select i1 %i.aq, i1 %i.ua, i1 false
   br i1 %or.cond.i147, label %._crit_edge.i136, label %bb.dc
 
