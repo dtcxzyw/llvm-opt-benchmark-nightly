@@ -205,8 +205,11 @@ _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit140: ; pre
   %i.t = load i64, ptr %i.s, align 8, !tbaa !991  ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.0134, i64 16
   %i.v = load i64, ptr %i.u, align 8, !tbaa !991
-  %i.w = and i64 %i.t, 50529027
-  %i.x = or i64 %i.t, 4160223223
+  %15 = and i64 %i.t, 50529027
+  %16 = and i64 %i.t, 134744072
+  %17 = or disjoint i64 %16, 4160223223
+  %i.w = and i64 %17, %i.v
+  %i.x = or i64 %i.w, %15
   %.sroa.055.0.copyload = load ptr, ptr %4, align 8, !tbaa !550
   %.sroa.256.0.copyload = load i32, ptr %i.a, align 8, !tbaa !233
   %.sroa.052.0.copyload = load ptr, ptr %.0133, align 8, !tbaa !533
@@ -233,10 +236,7 @@ _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit140: ; pre
   store i32 %.fca.1.extract49, ptr %.sroa.459.0..sroa_idx, align 8, !tbaa !233
   store ptr %.fca.0.extract36, ptr %10, align 8, !tbaa !533
   store i32 %.fca.1.extract37, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !233
-  %15 = and i64 %i.v, 4294967295
-  %.masked = and i64 %15, %i.x
-  %16 = or i64 %.masked, %i.w
-  %i.ag = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %0, i64 noundef %16, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 7, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #27 ; 2 uses
+  %i.ag = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %0, i64 noundef %i.x, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 7, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #27 ; 2 uses
   %.fca.0.extract30 = extractvalue { ptr, i32 } %i.ag, 0
   %.fca.1.extract31 = extractvalue { ptr, i32 } %i.ag, 1
   store ptr %.fca.0.extract30, ptr %11, align 8

@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.o
 bb.n:                                             ; preds = %bb.o
   %i.an = add nuw nsw i64 %1, 549755617280
   %i.ao = lshr i64 %i.an, 7
-  %i.ap = trunc i64 %i.ao to i32
+  %i.ap = trunc nuw i64 %i.ao to i32
   %i.aq = and i64 %1, 65663
   %i.ar = tail call fastcc i64 @tegra241_cmdqv_read_vcmdq_page0(ptr noundef %0, i64 noundef %i.aq, i32 noundef %i.ap, i1 noundef zeroext false)
   br label %trace_tegra241_cmdqv_read_mmio.exit
@@ -229,7 +229,7 @@ bb.q:                                             ; preds = %bb.s
 bb.r:                                             ; preds = %bb.s
   %i.ba = add nuw nsw i64 %1, 549755551744
   %i.bb = lshr i64 %i.ba, 7
-  %i.bc = trunc i64 %i.bb to i32
+  %i.bc = trunc nuw i64 %i.bb to i32
   %i.bd = and i64 %i.bl, 131199
   %i.be = tail call fastcc i64 @tegra241_cmdqv_read_vcmdq_page1(ptr noundef %0, i64 noundef %i.bd, i32 noundef %i.bc, i1 noundef zeroext false)
   br label %trace_tegra241_cmdqv_read_mmio.exit
@@ -438,7 +438,7 @@ bb.q:                                             ; preds = %bb.s
 bb.r:                                             ; preds = %bb.s
   %i.bd = add nuw nsw i64 %1, 549755617280
   %i.be = lshr i64 %i.bd, 7
-  %i.bf = trunc i64 %i.be to i32
+  %i.bf = trunc nuw i64 %i.be to i32
   %i.bg = and i64 %1, 65663
   tail call fastcc void @tegra241_cmdqv_write_vcmdq_page0(ptr noundef %0, i64 noundef %i.bg, i32 noundef %i.bf, i32 noundef %i.f, i1 noundef zeroext false)
   br label %tegra241_cmdqv_setup_all_vcmdq.exit.i
@@ -463,7 +463,7 @@ bb.u:                                             ; preds = %bb.w
 bb.v:                                             ; preds = %bb.w
   %i.bo = add nuw nsw i64 %1, 549755551744
   %i.bp = lshr i64 %i.bo, 7
-  %i.bq = trunc i64 %i.bp to i32
+  %i.bq = trunc nuw i64 %i.bp to i32
   %i.br = and i64 %i.bx, 131199
   call fastcc void @tegra241_cmdqv_write_vcmdq_page1(ptr noundef %0, i64 noundef %i.br, i32 noundef %i.bq, i32 noundef %i.f, i1 noundef zeroext false, ptr noundef %i.b)
   br label %tegra241_cmdqv_setup_all_vcmdq.exit.i
@@ -518,7 +518,7 @@ bb.ac:                                            ; preds = %bb.d
 bb.ad:                                            ; preds = %bb.am
   %i.ce = add nuw nsw i64 %1, 549755551744
   %i.cf = lshr i64 %i.ce, 7                       ; 3 uses
-  %i.cg = trunc i64 %i.cf to i32                  ; 2 uses
+  %i.cg = trunc nuw i64 %i.cf to i32              ; 2 uses
   %i.ch = and i64 %i.cc, 131199                   ; 3 uses
   switch i64 %i.ch, label %bb.ag [
     i64 131072, label %bb.ae
@@ -527,16 +527,14 @@ bb.ad:                                            ; preds = %bb.am
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 592
-  %4 = and i64 %i.cf, 1
-  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %4
+  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.cf
   store i64 %2, ptr %i.cj, align 8
   %i.ck = call fastcc zeroext i1 @tegra241_cmdqv_setup_vcmdq(ptr noundef %0, i32 noundef %i.cg, ptr noundef nonnull %i.a) ; 0 uses
   br label %bb.ai
 
 bb.af:                                            ; preds = %bb.ad
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 608
-  %5 = and i64 %i.cf, 1
-  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %5
+  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %i.cf
   store i64 %2, ptr %i.cm, align 8
   br label %bb.ai
 

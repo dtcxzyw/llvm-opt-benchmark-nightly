@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %._crit_edge.i.threa
   br label %_RNvXs0_NtNtCshxhuDJfZv4T_6fontbe8features10propertiesRSTNtNtCsbZq13ASDQ8l_10font_types3tag3TagBS_EINtB5_17BinarySearchExactBS_BS_E19binary_search_exactB9_.exit
 
 _RNvXs0_NtNtCshxhuDJfZv4T_6fontbe8features10propertiesRSTNtNtCsbZq13ASDQ8l_10font_types3tag3TagBS_EINtB5_17BinarySearchExactBS_BS_E19binary_search_exactB9_.exit: ; preds = %bb.b, %bb.c, %.thread.i
-  %.sroa.0.0.i = phi i32 [ %.val.i, %.thread.i ], [ %0, %bb.b ], [ %0, %bb.c ] ; 7 uses
+  %.sroa.0.0.i = phi i32 [ %.val.i, %.thread.i ], [ %0, %bb.b ], [ %0, %bb.c ] ; 9 uses
   store i32 %.sroa.0.0.i, ptr %i.c, align 4
   %_RNvNtNtCshxhuDJfZv4T_6fontbe8features7ot_tags26SCRIPT_EXCEPTIONS_REVERSED.val = load ptr, ptr @_RNvNtNtCshxhuDJfZv4T_6fontbe8features7ot_tags26SCRIPT_EXCEPTIONS_REVERSED, align 8, !nonnull !10, !align !19, !noundef !10 ; 2 uses
   %_RNvNtNtCshxhuDJfZv4T_6fontbe8features7ot_tags26SCRIPT_EXCEPTIONS_REVERSED.val22 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCshxhuDJfZv4T_6fontbe8features7ot_tags26SCRIPT_EXCEPTIONS_REVERSED, i64 8), align 8, !noundef !10 ; 6 uses
@@ -322,7 +322,7 @@ _RNvXs0_NtNtCshxhuDJfZv4T_6fontbe8features10propertiesRSTNtNtCsbZq13ASDQ8l_10fon
 
 bb.k:                                             ; preds = %_RNvXs0_NtNtCshxhuDJfZv4T_6fontbe8features10propertiesRSTNtNtCsbZq13ASDQ8l_10font_types3tag3TagReEINtB5_17BinarySearchExactBS_B1u_E19binary_search_exactB9_.exit
   %.not22.i = icmp eq i64 %.pn2.i, 0
-  br i1 %.not22.i, label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit, label %.lr.ph.i
+  br i1 %.not22.i, label %.sink.split, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %bb.v, %bb.s, %bb.p, %bb.m
   %.sroa.8.0 = phi i32 [ 0, %bb.m ], [ 0, %bb.p ], [ 0, %bb.s ], [ %i.db, %bb.v ]
@@ -341,7 +341,7 @@ bb.k:                                             ; preds = %_RNvXs0_NtNtCshxhuD
   %.sroa.6.0.insert.insert = or disjoint i32 %.sroa.7.0.insert.insert, %.sroa.6.0.insert.shift
   %.sroa.0.0.insert.ext = zext i8 %i.ci to i32
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.insert, %.sroa.0.0.insert.ext
-  br label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit
+  br label %.sink.split
 
 .lr.ph.i:                                         ; preds = %bb.k
   %i.ci = load i8, ptr %.pn4.i, align 1, !alias.scope !4112, !noalias !4113, !noundef !10 ; 3 uses
@@ -426,11 +426,6 @@ bb.v:                                             ; preds = %bb.u, %.lr.ph.i.3
   call void @_RNvNtCsf3Ta7LF998c_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 43, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @14, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @25) #39, !noalias !4114
   unreachable
 
-_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit: ; preds = %._crit_edge.i._RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit_crit_edge, %bb.k
-  %.sroa.016.0.copyload.i = phi i32 [ %.sroa.0.0.insert.insert, %._crit_edge.i._RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit_crit_edge ], [ 0, %bb.k ] ; 2 uses
-  %.sroa.418.0.extract.shift = and i32 %.sroa.016.0.copyload.i, -256
-  br label %.sink.split
-
 bb.w:                                             ; preds = %bb.g, %bb.h
   %.sroa.028.0.extract.trunc.i = trunc i32 %.sroa.0.0.i to i8
   %.sroa.2.0.extract.shift.i = lshr i32 %.sroa.0.0.i, 8
@@ -440,19 +435,18 @@ bb.w:                                             ; preds = %bb.g, %bb.h
   %.sroa.530.0.extract.shift.i = lshr i32 %.sroa.0.0.i, 24 ; 2 uses
   %i.dc = add i8 %.sroa.028.0.extract.trunc.i, -97
   %i.dd = icmp ult i8 %i.dc, 26
-  %i.de = select i1 %i.dd, i32 32, i32 0
+  %i.de = select i1 %i.dd, i32 32, i32 0          ; 2 uses
   %i.df = icmp eq i8 %.sroa.4.0.extract.trunc.i, 32
   %spec.select.i = select i1 %i.df, i8 %.sroa.2.0.extract.trunc.i, i8 %.sroa.4.0.extract.trunc.i ; 4 uses
   %i.dg = icmp eq i32 %.sroa.530.0.extract.shift.i, 32
   %i.dh = trunc nuw i32 %.sroa.530.0.extract.shift.i to i8
   %.sroa.9.0.i = select i1 %i.dg, i8 %spec.select.i, i8 %i.dh ; 3 uses
-  %.sroa.0.0.insert.ext.i32 = xor i32 %i.de, %.sroa.0.0.i ; 2 uses
-  %.sroa.025.0.extract.trunc.i = trunc i32 %.sroa.0.0.insert.ext.i32 to i8 ; 2 uses
-  %1 = icmp slt i8 %.sroa.025.0.extract.trunc.i, 0
-  br i1 %1, label %.thread.i33, label %.lr.ph.i.1.i
+  %1 = and i32 %.sroa.0.0.i, 128
+  %.not.i32 = icmp eq i32 %1, 0
+  br i1 %.not.i32, label %.lr.ph.i.1.i, label %.thread.i33
 
 .lr.ph.i.1.i:                                     ; preds = %bb.w
-  %i.di = icmp eq i8 %.sroa.025.0.extract.trunc.i, 0
+  %i.di = icmp eq i32 %i.de, %.sroa.0.0.i
   %i.dj = icmp eq i8 %.sroa.2.0.extract.trunc.i, 0 ; 2 uses
   %.not.1.i = xor i1 %i.dj, true
   %i.dk = icmp slt i8 %.sroa.2.0.extract.trunc.i, 0 ; 2 uses
@@ -491,27 +485,24 @@ bb.y:                                             ; preds = %.thread.i33, %bb.x
   unreachable
 
 _RNvNtNtCshxhuDJfZv4T_6fontbe8features10properties28ot_tag_to_unicode_short_name.exit: ; preds = %.lr.ph.i.3.i
+  %.sroa.0.0.insert.ext.i34 = xor i32 %i.de, %.sroa.0.0.i
   %.sroa.8.0.insert.ext.i = zext nneg i8 %.sroa.9.0.i to i32
   %.sroa.8.0.insert.shift.i = shl nuw nsw i32 %.sroa.8.0.insert.ext.i, 24
   %.sroa.733.0.insert.ext.i = zext nneg i8 %spec.select.i to i32
   %.sroa.733.0.insert.shift.i = shl nuw nsw i32 %.sroa.733.0.insert.ext.i, 16
   %.sroa.733.0.insert.insert.i = or disjoint i32 %.sroa.8.0.insert.shift.i, %.sroa.733.0.insert.shift.i
   %.sroa.632.0.insert.shift.i = and i32 %.sroa.0.0.i, 32512
-  %.sroa.632.0.insert.insert.i = or disjoint i32 %.sroa.733.0.insert.insert.i, %.sroa.632.0.insert.shift.i ; 2 uses
-  %.sroa.031.0.insert.ext.i = and i32 %.sroa.0.0.insert.ext.i32, 127
-  %.sroa.031.0.insert.insert.i = or disjoint i32 %.sroa.632.0.insert.insert.i, %.sroa.031.0.insert.ext.i
+  %.sroa.632.0.insert.insert.i = or disjoint i32 %.sroa.733.0.insert.insert.i, %.sroa.632.0.insert.shift.i
+  %.sroa.031.0.insert.insert.i = or i32 %.sroa.632.0.insert.insert.i, %.sroa.0.0.insert.ext.i34
   br label %.sink.split
 
-.sink.split:                                      ; preds = %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit, %_RNvNtNtCshxhuDJfZv4T_6fontbe8features10properties28ot_tag_to_unicode_short_name.exit
-  %.sroa.4.sroa.0.0.ph = phi i32 [ %.sroa.418.0.extract.shift, %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit ], [ %.sroa.632.0.insert.insert.i, %_RNvNtNtCshxhuDJfZv4T_6fontbe8features10properties28ot_tag_to_unicode_short_name.exit ]
-  %.sroa.01.0.ph = phi i32 [ %.sroa.016.0.copyload.i, %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit ], [ %.sroa.031.0.insert.insert.i, %_RNvNtNtCshxhuDJfZv4T_6fontbe8features10properties28ot_tag_to_unicode_short_name.exit ]
+.sink.split:                                      ; preds = %bb.k, %._crit_edge.i._RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit_crit_edge, %_RNvNtNtCshxhuDJfZv4T_6fontbe8features10properties28ot_tag_to_unicode_short_name.exit
+  %.sroa.031.0.insert.insert.i.sink = phi i32 [ %.sroa.031.0.insert.insert.i, %_RNvNtNtCshxhuDJfZv4T_6fontbe8features10properties28ot_tag_to_unicode_short_name.exit ], [ %.sroa.0.0.insert.insert, %._crit_edge.i._RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultINtNtCs2sOuOmxaxiH_7tinystr5ascii12TinyAsciiStrKj4_ENtNtBM_5error10ParseErrorE6unwrapCshxhuDJfZv4T_6fontbe.exit_crit_edge ], [ 0, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %2 = and i32 %.sroa.01.0.ph, 255
-  %3 = or disjoint i32 %2, %.sroa.4.sroa.0.0.ph
   br label %bb.z
 
 bb.z:                                             ; preds = %.sink.split, %bb.a
-  %.sroa.01.0.insert.insert = phi i32 [ 255, %bb.a ], [ %3, %.sink.split ]
+  %.sroa.01.0.insert.insert = phi i32 [ 255, %bb.a ], [ %.sroa.031.0.insert.insert.i.sink, %.sink.split ]
   ret i32 %.sroa.01.0.insert.insert
 }
 

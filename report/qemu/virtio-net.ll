@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
   store i8 %i.cy, ptr %i.cw, align 1
   %i.cz = getelementptr inbounds nuw i8, ptr %3, i64 7
   %i.da = lshr i64 %i.bu, 46
-  %i.db = trunc i64 %i.da to i8
+  %i.db = trunc nuw i64 %i.da to i8
   %i.dc = and i8 %i.db, 1
   store i8 %i.dc, ptr %i.cz, align 1
   %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 8

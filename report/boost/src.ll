@@ -206,7 +206,7 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
   %i.dp = lshr i32 %i.df, 6
-  %i.dq = trunc i32 %i.dp to i8
+  %i.dq = trunc nuw i32 %i.dp to i8
   %i.dr = or i8 %i.dq, -64
   store i8 %i.dr, ptr %i.dl, align 1, !tbaa !93
   %i.ds = trunc i32 %i.de to i8
@@ -609,7 +609,7 @@ bb.al:                                            ; preds = %bb.aj
 
 bb.am:                                            ; preds = %bb.al
   %i.dv = lshr i32 %i.dl, 6
-  %i.dw = trunc i32 %i.dv to i8
+  %i.dw = trunc nuw i32 %i.dv to i8
   %i.dx = or i8 %i.dw, -64
   store i8 %i.dx, ptr %i.dr, align 1, !tbaa !93
   %i.dy = trunc i32 %i.dk to i8

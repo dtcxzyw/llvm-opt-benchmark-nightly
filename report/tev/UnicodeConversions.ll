@@ -205,7 +205,7 @@ _ZL23CodePoint_to_UTF8_MultijPhmPm.exit.thread76: ; preds = %.preheader.i
   %i.bi = getelementptr i8, ptr %i.bh, i64 -2
   store i8 %i.bg, ptr %i.bi, align 1, !tbaa !13
   %i.bj = lshr i32 %.13141.i, 18
-  %i.bk = trunc nuw i32 %i.bj to i8
+  %i.bk = trunc i32 %i.bj to i8
   %i.bl = and i8 %i.bk, 63
   %i.bm = or disjoint i8 %i.bl, -128
   %i.bn = getelementptr i8, ptr %.457125, i64 %.242.i
@@ -608,7 +608,7 @@ _ZL23CodePoint_to_UTF8_MultijPhmPm.exit.thread113: ; preds = %.preheader.i
   %i.bc = getelementptr i8, ptr %i.bb, i64 -2
   store i8 %i.ba, ptr %i.bc, align 1, !tbaa !13
   %i.bd = lshr i32 %.13141.i, 18
-  %i.be = trunc nuw i32 %i.bd to i8
+  %i.be = trunc i32 %i.bd to i8
   %i.bf = and i8 %i.be, 63
   %i.bg = or disjoint i8 %i.bf, -128
   %i.bh = getelementptr i8, ptr %.482198, i64 %.242.i
@@ -923,7 +923,7 @@ _ZL23CodePoint_to_UTF8_MultijPhmPm.exit.thread76: ; preds = %.preheader.i
   %i.bi = getelementptr i8, ptr %i.bh, i64 -2
   store i8 %i.bg, ptr %i.bi, align 1, !tbaa !13
   %i.bj = lshr i32 %.13141.i, 18
-  %i.bk = trunc nuw i32 %i.bj to i8
+  %i.bk = trunc i32 %i.bj to i8
   %i.bl = and i8 %i.bk, 63
   %i.bm = or disjoint i8 %i.bl, -128
   %i.bn = getelementptr i8, ptr %.457125, i64 %.242.i
@@ -1326,7 +1326,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aq = getelementptr i8, ptr %i.ap, i64 -2
   store i8 %i.ao, ptr %i.aq, align 1, !tbaa !13
   %i.ar = lshr i32 %.13141, 18
-  %i.as = trunc nuw i32 %i.ar to i8
+  %i.as = trunc i32 %i.ar to i8
   %i.at = and i8 %i.as, 63
   %i.au = or disjoint i8 %i.at, -128
   %i.av = getelementptr i8, ptr %1, i64 %.242

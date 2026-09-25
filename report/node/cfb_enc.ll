@@ -13,9 +13,9 @@ bb.a:
   %i.c = sdiv i32 %2, 8                           ; 2 uses
   %i.d = add nsw i32 %2, 7
   %i.e = sdiv i32 %i.d, 8                         ; 5 uses
-  %i.f = srem i32 %2, 8                           ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
+  %i.f = srem i32 %2, 8                           ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   %i.g = add i32 %2, -65
   %or.cond = icmp ult i32 %i.g, -64
   br i1 %or.cond, label %bb.au, label %bb.b
@@ -38,14 +38,12 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.p = icmp eq i32 %i.f, 0
-  %7 = sub nuw nsw i32 8, %i.f
+  %7 = trunc nuw nsw i32 %i.f to i8
   %i.q = zext nneg i32 %i.c to i64
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.q ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 1
-  %8 = insertelement <8 x i32> poison, i32 %7, i64 0
-  %9 = shufflevector <8 x i32> %8, <8 x i32> poison, <8 x i32> zeroinitializer
-  %10 = insertelement <8 x i32> poison, i32 %i.f, i64 0
-  %11 = shufflevector <8 x i32> %10, <8 x i32> poison, <8 x i32> zeroinitializer
+  %8 = insertelement <8 x i8> poison, i8 %7, i64 0
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %bb.c
 
 .preheader252:                                    ; preds = %bb.b
@@ -57,14 +55,12 @@ bb.b:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.x = icmp eq i32 %i.f, 0
-  %12 = sub nuw nsw i32 8, %i.f
+  %10 = trunc nuw nsw i32 %i.f to i8
   %i.y = zext nneg i32 %i.c to i64
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.y ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
-  %13 = insertelement <8 x i32> poison, i32 %12, i64 0
-  %14 = shufflevector <8 x i32> %13, <8 x i32> poison, <8 x i32> zeroinitializer
-  %15 = insertelement <8 x i32> poison, i32 %i.f, i64 0
-  %16 = shufflevector <8 x i32> %15, <8 x i32> poison, <8 x i32> zeroinitializer
+  %11 = insertelement <8 x i8> poison, i8 %10, i64 0
+  %12 = shufflevector <8 x i8> %11, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %bb.y
 
 bb.c:                                             ; preds = %.lr.ph, %.loopexit255
@@ -76,7 +72,7 @@ bb.c:                                             ; preds = %.lr.ph, %.loopexit2
   %i.ab = sub nuw i64 %.0189264, %i.k             ; 2 uses
   store i32 %.0193262, ptr %i.a, align 4, !tbaa !12
   store i32 %.0191263, ptr %i.l, align 4, !tbaa !12
-  call void @DES_encrypt1(ptr noundef nonnull %i.a, ptr noundef %4, i32 noundef 1) #3
+  call void @DES_encrypt1(ptr noundef nonnull %i.a, ptr noundef %4, i32 noundef 1) #4
   %i.ac = getelementptr inbounds nuw i8, ptr %.0211261, i64 %i.k ; 9 uses
   switch i32 %i.e, label %bb.l [
     i32 8, label %bb.d
@@ -268,14 +264,9 @@ bb.w:                                             ; preds = %bb.u
 
 .preheader254.preheader:                          ; preds = %bb.w
   %i.cq = load <8 x i8>, ptr %i.r, align 1, !tbaa !13
-  %17 = zext <8 x i8> %i.cq to <8 x i32>
-  %18 = shl nuw nsw <8 x i32> %17, %11
   %i.cr = load <8 x i8>, ptr %i.s, align 1, !tbaa !13
-  %19 = zext <8 x i8> %i.cr to <8 x i32>
-  %20 = lshr <8 x i32> %19, %9
-  %21 = or <8 x i32> %20, %18
-  %22 = trunc <8 x i32> %21 to <8 x i8>
-  store <8 x i8> %22, ptr %i.b, align 16, !tbaa !13
+  %13 = call <8 x i8> @llvm.fshl.v8i8(<8 x i8> %i.cq, <8 x i8> %i.cr, <8 x i8> %9)
+  store <8 x i8> %13, ptr %i.b, align 16, !tbaa !13
   %.pre = load i32, ptr %i.b, align 16, !tbaa !12
   %.pre279 = load i32, ptr %i.m, align 4, !tbaa !12
   br label %.loopexit255
@@ -303,7 +294,7 @@ bb.y:                                             ; preds = %.lr.ph273, %bb.at
   %i.cw = sub nuw i64 %.1190272, %i.k             ; 2 uses
   store i32 %.2195270, ptr %i.a, align 4, !tbaa !12
   store i32 %.2271, ptr %i.t, align 4, !tbaa !12
-  call void @DES_encrypt1(ptr noundef nonnull %i.a, ptr noundef %4, i32 noundef 1) #3
+  call void @DES_encrypt1(ptr noundef nonnull %i.a, ptr noundef %4, i32 noundef 1) #4
   %i.cx = getelementptr inbounds nuw i8, ptr %.9220269, i64 %i.k ; 9 uses
   switch i32 %i.e, label %bb.ah [
     i32 8, label %bb.z
@@ -415,14 +406,9 @@ bb.aj:                                            ; preds = %bb.ah
 
 .preheader.preheader:                             ; preds = %bb.aj
   %i.ej = load <8 x i8>, ptr %i.z, align 1, !tbaa !13
-  %23 = zext <8 x i8> %i.ej to <8 x i32>
-  %24 = shl nuw nsw <8 x i32> %23, %16
   %i.ek = load <8 x i8>, ptr %i.aa, align 1, !tbaa !13
-  %25 = zext <8 x i8> %i.ek to <8 x i32>
-  %26 = lshr <8 x i32> %25, %14
-  %27 = or <8 x i32> %26, %24
-  %28 = trunc <8 x i32> %27 to <8 x i8>
-  store <8 x i8> %28, ptr %i.b, align 16, !tbaa !13
+  %14 = call <8 x i8> @llvm.fshl.v8i8(<8 x i8> %i.ej, <8 x i8> %i.ek, <8 x i8> %12)
+  store <8 x i8> %14, ptr %i.b, align 16, !tbaa !13
   %.pre280 = load i32, ptr %i.b, align 16, !tbaa !12
   %.pre281 = load i32, ptr %i.u, align 4, !tbaa !12
   br label %.loopexit
@@ -529,8 +515,8 @@ bb.at:                                            ; preds = %bb.as, %.loopexit
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.a, %.loopexit253
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret void
 }
 
@@ -542,10 +528,14 @@ declare void @DES_encrypt1(ptr noundef, ptr noundef, i32 noundef) local_unnamed_
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i8> @llvm.fshl.v8i8(<8 x i8>, <8 x i8>, <8 x i8>) #3
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}
