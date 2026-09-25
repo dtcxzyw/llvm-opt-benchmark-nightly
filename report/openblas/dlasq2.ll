@@ -203,8 +203,8 @@ begin_hunk_0_@dlasq2_:bb.a
   %i.aem = getelementptr i8, ptr %i.aef, i64 32
   %i.aen = load i32, ptr %i.i, align 4, !tbaa !33
   %i.aeo = sitofp i32 %i.aei to double            ; 2 uses
-  %3 = uitofp nneg i32 %i.ael to double
   store double %i.aeo, ptr %i.aej, align 8, !tbaa !35
+  %3 = uitofp nneg i32 %i.ael to double
   %i.aep = insertelement <2 x i32> poison, i32 %i.aek, i64 0
   %i.aeq = insertelement <2 x i32> %i.aep, i32 %i.aen, i64 1
   %i.aer = sitofp <2 x i32> %i.aeq to <2 x double>

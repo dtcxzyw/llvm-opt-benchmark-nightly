@@ -202,8 +202,8 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 18
   store i8 1, ptr %i.m, align 2
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.o = load ptr, ptr %i.n, align 8              ; 5 uses
-  %i.p = load ptr, ptr %0, align 8                ; 5 uses
+  %i.o = load ptr, ptr %0, align 8                ; 5 uses
+  %i.p = load ptr, ptr %i.n, align 8              ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -252,10 +252,10 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ag, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ah = insertelement <4 x ptr> poison, ptr %i.p, i64 0
+  %i.ah = insertelement <4 x ptr> poison, ptr %i.o, i64 0
   %i.ai = insertelement <4 x ptr> %i.ah, ptr %i.t, i64 1
   %i.aj = insertelement <4 x ptr> %i.ai, ptr %i.x, i64 2
-  %i.ak = insertelement <4 x ptr> %i.aj, ptr %i.o, i64 3
+  %i.ak = insertelement <4 x ptr> %i.aj, ptr %i.p, i64 3
   %.fr = freeze <4 x ptr> %i.ak
   %i.al = icmp ne <4 x ptr> %.fr, splat (ptr null)
   %i.am = bitcast <4 x i1> %i.al to i4
@@ -263,7 +263,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not381, label %bb.i, label %bb.cr
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
-  %i.an = icmp ne ptr %i.p, null                  ; 2 uses
+  %i.an = icmp ne ptr %i.o, null                  ; 2 uses
   %i.ao = icmp ne ptr %i.t, null                  ; 2 uses
   %or.cond7 = select i1 %i.an, i1 true, i1 %i.ao
   %i.ap = icmp ne ptr %i.v, null                  ; 2 uses
@@ -271,7 +271,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.aq = icmp ne ptr %i.x, null                  ; 2 uses
   %or.cond11 = select i1 %or.cond9, i1 true, i1 %i.aq
   %or.cond13 = or i1 %or.cond11, %i.aa
-  %i.ar = icmp ne ptr %i.o, null                  ; 2 uses
+  %i.ar = icmp ne ptr %i.p, null                  ; 2 uses
   %or.cond15 = select i1 %or.cond13, i1 true, i1 %i.ar
   br i1 %or.cond15, label %bb.k, label %bb.j
 
@@ -375,7 +375,7 @@ bb.w:                                             ; preds = %bb.v
   store ptr null, ptr %i.d, align 8
   %i.ca = load ptr, ptr %i.bw, align 8
   %i.cb = load ptr, ptr %i.ca, align 8
-  %i.cc = call fastcc ptr @_get_next_job_gres(ptr noundef nonnull %i.p, ptr noundef %i.b, ptr noundef %i.cb, ptr noundef %i.d, ptr noundef %i.a) ; 2 uses
+  %i.cc = call fastcc ptr @_get_next_job_gres(ptr noundef nonnull %i.o, ptr noundef %i.b, ptr noundef %i.cb, ptr noundef %i.d, ptr noundef %i.a) ; 2 uses
   %.not264303 = icmp eq ptr %i.cc, null
   br i1 %.not264303, label %._crit_edge, label %.lr.ph
 
@@ -733,7 +733,7 @@ bb.bf:                                            ; preds = %bb.be
   store ptr null, ptr %i.i, align 8
   %i.hl = load ptr, ptr %i.bw, align 8
   %i.hm = load ptr, ptr %i.hl, align 8
-  %i.hn = call fastcc ptr @_get_next_job_gres(ptr noundef nonnull %i.o, ptr noundef %i.b, ptr noundef %i.hm, ptr noundef %i.i, ptr noundef %i.a) ; 2 uses
+  %i.hn = call fastcc ptr @_get_next_job_gres(ptr noundef nonnull %i.p, ptr noundef %i.b, ptr noundef %i.hm, ptr noundef %i.i, ptr noundef %i.a) ; 2 uses
   %.not269327 = icmp eq ptr %i.hn, null
   br i1 %.not269327, label %._crit_edge330, label %.lr.ph329
 
@@ -948,22 +948,22 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
   br label %bb.cr
 
 bb.cb:                                            ; preds = %bb.bx
-  %i.kq = icmp eq ptr %i.o, null
+  %i.kq = icmp eq ptr %i.p, null
   %i.kr = trunc nuw i8 %.13 to i1                 ; 2 uses
   %or.cond17 = select i1 %i.kq, i1 true, i1 %i.kr
   br i1 %or.cond17, label %bb.cd, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.ks = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.56, ptr noundef nonnull %i.o) #26 ; 0 uses
+  %i.ks = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.56, ptr noundef nonnull %i.p) #26 ; 0 uses
   br label %bb.cr
 
 bb.cd:                                            ; preds = %bb.cb
-  %i.kt = icmp eq ptr %i.p, null
+  %i.kt = icmp eq ptr %i.o, null
   %or.cond19 = select i1 %i.kt, i1 true, i1 %i.kr
   br i1 %or.cond19, label %bb.cf, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.ku = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.57, ptr noundef nonnull %i.p) #26 ; 0 uses
+  %i.ku = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.57, ptr noundef nonnull %i.o) #26 ; 0 uses
   br label %bb.cr
 
 bb.cf:                                            ; preds = %bb.cd

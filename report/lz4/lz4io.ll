@@ -202,9 +202,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = sitofp i64 %i.c to double
+  %4 = sitofp i64 %i.g to double
   %i.k = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1)
   %i.l = uitofp i64 %i.k to double
-  %4 = sitofp i64 %i.g to double
   %i.m = insertelement <2 x double> poison, double %4, i64 0
   %i.n = insertelement <2 x double> %i.m, double %i.l, i64 1
   %i.o = fdiv <2 x double> %i.n, <double 1.000000e+06, double 1.000000e+09> ; 3 uses
@@ -607,9 +607,9 @@ bb.g:                                             ; preds = %bb.b, %bb.e
   br i1 %i.ac, label %bb.h, label %LZ4IO_finalTimeDisplay.exit
 
 bb.h:                                             ; preds = %._crit_edge
+  %5 = sitofp i64 %i.aa to double
   %i.ad = tail call i64 @llvm.umax.i64(i64 %i.z, i64 1)
   %i.ae = uitofp i64 %i.ad to double
-  %5 = sitofp i64 %i.aa to double
   %i.af = insertelement <2 x double> poison, double %5, i64 0
   %i.ag = insertelement <2 x double> %i.af, double %i.ae, i64 1
   %i.ah = fdiv <2 x double> %i.ag, <double 1.000000e+06, double 1.000000e+09> ; 3 uses
@@ -1012,9 +1012,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = sitofp i64 %i.c to double
+  %5 = sitofp i64 %i.g to double
   %i.k = call i64 @llvm.umax.i64(i64 %i.f, i64 1)
   %i.l = uitofp i64 %i.k to double
-  %5 = sitofp i64 %i.g to double
   %i.m = insertelement <2 x double> poison, double %5, i64 0
   %i.n = insertelement <2 x double> %i.m, double %i.l, i64 1
   %i.o = fdiv <2 x double> %i.n, <double 1.000000e+06, double 1.000000e+09> ; 3 uses
@@ -1417,9 +1417,9 @@ bb.h:                                             ; preds = %bb.c, %bb.f
   br i1 %i.ac, label %bb.i, label %LZ4IO_finalTimeDisplay.exit
 
 bb.i:                                             ; preds = %._crit_edge
+  %6 = sitofp i64 %i.aa to double
   %i.ad = call i64 @llvm.umax.i64(i64 %i.z, i64 1)
   %i.ae = uitofp i64 %i.ad to double
-  %6 = sitofp i64 %i.aa to double
   %i.af = insertelement <2 x double> poison, double %6, i64 0
   %i.ag = insertelement <2 x double> %i.af, double %i.ae, i64 1
   %i.ah = fdiv <2 x double> %i.ag, <double 1.000000e+06, double 1.000000e+09> ; 3 uses
@@ -1477,9 +1477,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %bb.c, label %LZ4IO_finalTimeDisplay.exit
 
 bb.c:                                             ; preds = %bb.b
+  %4 = sitofp i64 %i.i to double
   %i.l = call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.m = uitofp i64 %i.l to double
-  %4 = sitofp i64 %i.i to double
   %i.n = insertelement <2 x double> poison, double %4, i64 0
   %i.o = insertelement <2 x double> %i.n, double %i.m, i64 1
   %i.p = fdiv <2 x double> %i.o, <double 1.000000e+06, double 1.000000e+09> ; 3 uses
@@ -1882,9 +1882,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.
   br i1 %i.df, label %bb.ag, label %LZ4IO_finalTimeDisplay.exit
 
 bb.ag:                                            ; preds = %._crit_edge
+  %5 = sitofp i64 %i.dd to double
   %i.dg = call i64 @llvm.umax.i64(i64 %i.dc, i64 1)
   %i.dh = uitofp i64 %i.dg to double
-  %5 = sitofp i64 %i.dd to double
   %i.di = insertelement <2 x double> poison, double %5, i64 0
   %i.dj = insertelement <2 x double> %i.di, double %i.dh, i64 1
   %i.dk = fdiv <2 x double> %i.dj, <double 1.000000e+06, double 1.000000e+09> ; 3 uses

@@ -205,25 +205,25 @@ bb.b:                                             ; preds = %bb.a
   %i.z = tail call i32 @llvm.umax.i32(i32 %i.k, i32 %i.q)
   %i.aa = add nuw i32 %i.z, %i.v
   %i.ab = add i32 %i.aa, %i.y
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %6 = load ptr, ptr %5, align 8, !tbaa !207
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %7 = load i32, ptr %i.ac, align 4, !tbaa !208   ; 2 uses
-  %8 = sub i32 %i.u, %i.ab                        ; 9 uses
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %.val, i64 %9
-  store ptr %i.ad, ptr %i.c, align 8, !tbaa !210
-  %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 %9
-  store ptr %i.ae, ptr %5, align 8, !tbaa !207
-  %i.af = add i32 %8, 2                           ; 3 uses
-  %i.ag = icmp ult i32 %7, %i.af
-  %i.ah = sub i32 %7, %8
+  %5 = sub i32 %i.u, %i.ab                        ; 9 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.val, i64 %6
+  store ptr %i.ac, ptr %i.c, align 8, !tbaa !210
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %8 = load ptr, ptr %7, align 8, !tbaa !207
+  %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 %6
+  store ptr %i.ad, ptr %7, align 8, !tbaa !207
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %9 = load i32, ptr %i.ae, align 4, !tbaa !208   ; 2 uses
+  %i.af = add i32 %5, 2                           ; 3 uses
+  %i.ag = icmp ult i32 %9, %i.af
+  %i.ah = sub i32 %9, %5
   %storemerge.i = select i1 %i.ag, i32 2, i32 %i.ah
-  store i32 %storemerge.i, ptr %i.ac, align 4, !tbaa !208
+  store i32 %storemerge.i, ptr %i.ae, align 4, !tbaa !208
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !209 ; 2 uses
   %i.ak = icmp ult i32 %i.aj, %i.af
-  %i.al = sub i32 %i.aj, %8
+  %i.al = sub i32 %i.aj, %5
   %storemerge33.i = select i1 %i.ak, i32 2, i32 %i.al
   store i32 %storemerge33.i, ptr %i.ai, align 8, !tbaa !209
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -239,7 +239,7 @@ bb.b:                                             ; preds = %bb.a
   %i.au = shl nuw i32 1, %i.at
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !280
-  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.aw, i32 noundef %i.au, i32 noundef %8)
+  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.aw, i32 noundef %i.au, i32 noundef %5)
   %i.ax = load i32, ptr %i.m, align 4, !tbaa !106 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 160
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !92
@@ -275,7 +275,7 @@ bb.d:                                             ; preds = %ZSTD_allocateChainT
 .preheader.i.i.preheader:                         ; preds = %bb.d
   %i.bm = insertelement <4 x i32> poison, i32 %i.af, i64 0
   %i.bn = shufflevector <4 x i32> %i.bm, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
-  %i.bo = insertelement <4 x i32> poison, i32 %8, i64 0
+  %i.bo = insertelement <4 x i32> poison, i32 %5, i64 0
   %i.bp = shufflevector <4 x i32> %i.bo, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   br label %.preheader.i.i
 
@@ -320,7 +320,7 @@ bb.d:                                             ; preds = %ZSTD_allocateChainT
   br i1 %exitcond.not.i.i, label %ZSTD_reduceTable_btlazy2.exit.i, label %.preheader.i.i, !llvm.loop !12
 
 bb.e:                                             ; preds = %ZSTD_allocateChainTable.exit.thread21.i
-  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.bj, i32 noundef %i.bg, i32 noundef %8)
+  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.bj, i32 noundef %i.bg, i32 noundef %5)
   br label %ZSTD_reduceTable_btlazy2.exit.i
 
 ZSTD_reduceTable_btlazy2.exit.i:                  ; preds = %.preheader.i.i, %bb.e, %bb.d, %ZSTD_allocateChainTable.exit.i, %bb.c
@@ -333,7 +333,7 @@ bb.f:                                             ; preds = %ZSTD_reduceTable_bt
   %i.cv = shl nuw i32 1, %i.cu
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !282
-  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.cx, i32 noundef %i.cv, i32 noundef %8)
+  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.cx, i32 noundef %i.cv, i32 noundef %5)
   br label %ZSTD_reduceIndex.exit
 
 ZSTD_reduceIndex.exit:                            ; preds = %ZSTD_reduceTable_btlazy2.exit.i, %bb.f
@@ -350,7 +350,7 @@ bb.g:                                             ; preds = %ZSTD_reduceIndex.ex
 ZSTD_cwksp_mark_tables_clean.exit:                ; preds = %ZSTD_reduceIndex.exit, %bb.g
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !211
-  %storemerge = tail call i32 @llvm.usub.sat.i32(i32 %i.dd, i32 %8)
+  %storemerge = tail call i32 @llvm.usub.sat.i32(i32 %i.dd, i32 %5)
   store i32 %storemerge, ptr %i.dc, align 4, !tbaa !211
   store i32 0, ptr %i.b, align 8, !tbaa !278
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 248

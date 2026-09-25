@@ -205,15 +205,15 @@ _ZN7meshoptL17rasterizeOpacity1ILi2EEEvPhmiPKfS3_S3_RKNS_7TextureE.exit: ; preds
   %i.jj = sitofp i32 %i.ji to float
   %i.jk = trunc i64 %i.ir to i8
   %i.jl = and i8 %i.jk, 4                         ; 4 uses
-  %8 = fadd float %i.eg, %i.ed                    ; 2 uses
-  %9 = fdiv nnan float 1.000000e+00, %i.is        ; 4 uses
-  %i.jm = fadd float %i.do, %i.ea
-  %10 = extractelement <2 x float> %i.dn, i64 0
-  %i.jn = fadd float %10, %i.dy
-  %i.jo = insertelement <4 x float> poison, float %i.jn, i64 0
-  %i.jp = insertelement <4 x float> %i.jo, float %i.jm, i64 1
-  %i.jq = insertelement <4 x float> %i.jp, float %9, i64 2
-  %i.jr = insertelement <4 x float> %i.jq, float %8, i64 3
+  %8 = fdiv nnan float 1.000000e+00, %i.is        ; 4 uses
+  %9 = extractelement <2 x float> %i.dn, i64 0
+  %i.jm = fadd float %9, %i.dy
+  %10 = fadd float %i.do, %i.ea
+  %i.jn = fadd float %i.eg, %i.ed                 ; 2 uses
+  %i.jo = insertelement <4 x float> poison, float %i.jm, i64 0
+  %i.jp = insertelement <4 x float> %i.jo, float %10, i64 1
+  %i.jq = insertelement <4 x float> %i.jp, float %8, i64 2
+  %i.jr = insertelement <4 x float> %i.jq, float %i.jn, i64 3
   %i.js = fadd <4 x float> %i.jr, %i.dx
   %i.jt = insertelement <4 x float> <float f0x3EAAAAAB, float f0x3EAAAAAB, float poison, float f0x3EAAAAAB>, float %i.jj, i64 2
   %i.ju = fmul <4 x float> %i.js, %i.jt           ; 4 uses
@@ -245,7 +245,7 @@ _ZN7meshoptL17rasterizeOpacity1ILi2EEEvPhmiPKfS3_S3_RKNS_7TextureE.exit: ; preds
   %i.kt = add nsw i32 %i.kr, %i.jf
   %i.ku = add nsw i32 %i.kt, %i.ks
   %i.kv = sitofp i32 %i.ku to float
-  %i.kw = fmul float %9, %i.kv
+  %i.kw = fmul float %8, %i.kv
   %i.kx = fmul float %i.kw, 2.300000e-01
   %i.ky = call float @llvm.fmuladd.f32(float %i.kk, float 2.200000e-01, float %i.kx)
   %i.kz = call float @llvm.fmuladd.f32(float %i.kq, float 3.000000e-02, float %i.ky)
@@ -277,7 +277,7 @@ _ZN7meshoptL17rasterizeOpacity1ILi2EEEvPhmiPKfS3_S3_RKNS_7TextureE.exit: ; preds
   %i.ly = add nsw i32 %i.lw, %i.ks
   %i.lz = add nsw i32 %i.ly, %i.lx
   %i.ma = sitofp i32 %i.lz to float
-  %i.mb = fmul float %9, %i.ma
+  %i.mb = fmul float %8, %i.ma
   %i.mc = fmul float %i.mb, 2.300000e-01
   %i.md = call float @llvm.fmuladd.f32(float %i.ln, float 2.200000e-01, float %i.mc)
   %i.me = call float @llvm.fmuladd.f32(float %i.lv, float 3.000000e-02, float %i.md)
@@ -288,7 +288,7 @@ _ZN7meshoptL17rasterizeOpacity1ILi2EEEvPhmiPKfS3_S3_RKNS_7TextureE.exit: ; preds
   %i.mj = or i8 %i.mi, %i.le                      ; 2 uses
   store i8 %i.mj, ptr %i.iu, align 1, !tbaa !24
   %i.mk = load float, ptr %6, align 4, !tbaa !23
-  %i.ml = fadd float %8, %i.mk
+  %i.ml = fadd float %i.jn, %i.mk
   %i.mm = fmul float %i.ml, f0x3EAAAAAB
   %i.mn = load float, ptr %i.df, align 4, !tbaa !23
   %i.mo = fadd float %i.kg, %i.mn
@@ -306,7 +306,7 @@ _ZN7meshoptL17rasterizeOpacity1ILi2EEEvPhmiPKfS3_S3_RKNS_7TextureE.exit: ; preds
   %i.na = ashr i32 %i.mw, 16
   %i.nb = add nsw i32 %i.mz, %i.na
   %i.nc = sitofp i32 %i.nb to float
-  %i.nd = fmul float %9, %i.nc
+  %i.nd = fmul float %8, %i.nc
   %i.ne = fmul float %i.nd, 2.300000e-01
   %i.nf = call float @llvm.fmuladd.f32(float %i.mq, float 2.200000e-01, float %i.ne)
   %i.ng = call float @llvm.fmuladd.f32(float %i.mx, float 3.000000e-02, float %i.nf)

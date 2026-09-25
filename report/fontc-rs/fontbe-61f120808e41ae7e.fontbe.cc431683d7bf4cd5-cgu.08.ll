@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %bb.a
   %i.ai = sub <2 x i16> %i.ah, %i.af
   %i.aj = sitofp <2 x i16> %i.ai to <2 x double>  ; 3 uses
   %i.ak = fmul <2 x double> %i.ae, %i.aj
-  %8 = load <2 x double>, ptr %i.ad, align 8
-  %9 = fmul <2 x double> %8, %i.aj
-  %10 = fadd <2 x double> %i.ak, %i.ag            ; 4 uses
-  %i.al = fadd <2 x double> %9, %i.ag             ; 3 uses
+  %8 = fadd <2 x double> %i.ak, %i.ag             ; 4 uses
+  %9 = load <2 x double>, ptr %i.ad, align 8
+  %10 = fmul <2 x double> %9, %i.aj
+  %i.al = fadd <2 x double> %10, %i.ag            ; 3 uses
   %i.am = load i64, ptr %i.aa, align 8, !range !11, !noundef !8
   %i.an = trunc nuw i64 %i.am to i1
   br i1 %i.an, label %bb.au, label %bb.av
@@ -573,10 +573,10 @@ bb.au:                                            ; preds = %bb.e
   br label %bb.aw
 
 bb.av:                                            ; preds = %bb.e
-  %i.ec = shufflevector <2 x double> %i.al, <2 x double> %10, <2 x i32> <i32 1, i32 2>
-  %i.ed = shufflevector <2 x double> %10, <2 x double> %i.al, <2 x i32> <i32 1, i32 2>
+  %i.ec = shufflevector <2 x double> %i.al, <2 x double> %8, <2 x i32> <i32 1, i32 2>
+  %i.ed = shufflevector <2 x double> %8, <2 x double> %i.al, <2 x i32> <i32 1, i32 2>
   %i.ee = fsub <2 x double> %i.ec, %i.ed
-  %i.ef = fadd <2 x double> %10, %i.ee
+  %i.ef = fadd <2 x double> %8, %i.ee
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
@@ -612,7 +612,7 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.650, i64 32, i1 false)
-  %i.en = fadd <2 x double> %10, splat (double 5.000000e-01) ; 2 uses
+  %i.en = fadd <2 x double> %8, splat (double 5.000000e-01) ; 2 uses
   %i.eo = extractelement <2 x double> %i.en, i64 0
   %i.ep = tail call double @llvm.floor.f64(double %i.eo)
   %i.eq = tail call i16 @llvm.fptosi.sat.i16.f64(double %i.ep)

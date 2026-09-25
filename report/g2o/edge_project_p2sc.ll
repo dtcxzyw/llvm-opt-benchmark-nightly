@@ -205,8 +205,8 @@ bb.a:
   %foldExtExtBinop84 = fadd <2 x double> %foldExtExtBinop, %foldExtExtBinop82
   %foldExtExtBinop86 = fmul <2 x double> %i.cb, %.sroa.2.i.i.i.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.i.16..sroa.2.i.i.i.i.i.16..sroa.2.i.i.i.i.i.16..sroa.2.i.i.i.i.16..sroa.2.i.i.i.i.16..sroa.2.i.i.i.16..sroa.2.i.i.i.16..sroa.2.i.i.16..sroa.2.i.i.16..sroa.2.i.16..sroa.2.i.16..sroa.2.16..sroa.2.16..sroa.2.24..i.i.i.i.i.i.i.i.i.i.i.i
   %foldExtExtBinop88 = fadd <2 x double> %foldExtExtBinop84, %foldExtExtBinop86
-  %1 = fmul double %i.bx, %i.cd
-  %2 = fadd double %i.am, %i.ao
+  %1 = fadd double %i.am, %i.ao
+  %2 = fmul double %i.bx, %i.cd
   %i.ci = insertelement <2 x double> poison, double %i.ae, i64 0
   %i.cj = insertelement <2 x double> %i.ci, double %i.cf, i64 1
   %i.ck = shufflevector <2 x double> %i.g, <2 x double> %.sroa.2.i.i.i.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.i.8..sroa.2.i.i.i.i.i.8..sroa.2.i.i.i.i.i.8..sroa.2.i.i.i.i.8..sroa.2.i.i.i.i.8..sroa.2.i.i.i.8..sroa.2.i.i.i.8..sroa.2.i.i.8..sroa.2.i.i.8..sroa.2.i.8..sroa.2.i.8..sroa.2.8..sroa.2.8..sroa.2.16..i.i.i.i.i.i.i.i.i.i.i.i, <2 x i32> <i32 0, i32 2>
@@ -216,8 +216,8 @@ bb.a:
   %i.co = insertelement <2 x double> %.sroa.0.8..sroa.0.8..sroa.0.8., double %i.br, i64 1
   %i.cp = fmul <2 x double> %i.cn, %i.co
   %i.cq = fadd <2 x double> %i.cl, %i.cp
-  %i.cr = insertelement <2 x double> poison, double %2, i64 0
-  %i.cs = insertelement <2 x double> %i.cr, double %1, i64 1
+  %i.cr = insertelement <2 x double> poison, double %1, i64 0
+  %i.cs = insertelement <2 x double> %i.cr, double %2, i64 1
   %i.ct = fadd <2 x double> %i.cq, %i.cs
   %i.cu = shufflevector <2 x double> <double 1.000000e+00, double poison>, <2 x double> %foldExtExtBinop88, <2 x i32> <i32 0, i32 2>
   %i.cv = fdiv <2 x double> %i.cu, %i.ct          ; 2 uses

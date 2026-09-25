@@ -205,15 +205,12 @@ bb.ke:                                            ; preds = %bb.kd
   %i.afa = fmul <2 x double> %i.aez, splat (double 1.000000e+09)
   %i.afb = call <2 x double> @llvm.round.v2f64(<2 x double> %i.afa)
   %i.afc = fdiv <2 x double> %i.afb, splat (double 1.000000e+09) ; 3 uses
-  %1 = extractelement <2 x double> %i.afc, i64 0  ; 4 uses
-  %2 = call i64 @llvm.fptosi.sat.i64.f64(double %1) ; 3 uses
-  %i.afd = extractelement <2 x double> %i.afc, i64 1 ; 4 uses
+  %i.afd = extractelement <2 x double> %i.afc, i64 0 ; 4 uses
   %i.afe = call i64 @llvm.fptosi.sat.i64.f64(double %i.afd) ; 3 uses
-  %3 = sitofp i64 %2 to double
   %i.aff = sitofp i64 %i.afe to double
-  %i.afg = call double @llvm.fabs.f64(double %1)
+  %i.afg = call double @llvm.fabs.f64(double %i.afd)
   %i.afh = fcmp ueq double %i.afg, +inf
-  %i.afi = bitcast double %1 to i64               ; 3 uses
+  %i.afi = bitcast double %i.afd to i64           ; 3 uses
   %i.afj = and i64 %i.afi, 4503599627370495
   %i.afk = icmp eq i64 %i.afj, 0
   %i.afl = icmp slt i64 %i.afi, 0
@@ -222,15 +219,18 @@ bb.ke:                                            ; preds = %bb.kd
   %i.afn = icmp eq i64 %i.afm, -9223372036854775808
   %.sroa.4.0.i.i.i444 = select i1 %i.afn, i64 4, i64 3
   %.sroa.0.0.i.i.i445 = select i1 %i.afk, ptr %.1.i.i.i443, ptr @255
-  %i.afo = icmp sgt i64 %2, -1
-  %.sroa.0.0.i.i1.i446 = call i64 @llvm.abs.i64(i64 %2, i1 false) ; 3 uses
+  %i.afo = icmp sgt i64 %i.afe, -1
+  %.sroa.0.0.i.i1.i446 = call i64 @llvm.abs.i64(i64 %i.afe, i1 false) ; 3 uses
   %i.afp = icmp ugt i64 %.sroa.0.0.i.i1.i446, 9999
-  %i.afq = insertelement <2 x double> poison, double %3, i64 0
-  %i.afr = insertelement <2 x double> %i.afq, double %i.aff, i64 1
+  %1 = extractelement <2 x double> %i.afc, i64 1  ; 4 uses
+  %2 = call i64 @llvm.fptosi.sat.i64.f64(double %1) ; 3 uses
+  %3 = sitofp i64 %2 to double
+  %i.afq = insertelement <2 x double> poison, double %i.aff, i64 0
+  %i.afr = insertelement <2 x double> %i.afq, double %3, i64 1
   %i.afs = fcmp oeq <2 x double> %i.afc, %i.afr   ; 2 uses
-  %i.aft = call double @llvm.fabs.f64(double %i.afd)
+  %i.aft = call double @llvm.fabs.f64(double %1)
   %i.afu = fcmp ueq double %i.aft, +inf
-  %i.afv = bitcast double %i.afd to i64           ; 3 uses
+  %i.afv = bitcast double %1 to i64               ; 3 uses
   %i.afw = and i64 %i.afv, 4503599627370495
   %i.afx = icmp eq i64 %i.afw, 0
   %i.afy = icmp slt i64 %i.afv, 0
@@ -239,8 +239,8 @@ bb.ke:                                            ; preds = %bb.kd
   %i.aga = icmp eq i64 %i.afz, -9223372036854775808
   %.sroa.4.0.i.i.i = select i1 %i.aga, i64 4, i64 3
   %.sroa.0.0.i.i.i = select i1 %i.afx, ptr %.1.i.i.i, ptr @255
-  %i.agb = icmp sgt i64 %i.afe, -1
-  %.sroa.0.0.i.i1.i = call i64 @llvm.abs.i64(i64 %i.afe, i1 false) ; 3 uses
+  %i.agb = icmp sgt i64 %2, -1
+  %.sroa.0.0.i.i1.i = call i64 @llvm.abs.i64(i64 %2, i1 false) ; 3 uses
   %i.agc = icmp ugt i64 %.sroa.0.0.i.i1.i, 9999
   %i.agd = extractelement <2 x i1> %i.afs, i64 0
   %i.age = extractelement <2 x i1> %i.afs, i64 1
@@ -353,7 +353,7 @@ bb.kq:                                            ; preds = %_RNvXs4_NtCsl4q486L
   br i1 %i.afh, label %_RINvMNtCseqBJZIMdYtm_3ryu6bufferNtB3_6Buffer6formatdECsl4q486LaARA_9typst_svg.exit.i440, label %bb.kr
 
 bb.kr:                                            ; preds = %bb.kq
-  %i.ahe = invoke noundef i64 @_RNvNtCseqBJZIMdYtm_3ryu6pretty8format64(double noundef %1, ptr noundef nonnull dereferenceable(24) %i.n)
+  %i.ahe = invoke noundef i64 @_RNvNtCseqBJZIMdYtm_3ryu6pretty8format64(double noundef %i.afd, ptr noundef nonnull dereferenceable(24) %i.n)
           to label %_RINvMNtCseqBJZIMdYtm_3ryu6bufferNtB3_6Buffer6formatdECsl4q486LaARA_9typst_svg.exit.i440 unwind label %bb.kk
 
 _RINvMNtCseqBJZIMdYtm_3ryu6bufferNtB3_6Buffer6formatdECsl4q486LaARA_9typst_svg.exit.i440: ; preds = %bb.kq, %bb.kr
@@ -475,7 +475,7 @@ bb.kz:                                            ; preds = %.noexc1.i
   br i1 %i.afu, label %_RINvMNtCseqBJZIMdYtm_3ryu6bufferNtB3_6Buffer6formatdECsl4q486LaARA_9typst_svg.exit.i, label %bb.la
 
 bb.la:                                            ; preds = %bb.kz
-  %i.aiu = invoke noundef i64 @_RNvNtCseqBJZIMdYtm_3ryu6pretty8format64(double noundef %i.afd, ptr noundef nonnull dereferenceable(24) %i.p)
+  %i.aiu = invoke noundef i64 @_RNvNtCseqBJZIMdYtm_3ryu6pretty8format64(double noundef %1, ptr noundef nonnull dereferenceable(24) %i.p)
           to label %_RINvMNtCseqBJZIMdYtm_3ryu6bufferNtB3_6Buffer6formatdECsl4q486LaARA_9typst_svg.exit.i unwind label %bb.kk
 
 _RINvMNtCseqBJZIMdYtm_3ryu6bufferNtB3_6Buffer6formatdECsl4q486LaARA_9typst_svg.exit.i: ; preds = %bb.kz, %bb.la

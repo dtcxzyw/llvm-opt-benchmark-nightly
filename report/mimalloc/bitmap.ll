@@ -205,22 +205,22 @@ bb.h:                                             ; preds = %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = sub nuw nsw i64 %i.n, %i.w
   %notmask.i23.i.i.peel = shl nsw i64 -1, %i.w
-  %notmask.i26.i.i.peel = shl nsw i64 -1, %i.z
   %4 = xor i64 %notmask.i23.i.i.peel, -1
   %5 = shl i64 %4, %i.t                           ; 2 uses
-  %6 = xor i64 %notmask.i26.i.i.peel, -1          ; 2 uses
-  %7 = atomicrmw or ptr %i.x, i64 %5 acq_rel, align 8
-  %8 = atomicrmw or ptr %i.y, i64 %6 acq_rel, align 8
-  %.pre.i25.i.i.peel = and i64 %7, %5             ; 2 uses
-  %.pre.i28.i.i.peel = and i64 %8, %6             ; 2 uses
-  %9 = icmp eq i64 %.pre.i25.i.i.peel, 0
+  %6 = atomicrmw or ptr %i.x, i64 %5 acq_rel, align 8
+  %.pre.i25.i.i.peel = and i64 %6, %5             ; 2 uses
+  %7 = icmp eq i64 %.pre.i25.i.i.peel, 0
+  %notmask.i26.i.i.peel = shl nsw i64 -1, %i.z
+  %8 = xor i64 %notmask.i26.i.i.peel, -1          ; 2 uses
+  %9 = atomicrmw or ptr %i.y, i64 %8 acq_rel, align 8
+  %.pre.i28.i.i.peel = and i64 %9, %8             ; 2 uses
   %i.aa = icmp eq i64 %.pre.i28.i.i.peel, 0
   %i.ab = insertelement <2 x i64> poison, i64 %.pre.i28.i.i.peel, i64 0
   %i.ac = insertelement <2 x i64> %i.ab, i64 %.pre.i25.i.i.peel, i64 1
   %i.ad = tail call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %i.ac)
   %i.ae = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.ad) ; 2 uses
   store i64 %i.ae, ptr %i.a, align 8, !tbaa !9
-  %i.af = select i1 %9, i1 %i.aa, i1 false
+  %i.af = select i1 %7, i1 %i.aa, i1 false
   br label %mi_bchunk_setN.exit.peel
 
 bb.i:                                             ; preds = %bb.g

@@ -204,9 +204,9 @@ _RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtC
   %.sroa.52.0.i.i.i.i.i.i.i.i = select i1 %i.hk, i64 %i.ha, i64 undef
   %i.hl = trunc nuw i64 %i.fz to i1
   %.sroa.5.0.i.i.i.i.i.i.i.i = select i1 %i.hl, i64 %i.gy, i64 undef ; 4 uses
+  %2 = load i8, ptr %i.bp, align 1, !range !26, !alias.scope !8825, !noalias !8826, !noundef !11
   %i.hm = load <2 x i8>, ptr %i.bq, align 2, !alias.scope !8825, !noalias !8826
   %i.hn = load i8, ptr %i.br, align 4, !range !26, !alias.scope !8825, !noalias !8826, !noundef !11
-  %2 = load i8, ptr %i.bp, align 1, !range !26, !alias.scope !8825, !noalias !8826, !noundef !11
   %.sroa.11.sroa.31.0.extract.shift.i.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i.i.i.i, 32
   %.sroa.11.sroa.31.0.extract.trunc.i.i.i.i.i.i = trunc i64 %.sroa.11.sroa.31.0.extract.shift.i.i.i.i.i.i to i8
   %.sroa.11.sroa.33.0.extract.shift.i.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i.i.i.i, 40

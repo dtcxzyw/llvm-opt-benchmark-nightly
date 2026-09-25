@@ -202,14 +202,14 @@ bb.a:
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 1
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %.sroa.4.0.copyload.a = load i32, ptr %.sroa.4.0..sroa_idx, align 1
-  %.sroa.0.0.copyload = load i32, ptr %i.a, align 1
+  %.sroa.4.0.copyload.a = load i32, ptr %i.a, align 1
+  %.sroa.0.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 1
   %i.c = tail call noundef i32 @llvm.bswap.i32(i32 %.sroa.4.0.copyload.a)
-  %2 = tail call noundef i32 @llvm.bswap.i32(i32 %.sroa.0.0.copyload)
-  %3 = uitofp i32 %i.c to double
-  %i.d = uitofp i32 %2 to double
-  %i.e = insertelement <2 x double> poison, double %i.d, i64 0
-  %i.f = insertelement <2 x double> %i.e, double %3, i64 1
+  %2 = uitofp i32 %i.c to double
+  %3 = tail call noundef i32 @llvm.bswap.i32(i32 %.sroa.0.0.copyload)
+  %i.d = uitofp i32 %3 to double
+  %i.e = insertelement <2 x double> poison, double %2, i64 0
+  %i.f = insertelement <2 x double> %i.e, double %i.d, i64 1
   %i.g = fdiv <2 x double> %i.f, splat (double 1.000000e+05)
   %i.h = fadd <2 x double> %i.g, <double -9.000000e+01, double -1.800000e+02>
   store <2 x double> %i.h, ptr %i.b, align 8, !tbaa !104

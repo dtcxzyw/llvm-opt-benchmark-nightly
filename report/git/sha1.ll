@@ -204,28 +204,28 @@ begin_hunk_0_@sha1_compression_states:bb.a
   %i.apy = add i32 %i.aoi, %i.apg
   %i.apz = add i32 %i.apy, %i.apx
   %i.aqa = add i32 %i.apz, %i.apv                 ; 5 uses
-  %4 = tail call i32 @llvm.fshl.i32(i32 %i.apl, i32 %i.apl, i32 30) ; 3 uses
-  %i.aqb = tail call i32 @llvm.fshl.i32(i32 %i.apt, i32 %i.apt, i32 30) ; 2 uses
-  %i.aqc = tail call i32 @llvm.fshl.i32(i32 %i.aqa, i32 %i.aqa, i32 30)
-  %5 = tail call i32 @llvm.fshl.i32(i32 %i.aqa, i32 %i.aqa, i32 5)
-  %i.aqd = xor i32 %4, %i.apu
-  %6 = xor i32 %i.aqd, %i.apt
-  %i.aqe = add i32 %i.aom, -899497514
-  %i.aqf = add i32 %i.aqe, %i.apm
-  %i.aqg = add i32 %i.aqf, %6
-  %7 = add i32 %i.aqg, %5                         ; 3 uses
-  %i.aqh = tail call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 5)
-  %i.aqi = xor i32 %i.aqb, %4
+  %i.aqb = tail call i32 @llvm.fshl.i32(i32 %i.apl, i32 %i.apl, i32 30) ; 3 uses
+  %i.aqc = tail call i32 @llvm.fshl.i32(i32 %i.aqa, i32 %i.aqa, i32 5)
+  %4 = xor i32 %i.aqb, %i.apu
+  %i.aqd = xor i32 %4, %i.apt
+  %5 = add i32 %i.aom, -899497514
+  %i.aqe = add i32 %5, %i.apm
+  %i.aqf = add i32 %i.aqe, %i.aqd
+  %i.aqg = add i32 %i.aqf, %i.aqc                 ; 3 uses
+  %6 = tail call i32 @llvm.fshl.i32(i32 %i.apt, i32 %i.apt, i32 30) ; 2 uses
+  %i.aqh = tail call i32 @llvm.fshl.i32(i32 %i.aqg, i32 %i.aqg, i32 5)
+  %i.aqi = xor i32 %6, %i.aqb
   %i.aqj = xor i32 %i.aqi, %i.aqa
+  %7 = tail call i32 @llvm.fshl.i32(i32 %i.aqa, i32 %i.aqa, i32 30)
   %i.aqk = add i32 %i.aov, %i.apu
   %i.aql = add i32 %i.aqk, %i.aqj
   %i.aqm = add i32 %i.aql, %i.aqh
   store i32 %i.aqm, ptr %0, align 4, !tbaa !13
   %i.aqn = load <4 x i32>, ptr %i.b, align 4, !tbaa !13
-  %i.aqo = insertelement <4 x i32> poison, i32 %7, i64 0
-  %i.aqp = insertelement <4 x i32> %i.aqo, i32 %i.aqc, i64 1
-  %i.aqq = insertelement <4 x i32> %i.aqp, i32 %i.aqb, i64 2
-  %i.aqr = insertelement <4 x i32> %i.aqq, i32 %4, i64 3
+  %i.aqo = insertelement <4 x i32> poison, i32 %i.aqg, i64 0
+  %i.aqp = insertelement <4 x i32> %i.aqo, i32 %7, i64 1
+  %i.aqq = insertelement <4 x i32> %i.aqp, i32 %6, i64 2
+  %i.aqr = insertelement <4 x i32> %i.aqq, i32 %i.aqb, i64 3
   %i.aqs = add <4 x i32> %i.aqr, %i.aqn
   store <4 x i32> %i.aqs, ptr %i.b, align 4, !tbaa !13
   ret void

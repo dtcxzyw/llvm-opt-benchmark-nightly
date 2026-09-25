@@ -204,20 +204,20 @@ bb.aw:                                            ; preds = %.lr.ph259, %bb.av
 
 bb.ax:                                            ; preds = %.lr.ph257
   %i.hy = uitofp i8 %i.hx to float
-  %i.hz = fdiv float %i.hy, 2.550000e+02
+  %7 = fdiv float %i.hy, 2.550000e+02
+  %i.hz = fdiv float 1.000000e+00, %7             ; 3 uses
+  %8 = fsub nnan float 1.000000e+00, %i.hz
   %i.ia = load i8, ptr %i.hv, align 1, !tbaa !37
   %i.ib = uitofp i8 %i.ia to float
   %i.ic = getelementptr inbounds nuw i8, ptr %i.hv, i64 1 ; 2 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.hv, i64 2
-  %7 = fdiv float 1.000000e+00, %i.hz             ; 3 uses
-  %8 = fsub nnan float 1.000000e+00, %7
   %i.ie = fmul nnan float %8, 2.550000e+02        ; 2 uses
-  %i.if = tail call float @llvm.fmuladd.f32(float %i.ib, float %7, float %i.ie)
+  %i.if = tail call float @llvm.fmuladd.f32(float %i.ib, float %i.hz, float %i.ie)
   %i.ig = fptoui float %i.if to i8
   store i8 %i.ig, ptr %i.hv, align 1, !tbaa !37
   %i.ih = load <2 x i8>, ptr %i.ic, align 1, !tbaa !37
   %i.ii = uitofp <2 x i8> %i.ih to <2 x float>
-  %i.ij = insertelement <2 x float> poison, float %7, i64 0
+  %i.ij = insertelement <2 x float> poison, float %i.hz, i64 0
   %i.ik = shufflevector <2 x float> %i.ij, <2 x float> poison, <2 x i32> zeroinitializer
   %i.il = insertelement <2 x float> poison, float %i.ie, i64 0
   %i.im = shufflevector <2 x float> %i.il, <2 x float> poison, <2 x i32> zeroinitializer

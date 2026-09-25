@@ -204,8 +204,8 @@ bb.t:                                             ; preds = %current_time.exit83
   br i1 %i.cb, label %.split110.us, label %current_time.exit.us125
 
 current_time.exit.us125:                          ; preds = %.split.split.us
-  %i.cc = load i64, ptr %i.j, align 8, !tbaa !35
-  %i.cd = load i64, ptr %13, align 8, !tbaa !34
+  %i.cc = load i64, ptr %13, align 8, !tbaa !34
+  %i.cd = load i64, ptr %i.j, align 8, !tbaa !35
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
   %i.ce = call i32 @gettimeofday(ptr noundef nonnull %11, ptr noundef null) #21
@@ -213,17 +213,17 @@ current_time.exit.us125:                          ; preds = %.split.split.us
   br i1 %i.cf, label %.split122.us, label %current_time.exit83.us126
 
 current_time.exit83.us126:                        ; preds = %current_time.exit.us125
-  %14 = load i64, ptr %i.o, align 8, !tbaa !35
-  %15 = load i64, ptr %11, align 8, !tbaa !34
-  %16 = sitofp i64 %i.cd to double
-  %i.cg = sitofp i64 %15 to double
-  %17 = sitofp i64 %i.cc to double
-  %i.ch = sitofp i64 %14 to double
+  %14 = sitofp i64 %i.cc to double
+  %15 = sitofp i64 %i.cd to double
+  %16 = load i64, ptr %11, align 8, !tbaa !34
+  %i.cg = sitofp i64 %16 to double
+  %17 = load i64, ptr %i.o, align 8, !tbaa !35
+  %i.ch = sitofp i64 %17 to double
   %i.ci = insertelement <2 x double> poison, double %i.ch, i64 0
-  %i.cj = insertelement <2 x double> %i.ci, double %17, i64 1
+  %i.cj = insertelement <2 x double> %i.ci, double %15, i64 1
   %i.ck = fdiv <2 x double> %i.cj, splat (double 1.000000e+06)
   %i.cl = insertelement <2 x double> poison, double %i.cg, i64 0
-  %i.cm = insertelement <2 x double> %i.cl, double %16, i64 1
+  %i.cm = insertelement <2 x double> %i.cl, double %14, i64 1
   %i.cn = fadd <2 x double> %i.ck, %i.cm          ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
   %shift = shufflevector <2 x double> %i.cn, <2 x double> poison, <2 x i32> <i32 1, i32 poison>

@@ -205,9 +205,9 @@ bb.bm:                                            ; preds = %.lr.ph833
   %i.oo = getelementptr inbounds nuw i8, ptr %i.ol, i64 16
   %i.op = load <2 x float>, ptr %i.ol, align 4, !tbaa !163, !alias.scope !637, !noalias !640 ; 2 uses
   %i.oq = shufflevector <2 x float> %i.op, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.or = load float, ptr %i.oo, align 4, !tbaa !163, !alias.scope !637, !noalias !640
+  %i.or = load float, ptr %i.om, align 4, !tbaa !163, !alias.scope !637, !noalias !640
   %i.os = load float, ptr %i.on, align 4, !tbaa !163, !alias.scope !637, !noalias !640
-  %i.ot = load float, ptr %i.om, align 4, !tbaa !163, !alias.scope !637, !noalias !640
+  %i.ot = load float, ptr %i.oo, align 4, !tbaa !163, !alias.scope !637, !noalias !640
   %i.ou = getelementptr inbounds nuw i8, ptr %i.ol, i64 20
   %i.ov = load float, ptr %i.ou, align 4, !tbaa !163, !alias.scope !637, !noalias !640
   %i.ow = getelementptr inbounds nuw i8, ptr %i.ol, i64 24
@@ -225,11 +225,11 @@ bb.bm:                                            ; preds = %.lr.ph833
   %i.pi = insertelement <4 x float> poison, float %i.ov, i64 0
   %i.pj = shufflevector <4 x float> %i.pi, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pk = shufflevector <2 x float> %i.op, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %i.pl = insertelement <4 x float> poison, float %i.ot, i64 0
+  %i.pl = insertelement <4 x float> poison, float %i.or, i64 0
   %i.pm = shufflevector <4 x float> %i.pl, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pn = insertelement <4 x float> poison, float %i.os, i64 0
   %i.po = shufflevector <4 x float> %i.pn, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.pp = insertelement <4 x float> poison, float %i.or, i64 0
+  %i.pp = insertelement <4 x float> poison, float %i.ot, i64 0
   %i.pq = shufflevector <4 x float> %i.pp, <4 x float> poison, <4 x i32> zeroinitializer
   br label %.lr.ph.i.i.i.i.i
 

@@ -204,12 +204,12 @@ _ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterIN9__gnu_cxx17__nor
   %i.ah = zext nneg i16 %i.ag to i32              ; 2 uses
   %i.ai = or disjoint i32 %i.ae, %i.ah            ; 2 uses
   %i.aj = add nuw nsw i32 %i.ai, 65536            ; 2 uses
-  %i.ak = lshr i32 %i.ai, 6
+  %i.ak = lshr i32 %i.aj, 18
   %i.al = lshr i32 %i.aj, 12
-  %i.am = lshr i32 %i.aj, 18
-  %i.an = insertelement <4 x i32> poison, i32 %i.am, i64 0
+  %i.am = lshr i32 %i.ai, 6
+  %i.an = insertelement <4 x i32> poison, i32 %i.ak, i64 0
   %i.ao = insertelement <4 x i32> %i.an, i32 %i.al, i64 1
-  %i.ap = insertelement <4 x i32> %i.ao, i32 %i.ak, i64 2
+  %i.ap = insertelement <4 x i32> %i.ao, i32 %i.am, i64 2
   %i.aq = insertelement <4 x i32> %i.ap, i32 %i.ah, i64 3
   %i.ar = and <4 x i32> %i.aq, <i32 -1, i32 63, i32 63, i32 63>
   %i.as = or disjoint <4 x i32> %i.ar, <i32 240, i32 128, i32 128, i32 128>

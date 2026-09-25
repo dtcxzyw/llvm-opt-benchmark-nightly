@@ -204,12 +204,12 @@ bb.a:
   %.sroa.05.09.i = phi ptr [ %i.g, %bb.c ], [ %2, %.lr.ph.i.preheader ] ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i, i64 4
-  %i.i = load i32, ptr %i.h, align 4, !alias.scope !38622, !noundef !5 ; 3 uses
-  %5 = load i32, ptr %.sroa.05.09.i, align 4, !alias.scope !38622, !noundef !5 ; 3 uses
-  %6 = uitofp i32 %i.i to float
-  %i.j = uitofp i32 %5 to float
-  %i.k = insertelement <2 x float> poison, float %i.j, i64 0
-  %i.l = insertelement <2 x float> %i.k, float %6, i64 1
+  %i.i = load i32, ptr %.sroa.05.09.i, align 4, !alias.scope !38622, !noundef !5 ; 3 uses
+  %5 = uitofp i32 %i.i to float
+  %6 = load i32, ptr %i.h, align 4, !alias.scope !38622, !noundef !5 ; 3 uses
+  %i.j = uitofp i32 %6 to float
+  %i.k = insertelement <2 x float> poison, float %5, i64 0
+  %i.l = insertelement <2 x float> %i.k, float %i.j, i64 1
   %i.m = fdiv <2 x float> %i.l, %i.f              ; 2 uses
   %i.n = extractelement <2 x float> %i.m, i64 0
   %i.o = extractelement <2 x float> %i.m, i64 1
@@ -218,7 +218,7 @@ bb.a:
   %i.r = tail call i32 @llvm.fptoui.sat.i32.f32(float %i.q)
   %i.s = fmul float %i.p, %i.b
   %i.t = tail call i32 @llvm.fptoui.sat.i32.f32(float %i.s)
-  %i.u = mul i32 %i.i, %5                         ; 2 uses
+  %i.u = mul i32 %6, %i.i                         ; 2 uses
   %i.v = mul i32 %i.r, %i.t
   %i.w = tail call i32 @llvm.umin.i32(i32 %i.u, i32 %i.v) ; 4 uses
   %i.x = sub nuw i32 %i.u, %i.w                   ; 2 uses
@@ -234,8 +234,8 @@ bb.b:                                             ; preds = %.lr.ph.i
 bb.c:                                             ; preds = %bb.d, %bb.b
   %.sroa.04.1.i = phi i32 [ %i.x, %bb.d ], [ %.sroa.04.010.i, %bb.b ]
   %.sroa.02.1.i = phi i32 [ %i.w, %bb.d ], [ %.sroa.02.011.i, %bb.b ]
-  %.sroa.3.1.i = phi i32 [ %i.i, %bb.d ], [ %.sroa.3.012.i, %bb.b ] ; 2 uses
-  %.sroa.0.1.i = phi i32 [ %5, %bb.d ], [ %.sroa.0.013.i, %bb.b ] ; 2 uses
+  %.sroa.3.1.i = phi i32 [ %6, %bb.d ], [ %.sroa.3.012.i, %bb.b ] ; 2 uses
+  %.sroa.0.1.i = phi i32 [ %i.i, %bb.d ], [ %.sroa.0.013.i, %bb.b ] ; 2 uses
   %i.ab = icmp eq ptr %i.g, %i.c
   br i1 %i.ab, label %_RNvNtNtNtCs1dZk1kIfPhr_19candle_transformers6models5llava5utils22select_best_resolution.exit, label %.lr.ph.i
 

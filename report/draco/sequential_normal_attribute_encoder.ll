@@ -205,17 +205,17 @@ bb.a:
   %.sroa.031.0.insert.insert = or disjoint i64 %.sroa.432.0.insert.shift, %.sroa.031.0.insert.ext
   store i64 %.sroa.031.0.insert.insert, ptr %2, align 4, !tbaa !54
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 6 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !13, !noalias !310
-  %4 = load i32, ptr %3, align 4, !tbaa !13, !noalias !310
-  %5 = sub nsw i32 %i.i, %i.b                     ; 3 uses
-  %i.j = sub nsw i32 %4, %i.b                     ; 3 uses
-  %.sroa.4.0.insert.ext = zext i32 %5 to i64
+  %i.i = load i32, ptr %3, align 4, !tbaa !13, !noalias !310
+  %4 = sub nsw i32 %i.i, %i.b                     ; 3 uses
+  %5 = load i32, ptr %i.h, align 4, !tbaa !13, !noalias !310
+  %i.j = sub nsw i32 %5, %i.b                     ; 3 uses
+  %.sroa.4.0.insert.ext = zext i32 %i.j to i64
   %.sroa.4.0.insert.shift = shl nuw i64 %.sroa.4.0.insert.ext, 32
-  %.sroa.030.0.insert.ext = zext i32 %i.j to i64
+  %.sroa.030.0.insert.ext = zext i32 %4 to i64
   %.sroa.030.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.030.0.insert.ext
   store i64 %.sroa.030.0.insert.insert, ptr %3, align 4, !tbaa !54
-  %i.k = tail call i32 @llvm.abs.i32(i32 %i.j, i1 true)
-  %i.l = tail call i32 @llvm.abs.i32(i32 %5, i1 true)
+  %i.k = tail call i32 @llvm.abs.i32(i32 %4, i1 true)
+  %i.l = tail call i32 @llvm.abs.i32(i32 %i.j, i1 true)
   %i.m = add nuw i32 %i.l, %i.k
   %i.n = load i32, ptr %i.a, align 4, !tbaa !71   ; 3 uses
   %.not = icmp ugt i32 %i.m, %i.n
@@ -266,26 +266,26 @@ _ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2
   store i32 %i.ai, ptr %2, align 4, !tbaa !13
   %i.aj = sdiv i32 %i.ah, 2
   store i32 %i.aj, ptr %i.e, align 4, !tbaa !13
-  %i.ak = load i32, ptr %i.h, align 4, !tbaa !13  ; 4 uses
-  %6 = load i32, ptr %3, align 4, !tbaa !13       ; 3 uses
-  %7 = icmp sgt i32 %6, -1
-  br i1 %7, label %bb.g, label %bb.i
+  %i.ak = load i32, ptr %3, align 4, !tbaa !13    ; 3 uses
+  %6 = icmp sgt i32 %i.ak, -1
+  %7 = load i32, ptr %i.h, align 4, !tbaa !13     ; 4 uses
+  br i1 %6, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit
-  %i.al = icmp sgt i32 %i.ak, -1
+  %i.al = icmp sgt i32 %7, -1
   br i1 %i.al, label %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.am = icmp eq i32 %6, 0
+  %i.am = icmp eq i32 %i.ak, 0
   br i1 %i.am, label %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7, label %bb.j
 
 bb.i:                                             ; preds = %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit
-  %i.an = icmp slt i32 %i.ak, 1
+  %i.an = icmp slt i32 %7, 1
   br i1 %i.an, label %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ao = phi i32 [ 1, %bb.h ], [ -1, %bb.i ]
-  %.inv22.i.i2 = icmp slt i32 %i.ak, 1
+  %.inv22.i.i2 = icmp slt i32 %7, 1
   %i.ap = select i1 %.inv22.i.i2, i32 -1, i32 1
   br label %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7
 
@@ -293,29 +293,29 @@ _ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2
   %.021.i.i3 = phi i32 [ %i.ap, %bb.j ], [ 1, %bb.g ], [ -1, %bb.i ], [ -1, %bb.h ] ; 2 uses
   %.0.i.i4 = phi i32 [ %i.ao, %bb.j ], [ 1, %bb.g ], [ -1, %bb.i ], [ -1, %bb.h ] ; 2 uses
   %i.aq = load i32, ptr %i.a, align 4, !tbaa !71  ; 2 uses
-  %i.ar = shl i32 %6, 1
-  %i.as = shl i32 %i.ak, 1
+  %i.ar = shl i32 %i.ak, 1
+  %i.as = shl i32 %7, 1
   %i.at = mul nsw i32 %.0.i.i4, %.021.i.i3
   %i.au = icmp sgt i32 %i.at, -1                  ; 2 uses
   %i.av = mul nsw i32 %i.aq, %.0.i.i4             ; 2 uses
   %i.aw = mul nsw i32 %i.aq, %.021.i.i3           ; 2 uses
   %i.ax = sub i32 %i.ar, %i.av                    ; 2 uses
   %i.ay = sub i32 %i.as, %i.aw                    ; 2 uses
-  %i.az = sub i32 0, %i.ax
-  %i.ba = sub i32 0, %i.ay
-  %.027.i.i6.a = select i1 %i.au, i32 %i.az, i32 %i.ax
-  %.028.i.i5 = select i1 %i.au, i32 %i.ba, i32 %i.ay
-  %i.bb = add i32 %.027.i.i6.a, %i.aw
-  %i.bc = add i32 %.028.i.i5, %i.av
+  %i.az = sub i32 0, %i.ay
+  %i.ba = sub i32 0, %i.ax
+  %.027.i.i6.a = select i1 %i.au, i32 %i.az, i32 %i.ay
+  %.028.i.i5 = select i1 %i.au, i32 %i.ba, i32 %i.ax
+  %i.bb = add i32 %.027.i.i6.a, %i.av
+  %i.bc = add i32 %.028.i.i5, %i.aw
   %i.bd = sdiv i32 %i.bb, 2                       ; 2 uses
+  store i32 %i.bd, ptr %3, align 4, !tbaa !13
   %8 = sdiv i32 %i.bc, 2                          ; 2 uses
-  store i32 %8, ptr %3, align 4, !tbaa !13
-  store i32 %i.bd, ptr %i.h, align 4, !tbaa !13
+  store i32 %8, ptr %i.h, align 4, !tbaa !13
   br label %thread-pre-split
 
 thread-pre-split:                                 ; preds = %bb.a, %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7
-  %i.be = phi i32 [ %i.bd, %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7 ], [ %5, %bb.a ] ; 5 uses
-  %i.bf = phi i32 [ %8, %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7 ], [ %i.j, %bb.a ] ; 3 uses
+  %i.be = phi i32 [ %8, %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7 ], [ %i.j, %bb.a ] ; 5 uses
+  %i.bf = phi i32 [ %i.bd, %_ZNK5draco45PredictionSchemeNormalOctahedronTransformBaseIiE13InvertDiamondEPiS2_.exit7 ], [ %4, %bb.a ] ; 3 uses
   %i.bg = icmp eq i32 %i.bf, 0
   br i1 %i.bg, label %.split, label %bb.k
 
@@ -363,10 +363,10 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.027.0.insert.ext75 = zext i32 %i.bt to i64
   %.sroa.027.0.insert.insert76 = or disjoint i64 %.sroa.728.0.insert.shift74, %.sroa.027.0.insert.ext75
   store i64 %.sroa.027.0.insert.insert76, ptr %2, align 4, !tbaa !54
-  %i.bv = load i32, ptr %i.h, align 4, !tbaa !13
-  %i.bw = load i32, ptr %3, align 4, !tbaa !13
-  %i.bx = sub nsw i32 0, %i.bw
-  %i.by = sub nsw i32 0, %i.bv
+  %i.bv = load i32, ptr %3, align 4, !tbaa !13
+  %i.bw = load i32, ptr %i.h, align 4, !tbaa !13
+  %i.bx = sub nsw i32 0, %i.bv
+  %i.by = sub nsw i32 0, %i.bw
   br label %_ZNK5draco58PredictionSchemeNormalOctahedronCanonicalizedTransformBaseIiE11RotatePointENS_7VectorDIiLi2EEEi.exit9
 
 select.unfold:                                    ; preds = %_ZNK5draco58PredictionSchemeNormalOctahedronCanonicalizedTransformBaseIiE14IsInBottomLeftERKNS_7VectorDIiLi2EEE.exit, %bb.l

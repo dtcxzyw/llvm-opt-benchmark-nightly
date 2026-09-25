@@ -205,8 +205,8 @@ _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13Adva
   %i.et = urem <4 x i32> %i.es, splat (i32 10)
   %i.eu = trunc nuw nsw <4 x i32> %i.et to <4 x i8>
   %i.ev = udiv i32 %i.eh, 100000
-  %3 = udiv i32 %i.eh, 1000000
   %.lhs.trunc.i.i.i.i.i.peel = trunc nuw i32 %i.ev to i16
+  %3 = udiv i32 %i.eh, 1000000
   %.lhs.trunc7.i.i.i.i.i.peel = trunc nuw nsw i32 %3 to i16
   %i.ew = insertelement <2 x i16> poison, i16 %.lhs.trunc7.i.i.i.i.i.peel, i64 0
   %i.ex = insertelement <2 x i16> %i.ew, i16 %.lhs.trunc.i.i.i.i.i.peel, i64 1
@@ -290,8 +290,8 @@ _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13Adva
   %i.gu = urem <4 x i32> %i.gt, splat (i32 10)
   %i.gv = trunc nuw nsw <4 x i32> %i.gu to <4 x i8>
   %i.gw = udiv i32 %i.gi, 100000
-  %4 = udiv i32 %i.gi, 1000000
   %.lhs.trunc.i.i.i.i.i = trunc nuw i32 %i.gw to i16
+  %4 = udiv i32 %i.gi, 1000000
   %.lhs.trunc7.i.i.i.i.i = trunc nuw nsw i32 %4 to i16
   %i.gx = insertelement <2 x i16> poison, i16 %.lhs.trunc7.i.i.i.i.i, i64 0
   %i.gy = insertelement <2 x i16> %i.gx, i16 %.lhs.trunc.i.i.i.i.i, i64 1

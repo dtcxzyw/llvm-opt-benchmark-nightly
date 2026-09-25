@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.s = sext i16 %i.r to i32
   %i.t = load i16, ptr %i.k, align 8, !tbaa !66
   %i.u = sext i16 %i.m to i32                     ; 3 uses
-  %4 = sext i16 %i.t to i32                       ; 3 uses
-  %5 = add nsw i32 %i.p, %i.u                     ; 2 uses
-  store i32 %5, ptr %i.b, align 8, !tbaa !122
-  %i.v = sub nsw i32 %i.s, %4                     ; 6 uses
+  %4 = add nsw i32 %i.p, %i.u                     ; 2 uses
+  store i32 %4, ptr %i.b, align 8, !tbaa !122
+  %5 = sext i16 %i.t to i32                       ; 3 uses
+  %i.v = sub nsw i32 %i.s, %5                     ; 6 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 156
   store i32 %i.v, ptr %i.w, align 4, !tbaa !123
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -258,7 +258,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i32 1651078259, ptr %i.ap, align 8, !tbaa !135
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 192
-  store i32 %4, ptr %i.aq, align 8, !tbaa !136
+  store i32 %5, ptr %i.aq, align 8, !tbaa !136
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 196
   store i32 %i.u, ptr %i.ar, align 4, !tbaa !137
   %i.as = getelementptr inbounds nuw i8, ptr %i.k, i64 4
@@ -269,7 +269,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i64 %i.aw, ptr %i.ay, align 8, !tbaa !139
-  %i.az = insertelement <2 x i32> poison, i32 %4, i64 0
+  %i.az = insertelement <2 x i32> poison, i32 %5, i64 0
   %i.ba = insertelement <2 x i32> %i.az, i32 %i.u, i64 1
   %i.bb = shl nsw <2 x i32> %i.ba, splat (i32 6)
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -278,7 +278,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %i.be = shl nsw i32 %i.v, 6
   %i.bf = sext i32 %i.be to i64
   store i64 %i.bf, ptr %i.ax, align 8, !tbaa !140
-  %i.bg = shl nsw i32 %5, 6
+  %i.bg = shl nsw i32 %4, 6
   %i.bh = zext i32 %i.bg to i64
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %i.bh, ptr %i.bi, align 8, !tbaa !141

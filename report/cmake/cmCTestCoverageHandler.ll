@@ -204,15 +204,15 @@ bb.ku:                                            ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.afn, label %bb.kv, label %bb.kw
 
 bb.kv:                                            ; preds = %bb.ku
-  %134 = add nuw nsw i32 %i.afm, 10
-  %135 = uitofp nneg i32 %134 to float
-  %i.afo = uitofp nneg i32 %i.afm to float
+  %134 = uitofp nneg i32 %i.afm to float
+  %135 = add nuw nsw i32 %i.afm, 10
+  %i.afo = uitofp nneg i32 %135 to float
   %i.afp = insertelement <2 x i32> poison, i32 %i.afk, i64 0
   %i.afq = shufflevector <2 x i32> %i.afp, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.afr = add nsw <2 x i32> %i.afq, <i32 0, i32 10>
   %i.afs = sitofp <2 x i32> %i.afr to <2 x float>
-  %i.aft = insertelement <2 x float> poison, float %i.afo, i64 0
-  %i.afu = insertelement <2 x float> %i.aft, float %135, i64 1
+  %i.aft = insertelement <2 x float> poison, float %134, i64 0
+  %i.afu = insertelement <2 x float> %i.aft, float %i.afo, i64 1
   %i.afv = fdiv <2 x float> %i.afs, %i.afu        ; 2 uses
   %i.afw = extractelement <2 x float> %i.afv, i64 0
   %i.afx = fmul float %i.afw, 1.000000e+02

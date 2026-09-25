@@ -205,17 +205,17 @@ bb.m:                                             ; preds = %bb.j
   br label %_ZN7unicase7unicode12char_to_utf817h94ba0bbc3ad8ef76E.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.l
-  %i.bk = lshr i32 %.sroa.0.0.i.i.i.i, 6
-  %2 = lshr i32 %.sroa.0.0.i.i.i.i, 12
-  %i.bl = lshr i32 %.sroa.0.0.i.i.i.i, 18
-  %i.bm = trunc i32 %.sroa.0.0.i.i.i.i to i8
-  %3 = trunc i32 %i.bk to i8
-  %i.bn = trunc i32 %2 to i8
-  %i.bo = trunc nsw i32 %i.bl to i8
-  %i.bp = insertelement <4 x i8> poison, i8 %i.bo, i64 0
-  %i.bq = insertelement <4 x i8> %i.bp, i8 %i.bn, i64 1
-  %i.br = insertelement <4 x i8> %i.bq, i8 %3, i64 2
-  %i.bs = insertelement <4 x i8> %i.br, i8 %i.bm, i64 3
+  %i.bk = lshr i32 %.sroa.0.0.i.i.i.i, 18
+  %2 = trunc nsw i32 %i.bk to i8
+  %i.bl = lshr i32 %.sroa.0.0.i.i.i.i, 12
+  %i.bm = trunc i32 %i.bl to i8
+  %3 = lshr i32 %.sroa.0.0.i.i.i.i, 6
+  %i.bn = trunc i32 %3 to i8
+  %i.bo = trunc i32 %.sroa.0.0.i.i.i.i to i8
+  %i.bp = insertelement <4 x i8> poison, i8 %2, i64 0
+  %i.bq = insertelement <4 x i8> %i.bp, i8 %i.bm, i64 1
+  %i.br = insertelement <4 x i8> %i.bq, i8 %i.bn, i64 2
+  %i.bs = insertelement <4 x i8> %i.br, i8 %i.bo, i64 3
   %i.bt = and <4 x i8> %i.bs, <i8 -1, i8 63, i8 63, i8 63>
   %i.bu = or disjoint <4 x i8> %i.bt, <i8 -16, i8 -128, i8 -128, i8 -128>
   store <4 x i8> %i.bu, ptr %i.c, align 4, !alias.scope !5847, !noalias !5843
@@ -618,17 +618,17 @@ bb.m:                                             ; preds = %bb.j
   br label %_ZN7unicase7unicode12char_to_utf817h94ba0bbc3ad8ef76E.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.l
-  %i.bk = lshr i32 %.sroa.0.0.i.i.i.i, 6
-  %2 = lshr i32 %.sroa.0.0.i.i.i.i, 12
-  %i.bl = lshr i32 %.sroa.0.0.i.i.i.i, 18
-  %i.bm = trunc i32 %.sroa.0.0.i.i.i.i to i8
-  %3 = trunc i32 %i.bk to i8
-  %i.bn = trunc i32 %2 to i8
-  %i.bo = trunc nsw i32 %i.bl to i8
-  %i.bp = insertelement <4 x i8> poison, i8 %i.bo, i64 0
-  %i.bq = insertelement <4 x i8> %i.bp, i8 %i.bn, i64 1
-  %i.br = insertelement <4 x i8> %i.bq, i8 %3, i64 2
-  %i.bs = insertelement <4 x i8> %i.br, i8 %i.bm, i64 3
+  %i.bk = lshr i32 %.sroa.0.0.i.i.i.i, 18
+  %2 = trunc nsw i32 %i.bk to i8
+  %i.bl = lshr i32 %.sroa.0.0.i.i.i.i, 12
+  %i.bm = trunc i32 %i.bl to i8
+  %3 = lshr i32 %.sroa.0.0.i.i.i.i, 6
+  %i.bn = trunc i32 %3 to i8
+  %i.bo = trunc i32 %.sroa.0.0.i.i.i.i to i8
+  %i.bp = insertelement <4 x i8> poison, i8 %2, i64 0
+  %i.bq = insertelement <4 x i8> %i.bp, i8 %i.bm, i64 1
+  %i.br = insertelement <4 x i8> %i.bq, i8 %i.bn, i64 2
+  %i.bs = insertelement <4 x i8> %i.br, i8 %i.bo, i64 3
   %i.bt = and <4 x i8> %i.bs, <i8 -1, i8 63, i8 63, i8 63>
   %i.bu = or disjoint <4 x i8> %i.bt, <i8 -16, i8 -128, i8 -128, i8 -128>
   store <4 x i8> %i.bu, ptr %i.c, align 4, !alias.scope !5984, !noalias !5980

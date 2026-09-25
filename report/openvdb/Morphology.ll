@@ -205,10 +205,10 @@ bb.q:                                             ; preds = %.lr.ph106
   %i.ex = getelementptr inbounds nuw i8, ptr %i.eo, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.eo, i8 0, i64 33792, i1 false)
   %i.ey = and i32 %i.ew, -128
-  %4 = shl i32 %i.eq, 2
-  %5 = lshr i32 %i.eq, 3
-  %i.ez = insertelement <2 x i32> poison, i32 %5, i64 0
-  %i.fa = insertelement <2 x i32> %i.ez, i32 %4, i64 1
+  %4 = lshr i32 %i.eq, 3
+  %5 = shl i32 %i.eq, 2
+  %i.ez = insertelement <2 x i32> poison, i32 %4, i64 0
+  %i.fa = insertelement <2 x i32> %i.ez, i32 %5, i64 1
   %i.fb = and <2 x i32> %i.fa, <i32 536870784, i32 3968>
   %i.fc = load <2 x i32>, ptr %i.et, align 8, !tbaa !464
   %i.fd = add nsw <2 x i32> %i.fb, %i.fc

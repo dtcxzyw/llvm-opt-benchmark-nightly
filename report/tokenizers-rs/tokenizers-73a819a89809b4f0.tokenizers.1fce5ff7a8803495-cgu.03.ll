@@ -205,18 +205,18 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.if = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph143, i64 %i.id ; 5 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 4
-  %i.ih = load i32, ptr %i.ig, align 4            ; 4 uses
-  %i.ii = load i32, ptr %i.if, align 4            ; 6 uses
-  store i32 %i.ii, ptr %i.a, align 4
-  store i32 %i.ih, ptr %i.c, align 4
+  %i.ih = load i32, ptr %i.if, align 4            ; 6 uses
+  %i.ii = load i32, ptr %i.ig, align 4            ; 4 uses
+  store i32 %i.ih, ptr %i.a, align 4
+  store i32 %i.ii, ptr %i.c, align 4
   br i1 %.not, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %.sroa.028.0.val = load i32, ptr %.sroa.028.0.ph140, align 4, !noundef !3 ; 2 uses
   %.sroa.028.0.val37 = load i32, ptr %i.f, align 4, !range !6, !noundef !3
-  %i.ij = icmp eq i32 %i.ii, %.sroa.028.0.val
-  %i.ik = icmp ult i32 %i.ii, %.sroa.028.0.val
-  %i.il = icmp samesign ult i32 %i.ih, %.sroa.028.0.val37
+  %i.ij = icmp eq i32 %i.ih, %.sroa.028.0.val
+  %i.ik = icmp ult i32 %i.ih, %.sroa.028.0.val
+  %i.il = icmp samesign ult i32 %i.ii, %.sroa.028.0.val37
   %.sroa.0.0.i.i.i = select i1 %i.ij, i1 %i.il, i1 %i.ik
   br i1 %.sroa.0.0.i.i.i, label %bb.t, label %.thread
 
@@ -228,9 +228,9 @@ bb.t:                                             ; preds = %bb.r, %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.im = getelementptr [8 x i8], ptr %2, i64 %.sroa.16.0136314 ; 3 uses
-  %i.in = insertelement <4 x i32> poison, i32 %i.ii, i64 0
+  %i.in = insertelement <4 x i32> poison, i32 %i.ih, i64 0
   %i.io = shufflevector <4 x i32> %i.in, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.ip = insertelement <4 x i32> poison, i32 %i.ih, i64 0
+  %i.ip = insertelement <4 x i32> poison, i32 %i.ii, i64 0
   %i.iq = shufflevector <4 x i32> %i.ip, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %bb.w
 
@@ -320,9 +320,9 @@ bb.w:                                             ; preds = %bb.x, %bb.u
   %.val.i = load i32, ptr %.sroa.9.236.i, align 4, !alias.scope !1338, !noalias !1339, !noundef !3 ; 2 uses
   %i.kh = getelementptr i8, ptr %.sroa.9.236.i, i64 4
   %.val15.i = load i32, ptr %i.kh, align 4, !range !6, !alias.scope !1338, !noalias !1339, !noundef !3
-  %i.ki = icmp eq i32 %i.ii, %.val.i
-  %i.kj = icmp ult i32 %i.ii, %.val.i
-  %i.kk = icmp samesign ult i32 %i.ih, %.val15.i
+  %i.ki = icmp eq i32 %i.ih, %.val.i
+  %i.kj = icmp ult i32 %i.ih, %.val.i
+  %i.kk = icmp samesign ult i32 %i.ii, %.val15.i
   %.sroa.0.0.i.i.i40.i = select i1 %i.ki, i1 %i.kk, i1 %i.kj ; 2 uses
   %i.kl = getelementptr inbounds i8, ptr %.sroa.43.234.i, i64 -8 ; 3 uses
   %.sroa.01.0.i41.i = select i1 %.sroa.0.0.i.i.i40.i, ptr %2, ptr %i.kl

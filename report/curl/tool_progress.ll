@@ -204,10 +204,10 @@ bb.w:                                             ; preds = %.thread, %bb.v
   %i.cb = zext i32 %i.ca to i64
   %i.cc = getelementptr inbounds nuw [32 x i8], ptr @speedstore, i64 %i.cb ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
-  %i.ce = load i64, ptr %i.cd, align 8, !tbaa !40
-  %3 = load i64, ptr %i.cc, align 16, !tbaa !39
-  %4 = sub nsw i64 %.0105.lcssa, %3
-  %i.cf = sub nsw i64 %.0104.lcssa, %i.ce
+  %i.ce = load i64, ptr %i.cc, align 16, !tbaa !39
+  %3 = sub nsw i64 %.0105.lcssa, %i.ce
+  %4 = load i64, ptr %i.cd, align 8, !tbaa !40
+  %i.cf = sub nsw i64 %.0104.lcssa, %4
   br label %bb.y
 
 bb.x:                                             ; preds = %bb.v
@@ -218,7 +218,7 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x, %bb.w
   %.061 = phi i64 [ %i.bz, %bb.w ], [ %i.ci, %bb.x ]
-  %.060 = phi i64 [ %4, %bb.w ], [ %.0105.lcssa, %bb.x ]
+  %.060 = phi i64 [ %3, %bb.w ], [ %.0105.lcssa, %bb.x ]
   %.059 = phi i64 [ %i.cf, %bb.w ], [ %.0104.lcssa, %bb.x ]
   %spec.select = call i64 @llvm.umax.i64(i64 %.061, i64 1)
   %i.cj = sitofp i64 %.060 to double

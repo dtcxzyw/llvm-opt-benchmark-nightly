@@ -124,16 +124,16 @@ _RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4skipINtB4_4SkipINtNtB6_6cloned6Cl
 
 bb.e:                                             ; preds = %_RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4skipINtB4_4SkipINtNtB6_6cloned6ClonedINtNtNtBa_5slice4iter4IterNtNtCs1qcNTItuk7F_13glyphs_reader4font4NodeEEENtNtNtB8_6traits8iterator8Iterator4nextB1N_.exit.i
   %i.n = add i64 %.sroa.01.010, 1                 ; 2 uses
-  %.sroa.46.0.copyload.i.a = load double, ptr %.sroa.46.0..sroa_idx.i, align 8, !noalias !24
-  %.sroa.05.0.copyload.i = load double, ptr %i.a, align 8, !noalias !24
+  %.sroa.46.0.copyload.i.a = load double, ptr %i.a, align 8, !noalias !24
+  %.sroa.05.0.copyload.i = load double, ptr %.sroa.46.0..sroa_idx.i, align 8, !noalias !24
   %i.o = fadd double %.sroa.46.0.copyload.i.a, 5.000000e-01
-  %2 = fadd double %.sroa.05.0.copyload.i, 5.000000e-01
-  %3 = tail call double @llvm.floor.f64(double %i.o)
-  %4 = tail call double @llvm.floor.f64(double %2)
-  %5 = tail call i16 @llvm.fptosi.sat.i16.f64(double %3)
-  %i.p = tail call i16 @llvm.fptosi.sat.i16.f64(double %4)
-  %i.q = insertelement <2 x i16> poison, i16 %i.p, i64 0
-  %i.r = insertelement <2 x i16> %i.q, i16 %5, i64 1
+  %2 = tail call double @llvm.floor.f64(double %i.o)
+  %3 = tail call i16 @llvm.fptosi.sat.i16.f64(double %2)
+  %4 = fadd double %.sroa.05.0.copyload.i, 5.000000e-01
+  %5 = tail call double @llvm.floor.f64(double %4)
+  %i.p = tail call i16 @llvm.fptosi.sat.i16.f64(double %5)
+  %i.q = insertelement <2 x i16> poison, i16 %3, i64 0
+  %i.r = insertelement <2 x i16> %i.q, i16 %i.p, i64 1
   %i.s = sitofp <2 x i16> %i.r to <2 x double>
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !24
   %i.t = load ptr, ptr %i.j, align 8, !nonnull !4, !noundef !4

@@ -205,12 +205,12 @@ bb.a:
   call void @_ZN5Eigen8internal15queryCacheSizesERiS1_S1_(ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 4 dereferenceable(4) %i.c)
   %i.e = load i32, ptr %i.a, align 4, !tbaa !91   ; 2 uses
   %i.f = load i32, ptr %i.b, align 4, !tbaa !91   ; 2 uses
-  %i.g = icmp slt i32 %i.f, 1
-  %1 = icmp slt i32 %i.e, 1
-  %narrow1 = select i1 %i.g, i32 262144, i32 %i.f
-  %narrow.a = select i1 %1, i32 32768, i32 %i.e
-  %i.h = insertelement <2 x i32> poison, i32 %narrow.a, i64 0
-  %i.i = insertelement <2 x i32> %i.h, i32 %narrow1, i64 1
+  %i.g = icmp slt i32 %i.e, 1
+  %narrow = select i1 %i.g, i32 32768, i32 %i.e
+  %1 = icmp slt i32 %i.f, 1
+  %narrow.a = select i1 %1, i32 262144, i32 %i.f
+  %i.h = insertelement <2 x i32> poison, i32 %narrow, i64 0
+  %i.i = insertelement <2 x i32> %i.h, i32 %narrow.a, i64 1
   %i.j = sext <2 x i32> %i.i to <2 x i64>
   store <2 x i64> %i.j, ptr %0, align 8, !tbaa !80
   %i.k = load i32, ptr %i.c, align 4, !tbaa !91   ; 2 uses

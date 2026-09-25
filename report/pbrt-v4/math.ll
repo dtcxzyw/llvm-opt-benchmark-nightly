@@ -204,10 +204,10 @@ bb.a:
   %i.s = fmul float %sqrt.i, %spec.select         ; 3 uses
   %i.t = fsub float %sqrt.i, %i.s                 ; 2 uses
   %i.u = fcmp olt float %1, 0.000000e+00          ; 2 uses
-  %i.v = fsub float 1.000000e+00, %i.t
-  %i.w = fsub float 1.000000e+00, %i.s
-  %.032 = select i1 %i.u, float %i.v, float %i.s
-  %.0 = select i1 %i.u, float %i.w, float %i.t
+  %i.v = fsub float 1.000000e+00, %i.s
+  %i.w = fsub float 1.000000e+00, %i.t
+  %.032 = select i1 %i.u, float %i.w, float %i.s
+  %.0 = select i1 %i.u, float %i.v, float %i.t
   %i.x = insertelement <2 x float> poison, float %.0, i64 0
   %i.y = insertelement <2 x float> %i.x, float %.032, i64 1
   %i.z = tail call <2 x float> @llvm.copysign.v2f32(<2 x float> %i.y, <2 x float> %0)

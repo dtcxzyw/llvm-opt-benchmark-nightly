@@ -205,9 +205,9 @@ bb.q:                                             ; preds = %_ZNK2v88internal8co
 bb.r:                                             ; preds = %bb.n
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bp = load double, ptr %i.bo, align 8         ; 2 uses
-  %10 = fcmp ogt double %i.bp, 0.000000e+00
   %i.bq = fcmp olt double %i.bb, 0.000000e+00
   %.sroa.speculated5.i.i90 = select i1 %i.bq, double %i.bb, double -0.000000e+00
+  %10 = fcmp ogt double %i.bp, 0.000000e+00
   %.sroa.speculated5.i5.i91 = select i1 %10, double %i.bp, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE6minmaxEv.exit94
 
@@ -216,9 +216,9 @@ bb.s:                                             ; preds = %bb.o
   %i.bs = getelementptr [8 x i8], ptr %.sroa.0.0.i.i3.i.i82, i64 %i.br
   %i.bt = getelementptr i8, ptr %i.bs, i64 -8
   %i.bu = load double, ptr %i.bt, align 8         ; 2 uses
-  %11 = fcmp ogt double %i.bu, 0.000000e+00
   %i.bv = fcmp olt double %i.bj, 0.000000e+00
   %.sroa.speculated.i.i83 = select i1 %i.bv, double %i.bj, double -0.000000e+00
+  %11 = fcmp ogt double %i.bu, 0.000000e+00
   %.sroa.speculated.i3.i84 = select i1 %11, double %i.bu, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE6minmaxEv.exit94
 

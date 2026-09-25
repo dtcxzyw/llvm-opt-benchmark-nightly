@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.t = load i64, ptr %i.h, align 8, !tbaa !81
   %i.u = load i64, ptr %i.d, align 8, !tbaa !81
   %i.v = sub i64 %i.m, %i.l                       ; 2 uses
-  %1 = sub i64 %i.u, %i.t                         ; 2 uses
   store i64 %i.v, ptr %i.a, align 8, !tbaa !81
+  %1 = sub i64 %i.u, %i.t                         ; 2 uses
   store i64 %1, ptr %i.d, align 8, !tbaa !81
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #11

@@ -202,11 +202,11 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 232 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 240 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 248
-  %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 104 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.p, i64 256 ; 2 uses
-  store ptr null, ptr %3, align 8
+  %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 256 ; 2 uses
+  store ptr null, ptr %i.v, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.p, i64 104 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
-  store i64 -1, ptr %i.v, align 8
+  store i64 -1, ptr %3, align 8
   %i.w = invoke { ptr, ptr } @_RNvXs_NtNtCs4NRVxsYgnAr_4core5slice4iterRSNtNtCsfq6Q4Do6HaX_3syn4attr9AttributeNtNtNtNtB8_4iter6traits7collect12IntoIterator9into_iterBI_(ptr align 8 %1, i64 %2)
           to label %bb.c unwind label %.loopexit.split-lp ; 2 uses
 
@@ -233,8 +233,8 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.y, ptr %i.z, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.ac = insertelement <2 x ptr> poison, ptr %3, i64 0
-  %i.ad = insertelement <2 x ptr> %i.ac, ptr %i.v, i64 1
+  %i.ac = insertelement <2 x ptr> poison, ptr %i.v, i64 0
+  %i.ad = insertelement <2 x ptr> %i.ac, ptr %3, i64 1
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.c
