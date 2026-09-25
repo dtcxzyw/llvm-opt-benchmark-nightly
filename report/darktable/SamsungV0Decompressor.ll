@@ -204,7 +204,7 @@ _ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8ge
   br label %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit
 
 _ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit: ; preds = %bb.d, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i
-  %.sroa.63226.8 = phi i32 [ %i.bd, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.63226.0478, %bb.d ] ; 15 uses
+  %.sroa.63226.8 = phi i32 [ %i.bd, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.63226.0478, %bb.d ] ; 16 uses
   %.sroa.24.9 = phi i32 [ %i.bo, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.24.0479, %bb.d ] ; 2 uses
   %.sroa.0198.9 = phi i64 [ %i.bs, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.0198.0480, %bb.d ] ; 7 uses
   %i.bt = and i32 %.sroa.63226.8, 3
@@ -247,6 +247,8 @@ bb.j:                                             ; preds = %.preheader431.1
   br label %bb.k
 
 .thread666:                                       ; preds = %.preheader431.1
+  %3 = icmp sgt i32 %.sroa.63226.8, -1
+  tail call void @llvm.assume(i1 %3)
   %i.cj = lshr i64 %.sroa.0198.3707712, 60
   %i.ck = trunc nuw nsw i64 %i.cj to i32
   %i.cl = add nsw i32 %.sroa.24.3706713, -4
