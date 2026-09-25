@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.aza, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.ayz, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.ayx, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 51 uses
-  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !624 ; 3 uses
+  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !624 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.w to i16 ; 7 uses
   %i.x = ashr i32 %i.w, 16                        ; 6 uses
   %sext.i = shl i32 %i.w, 16
-  %i.y = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.y = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.z = icmp eq i32 %i.x, %i.y
   br i1 %i.z, label %.preheader138.i, label %bb.d
 
@@ -612,7 +612,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.aso, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.asp = lshr i32 %i.y, 3
+  %i.asp = lshr i32 %i.w, 3
+  %.zext201.i = and i32 %i.asp, 8191
   %i.asq = trunc i64 %.088173.i to i3             ; 7 uses
   %i.asr = trunc i64 %.088173.i to i8
   %i.ass = and i8 %i.asr, 7
@@ -630,7 +631,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.ate = zext i3 %i.atd to i8
   %i.atf = add i3 %i.asq, -1
   %i.atg = zext i3 %i.atf to i8
-  %smax.i = zext nneg i32 %i.asp to i64           ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i
@@ -951,11 +952,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.afu, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.aft, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.afr, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 31 uses
-  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !644 ; 3 uses
+  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !644 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.w to i16 ; 7 uses
   %i.x = ashr i32 %i.w, 16                        ; 6 uses
   %sext.i = shl i32 %i.w, 16
-  %i.y = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.y = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.z = icmp eq i32 %i.x, %i.y
   br i1 %i.z, label %.preheader138.i, label %bb.d
 
@@ -1358,7 +1359,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.zi, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.zj = lshr i32 %i.y, 3
+  %i.zj = lshr i32 %i.w, 3
+  %.zext201.i = and i32 %i.zj, 8191
   %i.zk = trunc i64 %.088173.i to i3              ; 7 uses
   %i.zl = trunc i64 %.088173.i to i8
   %i.zm = and i8 %i.zl, 7
@@ -1376,7 +1378,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.zy = zext i3 %i.zx to i8
   %i.zz = add i3 %i.zk, -1
   %i.aaa = zext i3 %i.zz to i8
-  %smax.i = zext nneg i32 %i.zj to i64            ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i
@@ -1689,11 +1691,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.si, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.sh, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.sf, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 18 uses
-  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !662 ; 3 uses
+  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !662 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.w to i16 ; 7 uses
   %i.x = ashr i32 %i.w, 16                        ; 5 uses
   %sext.i = shl i32 %i.w, 16
-  %i.y = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.y = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.z = icmp eq i32 %i.x, %i.y
   br i1 %i.z, label %.preheader138.i, label %bb.d
 
@@ -2094,7 +2096,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.lw, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.lx = lshr i32 %i.y, 3
+  %i.lx = lshr i32 %i.w, 3
+  %.zext201.i = and i32 %i.lx, 8191
   %i.ly = trunc i64 %.088173.i to i3              ; 7 uses
   %i.lz = trunc i64 %.088173.i to i8
   %i.ma = and i8 %i.lz, 7
@@ -2112,7 +2115,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.mm = zext i3 %i.ml to i8
   %i.mn = add i3 %i.ly, -1
   %i.mo = zext i3 %i.mn to i8
-  %smax.i = zext nneg i32 %i.lx to i64            ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i
@@ -2425,11 +2428,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.om, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.ol, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.oj, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 14 uses
-  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !680 ; 3 uses
+  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !680 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.w to i16 ; 7 uses
   %i.x = ashr i32 %i.w, 16                        ; 5 uses
   %sext.i = shl i32 %i.w, 16
-  %i.y = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.y = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.z = icmp eq i32 %i.x, %i.y
   br i1 %i.z, label %.preheader138.i, label %bb.d
 
@@ -2730,7 +2733,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.ia, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.ib = lshr i32 %i.y, 3
+  %i.ib = lshr i32 %i.w, 3
+  %.zext201.i = and i32 %i.ib, 8191
   %i.ic = trunc i64 %.088173.i to i3              ; 7 uses
   %i.id = trunc i64 %.088173.i to i8
   %i.ie = and i8 %i.id, 7
@@ -2748,7 +2752,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.iq = zext i3 %i.ip to i8
   %i.ir = add i3 %i.ic, -1
   %i.is = zext i3 %i.ir to i8
-  %smax.i = zext nneg i32 %i.ib to i64            ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i
@@ -3069,11 +3073,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.aza, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.ayz, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.ayx, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 51 uses
-  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !700 ; 3 uses
+  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !700 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.w to i16 ; 7 uses
   %i.x = ashr i32 %i.w, 16                        ; 6 uses
   %sext.i = shl i32 %i.w, 16
-  %i.y = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.y = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.z = icmp eq i32 %i.x, %i.y
   br i1 %i.z, label %.preheader138.i, label %bb.d
 
@@ -3476,7 +3480,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.aso, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.asp = lshr i32 %i.y, 3
+  %i.asp = lshr i32 %i.w, 3
+  %.zext201.i = and i32 %i.asp, 8191
   %i.asq = trunc i64 %.088173.i to i3             ; 7 uses
   %i.asr = trunc i64 %.088173.i to i8
   %i.ass = and i8 %i.asr, 7
@@ -3494,7 +3499,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.ate = zext i3 %i.atd to i8
   %i.atf = add i3 %i.asq, -1
   %i.atg = zext i3 %i.atf to i8
-  %smax.i = zext nneg i32 %i.asp to i64           ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i
@@ -3815,11 +3820,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.ajq, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.ajp, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.ajn, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 35 uses
-  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !720 ; 3 uses
+  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !720 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.w to i16 ; 7 uses
   %i.x = ashr i32 %i.w, 16                        ; 6 uses
   %sext.i = shl i32 %i.w, 16
-  %i.y = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.y = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.z = icmp eq i32 %i.x, %i.y
   br i1 %i.z, label %.preheader138.i, label %bb.d
 
@@ -4222,7 +4227,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.ade, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.adf = lshr i32 %i.y, 3
+  %i.adf = lshr i32 %i.w, 3
+  %.zext201.i = and i32 %i.adf, 8191
   %i.adg = trunc i64 %.088173.i to i3             ; 7 uses
   %i.adh = trunc i64 %.088173.i to i8
   %i.adi = and i8 %i.adh, 7
@@ -4240,7 +4246,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.adu = zext i3 %i.adt to i8
   %i.adv = add i3 %i.adg, -1
   %i.adw = zext i3 %i.adv to i8
-  %smax.i = zext nneg i32 %i.adf to i64           ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i
@@ -4553,11 +4559,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.si, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.sh, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.sf, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 18 uses
-  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !739 ; 3 uses
+  %i.w = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !739 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.w to i16 ; 7 uses
   %i.x = ashr i32 %i.w, 16                        ; 5 uses
   %sext.i = shl i32 %i.w, 16
-  %i.y = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.y = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.z = icmp eq i32 %i.x, %i.y
   br i1 %i.z, label %.preheader138.i, label %bb.d
 
@@ -4958,7 +4964,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.lw, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.lx = lshr i32 %i.y, 3
+  %i.lx = lshr i32 %i.w, 3
+  %.zext201.i = and i32 %i.lx, 8191
   %i.ly = trunc i64 %.088173.i to i3              ; 7 uses
   %i.lz = trunc i64 %.088173.i to i8
   %i.ma = and i8 %i.lz, 7
@@ -4976,7 +4983,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.mm = zext i3 %i.ml to i8
   %i.mn = add i3 %i.ly, -1
   %i.mo = zext i3 %i.mn to i8
-  %smax.i = zext nneg i32 %i.lx to i64            ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i
@@ -5281,11 +5288,11 @@ bb.c:                                             ; preds = %bb.a
   %.088173.i = phi i64 [ %i.jc, %.critedge.i ], [ %i.m, %.lr.ph176.preheader.i ] ; 16 uses
   %.090172.i = phi i64 [ %i.jb, %.critedge.i ], [ 0, %.lr.ph176.preheader.i ]
   %.092169.i = phi ptr [ %i.iz, %.critedge.i ], [ %i.n, %.lr.ph176.preheader.i ] ; 17 uses
-  %i.s = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !756 ; 3 uses
+  %i.s = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !756 ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.s to i16 ; 7 uses
   %i.t = ashr i32 %i.s, 16                        ; 4 uses
   %sext.i = shl i32 %i.s, 16
-  %i.u = ashr exact i32 %sext.i, 16               ; 4 uses
+  %i.u = ashr exact i32 %sext.i, 16               ; 3 uses
   %i.v = icmp eq i32 %i.t, %i.u
   br i1 %i.v, label %.preheader138.i, label %bb.d
 
@@ -5394,7 +5401,8 @@ bb.d:                                             ; preds = %.lr.ph176.i
   br i1 %i.bk, label %.preheader133.preheader.i, label %.preheader139.i
 
 .preheader133.preheader.i:                        ; preds = %.preheader141.i
-  %i.bl = lshr i32 %i.u, 3
+  %i.bl = lshr i32 %i.s, 3
+  %.zext201.i = and i32 %i.bl, 8191
   %i.bm = trunc i64 %.088173.i to i3              ; 7 uses
   %i.bn = trunc i64 %.088173.i to i8
   %i.bo = and i8 %i.bn, 7
@@ -5412,7 +5420,7 @@ bb.d:                                             ; preds = %.lr.ph176.i
   %i.ca = zext i3 %i.bz to i8
   %i.cb = add i3 %i.bm, -1
   %i.cc = zext i3 %i.cb to i8
-  %smax.i = zext nneg i32 %i.bl to i64            ; 2 uses
+  %smax.i = zext nneg i32 %.zext201.i to i64      ; 2 uses
   br label %.preheader133.i
 
 .preheader139.loopexit.i:                         ; preds = %.preheader133.i

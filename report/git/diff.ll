@@ -205,7 +205,7 @@ strbuf_setlen.exit.thread.thread:                 ; preds = %bb.a, %bb.w, %strbu
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @diff_words_fill(ptr nofree noundef captures(none) initializes((32, 36)) %0, ptr nofree noundef nonnull captures(none) initializes((0, 16)) %1, ptr noundef %2) unnamed_addr #0 {
+define internal fastcc void @diff_words_fill(ptr nofree noundef captures(none) %0, ptr nofree noundef nonnull captures(none) initializes((0, 16)) %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca [1 x %struct.regmatch_t], align 4   ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
@@ -222,20 +222,29 @@ bb.a:
 
 st_mult.exit.a:                                   ; preds = %bb.a
   %i.e = mul i32 %i.c, 3
-  %i.f = add i32 %i.e, 48
-  %4 = tail call i32 @llvm.smax.i32(i32 %i.f, i32 2)
-  %storemerge = lshr i32 %4, 1                    ; 2 uses
+  %i.f = add i32 %i.e, 48                         ; 2 uses
+  %4 = sdiv i32 %i.f, 2
+  %.inv = icmp sgt i32 %i.f, 1
+  %storemerge = select i1 %.inv, i32 %4, i32 1    ; 3 uses
   store i32 %storemerge, ptr %i.b, align 4, !tbaa !570
-  %5 = zext nneg i32 %storemerge to i64
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %7 = load ptr, ptr %6, align 8, !tbaa !571
-  %8 = shl nuw nsw i64 %5, 4
-  %9 = tail call ptr @xrealloc(ptr noundef %7, i64 noundef %8) #33 ; 2 uses
-  store ptr %9, ptr %6, align 8, !tbaa !571
+  %5 = sext i32 %storemerge to i64                ; 2 uses
+  %mul.ov.i = icmp slt i32 %storemerge, 0
+  br i1 %mul.ov.i, label %6, label %st_mult.exit
+
+6:                                                ; preds = %st_mult.exit.a
+  tail call void (ptr, ...) @die(ptr noundef nonnull @.str.363, i64 noundef 16, i64 noundef %5) #35
+  unreachable
+
+st_mult.exit:                                     ; preds = %st_mult.exit.a
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %8 = load ptr, ptr %7, align 8, !tbaa !571
+  %9 = shl nuw nsw i64 %5, 4
+  %10 = tail call ptr @xrealloc(ptr noundef %8, i64 noundef %9) #33 ; 2 uses
+  store ptr %10, ptr %7, align 8, !tbaa !571
   br label %bb.b
 
-bb.b:                                             ; preds = %._crit_edge, %st_mult.exit.a
-  %i.g = phi ptr [ %.pre, %._crit_edge ], [ %9, %st_mult.exit.a ] ; 2 uses
+bb.b:                                             ; preds = %._crit_edge, %st_mult.exit
+  %i.g = phi ptr [ %.pre, %._crit_edge ], [ %10, %st_mult.exit ] ; 2 uses
   %i.h = load ptr, ptr %0, align 8, !tbaa !315    ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8

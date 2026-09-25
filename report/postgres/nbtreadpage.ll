@@ -202,10 +202,11 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.n
   store i16 0, ptr %i.s, align 2
-  %i.bm = load i16, ptr %i.al, align 8
-  %5 = tail call i16 @llvm.smax.i16(i16 %i.bm, i16 15)
-  %spec.select.i = lshr i16 %5, 3
-  store i16 %spec.select.i, ptr %i.al, align 8
+  %i.bm = load i16, ptr %i.al, align 8            ; 2 uses
+  %5 = icmp sgt i16 %i.bm, 15
+  %6 = sdiv i16 %i.bm, 8
+  %7 = select i1 %5, i16 %6, i16 1
+  store i16 %7, ptr %i.al, align 8
   br label %_bt_checkkeys_look_ahead.exit
 
 bb.s:                                             ; preds = %bb.c
@@ -607,9 +608,6 @@ declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.smax.i16(i16, i16) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

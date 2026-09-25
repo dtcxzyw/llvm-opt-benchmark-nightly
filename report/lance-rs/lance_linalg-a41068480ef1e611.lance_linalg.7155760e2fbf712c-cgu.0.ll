@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i.i.i
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.7114.sroa.0.0.copyload.i, i64 noundef %i.fa, i64 noundef range(i64 1, -9223372036854775807) 8) #76, !noalias !6828
   br label %.body60.i
 
-.body60.i:                                        ; preds = %bb.ay, %bb.aw, %.body60.sink.split.i
+.body60.i:                                        ; preds = %.body60.sink.split.i, %bb.ay, %bb.aw
   %.pn.i = phi { ptr, i32 } [ %i.jp, %bb.aw ], [ %lpad.loopexit.i, %bb.ay ], [ %.pn.ph.i, %.body60.sink.split.i ]
   call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std11collections4hash3map8IntoIteryINtNtCs40k4W9msRzi_5alloc3vec3VecyEEECs9JgWGBoX3PY_12lance_linalg(ptr noalias noundef align 8 dereferenceable(64) %i.e) #77, !noalias !6828
   br label %bb.s

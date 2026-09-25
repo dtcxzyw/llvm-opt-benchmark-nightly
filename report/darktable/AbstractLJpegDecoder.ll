@@ -204,7 +204,7 @@ _ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16: ; preds = %_ZNK8rawspee
   %.sroa.5.0101 = phi i1 [ false, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.5.1, %.critedge ] ; 4 uses
   %.sroa.7.0100 = phi i8 [ 0, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.7.1, %.critedge ] ; 5 uses
   %.sroa.1070.099 = phi i8 [ 0, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.1070.1, %.critedge ] ; 6 uses
-  %.sroa.012.0.copyload.i10103 = load ptr, ptr %i.a, align 8 ; 4 uses
+  %.sroa.012.0.copyload.i10103 = load ptr, ptr %i.a, align 8 ; 5 uses
   %invariant.op.i.i = add nsw i32 %i.s, -1
   %i.t = zext nneg i32 %.sroa.413.0.copyload.i14105 to i64 ; 2 uses
   %i.u = zext i32 %invariant.op.i.i to i64
@@ -215,7 +215,7 @@ _ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16: ; preds = %_ZNK8rawspee
 
 _ZNK8rawspeed10ByteStream8peekByteEj.exit.i.us.i.i: ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16
   %.0.copyload.i.i.i.i.i.i.us.i.i = phi i8 [ %.0.copyload.i.i.i.i.i10.i.us.i.i, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i ], [ %.0.copyload.i.i.i.i.i.i.us.pre.i.i, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16 ]
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i ], [ %i.t, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16 ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i ], [ %i.t, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16 ] ; 4 uses
   %indvars.iv.next.i.i = add nuw i64 %indvars.iv.i.i, 1 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload.i10103, i64 %indvars.iv.next.i.i
   %.0.copyload.i.i.i.i.i10.i.us.i.i = load i8, ptr %i.w, align 1, !noalias !6019 ; 2 uses
@@ -234,17 +234,21 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i: ; preds = %_ZNK8rawspeed10Byte
 .split11.us.loopexit.i.i:                         ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.us.i.i
   %i.ac = trunc nuw i64 %indvars.iv.i.i to i32    ; 3 uses
   store i32 %i.ac, ptr %.sroa.413.0..sroa_idx.i, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload.i10103, i64 %indvars.iv.i.i
+  %.0.copyload.i.i.i.i.i.i.i21 = load i8, ptr %4, align 1
+  %5 = icmp eq i8 %.0.copyload.i.i.i.i.i.i.i21, -1
   %i.ad = and i64 %indvars.iv.next.i.i, 4294967295
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload.i10103, i64 %i.ad
-  %.0.copyload.i.i.i.i.i10.i.i22 = load i8, ptr %i.ae, align 1 ; 3 uses
+  %.0.copyload.i.i.i.i.i10.i.i22 = load i8, ptr %i.ae, align 1 ; 2 uses
   %i.af = add i8 %.0.copyload.i.i.i.i.i10.i.i22, -1
   %i.ag = icmp ult i8 %i.af, -2
-  tail call void @llvm.assume(i1 %i.ag)
+  %or.cond5.i.i23 = and i1 %5, %i.ag
+  %.sroa.0.0.extract.trunc.i24 = select i1 %or.cond5.i.i23, i8 %.0.copyload.i.i.i.i.i10.i.i22, i8 0 ; 2 uses
   %i.ah = add nuw nsw i32 %i.ac, 2                ; 4 uses
   %i.ai = icmp samesign ule i32 %i.ah, %i.s
   tail call void @llvm.assume(i1 %i.ai)
   store i32 %i.ah, ptr %.sroa.413.0..sroa_idx.i, align 8, !tbaa !291
-  %.not5 = icmp eq i8 %.0.copyload.i.i.i.i.i10.i.i22, -39
+  %.not5 = icmp eq i8 %.sroa.0.0.extract.trunc.i24, -39
   br i1 %.not5, label %.critedge7, label %bb.c
 
 .loopexit.i15:                                    ; preds = %.critedge, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i, %.preheader
@@ -294,7 +298,7 @@ bb.f:                                             ; preds = %_ZN8rawspeed10ByteS
   unreachable
 
 _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %_ZN8rawspeed10ByteStream9getStreamEj.exit
-  switch i8 %.0.copyload.i.i.i.i.i10.i.i22, label %.critedge [
+  switch i8 %.sroa.0.0.extract.trunc.i24, label %.critedge [
     i8 -60, label %bb.g
     i8 -61, label %bb.j
     i8 -38, label %bb.o
@@ -438,10 +442,10 @@ bb.aa:                                            ; preds = %.critedge7
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef zeroext range(i8 1, -1) i8 @_ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(236) %0, i1 noundef zeroext %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noundef zeroext i8 @_ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(236) %0, i1 noundef zeroext %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %.sroa.012.0.copyload = load ptr, ptr %i.a, align 8 ; 4 uses
+  %.sroa.012.0.copyload = load ptr, ptr %i.a, align 8 ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8 ; 8 uses
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
@@ -501,7 +505,7 @@ _ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i:    ; preds = %_ZNK8rawspeed10Byte
   br label %_ZN8rawspeed19advanceToNextMarkerENS_10ByteStreamEb.exit
 
 _ZN8rawspeed19advanceToNextMarkerENS_10ByteStreamEb.exit: ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i, %.split11.us.loopexit.i
-  %.sroa.02.sroa.6.0 = phi i32 [ %i.u, %.split11.us.loopexit.i ], [ %.sroa.413.0.copyload, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i ] ; 4 uses
+  %.sroa.02.sroa.6.0 = phi i32 [ %i.u, %.split11.us.loopexit.i ], [ %.sroa.413.0.copyload, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i ] ; 5 uses
   store i32 %.sroa.02.sroa.6.0, ptr %.sroa.413.0..sroa_idx, align 8
   %.not.i.not.i.i.i.i.i = icmp ult i32 %.sroa.02.sroa.6.0, %.sroa.2.0.copyload
   br i1 %.not.i.not.i.i.i.i.i, label %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i, label %bb.b
@@ -520,17 +524,22 @@ bb.c:                                             ; preds = %_ZNK8rawspeed10Byte
   unreachable
 
 _ZN8rawspeed10peekMarkerENS_10ByteStreamE.exit:   ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i
+  %2 = zext nneg i32 %.sroa.02.sroa.6.0 to i64
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload, i64 %2
+  %.0.copyload.i.i.i.i.i.i = load i8, ptr %3, align 1
+  %4 = icmp eq i8 %.0.copyload.i.i.i.i.i.i, -1
   %i.w = zext nneg i32 %i.v to i64
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload, i64 %i.w
   %.0.copyload.i.i.i.i.i10.i = load i8, ptr %i.x, align 1 ; 2 uses
   %i.y = add i8 %.0.copyload.i.i.i.i.i10.i, -1
   %i.z = icmp ult i8 %i.y, -2
-  tail call void @llvm.assume(i1 %i.z)
+  %or.cond5.i = and i1 %4, %i.z
+  %.sroa.0.0.extract.trunc = select i1 %or.cond5.i, i8 %.0.copyload.i.i.i.i.i10.i, i8 0
   %i.aa = add nuw nsw i32 %.sroa.02.sroa.6.0, 2   ; 2 uses
   %i.ab = icmp samesign ule i32 %i.aa, %.sroa.2.0.copyload
   tail call void @llvm.assume(i1 %i.ab)
   store i32 %i.aa, ptr %.sroa.413.0..sroa_idx, align 8, !tbaa !291
-  ret i8 %.0.copyload.i.i.i.i.i10.i
+  ret i8 %.sroa.0.0.extract.trunc
 
 .loopexit:                                        ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i, %bb.a, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i
   tail call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz(ptr noundef nonnull @.str.34, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb) #15

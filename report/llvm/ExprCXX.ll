@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   %i.aw = and i16 %i.as, 511
   %i.ax = icmp eq i16 %i.aw, 93
-  %spec.select.i.i38 = select i1 %i.ax, ptr %i.ar, ptr null ; 2 uses
+  %spec.select.i.i38 = select i1 %i.ax, ptr %i.ar, ptr null ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %spec.select.i.i38) ]
   %i.ay = getelementptr inbounds nuw i8, ptr %spec.select.i.i38, i64 40
   %i.az = load i32, ptr %i.ar, align 8
@@ -218,13 +218,14 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.in = phi ptr [ %i.au, %bb.p ], [ %i.bd, %bb.q ]
   %.in55 = phi ptr [ %i.av, %bb.p ], [ %i.be, %bb.q ]
+  %spec.select.i.i38.sink = phi ptr [ %i.ar, %bb.p ], [ %spec.select.i.i38, %bb.q ]
   %i.bf = load ptr, ptr %.in55, align 8, !tbaa !23 ; 2 uses
   %i.bg = load ptr, ptr %.in, align 8, !tbaa !23  ; 2 uses
   store ptr %i.bg, ptr %i.aq, align 8, !tbaa !196
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr %i.bf, ptr %i.bh, align 8, !tbaa !197
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.ar, ptr %i.bi, align 8, !tbaa !198
+  store ptr %spec.select.i.i38.sink, ptr %i.bi, align 8, !tbaa !198
   %i.bj = load i32, ptr %1, align 8
   %i.bk = and i32 %i.bj, 33554432
   %.not = icmp eq i32 %i.bk, 0
