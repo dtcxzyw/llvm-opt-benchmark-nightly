@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   br i1 %i.ar, label %.lr.ph76, label %.critedge2
 
 .lr.ph76:                                         ; preds = %.critedge
+  %3 = lshr i32 %.val55, 2
   %i.as = getelementptr i8, ptr %1, i64 8         ; 3 uses
   %i.at = getelementptr i8, ptr %0, i64 32        ; 3 uses
-  %3 = lshr i32 %.val55, 2
   %i.au = zext nneg i32 %3 to i64
   br label %bb.e
 
