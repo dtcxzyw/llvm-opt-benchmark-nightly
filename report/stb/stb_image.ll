@@ -204,7 +204,7 @@ bb.be:                                            ; preds = %bb.bc
   %i.ht = load ptr, ptr %i.da, align 8, !tbaa !39
   br label %bb.bf
 
-bb.bf:                                            ; preds = %bb.bf, %.lver.check
+bb.bf:                                            ; preds = %.lver.check, %bb.bf
   %indvars.iv440.lver.orig = phi i64 [ 0, %.lver.check ], [ %indvars.iv.next441.lver.orig, %bb.bf ] ; 2 uses
   %.2262379.lver.orig = phi ptr [ %i.dv, %.lver.check ], [ %i.ja, %bb.bf ] ; 5 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %i.ht, i64 %indvars.iv440.lver.orig

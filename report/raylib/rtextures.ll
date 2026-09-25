@@ -205,76 +205,6 @@ define internal fastcc i32 @stbiw__jpg_processDU(ptr nofree noundef nonnull read
   %i.aa = zext nneg i32 %i.y to i64
   br label %9
 
-9:                                                ; preds = %9, %.lver.check
-  %indvars.iv.lver.orig = phi i64 [ 0, %.lver.check ], [ %indvars.iv.next.lver.orig, %9 ] ; 2 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.lver.orig ; 9 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %10, i64 20 ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %10, i64 24
-  %17 = getelementptr inbounds nuw i8, ptr %10, i64 28 ; 2 uses
-  %18 = load float, ptr %10, align 4              ; 2 uses
-  %19 = load float, ptr %17, align 4              ; 2 uses
-  %20 = fadd float %18, %19                       ; 2 uses
-  %21 = load <2 x float>, ptr %11, align 4
-  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
-  %23 = load float, ptr %14, align 4              ; 2 uses
-  %24 = load float, ptr %13, align 4              ; 2 uses
-  %25 = load <2 x float>, ptr %15, align 4        ; 3 uses
-  %foldExtExtBinop = fadd <2 x float> %22, %25
-  %26 = extractelement <2 x float> %foldExtExtBinop, i64 1 ; 2 uses
-  %foldExtExtBinop385 = fadd <2 x float> %22, %25
-  %27 = extractelement <2 x float> %foldExtExtBinop385, i64 0 ; 2 uses
-  %28 = fsub <2 x float> %22, %25                 ; 3 uses
-  %29 = fadd float %24, %23                       ; 2 uses
-  %30 = fsub float %18, %19                       ; 3 uses
-  %31 = fsub float %24, %23
-  %32 = fadd float %29, %20                       ; 2 uses
-  %33 = fsub float %20, %29                       ; 3 uses
-  %34 = fadd float %27, %26                       ; 2 uses
-  %35 = fsub float %26, %27
-  %36 = fadd float %34, %32
-  %37 = fsub float %32, %34
-  %38 = fadd float %35, %33
-  %39 = fmul float %38, f0x3F3504F3               ; 2 uses
-  %40 = fadd float %33, %39
-  %41 = fsub float %33, %39
-  %shift = shufflevector <2 x float> %28, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop387 = fadd <2 x float> %28, %shift
-  %42 = extractelement <2 x float> %foldExtExtBinop387, i64 0
-  %43 = insertelement <2 x float> poison, float %31, i64 0
-  %44 = insertelement <2 x float> %43, float %30, i64 1
-  %45 = fadd <2 x float> %28, %44                 ; 3 uses
-  %shift389 = shufflevector <2 x float> %45, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop390 = fsub <2 x float> %45, %shift389
-  %46 = extractelement <2 x float> %foldExtExtBinop390, i64 0
-  %47 = fmul float %46, f0x3EC3EF15
-  %48 = insertelement <2 x float> poison, float %47, i64 0
-  %49 = shufflevector <2 x float> %48, <2 x float> poison, <2 x i32> zeroinitializer
-  %50 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %45, <2 x float> <float f0x3F0A8BD4, float f0x3FA73D75>, <2 x float> %49) ; 2 uses
-  %51 = fmul float %42, f0x3F3504F3               ; 2 uses
-  %52 = fadd float %30, %51                       ; 2 uses
-  %53 = fsub float %30, %51                       ; 2 uses
-  %54 = extractelement <2 x float> %50, i64 0     ; 2 uses
-  %55 = fadd float %53, %54
-  store float %55, ptr %15, align 4
-  %56 = fsub float %53, %54
-  store float %56, ptr %13, align 4
-  %57 = extractelement <2 x float> %50, i64 1     ; 2 uses
-  %58 = fadd float %52, %57
-  store float %58, ptr %11, align 4
-  %59 = fsub float %52, %57
-  store float %59, ptr %17, align 4
-  store float %36, ptr %10, align 4
-  store float %40, ptr %12, align 4
-  store float %37, ptr %14, align 4
-  store float %41, ptr %16, align 4
-  %indvars.iv.next.lver.orig = add nuw nsw i64 %indvars.iv.lver.orig, %i.z ; 2 uses
-  %60 = icmp samesign ult i64 %indvars.iv.next.lver.orig, %i.aa
-  br i1 %60, label %9, label %vector.body
-
 vector.body:                                      ; preds = %9
   %i.ab = mul nuw nsw i32 %4, 7
   %i.ac = zext nneg i32 %i.ab to i64
@@ -676,6 +606,76 @@ begin_hunk_1_@stbiw__jpg_processDU:.lver.check
   store i32 %i.om, ptr %i.on, align 4
   %i.oo = icmp eq i32 %6, %i.dw
   br i1 %i.oo, label %bb.a, label %bb.e
+
+9:                                                ; preds = %.lver.check, %9
+  %indvars.iv = phi i64 [ 0, %.lver.check ], [ %indvars.iv.next, %9 ] ; 2 uses
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv ; 9 uses
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %13 = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %10, i64 20 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %10, i64 24
+  %17 = getelementptr inbounds nuw i8, ptr %10, i64 28 ; 2 uses
+  %18 = load float, ptr %10, align 4              ; 2 uses
+  %19 = load float, ptr %17, align 4              ; 2 uses
+  %20 = fadd float %18, %19                       ; 2 uses
+  %21 = load <2 x float>, ptr %11, align 4
+  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
+  %23 = load float, ptr %14, align 4              ; 2 uses
+  %24 = load float, ptr %13, align 4              ; 2 uses
+  %25 = load <2 x float>, ptr %15, align 4        ; 3 uses
+  %foldExtExtBinop = fadd <2 x float> %22, %25
+  %26 = extractelement <2 x float> %foldExtExtBinop, i64 1 ; 2 uses
+  %foldExtExtBinop384 = fadd <2 x float> %22, %25
+  %27 = extractelement <2 x float> %foldExtExtBinop384, i64 0 ; 2 uses
+  %28 = fsub <2 x float> %22, %25                 ; 3 uses
+  %29 = fadd float %24, %23                       ; 2 uses
+  %30 = fsub float %18, %19                       ; 3 uses
+  %31 = fsub float %24, %23
+  %32 = fadd float %29, %20                       ; 2 uses
+  %33 = fsub float %20, %29                       ; 3 uses
+  %34 = fadd float %27, %26                       ; 2 uses
+  %35 = fsub float %26, %27
+  %36 = fadd float %34, %32
+  %37 = fsub float %32, %34
+  %38 = fadd float %35, %33
+  %39 = fmul float %38, f0x3F3504F3               ; 2 uses
+  %40 = fadd float %33, %39
+  %41 = fsub float %33, %39
+  %shift = shufflevector <2 x float> %28, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop386 = fadd <2 x float> %28, %shift
+  %42 = extractelement <2 x float> %foldExtExtBinop386, i64 0
+  %43 = insertelement <2 x float> poison, float %31, i64 0
+  %44 = insertelement <2 x float> %43, float %30, i64 1
+  %45 = fadd <2 x float> %28, %44                 ; 3 uses
+  %shift388 = shufflevector <2 x float> %45, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop389 = fsub <2 x float> %45, %shift388
+  %46 = extractelement <2 x float> %foldExtExtBinop389, i64 0
+  %47 = fmul float %46, f0x3EC3EF15
+  %48 = insertelement <2 x float> poison, float %47, i64 0
+  %49 = shufflevector <2 x float> %48, <2 x float> poison, <2 x i32> zeroinitializer
+  %50 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %45, <2 x float> <float f0x3F0A8BD4, float f0x3FA73D75>, <2 x float> %49) ; 2 uses
+  %51 = fmul float %42, f0x3F3504F3               ; 2 uses
+  %52 = fadd float %30, %51                       ; 2 uses
+  %53 = fsub float %30, %51                       ; 2 uses
+  %54 = extractelement <2 x float> %50, i64 0     ; 2 uses
+  %55 = fadd float %53, %54
+  store float %55, ptr %15, align 4
+  %56 = fsub float %53, %54
+  store float %56, ptr %13, align 4
+  %57 = extractelement <2 x float> %50, i64 1     ; 2 uses
+  %58 = fadd float %52, %57
+  store float %58, ptr %11, align 4
+  %59 = fsub float %52, %57
+  store float %59, ptr %17, align 4
+  store float %36, ptr %10, align 4
+  store float %40, ptr %12, align 4
+  store float %37, ptr %14, align 4
+  store float %41, ptr %16, align 4
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.z ; 2 uses
+  %60 = icmp samesign ult i64 %indvars.iv.next, %i.aa
+  br i1 %60, label %9, label %vector.body
 
 bb.a:                                             ; preds = %vector.body
   %.val147 = load i16, ptr %7, align 2
