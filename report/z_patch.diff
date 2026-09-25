@@ -1,0 +1,180 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 7fae7b8cea710..03341a31a08e0 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -5255,7 +5255,8 @@ Instruction *InstCombinerImpl::visitCallBase(CallBase &Call) {
+       if (GCR.getBasePtr() == GCR.getDerivedPtr() &&
+           GCR.getBasePtrIndex() != GCR.getDerivedPtrIndex()) {
+         auto *OpIntTy = GCR.getOperand(2)->getType();
+-        GCR.setOperand(2, ConstantInt::get(OpIntTy, GCR.getBasePtrIndex()));
++        replaceOperand(GCR, 2,
++                       ConstantInt::get(OpIntTy, GCR.getBasePtrIndex()));
+       }
+ 
+       // TODO: bitcast(relocate(p)) -> relocate(bitcast(p))
+@@ -5290,12 +5291,12 @@ Instruction *InstCombinerImpl::visitCallBase(CallBase &Call) {
+       assert(Val2Idx.count(BasePtr) && Val2Idx[BasePtr] != NumOfGCLives &&
+              "Missed live gc for base pointer");
+       auto *OpIntTy1 = GCR.getOperand(1)->getType();
+-      GCR.setOperand(1, ConstantInt::get(OpIntTy1, Val2Idx[BasePtr]));
++      replaceOperand(GCR, 1, ConstantInt::get(OpIntTy1, Val2Idx[BasePtr]));
+       Value *DerivedPtr = GCR.getDerivedPtr();
+       assert(Val2Idx.count(DerivedPtr) && Val2Idx[DerivedPtr] != NumOfGCLives &&
+              "Missed live gc for derived pointer");
+       auto *OpIntTy2 = GCR.getOperand(2)->getType();
+-      GCR.setOperand(2, ConstantInt::get(OpIntTy2, Val2Idx[DerivedPtr]));
++      replaceOperand(GCR, 2, ConstantInt::get(OpIntTy2, Val2Idx[DerivedPtr]));
+     }
+     // Create new statepoint instruction.
+     OperandBundleDef NewBundle("gc-live", std::move(NewLiveGc));
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 717cb65239189..f4c9594b37fb1 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -9239,7 +9239,7 @@ Instruction *InstCombinerImpl::visitFCmpInst(FCmpInst &I) {
+     case FCmpInst::FCMP_UNE: // True if unordered or not equal
+       // Canonicalize these to be 'fcmp uno %X, 0.0'.
+       I.setPredicate(FCmpInst::FCMP_UNO);
+-      I.setOperand(1, Constant::getNullValue(OpType));
++      replaceOperand(I, 1, Constant::getNullValue(OpType));
+       return &I;
+ 
+     case FCmpInst::FCMP_ORD: // True if ordered (no nans)
+@@ -9248,7 +9248,7 @@ Instruction *InstCombinerImpl::visitFCmpInst(FCmpInst &I) {
+     case FCmpInst::FCMP_OLE: // True if ordered and less than or equal
+       // Canonicalize these to be 'fcmp ord %X, 0.0'.
+       I.setPredicate(FCmpInst::FCMP_ORD);
+-      I.setOperand(1, Constant::getNullValue(OpType));
++      replaceOperand(I, 1, Constant::getNullValue(OpType));
+       return &I;
+     }
+   }
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+index 97964cebb50b8..b34a8b8a2a5b3 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+@@ -816,10 +816,12 @@ Value *InstCombinerImpl::getShiftedValue(Value *V, unsigned NumBits,
+   case Instruction::Or:
+   case Instruction::Xor:
+     // Bitwise operators can all arbitrarily be arbitrarily evaluated shifted.
+-    I->setOperand(
+-        0, getShiftedValue(I->getOperand(0), NumBits, IsLeftShift, Semantics));
+-    I->setOperand(
+-        1, getShiftedValue(I->getOperand(1), NumBits, IsLeftShift, Semantics));
++    replaceOperand(
++        *I, 0,
++        getShiftedValue(I->getOperand(0), NumBits, IsLeftShift, Semantics));
++    replaceOperand(
++        *I, 1,
++        getShiftedValue(I->getOperand(1), NumBits, IsLeftShift, Semantics));
+     return I;
+ 
+   case Instruction::Shl:
+@@ -828,10 +830,12 @@ Value *InstCombinerImpl::getShiftedValue(Value *V, unsigned NumBits,
+                             Semantics, Builder);
+ 
+   case Instruction::Select:
+-    I->setOperand(
+-        1, getShiftedValue(I->getOperand(1), NumBits, IsLeftShift, Semantics));
+-    I->setOperand(
+-        2, getShiftedValue(I->getOperand(2), NumBits, IsLeftShift, Semantics));
++    replaceOperand(
++        *I, 1,
++        getShiftedValue(I->getOperand(1), NumBits, IsLeftShift, Semantics));
++    replaceOperand(
++        *I, 2,
++        getShiftedValue(I->getOperand(2), NumBits, IsLeftShift, Semantics));
+     return I;
+   case Instruction::PHI: {
+     // We can change a phi if we can change all operands.  Note that we never
+@@ -857,10 +861,12 @@ Value *InstCombinerImpl::getShiftedValue(Value *V, unsigned NumBits,
+   case Instruction::Add: {
+     if (IsLeftShift)
+       I->dropPoisonGeneratingFlags();
+-    I->setOperand(
+-        0, getShiftedValue(I->getOperand(0), NumBits, IsLeftShift, Semantics));
+-    I->setOperand(
+-        1, getShiftedValue(I->getOperand(1), NumBits, IsLeftShift, Semantics));
++    replaceOperand(
++        *I, 0,
++        getShiftedValue(I->getOperand(0), NumBits, IsLeftShift, Semantics));
++    replaceOperand(
++        *I, 1,
++        getShiftedValue(I->getOperand(1), NumBits, IsLeftShift, Semantics));
+     return I;
+   }
+   }
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+index bcd30323ce9a3..ab8f044c87615 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+@@ -412,7 +412,7 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+     if (match(I->getOperand(1), m_APInt(C)) && !C->isAllOnes()) {
+       if ((*C | ~DemandedMask).isAllOnes()) {
+         // Force bits to 1 to create a 'not' op.
+-        I->setOperand(1, ConstantInt::getAllOnesValue(VTy));
++        replaceOperand(*I, 1, ConstantInt::getAllOnesValue(VTy));
+         return I;
+       }
+       // If we can't turn this into a 'not', try to shrink the constant.
+@@ -453,8 +453,8 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+     // try to keep the selected constants the same as icmp value constants, if
+     // we can. This helps not break apart (or helps put back together)
+     // canonical patterns like min and max.
+-    auto CanonicalizeSelectConstant = [](Instruction *I, unsigned OpNo,
+-                                         const APInt &DemandedMask) {
++    auto CanonicalizeSelectConstant = [&](Instruction *I, unsigned OpNo,
++                                          const APInt &DemandedMask) {
+       const APInt *SelC;
+       if (!match(I->getOperand(OpNo), m_APInt(SelC)))
+         return false;
+@@ -475,7 +475,7 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+       // If the constants are not already the same, but can be with the demand
+       // mask, use the constant value from the ICmp.
+       if ((*CmpC & DemandedMask) == (*SelC & DemandedMask)) {
+-        I->setOperand(OpNo, ConstantInt::get(I->getType(), *CmpC));
++        replaceOperand(*I, OpNo, ConstantInt::get(I->getType(), *CmpC));
+         return true;
+       }
+       return ShrinkDemandedConstant(I, OpNo, DemandedMask);
+@@ -1725,7 +1725,7 @@ Value *InstCombinerImpl::SimplifyDemandedVectorElts(Value *V,
+     if (all_of(Shuffle->getShuffleMask(), equal_to(0)) &&
+         DemandedElts.isAllOnes()) {
+       if (!isa<PoisonValue>(I->getOperand(1))) {
+-        I->setOperand(1, PoisonValue::get(I->getOperand(1)->getType()));
++        replaceOperand(*I, 1, PoisonValue::get(I->getOperand(1)->getType()));
+         MadeChange = true;
+       }
+       APInt LeftDemanded(OpWidth, 1);
+@@ -2928,13 +2928,13 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+ 
+       if ((DemandedMask & fcNegative) == DemandedMask) {
+         // Roundabout way of replacing with fneg(fabs)
+-        CI->setOperand(1, ConstantFP::get(VTy, -1.0));
++        replaceOperand(*CI, 1, ConstantFP::get(VTy, -1.0));
+         return I;
+       }
+ 
+       if ((DemandedMask & fcPositive) == DemandedMask) {
+         // Roundabout way of replacing with fabs
+-        CI->setOperand(1, ConstantFP::getZero(VTy));
++        replaceOperand(*CI, 1, ConstantFP::getZero(VTy));
+         return I;
+       }
+ 
+@@ -2956,13 +2956,13 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+ 
+       if (KnownSign.getSignBit() == false) {
+         CI->dropUBImplyingAttrsAndMetadata();
+-        CI->setOperand(1, ConstantFP::getZero(VTy));
++        replaceOperand(*CI, 1, ConstantFP::getZero(VTy));
+         return I;
+       }
+ 
+       if (KnownSign.getSignBit() == true) {
+         CI->dropUBImplyingAttrsAndMetadata();
+-        CI->setOperand(1, ConstantFP::get(VTy, -1.0));
++        replaceOperand(*CI, 1, ConstantFP::get(VTy, -1.0));
+         return I;
+       }
+ 
