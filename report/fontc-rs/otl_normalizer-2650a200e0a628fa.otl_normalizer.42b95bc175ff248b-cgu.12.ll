@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %_RNvXs9_NtNtNtCsf3T
   %i.et = trunc i64 %.sroa.12.sroa.7.1.i to i16
   %i.eu = call i16 @llvm.uadd.sat.i16(i16 %.sroa.12.sroa.9.1.i, i16 %i.et)
   %i.ev = call i16 @llvm.bswap.i16(i16 %.val4.i.i.i.us.peel.i.i.i.i.i)
-  %i.ew = zext i16 %i.ev to i32
-  %4 = shl nuw i32 %i.ew, 16
-  %5 = zext i16 %i.eu to i32
-  %i.ex = or disjoint i32 %4, %5
+  %i.ew = zext i16 %i.eu to i32
+  %4 = zext i16 %i.ev to i32
+  %5 = shl nuw i32 %4, 16
+  %i.ex = or disjoint i32 %5, %i.ew
   %.sroa.3.0.insert.ext.i.le.i.i.i.i.i = zext i32 %i.ex to i48
   %.sroa.3.0.insert.shift.i.le.i.i.i.i.i = shl nuw i48 %.sroa.3.0.insert.ext.i.le.i.i.i.i.i, 16
   %.sroa.0.0.insert.insert.i.le.i.i.i.i.i = or disjoint i48 %.sroa.3.0.insert.shift.i.le.i.i.i.i.i, 1
@@ -233,10 +233,10 @@ _RNvYNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtBa_9enumerate9Enu
   %i.fb = trunc i64 %.sroa.23.0.i to i16
   %i.fc = call i16 @llvm.uadd.sat.i16(i16 %.sroa.25.0.copyload.i, i16 %i.fb)
   %i.fd = call i16 @llvm.bswap.i16(i16 %.val4.i.i.i8.i.i.i.i.i)
-  %i.fe = zext i16 %i.fd to i32
-  %6 = shl nuw i32 %i.fe, 16
-  %7 = zext i16 %i.fc to i32
-  %i.ff = or disjoint i32 %6, %7
+  %i.fe = zext i16 %i.fc to i32
+  %6 = zext i16 %i.fd to i32
+  %7 = shl nuw i32 %6, 16
+  %i.ff = or disjoint i32 %7, %i.fe
   br label %_RINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters7flatten17and_then_or_clearINtNtB4_3map3MapINtNtB4_9enumerate9EnumerateINtNtNtB8_5slice4iter4IterINtNtCsbZq13ASDQ8l_10font_types3raw9BigEndiantEEENCNvMs9_NtNtCs8n5UXKvQVD9_10read_fonts6tables6layoutNtB39_15ClassDefFormat14iter0ETNtNtB2j_8glyph_id9GlyphId16tENvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECs5JazJsyow1H_14otl_normalizer.exit15.i.i.i.i.i
 
 _RINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters7flatten17and_then_or_clearINtNtB4_3map3MapINtNtB4_9enumerate9EnumerateINtNtNtB8_5slice4iter4IterINtNtCsbZq13ASDQ8l_10font_types3raw9BigEndiantEEENCNvMs9_NtNtCs8n5UXKvQVD9_10read_fonts6tables6layoutNtB39_15ClassDefFormat14iter0ETNtNtB2j_8glyph_id9GlyphId16tENvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECs5JazJsyow1H_14otl_normalizer.exit15.i.i.i.i.i: ; preds = %_RNvYNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtBa_9enumerate9EnumerateINtNtNtBe_5slice4iter4IterINtNtCsbZq13ASDQ8l_10font_types3raw9BigEndiantEEENCNvMs9_NtNtCs8n5UXKvQVD9_10read_fonts6tables6layoutNtB2G_15ClassDefFormat14iter0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCs5JazJsyow1H_14otl_normalizer.exit.i6.i.i.i.i.i, %bb.k, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtB7_3map3MapINtNtB7_9enumerate9EnumerateINtNtNtBb_5slice4iter4IterINtNtCsbZq13ASDQ8l_10font_types3raw9BigEndiantEEENCNvMs9_NtNtCs8n5UXKvQVD9_10read_fonts6tables6layoutNtB3p_15ClassDefFormat14iter0EEEINtB5_8FuseImplBY_E4nextCs5JazJsyow1H_14otl_normalizer.exit.thread.i.i.i.i.i
