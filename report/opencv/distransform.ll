@@ -205,15 +205,13 @@ _ZNK2cv8MatShapeclEv.exit150.i.i:                 ; preds = %bb.an, %bb.am
 
 vector.body:                                      ; preds = %_ZNK2cv8MatShapeclEv.exit150.i.i, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %_ZNK2cv8MatShapeclEv.exit150.i.i ] ; 2 uses
-  %vec.ind = phi <16 x i64> [ %vec.ind.next, %vector.body ], [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15>, %_ZNK2cv8MatShapeclEv.exit150.i.i ] ; 2 uses
-  %21 = trunc <16 x i64> %vec.ind to <16 x i32>
-  %22 = add <16 x i32> %21, splat (i32 1)
-  %i.dg = call <16 x i32> @llvm.umin.v16i32(<16 x i32> %22, <16 x i32> splat (i32 255))
+  %vec.ind = phi <16 x i32> [ %vec.ind.next, %vector.body ], [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16>, %_ZNK2cv8MatShapeclEv.exit150.i.i ] ; 2 uses
+  %i.dg = call <16 x i32> @llvm.umin.v16i32(<16 x i32> %vec.ind, <16 x i32> splat (i32 255))
   %i.dh = trunc nuw <16 x i32> %i.dg to <16 x i8>
   %i.di = getelementptr inbounds nuw i8, ptr %i.a, i64 %index
   store <16 x i8> %i.dh, ptr %i.di, align 16, !tbaa !24
   %index.next = add nuw i64 %index, 16            ; 2 uses
-  %vec.ind.next = add nuw nsw <16 x i64> %vec.ind, splat (i64 16)
+  %vec.ind.next = add <16 x i32> %vec.ind, splat (i32 16)
   %i.dj = icmp eq i64 %index.next, 256
   br i1 %i.dj, label %middle.block, label %vector.body, !llvm.loop !116
 

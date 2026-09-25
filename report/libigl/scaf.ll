@@ -205,23 +205,20 @@ vector.ph600:                                     ; preds = %_ZN5Eigen16CommaIni
 
 vector.body602:                                   ; preds = %vector.body602, %vector.ph600
   %index603 = phi i64 [ 0, %vector.ph600 ], [ %index.next608, %vector.body602 ] ; 2 uses
-  %vec.ind604 = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph600 ], [ %vec.ind.next609, %vector.body602 ] ; 3 uses
-  %vec.ind605 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph600 ], [ %vec.ind.next610, %vector.body602 ] ; 3 uses
+  %vec.ind604 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph600 ], [ %vec.ind.next609, %vector.body602 ] ; 3 uses
+  %vec.ind605 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph600 ], [ %vec.ind.next610, %vector.body602 ] ; 3 uses
+  %step.add606 = add <4 x i32> %vec.ind604, splat (i32 4)
   %step.add607 = add <4 x i32> %vec.ind605, splat (i32 4)
   %i.jh = getelementptr inbounds nuw [4 x i8], ptr %.pre527.pre, i64 %index603 ; 3 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 16
-  store <4 x i32> %vec.ind605, ptr %i.jh, align 4, !tbaa !78, !noalias !396
-  store <4 x i32> %step.add607, ptr %i.ji, align 4, !tbaa !78, !noalias !396
+  store <4 x i32> %vec.ind604, ptr %i.jh, align 4, !tbaa !78, !noalias !396
+  store <4 x i32> %step.add606, ptr %i.ji, align 4, !tbaa !78, !noalias !396
   %i.jj = getelementptr [4 x i8], ptr %i.jh, i64 %i.is ; 2 uses
-  %21 = trunc <4 x i64> %vec.ind604 to <4 x i32>
-  %22 = add <4 x i32> %21, splat (i32 1)
-  %23 = trunc <4 x i64> %vec.ind604 to <4 x i32>
-  %24 = add <4 x i32> %23, splat (i32 5)
   %i.jk = getelementptr i8, ptr %i.jj, i64 16
-  store <4 x i32> %22, ptr %i.jj, align 4, !tbaa !78
-  store <4 x i32> %24, ptr %i.jk, align 4, !tbaa !78
+  store <4 x i32> %vec.ind605, ptr %i.jj, align 4, !tbaa !78
+  store <4 x i32> %step.add607, ptr %i.jk, align 4, !tbaa !78
   %index.next608 = add nuw i64 %index603, 8       ; 2 uses
-  %vec.ind.next609 = add nuw <4 x i64> %vec.ind604, splat (i64 8)
+  %vec.ind.next609 = add <4 x i32> %vec.ind604, splat (i32 8)
   %vec.ind.next610 = add <4 x i32> %vec.ind605, splat (i32 8)
   %i.jl = icmp eq i64 %index.next608, %n.vec601
   br i1 %i.jl, label %middle.block611, label %vector.body602, !llvm.loop !348

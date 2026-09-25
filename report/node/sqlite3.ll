@@ -206,23 +206,20 @@ vector.ph:                                        ; preds = %.lr.ph.i
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.phi.a = phi <4 x i32> [ splat (i32 -2147483648), %vector.ph ], [ %i.ee, %vector.body ]
-  %vec.phi346 = phi <4 x i32> [ splat (i32 -2147483648), %vector.ph ], [ %i.ef, %vector.body ]
+  %vec.phi = phi <4 x i32> [ splat (i32 -2147483648), %vector.ph ], [ %i.ee, %vector.body ]
+  %vec.phi.a = phi <4 x i32> [ splat (i32 -2147483648), %vector.ph ], [ %i.ef, %vector.body ]
+  %vec.phi346 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i32> %vec.phi346, splat (i32 4)
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 %index ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 4
   %wide.load = load <4 x i8>, ptr %i.ea, align 1, !tbaa !741
   %wide.load347 = load <4 x i8>, ptr %i.eb, align 1, !tbaa !741
   %i.ec = icmp eq <4 x i8> %wide.load, zeroinitializer
   %i.ed = icmp eq <4 x i8> %wide.load347, zeroinitializer
-  %16 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %17 = add <4 x i32> %16, splat (i32 1)
-  %18 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %19 = add <4 x i32> %18, splat (i32 5)
-  %i.ee = select <4 x i1> %i.ec, <4 x i32> %vec.phi.a, <4 x i32> %17 ; 2 uses
-  %i.ef = select <4 x i1> %i.ed, <4 x i32> %vec.phi346, <4 x i32> %19 ; 2 uses
+  %i.ee = select <4 x i1> %i.ec, <4 x i32> %vec.phi, <4 x i32> %vec.phi346 ; 2 uses
+  %i.ef = select <4 x i1> %i.ed, <4 x i32> %vec.phi.a, <4 x i32> %step.add ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
+  %vec.ind.next = add <4 x i32> %vec.phi346, splat (i32 8)
   %i.eg = icmp eq i64 %index.next, %n.vec
   br i1 %i.eg, label %middle.block, label %vector.body, !llvm.loop !4195
 

@@ -3,7 +3,7 @@ inline.NumInlined: 15
 inline.NumDeleted: 8
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 7
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -109,7 +109,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
   store ptr null, ptr %i.c, align 8, !tbaa !11
   %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.c, i64 noundef 4096, i64 noundef 2500) #13
-  %i.e = load ptr, ptr %i.c, align 8, !tbaa !11   ; 16 uses
+  %i.e = load ptr, ptr %i.c, align 8, !tbaa !11   ; 14 uses
   %i.f = icmp eq ptr %i.e, null
   %i.g = icmp ne i32 %i.d, 0
   %or.cond.i.i = select i1 %i.f, i1 true, i1 %i.g
@@ -160,27 +160,36 @@ polybench_alloc_data.exit25:                      ; preds = %polybench_alloc_dat
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %polybench_alloc_data.exit25
-  %index = phi i64 [ 0, %polybench_alloc_data.exit25 ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <16 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15>, %polybench_alloc_data.exit25 ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %2 = trunc <16 x i64> %vec.ind to <16 x i8>
-  %3 = add <16 x i8> %2, splat (i8 1)
-  %i.s = and <16 x i8> %3, splat (i8 3)
-  %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 %index
+  %index = phi i64 [ 0, %polybench_alloc_data.exit25 ], [ %index.next, %vector.body ] ; 4 uses
+  %vec.ind = phi <16 x i8> [ <i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15, i8 16>, %polybench_alloc_data.exit25 ], [ %vec.ind.next.2, %vector.body ] ; 7 uses
+  %2 = and <16 x i8> %vec.ind, splat (i8 3)
+  %3 = and <16 x i8> %vec.ind, splat (i8 3)
+  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 %index ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store <16 x i8> %2, ptr %4, align 1, !tbaa !26
+  store <16 x i8> %3, ptr %5, align 1, !tbaa !26
+  %6 = and <16 x i8> %vec.ind, splat (i8 3)
+  %7 = and <16 x i8> %vec.ind, splat (i8 3)
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 %index ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 48
+  store <16 x i8> %6, ptr %9, align 1, !tbaa !26
+  store <16 x i8> %7, ptr %10, align 1, !tbaa !26
+  %11 = and <16 x i8> %vec.ind, splat (i8 3)
+  %i.s = and <16 x i8> %vec.ind, splat (i8 3)
+  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 %index ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 64
+  %i.t = getelementptr inbounds nuw i8, ptr %12, i64 80
+  store <16 x i8> %11, ptr %13, align 1, !tbaa !26
   store <16 x i8> %i.s, ptr %i.t, align 1, !tbaa !26
-  %index.next = add nuw i64 %index, 16            ; 2 uses
-  %vec.ind.next = add nuw nsw <16 x i64> %vec.ind, splat (i64 16)
+  %index.next = add nuw nsw i64 %index, 96        ; 2 uses
+  %vec.ind.next.2 = add <16 x i8> %vec.ind, splat (i8 96)
   %i.u = icmp eq i64 %index.next, 2496
   br i1 %i.u, label %scalar.ph, label %vector.body, !llvm.loop !14
 
 scalar.ph:                                        ; preds = %vector.body
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 2496
-  store i8 1, ptr %i.v, align 1, !tbaa !26
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 2497
-  store i8 2, ptr %4, align 1, !tbaa !26
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 2498
-  store i8 3, ptr %5, align 1, !tbaa !26
-  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 2499
-  store i8 0, ptr %6, align 1, !tbaa !26
+  store <4 x i8> <i8 0, i8 1, i8 2, i8 3>, ptr %i.v, align 1, !tbaa !26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(25000000) %i.j, i8 0, i64 25000000, i1 false), !tbaa !7
   br label %bb.e
 
@@ -292,27 +301,36 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i, label %vector.body94, label %bb.e, !llvm.loop !17
 
 vector.body94:                                    ; preds = %._crit_edge135.i, %vector.body94
-  %index95 = phi i64 [ %index.next97, %vector.body94 ], [ 0, %._crit_edge135.i ] ; 2 uses
-  %vec.ind96 = phi <16 x i64> [ %vec.ind.next98, %vector.body94 ], [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15>, %._crit_edge135.i ] ; 2 uses
-  %7 = trunc <16 x i64> %vec.ind96 to <16 x i8>
-  %8 = add <16 x i8> %7, splat (i8 1)
-  %i.bj = and <16 x i8> %8, splat (i8 3)
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.e, i64 %index95
+  %index95 = phi i64 [ %index.next97, %vector.body94 ], [ 0, %._crit_edge135.i ] ; 4 uses
+  %vec.ind100 = phi <16 x i8> [ %vec.ind.next103.2, %vector.body94 ], [ <i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15, i8 16>, %._crit_edge135.i ] ; 7 uses
+  %14 = and <16 x i8> %vec.ind100, splat (i8 3)
+  %15 = and <16 x i8> %vec.ind100, splat (i8 3)
+  %16 = getelementptr inbounds nuw i8, ptr %i.e, i64 %index95 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 16
+  store <16 x i8> %14, ptr %16, align 1, !tbaa !26
+  store <16 x i8> %15, ptr %17, align 1, !tbaa !26
+  %18 = and <16 x i8> %vec.ind100, splat (i8 3)
+  %19 = and <16 x i8> %vec.ind100, splat (i8 3)
+  %20 = getelementptr inbounds nuw i8, ptr %i.e, i64 %index95 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 32
+  %22 = getelementptr inbounds nuw i8, ptr %20, i64 48
+  store <16 x i8> %18, ptr %21, align 1, !tbaa !26
+  store <16 x i8> %19, ptr %22, align 1, !tbaa !26
+  %23 = and <16 x i8> %vec.ind100, splat (i8 3)
+  %i.bj = and <16 x i8> %vec.ind100, splat (i8 3)
+  %24 = getelementptr inbounds nuw i8, ptr %i.e, i64 %index95 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 64
+  %i.bk = getelementptr inbounds nuw i8, ptr %24, i64 80
+  store <16 x i8> %23, ptr %25, align 1, !tbaa !26
   store <16 x i8> %i.bj, ptr %i.bk, align 1, !tbaa !26
-  %index.next97 = add nuw i64 %index95, 16        ; 2 uses
-  %vec.ind.next98 = add nuw nsw <16 x i64> %vec.ind96, splat (i64 16)
+  %index.next97 = add nuw nsw i64 %index95, 96    ; 2 uses
+  %vec.ind.next103.2 = add <16 x i8> %vec.ind100, splat (i8 96)
   %i.bl = icmp eq i64 %index.next97, 2496
   br i1 %i.bl, label %kernel_nussinov.exit, label %vector.body94, !llvm.loop !18
 
 kernel_nussinov.exit:                             ; preds = %vector.body94
   %i.bm = getelementptr inbounds nuw i8, ptr %i.e, i64 2496
-  store i8 1, ptr %i.bm, align 1, !tbaa !26
-  %9 = getelementptr inbounds nuw i8, ptr %i.e, i64 2497
-  store i8 2, ptr %9, align 1, !tbaa !26
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 2498
-  store i8 3, ptr %10, align 1, !tbaa !26
-  %11 = getelementptr inbounds nuw i8, ptr %i.e, i64 2499
-  store i8 0, ptr %11, align 1, !tbaa !26
+  store <4 x i8> <i8 0, i8 1, i8 2, i8 3>, ptr %i.bm, align 1, !tbaa !26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(25000000) %i.o, i8 0, i64 25000000, i1 false), !tbaa !7
   br label %bb.h
 
