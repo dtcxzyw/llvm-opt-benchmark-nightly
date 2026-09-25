@@ -69,19 +69,17 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.y, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = lshr i32 %1, 6
+  %i.z = lshr i32 %1, 18
   %i.aa = lshr i32 %1, 12
-  %3 = lshr i32 %1, 18
-  %4 = insertelement <4 x i32> poison, i32 %i.z, i64 0
-  %5 = insertelement <4 x i32> %4, i32 %1, i64 1
-  %6 = trunc i32 %i.aa to i8
-  %7 = trunc nuw nsw i32 %3 to i8
-  %8 = insertelement <4 x i8> poison, i8 %7, i64 0
-  %9 = insertelement <4 x i8> %8, i8 %6, i64 1
-  %i.ab = trunc <4 x i32> %5 to <4 x i8>
-  %10 = shufflevector <4 x i8> %9, <4 x i8> %i.ab, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.ac = and <4 x i8> %10, <i8 -1, i8 63, i8 63, i8 63>
-  %i.ad = or disjoint <4 x i8> %i.ac, <i8 -16, i8 -128, i8 -128, i8 -128>
+  %3 = insertelement <2 x i32> poison, i32 %i.z, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.aa, i64 1
+  %5 = lshr i32 %1, 6
+  %6 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %1, i64 1
+  %8 = shufflevector <2 x i32> %4, <2 x i32> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.ab = trunc <4 x i32> %8 to <4 x i8>
+  %i.ac = and <4 x i8> %i.ab, <i8 -1, i8 63, i8 63, i8 63>
+  %i.ad = or <4 x i8> %i.ac, <i8 -16, i8 -128, i8 -128, i8 -128>
   store <4 x i8> %i.ad, ptr %0, align 1
   br label %bb.l
 

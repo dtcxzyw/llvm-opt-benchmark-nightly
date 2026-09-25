@@ -205,12 +205,12 @@ bb.a:
   %i.x = fmul double %i.k, %i.w                   ; 2 uses
   %i.y = fcmp ogt double %i.x, %i.f
   %i.z = select i1 %i.y, double %i.x, double %i.f
-  %10 = fmul double %i.e, %i.k                    ; 9 uses
-  %11 = fdiv double %i.z, %i.k                    ; 3 uses
+  %10 = fdiv double %i.z, %i.k                    ; 3 uses
+  %11 = fmul double %i.e, %i.k                    ; 9 uses
   %i.aa = insertelement <2 x double> poison, double %11, i64 0
   %i.ab = insertelement <2 x double> %i.aa, double %10, i64 1
   %i.ac = fdiv <2 x double> splat (double 1.000000e+00), %i.ab ; 3 uses
-  %i.ad = extractelement <2 x double> %i.ac, i64 0 ; 8 uses
+  %i.ad = extractelement <2 x double> %i.ac, i64 1 ; 8 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 216
   %i.af = load double, ptr %i.ae, align 8, !tbaa !188 ; 2 uses
   %i.ag = fcmp oeq double %i.af, 0.000000e+00
@@ -223,7 +223,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.aj, label %select.unfold, label %bb.m
 
 bb.c:                                             ; preds = %bb.a
-  %i.ak = extractelement <2 x double> %i.ac, i64 1 ; 3 uses
+  %i.ak = extractelement <2 x double> %i.ac, i64 0 ; 3 uses
   %i.al = fmul double %i.ak, %i.ad                ; 3 uses
   %i.am = fdiv double 1.000000e+00, %i.al         ; 2 uses
   %i.an = fcmp ogt double %i.am, %i.al
@@ -241,8 +241,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.as, label %bb.h, label %bb.o
 
 select.unfold:                                    ; preds = %bb.d, %bb.b
-  %i.at = fcmp olt double %i.ad, %10
-  %i.au = select i1 %i.at, double %i.ad, double %10 ; 5 uses
+  %i.at = fcmp olt double %i.ad, %11
+  %i.au = select i1 %i.at, double %i.ad, double %11 ; 5 uses
   %i.av = fdiv double 5.000000e-01, %i.au         ; 2 uses
   tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %2, double noundef %i.au, ptr noundef %5, ptr noundef %8) #12
   %i.aw = fadd double %i.t, %i.au
@@ -276,9 +276,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.e
-  %i.bm = insertelement <2 x double> poison, double %10, i64 0
-  %12 = shufflevector <2 x double> %i.bm, <2 x double> %i.ac, <2 x i32> <i32 0, i32 2>
-  %i.bn = fdiv <2 x double> splat (double 5.000000e-01), %12 ; 2 uses
+  %i.bm = insertelement <2 x double> %i.ac, double %11, i64 0
+  %i.bn = fdiv <2 x double> splat (double 5.000000e-01), %i.bm ; 2 uses
   tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %2, double noundef %i.ad, ptr noundef %5, ptr noundef %8) #12
   %i.bo = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !57
@@ -301,7 +300,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bx = extractelement <2 x double> %i.bn, i64 1 ; 2 uses
   %i.by = fneg double %i.bx
   tail call void @N_VLinearSum(double noundef %i.bx, ptr noundef %6, double noundef %i.by, ptr noundef %9, ptr noundef %6) #12
-  %i.bz = fadd double %10, %i.t
+  %i.bz = fadd double %11, %i.t
   %i.ca = load ptr, ptr %i.p, align 8, !tbaa !55
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.ca, i64 %i.r
   store double %i.bz, ptr %i.cb, align 8, !tbaa !53
@@ -312,7 +311,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not227, label %bb.k, label %bb.s
 
 bb.k:                                             ; preds = %bb.j
-  %i.cf = fsub double %i.t, %10
+  %i.cf = fsub double %i.t, %11
   %i.cg = load ptr, ptr %i.p, align 8, !tbaa !55
   %i.ch = getelementptr inbounds [8 x i8], ptr %i.cg, i64 %i.r
   store double %i.cf, ptr %i.ch, align 8, !tbaa !53
@@ -330,8 +329,8 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.r
 
 bb.m:                                             ; preds = %bb.b, %bb.d
-  %i.cn = fcmp olt double %i.ad, %10
-  %i.co = select i1 %i.cn, double %i.ad, double %10 ; 3 uses
+  %i.cn = fcmp olt double %i.ad, %11
+  %i.co = select i1 %i.cn, double %i.ad, double %11 ; 3 uses
   tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %2, double noundef %i.co, ptr noundef %5, ptr noundef %8) #12
   %i.cp = fadd double %i.t, %i.co
   %i.cq = load ptr, ptr %i.p, align 8, !tbaa !55
@@ -362,9 +361,9 @@ bb.o:                                             ; preds = %bb.e
   br i1 %.not, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %bb.o
-  %i.de = fneg double %11
-  tail call void @N_VLinearSum(double noundef %11, ptr noundef %6, double noundef %i.de, ptr noundef %3, ptr noundef %6) #12
-  %i.df = fadd double %10, %i.t
+  %i.de = fneg double %10
+  tail call void @N_VLinearSum(double noundef %10, ptr noundef %6, double noundef %i.de, ptr noundef %3, ptr noundef %6) #12
+  %i.df = fadd double %11, %i.t
   %i.dg = load ptr, ptr %i.p, align 8, !tbaa !55
   %i.dh = getelementptr inbounds [8 x i8], ptr %i.dg, i64 %i.r
   store double %i.df, ptr %i.dh, align 8, !tbaa !53
@@ -767,31 +766,31 @@ begin_hunk_1_@cvStep:bb.a
   store double %i.dey, ptr %gep364.2.2.i.i, align 8, !tbaa !53
   %i.dez = tail call double @SUNRabs(double noundef %i.dey) #12
   %i.dfa = fdiv double %i.dez, %i.cyk             ; 2 uses
-  %1 = insertelement <2 x double> poison, double %i.der, i64 0
-  %2 = insertelement <2 x double> %1, double %i.deg, i64 1
-  %3 = fdiv <2 x double> %2, %i.dbm               ; 2 uses
-  %4 = fdiv double %i.ddu, %i.cyk                 ; 2 uses
-  %i.dfb = insertelement <2 x double> <double 0.000000e+00, double poison>, double %.1290.1421.i.i, i64 1 ; 2 uses
-  %5 = fcmp ogt <2 x double> %3, %i.dfb
-  %6 = fcmp ogt double %4, %.1290.1.i.i
-  %7 = select <2 x i1> %5, <2 x double> %3, <2 x double> %i.dfb ; 2 uses
-  %.1290.2.i.i = select i1 %6, double %4, double %.1290.1.i.i ; 3 uses
+  %1 = fdiv double %i.ddu, %i.cyk                 ; 2 uses
+  %2 = fcmp ogt double %1, %.1290.1.i.i
+  %.1290.2.i.i = select i1 %2, double %1, double %.1290.1.i.i ; 3 uses
+  %3 = insertelement <2 x double> poison, double %i.der, i64 0
+  %i.dfb = insertelement <2 x double> %3, double %i.deg, i64 1
+  %4 = fdiv <2 x double> %i.dfb, %i.dbm           ; 2 uses
+  %5 = insertelement <2 x double> <double 0.000000e+00, double poison>, double %.1290.1421.i.i, i64 1 ; 2 uses
+  %6 = fcmp ogt <2 x double> %4, %5
+  %7 = select <2 x i1> %6, <2 x double> %4, <2 x double> %5 ; 2 uses
   %i.dfc = insertelement <2 x double> poison, double %i.dev, i64 0
   %i.dfd = insertelement <2 x double> %i.dfc, double %i.dei, i64 1
   %i.dfe = fdiv <2 x double> %i.dfd, %i.dbo       ; 2 uses
   %i.dff = fcmp ogt <2 x double> %i.dfe, %7
-  %8 = fadd double %.1290.2.i.i, 1.000000e+00     ; 2 uses
-  %9 = fcmp olt double %.1290.2.i.i, %8           ; 2 uses
-  %10 = select <2 x i1> %i.dff, <2 x double> %i.dfe, <2 x double> %7 ; 3 uses
-  %.2306.i.i = select i1 %9, i32 1, i32 %.0304375.i.i
-  %.2.i.i302 = select i1 %9, double %.1290.2.i.i, double %8 ; 2 uses
+  %8 = select <2 x i1> %i.dff, <2 x double> %i.dfe, <2 x double> %7 ; 3 uses
+  %9 = fadd double %.1290.2.i.i, 1.000000e+00     ; 2 uses
+  %10 = fcmp olt double %.1290.2.i.i, %9          ; 2 uses
+  %.2306.i.i = select i1 %10, i32 1, i32 %.0304375.i.i
+  %.2.i.i302 = select i1 %10, double %.1290.2.i.i, double %9 ; 2 uses
   %i.dfg = insertelement <2 x double> poison, double %i.dfa, i64 0
   %i.dfh = insertelement <2 x double> %i.dfg, double %.2.i.i302, i64 1
-  %i.dfi = fcmp ogt <2 x double> %i.dfh, %10      ; 2 uses
+  %i.dfi = fcmp ogt <2 x double> %i.dfh, %8       ; 2 uses
   %i.dfj = extractelement <2 x i1> %i.dfi, i64 1
   %.2306.1.i.i = select i1 %i.dfj, i32 2, i32 %.2306.i.i
-  %i.dfk = insertelement <2 x double> %10, double %i.dfa, i64 0
-  %i.dfl = insertelement <2 x double> %10, double %.2.i.i302, i64 1
+  %i.dfk = insertelement <2 x double> %8, double %i.dfa, i64 0
+  %i.dfl = insertelement <2 x double> %8, double %.2.i.i302, i64 1
   %i.dfm = select <2 x i1> %i.dfi, <2 x double> %i.dfk, <2 x double> %i.dfl ; 2 uses
   %i.dfn = extractelement <2 x double> %i.dfm, i64 0 ; 2 uses
   %i.dfo = extractelement <2 x double> %i.dfm, i64 1 ; 2 uses
