@@ -202,27 +202,19 @@ bb.ce:                                            ; preds = %bb.cc
 
 bb.cf:                                            ; preds = %bb.ce
   %i.fw = icmp sgt i32 %.sroa.38.2522, 999999999
-  br i1 %i.fw, label %.thread753, label %bb.cg
+  br i1 %i.fw, label %bb.ch, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
   %i.fx = icmp slt i32 %.sroa.38.2522, -999999999 ; 2 uses
   %i.fy = add nsw i64 %.sroa.074.2521, -631107417601
   %i.fz = add nsw i32 %.sroa.38.2522, 1000000000
-  %.sroa.016.1.i188 = select i1 %i.fx, i64 %i.fy, i64 %i.fv ; 3 uses
-  %.sroa.02.1.i189 = select i1 %i.fx, i32 %i.fz, i32 %.sroa.38.2522 ; 3 uses
-  %5 = icmp eq i64 %.sroa.016.1.i188, 0
-  %6 = icmp sgt i32 %.sroa.02.1.i189, -1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %.thread579, label %bb.ch
-
-.thread753:                                       ; preds = %bb.cf
-  %7 = add nsw i64 %.sroa.074.2521, -631107417599
-  %8 = add nsw i32 %.sroa.38.2522, -1000000000
+  %.sroa.016.1.i188 = select i1 %i.fx, i64 %i.fy, i64 %i.fv
+  %.sroa.02.1.i189 = select i1 %i.fx, i32 %i.fz, i32 %.sroa.38.2522
   br label %.thread579
 
-bb.ch:                                            ; preds = %bb.cg
-  %i.ga = add nsw i64 %.sroa.016.1.i188, -1
-  %i.gb = add nsw i32 %.sroa.02.1.i189, 1000000000
+bb.ch:                                            ; preds = %bb.cf
+  %i.ga = add nsw i64 %.sroa.074.2521, -631107417599
+  %i.gb = add nsw i32 %.sroa.38.2522, -1000000000
   br label %.thread579
 
 bb.ci:                                            ; preds = %bb.cd
@@ -260,10 +252,10 @@ bb.cn:                                            ; preds = %bb.cl
   %i.gm = add nsw i32 %.sroa.02.1.i197, -1000000000
   br label %.thread579
 
-.thread579:                                       ; preds = %.thread757, %.thread753, %bb.cn, %bb.ci, %bb.cl, %bb.ce, %bb.ch, %bb.cg
-  %.sroa.055.0.ph = phi i64 [ -631107417600, %bb.cl ], [ 631107417600, %bb.cg ], [ -631107417600, %bb.ci ], [ -631107417600, %bb.cn ], [ 631107417600, %bb.ce ], [ 631107417600, %bb.ch ], [ 631107417600, %.thread753 ], [ -631107417600, %.thread757 ]
-  %.sroa.074.5.ph = phi i64 [ %.sroa.016.1.i196, %bb.cl ], [ %.sroa.016.1.i188, %bb.cg ], [ %i.gc, %bb.ci ], [ %i.gl, %bb.cn ], [ %i.fv, %bb.ce ], [ %i.ga, %bb.ch ], [ %7, %.thread753 ], [ %i.gf, %.thread757 ]
-  %.sroa.38.5.ph = phi i32 [ %.sroa.02.1.i197, %bb.cl ], [ %.sroa.02.1.i189, %bb.cg ], [ 0, %bb.ci ], [ %i.gm, %bb.cn ], [ 0, %bb.ce ], [ %i.gb, %bb.ch ], [ %8, %.thread753 ], [ %i.gg, %.thread757 ]
+.thread579:                                       ; preds = %bb.cg, %.thread757, %bb.ch, %bb.cn, %bb.ci, %bb.cl, %bb.ce
+  %.sroa.055.0.ph = phi i64 [ -631107417600, %bb.cl ], [ 631107417600, %bb.cg ], [ -631107417600, %bb.ci ], [ -631107417600, %bb.cn ], [ 631107417600, %bb.ce ], [ -631107417600, %.thread757 ], [ 631107417600, %bb.ch ]
+  %.sroa.074.5.ph = phi i64 [ %.sroa.016.1.i196, %bb.cl ], [ %.sroa.016.1.i188, %bb.cg ], [ %i.gc, %bb.ci ], [ %i.gl, %bb.cn ], [ %i.fv, %bb.ce ], [ %i.gf, %.thread757 ], [ %i.ga, %bb.ch ]
+  %.sroa.38.5.ph = phi i32 [ %.sroa.02.1.i197, %bb.cl ], [ %.sroa.02.1.i189, %bb.cg ], [ 0, %bb.ci ], [ %i.gm, %bb.cn ], [ 0, %bb.ce ], [ %i.gg, %.thread757 ], [ %i.gb, %bb.ch ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.19433)
   br label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11SpanSecondsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
 

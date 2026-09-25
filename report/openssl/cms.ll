@@ -202,8 +202,7 @@ bb.ev:                                            ; preds = %.thread2969
   br label %.loopexit1367
 
 bb.ew:                                            ; preds = %.thread2969
-  %2 = and i32 %.0669.lcssa26712749286729353047, 1024
-  %.not922 = icmp eq i32 %2, 0                    ; 6 uses
+  %.not922 = icmp samesign ult i32 %.0669.lcssa26712749286729353047, 1024 ; 6 uses
   %i.hz = icmp ne ptr %.0804.lcssa26222782283529663017, null
   %or.cond14 = select i1 %i.hz, i1 true, i1 %i.hv
   %or.cond1020 = select i1 %.not922, i1 %or.cond14, i1 false

@@ -204,9 +204,8 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.ue, label %bb.ck, label %bb.cl, !prof !31
 
 bb.ck:                                            ; preds = %bb.cj
-  %5 = bitcast double %.0.copyload.i3527 to i64
-  %6 = icmp slt i64 %5, 0
-  %i.uf = select i1 %6, double %.0.copyload.i3527, double %i.oz
+  %.not3041 = tail call i1 @llvm.is.fpclass.f64(double %.0.copyload.i3527, /* (pzero) */ i32 64)
+  %i.uf = select i1 %.not3041, double %i.oz, double %.0.copyload.i3527
   br label %bb.cm
 
 bb.cl:                                            ; preds = %bb.cj
@@ -229,9 +228,8 @@ bb.cn:                                            ; preds = %bb.cm
   br i1 %i.up, label %bb.co, label %bb.cp, !prof !31
 
 bb.co:                                            ; preds = %bb.cn
-  %7 = bitcast double %i.un to i64
-  %8 = icmp slt i64 %7, 0
-  %i.uq = select i1 %8, double 0.000000e+00, double %i.un
+  %.not3042 = tail call i1 @llvm.is.fpclass.f64(double %i.un, /* (pzero) */ i32 64)
+  %i.uq = select i1 %.not3042, double %i.un, double 0.000000e+00
   br label %bb.cq
 
 bb.cp:                                            ; preds = %bb.cn
@@ -634,7 +632,7 @@ bb.ac:                                            ; preds = %bb.aa
   br i1 %i.ed, label %.thread1385, label %bb.ai
 
 bb.ad:                                            ; preds = %bb.ac
-  %5 = icmp slt i32 %i.ei, 1
+  %5 = icmp eq i32 %i.ei, 0
   br i1 %5, label %.thread1385, label %.preheader
 
 .preheader:                                       ; preds = %bb.ad
@@ -679,7 +677,7 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af
   %.val1204 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.et = getelementptr inbounds nuw i8, ptr %.val1204, i64 %i.dv
   store i32 %i.es, ptr %i.et, align 1
-  %i.eu = add nuw nsw i32 %.01134, 1              ; 2 uses
+  %i.eu = add nuw i32 %.01134, 1                  ; 2 uses
   %.not1179 = icmp eq i32 %i.eu, %i.ei
   br i1 %.not1179, label %bb.ah, label %bb.ae
 
@@ -1082,8 +1080,8 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.v
 
 bb.k:                                             ; preds = %bb.e
-  %.not443 = icmp eq i32 %.0.copyload.i511, 1
-  br i1 %.not443, label %bb.l, label %bb.m
+  %.not443 = icmp eq i32 %.0.copyload.i511, 0
+  br i1 %.not443, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.f
   %i.cf = add i32 %.0.copyload.i507, -8
@@ -1484,6 +1482,9 @@ bb.ao:                                            ; preds = %wasm_floor.exit395,
   store i32 %i.b, ptr %i.a, align 8, !tbaa !17
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #6

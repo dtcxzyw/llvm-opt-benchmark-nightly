@@ -38,7 +38,7 @@ bb.a:
   %i.n = getelementptr inbounds i8, ptr %19, i64 -8 ; 5 uses
   %i.o = getelementptr inbounds i8, ptr %20, i64 -4
   store i32 0, ptr %21, align 4, !tbaa !12
-  %i.p = load i32, ptr %0, align 4, !tbaa !12     ; 2 uses
+  %i.p = load i32, ptr %0, align 4, !tbaa !12     ; 3 uses
   %or.cond = icmp ugt i32 %i.p, 1
   br i1 %or.cond, label %.thread, label %bb.b
 
@@ -48,8 +48,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.s = icmp eq i32 %i.p, 1                      ; 2 uses
-  br i1 %i.s, label %bb.d, label %bb.e
+  %i.s = icmp eq i32 %i.p, 0
+  br i1 %i.s, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.t = load i32, ptr %2, align 4, !tbaa !12
@@ -84,7 +84,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ab, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  br i1 %i.s, label %bb.i, label %bb.j
+  %.not = icmp eq i32 %i.p, 0
+  br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ac = load i32, ptr %2, align 4, !tbaa !12

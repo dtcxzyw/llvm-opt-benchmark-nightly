@@ -205,10 +205,9 @@ bb.a:
   br label %.split7.us
 
 .split:                                           ; preds = %bb.a
-  %i.b = add nsw i32 %1, -10                      ; 3 uses
+  %i.b = add nsw i32 %1, -10                      ; 2 uses
   %.not.i = icmp ult i32 %i.b, 65536              ; 2 uses
-  %3 = lshr i32 %i.b, 16
-  %spec.select.i = select i1 %.not.i, i32 %i.b, i32 %3 ; 3 uses
+  %spec.select.i = select i1 %.not.i, i32 %i.b, i32 0 ; 3 uses
   %.not11.i = icmp samesign ult i32 %spec.select.i, 256 ; 2 uses
   %i.c = lshr i32 %spec.select.i, 8
   %.110.i = select i1 %.not11.i, i32 %spec.select.i, i32 %i.c

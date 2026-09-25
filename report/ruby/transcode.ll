@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.preheader.1
   br label %.preheader.2
 
 .preheader.2:                                     ; preds = %.preheader.1, %bb.j
-  %i.as = phi i64 [ %i.aq, %bb.j ], [ 4, %.preheader.1 ] ; 6 uses
+  %i.as = phi i64 [ %i.aq, %bb.j ], [ 4, %.preheader.1 ] ; 5 uses
   %.286.i.1 = phi i32 [ %i.ar, %bb.j ], [ %.286.i, %.preheader.1 ] ; 4 uses
   %i.at = icmp samesign ult i32 %.286.i.1, %.193.i
   br i1 %i.at, label %bb.k, label %bb.l
@@ -483,14 +483,10 @@ bb.au:                                            ; preds = %RSTRING_PTR.exit55.
 
 bb.av:                                            ; preds = %bb.au
   %i.eu = icmp samesign ugt i64 %.134, 4611686018427387903
-  br i1 %i.eu, label %.loopexit86, label %.peel.next.preheader
+  br i1 %i.eu, label %.loopexit86, label %.peel.next
 
-.peel.next.preheader:                             ; preds = %bb.av
-  %3 = icmp eq i64 %i.as, 4
-  br label %.peel.next
-
-.peel.next:                                       ; preds = %.peel.next.preheader, %bb.bl
-  %.235.in = phi i64 [ %.235, %bb.bl ], [ %.134, %.peel.next.preheader ] ; 2 uses
+.peel.next:                                       ; preds = %bb.av, %bb.bl
+  %.235.in = phi i64 [ %.235, %bb.bl ], [ %.134, %bb.av ] ; 2 uses
   %.235 = shl nuw nsw i64 %.235.in, 1             ; 3 uses
   %i.ev = load i64, ptr %i.b, align 8, !tbaa !28
   %i.ew = inttoptr i64 %i.ev to ptr
@@ -636,8 +632,7 @@ RSTRING_PTR.exit55:                               ; preds = %bb.bi, %bb.bj
 
 bb.bk:                                            ; preds = %RSTRING_PTR.exit55, %RSTRING_PTR.exit53
   %i.hh = icmp eq i32 %i.gi, 2
-  %or.cond3 = and i1 %i.hh, %3
-  br i1 %or.cond3, label %bb.bl, label %.loopexit85
+  br i1 %i.hh, label %bb.bl, label %.loopexit85
 
 bb.bl:                                            ; preds = %bb.bk
   %i.hi = icmp samesign ugt i64 %.235.in, 2305843009213693951

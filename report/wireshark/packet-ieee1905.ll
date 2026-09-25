@@ -202,9 +202,7 @@ dissect_associated_wf6_sta_status_report.exit:    ; preds = %.lr.ph.i151, %bb.gl
   %.039.lcssa.i = phi i32 [ %i.bri, %bb.gl ], [ %i.brw, %.lr.ph.i151 ]
   %.0.lcssa.i150 = phi i32 [ %i.bre, %bb.gl ], [ %i.bru, %.lr.ph.i151 ] ; 2 uses
   call void @proto_item_set_len(ptr noundef null, i32 noundef %.0.lcssa.i150)
-  %3 = icmp eq i32 %.039.lcssa.i, 1
-  %4 = zext i1 %3 to i32
-  %spec.select.i = add i32 %.0.lcssa.i150, %4
+  %spec.select.i = add i32 %.0.lcssa.i150, %.039.lcssa.i
   br label %dissect_ieee1905_tlv_data.exit
 
 bb.gm:                                            ; preds = %bb.f

@@ -119,7 +119,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   unreachable
 
 bb.h:                                             ; preds = %bb.c, %bb.f
-  %.0305 = phi i32 [ %i.n, %bb.f ], [ %i.h, %bb.c ] ; 5 uses
+  %.0305 = phi i32 [ %i.n, %bb.f ], [ %i.h, %bb.c ] ; 6 uses
   %.pn = phi ptr [ %i.l, %bb.f ], [ %17, %bb.c ]
   %.0304 = getelementptr inbounds nuw i8, ptr %.pn, i64 24 ; 3 uses
   %.not347 = icmp eq i64 %19, 0                   ; 2 uses
@@ -189,7 +189,7 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 bb.s:                                             ; preds = %bb.q
-  %i.av = icmp ne i32 %.0305, 0                   ; 3 uses
+  %i.av = icmp ne i32 %.0305, 0                   ; 2 uses
   %or.cond447 = select i1 %.not, i1 %i.av, i1 false
   br i1 %or.cond447, label %.lr.ph, label %.loopexit409
 
@@ -592,7 +592,8 @@ bb.ct:                                            ; preds = %bb.cs, %.loopexit
   store i32 %4, ptr %i.la, align 4
   store i32 0, ptr %i.lb, align 4
   call void @add_exact_object_address(ptr noundef nonnull %30, ptr noundef %i.kx) #6
-  br i1 %i.av, label %.lr.ph440.preheader, label %.preheader405
+  %.not449 = icmp eq i32 %.0305, 0
+  br i1 %.not449, label %.preheader405, label %.lr.ph440.preheader
 
 .lr.ph440.preheader:                              ; preds = %bb.ct
   %wide.trip.count479 = zext nneg i32 %.0305 to i64

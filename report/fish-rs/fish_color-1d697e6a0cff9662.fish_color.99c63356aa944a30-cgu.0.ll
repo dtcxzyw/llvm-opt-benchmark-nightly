@@ -204,9 +204,8 @@ bb.j:                                             ; preds = %bb.s, %bb.i
   %.sroa.573.0.insert.ext.i.i.i = zext i8 %.sroa.036.0.i.i.i to i32
   %.sroa.573.0.insert.shift.i.i.i = shl nuw nsw i32 %.sroa.573.0.insert.ext.i.i.i, 16
   %.sroa.472.0.insert.ext.i.i.i = shl nuw nsw i32 %.sroa.028.0.i.i.i, 8
-  %.sroa.472.0.insert.shift.i.i.i = and i32 %.sroa.472.0.insert.ext.i.i.i, 65280
-  %.sroa.472.0.insert.insert.i.i.i = add nuw nsw i32 %.sroa.020.0.i.i.i, %.sroa.573.0.insert.shift.i.i.i
-  %.sroa.071.0.insert.insert.i.i.i = add nuw nsw i32 %.sroa.472.0.insert.insert.i.i.i, %.sroa.472.0.insert.shift.i.i.i
+  %.sroa.472.0.insert.insert.i.i.i = or disjoint i32 %.sroa.472.0.insert.ext.i.i.i, %.sroa.573.0.insert.shift.i.i.i
+  %.sroa.071.0.insert.insert.i.i.i = add nuw nsw i32 %.sroa.472.0.insert.insert.i.i.i, %.sroa.020.0.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !186
   %i.da = shl nuw i32 %.sroa.071.0.insert.insert.i.i.i, 8
   %i.db = or disjoint i32 %i.da, 2

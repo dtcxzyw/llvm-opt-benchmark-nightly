@@ -204,14 +204,10 @@ bb.a:
   %i.h = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZNK7Imf_3_46Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.a)
   %i.i = tail call ptr @_ZNK7Imf_3_411ChannelList3endEv(ptr noundef nonnull align 8 dereferenceable(48) %i.h)
   %.not.i = icmp eq ptr %i.g, %i.i
-  br i1 %.not.i, label %_Z12channelCountRKN7Imf_3_46HeaderE.exit.loopexit, label %.lr.ph.i, !llvm.loop !0
+  br i1 %.not.i, label %_Z12channelCountRKN7Imf_3_46HeaderE.exit, label %.lr.ph.i, !llvm.loop !0
 
-_Z12channelCountRKN7Imf_3_46HeaderE.exit.loopexit: ; preds = %.lr.ph.i
-  %8 = zext nneg i32 %i.f to i64
-  br label %_Z12channelCountRKN7Imf_3_46HeaderE.exit
-
-_Z12channelCountRKN7Imf_3_46HeaderE.exit:         ; preds = %_Z12channelCountRKN7Imf_3_46HeaderE.exit.loopexit, %bb.a
-  %.0.lcssa.i = phi i64 [ 0, %bb.a ], [ %8, %_Z12channelCountRKN7Imf_3_46HeaderE.exit.loopexit ] ; 5 uses
+_Z12channelCountRKN7Imf_3_46HeaderE.exit:         ; preds = %.lr.ph.i, %bb.a
+  %.0.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.f, %.lr.ph.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
   %i.j = tail call noundef nonnull align 8 dereferenceable(49) ptr @_ZNK7Imf_3_414TiledInputPart6headerEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
   %i.k = tail call noundef nonnull align 4 dereferenceable(16) ptr @_ZNK7Imf_3_46Header15tileDescriptionEv(ptr noundef nonnull align 8 dereferenceable(49) %i.j)
@@ -397,6 +393,7 @@ _ZNSt6vectorIN7Imf_3_411FrameBufferESaIS1_EE6resizeEm.exit: ; preds = %bb.m, %bb
   %i.bx = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.by = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.bz = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %8 = zext nneg i32 %.0.lcssa.i to i64           ; 4 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge119
@@ -487,19 +484,17 @@ bb.q:                                             ; preds = %.lr.ph118
   %i.do = ptrtoint ptr %i.dm to i64               ; 2 uses
   %i.dp = ptrtoint ptr %i.dn to i64               ; 2 uses
   %i.dq = sub i64 %i.do, %i.dp                    ; 2 uses
-  %i.dr = sdiv exact i64 %i.dq, 24                ; 7 uses
-  %i.ds = icmp ult i64 %i.dr, %.0.lcssa.i
+  %i.dr = sdiv exact i64 %i.dq, 24                ; 6 uses
+  %i.ds = icmp ult i64 %i.dr, %8
   br i1 %i.ds, label %bb.r, label %bb.t
 
 bb.r:                                             ; preds = %bb.q
-  %i.dt = sub nuw nsw i64 %.0.lcssa.i, %i.dr      ; 5 uses
+  %i.dt = sub nuw nsw i64 %8, %i.dr               ; 5 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dk, i64 16 ; 3 uses
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !65
   %i.dw = ptrtoint ptr %i.dv to i64
   %i.dx = sub i64 %i.dw, %i.do
   %i.dy = sdiv exact i64 %i.dx, 24                ; 2 uses
-  %9 = icmp ult i64 %i.dr, 384307168202282326
-  call void @llvm.assume(i1 %9)
   %i.dz = sub nuw nsw i64 384307168202282325, %i.dr
   %i.ea = icmp ule i64 %i.dy, %i.dz
   call void @llvm.assume(i1 %i.ea)
@@ -562,11 +557,11 @@ _ZNSt12_Vector_baseISt6vectorIcSaIcEESaIS2_EE13_M_deallocateEPS2_m.exit37.i: ; p
   br label %_ZNSt6vectorIS_IcSaIcEESaIS1_EE6resizeEm.exit
 
 bb.t:                                             ; preds = %bb.q
-  %i.et = icmp ugt i64 %i.dr, %.0.lcssa.i
+  %i.et = icmp ugt i64 %i.dr, %8
   br i1 %i.et, label %bb.u, label %_ZNSt6vectorIS_IcSaIcEESaIS1_EE6resizeEm.exit
 
 bb.u:                                             ; preds = %bb.t
-  %i.eu = getelementptr inbounds nuw [24 x i8], ptr %i.dn, i64 %.0.lcssa.i ; 3 uses
+  %i.eu = getelementptr inbounds nuw [24 x i8], ptr %i.dn, i64 %8 ; 3 uses
   %.not.i.i82 = icmp eq ptr %i.dm, %i.eu
   br i1 %.not.i.i82, label %_ZNSt6vectorIS_IcSaIcEESaIS1_EE6resizeEm.exit, label %.lr.ph.i.i.i.i83
 
@@ -784,8 +779,9 @@ bb.aj:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.ak:                                            ; preds = %bb.aj
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !49
   store i32 %i.ia, ptr %i.ce, align 4, !tbaa !42
+  %9 = sext i32 %.0.lcssa.i to i64
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.0.lcssa.i, ptr %i.ib, align 8, !tbaa !50
+  store i64 %9, ptr %i.ib, align 8, !tbaa !50
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
   ret void
 

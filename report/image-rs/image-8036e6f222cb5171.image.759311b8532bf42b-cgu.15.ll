@@ -205,8 +205,10 @@ _RINvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtB5_4TakeNtNtNtBb_3str4ite
   %i.cv = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1027, !noalias !1028, !nonnull !5, !noundef !5
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.ct
   store i8 46, ptr %i.cw, align 1, !noalias !1028
-  %i.cx = add nuw nsw i64 %i.ct, 1                ; 2 uses
+  %i.cx = add nuw i64 %i.ct, 1                    ; 3 uses
   store i64 %i.cx, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1027, !noalias !1028
+  %4 = icmp sgt i64 %i.cx, -1
+  call void @llvm.assume(i1 %4)
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 1)
           to label %.noexc9.i.1 unwind label %.loopexit.i, !noalias !1026
 
@@ -214,8 +216,10 @@ _RINvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtB5_4TakeNtNtNtBb_3str4ite
   %i.cy = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1027, !noalias !1028, !nonnull !5, !noundef !5
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.cx
   store i8 46, ptr %i.cz, align 1, !noalias !1028
-  %i.da = add nuw nsw i64 %i.ct, 2                ; 2 uses
+  %i.da = add nuw i64 %i.ct, 2                    ; 3 uses
   store i64 %i.da, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1027, !noalias !1028
+  %5 = icmp sgt i64 %i.da, -1
+  call void @llvm.assume(i1 %5)
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 1)
           to label %.noexc9.i.2 unwind label %.loopexit.i, !noalias !1026
 

@@ -205,8 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.lcssa.peel = phi i32 [ %i.at, %.lr.ph.peel ], [ %i.az, %.lr.ph.1.peel ], [ %i.bf, %.lr.ph.2.peel ]
   %i.bg = zext nneg i32 %i.an to i64
   %i.bh = getelementptr i8, ptr %.1.peel, i64 %i.bg
-  %.cmp.peel = icmp samesign ugt i32 %.lcssa.peel, 9999999
-  %5 = zext i1 %.cmp.peel to i32
+  %5 = udiv i32 %.lcssa.peel, 10000000
   br label %._crit_edge.peel
 
 ._crit_edge.peel:                                 ; preds = %._crit_edge.loopexit.peel, %.preheader.peel
@@ -318,8 +317,7 @@ bb.g:                                             ; preds = %.thread72
   %.lcssa = phi i32 [ %i.cq, %.lr.ph ], [ %i.cw, %.lr.ph.1 ], [ %i.dc, %.lr.ph.2 ]
   %i.dd = zext nneg i32 %i.ck to i64
   %i.de = getelementptr i8, ptr %i.bt, i64 %i.dd
-  %.cmp = icmp samesign ugt i32 %.lcssa, 9999999
-  %6 = zext i1 %.cmp to i32
+  %6 = udiv i32 %.lcssa, 10000000
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader

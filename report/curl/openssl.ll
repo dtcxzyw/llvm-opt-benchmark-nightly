@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not54, label %bb.p, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.not55 = icmp eq i32 %0, 0
+  %.not55 = icmp eq i32 %0, 0                     ; 2 uses
   %or.cond = icmp ugt i32 %0, 1
   br i1 %or.cond, label %bb.p, label %bb.e
 
@@ -304,8 +304,7 @@ bb.n:                                             ; preds = %bb.l, %tls_rt_type.
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.g
-  %7 = icmp eq i32 %0, 1
-  %i.ai = select i1 %7, i32 6, i32 5
+  %i.ai = select i1 %.not55, i32 5, i32 6
   call void @Curl_debug(ptr noundef nonnull %i.f, i32 noundef %i.ai, ptr noundef %3, i64 noundef %4) #11
   br label %bb.p
 

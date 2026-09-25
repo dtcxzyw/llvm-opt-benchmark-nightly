@@ -204,8 +204,8 @@ bb.ah:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   br i1 %i.cz, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.da = icmp eq i64 %i.cy, 1
-  br i1 %i.da, label %bb.ak, label %bb.al, !prof !14
+  %i.da = icmp eq i64 %i.cy, 0
+  br i1 %i.da, label %bb.al, label %bb.ak, !prof !11
 
 bb.aj:                                            ; preds = %bb.ah
   %i.db = getelementptr [160 x i8], ptr %i.cw, i64 %i.cy ; 2 uses
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.cw, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h
-  %i.cx = add nsw i64 %2, -1
+  %i.cx = add nsw i64 %2, -1                      ; 2 uses
   %i.cy = call i64 @llvm.usub.sat.i64(i64 range(i64 0, 57646075230342349) %2, i64 16)
   %.sroa.427.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   %i.cz = getelementptr inbounds nuw i8, ptr %i.av, i64 8
@@ -636,6 +636,7 @@ bb.h:                                             ; preds = %bb.g
   %i.dm = getelementptr inbounds nuw i8, ptr %i.af, i64 32
   %i.dn = getelementptr inbounds nuw i8, ptr %i.ac, i64 4
   %i.do = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
+  %8 = icmp eq i64 %i.cx, 0
   br label %bb.i
 
 bb.i:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtCs7SPl5Nayu5l_4maud10PreEscapedNtNtCsgCecv3eZDcN_5alloc6string6StringEECs1hTjP0dFAwJ_12fontc_crater.exit.i, %.lr.ph.i
@@ -678,6 +679,7 @@ bb.k:                                             ; preds = %bb.j
           to label %.noexc16.i unwind label %.loopexit.i, !noalias !910
 
 .noexc16.i:                                       ; preds = %bb.k
+  %9 = icmp eq i64 %.sroa.7.0133.i, %i.cx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg), !noalias !918
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dv, i64 124
   %i.eb = load i32, ptr %i.ea, align 4, !alias.scope !923, !noalias !924, !noundef !6
@@ -687,10 +689,10 @@ bb.l:                                             ; preds = %.noexc16.i, %.noexc
   %spec.select.i.i.i = phi ptr [ %i.dv, %.noexc16.i ], [ %.sroa.0.0134.i, %.noexc.i ] ; 2 uses
   %i.ec = phi i32 [ %i.dx, %.noexc16.i ], [ %i.du, %.noexc.i ]
   %i.ed = phi ptr [ %i.dw, %.noexc16.i ], [ %i.dt, %.noexc.i ]
+  %10 = phi i1 [ %9, %.noexc16.i ], [ %8, %.noexc.i ]
   %.sroa.0.0.i15164.i = phi ptr [ %i.dv, %.noexc16.i ], [ null, %.noexc.i ] ; 5 uses
   %.sroa.52.0.i.i.i = phi i32 [ %i.eb, %.noexc16.i ], [ undef, %.noexc.i ]
   %.sroa.01.0.i.i.i = phi i32 [ 1, %.noexc16.i ], [ 0, %.noexc.i ]
-  %8 = icmp eq i64 %.sroa.7.0133.i, %i.cx
   %.not1.i166.i = icmp samesign ult i64 %.sroa.7.0133.i, %i.cy
   %i.ee = getelementptr inbounds nuw i8, ptr %.sroa.0.0134.i, i64 124 ; 2 uses
   %i.ef = load i32, ptr %i.ee, align 4, !alias.scope !921, !noalias !922, !noundef !6 ; 2 uses
@@ -1073,7 +1075,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECs1h
 bb.bd:                                            ; preds = %bb.ba, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1hTjP0dFAwJ_12fontc_crater.exit86.i.i.i
   %.sroa.01.0.in.i.i.i.i = phi i64 [ %i.gg, %bb.ba ], [ %i.gb, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1hTjP0dFAwJ_12fontc_crater.exit86.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.at), !noalias !918
-  br i1 %8, label %bb.bf, label %bb.be
+  br i1 %10, label %bb.bf, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar), !noalias !918

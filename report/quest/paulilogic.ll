@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not.i, label %.loopexit23, label %.lr.ph.i, !llvm.loop !0
 
 .loopexit23:                                      ; preds = %.lr.ph.i, %bb.a
-  %.06.lcssa.i = phi i32 [ %i.b, %bb.a ], [ %i.e, %.lr.ph.i ] ; 4 uses
+  %.06.lcssa.i = phi i32 [ %i.b, %bb.a ], [ %i.e, %.lr.ph.i ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %.not22 = icmp eq i32 %.06.lcssa.i, 0
@@ -214,18 +214,17 @@ bb.a:
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i: ; preds = %.loopexit23
   %i.h = sext i32 %.06.lcssa.i to i64             ; 2 uses
   %i.i = shl nuw nsw i64 %i.h, 2
-  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #14 ; 7 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #14 ; 5 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !24
   store ptr %i.j, ptr %i.f, align 8, !tbaa !23
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.h ; 3 uses
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.h ; 2 uses
   store ptr %i.k, ptr %i.g, align 8, !tbaa !28
-  %.not.not35 = icmp sgt i32 %.06.lcssa.i, 0
-  br i1 %.not.not35, label %.lr.ph, label %._crit_edge
+  br label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, %.loopexit23, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i
-  %.lcssa32 = phi ptr [ %i.j, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ], [ null, %.loopexit23 ], [ %i.ak, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
-  %.lcssa28 = phi ptr [ %i.k, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ], [ null, %.loopexit23 ], [ %i.al, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
-  %.lcssa24 = phi ptr [ %i.j, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ], [ null, %.loopexit23 ], [ %i.am, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
+._crit_edge:                                      ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, %.loopexit23
+  %.lcssa32 = phi ptr [ null, %.loopexit23 ], [ %i.ak, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
+  %.lcssa28 = phi ptr [ null, %.loopexit23 ], [ %i.al, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
+  %.lcssa24 = phi ptr [ null, %.loopexit23 ], [ %i.am, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
   store ptr %.lcssa24, ptr %i.f, align 8
   store ptr %.lcssa28, ptr %i.g, align 8
   store ptr %.lcssa32, ptr %0, align 8

@@ -71,12 +71,11 @@ bb.c:                                             ; preds = %.backedge, %bb.b
   br label %.backedge
 
 .preheader65:                                     ; preds = %bb.b, %bb.ac
-  %.1488 = phi i8 [ %i.bc, %bb.ac ], [ %i.l, %bb.b ] ; 7 uses
-  %.0468 = phi i16 [ %.4472, %bb.ac ], [ 0, %bb.b ] ; 27 uses
-  %.0455 = phi i32 [ %.1456, %bb.ac ], [ 0, %bb.b ] ; 21 uses
-  %.0447 = phi i32 [ %.1448, %bb.ac ], [ 0, %bb.b ] ; 17 uses
+  %.1488 = phi i8 [ %i.bc, %bb.ac ], [ %i.l, %bb.b ] ; 8 uses
+  %.0468 = phi i16 [ %.4472, %bb.ac ], [ 0, %bb.b ] ; 25 uses
+  %.0455 = phi i32 [ %.1456, %bb.ac ], [ 0, %bb.b ] ; 19 uses
+  %.0447 = phi i32 [ %.1448, %bb.ac ], [ 0, %bb.b ] ; 15 uses
   %.3433 = phi ptr [ %i.bb, %bb.ac ], [ %i.k, %bb.b ] ; 12 uses
-  %4 = zext i16 %.0468 to i32                     ; 2 uses
   %i.p = icmp ult i16 %.0468, 64
   br i1 %i.p, label %bb.d, label %bb.j
 
@@ -112,7 +111,7 @@ bb.i:                                             ; preds = %bb.d
 
 bb.j:                                             ; preds = %.preheader65
   %i.v = icmp ult i16 %.0468, 512
-  br i1 %i.v, label %.thread, label %7
+  br i1 %i.v, label %.thread, label %bb.aa
 
 .thread:                                          ; preds = %bb.d, %bb.j
   %i.w = add i8 %.1488, -48                       ; 2 uses
@@ -136,9 +135,11 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.ac
 
 bb.n:                                             ; preds = %.thread
-  switch i8 %.1488, label %7 [
+  switch i8 %.1488, label %bb.ad [
     i8 42, label %bb.o
     i8 46, label %bb.y
+    i8 122, label %bb.ab
+    i8 116, label %bb.ab
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -201,75 +202,55 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.n
   %.not538 = icmp samesign ult i16 %.0468, 256
-  br i1 %.not538, label %5, label %.loopexit66
+  br i1 %.not538, label %bb.z, label %.loopexit66
 
-5:                                                ; preds = %bb.y
-  %6 = or disjoint i16 %.0468, 256
+bb.z:                                             ; preds = %bb.y
+  %i.az = or disjoint i16 %.0468, 256
   br label %bb.ac
 
-7:                                                ; preds = %bb.n, %bb.j
-  %8 = icmp eq i8 %.1488, 122
-  %9 = icmp eq i8 %.1488, 116
-  %or.cond5 = or i1 %8, %9
-  %spec.store.select34 = select i1 %or.cond5, i8 108, i8 %.1488 ; 10 uses
-  %10 = icmp eq i8 %spec.store.select34, 106
-  br i1 %10, label %11, label %14
+bb.aa:                                            ; preds = %bb.j
+  switch i8 %.1488, label %bb.ad [
+    i8 122, label %bb.ab
+    i8 116, label %bb.ab
+  ]
 
-11:                                               ; preds = %7
-  %12 = and i16 %.0468, -3585
-  %13 = or disjoint i16 %12, 2560
-  br label %bb.ac
-
-14:                                               ; preds = %7
-  %15 = and i8 %spec.store.select34, -33
-  %or.cond8 = icmp eq i8 %15, 76
-  br i1 %or.cond8, label %bb.z, label %bb.aa
-
-bb.z:                                             ; preds = %14
-  %16 = and i32 %4, 512
-  %.not537 = icmp eq i32 %16, 0
-  %.2470.v = select i1 %.not537, i16 512, i16 2048
-  %.0468.masked49 = and i16 %.0468, -1025
-  %i.az = or i16 %.2470.v, %.0468.masked49
-  br label %bb.ac
-
-bb.aa:                                            ; preds = %14
-  %17 = icmp eq i8 %spec.store.select34, 104
-  br i1 %17, label %bb.ab, label %bb.ad
-
-bb.ab:                                            ; preds = %bb.aa
-  %18 = and i32 %4, 1024
-  %.not536 = icmp eq i32 %18, 0
-  %.3471.v = select i1 %.not536, i16 1024, i16 2048
-  %.0468.masked = and i16 %.0468, -513
+bb.ab:                                            ; preds = %bb.n, %bb.n, %bb.aa, %bb.aa
+  %4 = and i16 %.0468, 512
+  %.not536 = icmp eq i16 %4, 0
+  %.3471.v = select i1 %.not536, i16 512, i16 2048
+  %.0468.masked = and i16 %.0468, -1025
   %i.ba = or i16 %.3471.v, %.0468.masked
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.s, %bb.x, %bb.w, %bb.ab, %bb.z, %11, %5, %bb.m, %bb.l, %bb.i, %bb.h, %bb.g, %bb.e
-  %.4472 = phi i16 [ %.0468, %bb.l ], [ %i.ac, %bb.m ], [ %.0468, %bb.s ], [ %i.ay, %bb.x ], [ %i.av, %bb.w ], [ %6, %5 ], [ %13, %11 ], [ %i.az, %bb.z ], [ %i.ba, %bb.ab ], [ %i.q, %bb.e ], [ %i.s, %bb.g ], [ %i.t, %bb.h ], [ %i.u, %bb.i ] ; 2 uses
-  %.1456 = phi i32 [ %.0455, %bb.l ], [ %i.ab, %bb.m ], [ %.0455, %bb.s ], [ %i.ax, %bb.x ], [ %i.au, %bb.w ], [ %.0455, %5 ], [ %.0455, %11 ], [ %.0455, %bb.z ], [ %.0455, %bb.ab ], [ %.0455, %bb.e ], [ %.0455, %bb.g ], [ %.0455, %bb.h ], [ %.0455, %bb.i ] ; 2 uses
-  %.1448 = phi i32 [ %i.z, %bb.l ], [ %.0447, %bb.m ], [ %spec.store.select, %bb.s ], [ %.0447, %bb.x ], [ %.0447, %bb.w ], [ %.0447, %5 ], [ %.0447, %11 ], [ %.0447, %bb.z ], [ %.0447, %bb.ab ], [ %.0447, %bb.e ], [ %.0447, %bb.g ], [ %.0447, %bb.h ], [ %.0447, %bb.i ] ; 2 uses
+bb.ac:                                            ; preds = %bb.s, %bb.x, %bb.w, %bb.ab, %bb.z, %bb.m, %bb.l, %bb.i, %bb.h, %bb.g, %bb.e
+  %.4472 = phi i16 [ %.0468, %bb.l ], [ %i.ac, %bb.m ], [ %.0468, %bb.s ], [ %i.ay, %bb.x ], [ %i.av, %bb.w ], [ %i.az, %bb.z ], [ %i.u, %bb.i ], [ %i.ba, %bb.ab ], [ %i.t, %bb.h ], [ %i.q, %bb.e ], [ %i.s, %bb.g ] ; 2 uses
+  %.1456 = phi i32 [ %.0455, %bb.l ], [ %i.ab, %bb.m ], [ %.0455, %bb.s ], [ %i.ax, %bb.x ], [ %i.au, %bb.w ], [ %.0455, %bb.z ], [ %.0455, %bb.i ], [ %.0455, %bb.ab ], [ %.0455, %bb.h ], [ %.0455, %bb.e ], [ %.0455, %bb.g ] ; 2 uses
+  %.1448 = phi i32 [ %i.z, %bb.l ], [ %.0447, %bb.m ], [ %spec.store.select, %bb.s ], [ %.0447, %bb.x ], [ %.0447, %bb.w ], [ %.0447, %bb.z ], [ %.0447, %bb.i ], [ %.0447, %bb.ab ], [ %.0447, %bb.h ], [ %.0447, %bb.e ], [ %.0447, %bb.g ] ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.3433, i64 1 ; 2 uses
   %i.bc = load i8, ptr %.3433, align 1            ; 2 uses
   %.not541.a = icmp eq i8 %i.bc, 0
   br i1 %.not541.a, label %.thread30, label %.preheader65, !llvm.loop !7
 
-bb.ad:                                            ; preds = %bb.aa
-  %i.bd = zext i8 %spec.store.select34 to i32
-  %i.be = icmp eq i8 %spec.store.select34, 112
+bb.ad:                                            ; preds = %bb.n, %bb.aa
+  %5 = icmp eq i8 %.1488, 122
+  %6 = icmp eq i8 %.1488, 116
+  %or.cond5.le = or i1 %5, %6
+  %spec.store.select34.le = select i1 %or.cond5.le, i8 108, i8 %.1488 ; 7 uses
+  %i.bd = zext i8 %spec.store.select34.le to i32
+  %i.be = icmp eq i8 %spec.store.select34.le, 112
   %i.bf = or i16 %.0468, 2560
   %spec.select = select i1 %i.be, i16 %i.bf, i16 %.0468 ; 3 uses
-  %i.bg = add i8 %spec.store.select34, -69
+  %i.bg = add i8 %spec.store.select34.le, -69
   %or.cond11 = icmp ult i8 %i.bg, 3
   br i1 %or.cond11, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   %i.bh = or i16 %.0468, 8192
-  %i.bi = or disjoint i8 %spec.store.select34, 32
+  %i.bi = or disjoint i8 %spec.store.select34.le, 32
   br label %bb.ah
 
 bb.af:                                            ; preds = %bb.ad
-  %i.bj = add i8 %spec.store.select34, -101
+  %i.bj = add i8 %spec.store.select34.le, -101
   %or.cond14 = icmp ult i8 %i.bj, 3
   br i1 %or.cond14, label %bb.ag, label %bb.ci
 
@@ -672,7 +653,7 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
   br i1 %.not580, label %.loopexit51, label %.lr.ph108, !llvm.loop !12
 
 bb.ci:                                            ; preds = %bb.af
-  switch i8 %spec.store.select34, label %.thread30 [
+  switch i8 %spec.store.select34.le, label %.thread30 [
     i8 99, label %bb.cj
     i8 115, label %bb.cn
     i8 83, label %bb.cn
@@ -900,7 +881,7 @@ bb.dk:                                            ; preds = %bb.dj
   %.4434162642 = phi ptr [ %.3433, %bb.ci ], [ %i.bb, %bb.ac ] ; 2 uses
   %.2449122740 = phi i32 [ %.0447, %bb.ci ], [ %.1448, %bb.ac ] ; 2 uses
   %.2457112838 = phi i32 [ %.0455, %bb.ci ], [ %.1456, %bb.ac ]
-  %.248992936 = phi i8 [ %spec.store.select34, %bb.ci ], [ 0, %bb.ac ]
+  %.248992936 = phi i8 [ %spec.store.select34.le, %bb.ci ], [ 0, %bb.ac ]
   %i.lj = zext i16 %spec.select172543 to i32      ; 4 uses
   %i.lk = and i32 %i.lj, 2048
   %.not545.a = icmp eq i32 %i.lk, 0

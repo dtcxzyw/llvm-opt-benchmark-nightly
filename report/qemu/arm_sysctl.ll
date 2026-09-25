@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.b = icmp eq i32 %3, 0
+  %i.b = icmp eq i32 %3, 0                        ; 2 uses
   %i.c = zext nneg i32 %5 to i64                  ; 2 uses
   %i.d = icmp samesign ult i32 %5, 6
   %or.cond6 = select i1 %i.b, i1 %i.d, i1 false
@@ -215,8 +215,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.r
 
 bb.e:                                             ; preds = %bb.c
-  %7 = icmp eq i32 %3, 1
-  br i1 %7, label %bb.f, label %bb.p
+  br i1 %i.b, label %bb.p, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1200
@@ -300,8 +299,8 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.b = icmp eq i32 %3, 1
-  br i1 %i.b, label %bb.d, label %bb.f
+  %i.b = icmp eq i32 %3, 0
+  br i1 %i.b, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1184
@@ -328,7 +327,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.o
 
 bb.h:                                             ; preds = %bb.b
-  %i.l = icmp eq i32 %3, 0
+  %i.l = icmp eq i32 %3, 0                        ; 2 uses
   %i.m = zext nneg i32 %5 to i64                  ; 2 uses
   %i.n = icmp samesign ult i32 %5, 6
   %or.cond8 = select i1 %i.l, i1 %i.n, i1 false
@@ -342,8 +341,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.o
 
 bb.j:                                             ; preds = %bb.h
-  %7 = icmp eq i32 %3, 1
-  br i1 %7, label %bb.k, label %bb.m
+  br i1 %i.l, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1200

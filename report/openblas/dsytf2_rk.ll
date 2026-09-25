@@ -200,14 +200,15 @@ iter.check:                                       ; preds = %bb.ak
   store double %i.gl, ptr %i.c, align 8, !tbaa !30
   %i.gu = add nsw i32 %.0766941, -1
   %i.gv = sext i32 %i.aj to i64                   ; 2 uses
-  %wide.trip.count = zext nneg i32 %.0766941 to i64 ; 2 uses
+  %umax = call i32 @llvm.umax.i32(i32 %.0766941, i32 2)
+  %wide.trip.count = zext nneg i32 %umax to i64   ; 2 uses
   %invariant.gep1041 = getelementptr [8 x i8], ptr %i.f, i64 %i.gv ; 3 uses
   %i.gw = add nsw i64 %wide.trip.count, -1        ; 5 uses
-  %min.iters.check = icmp ult i32 %.0766941, 5
+  %min.iters.check = icmp samesign ult i32 %.0766941, 5
   br i1 %min.iters.check, label %.lr.ph938.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check1067 = icmp ult i32 %.0766941, 17
+  %min.iters.check1067 = icmp samesign ult i32 %.0766941, 17
   br i1 %min.iters.check1067, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -296,7 +297,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.sink.split
 
 bb.am:                                            ; preds = %bb.ai
-  %7 = icmp sgt i32 %.0766941, 2
+  %7 = icmp samesign ugt i32 %.0766941, 2
   %i.ht = add nsw i32 %.0766941, -1               ; 4 uses
   %i.hu = add nsw i32 %i.ht, %i.aj
   %i.hv = sext i32 %i.hu to i64                   ; 2 uses

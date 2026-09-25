@@ -205,9 +205,8 @@ bb.f:                                             ; preds = %.thread, %bb.d, %bb
   %.sroa.0127.0.insert.insert = or disjoint i64 %.sroa.2128.0.insert.shift, 6184769290241
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643ldrENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.ab, i8 %.sroa.062.0138, i64 %.sroa.0127.0.insert.insert)
   %i.ac = load ptr, ptr %i.z, align 8, !tbaa !70, !nonnull !43, !align !52
-  %.sroa.3124.0.insert.insert = add nsw i64 %i.o, -755897860096
-  %.sroa.2123.0.insert.insert = or disjoint i64 %.sroa.2128.0.insert.shift, %.sroa.3124.0.insert.insert
-  %.sroa.0122.0.insert.insert = or disjoint i64 %.sroa.2123.0.insert.insert, 1
+  %.sroa.2123.0.insert.insert = or disjoint i64 %.sroa.2128.0.insert.shift, %i.o
+  %.sroa.0122.0.insert.insert = or i64 %.sroa.2123.0.insert.insert, -755897860095
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643ldrENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.ac, i8 %2, i64 %.sroa.0122.0.insert.insert)
   br i1 %i.y, label %bb.i, label %bb.g
 
@@ -221,7 +220,7 @@ bb.h:                                             ; preds = %bb.b
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !70, !nonnull !43, !align !52
   %i.ag = zext nneg i8 %i.i to i64
   %i.ah = shl nuw nsw i64 %i.ag, 35
-  %.sroa.0.0.insert.insert = add nuw nsw i64 %i.ah, 343613831169
+  %.sroa.0.0.insert.insert = or i64 %i.ah, 343613831169
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643ldrENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.af, i8 %2, i64 %.sroa.0.0.insert.insert)
   br label %bb.i
 

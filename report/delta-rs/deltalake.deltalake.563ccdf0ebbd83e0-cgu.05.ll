@@ -205,12 +205,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %.thread.i
   %.sroa.4.0.i.ph10.i = phi i64 [ %.sroa.03.0.i.i, %.thread.i ], [ %i.k, %bb.d ] ; 5 uses
-  %i.m = shl nuw i64 %.sroa.4.0.i.ph10.i, 3
-  %2 = add nuw i64 %i.m, 8
-  %3 = and i64 %2, -16                            ; 3 uses
+  %i.m = shl nuw i64 %.sroa.4.0.i.ph10.i, 3       ; 3 uses
   %i.n = add nuw nsw i64 %.sroa.4.0.i.ph10.i, 16  ; 2 uses
-  %i.o = add i64 %3, %i.n                         ; 4 uses
-  %i.p = icmp ult i64 %i.o, %3
+  %i.o = add i64 %i.n, %i.m                       ; 4 uses
+  %i.p = icmp ult i64 %i.o, %i.m
   %i.q = icmp ugt i64 %i.o, 9223372036854775792
   %or.cond.i.i = or i1 %i.p, %i.q
   br i1 %or.cond.i.i, label %bb.f, label %_RNvXs_NtNtNtCsc8g9ilNZkOD_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i, !prof !32
@@ -234,13 +232,13 @@ bb.h:                                             ; preds = %bb.c
   unreachable
 
 bb.i:                                             ; preds = %_RNvXs_NtNtNtCsc8g9ilNZkOD_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
-  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 %3 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.m ; 2 uses
   %i.u = add nsw i64 %.sroa.4.0.i.ph10.i, -1      ; 2 uses
   %i.v = icmp samesign ult i64 %.sroa.4.0.i.ph10.i, 9
   %i.w = lshr i64 %.sroa.4.0.i.ph10.i, 3
   %i.x = mul nuw nsw i64 %i.w, 7
   %.sroa.07.0.i.i = select i1 %i.v, i64 %i.u, i64 %i.x
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.t, i8 -1, i64 %i.n, i1 false), !noalias !11061
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.t, i8 -1, i64 %i.n, i1 false), !noalias !11061
   br label %_RINvMsa_NtCs2HSpDNxY7OE_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtNtCsc8g9ilNZkOD_14allocator_api26stable5alloc6global6GlobalECs7p2uQeJxui2_9deltalake.exit
 
 _RINvMsa_NtCs2HSpDNxY7OE_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtNtCsc8g9ilNZkOD_14allocator_api26stable5alloc6global6GlobalECs7p2uQeJxui2_9deltalake.exit: ; preds = %bb.a, %bb.i

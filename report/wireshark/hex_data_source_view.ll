@@ -205,15 +205,13 @@ bb.i:                                             ; preds = %.lr.ph
 
 _ZNK17HexDataSourceView17annotationIndexAtEi.exit: ; preds = %.outer.i, %bb.i, %bb.h, %.loopexit.loopexit30.i
   %.01646 = phi i32 [ %i.af, %bb.h ], [ %.01653, %.loopexit.loopexit30.i ], [ %.01653, %bb.i ], [ %.01653, %.outer.i ] ; 2 uses
-  %.01745 = phi i32 [ %i.ad, %bb.h ], [ %.01752, %.loopexit.loopexit30.i ], [ %.01752, %bb.i ], [ %.01752, %.outer.i ] ; 3 uses
+  %.01745 = phi i32 [ %i.ad, %bb.h ], [ %.01752, %.loopexit.loopexit30.i ], [ %.01752, %bb.i ], [ %.01752, %.outer.i ] ; 2 uses
   %.3.i = phi i1 [ true, %bb.h ], [ %i.av, %.loopexit.loopexit30.i ], [ true, %bb.i ], [ true, %.outer.i ]
   br i1 %.3.i, label %bb.j, label %_ZNK17HexDataSourceView27annotationIndexIntersectingEii.exit
 
 bb.j:                                             ; preds = %_ZNK17HexDataSourceView17annotationIndexAtEi.exit
-  %1 = icmp slt i32 %.01745, 0
   %i.aw = icmp slt i32 %.01646, 1
-  %or.cond.i = or i1 %1, %i.aw
-  br i1 %or.cond.i, label %_ZNK17HexDataSourceView27annotationIndexIntersectingEii.exit, label %bb.k
+  br i1 %i.aw, label %_ZNK17HexDataSourceView27annotationIndexIntersectingEii.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ax = add nsw i32 %.01745, -1

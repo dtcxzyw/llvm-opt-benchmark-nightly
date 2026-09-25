@@ -202,29 +202,25 @@ bb.ad:                                            ; preds = %bb.ac
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cn, i64 4
   %i.cs = load i16, ptr %i.cr, align 2, !tbaa !128
   %i.ct = load i16, ptr %i.ca, align 2, !tbaa !158
-  %4 = icmp eq i16 %i.cs, %i.ct
-  %spec.select173 = zext i1 %4 to i32
+  %4 = icmp ne i16 %i.cs, %i.ct
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %.2141 = phi i32 [ 0, %bb.ac ], [ %spec.select173, %bb.ad ] ; 2 uses
+  %.2141 = phi i1 [ true, %bb.ac ], [ %4, %bb.ad ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cu = icmp ne i64 %indvars.iv.next, %i.cm
-  %5 = icmp eq i32 %.2141, 0
-  %i.cv = and i1 %5, %i.cu
+  %i.cv = and i1 %.2141, %i.cu
   br i1 %i.cv, label %bb.ac, label %.loopexit185, !llvm.loop !225
 
 .loopexit185:                                     ; preds = %bb.ae, %.preheader184, %bb.ab
-  %.3142 = phi i32 [ 0, %bb.ab ], [ 0, %.preheader184 ], [ %.2141, %bb.ae ] ; 2 uses
+  %.3142 = phi i1 [ true, %bb.ab ], [ true, %.preheader184 ], [ %.2141, %bb.ae ] ; 2 uses
   %i.cw = add nuw nsw i32 %.0143187, 1            ; 2 uses
   %i.cx = icmp ne i32 %i.cw, %i.by
-  %6 = icmp eq i32 %.3142, 0
-  %i.cy = and i1 %i.cx, %6
+  %i.cy = and i1 %i.cx, %.3142
   br i1 %i.cy, label %bb.ab, label %._crit_edge, !llvm.loop !226
 
 ._crit_edge:                                      ; preds = %.loopexit185
-  %7 = icmp eq i32 %.3142, 1
-  br i1 %7, label %bb.af, label %bb.ah
+  br i1 %.3142, label %bb.ah, label %bb.af
 
 bb.af:                                            ; preds = %._crit_edge
   %i.cz = call fastcc ptr @hpke_decrypt_encch(ptr noundef %0, ptr noundef %i.cc, ptr noundef nonnull %.pre201, i64 noundef %.val174, ptr noundef %i.bq, i32 noundef %spec.select, ptr noundef %i.c) ; 2 uses

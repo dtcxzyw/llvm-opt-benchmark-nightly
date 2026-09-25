@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.j
   %i.s = sub nuw nsw i32 %3, %2
   %i.t = sext i32 %i.s to i64
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 7 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 4 uses
   br label %bb.k
 
 .lr.ph84.preheader:                               ; preds = %bb.j
@@ -326,11 +326,13 @@ bb.l:                                             ; preds = %.lr.ph78.epil.prehe
   %i.az = zext nneg i32 %3 to i64
   %i.ba = urem i64 %i.ay, %i.az
   %i.bb = trunc nuw nsw i64 %i.ba to i32          ; 2 uses
-  %min.iters.check = icmp ult i32 %2, 4
+  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count100 = zext nneg i32 %smax to i64 ; 3 uses
+  %min.iters.check = icmp slt i32 %2, 4
   br i1 %min.iters.check, label %.lr.ph82.preheader127, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph82.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %wide.trip.count100, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.bb, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert114 = insertelement <4 x i32> poison, i32 %3, i64 0
@@ -349,7 +351,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !105
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count100
   br i1 %cmp.n, label %.loopexit, label %.lr.ph82.preheader127
 
 .lr.ph82.preheader127:                            ; preds = %.lr.ph82.preheader, %middle.block
@@ -398,7 +400,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph78.1
   %i.bt = srem i32 %i.bs, %3
   store i32 %i.bt, ptr %i.bq, align 4, !tbaa !50
   %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94, 1 ; 2 uses
-  %exitcond98.not = icmp eq i64 %indvars.iv.next95, %wide.trip.count
+  %exitcond98.not = icmp eq i64 %indvars.iv.next95, %wide.trip.count100
   br i1 %exitcond98.not, label %.loopexit, label %.lr.ph82, !llvm.loop !107
 
 .loopexit:                                        ; preds = %.lr.ph82, %.lr.ph86, %middle.block, %.preheader
@@ -801,10 +803,10 @@ declare i64 @llvm.umax.i64(i64, i64) #24
 declare i64 @llvm.umin.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #24
+declare i32 @llvm.smax.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #24
+declare i64 @llvm.smin.i64(i64, i64) #24
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }

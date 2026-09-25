@@ -202,7 +202,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit266.thread: ; preds = %bb.at, %_ZSteqIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit266
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #17
-  %i.jn = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef nonnull %i.ej, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.h, ptr noundef nonnull %i.da, ptr noundef nonnull %i.db) #17 ; 4 uses
+  %i.jn = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef nonnull %i.ej, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.h, ptr noundef nonnull %i.da, ptr noundef nonnull %i.db) #17 ; 5 uses
   %i.jo = and i32 %i.jn, -2
   %or.cond = icmp eq i32 %i.jo, 2
   br i1 %or.cond, label %bb.au, label %.thread507
@@ -216,7 +216,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exi
 
 bb.au:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit266.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #17
-  %i.js = zext nneg i32 %i.jn to i64              ; 3 uses
+  %i.js = zext nneg i32 %i.jn to i64              ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %20, i8 0, i64 24, i1 false)
   %i.jt = shl nuw nsw i64 %i.js, 3                ; 5 uses
   %i.ju = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jt) #21
@@ -232,6 +232,7 @@ bb.au:                                            ; preds = %_ZSteqIcSt11char_tr
   call void @llvm.memset.p0.i64(ptr align 8 %i.jw, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !70
   %i.jx = getelementptr i8, ptr %i.ju, i64 %i.jt
   store ptr %i.jx, ptr %i.dd, align 8, !tbaa !66
+  %wide.trip.count = zext nneg i32 %i.jn to i64
   %min.iters.check = icmp ult i32 %i.jn, 4
   br i1 %min.iters.check, label %scalar.ph, label %vector.body
 
@@ -315,7 +316,7 @@ scalar.ph:                                        ; preds = %.lr.ph733, %scalar.
   %i.kw = getelementptr inbounds nuw [8 x i8], ptr %i.ju, i64 %indvars.iv
   store double %i.kv, ptr %i.kw, align 8, !tbaa !70
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.js
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge734, label %scalar.ph, !llvm.loop !77
 
 _ZNSt6vectorIS_IdSaIdEESaIS1_EE9push_backERKS1_.exit278: ; preds = %._ZNSt6vectorIS_IdSaIdEESaIS1_EE9push_backERKS1_.exit278_crit_edge, %_ZNSt6vectorIdSaIdEEC2ERKS1_.exit.i273

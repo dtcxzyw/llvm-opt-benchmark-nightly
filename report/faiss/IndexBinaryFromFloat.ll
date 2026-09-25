@@ -202,9 +202,10 @@ bb.u:                                             ; preds = %.lr.ph76, %._crit_e
   %indvars.iv78 = phi i64 [ %1, %.lr.ph76 ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
   %.03375 = phi i64 [ 0, %.lr.ph76 ], [ %i.bt, %._crit_edge ] ; 4 uses
   %smin = tail call i64 @llvm.smin.i64(i64 %indvars.iv78, i64 32768)
-  %i.aw = mul i64 %3, %smin                       ; 4 uses
+  %i.aw = mul i64 %3, %smin                       ; 2 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.aw, i64 1) ; 3 uses
   %i.ax = sub nuw nsw i64 %1, %.03375
-  %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.ax, i64 32768) ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.ax, i64 32768) ; 2 uses
   %i.ay = load i32, ptr %i.ah, align 8, !tbaa !13
   %i.az = sext i32 %i.ay to i64
   %i.ba = mul nsw i64 %.sroa.speculated, %i.az
@@ -223,20 +224,15 @@ bb.v:                                             ; preds = %bb.u
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 72
   %i.bk = load ptr, ptr %i.bj, align 8
   invoke void %i.bk(ptr noundef nonnull align 8 dereferenceable(36) %i.bf, i64 noundef %.sroa.speculated, ptr noundef nonnull %i.an, i64 noundef %3, ptr noundef nonnull %i.ar, ptr noundef %i.bh, ptr noundef null)
-          to label %.preheader unwind label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit59
+          to label %.lr.ph unwind label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit59
 
-.preheader:                                       ; preds = %bb.v
-  %9 = mul nuw nsw i64 %.sroa.speculated, %3
-  %10 = icmp sgt i64 %9, 0
-  br i1 %10, label %.lr.ph, label %._crit_edge
-
-.lr.ph:                                           ; preds = %.preheader
+.lr.ph:                                           ; preds = %bb.v
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.bg ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aw, 4
+  %min.iters.check = icmp slt i64 %i.aw, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %i.aw, -4                      ; 3 uses
+  %n.vec = and i64 %smax, 9223372036854775804     ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -254,14 +250,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !39
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.aw, %n.vec
+  %cmp.n = icmp eq i64 %smax, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
-._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %.preheader
+._crit_edge:                                      ; preds = %scalar.ph, %middle.block
   %i.bt = add nuw nsw i64 %.03375, 32768          ; 2 uses
   %i.bu = icmp slt i64 %i.bt, %1
   %indvars.iv.next79 = add i64 %indvars.iv78, -32768
@@ -284,7 +280,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %indvars.iv
   store i32 %i.cb, ptr %i.cc, align 4, !tbaa !43
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.aw
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %smax
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !41
 
 _ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit62: ; preds = %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit59, %bb.t
@@ -685,6 +681,9 @@ declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.round.v4f64(<4 x double>) #10

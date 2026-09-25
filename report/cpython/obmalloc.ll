@@ -206,25 +206,23 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden noalias ptr @mi_pvalloc(i64 noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = load i64, ptr @mi_os_mem_config.0, align 8, !tbaa !121 ; 6 uses
+  %i.a = load i64, ptr @mi_os_mem_config.0, align 8, !tbaa !121 ; 7 uses
   %i.b = xor i64 %i.a, -1
-  %.not.a = icmp ult i64 %0, %i.b
-  br i1 %.not.a, label %1, label %mi_malloc_aligned.exit
+  %.not = icmp ult i64 %0, %i.b
+  %1 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.a)
+  %.not.a = icmp samesign ult i64 %1, 2
+  %or.cond = select i1 %.not, i1 %.not.a, i1 false
+  br i1 %or.cond, label %_mi_align_up.exit, label %mi_malloc_aligned.exit
 
-1:                                                ; preds = %bb.a
-  %2 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.a) ; 2 uses
-  %3 = icmp samesign ult i64 %2, 2
-  br i1 %3, label %_mi_align_up.exit, label %mi_malloc_aligned.exit
-
-_mi_align_up.exit:                                ; preds = %1
+_mi_align_up.exit:                                ; preds = %bb.a
   %i.c = add i64 %0, -1
   %i.d = add i64 %i.c, %i.a
   %i.e = sub i64 0, %i.a
   %i.f = and i64 %i.d, %i.e                       ; 6 uses
   %i.g = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_mi_heap_default)
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !95   ; 3 uses
-  %or.cond.not16.i.i = icmp eq i64 %2, 1
-  br i1 %or.cond.not16.i.i, label %bb.b, label %mi_malloc_aligned.exit, !prof !474
+  %or.cond.not16.i.i = icmp eq i64 %i.a, 0
+  br i1 %or.cond.not16.i.i, label %mi_malloc_aligned.exit, label %bb.b, !prof !474
 
 bb.b:                                             ; preds = %_mi_align_up.exit
   %i.i = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.f)
@@ -264,8 +262,8 @@ bb.f:                                             ; preds = %bb.b
   %i.aa = tail call noalias ptr @mi_heap_malloc_aligned_at(ptr noundef %i.h, i64 noundef %i.f, i64 noundef %i.a, i64 noundef 0)
   br label %mi_malloc_aligned.exit
 
-mi_malloc_aligned.exit:                           ; preds = %1, %bb.f, %bb.e, %bb.d, %_mi_align_up.exit, %bb.a
-  %.0 = phi ptr [ null, %bb.a ], [ %i.aa, %bb.f ], [ null, %_mi_align_up.exit ], [ %i.s, %bb.e ], [ %i.u, %bb.d ], [ null, %1 ]
+mi_malloc_aligned.exit:                           ; preds = %bb.f, %bb.e, %bb.d, %_mi_align_up.exit, %bb.a
+  %.0 = phi ptr [ null, %bb.a ], [ %i.aa, %bb.f ], [ null, %_mi_align_up.exit ], [ %i.s, %bb.e ], [ %i.u, %bb.d ]
   ret ptr %.0
 }
 
@@ -668,7 +666,7 @@ bb.e:                                             ; preds = %_mi_strlen.exit.i
 bb.f:                                             ; preds = %bb.e
   %i.i = add i64 %i.g, %strlen.i.i
   %i.j = icmp ugt i64 %i.i, 32767
-  %2 = sub nuw nsw i64 32767, %i.g
+  %2 = xor i64 %i.g, 32767
   %spec.select.i = select i1 %i.j, i64 %2, i64 %strlen.i.i
   %i.k = getelementptr i8, ptr @out_buf, i64 %i.g
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.k, ptr nonnull readonly align 1 %0, i64 %spec.select.i, i1 false)
@@ -702,7 +700,7 @@ bb.c:                                             ; preds = %_mi_strlen.exit
 bb.d:                                             ; preds = %bb.c
   %i.g = add i64 %i.e, %strlen.i
   %i.h = icmp ugt i64 %i.g, 32767
-  %2 = sub nuw nsw i64 32767, %i.e
+  %2 = xor i64 %i.e, 32767
   %spec.select = select i1 %i.h, i64 %2, i64 %strlen.i
   %i.i = getelementptr i8, ptr @out_buf, i64 %i.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.i, ptr nonnull readonly align 1 %0, i64 %spec.select, i1 false)
@@ -1105,7 +1103,7 @@ begin_hunk_2_@llvm.bswap.i32
 !471 = distinct !{ptr @mi_new_realloc, null}
 !472 = !{!"branch_weights", i32 2000, i32 2002}
 !473 = distinct !{!473, !89}
-!474 = !{!"branch_weights", i32 -2147483648, i32 0}
+!474 = !{!"branch_weights", i32 0, i32 -2147483648}
 !475 = distinct !{!475, !89}
 !476 = !{!55, !55, i64 0}
 !477 = !{!"p1 short", !56, i64 0}

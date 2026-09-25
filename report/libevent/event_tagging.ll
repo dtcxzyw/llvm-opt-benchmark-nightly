@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = call i32 @evtag_decode_int(ptr noundef nonnull %i.a, ptr noundef %0)
   %i.f = icmp eq i32 %i.e, -1
-  %i.g = load i32, ptr %i.a, align 4              ; 3 uses
+  %i.g = load i32, ptr %i.a, align 4              ; 2 uses
   %i.h = icmp slt i32 %i.g, 0
   %or.cond.i = select i1 %i.f, i1 true, i1 %i.h
   br i1 %or.cond.i, label %evtag_unmarshal_header.exit.thread, label %evtag_unmarshal_header.exit
@@ -216,17 +216,15 @@ evtag_unmarshal_header.exit.thread:               ; preds = %bb.b, %bb.a
 
 evtag_unmarshal_header.exit:                      ; preds = %bb.b
   %i.i = call i64 @evbuffer_get_length(ptr noundef %0) #8
-  %i.j = zext nneg i32 %i.g to i64
-  %4 = icmp ult i64 %i.i, %i.j
-  %..i = select i1 %4, i32 -1, i32 %i.g           ; 2 uses
+  %i.j = zext nneg i32 %i.g to i64                ; 2 uses
+  %4 = icmp uge i64 %i.i, %i.j                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  %5 = icmp sgt i32 %..i, -1
   %i.k = load i32, ptr %i.b, align 4
   %.not = icmp eq i32 %i.k, %1
-  %or.cond = select i1 %5, i1 %.not, i1 false
-  %6 = zext nneg i32 %..i to i64
-  %.not9 = icmp eq i64 %3, %6
-  %or.cond10 = select i1 %or.cond, i1 %.not9, i1 false
+  %or.cond = select i1 %4, i1 %.not, i1 false
+  %5 = select i1 %4, i64 %i.j, i64 4294967295
+  %.not9 = icmp eq i64 %3, %5
+  %or.cond10 = and i1 %or.cond, %.not9
   br i1 %or.cond10, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %evtag_unmarshal_header.exit
@@ -267,13 +265,12 @@ evtag_unmarshal_header.exit.thread:               ; preds = %bb.b, %bb.a
 evtag_unmarshal_header.exit:                      ; preds = %bb.b
   %i.i = call i64 @evbuffer_get_length(ptr noundef %0) #8
   %i.j = zext nneg i32 %i.g to i64
-  %3 = icmp ult i64 %i.i, %i.j
-  %..i = select i1 %3, i32 -1, i32 %i.g           ; 3 uses
+  %3 = icmp uge i64 %i.i, %i.j                    ; 2 uses
+  %..i = select i1 %3, i32 %i.g, i32 -1           ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  %4 = icmp ne i32 %..i, -1
   %i.k = load i32, ptr %i.b, align 4
   %.not = icmp eq i32 %i.k, %1
-  %or.cond = select i1 %4, i1 %.not, i1 false
+  %or.cond = select i1 %3, i1 %.not, i1 false
   br i1 %or.cond, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %evtag_unmarshal_header.exit

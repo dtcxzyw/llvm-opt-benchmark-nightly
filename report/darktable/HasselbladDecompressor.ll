@@ -202,14 +202,11 @@ _ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8ge
   br label %.noexc37.us
 
 .noexc37.us:                                      ; preds = %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i51.us, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE15decodeCodeValueINS_16BitStreamerMSB32EEEiRT_.exit26.us
-  %.sroa.75160.3.us = phi i32 [ %i.ei, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i51.us ], [ %.sroa.75160.2.us, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE15decodeCodeValueINS_16BitStreamerMSB32EEEiRT_.exit26.us ] ; 8 uses
+  %.sroa.75160.3.us = phi i32 [ %i.ei, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i51.us ], [ %.sroa.75160.2.us, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE15decodeCodeValueINS_16BitStreamerMSB32EEEiRT_.exit26.us ] ; 7 uses
   %.sroa.28.9.us = phi i32 [ %i.et, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i51.us ], [ %.sroa.28.3.us, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE15decodeCodeValueINS_16BitStreamerMSB32EEEiRT_.exit26.us ]
   %.sroa.0121.9.us = phi i64 [ %i.ex, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i51.us ], [ %.sroa.0121.3.us, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE15decodeCodeValueINS_16BitStreamerMSB32EEEiRT_.exit26.us ] ; 2 uses
   %i.ey = icmp sgt i32 %.sroa.75160.3.us, -1
   call void @llvm.assume(i1 %i.ey)
-  %2 = and i32 %.sroa.75160.3.us, 3
-  %3 = icmp eq i32 %2, 0
-  call void @llvm.assume(i1 %3)
   %i.ez = lshr i64 %.sroa.0121.9.us, 53           ; 3 uses
   %i.fa = trunc nuw nsw i64 %i.ez to i32          ; 2 uses
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.ez

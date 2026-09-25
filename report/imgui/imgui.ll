@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %bb.d
 
 bb.n:                                             ; preds = %bb.m
   %i.bo = getelementptr inbounds nuw i8, ptr %i.y, i64 12
-  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !222 ; 7 uses
-  %i.bq = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 7 uses
+  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !222 ; 8 uses
+  %i.bq = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 6 uses
   %i.br = and i32 %i.bp, 61440
   %.not.i.i = icmp ne i32 %i.br, 0
   %i.bs = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bp)
@@ -263,17 +263,12 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %_ZN5I
   %i.cv = zext nneg i8 %i.cu to i32
   %i.cw = shl nuw nsw i32 %i.cv, 13
   %i.cx = getelementptr i8, ptr %i.bq, i64 2756
-  %2 = load i8, ptr %i.cx, align 4, !tbaa !239, !range !99, !noundef !236
-  %3 = zext nneg i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 14
-  %5 = getelementptr i8, ptr %i.bq, i64 2772
-  %i.cy = load i8, ptr %5, align 4, !tbaa !239, !range !99, !noundef !236
+  %i.cy = load i8, ptr %i.cx, align 4, !tbaa !239, !range !99, !noundef !236
   %i.cz = zext nneg i8 %i.cy to i32
-  %i.da = shl nuw nsw i32 %i.cz, 15
-  %6 = or disjoint i32 %spec.select.i, %i.cw
-  %i.db = or disjoint i32 %6, %4
+  %i.da = shl nuw nsw i32 %i.cz, 14
+  %i.db = or disjoint i32 %spec.select.i, %i.cw
   %i.dc = or disjoint i32 %i.db, %i.da
-  %i.dd = or i32 %i.dc, %i.bp                     ; 3 uses
+  %i.dd = or i32 %i.dc, %i.bp                     ; 2 uses
   %i.de = and i32 %i.dd, 20480
   %or.cond.i = icmp eq i32 %i.de, 4096
   br i1 %or.cond.i, label %_ZL30IsKeyChordPotentiallyCharInputi.exit, label %bb.r
@@ -288,7 +283,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.dk, label %_ZL30IsKeyChordPotentiallyCharInputi.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.dl = and i32 %i.dd, -61441                   ; 2 uses
+  %i.dl = and i32 %i.bp, -61441                   ; 2 uses
   %i.dm = icmp eq i32 %i.dl, 0
   br i1 %i.dm, label %_ZL30IsKeyChordPotentiallyCharInputi.exit, label %bb.t
 

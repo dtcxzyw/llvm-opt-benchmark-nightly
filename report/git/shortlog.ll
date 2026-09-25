@@ -204,8 +204,8 @@ bb.y:                                             ; preds = %_.exit, %bb.v
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) @__const.read_from_stdin.oneline, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) @__const.read_from_stdin.oneline, i64 24, i1 false)
-  %i.eo = load i32, ptr %i.f, align 8, !tbaa !37  ; 2 uses
-  %i.ep = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.eo) ; 2 uses
+  %i.eo = load i32, ptr %i.f, align 8, !tbaa !37  ; 3 uses
+  %i.ep = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.eo)
   %.not.i21 = icmp samesign ult i32 %i.ep, 2
   br i1 %.not.i21, label %bb.aa, label %bb.z
 
@@ -215,8 +215,8 @@ bb.z:                                             ; preds = %bb.y
   unreachable
 
 bb.aa:                                            ; preds = %bb.y
-  %i.er = icmp eq i32 %i.ep, 1
-  br i1 %i.er, label %.split.i, label %bb.ae
+  %i.er = icmp eq i32 %i.eo, 0
+  br i1 %i.er, label %bb.ae, label %.split.i
 
 .split.i:                                         ; preds = %bb.aa
   %i.es = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.eo, i1 true)
@@ -471,11 +471,11 @@ parse_uint.exit:                                  ; preds = %bb.b
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !34
   %.not10.i38 = icmp ne i8 %i.ae, 0
   %i.af = icmp ugt i64 %i.ac, 2147483647
-  %or.cond12.i40 = select i1 %.not10.i38, i1 true, i1 %i.af
+  %or.cond12.i40 = select i1 %.not10.i38, i1 true, i1 %i.af ; 2 uses
   %i.ag = icmp eq ptr %.1, %i.ad
   %i.ah = trunc nuw nsw i64 %i.ac to i32
   %i.ai = select i1 %i.ag, i32 9, i32 %i.ah
-  %.0.i42 = select i1 %or.cond12.i40, i32 -1, i32 %i.ai ; 4 uses
+  %.0.i42 = select i1 %or.cond12.i40, i32 -1, i32 %i.ai ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 60
   store i32 %.0.i42, ptr %i.aj, align 4, !tbaa !40
@@ -485,9 +485,8 @@ parse_uint.exit:                                  ; preds = %bb.b
 
 bb.d:                                             ; preds = %parse_uint.exit
   %i.am = load i32, ptr %i.ab, align 8, !tbaa !39 ; 2 uses
-  %3 = icmp slt i32 %i.am, 0
-  %i.an = icmp slt i32 %.0.i42, 0
-  %or.cond = select i1 %3, i1 true, i1 %i.an
+  %i.an = icmp slt i32 %i.am, 0
+  %or.cond = select i1 %i.an, i1 true, i1 %or.cond12.i40
   br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d, %parse_uint.exit

@@ -205,7 +205,7 @@ bb.co:                                            ; preds = %bb.cn
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.cp, %bb.co
-  %.1470 = phi i32 [ 18, %bb.co ], [ %i.lt, %bb.cp ] ; 12 uses
+  %.1470 = phi i32 [ 18, %bb.co ], [ %i.lt, %bb.cp ] ; 13 uses
   %.3465 = phi i32 [ %.2464, %bb.co ], [ %.4466, %bb.cp ] ; 3 uses
   %.not549 = icmp sgt i32 %.3465, %.sroa.6.2
   %spec.select578 = tail call i32 @llvm.smin.i32(i32 %.3465, i32 %.sroa.0.2)
@@ -221,19 +221,20 @@ bb.cp:                                            ; preds = %bb.cp, %bb.co
 bb.cq:                                            ; preds = %bb.cp
   %i.lu = sub nsw i32 %.5460, %.1470
   %i.lv = add nsw i32 %i.lu, %i.gc                ; 4 uses
-  %spec.select579 = tail call i32 @llvm.smin.i32(i32 %spec.select577, i32 %.1470) ; 9 uses
+  %spec.select579 = tail call i32 @llvm.smin.i32(i32 %spec.select577, i32 %.1470) ; 6 uses
   %i.lw = icmp slt i32 %.1470, 9
   br i1 %i.lw, label %.preheader786, label %.loopexit785
 
 .preheader786:                                    ; preds = %bb.cq
-  %i.lx = icmp sgt i32 %spec.select579, 0
+  %i.lx = icmp sgt i32 %.1470, 0
   br i1 %i.lx, label %.lr.ph979.preheader, label %.preheader784
 
 .lr.ph979.preheader:                              ; preds = %.preheader786
-  %wide.trip.count = zext nneg i32 %spec.select579 to i64 ; 2 uses
+  %4 = tail call i32 @llvm.smax.i32(i32 %spec.select579, i32 1)
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %4 = icmp ult i32 %spec.select579, 4
-  br i1 %4, label %.lr.ph979.epil.preheader, label %.lr.ph979.preheader.new
+  %5 = icmp slt i32 %spec.select579, 4
+  br i1 %5, label %.lr.ph979.epil.preheader, label %.lr.ph979.preheader.new
 
 .lr.ph979.preheader.new:                          ; preds = %.lr.ph979.preheader
   %unroll_iter = and i64 %wide.trip.count, 2147483644
@@ -241,7 +242,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 .preheader784.loopexit.unr-lcssa:                 ; preds = %.lr.ph979
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader784, label %.lr.ph979.epil.preheader
+  br i1 %lcmp.mod.not, label %.preheader785.loopexit, label %.lr.ph979.epil.preheader
 
 .lr.ph979.epil.preheader:                         ; preds = %.preheader784.loopexit.unr-lcssa, %.lr.ph979.preheader
   %indvars.iv1112.epil.init = phi i64 [ 0, %.lr.ph979.preheader ], [ %indvars.iv.next1113.3, %.preheader784.loopexit.unr-lcssa ]
@@ -260,14 +261,20 @@ bb.cq:                                            ; preds = %bb.cp
   %i.mb = sext i8 %i.ma to i32
   %i.mc = add i32 %i.ly, -48
   %i.md = add i32 %i.mc, %i.mb                    ; 2 uses
-  %indvars.iv.next1113.epil = add nuw nsw i64 %indvars.iv1112.epil, 1
+  %indvars.iv.next1113.epil = add nuw nsw i64 %indvars.iv1112.epil, 1 ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.preheader784, label %.lr.ph979.epil, !llvm.loop !42
+  br i1 %epil.iter.cmp.not, label %.preheader785.loopexit, label %.lr.ph979.epil, !llvm.loop !42
 
-.preheader784:                                    ; preds = %.preheader784.loopexit.unr-lcssa, %.lr.ph979.epil, %.preheader786
-  %.2471.lcssa = phi i32 [ 0, %.preheader786 ], [ %spec.select579, %.lr.ph979.epil ], [ %spec.select579, %.preheader784.loopexit.unr-lcssa ] ; 5 uses
-  %.9.lcssa = phi i32 [ 0, %.preheader786 ], [ %i.nq, %.preheader784.loopexit.unr-lcssa ], [ %i.md, %.lr.ph979.epil ] ; 3 uses
+.preheader785.loopexit:                           ; preds = %.lr.ph979.epil, %.preheader784.loopexit.unr-lcssa
+  %.lcssa1604 = phi i32 [ %i.nq, %.preheader784.loopexit.unr-lcssa ], [ %i.md, %.lr.ph979.epil ]
+  %indvars.iv.next1114.lcssa = phi i64 [ %indvars.iv.next1113.3, %.preheader784.loopexit.unr-lcssa ], [ %indvars.iv.next1113.epil, %.lr.ph979.epil ]
+  %6 = trunc nuw nsw i64 %indvars.iv.next1114.lcssa to i32
+  br label %.preheader784
+
+.preheader784:                                    ; preds = %.preheader785.loopexit, %.preheader786
+  %.2471.lcssa = phi i32 [ 0, %.preheader786 ], [ %6, %.preheader785.loopexit ] ; 5 uses
+  %.9.lcssa = phi i32 [ 0, %.preheader786 ], [ %.lcssa1604, %.preheader785.loopexit ] ; 3 uses
   %i.me = icmp slt i32 %.2471.lcssa, %.1470
   br i1 %i.me, label %.lr.ph985.preheader, label %._crit_edge.thread.i
 
@@ -335,7 +342,7 @@ bb.cq:                                            ; preds = %bb.cp
   %i.no = sext i8 %i.nn to i32
   %i.np = add i32 %i.nk, -48
   %i.nq = add i32 %i.np, %i.no                    ; 3 uses
-  %indvars.iv.next1113.3 = add nuw nsw i64 %indvars.iv1112, 4 ; 2 uses
+  %indvars.iv.next1113.3 = add nuw nsw i64 %indvars.iv1112, 4 ; 3 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader784.loopexit.unr-lcssa, label %.lr.ph979, !llvm.loop !44
@@ -507,7 +514,7 @@ s2b.exit:                                         ; preds = %.lr.ph45.i, %bb.cx
   %.0490 = select i1 %i.qn, i32 %.24811250, i32 0 ; 3 uses
   %.1492 = add i32 %.0490, %.sroa.47706.1
   %.not552 = icmp eq i32 %.0494, 0
-  %5 = icmp sgt i32 %.0490, 0
+  %.not553 = icmp eq i32 %.0490, 0
   %i.qp = icmp sgt i32 %i.lm, %.64611253          ; 6 uses
   %i.qq = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 14 uses
   %i.qr = icmp ne i32 %.sroa.47706.1, 0
@@ -665,7 +672,7 @@ bb.dm:                                            ; preds = %Bfree.exit624
 
 bb.dn:                                            ; preds = %bb.dm, %Bfree.exit624
   %.4407 = phi ptr [ %i.tb, %bb.dm ], [ %.3406, %Bfree.exit624 ] ; 18 uses
-  br i1 %5, label %bb.do, label %bb.dp
+  br i1 %.not553, label %bb.dp, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
   %i.tc = tail call fastcc ptr @pow5mult(ptr noundef nonnull %0, ptr noundef nonnull %.0.i618, i32 noundef %.0490)
@@ -1068,7 +1075,7 @@ bb.an:                                            ; preds = %.lr.ph, %bb.am
   %.0483 = phi i32 [ 0, %._crit_edge ], [ 0, %bb.ak ], [ %i.el, %bb.al ], [ %i.el, %bb.an ] ; 3 uses
   %i.fb = fcmp olt double %i.fa, 1.000000e+00
   %or.cond10 = select i1 %or.cond, i1 %i.fb, i1 false
-  %8 = icmp sgt i32 %.0489707, 0
+  %8 = icmp ne i32 %.0489707, 0
   %or.cond12 = and i1 %8, %or.cond10
   br i1 %or.cond12, label %bb.ao, label %bb.aq
 
@@ -1471,8 +1478,8 @@ i2b.exit628:                                      ; preds = %bb.bz, %bb.ca
   %i.ln = getelementptr inbounds nuw i8, ptr %.0.i.i627, i64 24
   store i32 1, ptr %i.ln, align 8, !tbaa !27
   store i32 1, ptr %i.ll, align 4, !tbaa !28
-  %9 = icmp sgt i32 %.0461, 0
-  br i1 %9, label %bb.cb, label %bb.cc
+  %.not567 = icmp eq i32 %.0461, 0
+  br i1 %.not567, label %bb.cc, label %bb.cb
 
 bb.cb:                                            ; preds = %i2b.exit628
   %i.lo = tail call fastcc ptr @pow5mult(ptr noundef nonnull %0, ptr noundef nonnull %.0.i.i627, i32 noundef %.0461)

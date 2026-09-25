@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %.not68 = icmp eq i32 %3, 0
-  %i.a = lshr i64 %1, 3                           ; 7 uses
+  %i.a = lshr i64 %1, 3                           ; 6 uses
   %.not49.i = icmp eq i64 %i.a, 0                 ; 2 uses
   %i.b = lshr i64 %1, 4                           ; 14 uses
   %i.c = lshr i64 %1, 13                          ; 8 uses
@@ -261,24 +261,18 @@ vector.body189:                                   ; preds = %.lr.ph.split.us.i.u
   %index.next194 = add nuw i64 %index190, 4       ; 2 uses
   %ptr.ind195 = getelementptr i8, ptr %pointer.phi191, i64 32
   %i.q = icmp eq i64 %index.next194, %i.a
-  br i1 %i.q, label %.lr.ph47.split.us.i.us.us.preheader, label %vector.body189, !llvm.loop !40
+  br i1 %i.q, label %.lr.ph47.split.us.i.us.us, label %vector.body189, !llvm.loop !40
 
 .lr.ph.split.us.i.us.us:                          ; preds = %.lr.ph.split.us.i.us.us.preheader, %.lr.ph.split.us.i.us.us
   %.044.us.i.us.us = phi ptr [ %i.s, %.lr.ph.split.us.i.us.us ], [ %0, %.lr.ph.split.us.i.us.us.preheader ] ; 3 uses
-  %.03043.us.i.us.us = phi i64 [ %4, %.lr.ph.split.us.i.us.us ], [ 0, %.lr.ph.split.us.i.us.us.preheader ]
   %i.r = ptrtoint ptr %.044.us.i.us.us to i64
   store i64 %i.r, ptr %.044.us.i.us.us, align 8, !tbaa !26
   %i.s = getelementptr inbounds nuw i8, ptr %.044.us.i.us.us, i64 8
-  %4 = add nuw nsw i64 %.03043.us.i.us.us, 1      ; 2 uses
-  %exitcond61.not.i.us.us = icmp eq i64 %4, %i.a
-  br i1 %exitcond61.not.i.us.us, label %.lr.ph47.split.us.i.us.us.preheader, label %.lr.ph.split.us.i.us.us, !llvm.loop !41
+  br label %.lr.ph.split.us.i.us.us, !llvm.loop !41
 
-.lr.ph47.split.us.i.us.us.preheader:              ; preds = %vector.body189, %.lr.ph.split.us.i.us.us
-  br label %.lr.ph47.split.us.i.us.us
-
-.lr.ph47.split.us.i.us.us:                        ; preds = %bb.b, %.lr.ph47.split.us.i.us.us.preheader
-  %.146.us.i.us.us = phi ptr [ %0, %.lr.ph47.split.us.i.us.us.preheader ], [ %i.ae, %bb.b ] ; 6 uses
-  %.13145.us.i.us.us = phi i64 [ 0, %.lr.ph47.split.us.i.us.us.preheader ], [ %i.af, %bb.b ]
+.lr.ph47.split.us.i.us.us:                        ; preds = %vector.body189, %bb.b
+  %.146.us.i.us.us = phi ptr [ %i.ae, %bb.b ], [ %0, %vector.body189 ] ; 6 uses
+  %.13145.us.i.us.us = phi i64 [ %i.af, %bb.b ], [ 0, %vector.body189 ]
   %i.t = load i64, ptr %.146.us.i.us.us, align 8, !tbaa !26
   %i.u = ptrtoint ptr %.146.us.i.us.us to i64
   %.not.us.i.us.us = icmp eq i64 %i.t, %i.u
@@ -681,7 +675,7 @@ bb.d:                                             ; preds = %.preheader.split
   %i.n = add nsw i64 %i.l, -4096
   %spec.select = select i1 %.not71, i64 %i.l, i64 %i.n ; 13 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr align 8 %.167, i64 %spec.select, i1 false)
-  %i.o = lshr i64 %spec.select, 3                 ; 7 uses
+  %i.o = lshr i64 %spec.select, 3                 ; 6 uses
   %.not49.i = icmp eq i64 %i.o, 0                 ; 2 uses
   %i.p = lshr i64 %spec.select, 4                 ; 17 uses
   %i.q = lshr i64 %spec.select, 13                ; 8 uses
@@ -734,24 +728,18 @@ vector.body:                                      ; preds = %.lr.ph.split.us.i.u
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %ptr.ind = getelementptr i8, ptr %pointer.phi, i64 32
   %i.ad = icmp eq i64 %index.next, %i.o
-  br i1 %i.ad, label %.lr.ph47.split.us.i.us.preheader, label %vector.body, !llvm.loop !48
+  br i1 %i.ad, label %.lr.ph47.split.us.i.us, label %vector.body, !llvm.loop !48
 
 .lr.ph.split.us.i.us:                             ; preds = %.lr.ph.split.us.i.us.preheader, %.lr.ph.split.us.i.us
   %.044.us.i.us = phi ptr [ %i.af, %.lr.ph.split.us.i.us ], [ %.167, %.lr.ph.split.us.i.us.preheader ] ; 3 uses
-  %.03043.us.i.us = phi i64 [ %3, %.lr.ph.split.us.i.us ], [ 0, %.lr.ph.split.us.i.us.preheader ]
   %i.ae = ptrtoint ptr %.044.us.i.us to i64
   store i64 %i.ae, ptr %.044.us.i.us, align 8, !tbaa !26
   %i.af = getelementptr inbounds nuw i8, ptr %.044.us.i.us, i64 8
-  %3 = add nuw nsw i64 %.03043.us.i.us, 1         ; 2 uses
-  %exitcond61.not.i.us = icmp eq i64 %3, %i.o
-  br i1 %exitcond61.not.i.us, label %.lr.ph47.split.us.i.us.preheader, label %.lr.ph.split.us.i.us, !llvm.loop !49
+  br label %.lr.ph.split.us.i.us, !llvm.loop !49
 
-.lr.ph47.split.us.i.us.preheader:                 ; preds = %vector.body, %.lr.ph.split.us.i.us
-  br label %.lr.ph47.split.us.i.us
-
-.lr.ph47.split.us.i.us:                           ; preds = %bb.e, %.lr.ph47.split.us.i.us.preheader
-  %.146.us.i.us = phi ptr [ %.167, %.lr.ph47.split.us.i.us.preheader ], [ %i.ar, %bb.e ] ; 6 uses
-  %.13145.us.i.us = phi i64 [ 0, %.lr.ph47.split.us.i.us.preheader ], [ %i.as, %bb.e ]
+.lr.ph47.split.us.i.us:                           ; preds = %vector.body, %bb.e
+  %.146.us.i.us = phi ptr [ %i.ar, %bb.e ], [ %.167, %vector.body ] ; 6 uses
+  %.13145.us.i.us = phi i64 [ %i.as, %bb.e ], [ 0, %vector.body ]
   %i.ag = load i64, ptr %.146.us.i.us, align 8, !tbaa !26
   %i.ah = ptrtoint ptr %.146.us.i.us to i64
   %.not.us.i.us = icmp eq i64 %i.ag, %i.ah

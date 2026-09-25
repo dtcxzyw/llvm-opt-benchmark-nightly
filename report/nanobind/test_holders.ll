@@ -204,7 +204,7 @@ _ZN8nanobind6detail11type_casterI7PetKindiE11from_pythonENS_6handleEjPNS0_12clea
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %i.a, align 8, !tbaa !107
-  %i.f = trunc i64 %i.e to i32                    ; 4 uses
+  %i.f = trunc i64 %i.e to i32                    ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %switch = icmp ult i32 %i.f, 2
   br i1 %switch, label %_ZN8nanobind6detail9type_hookI3PetiE3getEPS2_.exit, label %bb.c
@@ -228,9 +228,7 @@ _ZN8nanobind6detail9type_hookI3PetiE3getEPS2_.exit: ; preds = %bb.b
   %i.i = call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #32 ; 2 uses
   store i32 %i.f, ptr %i.i, align 4, !tbaa !131
   %switch.selectcmp.i = icmp eq i32 %i.f, 0
-  %switch.select.i = select i1 %switch.selectcmp.i, ptr @_ZTI3Cat, ptr @_ZTI3Pet
-  %switch.selectcmp4.i = icmp eq i32 %i.f, 1
-  %switch.select5.i = select i1 %switch.selectcmp4.i, ptr @_ZTI3Dog, ptr %switch.select.i
+  %switch.select5.i = select i1 %switch.selectcmp.i, ptr @_ZTI3Cat, ptr @_ZTI3Dog
   %i.j = load ptr, ptr @_ZN8nanobind6detail9internalsE, align 8, !tbaa !16
   %i.k = call noundef ptr @_ZN8nanobind6detail11nb_type_putEPNS0_12nb_internalsEPKSt9type_infoS5_PvNS_9rv_policyEPNS0_12cleanup_listEPb(ptr noundef %i.j, ptr noundef nonnull %switch.select5.i, ptr noundef null, ptr noundef nonnull %i.i, i8 2, ptr noundef %3, ptr noundef null) #28
   br label %"_ZZN8nanobind6detail11func_createILb0ELb1EZL35nanobind_test_holders_ext_exec_implNS_7module_EE4$_40P3PetJ7PetKindEJLm0EEJNS_5scopeENS_4nameEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSA_jPNS0_12cleanup_listEE_clESO_SP_jSR_.exit"

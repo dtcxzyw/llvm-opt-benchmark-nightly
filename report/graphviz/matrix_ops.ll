@@ -204,9 +204,9 @@ scadd.exit276.loopexit:                           ; preds = %.lr.ph.i271.prol.lo
   br i1 %i.pz, label %._crit_edge324, label %.lr.ph323
 
 ._crit_edge324:                                   ; preds = %.lr.ph323, %.lr.ph323.prol.loopexit
-  %.1154.lcssa = phi i32 [ %.1154.lcssa.unr, %.lr.ph323.prol.loopexit ], [ %.1154.1, %.lr.ph323 ] ; 2 uses
+  %.1154.lcssa = phi i32 [ %.1154.lcssa.unr, %.lr.ph323.prol.loopexit ], [ %.1154.1, %.lr.ph323 ]
   %.1.lcssa = phi double [ %.1.lcssa.unr, %.lr.ph323.prol.loopexit ], [ %.1.1, %.lr.ph323 ]
-  %i.qa = zext i32 %.1154.lcssa to i64
+  %i.qa = zext i32 %.1154.lcssa to i64            ; 3 uses
   %.not177 = icmp eq i64 %indvars.iv383, %i.qa
   br i1 %.not177, label %bb.o, label %.lr.ph.preheader.i281
 
@@ -235,12 +235,11 @@ scadd.exit276.loopexit:                           ; preds = %.lr.ph.i271.prol.lo
   %i.qj = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv383
   %i.qk = load ptr, ptr %i.qj, align 8, !tbaa !16 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.p, ptr readonly align 8 %i.qk, i64 %i.lq, i1 false), !tbaa !18, !alias.scope !103
-  %4 = sext i32 %.1154.lcssa to i64               ; 2 uses
-  %i.ql = getelementptr inbounds [8 x i8], ptr %3, i64 %4
+  %i.ql = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.qa
   %i.qm = load ptr, ptr %i.ql, align 8, !tbaa !16 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.qk, ptr readonly align 8 %i.qm, i64 %i.lq, i1 false), !tbaa !18, !alias.scope !104
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.qm, ptr readonly align 8 %i.p, i64 %i.lq, i1 false), !tbaa !18, !alias.scope !105
-  %i.qn = getelementptr inbounds [8 x i8], ptr %i.lm, i64 %4
+  %i.qn = getelementptr inbounds nuw [8 x i8], ptr %i.lm, i64 %i.qa
   store double %i.pr, ptr %i.qn, align 8, !tbaa !18
   store double %.1.lcssa, ptr %i.pq, align 8, !tbaa !18
   br label %bb.o

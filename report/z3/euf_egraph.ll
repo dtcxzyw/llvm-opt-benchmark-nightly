@@ -205,18 +205,19 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ae
   %i.gw = load i32, ptr %i.gv, align 8, !tbaa !143 ; 2 uses
   %.not10 = icmp eq i32 %i.gw, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.0124, i64 24
-  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !143
-  %.not13 = icmp eq i32 %i.gw, %.pre              ; 2 uses
+  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !143 ; 2 uses
   br i1 %.not10, label %bb.al, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  br i1 %.not13, label %.thread, label %bb.ak
+  %.not11 = icmp eq i32 %.pre, %i.gw
+  br i1 %.not11, label %.thread, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   call void @_ZN3euf6egraph11add_literalEPNS_5enodeES2_(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef nonnull %.0124, ptr noundef nonnull %.0123)
   br label %.thread
 
 bb.al:                                            ; preds = %bb.ai
+  %.not13 = icmp eq i32 %.pre, 0
   br i1 %.not13, label %.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al

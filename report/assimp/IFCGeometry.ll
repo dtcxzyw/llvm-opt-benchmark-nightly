@@ -204,28 +204,27 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE5clearEv.exit: ; preds = %bb.cc, %_ZNKSt7__c
   br label %bb.cp
 
 bb.cp:                                            ; preds = %.preheader678, %bb.dh
-  %22 = phi i1 [ false, %.preheader678 ], [ true, %bb.dh ]
-  %i.aas = phi i1 [ true, %.preheader678 ], [ false, %bb.dh ]
+  %i.aas = phi i1 [ true, %.preheader678 ], [ false, %bb.dh ] ; 2 uses
   %.0120817 = phi i64 [ 0, %.preheader678 ], [ %.2122, %bb.dh ] ; 2 uses
-  br i1 %22, label %.preheader, label %.preheader671
+  br i1 %i.aas, label %.preheader, label %.preheader671
 
 .preheader671:                                    ; preds = %bb.cp
   br i1 %.not665779, label %.loopexit, label %.lr.ph814.preheader
 
 .lr.ph814.preheader:                              ; preds = %.preheader671
   %.pre895 = load ptr, ptr %.sroa.phi504, align 8
-  br label %.lr.ph814
+  br label %.lr.ph816
 
 .preheader:                                       ; preds = %bb.cp
   br i1 %.not665779, label %.loopexit, label %.lr.ph816.preheader
 
 .lr.ph816.preheader:                              ; preds = %.preheader
   %.pre896 = load ptr, ptr %.sroa.phi504, align 8
-  br label %.lr.ph816
+  br label %.lr.ph814
 
-.lr.ph816:                                        ; preds = %.lr.ph816.preheader, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349
-  %i.aat = phi ptr [ %i.abz, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349 ], [ %.pre896, %.lr.ph816.preheader ] ; 6 uses
-  %.0118815 = phi i64 [ %i.aca, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349 ], [ 0, %.lr.ph816.preheader ] ; 2 uses
+.lr.ph816:                                        ; preds = %.lr.ph814.preheader, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349
+  %i.aat = phi ptr [ %i.abz, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349 ], [ %.pre895, %.lr.ph814.preheader ] ; 6 uses
+  %.0118815 = phi i64 [ %i.aca, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349 ], [ 0, %.lr.ph814.preheader ] ; 2 uses
   %i.aau = getelementptr inbounds nuw [24 x i8], ptr %i.cu, i64 %.0118815 ; 2 uses
   %i.aav = load <2 x double>, ptr %i.aau, align 8, !noalias !220
   %i.aaw = load <2 x double>, ptr %8, align 16, !noalias !220
@@ -328,9 +327,9 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349: ; preds = %_ZNSt6ve
           cleanup
   br label %bb.gs
 
-.lr.ph814:                                        ; preds = %.lr.ph814.preheader, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365
-  %i.acb = phi ptr [ %i.adb, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365 ], [ %.pre895, %.lr.ph814.preheader ] ; 5 uses
-  %.0117813 = phi i64 [ %i.acc, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365 ], [ %i.fl, %.lr.ph814.preheader ]
+.lr.ph814:                                        ; preds = %.lr.ph816.preheader, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365
+  %i.acb = phi ptr [ %i.adb, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365 ], [ %.pre896, %.lr.ph816.preheader ] ; 5 uses
+  %.0117813 = phi i64 [ %i.acc, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365 ], [ %i.fl, %.lr.ph816.preheader ]
   %i.acc = add i64 %.0117813, -1                  ; 3 uses
   %i.acd = getelementptr inbounds nuw [24 x i8], ptr %i.cu, i64 %i.acc ; 2 uses
   %i.ace = load ptr, ptr %.sroa.phi507, align 8
@@ -422,7 +421,7 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365: ; preds = %bb.cu, 
           cleanup
   br label %bb.gs
 
-.loopexit:                                        ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349, %.preheader671, %.preheader
+.loopexit:                                        ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit365, %.preheader671, %.preheader
   %i.adc = load ptr, ptr %i.aap, align 8          ; 3 uses
   %i.add = load ptr, ptr %i.aaq, align 8
   %.not.i.i366 = icmp eq ptr %i.adc, %i.add

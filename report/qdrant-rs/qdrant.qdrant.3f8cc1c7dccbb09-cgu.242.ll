@@ -202,44 +202,20 @@ define hidden void @_RNvXsx_Csct6HaUIs3yu_8smallvecINtB5_8SmallVecATNtNtCsexYYUd
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 3 uses
   %i.d = icmp ugt i64 %i.c, 1
-  br i1 %i.d, label %bb.c, label %.preheader.preheader
+  br i1 %i.d, label %bb.c, label %bb.b
 
-.preheader.preheader:                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBH_3vec3VechEEECsl8OoimOLbh_6qdrant.exit, label %.lr.ph
+bb.b:                                             ; preds = %bb.a
+  %i.e = icmp eq i64 %i.c, 0
+  br i1 %i.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBH_3vec3VechEEECsl8OoimOLbh_6qdrant.exit, label %.lr.ph4
 
-.lr.ph:                                           ; preds = %.preheader.preheader
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBG_3vec3VechEEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(48) %0)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBH_3vec3VechEEECsl8OoimOLbh_6qdrant.exit unwind label %bb.b
+.lr.ph4:                                          ; preds = %bb.b
+  tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBG_3vec3VechEEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(48) %0)
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBH_3vec3VechEEECsl8OoimOLbh_6qdrant.exit
 
-2:                                                ; preds = %.lr.ph4
-  %3 = add nuw nsw i64 %.sroa.0.1.i3, 1           ; 2 uses
-  %4 = icmp eq i64 %3, %i.c
-  br i1 %4, label %common.resume, label %.lr.ph4
-
-bb.b:                                             ; preds = %.lr.ph
-  %5 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %i.e = icmp eq i64 %i.c, 1
-  br i1 %i.e, label %common.resume, label %.lr.ph4
-
-.lr.ph4:                                          ; preds = %bb.b, %2
-  %.sroa.0.1.i3 = phi i64 [ %3, %2 ], [ 1, %bb.b ] ; 2 uses
-  %6 = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.0.1.i3
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBG_3vec3VechEEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(48) %6) #19
-          to label %2 unwind label %7
-
-common.resume:                                    ; preds = %2, %bb.b, %bb.d
-  %common.resume.op = phi { ptr, i32 } [ %i.k, %bb.d ], [ %5, %bb.b ], [ %5, %2 ]
-  resume { ptr, i32 } %common.resume.op
-
-7:                                                ; preds = %.lr.ph4
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #18
-  unreachable
+common.resume:                                    ; preds = %bb.d
+  resume { ptr, i32 } %i.k
 
 bb.c:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8, !nonnull !6, !noundef !6
@@ -271,7 +247,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtBG
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBH_3vec3VechEEECsl8OoimOLbh_6qdrant.exit
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBH_3vec3VechEEECsl8OoimOLbh_6qdrant.exit: ; preds = %.preheader.preheader, %.lr.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtBG_6string6StringIBC_hEEEECsl8OoimOLbh_6qdrant.exit
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtNtCsexYYUdYSQU6_5alloc6string6StringINtNtBH_3vec3VechEEECsl8OoimOLbh_6qdrant.exit: ; preds = %bb.b, %.lr.ph4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtBG_6string6StringIBC_hEEEECsl8OoimOLbh_6qdrant.exit
   ret void
 }
 

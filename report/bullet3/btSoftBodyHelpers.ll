@@ -205,6 +205,8 @@ bb.n:                                             ; preds = %bb.m
 
 .preheader.preheader:                             ; preds = %bb.m
   tail call void @_ZdaPv(ptr noundef nonnull %i.h) #28
+  %smax = tail call i32 @llvm.smax.i32(i32 %5, i32 1) ; 2 uses
+  %smax211 = tail call i32 @llvm.smax.i32(i32 %6, i32 1)
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge195
@@ -258,11 +260,11 @@ bb.s:                                             ; preds = %bb.r
   br label %.thread.us
 
 .thread.us:                                       ; preds = %.thread.us.critedge, %bb.s, %bb.r, %bb.q, %bb.p
-  %exitcond208.not = icmp eq i32 %i.dc, %5
+  %exitcond208.not = icmp eq i32 %i.dc, %smax
   br i1 %exitcond208.not, label %._crit_edge195, label %.lr.ph194.split.us, !llvm.loop !337
 
 ._crit_edge195:                                   ; preds = %.thread, %.thread.us
-  %exitcond209.not.a = icmp eq i32 %i.cy, %6
+  %exitcond209.not.a = icmp eq i32 %i.cy, %smax211
   br i1 %exitcond209.not.a, label %.loopexit, label %.preheader, !llvm.loop !338
 
 .lr.ph194.split:                                  ; preds = %.preheader, %.thread
@@ -278,7 +280,7 @@ bb.t:                                             ; preds = %.lr.ph194.split
   br label %.thread
 
 .thread:                                          ; preds = %bb.t, %.lr.ph194.split
-  %exitcond207.not = icmp eq i32 %i.dl, %5
+  %exitcond207.not = icmp eq i32 %i.dl, %smax
   br i1 %exitcond207.not, label %._crit_edge195, label %.lr.ph194.split, !llvm.loop !337
 
 .loopexit:                                        ; preds = %._crit_edge195, %bb.a
@@ -525,6 +527,8 @@ bb.x:                                             ; preds = %bb.w
   %i.cx = insertelement <2 x float> poison, float %i.cv, i64 0
   %i.cy = insertelement <2 x float> %i.cx, float %i.cw, i64 1
   %i.cz = fdiv nnan <2 x float> splat (float 1.000000e+00), %i.cy ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %5, i32 1) ; 2 uses
+  %smax260 = tail call i32 @llvm.smax.i32(i32 %6, i32 1)
   %i.da = extractelement <2 x float> %i.cz, i64 1 ; 2 uses
   %i.db = extractelement <2 x float> %i.cz, i64 0 ; 2 uses
   br label %.preheader
@@ -616,12 +620,12 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 
 .thread.us:                                       ; preds = %.thread.us.critedge, %bb.ac
   %.2.us = phi i32 [ %i.ek, %bb.ac ], [ %.1240.us, %.thread.us.critedge ] ; 2 uses
-  %exitcond255.not = icmp eq i32 %i.dn, %5
+  %exitcond255.not = icmp eq i32 %i.dn, %smax
   br i1 %exitcond255.not, label %._crit_edge243, label %.lr.ph242.split.us, !llvm.loop !341
 
 ._crit_edge243:                                   ; preds = %.thread, %.thread.us
   %.us-phi = phi i32 [ %.2.us, %.thread.us ], [ %.0200245, %.thread ]
-  %exitcond256.not = icmp eq i32 %i.dc, %6
+  %exitcond256.not = icmp eq i32 %i.dc, %smax260
   br i1 %exitcond256.not, label %.loopexit, label %.preheader, !llvm.loop !342
 
 .lr.ph242.split:                                  ; preds = %.preheader, %.thread
@@ -637,7 +641,7 @@ bb.ad:                                            ; preds = %.lr.ph242.split
   br label %.thread
 
 .thread:                                          ; preds = %bb.ad, %.lr.ph242.split
-  %exitcond254.not = icmp eq i32 %i.el, %5
+  %exitcond254.not = icmp eq i32 %i.el, %smax
   br i1 %exitcond254.not, label %._crit_edge243, label %.lr.ph242.split, !llvm.loop !341
 
 .loopexit:                                        ; preds = %._crit_edge243, %bb.a

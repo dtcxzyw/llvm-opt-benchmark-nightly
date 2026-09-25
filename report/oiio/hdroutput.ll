@@ -205,12 +205,13 @@ _ZNSt10unique_ptrIA_hSt14default_deleteIS0_EE5resetIPhvEEvT_.exit: ; preds = %bb
   %i.t = shl nuw nsw i32 %2, 1
   %i.u = mul nuw nsw i32 %2, 3
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %i.w = zext nneg i32 %2 to i64                  ; 4 uses
-  %i.x = zext nneg i32 %i.t to i64
-  %i.y = zext nneg i32 %i.u to i64
+  %i.w = zext nneg i32 %2 to i64                  ; 3 uses
+  %4 = zext nneg i32 %i.t to i64
+  %i.x = zext nneg i32 %i.u to i64
+  %i.y = zext nneg i32 %2 to i64
   %invariant.gep = getelementptr inbounds nuw i8, ptr %.048, i64 %i.w
-  %invariant.gep117 = getelementptr inbounds nuw i8, ptr %.048, i64 %i.x
-  %invariant.gep119 = getelementptr inbounds nuw i8, ptr %.048, i64 %i.y
+  %invariant.gep117 = getelementptr inbounds nuw i8, ptr %.048, i64 %4
+  %invariant.gep119 = getelementptr inbounds nuw i8, ptr %.048, i64 %i.x
   br label %bb.f
 
 .critedge61:                                      ; preds = %.loopexit79
@@ -290,7 +291,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph
   store i8 %.sink29.i.i, ptr %gep120, align 1, !tbaa !54
   %i.az = getelementptr inbounds nuw i8, ptr %.15390, i64 12 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.w
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.y
   br i1 %exitcond.not, label %.preheader.lr.ph.i, label %.lr.ph, !llvm.loop !253
 
 .preheader.lr.ph.i:                               ; preds = %bb.j, %.loopexit79

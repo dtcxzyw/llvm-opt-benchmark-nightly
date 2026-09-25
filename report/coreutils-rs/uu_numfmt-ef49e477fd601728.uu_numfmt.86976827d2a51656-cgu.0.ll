@@ -204,7 +204,7 @@ bb.cz:                                            ; preds = %bb.cc
   %.sroa.015.0.i.i = select i1 %i.ol, i64 %..i.i.i, i64 %.sroa.021.0
   %i.om = load double, ptr %.sroa.05.0.sroa.phi96.i.i, align 8, !noalias !2081, !noundef !4
   %i.on = fdiv double %i.lv, %i.om                ; 2 uses
-  %i.oo = uitofp i64 %.sroa.015.0.i.i to double
+  %i.oo = uitofp nneg i64 %.sroa.015.0.i.i to double
   %i.op = tail call double @llvm.pow.f64(double 1.000000e+01, double %i.oo) ; 3 uses
   %i.oq = fcmp ueq double %i.op, +inf
   br i1 %i.oq, label %_RNvNtCsbyqtxyC5WYI_9uu_numfmt6format9div_round.exit.i.i, label %bb.da
@@ -607,9 +607,11 @@ _RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit161: ; preds = %bb.r, %b
   %i.fm = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !2980, !nonnull !4, !noundef !4 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 %i.bd
   store i8 37, ptr %i.fn, align 1, !noalias !2980
-  %i.fo = add nuw nsw i64 %i.bd, 1                ; 3 uses
+  %i.fo = add nuw i64 %i.bd, 1                    ; 4 uses
   store i64 %i.fo, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !2980
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2983)
+  %3 = icmp sgt i64 %i.fo, -1
+  tail call void @llvm.assume(i1 %3)
   %i.fp = icmp eq i64 %i.fl, %i.fo
   br i1 %i.fp, label %bb.t, label %_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit161.1, !prof !15
 
@@ -1012,9 +1014,11 @@ _RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit564: ; preds = %.prehead
   %i.ane = load ptr, ptr %.sroa.5.0..sroa_idx32, align 8, !alias.scope !3041, !nonnull !4, !noundef !4 ; 2 uses
   %i.anf = getelementptr inbounds nuw i8, ptr %i.ane, i64 %i.ajh
   store i8 37, ptr %i.anf, align 1, !noalias !3041
-  %i.ang = add nuw nsw i64 %i.ajh, 1              ; 3 uses
+  %i.ang = add nuw i64 %i.ajh, 1                  ; 4 uses
   store i64 %i.ang, ptr %.sroa.6.0..sroa_idx38, align 8, !alias.scope !3041
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3050)
+  %4 = icmp sgt i64 %i.ang, -1
+  tail call void @llvm.assume(i1 %4)
   %i.anh = icmp eq i64 %i.and, %i.ang
   br i1 %i.anh, label %bb.hp, label %_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit564.1, !prof !15
 

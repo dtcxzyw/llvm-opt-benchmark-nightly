@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.c
-  %i.e = tail call noalias dereferenceable_or_null(96) ptr @uprv_malloc_78(i64 noundef 96) #12 ; 18 uses
+  %i.e = tail call noalias dereferenceable_or_null(96) ptr @uprv_malloc_78(i64 noundef 96) #12 ; 17 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.f, label %bb.g
 
@@ -233,7 +233,7 @@ bb.g:                                             ; preds = %bb.e
   %i.q = select i1 %i.n, ptr @_ZL22uprv_writeDirectUInt32Pjj, ptr @_ZL20uprv_writeSwapUInt32Pjj
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   store ptr %i.q, ptr %i.r, align 8, !tbaa !42
-  %i.s = icmp eq i8 %3, 0                         ; 2 uses
+  %i.s = icmp eq i8 %3, 0                         ; 3 uses
   %i.t = select i1 %i.s, ptr @uprv_compareInvAscii_78, ptr @uprv_compareInvEbcdic_78
   %i.u = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store ptr %i.t, ptr %i.u, align 8, !tbaa !43
@@ -248,19 +248,17 @@ bb.g:                                             ; preds = %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   store ptr %_ZL16uprv_swapArray64PK12UDataSwapperPKviPvP10UErrorCode.sink, ptr %i.y, align 8, !tbaa !45
   %i.z = icmp eq i8 %1, 0
+  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 72 ; 2 uses
   br i1 %i.z, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %uprv_copyAscii_78.uprv_ebcdicFromAscii_78 = select i1 %i.s, ptr @uprv_copyAscii_78, ptr @uprv_ebcdicFromAscii_78
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 72
   store ptr %uprv_copyAscii_78.uprv_ebcdicFromAscii_78, ptr %5, align 8, !tbaa !16
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %6 = icmp eq i8 %3, 1
-  %uprv_copyEbcdic_78.uprv_asciiFromEbcdic_78 = select i1 %6, ptr @uprv_copyEbcdic_78, ptr @uprv_asciiFromEbcdic_78
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 72
-  store ptr %uprv_copyEbcdic_78.uprv_asciiFromEbcdic_78, ptr %7, align 8, !tbaa !16
+  %uprv_copyEbcdic_78.uprv_asciiFromEbcdic_78 = select i1 %i.s, ptr @uprv_asciiFromEbcdic_78, ptr @uprv_copyEbcdic_78
+  store ptr %uprv_copyEbcdic_78.uprv_asciiFromEbcdic_78, ptr %5, align 8, !tbaa !16
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.a, %bb.b, %bb.f, %bb.d

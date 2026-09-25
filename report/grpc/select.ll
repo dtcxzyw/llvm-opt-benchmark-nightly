@@ -204,12 +204,13 @@ bb.l:                                             ; preds = %bb.k
   %i.cr = zext i8 %.val.i15.i to i64
   %i.cs = getelementptr inbounds nuw i8, ptr @upb_DecodeFast_GetFieldType.types, i64 %i.cr
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !23
-  %i.cu = sext i8 %i.ct to i32
+  %i.cu = sext i8 %i.ct to i32                    ; 2 uses
   %i.cv = shl nsw i32 %i.cu, 3
   %i.cw = shl nuw nsw i32 %.03.ph.i.i, 1
   %i.cx = or disjoint i32 %i.cw, %.0.ph.i
-  %i.cy = or i32 %i.cv, %i.cx                     ; 2 uses
-  %switch.i = icmp ult i32 %i.cy, 72
+  %i.cy = or disjoint i32 %i.cv, %i.cx
+  %2 = and i32 %i.cu, 536870911
+  %switch.i = icmp samesign ult i32 %2, 9
   br i1 %switch.i, label %bb.m, label %upb_DecodeFast_TryFillEntry.exit.thread
 
 bb.m:                                             ; preds = %bb.l

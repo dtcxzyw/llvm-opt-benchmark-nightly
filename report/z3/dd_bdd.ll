@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader86:                                     ; preds = %bb.c, %_ZN2dd11bdd_manager11apply_constEjjNS0_6bdd_opE.exit.2.1
   %.pre = phi ptr [ %.pre.pre, %bb.c ], [ %.pre108.1, %_ZN2dd11bdd_manager11apply_constEjjNS0_6bdd_opE.exit.2.1 ] ; 6 uses
-  %.0.i.2 = phi i32 [ 0, %bb.c ], [ 1, %_ZN2dd11bdd_manager11apply_constEjjNS0_6bdd_opE.exit.2.1 ] ; 3 uses
+  %.0.i.2 = phi i32 [ 0, %bb.c ], [ 1, %_ZN2dd11bdd_manager11apply_constEjjNS0_6bdd_opE.exit.2.1 ] ; 2 uses
   %i.ak = phi i1 [ true, %bb.c ], [ false, %_ZN2dd11bdd_manager11apply_constEjjNS0_6bdd_opE.exit.2.1 ] ; 2 uses
-  %indvars.iv97 = phi i64 [ 0, %bb.c ], [ 1, %_ZN2dd11bdd_manager11apply_constEjjNS0_6bdd_opE.exit.2.1 ] ; 12 uses
+  %indvars.iv97 = phi i64 [ 0, %bb.c ], [ 1, %_ZN2dd11bdd_manager11apply_constEjjNS0_6bdd_opE.exit.2.1 ] ; 13 uses
   %i.al = or disjoint i64 %indvars.iv97, 8        ; 3 uses
   %i.am = add nuw nsw i64 %indvars.iv97, 9        ; 3 uses
   %i.an = icmp eq ptr %.pre, null
@@ -442,8 +442,9 @@ bb.o:                                             ; preds = %bb.n
 _ZNK6vectorIjLb0EjE4sizeEv.exit.thread.i.2:       ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit.thread.i.1, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i.1._crit_edge, %.lr.ph.preheader.i.i.1
   %.pre110 = phi ptr [ %.pre106.lcssa, %.lr.ph.preheader.i.i.1 ], [ %.pre106.lcssa, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i.1._crit_edge ], [ %.pre112, %_ZNK6vectorIjLb0EjE4sizeEv.exit.thread.i.1 ] ; 2 uses
   %i.dn = phi ptr [ %.lcssa, %.lr.ph.preheader.i.i.1 ], [ %.lcssa, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i.1._crit_edge ], [ %i.cj, %_ZNK6vectorIjLb0EjE4sizeEv.exit.thread.i.1 ] ; 6 uses
+  %.0.i.1 = trunc nuw nsw i64 %indvars.iv97 to i32
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dn, i64 %i.cl
-  store i32 %.0.i.2, ptr %i.do, align 4, !tbaa !62
+  store i32 %.0.i.1, ptr %i.do, align 4, !tbaa !62
   %i.dp = or disjoint i64 %indvars.iv97, 16       ; 4 uses
   %i.dq = add nuw nsw i64 %indvars.iv97, 17       ; 3 uses
   %i.dr = getelementptr inbounds i8, ptr %i.dn, i64 -4

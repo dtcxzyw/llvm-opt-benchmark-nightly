@@ -205,7 +205,7 @@ bb.cd:                                            ; preds = %bb.cc
   %i.oe = getelementptr inbounds nuw i8, ptr %i.lp, i64 40 ; 2 uses
   %i.of = load ptr, ptr %i.mh, align 8, !alias.scope !5292, !noalias !5291, !noundef !10 ; 11 uses
   %i.og = ptrtoaddr ptr %i.of to i64
-  %i.oh = load i64, ptr %i.mj, align 8, !alias.scope !5292, !noalias !5291, !noundef !10 ; 9 uses
+  %i.oh = load i64, ptr %i.mj, align 8, !alias.scope !5292, !noalias !5291, !noundef !10 ; 8 uses
   %.not.i164 = icmp ult i64 %i.oh, 4
   br i1 %.not.i164, label %bb.ce, label %bb.cf
 
@@ -232,7 +232,7 @@ bb.ch:                                            ; preds = %bb.ce
   unreachable
 
 bb.ci:                                            ; preds = %bb.cf
-  %.idx.i = and i64 %i.oh, -4                     ; 3 uses
+  %.idx.i = and i64 %i.oh, -4                     ; 6 uses
   %i.on = lshr i64 %i.oh, 2                       ; 6 uses
   %.not.i.i.i.i.i = icmp ugt i64 %.idx.i, 9223372036854775804
   br i1 %.not.i.i.i.i.i, label %bb.ck, label %bb.cj, !prof !27
@@ -348,16 +348,15 @@ _RNvXNtNtCs40k4W9msRzi_5alloc3vec14spec_from_iterINtB4_3VeclEINtB2_12SpecFromIte
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !5293
   call void @llvm.experimental.noalias.scope.decl(metadata !5297)
   %i.pz = icmp sgt i64 %i.oh, -1
-  %4 = and i64 %i.oh, 9223372036854775804         ; 3 uses
   call void @llvm.assume(i1 %i.pz)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !5298
   store i64 1, ptr %i.t, align 8, !noalias !5298
   store i64 1, ptr %i.fa, align 8, !noalias !5298
   store ptr %i.oo, ptr %i.fb, align 8, !noalias !5298
-  store i64 %4, ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !5298
+  store i64 %.idx.i, ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !5298
   store ptr null, ptr %.sroa.53.0..sroa_idx.i.i, align 8, !noalias !5298
   store i64 4, ptr %.sroa.53.sroa.4.0..sroa.53.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !5298
-  store i64 %4, ptr %.sroa.53.sroa.5.0..sroa.53.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !5298
+  store i64 %.idx.i, ptr %.sroa.53.sroa.5.0..sroa.53.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !5298
   call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #39, !noalias !5299
   %i.qa = call noundef align 8 dereferenceable_or_null(56) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 56, i64 noundef 8) #39, !noalias !5299 ; 4 uses
   %i.qb = icmp eq ptr %i.qa, null
@@ -387,7 +386,7 @@ _RNvXs5_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtB5_12ScalarBufferlEINtN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !5298
   store ptr %i.qa, ptr %i.u, align 8, !alias.scope !5297, !noalias !5300
   store ptr %i.oo, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !5297, !noalias !5300
-  store i64 %4, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !5297, !noalias !5300
+  store i64 %.idx.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !5297, !noalias !5300
   call void @llvm.experimental.noalias.scope.decl(metadata !5301)
   call void @llvm.experimental.noalias.scope.decl(metadata !5302)
   %i.qe = load i32, ptr %i.oo, align 4, !alias.scope !5303, !noalias !5304, !noundef !10 ; 2 uses
@@ -790,7 +789,7 @@ bb.gl:                                            ; preds = %bb.gk
   %i.yu = getelementptr inbounds nuw i8, ptr %i.wi, i64 40 ; 2 uses
   %i.yv = load ptr, ptr %i.xa, align 8, !alias.scope !5351, !noalias !5350, !noundef !10 ; 11 uses
   %i.yw = ptrtoaddr ptr %i.yv to i64
-  %i.yx = load i64, ptr %i.xc, align 8, !alias.scope !5351, !noalias !5350, !noundef !10 ; 9 uses
+  %i.yx = load i64, ptr %i.xc, align 8, !alias.scope !5351, !noalias !5350, !noundef !10 ; 8 uses
   %.not.i231 = icmp ult i64 %i.yx, 8
   br i1 %.not.i231, label %bb.gm, label %bb.gn
 
@@ -817,7 +816,7 @@ bb.gp:                                            ; preds = %bb.gm
   unreachable
 
 bb.gq:                                            ; preds = %bb.gn
-  %.idx.i232 = and i64 %i.yx, -8                  ; 3 uses
+  %.idx.i232 = and i64 %i.yx, -8                  ; 6 uses
   %i.zd = lshr i64 %i.yx, 3                       ; 6 uses
   %.not.i.i.i.i.i233 = icmp ugt i64 %.idx.i232, 9223372036854775800
   br i1 %.not.i.i.i.i.i233, label %bb.gs, label %bb.gr, !prof !27
@@ -933,16 +932,15 @@ _RNvXNtNtCs40k4W9msRzi_5alloc3vec14spec_from_iterINtB4_3VecxEINtB2_12SpecFromIte
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !5352
   call void @llvm.experimental.noalias.scope.decl(metadata !5356)
   %i.aap = icmp sgt i64 %i.yx, -1
-  %5 = and i64 %i.yx, 9223372036854775800         ; 3 uses
   call void @llvm.assume(i1 %i.aap)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !5357
   store i64 1, ptr %i.j, align 8, !noalias !5357
   store i64 1, ptr %i.ef, align 8, !noalias !5357
   store ptr %i.ze, ptr %i.eg, align 8, !noalias !5357
-  store i64 %5, ptr %.sroa.42.0..sroa_idx.i.i236, align 8, !noalias !5357
+  store i64 %.idx.i232, ptr %.sroa.42.0..sroa_idx.i.i236, align 8, !noalias !5357
   store ptr null, ptr %.sroa.53.0..sroa_idx.i.i237, align 8, !noalias !5357
   store i64 8, ptr %.sroa.53.sroa.4.0..sroa.53.0..sroa_idx.sroa_idx.i.i238, align 8, !noalias !5357
-  store i64 %5, ptr %.sroa.53.sroa.5.0..sroa.53.0..sroa_idx.sroa_idx.i.i239, align 8, !noalias !5357
+  store i64 %.idx.i232, ptr %.sroa.53.sroa.5.0..sroa.53.0..sroa_idx.sroa_idx.i.i239, align 8, !noalias !5357
   call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #39, !noalias !5358
   %i.aaq = call noundef align 8 dereferenceable_or_null(56) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 56, i64 noundef 8) #39, !noalias !5358 ; 4 uses
   %i.aar = icmp eq ptr %i.aaq, null
@@ -972,7 +970,7 @@ _RNvXs5_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtB5_12ScalarBufferxEINtN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !5357
   store ptr %i.aaq, ptr %i.k, align 8, !alias.scope !5356, !noalias !5359
   store ptr %i.ze, ptr %.sroa.4.0..sroa_idx.i.i240, align 8, !alias.scope !5356, !noalias !5359
-  store i64 %5, ptr %.sroa.5.0..sroa_idx.i.i241, align 8, !alias.scope !5356, !noalias !5359
+  store i64 %.idx.i232, ptr %.sroa.5.0..sroa_idx.i.i241, align 8, !alias.scope !5356, !noalias !5359
   call void @llvm.experimental.noalias.scope.decl(metadata !5360)
   call void @llvm.experimental.noalias.scope.decl(metadata !5361)
   %i.aau = load i64, ptr %i.ze, align 8, !alias.scope !5362, !noalias !5363, !noundef !10 ; 2 uses
@@ -1375,8 +1373,8 @@ _RNCINvMs6_NtCsfKiFC1ztrmh_9hashbrown3rawINtB8_8RawTableTNtNtCs40k4W9msRzi_5allo
   br i1 %i.cs, label %bb.h, label %_RNCINvMs6_NtCsfKiFC1ztrmh_9hashbrown3rawINtB8_8RawTableTNtNtCs40k4W9msRzi_5alloc6string6StringBS_EE25find_or_find_insert_indexNCINvNtBa_3map14equivalent_keyBS_BS_BS_E0NCINvB25_11make_hasherBS_BS_NtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE0E0Csc2V0exE7CWf_11lance_arrow.exit.thread.i, !prof !17
 
 ._crit_edge.i.i:                                  ; preds = %_RNCINvMs6_NtCsfKiFC1ztrmh_9hashbrown3rawINtB8_8RawTableTNtNtCs40k4W9msRzi_5alloc6string6StringBS_EE25find_or_find_insert_indexNCINvNtBa_3map14equivalent_keyBS_BS_BS_E0NCINvB25_11make_hasherBS_BS_NtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE0E0Csc2V0exE7CWf_11lance_arrow.exit.thread.i, %bb.c
-  %.not13.i.i = icmp eq i64 %.sroa.04.0.i.i, 1
-  br i1 %.not13.i.i, label %.thread.i.i, label %bb.d, !prof !11
+  %.not13.i.i = icmp eq i64 %.sroa.04.0.i.i, 0
+  br i1 %.not13.i.i, label %bb.d, label %.thread.i.i, !prof !15
 
 _RNCINvMs6_NtCsfKiFC1ztrmh_9hashbrown3rawINtB8_8RawTableTNtNtCs40k4W9msRzi_5alloc6string6StringBS_EE25find_or_find_insert_indexNCINvNtBa_3map14equivalent_keyBS_BS_BS_E0NCINvB25_11make_hasherBS_BS_NtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE0E0Csc2V0exE7CWf_11lance_arrow.exit.thread.i: ; preds = %_RNCINvMs6_NtCsfKiFC1ztrmh_9hashbrown3rawINtB8_8RawTableTNtNtCs40k4W9msRzi_5alloc6string6StringBS_EE25find_or_find_insert_indexNCINvNtBa_3map14equivalent_keyBS_BS_BS_E0NCINvB25_11make_hasherBS_BS_NtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE0E0Csc2V0exE7CWf_11lance_arrow.exit.i, %.lr.ph.i.i
   %i.ct = add i16 %.sroa.01.029.i.i, -1
@@ -1641,8 +1639,8 @@ bb.c:                                             ; preds = %bb.f, %_RINvMs6_NtC
   br i1 %i.cn, label %_RINvMs6_NtCsfKiFC1ztrmh_9hashbrown3rawINtB6_8RawTableTjuEE25find_or_find_insert_indexNCINvNtB8_3map14equivalent_keyjjuE0NCINvB1q_11make_hasherjuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE0ECsc2V0exE7CWf_11lance_arrow.exit, label %bb.d, !prof !15
 
 ._crit_edge.i.i:                                  ; preds = %bb.d, %bb.c
-  %.not13.i.i = icmp eq i64 %.sroa.04.0.i.i, 1
-  br i1 %.not13.i.i, label %.thread.i.i, label %bb.e, !prof !11
+  %.not13.i.i = icmp eq i64 %.sroa.04.0.i.i, 0
+  br i1 %.not13.i.i, label %bb.e, label %.thread.i.i, !prof !15
 
 bb.d:                                             ; preds = %.lr.ph.i.i
   %i.co = add i16 %.sroa.01.029.i.i, -1
@@ -2045,7 +2043,7 @@ bb.aj:                                            ; preds = %bb.h, %.split6.i, %
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvXs2_Csc2V0exE7CWf_11lance_arrowNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferNtB5_9BufferExt16from_bytes_bytes(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %2) ; 2 uses
+  %i.a = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %2)
   %i.b = icmp samesign ult i64 %i.a, 2
   br i1 %i.b, label %bb.b, label %._crit_edge
 
@@ -2056,8 +2054,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.d = icmp eq i64 %i.a, 1
-  br i1 %i.d, label %bb.d, label %bb.c, !prof !15
+  %i.d = icmp eq i64 %2, 0
+  br i1 %i.d, label %bb.c, label %bb.d, !prof !11
 
 bb.c:                                             ; preds = %bb.b
   invoke void @_RNvNtCscI6d9CVNmLh_4core9panicking9panic_fmt(ptr noundef nonnull @212, ptr noundef nonnull inttoptr (i64 83 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @214) #36

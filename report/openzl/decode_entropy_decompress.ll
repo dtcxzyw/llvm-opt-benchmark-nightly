@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   %i.b = tail call ptr @ZL_NULL_getOperationContext(ptr noundef null) #10
   store ptr %i.b, ptr %5, align 8, !tbaa !17
-  %i.c = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %4) ; 2 uses
+  %i.c = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %4)
   %i.d = icmp samesign ult i64 %i.c, 2
   %i.e = add i64 %4, -1
   %i.f = icmp ult i64 %i.e, 8
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %.not = icmp eq i64 %3, %4
-  br i1 %.not, label %6, label %bb.d
+  br i1 %.not, label %.split, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @ZS_Constant_decode.__zl_static_error_info.20, ptr noundef nonnull %5, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.19, i32 noundef 696, i32 noundef 1, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4) #9 ; 2 uses
@@ -229,11 +229,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = ptrtoint ptr %i.m to i64
   br label %.loopexit
 
-6:                                                ; preds = %bb.c
-  %7 = icmp eq i64 %i.c, 1
-  br i1 %7, label %.split, label %.loopexit
-
-.split:                                           ; preds = %6
+.split:                                           ; preds = %bb.c
   %i.o = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %4, i1 true)
   switch i64 %i.o, label %default.unreachable [
     i64 0, label %bb.e
@@ -401,9 +397,9 @@ middle.block:                                     ; preds = %vector.body
 default.unreachable:                              ; preds = %.split
   unreachable
 
-.loopexit:                                        ; preds = %.lr.ph, %.lr.ph53, %.lr.ph55, %middle.block, %middle.block78, %middle.block91, %vec.epilog.middle.block, %bb.h, %bb.g, %bb.f, %6, %bb.e, %bb.d, %bb.b
-  %.sroa.041.0 = phi i32 [ %i.h, %bb.b ], [ %i.l, %bb.d ], [ 0, %bb.e ], [ 0, %6 ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %middle.block78 ], [ 0, %middle.block91 ], [ 0, %middle.block ], [ 0, %vec.epilog.middle.block ], [ 0, %.lr.ph53 ], [ 0, %.lr.ph55 ], [ 0, %.lr.ph ]
-  %.sroa.7.0 = phi i64 [ %i.j, %bb.b ], [ %i.n, %bb.d ], [ 0, %bb.e ], [ 0, %6 ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %middle.block78 ], [ 0, %middle.block91 ], [ 0, %middle.block ], [ 0, %vec.epilog.middle.block ], [ 0, %.lr.ph53 ], [ 0, %.lr.ph55 ], [ 0, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph, %.lr.ph53, %.lr.ph55, %middle.block, %middle.block78, %middle.block91, %vec.epilog.middle.block, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.b
+  %.sroa.041.0 = phi i32 [ %i.h, %bb.b ], [ %i.l, %bb.d ], [ 0, %bb.e ], [ 0, %middle.block78 ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %middle.block91 ], [ 0, %middle.block ], [ 0, %vec.epilog.middle.block ], [ 0, %.lr.ph53 ], [ 0, %.lr.ph55 ], [ 0, %.lr.ph ]
+  %.sroa.7.0 = phi i64 [ %i.j, %bb.b ], [ %i.n, %bb.d ], [ 0, %bb.e ], [ 0, %middle.block78 ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %middle.block91 ], [ 0, %middle.block ], [ 0, %vec.epilog.middle.block ], [ 0, %.lr.ph53 ], [ 0, %.lr.ph55 ], [ 0, %.lr.ph ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   %.fca.0.insert = insertvalue { i32, i64 } poison, i32 %.sroa.041.0, 0
   %.fca.1.insert = insertvalue { i32, i64 } %.fca.0.insert, i64 %.sroa.7.0, 1

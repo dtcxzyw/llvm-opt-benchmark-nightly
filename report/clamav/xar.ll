@@ -202,10 +202,9 @@ bb.bu:                                            ; preds = %xar_hash_update.exi
 bb.bv:                                            ; preds = %xar_hash_update.exit389
   %i.gz = add i64 %i.gs, %.0208                   ; 2 uses
   %i.ha = call i32 @cli_checklimits(ptr noundef nonnull @.str.23, ptr noundef nonnull %0, i64 noundef %i.gz, i64 noundef 0, i64 noundef 0) #9
-  %.not349 = icmp ne i32 %i.ha, 0
-  %i.hb = icmp eq i32 %i.gk, 2
-  %or.cond560 = or i1 %i.hb, %.not349
-  br i1 %or.cond560, label %.critedge9, label %bb.bi
+  %4 = or i32 %i.ha, %i.gk
+  %i.hb = icmp eq i32 %4, 0
+  br i1 %i.hb, label %bb.bi, label %.critedge9
 
 .critedge9:                                       ; preds = %bb.bv, %bb.bi, %bb.bm
   %.8252 = phi i32 [ 26, %bb.bm ], [ 0, %bb.bi ], [ 0, %bb.bv ]

@@ -205,27 +205,19 @@ bb.cc:                                            ; preds = %bb.ca
 
 bb.cd:                                            ; preds = %bb.cc
   %i.fq = icmp sgt i32 %.sroa.41.2651, 999999999
-  br i1 %i.fq, label %.thread865, label %bb.ce
+  br i1 %i.fq, label %bb.cf, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
   %i.fr = icmp slt i32 %.sroa.41.2651, -999999999 ; 2 uses
   %i.fs = add nsw i64 %.sroa.0.2652, -631107417601
   %i.ft = add nsw i32 %.sroa.41.2651, 1000000000
-  %.sroa.010.1.i200 = select i1 %i.fr, i32 %i.ft, i32 %.sroa.41.2651 ; 3 uses
-  %.sroa.0.1.i201 = select i1 %i.fr, i64 %i.fs, i64 %i.fp ; 3 uses
-  %5 = icmp eq i64 %.sroa.0.1.i201, 0
-  %6 = icmp sgt i32 %.sroa.010.1.i200, -1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %_ZN4jiff4util1b6Bounds5check17h63f6e413c3b0bd21E.exit.i, label %bb.cf
-
-.thread865:                                       ; preds = %bb.cd
-  %7 = add nsw i64 %.sroa.0.2652, -631107417599
-  %8 = add nsw i32 %.sroa.41.2651, -1000000000
+  %.sroa.010.1.i200 = select i1 %i.fr, i32 %i.ft, i32 %.sroa.41.2651
+  %.sroa.0.1.i201 = select i1 %i.fr, i64 %i.fs, i64 %i.fp
   br label %_ZN4jiff4util1b6Bounds5check17h63f6e413c3b0bd21E.exit.i
 
-bb.cf:                                            ; preds = %bb.ce
-  %i.fu = add nsw i64 %.sroa.0.1.i201, -1
-  %i.fv = add nsw i32 %.sroa.010.1.i200, 1000000000
+bb.cf:                                            ; preds = %bb.cd
+  %i.fu = add nsw i64 %.sroa.0.2652, -631107417599
+  %i.fv = add nsw i32 %.sroa.41.2651, -1000000000
   br label %_ZN4jiff4util1b6Bounds5check17h63f6e413c3b0bd21E.exit.i
 
 bb.cg:                                            ; preds = %bb.cb
@@ -263,10 +255,10 @@ bb.cl:                                            ; preds = %bb.cj
   %i.gg = add nsw i32 %.sroa.010.1.i208, -1000000000
   br label %_ZN4jiff4util1b6Bounds5check17h63f6e413c3b0bd21E.exit.i
 
-_ZN4jiff4util1b6Bounds5check17h63f6e413c3b0bd21E.exit.i: ; preds = %.thread869, %.thread865, %bb.ce, %bb.cf, %bb.cc, %bb.cj, %bb.cg, %bb.cl, %bb.cb
-  %.sroa.082.0 = phi i64 [ -631107417600, %bb.cj ], [ %.sroa.0.2652, %bb.cb ], [ -631107417600, %bb.cl ], [ -631107417600, %bb.cg ], [ 631107417600, %bb.ce ], [ 631107417600, %bb.cc ], [ 631107417600, %bb.cf ], [ 631107417600, %.thread865 ], [ -631107417600, %.thread869 ] ; 4 uses
-  %.sroa.41.5 = phi i32 [ %.sroa.010.1.i208, %bb.cj ], [ %.sroa.41.2651, %bb.cb ], [ %i.gg, %bb.cl ], [ 0, %bb.cg ], [ %.sroa.010.1.i200, %bb.ce ], [ 0, %bb.cc ], [ %i.fv, %bb.cf ], [ %8, %.thread865 ], [ %i.ga, %.thread869 ]
-  %.sroa.0.5 = phi i64 [ %.sroa.0.1.i209, %bb.cj ], [ 0, %bb.cb ], [ %i.gf, %bb.cl ], [ %i.fw, %bb.cg ], [ %.sroa.0.1.i201, %bb.ce ], [ %i.fp, %bb.cc ], [ %i.fu, %bb.cf ], [ %7, %.thread865 ], [ %i.fz, %.thread869 ]
+_ZN4jiff4util1b6Bounds5check17h63f6e413c3b0bd21E.exit.i: ; preds = %bb.ce, %.thread869, %bb.cf, %bb.cc, %bb.cj, %bb.cg, %bb.cl, %bb.cb
+  %.sroa.082.0 = phi i64 [ -631107417600, %bb.cj ], [ %.sroa.0.2652, %bb.cb ], [ -631107417600, %bb.cl ], [ -631107417600, %bb.cg ], [ 631107417600, %bb.ce ], [ 631107417600, %bb.cc ], [ -631107417600, %.thread869 ], [ 631107417600, %bb.cf ] ; 4 uses
+  %.sroa.41.5 = phi i32 [ %.sroa.010.1.i208, %bb.cj ], [ %.sroa.41.2651, %bb.cb ], [ %i.gg, %bb.cl ], [ 0, %bb.cg ], [ %.sroa.010.1.i200, %bb.ce ], [ 0, %bb.cc ], [ %i.ga, %.thread869 ], [ %i.fv, %bb.cf ]
+  %.sroa.0.5 = phi i64 [ %.sroa.0.1.i209, %bb.cj ], [ 0, %bb.cb ], [ %i.gf, %bb.cl ], [ %i.fw, %bb.cg ], [ %.sroa.0.1.i201, %bb.ce ], [ %i.fp, %bb.cc ], [ %i.fz, %.thread869 ], [ %i.fu, %bb.cf ]
   %.sroa.0382.0.copyload = load i64, ptr %4, align 8 ; 3 uses
   %.sroa.4383.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.4384.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses

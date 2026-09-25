@@ -205,13 +205,12 @@ bb.v:                                             ; preds = %bb.u
   %i.cl = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.ck
   %i.cm = load i64, ptr %i.br, align 8, !tbaa !53
   %i.cn = call i32 @psa_mac_verify_finish(ptr noundef nonnull %4, ptr noundef nonnull %i.cl, i64 noundef %i.cm) #19 ; 2 uses
-  %.not271 = icmp eq i32 %i.cn, 0
-  %spec.select289 = zext i1 %.not271 to i32
+  %.not271 = icmp ne i32 %i.cn, 0
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t, %bb.s
   %.0245 = phi i32 [ %i.cf, %bb.s ], [ %i.ch, %bb.t ], [ %i.cj, %bb.u ], [ %i.cn, %bb.v ]
-  %.1220 = phi i32 [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %bb.u ], [ %spec.select289, %bb.v ]
+  %.1220 = phi i1 [ true, %bb.s ], [ true, %bb.t ], [ true, %bb.u ], [ %.not271, %bb.v ]
   %i.co = call i32 @psa_status_to_mbedtls(i32 noundef %.0245, ptr noundef nonnull @psa_to_ssl_errors, i64 noundef 7, ptr noundef nonnull @psa_generic_status_to_mbedtls) #19 ; 2 uses
   %i.cp = call i32 @psa_mac_abort(ptr noundef nonnull %4) #19 ; 2 uses
   %i.cq = icmp eq i32 %i.co, 0
@@ -237,7 +236,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 bb.z:                                             ; preds = %._crit_edge334, %bb.r
   %i.ct = phi i64 [ %.pre335, %._crit_edge334 ], [ %i.bn, %bb.r ] ; 5 uses
   %i.cu = phi i64 [ %.pre, %._crit_edge334 ], [ %i.bo, %bb.r ]
-  %.2221 = phi i32 [ %.1220, %._crit_edge334 ], [ 0, %bb.r ] ; 2 uses
+  %.2221 = phi i1 [ %.1220, %._crit_edge334 ], [ true, %bb.r ] ; 2 uses
   %i.cv = urem i64 %i.cu, %i.ct
   %.not273 = icmp eq i64 %i.cv, 0
   br i1 %.not273, label %bb.aa, label %.thread300
@@ -295,8 +294,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.dv = getelementptr i8, ptr %i.du, i64 -1
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !34
   %i.dx = zext i8 %i.dw to i64                    ; 3 uses
-  %5 = icmp eq i32 %.2221, 1
-  br i1 %5, label %bb.ag, label %bb.ah
+  br i1 %.2221, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.dy = add nuw nsw i64 %i.dx, 1
@@ -370,8 +368,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   store i64 %i.fk, ptr %i.s, align 8, !tbaa !40
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #19
-  %6 = icmp eq i32 %.2221, 0
-  br i1 %6, label %bb.aj, label %.thread307
+  br i1 %.2221, label %bb.aj, label %.thread307
 
 bb.aj:                                            ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
@@ -430,8 +427,8 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %bb.
   br i1 %i.gh, label %ssl_parse_inner_plaintext.exit, label %bb.an
 
 bb.an:                                            ; preds = %.thread307
-  %.not284 = icmp eq i32 %.6225, 1
-  br i1 %.not284, label %bb.ao, label %ssl_parse_inner_plaintext.exit
+  %.not284 = icmp eq i32 %.6225, 0
+  br i1 %.not284, label %ssl_parse_inner_plaintext.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.gi = getelementptr inbounds nuw i8, ptr %1, i64 88
@@ -834,7 +831,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %.loopexit50, %bb.a
   %.138 = phi i64 [ %i.bx, %.loopexit50 ], [ %1, %bb.a ] ; 2 uses
-  %.2 = phi i64 [ %i.by, %.loopexit50 ], [ %2, %bb.a ] ; 3 uses
+  %.2 = phi i64 [ %i.by, %.loopexit50 ], [ %2, %bb.a ] ; 4 uses
   %i.bz = trunc nuw nsw i64 %.2 to i32
   %i.ca = and i32 %i.bz, 7                        ; 14 uses
   %.not47 = icmp eq i32 %i.ca, 0
@@ -894,13 +891,15 @@ bb.w:                                             ; preds = %bb.v
 
 .loopexit:                                        ; preds = %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
   %.lcssa = phi i8 [ %i.cg, %bb.q ], [ %i.cj, %bb.r ], [ %i.cm, %bb.s ], [ %i.cp, %bb.t ], [ %i.cs, %bb.u ], [ %i.cv, %bb.v ], [ %i.cy, %bb.w ]
+  %3 = and i64 %.2, 16777208
   store i8 %.lcssa, ptr %i.cd, align 1, !tbaa !34
   br label %bb.x
 
 bb.x:                                             ; preds = %.loopexit, %bb.p
+  %.3 = phi i64 [ %.2, %bb.p ], [ %3, %.loopexit ]
   %i.cz = lshr i64 %.138, 3
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 %i.cz
-  %i.db = lshr i64 %.2, 3
+  %i.db = lshr i64 %.3, 3
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.da, i8 -1, i64 %i.db, i1 false)
   br label %.loopexit50.thread
 

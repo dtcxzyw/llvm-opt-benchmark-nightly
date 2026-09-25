@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.h, %bb.n
   %i.ah = phi ptr [ %i.aa, %bb.n ], [ %i.c, %bb.h ] ; 3 uses
   %.0.i.ph.ph53 = phi i32 [ %.0.i.ph.ph54, %bb.n ], [ 1, %bb.h ] ; 2 uses
-  %.1 = phi i32 [ %i.ag, %bb.n ], [ %i.n, %bb.h ] ; 5 uses
+  %.1 = phi i32 [ %i.ag, %bb.n ], [ %i.n, %bb.h ] ; 6 uses
   %i.ai = icmp eq ptr %i.ah, %1
   br i1 %i.ai, label %_ZN5boost6nowide3utf10utf_traitsIcLi1EE12trail_lengthEc.exit, label %bb.p, !prof !43
 
@@ -214,11 +214,12 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.al, label %bb.q, label %_ZN5boost6nowide3utf10utf_traitsIcLi1EE12trail_lengthEc.exit
 
 bb.q:                                             ; preds = %bb.p
+  %2 = icmp samesign ugt i32 %.1, 17407
   %i.am = and i32 %.1, 32736
   %or.cond.i = icmp eq i32 %i.am, 864
-  %2 = add nsw i32 %.1, -17408
-  %i.an = icmp ult i32 %2, -17406
-  %or.cond = or i1 %i.an, %or.cond.i
+  %.0.i43.not63 = or i1 %2, %or.cond.i
+  %i.an = icmp samesign ult i32 %.1, 2
+  %or.cond = select i1 %.0.i43.not63, i1 true, i1 %i.an, !prof !44
   br i1 %or.cond, label %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread, label %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit, !prof !44
 
 _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit: ; preds = %bb.q

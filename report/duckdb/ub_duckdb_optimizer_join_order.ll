@@ -205,7 +205,7 @@ bb.a:
   %i.d = load ptr, ptr %2, align 8, !tbaa !79     ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
+  %i.g = sub i64 %i.e, %i.f
   %i.h = icmp ugt i64 %i.g, 8
   br i1 %i.h, label %bb.b, label %bb.r
 
@@ -545,8 +545,8 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_b
   br i1 %.not77, label %._crit_edge90, label %.lr.ph89
 
 bb.r:                                             ; preds = %bb.a
-  %i.el = icmp eq i64 %i.g, 8
-  br i1 %i.el, label %_ZNSt6vectorImSaImEE2atEm.exit, label %12
+  %i.el = icmp eq ptr %i.c, %i.d
+  br i1 %i.el, label %bb.x, label %_ZNSt6vectorImSaImEE2atEm.exit
 
 _ZNSt6vectorImSaImEE2atEm.exit:                   ; preds = %bb.r
   %i.em = load i64, ptr %i.d, align 8, !tbaa !88  ; 3 uses
@@ -653,11 +653,7 @@ _ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE17_M_realloc_
   store ptr %i.ga, ptr %i.fe, align 8, !tbaa !141
   br label %_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE9push_backERKS3_.exit
 
-12:                                               ; preds = %bb.r
-  %13 = icmp eq ptr %i.d, %i.c
-  br i1 %13, label %bb.x, label %_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE9push_backERKS3_.exit
-
-bb.x:                                             ; preds = %12
+bb.x:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
   %i.gb = getelementptr inbounds nuw i8, ptr %11, i64 48 ; 2 uses
   store ptr %i.gb, ptr %11, align 8, !tbaa !381
@@ -862,7 +858,7 @@ bb.ak:                                            ; preds = %_ZNKSt6vectorIN6duc
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #28
   resume { ptr, i32 } %i.im
 
-_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i48, %bb.t, %_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, %bb.i, %_ZNSt13unordered_setIN6duckdb13ColumnBindingENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaIS1_EED2Ev.exit, %12
+_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i48, %bb.t, %_ZNSt6vectorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, %bb.i, %_ZNSt13unordered_setIN6duckdb13ColumnBindingENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaIS1_EED2Ev.exit
   ret void
 }
 

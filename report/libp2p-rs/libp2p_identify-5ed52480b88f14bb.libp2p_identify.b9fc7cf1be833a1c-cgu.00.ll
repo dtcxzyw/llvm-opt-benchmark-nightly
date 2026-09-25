@@ -204,12 +204,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i53 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ac, %bb.f ] ; 5 uses
-  %i.ae = shl nuw i64 %.sroa.4.0.i.ph.i53, 3
-  %4 = add nuw i64 %i.ae, 8
-  %5 = and i64 %4, -16                            ; 3 uses
+  %i.ae = shl nuw i64 %.sroa.4.0.i.ph.i53, 3      ; 3 uses
   %i.af = add nuw nsw i64 %.sroa.4.0.i.ph.i53, 16 ; 2 uses
-  %i.ag = add i64 %5, %i.af                       ; 4 uses
-  %i.ah = icmp ult i64 %i.ag, %5
+  %i.ag = add i64 %i.af, %i.ae                    ; 4 uses
+  %i.ah = icmp ult i64 %i.ag, %i.ae
   %i.ai = icmp ugt i64 %i.ag, 9223372036854775792
   %or.cond.i.i = or i1 %i.ah, %i.ai
   br i1 %or.cond.i.i, label %bb.h, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i, !prof !8
@@ -246,7 +244,7 @@ bb.l:                                             ; preds = %._crit_edge
   resume { ptr, i32 } %i.ao
 
 bb.m:                                             ; preds = %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 %5 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ae ; 3 uses
   %i.aq = add nsw i64 %.sroa.4.0.i.ph.i53, -1     ; 2 uses
   %i.ar = icmp samesign ult i64 %.sroa.4.0.i.ph.i53, 9
   %i.as = lshr i64 %.sroa.4.0.i.ph.i53, 3

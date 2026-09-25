@@ -100,19 +100,26 @@ bb.a:
   br i1 %epil.iter.cmp.not, label %.preheader, label %.preheader83.epil, !llvm.loop !18
 
 .preheader:                                       ; preds = %.preheader.loopexit.unr-lcssa, %.preheader83.epil, %.preheader83.lr.ph, %bb.a
+  %3 = uitofp nneg i32 %1 to float                ; 2 uses
   %i.ab = insertelement <2 x i32> poison, i32 %1, i64 0
-  %i.ac = insertelement <2 x i32> %i.ab, i32 %2, i64 1 ; 2 uses
+  %i.ac = insertelement <2 x i32> %i.ab, i32 %2, i64 1
   %i.ad = sdiv <2 x i32> %i.ac, splat (i32 2)
-  %i.ae = shufflevector <2 x i32> %i.ad, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %3 = sitofp <2 x i32> %i.ac to <2 x float>      ; 2 uses
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.af = sitofp <4 x i32> %i.ae to <4 x float>   ; 2 uses
-  %5 = sitofp i32 %1 to double                    ; 2 uses
-  %i.ag = fmul nnan double %5, 5.000000e-02
+  %i.ae = shufflevector <2 x i32> %i.ad, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %4 = sitofp i32 %2 to float                     ; 2 uses
+  %5 = uitofp nneg <4 x i32> %i.ae to <4 x float>
+  %i.af = sitofp <4 x i32> %i.ae to <4 x float>
+  %6 = shufflevector <4 x float> %5, <4 x float> %i.af, <4 x i32> <i32 0, i32 5, i32 2, i32 7> ; 2 uses
+  %7 = uitofp nneg i32 %1 to double               ; 2 uses
+  %i.ag = fmul nnan double %7, 5.000000e-02
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.aj = fmul nnan double %5, 1.000000e-02
-  %i.ak = shufflevector <4 x float> %i.af, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %i.aj = fmul nnan double %7, 1.000000e-02
+  %8 = insertelement <4 x float> poison, float %3, i64 0
+  %9 = insertelement <4 x float> %8, float %4, i64 1
+  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %11 = insertelement <2 x float> poison, float %3, i64 0
+  %12 = insertelement <2 x float> %11, float %4, i64 1
+  %i.ak = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.e
@@ -174,7 +181,7 @@ bb.c:                                             ; preds = %.preheader, %bb.e
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.cb = fmul <2 x float> %3, %i.bo
+  %i.cb = fmul <2 x float> %12, %i.bo
   %i.cc = fdiv <2 x float> %i.cb, splat (float 3.000000e+00)
   %i.cd = fadd <2 x float> %i.cc, %i.ak           ; 2 uses
   %i.ce = fmul double %i.ag, %i.bb
@@ -193,11 +200,11 @@ bb.e:                                             ; preds = %._crit_edge, %bb.d
   %.pre-phi97 = phi float [ %.pre96, %._crit_edge ], [ %i.ci, %bb.d ] ; 2 uses
   %.val80 = phi ptr [ %.val80.pre92, %._crit_edge ], [ %.val80.pre, %bb.d ]
   %.val79 = phi i64 [ %.val79.pre90, %._crit_edge ], [ %.val79.pre, %bb.d ]
-  %i.cl = fmul <4 x float> %4, %i.by
+  %i.cl = fmul <4 x float> %10, %i.by
   %i.cm = fmul double %i.aj, %i.bb
   %i.cn = fptrunc double %i.cm to float           ; 2 uses
   %i.co = fdiv <4 x float> %i.cl, splat (float 3.000000e+00)
-  %i.cp = fadd <4 x float> %i.co, %i.af           ; 4 uses
+  %i.cp = fadd <4 x float> %i.co, %6              ; 4 uses
   %i.cq = extractelement <4 x float> %i.cp, i64 0
   %i.cr = extractelement <4 x float> %i.cp, i64 1
   tail call fastcc void @_ZN12_GLOBAL__N_12spERN7Imf_3_47Array2DINS0_4RgbaEEEiifffffff(i64 %.val79, ptr %.val80, i32 noundef %1, i32 noundef %2, float noundef %i.cq, float noundef %i.cr, float noundef %i.cn, float noundef f0x3F333333, float noundef 2.000000e-01, float noundef 2.000000e+00, float noundef %.pre-phi97)

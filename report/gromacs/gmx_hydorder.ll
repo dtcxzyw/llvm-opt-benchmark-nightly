@@ -205,7 +205,7 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit.i:        ; preds = %_ZNSt10filesystem7_
   %i.dd = shufflevector <2 x float> %i.dc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.de = fdiv <2 x float> %i.db, %i.dd
   %i.df = fadd <2 x float> %i.de, splat (float 5.000000e-01)
-  %i.dg = fptosi <2 x float> %i.df to <2 x i32>   ; 5 uses
+  %i.dg = fptosi <2 x float> %i.df to <2 x i32>   ; 6 uses
   %puts.i = call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   %i.dh = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.43, ptr noundef nonnull @.str.32, i32 noundef 322, i64 noundef 1, i64 noundef 8)
           to label %.noexc37 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
@@ -608,10 +608,12 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit251.i:     ; preds = %_ZNSt10filesystem7_
 
 .lr.ph362.i:                                      ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit251.i
   %i.aev = sitofp i32 %i.cv to double             ; 2 uses
-  %i.aew = sitofp <2 x i32> %i.dg to <2 x double> ; 3 uses
+  %36 = uitofp nneg <2 x i32> %i.dg to <2 x double> ; 2 uses
+  %i.aew = sitofp <2 x i32> %i.dg to <2 x double> ; 2 uses
+  %37 = shufflevector <2 x double> %36, <2 x double> %i.aew, <2 x i32> <i32 0, i32 3>
   %i.aex = zext nneg i32 %.1 to i64
   %brmerge = select i1 %i.fg, i1 true, i1 %i.fb
-  %i.aey = extractelement <2 x double> %i.aew, i64 0
+  %i.aey = extractelement <2 x double> %36, i64 0
   %i.aez = extractelement <2 x double> %i.aew, i64 1
   br label %bb.bq
 
@@ -679,7 +681,7 @@ bb.br:                                            ; preds = %bb.br, %.preheader3
   %i.ags = fpext <2 x float> %i.agr to <2 x double>
   %i.agt = insertelement <2 x double> %i.afl, double %i.afw, i64 1
   %i.agu = fmul <2 x double> %i.agt, %i.ags
-  %i.agv = fdiv <2 x double> %i.agu, %i.aew       ; 2 uses
+  %i.agv = fdiv <2 x double> %i.agu, %37          ; 2 uses
   %i.agw = load ptr, ptr %i.afe, align 8, !tbaa !134
   %i.agx = getelementptr inbounds nuw [8 x i8], ptr %i.agw, i64 %indvars.iv416.i
   %i.agy = load ptr, ptr %i.agx, align 8, !tbaa !117

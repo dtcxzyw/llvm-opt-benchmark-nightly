@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bl
 bb.bn:                                            ; preds = %bb.bm
   %i.qs = fsub float %i.ql, %i.gu
   %i.qt = uitofp nneg i32 %i.qp to float
-  %i.qu = fdiv float %i.qs, %i.qt                 ; 11 uses
+  %i.qu = fdiv float %i.qs, %i.qt                 ; 12 uses
   %i.qv = uitofp nneg i32 %i.qq to float
   %i.qw = fdiv float %.0143.lcssa, %i.qv
   %i.qx = fpext float %i.qw to double
@@ -410,7 +410,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit264.i: ; preds = %
   %i.tk = fptosi float %i.tj to i32               ; 2 uses
   %i.tl = icmp sgt i32 %i.tg, %i.tk
   %i.tm = add nsw i32 %i.tk, 1
-  %spec.select392.i = select i1 %i.tl, i32 %i.tm, i32 %i.tg ; 12 uses
+  %spec.select392.i = select i1 %i.tl, i32 %i.tm, i32 %i.tg ; 13 uses
   %i.tn = sext i32 %i.cm to i64
   %i.to = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.47, ptr noundef nonnull @.str.55, i32 noundef 146, i64 noundef range(i64 -2147483648, 2147483648) %i.tn, i64 noundef 8)
           to label %.noexc174 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
@@ -813,7 +813,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #15
   %i.ade = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   %i.adf = sitofp i32 %spec.select392.i to float
-  %i.adg = fmul float %i.qu, %i.adf               ; 2 uses
+  %i.adg = fmul float %i.qu, %i.adf
   br label %bb.cr
 
 bb.cr:                                            ; preds = %.noexc192, %.lr.ph426.i
@@ -937,6 +937,8 @@ bb.ct:                                            ; preds = %.noexc194
 .noexc195:                                        ; preds = %bb.ct
   %i.afg = select i1 %i.aff, ptr @.str.80, ptr @.str.81
   %i.afh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.abh, ptr noundef nonnull @.str.79, ptr noundef nonnull %i.afg) #15 ; 0 uses
+  %28 = uitofp nneg i32 %spec.select392.i to float
+  %29 = fmul float %i.qu, %28
   br label %bb.cu
 
 bb.cu:                                            ; preds = %.noexc199, %.noexc195
@@ -949,7 +951,7 @@ bb.cu:                                            ; preds = %.noexc199, %.noexc1
           to label %.noexc196 unwind label %.loopexit.split-lp.loopexit
 
 .noexc196:                                        ; preds = %bb.cu
-  %i.afl = invoke noundef float @_Z8do_lmfitiPKfPffS0_ffPK16gmx_output_env_tbiPdiPKc(i32 noundef %spec.select392.i, ptr noundef nonnull %i.afj, ptr noundef %i.tw, float noundef %i.qu, ptr noundef null, float noundef 0.000000e+00, float noundef %i.adg, ptr noundef %i.rn, i1 noundef zeroext %i.afk, i32 noundef 7, ptr noundef nonnull %i.g, i32 noundef 0, ptr noundef null)
+  %i.afl = invoke noundef float @_Z8do_lmfitiPKfPffS0_ffPK16gmx_output_env_tbiPdiPKc(i32 noundef %spec.select392.i, ptr noundef nonnull %i.afj, ptr noundef %i.tw, float noundef %i.qu, ptr noundef null, float noundef 0.000000e+00, float noundef %29, ptr noundef %i.rn, i1 noundef zeroext %i.afk, i32 noundef 7, ptr noundef nonnull %i.g, i32 noundef 0, ptr noundef null)
           to label %.noexc197 unwind label %.loopexit.split-lp.loopexit ; 0 uses
 
 .noexc197:                                        ; preds = %.noexc196

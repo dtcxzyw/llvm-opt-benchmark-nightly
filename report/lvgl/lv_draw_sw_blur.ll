@@ -98,7 +98,7 @@ bb.i:                                             ; preds = %bb.h
   %i.as = shl i32 %i.ar, 12
   %i.at = add i32 %i.ar, 4
   %i.au = udiv i32 %i.as, %i.at                   ; 30 uses
-  %i.av = lshr i32 %i.ar, 1
+  %i.av = lshr i32 %i.ar, 1                       ; 3 uses
   %i.aw = call i32 @llvm.umax.i32(i32 %i.av, i32 1) ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !50
@@ -207,10 +207,11 @@ get_rounded_edge_point.exit:                      ; preds = %bb.l, %bb.n
   br i1 %i.dh, label %.loopexit760, label %bb.o
 
 bb.o:                                             ; preds = %get_rounded_edge_point.exit
-  %i.di = sub i32 %i.dg, %i.de
+  %i.di = sub nsw i32 %i.dg, %i.de
   %i.dj = udiv i32 %i.di, %.1532
-  %i.dk = add i32 %i.dj, 1
-  %.597 = call i32 @llvm.umin.i32(i32 %i.dk, i32 %i.aw)
+  %i.dk = add nuw nsw i32 %i.dj, 1                ; 2 uses
+  %4 = icmp samesign ugt i32 %i.av, %i.dk
+  %.597 = select i1 %4, i32 %i.dk, i32 %i.aw
   %i.dl = freeze i32 %.597                        ; 44 uses
   switch i8 %i.bj, label %bb.ab [
     i8 1, label %.lr.ph.i
@@ -221,13 +222,12 @@ bb.o:                                             ; preds = %get_rounded_edge_po
   %i.dm = load ptr, ptr %i.d, align 8, !tbaa !42
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !52
   %i.do = call ptr @lv_draw_buf_goto_xy(ptr noundef %i.dn, i32 noundef %.0519846, i32 noundef %i.de) #5 ; 4 uses
-  %4 = add nsw i32 %i.dl, -1
   %xtraiter1176 = and i32 %i.dl, 7                ; 3 uses
-  %i.dp = icmp ult i32 %4, 7
+  %i.dp = icmp ult i32 %i.dl, 8
   br i1 %i.dp, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter1182 = and i32 %i.dl, 2147483640
+  %unroll_iter1182 = and i32 %i.dl, -8
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.lr.ph.i.new
@@ -338,7 +338,7 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph824
   br i1 %i.ft, label %.epil.preheader1184, label %.lr.ph.i610.new
 
 .lr.ph.i610.new:                                  ; preds = %.lr.ph.i610
-  %unroll_iter1192 = and i32 %i.dl, 2147483640
+  %unroll_iter1192 = and i32 %i.dl, -8
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.lr.ph.i610.new
@@ -452,7 +452,7 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph830.a
   br i1 %i.hx, label %.lr.ph.split.i.epil.preheader, label %.lr.ph.split.i.preheader.new
 
 .lr.ph.split.i.preheader.new:                     ; preds = %.lr.ph.split.i.preheader
-  %unroll_iter = and i32 %i.dl, 2147483646
+  %unroll_iter = and i32 %i.dl, -2
   br label %.lr.ph.split.i
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i617
@@ -461,7 +461,7 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph830.a
   br i1 %i.hy, label %.lr.ph.split.us.i.epil.preheader, label %.lr.ph.split.us.i.preheader.new
 
 .lr.ph.split.us.i.preheader.new:                  ; preds = %.lr.ph.split.us.i.preheader
-  %unroll_iter1146 = and i32 %i.dl, 2147483646
+  %unroll_iter1146 = and i32 %i.dl, -2
   br label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i, %.lr.ph.split.us.i.preheader.new
@@ -669,7 +669,7 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph
   br i1 %i.mu, label %.lr.ph.split.i622.epil.preheader, label %.lr.ph.split.i622.preheader.new
 
 .lr.ph.split.i622.preheader.new:                  ; preds = %.lr.ph.split.i622.preheader
-  %unroll_iter1160 = and i32 %i.dl, 2147483646
+  %unroll_iter1160 = and i32 %i.dl, -2
   br label %.lr.ph.split.i622
 
 .lr.ph.split.us.i630.preheader:                   ; preds = %.lr.ph.i621
@@ -678,7 +678,7 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph
   br i1 %i.mv, label %.lr.ph.split.us.i630.epil.preheader, label %.lr.ph.split.us.i630.preheader.new
 
 .lr.ph.split.us.i630.preheader.new:               ; preds = %.lr.ph.split.us.i630.preheader
-  %unroll_iter1174 = and i32 %i.dl, 2147483646
+  %unroll_iter1174 = and i32 %i.dl, -2
   br label %.lr.ph.split.us.i630
 
 .lr.ph.split.us.i630:                             ; preds = %.lr.ph.split.us.i630, %.lr.ph.split.us.i630.preheader.new
@@ -1081,13 +1081,14 @@ get_rounded_edge_point.exit658:                   ; preds = %bb.ag, %bb.ai
   br i1 %i.ze, label %.loopexit, label %bb.aj
 
 bb.aj:                                            ; preds = %get_rounded_edge_point.exit658
-  %i.zf = sub i32 %i.zd, %i.zb                    ; 2 uses
+  %i.zf = sub nsw i32 %i.zd, %i.zb                ; 2 uses
   %i.zg = add nuw nsw i32 %i.zf, %.1532
   %i.zh = mul i32 %i.zg, %i.bk                    ; 3 uses
   %i.zi = udiv i32 %i.zf, %.1532
-  %i.zj = add i32 %i.zi, 1
-  %.602 = call i32 @llvm.umin.i32(i32 %i.zj, i32 %i.aw)
-  %i.zk = freeze i32 %.602                        ; 43 uses
+  %i.zj = add nuw nsw i32 %i.zi, 1                ; 2 uses
+  %5 = icmp samesign ugt i32 %i.av, %i.zj
+  %.602 = select i1 %5, i32 %i.zj, i32 %i.aw
+  %i.zk = freeze i32 %.602                        ; 44 uses
   switch i8 %i.bj, label %bb.bi [
     i8 1, label %.lr.ph.i660
     i8 2, label %.lr.ph.i676
@@ -1097,13 +1098,12 @@ bb.aj:                                            ; preds = %get_rounded_edge_po
   %i.zl = load ptr, ptr %i.d, align 8, !tbaa !42
   %i.zm = load ptr, ptr %i.zl, align 8, !tbaa !52
   %i.zn = call ptr @lv_draw_buf_goto_xy(ptr noundef %i.zm, i32 noundef %i.zb, i32 noundef %.6529893) #5 ; 4 uses
-  %5 = add nsw i32 %i.zk, -1                      ; 2 uses
   %xtraiter1287 = and i32 %i.zk, 7                ; 3 uses
-  %i.zo = icmp ult i32 %5, 7
+  %i.zo = icmp ult i32 %i.zk, 8
   br i1 %i.zo, label %.epil.preheader1286, label %.lr.ph.i660.new
 
 .lr.ph.i660.new:                                  ; preds = %.lr.ph.i660
-  %unroll_iter1294 = and i32 %i.zk, 2147483640
+  %unroll_iter1294 = and i32 %i.zk, -8
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.ak, %.lr.ph.i660.new
@@ -1215,11 +1215,11 @@ bb.an:                                            ; preds = %bb.am, %.lr.ph870
   %i.abp = load ptr, ptr %i.abo, align 8, !tbaa !52
   %i.abq = call ptr @lv_draw_buf_goto_xy(ptr noundef %i.abp, i32 noundef %i.zd, i32 noundef %.6529893) #5 ; 4 uses
   %xtraiter1297 = and i32 %i.zk, 7                ; 3 uses
-  %i.abr = icmp ult i32 %5, 7
+  %i.abr = icmp ult i32 %i.zk, 8
   br i1 %i.abr, label %.epil.preheader1296, label %.lr.ph.i668.new
 
 .lr.ph.i668.new:                                  ; preds = %.lr.ph.i668
-  %unroll_iter1304 = and i32 %i.zk, 2147483640
+  %unroll_iter1304 = and i32 %i.zk, -8
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ao, %.lr.ph.i668.new
@@ -1368,7 +1368,7 @@ bb.ax:                                            ; preds = %bb.av, %bb.aw, %bb.
   br i1 %i.aeh, label %.lr.ph.split.i677.epil.preheader, label %.lr.ph.split.i677.preheader.new
 
 .lr.ph.split.i677.preheader.new:                  ; preds = %.lr.ph.split.i677.preheader
-  %unroll_iter1239.a = and i32 %i.zk, 2147483646
+  %unroll_iter1239.a = and i32 %i.zk, -2
   br label %.lr.ph.split.i677
 
 .lr.ph.split.us.i685.preheader:                   ; preds = %.lr.ph.i676
@@ -1377,7 +1377,7 @@ bb.ax:                                            ; preds = %bb.av, %bb.aw, %bb.
   br i1 %i.aei, label %.lr.ph.split.us.i685.epil.preheader, label %.lr.ph.split.us.i685.preheader.new
 
 .lr.ph.split.us.i685.preheader.new:               ; preds = %.lr.ph.split.us.i685.preheader
-  %unroll_iter1254.a = and i32 %i.zk, 2147483646
+  %unroll_iter1254.a = and i32 %i.zk, -2
   br label %.lr.ph.split.us.i685
 
 .lr.ph.split.us.i685:                             ; preds = %.lr.ph.split.us.i685, %.lr.ph.split.us.i685.preheader.new
@@ -1585,7 +1585,7 @@ bb.az:                                            ; preds = %bb.ay, %.lr.ph855
   br i1 %i.aje, label %.lr.ph.split.i695.epil.preheader, label %.lr.ph.split.i695.preheader.new
 
 .lr.ph.split.i695.preheader.new:                  ; preds = %.lr.ph.split.i695.preheader
-  %unroll_iter1269 = and i32 %i.zk, 2147483646
+  %unroll_iter1269 = and i32 %i.zk, -2
   br label %.lr.ph.split.i695
 
 .lr.ph.split.us.i703.preheader:                   ; preds = %.lr.ph.i694
@@ -1594,7 +1594,7 @@ bb.az:                                            ; preds = %bb.ay, %.lr.ph855
   br i1 %i.ajf, label %.lr.ph.split.us.i703.epil.preheader, label %.lr.ph.split.us.i703.preheader.new
 
 .lr.ph.split.us.i703.preheader.new:               ; preds = %.lr.ph.split.us.i703.preheader
-  %unroll_iter1284 = and i32 %i.zk, 2147483646
+  %unroll_iter1284 = and i32 %i.zk, -2
   br label %.lr.ph.split.us.i703
 
 .lr.ph.split.us.i703:                             ; preds = %.lr.ph.split.us.i703, %.lr.ph.split.us.i703.preheader.new
@@ -1996,9 +1996,6 @@ declare i16 @llvm.bswap.i16(i16) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4

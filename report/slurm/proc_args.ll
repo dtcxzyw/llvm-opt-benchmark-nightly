@@ -202,7 +202,7 @@ bb.a:
   br i1 %.not, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = call i64 @__isoc23_strtol(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i32 noundef 10) #18 ; 4 uses
+  %i.b = call i64 @__isoc23_strtol(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i32 noundef 10) #18 ; 5 uses
   %.pr = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = icmp eq ptr %.pr, null
   br i1 %i.c, label %.thread, label %bb.c
@@ -210,9 +210,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.d = load i8, ptr %.pr, align 1
   %i.e = icmp ne i8 %i.d, 0
-  %.v = zext i1 %2 to i64
-  %3 = icmp slt i64 %i.b, %.v
-  %or.cond18 = select i1 %i.e, i1 true, i1 %3
+  %3 = icmp slt i64 %i.b, 0
+  %4 = icmp eq i64 %i.b, 0
+  %or.cond3 = select i1 %2, i1 %4, i1 false
+  %5 = or i1 %3, %or.cond3
+  %or.cond18 = select i1 %i.e, i1 true, i1 %5
   br i1 %or.cond18, label %.thread, label %bb.d
 
 .thread:                                          ; preds = %bb.a, %bb.c, %bb.b

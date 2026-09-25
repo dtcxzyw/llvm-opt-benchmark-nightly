@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
   br label %trace_usb_ehci_qh_tbytes.exit.i
 
 trace_usb_ehci_qh_tbytes.exit.i:                  ; preds = %bb.z, %bb.y, %bb.x, %bb.w
-  %i.bl = load i32, ptr %i.aq, align 8            ; 2 uses
+  %i.bl = load i32, ptr %i.aq, align 8
   %i.bm = and i32 %i.bl, -2147418113
   %i.bn = shl i32 %.0.i, 16
   %i.bo = and i32 %i.bn, 2147418112
@@ -218,17 +218,14 @@ trace_usb_ehci_qh_tbytes.exit.i:                  ; preds = %bb.z, %bb.y, %bb.x,
 bb.aa:                                            ; preds = %trace_usb_ehci_qh_tbytes.exit.i
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
   %i.bt = load i32, ptr %i.bs, align 4            ; 2 uses
-  %1 = and i32 %i.bt, 4095
-  %2 = add nuw i32 %1, %i.bq                      ; 2 uses
-  %i.bu = and i32 %2, 28672
-  %i.bv = add i32 %i.bu, %i.bl
-  %3 = and i32 %2, 4095
-  %i.bw = and i32 %i.bp, -28673
+  %i.bu = and i32 %i.bt, 4095
+  %i.bv = add nuw i32 %i.bu, %i.bq                ; 2 uses
+  %i.bw = and i32 %i.bv, 4095
   %i.bx = and i32 %i.bv, 28672
-  %i.by = or disjoint i32 %i.bx, %i.bw
+  %i.by = or i32 %i.bx, %i.bp
   store i32 %i.by, ptr %i.aq, align 8
   %i.bz = and i32 %i.bt, -4096
-  %i.ca = or disjoint i32 %3, %i.bz
+  %i.ca = or disjoint i32 %i.bw, %i.bz
   store i32 %i.ca, ptr %i.bs, align 4
   br label %ehci_finish_transfer.exit.i
 

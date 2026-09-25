@@ -205,13 +205,12 @@ bb.ak:                                            ; preds = %_ZN4cvc58internal12
           to label %.noexc61 unwind label %bb.be
 
 .noexc61:                                         ; preds = %bb.ak
+  %10 = xor i64 %.020141, 1
   %i.es = icmp eq i32 %i.er, 2
   %i.et = zext i1 %i.es to i64
-  %reass.sub144 = sub nsw i64 %i.et, %.020141
-  %spec.select.i.i60 = add nsw i64 %reass.sub144, 1
   %i.eu = getelementptr inbounds nuw i8, ptr %i.ek, i64 24
-  %10 = and i64 %spec.select.i.i60, 4294967295
-  %i.ev = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %10
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %10
+  %i.ev = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.et
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !28, !noalias !775 ; 5 uses
   store ptr %i.ew, ptr %9, align 8, !tbaa !30, !alias.scope !775
   %i.ex = load i64, ptr %i.ew, align 8, !noalias !775 ; 3 uses

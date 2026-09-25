@@ -203,10 +203,11 @@ bb.k:                                             ; preds = %bb.c
   %i.ag = and i64 %i.j, 2147483647
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.ag, ptr %i.ah, align 8, !tbaa !151
+  %4 = icmp eq i32 %i.k, 0
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.0212 = phi i32 [ 0, %bb.j ], [ %i.k, %bb.k ]  ; 2 uses
+  %.0212 = phi i1 [ true, %bb.j ], [ %4, %bb.k ]  ; 2 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.aa, label %bb.m
 
@@ -238,8 +239,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %4 = icmp eq i32 %.0212, 0
-  br i1 %4, label %bb.r, label %.thread343
+  br i1 %.0212, label %bb.r, label %.thread343
 
 bb.r:                                             ; preds = %bb.q
   %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 536
@@ -642,8 +642,7 @@ bb.ds:                                            ; preds = %pmix_obj_run_destru
   br label %bb.dt
 
 bb.dt:                                            ; preds = %bb.dn, %pmix_obj_update.exit, %bb.ds, %bb.dr, %bb.ak, %bb.ac
-  %5 = icmp sgt i32 %.0212, 0
-  br i1 %5, label %.thread343, label %pmix_obj_new_tma.exit284
+  br i1 %.0212, label %pmix_obj_new_tma.exit284, label %.thread343
 
 .thread343:                                       ; preds = %bb.q, %bb.dt
   store i8 1, ptr %i.l, align 4, !tbaa !139

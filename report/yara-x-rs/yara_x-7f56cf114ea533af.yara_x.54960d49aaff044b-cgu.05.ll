@@ -205,26 +205,29 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p, %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !5311
-  %i.bi = zext nneg i8 %.sroa.012.0.i to i64      ; 2 uses
+  %i.bi = zext nneg i8 %.sroa.012.0.i to i64      ; 3 uses
   %i.bj = shl nuw nsw i64 %i.bi, 56
+  %3 = mul nuw nsw i64 %i.bi, 282574488338432
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.p, %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !5311
-  %i.bk = zext nneg i8 %.sroa.012.0.i to i64
+  %i.bk = zext nneg i8 %.sroa.012.0.i to i64      ; 2 uses
+  %4 = mul nuw nsw i64 %i.bk, 282574488338432
+  %5 = or disjoint i64 %4, 65536
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %bb.r
-  %.sink251.i = phi i64 [ %i.bi, %bb.r ], [ %i.bk, %bb.s ] ; 3 uses
-  %.sink249.i = phi i64 [ %i.bj, %bb.r ], [ -72057594037927936, %bb.s ] ; 2 uses
-  %.sroa.019.0117209.i = phi i64 [ 0, %bb.r ], [ 1, %bb.s ] ; 2 uses
-  %i.bl = phi i64 [ 0, %bb.r ], [ 65536, %bb.s ]  ; 2 uses
-  %.sroa.437.0.insert.shift.i = shl nuw nsw i64 %.sink251.i, 8
-  %3 = mul nuw nsw i64 %.sink251.i, 282578800082944
-  %i.bm = or disjoint i64 %.sroa.437.0.insert.shift.i, %3
-  %i.bn = or disjoint i64 %i.bm, %.sroa.019.0117209.i
-  %i.bo = or disjoint i64 %i.bn, %i.bl
-  %.sroa.036.0.insert.insert.i = or i64 %i.bo, %.sink249.i
+bb.t:                                             ; preds = %bb.r, %bb.s
+  %.sink251.i = phi i64 [ %5, %bb.s ], [ %3, %bb.r ] ; 2 uses
+  %.sink249.i = phi i64 [ -72057594037927936, %bb.s ], [ %i.bj, %bb.r ] ; 2 uses
+  %.sroa.019.0117209.i = phi i64 [ 1, %bb.s ], [ 0, %bb.r ]
+  %i.bl = phi i64 [ %i.bk, %bb.s ], [ %i.bi, %bb.r ] ; 3 uses
+  %6 = mul nuw nsw i64 %i.bl, 4311744512
+  %.sroa.437.0.insert.shift.i = shl nuw nsw i64 %i.bl, 8
+  %i.bm = or disjoint i64 %.sink251.i, %6
+  %i.bn = or i64 %i.bm, %.sink249.i
+  %i.bo = or disjoint i64 %.sroa.437.0.insert.shift.i, %.sroa.019.0117209.i
+  %.sroa.036.0.insert.insert.i = add nuw nsw i64 %i.bo, %i.bn ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 2 uses
   store i8 %.sroa.012.0.i, ptr %i.bp, align 8, !noalias !5311
   store i64 %.sroa.036.0.insert.insert.i, ptr %i.r, align 8, !noalias !5311
@@ -232,10 +235,12 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   call void @_RINvXsf_NtCsgkljs906P5b_3nom8internalNCINvNtNtB8_6number8complete3u32RShINtNtB8_5error5ErrorB15_EE0INtB6_6ParserB15_E7processINtB6_7OutputMNtB6_4EmitB2d_NtB6_9StreamingEECs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.l, ptr noalias nofree noundef nonnull readonly dereferenceable(1) %i.bp, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bh, i64 noundef range(i64 0, -9223372036854775808) %i.bg), !noalias !5313
   %i.bq = load i64, ptr %i.l, align 8, !range !12, !noalias !5312, !noundef !5 ; 2 uses
   %.not.i.i = icmp eq i64 %i.bq, -1
-  %i.br = trunc nuw nsw i64 %.sroa.019.0117209.i to i8
-  %i.bs = trunc nuw nsw i64 %.sink251.i to i8     ; 2 uses
-  %i.bt = lshr exact i64 %i.bl, 16
-  %i.bu = trunc nuw nsw i64 %i.bt to i8
+  %i.br = trunc i64 %.sroa.036.0.insert.insert.i to i8
+  %7 = lshr i64 %.sroa.036.0.insert.insert.i, 8
+  %i.bs = trunc i64 %7 to i8
+  %i.bt = lshr i64 %.sink251.i, 16
+  %8 = trunc i64 %i.bt to i8
+  %i.bu = trunc nuw nsw i64 %i.bl to i8
   %i.bv = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.bx = load i64, ptr %i.bw, align 8, !noalias !5314 ; 3 uses
@@ -385,7 +390,7 @@ bb.ad:                                            ; preds = %.noexc17.i.i
 
 bb.ae:                                            ; preds = %.noexc17.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !5318
-  invoke fastcc void @_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvNtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parser4uint0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB28_NtB6_9StreamingEEBJ_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.d, i8 %i.bu, i8 %i.bs, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0145.0.copyload.i.i.i.i, i64 noundef %.sroa.4146.0.copyload.i.i.i.i)
+  invoke fastcc void @_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvNtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parser4uint0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB28_NtB6_9StreamingEEBJ_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.d, i8 %8, i8 %i.bu, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0145.0.copyload.i.i.i.i, i64 noundef %.sroa.4146.0.copyload.i.i.i.i)
           to label %.noexc18.i.i unwind label %bb.x, !noalias !5319
 
 .noexc18.i.i:                                     ; preds = %bb.ae

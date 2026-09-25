@@ -205,16 +205,17 @@ bb.h:                                             ; preds = %bb.g
   %i.k = getelementptr i8, ptr %0, i64 16
   %.val184.a = load double, ptr %i.k, align 8, !tbaa !259 ; 2 uses
   %i.l = fcmp oeq double %.val184.a, 0.000000e+00
-  %1 = bitcast double %.val184.a to i64
-  %2 = icmp slt i64 %1, 0
-  %or.cond148 = and i1 %i.l, %2
-  br i1 %or.cond148, label %bb.i, label %bb.j
+  br i1 %i.l, label %1, label %bb.j
 
-bb.i:                                             ; preds = %bb.h
+1:                                                ; preds = %bb.h
+  %.not147 = tail call i1 @llvm.is.fpclass.f64(double %.val184.a, /* (pzero) */ i32 64)
+  br i1 %.not147, label %bb.j, label %bb.i
+
+bb.i:                                             ; preds = %1
   %i.m = tail call ptr (i64, ...) @PyTuple_Pack(i64 noundef 3, ptr noundef nonnull %.val183.a, ptr noundef %0, ptr noundef nonnull @_Py_NoneStruct) #14
   br label %Py_DECREF.exit158
 
-bb.j:                                             ; preds = %bb.h
+bb.j:                                             ; preds = %1, %bb.h
   %i.n = tail call ptr (i64, ...) @PyTuple_Pack(i64 noundef 2, ptr noundef nonnull %.val183.a, ptr noundef %0) #14
   br label %Py_DECREF.exit158
 
@@ -615,6 +616,9 @@ Py_DECREF.exit26:                                 ; preds = %Py_INCREF.exit, %Py
 }
 
 declare ptr @_PyUnicode_Copy(ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #12

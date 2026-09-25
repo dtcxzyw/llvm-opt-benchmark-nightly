@@ -204,8 +204,7 @@ bb.an:                                            ; preds = %.critedge236.thread
   br i1 %.not19.i, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %.lr.ph.i250
-  %.not20.i = icmp eq i32 %.028.i, 0
-  %11 = zext i1 %.not20.i to i32
+  %11 = xor i32 %.028.i, 1
   br label %bb.au
 
 bb.ap:                                            ; preds = %.lr.ph.i250
@@ -274,8 +273,7 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %.not19.i258, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %.lr.ph.i254
-  %.not20.i268 = icmp eq i32 %.028.i255, 0
-  %12 = zext i1 %.not20.i268 to i32
+  %12 = xor i32 %.028.i255, 1
   br label %bb.bd
 
 bb.ay:                                            ; preds = %.lr.ph.i254
@@ -344,8 +342,7 @@ bb.be:                                            ; preds = %.critedge238
   br i1 %.not19.i275, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %.lr.ph.i271
-  %.not20.i285 = icmp eq i32 %.028.i272, 0
-  %13 = zext i1 %.not20.i285 to i32
+  %13 = xor i32 %.028.i272, 1
   br label %bb.bl
 
 bb.bg:                                            ; preds = %.lr.ph.i271
@@ -414,8 +411,7 @@ bb.bm:                                            ; preds = %.critedge239
   br i1 %.not19.i292, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %.lr.ph.i288
-  %.not20.i302 = icmp eq i32 %.028.i289, 0
-  %14 = zext i1 %.not20.i302 to i32
+  %14 = xor i32 %.028.i289, 1
   br label %bb.bt
 
 bb.bo:                                            ; preds = %.lr.ph.i288
@@ -818,8 +814,8 @@ bb.dh:                                            ; preds = %.thread339
   br i1 %.not229, label %bb.dl, label %bb.di
 
 bb.di:                                            ; preds = %.lr.ph366
-  %.not230 = icmp eq i32 %.0172364, 1
-  br i1 %.not230, label %bb.dk, label %bb.dj
+  %.not230 = icmp eq i32 %.0172364, 0
+  br i1 %.not230, label %bb.dj, label %bb.dk
 
 bb.dj:                                            ; preds = %bb.di
   %i.wj = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.40, ptr noundef nonnull %i.wh, ptr noundef nonnull @.str.42) #15 ; 0 uses

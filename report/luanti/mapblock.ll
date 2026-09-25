@@ -204,9 +204,8 @@ _ZN8MapBlock5isAirEv.exit:                        ; preds = %._ZN8MapBlock19actu
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 82
   %i.ax = load i8, ptr %i.aw, align 2, !tbaa !75, !range !87, !noundef !88
   %i.ay = shl nuw nsw i8 %i.ax, 3
-  %13 = xor i8 %i.ay, 8
-  %i.az = or i8 %13, %i.av
-  %.268 = xor i8 %i.az, 2
+  %i.az = or disjoint i8 %i.ay, %i.av
+  %.268 = xor i8 %i.az, 10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #20
   store i8 %.268, ptr %i.f, align 1, !tbaa !95
   %i.ba = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef nonnull %i.f, i64 noundef 1)

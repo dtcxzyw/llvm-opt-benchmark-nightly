@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %._crit_edge263
   br i1 %i.bl, label %bb.u, label %.preheader213
 
 .preheader213:                                    ; preds = %bb.t
-  %.not189267 = icmp slt i32 %.0166.lcssa, 1
+  %.not189267 = icmp eq i32 %.0166.lcssa, 0
   %.pre320 = load ptr, ptr %i.d, align 8, !tbaa !72 ; 3 uses
   br i1 %.not189267, label %._crit_edge270, label %.lr.ph269
 
@@ -607,7 +607,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bv = load i32, ptr %i.o, align 8, !tbaa !82
   %i.bw = add nsw i32 %i.bv, 1
   store i32 %i.bw, ptr %i.o, align 8, !tbaa !82
-  %smax = call i32 @llvm.smax.i32(i32 %.0.lcssa, i32 1)
+  %smax = call i32 @llvm.umax.i32(i32 %.0.lcssa, i32 1)
   br label %.lr.ph128
 
 .lr.ph128:                                        ; preds = %.lr.ph128.preheader, %.lr.ph128
@@ -1009,6 +1009,9 @@ declare i32 @llvm.smax.i32(i32, i32) #19
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #19
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

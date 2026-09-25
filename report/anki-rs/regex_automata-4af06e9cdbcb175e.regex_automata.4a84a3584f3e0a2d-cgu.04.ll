@@ -204,14 +204,13 @@ begin_hunk_0
 define { i1, i8 } @"_ZN102_$LT$regex_automata..util..alphabet..ByteSetIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h7221605471cf479aE"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %.promoted = load i64, ptr %i.a, align 8        ; 3 uses
+  %.promoted = load i64, ptr %i.a, align 8        ; 2 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !5, !align !6
-  %umax = tail call i64 @llvm.umax.i64(i64 %.promoted, i64 256)
   %exitcond.not2 = icmp ugt i64 %.promoted, 255
   br i1 %exitcond.not2, label %._crit_edge4, label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
-  %exitcond.not = icmp eq i64 %i.h, %umax
+  %exitcond.not = icmp eq i64 %i.h, 256
   br i1 %exitcond.not, label %._crit_edge4.loopexit, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph
@@ -296,14 +295,13 @@ bb.e:                                             ; preds = %bb.b, %"_ZN4core6re
 define range(i24 0, -254) i24 @"_ZN107_$LT$regex_automata..util..alphabet..ByteSetRangeIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hbfac22314004b0a8E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %.promoted = load i64, ptr %i.a, align 8        ; 3 uses
+  %.promoted = load i64, ptr %i.a, align 8        ; 2 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !5, !align !6 ; 3 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %.promoted, i64 256)
   %exitcond.not30 = icmp ugt i64 %.promoted, 255
   br i1 %exitcond.not30, label %.loopexit, label %.lr.ph31
 
 bb.b:                                             ; preds = %.lr.ph31
-  %exitcond.not = icmp eq i64 %i.e, %umax
+  %exitcond.not = icmp eq i64 %i.e, 256
   br i1 %exitcond.not, label %.loopexit.loopexit35, label %.lr.ph31
 
 .loopexit.loopexit:                               ; preds = %.lr.ph, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h13e665195e0ca7f2E.exit"

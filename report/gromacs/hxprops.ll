@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.i, label %bb.b, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.j = add nsw i32 %0, -4
+  %i.j = add nsw i32 %0, -4                       ; 2 uses
   %wide.trip.count = zext nneg i32 %i.j to i64
   br label %.lr.ph
 
@@ -239,9 +239,8 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.af = fpext float %i.ae to double
-  %i.ag = uitofp nneg i32 %0 to double
-  %3 = fadd double %i.ag, -4.000000e+00
-  %i.ah = fdiv double %i.af, %3
+  %i.ag = uitofp nneg i32 %i.j to double
+  %i.ah = fdiv double %i.af, %i.ag
   %i.ai = fptrunc double %i.ah to float
   br label %bb.b
 
@@ -538,7 +537,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
   %.015.lcssa = phi double [ 0.000000e+00, %bb.a ], [ %i.ck, %._crit_edge.loopexit ]
-  %3 = sitofp i32 %0 to double
+  %3 = uitofp nneg i32 %0 to double
   %i.cl = fadd double %3, -1.000000e+00
   %i.cm = fdiv double %.015.lcssa, %i.cl
   %i.cn = fptrunc double %i.cm to float

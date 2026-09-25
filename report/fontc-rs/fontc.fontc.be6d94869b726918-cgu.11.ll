@@ -202,19 +202,20 @@ bb.a:
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 153
   %i.f = load i8, ptr %i.e, align 1, !range !15, !alias.scope !464, !noundef !6
-  %2 = shl nuw nsw i8 %i.f, 2
+  %2 = trunc nuw i8 %i.f to i1
+  %..i = select i1 %2, i32 132, i32 128
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 162
   %i.h = load i8, ptr %i.g, align 2, !range !465, !alias.scope !464, !noundef !6 ; 2 uses
   %i.i = shl nuw nsw i8 %i.h, 3
   %i.j = and i8 %i.i, 8
-  %.sroa.0.126.i = or disjoint i8 %i.j, %2
-  %.sroa.0.1.i = zext nneg i8 %.sroa.0.126.i to i32
+  %3 = zext nneg i8 %i.j to i32
+  %.sroa.0.1.i = or disjoint i32 %..i, %3
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 163
   %i.l = load i8, ptr %i.k, align 1, !range !465, !alias.scope !464, !noundef !6 ; 2 uses
   %i.m = and i8 %i.l, 1
   %i.n = zext nneg i8 %i.m to i32
   %i.o = shl nuw nsw i32 %i.n, 9
-  %.sroa.0.2.i = or disjoint i32 %i.o, %.sroa.0.1.i
+  %.sroa.0.2.i = or disjoint i32 %.sroa.0.1.i, %i.o
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 164
   %i.q = load i8, ptr %i.p, align 4, !range !465, !alias.scope !464, !noundef !6 ; 2 uses
   %i.r = and i8 %i.q, 1
@@ -230,17 +231,18 @@ bb.a:
   %i.z = load i8, ptr %i.y, align 1, !range !15, !alias.scope !464, !noundef !6
   %i.aa = zext nneg i8 %i.z to i32
   %i.ab = shl nuw nsw i32 %i.aa, 8
+  %.sroa.0.5.i = or disjoint i32 %.sroa.0.4.i, %i.ab
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 159
   %i.ad = load i8, ptr %i.ac, align 1, !range !15, !alias.scope !464, !noundef !6
   %i.ae = shl nuw nsw i8 %i.ad, 6
   %masksel.i = zext nneg i8 %i.ae to i32
+  %.sroa.0.6.i = or i32 %.sroa.0.5.i, %masksel.i  ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.ag = load i8, ptr %i.af, align 8, !range !15, !alias.scope !464, !noundef !6
   %i.ah = trunc nuw i8 %i.ag to i1
-  %.masked.i = or disjoint i32 %.sroa.0.4.i, %i.ab
-  %3 = or i32 %.masked.i, %masksel.i
-  %masksel25.i = select i1 %i.ah, i32 0, i32 128
-  %.sroa.0.7.i = or i32 %3, %masksel25.i
+  %.masked.i = or i32 %.sroa.0.6.i, 128
+  %4 = and i32 %.sroa.0.6.i, 1884
+  %masksel25.i = select i1 %i.ah, i32 %4, i32 %.masked.i
   %or.cond.not.not.i = icmp eq i8 %i.h, 0
   %spec.select.i = select i1 %or.cond.not.not.i, i32 8, i32 0 ; 2 uses
   %or.cond7.not.not.i = icmp eq i8 %i.l, 0
@@ -338,7 +340,7 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionNtNtCs5Xr050g3D4S_3std4path7PathB
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bd, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0, i64 48, i1 false)
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i32 %.sroa.0.7.i, ptr %.sroa.5.0..sroa_idx, align 8
+  store i32 %masksel25.i, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
   store i32 %.sroa.0.2.i13, ptr %.sroa.6.0..sroa_idx, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64

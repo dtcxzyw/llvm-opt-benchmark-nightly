@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.thread142, %bb.c
 bb.e:                                             ; preds = %.lr.ph156.us, %._crit_edge.us
   %indvars.iv = phi i64 [ %3, %.lr.ph156.us ], [ %indvars.iv.next, %._crit_edge.us ] ; 4 uses
   %.0119154.us = phi i64 [ 0, %.lr.ph156.us ], [ %i.kc, %._crit_edge.us ] ; 10 uses
-  %i.bi = sub nuw nsw i64 %3, %.0119154.us        ; 2 uses
+  %i.bi = sub nuw nsw i64 %3, %.0119154.us
   %i.bj = tail call i64 @llvm.smin.i64(i64 %i.bi, i64 4)
   %i.bk = add nsw i64 %i.bj, -1                   ; 4 uses
   %i.bl = load ptr, ptr %i.az, align 8, !tbaa !27 ; 4 uses
@@ -266,7 +266,7 @@ bb.e:                                             ; preds = %.lr.ph156.us, %._cr
   %i.dk = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.dj
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
-  br i1 %i.bb, label %.preheader96.us.i.i.us, label %_ZL20iqp_gemm_8x8_q8_K_p4iPfmPKvPKS1_i.exit.us
+  br i1 %i.bb, label %.preheader96.us.i.i.us, label %.lr.ph.us
 
 .preheader96.us.i.i.us:                           ; preds = %bb.e, %bb.g
   %.sroa.18159.0.i.i.us = phi <8 x float> [ %i.hz, %bb.g ], [ zeroinitializer, %bb.e ]
@@ -413,17 +413,13 @@ bb.g:                                             ; preds = %bb.f
   %i.hz = tail call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.hu, <8 x float> %i.hy, <8 x float> %.sroa.18159.0.i.i.us) ; 2 uses
   %indvars.iv.next126.i.i.us = add nuw nsw i64 %indvars.iv125.i.i.us, 1 ; 2 uses
   %exitcond128.not.i.i.us = icmp eq i64 %indvars.iv.next126.i.i.us, %wide.trip.count.i.i
-  br i1 %exitcond128.not.i.i.us, label %_ZL20iqp_gemm_8x8_q8_K_p4iPfmPKvPKS1_i.exit.us, label %.preheader96.us.i.i.us, !llvm.loop !1
+  br i1 %exitcond128.not.i.i.us, label %.lr.ph.us, label %.preheader96.us.i.i.us, !llvm.loop !1
 
-_ZL20iqp_gemm_8x8_q8_K_p4iPfmPKvPKS1_i.exit.us:   ; preds = %bb.g, %bb.e
+.lr.ph.us:                                        ; preds = %bb.e, %bb.g
   %.lcssa179.sink.i.i.us = phi <8 x float> [ zeroinitializer, %bb.e ], [ %i.hh, %bb.g ]
   %.lcssa178.sink.i.i.us = phi <8 x float> [ zeroinitializer, %bb.e ], [ %i.hn, %bb.g ]
   %.lcssa177.sink.i.i.us = phi <8 x float> [ zeroinitializer, %bb.e ], [ %i.ht, %bb.g ]
   %.lcssa176.sink.i.i.us = phi <8 x float> [ zeroinitializer, %bb.e ], [ %i.hz, %bb.g ]
-  %6 = icmp sgt i64 %i.bi, 0
-  br i1 %6, label %.lr.ph.us, label %._crit_edge.us
-
-.lr.ph.us:                                        ; preds = %_ZL20iqp_gemm_8x8_q8_K_p4iPfmPKvPKS1_i.exit.us
   %i.ia = load ptr, ptr %i.bd, align 8, !tbaa !26
   %.idx143.us = shl nuw nsw i64 %.0119154.us, 3
   %i.ib = getelementptr inbounds nuw i8, ptr %4, i64 %.idx143.us ; 2 uses
@@ -497,7 +493,7 @@ _ZL20iqp_gemm_8x8_q8_K_p4iPfmPKvPKS1_i.exit.us:   ; preds = %bb.g, %bb.e
   store <8 x float> %.lcssa176.sink.i.i.us, ptr %i.kb, align 4
   br label %._crit_edge.us
 
-._crit_edge.us:                                   ; preds = %.lr.ph.us, %.lr.ph.us.1, %.lr.ph.us.2, %.lr.ph.us.3, %_ZL20iqp_gemm_8x8_q8_K_p4iPfmPKvPKS1_i.exit.us
+._crit_edge.us:                                   ; preds = %.lr.ph.us.3, %.lr.ph.us.2, %.lr.ph.us.1, %.lr.ph.us
   %i.kc = add nuw nsw i64 %.0119154.us, 4         ; 2 uses
   %i.kd = icmp slt i64 %i.kc, %3
   %indvars.iv.next = add i64 %indvars.iv, -4

@@ -205,15 +205,15 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %.not2.i = icmp eq i32 %.val, 0
   %i.fn = load ptr, ptr %i.k, align 8             ; 14 uses
   %i.fo = load ptr, ptr %i.du, align 8            ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.fo, i64 8 ; 3 uses
-  %wide.trip.count.i88 = zext i32 %.val to i64
-  %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 16 ; 2 uses
-  %i.fq = zext i32 %i.fm to i64                   ; 3 uses
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 8 ; 3 uses
+  %i.fq = zext i32 %.val to i64
   %i.fr = getelementptr inbounds nuw i8, ptr %2, i64 832
   %i.fs = getelementptr inbounds nuw i8, ptr %2, i64 3944 ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %2, i64 3948 ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %2, i64 3940 ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %2, i64 1600
+  %5 = getelementptr inbounds nuw i8, ptr %i.fo, i64 16 ; 2 uses
+  %6 = zext i32 %i.fm to i64                      ; 3 uses
   %xtraiter178 = and i32 %i.fm, 3                 ; 2 uses
   %lcmp.mod179.not = icmp eq i32 %xtraiter178, 0
   %i.fw = icmp ult i32 %i.fm, 4
@@ -227,21 +227,20 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.ga = add nsw i32 %i.fm, -1                   ; 3 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fn, i64 72 ; 3 uses
   %i.gc = icmp eq i32 %i.fm, 1
-  %xtraiter193 = and i64 %i.fq, 1
+  %xtraiter193 = and i64 %6, 1
   %i.gd = icmp eq i32 %i.fm, 1
-  %unroll_iter = and i64 %i.fq, 4294967294
+  %unroll_iter = and i64 %6, 4294967294
   %lcmp.mod194.not = icmp eq i64 %xtraiter193, 0
   %lcmp.mod195 = trunc i32 %i.fm to i1
   br label %bb.z
 
 bb.z:                                             ; preds = %.thread, %bb.ci
-  %i.ge = phi i1 [ true, %.thread ], [ false, %bb.ci ] ; 3 uses
-  %6 = phi i1 [ false, %.thread ], [ true, %bb.ci ]
+  %i.ge = phi i1 [ true, %.thread ], [ false, %bb.ci ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.thread ], [ 1, %bb.ci ] ; 3 uses
   br i1 %.not19.i, label %psh_glyph_load_points.exit, label %.lr.ph.i85
 
 .lr.ph.i85:                                       ; preds = %bb.z
-  %i.gf = load ptr, ptr %5, align 8, !tbaa !161   ; 4 uses
+  %i.gf = load ptr, ptr %i.fp, align 8, !tbaa !161 ; 4 uses
   br i1 %i.ge, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i.preheader
 
 .lr.ph.split.i.preheader:                         ; preds = %.lr.ph.i85
@@ -460,7 +459,7 @@ bb.ah:                                            ; preds = %.sink.split.i96, %b
 
 .loopexit.i:                                      ; preds = %bb.ah, %.lr.ph.i89
   %indvars.iv.next.i93 = add nuw nsw i64 %indvars.iv.i90, 1 ; 2 uses
-  %exitcond.not.i94 = icmp eq i64 %indvars.iv.next.i93, %wide.trip.count.i88
+  %exitcond.not.i94 = icmp eq i64 %indvars.iv.next.i93, %i.fq
   br i1 %exitcond.not.i94, label %psh_glyph_compute_extrema.exit, label %.lr.ph.i89, !llvm.loop !138
 
 psh_glyph_compute_extrema.exit:                   ; preds = %.loopexit.i, %psh_glyph_load_points.exit
@@ -710,8 +709,8 @@ bb.au:                                            ; preds = %psh_hint_table_acti
   br i1 %i.nb, label %bb.aj, label %.thread.i, !llvm.loop !145
 
 bb.av:                                            ; preds = %psh_hint_table_align_hints.exit
-  %i.nc = icmp eq i32 %i.kd, 1
-  br i1 %i.nc, label %.thread.i, label %.thread115.i
+  %i.nc = icmp eq i32 %i.kd, 0
+  br i1 %i.nc, label %.thread115.i, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.au, %bb.av
   %i.nd = load ptr, ptr %i.kb, align 8, !tbaa !67 ; 2 uses
@@ -969,14 +968,14 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj, %.lr
   br i1 %.not66.i.1, label %psh_glyph_find_strong_points.exit, label %.lr.ph125.i, !llvm.loop !147
 
 psh_glyph_find_strong_points.exit:                ; preds = %.lr.ph125.i.prol.loopexit, %bb.bl, %bb.ai, %.thread115.i
-  br i1 %6, label %.split75, label %.split
+  br i1 %i.ge, label %.split, label %.split75
 
 .split:                                           ; preds = %psh_glyph_find_strong_points.exit
   call fastcc void @psh_glyph_interpolate_strong_points(ptr noundef %4, i32 noundef 0)
   call fastcc void @psh_glyph_interpolate_normal_points(ptr noundef %4, i32 noundef 0)
   call fastcc void @psh_glyph_interpolate_other_points(ptr noundef %4, i32 noundef 0)
-  %i.qe = load ptr, ptr %5, align 8, !tbaa !161
-  %i.qf = load ptr, ptr %i.fp, align 8, !tbaa !162
+  %i.qe = load ptr, ptr %i.fp, align 8, !tbaa !161
+  %i.qf = load ptr, ptr %5, align 8, !tbaa !162
   br i1 %.not19.i, label %psh_glyph_save_points.exit, label %.lr.ph.split.us.i107
 
 .lr.ph.split.us.i107:                             ; preds = %.split, %bb.bn
@@ -1002,7 +1001,7 @@ bb.bm:                                            ; preds = %.lr.ph.split.us.i10
 bb.bn:                                            ; preds = %bb.bm, %.lr.ph.split.us.i107
   %i.qp = getelementptr inbounds nuw i8, ptr %.019.us.i, i64 72
   %indvars.iv.next24.i = add nuw nsw i64 %indvars.iv23.i, 1 ; 2 uses
-  %exitcond139.not = icmp eq i64 %indvars.iv.next24.i, %i.fq
+  %exitcond139.not = icmp eq i64 %indvars.iv.next24.i, %6
   br i1 %exitcond139.not, label %psh_glyph_save_points.exit, label %.lr.ph.split.us.i107, !llvm.loop !148
 
 .split75:                                         ; preds = %psh_glyph_find_strong_points.exit
@@ -1161,8 +1160,8 @@ psh_glyph_find_blue_points.exit:                  ; preds = %.loopexit.i110
   call fastcc void @psh_glyph_interpolate_strong_points(ptr noundef %4, i32 noundef 1)
   call fastcc void @psh_glyph_interpolate_normal_points(ptr noundef %4, i32 noundef 1)
   call fastcc void @psh_glyph_interpolate_other_points(ptr noundef %4, i32 noundef 1)
-  %i.te = load ptr, ptr %5, align 8, !tbaa !161   ; 3 uses
-  %i.tf = load ptr, ptr %i.fp, align 8, !tbaa !162 ; 3 uses
+  %i.te = load ptr, ptr %i.fp, align 8, !tbaa !161 ; 3 uses
+  %i.tf = load ptr, ptr %5, align 8, !tbaa !162   ; 3 uses
   br i1 %i.gd, label %.lr.ph.split.i119.epil.preheader, label %.lr.ph.split.i119
 
 .lr.ph.split.i119:                                ; preds = %psh_glyph_find_blue_points.exit, %bb.cf
@@ -1245,7 +1244,7 @@ bb.cg:                                            ; preds = %.lr.ph.split.i119.e
   store i8 %i.uk, ptr %i.ui, align 1, !tbaa !38
   br label %psh_glyph_save_points.exit
 
-psh_glyph_save_points.exit:                       ; preds = %bb.bn, %psh_glyph_save_points.exit.loopexit.unr-lcssa, %bb.cg, %.lr.ph.split.i119.epil.preheader, %psh_glyph_save_points.exit.critedge, %.split
+psh_glyph_save_points.exit:                       ; preds = %psh_glyph_save_points.exit.loopexit.unr-lcssa, %bb.cg, %.lr.ph.split.i119.epil.preheader, %bb.bn, %psh_glyph_save_points.exit.critedge, %.split
   br i1 %.not79, label %bb.ci, label %bb.ch
 
 bb.ch:                                            ; preds = %psh_glyph_save_points.exit
@@ -1648,8 +1647,8 @@ bb.a:
   br i1 %i.z, label %bb.b, label %.preheader123
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.aa = icmp eq i32 %.1, 1
-  br i1 %i.aa, label %bb.c, label %.lr.ph135.preheader
+  %i.aa = icmp eq i32 %.1, 0
+  br i1 %i.aa, label %.lr.ph135.preheader, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %.296, i64 64

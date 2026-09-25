@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %_RNvXs2_NtNtCscAsMj
   br label %_RNvXs2_NtNtCscAsMj0W7j8b_3std4hash6randomNtB5_13DefaultHasherNtNtCshzWfHUSfYae_4core4hash6Hasher5write.exit.i.i.i
 
 _RNvNtNtCshzWfHUSfYae_4core4hash3sip9u8to64_le.exit.i.i.i.i.i: ; preds = %bb.w
-  %.not22.i.i.i = icmp eq i64 %storemerge.i.i4143.i.i.i, 8
+  %.not22.i.i.i = icmp eq i64 %storemerge.i.i4143.i.i.i, 8 ; 2 uses
   %i.dw = zext i8 %i.du to i64                    ; 2 uses
   %.sroa.0.2.i.i.i.i.i.i = select i1 %.not22.i.i.i, i64 0, i64 %i.dw
   %i.dx = shl i64 %storemerge.i.i4143.i.i.i, 3
@@ -230,9 +230,8 @@ bb.x:                                             ; preds = %_RNvNtNtCshzWfHUSfY
   %i.ep = xor i64 %i.eo, %i.el                    ; 3 uses
   %i.eq = call noundef i64 @llvm.fshl.i64(i64 %i.ek, i64 %i.ek, i64 32) ; 3 uses
   %i.er = xor i64 %i.el, %i.ea                    ; 3 uses
-  %.not23.i.i.i = icmp ne i64 %storemerge.i.i4143.i.i.i, 7 ; 2 uses
-  %spec.select.i.i = zext i1 %.not23.i.i.i to i64
-  %spec.select61.i.i = select i1 %.not23.i.i.i, i64 %i.dw, i64 0
+  %2 = add nsw i64 %storemerge.i.i4143.i.i.i, -7
+  %spec.select61.i.i = select i1 %.not22.i.i.i, i64 %i.dw, i64 0
   br label %_RNvXs2_NtNtCscAsMj0W7j8b_3std4hash6randomNtB5_13DefaultHasherNtNtCshzWfHUSfYae_4core4hash6Hasher5write.exit.i.i.i
 
 bb.y:                                             ; preds = %_RNvNtNtCshzWfHUSfYae_4core4hash3sip9u8to64_le.exit.i.i.i.i.i
@@ -253,7 +252,7 @@ _RNvXs2_NtNtCscAsMj0W7j8b_3std4hash6randomNtB5_13DefaultHasherNtNtCshzWfHUSfYae_
   %i.ez = phi i64 [ %i.dq, %bb.y ], [ %i.ep, %bb.x ], [ %i.dq, %..thread.i_crit_edge.i.i ]
   %i.fa = phi i64 [ %i.ea, %bb.y ], [ %spec.select61.i.i, %bb.x ], [ %.pre.i.i, %..thread.i_crit_edge.i.i ] ; 3 uses
   %i.fb = phi i64 [ %i.ds, %bb.y ], [ %i.er, %bb.x ], [ %i.ds, %..thread.i_crit_edge.i.i ]
-  %storemerge.i.i.i.i.i = phi i64 [ %i.es, %bb.y ], [ %spec.select.i.i, %bb.x ], [ 1, %..thread.i_crit_edge.i.i ] ; 3 uses
+  %storemerge.i.i.i.i.i = phi i64 [ %i.es, %bb.y ], [ %2, %bb.x ], [ 1, %..thread.i_crit_edge.i.i ] ; 3 uses
   %i.fc = icmp eq ptr %i.dt, %.sroa.0.0.i12.sroa.phi.i.i.i
   br i1 %i.fc, label %.loopexit.i.i.i, label %bb.w
 

@@ -205,10 +205,9 @@ bb.i:                                             ; preds = %bb.a
   br label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit
 
 _ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit: ; preds = %bb.h, %bb.i
-  %2 = bitcast double %1 to i64                   ; 2 uses
-  %3 = and i64 %2, 9218868437227405312
-  %4 = icmp ne i64 %3, 9218868437227405312        ; 2 uses
-  br i1 %4, label %bb.j, label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
+  %2 = tail call double @llvm.fabs.f64(double %1)
+  %3 = fcmp one double %2, +inf                   ; 2 uses
+  br i1 %3, label %bb.j, label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
 
 bb.j:                                             ; preds = %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit
   %i.am = load ptr, ptr %0, align 8               ; 3 uses
@@ -237,8 +236,8 @@ _ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE4PushEm.exit.i
   br i1 %i.az, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %_ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE4PushEm.exit.i
-  %5 = icmp slt i64 %2, 0
-  br i1 %5, label %bb.m, label %bb.n
+  %.not.i.i = tail call i1 @llvm.is.fpclass.f64(double %1, /* (pzero) */ i32 64)
+  br i1 %.not.i.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 1
@@ -292,7 +291,7 @@ _ZN9rapidjson8internal4dtoaEdPci.exit.i:          ; preds = %bb.q, %bb.n
   br label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
 
 _ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit: ; preds = %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit, %_ZN9rapidjson8internal4dtoaEdPci.exit.i
-  ret i1 %4
+  ret i1 %3
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -695,10 +694,9 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   tail call void @_ZN9rapidjson12PrettyWriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE12PrettyPrefixENS_4TypeE(ptr noundef nonnull align 8 dereferenceable(72) %0, i32 noundef 6)
-  %2 = bitcast double %1 to i64                   ; 2 uses
-  %3 = and i64 %2, 9218868437227405312
-  %4 = icmp ne i64 %3, 9218868437227405312        ; 2 uses
-  br i1 %4, label %bb.b, label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
+  %2 = tail call double @llvm.fabs.f64(double %1)
+  %3 = fcmp one double %2, +inf                   ; 2 uses
+  br i1 %3, label %bb.b, label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %0, align 8                ; 3 uses
@@ -727,8 +725,8 @@ _ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE4PushEm.exit.i
   br i1 %i.p, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %_ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE4PushEm.exit.i
-  %5 = icmp slt i64 %2, 0
-  br i1 %5, label %bb.e, label %bb.f
+  %.not.i.i = tail call i1 @llvm.is.fpclass.f64(double %1, /* (pzero) */ i32 64)
+  br i1 %.not.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 1
@@ -782,7 +780,7 @@ _ZN9rapidjson8internal4dtoaEdPci.exit.i:          ; preds = %bb.i, %bb.f
   br label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
 
 _ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit: ; preds = %bb.a, %_ZN9rapidjson8internal4dtoaEdPci.exit.i
-  ret i1 %4
+  ret i1 %3
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -1184,6 +1182,9 @@ bb.q:                                             ; preds = %bb.o, %bb.p
 ._crit_edge55.split:                              ; preds = %._crit_edge53, %bb.a, %._crit_edge
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #10
 
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_Z12ai_to_stringIN5glTF213ComponentTypeEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i32 noundef %1) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {

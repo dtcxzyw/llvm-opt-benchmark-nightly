@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %.split.us.i
   tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.fi, ptr noundef nonnull @.str.119, ptr noundef nonnull @.str.116, i32 noundef %i.fk, i32 noundef %i.fm, ptr noundef nonnull %i.fp) #24
   br label %__i2c_check_suspended.exit
 
-.split132.us.i:                                   ; preds = %bb.ak, %bb.aq, %.lr.ph.split.split.split.split.us.i, %.lr.ph.split.split.split.split.us.i.1, %bb.ae
+.split132.us.i:                                   ; preds = %bb.ak, %bb.aq, %bb.ae, %.lr.ph.split.split.split.split.us.i, %.lr.ph.split.split.split.split.us.i.1
   %.us-phi133.i = phi ptr [ %i.dc, %bb.ae ], [ %i.ei, %.lr.ph.split.split.split.split.us.i.1 ], [ %1, %.lr.ph.split.split.split.split.us.i ], [ %1, %bb.ak ], [ %i.gx, %bb.aq ] ; 3 uses
   %i.fq = tail call i32 @___ratelimit(ptr noundef nonnull @i2c_quirk_error._rs, ptr noundef nonnull @__func__.i2c_quirk_error) #21
   %.not.i104.i = icmp eq i32 %i.fq, 0
@@ -283,12 +283,13 @@ bb.aq:                                            ; preds = %.lr.ph.split.split.
 bb.ar:                                            ; preds = %.lr.ph.split.split.split.split.i.1
   br i1 %i.hd, label %.split142.us.i, label %i2c_check_for_quirks.exit
 
-i2c_check_for_quirks.exit:                        ; preds = %bb.ah, %bb.aq, %bb.ar, %.lr.ph.split.split.split.split.us.i.1, %.lr.ph.split.split.split.us.split.i.1, %.lr.ph.split.split.split.us.i, %bb.f
+i2c_check_for_quirks.exit:                        ; preds = %bb.ah, %bb.aq, %bb.ar, %.lr.ph.split.split.split.us.split.i.1, %.lr.ph.split.split.split.split.us.i.1, %.lr.ph.split.split.split.us.i, %bb.f
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @i2c_trace_msg_key, i1 false) #22
           to label %arch_static_branch.exit75.thread [label %.lr.ph.preheader], !srcloc !84
 
 .lr.ph.preheader:                                 ; preds = %i2c_check_for_quirks.exit
-  %wide.trip.count = zext nneg i32 %2 to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %trace_i2c_read.exit

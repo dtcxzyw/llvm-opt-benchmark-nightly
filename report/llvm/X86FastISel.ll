@@ -204,8 +204,7 @@ bb.cp:                                            ; preds = %bb.cn
   %i.sb = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i32 0, ptr %i.sb, align 8, !tbaa !229, !alias.scope !1082
   %i.sc = shl nuw nsw i32 %i.qz, 8
-  %43 = and i32 %i.sc, 1048320
-  %i.sd = or disjoint i32 %43, 10
+  %i.sd = or disjoint i32 %i.sc, 10
   store i32 %i.sd, ptr %11, align 8, !alias.scope !1082
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.rw, ptr noundef nonnull align 8 dereferenceable(1065) %i.rx, ptr noundef nonnull align 8 dereferenceable(32) %11) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #18

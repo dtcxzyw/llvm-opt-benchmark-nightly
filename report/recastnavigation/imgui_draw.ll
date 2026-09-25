@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ap = phi ptr [ %i.ag, %bb.f ], [ %.pre, %bb.i ]
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 80
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !140 ; 11 uses
-  %i.as = zext nneg i32 %2 to i64                 ; 7 uses
+  %i.as = zext nneg i32 %2 to i64                 ; 4 uses
   %i.at = getelementptr [8 x i8], ptr %i.ar, i64 %i.as ; 14 uses
   %wide.trip.count = zext nneg i32 %i.h to i64
   br label %.lr.ph
@@ -319,6 +319,8 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph548:                                        ; preds = %bb.p
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 8 uses
+  %smax576 = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count577 = zext nneg i32 %smax576 to i64
   %.pre592 = load ptr, ptr %i.de, align 8, !tbaa !134
   br label %bb.r
 
@@ -432,6 +434,8 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
   %i.fr = load <2 x i32>, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !31
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 6 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count571 = zext nneg i32 %smax to i64
   %.pre591 = load ptr, ptr %i.fs, align 8, !tbaa !134
   br label %bb.q
 
@@ -461,7 +465,7 @@ bb.q:                                             ; preds = %.lr.ph546, %bb.q
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gf, i64 40 ; 2 uses
   store ptr %i.gh, ptr %i.fs, align 8, !tbaa !134
   %indvars.iv.next567 = add nuw nsw i64 %indvars.iv566, 1 ; 2 uses
-  %exitcond570.not = icmp eq i64 %indvars.iv.next567, %i.as
+  %exitcond570.not = icmp eq i64 %indvars.iv.next567, %wide.trip.count571
   br i1 %exitcond570.not, label %.loopexit534, label %bb.q, !llvm.loop !565
 
 bb.r:                                             ; preds = %.lr.ph548, %bb.r
@@ -500,7 +504,7 @@ bb.r:                                             ; preds = %.lr.ph548, %bb.r
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hb, i64 60 ; 2 uses
   store ptr %i.hd, ptr %i.de, align 8, !tbaa !134
   %indvars.iv.next572 = add nuw nsw i64 %indvars.iv571, 1 ; 2 uses
-  %exitcond575.not = icmp eq i64 %indvars.iv.next572, %i.as
+  %exitcond575.not = icmp eq i64 %indvars.iv.next572, %wide.trip.count577
   br i1 %exitcond575.not, label %.loopexit534, label %bb.r, !llvm.loop !566
 
 bb.s:                                             ; preds = %bb.l
@@ -574,6 +578,8 @@ bb.s:                                             ; preds = %bb.l
 .lr.ph554:                                        ; preds = %bb.v
   store ptr %i.lp, ptr %i.iz, align 8, !tbaa !115
   %i.je = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 10 uses
+  %smax587 = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count588 = zext nneg i32 %smax587 to i64
   %.pre593 = load ptr, ptr %i.je, align 8, !tbaa !134
   br label %bb.w
 
@@ -714,7 +720,7 @@ bb.w:                                             ; preds = %.lr.ph554, %bb.w
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mq, i64 80 ; 2 uses
   store ptr %i.ms, ptr %i.je, align 8, !tbaa !134
   %indvars.iv.next582 = add nuw nsw i64 %indvars.iv581, 1 ; 2 uses
-  %exitcond585.not = icmp eq i64 %indvars.iv.next582, %i.as
+  %exitcond585.not = icmp eq i64 %indvars.iv.next582, %wide.trip.count588
   br i1 %exitcond585.not, label %.loopexit534, label %bb.w, !llvm.loop !568
 
 .loopexit534:                                     ; preds = %bb.q, %bb.r, %bb.w
@@ -990,7 +996,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %i.bk = fmul float %i.j, 5.000000e-01
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %wide.trip.count153 = zext nneg i32 %2 to i64
+  %smax156 = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count153 = zext nneg i32 %smax156 to i64
   %i.bn = insertelement <2 x float> poison, float %i.bk, i64 0
   %i.bo = shufflevector <2 x float> %i.bn, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.j
@@ -1393,7 +1400,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bo = fmul float %i.n, 5.000000e-01
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %wide.trip.count147 = zext nneg i32 %2 to i64
+  %smax150 = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count147 = zext nneg i32 %smax150 to i64
   %i.br = insertelement <2 x float> poison, float %i.bo, i64 0
   %i.bs = shufflevector <2 x float> %i.br, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.m
@@ -1796,7 +1804,7 @@ bb.ai:                                            ; preds = %bb.ah, %_ZL17stbtt_
   %i.oa = add nsw i32 %i.eg, 2
   %i.ob = sext i32 %i.oa to i64
   %i.oc = shl nsw i64 %i.ob, 2
-  %6 = sitofp i32 %i.eh to float                  ; 3 uses
+  %6 = uitofp nneg i32 %i.eh to float             ; 3 uses
   %i.od = icmp sgt i32 %i.eg, -1                  ; 2 uses
   %wide.trip.count.i.i92.i.i.i = zext nneg i32 %i.eh to i64
   br label %bb.aj
@@ -2060,7 +2068,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bg
   %i.rx = add nuw nsw i32 %i.qt, 1
-  %7 = sitofp i32 %i.rx to float                  ; 2 uses
+  %7 = uitofp nneg i32 %i.rx to float             ; 2 uses
   %i.ry = fcmp ult float %.057.i.i.i.i.i.i, %7
   %i.rz = fcmp ult float %.055.i.i.i.i.i.i, %7
   %or.cond65.i.i.i.i.i.i = select i1 %i.ry, i1 true, i1 %i.rz
@@ -2125,7 +2133,7 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bp, %bb.bo
   %.055.i352.i.i.i.i.i = phi float [ %i.tf, %bb.bp ], [ %i.qq, %bb.bo ] ; 3 uses
   %.0.i353.i.i.i.i.i = phi float [ %i.so, %bb.bp ], [ %i.of, %bb.bo ] ; 2 uses
-  %8 = sitofp i32 %i.sn to float                  ; 4 uses
+  %8 = uitofp nneg i32 %i.sn to float             ; 4 uses
   %i.tg = fcmp ugt float %.057.i350.i.i.i.i.i, %8
   %i.th = fcmp ugt float %.055.i352.i.i.i.i.i, %8
   %or.cond64.i354.i.i.i.i.i = select i1 %i.tg, i1 true, i1 %i.th
@@ -2144,7 +2152,7 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %bb.bq
   %i.tp = add nuw nsw i32 %i.qt, 2
-  %9 = sitofp i32 %i.tp to float                  ; 2 uses
+  %9 = uitofp nneg i32 %i.tp to float             ; 2 uses
   %i.tq = fcmp ult float %.057.i350.i.i.i.i.i, %9
   %i.tr = fcmp ult float %.055.i352.i.i.i.i.i, %9
   %or.cond65.i355.i.i.i.i.i = select i1 %i.tq, i1 true, i1 %i.tr
@@ -2290,7 +2298,7 @@ bb.ci:                                            ; preds = %bb.ch
   %i.wq = getelementptr inbounds nuw i8, ptr %.0295473.i.i.i.i.i, i64 20
   %i.wr = load float, ptr %i.wq, align 4, !tbaa !798
   %i.ws = fmul float %i.wp, %i.wr                 ; 2 uses
-  %10 = sitofp i32 %i.wm to float
+  %10 = uitofp nneg i32 %i.wm to float
   %i.wt = fadd float %10, 1.000000e+00            ; 2 uses
   %i.wu = fsub float %i.wt, %.0307.i.i.i.i.i
   %i.wv = fsub float %i.wt, %.0305.i.i.i.i.i

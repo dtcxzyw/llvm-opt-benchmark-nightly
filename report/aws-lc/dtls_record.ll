@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.c, label %_ZNSt6bitsetILm256EElSEm.exit.sink.split
 
 bb.c:                                             ; preds = %bb.b
-  %i.ab = lshr i64 %i.aa, 6                       ; 10 uses
+  %i.ab = lshr i64 %i.aa, 6                       ; 9 uses
   %i.ac = and i64 %i.aa, 63                       ; 2 uses
   %i.ad = icmp eq i64 %i.ac, 0
   br i1 %i.ad, label %.lr.ph33.i.i, label %.preheader29.i.i
@@ -214,7 +214,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ae, label %.lr.ph.i.i, label %.loopexit.i.i
 
 .lr.ph33.i.i:                                     ; preds = %bb.c
-  %2 = sub nuw nsw i64 3, %i.ab
+  %2 = xor i64 %i.ab, 3
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %2
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !9
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -232,7 +232,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not28.i.i.1, label %_ZNSt12_Base_bitsetILm4EE16_M_do_left_shiftEm.exit.sink.split.i, label %.lr.ph33.i.i.2
 
 .lr.ph33.i.i.2:                                   ; preds = %.lr.ph33.i.i.1
-  %3 = sub nuw nsw i64 1, %i.ab
+  %3 = xor i64 %i.ab, 1
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
   %i.an = load i64, ptr %i.am, align 8, !tbaa !9
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -240,7 +240,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNSt12_Base_bitsetILm4EE16_M_do_left_shiftEm.exit.sink.split.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader29.i.i
-  %4 = sub nuw nsw i64 3, %i.ab
+  %4 = xor i64 %i.ab, 3
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %4 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !9
   %i.ar = getelementptr i8, ptr %i.ap, i64 -8
@@ -264,11 +264,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.bd, label %.lr.ph.i.i.2, label %.loopexit.i.i
 
 .lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
-  %5 = sub nuw nsw i64 1, %i.ab
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %5 ; 2 uses
-  %i.be = load i64, ptr %6, align 8, !tbaa !9
-  %7 = getelementptr i8, ptr %6, i64 -8
-  %i.bf = load i64, ptr %7, align 8, !tbaa !9
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.be = load i64, ptr %5, align 8, !tbaa !9
+  %i.bf = load i64, ptr %0, align 8, !tbaa !9
   %i.bg = tail call i64 @llvm.fshl.i64(i64 %i.be, i64 %i.bf, i64 %i.aa)
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.bg, ptr %i.bh, align 8, !tbaa !9

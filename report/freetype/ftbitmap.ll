@@ -205,19 +205,18 @@ bb.al:                                            ; preds = %bb.aj
 bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.fr = phi i32 [ %.pre177, %bb.ak ], [ %i.fm, %bb.al ]
   %.0110 = phi ptr [ %i.fj, %bb.ak ], [ %i.fq, %bb.al ]
-  %.0106 = phi i32 [ %i.fe, %bb.ak ], [ %i.fk, %bb.al ] ; 7 uses
+  %.0106 = phi i32 [ %i.fe, %bb.ak ], [ %i.fk, %bb.al ] ; 6 uses
   %.not164 = icmp eq i32 %i.fr, 0
   br i1 %.not164, label %._crit_edge159, label %.preheader136.lr.ph
 
 .preheader136.lr.ph:                              ; preds = %bb.am
   %.0107144 = add nsw i32 %.0106, -1
-  %.not217 = icmp eq i32 %.0106, 0
+  %.not217 = icmp eq i32 %.0106, 0                ; 2 uses
   %.not129140 = icmp slt i32 %.0104200, 1
   %i.fs = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %.not128152 = icmp slt i32 %.0103203, 1
-  %5 = icmp eq i32 %.0106, 0
   %i.ft = zext i32 %.0107144 to i64
-  %brmerge = select i1 %.not128152, i1 true, i1 %5
+  %brmerge = or i1 %.not128152, %.not217
   %wide.trip.count = zext nneg i32 %.0106 to i64  ; 9 uses
   %min.iters.check = icmp ult i32 %.0106, 4
   %min.iters.check225 = icmp ult i32 %.0106, 32
@@ -247,8 +246,8 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   br label %iter.check
 
 .lr.ph:                                           ; preds = %.lr.ph149, %.loopexit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit ], [ %i.ft, %.lr.ph149 ] ; 5 uses
-  %.0107.in145 = phi i32 [ %7, %.loopexit ], [ %.0106, %.lr.ph149 ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit ], [ %i.ft, %.lr.ph149 ] ; 4 uses
+  %.0107.in145 = phi i32 [ %5, %.loopexit ], [ %.0106, %.lr.ph149 ]
   %.0107.in145.fr = freeze i32 %.0107.in145       ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.1111156, i64 %indvars.iv ; 7 uses
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !24  ; 3 uses
@@ -257,7 +256,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.fy = zext nneg i32 %.0107.in145.fr to i64
   %i.fz = getelementptr i8, ptr %.1111156, i64 %i.fy
   %i.ga = getelementptr i8, ptr %i.fz, i64 -2
-  %i.gb = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
+  %i.gb = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   br i1 %.not131, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us.backedge
@@ -374,8 +373,8 @@ bb.au:                                            ; preds = %bb.at
 
 .loopexit:                                        ; preds = %bb.ar, %bb.au, %bb.as, %bb.aq, %bb.ap, %bb.an, %.split.us
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %6 = icmp sgt i64 %indvars.iv, 0
-  %7 = trunc nuw nsw i64 %indvars.iv to i32
+  %5 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
+  %6 = icmp sgt i32 %5, 0
   br i1 %6, label %.lr.ph, label %.preheader, !llvm.loop !44
 
 iter.check:                                       ; preds = %.lr.ph151.preheader, %._crit_edge

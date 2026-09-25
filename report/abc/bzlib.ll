@@ -204,10 +204,8 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
   br label %bb.aq
 
 bb.ae:                                            ; preds = %myfeof.exit
-  switch i32 %i.z, label %bb.an [
-    i32 0, label %bb.af
-    i32 4, label %bb.ak
-  ]
+  %cond = icmp eq i32 %i.z, 0
+  br i1 %cond, label %bb.af, label %bb.ak
 
 bb.af:                                            ; preds = %bb.ae
   %i.ab = load ptr, ptr %1, align 8, !tbaa !67    ; 2 uses
@@ -253,7 +251,7 @@ bb.am:                                            ; preds = %bb.ak, %bb.al
   %i.aj = sub i32 %3, %i.ai
   br label %bb.aq
 
-bb.an:                                            ; preds = %myfeof.exit96, %myfeof.exit96.thread, %bb.ae
+bb.an:                                            ; preds = %myfeof.exit96, %myfeof.exit96.thread
   %.pr = load i32, ptr %i.i, align 8, !tbaa !71
   %i.ak = icmp eq i32 %.pr, 0
   br i1 %i.ak, label %.thread103, label %bb.q

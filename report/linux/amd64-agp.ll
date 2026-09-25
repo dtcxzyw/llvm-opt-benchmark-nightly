@@ -204,11 +204,10 @@ bb.o:                                             ; preds = %.critedge.i, %.lr.p
   br i1 %i.ay, label %fix_northbridge.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.az = and i16 %i.ax, 4095                     ; 2 uses
+  %i.az = and i16 %i.ax, 4095
   %i.ba = and i16 %i.ax, 255
   %.not.i.i = icmp eq i16 %i.ba, 0
-  %3 = or i16 %i.az, 3840
-  %spec.select.i.i = select i1 %.not.i.i, i16 %i.az, i16 %3 ; 2 uses
+  %spec.select.i.i = select i1 %.not.i.i, i16 %i.az, i16 3840 ; 2 uses
   store i16 %spec.select.i.i, ptr %i.f, align 2
   %i.bb = zext nneg i16 %spec.select.i.i to i32
   %i.bc = call i64 @llvm.read_register.i64(metadata !1)

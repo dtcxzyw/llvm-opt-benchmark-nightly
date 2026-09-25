@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 400
   %i.k = load i8, ptr %i.j, align 8, !range !38, !noundef !39
   %i.l = trunc nuw i8 %i.k to i1
-  %i.m = icmp eq i32 %3, 0
+  %i.m = icmp eq i32 %3, 0                        ; 2 uses
   %or.cond = and i1 %i.m, %i.l
   br i1 %or.cond, label %.thread39, label %bb.c
 
@@ -275,8 +275,7 @@ bb.i:                                             ; preds = %FlushPendingEvents.
   ]
 
 bb.j:                                             ; preds = %FlushPendingEvents.exit
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %.thread, label %bb.q
+  br i1 %i.m, label %.thread, label %bb.q
 
 .thread:                                          ; preds = %bb.i, %bb.j
   %i.aq = phi i8 [ 0, %bb.j ], [ 1, %bb.i ]

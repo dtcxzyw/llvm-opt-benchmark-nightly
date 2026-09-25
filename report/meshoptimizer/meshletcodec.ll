@@ -204,9 +204,9 @@ _ZN7meshoptL15encodeTrianglesEPhS0_PKhm.exit:     ; preds = %bb.ag, %bb.a
   br i1 %.not.i, label %_ZN7meshoptL14encodeVerticesEPhS0_PKjm.exit, label %.lr.ph.i39
 
 .critedge.i:                                      ; preds = %bb.aj, %bb.ai, %bb.ah, %.lr.ph.i39
-  %.sroa.7.0.i = phi i32 [ %i.hb, %bb.aj ], [ %i.hb, %bb.ai ], [ %i.hb, %bb.ah ], [ 0, %.lr.ph.i39 ] ; 9 uses
-  %.sroa.11.0.i = phi i32 [ %i.hk, %bb.aj ], [ %i.hk, %bb.ai ], [ 0, %bb.ah ], [ 0, %.lr.ph.i39 ] ; 9 uses
-  %.sroa.15.0.i = phi i32 [ %i.ht, %bb.aj ], [ 0, %bb.ai ], [ 0, %bb.ah ], [ 0, %.lr.ph.i39 ] ; 9 uses
+  %.sroa.7.0.i = phi i32 [ %i.hb, %bb.aj ], [ %i.hb, %bb.ai ], [ %i.hb, %bb.ah ], [ 0, %.lr.ph.i39 ] ; 8 uses
+  %.sroa.11.0.i = phi i32 [ %i.hk, %bb.aj ], [ %i.hk, %bb.ai ], [ 0, %bb.ah ], [ 0, %.lr.ph.i39 ] ; 8 uses
+  %.sroa.15.0.i = phi i32 [ %i.ht, %bb.aj ], [ 0, %bb.ai ], [ 0, %bb.ah ], [ 0, %.lr.ph.i39 ] ; 8 uses
   %.157.lcssa.i = phi i32 [ %i.ho, %bb.aj ], [ %i.hf, %bb.ai ], [ %i.gw, %bb.ah ], [ %i.gn, %.lr.ph.i39 ]
   %i.gg = or i32 %.sroa.7.0.i, %i.gs
   %i.gh = or i32 %i.gg, %.sroa.11.0.i
@@ -229,7 +229,7 @@ _ZN7meshoptL15encodeTrianglesEPhS0_PKhm.exit:     ; preds = %bb.ag, %bb.a
   %i.gp = add i32 %i.gn, %i.go                    ; 2 uses
   %i.gq = shl i32 %i.gp, 1                        ; 2 uses
   %i.gr = ashr i32 %i.gp, 31                      ; 2 uses
-  %i.gs = xor i32 %i.gq, %i.gr                    ; 8 uses
+  %i.gs = xor i32 %i.gq, %i.gr                    ; 7 uses
   %i.gt = or disjoint i64 %.05587.i, 1            ; 2 uses
   %i.gu = icmp ult i64 %i.gt, %3
   br i1 %i.gu, label %bb.ah, label %.critedge.i
@@ -269,12 +269,12 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.critedge.i
 
 bb.ak:                                            ; preds = %.critedge.i
-  %i.hu = icmp ugt i32 %i.gs, 65535
-  %i.hv = icmp ugt i32 %.sroa.7.0.i, 65535
+  %i.hu = icmp ugt i32 %i.gs, 65535               ; 2 uses
+  %i.hv = icmp ugt i32 %.sroa.7.0.i, 65535        ; 2 uses
   %or.cond.i = and i1 %i.hu, %i.hv
-  %i.hw = icmp ugt i32 %.sroa.11.0.i, 65535
+  %i.hw = icmp ugt i32 %.sroa.11.0.i, 65535       ; 2 uses
   %or.cond5.i = and i1 %or.cond.i, %i.hw
-  %i.hx = icmp samesign ugt i32 %.sroa.15.0.i, 65535
+  %i.hx = icmp samesign ugt i32 %.sroa.15.0.i, 65535 ; 2 uses
   %i.hy = and i1 %or.cond5.i, %i.hx
   %i.hz = lshr exact i64 %.05587.i, 2
   %i.ia = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.hz ; 9 uses
@@ -327,11 +327,10 @@ bb.am:                                            ; preds = %bb.al
   br label %.thread75.i
 
 bb.an:                                            ; preds = %bb.al
-  %6 = icmp ult i32 %i.gs, 65536
   %i.iv = trunc i32 %i.gs to i16
   store i16 %i.iv, ptr %.05388.i, align 1
   %i.iw = getelementptr inbounds nuw i8, ptr %.05388.i, i64 2 ; 2 uses
-  br i1 %6, label %.thread75.i, label %bb.ao
+  br i1 %i.hu, label %bb.ao, label %.thread75.i
 
 bb.ao:                                            ; preds = %bb.an
   %i.ix = lshr i32 %i.gs, 16
@@ -358,11 +357,10 @@ bb.ap:                                            ; preds = %.thread75.i
   br i1 %i.ji, label %bb.as, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %7 = icmp ult i32 %.sroa.7.0.i, 65536
   %i.jj = trunc i32 %.sroa.7.0.i to i16
   store i16 %i.jj, ptr %.5.i40, align 1
   %i.jk = getelementptr inbounds nuw i8, ptr %.5.i40, i64 2 ; 2 uses
-  br i1 %7, label %.thread75.1.i, label %bb.ar
+  br i1 %i.hv, label %bb.ar, label %.thread75.1.i
 
 bb.ar:                                            ; preds = %bb.aq
   %i.jl = lshr i32 %.sroa.7.0.i, 16
@@ -396,11 +394,10 @@ bb.at:                                            ; preds = %.thread75.1.i
   br i1 %i.jz, label %bb.aw, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %8 = icmp ult i32 %.sroa.11.0.i, 65536
   %i.ka = trunc i32 %.sroa.11.0.i to i16
   store i16 %i.ka, ptr %.5.1.i, align 1
   %i.kb = getelementptr inbounds nuw i8, ptr %.5.1.i, i64 2 ; 2 uses
-  br i1 %8, label %.thread75.2.i, label %bb.av
+  br i1 %i.hw, label %bb.av, label %.thread75.2.i
 
 bb.av:                                            ; preds = %bb.au
   %i.kc = lshr i32 %.sroa.11.0.i, 16
@@ -434,11 +431,10 @@ bb.ax:                                            ; preds = %.thread75.2.i
   br i1 %i.kq, label %bb.ba, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %9 = icmp samesign ult i32 %.sroa.15.0.i, 65536
   %i.kr = trunc i32 %.sroa.15.0.i to i16
   store i16 %i.kr, ptr %.5.2.i, align 1
   %i.ks = getelementptr inbounds nuw i8, ptr %.5.2.i, i64 2 ; 2 uses
-  br i1 %9, label %.thread75.3.i, label %bb.az
+  br i1 %i.hx, label %bb.az, label %.thread75.3.i
 
 bb.az:                                            ; preds = %bb.ay
   %i.kt = lshr i32 %.sroa.15.0.i, 16

@@ -206,8 +206,7 @@ qrfStringInArray.exit180.thread:                  ; preds = %.lr.ph207, %middle.
   %.0148.lcssa.ph = phi ptr [ %.0148208, %bb.b ], [ %.1149, %qrfStringInArray.exit180.thread ]
   %.0145.lcssa.ph = phi ptr [ %.0145209, %bb.b ], [ %.1146, %qrfStringInArray.exit180.thread ]
   %.0140.lcssa.ph = phi i64 [ %indvars.iv240, %bb.b ], [ %indvars.iv.next241, %qrfStringInArray.exit180.thread ]
-  %sext274 = shl i64 %.0140.lcssa.ph, 32
-  %1 = ashr exact i64 %sext274, 32
+  %1 = and i64 %.0140.lcssa.ph, 4294967295
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.a
@@ -323,7 +322,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   br i1 %i.ek, label %.lr.ph224, label %._crit_edge
 
 .lr.ph224:                                        ; preds = %.loopexit
-  %2 = icmp slt i64 %indvars.iv260, %.0140.lcssa
+  %2 = icmp samesign ult i64 %indvars.iv260, %.0140.lcssa
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %.0145.lcssa, i64 %indvars.iv260
   br label %bb.r
 
@@ -726,17 +725,17 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.m, %.lr.ph104.i
   %indvars.iv119.i = phi i64 [ %i.af, %.lr.ph104.i ], [ %indvars.iv.next120.i, %bb.m ] ; 4 uses
   %.183101.i = phi ptr [ null, %.lr.ph104.i ], [ %.284.i, %bb.m ] ; 3 uses
+  %indvars11 = trunc i64 %indvars.iv119.i to i32  ; 4 uses
   %indvars.iv.next120.i = add nsw i64 %indvars.iv119.i, -1 ; 3 uses
-  %indvars = trunc i64 %indvars.iv.next120.i to i32 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next120.i to i32
   %i.ag = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv.next120.i
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !52
   %i.ai = icmp eq i8 %i.ah, 49                    ; 2 uses
   %i.aj = load ptr, ptr %i.e, align 8, !tbaa !232
-  %1 = trunc nuw nsw i64 %indvars.iv119.i to i32  ; 3 uses
-  %i.ak = tail call i32 @sqlite3_column_type(ptr noundef %i.aj, i32 noundef %1) #45
+  %i.ak = tail call i32 @sqlite3_column_type(ptr noundef %i.aj, i32 noundef %indvars11) #45
   %i.al = icmp eq i32 %i.ak, 5
   %i.am = load ptr, ptr %i.e, align 8, !tbaa !232
-  %i.an = tail call ptr @sqlite3_column_name(ptr noundef %i.am, i32 noundef %1) #45 ; 2 uses
+  %i.an = tail call ptr @sqlite3_column_name(ptr noundef %i.am, i32 noundef %indvars11) #45 ; 2 uses
   br i1 %i.al, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -748,7 +747,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.g
   %i.ap = select i1 %i.ai, ptr @.str.461, ptr @.str.446
-  %i.aq = tail call ptr (ptr, ptr, ...) @intckMprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.462, ptr noundef %i.an, ptr noundef nonnull %i.ap, i32 noundef %1)
+  %i.aq = tail call ptr (ptr, ptr, ...) @intckMprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.462, ptr noundef %i.an, ptr noundef nonnull %i.ap, i32 noundef %indvars11)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -761,7 +760,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.as = tail call ptr @sqlite3_column_name(ptr noundef %i.ar, i32 noundef 1) #45
   %i.at = tail call ptr (ptr, ptr, ...) @intckMprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.463, ptr noundef null, ptr noundef nonnull @.str.48, ptr noundef %i.as) ; 2 uses
   %i.au = tail call ptr (ptr, ptr, ...) @intckMprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.464, ptr noundef null, ptr noundef nonnull @.str.48, i32 noundef 1) ; 2 uses
-  %exitcond.peel.not.i = icmp eq i32 %indvars, 1
+  %exitcond.peel.not.i = icmp slt i32 %indvars11, 3
   br i1 %exitcond.peel.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.preheader.i, %.lr.ph.i
@@ -1164,7 +1163,7 @@ bb.r:                                             ; preds = %bb.q
   store i32 0, ptr %i.e, align 8, !tbaa !143
   br label %.thread206
 
-.thread206:                                       ; preds = %.thread291, %bb.r, %bb.p
+.thread206:                                       ; preds = %.thread291, %bb.p, %bb.r
   %.7208 = phi i32 [ %i.bv, %bb.r ], [ %.6, %bb.p ], [ %.6, %.thread291 ] ; 2 uses
   %i.bw = load ptr, ptr %i.i, align 8, !tbaa !139
   %i.bx = load i32, ptr %i.d, align 4, !tbaa !138

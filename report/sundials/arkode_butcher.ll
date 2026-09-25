@@ -205,7 +205,7 @@ bb.a:
   %i.c = icmp eq ptr %i.b, null
   %i.d = icmp slt i32 %3, 1
   %or.cond3.i = or i1 %i.d, %i.c
-  %wide.trip.count.i = zext i32 %3 to i64         ; 10 uses
+  %wide.trip.count.i = zext i32 %3 to i64         ; 7 uses
   br i1 %or.cond3.i, label %arkode_butcher_vp.exit, label %.preheader.preheader.i.preheader
 
 .preheader.preheader.i.preheader:                 ; preds = %bb.a
@@ -309,6 +309,8 @@ bb.b:                                             ; preds = %arkode_butcher_dot.
 
 .preheader129.us.preheader:                       ; preds = %arkode_butcher_dot.exit, %bb.b
   %.081.lcssa = phi i32 [ %.081140, %arkode_butcher_dot.exit ], [ 999, %bb.b ] ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   %xtraiter216 = and i64 %wide.trip.count.i, 3    ; 3 uses
   %i.at = icmp ult i64 %i.e, 3
   %unroll_iter223 = and i64 %wide.trip.count.i, 2147483644
@@ -325,7 +327,7 @@ bb.b:                                             ; preds = %arkode_butcher_dot.
 
 bb.c:                                             ; preds = %.epilog-lcssa
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond174.not = icmp eq i64 %indvars.iv.next, %wide.trip.count.i
+  %exitcond174.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond174.not, label %..critedge_crit_edge.us, label %.preheader.preheader.i98.us
 
 .preheader.preheader.i98.us:                      ; preds = %.preheader129.us, %bb.c
@@ -426,6 +428,8 @@ bb.d:                                             ; preds = %.preheader.i100.us
 
 .preheader127.us.preheader:                       ; preds = %..critedge_crit_edge.us, %.epilog-lcssa
   %.080137 = phi i32 [ %.080143.us, %.epilog-lcssa ], [ 999, %..critedge_crit_edge.us ] ; 2 uses
+  %smax180 = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %wide.trip.count186 = zext nneg i32 %smax180 to i64 ; 2 uses
   br label %.preheader127.us
 
 .preheader127.us:                                 ; preds = %.preheader127.us.preheader, %..critedge92_crit_edge.split.us.us
@@ -454,7 +458,7 @@ bb.e:                                             ; preds = %bb.e, %.preheader.u
   %i.cy = tail call double @SUNRpowerI(double noundef %i.cx, i32 noundef %i.cn) #18
   %i.cz = tail call double @llvm.fmuladd.f64(double %i.cv, double %i.cy, double %.5147.us.us) ; 2 uses
   %indvars.iv.next177 = add nuw nsw i64 %indvars.iv176, 1 ; 2 uses
-  %exitcond180.not = icmp eq i64 %indvars.iv.next177, %wide.trip.count.i
+  %exitcond180.not = icmp eq i64 %indvars.iv.next177, %wide.trip.count186
   br i1 %exitcond180.not, label %._crit_edge.us.us, label %bb.e
 
 ._crit_edge.us.us:                                ; preds = %bb.e
@@ -473,7 +477,7 @@ bb.e:                                             ; preds = %bb.e, %.preheader.u
 
 bb.f:                                             ; preds = %._crit_edge.us.us
   %indvars.iv.next182 = add nuw nsw i64 %indvars.iv181, 1 ; 2 uses
-  %exitcond185.not = icmp eq i64 %indvars.iv.next182, %wide.trip.count.i
+  %exitcond185.not = icmp eq i64 %indvars.iv.next182, %wide.trip.count186
   br i1 %exitcond185.not, label %..critedge92_crit_edge.split.us.us, label %.preheader.us.us
 
 ..critedge92_crit_edge.split.us.us:               ; preds = %bb.f

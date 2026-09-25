@@ -205,11 +205,11 @@ _ZSt22__chunk_insertion_sortIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseES
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterINS2_20vivify_flush_smallerEEEEvT_SE_T0_.exit
   %indvars.iv = phi ptr [ %scevgep, %.lr.ph.i.preheader ], [ %scevgep49, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterINS2_20vivify_flush_smallerEEEEvT_SE_T0_.exit ] ; 2 uses
-  %.sroa.010.014.i = phi ptr [ %0, %.lr.ph.i.preheader ], [ %i.aw, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterINS2_20vivify_flush_smallerEEEEvT_SE_T0_.exit ] ; 8 uses
+  %.sroa.010.014.i = phi ptr [ %0, %.lr.ph.i.preheader ], [ %i.aw, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterINS2_20vivify_flush_smallerEEEEvT_SE_T0_.exit ] ; 7 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i, %.lr.ph.i
-  %.sroa.0.030.i.idx = phi i64 [ 8, %.lr.ph.i ], [ %.sroa.0.030.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i ] ; 5 uses
+  %.sroa.0.030.i.idx = phi i64 [ 8, %.lr.ph.i ], [ %.sroa.0.030.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i ] ; 4 uses
   %.pn29.i = phi ptr [ %.sroa.010.014.i, %.lr.ph.i ], [ %.sroa.0.030.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i ]
   %.sroa.0.030.i.ptr = getelementptr inbounds nuw i8, ptr %.sroa.010.014.i, i64 %.sroa.0.030.i.idx ; 4 uses
   %i.f = load ptr, ptr %.sroa.0.030.i.ptr, align 8, !tbaa !189 ; 3 uses
@@ -261,17 +261,13 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL20vivify_flush_smallerEEclINS_17__
 
 bb.d:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL20vivify_flush_smallerEEclINS_17__normal_iteratorIPPNS2_6ClauseESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i, %.split.i
   %i.ae = icmp samesign ugt i64 %.sroa.0.030.i.idx, 8
-  br i1 %i.ae, label %bb.e, label %3, !prof !209
+  br i1 %i.ae, label %bb.e, label %bb.f, !prof !209
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %indvars.iv, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.010.014.i, i64 %.sroa.0.030.i.idx, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i
 
-3:                                                ; preds = %bb.d
-  %4 = icmp eq i64 %.sroa.0.030.i.idx, 8
-  br i1 %4, label %bb.f, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i
-
-bb.f:                                             ; preds = %3
+bb.f:                                             ; preds = %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %.pn29.i, i64 8
   store ptr %i.g, ptr %i.af, align 8, !tbaa !189
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i
@@ -324,8 +320,8 @@ bb.i:                                             ; preds = %_ZN9__gnu_cxx5__ops
   store ptr %i.ag, ptr %.sroa.04.0.i.i, align 8, !tbaa !189
   br label %.split12.i.i, !llvm.loop !4
 
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN7CaDiCaL20vivify_flush_smallerEEclIPNS2_6ClauseENS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit.i.i, %.split.i.i, %bb.g, %bb.f, %3, %bb.e
-  %.sink.i = phi ptr [ %.sroa.010.014.i, %bb.f ], [ %.sroa.010.014.i, %bb.e ], [ %.sroa.010.014.i, %3 ], [ %.sroa.0.030.i.ptr, %bb.g ], [ %.sroa.04.0.i.i, %.split.i.i ], [ %.sroa.04.0.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN7CaDiCaL20vivify_flush_smallerEEclIPNS2_6ClauseENS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit.i.i ]
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7CaDiCaL6ClauseESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN7CaDiCaL20vivify_flush_smallerEEclIPNS2_6ClauseENS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit.i.i, %.split.i.i, %bb.g, %bb.f, %bb.e
+  %.sink.i = phi ptr [ %.sroa.010.014.i, %bb.f ], [ %.sroa.010.014.i, %bb.e ], [ %.sroa.0.030.i.ptr, %bb.g ], [ %.sroa.04.0.i.i, %.split.i.i ], [ %.sroa.04.0.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN7CaDiCaL20vivify_flush_smallerEEclIPNS2_6ClauseENS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit.i.i ]
   store ptr %i.f, ptr %.sink.i, align 8, !tbaa !189
   %.sroa.0.030.i.add = add nuw nsw i64 %.sroa.0.030.i.idx, 8 ; 2 uses
   %.not.i22 = icmp eq i64 %.sroa.0.030.i.add, 56

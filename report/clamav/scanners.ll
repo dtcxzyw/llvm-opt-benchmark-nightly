@@ -205,8 +205,8 @@ fmap_need_off_once_len.exit:                      ; preds = %bb.f
 
 bb.g:                                             ; preds = %fmap_need_off_once_len.exit, %bb.e
   %.1 = phi i64 [ %.0, %bb.e ], [ %i.w, %fmap_need_off_once_len.exit ]
-  %i.x = call i32 @BZ2_bzDecompress(ptr noundef nonnull %1) #18 ; 3 uses
-  %.not48 = icmp eq i32 %i.x, 4                   ; 2 uses
+  %i.x = call i32 @BZ2_bzDecompress(ptr noundef nonnull %1) #18 ; 4 uses
+  %.not48 = icmp eq i32 %i.x, 4
   switch i32 %i.x, label %bb.h [
     i32 4, label %bb.i
     i32 0, label %bb.i
@@ -219,7 +219,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g, %bb.g
   %i.y = load i32, ptr %i.e, align 8, !tbaa !176  ; 2 uses
   %i.z = icmp eq i32 %i.y, 0
-  %or.cond3 = or i1 %.not48, %i.z
+  %2 = icmp ne i32 %i.x, 0
+  %or.cond3 = or i1 %2, %i.z
   br i1 %or.cond3, label %bb.j, label %bb.q
 
 bb.j:                                             ; preds = %bb.i
@@ -425,8 +426,8 @@ fmap_need_off_once_len.exit:                      ; preds = %bb.i
 
 bb.j:                                             ; preds = %fmap_need_off_once_len.exit, %bb.g
   %.1 = phi i64 [ %.036, %bb.g ], [ %i.w, %fmap_need_off_once_len.exit ]
-  %i.x = call i32 @cli_XzDecode(ptr noundef nonnull %1) #18 ; 3 uses
-  %.not61 = icmp eq i32 %i.x, 2                   ; 2 uses
+  %i.x = call i32 @cli_XzDecode(ptr noundef nonnull %1) #18 ; 4 uses
+  %.not61 = icmp eq i32 %i.x, 2
   switch i32 %i.x, label %bb.k [
     i32 2, label %bb.l
     i32 0, label %bb.l
@@ -439,7 +440,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j, %bb.j
   %i.y = load i64, ptr %i.f, align 8, !tbaa !186  ; 2 uses
   %i.z = icmp eq i64 %i.y, 0
-  %or.cond3 = or i1 %.not61, %i.z
+  %2 = icmp ne i32 %i.x, 0
+  %or.cond3 = or i1 %2, %i.z
   br i1 %or.cond3, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l

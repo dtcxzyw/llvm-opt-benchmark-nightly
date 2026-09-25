@@ -202,12 +202,11 @@ bb.i:                                             ; preds = %.preheader.i
   %i.ai = load ptr, ptr %i.j, align 8, !noalias !102, !nonnull !6, !noundef !6 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !102
   %i.aj = getelementptr i8, ptr %i.ai, i64 12
-  %.val.i = load i16, ptr %i.aj, align 1, !noalias !103 ; 3 uses
-  %2 = icmp ugt i16 %.val.i, -257
-  %3 = sext i16 %.val.i to i32
+  %.val.i = load i16, ptr %i.aj, align 1, !noalias !103 ; 2 uses
+  %2 = icmp ult i16 %.val.i, -256
   %i.ak = zext i16 %.val.i to i32
-  %.sroa.0.0.i21.i = select i1 %2, i32 %3, i32 %i.ak
-  %4 = icmp eq i32 %.sroa.0.0.i20.i, %.sroa.0.0.i21.i
+  %3 = icmp eq i32 %.sroa.0.0.i20.i, %i.ak
+  %4 = and i1 %2, %3
   br i1 %4, label %.loopexit, label %.preheader.i
 
 .backedge:                                        ; preds = %bb.g, %bb.g, %bb.d, %bb.c, %bb.f, %bb.h
@@ -610,13 +609,10 @@ bb.a:
 define hidden noundef zeroext i1 @_RNvYNtNtCseHTIzroA4w0_6object2pe11ImageSymbolNtNtNtNtB6_4read4coff6symbol6Symbol13is_definitionCs8aoZCP6pRcV_7objdump(ptr noalias nofree noundef readonly captures(none) dereferenceable(18) %0) unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %.val1 = load i16, ptr %i.a, align 1            ; 3 uses
-  %1 = icmp ugt i16 %.val1, -257
-  %2 = sext i16 %.val1 to i32
-  %3 = zext i16 %.val1 to i32
-  %.sroa.0.0.i = select i1 %1, i32 %2, i32 %3
-  %4 = icmp slt i32 %.sroa.0.0.i, 1
-  br i1 %4, label %bb.d, label %bb.b
+  %.val1 = load i16, ptr %i.a, align 1
+  %1 = add i16 %.val1, 256
+  %2 = icmp ult i16 %1, 257
+  br i1 %2, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16

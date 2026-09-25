@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK14V3PreExprToken5valueEv.exit:                ; preds = %bb.a
-  %2 = icmp eq i8 %.fca.1.extract, 1
+  %2 = icmp ne i8 %.fca.1.extract, 0
   ret i1 %2
 }
 
@@ -608,11 +608,10 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNK14V3PreExprToken5valueEv.exit:                ; preds = %bb.o
-  %7 = icmp ne i8 %.fca.1.extract30, 1
   store ptr %.sroa.098.0.copyload109, ptr %2, align 8, !tbaa !334
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %8 = zext i1 %7 to i8
-  store i8 %8, ptr %i.bv, align 8, !tbaa !335
+  %7 = xor i8 %.fca.1.extract30, 1
+  store i8 %7, ptr %i.bv, align 8, !tbaa !335
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !350 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -654,12 +653,12 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 _ZNK14V3PreExprToken5valueEv.exit48:              ; preds = %bb.s
-  %i.cj = icmp eq i8 %.fca.1.extract22, 1
-  br i1 %i.cj, label %bb.u, label %bb.w
+  %i.cj = icmp eq i8 %.fca.1.extract22, 0
+  br i1 %i.cj, label %bb.w, label %bb.u
 
 bb.u:                                             ; preds = %_ZNK14V3PreExprToken5valueEv.exit48
   %spec.select.i.i49 = icmp ult i8 %.fca.1.extract26, 2
-  br i1 %spec.select.i.i49, label %_ZNK14V3PreExprToken5valueEv.exit50, label %bb.v, !prof !308
+  br i1 %spec.select.i.i49, label %bb.w, label %bb.v, !prof !308
 
 bb.v:                                             ; preds = %bb.u
   %i.ck = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.270, i32 noundef 55) ; 0 uses
@@ -668,13 +667,8 @@ bb.v:                                             ; preds = %bb.u
   tail call void @_Z15v3errorEndFatalRNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(112) %i.cm) #42
   unreachable
 
-_ZNK14V3PreExprToken5valueEv.exit50:              ; preds = %bb.u
-  %9 = icmp eq i8 %.fca.1.extract26, 1
-  %10 = zext i1 %9 to i8
-  br label %bb.w
-
-bb.w:                                             ; preds = %_ZNK14V3PreExprToken5valueEv.exit50, %_ZNK14V3PreExprToken5valueEv.exit48
-  %i.cn = phi i8 [ 0, %_ZNK14V3PreExprToken5valueEv.exit48 ], [ %10, %_ZNK14V3PreExprToken5valueEv.exit50 ]
+bb.w:                                             ; preds = %bb.u, %_ZNK14V3PreExprToken5valueEv.exit48
+  %i.cn = phi i8 [ 0, %_ZNK14V3PreExprToken5valueEv.exit48 ], [ %.fca.1.extract26, %bb.u ]
   store ptr %.sroa.098.0.copyload109, ptr %3, align 8, !tbaa !334
   %i.co = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %i.cn, ptr %i.co, align 8, !tbaa !335
@@ -719,12 +713,12 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 _ZNK14V3PreExprToken5valueEv.exit54:              ; preds = %bb.z
-  %i.dc = icmp eq i8 %.fca.1.extract14, 1
-  br i1 %i.dc, label %bb.ad, label %bb.ab
+  %i.dc = icmp eq i8 %.fca.1.extract14, 0
+  br i1 %i.dc, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %_ZNK14V3PreExprToken5valueEv.exit54
   %spec.select.i.i55 = icmp ult i8 %.fca.1.extract18, 2
-  br i1 %spec.select.i.i55, label %_ZNK14V3PreExprToken5valueEv.exit56, label %bb.ac, !prof !308
+  br i1 %spec.select.i.i55, label %bb.ad, label %bb.ac, !prof !308
 
 bb.ac:                                            ; preds = %bb.ab
   %i.dd = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.270, i32 noundef 55) ; 0 uses
@@ -733,13 +727,8 @@ bb.ac:                                            ; preds = %bb.ab
   tail call void @_Z15v3errorEndFatalRNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(112) %i.df) #42
   unreachable
 
-_ZNK14V3PreExprToken5valueEv.exit56:              ; preds = %bb.ab
-  %11 = icmp eq i8 %.fca.1.extract18, 1
-  %12 = zext i1 %11 to i8
-  br label %bb.ad
-
-bb.ad:                                            ; preds = %_ZNK14V3PreExprToken5valueEv.exit56, %_ZNK14V3PreExprToken5valueEv.exit54
-  %i.dg = phi i8 [ 1, %_ZNK14V3PreExprToken5valueEv.exit54 ], [ %12, %_ZNK14V3PreExprToken5valueEv.exit56 ]
+bb.ad:                                            ; preds = %bb.ab, %_ZNK14V3PreExprToken5valueEv.exit54
+  %i.dg = phi i8 [ 1, %_ZNK14V3PreExprToken5valueEv.exit54 ], [ %.fca.1.extract18, %bb.ab ]
   store ptr %.sroa.098.0.copyload109, ptr %4, align 8, !tbaa !334
   %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i8 %i.dg, ptr %i.dh, align 8, !tbaa !335
@@ -784,12 +773,12 @@ bb.ah:                                            ; preds = %bb.ag
   unreachable
 
 _ZNK14V3PreExprToken5valueEv.exit60:              ; preds = %bb.ag
-  %i.dv = icmp eq i8 %.fca.1.extract6, 1
-  br i1 %i.dv, label %bb.ai, label %bb.ak
+  %i.dv = icmp eq i8 %.fca.1.extract6, 0
+  br i1 %i.dv, label %bb.ak, label %bb.ai
 
 bb.ai:                                            ; preds = %_ZNK14V3PreExprToken5valueEv.exit60
   %spec.select.i.i61 = icmp ult i8 %.fca.1.extract10, 2
-  br i1 %spec.select.i.i61, label %_ZNK14V3PreExprToken5valueEv.exit62, label %bb.aj, !prof !308
+  br i1 %spec.select.i.i61, label %bb.ak, label %bb.aj, !prof !308
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dw = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.270, i32 noundef 55) ; 0 uses
@@ -798,13 +787,8 @@ bb.aj:                                            ; preds = %bb.ai
   tail call void @_Z15v3errorEndFatalRNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(112) %i.dy) #42
   unreachable
 
-_ZNK14V3PreExprToken5valueEv.exit62:              ; preds = %bb.ai
-  %13 = icmp eq i8 %.fca.1.extract10, 1
-  %14 = zext i1 %13 to i8
-  br label %bb.ak
-
-bb.ak:                                            ; preds = %_ZNK14V3PreExprToken5valueEv.exit62, %_ZNK14V3PreExprToken5valueEv.exit60
-  %i.dz = phi i8 [ 1, %_ZNK14V3PreExprToken5valueEv.exit60 ], [ %14, %_ZNK14V3PreExprToken5valueEv.exit62 ]
+bb.ak:                                            ; preds = %bb.ai, %_ZNK14V3PreExprToken5valueEv.exit60
+  %i.dz = phi i8 [ 1, %_ZNK14V3PreExprToken5valueEv.exit60 ], [ %.fca.1.extract10, %bb.ai ]
   store ptr %.sroa.098.0.copyload109, ptr %5, align 8, !tbaa !334
   %i.ea = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i8 %i.dz, ptr %i.ea, align 8, !tbaa !335
@@ -860,9 +844,9 @@ bb.ap:                                            ; preds = %_ZNK14V3PreExprToke
   unreachable
 
 _ZNK14V3PreExprToken5valueEv.exit68:              ; preds = %_ZNK14V3PreExprToken5valueEv.exit66
-  %15 = icmp eq i8 %.fca.1.extract, 1
-  %16 = icmp ne i8 %.fca.1.extract2, 1
-  %i.er = xor i1 %16, %15
+  %8 = icmp ne i8 %.fca.1.extract, 0
+  %9 = icmp eq i8 %.fca.1.extract2, 0
+  %i.er = xor i1 %9, %8
   store ptr %.sroa.098.0.copyload109, ptr %6, align 8, !tbaa !334
   %i.es = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.et = zext i1 %i.er to i8

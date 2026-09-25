@@ -139,7 +139,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.g
-  %i.ac = call i32 @llvm.usub.sat.i32(i32 %i.q, i32 319) ; 3 uses
+  %i.ac = call i32 @llvm.usub.sat.i32(i32 %i.q, i32 319) ; 2 uses
   %i.ad = sub nsw i32 %i.q, %i.ac                 ; 6 uses
   %i.ae = add nsw i32 %i.ad, -1                   ; 4 uses
   store i32 %i.ae, ptr %i.a, align 4, !tbaa !25
@@ -236,17 +236,16 @@ middle.block:                                     ; preds = %vector.body
 .preheader:                                       ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.m
   %.167.lcssa = phi ptr [ %6, %bb.m ], [ %i.ak, %middle.block ], [ %.lcssa179.unr, %.lr.ph.prol.loopexit ], [ %i.br, %.lr.ph ] ; 3 uses
   %.1.lcssa = phi ptr [ %.064, %bb.m ], [ %i.aj, %middle.block ], [ %.lcssa180.unr, %.lr.ph.prol.loopexit ], [ %i.bp, %.lr.ph ] ; 2 uses
-  %.not128 = icmp ult i32 %i.q, 320
+  %.not128 = icmp samesign ult i32 %i.q, 320
   br i1 %.not128, label %._crit_edge, label %.lr.ph88.preheader
 
 .lr.ph88.preheader:                               ; preds = %.preheader
-  %8 = zext nneg i32 %i.ac to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %.167.lcssa, i8 48, i64 %8, i1 false), !tbaa !16
   %i.az = xor i32 %i.ad, -1
   %i.ba = add nsw i32 %i.q, %i.az
   %i.bb = zext i32 %i.ba to i64
-  %9 = getelementptr i8, ptr %.167.lcssa, i64 %i.bb
-  %scevgep = getelementptr i8, ptr %9, i64 1
+  %8 = add nuw nsw i64 %i.bb, 1                   ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.167.lcssa, i8 48, i64 %8, i1 false), !tbaa !16
+  %scevgep = getelementptr i8, ptr %.167.lcssa, i64 %8
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph

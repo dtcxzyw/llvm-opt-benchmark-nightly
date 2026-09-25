@@ -77,6 +77,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   store i64 %i.y, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !34
   %i.z = zext nneg i32 %i.q to i64
   %i.aa = select i1 %i.t, i64 0, i64 %i.z         ; 2 uses
+  %3 = add nuw nsw i32 %i.q, 1
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr @fftw_mkapiplan.pats, i64 %i.aa
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !35
   %i.ad = or i32 %i.ac, %i.u                      ; 2 uses
@@ -85,7 +86,6 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %.not6098, label %.loopexit, label %.lr.ph
 
 bb.h:                                             ; preds = %.lr.ph
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr @fftw_mkapiplan.pats, i64 %indvars.iv.next
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !35
   %i.ah = or i32 %i.ag, %i.u                      ; 2 uses
@@ -97,13 +97,14 @@ bb.h:                                             ; preds = %.lr.ph
   %i.aj = phi ptr [ %i.ai, %bb.h ], [ %i.ae, %bb.g ] ; 4 uses
   %i.ak = phi i32 [ %i.ah, %bb.h ], [ %i.ad, %bb.g ] ; 2 uses
   %.04970100 = phi ptr [ %i.aj, %bb.h ], [ null, %bb.g ]
-  %indvars.iv99 = phi i64 [ %indvars.iv.next, %bb.h ], [ %i.aa, %bb.g ] ; 2 uses
+  %indvars.iv99 = phi i64 [ %indvars.iv.next, %bb.h ], [ %i.aa, %bb.g ]
   tail call void @fftw_plan_destroy_internal(ptr noundef %.04970100) #3
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 40
   %i.am = load double, ptr %i.al, align 8, !tbaa !39 ; 2 uses
-  %i.an = trunc nuw i64 %indvars.iv99 to i32
-  %.not59.not = icmp sgt i32 %i.q, %i.an
-  br i1 %.not59.not, label %bb.h, label %.loopexit.thread, !llvm.loop !32
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv99, 1 ; 3 uses
+  %i.an = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %3, %i.an
+  br i1 %exitcond.not, label %.loopexit.thread, label %bb.h, !llvm.loop !32
 
 .loopexit:                                        ; preds = %bb.h, %bb.g, %bb.d
   %.251 = phi ptr [ %i.k, %bb.d ], [ null, %bb.g ], [ %i.aj, %bb.h ] ; 2 uses

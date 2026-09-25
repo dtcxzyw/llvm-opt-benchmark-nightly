@@ -204,23 +204,21 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce, %bb.
 
 bb.ch:                                            ; preds = %bb.cd, %bb.cf
   %i.gf = icmp samesign ugt i64 %i.aq, %i.bt      ; 2 uses
-  %spec.select = select i1 %i.gf, i64 %.0545, i64 %.0357544 ; 2 uses
-  %spec.select421 = select i1 %i.gf, i64 %.0357544, i64 %.0545 ; 2 uses
+  %spec.select = select i1 %i.gf, i64 %.0545, i64 %.0357544
+  %spec.select421 = select i1 %i.gf, i64 %.0357544, i64 %.0545
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   %i.gg = tail call noundef i64 @llvm.abs.i64(i64 %spec.select, i1 true)
   %i.gh = getelementptr [8 x i8], ptr %i.ar, i64 %i.gg
   %i.gi = getelementptr i8, ptr %i.gh, i64 -8
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !11, !noalias !84
-  %6 = icmp slt i64 %spec.select, 0
-  call void @_ZN4bzla8bitblast7AigNodeC1EPNS0_11AigNodeDataEb(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef %i.gj, i1 noundef zeroext %6)
+  call void @_ZN4bzla8bitblast7AigNodeC1EPNS0_11AigNodeDataEb(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef %i.gj, i1 noundef zeroext false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   %i.gk = call noundef i64 @llvm.abs.i64(i64 %spec.select421, i1 true)
   %i.gl = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !44, !noalias !85
   %i.gm = getelementptr [8 x i8], ptr %i.gl, i64 %i.gk
   %i.gn = getelementptr i8, ptr %i.gm, i64 -8
   %i.go = load ptr, ptr %i.gn, align 8, !tbaa !11, !noalias !85
-  %7 = icmp slt i64 %spec.select421, 0
-  invoke void @_ZN4bzla8bitblast7AigNodeC1EPNS0_11AigNodeDataEb(ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef %i.go, i1 noundef zeroext %7)
+  invoke void @_ZN4bzla8bitblast7AigNodeC1EPNS0_11AigNodeDataEb(ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef %i.go, i1 noundef zeroext false)
           to label %_ZNK4bzla8bitblast10AigManager8get_nodeEl.exit unwind label %bb.cj
 
 _ZNK4bzla8bitblast10AigManager8get_nodeEl.exit:   ; preds = %bb.ch

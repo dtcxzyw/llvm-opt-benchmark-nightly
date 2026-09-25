@@ -204,7 +204,7 @@ bb.bb:                                            ; preds = %bb.ay
 define range(i32 -22, 1) i32 @lsrkStep_RKL_CheckStabilityNorm(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, double noundef %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [7 x double], align 16            ; 9 uses
-  %4 = sitofp i32 %1 to double                    ; 9 uses
+  %4 = uitofp nneg i32 %1 to double               ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.c = load double, ptr %i.b, align 8, !tbaa !57
   %i.d = fmul double %2, %i.c                     ; 2 uses
@@ -325,9 +325,11 @@ bb.i:                                             ; preds = %bb.h
 
 .loopexit:                                        ; preds = %.lr.ph.i, %bb.h, %bb.i
   %i.bs = phi <2 x double> [ <double 0.000000e+00, double 1.000000e+00>, %bb.h ], [ %i.av, %bb.i ], [ %i.br, %.lr.ph.i ] ; 2 uses
-  %5 = fmul nnan double %4, 2.000000e+00
-  %6 = fadd nnan double %4, 1.000000e+00
-  %i.bt = fmul double %5, %6
+  %5 = shl nuw i32 %1, 1
+  %6 = uitofp i32 %5 to double
+  %7 = add nuw i32 %1, 1
+  %8 = uitofp i32 %7 to double
+  %i.bt = fmul nnan double %6, %8
   %i.bu = fdiv double %i.ap, %i.bt                ; 3 uses
   %i.bv = fsub double 1.000000e+00, %i.bu
   %i.bw = extractelement <2 x double> %i.bs, i64 1

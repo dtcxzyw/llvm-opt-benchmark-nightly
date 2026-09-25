@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.bv = tail call fastcc double @impulse0(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef nonnull %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, i32 noundef %10, double noundef %11) ; 3 uses
   %i.bw = add nuw nsw i32 %2, 1
   %i.bx = uitofp nneg i32 %i.bw to double
-  %12 = sitofp i32 %1 to double                   ; 7 uses
+  %12 = uitofp nneg i32 %1 to double              ; 7 uses
   %i.by = tail call double @sqrt(double noundef %12) #13
   %i.bz = fmul double %i.by, %i.bx                ; 6 uses
   %i.ca = icmp sgt i32 %1, 0
@@ -607,10 +607,8 @@ bb.a:
   %.0111244.us = phi i32 [ 1, %.lr.ph242.us.preheader ], [ %i.aci, %._crit_edge243.us ] ; 6 uses
   %i.u = load ptr, ptr %i.d, align 8, !tbaa !32
   %i.v = getelementptr inbounds nuw [12 x i8], ptr %i.u, i64 %indvars.iv284
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !22   ; 21 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !22   ; 22 uses
   %i.x = sdiv i32 %.0110245.us, %i.w              ; 23 uses
-  %14 = sitofp i32 %i.w to double
-  %15 = fdiv nnan double f0x401921FB54442D18, %14 ; 12 uses
   %i.y = icmp sgt i32 %.0111244.us, 0             ; 2 uses
   %i.z = icmp sgt i32 %i.w, 0
   %or.cond.i135.us = and i1 %i.y, %i.z
@@ -623,6 +621,11 @@ bb.a:
   %i.af = add i32 %i.w, -1                        ; 9 uses
   %i.ag = sext i32 %i.w to i64                    ; 6 uses
   %wide.trip.count69.i175.us = zext i32 %i.af to i64 ; 4 uses
+  %14 = sitofp i32 %i.w to double
+  %15 = uitofp nneg i32 %i.w to double
+  %16 = insertelement <2 x double> poison, double %14, i64 0
+  %17 = insertelement <2 x double> %16, double %15, i64 1
+  %18 = fdiv nnan <2 x double> splat (double f0x401921FB54442D18), %17 ; 4 uses
   %i.ah = icmp slt i32 %i.w, 1
   %or.cond.i.us.not258 = or i1 %i.ad, %i.ah
   %brmerge = select i1 %i.j, i1 true, i1 %i.ad
@@ -680,11 +683,13 @@ bb.a:
   %i.cg = shl nuw nsw i64 %i.ac, 4
   %i.ch = mul i64 %i.cg, %i.ab                    ; 2 uses
   %i.ci = add i32 %i.w, -1
+  %19 = extractelement <2 x double> %18, i64 0    ; 5 uses
   %xtraiter = and i32 %i.w, 3                     ; 3 uses
   %i.cj = icmp ult i32 %i.w, 4
   %unroll_iter = and i32 %i.w, 2147483644
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %lcmp.mod493 = icmp ne i32 %xtraiter, 0
+  %20 = extractelement <2 x double> %18, i64 0
   %min.iters.check464 = icmp eq i32 %i.x, 1
   %n.vec466 = and i64 %i.ab, 2147483646           ; 3 uses
   %cmp.n484 = icmp eq i64 %n.vec466, %i.ab
@@ -721,11 +726,13 @@ bb.a:
   %stride.check = icmp slt i64 %i.at, 0
   %n.vec347 = and i64 %i.ab, 2147483646           ; 3 uses
   %cmp.n353 = icmp eq i64 %n.vec347, %i.ab
+  %21 = extractelement <2 x double> %18, i64 1    ; 5 uses
   %xtraiter520 = and i32 %i.w, 3                  ; 3 uses
   %i.ct = icmp ult i32 %i.ci, 3
   %unroll_iter524 = and i32 %i.w, 2147483644
   %lcmp.mod522.not = icmp eq i32 %xtraiter520, 0
   %lcmp.mod523 = icmp ne i32 %xtraiter520, 0
+  %22 = extractelement <2 x double> %18, i64 1
   %min.iters.check = icmp eq i32 %i.x, 1
   %n.vec = and i64 %i.ab, 2147483646              ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %i.ab
@@ -786,7 +793,7 @@ bb.c:                                             ; preds = %.lr.ph.us
   %.040.i139.us = phi i32 [ %i.ef, %cdce.end218.us.3 ], [ 0, %.preheader.i137.us ] ; 5 uses
   %niter = phi i32 [ %niter.next.3, %cdce.end218.us.3 ], [ 0, %.preheader.i137.us ]
   %i.di = uitofp nneg i32 %.040.i139.us to double
-  %i.dj = fmul double %15, %i.di
+  %i.dj = fmul double %19, %i.di
   %i.dk = fcmp oeq double %i.dj, +inf
   br i1 %i.dk, label %cdce.call217.us, label %cdce.end218.us, !prof !218
 
@@ -798,7 +805,7 @@ cdce.call217.us:                                  ; preds = %.preheader.i137.us.
 cdce.end218.us:                                   ; preds = %.preheader.i137.us.new, %cdce.call217.us
   %i.dn = or disjoint i32 %.040.i139.us, 1
   %i.do = uitofp nneg i32 %i.dn to double
-  %i.dp = fmul nnan double %15, %i.do
+  %i.dp = fmul nnan double %19, %i.do
   %i.dq = fcmp oeq double %i.dp, +inf
   br i1 %i.dq, label %cdce.call217.us.1, label %cdce.end218.us.1, !prof !218
 
@@ -810,7 +817,7 @@ cdce.call217.us.1:                                ; preds = %cdce.end218.us
 cdce.end218.us.1:                                 ; preds = %cdce.call217.us.1, %cdce.end218.us
   %i.dt = or disjoint i32 %.040.i139.us, 2
   %i.du = uitofp nneg i32 %i.dt to double
-  %i.dv = fmul nnan double %15, %i.du
+  %i.dv = fmul nnan double %19, %i.du
   %i.dw = fcmp oeq double %i.dv, +inf
   br i1 %i.dw, label %cdce.call217.us.2, label %cdce.end218.us.2, !prof !218
 
@@ -822,7 +829,7 @@ cdce.call217.us.2:                                ; preds = %cdce.end218.us.1
 cdce.end218.us.2:                                 ; preds = %cdce.call217.us.2, %cdce.end218.us.1
   %i.dz = or disjoint i32 %.040.i139.us, 3
   %i.ea = uitofp nneg i32 %i.dz to double
-  %i.eb = fmul nnan double %15, %i.ea
+  %i.eb = fmul nnan double %19, %i.ea
   %i.ec = fcmp oeq double %i.eb, +inf
   br i1 %i.ec, label %cdce.call217.us.3, label %cdce.end218.us.3, !prof !218
 
@@ -849,7 +856,7 @@ bb.d:                                             ; preds = %cdce.end218.us.epil
   %.040.i139.us.epil = phi i32 [ %.040.i139.us.epil.init, %.epil.preheader ], [ %i.el, %cdce.end218.us.epil ] ; 2 uses
   %epil.iter = phi i32 [ 0, %.epil.preheader ], [ %epil.iter.next, %cdce.end218.us.epil ]
   %i.eg = uitofp nneg i32 %.040.i139.us.epil to double
-  %i.eh = fmul double %15, %i.eg
+  %i.eh = fmul double %19, %i.eg
   %i.ei = fcmp oeq double %i.eh, +inf
   br i1 %i.ei, label %cdce.call217.us.epil, label %cdce.end218.us.epil, !prof !218
 
@@ -888,7 +895,7 @@ cdce.end218.us.epil:                              ; preds = %cdce.call217.us.epi
   %indvars.iv50.i148.us = phi i64 [ %indvars.iv.next51.i153.us, %._crit_edge.us.us.i152.us ], [ 0, %.preheader.us.i145.us ] ; 3 uses
   %i.er = trunc nuw nsw i64 %indvars.iv50.i148.us to i32
   %i.es = uitofp nneg i32 %i.er to double
-  %i.et = fmul double %15, %i.es                  ; 2 uses
+  %i.et = fmul double %20, %i.es                  ; 2 uses
   %i.eu = tail call double @sin(double noundef %i.et) #13
   %i.ev = fmul double %i.eu, %i.i                 ; 5 uses
   %i.ew = tail call double @cos(double noundef %i.et) #13 ; 7 uses
@@ -1291,7 +1298,7 @@ arol.exit.us:                                     ; preds = %._crit_edge51.i.us,
   %.040.i.us = phi i32 [ %i.xq, %cdce.end214.us.3 ], [ 0, %.preheader.i.us ] ; 5 uses
   %niter525 = phi i32 [ %niter525.next.3, %cdce.end214.us.3 ], [ 0, %.preheader.i.us ]
   %i.wt = uitofp nneg i32 %.040.i.us to double
-  %i.wu = fmul double %15, %i.wt
+  %i.wu = fmul double %21, %i.wt
   %i.wv = fcmp oeq double %i.wu, +inf
   br i1 %i.wv, label %cdce.call213.us, label %cdce.end214.us, !prof !218
 
@@ -1303,7 +1310,7 @@ cdce.call213.us:                                  ; preds = %.preheader.i.us.new
 cdce.end214.us:                                   ; preds = %.preheader.i.us.new, %cdce.call213.us
   %i.wy = or disjoint i32 %.040.i.us, 1
   %i.wz = uitofp nneg i32 %i.wy to double
-  %i.xa = fmul nnan double %15, %i.wz
+  %i.xa = fmul nnan double %21, %i.wz
   %i.xb = fcmp oeq double %i.xa, +inf
   br i1 %i.xb, label %cdce.call213.us.1, label %cdce.end214.us.1, !prof !218
 
@@ -1315,7 +1322,7 @@ cdce.call213.us.1:                                ; preds = %cdce.end214.us
 cdce.end214.us.1:                                 ; preds = %cdce.call213.us.1, %cdce.end214.us
   %i.xe = or disjoint i32 %.040.i.us, 2
   %i.xf = uitofp nneg i32 %i.xe to double
-  %i.xg = fmul nnan double %15, %i.xf
+  %i.xg = fmul nnan double %21, %i.xf
   %i.xh = fcmp oeq double %i.xg, +inf
   br i1 %i.xh, label %cdce.call213.us.2, label %cdce.end214.us.2, !prof !218
 
@@ -1327,7 +1334,7 @@ cdce.call213.us.2:                                ; preds = %cdce.end214.us.1
 cdce.end214.us.2:                                 ; preds = %cdce.call213.us.2, %cdce.end214.us.1
   %i.xk = or disjoint i32 %.040.i.us, 3
   %i.xl = uitofp nneg i32 %i.xk to double
-  %i.xm = fmul nnan double %15, %i.xl
+  %i.xm = fmul nnan double %21, %i.xl
   %i.xn = fcmp oeq double %i.xm, +inf
   br i1 %i.xn, label %cdce.call213.us.3, label %cdce.end214.us.3, !prof !218
 
@@ -1354,7 +1361,7 @@ bb.i:                                             ; preds = %cdce.end214.us.epil
   %.040.i.us.epil = phi i32 [ %.040.i.us.epil.init, %.epil.preheader519 ], [ %i.xw, %cdce.end214.us.epil ] ; 2 uses
   %epil.iter521 = phi i32 [ 0, %.epil.preheader519 ], [ %epil.iter521.next, %cdce.end214.us.epil ]
   %i.xr = uitofp nneg i32 %.040.i.us.epil to double
-  %i.xs = fmul double %15, %i.xr
+  %i.xs = fmul double %21, %i.xr
   %i.xt = fcmp oeq double %i.xs, +inf
   br i1 %i.xt, label %cdce.call213.us.epil, label %cdce.end214.us.epil, !prof !218
 
@@ -1393,7 +1400,7 @@ cdce.end214.us.epil:                              ; preds = %cdce.call213.us.epi
   %indvars.iv50.i.us = phi i64 [ %indvars.iv.next51.i.us, %._crit_edge.us.us.i.us ], [ 0, %.preheader.us.i.us ] ; 3 uses
   %i.yc = trunc nuw nsw i64 %indvars.iv50.i.us to i32
   %i.yd = uitofp nneg i32 %i.yc to double
-  %i.ye = fmul double %15, %i.yd                  ; 2 uses
+  %i.ye = fmul double %22, %i.yd                  ; 2 uses
   %i.yf = tail call double @sin(double noundef %i.ye) #13
   %i.yg = fmul double %5, %i.yf                   ; 5 uses
   %i.yh = tail call double @cos(double noundef %i.ye) #13 ; 7 uses

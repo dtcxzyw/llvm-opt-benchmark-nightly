@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o
   store ptr %i.x, ptr %i.a, align 8
   %i.y = tail call ptr @list_create(ptr noundef nonnull @_sinfo_list_delete) #12 ; 2 uses
   %i.z = load ptr, ptr %i.s, align 8
-  %i.aa = tail call ptr @list_iterator_create(ptr noundef %i.z) #12 ; 5 uses
+  %i.aa = tail call ptr @list_iterator_create(ptr noundef %i.z) #12 ; 6 uses
   %i.ab = tail call ptr @list_next(ptr noundef %i.aa) #12 ; 2 uses
   %.not3335.i = icmp eq ptr %i.ab, null
   br i1 %.not3335.i, label %.outer._crit_edge.thread.i, label %.lr.ph.i
@@ -212,7 +212,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_query_fed_servers.exit
 
 .lr.ph.i:                                         ; preds = %bb.p, %.outer.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.outer.i ], [ 0, %bb.p ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.outer.i ], [ 0, %bb.p ] ; 4 uses
   %i.ac = phi ptr [ %i.ar, %.outer.i ], [ %i.ab, %bb.p ]
   br label %bb.q
 
@@ -256,17 +256,24 @@ bb.u:                                             ; preds = %bb.t
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.ar = tail call ptr @list_next(ptr noundef %i.aa) #12 ; 2 uses
   %.not33.i = icmp eq ptr %i.ar, null
-  br i1 %.not33.i, label %.outer._crit_edge.i, label %.lr.ph.i, !llvm.loop !14
+  br i1 %.not33.i, label %.outer._crit_edge.thread61.i, label %.lr.ph.i, !llvm.loop !14
 
-.outer._crit_edge.i:                              ; preds = %.outer.i, %bb.s
-  %indvars.iv.next.lcssa.sink.i = phi i64 [ %indvars.iv.i, %bb.s ], [ %indvars.iv.next.i, %.outer.i ] ; 2 uses
-  %7 = trunc nuw i64 %indvars.iv.next.lcssa.sink.i to i32
+.outer._crit_edge.thread61.i:                     ; preds = %.outer.i
   tail call void @list_iterator_destroy(ptr noundef %i.aa) #12
-  %8 = icmp sgt i32 %7, 0
-  br i1 %8, label %.lr.ph40.i, label %_query_fed_servers.exit
+  br label %.lr.ph40.preheader.i
 
-.lr.ph40.i:                                       ; preds = %.outer._crit_edge.i, %bb.x
-  %indvars.iv50.i = phi i64 [ %indvars.iv.next51.i, %bb.x ], [ 0, %.outer._crit_edge.i ] ; 2 uses
+.outer._crit_edge.i:                              ; preds = %bb.s
+  tail call void @list_iterator_destroy(ptr noundef %i.aa) #12
+  %.not42.i = icmp eq i64 %indvars.iv.i, 0
+  br i1 %.not42.i, label %_query_fed_servers.exit, label %.lr.ph40.preheader.i
+
+.lr.ph40.preheader.i:                             ; preds = %.outer._crit_edge.i, %.outer._crit_edge.thread61.i
+  %.024.ph.lcssa3264.in.i = phi i64 [ %indvars.iv.next.i, %.outer._crit_edge.thread61.i ], [ %indvars.iv.i, %.outer._crit_edge.i ]
+  %wide.trip.count.i = and i64 %.024.ph.lcssa3264.in.i, 4294967295
+  br label %.lr.ph40.i
+
+.lr.ph40.i:                                       ; preds = %bb.x, %.lr.ph40.preheader.i
+  %indvars.iv50.i = phi i64 [ 0, %.lr.ph40.preheader.i ], [ %indvars.iv.next51.i, %bb.x ] ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv50.i ; 2 uses
   %i.at = load i64, ptr %i.as, align 8
   %i.au = tail call i32 @threadpool_join(i64 noundef %i.at, ptr noundef nonnull @__func__._query_fed_servers) #12 ; 2 uses
@@ -284,7 +291,7 @@ bb.w:                                             ; preds = %.lr.ph40.i
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %indvars.iv.next51.i = add nuw nsw i64 %indvars.iv50.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next51.i, %indvars.iv.next.lcssa.sink.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next51.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_query_fed_servers.exit, label %.lr.ph40.i, !llvm.loop !15
 
 _query_fed_servers.exit:                          ; preds = %bb.x, %.outer._crit_edge.thread.i, %.outer._crit_edge.i

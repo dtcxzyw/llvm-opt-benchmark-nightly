@@ -205,8 +205,6 @@ bb.m:                                             ; preds = %bb.g
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvNtNtCs8frGy5WneL6_4fish9highlight9highlight21color_string_internal(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %0, i64 noundef %1, i32 noundef range(i32 65536, 917505) %2, ptr noalias nofree noundef nonnull captures(address) %3, i64 noundef range(i64 0, 2305843009213693952) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.4.0.extract.shift = lshr i32 %2, 8
-  %.sroa.4.0.extract.trunc = trunc i32 %.sroa.4.0.extract.shift to i8 ; 2 uses
   %.sroa.6.0.extract.shift = lshr i32 %2, 16      ; 3 uses
   %.sroa.6.0.extract.trunc = trunc nuw nsw i32 %.sroa.6.0.extract.shift to i8
   %i.a = and i32 %2, 255
@@ -214,7 +212,8 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_RNvXsf_NtNtCs3oUPovFnLWP_4core5slice3cmpNtNtNtCs8frGy5WneL6_4fish9highlight9highlight13HighlightSpecNtB5_13SliceContains14slice_containsBI_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = icmp eq i8 %.sroa.4.0.extract.trunc, 0
+  %5 = and i32 %2, 65280
+  %i.c = icmp eq i32 %5, 0
   %i.d = add nsw i32 %.sroa.6.0.extract.shift, -7
   %or.cond412 = icmp ult i32 %i.d, 2
   %i.e = and i32 %2, 917504
@@ -617,7 +616,7 @@ bb.dk:                                            ; preds = %.lr.ph462
 bb.dl:                                            ; preds = %bb.dj
   %i.in = getelementptr inbounds nuw i8, ptr %i.ik, i64 1
   %i.io = load i8, ptr %i.in, align 1, !range !14, !noundef !12
-  %i.ip = icmp eq i8 %i.io, %.sroa.4.0.extract.trunc
+  %i.ip = icmp eq i8 %i.io, 0
   br i1 %i.ip, label %bb.dm, label %bb.do
 
 bb.dm:                                            ; preds = %bb.dl

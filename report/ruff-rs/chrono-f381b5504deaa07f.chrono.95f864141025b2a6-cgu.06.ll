@@ -204,8 +204,7 @@ bb.m:                                             ; preds = %.lr.ph.i.4
 bb.n:                                             ; preds = %bb.m, %bb.m, %.lr.ph.i.4
   %.sroa.0.5.insert.ext = zext i8 %i.ab to i56
   %.sroa.0.5.insert.shift = shl nuw nsw i56 %.sroa.0.5.insert.ext, 40
-  %.sroa.0.5.insert.mask = and i56 %.sroa.0.4.insert.insert, -280375465082881
-  %.sroa.0.5.insert.insert = or disjoint i56 %.sroa.0.5.insert.mask, %.sroa.0.5.insert.shift ; 2 uses
+  %.sroa.0.5.insert.insert = or i56 %.sroa.0.4.insert.insert, %.sroa.0.5.insert.shift ; 2 uses
   %exitcond.not.i.4 = icmp eq i64 %4, 5
   br i1 %exitcond.not.i.4, label %bb.t, label %.lr.ph.i.5
 
@@ -229,8 +228,7 @@ bb.o:                                             ; preds = %.lr.ph.i.5
 bb.p:                                             ; preds = %bb.o, %bb.o, %.lr.ph.i.5
   %.sroa.0.6.insert.ext = zext i8 %i.ah to i56
   %.sroa.0.6.insert.shift = shl nuw i56 %.sroa.0.6.insert.ext, 48
-  %.sroa.0.6.insert.mask = and i56 %.sroa.0.5.insert.insert, 281474976710655
-  %.sroa.0.6.insert.insert = or disjoint i56 %.sroa.0.6.insert.mask, %.sroa.0.6.insert.shift ; 4 uses
+  %.sroa.0.6.insert.insert = or i56 %.sroa.0.5.insert.insert, %.sroa.0.6.insert.shift ; 4 uses
   %exitcond.not.i.5 = icmp eq i64 %4, 6
   br i1 %exitcond.not.i.5, label %bb.t, label %.lr.ph.i.6
 

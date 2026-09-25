@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.l, %bb.m
   %.0116 = phi i32 [ %3, %bb.m ], [ %i.ar, %bb.l ]
-  %i.ax = zext nneg i32 %4 to i64                 ; 6 uses
+  %i.ax = zext nneg i32 %4 to i64
   %i.ay = shl nuw nsw i64 %i.ax, 3
   %i.az = call noalias ptr @malloc(i64 noundef %i.ay) #27 ; 11 uses
   %i.ba = icmp eq ptr %i.az, null
@@ -276,26 +276,27 @@ bb.w:                                             ; preds = %bb.v
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !73
   %.not135 = icmp eq i32 %i.bw, 0
   %i.bx = sext i32 %.0116 to i64                  ; 7 uses
+  %wide.trip.count148 = zext nneg i32 %4 to i64   ; 4 uses
   br i1 %.not135, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %xtraiter = and i64 %i.ax, 3                    ; 3 uses
+  %xtraiter = and i64 %wide.trip.count148, 3      ; 3 uses
   %i.by = add nsw i32 %4, -1
   %i.bz = icmp ult i32 %i.by, 3
   br i1 %i.bz, label %.lr.ph.split.us.epil.preheader, label %.lr.ph.split.us.preheader.new
 
 .lr.ph.split.us.preheader.new:                    ; preds = %.lr.ph.split.us.preheader
-  %unroll_iter = and i64 %i.ax, 2147483644
+  %unroll_iter = and i64 %wide.trip.count148, 2147483644
   br label %.lr.ph.split.us
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %i.ca = zext nneg i32 %4 to i64                 ; 2 uses
+  %i.ca = zext nneg i32 %4 to i64                 ; 3 uses
   %min.iters.check = icmp ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader163, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %i.ax, 2147483644              ; 3 uses
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ca, i64 0
+  %n.vec = and i64 %i.ca, 2147483644              ; 3 uses
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %wide.trip.count148, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert160 = insertelement <2 x i64> poison, i64 %i.bx, i64 0
   %broadcast.splat161 = shufflevector <2 x i64> %broadcast.splatinsert160, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -322,7 +323,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ci, label %middle.block, label %vector.body, !llvm.loop !198
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %i.ax
+  %cmp.n = icmp eq i64 %n.vec, %i.ca
   br i1 %cmp.n, label %.preheader, label %.lr.ph.split.preheader163
 
 .lr.ph.split.preheader163:                        ; preds = %.lr.ph.split.preheader, %middle.block
@@ -388,13 +389,13 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader163, %.lr.ph.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split ], [ %indvars.iv.ph, %.lr.ph.split.preheader163 ] ; 3 uses
   %i.dc = xor i64 %indvars.iv, -1
-  %i.dd = add nsw i64 %i.ca, %i.dc
+  %i.dd = add nsw i64 %wide.trip.count148, %i.dc
   %i.de = mul nsw i64 %i.dd, %i.bx
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 %i.de
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %indvars.iv
   store ptr %i.df, ptr %i.dg, align 8, !tbaa !57
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ax
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ca
   br i1 %exitcond.not, label %.preheader, label %.lr.ph.split, !llvm.loop !201
 
 .lr.ph140:                                        ; preds = %.preheader, %.lr.ph140
@@ -797,7 +798,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.l, %bb.m
   %.0116 = phi i32 [ %3, %bb.m ], [ %i.ar, %bb.l ]
-  %i.ax = zext nneg i32 %4 to i64                 ; 6 uses
+  %i.ax = zext nneg i32 %4 to i64
   %i.ay = shl nuw nsw i64 %i.ax, 3
   %i.az = call noalias ptr @malloc(i64 noundef %i.ay) #27 ; 11 uses
   %i.ba = icmp eq ptr %i.az, null
@@ -868,26 +869,27 @@ bb.w:                                             ; preds = %bb.v
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !73
   %.not135 = icmp eq i32 %i.bw, 0
   %i.bx = sext i32 %.0116 to i64                  ; 7 uses
+  %wide.trip.count148 = zext nneg i32 %4 to i64   ; 4 uses
   br i1 %.not135, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %xtraiter = and i64 %i.ax, 3                    ; 3 uses
+  %xtraiter = and i64 %wide.trip.count148, 3      ; 3 uses
   %i.by = add nsw i32 %4, -1
   %i.bz = icmp ult i32 %i.by, 3
   br i1 %i.bz, label %.lr.ph.split.us.epil.preheader, label %.lr.ph.split.us.preheader.new
 
 .lr.ph.split.us.preheader.new:                    ; preds = %.lr.ph.split.us.preheader
-  %unroll_iter = and i64 %i.ax, 2147483644
+  %unroll_iter = and i64 %wide.trip.count148, 2147483644
   br label %.lr.ph.split.us
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %i.ca = zext nneg i32 %4 to i64                 ; 2 uses
+  %i.ca = zext nneg i32 %4 to i64                 ; 3 uses
   %min.iters.check = icmp ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader163, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %i.ax, 2147483644              ; 3 uses
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ca, i64 0
+  %n.vec = and i64 %i.ca, 2147483644              ; 3 uses
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %wide.trip.count148, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert160 = insertelement <2 x i64> poison, i64 %i.bx, i64 0
   %broadcast.splat161 = shufflevector <2 x i64> %broadcast.splatinsert160, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -914,7 +916,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ci, label %middle.block, label %vector.body, !llvm.loop !227
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %i.ax
+  %cmp.n = icmp eq i64 %n.vec, %i.ca
   br i1 %cmp.n, label %.preheader, label %.lr.ph.split.preheader163
 
 .lr.ph.split.preheader163:                        ; preds = %.lr.ph.split.preheader, %middle.block
@@ -980,13 +982,13 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader163, %.lr.ph.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split ], [ %indvars.iv.ph, %.lr.ph.split.preheader163 ] ; 3 uses
   %i.dc = xor i64 %indvars.iv, -1
-  %i.dd = add nsw i64 %i.ca, %i.dc
+  %i.dd = add nsw i64 %wide.trip.count148, %i.dc
   %i.de = mul nsw i64 %i.dd, %i.bx
   %i.df = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.de
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %indvars.iv
   store ptr %i.df, ptr %i.dg, align 8, !tbaa !176
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ax
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ca
   br i1 %exitcond.not, label %.preheader, label %.lr.ph.split, !llvm.loop !230
 
 .lr.ph140:                                        ; preds = %.preheader, %.lr.ph140
@@ -1389,7 +1391,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.l, %bb.m
   %.0116 = phi i32 [ %3, %bb.m ], [ %i.ar, %bb.l ]
-  %i.ax = zext nneg i32 %4 to i64                 ; 6 uses
+  %i.ax = zext nneg i32 %4 to i64
   %i.ay = shl nuw nsw i64 %i.ax, 3
   %i.az = call noalias ptr @malloc(i64 noundef %i.ay) #27 ; 11 uses
   %i.ba = icmp eq ptr %i.az, null
@@ -1460,26 +1462,27 @@ bb.w:                                             ; preds = %bb.v
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !73
   %.not135 = icmp eq i32 %i.bw, 0
   %i.bx = sext i32 %.0116 to i64                  ; 7 uses
+  %wide.trip.count148 = zext nneg i32 %4 to i64   ; 4 uses
   br i1 %.not135, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %xtraiter = and i64 %i.ax, 3                    ; 3 uses
+  %xtraiter = and i64 %wide.trip.count148, 3      ; 3 uses
   %i.by = add nsw i32 %4, -1
   %i.bz = icmp ult i32 %i.by, 3
   br i1 %i.bz, label %.lr.ph.split.us.epil.preheader, label %.lr.ph.split.us.preheader.new
 
 .lr.ph.split.us.preheader.new:                    ; preds = %.lr.ph.split.us.preheader
-  %unroll_iter = and i64 %i.ax, 2147483644
+  %unroll_iter = and i64 %wide.trip.count148, 2147483644
   br label %.lr.ph.split.us
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %i.ca = zext nneg i32 %4 to i64                 ; 2 uses
+  %i.ca = zext nneg i32 %4 to i64                 ; 3 uses
   %min.iters.check = icmp ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader163, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %i.ax, 2147483644              ; 3 uses
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ca, i64 0
+  %n.vec = and i64 %i.ca, 2147483644              ; 3 uses
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %wide.trip.count148, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert160 = insertelement <2 x i64> poison, i64 %i.bx, i64 0
   %broadcast.splat161 = shufflevector <2 x i64> %broadcast.splatinsert160, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -1506,7 +1509,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ci, label %middle.block, label %vector.body, !llvm.loop !243
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %i.ax
+  %cmp.n = icmp eq i64 %n.vec, %i.ca
   br i1 %cmp.n, label %.preheader, label %.lr.ph.split.preheader163
 
 .lr.ph.split.preheader163:                        ; preds = %.lr.ph.split.preheader, %middle.block
@@ -1572,13 +1575,13 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader163, %.lr.ph.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split ], [ %indvars.iv.ph, %.lr.ph.split.preheader163 ] ; 3 uses
   %i.dc = xor i64 %indvars.iv, -1
-  %i.dd = add nsw i64 %i.ca, %i.dc
+  %i.dd = add nsw i64 %wide.trip.count148, %i.dc
   %i.de = mul nsw i64 %i.dd, %i.bx
   %i.df = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.de
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %indvars.iv
   store ptr %i.df, ptr %i.dg, align 8, !tbaa !176
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ax
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ca
   br i1 %exitcond.not, label %.preheader, label %.lr.ph.split, !llvm.loop !246
 
 .lr.ph140:                                        ; preds = %.preheader, %.lr.ph140
@@ -1981,7 +1984,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !118
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 88
   store i64 %i.ah, ptr %i.ak, align 8, !tbaa !108
-  %i.al = zext nneg i32 %3 to i64                 ; 4 uses
+  %i.al = zext nneg i32 %3 to i64
   %i.am = mul nuw nsw i64 %i.al, 120
   %calloc = call ptr @calloc(i64 1, i64 %i.am)    ; 13 uses
   %i.an = icmp eq ptr %calloc, null
@@ -2013,6 +2016,7 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph:                                           ; preds = %bb.l, %bb.m
   %.not343 = icmp ne i32 %3, 1
+  %wide.trip.count = zext nneg i32 %3 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %bb.aa
@@ -2133,7 +2137,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z, %bb.p
   %.not347 = icmp eq i32 %i.cr, 0
   %spec.select = select i1 %.not347, i32 1, i32 %.0290379 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.al
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !367
 
 ._crit_edge:                                      ; preds = %bb.aa
@@ -2184,6 +2188,8 @@ bb.ag:                                            ; preds = %bb.af
 
 .lr.ph382.preheader:                              ; preds = %bb.ae, %bb.af
   %i.dn = call fastcc i32 @getSubsamp(ptr noundef %0)
+  %smax415 = call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %wide.trip.count416 = zext nneg i32 %smax415 to i64
   br label %.lr.ph382
 
 .lr.ph382:                                        ; preds = %.lr.ph382.preheader, %bb.ar
@@ -2299,7 +2305,7 @@ split:                                            ; preds = %bb.aq, %getDstSubsa
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ai
   %indvars.iv.next410 = add nuw nsw i64 %indvars.iv409, 1 ; 2 uses
-  %exitcond413.not = icmp eq i64 %indvars.iv.next410, %i.al
+  %exitcond413.not = icmp eq i64 %indvars.iv.next410, %wide.trip.count416
   br i1 %exitcond413.not, label %.lr.ph402, label %.lr.ph382, !llvm.loop !368
 
 .lr.ph402:                                        ; preds = %bb.ar
@@ -2317,6 +2323,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ai
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 1776
   %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %smax427 = call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %wide.trip.count428 = zext nneg i32 %smax427 to i64
   br label %bb.as
 
 bb.as:                                            ; preds = %.lr.ph402, %bb.bo
@@ -2545,7 +2553,7 @@ bb.bn:                                            ; preds = %.thread368
 
 bb.bo:                                            ; preds = %.thread368, %bb.bn
   %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 1 ; 2 uses
-  %exitcond424.not = icmp eq i64 %indvars.iv.next421, %i.al
+  %exitcond424.not = icmp eq i64 %indvars.iv.next421, %wide.trip.count428
   br i1 %exitcond424.not, label %._crit_edge403, label %bb.as, !llvm.loop !372
 
 ._crit_edge403:                                   ; preds = %bb.bo
@@ -2948,8 +2956,8 @@ bb.m:                                             ; preds = %processFlags.exit
 
 bb.n:                                             ; preds = %bb.m, %processFlags.exit
   %.062 = phi i32 [ %i.au, %bb.m ], [ -1, %processFlags.exit ]
-  %i.av = zext nneg i32 %3 to i64                 ; 2 uses
-  %i.aw = shl nuw nsw i64 %i.av, 3                ; 3 uses
+  %i.av = zext nneg i32 %3 to i64
+  %i.aw = shl nuw nsw i64 %i.av, 3
   %i.ax = call noalias ptr @malloc(i64 noundef %i.aw) #27 ; 7 uses
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %bb.o, label %.lr.ph
@@ -2960,10 +2968,12 @@ bb.n:                                             ; preds = %bb.m, %processFlags
   %i.bb = call align 16 ptr @llvm.threadlocal.address.p0(ptr align 16 @errStr)
   %i.bc = load i32, ptr %i.ah, align 4, !tbaa !74
   %i.bd = icmp eq i32 %i.bc, 0
+  %8 = zext nneg i32 %3 to i64                    ; 2 uses
   br i1 %i.bd, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ax, ptr nonnull align 8 %5, i64 %i.aw, i1 false), !tbaa !58
+  %9 = shl nuw nsw i64 %8, 3
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ax, ptr noundef nonnull align 8 dereferenceable(1) %5, i64 %9, i1 false), !tbaa !58
   br label %.lr.ph82.preheader
 
 bb.o:                                             ; preds = %bb.n
@@ -3069,12 +3079,15 @@ bb.v:                                             ; preds = %bb.p
 
 bb.w:                                             ; preds = %.thread, %.lr.ph.split
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.av
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %8
   br i1 %exitcond.not, label %.lr.ph82.preheader, label %.lr.ph.splitthread-pre-split, !llvm.loop !401
 
 .lr.ph82.preheader:                               ; preds = %bb.w, %.lr.ph.split.us.preheader
   %i.cx = call i32 @tj3Transform(ptr noundef nonnull %0, ptr noundef %1, i64 noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef nonnull %i.ax, ptr noundef %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %5, ptr nonnull align 8 %i.ax, i64 %i.aw, i1 false), !tbaa !58
+  %smax91 = call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %10 = zext nneg i32 %smax91 to i64
+  %11 = shl nuw nsw i64 %10, 3
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(1) %i.ax, i64 %11, i1 false), !tbaa !58
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph82.preheader, %bb.v, %bb.g, %bb.o, %bb.f, %bb.d
@@ -3427,6 +3440,9 @@ declare i32 @llvm.ctpop.i32(i32) #22
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #22

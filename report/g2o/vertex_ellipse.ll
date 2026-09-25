@@ -205,13 +205,13 @@ bb.a:
 
 .preheader.lr.ph.i.i.i.i.i.i:                     ; preds = %bb.a
   %i.e = fsub float 1.000000e+00, %i.d            ; 2 uses
+  %10 = load ptr, ptr %0, align 8, !tbaa !66      ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load i64, ptr %i.f, align 8, !tbaa !53   ; 5 uses
   %i.h = icmp sgt i64 %i.g, 0
   br i1 %i.h, label %.preheader.i.i.i.i.i.i, label %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIfLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEEEmLERKf.exit
 
 .preheader.i.i.i.i.i.i:                           ; preds = %.preheader.lr.ph.i.i.i.i.i.i
-  %10 = load ptr, ptr %0, align 8, !tbaa !66      ; 2 uses
   %min.iters.check176 = icmp ult i64 %i.g, 8
   br i1 %min.iters.check176, label %scalar.ph175.preheader, label %vector.ph177
 
@@ -614,7 +614,7 @@ bb.a:
 ._crit_edge147:                                   ; preds = %bb.k, %bb.a
   ret void
 
-bb.b:                                             ; preds = %.lr.ph146, %bb.k
+bb.b:                                             ; preds = %bb.k, %.lr.ph146
   %indvars.iv = phi i64 [ %.sroa.speculated132, %.lr.ph146 ], [ %indvars.iv.next, %bb.k ] ; 3 uses
   %.052144 = phi i64 [ 0, %.lr.ph146 ], [ %i.du, %bb.k ] ; 6 uses
   %smin = call i64 @llvm.smin.i64(i64 %indvars.iv, i64 8) ; 2 uses
@@ -622,12 +622,11 @@ bb.b:                                             ; preds = %.lr.ph146, %bb.k
   %i.e = add i64 %smin, -3
   %i.f = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 1)
   %i.g = call i64 @llvm.umin.i64(i64 %i.f, i64 8)
-  %i.h = sub nuw nsw i64 %.sroa.speculated132, %.052144 ; 2 uses
+  %i.h = sub nuw nsw i64 %.sroa.speculated132, %.052144
   %.sroa.speculated = call i64 @llvm.smin.i64(i64 %i.h, i64 8) ; 3 uses
-  %11 = icmp sgt i64 %i.h, 0
-  br i1 %11, label %.lr.ph, label %._crit_edge
+  br label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.i, %bb.b
+._crit_edge:                                      ; preds = %bb.i
   %i.i = add nuw i64 %.sroa.speculated, %.052144  ; 3 uses
   %i.j = sub i64 %1, %i.i                         ; 2 uses
   %i.k = icmp sgt i64 %i.j, 0

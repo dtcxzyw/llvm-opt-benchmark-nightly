@@ -206,8 +206,7 @@ qrfStringInArray.exit180.thread:                  ; preds = %.lr.ph207, %middle.
   %.0148.lcssa.ph = phi ptr [ %.0148208, %bb.b ], [ %.1149, %qrfStringInArray.exit180.thread ]
   %.0145.lcssa.ph = phi ptr [ %.0145209, %bb.b ], [ %.1146, %qrfStringInArray.exit180.thread ]
   %.0140.lcssa.ph = phi i64 [ %indvars.iv240, %bb.b ], [ %indvars.iv.next241, %qrfStringInArray.exit180.thread ]
-  %sext274 = shl i64 %.0140.lcssa.ph, 32
-  %1 = ashr exact i64 %sext274, 32
+  %1 = and i64 %.0140.lcssa.ph, 4294967295
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.a
@@ -323,7 +322,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   br i1 %i.ek, label %.lr.ph224, label %._crit_edge
 
 .lr.ph224:                                        ; preds = %.loopexit
-  %2 = icmp slt i64 %indvars.iv260, %.0140.lcssa
+  %2 = icmp samesign ult i64 %indvars.iv260, %.0140.lcssa
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %.0145.lcssa, i64 %indvars.iv260
   br label %bb.r
 

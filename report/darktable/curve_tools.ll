@@ -204,7 +204,7 @@ bb.a:
   br i1 %or.cond, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %0 to i64      ; 4 uses
+  %wide.trip.count = zext nneg i32 %0 to i64      ; 3 uses
   br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
@@ -223,8 +223,9 @@ bb.b:                                             ; preds = %.lr.ph
 
 .preheader:                                       ; preds = %bb.b
   %i.f = tail call noalias ptr @calloc(i64 noundef %wide.trip.count, i64 noundef 4) #13 ; 16 uses
-  %3 = shl nuw nsw i64 %wide.trip.count, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.f, ptr align 4 %2, i64 %3, i1 false), !tbaa !12
+  %3 = shl nuw nsw i32 %0, 2
+  %4 = zext nneg i32 %3 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.f, ptr align 4 %2, i64 %4, i1 false), !tbaa !12
   %i.g = icmp sgt i32 %0, 1
   br i1 %i.g, label %.lr.ph72.preheader, label %._crit_edge73
 
