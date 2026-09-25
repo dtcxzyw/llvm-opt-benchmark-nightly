@@ -55,7 +55,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.q = mul nsw i64 %i.n, %i.g
-  %i.r = getelementptr i8, ptr %i.p, i64 %i.q     ; 5 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.q ; 5 uses
   %i.s = icmp sgt i32 %5, 0
   %i.t = icmp sgt i32 %4, 0
   %or.cond92 = and i1 %i.s, %i.t
@@ -136,7 +136,7 @@ iter.check.new:                                   ; preds = %iter.check, %iter.c
   %.176 = phi ptr [ %2, %bb.d ], [ %i.r, %bb.f ], [ %i.r, %._crit_edge ]
   %.174 = phi ptr [ %0, %bb.d ], [ %i.p, %bb.f ], [ %i.p, %._crit_edge ]
   %.071 = phi ptr [ null, %bb.d ], [ %i.p, %bb.f ], [ %i.p, %._crit_edge ]
-  %i.ar = tail call double %i.d(ptr noundef nonnull %.174, i32 noundef %4, ptr noundef %.176, i32 noundef %4, i32 noundef %4, i32 noundef %5) #7, !callees !16
+  %i.ar = tail call double %i.d(ptr noundef nonnull %.174, i32 noundef %4, ptr noundef %.176, i32 noundef %4, i32 noundef %4, i32 noundef %5) #7, !callees !15
   %i.as = fptrunc double %i.ar to float
   store float %i.as, ptr %8, align 4, !tbaa !10
   tail call void @WebPSafeFree(ptr noundef %.071) #7
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.i = getelementptr inbounds i8, ptr %.01314, i64 %i.c
   %i.j = add nuw nsw i32 %.01116, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.j, %5
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !17
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %.0.lcssa = phi double [ 0.000000e+00, %bb.a ], [ %i.g, %bb.b ]
@@ -250,12 +250,12 @@ bb.b:                                             ; preds = %.preheader96.us, %b
   %i.i = fadd double %.198.us, %i.h               ; 3 uses
   %i.j = add nuw nsw i32 %.08297.us, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.j, %4
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !18
+  br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !17
 
 ._crit_edge.us:                                   ; preds = %bb.b
   %i.k = add nuw nsw i32 %.07999.us, 1            ; 2 uses
   %exitcond141.not = icmp eq i32 %i.k, %i.c
-  br i1 %exitcond141.not, label %.preheader95, label %.preheader96.us, !llvm.loop !19
+  br i1 %exitcond141.not, label %.preheader95, label %.preheader96.us, !llvm.loop !18
 
 .preheader95:                                     ; preds = %._crit_edge.us, %.preheader96.lr.ph, %bb.a
   %.079.lcssa = phi i32 [ 0, %bb.a ], [ %i.c, %.preheader96.lr.ph ], [ %i.c, %._crit_edge.us ] ; 3 uses
@@ -301,12 +301,12 @@ bb.c:                                             ; preds = %.preheader.us, %bb.
   %i.v = fadd double %.7121.us, %i.u              ; 3 uses
   %i.w = add nuw nsw i32 %.486120.us, 1           ; 2 uses
   %exitcond150.not = icmp eq i32 %i.w, %4
-  br i1 %exitcond150.not, label %._crit_edge123.us, label %bb.c, !llvm.loop !20
+  br i1 %exitcond150.not, label %._crit_edge123.us, label %bb.c, !llvm.loop !19
 
 ._crit_edge123.us:                                ; preds = %bb.c
   %i.x = add i32 %.281125.us, 1                   ; 2 uses
   %exitcond151.not = icmp eq i32 %i.x, %5
-  br i1 %exitcond151.not, label %._crit_edge127, label %.preheader.us, !llvm.loop !21
+  br i1 %exitcond151.not, label %._crit_edge127, label %.preheader.us, !llvm.loop !20
 
 .preheader93:                                     ; preds = %.lr.ph, %.preheader94
   %.183.lcssa = phi i32 [ 0, %.preheader94 ], [ %i.a, %.lr.ph ] ; 3 uses
@@ -331,7 +331,7 @@ bb.c:                                             ; preds = %.preheader.us, %bb.
   %i.af = fadd double %.3105, %i.ae               ; 2 uses
   %i.ag = add nuw nsw i32 %.183104, 1             ; 2 uses
   %exitcond142.not = icmp eq i32 %i.ag, %i.a
-  br i1 %exitcond142.not, label %.preheader93, label %.lr.ph, !llvm.loop !22
+  br i1 %exitcond142.not, label %.preheader93, label %.lr.ph, !llvm.loop !21
 
 .preheader92:                                     ; preds = %bb.d, %.preheader93
   %.284.lcssa = phi i32 [ %.183.lcssa, %.preheader93 ], [ %i.b, %bb.d ] ; 2 uses
@@ -354,7 +354,7 @@ bb.d:                                             ; preds = %.lr.ph109, %bb.d
   %i.am = fadd double %.4108, %i.al               ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond144.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond144.not, label %.preheader92, label %bb.d, !llvm.loop !23
+  br i1 %exitcond144.not, label %.preheader92, label %bb.d, !llvm.loop !22
 
 .lr.ph114:                                        ; preds = %.lr.ph114.preheader, %.lr.ph114
   %.5113 = phi double [ %i.ap, %.lr.ph114 ], [ %.4.lcssa, %.lr.ph114.preheader ]
@@ -364,14 +364,14 @@ bb.d:                                             ; preds = %.lr.ph109, %bb.d
   %i.ap = fadd double %.5113, %i.ao               ; 2 uses
   %i.aq = add i32 %.385112, 1                     ; 2 uses
   %exitcond145.not = icmp eq i32 %i.aq, %4
-  br i1 %exitcond145.not, label %._crit_edge, label %.lr.ph114, !llvm.loop !24
+  br i1 %exitcond145.not, label %._crit_edge, label %.lr.ph114, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %.lr.ph114, %.preheader92
   %.5.lcssa = phi double [ %.4.lcssa, %.preheader92 ], [ %i.ap, %.lr.ph114 ] ; 2 uses
   %indvars.iv.next147 = add nsw i64 %indvars.iv146, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next147 to i32
   %exitcond149.not = icmp eq i32 %i.d, %lftr.wideiv
-  br i1 %exitcond149.not, label %.preheader91, label %.preheader94, !llvm.loop !25
+  br i1 %exitcond149.not, label %.preheader91, label %.preheader94, !llvm.loop !24
 
 ._crit_edge127:                                   ; preds = %._crit_edge123.us, %.preheader91
   %.6.lcssa = phi double [ %.2.lcssa, %.preheader91 ], [ %i.v, %._crit_edge123.us ]
@@ -434,7 +434,7 @@ bb.a:
   %i.w = fadd double %i.v, 6.502500e+04           ; 3 uses
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.us.loopexit102.unr-lcssa, label %.lr.ph.split.us73, !llvm.loop !26
+  br i1 %niter.ncmp.7, label %._crit_edge.us.loopexit102.unr-lcssa, label %.lr.ph.split.us73, !llvm.loop !25
 
 .lr.ph57.us.us:                                   ; preds = %.lr.ph57.us.us.preheader, %._crit_edge58.us.us
   %indvars.iv86 = phi i64 [ 0, %.lr.ph57.us.us.preheader ], [ %indvars.iv.next87, %._crit_edge58.us.us ] ; 4 uses
@@ -476,19 +476,19 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %.2.us.us.us = select i1 %i.ap, double %i.ao, double %.152.us.us.us ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.aq = icmp slt i64 %indvars.iv.next, %i.ah
-  br i1 %i.aq, label %bb.b, label %._crit_edge.us.us.us, !llvm.loop !27
+  br i1 %i.aq, label %bb.b, label %._crit_edge.us.us.us, !llvm.loop !26
 
 ._crit_edge.us.us.us:                             ; preds = %bb.b
   %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
   %i.ar = icmp slt i64 %indvars.iv.next84, %i.o
-  br i1 %i.ar, label %.lr.ph.us.us.us, label %._crit_edge58.us.us, !llvm.loop !28
+  br i1 %i.ar, label %.lr.ph.us.us.us, label %._crit_edge58.us.us, !llvm.loop !27
 
 ._crit_edge58.us.us:                              ; preds = %._crit_edge.us.us.us, %.lr.ph57.us.us
   %.us-phi.us.us = phi double [ 6.502500e+04, %.lr.ph57.us.us ], [ %.2.us.us.us, %._crit_edge.us.us.us ]
   %i.as = fadd double %.14661.us.us, %.us-phi.us.us ; 2 uses
   %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
   %exitcond89.not = icmp eq i64 %indvars.iv.next87, %wide.trip.count
-  br i1 %exitcond89.not, label %._crit_edge.us, label %.lr.ph57.us.us, !llvm.loop !26
+  br i1 %exitcond89.not, label %._crit_edge.us, label %.lr.ph57.us.us, !llvm.loop !25
 
 ._crit_edge.us.loopexit102.unr-lcssa:             ; preds = %.lr.ph.split.us73
   br i1 %lcmp.mod.not, label %._crit_edge.us, label %.lr.ph.split.us73.epil.preheader
@@ -504,13 +504,13 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %i.at = fadd double %.14661.us74.epil, 6.502500e+04 ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %.lr.ph.split.us73.epil, !llvm.loop !29
+  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %.lr.ph.split.us73.epil, !llvm.loop !28
 
 ._crit_edge.us:                                   ; preds = %._crit_edge.us.loopexit102.unr-lcssa, %.lr.ph.split.us73.epil, %._crit_edge58.us.us
   %.us-phi66.us = phi double [ %i.as, %._crit_edge58.us.us ], [ %i.w, %._crit_edge.us.loopexit102.unr-lcssa ], [ %i.at, %.lr.ph.split.us73.epil ] ; 2 uses
   %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 1 ; 2 uses
   %exitcond94.not = icmp eq i64 %indvars.iv.next91, %wide.trip.count93
-  br i1 %exitcond94.not, label %._crit_edge71, label %.lr.ph.us, !llvm.loop !30
+  br i1 %exitcond94.not, label %._crit_edge71, label %.lr.ph.us, !llvm.loop !29
 
 ._crit_edge71:                                    ; preds = %._crit_edge.us, %bb.a
   %.045.lcssa = phi double [ 0.000000e+00, %bb.a ], [ %.us-phi66.us, %._crit_edge.us ]
@@ -541,17 +541,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !36
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !35
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !36
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !35
   %.not = icmp eq i32 %i.e, %i.g
   br i1 %.not, label %bb.c, label %bb.w
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !37
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !36
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !37
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !36
   %i.l = icmp ne i32 %i.i, %i.k
   %i.m = icmp eq ptr %3, null
   %or.cond3 = or i1 %i.m, %i.l
@@ -569,8 +569,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not52, label %bb.w, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = load i32, ptr %i.d, align 8, !tbaa !36   ; 7 uses
-  %i.q = load i32, ptr %i.h, align 4, !tbaa !37   ; 7 uses
+  %i.p = load i32, ptr %i.d, align 8, !tbaa !35   ; 7 uses
+  %i.q = load i32, ptr %i.h, align 4, !tbaa !36   ; 7 uses
   %i.r = call i32 @WebPPictureView(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 0, i32 noundef %i.p, i32 noundef %i.q, ptr noundef nonnull %4) #7
   %.not53 = icmp eq i32 %i.r, 0
   br i1 %.not53, label %bb.v, label %bb.g
@@ -581,7 +581,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not54, label %bb.v, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.t = load i32, ptr %4, align 8, !tbaa !38
+  %i.t = load i32, ptr %4, align 8, !tbaa !37
   %i.u = icmp eq i32 %i.t, 0
   br i1 %i.u, label %bb.i, label %bb.j
 
@@ -591,7 +591,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not55, label %bb.v, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.w = load i32, ptr %5, align 8, !tbaa !38
+  %i.w = load i32, ptr %5, align 8, !tbaa !37
   %i.x = icmp eq i32 %i.w, 0
   br i1 %i.x, label %bb.k, label %bb.l
 
@@ -608,14 +608,14 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ad = mul nsw i32 %i.q, %i.p
   %i.ae = sitofp i32 %i.ad to double              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.af = load i32, ptr %i.z, align 8, !tbaa !39
+  %i.af = load i32, ptr %i.z, align 8, !tbaa !38
   %i.ag = sext i32 %i.af to i64
   %i.ah = shl nsw i64 %i.ag, 2
-  %i.ai = load i32, ptr %i.aa, align 8, !tbaa !39
+  %i.ai = load i32, ptr %i.aa, align 8, !tbaa !38
   %i.aj = sext i32 %i.ai to i64
   %i.ak = shl nsw i64 %i.aj, 2
-  %i.al = load ptr, ptr %i.ab, align 8, !tbaa !40
-  %i.am = load ptr, ptr %i.ac, align 8, !tbaa !40
+  %i.al = load ptr, ptr %i.ab, align 8, !tbaa !39
+  %i.am = load ptr, ptr %i.ac, align 8, !tbaa !39
   %i.an = call i32 @WebPPlaneDistortion(ptr noundef %i.al, i64 noundef %i.ah, ptr noundef %i.am, i64 noundef %i.ak, i32 noundef %i.p, i32 noundef %i.q, i64 noundef 4, i32 noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %3)
   %.not57 = icmp eq i32 %i.an, 0
   br i1 %.not57, label %bb.m, label %bb.n
@@ -628,15 +628,15 @@ bb.n:                                             ; preds = %bb.l
   %i.ao = load float, ptr %i.a, align 4, !tbaa !10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.ap = load i32, ptr %i.z, align 8, !tbaa !39
+  %i.ap = load i32, ptr %i.z, align 8, !tbaa !38
   %i.aq = sext i32 %i.ap to i64
   %i.ar = shl nsw i64 %i.aq, 2
-  %i.as = load i32, ptr %i.aa, align 8, !tbaa !39
+  %i.as = load i32, ptr %i.aa, align 8, !tbaa !38
   %i.at = sext i32 %i.as to i64
   %i.au = shl nsw i64 %i.at, 2
-  %i.av = load ptr, ptr %i.ab, align 8, !tbaa !40
+  %i.av = load ptr, ptr %i.ab, align 8, !tbaa !39
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 1
-  %i.ax = load ptr, ptr %i.ac, align 8, !tbaa !40
+  %i.ax = load ptr, ptr %i.ac, align 8, !tbaa !39
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 1
   %i.az = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.ba = call i32 @WebPPlaneDistortion(ptr noundef nonnull %i.aw, i64 noundef %i.ar, ptr noundef nonnull %i.ay, i64 noundef %i.au, i32 noundef %i.p, i32 noundef %i.q, i64 noundef 4, i32 noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.az)
@@ -647,15 +647,15 @@ bb.o:                                             ; preds = %bb.n
   %i.bb = load float, ptr %i.a, align 4, !tbaa !10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.bc = load i32, ptr %i.z, align 8, !tbaa !39
+  %i.bc = load i32, ptr %i.z, align 8, !tbaa !38
   %i.bd = sext i32 %i.bc to i64
   %i.be = shl nsw i64 %i.bd, 2
-  %i.bf = load i32, ptr %i.aa, align 8, !tbaa !39
+  %i.bf = load i32, ptr %i.aa, align 8, !tbaa !38
   %i.bg = sext i32 %i.bf to i64
   %i.bh = shl nsw i64 %i.bg, 2
-  %i.bi = load ptr, ptr %i.ab, align 8, !tbaa !40
+  %i.bi = load ptr, ptr %i.ab, align 8, !tbaa !39
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 2
-  %i.bk = load ptr, ptr %i.ac, align 8, !tbaa !40
+  %i.bk = load ptr, ptr %i.ac, align 8, !tbaa !39
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 2
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bn = call i32 @WebPPlaneDistortion(ptr noundef nonnull %i.bj, i64 noundef %i.be, ptr noundef nonnull %i.bl, i64 noundef %i.bh, i32 noundef %i.p, i32 noundef %i.q, i64 noundef 4, i32 noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.bm)
@@ -666,15 +666,15 @@ bb.p:                                             ; preds = %bb.o
   %i.bo = load float, ptr %i.a, align 4, !tbaa !10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.bp = load i32, ptr %i.z, align 8, !tbaa !39
+  %i.bp = load i32, ptr %i.z, align 8, !tbaa !38
   %i.bq = sext i32 %i.bp to i64
   %i.br = shl nsw i64 %i.bq, 2
-  %i.bs = load i32, ptr %i.aa, align 8, !tbaa !39
+  %i.bs = load i32, ptr %i.aa, align 8, !tbaa !38
   %i.bt = sext i32 %i.bs to i64
   %i.bu = shl nsw i64 %i.bt, 2
-  %i.bv = load ptr, ptr %i.ab, align 8, !tbaa !40
+  %i.bv = load ptr, ptr %i.ab, align 8, !tbaa !39
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 3
-  %i.bx = load ptr, ptr %i.ac, align 8, !tbaa !40
+  %i.bx = load ptr, ptr %i.ac, align 8, !tbaa !39
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 3
   %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.ca = call i32 @WebPPlaneDistortion(ptr noundef nonnull %i.bw, i64 noundef %i.br, ptr noundef nonnull %i.by, i64 noundef %i.bu, i32 noundef %i.p, i32 noundef %i.q, i64 noundef 4, i32 noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.bz)
@@ -794,10 +794,10 @@ attributes #7 = { nounwind }
 !10 = !{!9, !9, i64 0}
 !11 = !{!"any pointer", !4, i64 0}
 !12 = !{!11, !11, i64 0}
-!13 = distinct !{!13, !8, !15}
+!13 = distinct !{!13, !8}
 !14 = distinct !{!14, !8}
-!15 = !{!"llvm.loop.isvectorized", i32 1}
-!16 = !{ptr @AccumulateLSIM, ptr @AccumulateSSE, ptr @AccumulateSSIM}
+!15 = !{ptr @AccumulateLSIM, ptr @AccumulateSSE, ptr @AccumulateSSIM}
+!16 = distinct !{!16, !8}
 !17 = distinct !{!17, !8}
 !18 = distinct !{!18, !8}
 !19 = distinct !{!19, !8}
@@ -809,17 +809,16 @@ attributes #7 = { nounwind }
 !25 = distinct !{!25, !8}
 !26 = distinct !{!26, !8}
 !27 = distinct !{!27, !8}
-!28 = distinct !{!28, !8}
-!29 = distinct !{!29, !31}
-!30 = distinct !{!30, !8}
-!31 = !{!"llvm.loop.unroll.disable"}
-!32 = !{!"p1 omnipotent char", !11, i64 0}
-!33 = !{!"p1 int", !11, i64 0}
-!34 = !{!"p1 _ZTS12WebPAuxStats", !11, i64 0}
-!35 = !{!"WebPPicture", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !32, i64 16, !32, i64 24, !32, i64 32, !5, i64 40, !5, i64 44, !32, i64 48, !5, i64 56, !4, i64 60, !33, i64 72, !5, i64 80, !4, i64 84, !11, i64 96, !11, i64 104, !5, i64 112, !32, i64 120, !34, i64 128, !5, i64 136, !11, i64 144, !11, i64 152, !4, i64 160, !32, i64 176, !32, i64 184, !4, i64 192, !11, i64 224, !11, i64 232, !4, i64 240}
-!36 = !{!35, !5, i64 8}
-!37 = !{!35, !5, i64 12}
-!38 = !{!35, !5, i64 0}
-!39 = !{!35, !5, i64 80}
-!40 = !{!35, !33, i64 72}
+!28 = distinct !{!28, !30}
+!29 = distinct !{!29, !8}
+!30 = !{!"llvm.loop.unroll.disable"}
+!31 = !{!"p1 omnipotent char", !11, i64 0}
+!32 = !{!"p1 int", !11, i64 0}
+!33 = !{!"p1 _ZTS12WebPAuxStats", !11, i64 0}
+!34 = !{!"WebPPicture", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !31, i64 16, !31, i64 24, !31, i64 32, !5, i64 40, !5, i64 44, !31, i64 48, !5, i64 56, !4, i64 60, !32, i64 72, !5, i64 80, !4, i64 84, !11, i64 96, !11, i64 104, !5, i64 112, !31, i64 120, !33, i64 128, !5, i64 136, !11, i64 144, !11, i64 152, !4, i64 160, !31, i64 176, !31, i64 184, !4, i64 192, !11, i64 224, !11, i64 232, !4, i64 240}
+!35 = !{!34, !5, i64 8}
+!36 = !{!34, !5, i64 12}
+!37 = !{!34, !5, i64 0}
+!38 = !{!34, !5, i64 80}
+!39 = !{!34, !32, i64 72}
 end_hunk_0
