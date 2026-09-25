@@ -205,9 +205,10 @@ _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1
   %i.bk = icmp eq i32 %i.bj, 5                    ; 2 uses
   %i.bl = icmp eq i32 %.val, 0
   %i.bm = icmp sgt i32 %i.bh, 4000
-  %or.cond.i = or i1 %i.bm, %i.bl
-  %narrow = select i1 %i.bk, i1 %or.cond.i, i1 false ; 2 uses
-  %i.bn = xor i1 %i.bk, %narrow
+  %or.cond.i = or i1 %i.bm, %i.bl                 ; 2 uses
+  %narrow = select i1 %i.bk, i1 %or.cond.i, i1 false
+  %i.bn = xor i1 %or.cond.i, true
+  %5 = select i1 %i.bk, i1 %i.bn, i1 false
   br i1 %narrow, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit
@@ -249,7 +250,7 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14Li
   %.sroa.06.0.i.i = phi i8 [ %i.cc, %bb.m ], [ %i.cd, %bb.n ] ; 4 uses
   %i.ce = icmp samesign ult i8 %.sroa.07.0.i, 16
   tail call void @llvm.assume(i1 %i.ce)
-  tail call fastcc void @_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler15LoadObjectFieldEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_15LiftoffRegisterENS0_8RegisterESB_iNS1_9ValueKindEbbNS1_14LiftoffRegListE(ptr noundef nonnull align 8 dereferenceable(1284) %0, ptr noundef %1, i8 %.sroa.06.0.i.i, i8 %.sroa.07.0.i, i8 -1, i32 noundef %i.ak, i8 noundef zeroext %.0.i32, i1 noundef zeroext %4, i1 noundef zeroext %i.bn)
+  tail call fastcc void @_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler15LoadObjectFieldEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_15LiftoffRegisterENS0_8RegisterESB_iNS1_9ValueKindEbbNS1_14LiftoffRegListE(ptr noundef nonnull align 8 dereferenceable(1284) %0, ptr noundef %1, i8 %.sroa.06.0.i.i, i8 %.sroa.07.0.i, i8 -1, i32 noundef %i.ak, i8 noundef zeroext %.0.i32, i1 noundef zeroext %4, i1 noundef zeroext %5)
   %i.cf = add nsw i8 %.0.i32, -6
   %spec.select.i.i = icmp ult i8 %i.cf, 3
   %i.cg = icmp eq i8 %.0.i32, 8
@@ -501,8 +502,8 @@ _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1
   %i.bw = icmp eq i32 %i.bv, 5                    ; 2 uses
   %i.bx = icmp eq i32 %.val, 0
   %i.by = icmp sgt i32 %i.bt, 4000
-  %or.cond.i = or i1 %i.by, %i.bx
-  %narrow = select i1 %i.bw, i1 %or.cond.i, i1 false ; 2 uses
+  %or.cond.i = or i1 %i.by, %i.bx                 ; 2 uses
+  %narrow = select i1 %i.bw, i1 %or.cond.i, i1 false
   br i1 %narrow, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit38
@@ -512,11 +513,12 @@ bb.n:                                             ; preds = %_ZN2v88internal4was
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit38
-  %i.ca = xor i1 %i.bw, %narrow
+  %i.ca = xor i1 %or.cond.i, true
+  %4 = select i1 %i.bw, i1 %i.ca, i1 false
   %i.cb = add i32 %.0.i.i, 15
   %i.cc = icmp samesign ult i8 %.sroa.07.0.i37, 16
   tail call void @llvm.assume(i1 %i.cc)
-  tail call fastcc void @_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler16StoreObjectFieldEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS0_8RegisterESA_iNS1_15LiftoffRegisterEbNS1_14LiftoffRegListENS1_9ValueKindENS1_16LiftoffAssembler16SkipWriteBarrierE(ptr noundef nonnull align 8 dereferenceable(1284) %0, ptr noundef %1, i8 %.sroa.07.0.i37, i8 -1, i32 noundef %i.cb, i8 %.sroa.07.0.i, i1 noundef zeroext %i.ca, i32 %i.bs, i8 noundef zeroext %.0.i, i1 noundef zeroext false)
+  tail call fastcc void @_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler16StoreObjectFieldEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS0_8RegisterESA_iNS1_15LiftoffRegisterEbNS1_14LiftoffRegListENS1_9ValueKindENS1_16LiftoffAssembler16SkipWriteBarrierE(ptr noundef nonnull align 8 dereferenceable(1284) %0, ptr noundef %1, i8 %.sroa.07.0.i37, i8 -1, i32 noundef %i.cb, i8 %.sroa.07.0.i, i1 noundef zeroext %4, i32 %i.bs, i8 noundef zeroext %.0.i, i1 noundef zeroext false)
   ret void
 }
 
@@ -919,9 +921,8 @@ _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1
   %.val = load i32, ptr %i.v, align 8
   %i.w = and i32 %.sroa.09.0.copyload, 5
   %i.x = icmp eq i32 %i.w, 5                      ; 2 uses
-  %i.y = icmp eq i32 %.val, 0
-  %narrow = select i1 %i.x, i1 %i.y, i1 false     ; 2 uses
-  %4 = xor i1 %i.x, %narrow
+  %i.y = icmp eq i32 %.val, 0                     ; 2 uses
+  %narrow = select i1 %i.x, i1 %i.y, i1 false
   br i1 %narrow, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit
@@ -988,7 +989,9 @@ _ZN2v88internal4wasm7liftoff8GetMemOpEPNS1_16LiftoffAssemblerENS0_8RegisterES5_m
   %i.at = inttoptr i64 %i.as to ptr               ; 2 uses
   %.fca.0.load.i = load i64, ptr %3, align 8      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  br i1 %4, label %bb.j, label %_ZN2v88internal4wasm16LiftoffAssembler17LoadTaggedPointerENS0_8RegisterES3_S3_iPjb.exit.i
+  %not. = xor i1 %i.x, true
+  %4 = select i1 %not., i1 true, i1 %i.y
+  br i1 %4, label %_ZN2v88internal4wasm16LiftoffAssembler17LoadTaggedPointerENS0_8RegisterES3_S3_iPjb.exit.i, label %bb.j
 
 _ZN2v88internal4wasm16LiftoffAssembler17LoadTaggedPointerENS0_8RegisterES3_S3_iPjb.exit.i: ; preds = %_ZN2v88internal4wasm7liftoff8GetMemOpEPNS1_16LiftoffAssemblerENS0_8RegisterES5_mNS0_11ScaleFactorE.exit
   tail call void @_ZN2v88internal14MacroAssembler15LoadTaggedFieldENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(1284) %0, i8 %.sroa.06.0.i.i, i64 %.fca.0.load.i, ptr nonnull %i.at) #24

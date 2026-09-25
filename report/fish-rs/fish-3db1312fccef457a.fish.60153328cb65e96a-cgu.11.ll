@@ -206,7 +206,7 @@ bb.i:                                             ; preds = %bb.g
   %i.db = trunc nuw i8 %i.da to i1                ; 4 uses
   %i.dc = lshr i64 %i.cy, 1
   %..i.i = call i64 @llvm.umax.i64(i64 %i.dc, i64 4)
-  %..i137.i = call i64 @llvm.umin.i64(i64 %..i.i, i64 %i.cy) ; 3 uses
+  %..i137.i = call i64 @llvm.umin.i64(i64 %..i.i, i64 %i.cy) ; 4 uses
   %.fr452.i = freeze { i64, i1 } zeroinitializer  ; 2 uses
   %i.dd = extractvalue { i64, i1 } %.fr452.i, 1
   %i.de = extractvalue { i64, i1 } %.fr452.i, 0   ; 2 uses
@@ -409,13 +409,13 @@ bb.r:                                             ; preds = %.lr.ph.i.i
   br i1 %or.cond.i, label %.thread, label %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i
 
 _RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i: ; preds = %.loopexit177, %.loopexit177.thread
-  %spec.select778 = phi i64 [ %spec.select777, %.loopexit177.thread ], [ %spec.select, %.loopexit177 ] ; 5 uses
+  %spec.select778 = phi i64 [ %spec.select777, %.loopexit177.thread ], [ %spec.select, %.loopexit177 ] ; 4 uses
   %i.fb = urem i64 %i.cf, %.sroa.4.0481
   %.not.i.i52 = icmp ne i64 %i.fb, 0
   %i.fc = udiv i64 %i.cf, %.sroa.4.0481
   %..i138.i = zext i1 %.not.i.i52 to i64
   %i.fd = add nuw nsw i64 %i.fc, %..i138.i        ; 5 uses
-  %i.fe = icmp ule i64 %i.fd, %spec.select778
+  %i.fe = icmp samesign ule i64 %i.fd, %..i137.i
   %or.cond4.not.i = select i1 %i.db, i1 true, i1 %i.fe
   br i1 %or.cond4.not.i, label %.thread.i, label %bb.s
 
@@ -818,7 +818,7 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   %.sroa.0.0.ph.i90287.i.i = phi i64 [ %i.jp, %.outer.i85.i.i ], [ 0, %bb.ar ] ; 2 uses
   %.sroa.013.0.ph.i89286.i.i = phi i64 [ %i.jq, %.outer.i85.i.i ], [ %i.iv, %bb.ar ] ; 6 uses
   %.sroa.036.0.ph.i87285.i.i = phi i64 [ %spec.select49.lcssa.i108.i.i, %.outer.i85.i.i ], [ %i.iv, %bb.ar ]
-  %.sroa.7.0.ph.i86284.i.i = phi i32 [ %spec.select.lcssa.i107.i.i, %.outer.i85.i.i ], [ 32, %bb.ar ] ; 3 uses
+  %.sroa.7.0.ph.i86284.i.i = phi i32 [ %spec.select.mux.i112.i.i, %.outer.i85.i.i ], [ 32, %bb.ar ] ; 3 uses
   %i.ja = invoke { i64, i64 } @_RNvNtCs8frGy5WneL6_4fish6screen16wcwidth_rendered(i32 noundef %.sroa.7.0.ph.i86284.i.i)
           to label %.noexc116.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, !noalias !2968 ; 2 uses
 
@@ -861,8 +861,9 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   br i1 %i.jj, label %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i114.i.i, label %bb.as
 
 bb.as:                                            ; preds = %.loopexit.i105.i.i
-  %i.jk = icmp eq i64 %i.ji, %.sroa.013.0.ph.i89286.i.i ; 2 uses
+  %i.jk = icmp eq i64 %i.ji, %.sroa.013.0.ph.i89286.i.i ; 3 uses
   %brmerge.not.i111.i.i = select i1 %i.jk, i1 %.not8.i.lcssa.i106.i.i, i1 false
+  %spec.select.mux.i112.i.i = select i1 %i.jk, i32 -1, i32 %spec.select.lcssa.i107.i.i
   br i1 %brmerge.not.i111.i.i, label %bb.at, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i113.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i113.i.i: ; preds = %bb.as
@@ -937,7 +938,7 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   %.sroa.0.0.ph.i49293.i.i = phi i64 [ %i.kq, %.outer.i44.i.i ], [ 0, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i52.preheader.i.i ] ; 2 uses
   %.sroa.013.0.ph.i48292.i.i = phi i64 [ %i.kr, %.outer.i44.i.i ], [ %i.jv, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i52.preheader.i.i ] ; 6 uses
   %.sroa.036.0.ph.i46291.i.i = phi i64 [ %spec.select49.lcssa.i67.i.i, %.outer.i44.i.i ], [ %i.ka, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i52.preheader.i.i ]
-  %.sroa.7.0.ph.i45290.i.i = phi i32 [ %spec.select.lcssa.i66.i.i, %.outer.i44.i.i ], [ 32, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i52.preheader.i.i ] ; 3 uses
+  %.sroa.7.0.ph.i45290.i.i = phi i32 [ %spec.select.mux.i71.i.i, %.outer.i44.i.i ], [ 32, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i52.preheader.i.i ] ; 3 uses
   %i.kb = invoke { i64, i64 } @_RNvNtCs8frGy5WneL6_4fish6screen16wcwidth_rendered(i32 noundef %.sroa.7.0.ph.i45290.i.i)
           to label %.noexc75.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, !noalias !2968 ; 2 uses
 
@@ -980,8 +981,9 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   br i1 %i.kk, label %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i73.i.i, label %bb.az
 
 bb.az:                                            ; preds = %.loopexit.i64.i.i
-  %i.kl = icmp eq i64 %i.kj, %.sroa.013.0.ph.i48292.i.i ; 2 uses
+  %i.kl = icmp eq i64 %i.kj, %.sroa.013.0.ph.i48292.i.i ; 3 uses
   %brmerge.not.i70.i.i = select i1 %i.kl, i1 %.not8.i.lcssa.i65.i.i, i1 false
+  %spec.select.mux.i71.i.i = select i1 %i.kl, i32 -1, i32 %spec.select.lcssa.i66.i.i
   br i1 %brmerge.not.i70.i.i, label %bb.ba, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i72.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i72.i.i: ; preds = %bb.az
@@ -1091,7 +1093,7 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   %.sroa.0.0.ph.i299.i.i = phi i64 [ %i.mb, %.outer.i.i.i ], [ 0, %bb.bj ] ; 2 uses
   %.sroa.013.0.ph.i298.i.i = phi i64 [ %i.mc, %.outer.i.i.i ], [ %i.ll, %bb.bj ] ; 6 uses
   %.sroa.036.0.ph.i297.i.i = phi i64 [ %spec.select49.lcssa.i.i.i, %.outer.i.i.i ], [ %i.ll, %bb.bj ]
-  %.sroa.7.0.ph.i296.i.i = phi i32 [ %spec.select.lcssa.i.i.i, %.outer.i.i.i ], [ 32, %bb.bj ] ; 3 uses
+  %.sroa.7.0.ph.i296.i.i = phi i32 [ %spec.select.mux.i.i.i, %.outer.i.i.i ], [ 32, %bb.bj ] ; 3 uses
   %i.lm = invoke { i64, i64 } @_RNvNtCs8frGy5WneL6_4fish6screen16wcwidth_rendered(i32 noundef %.sroa.7.0.ph.i296.i.i)
           to label %.noexc35.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, !noalias !2968 ; 2 uses
 
@@ -1134,8 +1136,9 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   br i1 %i.lv, label %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i.i.i, label %bb.bk
 
 bb.bk:                                            ; preds = %.loopexit.i33.i.i
-  %i.lw = icmp eq i64 %i.lu, %.sroa.013.0.ph.i298.i.i ; 2 uses
+  %i.lw = icmp eq i64 %i.lu, %.sroa.013.0.ph.i298.i.i ; 3 uses
   %brmerge.not.i.i.i = select i1 %i.lw, i1 %.not8.i.lcssa.i.i.i, i1 false
+  %spec.select.mux.i.i.i = select i1 %i.lw, i32 -1, i32 %spec.select.lcssa.i.i.i
   br i1 %brmerge.not.i.i.i, label %bb.bl, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i.i.i: ; preds = %bb.bk

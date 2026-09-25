@@ -205,16 +205,17 @@ bb.a:
   %.024.lcssa = phi i32 [ 0, %bb.a ], [ %.2, %_ZNK4llvm8DWARFDie6getTagEv.exit.thread ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #27
   call void @_ZN4llvm9DWARFUnit19extractDIEsIfNeededEb(ptr noundef nonnull align 8 dereferenceable(448) %1, i1 noundef zeroext false) #27
-  %i.al = load ptr, ptr %i.b, align 8, !tbaa !152 ; 7 uses
+  %i.al = load ptr, ptr %i.b, align 8, !tbaa !152 ; 8 uses
   %i.am = load ptr, ptr %i.c, align 8, !tbaa !152
-  %.not = icmp eq ptr %i.al, %i.am                ; 2 uses
-  %spec.select.i = select i1 %.not, ptr null, ptr %1
-  %spec.select1.i = select i1 %.not, ptr null, ptr %i.al ; 2 uses
+  %20 = icmp ne ptr %i.al, %i.am                  ; 3 uses
+  %spec.select.i = select i1 %20, ptr %1, ptr null
+  %spec.select1.i = select i1 %20, ptr %i.al, ptr null
   store ptr %spec.select.i, ptr %14, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 3 uses
   store ptr %spec.select1.i, ptr %i.an, align 8
-  %.not83 = icmp eq ptr %spec.select1.i, null
-  br i1 %.not83, label %bb.k, label %bb.l
+  %21 = icmp ne ptr %i.al, null
+  %22 = and i1 %21, %20
+  br i1 %22, label %bb.l, label %bb.k
 
 bb.b:                                             ; preds = %.lr.ph90, %_ZNK4llvm8DWARFDie6getTagEv.exit.thread
   %indvars.iv = phi i64 [ 0, %.lr.ph90 ], [ %indvars.iv.next, %_ZNK4llvm8DWARFDie6getTagEv.exit.thread ] ; 2 uses

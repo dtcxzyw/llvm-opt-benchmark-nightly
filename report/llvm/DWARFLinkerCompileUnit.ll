@@ -205,17 +205,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #27
   tail call void @_ZN4llvm9DWARFUnit19extractDIEsIfNeededEb(ptr noundef nonnull align 8 dereferenceable(448) %2, i1 noundef zeroext true) #27
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 288
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !270 ; 2 uses
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !270 ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %2, i64 296
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !270
-  %.not29 = icmp eq ptr %i.bb, %i.bd              ; 2 uses
-  %spec.select.i = select i1 %.not29, ptr null, ptr %2
-  %spec.select1.i = select i1 %.not29, ptr null, ptr %i.bb ; 2 uses
+  %17 = icmp ne ptr %i.bb, %i.bd                  ; 3 uses
+  %spec.select.i = select i1 %17, ptr %2, ptr null
+  %spec.select1.i = select i1 %17, ptr %i.bb, ptr null
   store ptr %spec.select.i, ptr %14, align 8
   %i.be = getelementptr inbounds nuw i8, ptr %14, i64 8
   store ptr %spec.select1.i, ptr %i.be, align 8
-  %.not30 = icmp eq ptr %spec.select1.i, null
-  br i1 %.not30, label %bb.v, label %bb.b
+  %18 = icmp ne ptr %i.bb, null
+  %19 = and i1 %18, %17
+  br i1 %19, label %bb.b, label %bb.v
 
 bb.b:                                             ; preds = %bb.a
   %i.bf = call { i64, i8 } @_ZNK4llvm8DWARFDie11getLanguageEv(ptr noundef nonnull align 8 dereferenceable(16) %14) #27 ; 2 uses
@@ -618,10 +619,10 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !270  ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 296
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !270
-  %.not = icmp eq ptr %i.m, %i.o
-  %.not6970 = icmp eq ptr %i.m, null
-  %.not69 = or i1 %.not6970, %.not
-  br i1 %.not69, label %_ZN4llvm5ErrorD2Ev.exit, label %bb.b
+  %7 = icmp ne ptr %i.m, %i.o
+  %8 = icmp ne ptr %i.m, null
+  %9 = and i1 %8, %7
+  br i1 %9, label %bb.b, label %_ZN4llvm5ErrorD2Ev.exit
 
 _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %bb.a
   store ptr null, ptr %0, align 8, !tbaa !287
