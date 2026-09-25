@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = sub i32 0, %1
   %i.h = and i32 %1, %i.g
-  %.neg = mul i32 %i.h, 14
+  %.neg = mul nuw i32 %i.h, 14
   %i.i = and i32 %.neg, 14
   %i.j = xor i32 %i.i, %i.c
   br label %bb.d

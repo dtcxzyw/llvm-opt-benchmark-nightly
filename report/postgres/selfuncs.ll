@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %.lr.ph405
 .thread271:                                       ; preds = %.lr.ph317
   %indvars357 = trunc i64 %indvars.iv355 to i32
   %sext245 = xor i32 %indvars357, -1
-  %i.dt = add i32 %.0170, %sext245
+  %i.dt = add nsw i32 %.0170, %sext245
   %sext246 = shl i32 %i.dt, 16
   %i.du = ashr exact i32 %sext246, 16
   br label %.critedge260.sink.split
