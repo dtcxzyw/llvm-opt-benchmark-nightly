@@ -205,9 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN5clang13ASTDeclReader20VisitTypedefNameDeclEPNS_15TypedefNameDeclE(ptr dead_on_unwind noalias nofree nonnull writable writeonly align 8 captures(none) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(89) %1, ptr noundef %2) unnamed_addr #1 align 2 {
 bb.a:
-  %3 = icmp eq ptr %2, null                       ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
-  %spec.select = select i1 %3, ptr null, ptr %i.a ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1744)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !154, !noalias !1744, !nonnull !155, !align !156 ; 4 uses
@@ -302,12 +300,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %.118.i = phi i1 [ %i.m, %bb.d ], [ %i.y, %._crit_edge.i ], [ true, %bb.a ]
   %.2.i = phi ptr [ null, %bb.d ], [ %.0.lcssa.i, %._crit_edge.i ], [ null, %bb.a ]
   %i.bc = load ptr, ptr %1, align 8, !tbaa !167, !noalias !1744, !nonnull !155, !align !156
-  %i.bd = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.bc, i64 %.sroa.028.0.i) #25, !noalias !1744 ; 5 uses
-  %4 = icmp eq ptr %i.bd, null
-  %5 = getelementptr inbounds nuw i8, ptr %i.bd, i64 64
-  %.not25.i11 = icmp eq ptr %5, %spec.select
-  %.not25.i = select i1 %4, i1 %3, i1 %.not25.i11
-  br i1 %.not25.i, label %bb.g, label %bb.f
+  %i.bd = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.bc, i64 %.sroa.028.0.i) #25, !noalias !1744 ; 4 uses
+  %.not25.i11 = icmp eq ptr %2, %i.bd
+  br i1 %.not25.i11, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.be = ptrtoint ptr %i.bd to i64
@@ -321,8 +316,6 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %6 = getelementptr inbounds i8, ptr %spec.select, i64 -64
-  %7 = select i1 %3, ptr null, ptr %6             ; 2 uses
   br i1 %.120.i, label %bb.h, label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_15TypedefNameDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -336,14 +329,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i26.i, label %bb.j, label %bb.i, !prof !980
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, ptr %7, i64 %.032.i), !noalias !1744
+  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, ptr %2, i64 %.032.i), !noalias !1744
   br label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_15TypedefNameDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.bq = zext i32 %i.bn to i64
   %i.br = load ptr, ptr %i.bl, align 8, !tbaa !164, !noalias !1744
   %i.bs = getelementptr inbounds nuw [16 x i8], ptr %i.br, i64 %i.bq ; 2 uses
-  store ptr %7, ptr %i.bs, align 1, !noalias !1744
+  store ptr %2, ptr %i.bs, align 1, !noalias !1744
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i64 %.032.i, ptr %.sroa.3.0..sroa_idx.i.i, align 1, !noalias !1744
   %i.bt = load i32, ptr %i.bm, align 8, !tbaa !975, !noalias !1744
@@ -746,9 +739,7 @@ bb.ag:                                            ; preds = %_ZN5clang13ASTDeclR
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN5clang13ASTDeclReader12VisitTagDeclEPNS_7TagDeclE(ptr dead_on_unwind noalias nofree nonnull writable align 8 captures(none) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(89) %1, ptr noundef %2) unnamed_addr #1 align 2 {
 bb.a:
-  %3 = icmp eq ptr %2, null                       ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 3 uses
-  %spec.select = select i1 %3, ptr null, ptr %i.a ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1772)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !154, !noalias !1772, !nonnull !155, !align !156 ; 4 uses
@@ -843,12 +834,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %.118.i = phi i1 [ %i.m, %bb.d ], [ %i.y, %._crit_edge.i ], [ true, %bb.a ]
   %.2.i = phi ptr [ null, %bb.d ], [ %.0.lcssa.i, %._crit_edge.i ], [ null, %bb.a ]
   %i.bc = load ptr, ptr %1, align 8, !tbaa !167, !noalias !1772, !nonnull !155, !align !156
-  %i.bd = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.bc, i64 %.sroa.028.0.i) #25, !noalias !1772 ; 5 uses
-  %4 = icmp eq ptr %i.bd, null
-  %5 = getelementptr inbounds nuw i8, ptr %i.bd, i64 96
-  %.not25.i25 = icmp eq ptr %5, %spec.select
-  %.not25.i = select i1 %4, i1 %3, i1 %.not25.i25
-  br i1 %.not25.i, label %bb.g, label %bb.f
+  %i.bd = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.bc, i64 %.sroa.028.0.i) #25, !noalias !1772 ; 4 uses
+  %.not25.i25 = icmp eq ptr %2, %i.bd
+  br i1 %.not25.i25, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.be = ptrtoint ptr %i.bd to i64
@@ -862,8 +850,6 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %6 = getelementptr inbounds i8, ptr %spec.select, i64 -96
-  %7 = select i1 %3, ptr null, ptr %6             ; 2 uses
   br i1 %.120.i, label %bb.h, label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_7TagDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -877,14 +863,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i26.i, label %bb.j, label %bb.i, !prof !980
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, ptr %7, i64 %.032.i), !noalias !1772
+  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, ptr %2, i64 %.032.i), !noalias !1772
   br label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_7TagDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.bq = zext i32 %i.bn to i64
   %i.br = load ptr, ptr %i.bl, align 8, !tbaa !164, !noalias !1772
   %i.bs = getelementptr inbounds nuw [16 x i8], ptr %i.br, i64 %i.bq ; 2 uses
-  store ptr %7, ptr %i.bs, align 1, !noalias !1772
+  store ptr %2, ptr %i.bs, align 1, !noalias !1772
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i64 %.032.i, ptr %.sroa.3.0..sroa_idx.i.i, align 1, !noalias !1772
   %i.bt = load i32, ptr %i.bm, align 8, !tbaa !975, !noalias !1772
@@ -1287,9 +1273,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %"class.clang::ASTDeclReader::FindExistingResult", align 8 ; 5 uses
-  %3 = icmp eq ptr %1, null                       ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 5 uses
-  %spec.select = select i1 %3, ptr null, ptr %i.c ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !154, !noalias !1986, !nonnull !155, !align !156 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -1383,12 +1367,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %.118.i = phi i1 [ %i.o, %bb.d ], [ %i.aa, %._crit_edge.i ], [ true, %bb.a ] ; 2 uses
   %.2.i = phi ptr [ null, %bb.d ], [ %.0.lcssa.i, %._crit_edge.i ], [ null, %bb.a ] ; 3 uses
   %i.be = load ptr, ptr %0, align 8, !tbaa !167, !noalias !1986, !nonnull !155, !align !156
-  %i.bf = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.be, i64 %.sroa.028.0.i) #25, !noalias !1986 ; 5 uses
-  %4 = icmp eq ptr %i.bf, null
-  %5 = getelementptr inbounds nuw i8, ptr %i.bf, i64 80
-  %.not25.i26 = icmp eq ptr %5, %spec.select
-  %.not25.i = select i1 %4, i1 %3, i1 %.not25.i26
-  br i1 %.not25.i, label %bb.g, label %bb.f
+  %i.bf = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.be, i64 %.sroa.028.0.i) #25, !noalias !1986 ; 4 uses
+  %.not25.i26 = icmp eq ptr %1, %i.bf
+  br i1 %.not25.i26, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.bg = ptrtoint ptr %i.bf to i64
@@ -1402,8 +1383,6 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %6 = getelementptr inbounds i8, ptr %spec.select, i64 -80
-  %7 = select i1 %3, ptr null, ptr %6             ; 2 uses
   br i1 %.120.i, label %bb.h, label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_13NamespaceDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -1417,14 +1396,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i26.i, label %bb.j, label %bb.i, !prof !980
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bn, ptr %7, i64 %.032.i), !noalias !1986
+  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bn, ptr %1, i64 %.032.i), !noalias !1986
   br label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_13NamespaceDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.bs = zext i32 %i.bp to i64
   %i.bt = load ptr, ptr %i.bn, align 8, !tbaa !164, !noalias !1986
   %i.bu = getelementptr inbounds nuw [16 x i8], ptr %i.bt, i64 %i.bs ; 2 uses
-  store ptr %7, ptr %i.bu, align 1, !noalias !1986
+  store ptr %1, ptr %i.bu, align 1, !noalias !1986
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   store i64 %.032.i, ptr %.sroa.3.0..sroa_idx.i.i, align 1, !noalias !1986
   %i.bv = load i32, ptr %i.bo, align 8, !tbaa !975, !noalias !1986
@@ -1827,9 +1806,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN5clang13ASTDeclReader29VisitRedeclarableTemplateDeclEPNS_24RedeclarableTemplateDeclE(ptr dead_on_unwind noalias nofree nonnull writable writeonly align 8 captures(none) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(89) %1, ptr noundef %2) unnamed_addr #1 align 2 {
 bb.a:
-  %3 = icmp eq ptr %2, null                       ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
-  %spec.select = select i1 %3, ptr null, ptr %i.a ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2099)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !154, !noalias !2099, !nonnull !155, !align !156 ; 4 uses
@@ -1924,12 +1901,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %.118.i = phi i1 [ %i.m, %bb.d ], [ %i.y, %._crit_edge.i ], [ true, %bb.a ]
   %.2.i = phi ptr [ null, %bb.d ], [ %.0.lcssa.i, %._crit_edge.i ], [ null, %bb.a ]
   %i.bc = load ptr, ptr %1, align 8, !tbaa !167, !noalias !2099, !nonnull !155, !align !156
-  %i.bd = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.bc, i64 %.sroa.028.0.i) #25, !noalias !2099 ; 5 uses
-  %4 = icmp eq ptr %i.bd, null
-  %5 = getelementptr inbounds nuw i8, ptr %i.bd, i64 64
-  %.not25.i23 = icmp eq ptr %5, %spec.select
-  %.not25.i = select i1 %4, i1 %3, i1 %.not25.i23
-  br i1 %.not25.i, label %bb.g, label %bb.f
+  %i.bd = tail call noundef ptr @_ZN5clang9ASTReader7GetDeclENS_12GlobalDeclIDE(ptr noundef nonnull align 8 dereferenceable(16376) %i.bc, i64 %.sroa.028.0.i) #25, !noalias !2099 ; 4 uses
+  %.not25.i23 = icmp eq ptr %2, %i.bd
+  br i1 %.not25.i23, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.be = ptrtoint ptr %i.bd to i64
@@ -1943,8 +1917,6 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %6 = getelementptr inbounds i8, ptr %spec.select, i64 -64
-  %7 = select i1 %3, ptr null, ptr %6             ; 2 uses
   br i1 %.120.i, label %bb.h, label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_24RedeclarableTemplateDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -1958,14 +1930,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i26.i, label %bb.j, label %bb.i, !prof !980
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, ptr %7, i64 %.032.i), !noalias !2099
+  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, ptr %2, i64 %.032.i), !noalias !2099
   br label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_24RedeclarableTemplateDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.bq = zext i32 %i.bn to i64
   %i.br = load ptr, ptr %i.bl, align 8, !tbaa !164, !noalias !2099
   %i.bs = getelementptr inbounds nuw [16 x i8], ptr %i.br, i64 %i.bq ; 2 uses
-  store ptr %7, ptr %i.bs, align 1, !noalias !2099
+  store ptr %2, ptr %i.bs, align 1, !noalias !2099
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i64 %.032.i, ptr %.sroa.3.0..sroa_idx.i.i, align 1, !noalias !2099
   %i.bt = load i32, ptr %i.bm, align 8, !tbaa !975, !noalias !2099
@@ -2368,9 +2340,9 @@ declare void @_ZN5clang7APValue24DestroyDataAndMakeUninitEv(ptr noundef nonnull 
 define internal fastcc void @_ZN5clang13ASTDeclReader16VisitVarDeclImplEPNS_7VarDeclE(ptr dead_on_unwind noalias nofree nonnull writable align 8 captures(none) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(89) %1, ptr noundef %2) unnamed_addr #1 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = icmp eq ptr %2, null                     ; 3 uses
+  %i.b = icmp eq ptr %2, null                     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 3 uses
-  %spec.select = select i1 %i.b, ptr null, ptr %i.c ; 3 uses
+  %spec.select = select i1 %i.b, ptr null, ptr %i.c ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2575)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 9 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !154, !noalias !2575, !nonnull !155, !align !156 ; 4 uses
@@ -2484,8 +2456,6 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %3 = getelementptr inbounds i8, ptr %spec.select, i64 -72
-  %4 = select i1 %i.b, ptr null, ptr %3           ; 2 uses
   br i1 %.120.i, label %bb.h, label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_7VarDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -2499,14 +2469,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i26.i, label %bb.j, label %bb.i, !prof !980
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, ptr %4, i64 %.032.i), !noalias !2575
+  tail call void @_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang4DeclEmELb1EE15growAndPushBackES5_(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, ptr %2, i64 %.032.i), !noalias !2575
   br label %_ZN5clang13ASTDeclReader17VisitRedeclarableINS_7VarDeclEEEN12_GLOBAL__N_118RedeclarableResultEPNS_12RedeclarableIT_EE.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.bu = zext i32 %i.br to i64
   %i.bv = load ptr, ptr %i.bp, align 8, !tbaa !164, !noalias !2575
   %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bv, i64 %i.bu ; 2 uses
-  store ptr %4, ptr %i.bw, align 1, !noalias !2575
+  store ptr %2, ptr %i.bw, align 1, !noalias !2575
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   store i64 %.032.i, ptr %.sroa.3.0..sroa_idx.i.i, align 1, !noalias !2575
   %i.bx = load i32, ptr %i.bq, align 8, !tbaa !975, !noalias !2575

@@ -202,20 +202,18 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.863.071.i = phi i64 [ %.sroa.speculated.i.i, %_ZN4mlir16SaturatedIntegermlES0_.exit.thread.i ], [ 0, %.lr.ph.preheader.i ]
   %.sroa.6.070.i = phi ptr [ %i.dc, %_ZN4mlir16SaturatedIntegermlES0_.exit.thread.i ], [ %i.cs, %.lr.ph.preheader.i ] ; 2 uses
   %.sroa.049.069.i = phi ptr [ %i.dd, %_ZN4mlir16SaturatedIntegermlES0_.exit.thread.i ], [ %i.cv, %.lr.ph.preheader.i ] ; 2 uses
-  %i.cw = load i64, ptr %.sroa.6.070.i, align 8, !tbaa !48 ; 2 uses
-  %32 = icmp eq i64 %i.cw, -9223372036854775808   ; 3 uses
-  %.2.i.i = select i1 %32, i64 0, i64 %i.cw       ; 2 uses
-  %i.cx = load i64, ptr %.sroa.049.069.i, align 8, !tbaa !48 ; 2 uses
-  %33 = icmp eq i64 %i.cx, -9223372036854775808   ; 3 uses
-  %.2.i27.i = select i1 %33, i64 0, i64 %i.cx     ; 2 uses
-  %i.cy = icmp ne i64 %.2.i27.i, 0
-  %or.cond.not.i.i28 = or i1 %33, %i.cy
-  %i.cz = icmp ne i64 %.2.i.i, 0
-  %or.cond.not14.i.i = or i1 %32, %i.cz
-  %or.cond.i = select i1 %or.cond.not.i.i28, i1 %or.cond.not14.i.i, i1 false
+  %i.cw = load i64, ptr %.sroa.6.070.i, align 8, !tbaa !48 ; 3 uses
+  %i.cx = load i64, ptr %.sroa.049.069.i, align 8, !tbaa !48 ; 3 uses
+  %i.cy = icmp ne i64 %i.cx, 0
+  %i.cz = icmp ne i64 %i.cw, 0
+  %or.cond.i = select i1 %i.cy, i1 %i.cz, i1 false
   br i1 %or.cond.i, label %_ZN4mlir16SaturatedIntegermlES0_.exit.i, label %_ZN4mlir16SaturatedIntegermlES0_.exit.thread.i
 
 _ZN4mlir16SaturatedIntegermlES0_.exit.i:          ; preds = %.lr.ph.i
+  %32 = icmp eq i64 %i.cw, -9223372036854775808   ; 2 uses
+  %.2.i.i = select i1 %32, i64 0, i64 %i.cw
+  %33 = icmp eq i64 %i.cx, -9223372036854775808   ; 2 uses
+  %.2.i27.i = select i1 %33, i64 0, i64 %i.cx
   %i.da = or i1 %32, %33
   %i.db = mul nsw i64 %.2.i27.i, %.2.i.i
   br i1 %i.da, label %._crit_edge.i, label %_ZN4mlir16SaturatedIntegermlES0_.exit.thread.i

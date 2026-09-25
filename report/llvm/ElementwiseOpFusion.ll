@@ -205,18 +205,17 @@ _ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit: ; preds = %bb.t, %bb.
   %.sroa.682.0138 = phi i64 [ %.sroa.5.0.i, %_ZN4mlir16SaturatedIntegermlES0_.exit ], [ 1, %bb.s ] ; 2 uses
   %i.hr = load i64, ptr %.043140, align 8, !tbaa !106
   %i.hs = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.hr
-  %i.ht = load i64, ptr %i.hs, align 8, !tbaa !106 ; 2 uses
-  %12 = icmp eq i64 %i.ht, -9223372036854775808   ; 3 uses
-  %.2.i = select i1 %12, i64 0, i64 %i.ht         ; 2 uses
-  %i.hu = icmp ne i64 %.2.i, 0
-  %or.cond.not.i = or i1 %12, %i.hu
+  %i.ht = load i64, ptr %i.hs, align 8, !tbaa !106 ; 3 uses
+  %i.hu = icmp ne i64 %i.ht, 0
   %i.hv = trunc nuw i8 %.sroa.0.0139 to i1
   %i.hw = icmp ne i64 %.sroa.682.0138, 0
   %or.cond.not14.i = select i1 %i.hv, i1 true, i1 %i.hw
-  %or.cond118 = select i1 %or.cond.not.i, i1 %or.cond.not14.i, i1 false
+  %or.cond118 = select i1 %i.hu, i1 %or.cond.not14.i, i1 false
   br i1 %or.cond118, label %bb.v, label %_ZN4mlir16SaturatedIntegermlES0_.exit
 
 bb.v:                                             ; preds = %.lr.ph141
+  %12 = icmp eq i64 %i.ht, -9223372036854775808   ; 2 uses
+  %.2.i = select i1 %12, i64 0, i64 %i.ht
   %..i = zext i1 %12 to i8
   %i.hx = or i8 %.sroa.0.0139, %..i               ; 2 uses
   %or.cond5.not.not.i = icmp eq i8 %i.hx, 0

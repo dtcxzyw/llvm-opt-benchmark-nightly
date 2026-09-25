@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br label %zend_string_truncate.exit108
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = icmp ne i64 %1, -1                       ; 4 uses
-  %spec.store.select = select i1 %i.c, i64 %1, i64 0 ; 10 uses
+  %i.c = icmp ne i64 %1, -1                       ; 3 uses
+  %spec.store.select = select i1 %i.c, i64 %1, i64 0 ; 9 uses
   %i.d = add i64 %spec.store.select, -1
   %or.cond = icmp ult i64 %i.d, 32767
   br i1 %or.cond, label %bb.d, label %bb.aa
@@ -442,16 +442,14 @@ bb.af:                                            ; preds = %_php_stream_stat.ex
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !127
   %i.ck = sub nsw i64 %i.cg, %i.cj
   %i.cl = call i64 @llvm.smax.i64(i64 %i.ck, i64 0)
-  %spec.select = add nuw nsw i64 %i.cl, 8192      ; 2 uses
-  %4 = icmp ugt i64 %spec.select, %spec.store.select
-  %or.cond98 = select i1 %i.c, i1 %4, i1 false
-  %spec.select102 = select i1 %or.cond98, i64 %1, i64 %spec.select
+  %spec.select = add nuw nsw i64 %i.cl, 8192
+  %4 = call i64 @llvm.umin.i64(i64 %spec.select, i64 %1)
   br label %_php_stream_stat.exit.thread
 
 _php_stream_stat.exit.thread:                     ; preds = %bb.ad, %bb.af, %_php_stream_stat.exit
-  %.076 = phi i64 [ 8192, %_php_stream_stat.exit ], [ %spec.select102, %bb.af ], [ 8192, %bb.ad ] ; 4 uses
+  %.076 = phi i64 [ 8192, %_php_stream_stat.exit ], [ %4, %bb.af ], [ 8192, %bb.ad ] ; 4 uses
   %i.cm = and i64 %.076, -8
-  %i.cn = add i64 %i.cm, 32                       ; 2 uses
+  %i.cn = add nuw i64 %i.cm, 32                   ; 2 uses
   br i1 %2, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %_php_stream_stat.exit.thread
@@ -854,7 +852,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %.critedge.cont.thread, %bb.e, %bb.d, %bb.c
   %.4122 = phi i64 [ %.3121.ph, %.critedge.cont.thread ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ] ; 7 uses
   %i.ap = icmp ne i64 %2, -1                      ; 5 uses
-  %spec.store.select6 = select i1 %i.ap, i64 %2, i64 0 ; 5 uses
+  %spec.store.select6 = select i1 %i.ap, i64 %2, i64 0 ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !94
   %.not153 = icmp eq ptr %i.ar, null
@@ -1062,7 +1060,7 @@ _php_stream_write.exit175.us:                     ; preds = %bb.aj
   br i1 %.not160.us, label %bb.ak, label %bb.af, !llvm.loop !183
 
 bb.ak:                                            ; preds = %.cont185.us
-  %i.cv = icmp eq i64 %spec.store.select6, %i.cj
+  %i.cv = icmp eq i64 %2, %i.cj
   br i1 %i.cv, label %.split279.us, label %_php_stream_set_option.exit.thread.split.us
 
 _php_stream_set_option.exit.thread.split.split:   ; preds = %_php_stream_set_option.exit.thread
@@ -1154,7 +1152,7 @@ bb.aq:                                            ; preds = %.cont185
   br i1 %.not, label %.cont194, label %.else190
 
 .else190:                                         ; preds = %.split279.us
-  store i64 %spec.store.select6, ptr %3, align 8, !tbaa !133
+  store i64 %2, ptr %3, align 8, !tbaa !133
   br label %.cont194
 
 .cont194:                                         ; preds = %.else187, %_php_stream_write.exit175.thread, %.cont191, %.else190, %.split279.us, %.loopexit249, %.critedge.cont, %.else196, %bb.b

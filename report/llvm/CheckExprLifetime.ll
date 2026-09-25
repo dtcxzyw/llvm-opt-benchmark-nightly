@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.m, %bb.m, %bb.m,
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.l
-  %.4 = phi ptr [ %i.al, %bb.l ], [ %i.bm, %bb.t ] ; 40 uses
+  %.4 = phi ptr [ %i.al, %bb.l ], [ %i.bm, %bb.t ] ; 39 uses
   %.not217 = icmp eq ptr %.0, %.4
   br i1 %.not217, label %bb.v, label %bb.b, !llvm.loop !945
 
@@ -607,12 +607,10 @@ bb.bm:                                            ; preds = %.loopexit
 
 bb.bn:                                            ; preds = %bb.bm
   %i.jf = and i16 %.pre447, 511
-  %.not.i.i.i289 = icmp eq i16 %i.jf, 118         ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i289, ptr %.4, ptr null
-  %16 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.jg = getelementptr inbounds nuw i8, ptr %.4, i64 40
-  %spec.select.i.i.i290 = select i1 %.not.i.i.i289, ptr %16, ptr %i.jg
-  %i.jh = load ptr, ptr %spec.select.i.i.i290, align 8, !tbaa !30 ; 2 uses
+  %.not.i.i.i289 = icmp eq i16 %i.jf, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i289, i64 48, i64 40
+  %i.jg = getelementptr inbounds nuw i8, ptr %.4, i64 %spec.select.v.i.i.i
+  %i.jh = load ptr, ptr %i.jg, align 8, !tbaa !30 ; 2 uses
   %i.ji = load i16, ptr %i.jh, align 8
   %i.jj = and i16 %i.ji, 511
   %.not414 = icmp eq i16 %i.jj, 50
@@ -1015,16 +1013,14 @@ _ZN5clang8CallExpr15getDirectCalleeEv.exit:       ; preds = %bb.b, %bb.c
 bb.d:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !834
-  %.not.i.i = icmp eq i16 %i.c, 118               ; 2 uses
-  %spec.select.i.i.i.i94 = select i1 %.not.i.i, ptr %1, ptr null
-  %10 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i94, i64 48
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i95 = select i1 %.not.i.i, ptr %10, ptr %i.u
+  %.not.i.i = icmp eq i16 %i.c, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZN5clang8CallExpr15getDirectCalleeEv.exit
   %.sink = phi i64 [ 32, %bb.d ], [ 16, %_ZN5clang8CallExpr15getDirectCalleeEv.exit ]
-  %.sroa.0204.0 = phi ptr [ %spec.select.i.i95, %bb.d ], [ %i.r, %_ZN5clang8CallExpr15getDirectCalleeEv.exit ] ; 4 uses
+  %.sroa.0204.0 = phi ptr [ %i.u, %bb.d ], [ %i.r, %_ZN5clang8CallExpr15getDirectCalleeEv.exit ] ; 4 uses
   %.070 = phi ptr [ %i.t, %bb.d ], [ %.0.i.i.i, %_ZN5clang8CallExpr15getDirectCalleeEv.exit ] ; 14 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %.sink
   %.sroa.9.0.in = load i32, ptr %i.v, align 8, !tbaa !836 ; 3 uses
@@ -1340,7 +1336,6 @@ bb.af:                                            ; preds = %"_ZZN5clang4semaL26
   %i.ek = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.el = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.en = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.eo = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1743,11 +1738,10 @@ _ZN5clang4semaL20isContainerOfPointerEPKNS_10RecordDeclE.exit.i: ; preds = %bb.c
 bb.cd:                                            ; preds = %_ZN5clang4semaL20isContainerOfPointerEPKNS_10RecordDeclE.exit.i
   %i.ml = load i16, ptr %1, align 8
   %i.mm = and i16 %i.ml, 511
-  %.not.i.i.i.i.i147 = icmp eq i16 %i.mm, 118     ; 2 uses
-  %spec.select.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i147, ptr %1, ptr null
-  %i.mn = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i.i.i147, ptr %i.mn, ptr %11
-  %i.mo = load ptr, ptr %spec.select.i.i.i.i.i, align 8, !tbaa !30
+  %.not.i.i.i.i.i147 = icmp eq i16 %i.mm, 118
+  %spec.select.v.i.i.i.i.i = select i1 %.not.i.i.i.i.i147, i64 48, i64 40
+  %i.mn = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i.i
+  %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !30
   %i.mp = getelementptr inbounds nuw i8, ptr %i.mo, i64 8
   %.sroa.0.0.copyload.i.i148 = load i64, ptr %i.mp, align 8, !tbaa !24 ; 3 uses
   %i.mq = and i64 %.sroa.0.0.copyload.i.i148, -16

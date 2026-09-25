@@ -205,10 +205,9 @@ _ZN5clang13ASTStmtReader18readSourceLocationEv.exit: ; preds = %bb.c, %bb.d
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !41 ; 2 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 13144
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !44 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.fh, i64 13152 ; 4 uses
-  %i.fk = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
+  %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 13152 ; 4 uses
   %i.fl = and i64 %i.i, 4294967295
-  %.pre = load i32, ptr %2, align 8, !tbaa !51    ; 2 uses
+  %.pre = load i32, ptr %i.fk, align 8, !tbaa !51 ; 2 uses
   %xtraiter = and i64 %i.i, 1
   %i.fm = icmp eq i64 %i.fl, 1
   br i1 %i.fm, label %.epil.preheader, label %.lr.ph.new
@@ -231,14 +230,13 @@ _ZN5clang13ASTStmtReader18readSourceLocationEv.exit: ; preds = %bb.c, %bb.d
   %i.fp = getelementptr inbounds i8, ptr %i.fo, i64 -8
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !59
   %i.fr = add i32 %.epil.init, -1
-  store i32 %i.fr, ptr %2, align 8, !tbaa !51
+  store i32 %i.fr, ptr %i.fk, align 8, !tbaa !51
   %i.fs = load i16, ptr %1, align 8
   %i.ft = and i16 %i.fs, 511
-  %.not.i.i.i.epil = icmp eq i16 %i.ft, 118       ; 2 uses
-  %spec.select.i.i.i.i.i.epil = select i1 %.not.i.i.i.epil, ptr %1, ptr null
-  %i.fu = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.epil, i64 48
-  %spec.select.i.i.i.epil = select i1 %.not.i.i.i.epil, ptr %i.fu, ptr %i.fk
-  %i.fv = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.epil, i64 %indvars.iv.epil.init
+  %.not.i.i.i.epil = icmp eq i16 %i.ft, 118
+  %spec.select.v.i.i.i.epil = select i1 %.not.i.i.i.epil, i64 48, i64 40
+  %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.epil
+  %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.fu, i64 %indvars.iv.epil.init
   store ptr %i.fq, ptr %i.fv, align 8, !tbaa !534
   br label %._crit_edge
 
@@ -254,28 +252,26 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %i.fz = getelementptr inbounds i8, ptr %i.fy, i64 -8
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !59
   %i.gb = add i32 %i.fw, -1                       ; 2 uses
-  store i32 %i.gb, ptr %2, align 8, !tbaa !51
+  store i32 %i.gb, ptr %i.fk, align 8, !tbaa !51
   %i.gc = load i16, ptr %1, align 8
   %i.gd = and i16 %i.gc, 511
-  %.not.i.i.i = icmp eq i16 %i.gd, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %i.ge = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %i.ge, ptr %i.fk
-  %i.gf = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i, i64 %indvars.iv
+  %.not.i.i.i = icmp eq i16 %i.gd, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.ge = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i
+  %i.gf = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %indvars.iv
   store ptr %i.ga, ptr %i.gf, align 8, !tbaa !534
   %i.gg = zext i32 %i.gb to i64
   %i.gh = getelementptr inbounds nuw [8 x i8], ptr %i.fj, i64 %i.gg
   %i.gi = getelementptr inbounds i8, ptr %i.gh, i64 -8
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !59
   %i.gk = add i32 %i.fw, -2                       ; 3 uses
-  store i32 %i.gk, ptr %2, align 8, !tbaa !51
+  store i32 %i.gk, ptr %i.fk, align 8, !tbaa !51
   %i.gl = load i16, ptr %1, align 8
   %i.gm = and i16 %i.gl, 511
-  %.not.i.i.i.1 = icmp eq i16 %i.gm, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.1 = select i1 %.not.i.i.i.1, ptr %1, ptr null
-  %i.gn = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.1, i64 48
-  %spec.select.i.i.i.1 = select i1 %.not.i.i.i.1, ptr %i.gn, ptr %i.fk
-  %i.go = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.1, i64 %indvars.iv
+  %.not.i.i.i.1 = icmp eq i16 %i.gm, 118
+  %spec.select.v.i.i.i.1 = select i1 %.not.i.i.i.1, i64 48, i64 40
+  %i.gn = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.1
+  %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %indvars.iv
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 8
   store ptr %i.gj, ptr %i.gp, align 8, !tbaa !534
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses

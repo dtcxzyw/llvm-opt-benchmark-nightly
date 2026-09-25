@@ -202,18 +202,17 @@ define hidden void @je_pages_unmark_guards(ptr noundef %0, ptr noundef %1) local
 bb.a:
   %i.a = icmp ne ptr %0, null                     ; 2 uses
   %i.b = icmp ne ptr %1, null                     ; 2 uses
-  %2 = and i1 %i.a, %i.b                          ; 2 uses
   %i.c = ptrtoint ptr %1 to i64
   %i.d = ptrtoint ptr %0 to i64
   %reass.sub = sub i64 %i.c, %i.d
-  %i.e = add i64 %reass.sub, 4096
-  %3 = select i1 %2, i64 %i.e, i64 -1             ; 2 uses
-  %4 = icmp ult i64 %3, 16385
-  %i.f = and i1 %2, %4
+  %i.e = add i64 %reass.sub, 4096                 ; 2 uses
+  %2 = icmp ult i64 %i.e, 16385
+  %3 = and i1 %i.b, %2
+  %i.f = and i1 %i.a, %3
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call i32 @mprotect(ptr noundef nonnull %0, i64 noundef %3, i32 noundef 3) #9 ; 0 uses
+  %i.g = tail call i32 @mprotect(ptr noundef nonnull %0, i64 noundef %i.e, i32 noundef 3) #9 ; 0 uses
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a

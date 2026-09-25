@@ -205,13 +205,8 @@ bb.e:                                             ; preds = %_ZN5clang11DeclCont
   br label %_ZN5clang13CXXMethodDecl9getParentEv.exit
 
 _ZN5clang13CXXMethodDecl9getParentEv.exit:        ; preds = %bb.d, %bb.e
-  %.0.i.i.i = phi ptr [ %i.s, %bb.d ], [ %i.v, %bb.e ] ; 2 uses
-  %10 = icmp eq ptr %.0.i.i.i, null               ; 2 uses
-  %11 = getelementptr inbounds i8, ptr %.0.i.i.i, i64 -64
-  %12 = select i1 %10, ptr null, ptr %11
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 64
-  %spec.select = select i1 %10, ptr null, ptr %13
-  %i.w = icmp ne ptr %.0.i.i, %spec.select        ; 3 uses
+  %.0.i.i.i = phi ptr [ %i.s, %bb.d ], [ %i.v, %bb.e ]
+  %i.w = icmp ne ptr %.0.i.i, %.0.i.i.i           ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 28 ; 2 uses
   %i.y = load i32, ptr %i.x, align 4
   %i.z = and i32 %i.y, 256

@@ -205,7 +205,7 @@ bb.go:                                            ; preds = %bb.gn, %bb.gn
 
 bb.gp:                                            ; preds = %bb.go, %bb.gn
   %i.alv = phi i1 [ false, %bb.gn ], [ true, %bb.go ]
-  %.0108.i = phi i32 [ 24, %bb.gn ], [ 53, %bb.go ] ; 10 uses
+  %.0108.i = phi i32 [ 24, %bb.gn ], [ 53, %bb.go ] ; 11 uses
   %.0107.i = phi i32 [ -149, %bb.gn ], [ -1074, %bb.go ] ; 9 uses
   br label %bb.gq
 
@@ -608,9 +608,9 @@ bb.ow:                                            ; preds = %bb.ov, %.preheader.
   %i.cbl = fmul nnan nsz double %i.cbk, %i.cbj    ; 4 uses
   %i.cbm = add nsw i32 %.1296.i.i1400, 53         ; 2 uses
   %i.cbn = sub nsw i32 %i.cbm, %.0107.i           ; 3 uses
-  %.not408.i.i = icmp sgt i32 %.0108.i, %i.cbn    ; 2 uses
+  %.not408.i.i = icmp sgt i32 %.0108.i, %i.cbn
   %spec.store.select.i277.i = call i32 @llvm.smax.i32(i32 %i.cbn, i32 0)
-  %.0364.i.i = select i1 %.not408.i.i, i32 %spec.store.select.i277.i, i32 %.0108.i ; 5 uses
+  %.0364.i.i = select i1 %.not408.i.i, i32 %spec.store.select.i277.i, i32 %.0108.i ; 4 uses
   %i.cbo = icmp samesign ult i32 %.0364.i.i, 53
   br i1 %i.cbo, label %bb.ox, label %bb.oy
 
@@ -699,18 +699,16 @@ bb.pj:                                            ; preds = %bb.pi, %bb.oy
 bb.pk:                                            ; preds = %bb.pj
   %i.ccv = call nsz double @llvm.fabs.f64(double %i.ccr)
   %i.ccw = fcmp nsz oge double %i.ccv, f0x4340000000000000 ; 3 uses
-  %4 = icmp ne i32 %.0364.i.i, %i.cbn
   %i.ccx = fmul nnan nsz double %i.ccr, 5.000000e-01
   %i.ccy = zext i1 %i.ccw to i32
   %.3298.i.i = add nsw i32 %.1296.i.i1400, %i.ccy ; 3 uses
-  %not..i.i = xor i1 %i.ccw, true
-  %narrow.i.i = or i1 %4, %not..i.i
-  %.2294.in.i.i = and i1 %.not408.i.i, %narrow.i.i
+  %.2294.v.i.i = select i1 %i.ccw, i32 0, i32 %.0108.i
+  %.2294.i.i = icmp slt i32 %i.cbn, %.2294.v.i.i
   %.2290.i.i = select nsz i1 %i.ccw, double %i.ccx, double %i.ccr ; 2 uses
   %i.ccz = add nsw i32 %.3298.i.i, 50
   %i.cda = icmp sgt i32 %i.ccz, %i.bqc
   %i.cdb = fcmp nsz une double %.3.i278.i, 0.000000e+00
-  %or.cond9.i.i = select i1 %.2294.in.i.i, i1 %i.cdb, i1 false
+  %or.cond9.i.i = select i1 %.2294.i.i, i1 %i.cdb, i1 false
   %or.cond522.i.i = select i1 %i.cda, i1 true, i1 %or.cond9.i.i
   br i1 %or.cond522.i.i, label %bb.pl, label %bb.pm
 

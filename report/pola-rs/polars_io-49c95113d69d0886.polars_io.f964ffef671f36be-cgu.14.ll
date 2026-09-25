@@ -204,161 +204,161 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 12 uses
   %i.d = alloca [32 x i8], align 8                ; 9 uses
   %i.e = alloca [8 x i8], align 8                 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !56153
-  store i64 64, ptr %i.e, align 8, !dbg !56154
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !56155
-  call void @_RINvNtCsh8eZTKRCwoO_3std3env3varReECslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.d, ptr noalias noundef nonnull readonly captures(address, read_provenance) @108, i64 noundef 39), !dbg !56155
-  %i.f = load i64, ptr %i.d, align 8, !dbg !56155, !range !1524, !noundef !1513
-  %i.g = trunc nuw i64 %i.f to i1, !dbg !56156
-  br i1 %i.g, label %.sink.split.i, label %bb.b, !dbg !56156
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !56151
+  store i64 64, ptr %i.e, align 8, !dbg !56152
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !56153
+  call void @_RINvNtCsh8eZTKRCwoO_3std3env3varReECslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.d, ptr noalias noundef nonnull readonly captures(address, read_provenance) @108, i64 noundef 39), !dbg !56153
+  %i.f = load i64, ptr %i.d, align 8, !dbg !56153, !range !1524, !noundef !1513
+  %i.g = trunc nuw i64 %i.f to i1, !dbg !56154
+  br i1 %i.g, label %.sink.split.i, label %bb.b, !dbg !56154
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !56157
-  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !56157
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !dbg !56157
-  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !56158
-  %i.j = load ptr, ptr %i.i, align 8, !dbg !56158, !nonnull !1513, !noundef !1513 ; 3 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !56159
-  %i.l = load i64, ptr %i.k, align 8, !dbg !56159, !noundef !1513 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !56155
+  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !56155
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !dbg !56155
+  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !56156
+  %i.j = load ptr, ptr %i.i, align 8, !dbg !56156, !nonnull !1513, !noundef !1513 ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !56157
+  %i.l = load i64, ptr %i.k, align 8, !dbg !56157, !noundef !1513 ; 2 uses
   switch i64 %i.l, label %thread-pre-split.i.i [
     i64 0, label %.loopexit.thread.i
     i64 1, label %bb.c
-  ], !dbg !56160
+  ], !dbg !56158
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = load i8, ptr %i.j, align 1, !dbg !56161, !alias.scope !56148, !noalias !56149, !noundef !1513 ; 2 uses
+  %i.m = load i8, ptr %i.j, align 1, !dbg !56159, !alias.scope !56146, !noalias !56147, !noundef !1513 ; 2 uses
   switch i8 %i.m, label %bb.d [
     i8 43, label %.loopexit.thread.i
     i8 45, label %.loopexit.thread.i
-  ], !dbg !56161
+  ], !dbg !56159
 
 thread-pre-split.i.i:                             ; preds = %bb.b
-  %.pr.i.i = load i8, ptr %i.j, align 1, !dbg !56161, !alias.scope !56148, !noalias !56149
-  br label %bb.d, !dbg !56161
+  %.pr.i.i = load i8, ptr %i.j, align 1, !dbg !56159, !alias.scope !56146, !noalias !56147
+  br label %bb.d, !dbg !56159
 
 bb.d:                                             ; preds = %thread-pre-split.i.i, %bb.c
-  %i.n = phi i8 [ %.pr.i.i, %thread-pre-split.i.i ], [ %i.m, %bb.c ], !dbg !56161
-  %cond.i.i = icmp eq i8 %i.n, 43, !dbg !56161    ; 2 uses
-  %i.o = sext i1 %cond.i.i to i64, !dbg !56161
-  %.sroa.15.0.i.i = add nsw i64 %i.l, %i.o, !dbg !56161 ; 4 uses
-  %.sroa.0.0.idx.i.i = zext i1 %cond.i.i to i64, !dbg !56161
-  %.sroa.0.0.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.0.0.idx.i.i, !dbg !56161 ; 2 uses
+  %i.n = phi i8 [ %.pr.i.i, %thread-pre-split.i.i ], [ %i.m, %bb.c ], !dbg !56159
+  %cond.i.i = icmp eq i8 %i.n, 43, !dbg !56159    ; 2 uses
+  %i.o = sext i1 %cond.i.i to i64, !dbg !56159
+  %.sroa.15.0.i.i = add nsw i64 %i.l, %i.o, !dbg !56159 ; 4 uses
+  %.sroa.0.0.idx.i.i = zext i1 %cond.i.i to i64, !dbg !56159
+  %.sroa.0.0.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.0.0.idx.i.i, !dbg !56159 ; 2 uses
   %i.p = icmp samesign ult i64 %.sroa.15.0.i.i, 17
-  br i1 %i.p, label %.preheader.i.i, label %.preheader56.i.i.preheader, !dbg !56162
+  br i1 %i.p, label %.preheader.i.i, label %.preheader56.i.i.preheader, !dbg !56160
 
 .preheader.i.i:                                   ; preds = %bb.d
-  %.not5366.i.i = icmp eq i64 %.sroa.15.0.i.i, 0, !dbg !56163
-  br i1 %.not5366.i.i, label %.loopexit.thread.i, label %.lr.ph.i.i, !dbg !56163
+  %.not5366.i.i = icmp eq i64 %.sroa.15.0.i.i, 0, !dbg !56161
+  br i1 %.not5366.i.i, label %.loopexit.thread.i, label %.lr.ph.i.i, !dbg !56161
 
 .preheader56.i.i:                                 ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i18, i64 1, !dbg !56164
-  %i.r = add nsw i64 %.sroa.15.1.i.i17, -1, !dbg !56164 ; 2 uses
-  %.not52.i.not.i = icmp eq i64 %i.r, 0, !dbg !56165
-  br i1 %.not52.i.not.i, label %.loopexit.i, label %.preheader56.i.i.preheader, !dbg !56165
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i18, i64 1, !dbg !56162
+  %i.r = add nsw i64 %.sroa.15.1.i.i17, -1, !dbg !56162 ; 2 uses
+  %.not52.i.not.i = icmp eq i64 %i.r, 0, !dbg !56163
+  br i1 %.not52.i.not.i, label %.loopexit.i, label %.preheader56.i.i.preheader, !dbg !56163
 
 .preheader56.i.i.preheader:                       ; preds = %bb.d, %.preheader56.i.i
   %.sroa.0.1.i.i18 = phi ptr [ %i.q, %.preheader56.i.i ], [ %.sroa.0.0.i.i, %bb.d ] ; 2 uses
   %.sroa.15.1.i.i17 = phi i64 [ %i.r, %.preheader56.i.i ], [ %.sroa.15.0.i.i, %bb.d ]
   %.sroa.042.0.i.i16 = phi i64 [ %i.aa, %.preheader56.i.i ], [ 0, %bb.d ]
-  %i.s = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i16, i64 10), !dbg !56166 ; 2 uses
-  %i.t = extractvalue { i64, i1 } %i.s, 1, !dbg !56166
-  br i1 %i.t, label %.loopexit.thread.i, label %bb.e, !dbg !56167, !prof !1623
+  %i.s = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i16, i64 10), !dbg !56164 ; 2 uses
+  %i.t = extractvalue { i64, i1 } %i.s, 1, !dbg !56164
+  br i1 %i.t, label %.loopexit.thread.i, label %bb.e, !dbg !56165, !prof !1623
 
 bb.e:                                             ; preds = %.preheader56.i.i.preheader
-  %i.u = extractvalue { i64, i1 } %i.s, 0, !dbg !56166 ; 2 uses
-  %i.v = load i8, ptr %.sroa.0.1.i.i18, align 1, !dbg !56168, !alias.scope !56148, !noalias !56149, !noundef !1513
-  %i.w = zext i8 %i.v to i32, !dbg !56169
-  %i.x = add nsw i32 %i.w, -48, !dbg !56170       ; 2 uses
-  %i.y = icmp ugt i32 %i.x, 9, !dbg !56171
+  %i.u = extractvalue { i64, i1 } %i.s, 0, !dbg !56164 ; 2 uses
+  %i.v = load i8, ptr %.sroa.0.1.i.i18, align 1, !dbg !56166, !alias.scope !56146, !noalias !56147, !noundef !1513
+  %i.w = zext i8 %i.v to i32, !dbg !56167
+  %i.x = add nsw i32 %i.w, -48, !dbg !56168       ; 2 uses
+  %i.y = icmp ugt i32 %i.x, 9, !dbg !56169
   %i.z = zext nneg i32 %i.x to i64
   %i.aa = add i64 %i.u, %i.z                      ; 3 uses
   %i.ab = icmp ult i64 %i.aa, %i.u
-  %or.cond.i = select i1 %i.y, i1 true, i1 %i.ab, !dbg !56172, !prof !1793
-  br i1 %or.cond.i, label %.loopexit.thread.i, label %.preheader56.i.i, !dbg !56172, !prof !1793
+  %or.cond.i = select i1 %i.y, i1 true, i1 %i.ab, !dbg !56170, !prof !1793
+  br i1 %or.cond.i, label %.loopexit.thread.i, label %.preheader56.i.i, !dbg !56170, !prof !1793
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %bb.f
   %.sroa.0.269.i.i = phi ptr [ %i.ai, %bb.f ], [ %.sroa.0.0.i.i, %.preheader.i.i ] ; 2 uses
   %.sroa.15.268.i.i = phi i64 [ %i.ah, %bb.f ], [ %.sroa.15.0.i.i, %.preheader.i.i ]
   %.sroa.042.267.i.i = phi i64 [ %i.ak, %bb.f ], [ 0, %.preheader.i.i ]
-  %i.ac = load i8, ptr %.sroa.0.269.i.i, align 1, !dbg !56173, !alias.scope !56148, !noalias !56149, !noundef !1513
-  %i.ad = zext i8 %i.ac to i32, !dbg !56174
-  %i.ae = add nsw i32 %i.ad, -48, !dbg !56175     ; 2 uses
-  %i.af = icmp ugt i32 %i.ae, 9, !dbg !56176
-  br i1 %i.af, label %.loopexit.thread.i, label %bb.f, !dbg !56177
+  %i.ac = load i8, ptr %.sroa.0.269.i.i, align 1, !dbg !56171, !alias.scope !56146, !noalias !56147, !noundef !1513
+  %i.ad = zext i8 %i.ac to i32, !dbg !56172
+  %i.ae = add nsw i32 %i.ad, -48, !dbg !56173     ; 2 uses
+  %i.af = icmp ugt i32 %i.ae, 9, !dbg !56174
+  br i1 %i.af, label %.loopexit.thread.i, label %bb.f, !dbg !56175
 
 bb.f:                                             ; preds = %.lr.ph.i.i
-  %i.ag = mul i64 %.sroa.042.267.i.i, 10, !dbg !56178
-  %i.ah = add nsw i64 %.sroa.15.268.i.i, -1, !dbg !56179 ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.269.i.i, i64 1, !dbg !56179
-  %i.aj = zext nneg i32 %i.ae to i64, !dbg !56180
-  %i.ak = add i64 %i.ag, %i.aj, !dbg !56181       ; 2 uses
-  %.not53.i.i = icmp eq i64 %i.ah, 0, !dbg !56163
-  br i1 %.not53.i.i, label %.loopexit.i, label %.lr.ph.i.i, !dbg !56163
+  %i.ag = mul i64 %.sroa.042.267.i.i, 10, !dbg !56176
+  %i.ah = add nsw i64 %.sroa.15.268.i.i, -1, !dbg !56177 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.269.i.i, i64 1, !dbg !56177
+  %i.aj = zext nneg i32 %i.ae to i64, !dbg !56178
+  %i.ak = add i64 %i.ag, %i.aj, !dbg !56179       ; 2 uses
+  %.not53.i.i = icmp eq i64 %i.ah, 0, !dbg !56161
+  br i1 %.not53.i.i, label %.loopexit.i, label %.lr.ph.i.i, !dbg !56161
 
 bb.g:                                             ; preds = %.loopexit.thread.i
   %i.al = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXso_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i unwind label %bb.h, !dbg !56182
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i unwind label %bb.h, !dbg !56180
 
 bb.h:                                             ; preds = %bb.g
   %i.am = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %.body unwind label %bb.i, !dbg !56183
+          to label %.body unwind label %bb.i, !dbg !56181
 
 bb.i:                                             ; preds = %bb.h
   %i.an = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #35, !dbg !56182
-  unreachable, !dbg !56182
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #35, !dbg !56180
+  unreachable, !dbg !56180
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i: ; preds = %bb.g
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %.body.i unwind label %bb.p, !dbg !56184
+          to label %.body.i unwind label %bb.p, !dbg !56182
 
 .loopexit.i:                                      ; preds = %.preheader56.i.i, %bb.f
-  %i.ao = phi i64 [ %i.ak, %bb.f ], [ %i.aa, %.preheader56.i.i ], !dbg !56185 ; 4 uses
-  %i.ap = icmp ult i64 %i.ao, 2, !dbg !56186
-  br i1 %i.ap, label %.loopexit.thread.i, label %bb.j, !dbg !56187, !prof !1736
+  %i.ao = phi i64 [ %i.ak, %bb.f ], [ %i.aa, %.preheader56.i.i ], !dbg !56183 ; 4 uses
+  %i.ap = icmp ult i64 %i.ao, 2, !dbg !56184
+  br i1 %i.ap, label %.loopexit.thread.i, label %bb.j, !dbg !56185, !prof !1736
 
 bb.j:                                             ; preds = %.loopexit.i
-  store i64 %i.ao, ptr %i.e, align 8, !dbg !56188
+  store i64 %i.ao, ptr %i.e, align 8, !dbg !56186
   invoke void @_RNvXso_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i.i unwind label %bb.k, !dbg !56189
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i.i unwind label %bb.k, !dbg !56187
 
 bb.k:                                             ; preds = %bb.j
   %i.aq = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %.body.i unwind label %bb.l, !dbg !56190
+          to label %.body.i unwind label %bb.l, !dbg !56188
 
 bb.l:                                             ; preds = %bb.k
   %i.ar = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #35, !dbg !56189
-  unreachable, !dbg !56189
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #35, !dbg !56187
+  unreachable, !dbg !56187
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i.i: ; preds = %bb.j
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6StringECslpwjCj2YNBy_9polars_io.exit.i unwind label %bb.n, !dbg !56191
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6StringECslpwjCj2YNBy_9polars_io.exit.i unwind label %bb.n, !dbg !56189
 
 .loopexit.thread.i:                               ; preds = %bb.e, %.preheader56.i.i.preheader, %.lr.ph.i.i, %.loopexit.i, %.preheader.i.i, %bb.c, %bb.c, %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !56192
-  store ptr %i.c, ptr %i.a, align 8, !dbg !56192
-  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !56192
-  store ptr @_RNvXsq_NtCsgZ49sUHp3tW_5alloc6stringNtB5_6StringNtNtCscgRAwXFJnXP_4core3fmt7Display3fmt, ptr %.sroa.46.0..sroa_idx.i, align 8, !dbg !56192
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !56190
+  store ptr %i.c, ptr %i.a, align 8, !dbg !56190
+  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !56190
+  store ptr @_RNvXsq_NtCsgZ49sUHp3tW_5alloc6stringNtB5_6StringNtNtCscgRAwXFJnXP_4core3fmt7Display3fmt, ptr %.sroa.46.0..sroa_idx.i, align 8, !dbg !56190
   invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking9panic_fmt(ptr noundef nonnull @109, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @110) #36
-          to label %bb.m unwind label %bb.g, !dbg !56193
+          to label %bb.m unwind label %bb.g, !dbg !56191
 
 bb.m:                                             ; preds = %.loopexit.thread.i
   unreachable
 
 .body.i:                                          ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i, %bb.n, %bb.k
   %.pn.i = phi { ptr, i32 } [ %i.aq, %bb.k ], [ %i.au, %bb.n ], [ %i.al, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i ]
-  %i.as = load i64, ptr %i.d, align 8, !dbg !56194, !range !1524, !noundef !1513
-  %i.at = icmp eq i64 %i.as, 0, !dbg !56194
-  br i1 %i.at, label %bb.q, label %bb.r, !dbg !56194
+  %i.as = load i64, ptr %i.d, align 8, !dbg !56192, !range !1524, !noundef !1513
+  %i.at = icmp eq i64 %i.as, 0, !dbg !56192
+  br i1 %i.at, label %bb.q, label %bb.r, !dbg !56192
 
 bb.n:                                             ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i.i
   %i.au = landingpad { ptr, i32 }
@@ -366,146 +366,146 @@ bb.n:                                             ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6StringECslpwjCj2YNBy_9polars_io.exit.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !56194
-  %i.av = load i64, ptr %i.d, align 8, !dbg !56194, !range !1524, !noundef !1513
-  %i.aw = trunc nuw i64 %i.av to i1, !dbg !56194
-  br i1 %i.aw, label %.sink.split.i, label %bb.o, !dbg !56194
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !56192
+  %i.av = load i64, ptr %i.d, align 8, !dbg !56192, !range !1524, !noundef !1513
+  %i.aw = trunc nuw i64 %i.av to i1, !dbg !56192
+  br i1 %i.aw, label %.sink.split.i, label %bb.o, !dbg !56192
 
 .sink.split.i:                                    ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6StringECslpwjCj2YNBy_9polars_io.exit.i, %bb.a
   %.ph.i = phi i64 [ 64, %bb.a ], [ %i.ao, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6StringECslpwjCj2YNBy_9polars_io.exit.i ]
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCsh8eZTKRCwoO_3std3env8VarErrorEECslpwjCj2YNBy_9polars_io(ptr noalias noundef align 8 dereferenceable(32) %i.d), !dbg !56194
-  br label %bb.o, !dbg !56194
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCsh8eZTKRCwoO_3std3env8VarErrorEECslpwjCj2YNBy_9polars_io(ptr noalias noundef align 8 dereferenceable(32) %i.d), !dbg !56192
+  br label %bb.o, !dbg !56192
 
 bb.o:                                             ; preds = %.sink.split.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6StringECslpwjCj2YNBy_9polars_io.exit.i
   %i.ax = phi i64 [ %i.ao, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6StringECslpwjCj2YNBy_9polars_io.exit.i ], [ %.ph.i, %.sink.split.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !56194
-  %i.ay = call noundef zeroext i1 @_RNvNtCs1LHh8CLbVkQ_11polars_core6config7verbose(), !dbg !56195
-  br i1 %i.ay, label %bb.s, label %_RNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0B7_.exit, !dbg !56195
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !56192
+  %i.ay = call noundef zeroext i1 @_RNvNtCs1LHh8CLbVkQ_11polars_core6config7verbose(), !dbg !56193
+  br i1 %i.ay, label %bb.s, label %_RNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0B7_.exit, !dbg !56193
 
 bb.p:                                             ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslpwjCj2YNBy_9polars_io.exit.i, %bb.r
   %i.az = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  br label %.body, !dbg !56196
+  br label %.body, !dbg !56194
 
 .body:                                            ; preds = %bb.h, %bb.p
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #35, !dbg !56196
-  unreachable, !dbg !56196
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #35, !dbg !56194
+  unreachable, !dbg !56194
 
 bb.q:                                             ; preds = %bb.r, %.body.i
-  resume { ptr, i32 } %.pn.i, !dbg !56196
+  resume { ptr, i32 } %.pn.i, !dbg !56194
 
 bb.r:                                             ; preds = %.body.i
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCsh8eZTKRCwoO_3std3env8VarErrorEECslpwjCj2YNBy_9polars_io(ptr noalias noundef align 8 dereferenceable(32) %i.d) #37
-          to label %bb.q unwind label %bb.p, !dbg !56194
+          to label %bb.q unwind label %bb.p, !dbg !56192
 
 bb.s:                                             ; preds = %bb.o
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !56197
-  store ptr %i.e, ptr %i.b, align 8, !dbg !56197
-  %.sroa.410.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !56197
-  store ptr @_RNvXsi_NtNtNtCscgRAwXFJnXP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.410.0..sroa_idx.i, align 8, !dbg !56197
-  call void @_RNvNtNtCsh8eZTKRCwoO_3std2io5stdio7__eprint(ptr noundef nonnull @111, ptr noundef nonnull %i.b), !dbg !56198
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !56198
-  %.pre.i = load i64, ptr %i.e, align 8, !dbg !56199
-  br label %_RNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0B7_.exit, !dbg !56200
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !56195
+  store ptr %i.e, ptr %i.b, align 8, !dbg !56195
+  %.sroa.410.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !56195
+  store ptr @_RNvXsi_NtNtNtCscgRAwXFJnXP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.410.0..sroa_idx.i, align 8, !dbg !56195
+  call void @_RNvNtNtCsh8eZTKRCwoO_3std2io5stdio7__eprint(ptr noundef nonnull @111, ptr noundef nonnull %i.b), !dbg !56196
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !56196
+  %.pre.i = load i64, ptr %i.e, align 8, !dbg !56197
+  br label %_RNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0B7_.exit, !dbg !56198
 
 _RNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0B7_.exit: ; preds = %bb.o, %bb.s
-  %i.ba = phi i64 [ %.pre.i, %bb.s ], [ %i.ax, %bb.o ], !dbg !56199
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !56201
-  ret i64 %i.ba, !dbg !56202
+  %i.ba = phi i64 [ %.pre.i, %bb.s ], [ %i.ax, %bb.o ], !dbg !56197
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !56199
+  ret i64 %i.ba, !dbg !56200
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly captures(none) %0) unnamed_addr #5 !dbg !56203 {
+define internal { ptr, i64 } @_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly captures(none) %0) unnamed_addr #5 !dbg !56201 {
 bb.a:
-  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56204
+  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56202
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal void @_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56205 {
+define internal void @_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56203 {
 bb.a:
-  ret void, !dbg !56206
+  ret void, !dbg !56204
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define internal void @_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly captures(none) %1) unnamed_addr #9 !dbg !56207 {
+define internal void @_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly captures(none) %1) unnamed_addr #9 !dbg !56205 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @394, i64 16, i1 false), !dbg !56210
-  ret void, !dbg !56211
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @394, i64 16, i1 false), !dbg !56208
+  ret void, !dbg !56209
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56212 {
+define internal { ptr, i64 } @_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56210 {
 bb.a:
-  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56213
+  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56211
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal void @_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56214 {
+define internal void @_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56212 {
 bb.a:
-  ret void, !dbg !56215
+  ret void, !dbg !56213
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define internal void @_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly align 8 captures(none) %1) unnamed_addr #9 !dbg !56216 {
+define internal void @_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly align 8 captures(none) %1) unnamed_addr #9 !dbg !56214 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @395, i64 16, i1 false), !dbg !56219
-  ret void, !dbg !56220
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @395, i64 16, i1 false), !dbg !56217
+  ret void, !dbg !56218
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56221 {
+define internal { ptr, i64 } @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56219 {
 bb.a:
-  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56222
+  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56220
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, ptr } @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error6sourceCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56223 {
+define internal { ptr, ptr } @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error6sourceCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56221 {
 bb.a:
-  ret { ptr, ptr } { ptr null, ptr undef }, !dbg !56224
+  ret { ptr, ptr } { ptr null, ptr undef }, !dbg !56222
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal void @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56225 {
+define internal void @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56223 {
 bb.a:
-  ret void, !dbg !56226
+  ret void, !dbg !56224
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define internal void @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly align 8 captures(none) %1) unnamed_addr #9 !dbg !56227 {
+define internal void @_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly align 8 captures(none) %1) unnamed_addr #9 !dbg !56225 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @396, i64 16, i1 false), !dbg !56230
-  ret void, !dbg !56231
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @396, i64 16, i1 false), !dbg !56228
+  ret void, !dbg !56229
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56232 {
+define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56230 {
 bb.a:
-  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56233
+  ret { ptr, i64 } { ptr @393, i64 40 }, !dbg !56231
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, ptr } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_5causeCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56234 {
+define hidden { ptr, ptr } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_5causeCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56232 {
+bb.a:
+  ret { ptr, ptr } { ptr null, ptr undef }, !dbg !56233
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
+define internal { ptr, ptr } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_6sourceCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56234 {
 bb.a:
   ret { ptr, ptr } { ptr null, ptr undef }, !dbg !56235
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, ptr } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_6sourceCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #5 !dbg !56236 {
+define internal void @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56236 {
 bb.a:
-  ret { ptr, ptr } { ptr null, ptr undef }, !dbg !56237
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal void @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7provideCslpwjCj2YNBy_9polars_io(ptr noalias readonly align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noalias readonly align 8 captures(none) %2) unnamed_addr #5 !dbg !56238 {
-bb.a:
-  ret void, !dbg !56239
+  ret void, !dbg !56237
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define internal void @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly align 8 captures(none) %1) unnamed_addr #9 !dbg !56240 {
+define internal void @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7type_idCslpwjCj2YNBy_9polars_io(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias readonly align 8 captures(none) %1) unnamed_addr #9 !dbg !56238 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @397, i64 16, i1 false), !dbg !56243
-  ret void, !dbg !56244
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @397, i64 16, i1 false), !dbg !56241
+  ret void, !dbg !56242
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -908,7 +908,7 @@ begin_hunk_1_@llvm.umin.i8
 !56073 = !DILocation(line: 82, column: 5, scope: !56011, inlinedAt: !56012)
 !56074 = !DILocation(line: 250, column: 5, scope: !56010)
 !56075 = distinct !DISubprogram(name: "call_once<polars_io::configs::cloud_writer_coalesce_run_length::COALESCE_RUN_LENGTH::{closure_env#0}, ()>", linkageName: "_RNvYNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0INtNtNtCscgRAwXFJnXP_4core3ops8function6FnOnceuE9call_onceBa_", scope: !1579, file: !1576, line: 250, type: !1514, scopeLine: 250, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56076 = distinct !DISubprogram(name: "{closure#0}", linkageName: "_RNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0B7_", scope: !56145, file: !2176, line: 44, type: !1532, scopeLine: 44, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56076 = distinct !DISubprogram(name: "{closure#0}", linkageName: "_RNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0B7_", scope: !56143, file: !2176, line: 44, type: !1532, scopeLine: 44, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
 !56077 = distinct !DILocation(line: 250, column: 5, scope: !56075)
 !56078 = distinct !DILexicalBlock(scope: !56076, file: !2176, line: 45, column: 9)
 !56079 = distinct !DILexicalBlock(scope: !56078, file: !2176, line: 47, column: 81)
@@ -926,9 +926,9 @@ begin_hunk_1_@llvm.umin.i8
 !56091 = distinct !DILocation(line: 1942, column: 18, scope: !56083, inlinedAt: !56090)
 !56092 = distinct !DILocation(line: 296, column: 20, scope: !56082, inlinedAt: !56091)
 !56093 = distinct !DILocation(line: 609, column: 14, scope: !56081, inlinedAt: !56092)
-!56094 = distinct !DISubprogram(name: "from_ascii_radix", linkageName: "_RNvMsv_NtCscgRAwXFJnXP_4core3numj16from_ascii_radix", scope: !56146, file: !2070, line: 1703, type: !1514, scopeLine: 1703, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56095 = distinct !DISubprogram(name: "from_str_radix", linkageName: "_RNvMsv_NtCscgRAwXFJnXP_4core3numj14from_str_radix", scope: !56146, file: !2070, line: 1624, type: !1514, scopeLine: 1624, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56096 = distinct !DISubprogram(name: "from_str", linkageName: "_RNvXsu_NtCscgRAwXFJnXP_4core3numjNtNtNtB7_3str6traits7FromStr8from_str", scope: !56147, file: !2070, line: 1573, type: !1514, scopeLine: 1573, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56094 = distinct !DISubprogram(name: "from_ascii_radix", linkageName: "_RNvMsv_NtCscgRAwXFJnXP_4core3numj16from_ascii_radix", scope: !56144, file: !2070, line: 1703, type: !1514, scopeLine: 1703, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56095 = distinct !DISubprogram(name: "from_str_radix", linkageName: "_RNvMsv_NtCscgRAwXFJnXP_4core3numj14from_str_radix", scope: !56144, file: !2070, line: 1624, type: !1514, scopeLine: 1624, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56096 = distinct !DISubprogram(name: "from_str", linkageName: "_RNvXsu_NtCscgRAwXFJnXP_4core3numjNtNtNtB7_3str6traits7FromStr8from_str", scope: !56145, file: !2070, line: 1573, type: !1514, scopeLine: 1573, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
 !56097 = distinct !DISubprogram(name: "parse<usize>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core3stre5parsejECslpwjCj2YNBy_9polars_io", scope: !2062, file: !2061, line: 2761, type: !1514, scopeLine: 2761, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
 !56098 = distinct !DILocation(line: 49, column: 18, scope: !56079, inlinedAt: !56077)
 !56099 = distinct !DILocation(line: 2762, column: 9, scope: !56097, inlinedAt: !56098)
@@ -961,120 +961,118 @@ begin_hunk_1_@llvm.umin.i8
 !56126 = distinct !DILocation(line: 810, column: 1, scope: !391, inlinedAt: !56125)
 !56127 = distinct !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56126)
 !56128 = distinct !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56126)
-!56129 = distinct !DISubprogram(name: "ok<usize, core::num::error::ParseIntError>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultjNtNtNtB4_3num5error13ParseIntErrorE2okCslpwjCj2YNBy_9polars_io", scope: !1603, file: !1601, line: 708, type: !1514, scopeLine: 708, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56130 = distinct !DILocation(line: 50, column: 18, scope: !56079, inlinedAt: !56077)
-!56131 = distinct !DISubprogram(name: "filter<usize, polars_io::configs::cloud_writer_coalesce_run_length::COALESCE_RUN_LENGTH::{closure#0}::{closure_env#0}>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionjE6filterNCNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH00EB11_", scope: !1573, file: !1549, line: 1578, type: !1514, scopeLine: 1578, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56132 = distinct !DILexicalBlock(scope: !56131, file: !1549, line: 1583, column: 31)
-!56133 = distinct !DILocation(line: 51, column: 18, scope: !56079, inlinedAt: !56077)
-!56134 = distinct !DISubprogram(name: "unwrap_or_else<usize, polars_io::configs::cloud_writer_coalesce_run_length::COALESCE_RUN_LENGTH::{closure#0}::{closure_env#1}>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionjE14unwrap_or_elseNCNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0s_0EB1a_", scope: !1573, file: !1549, line: 1061, type: !1514, scopeLine: 1061, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56135 = distinct !DILocation(line: 52, column: 18, scope: !56079, inlinedAt: !56077)
-!56136 = distinct !DILocation(line: 55, column: 9, scope: !56078, inlinedAt: !56077)
-!56137 = distinct !DILocation(line: 810, column: 1, scope: !391, inlinedAt: !56136)
-!56138 = distinct !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56137)
-!56139 = distinct !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56137)
-!56140 = distinct !DISubprogram(name: "{closure#1}", linkageName: "_RNCNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0s_0B9_", scope: !56151, file: !2176, line: 52, type: !1514, scopeLine: 52, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56141 = distinct !DILexicalBlock(scope: !56140, file: !1560, line: 62, column: 38)
-!56142 = distinct !DILocation(line: 1067, column: 21, scope: !56134, inlinedAt: !56135)
-!56143 = distinct !DILexicalBlock(scope: !56078, file: !1989, line: 224, column: 29)
-!56144 = !DINamespace(name: "cloud_writer_coalesce_run_length", scope: !2177)
-!56145 = !DINamespace(name: "COALESCE_RUN_LENGTH", scope: !56144)
-!56146 = !DINamespace(name: "{impl#33}", scope: !1635)
-!56147 = !DINamespace(name: "{impl#32}", scope: !1635)
-!56148 = !{!56103}
-!56149 = !{!56104}
+!56129 = distinct !DISubprogram(name: "filter<usize, polars_io::configs::cloud_writer_coalesce_run_length::COALESCE_RUN_LENGTH::{closure#0}::{closure_env#0}>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionjE6filterNCNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH00EB11_", scope: !1573, file: !1549, line: 1578, type: !1514, scopeLine: 1578, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56130 = distinct !DILexicalBlock(scope: !56129, file: !1549, line: 1583, column: 31)
+!56131 = distinct !DILocation(line: 51, column: 18, scope: !56079, inlinedAt: !56077)
+!56132 = distinct !DISubprogram(name: "unwrap_or_else<usize, polars_io::configs::cloud_writer_coalesce_run_length::COALESCE_RUN_LENGTH::{closure#0}::{closure_env#1}>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionjE14unwrap_or_elseNCNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0s_0EB1a_", scope: !1573, file: !1549, line: 1061, type: !1514, scopeLine: 1061, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56133 = distinct !DILocation(line: 52, column: 18, scope: !56079, inlinedAt: !56077)
+!56134 = distinct !DILocation(line: 55, column: 9, scope: !56078, inlinedAt: !56077)
+!56135 = distinct !DILocation(line: 810, column: 1, scope: !391, inlinedAt: !56134)
+!56136 = distinct !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56135)
+!56137 = distinct !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56135)
+!56138 = distinct !DISubprogram(name: "{closure#1}", linkageName: "_RNCNCNvNvNtCslpwjCj2YNBy_9polars_io7configs32cloud_writer_coalesce_run_length19COALESCE_RUN_LENGTH0s_0B9_", scope: !56149, file: !2176, line: 52, type: !1514, scopeLine: 52, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56139 = distinct !DILexicalBlock(scope: !56138, file: !1560, line: 62, column: 38)
+!56140 = distinct !DILocation(line: 1067, column: 21, scope: !56132, inlinedAt: !56133)
+!56141 = distinct !DILexicalBlock(scope: !56078, file: !1989, line: 224, column: 29)
+!56142 = !DINamespace(name: "cloud_writer_coalesce_run_length", scope: !2177)
+!56143 = !DINamespace(name: "COALESCE_RUN_LENGTH", scope: !56142)
+!56144 = !DINamespace(name: "{impl#33}", scope: !1635)
+!56145 = !DINamespace(name: "{impl#32}", scope: !1635)
+!56146 = !{!56103}
+!56147 = !{!56104}
+!56148 = !DILexicalBlockFile(scope: !56139, file: !2176, discriminator: 0)
+!56149 = !DINamespace(name: "{closure#0}", scope: !56143)
 !56150 = !DILexicalBlockFile(scope: !56141, file: !2176, discriminator: 0)
-!56151 = !DINamespace(name: "{closure#0}", scope: !56145)
-!56152 = !DILexicalBlockFile(scope: !56143, file: !2176, discriminator: 0)
-!56153 = !DILocation(line: 45, column: 13, scope: !56076, inlinedAt: !56077)
-!56154 = !DILocation(line: 45, column: 28, scope: !56076, inlinedAt: !56077)
-!56155 = !DILocation(line: 47, column: 24, scope: !56079, inlinedAt: !56077)
-!56156 = !DILocation(line: 47, column: 16, scope: !56079, inlinedAt: !56077)
-!56157 = !DILocation(line: 47, column: 19, scope: !56079, inlinedAt: !56077)
-!56158 = !DILocation(line: 614, column: 9, scope: !56080, inlinedAt: !56093)
-!56159 = !DILocation(line: 1841, column: 86, scope: !56084, inlinedAt: !56089)
-!56160 = !DILocation(line: 1711, column: 20, scope: !56094, inlinedAt: !56101)
-!56161 = !DILocation(line: 1718, column: 49, scope: !56105, inlinedAt: !56101)
-!56162 = !DILocation(line: 1517, column: 5, scope: !56106, inlinedAt: !56109)
-!56163 = !DILocation(line: 1749, column: 39, scope: !56110, inlinedAt: !56101)
-!56164 = !DILocation(line: 1765, column: 43, scope: !56111, inlinedAt: !56101)
-!56165 = !DILocation(line: 1765, column: 39, scope: !56111, inlinedAt: !56101)
-!56166 = !DILocation(line: 3105, column: 26, scope: !56112, inlinedAt: !56115)
-!56167 = !DILocation(line: 457, column: 8, scope: !56116, inlinedAt: !56118)
-!56168 = !DILocation(line: 1777, column: 57, scope: !56119, inlinedAt: !56101)
-!56169 = !DILocation(line: 1777, column: 56, scope: !56119, inlinedAt: !56101)
-!56170 = !DILocation(line: 2548, column: 13, scope: !1202, inlinedAt: !56121)
-!56171 = !DILocation(line: 423, column: 12, scope: !1204, inlinedAt: !56120)
-!56172 = !DILocation(line: 1731, column: 25, scope: !56119, inlinedAt: !56101)
-!56173 = !DILocation(line: 1751, column: 57, scope: !56110, inlinedAt: !56101)
-!56174 = !DILocation(line: 1751, column: 56, scope: !56110, inlinedAt: !56101)
-!56175 = !DILocation(line: 2548, column: 13, scope: !1202, inlinedAt: !56123)
-!56176 = !DILocation(line: 423, column: 12, scope: !1204, inlinedAt: !56122)
-!56177 = !DILocation(line: 1731, column: 25, scope: !56110, inlinedAt: !56101)
-!56178 = !DILocation(line: 1750, column: 33, scope: !56110, inlinedAt: !56101)
-!56179 = !DILocation(line: 1749, column: 43, scope: !56110, inlinedAt: !56101)
-!56180 = !DILocation(line: 1752, column: 72, scope: !56124, inlinedAt: !56101)
-!56181 = !DILocation(line: 1752, column: 33, scope: !56124, inlinedAt: !56101)
-!56182 = !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56126)
-!56183 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56127)
-!56184 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56128)
-!56185 = !DILocation(line: 713, column: 9, scope: !56129, inlinedAt: !56130)
-!56186 = !DILocation(line: 1583, column: 16, scope: !56132, inlinedAt: !56133)
-!56187 = !DILocation(line: 1065, column: 9, scope: !56134, inlinedAt: !56135)
-!56188 = !DILocation(line: 48, column: 13, scope: !56079, inlinedAt: !56077)
-!56189 = !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56137)
-!56190 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56138)
-!56191 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56139)
-!56192 = !DILocation(line: 53, column: 21, scope: !56150, inlinedAt: !56142)
-!56193 = !DILocation(line: 53, column: 21, scope: !56140, inlinedAt: !56142)
-!56194 = !DILocation(line: 55, column: 9, scope: !56078, inlinedAt: !56077)
-!56195 = !DILocation(line: 57, column: 12, scope: !56078, inlinedAt: !56077)
-!56196 = !DILocation(line: 44, column: 65, scope: !56076, inlinedAt: !56077)
-!56197 = !DILocation(line: 58, column: 13, scope: !56152, inlinedAt: !56077)
-!56198 = !DILocation(line: 58, column: 13, scope: !56078, inlinedAt: !56077)
-!56199 = !DILocation(line: 61, column: 9, scope: !56078, inlinedAt: !56077)
-!56200 = !DILocation(line: 57, column: 9, scope: !56078, inlinedAt: !56077)
-!56201 = !DILocation(line: 62, column: 5, scope: !56076, inlinedAt: !56077)
-!56202 = !DILocation(line: 250, column: 5, scope: !56075)
-!56203 = distinct !DISubprogram(name: "description<http::error::Error>", linkageName: "_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56204 = !DILocation(line: 139, column: 6, scope: !56203)
-!56205 = distinct !DISubprogram(name: "provide<http::error::Error>", linkageName: "_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56206 = !DILocation(line: 260, column: 59, scope: !56205)
-!56207 = distinct !DISubprogram(name: "type_id<http::error::Error>", linkageName: "_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56208 = distinct !DISubprogram(name: "of<http::error::Error>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNtCs1d9mkheQt2j_4http5error5ErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56209 = !DILocation(line: 126, column: 9, scope: !56207)
-!56210 = !DILocation(line: 791, column: 9, scope: !56208, inlinedAt: !56209)
-!56211 = !DILocation(line: 127, column: 6, scope: !56207)
-!56212 = distinct !DISubprogram(name: "description<std::io::error::Error>", linkageName: "_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56213 = !DILocation(line: 139, column: 6, scope: !56212)
-!56214 = distinct !DISubprogram(name: "provide<std::io::error::Error>", linkageName: "_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56215 = !DILocation(line: 260, column: 59, scope: !56214)
-!56216 = distinct !DISubprogram(name: "type_id<std::io::error::Error>", linkageName: "_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56217 = distinct !DISubprogram(name: "of<std::io::error::Error>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56218 = !DILocation(line: 126, column: 9, scope: !56216)
-!56219 = !DILocation(line: 791, column: 9, scope: !56217, inlinedAt: !56218)
-!56220 = !DILocation(line: 127, column: 6, scope: !56216)
-!56221 = distinct !DISubprogram(name: "description<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56222 = !DILocation(line: 139, column: 6, scope: !56221)
-!56223 = distinct !DISubprogram(name: "source<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error6sourceCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 111, type: !1514, scopeLine: 111, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56224 = !DILocation(line: 113, column: 6, scope: !56223)
-!56225 = distinct !DISubprogram(name: "provide<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56226 = !DILocation(line: 260, column: 59, scope: !56225)
-!56227 = distinct !DISubprogram(name: "type_id<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56228 = distinct !DISubprogram(name: "of<tokio::runtime::task::error::JoinError>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56229 = !DILocation(line: 126, column: 9, scope: !56227)
-!56230 = !DILocation(line: 791, column: 9, scope: !56228, inlinedAt: !56229)
-!56231 = !DILocation(line: 127, column: 6, scope: !56227)
-!56232 = distinct !DISubprogram(name: "description<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56233 = !DILocation(line: 139, column: 6, scope: !56232)
-!56234 = distinct !DISubprogram(name: "cause<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_5causeCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 147, type: !1514, scopeLine: 147, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56235 = !DILocation(line: 149, column: 6, scope: !56234)
-!56236 = distinct !DISubprogram(name: "source<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_6sourceCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 111, type: !1514, scopeLine: 111, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56237 = !DILocation(line: 113, column: 6, scope: !56236)
-!56238 = distinct !DISubprogram(name: "provide<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56239 = !DILocation(line: 260, column: 59, scope: !56238)
-!56240 = distinct !DISubprogram(name: "type_id<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56241 = distinct !DISubprogram(name: "of<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBU_3BoxDNtNtB8_5error5ErrorNtNtB8_6marker4SendNtB20_4SyncEL_EINtNtB8_7convert4FromNtNtBW_6string6StringE4from11StringErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!56242 = !DILocation(line: 126, column: 9, scope: !56240)
-!56243 = !DILocation(line: 791, column: 9, scope: !56241, inlinedAt: !56242)
-!56244 = !DILocation(line: 127, column: 6, scope: !56240)
+!56151 = !DILocation(line: 45, column: 13, scope: !56076, inlinedAt: !56077)
+!56152 = !DILocation(line: 45, column: 28, scope: !56076, inlinedAt: !56077)
+!56153 = !DILocation(line: 47, column: 24, scope: !56079, inlinedAt: !56077)
+!56154 = !DILocation(line: 47, column: 16, scope: !56079, inlinedAt: !56077)
+!56155 = !DILocation(line: 47, column: 19, scope: !56079, inlinedAt: !56077)
+!56156 = !DILocation(line: 614, column: 9, scope: !56080, inlinedAt: !56093)
+!56157 = !DILocation(line: 1841, column: 86, scope: !56084, inlinedAt: !56089)
+!56158 = !DILocation(line: 1711, column: 20, scope: !56094, inlinedAt: !56101)
+!56159 = !DILocation(line: 1718, column: 49, scope: !56105, inlinedAt: !56101)
+!56160 = !DILocation(line: 1517, column: 5, scope: !56106, inlinedAt: !56109)
+!56161 = !DILocation(line: 1749, column: 39, scope: !56110, inlinedAt: !56101)
+!56162 = !DILocation(line: 1765, column: 43, scope: !56111, inlinedAt: !56101)
+!56163 = !DILocation(line: 1765, column: 39, scope: !56111, inlinedAt: !56101)
+!56164 = !DILocation(line: 3105, column: 26, scope: !56112, inlinedAt: !56115)
+!56165 = !DILocation(line: 457, column: 8, scope: !56116, inlinedAt: !56118)
+!56166 = !DILocation(line: 1777, column: 57, scope: !56119, inlinedAt: !56101)
+!56167 = !DILocation(line: 1777, column: 56, scope: !56119, inlinedAt: !56101)
+!56168 = !DILocation(line: 2548, column: 13, scope: !1202, inlinedAt: !56121)
+!56169 = !DILocation(line: 423, column: 12, scope: !1204, inlinedAt: !56120)
+!56170 = !DILocation(line: 1731, column: 25, scope: !56119, inlinedAt: !56101)
+!56171 = !DILocation(line: 1751, column: 57, scope: !56110, inlinedAt: !56101)
+!56172 = !DILocation(line: 1751, column: 56, scope: !56110, inlinedAt: !56101)
+!56173 = !DILocation(line: 2548, column: 13, scope: !1202, inlinedAt: !56123)
+!56174 = !DILocation(line: 423, column: 12, scope: !1204, inlinedAt: !56122)
+!56175 = !DILocation(line: 1731, column: 25, scope: !56110, inlinedAt: !56101)
+!56176 = !DILocation(line: 1750, column: 33, scope: !56110, inlinedAt: !56101)
+!56177 = !DILocation(line: 1749, column: 43, scope: !56110, inlinedAt: !56101)
+!56178 = !DILocation(line: 1752, column: 72, scope: !56124, inlinedAt: !56101)
+!56179 = !DILocation(line: 1752, column: 33, scope: !56124, inlinedAt: !56101)
+!56180 = !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56126)
+!56181 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56127)
+!56182 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56128)
+!56183 = !DILocation(line: 0, scope: !56079, inlinedAt: !56077)
+!56184 = !DILocation(line: 1583, column: 16, scope: !56130, inlinedAt: !56131)
+!56185 = !DILocation(line: 1065, column: 9, scope: !56132, inlinedAt: !56133)
+!56186 = !DILocation(line: 48, column: 13, scope: !56079, inlinedAt: !56077)
+!56187 = !DILocation(line: 810, column: 1, scope: !282, inlinedAt: !56135)
+!56188 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56136)
+!56189 = !DILocation(line: 810, column: 1, scope: !284, inlinedAt: !56137)
+!56190 = !DILocation(line: 53, column: 21, scope: !56148, inlinedAt: !56140)
+!56191 = !DILocation(line: 53, column: 21, scope: !56138, inlinedAt: !56140)
+!56192 = !DILocation(line: 55, column: 9, scope: !56078, inlinedAt: !56077)
+!56193 = !DILocation(line: 57, column: 12, scope: !56078, inlinedAt: !56077)
+!56194 = !DILocation(line: 44, column: 65, scope: !56076, inlinedAt: !56077)
+!56195 = !DILocation(line: 58, column: 13, scope: !56150, inlinedAt: !56077)
+!56196 = !DILocation(line: 58, column: 13, scope: !56078, inlinedAt: !56077)
+!56197 = !DILocation(line: 61, column: 9, scope: !56078, inlinedAt: !56077)
+!56198 = !DILocation(line: 57, column: 9, scope: !56078, inlinedAt: !56077)
+!56199 = !DILocation(line: 62, column: 5, scope: !56076, inlinedAt: !56077)
+!56200 = !DILocation(line: 250, column: 5, scope: !56075)
+!56201 = distinct !DISubprogram(name: "description<http::error::Error>", linkageName: "_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56202 = !DILocation(line: 139, column: 6, scope: !56201)
+!56203 = distinct !DISubprogram(name: "provide<http::error::Error>", linkageName: "_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56204 = !DILocation(line: 260, column: 59, scope: !56203)
+!56205 = distinct !DISubprogram(name: "type_id<http::error::Error>", linkageName: "_RNvYNtNtCs1d9mkheQt2j_4http5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56206 = distinct !DISubprogram(name: "of<http::error::Error>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNtCs1d9mkheQt2j_4http5error5ErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56207 = !DILocation(line: 126, column: 9, scope: !56205)
+!56208 = !DILocation(line: 791, column: 9, scope: !56206, inlinedAt: !56207)
+!56209 = !DILocation(line: 127, column: 6, scope: !56205)
+!56210 = distinct !DISubprogram(name: "description<std::io::error::Error>", linkageName: "_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56211 = !DILocation(line: 139, column: 6, scope: !56210)
+!56212 = distinct !DISubprogram(name: "provide<std::io::error::Error>", linkageName: "_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56213 = !DILocation(line: 260, column: 59, scope: !56212)
+!56214 = distinct !DISubprogram(name: "type_id<std::io::error::Error>", linkageName: "_RNvYNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56215 = distinct !DISubprogram(name: "of<std::io::error::Error>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56216 = !DILocation(line: 126, column: 9, scope: !56214)
+!56217 = !DILocation(line: 791, column: 9, scope: !56215, inlinedAt: !56216)
+!56218 = !DILocation(line: 127, column: 6, scope: !56214)
+!56219 = distinct !DISubprogram(name: "description<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56220 = !DILocation(line: 139, column: 6, scope: !56219)
+!56221 = distinct !DISubprogram(name: "source<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error6sourceCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 111, type: !1514, scopeLine: 111, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56222 = !DILocation(line: 113, column: 6, scope: !56221)
+!56223 = distinct !DISubprogram(name: "provide<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56224 = !DILocation(line: 260, column: 59, scope: !56223)
+!56225 = distinct !DISubprogram(name: "type_id<tokio::runtime::task::error::JoinError>", linkageName: "_RNvYNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorNtNtCscgRAwXFJnXP_4core5error5Error7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56226 = distinct !DISubprogram(name: "of<tokio::runtime::task::error::JoinError>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNtNtNtCskmDBXs7hs3c_5tokio7runtime4task5error9JoinErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56227 = !DILocation(line: 126, column: 9, scope: !56225)
+!56228 = !DILocation(line: 791, column: 9, scope: !56226, inlinedAt: !56227)
+!56229 = !DILocation(line: 127, column: 6, scope: !56225)
+!56230 = distinct !DISubprogram(name: "description<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 137, type: !1514, scopeLine: 137, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56231 = !DILocation(line: 139, column: 6, scope: !56230)
+!56232 = distinct !DISubprogram(name: "cause<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_5causeCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 147, type: !1514, scopeLine: 147, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56233 = !DILocation(line: 149, column: 6, scope: !56232)
+!56234 = distinct !DISubprogram(name: "source<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_6sourceCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 111, type: !1514, scopeLine: 111, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56235 = !DILocation(line: 113, column: 6, scope: !56234)
+!56236 = distinct !DISubprogram(name: "provide<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7provideCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 260, type: !1514, scopeLine: 260, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56237 = !DILocation(line: 260, column: 59, scope: !56236)
+!56238 = distinct !DISubprogram(name: "type_id<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7type_idCslpwjCj2YNBy_9polars_io", scope: !2267, file: !2265, line: 122, type: !1514, scopeLine: 122, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56239 = distinct !DISubprogram(name: "of<alloc::boxed::convert::{impl#17}::from::StringError>", linkageName: "_RINvMs8_NtCscgRAwXFJnXP_4core3anyNtB6_6TypeId2ofNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBU_3BoxDNtNtB8_5error5ErrorNtNtB8_6marker4SendNtB20_4SyncEL_EINtNtB8_7convert4FromNtNtBW_6string6StringE4from11StringErrorECslpwjCj2YNBy_9polars_io", scope: !2270, file: !2268, line: 790, type: !1514, scopeLine: 790, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!56240 = !DILocation(line: 126, column: 9, scope: !56238)
+!56241 = !DILocation(line: 791, column: 9, scope: !56239, inlinedAt: !56240)
+!56242 = !DILocation(line: 127, column: 6, scope: !56238)
 end_hunk_1

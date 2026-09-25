@@ -204,12 +204,10 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.ai = load i16, ptr %1, align 8
   %i.aj = and i16 %i.ai, 511
-  %.not.i.i.i.i = icmp eq i16 %i.aj, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %4, ptr %i.ak
-  %i.al = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !260
+  %.not.i.i.i.i = icmp eq i16 %i.aj, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !260
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 672
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !120, !nonnull !113, !align !121
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !174, !nonnull !113, !align !121
@@ -258,11 +256,10 @@ _ZNK5clang4Type18getAsCXXRecordDeclEv.exit:       ; preds = %bb.i, %bb.k, %bb.l
 bb.m:                                             ; preds = %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit
   %i.bi = load i16, ptr %1, align 8
   %i.bj = and i16 %i.bi, 511
-  %.not.i.i.i.i63 = icmp eq i16 %i.bj, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i64 = select i1 %.not.i.i.i.i63, ptr %1, ptr null
-  %i.bk = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i64, i64 48
-  %spec.select.i.i.i.i65 = select i1 %.not.i.i.i.i63, ptr %i.bk, ptr %i.ak
-  %i.bl = load ptr, ptr %spec.select.i.i.i.i65, align 8, !tbaa !260
+  %.not.i.i.i.i63 = icmp eq i16 %i.bj, 118
+  %spec.select.v.i.i.i.i64 = select i1 %.not.i.i.i.i63, i64 48, i64 40
+  %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i64
+  %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !260
   %i.bm = call noundef zeroext i1 @_ZN5clang6interp8CompilerINS0_15ByteCodeEmitterEE16visitInitializerEPKNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(936) %0, ptr noundef %i.bl)
   br label %.critedge
 
@@ -335,12 +332,10 @@ bb.s:                                             ; preds = %bb.n
 
 bb.t:                                             ; preds = %bb.s
   %i.cq = and i32 %i.bn, 511
-  %.not.i.i.i.i69 = icmp eq i32 %i.cq, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i70 = select i1 %.not.i.i.i.i69, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i70, i64 48
-  %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i71 = select i1 %.not.i.i.i.i69, ptr %5, ptr %i.cr
-  %i.cs = load ptr, ptr %spec.select.i.i.i.i71, align 8, !tbaa !260 ; 2 uses
+  %.not.i.i.i.i69 = icmp eq i32 %i.cq, 118
+  %spec.select.v.i.i.i.i70 = select i1 %.not.i.i.i.i69, i64 48, i64 40
+  %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i70
+  %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !260 ; 2 uses
   %i.ct = load i16, ptr %i.cs, align 8
   %i.cu = and i16 %i.ct, 511
   %.not127 = icmp eq i16 %i.cu, 50
@@ -391,16 +386,14 @@ bb.y:                                             ; preds = %.thread113
 bb.z:                                             ; preds = %bb.y
   %i.do = load i16, ptr %1, align 8
   %i.dp = and i16 %i.do, 511
-  %.not.i.i.i.i73 = icmp eq i16 %i.dp, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i74 = select i1 %.not.i.i.i.i73, ptr %1, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i74, i64 48
-  %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i.i75 = select i1 %.not.i.i.i.i73, ptr %6, ptr %i.dq ; 2 uses
+  %.not.i.i.i.i73 = icmp eq i16 %i.dp, 118
+  %spec.select.v.i.i.i.i74 = select i1 %.not.i.i.i.i73, i64 48, i64 40
+  %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i74 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !563 ; 2 uses
   %i.dt = zext i32 %i.ds to i64
   %.idx = shl nuw nsw i64 %i.dt, 3
-  %i.du = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i75, i64 %.idx
+  %i.du = getelementptr inbounds nuw i8, ptr %i.dq, i64 %.idx
   %.not129131 = icmp eq i32 %i.ds, 0
   br i1 %.not129131, label %._crit_edge, label %.lr.ph
 
@@ -410,7 +403,7 @@ bb.aa:                                            ; preds = %.lr.ph
   br i1 %.not129, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.z, %bb.aa
-  %.sroa.095.0132 = phi ptr [ %i.dv, %bb.aa ], [ %spec.select.i.i.i.i75, %bb.z ] ; 2 uses
+  %.sroa.095.0132 = phi ptr [ %i.dv, %bb.aa ], [ %i.dq, %bb.z ] ; 2 uses
   %i.dw = load ptr, ptr %.sroa.095.0132, align 8, !tbaa !277
   %i.dx = load ptr, ptr %0, align 8, !tbaa !143
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 64
@@ -442,12 +435,11 @@ bb.ab:                                            ; preds = %._crit_edge
   %.046134 = phi i32 [ %i.ev, %.lr.ph137 ], [ 0, %bb.ab ]
   %i.ei = load i16, ptr %1, align 8
   %i.ej = and i16 %i.ei, 511
-  %.not.i.i.i.i78 = icmp eq i16 %i.ej, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i79 = select i1 %.not.i.i.i.i78, ptr %1, ptr null
-  %i.ek = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i79, i64 48
-  %spec.select.i.i.i.i80 = select i1 %.not.i.i.i.i78, ptr %i.ek, ptr %i.dq
+  %.not.i.i.i.i78 = icmp eq i16 %i.ej, 118
+  %spec.select.v.i.i.i.i79 = select i1 %.not.i.i.i.i78, i64 48, i64 40
+  %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i79
   %i.el = zext i32 %.045135 to i64
-  %i.em = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i80, i64 %i.el
+  %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.el
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !260
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 8
   %.sroa.0.0.copyload.i81 = load i64, ptr %i.eo, align 8, !tbaa !116
@@ -850,12 +842,10 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.ai = load i16, ptr %1, align 8
   %i.aj = and i16 %i.ai, 511
-  %.not.i.i.i.i = icmp eq i16 %i.aj, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %4, ptr %i.ak
-  %i.al = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !260
+  %.not.i.i.i.i = icmp eq i16 %i.aj, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !260
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1144
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !833, !nonnull !113, !align !121
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !174, !nonnull !113, !align !121
@@ -904,11 +894,10 @@ _ZNK5clang4Type18getAsCXXRecordDeclEv.exit:       ; preds = %bb.i, %bb.k, %bb.l
 bb.m:                                             ; preds = %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit
   %i.bi = load i16, ptr %1, align 8
   %i.bj = and i16 %i.bi, 511
-  %.not.i.i.i.i63 = icmp eq i16 %i.bj, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i64 = select i1 %.not.i.i.i.i63, ptr %1, ptr null
-  %i.bk = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i64, i64 48
-  %spec.select.i.i.i.i65 = select i1 %.not.i.i.i.i63, ptr %i.bk, ptr %i.ak
-  %i.bl = load ptr, ptr %spec.select.i.i.i.i65, align 8, !tbaa !260
+  %.not.i.i.i.i63 = icmp eq i16 %i.bj, 118
+  %spec.select.v.i.i.i.i64 = select i1 %.not.i.i.i.i63, i64 48, i64 40
+  %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i64
+  %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !260
   %i.bm = call noundef zeroext i1 @_ZN5clang6interp8CompilerINS0_11EvalEmitterEE16visitInitializerEPKNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(1408) %0, ptr noundef %i.bl)
   br label %.critedge
 
@@ -981,12 +970,10 @@ bb.s:                                             ; preds = %bb.n
 
 bb.t:                                             ; preds = %bb.s
   %i.cq = and i32 %i.bn, 511
-  %.not.i.i.i.i69 = icmp eq i32 %i.cq, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i70 = select i1 %.not.i.i.i.i69, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i70, i64 48
-  %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i71 = select i1 %.not.i.i.i.i69, ptr %5, ptr %i.cr
-  %i.cs = load ptr, ptr %spec.select.i.i.i.i71, align 8, !tbaa !260 ; 2 uses
+  %.not.i.i.i.i69 = icmp eq i32 %i.cq, 118
+  %spec.select.v.i.i.i.i70 = select i1 %.not.i.i.i.i69, i64 48, i64 40
+  %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i70
+  %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !260 ; 2 uses
   %i.ct = load i16, ptr %i.cs, align 8
   %i.cu = and i16 %i.ct, 511
   %.not127 = icmp eq i16 %i.cu, 50
@@ -1037,16 +1024,14 @@ bb.y:                                             ; preds = %.thread113
 bb.z:                                             ; preds = %bb.y
   %i.do = load i16, ptr %1, align 8
   %i.dp = and i16 %i.do, 511
-  %.not.i.i.i.i73 = icmp eq i16 %i.dp, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i74 = select i1 %.not.i.i.i.i73, ptr %1, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i74, i64 48
-  %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i.i75 = select i1 %.not.i.i.i.i73, ptr %6, ptr %i.dq ; 2 uses
+  %.not.i.i.i.i73 = icmp eq i16 %i.dp, 118
+  %spec.select.v.i.i.i.i74 = select i1 %.not.i.i.i.i73, i64 48, i64 40
+  %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i74 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !563 ; 2 uses
   %i.dt = zext i32 %i.ds to i64
   %.idx = shl nuw nsw i64 %i.dt, 3
-  %i.du = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i75, i64 %.idx
+  %i.du = getelementptr inbounds nuw i8, ptr %i.dq, i64 %.idx
   %.not129131 = icmp eq i32 %i.ds, 0
   br i1 %.not129131, label %._crit_edge, label %.lr.ph
 
@@ -1056,7 +1041,7 @@ bb.aa:                                            ; preds = %.lr.ph
   br i1 %.not129, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.z, %bb.aa
-  %.sroa.095.0132 = phi ptr [ %i.dv, %bb.aa ], [ %spec.select.i.i.i.i75, %bb.z ] ; 2 uses
+  %.sroa.095.0132 = phi ptr [ %i.dv, %bb.aa ], [ %i.dq, %bb.z ] ; 2 uses
   %i.dw = load ptr, ptr %.sroa.095.0132, align 8, !tbaa !277
   %i.dx = load ptr, ptr %0, align 8, !tbaa !143
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 72
@@ -1088,12 +1073,11 @@ bb.ab:                                            ; preds = %._crit_edge
   %.046134 = phi i32 [ %i.ev, %.lr.ph137 ], [ 0, %bb.ab ]
   %i.ei = load i16, ptr %1, align 8
   %i.ej = and i16 %i.ei, 511
-  %.not.i.i.i.i78 = icmp eq i16 %i.ej, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i79 = select i1 %.not.i.i.i.i78, ptr %1, ptr null
-  %i.ek = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i79, i64 48
-  %spec.select.i.i.i.i80 = select i1 %.not.i.i.i.i78, ptr %i.ek, ptr %i.dq
+  %.not.i.i.i.i78 = icmp eq i16 %i.ej, 118
+  %spec.select.v.i.i.i.i79 = select i1 %.not.i.i.i.i78, i64 48, i64 40
+  %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i79
   %i.el = zext i32 %.045135 to i64
-  %i.em = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i80, i64 %i.el
+  %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.el
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !260
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 8
   %.sroa.0.0.copyload.i81 = load i64, ptr %i.eo, align 8, !tbaa !116
@@ -1496,19 +1480,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %0, align 8, !tbaa !1925, !nonnull !113, !align !121
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !559  ; 5 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !559  ; 4 uses
   %i.o = load i16, ptr %i.n, align 8
   %i.p = and i16 %i.o, 511
-  %.not.i.i.i.i = icmp eq i16 %i.p, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.n, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %3, ptr %i.q ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.p, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 %spec.select.v.i.i.i.i ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 32
   %i.s = load i32, ptr %i.r, align 8, !tbaa !563  ; 2 uses
   %i.t = zext i32 %i.s to i64
   %.idx = shl nuw nsw i64 %i.t, 3
-  %i.u = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 %.idx
+  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 %.idx
   %.not40 = icmp eq i32 %i.s, 0
   br i1 %.not40, label %._crit_edge, label %.lr.ph
 
@@ -1518,7 +1500,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.sroa.030.041 = phi ptr [ %i.v, %bb.c ], [ %spec.select.i.i.i.i, %bb.b ] ; 2 uses
+  %.sroa.030.041 = phi ptr [ %i.v, %bb.c ], [ %i.q, %bb.b ] ; 2 uses
   %i.w = load ptr, ptr %.sroa.030.041, align 8, !tbaa !277
   %i.x = load ptr, ptr %i.b, align 8, !tbaa !143
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 64
@@ -1921,19 +1903,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %0, align 8, !tbaa !2011, !nonnull !113, !align !121
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !559  ; 5 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !559  ; 4 uses
   %i.o = load i16, ptr %i.n, align 8
   %i.p = and i16 %i.o, 511
-  %.not.i.i.i.i = icmp eq i16 %i.p, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.n, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %3, ptr %i.q ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.p, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 %spec.select.v.i.i.i.i ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 32
   %i.s = load i32, ptr %i.r, align 8, !tbaa !563  ; 2 uses
   %i.t = zext i32 %i.s to i64
   %.idx = shl nuw nsw i64 %i.t, 3
-  %i.u = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 %.idx
+  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 %.idx
   %.not40 = icmp eq i32 %i.s, 0
   br i1 %.not40, label %._crit_edge, label %.lr.ph
 
@@ -1943,7 +1923,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.sroa.030.041 = phi ptr [ %i.v, %bb.c ], [ %spec.select.i.i.i.i, %bb.b ] ; 2 uses
+  %.sroa.030.041 = phi ptr [ %i.v, %bb.c ], [ %i.q, %bb.b ] ; 2 uses
   %i.w = load ptr, ptr %.sroa.030.041, align 8, !tbaa !277
   %i.x = load ptr, ptr %i.b, align 8, !tbaa !143
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 72

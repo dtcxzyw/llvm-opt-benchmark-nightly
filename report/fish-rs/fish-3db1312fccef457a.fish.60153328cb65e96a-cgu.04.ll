@@ -205,15 +205,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish3env3var6EnvVar
   resume { ptr, i32 } %.pn.i
 
 _RNCNvNtCs8frGy5WneL6_4fish8termsize10var_to_int0B5_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit.i, %bb.j
-  %1 = trunc i64 %i.l to i1                       ; 2 uses
   %.sroa.5.0.extract.shift.i = lshr i64 %i.l, 32
-  %.sroa.5.0.extract.trunc.i = trunc nuw i64 %.sroa.5.0.extract.shift.i to i32
-  %.sroa.3.0.i = select i1 %1, i32 undef, i32 %.sroa.5.0.extract.trunc.i ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %or.cond = icmp ugt i32 %.sroa.3.0.i, 65535
-  %or.cond5 = select i1 %1, i1 true, i1 %or.cond
-  %i.t = trunc nuw i32 %.sroa.3.0.i to i16
-  %spec.select = select i1 %or.cond5, i16 0, i16 %i.t
+  %1 = and i64 %i.l, -281474976710655
+  %or.cond5.not = icmp eq i64 %1, 0
+  %i.t = trunc i64 %.sroa.5.0.extract.shift.i to i16
+  %spec.select = select i1 %or.cond5.not, i16 %i.t, i16 0
   br label %bb.l
 
 bb.l:                                             ; preds = %_RNCNvNtCs8frGy5WneL6_4fish8termsize10var_to_int0B5_.exit, %bb.a
