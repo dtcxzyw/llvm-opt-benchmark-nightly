@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %.lr.ph394, %._crit_
   %i.bu = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %i.be ; 2 uses
   %i.bv = load ptr, ptr %i.ac, align 8, !tbaa !80 ; 2 uses
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvars.iv457
-  %i.bx = load i32, ptr %i.bw, align 4, !tbaa !117 ; 3 uses
+  %i.bx = load i32, ptr %i.bw, align 4, !tbaa !117 ; 2 uses
   %i.by = sext i32 %i.bx to i64
   %.idx273 = shl nsw i64 %i.by, 2                 ; 5 uses
   %.not518 = icmp eq i32 %i.bx, 0
@@ -227,22 +227,18 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i: ; preds = %bb.k
 
 .noexc201:                                        ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
   %i.cb = icmp samesign ugt i64 %.idx273, 4
-  br i1 %i.cb, label %bb.m, label %9, !prof !87
+  br i1 %i.cb, label %bb.m, label %bb.n, !prof !87
 
 bb.m:                                             ; preds = %.noexc201
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ca, ptr align 4 %i.bu, i64 %.idx273, i1 false)
   br label %_ZNSt6vectorIiSaIiEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKiS1_EEEEPimT_S9_.exit.i
 
-9:                                                ; preds = %.noexc201
-  %10 = icmp eq i32 %i.bx, 1
-  br i1 %10, label %bb.n, label %_ZNSt6vectorIiSaIiEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKiS1_EEEEPimT_S9_.exit.i
-
-bb.n:                                             ; preds = %9
+bb.n:                                             ; preds = %.noexc201
   %i.cc = load i32, ptr %i.bu, align 4, !tbaa !117
   store i32 %i.cc, ptr %i.ca, align 4, !tbaa !117
   br label %_ZNSt6vectorIiSaIiEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKiS1_EEEEPimT_S9_.exit.i
 
-_ZNSt6vectorIiSaIiEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKiS1_EEEEPimT_S9_.exit.i: ; preds = %bb.n, %9, %bb.m
+_ZNSt6vectorIiSaIiEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKiS1_EEEEPimT_S9_.exit.i: ; preds = %bb.n, %bb.m
   %i.cd = load ptr, ptr %8, align 8, !tbaa !80    ; 3 uses
   %.not.i.i199 = icmp eq ptr %i.cd, null
   br i1 %.not.i.i199, label %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i, label %bb.o

@@ -205,8 +205,8 @@ bb.ca:                                            ; preds = %sljit_emit_jump.exi
   br label %sljit_set_label.exit
 
 bb.cb:                                            ; preds = %add_jump.exit
-  %i.kv = icmp eq i32 %i.dm, 1
-  br i1 %i.kv, label %bb.cc, label %sljit_set_label.exit
+  %i.kv = icmp eq i32 %i.dm, 0
+  br i1 %i.kv, label %sljit_set_label.exit, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
   %i.kw = getelementptr inbounds nuw i8, ptr %.0.i.ph1873, i64 24
@@ -609,7 +609,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ab = or disjoint i32 %i.x, %i.aa             ; 3 uses
   %i.ac = icmp samesign ult i32 %i.ab, 2048
   %i.ad = getelementptr inbounds nuw i8, ptr %.0139, i64 3
-  %i.ae = and i32 %i.ab, 2147481600
+  %i.ae = and i32 %i.ab, 63488
   %or.cond = icmp eq i32 %i.ae, 55296
   %or.cond176 = or i1 %i.ac, %or.cond
   br i1 %or.cond176, label %bb.ad, label %bb.n
@@ -738,7 +738,7 @@ bb.w:                                             ; preds = %bb.v
   %i.cr = add nsw i32 %i.cq, -917504
   %i.cs = or i32 %i.cr, %i.cl                     ; 3 uses
   %i.ct = icmp samesign ult i32 %i.cs, 2048
-  %i.cu = and i32 %i.cs, 2147481600
+  %i.cu = and i32 %i.cs, 63488
   %or.cond11 = icmp eq i32 %i.cu, 55296
   %or.cond183 = or i1 %i.ct, %or.cond11
   br i1 %or.cond183, label %._crit_edge, label %bb.aa
@@ -1141,7 +1141,7 @@ bb.pb:                                            ; preds = %bb.pa, %bb.oz
   %i.bap = phi i32 [ 2, %bb.oz ], [ %i.bao, %bb.pa ]
   %i.baq = add nuw nsw i32 %i.bak, %.0463
   %i.bar = add nuw nsw i32 %i.baq, %i.bap
-  br label %bb.pe
+  br label %bb.pf
 
 bb.pc:                                            ; preds = %bb.oy
   br i1 %i.fr, label %.thread2190, label %bb.pd
@@ -1153,24 +1153,23 @@ bb.pd:                                            ; preds = %bb.pc
   %or.cond31 = and i1 %i.bau, %i.bat
   br i1 %or.cond31, label %.thread2190, label %bb.pe
 
-.thread2190:                                      ; preds = %bb.pc, %bb.pd
+.thread2190:                                      ; preds = %bb.pd, %bb.pc
   %i.bav = add nuw nsw i32 %.0463, 1
   br label %bb.pf
 
-bb.pe:                                            ; preds = %bb.pd, %bb.pb
-  %.8 = phi i32 [ %i.bar, %bb.pb ], [ %.0463, %bb.pd ] ; 2 uses
-  %2 = icmp sgt i32 %.8, 0
-  br i1 %2, label %bb.pf, label %free_stack.exit965
+bb.pe:                                            ; preds = %bb.pd
+  %.not528 = icmp eq i32 %.0463, 0
+  br i1 %.not528, label %free_stack.exit965, label %bb.pf
 
-bb.pf:                                            ; preds = %.thread2190, %bb.pe
-  %.82192 = phi i32 [ %i.bav, %.thread2190 ], [ %.8, %bb.pe ]
+bb.pf:                                            ; preds = %.thread2190, %bb.pb, %bb.pe
+  %.82194 = phi i32 [ 1, %bb.pe ], [ %i.bav, %.thread2190 ], [ %i.bar, %bb.pb ]
   %.val549.a = load ptr, ptr %0, align 8, !tbaa !128 ; 3 uses
   %i.baw = load i32, ptr %.val549.a, align 8, !tbaa !129
   %.not.i.i964 = icmp eq i32 %i.baw, 0
   br i1 %.not.i.i964, label %bb.pg, label %free_stack.exit965, !prof !130
 
 bb.pg:                                            ; preds = %bb.pf
-  %i.bax = shl nsw i32 %.82192, 3
+  %i.bax = shl nsw i32 %.82194, 3
   %i.bay = zext nneg i32 %i.bax to i64
   %i.baz = getelementptr inbounds nuw i8, ptr %.val549.a, i64 144
   store i32 0, ptr %i.baz, align 8, !tbaa !132

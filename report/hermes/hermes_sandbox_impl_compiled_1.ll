@@ -204,16 +204,12 @@ bb.h:                                             ; preds = %bb.g
   %i.ao = sub i32 %.0.copyload.i516, %.0.copyload.i518 ; 2 uses
   %i.ap = tail call i32 @llvm.umax.i32(i32 %i.ao, i32 %i.am)
   %i.aq = icmp ugt i32 %i.ao, 2147483645
-  %i.ar = select i1 %i.aq, i32 2147483647, i32 %i.ap ; 3 uses
+  %i.ar = select i1 %i.aq, i32 2147483647, i32 %i.ap ; 2 uses
   %.not470 = icmp eq i32 %i.ar, 0
-  br i1 %.not470, label %._crit_edge, label %2
+  br i1 %.not470, label %._crit_edge, label %bb.i
 
-2:                                                ; preds = %bb.h
-  %3 = icmp slt i32 %i.ar, 0
-  br i1 %3, label %4, label %bb.i
-
-bb.i:                                             ; preds = %2
-  %i.as = shl nuw i32 %i.ar, 1                    ; 2 uses
+bb.i:                                             ; preds = %bb.h
+  %i.as = shl i32 %i.ar, 1                        ; 2 uses
   %i.at = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.as) #7
   br label %._crit_edge
 
@@ -245,11 +241,6 @@ bb.j:                                             ; preds = %._crit_edge
 
 bb.k:                                             ; preds = %bb.g
   tail call void @w2c_hermes_abort(ptr noundef nonnull %0) #7
-  tail call void @wasm_rt_trap(i32 noundef 5) #8
-  unreachable
-
-4:                                                ; preds = %2
-  tail call void @w2c_hermes_std0x3A0x3A_0x5F20x3A0x3A_0x5Fthrow_out_of_range0x5Babi0x3Av150070x5D0x28char0x20const0x2A0x29(ptr noundef nonnull %0) #7
   tail call void @wasm_rt_trap(i32 noundef 5) #8
   unreachable
 

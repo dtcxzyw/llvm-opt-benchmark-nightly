@@ -205,13 +205,10 @@ default.unreachable:                              ; preds = %bb.k
   br i1 %i.gm, label %bb.p, label %_RNCNvYINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileENtNtBb_8buf_read7BufRead9read_line0Csat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i
 
 _RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i: ; preds = %bb.k
-  %2 = lshr i64 %.sroa.8.025.i.i.i.i.i, 32
-  %i.gn = icmp ult i64 %.sroa.8.025.i.i.i.i.i, 188978561024 ; 2 uses
-  %switch.idx.cast.i.i.i.i.i.i.i.i = trunc i64 %2 to i8
-  %spec.select.i.i.i.i.i.i.i.i = select i1 %i.gn, i8 %switch.idx.cast.i.i.i.i.i.i.i.i, i8 -1 ; 2 uses
-  %3 = icmp ne i8 %spec.select.i.i.i.i.i.i.i.i, -1
-  call void @llvm.assume(i1 %3)
-  %i.go = icmp eq i8 %spec.select.i.i.i.i.i.i.i.i, 35
+  %i.gn = icmp ult i64 %.sroa.8.025.i.i.i.i.i, 188978561024
+  call void @llvm.assume(i1 %i.gn)
+  %.mask.i.i.i.i.i = and i64 %.sroa.8.025.i.i.i.i.i, 270582939648
+  %i.go = icmp eq i64 %.mask.i.i.i.i.i, 150323855360
   br i1 %i.go, label %bb.o, label %_RNCNvYINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileENtNtBb_8buf_read7BufRead9read_line0Csat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i
 
 .loopexit64.i.i.i.i.i:                            ; preds = %_RNvXs5_NtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i, %_RNvXs5_NtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCsat9HgdBb3qc_16shadowsocks_rust.exit.thread57.i.i.i.i.i
@@ -310,7 +307,6 @@ bb.n:                                             ; preds = %_RNvMs_NtCsgCecv3eZ
 
 bb.o:                                             ; preds = %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !821
-  call void @llvm.assume(i1 %i.gn)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i
 
 bb.p:                                             ; preds = %.split27.i.i.i.i.i
@@ -713,8 +709,8 @@ default.unreachable:                              ; preds = %bb.ky, %_RINvYNtNtC
   unreachable
 
 .thread139:                                       ; preds = %_RINvXNvXNvNtCsat9HgdBb3qc_16shadowsocks_rust6configs_1__NtB8_9LogConfigNtNtCs2d6kDCn68sB_10serde_core2de11Deserialize11deserializeNtB3_14___FieldVisitorNtB19_7Visitor9visit_strNtNtCseuwcdgGPBeX_5json55error5ErrorEBa_.exit.i.i.i.i.i.i.jt0, %bb.m, %bb.r
-  %i.id = icmp eq i32 %.sroa.04.03653, 1
-  br i1 %i.id, label %bb.ag, label %bb.ad, !prof !23
+  %i.id = icmp eq i32 %.sroa.04.03653, 0
+  br i1 %i.id, label %bb.ad, label %bb.ag, !prof !20
 
 .thread144:                                       ; preds = %_RINvXNvXNvNtCsat9HgdBb3qc_16shadowsocks_rust6configs_1__NtB8_9LogConfigNtNtCs2d6kDCn68sB_10serde_core2de11Deserialize11deserializeNtB3_14___FieldVisitorNtB19_7Visitor9visit_strNtNtCseuwcdgGPBeX_5json55error5ErrorEBa_.exit.i.i.i.i.i.i.jt1, %bb.n, %bb.s
   %.not70 = icmp eq i8 %.sroa.09.03651, 2
@@ -1117,8 +1113,8 @@ bb.c:                                             ; preds = %bb.f, %_RINvMs6_NtC
   br i1 %i.w, label %bb.j, label %bb.d, !prof !20
 
 ._crit_edge.i.i:                                  ; preds = %bb.d, %bb.c
-  %.not12.i.i = icmp eq i64 %.sroa.04.0.i.i, 1
-  br i1 %.not12.i.i, label %.thread.i.i, label %bb.e, !prof !23
+  %.not12.i.i = icmp eq i64 %.sroa.04.0.i.i, 0
+  br i1 %.not12.i.i, label %bb.e, label %.thread.i.i, !prof !20
 
 bb.d:                                             ; preds = %.lr.ph.i.i
   %i.x = add i16 %.sroa.01.029.i.i, -1
@@ -1521,8 +1517,8 @@ bb.s:                                             ; preds = %bb.v, %_RINvMs6_NtC
   br i1 %i.dc, label %_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapNtNtCs1kwRxRulhfk_12tracing_core4span2IdINtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive8MatchSetNtNtB1w_5field9SpanMatchENtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE6insertCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i.i.i, label %bb.t, !prof !20
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i:                  ; preds = %bb.t, %bb.s
-  %.not12.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.04.0.i.i.i.i.i.i.i.i.i.i, 1
-  br i1 %.not12.i.i.i.i.i.i.i.i.i.i, label %.thread.i.i.i.i.i.i.i.i.i.i, label %bb.u, !prof !23
+  %.not12.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.04.0.i.i.i.i.i.i.i.i.i.i, 0
+  br i1 %.not12.i.i.i.i.i.i.i.i.i.i, label %bb.u, label %.thread.i.i.i.i.i.i.i.i.i.i, !prof !20
 
 bb.t:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
   %i.dd = add i16 %.sroa.01.029.i.i.i.i.i.i.i.i.i.i, -1

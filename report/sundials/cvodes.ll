@@ -205,7 +205,7 @@ bb.hk:                                            ; preds = %bb.hj
   br i1 %.not78.not.i.i, label %.preheader.i.i, label %cvPredict.exit.i
 
 cvPredict.exit.i:                                 ; preds = %bb.hk, %.loopexit86.i.i, %bb.hc
-  %i.afv = phi i32 [ %i.afj, %.loopexit86.i.i ], [ %i.aef, %bb.hc ], [ %i.aft, %bb.hk ] ; 30 uses
+  %i.afv = phi i32 [ %i.afj, %.loopexit86.i.i ], [ %i.aef, %bb.hc ], [ %i.aft, %bb.hk ] ; 29 uses
   %i.afw = load i32, ptr %i.qw, align 8, !tbaa !23
   switch i32 %i.afw, label %bb.hv [
     i32 1, label %bb.hl
@@ -608,7 +608,7 @@ scalar.ph1113:                                    ; preds = %scalar.ph1113.prehe
   br i1 %i.anw, label %.preheader83.i.i.i, label %.loopexit85..loopexit_crit_edge.i.i.i
 
 .loopexit85..loopexit_crit_edge.i.i.i:            ; preds = %.loopexit85.i.i.i
-  %.pre123.i.i.i = sitofp i32 %i.afv to double
+  %.pre123.i.i.i = uitofp nneg i32 %i.afv to double
   br label %.loopexit.i.i.i
 
 .preheader83.i.i.i:                               ; preds = %.loopexit85.i.i.i
@@ -837,7 +837,7 @@ middle.block1066:                                 ; preds = %vector.body1053
   br i1 %i.arg, label %.lr.ph103.i.i.i, label %.loopexit.i.i.i, !llvm.loop !277
 
 .loopexit.i.i.i:                                  ; preds = %.lr.ph103.i.i.i, %middle.block1066, %.loopexit85..loopexit_crit_edge.i.i.i
-  %.pre-phi124.i.i.i = phi double [ %.pre123.i.i.i, %.loopexit85..loopexit_crit_edge.i.i.i ], [ %i.apk, %middle.block1066 ], [ %i.apk, %.lr.ph103.i.i.i ]
+  %.pre-phi124.i.i.i = phi double [ %.pre123.i.i.i, %.loopexit85..loopexit_crit_edge.i.i.i ], [ %i.apk, %middle.block1066 ], [ %i.apk, %.lr.ph103.i.i.i ] ; 2 uses
   %.177.i.i.i = phi double [ -1.000000e+00, %.loopexit85..loopexit_crit_edge.i.i.i ], [ %i.apm, %middle.block1066 ], [ %i.apm, %.lr.ph103.i.i.i ] ; 4 uses
   %.075.i.i.i = phi double [ -1.000000e+00, %.loopexit85..loopexit_crit_edge.i.i.i ], [ %i.apu, %middle.block1066 ], [ %i.apu, %.lr.ph103.i.i.i ] ; 3 uses
   %.074.i.i.i = phi double [ 1.000000e+00, %.loopexit85..loopexit_crit_edge.i.i.i ], [ %i.apt, %middle.block1066 ], [ %i.apt, %.lr.ph103.i.i.i ] ; 2 uses
@@ -867,8 +867,7 @@ bb.hs:                                            ; preds = %.loopexit.i.i.i
 
 bb.ht:                                            ; preds = %bb.hs
   %i.arw = fdiv double %.073.i.i.i, %i.arq
-  %5 = uitofp nneg i32 %i.afv to double
-  %i.arx = fdiv double 1.000000e+00, %5
+  %i.arx = fdiv double 1.000000e+00, %.pre-phi124.i.i.i
   %i.ary = fadd double %i.arx, %.177.i.i.i        ; 2 uses
   %i.arz = fadd double %.075.i.i.i, %.074.i.i.i
   %i.asa = fsub double 1.000000e+00, %i.arz
@@ -886,16 +885,16 @@ bb.hu:                                            ; preds = %bb.ht, %bb.hs
   %i.ash = fadd double %.172.i.i.i, %i.asg
   %i.asi = fdiv double %i.ann, %i.ash             ; 2 uses
   %i.asj = add nsw i32 %i.afv, 1
-  %6 = sitofp i32 %i.asj to double
-  %i.ask = fdiv double 1.000000e+00, %6
+  %5 = uitofp nneg i32 %i.asj to double
+  %i.ask = fdiv double 1.000000e+00, %5
   %i.asl = fsub double %.177.i.i.i, %i.ask        ; 2 uses
   %i.asm = fsub double %i.asi, %.075.i.i.i
   %i.asn = fadd double %i.asm, 1.000000e+00
   %i.aso = fadd double %i.asl, %i.asn
   %i.asp = fdiv double %i.aso, %i.arj
   %i.asq = add nsw i32 %i.afv, 2
-  %7 = sitofp i32 %i.asq to double
-  %i.asr = fmul double %i.asi, %7
+  %6 = uitofp nneg i32 %i.asq to double
+  %i.asr = fmul double %i.asi, %6
   %i.ass = fmul double %i.asl, %i.asr
   %i.ast = fdiv double %i.asp, %i.ass
   %i.asu = call double @llvm.fabs.f64(double %i.ast)

@@ -205,8 +205,8 @@ _ZNK4pugi4impl12_GLOBAL__N_118xpath_lexer_stringeqEPKc.exit378: ; preds = %bb.bz
   br i1 %or.cond23, label %bb.ca, label %bb.cj
 
 bb.ca:                                            ; preds = %_ZNK4pugi4impl12_GLOBAL__N_118xpath_lexer_stringeqEPKc.exit378
-  %i.ji = icmp eq i64 %1, 1
-  br i1 %i.ji, label %bb.cb, label %bb.cd
+  %i.ji = icmp eq i64 %1, 0
+  br i1 %i.ji, label %bb.cd, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
   %i.jj = getelementptr i8, ptr %.0.val1, i64 1
@@ -230,7 +230,7 @@ bb.cc:                                            ; preds = %bb.cb
   br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeENS1_10ast_type_tENS_16xpath_value_typeEPNS1_14xpath_ast_nodeES6_.exit
 
 bb.cd:                                            ; preds = %bb.cb, %bb.ca
-  %2 = icmp eq i64 %1, 0
+  %2 = phi i8 [ 30, %bb.cb ], [ 29, %bb.ca ]
   %.val177.a = load ptr, ptr %0, align 8, !tbaa !232 ; 5 uses
   %i.jt = getelementptr inbounds nuw i8, ptr %.val177.a, i64 8 ; 3 uses
   %i.ju = load i64, ptr %i.jt, align 8, !tbaa !224 ; 2 uses
@@ -275,8 +275,7 @@ bb.ci:                                            ; preds = %bb.cf
 
 _ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i381: ; preds = %bb.ci, %bb.ce
   %.1.i.i.i382 = phi ptr [ %i.ka, %bb.ce ], [ %i.kh, %bb.ci ] ; 7 uses
-  %3 = select i1 %2, i8 29, i8 30
-  store i8 %3, ptr %.1.i.i.i382, align 8, !tbaa !245
+  store i8 %2, ptr %.1.i.i.i382, align 8, !tbaa !245
   %i.ki = getelementptr inbounds nuw i8, ptr %.1.i.i.i382, i64 1
   store i8 3, ptr %i.ki, align 1, !tbaa !246
   %i.kj = getelementptr inbounds nuw i8, ptr %.1.i.i.i382, i64 2
@@ -316,8 +315,8 @@ _ZNK4pugi4impl12_GLOBAL__N_118xpath_lexer_stringeqEPKc.exit393: ; preds = %bb.ck
   br label %.lr.ph.i.i396
 
 bb.cl:                                            ; preds = %_ZNK4pugi4impl12_GLOBAL__N_118xpath_lexer_stringeqEPKc.exit393
-  %i.ku = icmp eq i64 %1, 1
-  br i1 %i.ku, label %bb.cm, label %bb.co
+  %i.ku = icmp eq i64 %1, 0
+  br i1 %i.ku, label %bb.co, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
   %i.kv = getelementptr i8, ptr %.0.val1, i64 1
@@ -341,10 +340,9 @@ bb.cn:                                            ; preds = %bb.cm
   br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeENS1_10ast_type_tENS_16xpath_value_typeEPNS1_14xpath_ast_nodeES6_.exit
 
 bb.co:                                            ; preds = %bb.cm, %bb.cl
-  %4 = icmp eq i64 %1, 0
-  %5 = select i1 %4, i32 27, i32 28
+  %3 = phi i32 [ 28, %bb.cm ], [ 27, %bb.cl ]
   %.val176.a = load ptr, ptr %0, align 8, !tbaa !232
-  %i.lf = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeENS1_10ast_type_tENS_16xpath_value_typeEPNS1_14xpath_ast_nodeES6_(ptr %.val176.a, i32 noundef %5, i32 noundef 3, ptr noundef %.0.val1, ptr noundef null)
+  %i.lf = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeENS1_10ast_type_tENS_16xpath_value_typeEPNS1_14xpath_ast_nodeES6_(ptr %.val176.a, i32 noundef %3, i32 noundef 3, ptr noundef %.0.val1, ptr noundef null)
   br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeENS1_10ast_type_tENS_16xpath_value_typeEPNS1_14xpath_ast_nodeES6_.exit
 
 bb.cp:                                            ; preds = %.lr.ph.i.i396

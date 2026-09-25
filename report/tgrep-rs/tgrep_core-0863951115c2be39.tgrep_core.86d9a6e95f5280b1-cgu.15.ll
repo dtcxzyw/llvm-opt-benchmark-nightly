@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden { i64, ptr } @_RNvYINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileENtNtB9_8buf_read7BufRead9read_lineCsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef align 8 dereferenceable(48) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 6 uses
+  %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [16 x i8], align 8                ; 8 uses
@@ -307,20 +307,17 @@ bb.e:                                             ; preds = %bb.d
           to label %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i unwind label %bb.j, !inline_history !7
 
 .split37.i.i.i:                                   ; preds = %bb.d
-  %2 = lshr i64 %.sroa.9.030.i.i.i, 32
-  %i.ak = icmp ult i64 %.sroa.9.030.i.i.i, 188978561024 ; 2 uses
-  %switch.idx.cast.i.i.i.i.i.i = trunc i64 %2 to i8
-  %spec.select.i.i.i.i.i.i = select i1 %i.ak, i8 %switch.idx.cast.i.i.i.i.i.i, i8 -1 ; 2 uses
-  %3 = icmp ne i8 %spec.select.i.i.i.i.i.i, -1
-  call void @llvm.assume(i1 %3)
-  %i.al = icmp eq i8 %spec.select.i.i.i.i.i.i, 35
-  br i1 %i.al, label %4, label %.loopexit14.i
+  %i.ak = icmp ult i64 %.sroa.9.030.i.i.i, 188978561024
+  call void @llvm.assume(i1 %i.ak)
+  %.mask.i.i.i = and i64 %.sroa.9.030.i.i.i, 270582939648
+  %i.al = icmp eq i64 %.mask.i.i.i, 150323855360
+  br i1 %i.al, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.sink.split.i, label %.loopexit14.i
 
 .split38.i.i.i:                                   ; preds = %bb.d
   %i.am = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.an = load i8, ptr %i.am, align 8, !range !30, !noundef !12
   %i.ao = icmp eq i8 %i.an, 35
-  br i1 %i.ao, label %.thread.i.i.i, label %.loopexit14.i
+  br i1 %i.ao, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.sink.split.i, label %.loopexit14.i
 
 .split.i.i.i:                                     ; preds = %bb.d
   %i.ap = getelementptr i8, ptr %i.ac, i64 31
@@ -412,16 +409,7 @@ bb.j:                                             ; preds = %.noexc.i.i.i, %bb.e
           to label %.body.i unwind label %bb.l
 
 _RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i: ; preds = %.noexc.i.i.i
-  br i1 %i.aj, label %.thread.i.i.i, label %.loopexit14.i
-
-.thread.i.i.i:                                    ; preds = %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i, %.split38.i.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !948
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.i
-
-4:                                                ; preds = %.split37.i.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !948
-  call void @llvm.assume(i1 %i.ak)
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.i
+  br i1 %i.aj, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.sink.split.i, label %.loopexit14.i
 
 bb.k:                                             ; preds = %.split.i.i.i
   %i.bu = getelementptr i8, ptr %i.ac, i64 -1     ; 2 uses
@@ -432,7 +420,11 @@ bb.k:                                             ; preds = %.split.i.i.i
   invoke void @_RNvXsd_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.q)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.i unwind label %.loopexit.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.i: ; preds = %bb.k, %4, %.thread.i.i.i
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.sink.split.i: ; preds = %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i, %.split38.i.i.i, %.split37.i.i.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !948
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.i
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECsbzNSmZPCnTx_10tgrep_core.exit.i.i.sink.split.i, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !948
   br label %bb.b
 

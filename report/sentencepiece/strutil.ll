@@ -205,12 +205,8 @@ _ZN6google8protobuf9CaseEqualENS0_11StringPieceES1_.exit70: ; preds = %.lr.ph.i.
   br label %.lr.ph.i.i83
 
 .lr.ph.i.i74:                                     ; preds = %_ZN6google8protobuf9CaseEqualENS0_11StringPieceES1_.exit70
-  %i.bj = load i8, ptr %0, align 1, !tbaa !21     ; 3 uses
-  %5 = add i8 %i.bj, -65
-  %6 = icmp ult i8 %5, 26
-  %7 = add nuw nsw i8 %i.bj, 32
-  %8 = select i1 %6, i8 %7, i8 %i.bj
-  %.not.i.i76 = icmp eq i8 %8, 49
+  %i.bj = load i8, ptr %0, align 1, !tbaa !21
+  %.not.i.i76 = icmp eq i8 %i.bj, 49
   br i1 %.not.i.i76, label %.sink.split, label %_ZN6google8protobuf9CaseEqualENS0_11StringPieceES1_.exit88
 
 bb.j:                                             ; preds = %bb.c, %bb.b

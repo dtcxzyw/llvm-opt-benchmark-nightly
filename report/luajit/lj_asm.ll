@@ -205,7 +205,7 @@ bb.agi:                                           ; preds = %bb.agh, %bb.agg, %b
   store i32 269480700, ptr %i.fdv, align 4, !tbaa !26
   %i.fdw = getelementptr inbounds i8, ptr %.130.i.i541, i64 -4 ; 2 uses
   %i.fdx = lshr i32 %.0.i.i.i536, 1
-  %i.fdy = and i32 %i.fdx, 260
+  %i.fdy = and i32 %i.fdx, 4
   %i.fdz = lshr i32 %.031.i.i540, 3
   %i.fea = and i32 %i.fdz, 1
   %i.feb = or disjoint i32 %i.fea, %i.fdy         ; 2 uses
@@ -608,7 +608,7 @@ bb.apr:                                           ; preds = %bb.apq, %bb.app, %.
   store i32 286258172, ptr %i.grd, align 4, !tbaa !26
   %i.gre = getelementptr inbounds i8, ptr %.130.i.i422, i64 -4 ; 2 uses
   %i.grf = lshr i32 %.0.i.i.i420, 1
-  %i.grg = and i32 %i.grf, 260                    ; 2 uses
+  %i.grg = and i32 %i.grf, 4                      ; 2 uses
   %i.grh = lshr i32 %.031.i.i421, 3
   %i.gri = and i32 %i.grh, 1
   %i.grj = or disjoint i32 %i.gri, %i.grg         ; 2 uses
@@ -959,7 +959,7 @@ bb.ara:                                           ; preds = %bb.aqz, %bb.aqy, %b
   store i32 286258172, ptr %i.gwu, align 4, !tbaa !26
   %i.gwv = getelementptr inbounds i8, ptr %.130.i.i59.i, i64 -4 ; 2 uses
   %i.gww = lshr i32 %.0.i.i.i57.i, 1              ; 3 uses
-  %i.gwx = and i32 %i.gww, 260
+  %i.gwx = and i32 %i.gww, 4
   %i.gwy = lshr i32 %.031.i.i58.i, 3
   %i.gwz = and i32 %i.gwy, 1
   %i.gxa = or disjoint i32 %i.gwz, %i.gwx         ; 2 uses
@@ -1105,7 +1105,7 @@ bb.arn:                                           ; preds = %bb.arm, %bb.arl, %b
   %i.gzb = getelementptr inbounds i8, ptr %.130.i32.i.i, i64 -5 ; 3 uses
   store i32 269480956, ptr %i.gzb, align 4, !tbaa !26
   %i.gzc = getelementptr inbounds i8, ptr %.130.i32.i.i, i64 -4 ; 2 uses
-  %i.gzd = and i32 %.pre-phi.i.i410, 260
+  %i.gzd = and i32 %.pre-phi.i.i410, 4
   %i.gze = lshr i32 %.031.i31.i.i, 3
   %i.gzf = and i32 %i.gze, 1
   %i.gzg = or disjoint i32 %i.gzf, %i.gzd         ; 2 uses
@@ -1508,7 +1508,7 @@ bb.n:                                             ; preds = %ra_scratch.exit.i, 
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.i
-  %.1.i = phi i32 [ %.0.i, %bb.n ], [ %i.am, %bb.i ] ; 10 uses
+  %.1.i = phi i32 [ %.0.i, %bb.n ], [ %i.am, %bb.i ] ; 9 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 7
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !25  ; 2 uses
   %.not23.i = icmp eq i8 %i.bj, 0
@@ -1814,8 +1814,7 @@ bb.at:                                            ; preds = %bb.ar
   %i.hb = shl nuw i32 1, %i.ha
   %i.hc = and i32 %i.hb, 6315993
   %.not93 = icmp eq i32 %i.hc, 0
-  %i.hd = select i1 %.not93, i32 0, i32 524800
-  %3 = or disjoint i32 %i.hd, %.1.i               ; 2 uses
+  %i.hd = select i1 %.not93, i32 0, i32 524800    ; 2 uses
   %i.he = load ptr, ptr %i.h, align 8, !tbaa !52  ; 2 uses
   %i.hf = add i32 %.0114, 128
   %i.hg = icmp ult i32 %i.hf, 256
@@ -1845,7 +1844,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.hq = getelementptr inbounds i8, ptr %.019.i, i64 -5
   store i32 %.0.i104, ptr %i.hq, align 4, !tbaa !26
   %i.hr = getelementptr inbounds i8, ptr %.019.i, i64 -2
-  %i.hs = lshr i32 %3, 1
+  %i.hs = lshr exact i32 %i.hd, 1
   %i.ht = and i32 %i.hs, 256
   %i.hu = lshr i32 %.1.i, 3
   %i.hv = and i32 %i.hu, 1                        ; 2 uses
@@ -1854,9 +1853,8 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   br i1 %.not.i.i105, label %emit_gri.exit, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.hx = lshr i32 %3, 16
-  %4 = and i32 %i.hx, 8
-  %i.hy = or disjoint i32 %4, %i.hv
+  %i.hx = lshr i32 %i.hd, 16
+  %i.hy = or disjoint i32 %i.hx, %i.hv
   %i.hz = trunc nuw nsw i32 %i.hy to i8
   %i.ia = or disjoint i8 %i.hz, 64
   %i.ib = getelementptr inbounds i8, ptr %.019.i, i64 -3 ; 2 uses
@@ -2259,9 +2257,9 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa, %asm_
   %i.fx = getelementptr i8, ptr %i.fo, i64 -4
   store i8 -123, ptr %i.fx, align 1, !tbaa !25
   %i.fy = lshr i32 %.1.i, 1
-  %i.fz = and i32 %i.fy, 260                      ; 5 uses
+  %i.fz = and i32 %i.fy, 4                        ; 5 uses
   %i.ga = lshr i32 %.1.i, 3
-  %i.gb = and i32 %i.ga, 1                        ; 10 uses
+  %i.gb = and i32 %i.ga, 1                        ; 8 uses
   %i.gc = or disjoint i32 %i.fz, %i.gb
   %i.gd = trunc nuw nsw i32 %i.gc to i8
   %i.ge = or disjoint i8 %i.gd, 72
@@ -2664,7 +2662,7 @@ emit_rmro.exit305:                                ; preds = %.thread.i304, %bb.d
   store i8 %i.vc, ptr %i.vd, align 1, !tbaa !25
   %i.ve = getelementptr i8, ptr %i.va, i64 -2     ; 2 uses
   store i8 -63, ptr %i.ve, align 1, !tbaa !25
-  %.not.i.i306 = icmp eq i32 %i.gb, 0             ; 3 uses
+  %.not.i.i306 = icmp eq i32 %i.gb, 0             ; 5 uses
   br i1 %.not.i.i306, label %emit_rr.exit, label %bb.dr
 
 bb.dr:                                            ; preds = %emit_rmro.exit305
@@ -2699,8 +2697,8 @@ bb.dt:                                            ; preds = %bb.ds, %emit_rr.exi
   store i8 %i.vp, ptr %i.vq, align 1, !tbaa !25
   %i.vr = getelementptr i8, ptr %.022.i310, i64 -3 ; 2 uses
   store i8 -115, ptr %i.vr, align 1, !tbaa !25
-  %i.vs = lshr i32 %.1.i, 1                       ; 4 uses
-  %i.vt = and i32 %i.vs, 4
+  %i.vs = lshr i32 %.1.i, 1
+  %i.vt = and i32 %i.vs, 4                        ; 7 uses
   %i.vu = lshr i32 %.1.i, 2
   %i.vv = and i32 %i.vu, 2
   %i.vw = or disjoint i32 %i.vt, %i.vv
@@ -2744,8 +2742,7 @@ bb.dy:                                            ; preds = %bb.dx, %bb.dw
   %i.wh = getelementptr inbounds i8, ptr %.019.i, i64 -5
   store i32 %.0.i314, ptr %i.wh, align 4, !tbaa !26
   %i.wi = getelementptr inbounds i8, ptr %.019.i, i64 -2
-  %.not.i.i315 = icmp eq i32 %i.gb, 0
-  br i1 %.not.i.i315, label %emit_gri.exit, label %bb.dz
+  br i1 %.not.i.i306, label %emit_gri.exit, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
   %i.wj = getelementptr inbounds i8, ptr %.019.i, i64 -3 ; 2 uses
@@ -2796,10 +2793,9 @@ bb.ee:                                            ; preds = %bb.ed, %bb.ec, %bb.
   store i8 %i.wv, ptr %i.ww, align 1, !tbaa !25
   %i.wx = getelementptr i8, ptr %.130.i319, i64 -2 ; 2 uses
   store i8 -117, ptr %i.wx, align 1, !tbaa !25
-  %3 = and i32 %i.vs, 260
   %i.wy = lshr i32 %.031.i318, 3
   %i.wz = and i32 %i.wy, 1
-  %i.xa = or disjoint i32 %i.wz, %3               ; 2 uses
+  %i.xa = or disjoint i32 %i.wz, %i.vt            ; 2 uses
   %.not.i.i321 = icmp eq i32 %i.xa, 0
   br i1 %.not.i.i321, label %emit_rmro.exit327, label %bb.ef
 
@@ -2863,10 +2859,9 @@ bb.em:                                            ; preds = %bb.el, %bb.ek, %bb.
   store i8 %i.xq, ptr %i.xr, align 1, !tbaa !25
   %i.xs = getelementptr i8, ptr %.130.i330, i64 -2 ; 2 uses
   store i8 35, ptr %i.xs, align 1, !tbaa !25
-  %4 = and i32 %i.vs, 260                         ; 2 uses
   %i.xt = lshr i32 %.031.i329, 3
   %i.xu = and i32 %i.xt, 1
-  %i.xv = or disjoint i32 %i.xu, %4               ; 2 uses
+  %i.xv = or disjoint i32 %i.xu, %i.vt            ; 2 uses
   %.not.i.i332 = icmp eq i32 %i.xv, 0
   br i1 %.not.i.i332, label %emit_rmro.exit338, label %bb.en
 
@@ -2923,7 +2918,7 @@ bb.es:                                            ; preds = %bb.er, %bb.eq, %bb.
   store i8 -117, ptr %i.ym, align 1, !tbaa !25
   %i.yn = lshr i32 %.031.i340, 3
   %i.yo = and i32 %i.yn, 1
-  %i.yp = or disjoint i32 %i.yo, %4               ; 2 uses
+  %i.yp = or disjoint i32 %i.yo, %i.vt            ; 2 uses
   %.not.i.i343 = icmp eq i32 %i.yp, 0
   br i1 %.not.i.i343, label %emit_rmro.exit349, label %bb.et
 
@@ -2982,10 +2977,9 @@ bb.ez:                                            ; preds = %bb.ey, %bb.ex, %bb.
   store i8 %i.ze, ptr %i.zf, align 1, !tbaa !25
   %i.zg = getelementptr i8, ptr %.130.i352, i64 -2 ; 2 uses
   store i8 35, ptr %i.zg, align 1, !tbaa !25
-  %5 = and i32 %i.vs, 260                         ; 3 uses
   %i.zh = lshr i32 %.031.i351, 3
   %i.zi = and i32 %i.zh, 1
-  %i.zj = or disjoint i32 %i.zi, %5               ; 2 uses
+  %i.zj = or disjoint i32 %i.zi, %i.vt            ; 2 uses
   %.not.i.i354 = icmp eq i32 %i.zj, 0
   br i1 %.not.i.i354, label %emit_rmro.exit360, label %bb.fa
 
@@ -3008,7 +3002,7 @@ emit_rmro.exit360:                                ; preds = %bb.ez, %bb.fa
   store i8 43, ptr %i.zs, align 1, !tbaa !25
   %i.zt = lshr i32 %.0, 3
   %i.zu = and i32 %i.zt, 1                        ; 2 uses
-  %i.zv = or disjoint i32 %i.zu, %5               ; 3 uses
+  %i.zv = or disjoint i32 %i.zu, %i.vt            ; 3 uses
   %.not.i.i361 = icmp eq i32 %i.zv, 0             ; 2 uses
   br i1 %.not.i.i361, label %emit_rr.exit364, label %bb.fb
 
@@ -3152,7 +3146,7 @@ bb.fj:                                            ; preds = %emit_rr.exit388
   store i8 %i.abv, ptr %i.abw, align 1, !tbaa !25
   %i.abx = getelementptr i8, ptr %.046.i.i387, i64 -2
   store i8 3, ptr %i.abx, align 1, !tbaa !25
-  %i.aby = or disjoint i32 %i.gb, %5              ; 2 uses
+  %i.aby = or disjoint i32 %i.gb, %i.vt           ; 2 uses
   %.not.i.i389 = icmp eq i32 %i.aby, 0
   br i1 %.not.i.i389, label %emit_rr.exit392, label %bb.fk
 
@@ -3245,8 +3239,7 @@ emit_rr.exit406:                                  ; preds = %bb.fm, %bb.fn
   store i8 %i.ads, ptr %i.adt, align 1, !tbaa !25
   %i.adu = getelementptr i8, ptr %.046.i.i405, i64 -6 ; 2 uses
   store i8 -127, ptr %i.adu, align 2, !tbaa !25
-  %.not.i.i409 = icmp eq i32 %i.gb, 0
-  br i1 %.not.i.i409, label %emit_gri.exit411, label %bb.fo
+  br i1 %.not.i.i306, label %emit_gri.exit411, label %bb.fo
 
 bb.fo:                                            ; preds = %emit_rr.exit406
   %i.adv = getelementptr inbounds i8, ptr %.046.i.i405, i64 -7 ; 2 uses
@@ -3649,8 +3642,8 @@ ra_alloc1.exit:                                   ; preds = %ra_dest.exit, %bb.m
   %i.ck = shl nuw i32 1, %i.cj
   %i.cl = and i32 %i.ck, 6315993
   %.not = icmp eq i32 %i.cl, 0
-  %i.cm = select i1 %.not, i32 0, i32 524800
-  %i.cn = or disjoint i32 %i.cm, %.1.i            ; 2 uses
+  %i.cm = select i1 %.not, i32 0, i32 524800      ; 2 uses
+  %i.cn = or disjoint i32 %i.cm, %.1.i
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !52 ; 4 uses
   %i.cq = shl nuw nsw i32 %.1.i, 3
@@ -3674,10 +3667,10 @@ ra_alloc1.exit:                                   ; preds = %ra_dest.exit, %bb.m
   br i1 %.not.i.i, label %emit_rr.exit, label %bb.n
 
 bb.n:                                             ; preds = %ra_alloc1.exit
-  %i.df = lshr i32 %i.cn, 16
-  %i.dg = or i32 %i.de, %i.df
+  %i.df = lshr i32 %i.cm, 16
+  %i.dg = or disjoint i32 %i.de, %i.df
   %i.dh = trunc i32 %i.dg to i8
-  %i.di = or i8 %i.dh, 64
+  %i.di = or disjoint i8 %i.dh, 64
   %i.dj = getelementptr inbounds i8, ptr %i.cp, i64 -4 ; 2 uses
   store i8 %i.di, ptr %i.dj, align 1, !tbaa !25
   br label %emit_rr.exit
@@ -3691,8 +3684,8 @@ emit_rr.exit:                                     ; preds = %ra_alloc1.exit, %bb
   %i.dn = shl nuw i32 1, %i.dm
   %i.do = and i32 %i.dn, 6315993
   %.not23 = icmp eq i32 %i.do, 0
-  %i.dp = select i1 %.not23, i32 0, i32 524800
-  %i.dq = or disjoint i32 %i.dp, %.1.i            ; 2 uses
+  %i.dp = select i1 %.not23, i32 0, i32 524800    ; 2 uses
+  %i.dq = or disjoint i32 %i.dp, %.1.i
   %i.dr = getelementptr inbounds i8, ptr %.046.i.i, i64 -1
   store i8 %i.cu, ptr %i.dr, align 1, !tbaa !25
   %i.ds = getelementptr i8, ptr %.046.i.i, i64 -2 ; 2 uses
@@ -3704,10 +3697,10 @@ emit_rr.exit:                                     ; preds = %ra_alloc1.exit, %bb
   br i1 %.not.i.i27, label %emit_rr.exit29, label %bb.o
 
 bb.o:                                             ; preds = %emit_rr.exit
-  %i.dw = lshr i32 %i.dq, 16
-  %i.dx = or i32 %i.dv, %i.dw
+  %i.dw = lshr i32 %i.dp, 16
+  %i.dx = or disjoint i32 %i.dv, %i.dw
   %i.dy = trunc i32 %i.dx to i8
-  %i.dz = or i8 %i.dy, 64
+  %i.dz = or disjoint i8 %i.dy, 64
   %i.ea = getelementptr i8, ptr %.046.i.i, i64 -3 ; 2 uses
   store i8 %i.dz, ptr %i.ea, align 1, !tbaa !25
   br label %emit_rr.exit29
@@ -3930,7 +3923,7 @@ emit_rmro.exit60:                                 ; preds = %bb.q, %.thread93, %
   %i.cd = and i32 %i.cc, 4
   %i.ce = lshr i32 %.031.i50, 3
   %i.cf = and i32 %i.ce, 1
-  %i.cg = or disjoint i32 %i.cd, %i.cf
+  %i.cg = or disjoint i32 %i.cf, %i.cd
   %i.ch = trunc nuw nsw i32 %i.cg to i8
   %i.ci = or disjoint i8 %i.ch, 72
   %i.cj = getelementptr i8, ptr %.130.i51, i64 -3 ; 2 uses
@@ -4333,7 +4326,7 @@ emit_rr.exit:                                     ; preds = %asm_guardcc.exit25,
   store i32 705688316, ptr %i.fy, align 4, !tbaa !26
   %i.fz = getelementptr inbounds i8, ptr %.046.i.i, i64 -4 ; 2 uses
   %i.ga = lshr i32 %.0.i.i, 1
-  %i.gb = and i32 %i.ga, 260                      ; 2 uses
+  %i.gb = and i32 %i.ga, 4                        ; 2 uses
   %i.gc = lshr i32 %.1.i, 3
   %i.gd = and i32 %i.gc, 1
   %i.ge = or disjoint i32 %i.gd, %i.gb            ; 2 uses

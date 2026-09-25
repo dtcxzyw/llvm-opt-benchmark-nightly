@@ -117,9 +117,9 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.ap = getelementptr inbounds nuw i8, ptr %i.u, i64 80
-  %i.aq = load i32, ptr %i.ap, align 8, !tbaa !37 ; 3 uses
+  %i.aq = load i32, ptr %i.ap, align 8, !tbaa !37 ; 2 uses
   %switch196 = icmp ult i32 %i.aq, 2
-  br i1 %switch196, label %9, label %bb.n
+  br i1 %switch196, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ar = load i64, ptr @H5E_ARGS_g, align 8, !tbaa !24
@@ -127,25 +127,19 @@ bb.n:                                             ; preds = %bb.m
   %i.at = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5T__conv_s_s, i32 noundef 69, i64 noundef %i.ar, i64 noundef %i.as, ptr noundef nonnull @.str.5) #5 ; 0 uses
   br label %.loopexit233
 
-9:                                                ; preds = %bb.m
-  %10 = icmp eq i32 %i.al, 0
-  br i1 %10, label %11, label %bb.o
-
-11:                                               ; preds = %9
-  %12 = icmp eq i32 %i.aq, 1
-  br i1 %12, label %.thread197, label %bb.p
-
-bb.o:                                             ; preds = %9
+bb.o:                                             ; preds = %bb.m
+  %9 = icmp eq i32 %i.al, 0
   %i.au = icmp eq i32 %i.aq, 0
-  br i1 %i.au, label %.thread197, label %bb.p
+  %10 = xor i1 %9, %i.au
+  br i1 %10, label %.thread197, label %bb.p
 
-.thread197:                                       ; preds = %bb.o, %11
+.thread197:                                       ; preds = %bb.o
   %i.av = load i64, ptr @H5E_ARGS_g, align 8, !tbaa !24
   %i.aw = load i64, ptr @H5E_BADVALUE_g, align 8, !tbaa !24
   %i.ax = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5T__conv_s_s, i32 noundef 75, i64 noundef %i.av, i64 noundef %i.aw, ptr noundef nonnull @.str.6) #5 ; 0 uses
   br label %.loopexit233
 
-bb.p:                                             ; preds = %11, %bb.o
+bb.p:                                             ; preds = %bb.o
   %i.ay = getelementptr inbounds nuw i8, ptr %i.n, i64 84
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !37
   %or.cond194 = icmp ugt i32 %i.az, 2

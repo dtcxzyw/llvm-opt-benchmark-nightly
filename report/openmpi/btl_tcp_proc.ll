@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.05886.ph = phi ptr [ %.05886160, %.loopexit ], [ undef, %.lr.ph ] ; 2 uses
   %.06085.ph = phi i32 [ %.06085156, %.loopexit ], [ 0, %.lr.ph ] ; 2 uses
   %i.n = load ptr, ptr %i.j, align 8, !tbaa !64   ; 2 uses
-  %i.o = load i16, ptr %1, align 2, !tbaa !78     ; 3 uses
+  %i.o = load i16, ptr %1, align 2, !tbaa !78     ; 2 uses
   %cond1 = icmp eq i16 %i.o, 2
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.05787.ph
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !94   ; 7 uses
@@ -245,8 +245,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !90 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 12
   %i.ai = load i8, ptr %i.ah, align 4, !tbaa !76
-  %3 = zext i8 %i.ai to i16
-  %.not = icmp eq i16 %i.o, %3
+  %.not = icmp eq i8 %i.ai, 2
   br i1 %.not, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %.outer.peel.newph

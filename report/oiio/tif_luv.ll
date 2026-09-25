@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.h
   %.01824 = phi ptr [ %i.c, %.lr.ph ], [ %i.ai, %bb.h ] ; 2 uses
   %i.e = add nsw i64 %.in, -1
   %i.f = load i16, ptr %.01725, align 2, !tbaa !63 ; 3 uses
-  %3 = sext i16 %i.f to i32                       ; 2 uses
   %i.g = icmp slt i16 %i.f, 1
   br i1 %i.g, label %bb.h, label %bb.c
 
@@ -216,17 +215,17 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.i = load i32, ptr %i.d, align 8, !tbaa !37
   %i.j = icmp eq i32 %i.i, 0
+  %narrow = add nsw i16 %i.f, -3314               ; 2 uses
   br i1 %i.j, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %4 = add nsw i32 %3, -3314
-  %5 = ashr i32 %4, 2
+  %3 = ashr i16 %narrow, 2
+  %4 = sext i16 %3 to i32
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
-  %6 = uitofp nneg i32 %3 to double
-  %7 = fadd nnan double %6, -3.314000e+03
-  %i.k = fmul nnan double %7, 2.500000e-01
+  %5 = sitofp i16 %narrow to double
+  %i.k = fmul nnan double %5, 2.500000e-01
   %i.l = load i32, ptr @_TIFFRand.nCounter, align 4, !tbaa !6 ; 2 uses
   %.not.i.i = icmp eq i32 %i.l, 0
   br i1 %.not.i.i, label %bb.g, label %tiff_itrunc.exit
@@ -250,7 +249,7 @@ tiff_itrunc.exit:                                 ; preds = %bb.f, %bb.g
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.c, %bb.b, %tiff_itrunc.exit, %bb.e
-  %.016 = phi i32 [ %.0.i, %tiff_itrunc.exit ], [ 0, %bb.b ], [ %5, %bb.e ], [ 1023, %bb.c ]
+  %.016 = phi i32 [ %.0.i, %tiff_itrunc.exit ], [ 0, %bb.b ], [ %4, %bb.e ], [ 1023, %bb.c ]
   %i.w = getelementptr inbounds nuw i8, ptr %.01725, i64 2
   %i.x = load <2 x i16>, ptr %i.w, align 2, !tbaa !63
   %i.y = sitofp <2 x i16> %i.x to <2 x double>

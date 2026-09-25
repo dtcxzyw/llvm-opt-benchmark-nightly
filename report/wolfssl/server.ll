@@ -204,7 +204,7 @@ bb.a:
   %.03541603 = phi i32 [ %.03541603.be, %.lr.ph.backedge ], [ 0, %bb.a ] ; 77 uses
   %.03561601 = phi i32 [ %.03561601.be, %.lr.ph.backedge ], [ 0, %bb.a ] ; 78 uses
   %.03581599 = phi ptr [ %.03581599.be, %.lr.ph.backedge ], [ null, %bb.a ] ; 78 uses
-  %.03601597 = phi i32 [ %.03601597.be, %.lr.ph.backedge ], [ 0, %bb.a ] ; 74 uses
+  %.03601597 = phi i32 [ %.03601597.be, %.lr.ph.backedge ], [ 0, %bb.a ] ; 70 uses
   %.03621595 = phi i32 [ %.03621595.be, %.lr.ph.backedge ], [ 0, %bb.a ] ; 76 uses
   %.03641593 = phi i32 [ %.03641593.be, %.lr.ph.backedge ], [ 1, %bb.a ] ; 78 uses
   %.03661591 = phi i32 [ %.03661591.be, %.lr.ph.backedge ], [ 0, %bb.a ] ; 78 uses
@@ -607,7 +607,7 @@ err_sys_ex.exit.thread:                           ; preds = %bb.ff, %switch.edge
   %.042313742527 = phi i32 [ %.0423137425262659, %err_sys_ex.exit ], [ %.0423137425262659, %bb.fl ], [ %.04231545, %bb.fd ], [ 1, %switch.edge ], [ 1, %bb.ff ]
   %i.jz = phi i1 [ %i.jw, %err_sys_ex.exit ], [ true, %bb.fl ], [ false, %bb.fd ], [ false, %switch.edge ], [ false, %bb.ff ] ; 9 uses
   %.2435686 = phi i32 [ %.0433146925172664, %err_sys_ex.exit ], [ %.0433146925172664, %bb.fl ], [ %., %bb.fd ], [ -1, %switch.edge ], [ -2, %bb.ff ] ; 3 uses
-  %.not476 = icmp eq i32 %.03601597, 0
+  %.not476 = icmp eq i32 %.03601597, 0            ; 8 uses
   br i1 %.not476, label %bb.fr, label %bb.fm
 
 bb.fm:                                            ; preds = %err_sys_ex.exit.thread
@@ -635,7 +635,6 @@ bb.fq:                                            ; preds = %bb.fp
   unreachable
 
 bb.fr:                                            ; preds = %bb.fo, %bb.fn, %err_sys_ex.exit.thread
-  %.036088025782786 = phi i32 [ 0, %err_sys_ex.exit.thread ], [ %.03601597, %bb.fo ], [ %.03601597, %bb.fn ] ; 7 uses
   switch i32 %.2435686, label %bb.fy [
     i32 3, label %err_sys_ex.exit557
     i32 4, label %bb.fs
@@ -669,7 +668,7 @@ bb.fx:                                            ; preds = %bb.fu
   unreachable
 
 bb.fy:                                            ; preds = %bb.fp, %bb.fr
-  %.036088025782785 = phi i32 [ %.03601597, %bb.fp ], [ %.036088025782786, %bb.fr ] ; 3 uses
+  %.not4763012 = phi i1 [ false, %bb.fp ], [ %.not476, %bb.fr ] ; 3 uses
   %i.kg = load i32, ptr @runWithErrors, align 4, !tbaa !9
   %i.kh = icmp eq i32 %i.kg, 1
   br i1 %i.kh, label %bb.fz, label %bb.gb
@@ -689,13 +688,13 @@ bb.gb:                                            ; preds = %bb.fy
   unreachable
 
 .critedge545.sink.split:                          ; preds = %bb.ga, %bb.fw
-  %.036088025782780.ph = phi i32 [ %.036088025782786, %bb.fw ], [ %.036088025782785, %bb.ga ]
+  %.not4763007.ph = phi i1 [ %.not476, %bb.fw ], [ %.not4763012, %bb.ga ]
   %i.kk = load ptr, ptr @stderr, align 8, !tbaa !12
   %fwrite.i552 = tail call i64 @fwrite(ptr nonnull @.str.73, i64 32, i64 1, ptr %i.kk) #22 ; 0 uses
   br label %.critedge545
 
 .critedge545:                                     ; preds = %.critedge545.sink.split, %bb.ga, %bb.fw
-  %.036088025782780 = phi i32 [ %.036088025782786, %bb.fw ], [ %.036088025782785, %bb.ga ], [ %.036088025782780.ph, %.critedge545.sink.split ] ; 3 uses
+  %.not4763007 = phi i1 [ %.not476, %bb.fw ], [ %.not4763012, %bb.ga ], [ %.not4763007.ph, %.critedge545.sink.split ] ; 3 uses
   %.pr = load i32, ptr @runWithErrors, align 4, !tbaa !9
   %i.kl = icmp eq i32 %.pr, 1
   br i1 %i.kl, label %.critedge545.thread, label %bb.ge
@@ -720,6 +719,7 @@ bb.ge:                                            ; preds = %.critedge545
   unreachable
 
 err_sys_ex.exit557:                               ; preds = %bb.fp, %.thread3013, %bb.ft, %bb.fr, %bb.fs
+  %.not4763011 = phi i1 [ %.not476, %bb.ft ], [ %.not476, %bb.fr ], [ true, %.thread3013 ], [ false, %bb.fp ], [ %.not476, %bb.fs ] ; 2 uses
   %i.kp = phi i1 [ %i.jz, %bb.ft ], [ %i.jz, %bb.fr ], [ false, %.thread3013 ], [ %i.jz, %bb.fp ], [ %i.jz, %bb.fs ] ; 2 uses
   %.0152625113009 = phi i16 [ %.01529, %bb.ft ], [ %.01529, %bb.fr ], [ 11111, %.thread3013 ], [ %.01529, %bb.fp ], [ %.01529, %bb.fs ] ; 2 uses
   %.0438150725133002 = phi i32 [ %.04381531, %bb.ft ], [ %.04381531, %bb.fr ], [ -99, %.thread3013 ], [ %.04381531, %bb.fp ], [ %.04381531, %bb.fs ] ; 2 uses
@@ -753,7 +753,6 @@ err_sys_ex.exit557:                               ; preds = %bb.fp, %.thread3013
   %.036693725722805 = phi i32 [ %.03661591, %bb.ft ], [ %.03661591, %bb.fr ], [ 0, %.thread3013 ], [ %.03661591, %bb.fp ], [ %.03661591, %bb.fs ] ; 2 uses
   %.036491825742798 = phi i32 [ %.03641593, %bb.ft ], [ %.03641593, %bb.fr ], [ 1, %.thread3013 ], [ %.03641593, %bb.fp ], [ %.03641593, %bb.fs ] ; 2 uses
   %.036289925762791 = phi i32 [ %.03621595, %bb.ft ], [ %.03621595, %bb.fr ], [ 0, %.thread3013 ], [ %.03621595, %bb.fp ], [ %.03621595, %bb.fs ] ; 2 uses
-  %.036088025782784 = phi i32 [ %.036088025782786, %bb.ft ], [ %.036088025782786, %bb.fr ], [ 0, %.thread3013 ], [ %.03601597, %bb.fp ], [ %.036088025782786, %bb.fs ] ; 2 uses
   %.035886125802777 = phi ptr [ %.03581599, %bb.ft ], [ %.03581599, %bb.fr ], [ null, %.thread3013 ], [ %.03581599, %bb.fp ], [ %.03581599, %bb.fs ] ; 2 uses
   %.035684225822770 = phi i32 [ %.03561601, %bb.ft ], [ %.03561601, %bb.fr ], [ 0, %.thread3013 ], [ %.03561601, %bb.fp ], [ %.03561601, %bb.fs ] ; 2 uses
   %.035482325842763 = phi i32 [ %.03541603, %bb.ft ], [ %.03541603, %bb.fr ], [ 0, %.thread3013 ], [ %.03541603, %bb.fp ], [ %.03541603, %bb.fs ] ; 2 uses
@@ -765,6 +764,7 @@ err_sys_ex.exit557:                               ; preds = %bb.fp, %.thread3013
   br i1 %i.ks, label %err_sys_ex.exit557.thread, label %err_sys_ex.exit561
 
 err_sys_ex.exit557.thread:                        ; preds = %bb.fz, %bb.fv, %bb.gd, %bb.gc, %.critedge545.thread, %err_sys_ex.exit557
+  %.not4763009 = phi i1 [ %.not4763012, %bb.fz ], [ %.not476, %bb.fv ], [ %.not4763007, %bb.gd ], [ %.not4763007, %bb.gc ], [ %.not4763007, %.critedge545.thread ], [ %.not4763011, %err_sys_ex.exit557 ] ; 3 uses
   %i.kt = phi i1 [ %i.jz, %bb.fz ], [ %i.jz, %bb.fv ], [ %i.jz, %bb.gd ], [ %i.jz, %bb.gc ], [ %i.jz, %.critedge545.thread ], [ %i.kp, %err_sys_ex.exit557 ] ; 3 uses
   %.0152625113007 = phi i16 [ %.01529, %bb.fz ], [ %.01529, %bb.fv ], [ %.01529, %bb.gd ], [ %.01529, %bb.gc ], [ %.01529, %.critedge545.thread ], [ %.0152625113009, %err_sys_ex.exit557 ] ; 3 uses
   %.0438150725133000 = phi i32 [ %.04381531, %bb.fz ], [ %.04381531, %bb.fv ], [ %.04381531, %bb.gd ], [ %.04381531, %bb.gc ], [ %.04381531, %.critedge545.thread ], [ %.0438150725133002, %err_sys_ex.exit557 ] ; 3 uses
@@ -798,7 +798,6 @@ err_sys_ex.exit557.thread:                        ; preds = %bb.fz, %bb.fv, %bb.
   %.036693725722803 = phi i32 [ %.03661591, %bb.fz ], [ %.03661591, %bb.fv ], [ %.03661591, %bb.gd ], [ %.03661591, %bb.gc ], [ %.03661591, %.critedge545.thread ], [ %.036693725722805, %err_sys_ex.exit557 ] ; 3 uses
   %.036491825742796 = phi i32 [ %.03641593, %bb.fz ], [ %.03641593, %bb.fv ], [ %.03641593, %bb.gd ], [ %.03641593, %bb.gc ], [ %.03641593, %.critedge545.thread ], [ %.036491825742798, %err_sys_ex.exit557 ] ; 3 uses
   %.036289925762789 = phi i32 [ %.03621595, %bb.fz ], [ %.03621595, %bb.fv ], [ %.03621595, %bb.gd ], [ %.03621595, %bb.gc ], [ %.03621595, %.critedge545.thread ], [ %.036289925762791, %err_sys_ex.exit557 ] ; 3 uses
-  %.036088025782782 = phi i32 [ %.036088025782785, %bb.fz ], [ %.036088025782786, %bb.fv ], [ %.036088025782780, %bb.gd ], [ %.036088025782780, %bb.gc ], [ %.036088025782780, %.critedge545.thread ], [ %.036088025782784, %err_sys_ex.exit557 ] ; 3 uses
   %.035886125802775 = phi ptr [ %.03581599, %bb.fz ], [ %.03581599, %bb.fv ], [ %.03581599, %bb.gd ], [ %.03581599, %bb.gc ], [ %.03581599, %.critedge545.thread ], [ %.035886125802777, %err_sys_ex.exit557 ] ; 3 uses
   %.035684225822768 = phi i32 [ %.03561601, %bb.fz ], [ %.03561601, %bb.fv ], [ %.03561601, %bb.gd ], [ %.03561601, %bb.gc ], [ %.03561601, %.critedge545.thread ], [ %.035684225822770, %err_sys_ex.exit557 ] ; 3 uses
   %.035482325842761 = phi i32 [ %.03541603, %bb.fz ], [ %.03541603, %bb.fv ], [ %.03541603, %bb.gd ], [ %.03541603, %bb.gc ], [ %.03541603, %.critedge545.thread ], [ %.035482325842763, %err_sys_ex.exit557 ] ; 3 uses
@@ -827,6 +826,7 @@ bb.gi:                                            ; preds = %err_sys_ex.exit557.
   unreachable
 
 err_sys_ex.exit561:                               ; preds = %bb.gh, %bb.gg, %bb.gf, %err_sys_ex.exit557
+  %.not4763008 = phi i1 [ %.not4763011, %err_sys_ex.exit557 ], [ %.not4763009, %bb.gf ], [ %.not4763009, %bb.gg ], [ %.not4763009, %bb.gh ]
   %i.kz = phi i1 [ %i.kp, %err_sys_ex.exit557 ], [ %i.kt, %bb.gf ], [ %i.kt, %bb.gg ], [ %i.kt, %bb.gh ]
   %.0152625113006 = phi i16 [ %.0152625113009, %err_sys_ex.exit557 ], [ %.0152625113007, %bb.gf ], [ %.0152625113007, %bb.gg ], [ %.0152625113007, %bb.gh ]
   %.0438150725132999 = phi i32 [ %.0438150725133002, %err_sys_ex.exit557 ], [ %.0438150725133000, %bb.gf ], [ %.0438150725133000, %bb.gg ], [ %.0438150725133000, %bb.gh ] ; 2 uses
@@ -860,7 +860,6 @@ err_sys_ex.exit561:                               ; preds = %bb.gh, %bb.gg, %bb.
   %.036693725722802 = phi i32 [ %.036693725722805, %err_sys_ex.exit557 ], [ %.036693725722803, %bb.gf ], [ %.036693725722803, %bb.gg ], [ %.036693725722803, %bb.gh ]
   %.036491825742795 = phi i32 [ %.036491825742798, %err_sys_ex.exit557 ], [ %.036491825742796, %bb.gf ], [ %.036491825742796, %bb.gg ], [ %.036491825742796, %bb.gh ]
   %.036289925762788 = phi i32 [ %.036289925762791, %err_sys_ex.exit557 ], [ %.036289925762789, %bb.gf ], [ %.036289925762789, %bb.gg ], [ %.036289925762789, %bb.gh ]
-  %.036088025782781 = phi i32 [ %.036088025782784, %err_sys_ex.exit557 ], [ %.036088025782782, %bb.gf ], [ %.036088025782782, %bb.gg ], [ %.036088025782782, %bb.gh ]
   %.035886125802774 = phi ptr [ %.035886125802777, %err_sys_ex.exit557 ], [ %.035886125802775, %bb.gf ], [ %.035886125802775, %bb.gg ], [ %.035886125802775, %bb.gh ] ; 3 uses
   %.035684225822767 = phi i32 [ %.035684225822770, %err_sys_ex.exit557 ], [ %.035684225822768, %bb.gf ], [ %.035684225822768, %bb.gg ], [ %.035684225822768, %bb.gh ]
   %.035482325842760 = phi i32 [ %.035482325842763, %err_sys_ex.exit557 ], [ %.035482325842761, %bb.gf ], [ %.035482325842761, %bb.gg ], [ %.035482325842761, %bb.gh ] ; 2 uses
@@ -1237,7 +1236,6 @@ bb.iv:                                            ; preds = %bb.iu
 bb.iw:                                            ; preds = %bb.iv, %bb.iu
   %i.nz = icmp ne i32 %.035482325842760, 0
   %or.cond53 = and i1 %or.cond23, %i.nz
-  %13 = icmp eq i32 %.036088025782781, 1
   %.not502 = icmp eq i32 %.035280425862753, 0
   %i.oa = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %.not504.not = icmp eq ptr %.0388114625502879, null
@@ -1261,7 +1259,7 @@ bb.iw:                                            ; preds = %bb.iv, %bb.iu
   %.not522 = icmp eq i32 %.0436148825152992, 0
   %i.ol = icmp ne i32 %.0413127925362928, 0
   %i.om = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %14 = icmp eq i32 %.0411126025382921, 1
+  %13 = icmp ne i32 %.0411126025382921, 0
   br label %.outer.outer
 
 .outer.outer:                                     ; preds = %bb.qb, %bb.iw
@@ -1286,7 +1284,7 @@ bb.ix:                                            ; preds = %.outer, %.thread305
   %.0670 = phi i32 [ %.2672, %.thread3054 ], [ %.0670.ph, %.outer ]
   %.2472 = phi i16 [ %.3473, %.thread3054 ], [ %.2472.ph, %.outer ] ; 12 uses
   %.1443 = phi ptr [ %.3445, %.thread3054 ], [ %.1443.ph, %.outer ] ; 5 uses
-  %or.cond91 = phi i1 [ false, %.thread3054 ], [ %14, %.outer ]
+  %or.cond91 = phi i1 [ false, %.thread3054 ], [ %13, %.outer ]
   %.not47.i = phi i1 [ true, %.thread3054 ], [ %.not47.i.ph, %.outer ]
   %.0390 = phi i32 [ %.5, %.thread3054 ], [ %.0390.ph, %.outer ]
   %i.oo = call ptr @wolfSSL_new(ptr noundef %.1443) #20 ; 27 uses
@@ -1415,7 +1413,7 @@ bb.jt:                                            ; preds = %bb.jo
   ]
 
 bb.ju:                                            ; preds = %bb.jt
-  br i1 %13, label %bb.jv, label %bb.kb
+  br i1 %.not4763008, label %bb.kb, label %bb.jv
 
 bb.jv:                                            ; preds = %bb.ju
   %i.po = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.035886125802774, ptr noundef nonnull dereferenceable(18) @.str.198) #24

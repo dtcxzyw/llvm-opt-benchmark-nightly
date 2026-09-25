@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef align 8 ptr @_RNvXsD_NtNtCs6P5GRezSnwZ_4http6header3mapINtB5_9ValueIterNtNtB7_5value11HeaderValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias nofree noundef align 8 captures(none) dereferenceable(48) %0) unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !19, !noundef !9 ; 2 uses
+  %i.a = load i64, ptr %0, align 8, !range !19, !noundef !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   switch i64 %i.a, label %bb.c [
     i64 2, label %bb.b
@@ -278,14 +278,12 @@ bb.l:                                             ; preds = %bb.c
   %i.aa = load ptr, ptr %i.z, align 8, !nonnull !9, !noundef !9
   %i.ab = getelementptr inbounds nuw [72 x i8], ptr %i.aa, i64 %i.c ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ad = load i64, ptr %i.ac, align 8, !range !19, !noundef !9 ; 2 uses
+  %i.ad = load i64, ptr %i.ac, align 8, !range !19, !noundef !9
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.not9 = icmp ne i64 %i.ad, 2
-  %i.af = icmp eq i64 %i.a, %i.ad
-  %or.cond = and i1 %.not9, %i.af
+  %i.af = icmp eq i64 %i.ad, 1
   %i.ag = load i64, ptr %i.ae, align 8
   %i.ah = icmp eq i64 %i.c, %i.ag
-  %or.cond11 = select i1 %or.cond, i1 %i.ah, i1 false
+  %or.cond11 = select i1 %i.af, i1 %i.ah, i1 false
   br i1 %or.cond11, label %bb.o, label %bb.n
 
 bb.m:                                             ; preds = %bb.c

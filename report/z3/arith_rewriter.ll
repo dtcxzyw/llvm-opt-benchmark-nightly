@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b, %bb.j, %bb.h
   br label %bb.cy
 
 bb.e:                                             ; preds = %bb.c
-  %15 = icmp eq i32 %3, 1                         ; 2 uses
+  %15 = icmp ne i32 %3, 0                         ; 2 uses
   %i.am = load i32, ptr %7, align 8
   %i.an = icmp eq i32 %i.am, 0
   %or.cond234 = select i1 %15, i1 %i.an, i1 false
@@ -608,8 +608,8 @@ _ZSt4sortIPP4exprN13poly_rewriterI19arith_rewriter_coreE6mon_ltEEvT_S7_T0_.exit.
           to label %_ZN8rational3negEv.exit405 unwind label %bb.ep
 
 .critedge:                                        ; preds = %bb.eq
-  %i.aht = icmp eq i32 %i.ahq, 1
-  br i1 %i.aht, label %_ZN13poly_rewriterI19arith_rewriter_coreE10mk_numeralERK8rational.exit413.thread515, label %_ZN13poly_rewriterI19arith_rewriter_coreE10mk_numeralERK8rational.exit413
+  %i.aht = icmp eq i32 %i.ahq, 0
+  br i1 %i.aht, label %_ZN13poly_rewriterI19arith_rewriter_coreE10mk_numeralERK8rational.exit413, label %_ZN13poly_rewriterI19arith_rewriter_coreE10mk_numeralERK8rational.exit413.thread515
 
 _ZN13poly_rewriterI19arith_rewriter_coreE10mk_numeralERK8rational.exit413.thread515: ; preds = %.critedge
   %i.ahu = load ptr, ptr %14, align 8, !tbaa !110
@@ -1012,7 +1012,7 @@ _ZN8rationalmLERKS_.exit:                         ; preds = %_ZNK13poly_rewriter
   br i1 %exitcond.not, label %._crit_edge, label %bb.j, !llvm.loop !685
 
 ._crit_edge:                                      ; preds = %_ZN8rationalmLERKS_.exit, %_ZN8rationalC2Ei.exit
-  %.0104.lcssa = phi i32 [ 0, %_ZN8rationalC2Ei.exit ], [ %.1105, %_ZN8rationalmLERKS_.exit ] ; 6 uses
+  %.0104.lcssa = phi i32 [ 0, %_ZN8rationalC2Ei.exit ], [ %.1105, %_ZN8rationalmLERKS_.exit ] ; 4 uses
   %.0102.lcssa = phi i32 [ 0, %_ZN8rationalC2Ei.exit ], [ %.1103, %_ZN8rationalmLERKS_.exit ] ; 2 uses
   %.0100.lcssa = phi ptr [ null, %_ZN8rationalC2Ei.exit ], [ %.1101, %_ZN8rationalmLERKS_.exit ] ; 12 uses
   %i.cn = icmp eq i32 %.0104.lcssa, %1
@@ -1415,8 +1415,8 @@ bb.bm:                                            ; preds = %bb.ag
   br i1 %i.jh, label %_ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit.thread, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.ji = icmp eq i32 %.0104.lcssa, 1
-  br i1 %i.ji, label %bb.bo, label %bb.cf
+  %i.ji = icmp eq i32 %.0104.lcssa, 0             ; 3 uses
+  br i1 %i.ji, label %bb.cf, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
   %i.jj = load ptr, ptr %2, align 8, !tbaa !97    ; 2 uses
@@ -1728,13 +1728,11 @@ bb.cg:                                            ; preds = %bb.cf
   br label %.lr.ph395
 
 ._crit_edge396:                                   ; preds = %bb.cq
-  %16 = icmp eq i32 %.0104.lcssa, 0
-  %or.cond3 = and i1 %.294, %16
+  %or.cond3 = and i1 %i.ji, %.294
   br i1 %or.cond3, label %bb.cr, label %bb.ct
 
 ._crit_edge396.thread:                            ; preds = %bb.cg
-  %17 = icmp eq i32 %.0104.lcssa, 0
-  br i1 %17, label %bb.cr, label %.thread379
+  br i1 %i.ji, label %bb.cr, label %.thread379
 
 .lr.ph395:                                        ; preds = %.lr.ph395.preheader, %bb.cq
   %i.ng = phi ptr [ %i.nd, %.lr.ph395.preheader ], [ %i.pu, %bb.cq ]

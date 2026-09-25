@@ -204,15 +204,12 @@ ar_add_direct_with_hash.exit.thread:              ; preds = %bb.k, %bb.l
   %i.aq = trunc i64 %i.c to i8
   %i.ar = getelementptr i8, ptr %i.al, i64 %i.an
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !24
-  %i.as = load i64, ptr %i.d, align 8, !tbaa !21  ; 2 uses
-  %i.at = and i64 %i.as, -16711681
+  %i.as = load i64, ptr %i.d, align 8, !tbaa !21
+  %i.at = and i64 %i.as, -15794177
   %i.au = shl nuw nsw i32 %.0.i, 20
-  %i.av = add nuw nsw i32 %i.au, 1048576
+  %i.av = add nuw nsw i32 %i.au, 1114112
   %i.aw = zext nneg i32 %i.av to i64
-  %4 = or i64 %i.at, %i.aw
-  %5 = and i64 %i.as, 983040
-  %narrow.i.i = add nuw nsw i64 %5, 65536
-  %i.ax = or i64 %4, %narrow.i.i
+  %i.ax = or i64 %i.at, %i.aw
   store i64 %i.ax, ptr %i.d, align 8, !tbaa !21
   br label %ar_add_direct_with_hash.exit
 
@@ -615,14 +612,11 @@ ar_compact_table.exit:                            ; preds = %.ar_compact_table.e
   store i64 %2, ptr %i.bc, align 8, !tbaa !44
   %i.bd = getelementptr i8, ptr %i.j, i64 %i.ba
   store i8 %i.e, ptr %i.bd, align 1, !tbaa !24
-  %i.be = load i64, ptr %i.a, align 8, !tbaa !21  ; 2 uses
-  %i.bf = and i64 %i.be, -16711681
-  %i.bg = add nuw nsw i32 %.pre-phi, 1048576
+  %i.be = load i64, ptr %i.a, align 8, !tbaa !21
+  %i.bf = and i64 %i.be, -15794177
+  %i.bg = add nuw nsw i32 %.pre-phi, 1114112
   %i.bh = zext nneg i32 %i.bg to i64
-  %3 = or disjoint i64 %i.bf, %i.bh
-  %4 = and i64 %i.be, 983040
-  %narrow.i = add nuw nsw i64 %4, 65536
-  %i.bi = or i64 %3, %narrow.i
+  %i.bi = or disjoint i64 %i.bf, %i.bh
   store i64 %i.bi, ptr %i.a, align 8, !tbaa !21
   br label %bb.j
 

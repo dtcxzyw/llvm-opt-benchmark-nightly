@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %bb.aj, %_RINvMs6_Nt
   br i1 %i.eg, label %_RNvMs1_NtCs7GWc7oqutCf_9hashbrown3mapINtB5_7HashMapNtCs3VOLFQjs6jb_8lscolors9IndicatorNtNtCs7tKScEop1B6_5alloc6string6StringNtCs4jvHr4X8PhZ_10rustc_hash13FxBuildHasherE6insertCs5EcwQX7phGK_5uu_ls.exit.i, label %bb.ah, !prof !12
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.ah, %bb.ag
-  %.not12.i.i.i1.i = icmp eq i64 %.sroa.04.0.i.i.i.i, 1
-  br i1 %.not12.i.i.i1.i, label %.thread.i.i.i.i, label %bb.ai, !prof !7
+  %.not12.i.i.i1.i = icmp eq i64 %.sroa.04.0.i.i.i.i, 0
+  br i1 %.not12.i.i.i1.i, label %bb.ai, label %.thread.i.i.i.i, !prof !12
 
 bb.ah:                                            ; preds = %.lr.ph.i.i.i.i
   %i.eh = add i16 %.sroa.01.029.i.i.i.i, -1
@@ -480,8 +480,8 @@ bb.c:                                             ; preds = %bb.f, %_RINvMs6_NtC
   br i1 %.sroa.0.0.i.i.i.i.i, label %_RINvMs6_NtCs7GWc7oqutCf_9hashbrown3rawINtB6_8RawTableTNtNtNtCsh036I4OHgIr_6uucore8features2fs15FileInformationuEE25find_or_find_insert_indexNCINvNtB8_3map14equivalent_keyBQ_BQ_uE0NCINvB2j_11make_hasherBQ_uNtCs4jvHr4X8PhZ_10rustc_hash13FxBuildHasherE0ECs5EcwQX7phGK_5uu_ls.exit, label %bb.d, !prof !12
 
 ._crit_edge.i.i:                                  ; preds = %bb.d, %bb.c
-  %.not12.i.i = icmp eq i64 %.sroa.04.0.i.i, 1
-  br i1 %.not12.i.i, label %.thread.i.i, label %bb.e, !prof !7
+  %.not12.i.i = icmp eq i64 %.sroa.04.0.i.i, 0
+  br i1 %.not12.i.i, label %bb.e, label %.thread.i.i, !prof !12
 
 bb.d:                                             ; preds = %.lr.ph.i.i
   %i.ad = add i16 %.sroa.01.029.i.i, -1
@@ -884,8 +884,7 @@ bb.m:                                             ; preds = %bb.k, %bb.j, %bb.i,
   %.sroa.18.0 = phi i32 [ 33554435, %bb.c ], [ %i.cd, %bb.n ], [ 3, %bb.j ], [ 33554434, %bb.h ], [ 33554434, %bb.i ], [ 16777218, %bb.k ]
   %.sroa.13.0 = phi i32 [ %i.j, %bb.c ], [ %.sroa.13.1, %bb.n ], [ 0, %bb.j ], [ 2, %bb.h ], [ 0, %bb.i ], [ 2, %bb.k ]
   %.sroa.022.1.insert.ext = shl nuw nsw i32 %.sroa.13.0, 8
-  %.sroa.022.1.insert.shift = and i32 %.sroa.022.1.insert.ext, 65280
-  %i.cb = or i32 %.sroa.18.0, %.sroa.022.1.insert.shift
+  %i.cb = or i32 %.sroa.18.0, %.sroa.022.1.insert.ext
   br label %bb.l
 
 bb.n:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d

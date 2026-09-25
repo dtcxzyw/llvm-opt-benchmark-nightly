@@ -204,8 +204,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %bb.c
-  %34 = phi i1 [ false, %bb.a ], [ true, %bb.c ]
-  %i.am = phi i1 [ true, %bb.a ], [ false, %bb.c ]
+  %i.am = phi i1 [ true, %bb.a ], [ false, %bb.c ] ; 2 uses
   br label %bb.d
 
 bb.b:                                             ; preds = %bb.c
@@ -394,9 +393,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.4: ; preds = %.no
 bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.4, %bb.m
   %.pre402.a = phi ptr [ %.pre402.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.4 ], [ %.pre402.pre405, %bb.m ] ; 3 uses
   %.pre400 = phi i64 [ %.pre400.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.4 ], [ %.pre400.pre403, %bb.m ] ; 3 uses
-  %35 = icmp sgt i64 %.pre400, 1
-  %or.cond = select i1 %34, i1 %35, i1 false
-  br i1 %or.cond, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SA_.exit
+  %34 = icmp slt i64 %.pre400, 2
+  %or.cond = select i1 %i.am, i1 true, i1 %34
+  br i1 %or.cond, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SA_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.p
   %i.cc = getelementptr i8, ptr %.pre402.a, i64 %.pre400

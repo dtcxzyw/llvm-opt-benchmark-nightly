@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   br i1 %i.cm, label %bb.i, label %._crit_edge, !llvm.loop !751
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.j
-  %.043 = phi i64 [ %i.cc, %bb.j ], [ %i.bt, %bb.m ] ; 5 uses
+  %.043 = phi i64 [ %i.cc, %bb.j ], [ %i.bt, %bb.m ] ; 4 uses
   %i.cn = load i8, ptr %i.k, align 8, !tbaa !95, !range !78, !noundef !79
   %i.co = trunc nuw i8 %i.cn to i1
   br i1 %i.co, label %bb.q, label %bb.n
@@ -219,28 +219,24 @@ bb.n:                                             ; preds = %._crit_edge
   %i.cr = load ptr, ptr %i.bp, align 8, !tbaa !83 ; 2 uses
   %i.cs = load ptr, ptr %1, align 8, !tbaa !92    ; 2 uses
   %i.ct = icmp ugt i64 %.043, 1
-  br i1 %i.ct, label %bb.o, label %2, !prof !221
+  br i1 %i.ct, label %bb.o, label %bb.p, !prof !221
 
 bb.o:                                             ; preds = %bb.n
   %.idx = mul nuw nsw i64 %.043, 12
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.cs, ptr align 4 %i.cr, i64 %.idx, i1 false)
   br label %_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit
 
-2:                                                ; preds = %bb.n
-  %3 = icmp eq i64 %.043, 1
-  br i1 %3, label %bb.p, label %_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit
-
-bb.p:                                             ; preds = %2
+bb.p:                                             ; preds = %bb.n
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.cs, ptr noundef nonnull align 4 dereferenceable(12) %i.cr, i64 12, i1 false), !tbaa.struct !289
   br label %_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit
 
-_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit: ; preds = %._crit_edge.thread, %bb.o, %2, %bb.p
-  %.0436972 = phi i64 [ %.043, %bb.o ], [ 0, %2 ], [ 1, %bb.p ], [ 0, %._crit_edge.thread ]
+_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit: ; preds = %._crit_edge.thread, %bb.o, %bb.p
+  %.0437073 = phi i64 [ %.043, %bb.o ], [ 0, %._crit_edge.thread ], [ 1, %bb.p ]
   store i8 1, ptr %i.k, align 8, !tbaa !95
   br label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge.thread, %_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit, %._crit_edge
-  %.04370 = phi i64 [ 0, %._crit_edge.thread ], [ %.0436972, %_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit ], [ %.043, %._crit_edge ]
+  %.04370 = phi i64 [ 0, %._crit_edge.thread ], [ %.0437073, %_ZSt4copyIP16llama_token_dataS1_ET0_T_S3_S2_.exit ], [ %.043, %._crit_edge ]
   store i64 %.04370, ptr %i.f, align 8, !tbaa !93
   br label %bb.r
 
@@ -643,8 +639,7 @@ bb.d:                                             ; preds = %bb.c
   %.not.i.i.i.i11.i = icmp eq ptr %i.w, %i.p
   br i1 %.not.i.i.i.i11.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !37
 
-_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i, %bb.d
-  %2 = sub nuw nsw i64 3, %i.s
+_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit.i: ; preds = %bb.d, %.lr.ph.i.i.i.i.i
   br label %.lr.ph.i.i.i.i12.i.prol
 
 .lr.ph.i.i.i.i12.i.prol:                          ; preds = %.lr.ph.i.i.i.i12.i.prol, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit.i
@@ -657,7 +652,8 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS
   store i8 0, ptr %.sroa.11.0..09.i.i.i.i.i.sroa_idx.prol, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.prol, i64 24 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %2
+  %2 = xor i64 %i.s, %prol.iter.next
+  %prol.iter.cmp.not = icmp eq i64 %2, 3
   br i1 %prol.iter.cmp.not, label %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIPKcEEmS4_S4_ET_S6_T0_RKT1_RSaIT2_E.exit.i, label %.lr.ph.i.i.i.i12.i.prol, !llvm.loop !1166
 
 _ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIPKcEEmS4_S4_ET_S6_T0_RKT1_RSaIT2_E.exit.i: ; preds = %.lr.ph.i.i.i.i12.i.prol

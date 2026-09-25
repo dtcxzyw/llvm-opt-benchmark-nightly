@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %_ZN14arrow_vendored
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.z
   %.016.lcssa.i.i = phi i64 [ %.2136, %bb.z ], [ %i.dz, %.lr.ph.i.i ] ; 3 uses
-  %.015.lcssa.i.i = phi i32 [ %.4132, %bb.z ], [ %i.ea, %.lr.ph.i.i ] ; 5 uses
+  %.015.lcssa.i.i = phi i32 [ %.4132, %bb.z ], [ %i.ea, %.lr.ph.i.i ] ; 4 uses
   %i.ec = icmp sgt i32 %.015.lcssa.i.i, 971
   br i1 %i.ec, label %_ZN14arrow_vendored17double_conversion6DoubleC2ENS0_5DiyFpE.exit, label %bb.aa
 
@@ -213,11 +213,9 @@ bb.aa:                                            ; preds = %._crit_edge.i.i
   br i1 %i.ed, label %_ZN14arrow_vendored17double_conversion6DoubleC2ENS0_5DiyFpE.exit, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.aa
-  %8 = icmp ne i32 %.015.lcssa.i.i, -1074
   %i.ee = and i64 %.016.lcssa.i.i, 4503599627370496
-  %i.ef = icmp eq i64 %i.ee, 0                    ; 2 uses
-  %9 = and i1 %8, %i.ef
-  br i1 %9, label %.lr.ph25.i.i, label %._crit_edge26.i.i
+  %i.ef = icmp eq i64 %i.ee, 0
+  br i1 %i.ef, label %.lr.ph25.i.i, label %._crit_edge26.i.i
 
 .lr.ph25.i.i:                                     ; preds = %.preheader.i.i, %.lr.ph25.i.i
   %.124.i.i = phi i32 [ %i.eh, %.lr.ph25.i.i ], [ %.015.lcssa.i.i, %.preheader.i.i ] ; 2 uses
@@ -233,7 +231,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i
 ._crit_edge26.i.i:                                ; preds = %.lr.ph25.i.i, %.preheader.i.i
   %.117.lcssa.i.i = phi i64 [ %.016.lcssa.i.i, %.preheader.i.i ], [ %i.eg, %.lr.ph25.i.i ]
   %.1.lcssa.i.i = phi i32 [ %.015.lcssa.i.i, %.preheader.i.i ], [ %i.eh, %.lr.ph25.i.i ] ; 2 uses
-  %.lcssa.i.i = phi i1 [ %i.ef, %.preheader.i.i ], [ %i.ek, %.lr.ph25.i.i ]
+  %.lcssa.i.i = phi i1 [ false, %.preheader.i.i ], [ %i.ek, %.lr.ph25.i.i ]
   %i.em = icmp eq i32 %.1.lcssa.i.i, -1074
   %brmerge.not.i.i = select i1 %i.em, i1 %.lcssa.i.i, i1 false
   %i.en = add nsw i32 %.1.lcssa.i.i, 1075

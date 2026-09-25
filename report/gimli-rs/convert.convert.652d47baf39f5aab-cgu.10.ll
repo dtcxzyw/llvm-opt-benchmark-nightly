@@ -204,12 +204,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i55 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ac, %bb.f ] ; 5 uses
-  %i.ae = shl nuw i64 %.sroa.4.0.i.ph.i55, 3
-  %4 = add nuw i64 %i.ae, 8
-  %5 = and i64 %4, -16                            ; 3 uses
+  %i.ae = shl nuw i64 %.sroa.4.0.i.ph.i55, 3      ; 3 uses
   %i.af = add nuw nsw i64 %.sroa.4.0.i.ph.i55, 16 ; 2 uses
-  %i.ag = add i64 %5, %i.af                       ; 4 uses
-  %i.ah = icmp ult i64 %i.ag, %5
+  %i.ag = add i64 %i.af, %i.ae                    ; 4 uses
+  %i.ah = icmp ult i64 %i.ag, %i.ae
   %i.ai = icmp ugt i64 %i.ag, 9223372036854775792
   %or.cond.i.i = or i1 %i.ah, %i.ai
   br i1 %or.cond.i.i, label %bb.h, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !10
@@ -233,7 +231,7 @@ bb.j:                                             ; preds = %bb.e
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECs8GyQQEoxZtT_7convert.exit.thread
 
 _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECs8GyQQEoxZtT_7convert.exit: ; preds = %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 %5 ; 9 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ae ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ao, i8 -1, i64 %i.af, i1 false), !noalias !196
   %i.ap = icmp samesign ult i64 %.sroa.4.0.i.ph.i55, 9
   %i.aq = add nsw i64 %.sroa.4.0.i.ph.i55, -1     ; 6 uses
@@ -636,12 +634,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.thread, %bb.d
   %.sroa.4.0.i.ph.i10 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.k, %bb.d ] ; 5 uses
-  %i.m = shl nuw i64 %.sroa.4.0.i.ph.i10, 3
-  %2 = add nuw i64 %i.m, 8
-  %3 = and i64 %2, -16                            ; 3 uses
+  %i.m = shl nuw i64 %.sroa.4.0.i.ph.i10, 3       ; 3 uses
   %i.n = add nuw nsw i64 %.sroa.4.0.i.ph.i10, 16  ; 2 uses
-  %i.o = add i64 %3, %i.n                         ; 4 uses
-  %i.p = icmp ult i64 %i.o, %3
+  %i.o = add i64 %i.n, %i.m                       ; 4 uses
+  %i.p = icmp ult i64 %i.o, %i.m
   %i.q = icmp ugt i64 %i.o, 9223372036854775792
   %or.cond.i.i = or i1 %i.p, %i.q
   br i1 %or.cond.i.i, label %bb.f, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !10
@@ -678,7 +674,7 @@ _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNt
   %i.aa = lshr i64 %.sroa.4.0.i.ph.i10, 3
   %i.ab = mul nuw nsw i64 %i.aa, 7
   %.sroa.09.0.i.i = select i1 %i.y, i64 %i.z, i64 %i.ab
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.r, i64 %3 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.m ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ac, i8 -1, i64 %i.n, i1 false), !noalias !384
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECs8GyQQEoxZtT_7convert.exit
 

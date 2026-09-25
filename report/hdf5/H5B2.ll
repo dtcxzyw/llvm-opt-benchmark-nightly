@@ -200,24 +200,20 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.cu, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.cv = and i32 %.0149233, -3
-  %or.cond = icmp eq i32 %i.cv, 0
-  %. = select i1 %or.cond, i32 2, i32 3
+  %i.cv = and i32 %.0149233, 1
+  %. = or disjoint i32 %i.cv, 2
   br label %bb.am
 
 bb.al:                                            ; preds = %bb.aj
   %i.cw = load i16, ptr %i.bx, align 8, !tbaa !52
   %i.cx = zext i16 %i.cw to i32
   %i.cy = icmp eq i32 %i.cp, %i.cx
-  br i1 %i.cy, label %7, label %bb.am
-
-7:                                                ; preds = %bb.al
-  %or.cond3.inv = icmp samesign ugt i32 %.0149233, 1
-  %.187 = select i1 %or.cond3.inv, i32 3, i32 1
+  %.187 = or i32 %.0149233, 1
+  %spec.select210 = select i1 %i.cy, i32 %.187, i32 3
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.al, %7, %bb.ak, %bb.ai
-  %.1150 = phi i32 [ %., %bb.ak ], [ 3, %bb.ai ], [ %.187, %7 ], [ 3, %bb.al ] ; 2 uses
+bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.ai
+  %.1150 = phi i32 [ %., %bb.ak ], [ 3, %bb.ai ], [ %spec.select210, %bb.al ] ; 2 uses
   %i.cz = load ptr, ptr %i.m, align 8, !tbaa !36
   %i.da = load i64, ptr %5, align 8, !tbaa !55
   %i.db = load i8, ptr %i.bh, align 8, !tbaa !50, !range !10, !noundef !11
@@ -458,7 +454,7 @@ bb.br:                                            ; preds = %._crit_edge246, %bb
   %i.hg = zext i16 %i.hf to i32
   %i.hh = add nsw i32 %i.hg, -1
   %i.hi = icmp eq i32 %i.he, %i.hh
-  %or.cond7 = icmp samesign ult i32 %.0149.lcssa, 2
+  %or.cond7 = icmp ult i32 %.0149.lcssa, 2
   %or.cond190 = select i1 %i.hi, i1 %or.cond7, i1 false
   br i1 %or.cond190, label %bb.bs, label %bb.bv
 
@@ -861,24 +857,20 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.bl, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.bm = and i32 %.0131200, -3
-  %or.cond = icmp eq i32 %i.bm, 0
-  %. = select i1 %or.cond, i32 2, i32 3
+  %i.bm = and i32 %.0131200, 1
+  %. = or disjoint i32 %i.bm, 2
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.q
   %i.bn = load i16, ptr %i.ao, align 8, !tbaa !52
   %i.bo = zext i16 %i.bn to i32
   %i.bp = icmp eq i32 %i.bg, %i.bo
-  br i1 %i.bp, label %7, label %bb.t
-
-7:                                                ; preds = %bb.s
-  %or.cond3.inv = icmp samesign ugt i32 %.0131200, 1
-  %.155 = select i1 %or.cond3.inv, i32 3, i32 1
+  %.155 = or i32 %.0131200, 1
+  %spec.select178 = select i1 %i.bp, i32 %.155, i32 3
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %7, %bb.r, %bb.p
-  %.1132 = phi i32 [ %., %bb.r ], [ 3, %bb.p ], [ %.155, %7 ], [ 3, %bb.s ] ; 2 uses
+bb.t:                                             ; preds = %bb.s, %bb.r, %bb.p
+  %.1132 = phi i32 [ %., %bb.r ], [ 3, %bb.p ], [ %spec.select178, %bb.s ] ; 2 uses
   %i.bq = load ptr, ptr %i.o, align 8, !tbaa !36
   %i.br = load i64, ptr %5, align 8, !tbaa !55
   %i.bs = load i8, ptr %i.y, align 8, !tbaa !50, !range !10, !noundef !11
@@ -1124,7 +1116,7 @@ bb.ax:                                            ; preds = %._crit_edge214, %bb
   %i.ge = zext i16 %i.gd to i32
   %i.gf = add nsw i32 %i.ge, -1
   %i.gg = icmp eq i32 %i.gc, %i.gf
-  %or.cond7 = icmp samesign ult i32 %.0131.lcssa, 2
+  %or.cond7 = icmp ult i32 %.0131.lcssa, 2
   %or.cond158 = select i1 %i.gg, i1 %or.cond7, i1 false
   br i1 %or.cond158, label %bb.ay, label %bb.bb
 

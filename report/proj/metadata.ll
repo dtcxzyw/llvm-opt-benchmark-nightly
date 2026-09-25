@@ -204,19 +204,11 @@ bb.an:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 .thread150:                                       ; preds = %bb.af, %bb.ae, %bb.ad, %.lr.ph.i.i79.preheader, %bb.z, %bb.y, %bb.x, %.lr.ph.i.i63.preheader, %bb.u, %bb.t, %bb.s, %bb.r, %.lr.ph.i.i46.preheader, %bb.o, %bb.n, %.lr.ph.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %.lr.ph.i.i.3, %.lr.ph.i.i46.1, %.lr.ph.i.i46.2, %.lr.ph.i.i46.3, %.lr.ph.i.i46.4, %.lr.ph.i.i46.5, %.lr.ph.i.i63.1, %.lr.ph.i.i63.2, %.lr.ph.i.i63.3, %.lr.ph.i.i63.4, %.lr.ph.i.i79.4, %.lr.ph.i.i79.3, %.lr.ph.i.i79.2, %.lr.ph.i.i79.1, %bb.m, %bb.l, %bb.q, %bb.p, %bb.aj, %bb.v, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96, %bb.ab, %.loopexit
   %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 %storemerge168 ; 10 uses
-  %i.gb = load i8, ptr %i.ga, align 1, !tbaa !38  ; 4 uses
-  %.not17.i = icmp eq i8 %i.gb, 0
-  br i1 %.not17.i, label %_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit.thread, label %.lr.ph.i.preheader
+  %i.gb = load i8, ptr %i.ga, align 1, !tbaa !38
+  %.not17.i = icmp eq i8 %i.gb, 95
+  br i1 %.not17.i, label %bb.ao, label %_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit.thread
 
-.lr.ph.i.preheader:                               ; preds = %.thread150
-  %3 = add i8 %i.gb, -65
-  %or.cond.i.i = icmp ult i8 %3, 26
-  %4 = add nuw nsw i8 %i.gb, 32
-  %5 = select i1 %or.cond.i.i, i8 %4, i8 %i.gb
-  %.not14.i = icmp eq i8 %5, 95
-  br i1 %.not14.i, label %bb.ao, label %_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit.thread
-
-bb.ao:                                            ; preds = %.lr.ph.i.preheader
+bb.ao:                                            ; preds = %.thread150
   %i.gc = getelementptr inbounds nuw i8, ptr %i.ga, i64 1
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !38  ; 4 uses
   %.not.i100 = icmp eq i8 %i.gd, 0
@@ -351,7 +343,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds
   %i.hw = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull @.str.13, i64 noundef 4)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit unwind label %.loopexit.split-lp ; 0 uses
 
-_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit.thread: ; preds = %bb.av, %bb.ar, %bb.at, %bb.aq, %bb.ap, %bb.as, %bb.au, %bb.ao, %.thread150, %.lr.ph.i.preheader, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %.lr.ph.i.6, %.lr.ph.i.7, %.lr.ph.i.8, %_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit
+_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit.thread: ; preds = %.thread150, %bb.av, %bb.ar, %bb.at, %bb.aq, %bb.ap, %bb.as, %bb.au, %bb.ao, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %.lr.ph.i.6, %.lr.ph.i.7, %.lr.ph.i.8, %_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit
   switch i8 %i.i, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit [
     i8 95, label %.thread145
     i8 47, label %.thread145

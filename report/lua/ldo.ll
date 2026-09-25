@@ -204,8 +204,7 @@ bb.n:                                             ; preds = %precover.exit.threa
   br label %bb.p
 
 .loopexit:                                        ; preds = %findpcall.exit.i, %bb.j
-  %.015.i.ph = phi i8 [ %i.bq, %bb.j ], [ %i.cc, %findpcall.exit.i ] ; 2 uses
-  %4 = zext nneg i8 %.015.i.ph to i32
+  %.015.i.ph = phi i8 [ %i.bq, %bb.j ], [ %i.cc, %findpcall.exit.i ]
   %.not = icmp eq i8 %.015.i.ph, 0
   br i1 %.not, label %bb.p, label %bb.o
 
@@ -217,7 +216,7 @@ bb.o:                                             ; preds = %.loopexit
   br label %bb.q
 
 bb.p:                                             ; preds = %.thread42, %.loopexit
-  %i.da = phi i32 [ %i.bt, %.thread42 ], [ %4, %.loopexit ]
+  %i.da = phi i32 [ %i.bt, %.thread42 ], [ 0, %.loopexit ]
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !30
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 32

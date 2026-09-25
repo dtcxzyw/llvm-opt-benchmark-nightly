@@ -204,32 +204,28 @@ bb.a:
   %i.ae = and i32 %i.ad, 1
   %i.af = zext nneg i32 %i.ae to i64
   %i.ag = shl nuw nsw i64 %i.af, 52
-  %3 = and i64 %i.ab, 9218867337715777536
-  %i.ah = or disjoint i64 %3, %i.ag               ; 2 uses
+  %i.ah = or disjoint i64 %i.ab, %i.ag            ; 2 uses
   store i64 %i.ah, ptr %1, align 1
   %i.ai = load i32, ptr %i.e, align 4
   %i.aj = lshr i32 %i.ai, 21
   %i.ak = and i32 %i.aj, 1
   %i.al = zext nneg i32 %i.ak to i64
   %i.am = shl nuw nsw i64 %i.al, 53
-  %4 = and i64 %i.ah, 9214363738088407040
-  %i.an = or disjoint i64 %4, %i.am               ; 2 uses
+  %i.an = or disjoint i64 %i.ah, %i.am            ; 2 uses
   store i64 %i.an, ptr %1, align 1
   %i.ao = load i32, ptr %i.e, align 4
   %i.ap = lshr i32 %i.ao, 22
   %i.aq = and i32 %i.ap, 1
   %i.ar = zext nneg i32 %i.aq to i64
   %i.as = shl nuw nsw i64 %i.ar, 54
-  %5 = and i64 %i.an, 9205356538833666048
-  %i.at = or disjoint i64 %5, %i.as               ; 3 uses
+  %i.at = or disjoint i64 %i.an, %i.as            ; 3 uses
   store i64 %i.at, ptr %1, align 1
   %i.au = load i32, ptr %i.e, align 4
   %i.av = lshr i32 %i.au, 23
   %i.aw = and i32 %i.av, 1                        ; 2 uses
   %i.ax = zext nneg i32 %i.aw to i64
   %i.ay = shl nuw nsw i64 %i.ax, 55
-  %6 = and i64 %i.at, 9187342140324184064
-  %i.az = or disjoint i64 %6, %i.ay               ; 2 uses
+  %i.az = or disjoint i64 %i.at, %i.ay            ; 2 uses
   store i64 %i.az, ptr %1, align 1
   %.not = icmp eq i32 %i.aw, 0
   %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 16

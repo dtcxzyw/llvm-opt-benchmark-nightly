@@ -205,13 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit.i144: ; pred
 
 bb.au:                                            ; preds = %.preheader168.preheader
   %i.gm = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.n
-  %i.gn = load i8, ptr %i.gm, align 1, !tbaa !114 ; 2 uses
-  %1 = sext i8 %i.gn to i32                       ; 2 uses
-  %2 = add i8 %i.gn, -97
-  %or.cond.i.i149 = icmp ult i8 %2, 26
-  %3 = add nsw i32 %1, -32
-  %4 = select i1 %or.cond.i.i149, i32 %3, i32 %1
-  %.not42.i150 = icmp eq i32 %4, 46
+  %i.gn = load i8, ptr %i.gm, align 1, !tbaa !114
+  %.not42.i150 = icmp eq i8 %i.gn, 46
   br i1 %.not42.i150, label %.preheader168.1, label %_ZZN4crow7utilityL17sanitize_filenameERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcENKUlS7_jPKcbcE_clES7_jS9_bc.exit
 
 .preheader168.1:                                  ; preds = %bb.au
@@ -222,13 +217,8 @@ bb.au:                                            ; preds = %.preheader168.prehe
 
 bb.av:                                            ; preds = %.preheader168.1
   %i.gq = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.gp
-  %i.gr = load i8, ptr %i.gq, align 1, !tbaa !114 ; 2 uses
-  %5 = sext i8 %i.gr to i32                       ; 2 uses
-  %6 = add i8 %i.gr, -97
-  %or.cond.i.i149.1 = icmp ult i8 %6, 26
-  %7 = add nsw i32 %5, -32
-  %8 = select i1 %or.cond.i.i149.1, i32 %7, i32 %5
-  %.not42.i150.1 = icmp eq i32 %8, 46
+  %i.gr = load i8, ptr %i.gq, align 1, !tbaa !114
+  %.not42.i150.1 = icmp eq i8 %i.gr, 46
   br i1 %.not42.i150.1, label %._crit_edge.i152, label %_ZZN4crow7utilityL17sanitize_filenameERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcENKUlS7_jPKcbcE_clES7_jS9_bc.exit
 
 ._crit_edge.i152:                                 ; preds = %bb.av

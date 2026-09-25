@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %.242.1 = phi i32 [ %.242, %.thread ], [ 0, %bb.d ], [ 1, %bb.c ]
   call void @wc_FreeDecodedCert(ptr noundef nonnull %0) #24
   call void @wc_InitDecodedCert(ptr noundef nonnull %0, ptr noundef nonnull %i.c, i32 noundef 8, ptr noundef null) #24
-  %i.z = icmp eq i32 %.242.1, 1
-  br i1 %i.z, label %bb.e, label %.thread.3.critedge
+  %i.z = icmp eq i32 %.242.1, 0
+  br i1 %i.z, label %.thread.3.critedge, label %bb.e
 
 bb.e:                                             ; preds = %.thread.1
   %i.aa = call i32 @wc_ParseCert(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 0, ptr noundef null) #24 ; 2 uses
@@ -608,8 +608,8 @@ bb.i:                                             ; preds = %.critedge537
   %i.ey = call i32 @fflush(ptr noundef %i.ex)     ; 0 uses
   br label %.critedge523
 
-.critedge523:                                     ; preds = %bb.e, %bb.f, %bb.h, %bb.g, %.critedge520, %bb.d, %.critedge515, %.critedge517, %.critedge537, %bb.i
-  %.25 = phi i32 [ 0, %bb.d ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %.critedge520 ], [ 1, %.critedge537 ], [ 0, %bb.i ], [ 0, %.critedge517 ], [ 0, %.critedge515 ], [ 0, %bb.f ], [ 0, %bb.e ]
+.critedge523:                                     ; preds = %.critedge517, %.critedge515, %.critedge520, %bb.d, %bb.f, %bb.e, %bb.h, %bb.g, %.critedge537, %bb.i
+  %.25 = phi i32 [ 1, %.critedge537 ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.i ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %.critedge520 ], [ 0, %.critedge515 ], [ 0, %.critedge517 ]
   %i.ez = load ptr, ptr %i.c, align 8, !tbaa !70
   call void @wolfSSL_free(ptr noundef %i.ez) #24
   %i.fa = load ptr, ptr %i.d, align 8, !tbaa !70
@@ -1012,8 +1012,7 @@ bb.l:                                             ; preds = %bb.i, %bb.i
 .thread338:                                       ; preds = %bb.l, %bb.k, %bb.j, %bb.g, %.critedge25
   %.5271 = phi i32 [ %.3269.fr443, %.critedge25 ], [ %.3269.fr443, %bb.g ], [ 0, %bb.j ], [ %.3.fr444, %bb.l ], [ %spec.select413, %bb.k ] ; 6 uses
   %.5 = phi i32 [ %.3.fr444, %.critedge25 ], [ %.3.fr444, %bb.g ], [ %.3.fr444, %bb.j ], [ %spec.select415, %bb.l ], [ %spec.select414, %bb.k ] ; 8 uses
-  %.not311 = phi i1 [ false, %.critedge25 ], [ false, %bb.g ], [ true, %bb.j ], [ true, %bb.l ], [ true, %bb.k ]
-  %1 = phi i1 [ true, %.critedge25 ], [ true, %bb.g ], [ false, %bb.j ], [ false, %bb.l ], [ false, %bb.k ]
+  %.not311 = phi i1 [ false, %.critedge25 ], [ false, %bb.g ], [ true, %bb.j ], [ true, %bb.l ], [ true, %bb.k ] ; 2 uses
   %.1261 = phi i32 [ 1, %.critedge25 ], [ 1, %bb.g ], [ 0, %bb.j ], [ 0, %bb.l ], [ 0, %bb.k ]
   %.not303 = icmp eq i32 %.0442, 0
   br i1 %.not303, label %bb.m, label %.thread360
@@ -1128,7 +1127,7 @@ bb.z:                                             ; preds = %bb.w, %bb.w
 .thread360:                                       ; preds = %bb.z, %bb.y, %bb.x, %bb.t, %bb.u, %.thread338
   %.10276 = phi i32 [ %.5271, %.thread338 ], [ %.8274, %bb.t ], [ %.8274, %bb.u ], [ 0, %bb.x ], [ %.8, %bb.z ], [ %spec.select419, %bb.y ]
   %.10 = phi i32 [ %.5, %.thread338 ], [ %.8, %bb.t ], [ %.8, %bb.u ], [ %.8, %bb.x ], [ %spec.select421, %bb.z ], [ %spec.select420, %bb.y ]
-  %i.cf = phi i1 [ true, %.thread338 ], [ true, %bb.t ], [ false, %bb.u ], [ false, %bb.x ], [ false, %bb.z ], [ false, %bb.y ]
+  %i.cf = phi i1 [ false, %.thread338 ], [ false, %bb.t ], [ true, %bb.u ], [ true, %bb.x ], [ true, %bb.z ], [ true, %bb.y ]
   %.1 = phi i32 [ 1, %.thread338 ], [ 1, %bb.t ], [ 0, %bb.u ], [ 0, %bb.x ], [ 0, %bb.z ], [ 0, %bb.y ]
   %.10276.fr = freeze i32 %.10276                 ; 6 uses
   %.10.fr = freeze i32 %.10                       ; 8 uses
@@ -1204,7 +1203,7 @@ bb.ah:                                            ; preds = %bb.aa, %.thread371,
   br i1 %i.db, label %bb.ai, label %.thread398
 
 bb.ai:                                            ; preds = %.critedge23
-  br i1 %1, label %bb.ak, label %bb.aj
+  br i1 %.not311, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
   switch i32 %.13279, label %.critedge23.thread.thread408 [
@@ -1244,7 +1243,7 @@ bb.ak:                                            ; preds = %bb.ai
   %i.do = phi i1 [ false, %bb.ak ], [ %i.dn, %.critedge23.thread ] ; 2 uses
   %.15394 = phi i32 [ %spec.select425, %bb.ak ], [ %spec.select427, %.critedge23.thread ] ; 5 uses
   %.15281393 = phi i32 [ %spec.select426, %bb.ak ], [ %.13, %.critedge23.thread ]
-  br i1 %i.cf, label %bb.an, label %bb.al
+  br i1 %i.cf, label %bb.al, label %bb.an
 
 bb.al:                                            ; preds = %.critedge23.thread.thread
   switch i32 %.15281393, label %bb.am [

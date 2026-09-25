@@ -202,24 +202,16 @@ SDL_Haptic_Load_Axes_List.exit.split.loop.exit55.i: ; preds = %.thread.i.i
   br label %SDL_Haptic_Load_Axes_List.exit.i
 
 SDL_Haptic_Load_Axes_List.exit.i:                 ; preds = %bb.m, %SDL_Haptic_Load_Axes_List.exit.split.loop.exit55.i
-  %.137.i = phi i32 [ %indvars.le.i, %SDL_Haptic_Load_Axes_List.exit.split.loop.exit55.i ], [ %i.ab, %bb.m ] ; 3 uses
-  %.2.i = phi ptr [ %.135.i, %SDL_Haptic_Load_Axes_List.exit.split.loop.exit55.i ], [ %.034.i, %bb.m ] ; 5 uses
+  %.137.i = phi i32 [ %indvars.le.i, %SDL_Haptic_Load_Axes_List.exit.split.loop.exit55.i ], [ %i.ab, %bb.m ] ; 2 uses
+  %.2.i = phi ptr [ %.135.i, %SDL_Haptic_Load_Axes_List.exit.split.loop.exit55.i ], [ %.034.i, %bb.m ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #8
   %i.am = icmp ne i32 %.137.i, 0
   %i.an = icmp ne ptr %.2.i, null
   %or.cond.i = and i1 %i.am, %i.an
-  br i1 %or.cond.i, label %2, label %SDL_Haptic_Get_Naxes.exit.thread
+  br i1 %or.cond.i, label %.lr.ph.preheader.i.i, label %SDL_Haptic_Get_Naxes.exit.thread
 
-2:                                                ; preds = %SDL_Haptic_Load_Axes_List.exit.i
-  %3 = icmp sgt i32 %.137.i, 0
-  br i1 %3, label %.lr.ph.preheader.i.i, label %SDL_Haptic_Get_Naxes.exit.thread54
-
-SDL_Haptic_Get_Naxes.exit.thread54:               ; preds = %2
-  call void @SDL_free_REAL(ptr noundef nonnull %.2.i) #8
-  br label %SDL_Haptic_Get_Naxes.exit.thread
-
-.lr.ph.preheader.i.i:                             ; preds = %2
+.lr.ph.preheader.i.i:                             ; preds = %SDL_Haptic_Load_Axes_List.exit.i
   %wide.trip.count.i.i = zext nneg i32 %.137.i to i64 ; 2 uses
   br label %.lr.ph.i15.i
 
@@ -286,8 +278,8 @@ bb.r:                                             ; preds = %SDL_Haptic_Get_Naxe
   store i32 %.1.i, ptr %i.bh, align 4
   br label %SDL_Haptic_Get_Naxes.exit.thread
 
-SDL_Haptic_Get_Naxes.exit.thread:                 ; preds = %SDL_Haptic_Load_Axes_List.exit.thread.i, %SDL_Haptic_Load_Axes_List.exit.i, %SDL_Haptic_Get_Naxes.exit.thread54, %bb.r, %SDL_Haptic_Get_Naxes.exit
-  %.09.i53 = phi i32 [ -1, %SDL_Haptic_Get_Naxes.exit.thread54 ], [ %.1.i, %bb.r ], [ %.1.i, %SDL_Haptic_Get_Naxes.exit ], [ -1, %SDL_Haptic_Load_Axes_List.exit.i ], [ -1, %SDL_Haptic_Load_Axes_List.exit.thread.i ]
+SDL_Haptic_Get_Naxes.exit.thread:                 ; preds = %SDL_Haptic_Load_Axes_List.exit.thread.i, %SDL_Haptic_Load_Axes_List.exit.i, %bb.r, %SDL_Haptic_Get_Naxes.exit
+  %.09.i53 = phi i32 [ %.1.i, %SDL_Haptic_Get_Naxes.exit ], [ %.1.i, %bb.r ], [ -1, %SDL_Haptic_Load_Axes_List.exit.i ], [ -1, %SDL_Haptic_Load_Axes_List.exit.thread.i ]
   %i.bi = icmp sgt i32 %i.s, -1
   %i.bj = icmp sgt i32 %.09.i53, %i.s
   %or.cond = and i1 %i.bi, %i.bj

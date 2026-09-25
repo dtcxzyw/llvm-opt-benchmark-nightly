@@ -204,12 +204,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i54 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ad, %bb.f ] ; 5 uses
-  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3
-  %5 = add nuw i64 %i.af, 8
-  %6 = and i64 %5, -16                            ; 3 uses
+  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3      ; 3 uses
   %i.ag = add nuw nsw i64 %.sroa.4.0.i.ph.i54, 16 ; 2 uses
-  %i.ah = add i64 %6, %i.ag                       ; 4 uses
-  %i.ai = icmp ult i64 %i.ah, %6
+  %i.ah = add i64 %i.ag, %i.af                    ; 4 uses
+  %i.ai = icmp ult i64 %i.ah, %i.af
   %i.aj = icmp ugt i64 %i.ah, 9223372036854775792
   %or.cond.i.i = or i1 %i.ai, %i.aj
   br i1 %or.cond.i.i, label %bb.h, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !8
@@ -233,7 +231,7 @@ bb.j:                                             ; preds = %bb.e
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit.thread
 
 _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit: ; preds = %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %6 ; 9 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.af ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ap, i8 -1, i64 %i.ag, i1 false), !noalias !112
   %i.aq = icmp samesign ult i64 %.sroa.4.0.i.ph.i54, 9
   %i.ar = add nsw i64 %.sroa.4.0.i.ph.i54, -1     ; 6 uses
@@ -524,12 +522,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i54 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ad, %bb.f ] ; 5 uses
-  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3
-  %5 = add nuw i64 %i.af, 8
-  %6 = and i64 %5, -16                            ; 3 uses
+  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3      ; 3 uses
   %i.ag = add nuw nsw i64 %.sroa.4.0.i.ph.i54, 16 ; 2 uses
-  %i.ah = add i64 %6, %i.ag                       ; 4 uses
-  %i.ai = icmp ult i64 %i.ah, %6
+  %i.ah = add i64 %i.ag, %i.af                    ; 4 uses
+  %i.ai = icmp ult i64 %i.ah, %i.af
   %i.aj = icmp ugt i64 %i.ah, 9223372036854775792
   %or.cond.i.i = or i1 %i.ai, %i.aj
   br i1 %or.cond.i.i, label %bb.h, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !8
@@ -553,7 +549,7 @@ bb.j:                                             ; preds = %bb.e
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit.thread
 
 _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit: ; preds = %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %6 ; 9 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.af ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ap, i8 -1, i64 %i.ag, i1 false), !noalias !149
   %i.aq = icmp samesign ult i64 %.sroa.4.0.i.ph.i54, 9
   %i.ar = add nsw i64 %.sroa.4.0.i.ph.i54, -1     ; 6 uses
@@ -844,12 +840,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i54 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ad, %bb.f ] ; 5 uses
-  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3
-  %5 = add nuw i64 %i.af, 8
-  %6 = and i64 %5, -16                            ; 3 uses
+  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3      ; 3 uses
   %i.ag = add nuw nsw i64 %.sroa.4.0.i.ph.i54, 16 ; 2 uses
-  %i.ah = add i64 %6, %i.ag                       ; 4 uses
-  %i.ai = icmp ult i64 %i.ah, %6
+  %i.ah = add i64 %i.ag, %i.af                    ; 4 uses
+  %i.ai = icmp ult i64 %i.ah, %i.af
   %i.aj = icmp ugt i64 %i.ah, 9223372036854775792
   %or.cond.i.i = or i1 %i.ai, %i.aj
   br i1 %or.cond.i.i, label %bb.h, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !8
@@ -873,7 +867,7 @@ bb.j:                                             ; preds = %bb.e
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit.thread
 
 _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit: ; preds = %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %6 ; 9 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.af ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ap, i8 -1, i64 %i.ag, i1 false), !noalias !186
   %i.aq = icmp samesign ult i64 %.sroa.4.0.i.ph.i54, 9
   %i.ar = add nsw i64 %.sroa.4.0.i.ph.i54, -1     ; 6 uses
@@ -1164,12 +1158,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i54 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ad, %bb.f ] ; 5 uses
-  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3
-  %5 = add nuw i64 %i.af, 8
-  %6 = and i64 %5, -16                            ; 3 uses
+  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3      ; 3 uses
   %i.ag = add nuw nsw i64 %.sroa.4.0.i.ph.i54, 16 ; 2 uses
-  %i.ah = add i64 %6, %i.ag                       ; 4 uses
-  %i.ai = icmp ult i64 %i.ah, %6
+  %i.ah = add i64 %i.ag, %i.af                    ; 4 uses
+  %i.ai = icmp ult i64 %i.ah, %i.af
   %i.aj = icmp ugt i64 %i.ah, 9223372036854775792
   %or.cond.i.i = or i1 %i.ai, %i.aj
   br i1 %or.cond.i.i, label %bb.h, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !8
@@ -1193,7 +1185,7 @@ bb.j:                                             ; preds = %bb.e
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit.thread
 
 _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit: ; preds = %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %6 ; 9 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.af ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ap, i8 -1, i64 %i.ag, i1 false), !noalias !223
   %i.aq = icmp samesign ult i64 %.sroa.4.0.i.ph.i54, 9
   %i.ar = add nsw i64 %.sroa.4.0.i.ph.i54, -1     ; 6 uses
@@ -1484,12 +1476,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i54 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ad, %bb.f ] ; 5 uses
-  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3
-  %5 = add nuw i64 %i.af, 8
-  %6 = and i64 %5, -16                            ; 3 uses
+  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3      ; 3 uses
   %i.ag = add nuw nsw i64 %.sroa.4.0.i.ph.i54, 16 ; 2 uses
-  %i.ah = add i64 %6, %i.ag                       ; 4 uses
-  %i.ai = icmp ult i64 %i.ah, %6
+  %i.ah = add i64 %i.ag, %i.af                    ; 4 uses
+  %i.ai = icmp ult i64 %i.ah, %i.af
   %i.aj = icmp ugt i64 %i.ah, 9223372036854775792
   %or.cond.i.i = or i1 %i.ai, %i.aj
   br i1 %or.cond.i.i, label %bb.h, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !8
@@ -1513,7 +1503,7 @@ bb.j:                                             ; preds = %bb.e
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit.thread
 
 _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit: ; preds = %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %6 ; 9 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.af ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ap, i8 -1, i64 %i.ag, i1 false), !noalias !260
   %i.aq = icmp samesign ult i64 %.sroa.4.0.i.ph.i54, 9
   %i.ar = add nsw i64 %.sroa.4.0.i.ph.i54, -1     ; 6 uses
@@ -1804,12 +1794,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %.sroa.4.0.i.ph.i54 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.ad, %bb.f ] ; 5 uses
-  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3
-  %5 = add nuw i64 %i.af, 8
-  %6 = and i64 %5, -16                            ; 3 uses
+  %i.af = shl nuw i64 %.sroa.4.0.i.ph.i54, 3      ; 3 uses
   %i.ag = add nuw nsw i64 %.sroa.4.0.i.ph.i54, 16 ; 2 uses
-  %i.ah = add i64 %6, %i.ag                       ; 4 uses
-  %i.ai = icmp ult i64 %i.ah, %6
+  %i.ah = add i64 %i.ag, %i.af                    ; 4 uses
+  %i.ai = icmp ult i64 %i.ah, %i.af
   %i.aj = icmp ugt i64 %i.ah, 9223372036854775792
   %or.cond.i.i = or i1 %i.ai, %i.aj
   br i1 %or.cond.i.i, label %bb.h, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !8
@@ -1833,7 +1821,7 @@ bb.j:                                             ; preds = %bb.e
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit.thread
 
 _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit: ; preds = %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %6 ; 9 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.af ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ap, i8 -1, i64 %i.ag, i1 false), !noalias !297
   %i.aq = icmp samesign ult i64 %.sroa.4.0.i.ph.i54, 9
   %i.ar = add nsw i64 %.sroa.4.0.i.ph.i54, -1     ; 6 uses
@@ -2236,12 +2224,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.thread, %bb.d
   %.sroa.4.0.i.ph.i10 = phi i64 [ %.sroa.03.0.i.i, %.thread ], [ %i.k, %bb.d ] ; 5 uses
-  %i.m = shl nuw i64 %.sroa.4.0.i.ph.i10, 3
-  %2 = add nuw i64 %i.m, 8
-  %3 = and i64 %2, -16                            ; 3 uses
+  %i.m = shl nuw i64 %.sroa.4.0.i.ph.i10, 3       ; 3 uses
   %i.n = add nuw nsw i64 %.sroa.4.0.i.ph.i10, 16  ; 2 uses
-  %i.o = add i64 %3, %i.n                         ; 4 uses
-  %i.p = icmp ult i64 %i.o, %3
+  %i.o = add i64 %i.n, %i.m                       ; 4 uses
+  %i.p = icmp ult i64 %i.o, %i.m
   %i.q = icmp ugt i64 %i.o, 9223372036854775792
   %or.cond.i.i = or i1 %i.p, %i.q
   br i1 %or.cond.i.i, label %bb.f, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !8
@@ -2278,7 +2264,7 @@ _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNt
   %i.aa = lshr i64 %.sroa.4.0.i.ph.i10, 3
   %i.ab = mul nuw nsw i64 %i.aa, 7
   %.sroa.09.0.i.i = select i1 %i.y, i64 %i.z, i64 %i.ab
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.r, i64 %3 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.m ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ac, i8 -1, i64 %i.n, i1 false), !noalias !326
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsi68uqYEhoRA_5gimli.exit
 

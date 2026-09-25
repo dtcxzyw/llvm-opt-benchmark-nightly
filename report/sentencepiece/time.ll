@@ -66,11 +66,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.1110 = phi i64 [ %i.j, %.lr.ph ], [ %.050, %bb.d ]
   %.152109 = phi i32 [ %i.k, %.lr.ph ], [ %.051, %bb.d ]
   %i.j = sub nuw nsw i64 %.1110, %.0.i111         ; 3 uses
-  %i.k = add nsw i32 %.152109, 100                ; 3 uses
-  %2 = srem i32 %i.k, 400                         ; 2 uses
-  %3 = icmp eq i32 %2, 0
-  %4 = icmp sgt i32 %2, 300
-  %or.cond.i = or i1 %3, %4
+  %i.k = add nuw nsw i32 %.152109, 100            ; 3 uses
+  %2 = urem i32 %i.k, 400
+  %3 = add nsw i32 %2, -301
+  %or.cond.i = icmp ult i32 %3, -300
   %.0.i = select i1 %or.cond.i, i64 3155760000, i64 3155673600 ; 2 uses
   %.not = icmp samesign ult i64 %i.j, %.0.i
   br i1 %.not, label %.preheader101, label %.lr.ph, !llvm.loop !27

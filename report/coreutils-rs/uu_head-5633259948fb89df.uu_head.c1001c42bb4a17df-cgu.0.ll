@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !238)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.c = load i64, ptr %i.b, align 8, !alias.scope !238, !noundef !8 ; 9 uses
+  %i.c = load i64, ptr %i.b, align 8, !alias.scope !238, !noundef !8 ; 8 uses
   %i.d = icmp sgt i64 %i.c, -1
   tail call void @llvm.assume(i1 %i.d)
   %i.e = icmp samesign ult i64 %i.c, 65536
@@ -239,10 +239,9 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsgzkSwV7OBv7_7uu_head.exit
   br i1 %.not.i, label %_RNvMs4_NtCs7tKScEop1B6_5alloc3vecINtB5_3VechE11extend_withCsgzkSwV7OBv7_7uu_head.exit.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsgzkSwV7OBv7_7uu_head.exit.i.i
-  %1 = sub nuw nsw i64 65535, %i.c
+  %1 = xor i64 %i.c, 65535                        ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.n, i8 0, i64 %1, i1 false), !noalias !241
-  %reass.sub.i = sub nsw i64 %i.j, %i.c
-  %i.o = add i64 %reass.sub.i, 65535              ; 2 uses
+  %i.o = add nuw i64 %i.j, %1                     ; 2 uses
   %scevgep.i.i = getelementptr i8, ptr %i.l, i64 %i.o
   br label %_RNvMs4_NtCs7tKScEop1B6_5alloc3vecINtB5_3VechE11extend_withCsgzkSwV7OBv7_7uu_head.exit.i
 

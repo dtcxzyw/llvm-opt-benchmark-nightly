@@ -204,12 +204,7 @@ bb.j:                                             ; preds = %bb.h
   %or.cond79 = select i1 %i.av, i1 %i.ax, i1 false
   br i1 %or.cond79, label %.lr.ph106, label %.critedge.preheader119
 
-.preheader80:                                     ; preds = %.critedge
-  %1 = trunc nuw i64 %indvars.iv.next to i32
-  %2 = icmp sgt i32 %1, 0
-  br i1 %2, label %.lr.ph114.preheader, label %._crit_edge115
-
-.lr.ph114.preheader:                              ; preds = %.preheader80
+.lr.ph114.preheader:                              ; preds = %.critedge
   %i.ay = zext i32 %.062.lcssa151 to i64
   br label %.lr.ph114
 
@@ -219,7 +214,7 @@ bb.j:                                             ; preds = %bb.h
   %i.az = srem i32 %.2110, 10
   %i.ba = trunc nsw i32 %i.az to i8
   %i.bb = add nsw i8 %i.ba, 48
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   store i8 %i.bb, ptr %i.bc, align 1, !tbaa !10
   %i.bd = sdiv i32 %.2110, 10
@@ -227,7 +222,7 @@ bb.j:                                             ; preds = %bb.h
   %i.bf = icmp ult i32 %i.be, -19
   %i.bg = icmp slt i64 %indvars.iv, %i.as
   %i.bh = select i1 %i.bf, i1 true, i1 %i.bg
-  br i1 %i.bh, label %.critedge, label %.preheader80
+  br i1 %i.bh, label %.critedge, label %.lr.ph114.preheader
 
 .lr.ph114:                                        ; preds = %.lr.ph114.preheader, %bb.l
   %indvars.iv132 = phi i64 [ %indvars.iv.next, %.lr.ph114.preheader ], [ %indvars.iv.next133, %bb.l ] ; 3 uses
@@ -246,10 +241,11 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph114
   %i.bn = sext i8 %i.bm to i32
   %i.bo = load ptr, ptr @stdout, align 8, !tbaa !13
   %i.bp = tail call i32 @putc(i32 noundef %i.bn, ptr noundef %i.bo), !inline_history !0 ; 0 uses
-  %i.bq = icmp sgt i64 %indvars.iv132, 1
+  %1 = trunc nuw i64 %indvars.iv132 to i32
+  %i.bq = icmp sgt i32 %1, 1
   br i1 %i.bq, label %.lr.ph114, label %._crit_edge115
 
-._crit_edge115:                                   ; preds = %bb.l, %.critedge.preheader, %.preheader80
+._crit_edge115:                                   ; preds = %bb.l, %.critedge.preheader
   %.not = icmp eq i32 %i.al, 0
   br i1 %.not, label %.loopexit, label %bb.m
 
@@ -284,7 +280,7 @@ bb.p:                                             ; preds = %.preheader174, %bb.
   %i.cb = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv135
   store i8 %i.ca, ptr %i.cb, align 1, !tbaa !10
   %i.cc = udiv i32 %.6116, 10
-  %i.cd = icmp ugt i32 %.6116, 9
+  %i.cd = icmp samesign ugt i32 %.6116, 9
   %i.ce = icmp eq i64 %indvars.iv135, 0
   %i.cf = or i1 %i.cd, %i.ce
   %indvars.iv.next139 = add nuw i64 %indvars.iv138, 1

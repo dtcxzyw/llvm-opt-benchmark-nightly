@@ -204,8 +204,8 @@ bb.a:
   br i1 %or.cond.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = icmp eq i64 %i.a, 2
-  br i1 %i.c, label %.thread, label %bb.c
+  %i.c = icmp eq i64 %i.a, 0
+  br i1 %i.c, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup26direct_story_reply_message5ReplyEBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %0)
@@ -443,58 +443,36 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCskw1zp9Ib
 define noundef nonnull align 8 ptr @_RNvMsb_NtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backupNtB5_7Contact17mut_notRegistered(ptr noalias nofree noundef align 8 captures(ret: address, provenance) dereferenceable(400) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !range !11, !noundef !5 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !range !11, !noundef !5 ; 2 uses
   %i.c = and i64 %i.b, 1
   %or.cond.not = icmp eq i64 %i.c, 0
   br i1 %or.cond.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %.val19 = load ptr, ptr %i.d, align 8           ; 5 uses
-  %i.e = icmp eq i64 %i.b, 2
-  br i1 %i.e, label %.thread, label %1
+  %.val19 = load ptr, ptr %i.d, align 8           ; 4 uses
+  %.not = icmp ne i64 %i.b, 0
+  %i.e = icmp eq ptr %.val19, null
+  %or.cond = select i1 %.not, i1 true, i1 %i.e
+  br i1 %or.cond, label %.thread, label %bb.c
 
-1:                                                ; preds = %bb.b
-  %2 = icmp eq i64 %i.b, 0
-  %3 = icmp eq ptr %.val19, null                  ; 2 uses
-  br i1 %2, label %4, label %7
-
-4:                                                ; preds = %1
-  br i1 %3, label %.thread, label %bb.c
-
-bb.c:                                             ; preds = %4
+bb.c:                                             ; preds = %bb.b
   invoke void @_RNvXsg_NtCsfBDUjroi3FF_9hashbrown3rawINtB5_8RawTableTmNtNtCsh1373Z0TDxr_8protobuf7unknown13UnknownValuesEENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCskw1zp9IbpTW_24libsignal_message_backup(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.val19)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i unwind label %5
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i unwind label %common.resume.i.i
 
-common.resume.i.i:                                ; preds = %9, %5
-  %common.resume.op.i.i = phi { ptr, i32 } [ %6, %5 ], [ %10, %9 ]
+common.resume.i.i:                                ; preds = %bb.c
+  %1 = landingpad { ptr, i32 }
+          cleanup
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val19, i64 noundef 32, i64 noundef 8) #19
   store i64 1, ptr %i.a, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i8 0, i64 24, i1 false)
-  resume { ptr, i32 } %common.resume.op.i.i
+  resume { ptr, i32 } %1
 
-5:                                                ; preds = %bb.c
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume.i.i
-
-7:                                                ; preds = %1
-  br i1 %3, label %.thread, label %8
-
-8:                                                ; preds = %7
-  invoke void @_RNvXsg_NtCsfBDUjroi3FF_9hashbrown3rawINtB5_8RawTableTmNtNtCsh1373Z0TDxr_8protobuf7unknown13UnknownValuesEENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCskw1zp9IbpTW_24libsignal_message_backup(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.val19)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i unwind label %9
-
-9:                                                ; preds = %8
-  %10 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume.i.i
-
-_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i: ; preds = %8, %bb.c
+_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i: ; preds = %bb.c
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val19, i64 noundef 32, i64 noundef 8) #19
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %4, %7, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i
+.thread:                                          ; preds = %bb.b, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i
   store i64 1, ptr %i.a, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i8 0, i64 24, i1 false)
   br label %bb.d

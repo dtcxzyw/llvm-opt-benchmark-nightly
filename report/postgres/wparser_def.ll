@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 .thread276:                                       ; preds = %bb.a, %bb.ad, %.critedge
   %.082.lcssa242 = phi i1 [ false, %bb.ad ], [ true, %.critedge ], [ false, %bb.a ] ; 4 uses
-  %.083.lcssa240 = phi i32 [ %.083140.lcssa, %bb.ad ], [ %.083140.lcssa, %.critedge ], [ 0, %bb.a ] ; 4 uses
+  %.083.lcssa240 = phi i32 [ %.083140.lcssa, %bb.ad ], [ %.083140.lcssa, %.critedge ], [ 0, %bb.a ] ; 3 uses
   %.085.lcssa238 = phi i32 [ %.085139.lcssa, %bb.ad ], [ %.085139.lcssa, %.critedge ], [ 3, %bb.a ] ; 7 uses
   %.087.lcssa236 = phi i32 [ %.087138.lcssa, %bb.ad ], [ %.087138.lcssa, %.critedge ], [ 35, %bb.a ] ; 10 uses
   %.089.lcssa234 = phi i32 [ %.089137.lcssa, %bb.ad ], [ %.089137.lcssa, %.critedge ], [ 15, %bb.a ] ; 11 uses
@@ -607,7 +607,7 @@ bb.cb:                                            ; preds = %bb.ag
 .loopexit.i:                                      ; preds = %bb.cm, %.lr.ph.i110
   %.1268.lcssa.i = phi i32 [ %.0267393.i, %.lr.ph.i110 ], [ %i.js, %bb.cm ] ; 3 uses
   %.1265.lcssa.i = phi i32 [ %.0264394.i, %.lr.ph.i110 ], [ %.2266.i, %bb.cm ]
-  %.1.lcssa.i = phi ptr [ %.0395.i, %.lr.ph.i110 ], [ %.2.i, %bb.cm ] ; 8 uses
+  %.1.lcssa.i = phi ptr [ %.0395.i, %.lr.ph.i110 ], [ %.2.i, %bb.cm ] ; 9 uses
   %i.ia = call fastcc zeroext i1 @hlCover(ptr noundef readonly %i.i, ptr noundef nonnull %i.n, ptr noundef readonly %.091, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c)
   br i1 %i.ia, label %.lr.ph.i110, label %.preheader383.i, !llvm.loop !19
 
@@ -1010,11 +1010,10 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dl, %.lr
 ._crit_edge452.i:                                 ; preds = %bb.dn
   %i.ni = add nuw nsw i32 %.0273454.i, 1          ; 2 uses
   %exitcond477.not.i = icmp eq i32 %i.ni, %.083.lcssa240
-  br i1 %exitcond477.not.i, label %._crit_edge455.i.split, label %.preheader382.i, !llvm.loop !30
+  br i1 %exitcond477.not.i, label %mark_hl_fragments.exit, label %.preheader382.i, !llvm.loop !30
 
-._crit_edge455.i.split:                           ; preds = %._crit_edge.i106, %._crit_edge452.i
-  %.0273.lcssa.ph.i.split.ph = phi i32 [ %.0273454.i, %._crit_edge.i106 ], [ %.083.lcssa240, %._crit_edge452.i ]
-  %2 = icmp slt i32 %.0273.lcssa.ph.i.split.ph, 1
+._crit_edge455.i.split:                           ; preds = %._crit_edge.i106
+  %2 = icmp eq i32 %.0273454.i, 0
   br i1 %2, label %.preheader.i102, label %mark_hl_fragments.exit
 
 .preheader.i102:                                  ; preds = %bb.cb, %.preheader382.lr.ph.i, %._crit_edge455.i.split, %.preheader383.i
@@ -1068,9 +1067,9 @@ bb.dq:                                            ; preds = %bb.dp, %bb.do, %bb.
   call fastcc void @mark_fragment(ptr noundef nonnull readonly %i.i, i1 noundef zeroext %.082.lcssa242, i32 noundef 0, i32 noundef %.1351.lcssa.i)
   br label %mark_hl_fragments.exit
 
-mark_hl_fragments.exit:                           ; preds = %._crit_edge455.i.split, %._crit_edge462.i
-  %.0.lcssa.i101285 = phi ptr [ %.1.lcssa.i, %._crit_edge455.i.split ], [ %.0.lcssa.i101286, %._crit_edge462.i ]
-  call void @pfree(ptr noundef %.0.lcssa.i101285) #12
+mark_hl_fragments.exit:                           ; preds = %._crit_edge452.i, %._crit_edge455.i.split, %._crit_edge462.i
+  %.0.lcssa.i101287 = phi ptr [ %.0.lcssa.i101286, %._crit_edge462.i ], [ %.1.lcssa.i, %._crit_edge455.i.split ], [ %.1.lcssa.i, %._crit_edge452.i ]
+  call void @pfree(ptr noundef %.0.lcssa.i101287) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12

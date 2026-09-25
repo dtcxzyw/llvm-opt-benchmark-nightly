@@ -202,13 +202,10 @@ bb.f:                                             ; preds = %bb.e
           to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit unwind label %bb.l, !inline_history !32
 
 .split37:                                         ; preds = %bb.e
-  %3 = lshr i64 %.sroa.9.030, 32
-  %i.ah = icmp ult i64 %.sroa.9.030, 188978561024 ; 2 uses
-  %switch.idx.cast.i.i.i = trunc i64 %3 to i8
-  %spec.select.i.i.i = select i1 %i.ah, i8 %switch.idx.cast.i.i.i, i8 -1 ; 2 uses
-  %4 = icmp ne i8 %spec.select.i.i.i, -1
-  call void @llvm.assume(i1 %4)
-  %i.ai = icmp eq i8 %spec.select.i.i.i, 35
+  %i.ah = icmp ult i64 %.sroa.9.030, 188978561024
+  call void @llvm.assume(i1 %i.ah)
+  %.mask = and i64 %.sroa.9.030, 270582939648
+  %i.ai = icmp eq i64 %.mask, 150323855360
   br i1 %i.ai, label %bb.m, label %.loopexit
 
 .split38:                                         ; preds = %bb.e
@@ -314,7 +311,6 @@ _RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
 
 bb.m:                                             ; preds = %.split37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 %i.ah)
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECs4U8CktZq7fc_17unbuffered_server.exit
 
 bb.n:                                             ; preds = %.split

@@ -205,8 +205,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n,
   %i.bv = getelementptr i8, ptr %0, i64 304       ; 6 uses
   %i.bw = getelementptr i8, ptr %0, i64 312       ; 13 uses
   %i.bx = icmp samesign ugt i32 %3, 1             ; 2 uses
-  %5 = icmp eq i32 %3, 1                          ; 2 uses
-  %.not246.a = icmp eq i32 %3, 0
+  %.not246.a = icmp eq i32 %3, 0                  ; 3 uses
   br label %bb.s
 
 ._crit_edge294:                                   ; preds = %pm_parse_errors_format_line.exit274, %bb.r
@@ -351,7 +350,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.an
 
 bb.ak:                                            ; preds = %bb.ai
-  br i1 %5, label %bb.al, label %bb.am
+  br i1 %.not246.a, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   tail call void @pm_buffer_append_string(ptr noundef nonnull %2, ptr noundef nonnull @.str.338, i64 noundef 9) #37
@@ -460,7 +459,7 @@ bb.au:                                            ; preds = %._crit_edge283
   br label %bb.ax
 
 bb.av:                                            ; preds = %._crit_edge283
-  br i1 %5, label %bb.aw, label %bb.ax
+  br i1 %.not246.a, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   tail call void @pm_buffer_append_string(ptr noundef nonnull %2, ptr noundef nonnull @.str.342, i64 noundef 4) #37

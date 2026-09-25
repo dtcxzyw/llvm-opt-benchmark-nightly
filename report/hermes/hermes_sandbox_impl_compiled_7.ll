@@ -204,15 +204,11 @@ bb.l:                                             ; preds = %bb.k
   %i.as = sub i32 %.0.copyload.i, %.0.copyload.i318 ; 2 uses
   %i.at = tail call i32 @llvm.umax.i32(i32 %i.aq, i32 %i.as)
   %i.au = icmp ugt i32 %i.as, 2147483645
-  %i.av = select i1 %i.au, i32 2147483647, i32 %i.at ; 4 uses
+  %i.av = select i1 %i.au, i32 2147483647, i32 %i.at ; 3 uses
   %.not301 = icmp eq i32 %i.av, 0
-  br i1 %.not301, label %bb.n, label %5
+  br i1 %.not301, label %bb.n, label %bb.m
 
-5:                                                ; preds = %bb.l
-  %6 = icmp slt i32 %i.av, 0
-  br i1 %6, label %7, label %bb.m
-
-bb.m:                                             ; preds = %5
+bb.m:                                             ; preds = %bb.l
   %i.aw = shl nuw i32 %i.av, 1
   %i.ax = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.aw)
   br label %bb.n
@@ -236,7 +232,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.be = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.0, i32 noundef %.0.copyload.i318, i32 noundef %i.ay) #13
   %i.bf = sub i32 %.0.copyload.i316, %2           ; 2 uses
   %i.bg = tail call i32 @w2c_hermes_memmove(ptr noundef nonnull %0, i32 noundef %.1, i32 noundef %2, i32 noundef %i.bf) #13
-  %i.bh = shl nuw i32 %i.av, 1
+  %i.bh = shl i32 %i.av, 1
   %i.bi = add i32 %.0, %i.bh
   %.val311 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.bj = getelementptr inbounds nuw i8, ptr %.val311, i64 %i.f
@@ -258,10 +254,6 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.k
   tail call void @w2c_hermes_abort(ptr noundef nonnull %0) #13
   tail call void @wasm_rt_trap(i32 noundef 5) #14
-  unreachable
-
-7:                                                ; preds = %5
-  tail call void @w2c_hermes_std0x3A0x3A_0x5F20x3A0x3A_0x5Fthrow_out_of_range0x5Babi0x3Av150070x5D0x28char0x20const0x2A0x29(ptr noundef nonnull %0)
   unreachable
 
 bb.s:                                             ; preds = %bb.a, %bb.f, %bb.i, %bb.q, %bb.p, %bb.j

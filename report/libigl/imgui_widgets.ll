@@ -205,9 +205,8 @@ bb.af:                                            ; preds = %_Z22ImParseFormatPr
   br label %bb.aj
 
 .critedge:                                        ; preds = %bb.ad, %bb.ae, %bb.ac, %bb.ac, %bb.x
-  %9 = sitofp i32 %i.t to float
-  %10 = add i32 %i.t, 100
-  %or.cond199 = icmp ult i32 %10, 201
+  %9 = uitofp nneg i32 %i.t to float
+  %or.cond199 = icmp ult i32 %i.t, 101
   %.pre.pre = load ptr, ptr @GImGui, align 8, !tbaa !22 ; 3 uses
   br i1 %or.cond199, label %bb.ah, label %bb.ag
 
@@ -217,7 +216,7 @@ bb.ag:                                            ; preds = %.critedge
   %i.en = fcmp ogt float %i.em, 0.000000e+00
   br i1 %i.en, label %bb.ah, label %bb.ai
 
-bb.ah:                                            ; preds = %.critedge, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %.critedge
   %i.eo = fcmp olt float %i.cy, 0.000000e+00
   %i.ep = select i1 %i.eo, float -1.000000e+00, float 1.000000e+00
   %i.eq = fdiv float %i.ep, %9
@@ -620,9 +619,8 @@ bb.af:                                            ; preds = %_Z22ImParseFormatPr
   br label %bb.aj
 
 .critedge:                                        ; preds = %bb.ad, %bb.ae, %bb.ac, %bb.ac, %bb.x
-  %9 = sitofp i64 %i.t to float
-  %10 = add i64 %i.t, 100
-  %or.cond199 = icmp ult i64 %10, 201
+  %9 = uitofp nneg i64 %i.t to float
+  %or.cond199 = icmp ult i64 %i.t, 101
   %.pre.pre = load ptr, ptr @GImGui, align 8, !tbaa !22 ; 3 uses
   br i1 %or.cond199, label %bb.ah, label %bb.ag
 
@@ -632,7 +630,7 @@ bb.ag:                                            ; preds = %.critedge
   %i.en = fcmp ogt float %i.em, 0.000000e+00
   br i1 %i.en, label %bb.ah, label %bb.ai
 
-bb.ah:                                            ; preds = %.critedge, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %.critedge
   %i.eo = fcmp olt float %i.cy, 0.000000e+00
   %i.ep = select i1 %i.eo, float -1.000000e+00, float 1.000000e+00
   %i.eq = fdiv float %i.ep, %9

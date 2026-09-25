@@ -202,13 +202,10 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCsizY4S0OBG5z_6igno
   br i1 %i.bt, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsizY4S0OBG5z_6ignore.exit25.i.i.i.i, label %.loopexit17.i.i
 
 bb.l:                                             ; preds = %bb.d
-  %2 = lshr i64 %.sroa.9.041.i.i.i.i, 32
   %i.bu = icmp ult i64 %.sroa.9.041.i.i.i.i, 180388626432
-  %switch.idx.cast.i.i.i.i.i.i = trunc i64 %2 to i8
-  %spec.select.i.i.i.i.i.i = select i1 %i.bu, i8 %switch.idx.cast.i.i.i.i.i.i, i8 -1 ; 2 uses
-  %3 = icmp ne i8 %spec.select.i.i.i.i.i.i, -1
-  call void @llvm.assume(i1 %3)
-  %i.bv = icmp eq i8 %spec.select.i.i.i.i.i.i, 35
+  call void @llvm.assume(i1 %i.bu)
+  %.mask.i.i.i.i = and i64 %.sroa.9.041.i.i.i.i, 270582939648
+  %i.bv = icmp eq i64 %.mask.i.i.i.i, 150323855360
   br i1 %i.bv, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsizY4S0OBG5z_6ignore.exit25.i.i.i.i, label %.loopexit17.i.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsizY4S0OBG5z_6ignore.exit25.i.i.i.i: ; preds = %bb.l, %.split59.i.i.i.i, %.split60.i.i.i.i, %.split.i.i.i.i

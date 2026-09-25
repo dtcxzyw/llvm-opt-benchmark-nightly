@@ -204,7 +204,7 @@ bb.a:
   %.not = icmp eq i8 %i.m, 0
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 80
   %i.o = load i64, ptr %i.n, align 8              ; 2 uses
-  %i.p = select i1 %.not, i64 0, i64 %i.o         ; 5 uses
+  %i.p = select i1 %.not, i64 0, i64 %i.o         ; 4 uses
   %i.q = icmp eq i64 %i.o, 0
   br i1 %i.q, label %bb.b, label %.thread
 
@@ -229,19 +229,16 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.028.043 = phi ptr [ %i.aa, %.lr.ph ], [ %i.t, %bb.b ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.028.043, i64 136
   %i.y = load i64, ptr %i.x, align 8, !tbaa !590
-  %i.z = add i64 %i.y, %.02244                    ; 4 uses
+  %i.z = add i64 %i.y, %.02244                    ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.028.043, i64 760 ; 2 uses
   %.not41 = icmp eq ptr %i.aa, %i.v
   br i1 %.not41, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.ab = icmp ne i64 %i.p, 0                     ; 2 uses
-  %4 = icmp eq i64 %i.z, 0
-  %not. = xor i1 %i.ab, true
-  %or.cond = select i1 %not., i1 true, i1 %4
-  %.not25 = icmp eq i64 %i.p, %i.z
-  %or.cond27 = select i1 %or.cond, i1 true, i1 %.not25
-  br i1 %or.cond27, label %bb.i, label %bb.c
+  %.not25 = icmp ne i64 %i.z, 0
+  %or.cond27 = select i1 %i.ab, i1 %.not25, i1 false
+  br i1 %or.cond27, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %._crit_edge
   %i.ac = tail call ptr @__cxa_allocate_exception(i64 16) #24 ; 3 uses

@@ -205,7 +205,7 @@ _ZN5vcpkg4PathC2ERKS0_.exit:                      ; preds = %._crit_edge.i.i.i, 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 24, i1 false)
   %i.bl = load ptr, ptr %i.ag, align 8, !tbaa !91 ; 2 uses
   %.not176 = icmp eq ptr %i.bl, %i.ai
-  br i1 %.not176, label %_ZN5vcpkg4Util17sort_unique_eraseIRSt6vectorINS_19LinkageAndBuildTypeESaIS3_EESt4lessIvEEEOT_SA_T0_.exit, label %.lr.ph
+  br i1 %.not176, label %_ZNSt6vectorIN5vcpkg19LinkageAndBuildTypeESaIS1_EED2Ev.exit.i, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN5vcpkg19LinkageAndBuildTypeESaIS1_EE9push_backEOS1_.exit
   %.pre = load ptr, ptr %i.k, align 8, !tbaa !149 ; 5 uses
@@ -608,18 +608,18 @@ _ZNSt6vectorIN5vcpkg19LinkageAndBuildTypeESaIS1_EE9push_backEOS1_.exit: ; preds 
   %.not = icmp eq ptr %i.hk, %i.ai
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
-_ZN5vcpkg4Util17sort_unique_eraseIRSt6vectorINS_19LinkageAndBuildTypeESaIS3_EESt4lessIvEEEOT_SA_T0_.exit: ; preds = %.preheader.i.i.i.i, %_ZN5vcpkg4PathC2ERKS0_.exit, %_ZSt8_DestroyIPN5vcpkg19LinkageAndBuildTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i.i, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5vcpkg19LinkageAndBuildTypeESt6vectorIS3_SaIS3_EEEEET_S9_S9_.exit.i, %.noexc40, %._crit_edge
-  %16 = phi ptr [ null, %_ZN5vcpkg4PathC2ERKS0_.exit ], [ %.pre187, %_ZSt8_DestroyIPN5vcpkg19LinkageAndBuildTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i.i ], [ %.pre187, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5vcpkg19LinkageAndBuildTypeESt6vectorIS3_SaIS3_EEEEET_S9_S9_.exit.i ], [ %.pre.i, %.noexc40 ], [ %.pre, %._crit_edge ], [ %.pre.i, %.preheader.i.i.i.i ] ; 5 uses
-  %17 = phi ptr [ null, %_ZN5vcpkg4PathC2ERKS0_.exit ], [ %i.cz, %_ZSt8_DestroyIPN5vcpkg19LinkageAndBuildTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i.i ], [ %.pre24.i, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5vcpkg19LinkageAndBuildTypeESt6vectorIS3_SaIS3_EEEEET_S9_S9_.exit.i ], [ %.pre.i, %.noexc40 ], [ %.pre186, %._crit_edge ], [ %.pre23.i, %.preheader.i.i.i.i ]
+_ZN5vcpkg4Util17sort_unique_eraseIRSt6vectorINS_19LinkageAndBuildTypeESaIS3_EESt4lessIvEEEOT_SA_T0_.exit: ; preds = %.preheader.i.i.i.i, %_ZSt8_DestroyIPN5vcpkg19LinkageAndBuildTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i.i, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5vcpkg19LinkageAndBuildTypeESt6vectorIS3_SaIS3_EEEEET_S9_S9_.exit.i, %.noexc40, %._crit_edge
+  %16 = phi ptr [ %.pre, %._crit_edge ], [ %.pre187, %_ZSt8_DestroyIPN5vcpkg19LinkageAndBuildTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i.i ], [ %.pre187, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5vcpkg19LinkageAndBuildTypeESt6vectorIS3_SaIS3_EEEEET_S9_S9_.exit.i ], [ %.pre.i, %.noexc40 ], [ %.pre.i, %.preheader.i.i.i.i ] ; 6 uses
+  %17 = phi ptr [ %.pre186, %._crit_edge ], [ %i.cz, %_ZSt8_DestroyIPN5vcpkg19LinkageAndBuildTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i.i ], [ %.pre24.i, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5vcpkg19LinkageAndBuildTypeESt6vectorIS3_SaIS3_EEEEET_S9_S9_.exit.i ], [ %.pre.i, %.noexc40 ], [ %.pre23.i, %.preheader.i.i.i.i ] ; 2 uses
   %i.hl = ptrtoint ptr %17 to i64
   %i.hm = ptrtoint ptr %16 to i64
-  %i.hn = sub i64 %i.hl, %i.hm                    ; 2 uses
+  %i.hn = sub i64 %i.hl, %i.hm
   %i.ho = icmp ugt i64 %i.hn, 2
   br i1 %i.ho, label %bb.ar, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZN5vcpkg4Util17sort_unique_eraseIRSt6vectorINS_19LinkageAndBuildTypeESaIS3_EESt4lessIvEEEOT_SA_T0_.exit
-  %i.hp = icmp eq i64 %i.hn, 2
-  br i1 %i.hp, label %bb.aq, label %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit
+  %i.hp = icmp eq ptr %17, %16
+  br i1 %i.hp, label %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %i.hq = load i8, ptr %16, align 1, !tbaa !146
@@ -630,7 +630,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.hv = load i8, ptr %i.r, align 1, !range !84
   %i.hw = icmp ne i8 %i.hu, %i.hv
   %.not3.i = select i1 %i.hs, i1 true, i1 %i.hw
-  br i1 %.not3.i, label %bb.ar, label %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread251
+  br i1 %.not3.i, label %bb.ar, label %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit
 
 bb.ar:                                            ; preds = %bb.aq, %_ZN5vcpkg4Util17sort_unique_eraseIRSt6vectorINS_19LinkageAndBuildTypeESaIS3_EESt4lessIvEEEOT_SA_T0_.exit
   %i.hx = load ptr, ptr %i.s, align 8, !tbaa !90  ; 2 uses
@@ -735,7 +735,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %.pre188 = load i64, ptr %i.j, align 8, !tbaa !98
   br label %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread
 
-_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread: ; preds = %bb.ay, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
+_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %bb.ay
   %i.jc = phi i64 [ %.pre188, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ], [ %i.iy, %bb.ay ]
   %i.jd = getelementptr inbounds nuw i8, ptr %i.is, i64 8
   store i64 %i.jc, ptr %i.jd, align 8, !tbaa !98
@@ -768,21 +768,20 @@ bb.ba:                                            ; preds = %bb.az, %.critedge.i
           cleanup
   br label %bb.bc
 
-_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit: ; preds = %bb.ap, %._ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exitthread-pre-split_crit_edge
-  %18 = phi ptr [ %16, %bb.ap ], [ %.pr.pre, %._ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exitthread-pre-split_crit_edge ] ; 2 uses
+_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit: ; preds = %bb.aq, %bb.ap, %._ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exitthread-pre-split_crit_edge
+  %18 = phi ptr [ %16, %bb.aq ], [ %.pr.pre, %._ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exitthread-pre-split_crit_edge ], [ %16, %bb.ap ] ; 3 uses
   %.not.i.i.i.i84 = icmp eq ptr %18, null
   br i1 %.not.i.i.i.i84, label %_ZNSt6vectorIN5vcpkg19LinkageAndBuildTypeESaIS1_EED2Ev.exit.i, label %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread251
 
-_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread251: ; preds = %bb.aq, %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit
-  %19 = phi ptr [ %18, %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit ], [ %16, %bb.aq ] ; 2 uses
+_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread251: ; preds = %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit
   %i.jm = load ptr, ptr %i.q, align 8, !tbaa !248
   %i.jn = ptrtoint ptr %i.jm to i64
-  %i.jo = ptrtoint ptr %19 to i64
+  %i.jo = ptrtoint ptr %18 to i64
   %i.jp = sub i64 %i.jn, %i.jo
-  call void @_ZdlPvm(ptr noundef nonnull %19, i64 noundef %i.jp) #24
+  call void @_ZdlPvm(ptr noundef nonnull %18, i64 noundef %i.jp) #24
   br label %_ZNSt6vectorIN5vcpkg19LinkageAndBuildTypeESaIS1_EED2Ev.exit.i
 
-_ZNSt6vectorIN5vcpkg19LinkageAndBuildTypeESaIS1_EED2Ev.exit.i: ; preds = %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread, %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread251, %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit
+_ZNSt6vectorIN5vcpkg19LinkageAndBuildTypeESaIS1_EED2Ev.exit.i: ; preds = %_ZN5vcpkg4PathC2ERKS0_.exit, %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread, %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit.thread251, %_ZNSt6vectorIN5vcpkg15FileAndLinkagesESaIS1_EE9push_backEOS1_.exit
   %i.jq = load ptr, ptr %11, align 8, !tbaa !44   ; 2 uses
   %i.jr = icmp eq ptr %i.jq, %i.i
   br i1 %i.jr, label %_ZN5vcpkg15FileAndLinkagesD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i85

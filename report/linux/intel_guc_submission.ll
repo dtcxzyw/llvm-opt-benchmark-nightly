@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i32 %.09.lcssa.wide, ptr %i.am, align 4
   store i32 1, ptr %1, align 4
-  %i.an = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %i.f, ptr noundef nonnull %i.ai, i32 noundef 4, i32 noundef 0, i1 noundef zeroext true) #22, !srcloc !49 ; 0 uses
+  %i.an = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %i.f, ptr noundef nonnull %i.ai, i32 noundef 2, i32 noundef 0, i1 noundef zeroext true) #22, !srcloc !49 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   br label %guc_context_set_prio.exit
 
@@ -608,10 +608,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.val.i = phi i32 [ 12, %bb.b ], [ 10, %bb.a ]
   %i.am = getelementptr i8, ptr %0, i64 432       ; 2 uses
   %i.an = getelementptr i8, ptr %i.d, i64 624
-  %i.ao = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %i.an, ptr noundef nonnull %i.t, i32 noundef %.val.i, i32 noundef 0, i1 noundef zeroext %1) #22, !srcloc !49 ; 2 uses
+  %i.ao = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %i.an, ptr noundef nonnull %i.t, i32 noundef 10, i32 noundef 0, i1 noundef zeroext %1) #22, !srcloc !49 ; 2 uses
   %i.ap = call i64 @_raw_spin_lock_irqsave(ptr noundef %i.am) #21
   %.not21 = icmp eq i32 %i.ao, 0
   %i.aq = getelementptr i8, ptr %0, i64 436       ; 2 uses
@@ -1014,7 +1013,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i32 %2, ptr %i.r, align 4
   store i32 1, ptr %3, align 4
-  %i.s = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %0, ptr noundef nonnull %i.n, i32 noundef 4, i32 noundef 0, i1 noundef zeroext true) #22, !srcloc !49 ; 0 uses
+  %i.s = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %0, ptr noundef nonnull %i.n, i32 noundef 2, i32 noundef 0, i1 noundef zeroext true) #22, !srcloc !49 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   br label %bb.f
 

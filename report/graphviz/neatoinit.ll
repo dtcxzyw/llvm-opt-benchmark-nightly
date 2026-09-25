@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 gv_calloc.exit58.i.i:                             ; preds = %bb.aj, %.thread.i57.i.i
-  %.sroa.9.1.i = phi i32 [ 0, %.thread.i57.i.i ], [ %spec.select.i.i, %bb.aj ] ; 4 uses
+  %.sroa.9.1.i = phi i32 [ 0, %.thread.i57.i.i ], [ %spec.select.i.i, %bb.aj ] ; 3 uses
   %.sroa.15.0.i = phi ptr [ %i.fr, %.thread.i57.i.i ], [ %i.fm, %bb.aj ] ; 4 uses
   %i.fy = phi ptr [ %i.fs, %.thread.i57.i.i ], [ %i.ft, %bb.aj ] ; 3 uses
   %i.fz = call ptr @agfstsubg(ptr noundef %0) #21, !noalias !184 ; 2 uses
@@ -321,7 +321,7 @@ bitarray_set.exit.i.i:                            ; preds = %bb.aq, %.lr.ph85.i.
   %.sroa.0.3.i = phi i32 [ 0, %gv_calloc.exit58.i.i ], [ %.sroa.0.2.i, %.loopexit.i.i ]
   %.sroa.17.2.i = phi i32 [ %i.fg, %gv_calloc.exit58.i.i ], [ %.sroa.17.1.i, %.loopexit.i.i ] ; 4 uses
   %i.hl = sext i32 %.sroa.9.1.i to i64            ; 2 uses
-  %.not.i64.i.i = icmp eq i32 %.sroa.9.1.i, 0
+  %.not.i64.i.i = icmp eq i32 %.sroa.9.1.i, 0     ; 2 uses
   br i1 %.not.i64.i.i, label %.thread.i67.i.i, label %bb.ar
 
 .thread.i67.i.i:                                  ; preds = %._crit_edge99.i.i
@@ -582,8 +582,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
   %i.kr = zext i16 %i.kq to i32
   %i.ks = load i32, ptr @MaxIter, align 4, !tbaa !55
   %i.kt = call i32 @stress_majorization_cola(ptr noundef nonnull %i.eh, i32 noundef range(i32 2, -2147483648) %i.i, ptr noundef nonnull %i.db, ptr noundef %i.kp, i32 noundef %i.kr, i32 noundef range(i32 0, 4) %3, i32 noundef %i.ks, ptr noundef nonnull %7) #21
-  %9 = icmp sgt i32 %.sroa.9.1.i, 0
-  br i1 %9, label %bb.bs, label %freeClusterData.exit.i
+  br i1 %.not.i64.i.i, label %freeClusterData.exit.i, label %bb.bs
 
 bb.bs:                                            ; preds = %._crit_edge154.i
   %i.ku = load ptr, ptr %.sroa.15.0.i, align 8, !tbaa !182

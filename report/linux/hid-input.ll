@@ -205,11 +205,10 @@ report_features.exit:                             ; preds = %.loopexit36.i, %bb.
   br label %bb.j
 
 bb.j:                                             ; preds = %report_features.exit, %.loopexit148
-  %2 = phi i1 [ false, %report_features.exit ], [ true, %.loopexit148 ]
-  %i.bn = phi i1 [ true, %report_features.exit ], [ false, %.loopexit148 ]
+  %i.bn = phi i1 [ true, %report_features.exit ], [ false, %.loopexit148 ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %report_features.exit ], [ 1, %.loopexit148 ]
   %.085177 = phi ptr [ null, %report_features.exit ], [ %.5, %.loopexit148 ] ; 2 uses
-  br i1 %2, label %bb.k, label %bb.l
+  br i1 %i.bn, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.bo = load i32, ptr %i.bd, align 4

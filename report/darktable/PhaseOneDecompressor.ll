@@ -204,7 +204,7 @@ _ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8ge
   br label %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit
 
 _ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit: ; preds = %bb.g, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i
-  %.sroa.3368.1 = phi i32 [ %i.bu, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.3368.0151, %bb.g ] ; 5 uses
+  %.sroa.3368.1 = phi i32 [ %i.bu, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.3368.0151, %bb.g ] ; 3 uses
   %.sroa.13.7 = phi i32 [ %i.cf, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.13.0152, %bb.g ] ; 7 uses
   %.sroa.054.7 = phi i64 [ %i.cj, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_16BitStreamerMSB32EE8getInputEv.exit.i ], [ %.sroa.054.0153, %bb.g ] ; 8 uses
   %.not = icmp samesign ult i64 %indvars.iv, %i.al
@@ -223,9 +223,6 @@ bb.m:                                             ; preds = %_ZN8rawspeed11BitSt
 .preheader135:                                    ; preds = %bb.m
   %i.cm = icmp sgt i32 %.sroa.3368.1, -1
   tail call void @llvm.assume(i1 %i.cm)
-  %4 = and i32 %.sroa.3368.1, 3
-  %5 = icmp eq i32 %4, 0
-  tail call void @llvm.assume(i1 %5)
   %i.cn = icmp samesign ult i32 %.sroa.13.7, 65
   tail call void @llvm.assume(i1 %i.cn)
   %i.co = add nsw i32 %.sroa.13.7, -1             ; 3 uses
@@ -354,9 +351,6 @@ bb.u:                                             ; preds = %bb.t
   tail call void @llvm.assume(i1 %i.ek)
   %i.el = icmp sgt i32 %.sroa.3368.1, -1
   tail call void @llvm.assume(i1 %i.el)
-  %6 = and i32 %.sroa.3368.1, 3
-  %7 = icmp eq i32 %6, 0
-  tail call void @llvm.assume(i1 %7)
   br i1 %i.ej, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.loopexit

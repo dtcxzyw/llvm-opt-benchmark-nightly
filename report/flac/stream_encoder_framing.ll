@@ -202,9 +202,7 @@ bb.i:                                             ; preds = %add_entropy_coding_
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !19
   %i.an = load i32, ptr %i.ab, align 8, !tbaa !10
-  %5 = icmp eq i32 %.pr, 1
-  %6 = zext i1 %5 to i32
-  %i.ao = tail call fastcc i32 @add_residual_partitioned_rice_(ptr noundef %4, ptr noundef %i.ag, i32 noundef %1, i32 noundef %i.ah, ptr noundef %i.ak, ptr noundef %i.am, i32 noundef %i.an, i32 noundef %6)
+  %i.ao = tail call fastcc i32 @add_residual_partitioned_rice_(ptr noundef %4, ptr noundef %i.ag, i32 noundef %1, i32 noundef %i.ah, ptr noundef %i.ak, ptr noundef %i.am, i32 noundef %i.an, i32 noundef %.pr)
   %.not29 = icmp eq i32 %i.ao, 0
   br i1 %.not29, label %add_entropy_coding_method_.exit.thread, label %add_entropy_coding_method_.exit.thread33
 
@@ -493,9 +491,7 @@ bb.l:                                             ; preds = %add_entropy_coding_
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !19
   %i.bg = load i32, ptr %i.au, align 8, !tbaa !10
-  %5 = icmp eq i32 %.pr, 1
-  %6 = zext i1 %5 to i32
-  %i.bh = tail call fastcc i32 @add_residual_partitioned_rice_(ptr noundef %4, ptr noundef %i.az, i32 noundef %1, i32 noundef %i.ba, ptr noundef %i.bd, ptr noundef %i.bf, i32 noundef %i.bg, i32 noundef %6)
+  %i.bh = tail call fastcc i32 @add_residual_partitioned_rice_(ptr noundef %4, ptr noundef %i.az, i32 noundef %1, i32 noundef %i.ba, ptr noundef %i.bd, ptr noundef %i.bf, i32 noundef %i.bg, i32 noundef %.pr)
   %.not42 = icmp eq i32 %i.bh, 0
   br i1 %.not42, label %add_entropy_coding_method_.exit.thread, label %add_entropy_coding_method_.exit.thread47
 

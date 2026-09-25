@@ -111,12 +111,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.p = tail call noalias ptr @_emalloc(i64 noundef %.0143.lcssa) #8 ; 3 uses
   br i1 %.not148168, label %._crit_edge184, label %.lr.ph175
 
-.preheader:                                       ; preds = %.lr.ph175
-  %5 = trunc nuw i64 %indvars.iv.next to i32
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph183, label %._crit_edge184
-
-.lr.ph183:                                        ; preds = %.preheader
+.lr.ph183:                                        ; preds = %.lr.ph175
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 120
   %i.r = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -125,16 +120,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .lr.ph175:                                        ; preds = %._crit_edge, %.lr.ph175
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph175 ], [ 0, %._crit_edge ] ; 2 uses
   %.0139173 = phi ptr [ %i.v, %.lr.ph175 ], [ %i.d, %._crit_edge ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv
   store ptr %.0139173, ptr %i.t, align 8, !tbaa !91
   %i.u = getelementptr inbounds nuw i8, ptr %.0139173, i64 16
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !23   ; 2 uses
   %.not149 = icmp eq ptr %i.v, null
-  br i1 %.not149, label %.preheader, label %.lr.ph175, !llvm.loop !87
+  br i1 %.not149, label %.lr.ph183, label %.lr.ph175, !llvm.loop !87
 
 .loopexit167:                                     ; preds = %zend_string_release.exit, %bb.f
-  %i.w = icmp sgt i64 %indvars.iv194, 1
+  %5 = trunc nuw i64 %indvars.iv194 to i32
+  %i.w = icmp sgt i32 %5, 1
   br i1 %i.w, label %bb.f, label %._crit_edge184, !llvm.loop !88
 
 bb.f:                                             ; preds = %.lr.ph183, %.loopexit167
@@ -324,7 +320,7 @@ zend_string_release.exit:                         ; preds = %bb.y, %bb.x, %bb.v,
   %.not155 = icmp eq ptr %i.co, %i.ae
   br i1 %.not155, label %.loopexit167, label %.lr.ph180, !llvm.loop !89
 
-._crit_edge184:                                   ; preds = %.loopexit167, %._crit_edge, %.preheader
+._crit_edge184:                                   ; preds = %.loopexit167, %._crit_edge
   call void @_efree(ptr noundef %i.p) #7
   br i1 %3, label %bb.z, label %.loopexit
 

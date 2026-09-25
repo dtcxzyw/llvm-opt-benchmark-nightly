@@ -202,15 +202,14 @@ bb.ec:                                            ; preds = %.lr.ph2011, %bb.eu
   br i1 %exitcond2082.not.7, label %._crit_edge2005, label %.lr.ph2004, !llvm.loop !31
 
 ._crit_edge2005:                                  ; preds = %.lr.ph2004.prol.loopexit, %.lr.ph2004, %bb.ec
-  %.01838.lcssa = phi i32 [ %i.awa, %bb.ec ], [ %spec.select1909.lcssa.unr, %.lr.ph2004.prol.loopexit ], [ %spec.select1909.7, %.lr.ph2004 ] ; 10 uses
+  %.01838.lcssa = phi i32 [ %i.awa, %bb.ec ], [ %spec.select1909.lcssa.unr, %.lr.ph2004.prol.loopexit ], [ %spec.select1909.7, %.lr.ph2004 ] ; 9 uses
   %.21831.lcssa = phi double [ %i.avx, %bb.ec ], [ %spec.select1910.lcssa.unr, %.lr.ph2004.prol.loopexit ], [ %spec.select1910.7, %.lr.ph2004 ]
-  %i.axr = zext i32 %.01838.lcssa to i64
+  %i.axr = zext i32 %.01838.lcssa to i64          ; 2 uses
   %.not1883 = icmp eq i64 %indvars.iv2083, %i.axr
   br i1 %.not1883, label %bb.eu, label %bb.ed
 
 bb.ed:                                            ; preds = %._crit_edge2005
-  %29 = sext i32 %.01838.lcssa to i64
-  %i.axs = getelementptr inbounds [8 x i8], ptr %i.q, i64 %29
+  %i.axs = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.axr
   store double %i.avx, ptr %i.axs, align 8, !tbaa !36
   store double %.21831.lcssa, ptr %i.avw, align 8, !tbaa !36
   br i1 %.not, label %bb.ee, label %bb.em

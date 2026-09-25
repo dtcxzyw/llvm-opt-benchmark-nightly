@@ -205,10 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.g
-  %6 = icmp eq i32 %1, 1
-  %spec.store.select = select i1 %6, i32 0, i32 %1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 228
-  store i32 %spec.store.select, ptr %i.q, align 4, !tbaa !42
+  store i32 0, ptr %i.q, align 4, !tbaa !42
   ret void
 
 bb.n:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit

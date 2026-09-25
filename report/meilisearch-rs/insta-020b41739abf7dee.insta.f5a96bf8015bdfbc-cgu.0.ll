@@ -205,8 +205,8 @@ bb.p:                                             ; preds = %bb.s, %"_ZN9hashbro
   br i1 %i.ch, label %.loopexit, label %bb.q, !prof !23
 
 ._crit_edge.i.i.i:                                ; preds = %bb.q, %bb.p
-  %.not13.i.i.i = icmp eq i64 %.sroa.01.0.i.i.i22, 1
-  br i1 %.not13.i.i.i, label %.thread.i.i.i, label %bb.r, !prof !22
+  %.not13.i.i.i = icmp eq i64 %.sroa.01.0.i.i.i22, 0
+  br i1 %.not13.i.i.i, label %bb.r, label %.thread.i.i.i, !prof !23
 
 bb.q:                                             ; preds = %.lr.ph.i.i.i
   %i.ci = add i16 %.sroa.05.026.i.i.i, -1
@@ -609,14 +609,10 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %storemerge.i = phi i64 [ %i.iq, %bb.bj ], [ 0, %bb.bi ]
   store i64 %storemerge.i, ptr %i.t, align 8, !alias.scope !14703, !noalias !14704
   %.not.i184.i = icmp ult i64 %i.hz, 3
-  br i1 %.not.i184.i, label %.lr.ph.i185.i, label %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit202.i"
+  br i1 %.not.i184.i, label %bb.bl, label %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit202.i"
 
-.lr.ph.i185.i:                                    ; preds = %bb.bk
-  %2 = sub nuw nsw i64 3, %i.hz
-  br label %bb.bl
-
-bb.bl:                                            ; preds = %"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$13push_back_mut17h250151835bdab181E.exit.i190.i", %.lr.ph.i185.i
-  %.sroa.03.015.i186.i = phi i64 [ 0, %.lr.ph.i185.i ], [ %i.ir, %"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$13push_back_mut17h250151835bdab181E.exit.i190.i" ]
+bb.bl:                                            ; preds = %bb.bk, %"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$13push_back_mut17h250151835bdab181E.exit.i190.i"
+  %.sroa.03.015.i186.i = phi i64 [ %i.ir, %"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$13push_back_mut17h250151835bdab181E.exit.i190.i" ], [ 0, %bb.bk ]
   %i.ir = add nuw nsw i64 %.sroa.03.015.i186.i, 1 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14729)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14730)
@@ -715,7 +711,8 @@ bb.bo:                                            ; preds = %"_ZN81_$LT$core..st
   %i.km = load ptr, ptr %i.s, align 8, !alias.scope !14736, !noalias !14704, !nonnull !17, !noundef !17
   %i.kn = getelementptr inbounds nuw [4 x i8], ptr %i.km, i64 %.sroa.0.0.i.i192.i
   store i32 %i.kc, ptr %i.kn, align 4, !noalias !14704
-  %exitcond.not.i193.i = icmp eq i64 %i.ir, %2
+  %2 = xor i64 %i.ir, %i.hz
+  %exitcond.not.i193.i = icmp eq i64 %2, 3
   br i1 %exitcond.not.i193.i, label %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit202.loopexit.i", label %bb.bl
 
 "_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit202.loopexit.i": ; preds = %"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$13push_back_mut17h250151835bdab181E.exit.i190.i"
@@ -1118,8 +1115,8 @@ bb.gu:                                            ; preds = %bb.by
   br i1 %.not.i240, label %bb.gv, label %.split.i
 
 .split.i:                                         ; preds = %bb.gu
-  %i.zq = icmp eq i64 %i.zp, 1
-  br i1 %i.zq, label %bb.gw, label %bb.gx
+  %i.zq = icmp eq i64 %i.zp, 0
+  br i1 %i.zq, label %bb.gx, label %bb.gw
 
 bb.gv:                                            ; preds = %bb.gu
   %i.zr = getelementptr inbounds nuw i8, ptr %i.zo, i64 1
@@ -1522,8 +1519,8 @@ bb.c:                                             ; preds = %bb.e, %"_ZN9hashbro
   br i1 %i.y, label %bb.h, label %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h44b303b64448eb42E.exit.thread.i", !prof !66
 
 ._crit_edge.i.i:                                  ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h44b303b64448eb42E.exit.thread.i", %bb.c
-  %.not13.i.i = icmp eq i64 %.sroa.01.0.i.i, 1
-  br i1 %.not13.i.i, label %.thread.i.i, label %bb.d, !prof !22
+  %.not13.i.i = icmp eq i64 %.sroa.01.0.i.i, 0
+  br i1 %.not13.i.i, label %bb.d, label %.thread.i.i, !prof !23
 
 "_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h44b303b64448eb42E.exit.thread.i": ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h44b303b64448eb42E.exit.i", %.lr.ph.i.i
   %i.z = add i16 %.sroa.05.026.i.i, -1

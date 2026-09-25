@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %0, i64 176        ; 8 uses
-  %.val = load ptr, ptr %i.a, align 8, !tbaa !41  ; 12 uses
+  %.val = load ptr, ptr %i.a, align 8, !tbaa !41  ; 11 uses
   %.not.i = icmp eq ptr %.val, null
   br i1 %.not.i, label %pmix_gds_shmem2_get_session_tma.exit.preheader, label %bb.i
 
@@ -330,7 +330,7 @@ bb.i:                                             ; preds = %bb.b
   %i.as = getelementptr inbounds nuw i8, ptr %.val, i64 160
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !57 ; 5 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 72
-  %i.av = load i32, ptr %i.au, align 8, !tbaa !60 ; 3 uses
+  %i.av = load i32, ptr %i.au, align 8, !tbaa !60 ; 2 uses
   %i.aw = icmp eq i32 %i.av, -1
   %i.ax = icmp eq i32 %1, -1                      ; 2 uses
   br i1 %i.aw, label %bb.j, label %bb.ad
@@ -440,7 +440,7 @@ bb.s:                                             ; preds = %.lr.ph
   br i1 %.not59, label %._crit_edge, label %.lr.ph, !llvm.loop !54
 
 ._crit_edge:                                      ; preds = %bb.s, %.preheader
-  br i1 %2, label %bb.t, label %3
+  br i1 %2, label %bb.t, label %bb.ae
 
 bb.t:                                             ; preds = %._crit_edge
   %i.cg = load i64, ptr getelementptr inbounds nuw (i8, ptr @pmix_gds_shmem2_session_t_class, i64 56), align 8, !tbaa !28 ; 2 uses
@@ -546,17 +546,13 @@ bb.ad:                                            ; preds = %bb.i
   %or.cond = or i1 %i.ax, %.not61
   br i1 %or.cond, label %.thread, label %bb.ae, !prof !64
 
-3:                                                ; preds = %._crit_edge
-  %.not61.old = icmp eq i32 %i.av, %1
-  br i1 %.not61.old, label %.thread, label %bb.ae, !prof !65
-
-bb.ae:                                            ; preds = %bb.ad, %3
+bb.ae:                                            ; preds = %._crit_edge, %bb.ad
   %i.dm = tail call ptr @PMIx_Error_string(i32 noundef -27) #15
   tail call void (i32, ptr, ...) @pmix_output(i32 noundef 0, ptr noundef nonnull @.str, ptr noundef %i.dm, ptr noundef nonnull @.str.1, i32 noundef 168) #15
   br label %.thread
 
-.thread:                                          ; preds = %pmix_obj_update.exit, %pmix_obj_update.exit63, %bb.ae, %pmix_gds_shmem2_get_session_tma.exit._crit_edge, %pmix_obj_update.exit65, %pmix_obj_update.exit66, %bb.j, %bb.ad, %3, %bb.a
-  %.3 = phi ptr [ null, %bb.a ], [ %.val, %bb.j ], [ null, %pmix_gds_shmem2_get_session_tma.exit._crit_edge ], [ null, %bb.ae ], [ %.val, %bb.ad ], [ %.val, %3 ], [ %.05591, %pmix_obj_update.exit66 ], [ %i.p, %pmix_obj_update.exit65 ], [ %.0.i.i72, %pmix_obj_update.exit ], [ %.088, %pmix_obj_update.exit63 ]
+.thread:                                          ; preds = %pmix_obj_update.exit, %pmix_obj_update.exit63, %bb.ae, %pmix_gds_shmem2_get_session_tma.exit._crit_edge, %pmix_obj_update.exit65, %pmix_obj_update.exit66, %bb.j, %bb.ad, %bb.a
+  %.3 = phi ptr [ null, %bb.a ], [ %.val, %bb.j ], [ null, %pmix_gds_shmem2_get_session_tma.exit._crit_edge ], [ null, %bb.ae ], [ %.val, %bb.ad ], [ %.088, %pmix_obj_update.exit63 ], [ %.05591, %pmix_obj_update.exit66 ], [ %i.p, %pmix_obj_update.exit65 ], [ %.0.i.i72, %pmix_obj_update.exit ]
   ret ptr %.3
 }
 
@@ -603,8 +599,8 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.sink.in = phi ptr [ %i.e, %bb.d ], [ %i.d, %bb.c ], [ %i.a, %bb.b ]
-  %.sink = load ptr, ptr %.sink.in, align 8, !tbaa !66
-  store ptr %.sink, ptr %2, align 8, !tbaa !66
+  %.sink = load ptr, ptr %.sink.in, align 8, !tbaa !65
+  store ptr %.sink, ptr %2, align 8, !tbaa !65
   ret i32 0
 }
 
@@ -876,6 +872,5 @@ attributes #18 = { noreturn nounwind }
 !62 = !{!15, !15, i64 0}
 !63 = !{i64 0, i64 8, !34, i64 8, i64 8, !34, i64 16, i64 8, !34, i64 24, i64 8, !34, i64 32, i64 8, !34, i64 40, i64 8, !34, i64 48, i64 8, !34, i64 56, i64 8, !62}
 !64 = !{!"branch_weights", i32 4001, i32 1}
-!65 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!66 = !{!23, !23, i64 0}
+!65 = !{!23, !23, i64 0}
 end_hunk_0

@@ -205,15 +205,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit208: ; preds = %_Z
 
 .lr.ph834:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit208
   %i.wt = zext nneg i8 %.0688411016 to i64
-  %i.wu = icmp ult i8 %.0688411016, 3             ; 2 uses
+  %i.wu = icmp samesign ult i8 %.0688411016, 3    ; 2 uses
   %i.wv = icmp eq i8 %.0688411016, 2              ; 2 uses
   %.idx.i.i.i.i.i.i.i.i212 = select i1 %i.wv, i64 16, i64 0
   %i.ww = select i1 %i.wv, i64 2, i64 1
   %.not11.i219.not = icmp eq i8 %.0688411016, 3   ; 2 uses
   %i.wx = zext nneg i32 %.07568381020 to i64      ; 2 uses
-  %.idx.i.i.i.i.i.i.i.i212.mux.a = select i1 %i.wu, i64 %.idx.i.i.i.i.i.i.i.i212, i64 48
-  %.mux = select i1 %i.wu, i64 %i.ww, i64 102
-  %83 = icmp samesign ugt i64 %.mux, %i.wt
+  %.idx.i.i.i.i.i.i.i.i212.mux = select i1 %i.wu, i64 %.idx.i.i.i.i.i.i.i.i212, i64 48
+  %.idx.i.i.i.i.i.i.i.i212.mux.a = select i1 %i.wu, i64 %i.ww, i64 102
+  %83 = icmp samesign ule i64 %.idx.i.i.i.i.i.i.i.i212.mux.a, %i.wt
+  %brmerge = select i1 %.not11.i219.not, i1 true, i1 %83
+  %.mux = select i1 %.not11.i219.not, i64 32, i64 %.idx.i.i.i.i.i.i.i.i212.mux
+  %.0.i.i.i.i13.i.i.ptr.i218 = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.enums2str, i64 %.mux
+  %84 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i13.i.i.ptr.i218, i64 8
   br label %bb.bx
 
 ._crit_edge835:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit248, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit208
@@ -247,14 +251,9 @@ bb.bx:                                            ; preds = %.lr.ph834, %_ZNSt7_
   %i.xg = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull @_ZZNK4LIEF5MachO8DyldInfo20show_rebases_opcodesB5cxx11EvE3tab, i64 noundef 4) #26 ; 0 uses
   %i.xh = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull @_ZZNK4LIEF5MachO8DyldInfo20show_rebases_opcodesB5cxx11EvE3tab, i64 noundef 4) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %68) #26
-  %.not1063 = xor i1 %83, true
-  %brmerge = select i1 %.not11.i219.not, i1 true, i1 %.not1063
-  %.mux1064 = select i1 %.not11.i219.not, i64 32, i64 %.idx.i.i.i.i.i.i.i.i212.mux.a
   br i1 %brmerge, label %_ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i216, label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit220
 
 _ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i216: ; preds = %bb.bx
-  %.0.i.i.i.i13.i.i.ptr.i218 = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.enums2str, i64 %.mux1064
-  %84 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i13.i.i.ptr.i218, i64 8
   %i.xi = load ptr, ptr %84, align 8, !tbaa !167
   br label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit220
 
@@ -657,14 +656,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit276: ; preds = %_Z
 
 .lr.ph828:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit276
   %i.adh = zext nneg i8 %.0688411016 to i64
-  %i.adi = icmp ult i8 %.0688411016, 3            ; 2 uses
+  %i.adi = icmp samesign ult i8 %.0688411016, 3   ; 2 uses
   %i.adj = icmp eq i8 %.0688411016, 2             ; 2 uses
   %.idx.i.i.i.i.i.i.i.i280 = select i1 %i.adj, i64 16, i64 0
   %i.adk = select i1 %i.adj, i64 2, i64 1
   %.not11.i287.not = icmp eq i8 %.0688411016, 3   ; 2 uses
-  %.idx.i.i.i.i.i.i.i.i280.mux.a = select i1 %i.adi, i64 %.idx.i.i.i.i.i.i.i.i280, i64 48
-  %.mux993 = select i1 %i.adi, i64 %i.adk, i64 102
-  %85 = icmp samesign ugt i64 %.mux993, %i.adh
+  %.idx.i.i.i.i.i.i.i.i280.mux = select i1 %i.adi, i64 %.idx.i.i.i.i.i.i.i.i280, i64 48
+  %.idx.i.i.i.i.i.i.i.i280.mux.a = select i1 %i.adi, i64 %i.adk, i64 102
+  %85 = icmp samesign ule i64 %.idx.i.i.i.i.i.i.i.i280.mux.a, %i.adh
+  %brmerge999 = select i1 %.not11.i287.not, i1 true, i1 %85
+  %.mux993 = select i1 %.not11.i287.not, i64 32, i64 %.idx.i.i.i.i.i.i.i.i280.mux
+  %.0.i.i.i.i13.i.i.ptr.i286 = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.enums2str, i64 %.mux993
+  %86 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i13.i.i.ptr.i286, i64 8
   br label %bb.dh
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit316, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit276
@@ -698,14 +701,9 @@ bb.dh:                                            ; preds = %.lr.ph828, %_ZNSt7_
   %i.adt = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull @_ZZNK4LIEF5MachO8DyldInfo20show_rebases_opcodesB5cxx11EvE3tab, i64 noundef 4) #26 ; 0 uses
   %i.adu = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull @_ZZNK4LIEF5MachO8DyldInfo20show_rebases_opcodesB5cxx11EvE3tab, i64 noundef 4) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %72) #26
-  %.not1065 = xor i1 %85, true
-  %brmerge1066 = select i1 %.not11.i287.not, i1 true, i1 %.not1065
-  %.mux1067 = select i1 %.not11.i287.not, i64 32, i64 %.idx.i.i.i.i.i.i.i.i280.mux.a
-  br i1 %brmerge1066, label %_ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i284, label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit288
+  br i1 %brmerge999, label %_ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i284, label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit288
 
 _ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i284: ; preds = %bb.dh
-  %.0.i.i.i.i13.i.i.ptr.i286 = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.enums2str, i64 %.mux1067
-  %86 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i13.i.i.ptr.i286, i64 8
   %i.adv = load ptr, ptr %86, align 8, !tbaa !167
   br label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit288
 
@@ -1074,7 +1072,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit335: ; preds = %bb.eb,
   %i.ahu = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull @_ZZNK4LIEF5MachO8DyldInfo20show_rebases_opcodesB5cxx11EvE3tab, i64 noundef 4) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %75) #26
   %i.ahv = zext nneg i8 %.0688411016 to i64
-  %i.ahw = icmp ugt i8 %.0688411016, 2
+  %i.ahw = icmp samesign ugt i8 %.0688411016, 2
   br i1 %i.ahw, label %bb.ed, label %bb.ee
 
 bb.ed:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit335
@@ -1477,16 +1475,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit409: ; preds = %_Z
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit409
   %i.aoj = zext nneg i8 %.0688411016 to i64
-  %i.aok = icmp ult i8 %.0688411016, 3            ; 2 uses
+  %i.aok = icmp samesign ult i8 %.0688411016, 3   ; 2 uses
   %i.aol = icmp eq i8 %.0688411016, 2             ; 2 uses
   %.idx.i.i.i.i.i.i.i.i410 = select i1 %i.aol, i64 16, i64 0
   %i.aom = select i1 %i.aol, i64 2, i64 1
   %.not11.i417.not = icmp eq i8 %.0688411016, 3   ; 2 uses
   %i.aon = and i64 %.fca.0.extract, 4294967295
   %i.aoo = add nuw nsw i64 %i.aon, %i.av
-  %.idx.i.i.i.i.i.i.i.i410.mux.a = select i1 %i.aok, i64 %.idx.i.i.i.i.i.i.i.i410, i64 48
-  %.mux996 = select i1 %i.aok, i64 %i.aom, i64 102
-  %87 = icmp samesign ugt i64 %.mux996, %i.aoj
+  %.idx.i.i.i.i.i.i.i.i410.mux = select i1 %i.aok, i64 %.idx.i.i.i.i.i.i.i.i410, i64 48
+  %.idx.i.i.i.i.i.i.i.i410.mux.a = select i1 %i.aok, i64 %i.aom, i64 102
+  %87 = icmp samesign ule i64 %.idx.i.i.i.i.i.i.i.i410.mux.a, %i.aoj
+  %brmerge1002 = select i1 %.not11.i417.not, i1 true, i1 %87
+  %.mux996 = select i1 %.not11.i417.not, i64 32, i64 %.idx.i.i.i.i.i.i.i.i410.mux
+  %.0.i.i.i.i13.i.i.ptr.i416 = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.enums2str, i64 %.mux996
+  %88 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i13.i.i.ptr.i416, i64 8
   br label %bb.fp
 
 bb.fp:                                            ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit446
@@ -1495,14 +1497,9 @@ bb.fp:                                            ; preds = %.lr.ph, %_ZNSt7__cx
   %i.aop = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull @_ZZNK4LIEF5MachO8DyldInfo20show_rebases_opcodesB5cxx11EvE3tab, i64 noundef 4) #26 ; 0 uses
   %i.aoq = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull @_ZZNK4LIEF5MachO8DyldInfo20show_rebases_opcodesB5cxx11EvE3tab, i64 noundef 4) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %79) #26
-  %.not1068 = xor i1 %87, true
-  %brmerge1069 = select i1 %.not11.i417.not, i1 true, i1 %.not1068
-  %.mux1070 = select i1 %.not11.i417.not, i64 32, i64 %.idx.i.i.i.i.i.i.i.i410.mux.a
-  br i1 %brmerge1069, label %_ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i414, label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit418
+  br i1 %brmerge1002, label %_ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i414, label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit418
 
 _ZNK6frozen3mapIN4LIEF5MachO8DyldInfo11REBASE_TYPEEPKcLm4ESt4lessIS4_EE4findIS4_EEPKSt4pairIKS4_S6_ERKT_.exit.thread12.i414: ; preds = %bb.fp
-  %.0.i.i.i.i13.i.i.ptr.i416 = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.enums2str, i64 %.mux1070
-  %88 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i13.i.i.ptr.i416, i64 8
   %i.aor = load ptr, ptr %88, align 8, !tbaa !167
   br label %_ZN4LIEF5MachO9to_stringENS0_8DyldInfo11REBASE_TYPEE.exit418
 

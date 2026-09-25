@@ -35,11 +35,11 @@ bb.a:
 ._crit_edge:                                      ; preds = %.lr.ph.3, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %bb.a
   %.014.lcssa = phi i32 [ 17, %bb.a ], [ 18, %.lr.ph ], [ 19, %.lr.ph.1 ], [ 20, %.lr.ph.2 ], [ %spec.select, %.lr.ph.3 ] ; 5 uses
   %.013.lcssa = phi i32 [ 7, %bb.a ], [ 8, %.lr.ph ], [ 9, %.lr.ph.1 ], [ 10, %.lr.ph.2 ], [ %spec.select55, %.lr.ph.3 ] ; 4 uses
-  %i.f = shl nuw i32 1, %.013.lcssa               ; 2 uses
+  %i.f = shl nuw nsw i32 1, %.013.lcssa           ; 2 uses
   %i.g = sub nuw nsw i32 64, %.014.lcssa
-  %i.h = add i32 %i.f, -1
+  %i.h = add nsw i32 %i.f, -1
   %i.i = zext nneg i32 %.013.lcssa to i64         ; 2 uses
-  %i.j = shl i64 4, %i.i
+  %i.j = shl nuw nsw i64 4, %i.i
   %i.k = zext nneg i32 %.014.lcssa to i64         ; 2 uses
   %i.l = shl nuw nsw i64 2, %i.k                  ; 2 uses
   %i.m = sub nuw nsw i32 %.014.lcssa, %.013.lcssa
@@ -57,7 +57,7 @@ bb.b:                                             ; preds = %._crit_edge
   %.not.i = icmp ne i64 %i.u, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.v = tail call ptr @BrotliAllocate(ptr noundef %0, i64 noundef %i.u) #6 ; 6 uses
-  %i.w = zext i32 %i.f to i64                     ; 7 uses
+  %i.w = zext nneg i32 %i.f to i64                ; 6 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.w ; 3 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.w ; 5 uses
   %i.z = zext nneg i32 %i.o to i64                ; 7 uses
@@ -79,15 +79,14 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.0.copyload.i.i = load i64, ptr %i.ag, align 1
   %i.ah = and i64 %.0.copyload.i.i, 1099511627775
   %i.ai = mul i64 %i.ah, 2297779722762296275
-  %i.aj = lshr i64 %i.ai, %i.ae
-  %3 = and i64 %i.aj, 4294967295                  ; 3 uses
-  %i.ak = getelementptr inbounds nuw [2 x i8], ptr %i.y, i64 %3 ; 2 uses
+  %i.aj = lshr i64 %i.ai, %i.ae                   ; 3 uses
+  %i.ak = getelementptr inbounds nuw [2 x i8], ptr %i.y, i64 %i.aj ; 2 uses
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !22 ; 2 uses
   %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %3
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.aj
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !23
   br label %bb.e
 
@@ -95,7 +94,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ap = phi i32 [ %i.ao, %bb.d ], [ -1, %bb.c ]
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.af
   store i32 %i.ap, ptr %i.aq, align 4, !tbaa !23
-  %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %3
+  %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.aj
   store i32 %.0178215.i, ptr %i.ar, align 4, !tbaa !23
   %i.as = add i16 %i.al, 1
   %spec.select.i = tail call i16 @llvm.umin.i16(i16 %i.as, i16 32)
@@ -154,11 +153,9 @@ bb.h:                                             ; preds = %bb.f
 .new:                                             ; preds = %._crit_edge.i
   %i.bj = zext i32 %i.bi to i64                   ; 2 uses
   %i.bk = shl nuw nsw i64 %i.bj, 2
-  %4 = add nuw i64 %i.l, 32
-  %i.bl = add i64 %4, %i.j
-  %i.bm = add i64 %i.bl, %i.bk                    ; 2 uses
-  %.not193.i = icmp ne i64 %i.bm, 0
-  tail call void @llvm.assume(i1 %.not193.i)
+  %3 = or disjoint i64 %i.l, 32
+  %i.bl = add nuw nsw i64 %3, %i.j
+  %i.bm = add nuw nsw i64 %i.bl, %i.bk
   %i.bn = tail call ptr @BrotliAllocate(ptr noundef %0, i64 noundef %i.bm) #6 ; 8 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 24 ; 4 uses
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.w ; 3 uses
@@ -177,8 +174,6 @@ bb.h:                                             ; preds = %bb.f
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bn, i64 20
   store i32 %.013.lcssa, ptr %i.bx, align 4, !tbaa !13
   store ptr %1, ptr %i.br, align 1
-  %xtraiter = and i64 %i.w, 1
-  %unroll_iter = and i64 %i.w, 4294967294
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.new
@@ -200,12 +195,10 @@ bb.i:                                             ; preds = %bb.i, %.new
   store i32 0, ptr %i.cd, align 4, !tbaa !23
   %indvars.iv.next238.i.1 = add nuw nsw i64 %indvars.iv237.i, 2
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %i.w
   br i1 %niter.ncmp.1, label %.preheader.preheader.i.unr-lcssa, label %bb.i, !llvm.loop !17
 
 .preheader.preheader.i.unr-lcssa:                 ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  call void @llvm.assume(i1 %lcmp.mod.not)
   %i.cg = zext nneg i32 %i.h to i64
   br label %.preheader.i
 

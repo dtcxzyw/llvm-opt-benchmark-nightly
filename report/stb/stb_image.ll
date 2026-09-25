@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.q
   %i.cl = sext i32 %spec.store.select to i64
   %i.cm = and i64 %i.bl, 4294967295
   %wide.trip.count271 = and i64 %i.az, 2147483647
-  %wide.trip.count = and i64 %i.bl, 2147483647
+  %wide.trip.count = and i64 %i.bl, 4294967295
   br label %bb.x
 
 bb.t:                                             ; preds = %bb.s, %bb.w
@@ -607,7 +607,6 @@ stbi__refill_buffer.exit.i229:                    ; preds = %bb.p, %bb.o
 
 stbi__get8.exit232:                               ; preds = %bb.l, %bb.m, %stbi__refill_buffer.exit.i229
   %.0.i231 = phi i8 [ %i.bs, %bb.l ], [ %i.cr, %stbi__refill_buffer.exit.i229 ], [ 0, %bb.m ] ; 2 uses
-  %6 = zext i8 %.0.i231 to i32                    ; 2 uses
   %i.ct = tail call i32 @stbi__get16le(ptr noundef nonnull %0) ; 4 uses
   %i.cu = tail call i32 @stbi__get16le(ptr noundef nonnull %0) ; 4 uses
   %i.cv = load ptr, ptr %i.b, align 8, !tbaa !29  ; 3 uses
@@ -804,7 +803,7 @@ stbi__get8.exit250:                               ; preds = %bb.aa, %bb.ab, %stb
   %.0.i249 = phi i8 [ %i.fn, %bb.aa ], [ %i.gm, %stbi__refill_buffer.exit.i247 ], [ 0, %bb.ab ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
   store i32 0, ptr %i.a, align 4
-  %i.gp = icmp ugt i8 %.0.i231, 7                 ; 3 uses
+  %i.gp = icmp ugt i8 %.0.i231, 7                 ; 2 uses
   %.0.i249.fr = freeze i8 %.0.i249
   %i.gq = lshr i8 %.0.i249.fr, 5
   %i.gr = and i8 %i.gq, 1                         ; 2 uses
@@ -837,9 +836,7 @@ bb.ai:                                            ; preds = %stbi__get8.exit250
   ]
 
 bb.aj:                                            ; preds = %bb.ai
-  %7 = add nsw i32 %6, -8
-  %.0178 = select i1 %i.gp, i32 %7, i32 %6
-  %i.gu = icmp eq i32 %.0178, 3
+  %i.gu = icmp eq i8 %.0.i231, 3
   br i1 %i.gu, label %bb.al, label %bb.ag
 
 bb.ak:                                            ; preds = %bb.ai, %bb.ai

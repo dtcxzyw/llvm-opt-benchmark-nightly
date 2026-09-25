@@ -205,7 +205,7 @@ _ZNK5folly12small_vectorISt4pairIlmELm64EvE14computeNewSizeEv.exit: ; preds = %b
   %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 9223372036854775806)
   %i.k = add nuw nsw i64 %i.j, 1
   %.sroa.speculated.i = select i1 %.not.i.i, i64 %i.k, i64 97
-  %.sroa.speculated27 = tail call i64 @llvm.umax.i64(i64 %1, i64 %.sroa.speculated.i) ; 5 uses
+  %.sroa.speculated27 = tail call i64 @llvm.umax.i64(i64 %1, i64 %.sroa.speculated.i) ; 2 uses
   %i.l = icmp samesign ugt i64 %.sroa.speculated27, 1152921504606846975
   br i1 %i.l, label %_ZN5folly11checked_mulImQsr3stdE13is_unsigned_vIT_EEEbPS1_S1_S1_.exit, label %bb.d, !prof !198
 
@@ -214,7 +214,7 @@ _ZN5folly11checked_mulImQsr3stdE13is_unsigned_vIT_EEEbPS1_S1_S1_.exit: ; preds =
   unreachable
 
 bb.d:                                             ; preds = %_ZNK5folly12small_vectorISt4pairIlmELm64EvE14computeNewSizeEv.exit
-  %i.m = shl nuw i64 %.sroa.speculated27, 4       ; 3 uses
+  %i.m = shl nuw i64 %.sroa.speculated27, 4       ; 4 uses
   %i.n = load atomic i8, ptr @_ZN5folly6detail14FastStaticBoolIZNS0_23usingJEMallocOrTCMallocEvE11InitializerE5flag_E monotonic, align 1 ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.n, 0
   br i1 %.not.i.i.i.i, label %_ZN5folly10canNallocxEv.exit.i, label %.split.i, !prof !198
@@ -230,15 +230,13 @@ _ZN5folly10canNallocxEv.exit.i:                   ; preds = %bb.d
 bb.e:                                             ; preds = %_ZN5folly10canNallocxEv.exit.i, %.split.i
   %i.q = tail call i64 @nallocx(i64 noundef %i.m, i32 noundef 0) #34 ; 2 uses
   %.not.i = icmp eq i64 %i.q, 0
-  %4 = lshr i64 %i.q, 4
-  %i.r = select i1 %.not.i, i64 %.sroa.speculated27, i64 %4 ; 2 uses
-  %.pre = shl nuw i64 %i.r, 4
+  %i.r = select i1 %.not.i, i64 %i.m, i64 %i.q
   br label %_ZN5folly14goodMallocSizeEm.exit
 
 _ZN5folly14goodMallocSizeEm.exit:                 ; preds = %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.e
-  %.pre-phi = phi i64 [ %i.m, %.split.i ], [ %i.m, %_ZN5folly10canNallocxEv.exit.i ], [ %.pre, %bb.e ]
-  %.0.i12 = phi i64 [ %.sroa.speculated27, %.split.i ], [ %.sroa.speculated27, %_ZN5folly10canNallocxEv.exit.i ], [ %i.r, %bb.e ]
-  %i.s = tail call noalias ptr @malloc(i64 noundef %.pre-phi) #49 ; 8 uses
+  %.pre-phi = phi i64 [ %i.m, %.split.i ], [ %i.r, %bb.e ], [ %i.m, %_ZN5folly10canNallocxEv.exit.i ] ; 2 uses
+  %4 = and i64 %.pre-phi, -16
+  %i.s = tail call noalias ptr @malloc(i64 noundef %4) #49 ; 8 uses
   %.not.i14 = icmp eq ptr %i.s, null
   br i1 %.not.i14, label %bb.f, label %bb.g
 
@@ -376,11 +374,12 @@ bb.k:                                             ; preds = %_ZN5folly11canSdall
   br label %_ZN5folly12small_vectorISt4pairIlmELm64EvE8freeHeapEv.exit
 
 _ZN5folly12small_vectorISt4pairIlmELm64EvE8freeHeapEv.exit: ; preds = %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt4pairIlmELm64EvE16makeSizeInternalILb1ELb0EZNS5_12emplace_backIJRlRmEEERS4_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit, %bb.j, %bb.k
+  %5 = lshr i64 %.pre-phi, 4
   store ptr %i.s, ptr %i.u, align 8, !tbaa !196
   %i.bk = load i64, ptr %0, align 8
   %storemerge.i21 = or i64 %i.bk, -9223372036854775808
   store i64 %storemerge.i21, ptr %0, align 8, !tbaa !1724
-  store i64 %.0.i12, ptr %i.c, align 8, !tbaa !1730
+  store i64 %5, ptr %i.c, align 8, !tbaa !1730
   ret void
 }
 

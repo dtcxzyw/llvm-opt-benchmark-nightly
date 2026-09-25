@@ -204,7 +204,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.i = load i64, ptr %i.h, align 8, !tbaa !78
-  %.fr72 = freeze i64 %i.i                        ; 6 uses
+  %.fr72 = freeze i64 %i.i                        ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 %.fr72
   store ptr %i.j, ptr %i.g, align 8, !tbaa !81
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 24
@@ -236,10 +236,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.034.056.us, i64 16
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !81
   %i.w = load ptr, ptr %i.t, align 8, !tbaa !80
-  %4 = ptrtoint ptr %i.v to i64
-  %5 = ptrtoint ptr %i.w to i64
-  %6 = sub i64 %4, %5
-  %.not.i.i.i.us = icmp eq i64 %.fr72, %6
+  %.not.i.i.i.us = icmp eq ptr %i.v, %i.w
   br i1 %.not.i.i.i.us, label %_ZNKSt8__detail15_Hashtable_baseIN5folly5RangeIPKcEESt4pairIKS5_St10shared_ptrINS1_10symbolizer8ElfCache5EntryEEENS_10_Select1stESt8equal_toIS5_ENS1_4HashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE13_M_key_equalsERS7_RKNS_16_Hash_node_valueISD_Lb1EEE.exit.thread, label %_ZNKSt8__detail15_Hashtable_baseIN5folly5RangeIPKcEESt4pairIKS5_St10shared_ptrINS1_10symbolizer8ElfCache5EntryEEENS_10_Select1stESt8equal_toIS5_ENS1_4HashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE13_M_key_equalsERS7_RKNS_16_Hash_node_valueISD_Lb1EEE.exit.thread40.us
 
 _ZNKSt8__detail15_Hashtable_baseIN5folly5RangeIPKcEESt4pairIKS5_St10shared_ptrINS1_10symbolizer8ElfCache5EntryEEENS_10_Select1stESt8equal_toIS5_ENS1_4HashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE13_M_key_equalsERS7_RKNS_16_Hash_node_valueISD_Lb1EEE.exit.thread40.us: ; preds = %.lr.ph.split.us
