@@ -143,35 +143,21 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMs3_NtCs5zeGauAcNNa_10wasmi_core4simdNtNtB8_5value4V1289widen_nxmasECsefoF4u9kbII_5wasmi(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 1 captures(none) dereferenceable(16) initializes((0, 16)) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.0.0.extract.trunc.i = trunc i64 %1 to i8
-  %.sroa.2.0.extract.shift.i = lshr i64 %1, 8
-  %.sroa.2.0.extract.trunc.i = trunc i64 %.sroa.2.0.extract.shift.i to i8
-  %.sroa.3.0.extract.shift.i = lshr i64 %1, 16
-  %.sroa.3.0.extract.trunc.i = trunc i64 %.sroa.3.0.extract.shift.i to i8
-  %.sroa.4.0.extract.shift.i = lshr i64 %1, 24
-  %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8
   %.sroa.5.0.extract.shift.i = lshr i64 %1, 32
   %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i8
   %.sroa.6.0.extract.shift.i = lshr i64 %1, 40
   %.sroa.6.0.extract.trunc.i = trunc i64 %.sroa.6.0.extract.shift.i to i8
   %.sroa.7.0.extract.shift.i = lshr i64 %1, 48
   %.sroa.7.0.extract.trunc.i = trunc i64 %.sroa.7.0.extract.shift.i to i8
-  %2 = sext i8 %.sroa.0.0.extract.trunc.i to i16
-  %3 = sext i8 %.sroa.2.0.extract.trunc.i to i16
-  %4 = sext i8 %.sroa.3.0.extract.trunc.i to i16
-  %5 = sext i8 %.sroa.4.0.extract.trunc.i to i16
   %i.a = sext i8 %.sroa.5.0.extract.trunc.i to i16
   %i.b = sext i8 %.sroa.6.0.extract.trunc.i to i16
   %i.c = sext i8 %.sroa.7.0.extract.trunc.i to i16
   %i.d = ashr i64 %1, 56
   %i.e = trunc nsw i64 %i.d to i16
-  store i16 %2, ptr %0, align 1, !alias.scope !54
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i16 %3, ptr %.sroa.45.0..sroa_idx, align 1, !alias.scope !54
-  %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i16 %4, ptr %.sroa.56.0..sroa_idx, align 1, !alias.scope !54
-  %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i16 %5, ptr %.sroa.67.0..sroa_idx, align 1, !alias.scope !54
+  %2 = bitcast i64 %1 to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = sext <4 x i8> %3 to <4 x i16>
+  store <4 x i16> %4, ptr %0, align 1, !alias.scope !54
   %.sroa.78.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 %i.a, ptr %.sroa.78.0..sroa_idx, align 1, !alias.scope !54
   %.sroa.89.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
@@ -186,30 +172,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMs3_NtCs5zeGauAcNNa_10wasmi_core4simdNtNtB8_5value4V1289widen_nxmhtECsefoF4u9kbII_5wasmi(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 1 captures(none) dereferenceable(16) initializes((0, 16)) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.8.0.extract.shift.i = lshr i64 %1, 56
-  %.sroa.7.0.extract.shift.i = lshr i64 %1, 48
-  %.sroa.6.0.extract.shift.i = lshr i64 %1, 40
-  %.sroa.5.0.extract.shift.i = lshr i64 %1, 32
-  %.sroa.4.0.extract.shift.i = lshr i64 %1, 24
-  %.sroa.3.0.extract.shift.i = lshr i64 %1, 16
-  %.sroa.8.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.8.0.extract.shift.i to i16
-  %.sroa.7.0.extract.trunc.i = trunc nuw i64 %.sroa.7.0.extract.shift.i to i16
-  %.sroa.6.0.extract.trunc.i = trunc i64 %.sroa.6.0.extract.shift.i to i16
-  %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i16
-  %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i16
-  %.sroa.3.0.extract.trunc.i = trunc i64 %.sroa.3.0.extract.shift.i to i16
-  %.sroa.0.0.extract.trunc.i = trunc i64 %1 to i16 ; 2 uses
-  %2 = lshr i16 %.sroa.0.0.extract.trunc.i, 8
-  %3 = insertelement <8 x i16> poison, i16 %.sroa.0.0.extract.trunc.i, i64 0
-  %4 = insertelement <8 x i16> %3, i16 %2, i64 1
-  %5 = insertelement <8 x i16> %4, i16 %.sroa.3.0.extract.trunc.i, i64 2
-  %6 = insertelement <8 x i16> %5, i16 %.sroa.4.0.extract.trunc.i, i64 3
-  %7 = insertelement <8 x i16> %6, i16 %.sroa.5.0.extract.trunc.i, i64 4
-  %8 = insertelement <8 x i16> %7, i16 %.sroa.6.0.extract.trunc.i, i64 5
-  %9 = insertelement <8 x i16> %8, i16 %.sroa.7.0.extract.trunc.i, i64 6
-  %10 = insertelement <8 x i16> %9, i16 %.sroa.8.0.extract.trunc.i, i64 7
-  %11 = and <8 x i16> %10, <i16 255, i16 -1, i16 255, i16 255, i16 255, i16 255, i16 255, i16 -1>
-  store <8 x i16> %11, ptr %0, align 1, !alias.scope !58
+  %2 = bitcast i64 %1 to <8 x i8>
+  %3 = zext <8 x i8> %2 to <8 x i16>
+  store <8 x i16> %3, ptr %0, align 1, !alias.scope !58
   ret void
 }
 
@@ -261,21 +226,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMs3_NtCs5zeGauAcNNa_10wasmi_core4simdNtNtB8_5value4V1289widen_nxmtmECsefoF4u9kbII_5wasmi(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 1 captures(none) dereferenceable(16) initializes((0, 16)) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.0.0.extract.trunc.i = trunc i64 %1 to i32 ; 2 uses
-  %2 = lshr i32 %.sroa.0.0.extract.trunc.i, 16
-  %.sroa.3.0.extract.shift.i = lshr i64 %1, 32
-  %.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.3.0.extract.shift.i to i32
-  %.sroa.4.0.extract.shift.i = lshr i64 %1, 48
-  %.sroa.4.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.4.0.extract.shift.i to i32
-  %3 = and i32 %.sroa.0.0.extract.trunc.i, 65535
-  %4 = and i32 %.sroa.3.0.extract.trunc.i, 65535
-  store i32 %3, ptr %0, align 1, !alias.scope !74
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %2, ptr %.sroa.45.0..sroa_idx, align 1, !alias.scope !74
-  %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %4, ptr %.sroa.56.0..sroa_idx, align 1, !alias.scope !74
-  %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.4.0.extract.trunc.i, ptr %.sroa.67.0..sroa_idx, align 1, !alias.scope !74
+  %2 = bitcast i64 %1 to <4 x i16>
+  %3 = zext <4 x i16> %2 to <4 x i32>
+  store <4 x i32> %3, ptr %0, align 1, !alias.scope !74
   ret void
 }
 

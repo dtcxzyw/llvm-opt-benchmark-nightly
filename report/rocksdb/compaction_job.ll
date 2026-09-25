@@ -205,11 +205,7 @@ bb.t:                                             ; preds = %_ZNKSt14default_del
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.sroa.9.1, ptr %i.eu, align 1, !tbaa !759
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %10 = insertelement <4 x i32> poison, i32 %.sroa.14.1, i64 0
-  %11 = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> zeroinitializer
-  %12 = lshr <4 x i32> %11, <i32 0, i32 8, i32 16, i32 24>
-  %13 = trunc <4 x i32> %12 to <4 x i8>
-  store <4 x i8> %13, ptr %i.ev, align 2, !tbaa !73
+  store i32 %.sroa.14.1, ptr %i.ev, align 2, !tbaa !73
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #37
   %.not.i.i40 = icmp eq ptr %.sroa.28101.1, null
   br i1 %.not.i.i40, label %bb.v, label %bb.u

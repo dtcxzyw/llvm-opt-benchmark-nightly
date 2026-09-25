@@ -202,15 +202,8 @@ declare void @b3RecWrite_BodyEnable(ptr noundef, ptr noundef) local_unnamed_addr
 ; Function Attrs: nounwind uwtable
 define void @b3Body_SetMotionLocks(i64 %0, i48 %1) local_unnamed_addr #4 {
 bb.a:
-  %2 = alloca %struct.b3RecArgs_BodySetMotionLocks, align 8 ; 11 uses
+  %2 = alloca %struct.b3RecArgs_BodySetMotionLocks, align 8 ; 8 uses
   %.sroa.3.0.extract.shift = lshr i64 %0, 32
-  %.sroa.0.0.extract.trunc = trunc i48 %1 to i8
-  %.sroa.4.0.extract.shift = lshr i48 %1, 8       ; 2 uses
-  %.sroa.4.0.extract.trunc = trunc i48 %.sroa.4.0.extract.shift to i8
-  %.sroa.6.0.extract.shift = lshr i48 %1, 16      ; 2 uses
-  %.sroa.6.0.extract.trunc = trunc i48 %.sroa.6.0.extract.shift to i8
-  %.sroa.8.0.extract.shift = lshr i48 %1, 24      ; 2 uses
-  %.sroa.8.0.extract.trunc = trunc i48 %.sroa.8.0.extract.shift to i8
   %.sroa.10.0.extract.shift = lshr i48 %1, 32     ; 2 uses
   %.sroa.10.0.extract.trunc = trunc i48 %.sroa.10.0.extract.shift to i8
   %.sroa.12.0.extract.shift = lshr i48 %1, 40     ; 2 uses
@@ -230,14 +223,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   store i64 %0, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i8 %.sroa.0.0.extract.trunc, ptr %3, align 8, !tbaa !124
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 9
-  store i8 %.sroa.4.0.extract.trunc, ptr %.sroa.4.0..sroa_idx, align 1, !tbaa !124
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 10
-  store i8 %.sroa.6.0.extract.trunc, ptr %.sroa.6.0..sroa_idx, align 2, !tbaa !124
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 11
-  store i8 %.sroa.8.0.extract.trunc, ptr %.sroa.8.0..sroa_idx, align 1, !tbaa !124
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = bitcast i48 %1 to <6 x i8>
+  %4 = shufflevector <6 x i8> %3, <6 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %4, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !124
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
   store i8 %.sroa.10.0.extract.trunc, ptr %.sroa.10.0..sroa_idx, align 4, !tbaa !124
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 13
@@ -252,14 +241,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.h = trunc i48 %1 to i1
   %i.i = trunc i48 %1 to i32
   %i.j = and i32 %i.i, 1
-  %4 = trunc i48 %.sroa.4.0.extract.shift to i1   ; 2 uses
-  %i.k = select i1 %4, i32 2, i32 0
+  %5 = and i48 %1, 256
+  %.not49 = icmp eq i48 %5, 0                     ; 2 uses
+  %i.k = select i1 %.not49, i32 0, i32 2
   %i.l = or disjoint i32 %i.k, %i.j
-  %5 = trunc i48 %.sroa.6.0.extract.shift to i1   ; 2 uses
-  %i.m = select i1 %5, i32 4, i32 0
+  %6 = and i48 %1, 65536
+  %.not50 = icmp eq i48 %6, 0                     ; 2 uses
+  %i.m = select i1 %.not50, i32 0, i32 4
   %i.n = or disjoint i32 %i.l, %i.m
-  %6 = trunc i48 %.sroa.8.0.extract.shift to i1   ; 2 uses
-  %i.o = select i1 %6, i32 8, i32 0
+  %7 = and i48 %1, 16777216
+  %.not51 = icmp eq i48 %7, 0                     ; 2 uses
+  %i.o = select i1 %.not51, i32 0, i32 8
   %i.p = or disjoint i32 %i.n, %i.o
   %i.q = trunc i48 %.sroa.10.0.extract.shift to i1 ; 2 uses
   %i.r = select i1 %i.q, i32 16, i32 0
@@ -321,7 +313,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  br i1 %4, label %bb.i, label %bb.j
+  br i1 %.not49, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 4
@@ -329,7 +321,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  br i1 %5, label %bb.k, label %bb.l
+  br i1 %.not50, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
@@ -337,7 +329,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  br i1 %6, label %bb.m, label %bb.n
+  br i1 %.not51, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 12

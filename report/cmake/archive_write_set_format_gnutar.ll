@@ -204,7 +204,7 @@ format_octal.exit:                                ; preds = %bb.n, %bb.o
   store i8 48, ptr %i.au, align 1, !tbaa !20
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 100
   store i8 48, ptr %i.av, align 1, !tbaa !20
-  %i.aw = tail call i64 @archive_entry_uid(ptr noundef %2) #11 ; 10 uses
+  %i.aw = tail call i64 @archive_entry_uid(ptr noundef %2) #11 ; 3 uses
   %i.ax = icmp slt i64 %i.aw, 2097152
   br i1 %i.ax, label %bb.p, label %format_256.exit.i
 
@@ -246,42 +246,15 @@ bb.p:                                             ; preds = %format_octal.exit
   br label %format_number.exit.thread
 
 format_256.exit.i:                                ; preds = %format_octal.exit
-  %4 = trunc i64 %i.aw to i8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 115
-  store i8 %4, ptr %5, align 1, !tbaa !20
-  %6 = lshr i64 %i.aw, 8
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 114
-  store i8 %7, ptr %8, align 1, !tbaa !20
-  %9 = lshr i64 %i.aw, 16
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 113
-  store i8 %10, ptr %11, align 1, !tbaa !20
-  %12 = lshr i64 %i.aw, 24
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 112
-  store i8 %13, ptr %14, align 1, !tbaa !20
-  %15 = lshr i64 %i.aw, 32
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 111
-  store i8 %16, ptr %17, align 1, !tbaa !20
-  %18 = lshr i64 %i.aw, 40
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %1, i64 110
-  store i8 %19, ptr %20, align 1, !tbaa !20
-  %21 = lshr i64 %i.aw, 48
-  %22 = trunc i64 %21 to i8
-  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 109
-  store i8 %22, ptr %i.cb, align 1, !tbaa !20
-  %23 = lshr i64 %i.aw, 56
-  %24 = trunc nuw nsw i64 %23 to i8
-  %25 = getelementptr inbounds nuw i8, ptr %1, i64 108
-  %26 = or disjoint i8 %24, -128
-  store i8 %26, ptr %25, align 1, !tbaa !20
+  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 108
+  %4 = bitcast i64 %i.aw to <8 x i8>
+  %5 = or disjoint <8 x i8> %4, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
+  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %6, ptr %i.cb, align 1, !tbaa !20
   br label %format_number.exit.thread
 
 format_number.exit.thread:                        ; preds = %bb.p, %format_256.exit.i
-  %i.cc = tail call i64 @archive_entry_gid(ptr noundef %2) #11 ; 10 uses
+  %i.cc = tail call i64 @archive_entry_gid(ptr noundef %2) #11 ; 3 uses
   %i.cd = icmp slt i64 %i.cc, 2097152
   br i1 %i.cd, label %bb.q, label %format_256.exit.i102
 
@@ -323,42 +296,15 @@ bb.q:                                             ; preds = %format_number.exit.
   br label %format_number.exit109.thread
 
 format_256.exit.i102:                             ; preds = %format_number.exit.thread
-  %27 = trunc i64 %i.cc to i8
-  %28 = getelementptr inbounds nuw i8, ptr %1, i64 123
-  store i8 %27, ptr %28, align 1, !tbaa !20
-  %29 = lshr i64 %i.cc, 8
-  %30 = trunc i64 %29 to i8
-  %31 = getelementptr inbounds nuw i8, ptr %1, i64 122
-  store i8 %30, ptr %31, align 1, !tbaa !20
-  %32 = lshr i64 %i.cc, 16
-  %33 = trunc i64 %32 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %1, i64 121
-  store i8 %33, ptr %34, align 1, !tbaa !20
-  %35 = lshr i64 %i.cc, 24
-  %36 = trunc i64 %35 to i8
-  %37 = getelementptr inbounds nuw i8, ptr %1, i64 120
-  store i8 %36, ptr %37, align 1, !tbaa !20
-  %38 = lshr i64 %i.cc, 32
-  %39 = trunc i64 %38 to i8
-  %40 = getelementptr inbounds nuw i8, ptr %1, i64 119
-  store i8 %39, ptr %40, align 1, !tbaa !20
-  %41 = lshr i64 %i.cc, 40
-  %42 = trunc i64 %41 to i8
-  %43 = getelementptr inbounds nuw i8, ptr %1, i64 118
-  store i8 %42, ptr %43, align 1, !tbaa !20
-  %44 = lshr i64 %i.cc, 48
-  %45 = trunc i64 %44 to i8
-  %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 117
-  store i8 %45, ptr %i.dh, align 1, !tbaa !20
-  %46 = lshr i64 %i.cc, 56
-  %47 = trunc nuw nsw i64 %46 to i8
-  %48 = getelementptr inbounds nuw i8, ptr %1, i64 116
-  %49 = or disjoint i8 %47, -128
-  store i8 %49, ptr %48, align 1, !tbaa !20
+  %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 116
+  %7 = bitcast i64 %i.cc to <8 x i8>
+  %8 = or disjoint <8 x i8> %7, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %9, ptr %i.dh, align 1, !tbaa !20
   br label %format_number.exit109.thread
 
 format_number.exit109.thread:                     ; preds = %bb.q, %format_256.exit.i102
-  %i.di = tail call i64 @archive_entry_size(ptr noundef %2) #11 ; 10 uses
+  %i.di = tail call i64 @archive_entry_size(ptr noundef %2) #11 ; 3 uses
   %i.dj = icmp slt i64 %i.di, 8589934592
   br i1 %i.dj, label %bb.r, label %format_256.exit.i113
 
@@ -403,37 +349,10 @@ bb.r:                                             ; preds = %format_number.exit1
   br label %format_number.exit120.thread
 
 format_256.exit.i113:                             ; preds = %format_number.exit109.thread
-  %50 = trunc i64 %i.di to i8
-  %51 = getelementptr inbounds nuw i8, ptr %1, i64 135
-  store i8 %50, ptr %51, align 1, !tbaa !20
-  %52 = lshr i64 %i.di, 8
-  %53 = trunc i64 %52 to i8
-  %54 = getelementptr inbounds nuw i8, ptr %1, i64 134
-  store i8 %53, ptr %54, align 1, !tbaa !20
-  %55 = lshr i64 %i.di, 16
-  %56 = trunc i64 %55 to i8
-  %57 = getelementptr inbounds nuw i8, ptr %1, i64 133
-  store i8 %56, ptr %57, align 1, !tbaa !20
-  %58 = lshr i64 %i.di, 24
-  %59 = trunc i64 %58 to i8
-  %60 = getelementptr inbounds nuw i8, ptr %1, i64 132
-  store i8 %59, ptr %60, align 1, !tbaa !20
-  %61 = lshr i64 %i.di, 32
-  %62 = trunc i64 %61 to i8
-  %63 = getelementptr inbounds nuw i8, ptr %1, i64 131
-  store i8 %62, ptr %63, align 1, !tbaa !20
-  %64 = lshr i64 %i.di, 40
-  %65 = trunc i64 %64 to i8
-  %66 = getelementptr inbounds nuw i8, ptr %1, i64 130
-  store i8 %65, ptr %66, align 1, !tbaa !20
-  %67 = lshr i64 %i.di, 48
-  %68 = trunc i64 %67 to i8
-  %i.er = getelementptr inbounds nuw i8, ptr %1, i64 129
-  store i8 %68, ptr %i.er, align 1, !tbaa !20
-  %69 = lshr i64 %i.di, 56
-  %70 = trunc nuw nsw i64 %69 to i8
-  %71 = getelementptr inbounds nuw i8, ptr %1, i64 128
-  store i8 %70, ptr %71, align 1, !tbaa !20
+  %i.er = getelementptr inbounds nuw i8, ptr %1, i64 128
+  %10 = bitcast i64 %i.di to <8 x i8>
+  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %11, ptr %i.er, align 1, !tbaa !20
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 127
   store i8 0, ptr %i.es, align 1, !tbaa !20
   %i.et = getelementptr inbounds nuw i8, ptr %1, i64 126

@@ -204,45 +204,18 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %i.e = select i1 %.not, ptr %i.d, ptr %i.c      ; 11 uses
+  %i.e = select i1 %.not, ptr %i.d, ptr %i.c      ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   store <4 x i8> <i8 0, i8 0, i8 8, i8 6>, ptr %i.e, align 1, !tbaa !46
   %.not25 = icmp ne i8 %1, 0
   %i.g = zext i1 %.not25 to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 5
+  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 5
   store i8 %i.g, ptr %i.f, align 1, !tbaa !46
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 9
-  %5 = lshr i64 %2, 56
-  %6 = trunc nuw i64 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 10
-  store i32 0, ptr %3, align 1
-  store i8 %6, ptr %4, align 1, !tbaa !46
-  %8 = lshr i64 %2, 48
-  %9 = trunc i64 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 11
-  store i8 %9, ptr %7, align 1, !tbaa !46
-  %11 = lshr i64 %2, 40
-  %12 = trunc i64 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  store i8 %12, ptr %10, align 1, !tbaa !46
-  %14 = lshr i64 %2, 32
-  %15 = trunc i64 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.e, i64 13
-  store i8 %15, ptr %13, align 1, !tbaa !46
-  %17 = lshr i64 %2, 24
-  %18 = trunc i64 %17 to i8
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 14
-  store i8 %18, ptr %16, align 1, !tbaa !46
-  %19 = lshr i64 %2, 16
-  %20 = trunc i64 %19 to i8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 15
-  store i8 %20, ptr %i.h, align 1, !tbaa !46
-  %21 = lshr i64 %2, 8
-  %22 = trunc i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store i8 %22, ptr %i.i, align 1, !tbaa !46
-  %24 = trunc i64 %2 to i8
-  store i8 %24, ptr %23, align 1, !tbaa !46
+  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 9
+  store i32 0, ptr %i.h, align 1
+  %3 = bitcast i64 %2 to <8 x i8>
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %4, ptr %i.i, align 1, !tbaa !46
   ret void
 }
 

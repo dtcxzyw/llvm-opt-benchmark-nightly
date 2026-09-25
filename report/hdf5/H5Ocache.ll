@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.z = or disjoint i32 %i.y, 10
   %i.aa = add nuw nsw i32 %i.z, %i.x
   %i.ab = zext nneg i32 %i.aa to i64
-  %i.ac = sub i64 %i.o, %i.ab                     ; 11 uses
+  %i.ac = sub i64 %i.o, %i.ab                     ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   %i.ae = getelementptr inbounds nuw i8, ptr %i.j, i64 5
   store i8 %i.l, ptr %i.ad, align 1, !tbaa !50
@@ -330,7 +330,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.dm = phi i8 [ %.pre185, %bb.f ], [ %i.cu, %bb.e ]
-  %.1179 = phi ptr [ %i.dl, %bb.f ], [ %.0178, %bb.e ] ; 11 uses
+  %.1179 = phi ptr [ %i.dl, %bb.f ], [ %.0178, %bb.e ] ; 4 uses
   %i.dn = and i8 %i.dm, 3
   switch i8 %i.dn, label %default.unreachable186 [
     i8 0, label %bb.h
@@ -340,36 +340,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   ]
 
 .preheader.preheader:                             ; preds = %bb.g
-  %4 = trunc i64 %i.ac to i8
-  %5 = getelementptr inbounds nuw i8, ptr %.1179, i64 1
-  store i8 %4, ptr %.1179, align 1, !tbaa !50
-  %6 = lshr i64 %i.ac, 8
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %.1179, i64 2
-  store i8 %7, ptr %5, align 1, !tbaa !50
-  %9 = lshr i64 %i.ac, 16
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %.1179, i64 3
-  store i8 %10, ptr %8, align 1, !tbaa !50
-  %12 = lshr i64 %i.ac, 24
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %.1179, i64 4
-  store i8 %13, ptr %11, align 1, !tbaa !50
-  %15 = lshr i64 %i.ac, 32
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %.1179, i64 5
-  store i8 %16, ptr %14, align 1, !tbaa !50
-  %18 = lshr i64 %i.ac, 40
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %.1179, i64 6
-  store i8 %19, ptr %17, align 1, !tbaa !50
-  %21 = lshr i64 %i.ac, 48
-  %22 = trunc i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %.1179, i64 7
-  store i8 %22, ptr %20, align 1, !tbaa !50
-  %24 = lshr i64 %i.ac, 56
-  %25 = trunc nuw i64 %24 to i8
-  store i8 %25, ptr %23, align 1, !tbaa !50
+  store i64 %i.ac, ptr %.1179, align 1, !tbaa !50
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.g

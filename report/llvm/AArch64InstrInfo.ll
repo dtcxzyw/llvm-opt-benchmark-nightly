@@ -205,10 +205,7 @@ _ZN4llvm24instructionsWithoutDebugINS_14ilist_iteratorINS_12ilist_detail12node_o
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit
   %.sroa.036.098 = phi ptr [ %.sroa.023.2.i.i, %.lr.ph ], [ %.sroa.036.3, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit ] ; 8 uses
-  %.sroa.044.097 = phi i8 [ 0, %.lr.ph ], [ %.sroa.044.2, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit ] ; 2 uses
-  %.sroa.646.096 = phi i8 [ 0, %.lr.ph ], [ %.sroa.646.2, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit ] ; 2 uses
-  %.sroa.847.095 = phi i8 [ 0, %.lr.ph ], [ %.sroa.847.2, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit ] ; 2 uses
-  %.sroa.1048.094 = phi i8 [ 0, %.lr.ph ], [ %.sroa.1048.2, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit ] ; 2 uses
+  %4 = phi <4 x i8> [ zeroinitializer, %.lr.ph ], [ %7, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit ] ; 2 uses
   %i.u = tail call noundef i32 @_ZNK4llvm12MachineInstr25findRegisterUseOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEb(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.036.098, i32 7, ptr noundef nonnull %2, i1 noundef zeroext false) #32
   %.not90 = icmp eq i32 %i.u, -1
   br i1 %.not90, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_12MachineInstrELb1EE9push_backES2_.exit, label %bb.e
@@ -288,18 +285,8 @@ bb.m:                                             ; preds = %_ZL23findCondCodeUs
   br label %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit
 
 _ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit:  ; preds = %_ZL23findCondCodeUsedByInstrRKN4llvm12MachineInstrE.exit, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m
-  %.sroa.7.0.insert.insert.i = phi i32 [ 0, %_ZL23findCondCodeUsedByInstrRKN4llvm12MachineInstrE.exit ], [ 256, %bb.g ], [ 65536, %bb.i ], [ 1, %bb.j ], [ 16777216, %bb.k ], [ 65792, %bb.h ], [ 16777473, %bb.l ], [ 16777217, %bb.m ] ; 4 uses
-  %.sroa.032.0.extract.trunc = trunc i32 %.sroa.7.0.insert.insert.i to i8
-  %.sroa.4.0.extract.shift = lshr i32 %.sroa.7.0.insert.insert.i, 8
-  %.sroa.4.0.extract.trunc = trunc i32 %.sroa.4.0.extract.shift to i8
-  %.sroa.5.0.extract.shift = lshr i32 %.sroa.7.0.insert.insert.i, 16
-  %.sroa.5.0.extract.trunc = trunc i32 %.sroa.5.0.extract.shift to i8
-  %.sroa.6.0.extract.shift = lshr i32 %.sroa.7.0.insert.insert.i, 24
-  %.sroa.6.0.extract.trunc = trunc nuw nsw i32 %.sroa.6.0.extract.shift to i8
-  %4 = or i8 %.sroa.044.097, %.sroa.032.0.extract.trunc ; 3 uses
-  %5 = or i8 %.sroa.646.096, %.sroa.4.0.extract.trunc ; 3 uses
-  %6 = or i8 %.sroa.847.095, %.sroa.5.0.extract.trunc ; 3 uses
-  %7 = or i8 %.sroa.1048.094, %.sroa.6.0.extract.trunc ; 3 uses
+  %5 = phi <4 x i8> [ zeroinitializer, %_ZL23findCondCodeUsedByInstrRKN4llvm12MachineInstrE.exit ], [ <i8 0, i8 1, i8 0, i8 0>, %bb.g ], [ <i8 0, i8 0, i8 1, i8 0>, %bb.i ], [ <i8 1, i8 0, i8 0, i8 0>, %bb.j ], [ <i8 0, i8 0, i8 0, i8 1>, %bb.k ], [ <i8 0, i8 1, i8 1, i8 0>, %bb.h ], [ <i8 1, i8 1, i8 0, i8 1>, %bb.l ], [ <i8 1, i8 0, i8 0, i8 1>, %bb.m ]
+  %6 = or <4 x i8> %4, %5                         ; 3 uses
   br i1 %.not28, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_12MachineInstrELb1EE9push_backES2_.exit, label %bb.n
 
 bb.n:                                             ; preds = %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit
@@ -323,10 +310,7 @@ bb.p:                                             ; preds = %bb.n
   br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_12MachineInstrELb1EE9push_backES2_.exit
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_12MachineInstrELb1EE9push_backES2_.exit: ; preds = %bb.p, %bb.o, %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit, %bb.d
-  %.sroa.1048.2 = phi i8 [ %.sroa.1048.094, %bb.d ], [ %7, %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit ], [ %7, %bb.o ], [ %7, %bb.p ] ; 2 uses
-  %.sroa.847.2 = phi i8 [ %.sroa.847.095, %bb.d ], [ %6, %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit ], [ %6, %bb.o ], [ %6, %bb.p ] ; 2 uses
-  %.sroa.646.2 = phi i8 [ %.sroa.646.096, %bb.d ], [ %5, %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit ], [ %5, %bb.o ], [ %5, %bb.p ] ; 2 uses
-  %.sroa.044.2 = phi i8 [ %.sroa.044.097, %bb.d ], [ %4, %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit ], [ %4, %bb.o ], [ %4, %bb.p ] ; 2 uses
+  %7 = phi <4 x i8> [ %4, %bb.d ], [ %6, %_ZL11getUsedNZCVN4llvm9AArch64CC8CondCodeE.exit ], [ %6, %bb.o ], [ %6, %bb.p ] ; 2 uses
   %i.ao = tail call noundef i32 @_ZNK4llvm12MachineInstr25findRegisterDefOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEbb(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.036.098, i32 7, ptr noundef nonnull %2, i1 noundef zeroext false, i1 noundef zeroext true) #32
   %.not91 = icmp eq i32 %i.ao, -1
   br i1 %.not91, label %bb.q, label %.thread.loopexit
@@ -362,20 +346,11 @@ _ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optio
   br i1 %.not89, label %.thread.loopexit, label %bb.d
 
 .thread.loopexit:                                 ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_12MachineInstrELb1EE9push_backES2_.exit, %_ZN4llvm20filter_iterator_baseINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEZNS_24instructionsWithoutDebugIS6_EEDaT_S8_bEUlRKS4_E_St26bidirectional_iterator_tagEppEv.exit
-  %8 = zext nneg i8 %.sroa.1048.2 to i32
-  %9 = shl nuw nsw i32 %8, 24
-  %10 = zext i8 %.sroa.847.2 to i32
-  %11 = shl nuw nsw i32 %10, 16
-  %12 = or disjoint i32 %9, %11
-  %13 = zext i8 %.sroa.646.2 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = or disjoint i32 %12, %14
-  %16 = zext i8 %.sroa.044.2 to i32
-  %17 = or disjoint i32 %15, %16
+  %8 = bitcast <4 x i8> %7 to i32
   br label %_ZL26areCFlagsAliveInSuccessorsPKN4llvm17MachineBasicBlockE.exit
 
 _ZL26areCFlagsAliveInSuccessorsPKN4llvm17MachineBasicBlockE.exit: ; preds = %.lr.ph.i, %_ZN4llvm16AArch64InstrInfo42findCondCodeUseOperandIdxForBranchOrSelectERKNS_12MachineInstrE.exit.i, %bb.e, %_ZL23findCondCodeUsedByInstrRKN4llvm12MachineInstrE.exit, %_ZN4llvm24instructionsWithoutDebugINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEEEDaT_S7_b.exit, %.thread.loopexit, %bb.a
-  %.sroa.049.1 = phi i32 [ undef, %bb.a ], [ %17, %.thread.loopexit ], [ undef, %_ZN4llvm16AArch64InstrInfo42findCondCodeUseOperandIdxForBranchOrSelectERKNS_12MachineInstrE.exit.i ], [ 0, %_ZN4llvm24instructionsWithoutDebugINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEEEDaT_S7_b.exit ], [ undef, %_ZL23findCondCodeUsedByInstrRKN4llvm12MachineInstrE.exit ], [ undef, %bb.e ], [ undef, %.lr.ph.i ]
+  %.sroa.049.1 = phi i32 [ undef, %bb.a ], [ %8, %.thread.loopexit ], [ undef, %_ZN4llvm16AArch64InstrInfo42findCondCodeUseOperandIdxForBranchOrSelectERKNS_12MachineInstrE.exit.i ], [ 0, %_ZN4llvm24instructionsWithoutDebugINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEEEDaT_S7_b.exit ], [ undef, %_ZL23findCondCodeUsedByInstrRKN4llvm12MachineInstrE.exit ], [ undef, %bb.e ], [ undef, %.lr.ph.i ]
   %.sroa.2.6 = phi i8 [ 0, %bb.a ], [ 1, %.thread.loopexit ], [ 0, %_ZN4llvm16AArch64InstrInfo42findCondCodeUseOperandIdxForBranchOrSelectERKNS_12MachineInstrE.exit.i ], [ 1, %_ZN4llvm24instructionsWithoutDebugINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEEEEDaT_S7_b.exit ], [ 0, %_ZL23findCondCodeUsedByInstrRKN4llvm12MachineInstrE.exit ], [ 0, %bb.e ], [ 0, %.lr.ph.i ]
   %.sroa.2.0.insert.ext = zext nneg i8 %.sroa.2.6 to i40
   %.sroa.2.0.insert.shift = shl nuw nsw i40 %.sroa.2.0.insert.ext, 32

@@ -204,7 +204,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
   br i1 %i.q, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8nlGN3X_18ty_python_semantic.exit, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit
-  %.sroa.021.0128 = phi ptr [ %i.t, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ %1, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8nlGN3X_18ty_python_semantic.exit ] ; 19 uses
+  %.sroa.021.0128 = phi ptr [ %i.t, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ %1, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8nlGN3X_18ty_python_semantic.exit ] ; 18 uses
   %.sroa.7.0126 = phi i64 [ %i.u, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8nlGN3X_18ty_python_semantic.exit ] ; 3 uses
   %.sroa.10.0125 = phi i64 [ %i.r, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ %i.i, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8nlGN3X_18ty_python_semantic.exit ]
   %i.r = add i64 %.sroa.10.0125, -1               ; 2 uses
@@ -232,9 +232,7 @@ bb.c:                                             ; preds = %.lr.ph
 
 bb.d:                                             ; preds = %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.021.0128, i64 16
-  %3 = load i32, ptr %i.y, align 8, !noalias !7920, !noundef !14
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.021.0128, i64 20
-  %5 = load i32, ptr %4, align 4, !noalias !7920, !noundef !14
+  %3 = load <2 x i32>, ptr %i.y, align 8, !noalias !7920
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.021.0128, i64 24
   %i.aa = invoke noundef i32 @_RNvXsc_NtCskLngH8kgpZI_15ruff_python_ast10node_indexNtB5_15AtomicNodeIndexNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noundef nonnull align 4 %i.z)
           to label %.noexc unwind label %.loopexit, !inline_history !7892
@@ -288,7 +286,7 @@ _RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast
 bb.g:                                             ; preds = %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr9new_panic.exit.i
   %.sroa.072.0 = phi ptr [ %.sroa.081.0, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr9new_panic.exit.i ], [ undef, %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i ] ; 3 uses
   %.sroa.573.0 = phi i64 [ %.sroa.582.0, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr9new_panic.exit.i ], [ undef, %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i ]
-  %.sroa.674.0 = phi i64 [ %.sroa.783.0, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr9new_panic.exit.i ], [ -72057594037927936, %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i ] ; 4 uses
+  %.sroa.674.0 = phi i64 [ %.sroa.783.0, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr9new_panic.exit.i ], [ -72057594037927936, %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i ] ; 3 uses
   %.sroa.1176.0 = phi i32 [ %i.cm, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr9new_panic.exit.i ], [ undef, %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i ]
   %.sroa.1377.0 = phi i32 [ %i.co, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr9new_panic.exit.i ], [ undef, %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i ]
   %i.ao = load i8, ptr %i.v, align 4, !range !7924, !noalias !7921, !noundef !14
@@ -514,10 +512,8 @@ bb.ac:                                            ; preds = %bb.ab, %_RINvNtCs4N
 
 .noexc13:                                         ; preds = %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast5nodes28InterpolatedStringFormatSpecENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i, %bb.g
   %.sroa.02.0.i = phi ptr [ null, %bb.g ], [ %i.cp, %_RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast5nodes28InterpolatedStringFormatSpecENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsoTR8nlGN3X_18ty_python_semantic.exit.i ]
-  %.sroa.674.16.extract.trunc = trunc i64 %.sroa.674.0 to i32
-  %.sroa.674.20.extract.shift = lshr i64 %.sroa.674.0, 32
-  %.sroa.674.20.extract.trunc = trunc nuw i64 %.sroa.674.20.extract.shift to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !7921
+  %4 = bitcast i64 %.sroa.674.0 to <2 x i32>
   br label %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit
 
 _RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit: ; preds = %.noexc13, %.noexc12
@@ -527,19 +523,16 @@ _RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringEle
   %.sroa.9.sroa.0.0 = phi i32 [ undef, %.noexc12 ], [ %.sroa.1377.0, %.noexc13 ]
   %.sroa.935.0 = phi i8 [ 0, %.noexc12 ], [ %i.ao, %.noexc13 ]
   %.sroa.8.0 = phi i32 [ %i.aa, %.noexc12 ], [ %.sroa.1176.0, %.noexc13 ]
-  %.sroa.729.0 = phi i32 [ %5, %.noexc12 ], [ %.sroa.674.20.extract.trunc, %.noexc13 ]
-  %.sroa.6.0 = phi i32 [ %3, %.noexc12 ], [ %.sroa.674.16.extract.trunc, %.noexc13 ]
   %.sroa.524.0 = phi i64 [ %i.ad, %.noexc12 ], [ %.sroa.573.0, %.noexc13 ]
   %.sroa.022.0 = phi ptr [ %i.ac, %.noexc12 ], [ %.sroa.072.0, %.noexc13 ]
+  %5 = phi <2 x i32> [ %3, %.noexc12 ], [ %4, %.noexc13 ]
   %i.dc = phi <2 x i32> [ undef, %.noexc12 ], [ %i.af, %.noexc13 ]
-  %i.dd = getelementptr inbounds nuw [64 x i8], ptr %i.l, i64 %.sroa.7.0126 ; 11 uses
+  %i.dd = getelementptr inbounds nuw [64 x i8], ptr %i.l, i64 %.sroa.7.0126 ; 10 uses
   store ptr %.sroa.022.0, ptr %i.dd, align 8
-  %.sroa.457.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  store i64 %.sroa.524.0, ptr %.sroa.457.0..sroa_idx, align 8
-  %.sroa.558.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
-  store i32 %.sroa.6.0, ptr %.sroa.558.0..sroa_idx.a, align 8
-  %.sroa.659.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dd, i64 20
-  store i32 %.sroa.729.0, ptr %.sroa.659.0..sroa_idx, align 4
+  %.sroa.558.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
+  store i64 %.sroa.524.0, ptr %.sroa.558.0..sroa_idx.a, align 8
+  %.sroa.659.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
+  store <2 x i32> %5, ptr %.sroa.659.0..sroa_idx, align 8
   %.sroa.760.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
   store i32 %.sroa.8.0, ptr %.sroa.760.0..sroa_idx, align 8
   %.sroa.861.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dd, i64 28

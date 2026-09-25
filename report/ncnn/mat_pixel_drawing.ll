@@ -204,13 +204,11 @@ bb.a:
   br i1 %i.g, label %.lr.ph115, label %._crit_edge116
 
 .lr.ph115:                                        ; preds = %bb.a
-  %9 = insertelement <4 x i32> poison, i32 %8, i64 0
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
-  %11 = lshr <4 x i32> %10, <i32 0, i32 8, i32 16, i32 24>
-  %12 = and <4 x i32> %11, <i32 255, i32 255, i32 255, i32 -1>
   %i.h = sext i32 %7 to i64
   %i.i = sext i32 %3 to i64
   %wide.trip.count122 = and i64 %i.e, 2147483647
+  %9 = bitcast i32 %8 to <4 x i8>
+  %10 = zext <4 x i8> %9 to <4 x i32>
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph115, %.loopexit
@@ -299,7 +297,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.ao = mul nuw nsw <4 x i32> %i.an, %i.al
   %i.ap = insertelement <4 x i32> poison, i32 %i.ai, i64 0
   %i.aq = shufflevector <4 x i32> %i.ap, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.ar = mul nuw nsw <4 x i32> %12, %i.aq
+  %i.ar = mul nuw nsw <4 x i32> %i.aq, %10
   %i.as = add nuw nsw <4 x i32> %i.ao, %i.ar
   %i.at = udiv <4 x i32> %i.as, splat (i32 255)
   %i.au = trunc <4 x i32> %i.at to <4 x i8>

@@ -83,7 +83,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: nounwind sspstrong uwtable
 define internal range(i32 -1, 1) i32 @wav_init_out(ptr noundef %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
-  %i.a = alloca [44 x i8], align 16               ; 17 uses
+  %i.a = alloca [44 x i8], align 16               ; 11 uses
   %2 = alloca %struct.audsettings, align 8        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(44) %i.a, ptr noundef nonnull align 16 dereferenceable(44) @__const.wav_init_out.hdr, i64 44, i1 false)
@@ -154,38 +154,12 @@ le_store.exit:                                    ; preds = %bb.a, %bb.a, %bb.b
   store i8 %i.y, ptr %i.z, align 1
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.ac = load i32, ptr %i.ab, align 8            ; 5 uses
-  %3 = trunc i32 %i.ac to i8
-  store i8 %3, ptr %i.aa, align 8
-  %4 = lshr i32 %i.ac, 8
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 25
-  store i8 %5, ptr %6, align 1
-  %7 = lshr i32 %i.ac, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 26
-  store i8 %8, ptr %9, align 2
-  %10 = lshr i32 %i.ac, 24
-  %11 = trunc nuw i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 27
-  store i8 %11, ptr %12, align 1
+  %i.ac = load i32, ptr %i.ab, align 8            ; 2 uses
+  store i32 %i.ac, ptr %i.aa, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %i.ae = add nuw nsw i32 %.0, %i.n               ; 2 uses
-  %i.af = shl i32 %i.ac, %i.ae                    ; 4 uses
-  %13 = trunc i32 %i.af to i8
-  store i8 %13, ptr %i.ad, align 4
-  %14 = lshr i32 %i.af, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 29
-  store i8 %15, ptr %16, align 1
-  %17 = lshr i32 %i.af, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 30
-  store i8 %18, ptr %19, align 2
-  %20 = lshr i32 %i.af, 24
-  %21 = trunc nuw i32 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 31
-  store i8 %21, ptr %22, align 1
+  %i.af = shl i32 %i.ac, %i.ae
+  store i32 %i.af, ptr %i.ad, align 4
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.ah = shl nuw nsw i32 1, %i.ae
   %i.ai = trunc nuw nsw i32 %i.ah to i8
@@ -232,8 +206,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @wav_fini_out(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
-  %i.b = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
+  %i.b = alloca [4 x i8], align 4                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 6 uses
@@ -246,36 +220,10 @@ le_store.exit.preheader:                          ; preds = %bb.a
   %i.f = load i32, ptr %i.e, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load i32, ptr %i.g, align 8
-  %i.i = mul i32 %i.h, %i.f                       ; 5 uses
-  %i.j = add i32 %i.i, 36                         ; 4 uses
-  %1 = trunc i32 %i.j to i8
-  store i8 %1, ptr %i.a, align 1
-  %2 = lshr i32 %i.j, 8
-  %3 = trunc i32 %2 to i8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %3, ptr %4, align 1
-  %5 = lshr i32 %i.j, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %6, ptr %7, align 1
-  %8 = lshr i32 %i.j, 24
-  %9 = trunc nuw i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %9, ptr %10, align 1
-  %11 = trunc i32 %i.i to i8
-  store i8 %11, ptr %i.b, align 1
-  %12 = lshr i32 %i.i, 8
-  %13 = trunc i32 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %13, ptr %14, align 1
-  %15 = lshr i32 %i.i, 16
-  %16 = trunc i32 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i8 %16, ptr %17, align 1
-  %18 = lshr i32 %i.i, 24
-  %19 = trunc nuw i32 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  store i8 %19, ptr %20, align 1
+  %i.i = mul i32 %i.h, %i.f                       ; 2 uses
+  %i.j = add i32 %i.i, 36
+  store i32 %i.j, ptr %i.a, align 4
+  store i32 %i.i, ptr %i.b, align 4
   %i.k = tail call i32 @fseek(ptr noundef nonnull %i.d, i64 noundef 4, i32 noundef 0)
   %.not12 = icmp eq i32 %i.k, 0
   br i1 %.not12, label %bb.b, label %.sink.split

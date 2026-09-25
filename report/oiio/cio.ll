@@ -204,37 +204,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @opj_write_double_LE(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, double noundef %1) local_unnamed_addr #4 {
 bb.a:
-  %2 = bitcast double %1 to i64                   ; 8 uses
-  %.7.extract.shift = lshr i64 %2, 56
-  %.7.extract.trunc = trunc nuw i64 %.7.extract.shift to i8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.7.extract.trunc, ptr %0, align 1, !tbaa !8
-  %.6.extract.shift = lshr i64 %2, 48
-  %.6.extract.trunc = trunc i64 %.6.extract.shift to i8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %.6.extract.trunc, ptr %3, align 1, !tbaa !8
-  %.5.extract.shift = lshr i64 %2, 40
-  %.5.extract.trunc = trunc i64 %.5.extract.shift to i8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %.5.extract.trunc, ptr %4, align 1, !tbaa !8
-  %.4.extract.shift = lshr i64 %2, 32
-  %.4.extract.trunc = trunc i64 %.4.extract.shift to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %.4.extract.trunc, ptr %5, align 1, !tbaa !8
-  %.3.extract.shift = lshr i64 %2, 24
-  %.3.extract.trunc = trunc i64 %.3.extract.shift to i8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %.3.extract.trunc, ptr %6, align 1, !tbaa !8
-  %.2.extract.shift = lshr i64 %2, 16
-  %.2.extract.trunc = trunc i64 %.2.extract.shift to i8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %.2.extract.trunc, ptr %7, align 1, !tbaa !8
-  %.1.extract.shift = lshr i64 %2, 8
-  %.1.extract.trunc = trunc i64 %.1.extract.shift to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %.1.extract.trunc, ptr %8, align 1, !tbaa !8
-  %.0.extract.trunc = trunc i64 %2 to i8
-  store i8 %.0.extract.trunc, ptr %9, align 1, !tbaa !8
+  %2 = bitcast double %1 to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %0, align 1, !tbaa !8
   ret void
 }
 

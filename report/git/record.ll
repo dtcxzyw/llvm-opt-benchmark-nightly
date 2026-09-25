@@ -202,7 +202,7 @@ declare ptr @reftable_buf_detach(ptr noundef) local_unnamed_addr #6
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -2147483648, 1) i32 @reftable_log_record_key(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #5 {
 bb.a:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !31
   %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
@@ -218,37 +218,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load i64, ptr %i.i, align 8, !tbaa !33
-  %i.k = xor i64 %i.j, -1                         ; 8 uses
-  %2 = lshr i64 %i.k, 56
-  %3 = trunc nuw i64 %2 to i8
-  store i8 %3, ptr %i.a, align 1, !tbaa !20
-  %4 = lshr i64 %i.k, 48
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !20
-  %7 = lshr i64 %i.k, 40
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !20
-  %10 = lshr i64 %i.k, 32
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !20
-  %13 = lshr i64 %i.k, 24
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %14, ptr %15, align 1, !tbaa !20
-  %16 = lshr i64 %i.k, 16
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %17, ptr %18, align 1, !tbaa !20
-  %19 = lshr i64 %i.k, 8
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %20, ptr %21, align 1, !tbaa !20
-  %22 = trunc i64 %i.k to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !20
+  %i.k = xor i64 %i.j, -1
+  %2 = bitcast i64 %i.k to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.a, align 8, !tbaa !20
   %i.l = call i32 @reftable_buf_add(ptr noundef %1, ptr noundef nonnull %i.a, i64 noundef 8) #17
   %. = call i32 @llvm.smin.i32(i32 %i.l, i32 0)
   br label %bb.c

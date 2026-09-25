@@ -204,9 +204,9 @@ bb.a:
   %138 = alloca %"class.cv::Scalar_", align 16    ; 6 uses
   %139 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %140 = alloca %"class.cv::_InputArray", align 8 ; 8 uses
-  %.sroa.0200.0.extract.trunc = trunc i64 %1 to i32 ; 3 uses
+  %.sroa.0200.0.extract.trunc = trunc i64 %1 to i32 ; 2 uses
   %.sroa.5.0.extract.shift = lshr i64 %1, 32
-  %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32 ; 3 uses
+  %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !30
   %i.e = load ptr, ptr %0, align 8, !tbaa !57
@@ -387,7 +387,7 @@ _ZNSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EE6resizeEm.exit551: ; preds = %_ZS
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #24
   store i32 0, ptr %18, align 8, !tbaa !126
-  %i.bn = getelementptr inbounds nuw i8, ptr %18, i64 4 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %18, i64 4
   store i32 0, ptr %i.bn, align 4, !tbaa !127
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !21
@@ -411,10 +411,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.ca, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit553.thread827
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %141 = add nsw i32 %.sroa.5.0.extract.trunc, 1
-  store i32 %141, ptr %i.bn, align 4, !tbaa !127
-  %142 = add nsw i32 %.sroa.0200.0.extract.trunc, 1
-  store i32 %142, ptr %18, align 8, !tbaa !126
+  %141 = bitcast i64 %1 to <2 x i32>
+  %142 = add nsw <2 x i32> %141, splat (i32 1)
+  store <2 x i32> %142, ptr %18, align 8, !tbaa !25
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNKSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EE12_M_check_lenEmPKc.exit.i728, %_ZNKSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EE12_M_check_lenEmPKc.exit.i, %bb.e

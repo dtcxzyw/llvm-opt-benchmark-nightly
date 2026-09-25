@@ -204,7 +204,7 @@ blf_read_bytes.exit.thread:                       ; preds = %bb.e, %bb.d, %bb.m,
 define internal fastcc noundef zeroext i1 @blf_read_ethernet_status(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef range(i64 0, 4294967296) %5, i32 noundef %6, i64 noundef %7, i16 noundef zeroext %8) unnamed_addr #2 {
 bb.a:
   %9 = alloca %struct.blf_ethernet_status, align 4 ; 11 uses
-  %i.a = alloca [24 x i8], align 16               ; 20 uses
+  %i.a = alloca [24 x i8], align 16               ; 13 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
@@ -296,37 +296,9 @@ blf_read_bytes.exit33:                            ; preds = %bb.f, %blf_read_byt
 
 bb.i:                                             ; preds = %blf_read_bytes.exit33
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %10 = load i64, ptr %i.b, align 8               ; 8 uses
-  %11 = lshr i64 %10, 56
-  %12 = trunc nuw i64 %11 to i8
-  store i8 %12, ptr %i.ar, align 16
-  %13 = lshr i64 %10, 48
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  store i8 %14, ptr %15, align 1
-  %16 = lshr i64 %10, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
-  store i8 %17, ptr %18, align 2
-  %19 = lshr i64 %10, 32
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 19
-  store i8 %20, ptr %21, align 1
-  %22 = lshr i64 %10, 24
-  %23 = trunc i64 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  store i8 %23, ptr %24, align 4
-  %25 = lshr i64 %10, 16
-  %26 = trunc i64 %25 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %i.a, i64 21
-  store i8 %26, ptr %27, align 1
-  %28 = lshr i64 %10, 8
-  %29 = trunc i64 %28 to i8
-  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 22
-  store i8 %29, ptr %30, align 2
-  %31 = trunc i64 %10 to i8
-  %32 = getelementptr inbounds nuw i8, ptr %i.a, i64 23
-  store i8 %31, ptr %32, align 1
+  %10 = load <8 x i8>, ptr %i.b, align 8
+  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %11, ptr %i.ar, align 16
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %blf_read_bytes.exit33

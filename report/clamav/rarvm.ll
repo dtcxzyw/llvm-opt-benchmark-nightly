@@ -204,46 +204,16 @@ bb.a:
   %i.c = sub i32 32, %4
   %i.d = lshr i32 -1, %i.c
   %i.e = shl i32 %i.d, %i.b
-  %i.f = xor i32 %i.e, -1                         ; 4 uses
-  %i.g = shl i32 %2, %i.b                         ; 4 uses
-  %i.h = zext nneg i32 %i.a to i64                ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %i.h ; 2 uses
-  %6 = load i8, ptr %5, align 1, !tbaa !16
-  %7 = trunc i32 %i.f to i8
-  %8 = and i8 %6, %7
-  %9 = trunc i32 %i.g to i8
-  %10 = or i8 %8, %9
-  store i8 %10, ptr %5, align 1, !tbaa !16
-  %11 = lshr i32 %i.f, 8
-  %12 = lshr i32 %i.g, 8
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 %i.h
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 1 ; 2 uses
-  %15 = load i8, ptr %14, align 1, !tbaa !16
-  %16 = trunc i32 %11 to i8
-  %17 = and i8 %15, %16
-  %18 = trunc i32 %12 to i8
-  %19 = or i8 %17, %18
-  store i8 %19, ptr %14, align 1, !tbaa !16
-  %20 = lshr i32 %i.f, 16
-  %21 = lshr i32 %i.g, 16
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 %i.h
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 2 ; 2 uses
-  %24 = load i8, ptr %23, align 1, !tbaa !16
-  %25 = trunc i32 %20 to i8
-  %26 = and i8 %24, %25
-  %27 = trunc i32 %21 to i8
-  %28 = or i8 %26, %27
-  store i8 %28, ptr %23, align 1, !tbaa !16
-  %29 = lshr i32 %i.f, 24
-  %30 = lshr i32 %i.g, 24
-  %31 = getelementptr inbounds nuw i8, ptr %1, i64 %i.h
-  %i.i = getelementptr inbounds nuw i8, ptr %31, i64 3 ; 2 uses
-  %32 = load i8, ptr %i.i, align 1, !tbaa !16
-  %33 = trunc nuw i32 %29 to i8
-  %34 = and i8 %32, %33
-  %35 = trunc nuw i32 %30 to i8
-  %36 = or i8 %34, %35
-  store i8 %36, ptr %i.i, align 1, !tbaa !16
+  %i.f = xor i32 %i.e, -1
+  %i.g = shl i32 %2, %i.b
+  %i.h = zext nneg i32 %i.a to i64
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %i.h ; 2 uses
+  %5 = load <4 x i8>, ptr %i.i, align 1, !tbaa !16
+  %6 = bitcast i32 %i.f to <4 x i8>
+  %7 = and <4 x i8> %5, %6
+  %8 = bitcast i32 %i.g to <4 x i8>
+  %9 = or <4 x i8> %7, %8
+  store <4 x i8> %9, ptr %i.i, align 1, !tbaa !16
   ret void
 }
 

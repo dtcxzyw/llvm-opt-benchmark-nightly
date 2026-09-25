@@ -201,36 +201,9 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 exif_set_long.exit.thread:                        ; preds = %bb.b
-  %.sroa.2.0.extract.shift = lshr i64 %2, 32
-  %3 = lshr i64 %2, 24
-  %4 = trunc i64 %3 to i8
-  store i8 %4, ptr %0, align 1, !tbaa !8
-  %5 = lshr i64 %2, 16
-  %6 = trunc i64 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %6, ptr %7, align 1, !tbaa !8
-  %8 = lshr i64 %2, 8
-  %9 = trunc i64 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %9, ptr %10, align 1, !tbaa !8
-  %11 = trunc i64 %2 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !8
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %14 = lshr i64 %2, 56
-  %15 = trunc nuw i64 %14 to i8
-  store i8 %15, ptr %13, align 1, !tbaa !8
-  %16 = lshr i64 %2, 48
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %17, ptr %18, align 1, !tbaa !8
-  %19 = lshr i64 %2, 40
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %20, ptr %21, align 1, !tbaa !8
-  %22 = trunc i64 %.sroa.2.0.extract.shift to i8
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !8
+  %3 = bitcast i64 %2 to <8 x i8>
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>
+  store <8 x i8> %4, ptr %0, align 1, !tbaa !8
   br label %exif_set_long.exit5
 
 exif_set_long.exit.thread6:                       ; preds = %bb.b
@@ -357,36 +330,9 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 exif_set_slong.exit.thread:                       ; preds = %bb.b
-  %.sroa.2.0.extract.shift = lshr i64 %2, 32
-  %3 = lshr i64 %2, 24
-  %4 = trunc i64 %3 to i8
-  store i8 %4, ptr %0, align 1, !tbaa !8
-  %5 = lshr i64 %2, 16
-  %6 = trunc i64 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %6, ptr %7, align 1, !tbaa !8
-  %8 = lshr i64 %2, 8
-  %9 = trunc i64 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %9, ptr %10, align 1, !tbaa !8
-  %11 = trunc i64 %2 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !8
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %14 = lshr i64 %2, 56
-  %15 = trunc nuw i64 %14 to i8
-  store i8 %15, ptr %13, align 1, !tbaa !8
-  %16 = lshr i64 %2, 48
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %17, ptr %18, align 1, !tbaa !8
-  %19 = lshr i64 %2, 40
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %20, ptr %21, align 1, !tbaa !8
-  %22 = trunc i64 %.sroa.2.0.extract.shift to i8
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !8
+  %3 = bitcast i64 %2 to <8 x i8>
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>
+  store <8 x i8> %4, ptr %0, align 1, !tbaa !8
   br label %exif_set_slong.exit5
 
 exif_set_slong.exit.thread6:                      ; preds = %bb.b

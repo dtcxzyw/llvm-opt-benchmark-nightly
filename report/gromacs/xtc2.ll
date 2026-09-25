@@ -205,21 +205,13 @@ vector.body:                                      ; preds = %bb.c
   %interleaved.vec.1 = shufflevector <16 x i8> %i.z, <16 x i8> %i.ac, <32 x i32> <i32 0, i32 8, i32 16, i32 24, i32 1, i32 9, i32 17, i32 25, i32 2, i32 10, i32 18, i32 26, i32 3, i32 11, i32 19, i32 27, i32 4, i32 12, i32 20, i32 28, i32 5, i32 13, i32 21, i32 29, i32 6, i32 14, i32 22, i32 30, i32 7, i32 15, i32 23, i32 31>
   store <32 x i8> %interleaved.vec.1, ptr %i.w, align 1, !tbaa !19
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 64
-  %5 = load i32, ptr %i.ad, align 16, !tbaa !12
-  %6 = insertelement <4 x i32> poison, i32 %5, i64 0
-  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <4 x i32> zeroinitializer
-  %8 = lshr <4 x i32> %7, <i32 0, i32 8, i32 16, i32 24>
-  %9 = trunc <4 x i32> %8 to <4 x i8>
-  store <4 x i8> %9, ptr %4, align 1, !tbaa !19
+  %4 = load <4 x i8>, ptr %i.ad, align 16, !tbaa !12
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 64
+  store <4 x i8> %4, ptr %5, align 1, !tbaa !19
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 68
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 68
-  %11 = load i32, ptr %i.ae, align 4, !tbaa !12
-  %12 = insertelement <4 x i32> poison, i32 %11, i64 0
-  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer
-  %14 = lshr <4 x i32> %13, <i32 0, i32 8, i32 16, i32 24>
-  %15 = trunc <4 x i32> %14 to <4 x i8>
-  store <4 x i8> %15, ptr %10, align 1, !tbaa !19
+  %6 = load <4 x i8>, ptr %i.ae, align 4, !tbaa !12
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 68
+  store <4 x i8> %6, ptr %7, align 1, !tbaa !19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret void

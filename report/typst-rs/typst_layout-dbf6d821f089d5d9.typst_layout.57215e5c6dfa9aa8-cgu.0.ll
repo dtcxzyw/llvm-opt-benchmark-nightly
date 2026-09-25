@@ -205,17 +205,12 @@ bb.kc:                                            ; preds = %bb.ka
   br i1 %i.akl, label %bb.kd, label %bb.kf
 
 bb.kd:                                            ; preds = %bb.kc
-  %.sroa.0157.0.copyload.i = load i64, ptr %i.jx, align 2, !noalias !25948 ; 2 uses
+  %.sroa.0157.0.copyload.i2706 = load <4 x i16>, ptr %i.jx, align 2, !noalias !25948
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !26171
   %i.akm = load double, ptr %i.ajl, align 8, !noalias !26172, !noundef !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !26171
-  %.sroa.4.0.extract.shift.i.i = lshr i64 %.sroa.0157.0.copyload.i, 16
-  %.sroa.6.0.extract.shift.i.i = lshr i64 %.sroa.0157.0.copyload.i, 48
-  %.sroa.4.0.extract.trunc.i.i = trunc i64 %.sroa.4.0.extract.shift.i.i to i16
-  %.sroa.6.0.extract.trunc.i.i = trunc nuw i64 %.sroa.6.0.extract.shift.i.i to i16
-  %6 = insertelement <2 x i16> poison, i16 %.sroa.6.0.extract.trunc.i.i, i64 0
-  %7 = insertelement <2 x i16> %6, i16 %.sroa.4.0.extract.trunc.i.i, i64 1
-  %i.akn = sitofp <2 x i16> %7 to <2 x double>
+  %6 = shufflevector <4 x i16> %.sroa.0157.0.copyload.i2706, <4 x i16> poison, <2 x i32> <i32 3, i32 1>
+  %i.akn = sitofp <2 x i16> %6 to <2 x double>
   %i.ako = insertelement <2 x double> poison, double %i.akm, i64 0
   %i.akp = shufflevector <2 x double> %i.ako, <2 x double> poison, <2 x i32> zeroinitializer
   %i.akq = fdiv <2 x double> %i.akn, %i.akp       ; 2 uses

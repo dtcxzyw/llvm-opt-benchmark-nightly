@@ -205,7 +205,7 @@ ft_mem_qalloc.exit:                               ; preds = %bb.l
   %i.ar = add nuw nsw i64 %i.aq, 2                ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !107
-  %i.au = call ptr %i.at(ptr noundef %i.o, i64 noundef %i.ar) #30, !inline_history !639 ; 14 uses
+  %i.au = call ptr %i.at(ptr noundef %i.o, i64 noundef %i.ar) #30, !inline_history !639 ; 12 uses
   %.not.i47.not = icmp eq ptr %i.au, null
   br i1 %.not.i47.not, label %Mac_Read_POST_Resource.exit.thread, label %.lr.ph124
 
@@ -224,7 +224,7 @@ bb.m:                                             ; preds = %.lr.ph124, %bb.aa
   %indvars.iv135 = phi i64 [ 0, %.lr.ph124 ], [ %indvars.iv.next136, %bb.aa ] ; 2 uses
   %.0111.i122 = phi i64 [ 2, %.lr.ph124 ], [ %.2.i, %bb.aa ] ; 5 uses
   %.0112.i121 = phi i64 [ 6, %.lr.ph124 ], [ %.2114.i, %bb.aa ] ; 6 uses
-  %.0116.i120 = phi i64 [ 0, %.lr.ph124 ], [ %.2118.i, %bb.aa ] ; 7 uses
+  %.0116.i120 = phi i64 [ 0, %.lr.ph124 ], [ %.2118.i, %bb.aa ] ; 4 uses
   %.0119.i119 = phi i32 [ 1, %.lr.ph124 ], [ %.2121.i, %bb.aa ] ; 3 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv135
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !68 ; 3 uses
@@ -277,26 +277,15 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.x
 
 bb.t:                                             ; preds = %bb.r
-  %i.bs = add i64 %.0111.i122, 3                  ; 2 uses
+  %i.bs = add i64 %.0111.i122, 3
   %i.bt = icmp ugt i64 %i.bs, %i.ar
   br i1 %i.bt, label %ft_mem_free.exit44, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %5 = trunc i64 %.0116.i120 to i8
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.au, i64 %.0111.i122 ; 3 uses
-  store i8 %5, ptr %i.bu, align 1, !tbaa !162
-  %6 = lshr i64 %.0116.i120, 8
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr i8, ptr %i.bu, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !162
-  %9 = lshr i64 %.0116.i120, 16
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr i8, ptr %i.bu, i64 2
-  store i8 %10, ptr %11, align 1, !tbaa !162
-  %12 = lshr i64 %.0116.i120, 24
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.bs
-  store i8 %13, ptr %14, align 1, !tbaa !162
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.au, i64 %.0111.i122
+  %5 = bitcast i64 %.0116.i120 to <8 x i8>
+  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %6, ptr %i.bu, align 1, !tbaa !162
   %i.bv = icmp eq i16 %i.bl, 5
   br i1 %i.bv, label %._crit_edge125, label %bb.v
 
@@ -346,7 +335,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.q
   br i1 %exitcond138.not, label %._crit_edge125, label %bb.m, !llvm.loop !641
 
 ._crit_edge125:                                   ; preds = %bb.aa, %bb.u
-  %.0116.i.lcssa = phi i64 [ %.2118.i, %bb.aa ], [ %.0116.i120, %bb.u ] ; 4 uses
+  %.0116.i.lcssa = phi i64 [ %.2118.i, %bb.aa ], [ %.0116.i120, %bb.u ]
   %.0112.i.lcssa = phi i64 [ %.2114.i, %bb.aa ], [ %.0112.i121, %bb.u ] ; 2 uses
   %.0111.i.lcssa = phi i64 [ %.2.i, %bb.aa ], [ %.0111.i122, %bb.u ] ; 2 uses
   %i.ci = add i64 %.0112.i.lcssa, 2               ; 2 uses
@@ -358,26 +347,15 @@ bb.ab:                                            ; preds = %._crit_edge125
   store i8 -128, ptr %i.ck, align 1, !tbaa !162
   %i.cl = getelementptr i8, ptr %i.ck, i64 1
   store i8 3, ptr %i.cl, align 1, !tbaa !162
-  %i.cm = add i64 %.0111.i.lcssa, 3               ; 2 uses
+  %i.cm = add i64 %.0111.i.lcssa, 3
   %i.cn = icmp ugt i64 %i.cm, %i.ar
   br i1 %i.cn, label %ft_mem_free.exit44, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %15 = trunc i64 %.0116.i.lcssa to i8
-  %i.co = getelementptr inbounds nuw i8, ptr %i.au, i64 %.0111.i.lcssa ; 3 uses
-  store i8 %15, ptr %i.co, align 1, !tbaa !162
-  %16 = lshr i64 %.0116.i.lcssa, 8
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr i8, ptr %i.co, i64 1
-  store i8 %17, ptr %18, align 1, !tbaa !162
-  %19 = lshr i64 %.0116.i.lcssa, 16
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr i8, ptr %i.co, i64 2
-  store i8 %20, ptr %21, align 1, !tbaa !162
-  %22 = lshr i64 %.0116.i.lcssa, 24
-  %23 = trunc i64 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.cm
-  store i8 %23, ptr %24, align 1, !tbaa !162
+  %i.co = getelementptr inbounds nuw i8, ptr %i.au, i64 %.0111.i.lcssa
+  %7 = bitcast i64 %.0116.i.lcssa to <8 x i8>
+  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %8, ptr %i.co, align 1, !tbaa !162
   %i.cp = call fastcc i32 @open_face_from_buffer(ptr noundef nonnull %0, ptr noundef nonnull %i.au, i64 noundef %i.ci, i64 noundef 0, ptr noundef nonnull @.str.18, ptr noundef %4), !inline_history !640
   br label %Mac_Read_POST_Resource.exit
 

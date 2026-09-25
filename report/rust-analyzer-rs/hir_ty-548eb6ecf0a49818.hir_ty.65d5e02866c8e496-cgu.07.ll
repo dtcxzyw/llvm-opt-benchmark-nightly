@@ -205,9 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2470)
-  %3 = load i32, ptr %1, align 8, !range !31, !alias.scope !2470, !noalias !2471, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %5 = load i32, ptr %4, align 4, !alias.scope !2470, !noalias !2471, !noundef !4
+  %3 = load <2 x i32>, ptr %1, align 8, !alias.scope !2470, !noalias !2471
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !2470, !noalias !2471, !nonnull !4, !noundef !4
   %i.h = tail call noundef ptr @_RINvXs1r_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver11generic_argNtB7_11GenericArgsINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir4fold12TypeFoldableNtNtB9_8interner10DbInternerE13try_fold_withINtNtNtNtCshbspv01vNlV_29ra_ap_rustc_next_trait_solver5solve8assembly17structural_traits21ReplaceProjectionWithB2b_NtNtB9_6solver13SolverContextEEBb_(ptr noundef nonnull %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %2), !noalias !2472 ; 2 uses
@@ -235,9 +233,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.q, label %bb.k, label %bb.l
 
 bb.g:                                             ; preds = %bb.a
-  %6 = load i32, ptr %1, align 8, !range !31, !noundef !4
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %8 = load i32, ptr %7, align 4, !noundef !4
+  %4 = load <2 x i32>, ptr %1, align 8
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.c
@@ -253,11 +249,8 @@ bb.j:                                             ; preds = %bb.g, %bb.l, %bb.i
   %.sroa.10.sroa.0.0 = phi i64 [ undef, %bb.i ], [ %.sroa.516.0.copyload.i, %bb.l ], [ undef, %bb.g ]
   %.sroa.811.0 = phi i32 [ 2, %bb.i ], [ %i.b, %bb.l ], [ 4, %bb.g ]
   %.sroa.8.0 = phi i64 [ %i.s, %bb.i ], [ %i.u, %bb.l ], [ undef, %bb.g ]
-  %.sroa.7.0 = phi i32 [ %5, %bb.i ], [ %.sroa.044.4.extract.trunc, %bb.l ], [ %8, %bb.g ]
-  %.sroa.0.0 = phi i32 [ %3, %bb.i ], [ %.sroa.044.0.extract.trunc, %bb.l ], [ %6, %bb.g ]
-  store i32 %.sroa.0.0, ptr %0, align 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx, align 4
+  %5 = phi <2 x i32> [ %3, %bb.i ], [ %6, %bb.l ], [ %4, %bb.g ]
+  store <2 x i32> %5, ptr %0, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.8.0, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.811.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -273,10 +266,8 @@ bb.k:                                             ; preds = %bb.d, %bb.e, %bb.f
 
 bb.l:                                             ; preds = %bb.f
   %i.u = ptrtoint ptr %i.p to i64
-  %i.v = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %.sroa.044.0.extract.trunc = trunc i64 %i.v to i32
-  %.sroa.044.4.extract.shift = lshr i64 %i.v, 32
-  %.sroa.044.4.extract.trunc = trunc nuw i64 %.sroa.044.4.extract.shift to i32
+  %i.v = ptrtoint ptr %i.n to i64
+  %6 = bitcast i64 %i.v to <2 x i32>
   br label %bb.j
 
 bb.m:                                             ; preds = %bb.h, %bb.k, %bb.j
@@ -307,9 +298,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2484)
-  %3 = load i32, ptr %1, align 8, !range !31, !alias.scope !2484, !noalias !2485, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %5 = load i32, ptr %4, align 4, !alias.scope !2484, !noalias !2485, !noundef !4
+  %3 = load <2 x i32>, ptr %1, align 8, !alias.scope !2484, !noalias !2485
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !alias.scope !2484, !noalias !2485, !nonnull !4, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2486
@@ -377,12 +366,9 @@ bb.j:                                             ; preds = %bb.m, %bb.l, %bb.i
   %.sroa.10.sroa.5.0 = phi i64 [ undef, %bb.i ], [ %.sroa.21.24.insert.ext, %bb.l ], [ undef, %bb.m ]
   %.sroa.811.0 = phi i32 [ 2, %bb.i ], [ %.sroa.15.sroa.0.0.extract.trunc134, %bb.l ], [ 4, %bb.m ]
   %.sroa.8.0 = phi i64 [ %i.y, %bb.i ], [ %i.ad, %bb.l ], [ undef, %bb.m ]
-  %.sroa.7.0 = phi i32 [ %5, %bb.i ], [ %.sroa.5126.12.extract.trunc, %bb.l ], [ %8, %bb.m ]
-  %.sroa.0.0 = phi i32 [ %3, %bb.i ], [ %.sroa.5126.8.extract.trunc128, %bb.l ], [ %6, %bb.m ]
+  %4 = phi <2 x i32> [ %3, %bb.i ], [ %5, %bb.l ], [ %6, %bb.m ]
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.sroa.0.0, ptr %i.z, align 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx, align 4
+  store <2 x i32> %4, ptr %i.z, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.8.0, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.811.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -411,17 +397,13 @@ bb.l:                                             ; preds = %bb.f
   %.sroa.21.24..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.21.24.copyload = load i32, ptr %.sroa.21.24..sroa_idx, align 8, !alias.scope !2492, !noalias !2493
   %.sroa.21.24.insert.ext = zext i32 %.sroa.21.24.copyload to i64
-  %i.ac = ptrtoint ptr %i.s to i64                ; 2 uses
+  %i.ac = ptrtoint ptr %i.s to i64
   %i.ad = ptrtoint ptr %i.v to i64
-  %.sroa.5126.8.extract.trunc128 = trunc i64 %i.ac to i32
-  %.sroa.5126.12.extract.shift = lshr i64 %i.ac, 32
-  %.sroa.5126.12.extract.trunc = trunc nuw i64 %.sroa.5126.12.extract.shift to i32
+  %5 = bitcast i64 %i.ac to <2 x i32>
   br label %bb.j
 
 bb.m:                                             ; preds = %bb.a
-  %6 = load i32, ptr %1, align 8, !range !31, !noundef !4
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %8 = load i32, ptr %7, align 4, !noundef !4
+  %6 = load <2 x i32>, ptr %1, align 8
   br label %bb.j
 
 bb.n:                                             ; preds = %bb.h, %bb.k, %bb.j
@@ -458,9 +440,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2502)
-  %3 = load i32, ptr %1, align 8, !range !31, !alias.scope !2502, !noalias !2503, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %5 = load i32, ptr %4, align 4, !alias.scope !2502, !noalias !2503, !noundef !4
+  %3 = load <2 x i32>, ptr %1, align 8, !alias.scope !2502, !noalias !2503
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !alias.scope !2502, !noalias !2503, !nonnull !4, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2504
@@ -549,12 +529,9 @@ bb.j:                                             ; preds = %bb.m, %bb.l, %bb.i
   %.sroa.10.sroa.0.0 = phi i64 [ undef, %bb.i ], [ %i.ac, %bb.l ], [ undef, %bb.m ]
   %.sroa.811.0 = phi i32 [ 2, %bb.i ], [ %i.e, %bb.l ], [ 4, %bb.m ]
   %.sroa.8.0 = phi i64 [ %i.x, %bb.i ], [ %i.ad, %bb.l ], [ undef, %bb.m ]
-  %.sroa.7.0 = phi i32 [ %5, %bb.i ], [ %.sroa.5131.12.extract.trunc, %bb.l ], [ %8, %bb.m ]
-  %.sroa.0.0 = phi i32 [ %3, %bb.i ], [ %.sroa.5131.8.extract.trunc133, %bb.l ], [ %6, %bb.m ]
+  %4 = phi <2 x i32> [ %3, %bb.i ], [ %5, %bb.l ], [ %6, %bb.m ]
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.sroa.0.0, ptr %i.y, align 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx, align 4
+  store <2 x i32> %4, ptr %i.y, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.8.0, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.811.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -594,16 +571,12 @@ bb.l:                                             ; preds = %bb.f
   %.sroa.24.24..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.ac = load i64, ptr %.sroa.24.24..sroa_idx, align 4, !alias.scope !2510, !noalias !2513
   %i.ad = ptrtoint ptr %i.ab to i64
-  %i.ae = ptrtoint ptr %i.q to i64                ; 2 uses
-  %.sroa.5131.8.extract.trunc133 = trunc i64 %i.ae to i32
-  %.sroa.5131.12.extract.shift = lshr i64 %i.ae, 32
-  %.sroa.5131.12.extract.trunc = trunc nuw i64 %.sroa.5131.12.extract.shift to i32
+  %i.ae = ptrtoint ptr %i.q to i64
+  %5 = bitcast i64 %i.ae to <2 x i32>
   br label %bb.j
 
 bb.m:                                             ; preds = %bb.a
-  %6 = load i32, ptr %1, align 8, !range !31, !noundef !4
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %8 = load i32, ptr %7, align 4, !noundef !4
+  %6 = load <2 x i32>, ptr %1, align 8
   br label %bb.j
 
 bb.n:                                             ; preds = %bb.h, %bb.k, %bb.j
@@ -633,9 +606,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2522)
-  %3 = load i32, ptr %1, align 8, !range !31, !alias.scope !2522, !noalias !2523, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %5 = load i32, ptr %4, align 4, !alias.scope !2522, !noalias !2523, !noundef !4
+  %3 = load <2 x i32>, ptr %1, align 8, !alias.scope !2522, !noalias !2523
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !2522, !noalias !2523, !nonnull !4, !noundef !4
   %i.h = tail call noundef nonnull ptr @_RINvXs1r_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver11generic_argNtB7_11GenericArgsINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir4fold12TypeFoldableNtNtB9_8interner10DbInternerE13try_fold_withNtNvBb_29replace_errors_with_variables13ErrorReplacerEBb_(ptr noundef nonnull %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %2), !noalias !2524
@@ -653,27 +624,20 @@ bb.d:                                             ; preds = %bb.a
   %i.n = tail call noundef nonnull ptr @_RINvXs1r_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver11generic_argNtB7_11GenericArgsINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir4fold12TypeFoldableNtNtB9_8interner10DbInternerE13try_fold_withNtNvBb_29replace_errors_with_variables13ErrorReplacerEBb_(ptr noundef nonnull %i.k, ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %2), !noalias !2527
   %i.o = tail call noundef nonnull ptr @_RINvXsl_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver11generic_argNtB6_4TermINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir4fold12TypeFoldableNtNtB8_8interner10DbInternerE13try_fold_withNtNvBa_29replace_errors_with_variables13ErrorReplacerEBa_(ptr noundef nonnull %i.m, ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %2), !noalias !2527
   %i.p = ptrtoint ptr %i.o to i64
-  %i.q = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %.sroa.043.0.extract.trunc = trunc i64 %i.q to i32
-  %.sroa.043.4.extract.shift = lshr i64 %i.q, 32
-  %.sroa.043.4.extract.trunc = trunc nuw i64 %.sroa.043.4.extract.shift to i32
+  %i.q = ptrtoint ptr %i.n to i64
+  %4 = bitcast i64 %i.q to <2 x i32>
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
-  %6 = load i32, ptr %1, align 8, !range !31, !noundef !4
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %8 = load i32, ptr %7, align 4, !noundef !4
+  %5 = load <2 x i32>, ptr %1, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.sroa.9.sroa.0.0 = phi i64 [ undef, %bb.c ], [ %i.j, %bb.d ], [ undef, %bb.e ]
   %.sroa.711.0 = phi i32 [ 2, %bb.c ], [ %i.b, %bb.d ], [ 4, %bb.e ]
   %.sroa.7.0 = phi i64 [ %i.i, %bb.c ], [ %i.p, %bb.d ], [ undef, %bb.e ]
-  %.sroa.6.0 = phi i32 [ %5, %bb.c ], [ %.sroa.043.4.extract.trunc, %bb.d ], [ %8, %bb.e ]
-  %.sroa.0.0 = phi i32 [ %3, %bb.c ], [ %.sroa.043.0.extract.trunc, %bb.d ], [ %6, %bb.e ]
-  store i32 %.sroa.0.0, ptr %0, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 4
+  %6 = phi <2 x i32> [ %3, %bb.c ], [ %4, %bb.d ], [ %5, %bb.e ]
+  store <2 x i32> %6, ptr %0, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.711.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16

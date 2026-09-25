@@ -204,37 +204,10 @@ bb.f:                                             ; preds = %print_tar_number.ex
   br label %print_tar_number.exit73
 
 .lr.ph.i75:                                       ; preds = %bb.f
-  %8 = trunc i64 %3 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 135
-  store i8 %8, ptr %9, align 1
-  %10 = lshr i64 %3, 8
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 134
-  store i8 %11, ptr %12, align 1
-  %13 = lshr i64 %3, 16
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 133
-  store i8 %14, ptr %15, align 1
-  %16 = lshr i64 %3, 24
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 132
-  store i8 %17, ptr %18, align 1
-  %19 = lshr i64 %3, 32
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 131
-  store i8 %20, ptr %21, align 1
-  %22 = lshr i64 %3, 40
-  %23 = trunc i64 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 130
-  store i8 %23, ptr %24, align 1
-  %25 = lshr i64 %3, 48
-  %26 = trunc i64 %25 to i8
-  %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 129
-  store i8 %26, ptr %i.ez, align 1
-  %27 = lshr i64 %3, 56
-  %28 = trunc nuw i64 %27 to i8
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 128
-  store i8 %28, ptr %29, align 1
+  %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %8 = bitcast i64 %3 to <8 x i8>
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %9, ptr %i.ez, align 1
   store <4 x i8> <i8 -128, i8 0, i8 0, i8 0>, ptr %i.dn, align 1
   br label %print_tar_number.exit73
 
@@ -287,37 +260,10 @@ print_tar_number.exit73:                          ; preds = %.lr.ph.i75, %.lr.ph
   br label %print_tar_number.exit93
 
 .lr.ph.i85:                                       ; preds = %print_tar_number.exit73
-  %30 = trunc i64 %7 to i8
-  %31 = getelementptr inbounds nuw i8, ptr %0, i64 147
-  store i8 %30, ptr %31, align 1
-  %32 = lshr i64 %7, 8
-  %33 = trunc i64 %32 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %0, i64 146
-  store i8 %33, ptr %34, align 1
-  %35 = lshr i64 %7, 16
-  %36 = trunc i64 %35 to i8
-  %37 = getelementptr inbounds nuw i8, ptr %0, i64 145
-  store i8 %36, ptr %37, align 1
-  %38 = lshr i64 %7, 24
-  %39 = trunc i64 %38 to i8
-  %40 = getelementptr inbounds nuw i8, ptr %0, i64 144
-  store i8 %39, ptr %40, align 1
-  %41 = lshr i64 %7, 32
-  %42 = trunc i64 %41 to i8
-  %43 = getelementptr inbounds nuw i8, ptr %0, i64 143
-  store i8 %42, ptr %43, align 1
-  %44 = lshr i64 %7, 40
-  %45 = trunc i64 %44 to i8
-  %46 = getelementptr inbounds nuw i8, ptr %0, i64 142
-  store i8 %45, ptr %46, align 1
-  %47 = lshr i64 %7, 48
-  %48 = trunc i64 %47 to i8
-  %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 141
-  store i8 %48, ptr %i.gl, align 1
-  %49 = lshr i64 %7, 56
-  %50 = trunc nuw i64 %49 to i8
-  %51 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  store i8 %50, ptr %51, align 1
+  %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 140
+  %10 = bitcast i64 %7 to <8 x i8>
+  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %11, ptr %i.gl, align 1
   store <4 x i8> <i8 -128, i8 0, i8 0, i8 0>, ptr %i.fa, align 1
   br label %print_tar_number.exit93
 

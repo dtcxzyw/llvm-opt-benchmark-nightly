@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %.peel.next.i.i.i
 
 bb.bt:                                            ; preds = %bb.bq
   %gepdiff.i.i = sub nsw i64 %i.ie, %i.hn
-  %4 = load i64, ptr %i.dd, align 8, !tbaa !93    ; 2 uses
+  %4 = load <8 x i8>, ptr %i.dd, align 8, !tbaa !93
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 0, ptr %i.a, align 4, !tbaa !96
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -240,21 +240,9 @@ bb.bx:                                            ; preds = %bb.bw
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.c, ptr nonnull align 2 %i.jd, i64 %i.je, i1 false)
   %invariant.gep.i.i.i = getelementptr i8, ptr %i.c, i64 %i.je
   %gep.7.i.i.i = getelementptr i8, ptr %invariant.gep.i.i.i, i64 -8 ; 2 uses
-  %5 = insertelement <2 x i64> poison, i64 %4, i64 0
-  %6 = shufflevector <2 x i64> %5, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %7 = lshr <2 x i64> %6, <i64 40, i64 32>
-  %8 = lshr <2 x i64> %6, <i64 56, i64 48>
-  %9 = insertelement <4 x i64> poison, i64 %4, i64 0
-  %10 = shufflevector <4 x i64> %9, <4 x i64> poison, <4 x i32> zeroinitializer
-  %11 = lshr <4 x i64> %10, <i64 24, i64 16, i64 8, i64 0>
-  %12 = trunc <4 x i64> %11 to <4 x i8>
-  %13 = trunc <2 x i64> %7 to <2 x i8>
-  %14 = trunc <2 x i64> %8 to <2 x i8>
   %i.jf = load <8 x i8>, ptr %gep.7.i.i.i, align 1, !tbaa !99
-  %15 = shufflevector <2 x i8> %14, <2 x i8> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %16 = shufflevector <4 x i8> %12, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %17 = shufflevector <8 x i8> %15, <8 x i8> %16, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %i.jg = xor <8 x i8> %i.jf, %17
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %i.jg = xor <8 x i8> %i.jf, %5
   store <8 x i8> %i.jg, ptr %gep.7.i.i.i, align 1, !tbaa !99
   %i.jh = call i32 @EVP_CipherInit_ex(ptr noundef nonnull %i.ja, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.c, i32 noundef 1) #10
   %.not48.i.i.i = icmp eq i32 %i.jh, 1

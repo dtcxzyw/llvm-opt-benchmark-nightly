@@ -204,7 +204,7 @@ _ZN4llvm8DenseMapINS_12VersionTupleES1_NS_12DenseMapInfoIS1_vEENS_6detail12Dense
 ; Function Attrs: mustprogress noinline nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm12DenseMapBaseINS_8DenseMapINS_12VersionTupleES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E8moveFromERS8_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #5 comdat align 2 {
 bb.a:
-  %2 = alloca %"struct.std::array", align 4       ; 8 uses
+  %2 = alloca %"struct.std::array", align 4       ; 7 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !23
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !24
@@ -223,9 +223,8 @@ bb.a:
   br i1 %.not.i22, label %_ZN4llvm8densemap6detail11forEachUsedIZNS_12DenseMapBaseINS_8DenseMapINS_12VersionTupleES5_NS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_S5_EEEES5_S5_S7_SA_E8moveFromERSB_EUljE_EEvPKjjT_.exit, label %.lr.ph25
 
 .lr.ph25:                                         ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16
   br label %bb.b
 
@@ -253,20 +252,15 @@ bb.c:                                             ; preds = %.lr.ph, %_ZZN4llvm1
   %i.ab = trunc nuw i64 %i.aa to i32
   %i.ac = and i32 %i.ab, 2147483647
   %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %i.ae = load i64, ptr %i.ad, align 4            ; 3 uses
-  %4 = trunc i64 %i.ae to i32
-  %5 = and i32 %4, 2147483647
-  %6 = lshr i64 %i.ae, 32
-  %7 = trunc nuw i64 %6 to i32
-  %8 = and i32 %7, 1048575
+  %i.ae = load i64, ptr %i.ad, align 4            ; 2 uses
   %i.af = lshr i64 %i.ae, 52
   %i.ag = trunc nuw nsw i64 %i.af to i32
   %i.ah = and i32 %i.ag, 1023
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   store i32 %i.z, ptr %2, align 4
-  store i32 %i.ac, ptr %3, align 4
-  store i32 %5, ptr %i.o, align 4
-  store i32 %8, ptr %i.p, align 4
+  store i32 %i.ac, ptr %i.o, align 4
+  %.inner = and i64 %i.ae, 4503597479886847
+  store i64 %.inner, ptr %i.p, align 4
   store i32 %i.ah, ptr %i.q, align 4
   %i.ai = call noundef i64 @_ZN4llvm11xxh3_64bitsEPKhm(ptr noundef nonnull %2, i64 noundef 20) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15

@@ -205,7 +205,7 @@ bb.a:
   %11 = alloca %"class.testing::Message", align 8 ; 7 uses
   %12 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.i = alloca [13 x i8], align 1                ; 14 uses
+  %i.i = alloca [13 x i8], align 8                ; 7 uses
   %i.j = alloca [25 x i8], align 16               ; 7 uses
   %14 = alloca %"class.bssl::internal::StackAllocated.943", align 8 ; 8 uses
   %15 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
@@ -608,51 +608,18 @@ _ZNK4bssl4SpanIhE7subspanEmm.exit167:             ; preds = %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #45
   %i.ed = getelementptr inbounds nuw i8, ptr %i.h, i64 76
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #45
-  %29 = getelementptr inbounds nuw i8, ptr %i.i, i64 7
-  %30 = getelementptr inbounds nuw i8, ptr %i.i, i64 6
-  %31 = getelementptr inbounds nuw i8, ptr %i.i, i64 5
-  %32 = getelementptr inbounds nuw i8, ptr %i.i, i64 4
-  %33 = getelementptr inbounds nuw i8, ptr %i.i, i64 3
-  %34 = getelementptr inbounds nuw i8, ptr %i.i, i64 2
-  %35 = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %36 = getelementptr inbounds nuw i8, ptr %i.h, i64 80 ; 2 uses
-  %i.ee = call i64 @SSL_get_write_sequence(ptr noundef %0) ; 5 uses
-  %37 = lshr i64 %i.ee, 40
-  %38 = lshr i64 %i.ee, 48
-  %39 = lshr i64 %i.ee, 56
-  %40 = trunc i64 %i.ee to i8                     ; 2 uses
-  %41 = insertelement <4 x i64> poison, i64 %i.ee, i64 0
-  %42 = shufflevector <4 x i64> %41, <4 x i64> poison, <4 x i32> zeroinitializer
-  %43 = lshr <4 x i64> %42, <i64 32, i64 24, i64 16, i64 8>
-  %44 = trunc <4 x i64> %43 to <4 x i8>           ; 5 uses
-  %45 = trunc i64 %37 to i8                       ; 2 uses
-  %46 = trunc i64 %38 to i8                       ; 2 uses
-  %47 = trunc nuw i64 %39 to i8                   ; 2 uses
-  store i8 %40, ptr %29, align 1, !tbaa !1106
-  %48 = extractelement <4 x i8> %44, i64 3
-  store i8 %48, ptr %30, align 1, !tbaa !1106
-  %49 = extractelement <4 x i8> %44, i64 2
-  store i8 %49, ptr %31, align 1, !tbaa !1106
-  %50 = extractelement <4 x i8> %44, i64 1
-  store i8 %50, ptr %32, align 1, !tbaa !1106
-  %51 = extractelement <4 x i8> %44, i64 0
-  store i8 %51, ptr %33, align 1, !tbaa !1106
-  store i8 %45, ptr %34, align 1, !tbaa !1106
-  store i8 %46, ptr %35, align 1, !tbaa !1106
-  %i.ef = load <8 x i8>, ptr %36, align 16, !tbaa !1106
-  %52 = insertelement <8 x i8> poison, i8 %47, i64 0
-  %53 = insertelement <8 x i8> %52, i8 %46, i64 1
-  %54 = insertelement <8 x i8> %53, i8 %45, i64 2
-  %55 = shufflevector <4 x i8> %44, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %56 = shufflevector <8 x i8> %54, <8 x i8> %55, <8 x i32> <i32 0, i32 1, i32 2, i32 8, i32 9, i32 10, i32 11, i32 poison>
-  %57 = insertelement <8 x i8> %56, i8 %40, i64 7
-  %i.eg = xor <8 x i8> %i.ef, %57
-  store <8 x i8> %i.eg, ptr %36, align 16, !tbaa !1106
-  store i8 %47, ptr %i.i, align 1, !tbaa !1106
+  %i.ee = call i64 @SSL_get_write_sequence(ptr noundef %0)
+  %29 = getelementptr inbounds nuw i8, ptr %i.h, i64 80 ; 2 uses
+  %i.ef = load <8 x i8>, ptr %29, align 16, !tbaa !1106
+  %30 = bitcast i64 %i.ee to <8 x i8>
+  %31 = shufflevector <8 x i8> %30, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0> ; 2 uses
+  %i.eg = xor <8 x i8> %i.ef, %31
+  store <8 x i8> %i.eg, ptr %29, align 16, !tbaa !1106
+  store <8 x i8> %31, ptr %i.i, align 8, !tbaa !1106
   %i.eh = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store <4 x i8> <i8 22, i8 3, i8 3, i8 0>, ptr %i.eh, align 1, !tbaa !1106
+  store <4 x i8> <i8 22, i8 3, i8 3, i8 0>, ptr %i.eh, align 8, !tbaa !1106
   %i.ei = getelementptr inbounds nuw i8, ptr %i.i, i64 12
-  store i8 4, ptr %i.ei, align 1, !tbaa !1106
+  store i8 4, ptr %i.ei, align 4, !tbaa !1106
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #45
   store <4 x i8> <i8 22, i8 3, i8 3, i8 0>, ptr %i.j, align 16, !tbaa !1106
   %i.ej = getelementptr inbounds nuw i8, ptr %i.j, i64 4

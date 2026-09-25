@@ -205,37 +205,9 @@ bb.a:
 SHA256_Pad.exit:                                  ; preds = %.preheader28.i, %.lr.ph.i
   %i.q = getelementptr i8, ptr %0, i64 40
   %i.r = getelementptr i8, ptr %0, i64 96
-  %2 = load i64, ptr %i.b, align 8                ; 8 uses
-  %3 = trunc i64 %2 to i8
-  %4 = getelementptr i8, ptr %0, i64 103
-  store i8 %3, ptr %4, align 1
-  %5 = lshr i64 %2, 8
-  %6 = trunc i64 %5 to i8
-  %7 = getelementptr i8, ptr %0, i64 102
-  store i8 %6, ptr %7, align 2
-  %8 = lshr i64 %2, 16
-  %9 = trunc i64 %8 to i8
-  %10 = getelementptr i8, ptr %0, i64 101
-  store i8 %9, ptr %10, align 1
-  %11 = lshr i64 %2, 24
-  %12 = trunc i64 %11 to i8
-  %13 = getelementptr i8, ptr %0, i64 100
-  store i8 %12, ptr %13, align 4
-  %14 = lshr i64 %2, 32
-  %15 = trunc i64 %14 to i8
-  %16 = getelementptr i8, ptr %0, i64 99
-  store i8 %15, ptr %16, align 1
-  %17 = lshr i64 %2, 40
-  %18 = trunc i64 %17 to i8
-  %19 = getelementptr i8, ptr %0, i64 98
-  store i8 %18, ptr %19, align 2
-  %20 = lshr i64 %2, 48
-  %21 = trunc i64 %20 to i8
-  %22 = getelementptr i8, ptr %0, i64 97
-  store i8 %21, ptr %22, align 1
-  %23 = lshr i64 %2, 56
-  %24 = trunc nuw i64 %23 to i8
-  store i8 %24, ptr %i.r, align 8
+  %2 = load <8 x i8>, ptr %i.b, align 8
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 256
   call fastcc void @SHA256_Transform(ptr noundef nonnull %0, ptr noundef %i.q, ptr noundef nonnull %i.a, ptr noundef nonnull %i.s)
   %i.t = load i32, ptr %0, align 8                ; 4 uses

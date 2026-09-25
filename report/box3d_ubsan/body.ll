@@ -202,15 +202,15 @@ declare void @b3RecWrite_BodyEnable(ptr noundef, ptr noundef) local_unnamed_addr
 ; Function Attrs: nounwind uwtable
 define void @b3Body_SetMotionLocks(i64 %0, i48 %1) local_unnamed_addr #0 !func_sanitize !346 {
 bb.a:
-  %2 = alloca %struct.b3RecArgs_BodySetMotionLocks, align 8 ; 11 uses
+  %2 = alloca %struct.b3RecArgs_BodySetMotionLocks, align 8 ; 8 uses
   %.sroa.3.0.extract.shift = lshr i64 %0, 32
-  %.sroa.0.0.extract.trunc = trunc i48 %1 to i8   ; 3 uses
+  %.sroa.0.0.extract.trunc = trunc i48 %1 to i8   ; 2 uses
   %.sroa.4.0.extract.shift = lshr i48 %1, 8       ; 3 uses
-  %.sroa.4.0.extract.trunc = trunc i48 %.sroa.4.0.extract.shift to i8 ; 3 uses
+  %.sroa.4.0.extract.trunc = trunc i48 %.sroa.4.0.extract.shift to i8 ; 2 uses
   %.sroa.6.0.extract.shift = lshr i48 %1, 16      ; 3 uses
-  %.sroa.6.0.extract.trunc = trunc i48 %.sroa.6.0.extract.shift to i8 ; 3 uses
+  %.sroa.6.0.extract.trunc = trunc i48 %.sroa.6.0.extract.shift to i8 ; 2 uses
   %.sroa.8.0.extract.shift = lshr i48 %1, 24      ; 3 uses
-  %.sroa.8.0.extract.trunc = trunc i48 %.sroa.8.0.extract.shift to i8 ; 3 uses
+  %.sroa.8.0.extract.trunc = trunc i48 %.sroa.8.0.extract.shift to i8 ; 2 uses
   %.sroa.10.0.extract.shift = lshr i48 %1, 32     ; 3 uses
   %.sroa.10.0.extract.trunc = trunc i48 %.sroa.10.0.extract.shift to i8 ; 3 uses
   %.sroa.12.0.extract.shift = lshr i48 %1, 40     ; 3 uses
@@ -240,14 +240,10 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   store i64 %0, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i8 %.sroa.0.0.extract.trunc, ptr %3, align 8, !tbaa !119
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 9
-  store i8 %.sroa.4.0.extract.trunc, ptr %.sroa.4.0..sroa_idx, align 1, !tbaa !119
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 10
-  store i8 %.sroa.6.0.extract.trunc, ptr %.sroa.6.0..sroa_idx, align 2, !tbaa !119
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 11
-  store i8 %.sroa.8.0.extract.trunc, ptr %.sroa.8.0..sroa_idx, align 1, !tbaa !119
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = bitcast i48 %1 to <6 x i8>
+  %4 = shufflevector <6 x i8> %3, <6 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %4, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !119
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
   store i8 %.sroa.10.0.extract.trunc, ptr %.sroa.10.0..sroa_idx, align 4, !tbaa !119
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 13

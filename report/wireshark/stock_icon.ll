@@ -202,7 +202,7 @@ bb.a:
   %11 = alloca %class.QColor, align 8             ; 6 uses
   %12 = alloca %class.QFont, align 8              ; 8 uses
   %13 = alloca %class.QRectF, align 8             ; 5 uses
-  %14 = alloca %class.QRectF, align 8             ; 8 uses
+  %14 = alloca %class.QRectF, align 16            ; 7 uses
   %15 = alloca %class.QTextOption, align 8        ; 7 uses
   %16 = alloca %class.QTextOption, align 8        ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
@@ -378,7 +378,6 @@ _ZN9QtPrivate21qMakeForeachContainerIR5QListIiEEENS_17QForeachContainerINSt5deca
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8
   %.sroa.2.0.extract.trunc = trunc i64 %2 to i48
   %i.at = getelementptr i8, ptr %4, i64 16
-  %17 = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.av = getelementptr inbounds nuw i8, ptr %14, i64 24
   br label %bb.m
@@ -499,20 +498,19 @@ bb.v:                                             ; preds = %bb.u
           to label %bb.w unwind label %bb.ak      ; 2 uses
 
 bb.w:                                             ; preds = %bb.v
-  %i.bj = extractvalue { i64, i64 } %i.bi, 0      ; 2 uses
+  %i.bj = extractvalue { i64, i64 } %i.bi, 0      ; 3 uses
   %i.bk = extractvalue { i64, i64 } %i.bi, 1      ; 2 uses
-  %.sroa.0.0.extract.trunc = trunc i64 %i.bj to i32 ; 2 uses
-  %18 = sitofp i32 %.sroa.0.0.extract.trunc to double
-  store double %18, ptr %14, align 8
   %.sroa.0.4.extract.shift = lshr i64 %i.bj, 32
-  %.sroa.0.4.extract.trunc = trunc nuw i64 %.sroa.0.4.extract.shift to i32 ; 2 uses
-  %19 = sitofp i32 %.sroa.0.4.extract.trunc to double
-  store double %19, ptr %17, align 8
+  %.sroa.0.4.extract.trunc = trunc nuw i64 %.sroa.0.4.extract.shift to i32
+  %.sroa.0.0.extract.trunc = trunc i64 %i.bj to i32
+  %17 = bitcast i64 %i.bj to <2 x i32>
+  %18 = sitofp <2 x i32> %17 to <2 x double>
+  store <2 x double> %18, ptr %14, align 16
   %.sroa.8.8.extract.trunc = trunc i64 %i.bk to i32
   %i.bl = add i32 %.sroa.8.8.extract.trunc, 1
   %i.bm = sub i32 %i.bl, %.sroa.0.0.extract.trunc
   %i.bn = sitofp i32 %i.bm to double
-  store double %i.bn, ptr %i.au, align 8
+  store double %i.bn, ptr %i.au, align 16
   %.sroa.8.12.extract.shift = lshr i64 %i.bk, 32
   %.sroa.8.12.extract.trunc = trunc nuw i64 %.sroa.8.12.extract.shift to i32
   %i.bo = add i32 %.sroa.8.12.extract.trunc, 1

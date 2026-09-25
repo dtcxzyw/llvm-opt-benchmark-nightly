@@ -204,22 +204,9 @@ mz_stream_write_value.exit:                       ; preds = %.loopexit.i, %bb.a,
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @mz_stream_write_uint32(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 .loopexit.i:
-  %i.a = alloca [8 x i8], align 1                 ; 7 uses
+  %i.a = alloca [8 x i8], align 4                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %2 = trunc i32 %1 to i8
-  store i8 %2, ptr %i.a, align 1, !tbaa !24
-  %3 = lshr i32 %1, 8
-  %4 = trunc i32 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %4, ptr %5, align 1, !tbaa !24
-  %6 = lshr i32 %1, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %7, ptr %8, align 1, !tbaa !24
-  %9 = lshr i32 %1, 24
-  %10 = trunc nuw i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !24
+  store i32 %1, ptr %i.a, align 4, !tbaa !24
   %.not.i.i = icmp eq ptr %0, null
   br i1 %.not.i.i, label %mz_stream_write_value.exit, label %bb.a
 
@@ -263,38 +250,9 @@ mz_stream_write_value.exit:                       ; preds = %.loopexit.i, %bb.a,
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @mz_stream_write_int64(ptr noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 .loopexit.i:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %2 = trunc i64 %1 to i8
-  store i8 %2, ptr %i.a, align 1, !tbaa !24
-  %3 = lshr i64 %1, 8
-  %4 = trunc i64 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %4, ptr %5, align 1, !tbaa !24
-  %6 = lshr i64 %1, 16
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %7, ptr %8, align 1, !tbaa !24
-  %9 = lshr i64 %1, 24
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !24
-  %12 = lshr i64 %1, 32
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %13, ptr %14, align 1, !tbaa !24
-  %15 = lshr i64 %1, 40
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %16, ptr %17, align 1, !tbaa !24
-  %18 = lshr i64 %1, 48
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %19, ptr %20, align 1, !tbaa !24
-  %21 = lshr i64 %1, 56
-  %22 = trunc nuw i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !24
+  store i64 %1, ptr %i.a, align 8, !tbaa !24
   %.not.i.i = icmp eq ptr %0, null
   br i1 %.not.i.i, label %mz_stream_write_value.exit, label %bb.a
 
@@ -338,38 +296,9 @@ mz_stream_write_value.exit:                       ; preds = %.loopexit.i, %bb.a,
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @mz_stream_write_uint64(ptr noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 .loopexit.i:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %2 = trunc i64 %1 to i8
-  store i8 %2, ptr %i.a, align 1, !tbaa !24
-  %3 = lshr i64 %1, 8
-  %4 = trunc i64 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %4, ptr %5, align 1, !tbaa !24
-  %6 = lshr i64 %1, 16
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %7, ptr %8, align 1, !tbaa !24
-  %9 = lshr i64 %1, 24
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !24
-  %12 = lshr i64 %1, 32
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %13, ptr %14, align 1, !tbaa !24
-  %15 = lshr i64 %1, 40
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %16, ptr %17, align 1, !tbaa !24
-  %18 = lshr i64 %1, 48
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %19, ptr %20, align 1, !tbaa !24
-  %21 = lshr i64 %1, 56
-  %22 = trunc nuw i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !24
+  store i64 %1, ptr %i.a, align 8, !tbaa !24
   %.not.i.i = icmp eq ptr %0, null
   br i1 %.not.i.i, label %mz_stream_write_value.exit, label %bb.a
 

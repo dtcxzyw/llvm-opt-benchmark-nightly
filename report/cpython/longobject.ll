@@ -205,24 +205,9 @@ bb.l:                                             ; preds = %._crit_edge172
   %i.w = and i64 %.095.val.pre, 3
   %i.x = sub nsw i64 1, %i.w
   %i.y = zext i32 %.095.val137 to i64
-  %i.z = mul nsw i64 %i.x, %i.y                   ; 14 uses
+  %i.z = mul nsw i64 %i.x, %i.y                   ; 7 uses
   store i64 %i.z, ptr %.sroa.0, align 8, !tbaa !40
   %i.aa = icmp eq i64 %2, 0
-  %4 = lshr i64 %i.z, 56
-  %5 = trunc nuw i64 %4 to i8
-  %6 = lshr i64 %i.z, 48
-  %7 = trunc i64 %6 to i8
-  %8 = lshr i64 %i.z, 40
-  %9 = trunc i64 %8 to i8
-  %10 = lshr i64 %i.z, 32
-  %11 = trunc i64 %10 to i8
-  %12 = lshr i64 %i.z, 24
-  %13 = trunc i64 %12 to i8
-  %14 = lshr i64 %i.z, 16
-  %15 = trunc i64 %14 to i8
-  %16 = lshr i64 %i.z, 8
-  %17 = trunc i64 %16 to i8
-  %18 = trunc i64 %i.z to i8
   br i1 %i.aa, label %_fits_in_n_bits.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -340,22 +325,10 @@ bb.y:                                             ; preds = %bb.x
 .preheader159:                                    ; preds = %bb.x
   %i.ay = add nsw i64 %2, -8                      ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 1 %1, i8 %i.av, i64 %i.ay, i1 false), !tbaa !40
-  %scevgep = getelementptr i8, ptr %1, i64 %i.ay  ; 8 uses
-  %19 = getelementptr i8, ptr %scevgep, i64 1
-  store i8 %5, ptr %scevgep, align 1, !tbaa !40
-  %20 = getelementptr i8, ptr %scevgep, i64 2
-  store i8 %7, ptr %19, align 1, !tbaa !40
-  %21 = getelementptr i8, ptr %scevgep, i64 3
-  store i8 %9, ptr %20, align 1, !tbaa !40
-  %22 = getelementptr i8, ptr %scevgep, i64 4
-  store i8 %11, ptr %21, align 1, !tbaa !40
-  %23 = getelementptr i8, ptr %scevgep, i64 5
-  store i8 %13, ptr %22, align 1, !tbaa !40
-  %i.az = getelementptr i8, ptr %scevgep, i64 6
-  store i8 %15, ptr %23, align 1, !tbaa !40
-  %24 = getelementptr i8, ptr %scevgep, i64 7
-  store i8 %17, ptr %i.az, align 1, !tbaa !40
-  store i8 %18, ptr %24, align 1, !tbaa !40
+  %i.az = getelementptr i8, ptr %1, i64 %i.ay
+  %4 = bitcast i64 %i.z to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.az, align 1, !tbaa !40
   br label %_fits_in_n_bits.exit.thread
 
 bb.z:                                             ; preds = %._crit_edge172

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %.lr.ph71, %.critedge
   %.170 = phi i32 [ %.066, %.lr.ph71 ], [ %.2, %.critedge ] ; 2 uses
-  %.14269 = phi ptr [ %.04165, %.lr.ph71 ], [ %.243, %.critedge ] ; 10 uses
+  %.14269 = phi ptr [ %.04165, %.lr.ph71 ], [ %.243, %.critedge ] ; 3 uses
   %i.s = load i32, ptr %i.k, align 4, !tbaa !18   ; 3 uses
   %i.t = load i32, ptr %i.l, align 4, !tbaa !29
   %i.u = icmp ult i32 %i.s, %i.t
@@ -217,37 +217,9 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.w, ptr %i.k, align 4, !tbaa !18
   %i.x = zext i32 %i.s to i64
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.x
-  %3 = load i64, ptr %i.y, align 8, !tbaa !25     ; 8 uses
-  %4 = lshr i64 %3, 56
-  %5 = trunc nuw i64 %4 to i8
-  store i8 %5, ptr %.14269, align 1, !tbaa !31
-  %6 = lshr i64 %3, 48
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %.14269, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !31
-  %9 = lshr i64 %3, 40
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %.14269, i64 2
-  store i8 %10, ptr %11, align 1, !tbaa !31
-  %12 = lshr i64 %3, 32
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %.14269, i64 3
-  store i8 %13, ptr %14, align 1, !tbaa !31
-  %15 = lshr i64 %3, 24
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %.14269, i64 4
-  store i8 %16, ptr %17, align 1, !tbaa !31
-  %18 = lshr i64 %3, 16
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %.14269, i64 5
-  store i8 %19, ptr %20, align 1, !tbaa !31
-  %21 = lshr i64 %3, 8
-  %22 = trunc i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %.14269, i64 6
-  store i8 %22, ptr %23, align 1, !tbaa !31
-  %24 = trunc i64 %3 to i8
-  %25 = getelementptr inbounds nuw i8, ptr %.14269, i64 7
-  store i8 %24, ptr %25, align 1, !tbaa !31
+  %3 = load <8 x i8>, ptr %i.y, align 8, !tbaa !25
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %4, ptr %.14269, align 1, !tbaa !31
   %i.z = getelementptr inbounds nuw i8, ptr %.14269, i64 8 ; 2 uses
   %i.aa = add i32 %.170, -8                       ; 2 uses
   %i.ab = load i32, ptr %i.b, align 8, !tbaa !12

@@ -205,26 +205,16 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit: ; preds = %_ZN11OpenIma
   %i.e = call i32 @llvm.bswap.i32(i32 %.promoted.i)
   %.1 = select i1 %i.d, i32 %i.e, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
+  %2 = bitcast i32 %.1 to <4 x i8>
+  %3 = uitofp <4 x i8> %2 to <4 x float>
+  %4 = fmul nnan <4 x float> %3, splat (float f0x3B808081)
   br label %bb.a
 
 bb.a:                                             ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit
-  %.0 = phi i32 [ %.1, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit ], [ 0, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit ] ; 4 uses
+  %.0 = phi <4 x float> [ %4, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit ], [ zeroinitializer, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit ]
   %i.f = phi i1 [ %i.d, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit ], [ false, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit ]
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 636
-  %2 = lshr i32 %.0, 24
-  %3 = lshr i32 %.0, 16
-  %4 = lshr i32 %.0, 8
-  %5 = trunc nuw i32 %2 to i8
-  %6 = trunc i32 %3 to i8
-  %7 = trunc i32 %4 to i8
-  %8 = trunc i32 %.0 to i8
-  %9 = insertelement <4 x i8> poison, i8 %8, i64 0
-  %10 = insertelement <4 x i8> %9, i8 %7, i64 1
-  %11 = insertelement <4 x i8> %10, i8 %6, i64 2
-  %12 = insertelement <4 x i8> %11, i8 %5, i64 3
-  %13 = uitofp <4 x i8> %12 to <4 x float>
-  %14 = fmul nnan <4 x float> %13, splat (float f0x3B808081)
-  store <4 x float> %14, ptr %i.g, align 4, !tbaa !65
+  store <4 x float> %.0, ptr %i.g, align 4, !tbaa !65
   ret i1 %i.f
 }
 

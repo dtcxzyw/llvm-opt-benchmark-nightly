@@ -205,18 +205,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @nk_color_f(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %2, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %3, i32 %4) local_unnamed_addr #11 {
 bb.a:
-  %.sroa.4.0.extract.shift = lshr i32 %4, 24
-  %.sroa.3.0.extract.shift = lshr i32 %4, 16
-  %.sroa.2.0.extract.shift = lshr i32 %4, 8
-  %.sroa.4.0.extract.trunc = trunc nuw i32 %.sroa.4.0.extract.shift to i8
-  %.sroa.3.0.extract.trunc = trunc i32 %.sroa.3.0.extract.shift to i8
-  %.sroa.2.0.extract.trunc = trunc i32 %.sroa.2.0.extract.shift to i8
-  %.sroa.0.0.extract.trunc = trunc i32 %4 to i8
-  %5 = insertelement <4 x i8> poison, i8 %.sroa.0.0.extract.trunc, i64 0
-  %6 = insertelement <4 x i8> %5, i8 %.sroa.2.0.extract.trunc, i64 1
-  %7 = insertelement <4 x i8> %6, i8 %.sroa.3.0.extract.trunc, i64 2
-  %8 = insertelement <4 x i8> %7, i8 %.sroa.4.0.extract.trunc, i64 3
-  %i.a = uitofp <4 x i8> %8 to <4 x float>
+  %5 = bitcast i32 %4 to <4 x i8>
+  %i.a = uitofp <4 x i8> %5 to <4 x float>
   %i.b = fmul nnan <4 x float> %i.a, splat (float f0x3B808081) ; 4 uses
   %i.c = extractelement <4 x float> %i.b, i64 0
   store float %i.c, ptr %0, align 4, !tbaa !54
@@ -232,18 +222,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @nk_color_fv(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0, i32 %1) local_unnamed_addr #11 {
 bb.a:
-  %.sroa.4.0.extract.shift.i = lshr i32 %1, 24
-  %.sroa.3.0.extract.shift.i = lshr i32 %1, 16
-  %.sroa.2.0.extract.shift.i = lshr i32 %1, 8
-  %.sroa.4.0.extract.trunc.i = trunc nuw i32 %.sroa.4.0.extract.shift.i to i8
-  %.sroa.3.0.extract.trunc.i = trunc i32 %.sroa.3.0.extract.shift.i to i8
-  %.sroa.2.0.extract.trunc.i = trunc i32 %.sroa.2.0.extract.shift.i to i8
-  %.sroa.0.0.extract.trunc.i = trunc i32 %1 to i8
-  %2 = insertelement <4 x i8> poison, i8 %.sroa.0.0.extract.trunc.i, i64 0
-  %3 = insertelement <4 x i8> %2, i8 %.sroa.2.0.extract.trunc.i, i64 1
-  %4 = insertelement <4 x i8> %3, i8 %.sroa.3.0.extract.trunc.i, i64 2
-  %5 = insertelement <4 x i8> %4, i8 %.sroa.4.0.extract.trunc.i, i64 3
-  %i.a = uitofp <4 x i8> %5 to <4 x float>
+  %2 = bitcast i32 %1 to <4 x i8>
+  %i.a = uitofp <4 x i8> %2 to <4 x float>
   %i.b = fmul nnan <4 x float> %i.a, splat (float f0x3B808081)
   store <4 x float> %i.b, ptr %0, align 4, !tbaa !54
   ret void
@@ -252,18 +232,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define { <2 x float>, <2 x float> } @nk_color_cf(i32 %0) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.4.0.extract.shift.i = lshr i32 %0, 24
-  %.sroa.3.0.extract.shift.i = lshr i32 %0, 16
-  %.sroa.2.0.extract.shift.i = lshr i32 %0, 8
-  %.sroa.4.0.extract.trunc.i = trunc nuw i32 %.sroa.4.0.extract.shift.i to i8
-  %.sroa.3.0.extract.trunc.i = trunc i32 %.sroa.3.0.extract.shift.i to i8
-  %.sroa.2.0.extract.trunc.i = trunc i32 %.sroa.2.0.extract.shift.i to i8
-  %.sroa.0.0.extract.trunc.i = trunc i32 %0 to i8
-  %1 = insertelement <4 x i8> poison, i8 %.sroa.0.0.extract.trunc.i, i64 0
-  %2 = insertelement <4 x i8> %1, i8 %.sroa.2.0.extract.trunc.i, i64 1
-  %3 = insertelement <4 x i8> %2, i8 %.sroa.3.0.extract.trunc.i, i64 2
-  %4 = insertelement <4 x i8> %3, i8 %.sroa.4.0.extract.trunc.i, i64 3
-  %i.a = uitofp <4 x i8> %4 to <4 x float>
+  %1 = bitcast i32 %0 to <4 x i8>
+  %i.a = uitofp <4 x i8> %1 to <4 x float>
   %i.b = fmul nnan <4 x float> %i.a, splat (float f0x3B808081) ; 2 uses
   %i.c = shufflevector <4 x float> %i.b, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.d = shufflevector <4 x float> %i.b, <4 x float> poison, <2 x i32> <i32 2, i32 3>
@@ -302,8 +272,6 @@ define void @nk_color_dv(ptr nofree noundef writeonly captures(none) initializes
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.2.0.extract.shift.i = lshr i32 %1, 8
-  %.sroa.3.0.extract.shift.i = lshr i32 %1, 16
-  %.sroa.4.0.extract.shift.i = lshr i32 %1, 24
   %i.b = trunc i32 %1 to i8
   %i.c = insertelement <2 x i8> poison, i8 %i.b, i64 0
   %i.d = trunc i32 %.sroa.2.0.extract.shift.i to i8
@@ -311,10 +279,8 @@ bb.a:
   %i.f = uitofp <2 x i8> %i.e to <2 x double>
   %i.g = fmul nnan <2 x double> %i.f, splat (double f0x3F70101010101010)
   store <2 x double> %i.g, ptr %0, align 8, !tbaa !63
-  %.sroa.4.0.extract.trunc.i = trunc nuw i32 %.sroa.4.0.extract.shift.i to i8
-  %.sroa.3.0.extract.trunc.i = trunc i32 %.sroa.3.0.extract.shift.i to i8
-  %2 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i, i64 0
-  %3 = insertelement <2 x i8> %2, i8 %.sroa.4.0.extract.trunc.i, i64 1
+  %2 = bitcast i32 %1 to <4 x i8>
+  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.h = uitofp <2 x i8> %3 to <2 x double>
   %i.i = fmul nnan <2 x double> %i.h, splat (double f0x3F70101010101010)
   store <2 x double> %i.i, ptr %i.a, align 8, !tbaa !63
@@ -380,18 +346,14 @@ bb.a:
   %.sroa.0.0.extract.trunc.i = trunc i32 %4 to i8
   %.sroa.2.0.extract.shift.i = lshr i32 %4, 8
   %.sroa.2.0.extract.trunc.i = trunc i32 %.sroa.2.0.extract.shift.i to i8
-  %.sroa.3.0.extract.shift.i = lshr i32 %4, 16
-  %.sroa.4.0.extract.shift.i = lshr i32 %4, 24
   %i.a = uitofp i8 %.sroa.0.0.extract.trunc.i to float
   %i.b = fmul nnan float %i.a, f0x3B808081
   %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %i.b, i64 0 ; 2 uses
   %i.c = uitofp i8 %.sroa.2.0.extract.trunc.i to float
   %i.d = fmul nnan float %i.c, f0x3B808081        ; 3 uses
   %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.d, i64 1
-  %.sroa.4.0.extract.trunc.i = trunc nuw i32 %.sroa.4.0.extract.shift.i to i8
-  %.sroa.3.0.extract.trunc.i = trunc i32 %.sroa.3.0.extract.shift.i to i8
-  %5 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i, i64 0
-  %6 = insertelement <2 x i8> %5, i8 %.sroa.4.0.extract.trunc.i, i64 1
+  %5 = bitcast i32 %4 to <4 x i8>
+  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.e = uitofp <2 x i8> %6 to <2 x float>
   %i.f = fmul nnan <2 x float> %i.e, splat (float f0x3B808081) ; 4 uses
   %i.g = extractelement <2 x float> %i.f, i64 0
@@ -595,18 +557,14 @@ bb.a:
   %.sroa.0.0.extract.trunc.i.i = trunc i32 %1 to i8
   %.sroa.2.0.extract.shift.i.i = lshr i32 %1, 8
   %.sroa.2.0.extract.trunc.i.i = trunc i32 %.sroa.2.0.extract.shift.i.i to i8
-  %.sroa.3.0.extract.shift.i.i = lshr i32 %1, 16
-  %.sroa.4.0.extract.shift.i.i = lshr i32 %1, 24
   %i.d = uitofp i8 %.sroa.0.0.extract.trunc.i.i to float
   %i.e = fmul nnan float %i.d, f0x3B808081
   %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.e, i64 0 ; 2 uses
   %i.f = uitofp i8 %.sroa.2.0.extract.trunc.i.i to float
   %i.g = fmul nnan float %i.f, f0x3B808081        ; 3 uses
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.g, i64 1
-  %.sroa.4.0.extract.trunc.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i to i8
-  %.sroa.3.0.extract.trunc.i.i = trunc i32 %.sroa.3.0.extract.shift.i.i to i8
-  %2 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i, i64 0
-  %3 = insertelement <2 x i8> %2, i8 %.sroa.4.0.extract.trunc.i.i, i64 1
+  %2 = bitcast i32 %1 to <4 x i8>
+  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.h = uitofp <2 x i8> %3 to <2 x float>
   %i.i = fmul nnan <2 x float> %i.h, splat (float f0x3B808081) ; 4 uses
   %i.j = extractelement <2 x float> %i.i, i64 0
@@ -657,18 +615,14 @@ bb.a:
   %.sroa.0.0.extract.trunc.i.i = trunc i32 %4 to i8
   %.sroa.2.0.extract.shift.i.i = lshr i32 %4, 8
   %.sroa.2.0.extract.trunc.i.i = trunc i32 %.sroa.2.0.extract.shift.i.i to i8
-  %.sroa.3.0.extract.shift.i.i = lshr i32 %4, 16
-  %.sroa.4.0.extract.shift.i.i = lshr i32 %4, 24
   %i.a = uitofp i8 %.sroa.0.0.extract.trunc.i.i to float
   %i.b = fmul nnan float %i.a, f0x3B808081
   %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.b, i64 0 ; 2 uses
   %i.c = uitofp i8 %.sroa.2.0.extract.trunc.i.i to float
   %i.d = fmul nnan float %i.c, f0x3B808081        ; 3 uses
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.d, i64 1
-  %.sroa.4.0.extract.trunc.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i to i8
-  %.sroa.3.0.extract.trunc.i.i = trunc i32 %.sroa.3.0.extract.shift.i.i to i8
-  %5 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i, i64 0
-  %6 = insertelement <2 x i8> %5, i8 %.sroa.4.0.extract.trunc.i.i, i64 1
+  %5 = bitcast i32 %4 to <4 x i8>
+  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.e = uitofp <2 x i8> %6 to <2 x float>
   %i.f = fmul nnan <2 x float> %i.e, splat (float f0x3B808081) ; 4 uses
   %i.g = extractelement <2 x float> %i.f, i64 0
@@ -731,18 +685,14 @@ bb.a:
   %.sroa.0.0.extract.trunc.i.i.i = trunc i32 %1 to i8
   %.sroa.2.0.extract.shift.i.i.i = lshr i32 %1, 8
   %.sroa.2.0.extract.trunc.i.i.i = trunc i32 %.sroa.2.0.extract.shift.i.i.i to i8
-  %.sroa.3.0.extract.shift.i.i.i = lshr i32 %1, 16
-  %.sroa.4.0.extract.shift.i.i.i = lshr i32 %1, 24
   %i.a = uitofp i8 %.sroa.0.0.extract.trunc.i.i.i to float
   %i.b = fmul nnan float %i.a, f0x3B808081
   %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.b, i64 0 ; 2 uses
   %i.c = uitofp i8 %.sroa.2.0.extract.trunc.i.i.i to float
   %i.d = fmul nnan float %i.c, f0x3B808081        ; 3 uses
   %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.d, i64 1
-  %.sroa.4.0.extract.trunc.i.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i.i to i8
-  %.sroa.3.0.extract.trunc.i.i.i = trunc i32 %.sroa.3.0.extract.shift.i.i.i to i8
-  %2 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i.i, i64 0
-  %3 = insertelement <2 x i8> %2, i8 %.sroa.4.0.extract.trunc.i.i.i, i64 1
+  %2 = bitcast i32 %1 to <4 x i8>
+  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.e = uitofp <2 x i8> %3 to <2 x float>
   %i.f = fmul nnan <2 x float> %i.e, splat (float f0x3B808081) ; 4 uses
   %i.g = extractelement <2 x float> %i.f, i64 0
@@ -795,18 +745,14 @@ bb.a:
   %.sroa.0.0.extract.trunc.i.i.i = trunc i32 %1 to i8
   %.sroa.2.0.extract.shift.i.i.i = lshr i32 %1, 8
   %.sroa.2.0.extract.trunc.i.i.i = trunc i32 %.sroa.2.0.extract.shift.i.i.i to i8
-  %.sroa.3.0.extract.shift.i.i.i = lshr i32 %1, 16
-  %.sroa.4.0.extract.shift.i.i.i = lshr i32 %1, 24
   %i.a = uitofp i8 %.sroa.0.0.extract.trunc.i.i.i to float
   %i.b = fmul nnan float %i.a, f0x3B808081
   %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.b, i64 0 ; 2 uses
   %i.c = uitofp i8 %.sroa.2.0.extract.trunc.i.i.i to float
   %i.d = fmul nnan float %i.c, f0x3B808081        ; 3 uses
   %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.d, i64 1
-  %.sroa.4.0.extract.trunc.i.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i.i to i8
-  %.sroa.3.0.extract.trunc.i.i.i = trunc i32 %.sroa.3.0.extract.shift.i.i.i to i8
-  %2 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i.i, i64 0
-  %3 = insertelement <2 x i8> %2, i8 %.sroa.4.0.extract.trunc.i.i.i, i64 1
+  %2 = bitcast i32 %1 to <4 x i8>
+  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.e = uitofp <2 x i8> %3 to <2 x float>
   %i.f = fmul nnan <2 x float> %i.e, splat (float f0x3B808081) ; 4 uses
   %i.g = extractelement <2 x float> %i.f, i64 0
@@ -858,18 +804,14 @@ bb.a:
   %.sroa.0.0.extract.trunc.i.i.i = trunc i32 %4 to i8
   %.sroa.2.0.extract.shift.i.i.i = lshr i32 %4, 8
   %.sroa.2.0.extract.trunc.i.i.i = trunc i32 %.sroa.2.0.extract.shift.i.i.i to i8
-  %.sroa.3.0.extract.shift.i.i.i = lshr i32 %4, 16
-  %.sroa.4.0.extract.shift.i.i.i = lshr i32 %4, 24
   %i.a = uitofp i8 %.sroa.0.0.extract.trunc.i.i.i to float
   %i.b = fmul nnan float %i.a, f0x3B808081
   %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.b, i64 0 ; 2 uses
   %i.c = uitofp i8 %.sroa.2.0.extract.trunc.i.i.i to float
   %i.d = fmul nnan float %i.c, f0x3B808081        ; 3 uses
   %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.d, i64 1
-  %.sroa.4.0.extract.trunc.i.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i.i to i8
-  %.sroa.3.0.extract.trunc.i.i.i = trunc i32 %.sroa.3.0.extract.shift.i.i.i to i8
-  %5 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i.i, i64 0
-  %6 = insertelement <2 x i8> %5, i8 %.sroa.4.0.extract.trunc.i.i.i, i64 1
+  %5 = bitcast i32 %4 to <4 x i8>
+  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.e = uitofp <2 x i8> %6 to <2 x float>
   %i.f = fmul nnan <2 x float> %i.e, splat (float f0x3B808081) ; 4 uses
   %i.g = extractelement <2 x float> %i.f, i64 0
@@ -1272,63 +1214,47 @@ bb.f:                                             ; preds = %bb.a, %nk_draw_list
 define void @nk_draw_list_fill_rect_multi_color(ptr nofree noundef captures(address_is_null) %0, <2 x float> %1, <2 x float> %2, i32 %3, i32 %4, i32 %5, i32 %6) local_unnamed_addr #20 {
 bb.a:
   %.sroa.2.0.extract.shift.i.i = lshr i32 %3, 8
-  %.sroa.3.0.extract.shift.i.i = lshr i32 %3, 16
-  %.sroa.4.0.extract.shift.i.i = lshr i32 %3, 24
   %i.a = trunc i32 %3 to i8
   %i.b = insertelement <2 x i8> poison, i8 %i.a, i64 0
   %i.c = trunc i32 %.sroa.2.0.extract.shift.i.i to i8
   %i.d = insertelement <2 x i8> %i.b, i8 %i.c, i64 1
   %i.e = uitofp <2 x i8> %i.d to <2 x float>
   %i.f = fmul nnan <2 x float> %i.e, splat (float f0x3B808081)
-  %.sroa.4.0.extract.trunc.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i to i8
-  %.sroa.3.0.extract.trunc.i.i = trunc i32 %.sroa.3.0.extract.shift.i.i to i8
-  %7 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i, i64 0
-  %8 = insertelement <2 x i8> %7, i8 %.sroa.4.0.extract.trunc.i.i, i64 1
+  %7 = bitcast i32 %3 to <4 x i8>
+  %8 = shufflevector <4 x i8> %7, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.g = uitofp <2 x i8> %8 to <2 x float>
   %i.h = fmul nnan <2 x float> %i.g, splat (float f0x3B808081)
   %.sroa.2.0.extract.shift.i.i66 = lshr i32 %5, 8
-  %.sroa.3.0.extract.shift.i.i68 = lshr i32 %5, 16
-  %.sroa.4.0.extract.shift.i.i70 = lshr i32 %5, 24
   %i.i = trunc i32 %5 to i8
   %i.j = insertelement <2 x i8> poison, i8 %i.i, i64 0
   %i.k = trunc i32 %.sroa.2.0.extract.shift.i.i66 to i8
   %i.l = insertelement <2 x i8> %i.j, i8 %i.k, i64 1
   %i.m = uitofp <2 x i8> %i.l to <2 x float>
   %i.n = fmul nnan <2 x float> %i.m, splat (float f0x3B808081)
-  %.sroa.4.0.extract.trunc.i.i71 = trunc nuw i32 %.sroa.4.0.extract.shift.i.i70 to i8
-  %.sroa.3.0.extract.trunc.i.i69 = trunc i32 %.sroa.3.0.extract.shift.i.i68 to i8
-  %9 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i69, i64 0
-  %10 = insertelement <2 x i8> %9, i8 %.sroa.4.0.extract.trunc.i.i71, i64 1
+  %9 = bitcast i32 %5 to <4 x i8>
+  %10 = shufflevector <4 x i8> %9, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.o = uitofp <2 x i8> %10 to <2 x float>
   %i.p = fmul nnan <2 x float> %i.o, splat (float f0x3B808081)
   %.sroa.2.0.extract.shift.i.i73 = lshr i32 %4, 8
-  %.sroa.3.0.extract.shift.i.i75 = lshr i32 %4, 16
-  %.sroa.4.0.extract.shift.i.i77 = lshr i32 %4, 24
   %i.q = trunc i32 %4 to i8
   %i.r = insertelement <2 x i8> poison, i8 %i.q, i64 0
   %i.s = trunc i32 %.sroa.2.0.extract.shift.i.i73 to i8
   %i.t = insertelement <2 x i8> %i.r, i8 %i.s, i64 1
   %i.u = uitofp <2 x i8> %i.t to <2 x float>
   %i.v = fmul nnan <2 x float> %i.u, splat (float f0x3B808081)
-  %.sroa.4.0.extract.trunc.i.i78 = trunc nuw i32 %.sroa.4.0.extract.shift.i.i77 to i8
-  %.sroa.3.0.extract.trunc.i.i76 = trunc i32 %.sroa.3.0.extract.shift.i.i75 to i8
-  %11 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i76, i64 0
-  %12 = insertelement <2 x i8> %11, i8 %.sroa.4.0.extract.trunc.i.i78, i64 1
+  %11 = bitcast i32 %4 to <4 x i8>
+  %12 = shufflevector <4 x i8> %11, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.w = uitofp <2 x i8> %12 to <2 x float>
   %i.x = fmul nnan <2 x float> %i.w, splat (float f0x3B808081)
   %.sroa.2.0.extract.shift.i.i80 = lshr i32 %6, 8
-  %.sroa.3.0.extract.shift.i.i82 = lshr i32 %6, 16
-  %.sroa.4.0.extract.shift.i.i84 = lshr i32 %6, 24
   %i.y = trunc i32 %6 to i8
   %i.z = insertelement <2 x i8> poison, i8 %i.y, i64 0
   %i.aa = trunc i32 %.sroa.2.0.extract.shift.i.i80 to i8
   %i.ab = insertelement <2 x i8> %i.z, i8 %i.aa, i64 1
   %i.ac = uitofp <2 x i8> %i.ab to <2 x float>
   %i.ad = fmul nnan <2 x float> %i.ac, splat (float f0x3B808081)
-  %.sroa.4.0.extract.trunc.i.i85 = trunc nuw i32 %.sroa.4.0.extract.shift.i.i84 to i8
-  %.sroa.3.0.extract.trunc.i.i83 = trunc i32 %.sroa.3.0.extract.shift.i.i82 to i8
-  %13 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i83, i64 0
-  %14 = insertelement <2 x i8> %13, i8 %.sroa.4.0.extract.trunc.i.i85, i64 1
+  %13 = bitcast i32 %6 to <4 x i8>
+  %14 = shufflevector <4 x i8> %13, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.ae = uitofp <2 x i8> %14 to <2 x float>
   %i.af = fmul nnan <2 x float> %i.ae, splat (float f0x3B808081)
   %.not = icmp eq ptr %0, null
@@ -1731,18 +1657,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define internal fastcc void @nk_draw_list_push_rect_uv(ptr nofree noundef nonnull captures(none) %0, <2 x float> %1, <2 x float> %2, <2 x float> %3, <2 x float> %4, i32 %5) unnamed_addr #20 {
 bb.a:
   %.sroa.2.0.extract.shift.i.i = lshr i32 %5, 8
-  %.sroa.3.0.extract.shift.i.i = lshr i32 %5, 16
-  %.sroa.4.0.extract.shift.i.i = lshr i32 %5, 24
   %i.a = trunc i32 %5 to i8
   %i.b = insertelement <2 x i8> poison, i8 %i.a, i64 0
   %i.c = trunc i32 %.sroa.2.0.extract.shift.i.i to i8
   %i.d = insertelement <2 x i8> %i.b, i8 %i.c, i64 1
   %i.e = uitofp <2 x i8> %i.d to <2 x float>
   %i.f = fmul nnan <2 x float> %i.e, splat (float f0x3B808081) ; 4 uses
-  %.sroa.4.0.extract.trunc.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i to i8
-  %.sroa.3.0.extract.trunc.i.i = trunc i32 %.sroa.3.0.extract.shift.i.i to i8
-  %6 = insertelement <2 x i8> poison, i8 %.sroa.3.0.extract.trunc.i.i, i64 0
-  %7 = insertelement <2 x i8> %6, i8 %.sroa.4.0.extract.trunc.i.i, i64 1
+  %6 = bitcast i32 %5 to <4 x i8>
+  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   %i.g = uitofp <2 x i8> %7 to <2 x float>
   %i.h = fmul nnan <2 x float> %i.g, splat (float f0x3B808081) ; 4 uses
   %.sroa.0.4.vec.insert.i = shufflevector <2 x float> %4, <2 x float> %3, <2 x i32> <i32 0, i32 3>

@@ -106,7 +106,7 @@ bb.a:
   %i.ai = xor i64 %i.ag, -1
   %i.aj = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 -1, 1) %i.ai) #9, !srcloc !15 ; 0 uses
   %i.ak = and i64 %i.ah, 2251799813685229
-  %i.al = add nuw nsw i64 %i.ak, %i.d             ; 8 uses
+  %i.al = add nuw nsw i64 %i.ak, %i.d             ; 5 uses
   %i.am = lshr i64 %i.al, 51
   %i.an = and i64 %i.ah, 2251799813685247         ; 3 uses
   %i.ao = add nuw nsw i64 %i.an, %i.k
@@ -124,13 +124,6 @@ bb.a:
   %i.ba = shl nuw nsw i64 %i.av, 1
   %i.bb = shl nuw nsw i64 %i.as, 6
   %i.bc = shl nuw nsw i64 %i.ap, 3
-  %2 = trunc i64 %i.al to i8
-  %3 = lshr i64 %i.al, 8
-  %4 = trunc i64 %3 to i8
-  %5 = lshr i64 %i.al, 16
-  %6 = trunc i64 %5 to i8
-  %7 = lshr i64 %i.al, 24
-  %8 = trunc i64 %7 to i8
   %i.bd = lshr i64 %i.al, 32
   %i.be = trunc i64 %i.bd to i8
   %i.bf = lshr i64 %i.al, 40
@@ -196,13 +189,9 @@ bb.a:
   %i.dn = lshr i64 %i.az, 48
   %i.do = trunc i64 %i.dn to i8
   %i.dp = and i8 %i.do, 127
-  store i8 %2, ptr %0, align 1, !tbaa !11
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %4, ptr %9, align 1, !tbaa !11
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %6, ptr %10, align 1, !tbaa !11
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %8, ptr %11, align 1, !tbaa !11
+  %2 = bitcast i64 %i.al to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %3, ptr %0, align 1, !tbaa !11
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i8 %i.be, ptr %i.dq, align 1, !tbaa !11
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 5

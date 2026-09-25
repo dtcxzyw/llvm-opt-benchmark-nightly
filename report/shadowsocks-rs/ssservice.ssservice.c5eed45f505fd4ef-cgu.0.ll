@@ -205,17 +205,13 @@ bb.y:                                             ; preds = %bb.w
 _RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit: ; preds = %bb.t, %bb.x
   %.sroa.55.0.i = phi i64 [ %i.bx, %bb.x ], [ undef, %bb.t ]
   %i.by = trunc nuw i32 %i.j to i1
-  %.sroa.53.0.i = select i1 %i.by, i32 %i.bo, i32 undef ; 2 uses
-  %.sroa.4.4.extract.trunc = trunc i32 %.sroa.53.0.i to i16
-  %.sroa.4.6.extract.shift = lshr i32 %.sroa.53.0.i, 16
-  %.sroa.4.6.extract.trunc = trunc nuw i32 %.sroa.4.6.extract.shift to i16
+  %.sroa.53.0.i = select i1 %i.by, i32 %i.bo, i32 undef
+  %2 = bitcast i32 %.sroa.53.0.i to <2 x i16>
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.c
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %2 = load i16, ptr %i.bz, align 4, !range !326, !noundef !178
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %4 = load i16, ptr %3, align 2
+  %3 = load <2 x i16>, ptr %i.bz, align 4
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit
@@ -225,15 +221,12 @@ bb.aa:                                            ; preds = %bb.z, %_RNvXsk_NtCs
   %.sroa.7.sroa.5.0 = phi ptr [ undef, %bb.z ], [ %i.bj, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit ]
   %.sroa.7.sroa.4.0 = phi ptr [ undef, %bb.z ], [ %.sroa.0.0.i, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit ]
   %.sroa.7.sroa.0.0 = phi ptr [ undef, %bb.z ], [ %i.aj, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit ]
-  %.sroa.6.0 = phi i16 [ %4, %bb.z ], [ %.sroa.4.6.extract.trunc, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit ]
-  %.sroa.5.0 = phi i16 [ %2, %bb.z ], [ %.sroa.4.4.extract.trunc, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit ]
+  %4 = phi <2 x i16> [ %3, %bb.z ], [ %2, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit ]
   %i.ca = phi <2 x i16> [ undef, %bb.z ], [ %i.bq, %_RNvXsk_NtCsi1FNhPBS7PW_11hickory_net5errorNtB5_9NoRecordsNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit ]
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.j, ptr %i.cb, align 8
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i16 %.sroa.5.0, ptr %.sroa.5.0..sroa_idx2, align 4
-  %.sroa.6.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %0, i64 14
-  store i16 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx4, align 2
+  store <2 x i16> %4, ptr %.sroa.5.0..sroa_idx2, align 4
   %.sroa.7.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sroa.7.sroa.0.0, ptr %.sroa.7.0..sroa_idx6, align 8
   %.sroa.7.sroa.4.0..sroa.7.0..sroa_idx6.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

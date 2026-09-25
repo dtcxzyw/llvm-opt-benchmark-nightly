@@ -204,73 +204,19 @@ bb.c:                                             ; preds = %.preheader
 ; Function Attrs: nounwind uwtable
 define dso_local void @PHP_SHA384Final(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1) #2 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 20 uses
+  %i.a = alloca [16 x i8], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !18   ; 10 uses
-  %2 = trunc i64 %i.c to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
-  store i8 %2, ptr %3, align 1, !tbaa !16
-  %4 = lshr i64 %i.c, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
-  store i8 %5, ptr %6, align 2, !tbaa !16
-  %7 = lshr i64 %i.c, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  store i8 %8, ptr %9, align 1, !tbaa !16
-  %10 = lshr i64 %i.c, 24
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i8 %11, ptr %12, align 4, !tbaa !16
-  %13 = lshr i64 %i.c, 32
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %14, ptr %15, align 1, !tbaa !16
-  %16 = lshr i64 %i.c, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %17, ptr %18, align 2, !tbaa !16
-  %19 = lshr i64 %i.c, 48
-  %20 = trunc i64 %19 to i8
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %20, ptr %i.d, align 1, !tbaa !16
-  %21 = lshr i64 %i.c, 56
-  %22 = trunc nuw i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %22, ptr %23, align 8, !tbaa !16
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !18   ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %2 = bitcast i64 %i.c to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.d, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 4 uses
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !18   ; 9 uses
-  %24 = trunc i64 %i.f to i8
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %24, ptr %25, align 1, !tbaa !16
-  %26 = lshr i64 %i.f, 8
-  %27 = trunc i64 %26 to i8
-  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %27, ptr %28, align 2, !tbaa !16
-  %29 = lshr i64 %i.f, 16
-  %30 = trunc i64 %29 to i8
-  %31 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %30, ptr %31, align 1, !tbaa !16
-  %32 = lshr i64 %i.f, 24
-  %33 = trunc i64 %32 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %33, ptr %34, align 4, !tbaa !16
-  %35 = lshr i64 %i.f, 32
-  %36 = trunc i64 %35 to i8
-  %37 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %36, ptr %37, align 1, !tbaa !16
-  %38 = lshr i64 %i.f, 40
-  %39 = trunc i64 %38 to i8
-  %40 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %39, ptr %40, align 2, !tbaa !16
-  %41 = lshr i64 %i.f, 48
-  %42 = trunc i64 %41 to i8
-  %43 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %42, ptr %43, align 1, !tbaa !16
-  %44 = lshr i64 %i.f, 56
-  %45 = trunc nuw i64 %44 to i8
-  store i8 %45, ptr %i.a, align 16, !tbaa !16
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !18   ; 2 uses
+  %4 = bitcast i64 %i.f to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.a, align 16, !tbaa !16
   %i.g = trunc i64 %i.c to i32
   %i.h = lshr i32 %i.g, 3
   %i.i = and i32 %i.h, 127                        ; 5 uses
@@ -673,73 +619,19 @@ bb.b:                                             ; preds = %._crit_edge
 ; Function Attrs: nounwind uwtable
 define dso_local void @PHP_SHA512Final(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1) #2 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 20 uses
+  %i.a = alloca [16 x i8], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !18   ; 10 uses
-  %2 = trunc i64 %i.c to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
-  store i8 %2, ptr %3, align 1, !tbaa !16
-  %4 = lshr i64 %i.c, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
-  store i8 %5, ptr %6, align 2, !tbaa !16
-  %7 = lshr i64 %i.c, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  store i8 %8, ptr %9, align 1, !tbaa !16
-  %10 = lshr i64 %i.c, 24
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i8 %11, ptr %12, align 4, !tbaa !16
-  %13 = lshr i64 %i.c, 32
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %14, ptr %15, align 1, !tbaa !16
-  %16 = lshr i64 %i.c, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %17, ptr %18, align 2, !tbaa !16
-  %19 = lshr i64 %i.c, 48
-  %20 = trunc i64 %19 to i8
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %20, ptr %i.d, align 1, !tbaa !16
-  %21 = lshr i64 %i.c, 56
-  %22 = trunc nuw i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %22, ptr %23, align 8, !tbaa !16
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !18   ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %2 = bitcast i64 %i.c to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.d, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 4 uses
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !18   ; 9 uses
-  %24 = trunc i64 %i.f to i8
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %24, ptr %25, align 1, !tbaa !16
-  %26 = lshr i64 %i.f, 8
-  %27 = trunc i64 %26 to i8
-  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %27, ptr %28, align 2, !tbaa !16
-  %29 = lshr i64 %i.f, 16
-  %30 = trunc i64 %29 to i8
-  %31 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %30, ptr %31, align 1, !tbaa !16
-  %32 = lshr i64 %i.f, 24
-  %33 = trunc i64 %32 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %33, ptr %34, align 4, !tbaa !16
-  %35 = lshr i64 %i.f, 32
-  %36 = trunc i64 %35 to i8
-  %37 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %36, ptr %37, align 1, !tbaa !16
-  %38 = lshr i64 %i.f, 40
-  %39 = trunc i64 %38 to i8
-  %40 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %39, ptr %40, align 2, !tbaa !16
-  %41 = lshr i64 %i.f, 48
-  %42 = trunc i64 %41 to i8
-  %43 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %42, ptr %43, align 1, !tbaa !16
-  %44 = lshr i64 %i.f, 56
-  %45 = trunc nuw i64 %44 to i8
-  store i8 %45, ptr %i.a, align 16, !tbaa !16
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !18   ; 2 uses
+  %4 = bitcast i64 %i.f to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.a, align 16, !tbaa !16
   %i.g = trunc i64 %i.c to i32
   %i.h = lshr i32 %i.g, 3
   %i.i = and i32 %i.h, 127                        ; 5 uses

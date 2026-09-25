@@ -206,14 +206,14 @@ bb.a:
   %i.bn = alloca [48 x i8], align 8               ; 7 uses
   %i.bo = alloca [24 x i8], align 8               ; 13 uses
   %i.bp = alloca [48 x i8], align 8               ; 7 uses
-  %i.bq = alloca [56 x i8], align 8               ; 19 uses
+  %i.bq = alloca [56 x i8], align 8               ; 18 uses
   %i.br = alloca [344 x i8], align 8              ; 8 uses
   %i.bs = alloca [24 x i8], align 8               ; 6 uses
   %i.bt = alloca [344 x i8], align 8              ; 8 uses
   %i.bu = alloca [88 x i8], align 8               ; 17 uses
   %.sroa.7.sroa.8.sroa.9.sroa.9 = alloca [16 x i8], align 8 ; 4 uses
   %.sroa.20.sroa.7 = alloca [16 x i8], align 8    ; 6 uses
-  %i.bv = alloca [24 x i8], align 8               ; 9 uses
+  %i.bv = alloca [24 x i8], align 8               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.20.sroa.7)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30796)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30797)
@@ -616,9 +616,7 @@ bb.ea:                                            ; preds = %bb.dz
   %.sroa.6.i.sroa.7.0..sroa.550.0..sroa_idx.i.sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
   %.sroa.6.i.sroa.7.0.copyload.pre = load i64, ptr %.sroa.6.i.sroa.7.0..sroa.550.0..sroa_idx.i.sroa_idx.phi.trans.insert, align 8, !noalias !30805
   %.sroa.6.i.sroa.10.0..sroa.550.0..sroa_idx.i.sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bq, i64 24
-  %.sroa.6.i.sroa.10.0.copyload.pre = load i32, ptr %.sroa.6.i.sroa.10.0..sroa.550.0..sroa_idx.i.sroa_idx.phi.trans.insert, align 8, !noalias !30805
-  %.sroa.6.i.sroa.12.0..sroa.550.0..sroa_idx.i.sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bq, i64 28
-  %.sroa.6.i.sroa.12.0.copyload.pre = load i32, ptr %.sroa.6.i.sroa.12.0..sroa.550.0..sroa_idx.i.sroa_idx.phi.trans.insert, align 4, !noalias !30805
+  %3 = load <2 x i32>, ptr %.sroa.6.i.sroa.10.0..sroa.550.0..sroa_idx.i.sroa_idx.phi.trans.insert, align 8, !noalias !30805
   %i.mk = inttoptr i64 %.sroa.6.i.sroa.0.0.copyload.pre to ptr
   br label %bb.ee
 
@@ -664,10 +662,11 @@ common.resume:                                    ; preds = %.thread293, %.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bm), !noalias !30808
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i.sroa.5.i.i)
   %i.mo = icmp eq i64 %.sroa.0.0.i.i.i.i, -9223372036854775806
-  %i.mp = ptrtoint ptr %.sroa.12.0.i.i.i.i to i64 ; 2 uses
-  %i.mq = trunc i64 %i.mp to i32                  ; 2 uses
+  %i.mp = ptrtoint ptr %.sroa.12.0.i.i.i.i to i64 ; 3 uses
+  %i.mq = trunc i64 %i.mp to i32
   %i.mr = lshr i64 %i.mp, 32
-  %i.ms = trunc nuw i64 %i.mr to i32              ; 2 uses
+  %i.ms = trunc nuw i64 %i.mr to i32
+  %4 = bitcast i64 %i.mp to <2 x i32>
   br i1 %i.mo, label %bb.ed, label %bb.ee
 
 bb.ec:                                            ; preds = %bb.f
@@ -684,11 +683,10 @@ bb.ed:                                            ; preds = %"_ZN4heed9databases
   br label %bb.ef
 
 bb.ee:                                            ; preds = %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.i", %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.thread76.i"
-  %.sroa.6.i.sroa.12.0.copyload = phi i32 [ %.sroa.6.i.sroa.12.0.copyload.pre, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.thread76.i" ], [ %i.ms, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.i" ]
-  %.sroa.6.i.sroa.10.0.copyload = phi i32 [ %.sroa.6.i.sroa.10.0.copyload.pre, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.thread76.i" ], [ %i.mq, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.i" ]
   %.sroa.6.i.sroa.7.0.copyload = phi i64 [ %.sroa.6.i.sroa.7.0.copyload.pre, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.thread76.i" ], [ %.sroa.11.0.i.i.i.i, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.i" ]
   %.sroa.6.i.sroa.0.0.copyload = phi ptr [ %i.mk, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.thread76.i" ], [ %.sroa.7.0.i.i.i.i, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.i" ]
   %i.mt = phi i64 [ -9223372036854775807, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.thread76.i" ], [ %.sroa.0.0.i.i.i.i, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.i" ]
+  %5 = phi <2 x i32> [ %3, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.thread76.i" ], [ %4, %"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$3get17h4a1660ca82124623E.exit.i" ]
   %.sroa.651.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bq, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.20.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.651.0..sroa_idx.i, i64 16, i1 false), !noalias !30962
   %.sroa.21.40..sroa.651.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bq, i64 48
@@ -724,12 +722,11 @@ bb.ef:                                            ; preds = %bb.ed, %bb.g
   br label %bb.kf
 
 bb.eg:                                            ; preds = %bb.ee, %bb.ec
-  %.sroa.20.sroa.0.0.ph = phi i32 [ undef, %bb.ec ], [ %.sroa.6.i.sroa.10.0.copyload, %bb.ee ]
-  %.sroa.20.sroa.6.0.ph = phi i32 [ undef, %bb.ec ], [ %.sroa.6.i.sroa.12.0.copyload, %bb.ee ]
   %.sroa.21.0.ph = phi i1 [ undef, %bb.ec ], [ %i.mu, %bb.ee ]
   %.sroa.14.0.ph = phi ptr [ undef, %bb.ec ], [ %.sroa.6.i.sroa.0.0.copyload, %bb.ee ] ; 3 uses
   %.sroa.8134.0.ph = phi i64 [ -9223372036854775807, %bb.ec ], [ %i.mt, %bb.ee ] ; 4 uses
   %.sroa.518.sroa.5.12.insert.insert = phi i64 [ 0, %bb.ec ], [ %.sroa.6.i.sroa.7.0.copyload, %bb.ee ]
+  %6 = phi <2 x i32> [ undef, %bb.ec ], [ %5, %bb.ee ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.sroa.8.sroa.9.sroa.9, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.20.sroa.7, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.20.sroa.7)
   %.not73 = icmp eq i64 %.sroa.8134.0.ph, -9223372036854775807
@@ -737,9 +734,7 @@ bb.eg:                                            ; preds = %bb.ee, %bb.ec
 
 bb.eh:                                            ; preds = %bb.eg
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bv)
-  store i32 %.sroa.20.sroa.0.0.ph, ptr %i.bv, align 8
-  %.sroa.38.sroa.3.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
-  store i32 %.sroa.20.sroa.6.0.ph, ptr %.sroa.38.sroa.3.sroa.2.0..sroa_idx, align 4
+  store <2 x i32> %6, ptr %i.bv, align 8
   %.sroa.38.sroa.3.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 8 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.38.sroa.3.sroa.3.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.sroa.8.sroa.9.sroa.9, i64 16, i1 false)
   %.sroa.0180.0.copyload.pre = load ptr, ptr %i.bv, align 8 ; 7 uses

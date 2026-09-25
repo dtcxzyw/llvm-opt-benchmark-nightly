@@ -204,27 +204,11 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
   %.051 = phi ptr [ %i.k, %.lr.ph ], [ %.1, %bb.c ] ; 4 uses
-  %.03650 = phi i64 [ %i.l, %.lr.ph ], [ %i.w, %bb.c ] ; 6 uses
-  %6 = lshr i64 %.03650, 8
-  %7 = insertelement <4 x i64> poison, i64 %.03650, i64 0
-  %8 = shufflevector <4 x i64> %7, <4 x i64> poison, <4 x i32> zeroinitializer
-  %9 = lshr <4 x i64> %8, <i64 40, i64 32, i64 24, i64 16>
-  %10 = lshr i64 %.03650, 48
-  %11 = lshr i64 %.03650, 56
+  %.03650 = phi i64 [ %i.l, %.lr.ph ], [ %i.w, %bb.c ] ; 2 uses
   %i.o = load <8 x i8>, ptr %2, align 1, !tbaa !10
-  %12 = insertelement <2 x i64> poison, i64 %6, i64 0
-  %13 = insertelement <2 x i64> %12, i64 %.03650, i64 1
-  %14 = trunc <2 x i64> %13 to <2 x i8>
-  %15 = trunc <4 x i64> %9 to <4 x i8>
-  %16 = trunc i64 %10 to i8
-  %17 = trunc nuw i64 %11 to i8
-  %18 = insertelement <8 x i8> poison, i8 %17, i64 0
-  %19 = insertelement <8 x i8> %18, i8 %16, i64 1
-  %20 = shufflevector <4 x i8> %15, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %21 = shufflevector <8 x i8> %19, <8 x i8> %20, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison>
-  %22 = shufflevector <2 x i8> %14, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %23 = shufflevector <8 x i8> %21, <8 x i8> %22, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %i.p = xor <8 x i8> %i.o, %23                   ; 2 uses
+  %6 = bitcast i64 %.03650 to <8 x i8>
+  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %i.p = xor <8 x i8> %i.o, %7                    ; 2 uses
   store <8 x i8> %i.p, ptr %2, align 1, !tbaa !10
   store <8 x i8> %i.p, ptr %i.c, align 16
   %i.q = load i64, ptr %.051, align 1

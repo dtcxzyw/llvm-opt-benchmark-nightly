@@ -206,46 +206,18 @@ nodeHashLookup.exit.thread:                       ; preds = %bb.c, %bb.b, %nodeR
 bb.e:                                             ; preds = %nodeHashLookup.exit.thread
   %i.ag = mul nuw nsw i32 %i.ae, %i.v
   %i.ah = zext nneg i32 %i.ag to i64
-  %8 = getelementptr i8, ptr %i.y, i64 %i.ah      ; 9 uses
-  %9 = getelementptr i8, ptr %8, i64 4
-  %10 = load i64, ptr %2, align 8, !tbaa !2939    ; 8 uses
-  %11 = lshr i64 %10, 56
-  %12 = trunc nuw i64 %11 to i8
-  store i8 %12, ptr %9, align 1, !tbaa !733
-  %13 = lshr i64 %10, 48
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr i8, ptr %8, i64 5
-  store i8 %14, ptr %15, align 1, !tbaa !733
-  %16 = lshr i64 %10, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr i8, ptr %8, i64 6
-  store i8 %17, ptr %18, align 1, !tbaa !733
-  %19 = lshr i64 %10, 32
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr i8, ptr %8, i64 7
-  store i8 %20, ptr %21, align 1, !tbaa !733
-  %22 = lshr i64 %10, 24
-  %23 = trunc i64 %22 to i8
-  %24 = getelementptr i8, ptr %8, i64 8
-  store i8 %23, ptr %24, align 1, !tbaa !733
-  %25 = lshr i64 %10, 16
-  %26 = trunc i64 %25 to i8
-  %i.ai = getelementptr i8, ptr %8, i64 9
-  store i8 %26, ptr %i.ai, align 1, !tbaa !733
-  %27 = lshr i64 %10, 8
-  %28 = trunc i64 %27 to i8
-  %i.aj = getelementptr i8, ptr %8, i64 10
-  store i8 %28, ptr %i.aj, align 1, !tbaa !733
-  %29 = trunc i64 %10 to i8
-  %30 = getelementptr i8, ptr %8, i64 11
-  store i8 %29, ptr %30, align 1, !tbaa !733
+  %i.ai = getelementptr i8, ptr %i.y, i64 %i.ah   ; 2 uses
+  %i.aj = getelementptr i8, ptr %i.ai, i64 4
+  %8 = load <8 x i8>, ptr %2, align 8, !tbaa !2939
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %9, ptr %i.aj, align 1, !tbaa !733
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !2899
   %.not.i.i = icmp eq i8 %i.al, 0
   br i1 %.not.i.i, label %nodeOverwriteCell.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e
-  %i.am = getelementptr i8, ptr %8, i64 12
+  %i.am = getelementptr i8, ptr %i.ai, i64 12
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 8
   br label %bb.f
 
@@ -648,45 +620,17 @@ bb.av:                                            ; preds = %cellUnion.exit189.i
 bb.aw:                                            ; preds = %bb.av
   %i.xy = mul nuw nsw i32 %i.xw, %i.xn
   %i.xz = zext nneg i32 %i.xy to i64
-  %31 = getelementptr i8, ptr %i.xq, i64 %i.xz    ; 9 uses
-  %32 = getelementptr i8, ptr %31, i64 4
-  %33 = load i64, ptr %i.xj, align 8, !tbaa !2939 ; 8 uses
-  %34 = lshr i64 %33, 56
-  %35 = trunc nuw i64 %34 to i8
-  store i8 %35, ptr %32, align 1, !tbaa !733
-  %36 = lshr i64 %33, 48
-  %37 = trunc i64 %36 to i8
-  %38 = getelementptr i8, ptr %31, i64 5
-  store i8 %37, ptr %38, align 1, !tbaa !733
-  %39 = lshr i64 %33, 40
-  %40 = trunc i64 %39 to i8
-  %41 = getelementptr i8, ptr %31, i64 6
-  store i8 %40, ptr %41, align 1, !tbaa !733
-  %42 = lshr i64 %33, 32
-  %43 = trunc i64 %42 to i8
-  %44 = getelementptr i8, ptr %31, i64 7
-  store i8 %43, ptr %44, align 1, !tbaa !733
-  %45 = lshr i64 %33, 24
-  %46 = trunc i64 %45 to i8
-  %47 = getelementptr i8, ptr %31, i64 8
-  store i8 %46, ptr %47, align 1, !tbaa !733
-  %48 = lshr i64 %33, 16
-  %49 = trunc i64 %48 to i8
-  %i.ya = getelementptr i8, ptr %31, i64 9
-  store i8 %49, ptr %i.ya, align 1, !tbaa !733
-  %50 = lshr i64 %33, 8
-  %51 = trunc i64 %50 to i8
-  %i.yb = getelementptr i8, ptr %31, i64 10
-  store i8 %51, ptr %i.yb, align 1, !tbaa !733
-  %52 = trunc i64 %33 to i8
-  %53 = getelementptr i8, ptr %31, i64 11
-  store i8 %52, ptr %53, align 1, !tbaa !733
+  %i.ya = getelementptr i8, ptr %i.xq, i64 %i.xz  ; 2 uses
+  %i.yb = getelementptr i8, ptr %i.ya, i64 4
+  %10 = load <8 x i8>, ptr %i.xj, align 8, !tbaa !2939
+  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %11, ptr %i.yb, align 1, !tbaa !733
   %i.yc = load i8, ptr %i.xc, align 1, !tbaa !2899
   %.not.i.i.i = icmp eq i8 %i.yc, 0
   br i1 %.not.i.i.i, label %nodeOverwriteCell.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.aw
-  %i.yd = getelementptr i8, ptr %31, i64 12
+  %i.yd = getelementptr i8, ptr %i.ya, i64 12
   %i.ye = getelementptr inbounds nuw i8, ptr %i.xj, i64 8
   br label %bb.ax
 
@@ -1089,7 +1033,7 @@ cellUnion.exit:                                   ; preds = %.preheader57.i, %.p
 
 nodeGetCell.exit._crit_edge:                      ; preds = %cellUnion.exit, %nodeGetCell.exit.preheader
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.en = load i64, ptr %i.em, align 8, !tbaa !2956 ; 9 uses
+  %i.en = load i64, ptr %i.em, align 8, !tbaa !2956 ; 2 uses
   %i.eo = getelementptr i8, ptr %i.a, i64 24
   %.val.i29 = load ptr, ptr %i.eo, align 8, !tbaa !2917 ; 4 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.val.i29, i64 2
@@ -1162,44 +1106,17 @@ bb.h:                                             ; preds = %bb.f
   %i.gl = shl nuw nsw i64 %i.ev, 32
   %sext = mul i64 %i.gl, %indvars.iv.i.i
   %i.gm = ashr exact i64 %sext, 32
-  %4 = getelementptr i8, ptr %.val.i29, i64 %i.gm ; 9 uses
-  %5 = getelementptr i8, ptr %4, i64 4
-  %6 = lshr i64 %i.en, 56
-  %7 = trunc nuw i64 %6 to i8
-  store i8 %7, ptr %5, align 1, !tbaa !733
-  %8 = lshr i64 %i.en, 48
-  %9 = trunc i64 %8 to i8
-  %10 = getelementptr i8, ptr %4, i64 5
-  store i8 %9, ptr %10, align 1, !tbaa !733
-  %11 = lshr i64 %i.en, 40
-  %12 = trunc i64 %11 to i8
-  %13 = getelementptr i8, ptr %4, i64 6
-  store i8 %12, ptr %13, align 1, !tbaa !733
-  %14 = lshr i64 %i.en, 32
-  %15 = trunc i64 %14 to i8
-  %16 = getelementptr i8, ptr %4, i64 7
-  store i8 %15, ptr %16, align 1, !tbaa !733
-  %17 = lshr i64 %i.en, 24
-  %18 = trunc i64 %17 to i8
-  %19 = getelementptr i8, ptr %4, i64 8
-  store i8 %18, ptr %19, align 1, !tbaa !733
-  %20 = lshr i64 %i.en, 16
-  %21 = trunc i64 %20 to i8
-  %i.gn = getelementptr i8, ptr %4, i64 9
-  store i8 %21, ptr %i.gn, align 1, !tbaa !733
-  %22 = lshr i64 %i.en, 8
-  %23 = trunc i64 %22 to i8
-  %i.go = getelementptr i8, ptr %4, i64 10
-  store i8 %23, ptr %i.go, align 1, !tbaa !733
-  %24 = trunc i64 %i.en to i8
-  %25 = getelementptr i8, ptr %4, i64 11
-  store i8 %24, ptr %25, align 1, !tbaa !733
+  %i.gn = getelementptr i8, ptr %.val.i29, i64 %i.gm ; 2 uses
+  %i.go = getelementptr i8, ptr %i.gn, i64 4
+  %4 = bitcast i64 %i.en to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.go, align 1, !tbaa !733
   %i.gp = load i8, ptr %i.i, align 1, !tbaa !2899
   %.not.i30 = icmp eq i8 %i.gp, 0
   br i1 %.not.i30, label %nodeOverwriteCell.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h
-  %i.gq = getelementptr i8, ptr %4, i64 12
+  %i.gq = getelementptr i8, ptr %i.gn, i64 12
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i
@@ -1348,46 +1265,18 @@ bb.a:
   %i.e = zext i8 %i.d to i32
   %i.f = mul nsw i32 %3, %i.e
   %i.g = sext i32 %i.f to i64
-  %4 = getelementptr i8, ptr %i.b, i64 %i.g       ; 9 uses
-  %5 = getelementptr i8, ptr %4, i64 4
-  %6 = load i64, ptr %2, align 8, !tbaa !2939     ; 8 uses
-  %7 = lshr i64 %6, 56
-  %8 = trunc nuw i64 %7 to i8
-  store i8 %8, ptr %5, align 1, !tbaa !733
-  %9 = lshr i64 %6, 48
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr i8, ptr %4, i64 5
-  store i8 %10, ptr %11, align 1, !tbaa !733
-  %12 = lshr i64 %6, 40
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr i8, ptr %4, i64 6
-  store i8 %13, ptr %14, align 1, !tbaa !733
-  %15 = lshr i64 %6, 32
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr i8, ptr %4, i64 7
-  store i8 %16, ptr %17, align 1, !tbaa !733
-  %18 = lshr i64 %6, 24
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr i8, ptr %4, i64 8
-  store i8 %19, ptr %20, align 1, !tbaa !733
-  %21 = lshr i64 %6, 16
-  %22 = trunc i64 %21 to i8
-  %i.h = getelementptr i8, ptr %4, i64 9
-  store i8 %22, ptr %i.h, align 1, !tbaa !733
-  %23 = lshr i64 %6, 8
-  %24 = trunc i64 %23 to i8
-  %i.i = getelementptr i8, ptr %4, i64 10
-  store i8 %24, ptr %i.i, align 1, !tbaa !733
-  %25 = trunc i64 %6 to i8
-  %26 = getelementptr i8, ptr %4, i64 11
-  store i8 %25, ptr %26, align 1, !tbaa !733
+  %i.h = getelementptr i8, ptr %i.b, i64 %i.g     ; 2 uses
+  %i.i = getelementptr i8, ptr %i.h, i64 4
+  %4 = load <8 x i8>, ptr %2, align 8, !tbaa !2939
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.i, align 1, !tbaa !733
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !2899
   %.not = icmp eq i8 %i.k, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.l = getelementptr i8, ptr %4, i64 12
+  %i.l = getelementptr i8, ptr %i.h, i64 12
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
   br label %bb.b
 
@@ -1530,40 +1419,40 @@ bb.f:                                             ; preds = %bb.d
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !733
   %i.bn = zext i8 %i.bm to i64
   %i.bo = shl nuw i64 %i.bn, 56
-  %i.bp = getelementptr i8, ptr %i.bk, i64 5      ; 2 uses
+  %i.bp = getelementptr i8, ptr %i.bk, i64 5
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !733
   %i.br = zext i8 %i.bq to i64
   %i.bs = shl nuw nsw i64 %i.br, 48
   %i.bt = or disjoint i64 %i.bs, %i.bo
-  %i.bu = getelementptr i8, ptr %i.bk, i64 6      ; 2 uses
+  %i.bu = getelementptr i8, ptr %i.bk, i64 6
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !733
   %i.bw = zext i8 %i.bv to i64
   %i.bx = shl nuw nsw i64 %i.bw, 40
   %i.by = or disjoint i64 %i.bt, %i.bx
-  %i.bz = getelementptr i8, ptr %i.bk, i64 7      ; 2 uses
+  %i.bz = getelementptr i8, ptr %i.bk, i64 7
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !733
   %i.cb = zext i8 %i.ca to i64
   %i.cc = shl nuw nsw i64 %i.cb, 32
   %i.cd = or disjoint i64 %i.by, %i.cc
-  %i.ce = getelementptr i8, ptr %i.bk, i64 8      ; 2 uses
+  %i.ce = getelementptr i8, ptr %i.bk, i64 8
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !733
   %i.cg = zext i8 %i.cf to i64
   %i.ch = shl nuw nsw i64 %i.cg, 24
   %i.ci = or disjoint i64 %i.cd, %i.ch
-  %i.cj = getelementptr i8, ptr %i.bk, i64 9      ; 2 uses
+  %i.cj = getelementptr i8, ptr %i.bk, i64 9
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !733
   %i.cl = zext i8 %i.ck to i64
   %i.cm = shl nuw nsw i64 %i.cl, 16
   %i.cn = or disjoint i64 %i.ci, %i.cm
-  %i.co = getelementptr i8, ptr %i.bk, i64 10     ; 2 uses
+  %i.co = getelementptr i8, ptr %i.bk, i64 10
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !733
   %i.cq = zext i8 %i.cp to i64
   %i.cr = shl nuw nsw i64 %i.cq, 8
   %i.cs = or disjoint i64 %i.cn, %i.cr
-  %i.ct = getelementptr i8, ptr %i.bk, i64 11     ; 2 uses
+  %i.ct = getelementptr i8, ptr %i.bk, i64 11
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !733
   %i.cv = zext i8 %i.cu to i64
-  %i.cw = add nuw i64 %i.cs, %i.cv                ; 8 uses
+  %i.cw = add nuw i64 %i.cs, %i.cv
   %i.cx = getelementptr i8, ptr %i.bk, i64 12     ; 2 uses
   %i.cy = load i8, ptr %i.d, align 1, !tbaa !2899 ; 3 uses
   %i.cz = zext i8 %i.cy to i64                    ; 6 uses
@@ -1785,29 +1674,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.gz, label %.preheader57.i, label %cellUnion.exit, !llvm.loop !6705
 
 cellUnion.exit:                                   ; preds = %.preheader57.i, %.preheader.i30, %middle.block89, %middle.block
-  %4 = lshr i64 %i.cw, 56
-  %5 = trunc nuw i64 %4 to i8
-  store i8 %5, ptr %i.bl, align 1, !tbaa !733
-  %6 = lshr i64 %i.cw, 48
-  %7 = trunc i64 %6 to i8
-  store i8 %7, ptr %i.bp, align 1, !tbaa !733
-  %8 = lshr i64 %i.cw, 40
-  %9 = trunc i64 %8 to i8
-  store i8 %9, ptr %i.bu, align 1, !tbaa !733
-  %10 = lshr i64 %i.cw, 32
-  %11 = trunc i64 %10 to i8
-  store i8 %11, ptr %i.bz, align 1, !tbaa !733
-  %12 = lshr i64 %i.cw, 24
-  %13 = trunc i64 %12 to i8
-  store i8 %13, ptr %i.ce, align 1, !tbaa !733
-  %14 = lshr i64 %i.cw, 16
-  %15 = trunc i64 %14 to i8
-  store i8 %15, ptr %i.cj, align 1, !tbaa !733
-  %16 = lshr i64 %i.cw, 8
-  %17 = trunc i64 %16 to i8
-  store i8 %17, ptr %i.co, align 1, !tbaa !733
-  %18 = trunc i64 %i.cw to i8
-  store i8 %18, ptr %i.ct, align 1, !tbaa !733
+  %4 = bitcast i64 %i.cw to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.bl, align 1, !tbaa !733
   %i.ha = load i8, ptr %i.d, align 1, !tbaa !2899
   %.not.i31 = icmp eq i8 %i.ha, 0
   br i1 %.not.i31, label %nodeOverwriteCell.exit, label %.lr.ph.i32

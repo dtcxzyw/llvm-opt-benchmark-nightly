@@ -204,24 +204,16 @@ bb.gi:                                            ; preds = %bb.gh
   %.sroa.0945.1.insert.ext = zext i32 %.sroa.6352.0.copyload to i40
   %.sroa.0945.1.insert.shift = shl nuw i40 %.sroa.0945.1.insert.ext, 8
   %.sroa.0945.1.insert.insert = or disjoint i40 %.sroa.0945.1.insert.shift, %.sroa.0945.0.insert.ext
-  %i.qz = call fastcc noundef i40 @_RNvMs1_NtCs3ZkgueCtkyH_14ruff_workspace7optionsNtB5_24Flake8AnnotationsOptions13into_settings(i40 noundef %.sroa.0945.1.insert.insert) ; 5 uses
-  %.sroa.0947.0.extract.trunc = trunc i40 %i.qz to i8
-  %.sroa.0947.1.extract.shift = lshr i40 %i.qz, 8
-  %.sroa.0947.1.extract.trunc = trunc i40 %.sroa.0947.1.extract.shift to i8
-  %.sroa.0947.2.extract.shift = lshr i40 %i.qz, 16
-  %.sroa.0947.2.extract.trunc = trunc i40 %.sroa.0947.2.extract.shift to i8
-  %.sroa.0947.3.extract.shift = lshr i40 %i.qz, 24
-  %.sroa.0947.3.extract.trunc = trunc i40 %.sroa.0947.3.extract.shift to i8
-  %.sroa.0947.4.extract.shift = lshr i40 %i.qz, 32
-  %.sroa.0947.4.extract.trunc = trunc nuw i40 %.sroa.0947.4.extract.shift to i8
+  %i.qz = call fastcc noundef i40 @_RNvMs1_NtCs3ZkgueCtkyH_14ruff_workspace7optionsNtB5_24Flake8AnnotationsOptions13into_settings(i40 noundef %.sroa.0945.1.insert.insert) ; 2 uses
+  %.sroa.0947.3.extract.shift = lshr i40 %i.qz, 32
+  %.sroa.0947.3.extract.trunc = trunc nuw i40 %.sroa.0947.3.extract.shift to i8
+  %4 = bitcast i40 %i.qz to <5 x i8>
+  %5 = shufflevector <5 x i8> %4, <5 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   br label %bb.gj
 
 bb.gj:                                            ; preds = %bb.gh, %bb.gi
-  %.sroa.12343.0 = phi i8 [ %.sroa.0947.4.extract.trunc, %bb.gi ], [ 0, %bb.gh ]
   %.sroa.11341.0 = phi i8 [ %.sroa.0947.3.extract.trunc, %bb.gi ], [ 0, %bb.gh ]
-  %.sroa.10339.0 = phi i8 [ %.sroa.0947.2.extract.trunc, %bb.gi ], [ 0, %bb.gh ]
-  %.sroa.9337.0 = phi i8 [ %.sroa.0947.1.extract.trunc, %bb.gi ], [ 0, %bb.gh ]
-  %.sroa.0335.0 = phi i8 [ %.sroa.0947.0.extract.trunc, %bb.gi ], [ 0, %bb.gh ]
+  %6 = phi <4 x i8> [ %5, %bb.gi ], [ zeroinitializer, %bb.gh ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bi)
   %i.ra = getelementptr inbounds nuw i8, ptr %i.cx, i64 1160
   %.sroa.0355.0.copyload = load i64, ptr %i.ra, align 8 ; 2 uses
@@ -624,15 +616,9 @@ bb.jv:                                            ; preds = %bb.jr, %bb.jw
   %.sroa.0177.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2725
   store i8 %.1415, ptr %.sroa.0177.sroa.24.0..sroa_idx, align 1
   %.sroa.0177.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2726
-  store i8 %.sroa.0335.0, ptr %.sroa.0177.sroa.25.0..sroa_idx, align 2
-  %.sroa.0177.sroa.25.sroa.7.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2727
-  store i8 %.sroa.9337.0, ptr %.sroa.0177.sroa.25.sroa.7.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx, align 1
-  %.sroa.0177.sroa.25.sroa.8.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2728
-  store i8 %.sroa.10339.0, ptr %.sroa.0177.sroa.25.sroa.8.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx, align 8
-  %.sroa.0177.sroa.25.sroa.9.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2729
-  store i8 %.sroa.11341.0, ptr %.sroa.0177.sroa.25.sroa.9.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx, align 1
+  store <4 x i8> %6, ptr %.sroa.0177.sroa.25.0..sroa_idx, align 2
   %.sroa.0177.sroa.25.sroa.10.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2730
-  store i8 %.sroa.12343.0, ptr %.sroa.0177.sroa.25.sroa.10.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx, align 2
+  store i8 %.sroa.11341.0, ptr %.sroa.0177.sroa.25.sroa.10.0..sroa.0177.sroa.25.0..sroa_idx.sroa_idx, align 2
   %.sroa.0177.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2731
   store i8 %.sroa.0371.0, ptr %.sroa.0177.sroa.26.0..sroa_idx, align 1
   %.sroa.0177.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2732

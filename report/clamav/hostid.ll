@@ -17,13 +17,9 @@ bb.a:
   br i1 %.not, label %.preheader.preheader, label %bb.c
 
 .preheader.preheader:                             ; preds = %bb.a
-  %0 = load <32 x i8>, ptr @hostid, align 16, !tbaa !8
-  %1 = icmp eq <32 x i8> %0, splat (i8 45)        ; 4 uses
-  %2 = load <4 x i8>, ptr getelementptr inbounds nuw (i8, ptr @hostid, i64 32), align 16, !tbaa !8
-  %3 = icmp eq <4 x i8> %2, splat (i8 45)
-  %4 = shufflevector <4 x i1> %3, <4 x i1> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %rdx.op = shufflevector <32 x i1> %1, <32 x i1> %4, <36 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35>
-  %i.b = bitcast <36 x i1> %rdx.op to i36
+  %0 = load <36 x i8>, ptr @hostid, align 16, !tbaa !8
+  %1 = icmp eq <36 x i8> %0, splat (i8 45)        ; 4 uses
+  %i.b = bitcast <36 x i1> %1 to i36
   %i.c = tail call range(i36 0, 37) i36 @llvm.ctpop.i36(i36 %i.b)
   %.not16 = icmp eq i36 %i.c, 4
   br i1 %.not16, label %bb.b, label %bb.c
@@ -31,12 +27,12 @@ bb.a:
 bb.b:                                             ; preds = %.preheader.preheader
   %i.d = load i8, ptr getelementptr inbounds nuw (i8, ptr @hostid, i64 8), align 8, !tbaa !8
   %i.e = icmp eq i8 %i.d, 45
-  %i.f = extractelement <32 x i1> %1, i64 13
-  %or.cond.not22 = select i1 %i.e, i1 %i.f, i1 false
-  %i.g = extractelement <32 x i1> %1, i64 18
-  %or.cond5.not19 = select i1 %or.cond.not22, i1 %i.g, i1 false
-  %i.h = extractelement <32 x i1> %1, i64 23
-  %or.cond8.not = select i1 %or.cond5.not19, i1 %i.h, i1 false
+  %i.f = extractelement <36 x i1> %1, i64 13
+  %or.cond.not22 = and i1 %i.e, %i.f
+  %i.g = extractelement <36 x i1> %1, i64 18
+  %or.cond5.not19 = and i1 %or.cond.not22, %i.g
+  %i.h = extractelement <36 x i1> %1, i64 23
+  %or.cond8.not = and i1 %or.cond5.not19, %i.h
   %. = zext i1 %or.cond8.not to i32
   br label %bb.c
 

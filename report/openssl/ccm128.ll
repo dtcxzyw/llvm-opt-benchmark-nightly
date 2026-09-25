@@ -155,20 +155,10 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.w = xor i8 %i.u, -1
   store i8 %i.w, ptr %i.t, align 1, !tbaa !8
-  %3 = lshr i64 %2, 56
-  %4 = lshr i64 %2, 48
-  %5 = lshr i64 %2, 40
-  %6 = lshr i64 %2, 32
-  %7 = trunc i64 %6 to i8
-  %8 = trunc i64 %5 to i8
-  %9 = trunc i64 %4 to i8
-  %10 = trunc nuw i64 %3 to i8
   %i.x = load <4 x i8>, ptr %i.v, align 2, !tbaa !8
-  %11 = insertelement <4 x i8> poison, i8 %10, i64 0
-  %12 = insertelement <4 x i8> %11, i8 %9, i64 1
-  %13 = insertelement <4 x i8> %12, i8 %8, i64 2
-  %14 = insertelement <4 x i8> %13, i8 %7, i64 3
-  %i.y = xor <4 x i8> %i.x, %14
+  %3 = bitcast i64 %2 to <8 x i8>
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <4 x i32> <i32 7, i32 6, i32 5, i32 4>
+  %i.y = xor <4 x i8> %i.x, %4
   store <4 x i8> %i.y, ptr %i.v, align 2, !tbaa !8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 22 ; 2 uses
   %i.aa = load i8, ptr %i.z, align 2, !tbaa !8

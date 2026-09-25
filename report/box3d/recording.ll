@@ -204,43 +204,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i16 %i.ae, ptr %.sroa.4.0..sroa_idx, align 2, !tbaa !54
   call void @b3RecWrite_DestroyWorld(ptr noundef nonnull %i.b, ptr noundef nonnull %1)
-  %i.af = load i32, ptr %i.j, align 4, !tbaa !71  ; 7 uses
+  %i.af = load i32, ptr %i.j, align 4, !tbaa !71  ; 4 uses
   tail call void @b3RecWriteRegistry(ptr noundef nonnull %i.b)
   %i.ag = load i32, ptr %i.j, align 4, !tbaa !71
-  %i.ah = sub nsw i32 %i.ag, %i.af                ; 6 uses
-  %i.ai = load ptr, ptr %i.b, align 8, !tbaa !72  ; 16 uses
+  %i.ah = sub nsw i32 %i.ag, %i.af                ; 3 uses
+  %i.ai = load ptr, ptr %i.b, align 8, !tbaa !72  ; 10 uses
   %i.aj = sext i32 %i.af to i64                   ; 3 uses
   %i.ak = sext i32 %i.ah to i64                   ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
-  %3 = getelementptr inbounds nuw i8, ptr %i.ai, i64 40
-  %4 = trunc i32 %i.af to i8
-  store i8 %4, ptr %2, align 1, !tbaa !29
-  %5 = trunc i32 %i.ah to i8
-  store i8 %5, ptr %3, align 1, !tbaa !29
-  %6 = lshr i32 %i.af, 8
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.ai, i64 33
-  store i8 %7, ptr %8, align 1, !tbaa !29
-  %9 = lshr i32 %i.ah, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.ai, i64 41
-  store i8 %10, ptr %11, align 1, !tbaa !29
-  %12 = lshr i32 %i.af, 16
-  %13 = trunc i32 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.ai, i64 34
-  store i8 %13, ptr %14, align 1, !tbaa !29
-  %15 = lshr i32 %i.ah, 16
-  %16 = trunc i32 %15 to i8
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 42
-  store i8 %16, ptr %i.al, align 1, !tbaa !29
-  %17 = lshr i32 %i.af, 24
-  %18 = trunc nuw i32 %17 to i8
-  %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 35
-  store i8 %18, ptr %i.am, align 1, !tbaa !29
-  %19 = lshr i32 %i.ah, 24
-  %20 = trunc nuw i32 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.ai, i64 43
-  store i8 %20, ptr %21, align 1, !tbaa !29
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
+  %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 40
+  store i32 %i.af, ptr %i.al, align 1, !tbaa !29
+  store i32 %i.ah, ptr %i.am, align 1, !tbaa !29
   %i.an = ashr i32 %i.af, 31
   %i.ao = trunc nsw i32 %i.an to i8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 36

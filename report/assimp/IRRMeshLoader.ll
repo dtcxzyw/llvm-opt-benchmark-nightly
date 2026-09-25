@@ -205,7 +205,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77.preheader: ; preds =
 
 _ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77: ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77.preheader, %bb.ak
   %.016.i = phi ptr [ %i.dk, %bb.ak ], [ %.0.lcssa.i.i62, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77.preheader ] ; 5 uses
-  %.0.i = phi i32 [ %.1.i, %bb.ak ], [ 0, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77.preheader ] ; 7 uses
+  %.0.i = phi i32 [ %.1.i, %bb.ak ], [ 0, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77.preheader ] ; 4 uses
   %i.cv = load i8, ptr %.016.i, align 1           ; 3 uses
   %i.cw = add i8 %i.cv, -48                       ; 2 uses
   %or.cond.i = icmp ult i8 %i.cw, 10
@@ -247,15 +247,9 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ah, %bb.
   br label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77, !llvm.loop !24
 
 _ZN6Assimp9strtoul16EPKcPS1_.exit:                ; preds = %bb.ai
-  %13 = lshr i32 %.0.i, 8
-  %14 = lshr i32 %.0.i, 16
-  %15 = lshr i32 %.0.i, 24
-  %16 = insertelement <4 x i32> poison, i32 %.0.i, i64 0
-  %17 = insertelement <4 x i32> %16, i32 %15, i64 1
-  %18 = insertelement <4 x i32> %17, i32 %14, i64 2
-  %19 = insertelement <4 x i32> %18, i32 %13, i64 3
-  %20 = and <4 x i32> %19, <i32 255, i32 -1, i32 255, i32 255>
-  %i.dl = uitofp <4 x i32> %20 to <4 x float>
+  %13 = bitcast i32 %.0.i to <4 x i8>
+  %14 = shufflevector <4 x i8> %13, <4 x i8> poison, <4 x i32> <i32 0, i32 3, i32 2, i32 1>
+  %i.dl = uitofp <4 x i8> %14 to <4 x float>
   %i.dm = fdiv <4 x float> %i.dl, splat (float 2.550000e+02) ; 12 uses
   %i.dn = load ptr, ptr %10, align 8
   %i.do = load ptr, ptr %i.h, align 8             ; 7 uses

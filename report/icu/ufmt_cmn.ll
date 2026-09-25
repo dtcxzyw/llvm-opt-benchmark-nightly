@@ -199,97 +199,53 @@ bb.b:                                             ; preds = %scalar.ph
 define void @_Z12ufmt_ptou_78PDsPiPva(ptr nofree noundef writeonly captures(none) initializes((0, 32)) %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1, ptr noundef %2, i8 noundef signext %3) local_unnamed_addr #3 {
 .split32.us:
   %.not = icmp eq i8 %3, 0
-  %i.a = ptrtoint ptr %2 to i64                   ; 5 uses
-  %.7.extract.shift65 = lshr i64 %i.a, 56
-  %.7.extract.trunc66 = trunc nuw i64 %.7.extract.shift65 to i8 ; 2 uses
-  %4 = lshr i8 %.7.extract.trunc66, 4
-  %5 = and i8 %.7.extract.trunc66, 15             ; 2 uses
-  %6 = zext nneg i8 %4 to i16                     ; 2 uses
+  %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
   %i.b = icmp ult ptr %2, inttoptr (i64 -6917529027641081856 to ptr)
-  %7 = or disjoint i16 %6, 48
-  %8 = zext nneg i8 %5 to i16                     ; 2 uses
-  %i.c = icmp samesign ult i8 %5, 10
-  %9 = or disjoint i16 %8, 48
-  %10 = getelementptr i8, ptr %0, i64 2
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %. = select i1 %.not, i16 55, i16 87            ; 9 uses
-  %12 = add nuw nsw i16 %., %6
-  %i.d = select i1 %i.b, i16 %7, i16 %12
-  store i16 %i.d, ptr %0, align 2, !tbaa !9
-  %13 = add nuw nsw i16 %., %8
-  %14 = select i1 %i.c, i16 %9, i16 %13
-  store i16 %14, ptr %10, align 2, !tbaa !9
-  %15 = insertelement <4 x i64> poison, i64 %i.a, i64 0
-  %16 = shufflevector <4 x i64> %15, <4 x i64> poison, <4 x i32> zeroinitializer
-  %17 = lshr <4 x i64> %16, <i64 48, i64 40, i64 32, i64 24>
-  %18 = shufflevector <4 x i64> %17, <4 x i64> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  %19 = trunc <8 x i64> %18 to <8 x i8>           ; 3 uses
-  %20 = and <8 x i8> %19, <i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15>
-  %21 = lshr <8 x i8> %19, <i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15>
-  %22 = and <8 x i8> %19, <i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15>
-  %23 = shufflevector <8 x i8> %21, <8 x i8> %22, <8 x i32> <i32 0, i32 9, i32 2, i32 11, i32 4, i32 13, i32 6, i32 15> ; 2 uses
-  %24 = icmp ult <8 x i8> %20, <i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10>
-  %i.e = or disjoint <8 x i8> %23, splat (i8 48)
-  %i.f = trunc nuw nsw i16 %. to i8
+  %.6.extract.shift62 = lshr i64 %i.a, 48
+  %.6.extract.trunc63 = trunc i64 %.6.extract.shift62 to i8
+  %i.c = icmp ult i8 %.6.extract.trunc63, -96
+  %i.d = select i1 %.not, i16 55, i16 87          ; 2 uses
+  %4 = bitcast i64 %i.a to <8 x i8>               ; 3 uses
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 7, i32 6, i32 6, i32 5, i32 5, i32 4, i32 4> ; 2 uses
+  %6 = lshr <8 x i8> %5, <i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15>
+  %7 = and <8 x i8> %5, <i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15> ; 3 uses
+  %8 = shufflevector <8 x i8> %6, <8 x i8> %7, <8 x i32> <i32 0, i32 9, i32 2, i32 11, i32 4, i32 13, i32 6, i32 15> ; 2 uses
+  %9 = extractelement <8 x i8> %7, i64 1
+  %10 = icmp samesign ult i8 %9, 10
+  %11 = extractelement <8 x i8> %7, i64 3
+  %12 = icmp samesign ult i8 %11, 10
+  %13 = shufflevector <8 x i8> %4, <8 x i8> poison, <4 x i32> <i32 5, i32 5, i32 4, i32 4>
+  %14 = and <4 x i8> %13, <i8 -1, i8 15, i8 -1, i8 15>
+  %15 = icmp ult <4 x i8> %14, <i8 -96, i8 10, i8 -96, i8 10>
+  %i.e = or disjoint <8 x i8> %8, splat (i8 48)
+  %i.f = trunc nuw nsw i16 %i.d to i8
   %i.g = insertelement <8 x i8> poison, i8 %i.f, i64 0
   %i.h = shufflevector <8 x i8> %i.g, <8 x i8> poison, <8 x i32> zeroinitializer
-  %i.i = add nuw <8 x i8> %i.h, %23
-  %25 = select <8 x i1> %24, <8 x i8> %i.e, <8 x i8> %i.i
-  %26 = zext <8 x i8> %25 to <8 x i16>
-  store <8 x i16> %26, ptr %11, align 2, !tbaa !9
-  %.2.extract.shift = lshr i64 %i.a, 16
-  %.2.extract.trunc = trunc i64 %.2.extract.shift to i8 ; 3 uses
-  %27 = lshr i8 %.2.extract.trunc, 4
-  %28 = and i8 %.2.extract.trunc, 15              ; 2 uses
-  %29 = zext nneg i8 %27 to i16                   ; 2 uses
-  %30 = icmp ult i8 %.2.extract.trunc, -96
-  %31 = or disjoint i16 %29, 48
-  %32 = add nuw nsw i16 %., %29
-  %33 = select i1 %30, i16 %31, i16 %32
-  %34 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 %33, ptr %34, align 2, !tbaa !9
-  %35 = zext nneg i8 %28 to i16                   ; 2 uses
-  %36 = icmp samesign ult i8 %28, 10
-  %37 = or disjoint i16 %35, 48
-  %38 = add nuw nsw i16 %., %35
-  %39 = select i1 %36, i16 %37, i16 %38
-  %40 = getelementptr i8, ptr %0, i64 22
-  store i16 %39, ptr %40, align 2, !tbaa !9
-  %.1.extract.shift = lshr i64 %i.a, 8
-  %.1.extract.trunc = trunc i64 %.1.extract.shift to i8 ; 3 uses
-  %41 = lshr i8 %.1.extract.trunc, 4
-  %42 = and i8 %.1.extract.trunc, 15              ; 2 uses
-  %43 = zext nneg i8 %41 to i16                   ; 2 uses
-  %44 = icmp ult i8 %.1.extract.trunc, -96
-  %45 = or disjoint i16 %43, 48
-  %46 = add nuw nsw i16 %., %43
-  %47 = select i1 %44, i16 %45, i16 %46
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i16 %47, ptr %i.j, align 2, !tbaa !9
-  %48 = zext nneg i8 %42 to i16                   ; 2 uses
-  %49 = icmp samesign ult i8 %42, 10
-  %50 = or disjoint i16 %48, 48
-  %51 = add nuw nsw i16 %., %48
-  %52 = select i1 %49, i16 %50, i16 %51
-  %53 = getelementptr i8, ptr %0, i64 26
-  store i16 %52, ptr %53, align 2, !tbaa !9
-  %.0.extract.trunc = trunc i64 %i.a to i8        ; 3 uses
-  %54 = lshr i8 %.0.extract.trunc, 4
-  %55 = and i8 %.0.extract.trunc, 15              ; 2 uses
-  %56 = zext nneg i8 %54 to i16                   ; 2 uses
-  %57 = icmp ult i8 %.0.extract.trunc, -96
-  %58 = or disjoint i16 %56, 48
-  %59 = add nuw nsw i16 %., %56
-  %60 = select i1 %57, i16 %58, i16 %59
-  %61 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i16 %60, ptr %61, align 2, !tbaa !9
-  %62 = zext nneg i8 %55 to i16                   ; 2 uses
-  %63 = icmp samesign ult i8 %55, 10
-  %64 = or disjoint i16 %62, 48
-  %65 = add nuw nsw i16 %., %62
-  %66 = select i1 %63, i16 %64, i16 %65
-  %67 = getelementptr i8, ptr %0, i64 30
-  store i16 %66, ptr %67, align 2, !tbaa !9
+  %i.i = add nuw <8 x i8> %i.h, %8
+  %16 = insertelement <8 x i1> poison, i1 %i.b, i64 0
+  %17 = insertelement <8 x i1> %16, i1 %10, i64 1
+  %18 = insertelement <8 x i1> %17, i1 %i.c, i64 2
+  %19 = insertelement <8 x i1> %18, i1 %12, i64 3
+  %20 = shufflevector <4 x i1> %15, <4 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %21 = shufflevector <8 x i1> %19, <8 x i1> %20, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %22 = select <8 x i1> %21, <8 x i8> %i.e, <8 x i8> %i.i
+  %23 = zext <8 x i8> %22 to <8 x i16>
+  store <8 x i16> %23, ptr %0, align 2, !tbaa !9
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %24 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 3, i32 3, i32 2, i32 2, i32 1, i32 1, i32 0, i32 0> ; 3 uses
+  %25 = and <8 x i8> %24, <i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15>
+  %26 = lshr <8 x i8> %24, <i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15>
+  %27 = and <8 x i8> %24, <i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15>
+  %28 = shufflevector <8 x i8> %26, <8 x i8> %27, <8 x i32> <i32 0, i32 9, i32 2, i32 11, i32 4, i32 13, i32 6, i32 15> ; 2 uses
+  %29 = icmp ult <8 x i8> %25, <i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10>
+  %30 = or disjoint <8 x i8> %28, splat (i8 48)
+  %.0.extract.trunc = trunc nuw nsw i16 %i.d to i8
+  %31 = insertelement <8 x i8> poison, i8 %.0.extract.trunc, i64 0
+  %32 = shufflevector <8 x i8> %31, <8 x i8> poison, <8 x i32> zeroinitializer
+  %33 = add nuw <8 x i8> %32, %28
+  %34 = select <8 x i1> %29, <8 x i8> %30, <8 x i8> %33
+  %35 = zext <8 x i8> %34 to <8 x i16>
+  store <8 x i16> %35, ptr %i.j, align 2, !tbaa !9
   store i32 16, ptr %1, align 4, !tbaa !11
   ret void
 }

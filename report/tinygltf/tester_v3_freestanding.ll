@@ -205,7 +205,7 @@ bb.gs:                                            ; preds = %bb.gr, %bb.gq, %bb.
   %or.cond5 = select i1 %i.ahg, i1 %i.ahh, i1 false ; 2 uses
   %i.ahi = add i32 %i.ahe, 8
   %i.ahj = select i1 %or.cond5, i32 %i.ahi, i32 0
-  %i.ahk = add i32 %i.ahj, %i.ahf                 ; 5 uses
+  %i.ahk = add i32 %i.ahj, %i.ahf                 ; 2 uses
   %i.ahl = zext i32 %i.ahk to i64                 ; 3 uses
   %i.ahm = add nuw nsw i64 %i.ahl, 15
   %i.ahn = and i64 %i.ahm, 8589934584
@@ -405,26 +405,13 @@ bb.ha:                                            ; preds = %.loopexit.i148, %bb
   br label %tg3__error_push.exit
 
 .lr.ph.i152:                                      ; preds = %bb.gs
-  %.sroa.6269.0.extract.shift = lshr i32 %i.ahk, 24
-  %.sroa.6269.0.extract.trunc = trunc nuw i32 %.sroa.6269.0.extract.shift to i8
-  %.sroa.5268.0.extract.shift = lshr i32 %i.ahk, 16
-  %.sroa.5268.0.extract.trunc = trunc i32 %.sroa.5268.0.extract.shift to i8
-  %.sroa.4267.0.extract.shift = lshr i32 %i.ahk, 8
-  %.sroa.4267.0.extract.trunc = trunc i32 %.sroa.4267.0.extract.shift to i8
-  %.sroa.0266.0.extract.trunc = trunc i32 %i.ahk to i8
-  %i.ajz = getelementptr inbounds nuw i8, ptr @test_heap, i64 %i.aho ; 12 uses
+  %i.ajz = getelementptr inbounds nuw i8, ptr @test_heap, i64 %i.aho ; 9 uses
   store i64 %i.ahl, ptr %i.ajz, align 8, !tbaa !30
   store i64 %i.ahp, ptr @test_heap_used, align 8, !tbaa !30
-  %14 = getelementptr inbounds nuw i8, ptr %i.ajz, i64 8 ; 13 uses
-  store <8 x i8> <i8 103, i8 108, i8 84, i8 70, i8 2, i8 0, i8 0, i8 0>, ptr %14, align 8, !tbaa !37
-  %15 = getelementptr inbounds nuw i8, ptr %i.ajz, i64 16
-  %16 = getelementptr inbounds nuw i8, ptr %i.ajz, i64 17
-  store i8 %.sroa.0266.0.extract.trunc, ptr %15, align 8, !tbaa !37
-  %i.aka = getelementptr inbounds nuw i8, ptr %i.ajz, i64 18
-  store i8 %.sroa.4267.0.extract.trunc, ptr %16, align 1, !tbaa !37
-  %i.akb = getelementptr inbounds nuw i8, ptr %i.ajz, i64 19
-  store i8 %.sroa.5268.0.extract.trunc, ptr %i.aka, align 2, !tbaa !37
-  store i8 %.sroa.6269.0.extract.trunc, ptr %i.akb, align 1, !tbaa !37
+  %i.aka = getelementptr inbounds nuw i8, ptr %i.ajz, i64 8 ; 13 uses
+  store <8 x i8> <i8 103, i8 108, i8 84, i8 70, i8 2, i8 0, i8 0, i8 0>, ptr %i.aka, align 8, !tbaa !37
+  %i.akb = getelementptr inbounds nuw i8, ptr %i.ajz, i64 16
+  store i32 %i.ahk, ptr %i.akb, align 8, !tbaa !37
   %i.akc = getelementptr inbounds nuw i8, ptr %i.ajz, i64 20
   %i.akd = getelementptr inbounds nuw i8, ptr %i.ajz, i64 21
   store i8 %.sroa.0274.0.extract.trunc, ptr %i.akc, align 4, !tbaa !37
@@ -595,7 +582,7 @@ vector.ph669:                                     ; preds = %vector.main.loop.it
   %i.amf = and i64 %i.ame, 24
   %n.vec670 = and i64 %i.ame, 8589934560          ; 4 uses
   %i.amg = add i64 %.0244, %n.vec670
-  %i.amh = getelementptr i8, ptr %14, i64 %.0244
+  %i.amh = getelementptr i8, ptr %i.aka, i64 %.0244
   br label %vector.body671
 
 vector.body671:                                   ; preds = %vector.ph669, %vector.body671
@@ -621,7 +608,7 @@ vec.epilog.ph682:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val676 = phi i64 [ %n.vec670, %vec.epilog.iter.check680 ], [ 0, %vector.main.loop.iter.check667 ]
   %n.vec683 = and i64 %i.ame, 8589934584          ; 3 uses
   %i.amm = add i64 %.0244, %n.vec683
-  %i.amn = getelementptr i8, ptr %14, i64 %.0244
+  %i.amn = getelementptr i8, ptr %i.aka, i64 %.0244
   br label %vec.epilog.vector.body684
 
 vec.epilog.vector.body684:                        ; preds = %vec.epilog.vector.body684, %vec.epilog.ph682
@@ -643,7 +630,7 @@ vec.epilog.middle.block687:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.1254 = phi i64 [ %i.amt, %.lr.ph ], [ %.1254.ph, %.lr.ph.preheader ] ; 2 uses
-  %i.amr = getelementptr i8, ptr %14, i64 %.1254
+  %i.amr = getelementptr i8, ptr %i.aka, i64 %.1254
   %i.ams = getelementptr i8, ptr %i.amr, i64 20
   store i8 32, ptr %i.ams, align 1, !tbaa !37
   %i.amt = add i64 %.1254, 1                      ; 2 uses
@@ -656,7 +643,7 @@ vec.epilog.middle.block687:                       ; preds = %vec.epilog.vector.b
 
 iter.check711:                                    ; preds = %._crit_edge
   %i.amw = zext i32 %i.ahf to i64                 ; 2 uses
-  %i.amx = getelementptr inbounds nuw i8, ptr %14, i64 %i.amw ; 6 uses
+  %i.amx = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.amw ; 6 uses
   %i.amy = getelementptr inbounds nuw i8, ptr %i.amx, i64 1
   store i8 %.sroa.0270.0.extract.trunc, ptr %i.amx, align 1, !tbaa !37
   %i.amz = getelementptr inbounds nuw i8, ptr %i.amx, i64 2
@@ -843,7 +830,7 @@ vector.body733:                                   ; preds = %vector.ph731, %vect
   %i.apm = trunc i64 %i.apl to i32
   %i.apn = add i32 %i.aoy, %i.apm
   %i.apo = zext i32 %i.apn to i64
-  %i.app = getelementptr inbounds nuw i8, ptr %14, i64 %i.apo ; 2 uses
+  %i.app = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.apo ; 2 uses
   %i.apq = getelementptr inbounds nuw i8, ptr %i.app, i64 16
   store <16 x i8> zeroinitializer, ptr %i.app, align 1, !tbaa !37
   store <16 x i8> zeroinitializer, ptr %i.apq, align 1, !tbaa !37
@@ -871,7 +858,7 @@ vec.epilog.vector.body746:                        ; preds = %vec.epilog.vector.b
   %i.apu = trunc i64 %i.apt to i32
   %i.apv = add i32 %i.aoy, %i.apu
   %i.apw = zext i32 %i.apv to i64
-  %i.apx = getelementptr inbounds nuw i8, ptr %14, i64 %i.apw
+  %i.apx = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.apw
   store <8 x i8> zeroinitializer, ptr %i.apx, align 1, !tbaa !37
   %index.next748 = add nuw i64 %index747, 8       ; 2 uses
   %i.apy = icmp eq i64 %index.next748, %n.vec745
@@ -894,7 +881,7 @@ tg3__memcpy.exit211.prol:                         ; preds = %tg3__memcpy.exit211
   %i.aqa = trunc nuw i64 %indvars.iv.prol to i32
   %i.aqb = add i32 %i.aoy, %i.aqa
   %i.aqc = zext i32 %i.aqb to i64
-  %i.aqd = getelementptr inbounds nuw i8, ptr %14, i64 %i.aqc
+  %i.aqd = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.aqc
   store i8 0, ptr %i.aqd, align 1, !tbaa !37
   %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter938.next = add i64 %prol.iter938, 1   ; 2 uses
@@ -918,29 +905,29 @@ tg3__memcpy.exit211:                              ; preds = %tg3__memcpy.exit211
   %i.aqg = trunc nuw i64 %indvars.iv to i32
   %i.aqh = add i32 %i.aoy, %i.aqg
   %i.aqi = zext i32 %i.aqh to i64
-  %i.aqj = getelementptr inbounds nuw i8, ptr %14, i64 %i.aqi
+  %i.aqj = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.aqi
   store i8 0, ptr %i.aqj, align 1, !tbaa !37
   %i.aqk = trunc i64 %indvars.iv to i32
   %.reass = add i32 %i.aqk, %invariant.op
   %i.aql = zext i32 %.reass to i64
-  %i.aqm = getelementptr inbounds nuw i8, ptr %14, i64 %i.aql
+  %i.aqm = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.aql
   store i8 0, ptr %i.aqm, align 1, !tbaa !37
   %i.aqn = trunc i64 %indvars.iv to i32
   %.reass978 = add i32 %i.aqn, %invariant.op977
   %i.aqo = zext i32 %.reass978 to i64
-  %i.aqp = getelementptr inbounds nuw i8, ptr %14, i64 %i.aqo
+  %i.aqp = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.aqo
   store i8 0, ptr %i.aqp, align 1, !tbaa !37
   %i.aqq = trunc i64 %indvars.iv to i32
   %.reass980 = add i32 %i.aqq, %invariant.op979
   %i.aqr = zext i32 %.reass980 to i64
-  %i.aqs = getelementptr inbounds nuw i8, ptr %14, i64 %i.aqr
+  %i.aqs = getelementptr inbounds nuw i8, ptr %i.aka, i64 %i.aqr
   store i8 0, ptr %i.aqs, align 1, !tbaa !37
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
   br i1 %exitcond.not.3, label %tg3__memcpy.exit211._crit_edge, label %tg3__memcpy.exit211, !llvm.loop !705
 
 tg3__memcpy.exit211._crit_edge:                   ; preds = %tg3__memcpy.exit211.prol.loopexit, %tg3__memcpy.exit211, %middle.block736, %vec.epilog.middle.block749, %tg3__memcpy.exit211.preheader, %._crit_edge
-  store ptr %14, ptr %2, align 8, !tbaa !23
+  store ptr %i.aka, ptr %2, align 8, !tbaa !23
   store i64 %i.ahl, ptr %3, align 8, !tbaa !30
   br label %tg3__error_push.exit
 

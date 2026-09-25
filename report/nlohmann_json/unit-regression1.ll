@@ -205,7 +205,7 @@ _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberImEEvT_b(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array.613", align 8   ; 12 uses
+  %3 = alloca %"struct.std::array.613", align 8   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   store i64 %1, ptr %3, align 8
   %i.a = load i8, ptr %0, align 8, !tbaa !643, !range !89, !noundef !90
@@ -214,36 +214,9 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = lshr i64 %1, 32
-  %5 = trunc i64 %4 to i8
-  %6 = lshr i64 %1, 24
-  %7 = trunc i64 %6 to i8
-  %8 = lshr i64 %1, 40
-  %9 = trunc i64 %8 to i8
-  %10 = lshr i64 %1, 16
-  %11 = trunc i64 %10 to i8
-  %12 = lshr i64 %1, 48
-  %13 = trunc i64 %12 to i8
-  %14 = lshr i64 %1, 8
-  %15 = trunc i64 %14 to i8
-  %16 = lshr i64 %1, 56
-  %17 = trunc nuw i64 %16 to i8
-  %18 = trunc i64 %1 to i8
-  %.012.i.i = getelementptr inbounds nuw i8, ptr %3, i64 7
-  store i8 %17, ptr %3, align 8, !tbaa !103
-  store i8 %18, ptr %.012.i.i, align 1, !tbaa !103
-  %19 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i = getelementptr inbounds nuw i8, ptr %3, i64 6
-  store i8 %13, ptr %19, align 1, !tbaa !103
-  store i8 %15, ptr %.0.i.i, align 2, !tbaa !103
-  %20 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %.0.i.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 5
-  store i8 %9, ptr %20, align 2, !tbaa !103
-  store i8 %11, ptr %.0.i.i.1, align 1, !tbaa !103
-  %21 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %.0.i.i.2 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i8 %5, ptr %21, align 1, !tbaa !103
-  store i8 %7, ptr %.0.i.i.2, align 4, !tbaa !103
+  %4 = bitcast i64 %1 to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %3, align 8, !tbaa !103
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -260,7 +233,7 @@ _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE19write_compact_floatEdNS1_14input_format_tE(ptr noundef nonnull align 8 dereferenceable(24) %0, double noundef %1, i32 noundef %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array.613", align 8   ; 12 uses
+  %3 = alloca %"struct.std::array.613", align 8   ; 5 uses
   %4 = alloca %"struct.std::array.553", align 4   ; 8 uses
   %i.a = tail call double @llvm.fabs.f64(double %1)
   %or.cond = fcmp ugt double %i.a, f0x47EFFFFFE0000000
@@ -328,37 +301,9 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i12, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIdEEvT_b.exit, label %.lr.ph.i.i.i13
 
 .lr.ph.i.i.i13:                                   ; preds = %bb.d
-  %5 = bitcast double %1 to i64                   ; 8 uses
-  %6 = lshr i64 %5, 32
-  %7 = trunc i64 %6 to i8
-  %8 = lshr i64 %5, 24
-  %9 = trunc i64 %8 to i8
-  %10 = lshr i64 %5, 40
-  %11 = trunc i64 %10 to i8
-  %12 = lshr i64 %5, 16
-  %13 = trunc i64 %12 to i8
-  %14 = lshr i64 %5, 48
-  %15 = trunc i64 %14 to i8
-  %16 = lshr i64 %5, 8
-  %17 = trunc i64 %16 to i8
-  %18 = lshr i64 %5, 56
-  %19 = trunc nuw i64 %18 to i8
-  %20 = trunc i64 %5 to i8
-  %.012.i.i.i14 = getelementptr inbounds nuw i8, ptr %3, i64 7
-  store i8 %19, ptr %3, align 8, !tbaa !103
-  store i8 %20, ptr %.012.i.i.i14, align 1, !tbaa !103
-  %21 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i.i15 = getelementptr inbounds nuw i8, ptr %3, i64 6
-  store i8 %15, ptr %21, align 1, !tbaa !103
-  store i8 %17, ptr %.0.i.i.i15, align 2, !tbaa !103
-  %22 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %.0.i.i.1.i = getelementptr inbounds nuw i8, ptr %3, i64 5
-  store i8 %11, ptr %22, align 2, !tbaa !103
-  store i8 %13, ptr %.0.i.i.1.i, align 1, !tbaa !103
-  %23 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %.0.i.i.2.i = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i8 %7, ptr %23, align 1, !tbaa !103
-  store i8 %9, ptr %.0.i.i.2.i, align 4, !tbaa !103
+  %5 = bitcast double %1 to <8 x i8>
+  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %6, ptr %3, align 8, !tbaa !103
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIdEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIdEEvT_b.exit: ; preds = %bb.d, %.lr.ph.i.i.i13

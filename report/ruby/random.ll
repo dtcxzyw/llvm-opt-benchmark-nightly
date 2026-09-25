@@ -204,24 +204,11 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.01623 = phi ptr [ %i.c, %.lr.ph ], [ %2, %bb.a ] ; 5 uses
+  %.01623 = phi ptr [ %i.c, %.lr.ph ], [ %2, %bb.a ] ; 2 uses
   %.01822 = phi i64 [ %i.d, %.lr.ph ], [ %3, %bb.a ]
-  %i.b = tail call i32 %0(ptr noundef %1) #23     ; 4 uses
-  %4 = trunc i32 %i.b to i8
-  %5 = getelementptr i8, ptr %.01623, i64 1
-  store i8 %4, ptr %.01623, align 1, !tbaa !56
-  %6 = lshr i32 %i.b, 8
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr i8, ptr %.01623, i64 2
-  store i8 %7, ptr %5, align 1, !tbaa !56
-  %9 = lshr i32 %i.b, 16
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr i8, ptr %.01623, i64 3
-  store i8 %10, ptr %8, align 1, !tbaa !56
-  %12 = lshr i32 %i.b, 24
-  %13 = trunc nuw i32 %12 to i8
+  %i.b = tail call i32 %0(ptr noundef %1) #23
   %i.c = getelementptr i8, ptr %.01623, i64 4     ; 2 uses
-  store i8 %13, ptr %11, align 1, !tbaa !56
+  store i32 %i.b, ptr %.01623, align 1, !tbaa !56
   %i.d = add i64 %.01822, -4                      ; 3 uses
   %i.e = icmp ugt i64 %i.d, 3
   br i1 %i.e, label %.lr.ph, label %._crit_edge, !llvm.loop !3

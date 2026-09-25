@@ -205,7 +205,7 @@ is_regular_fmt.exit.thread:                       ; preds = %bb.p, %.lr.ph.i, %b
 bb.w:                                             ; preds = %is_regular_fmt.exit.thread
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %9, i64 32, i1 false), !tbaa.struct !65
   %i.dd = getelementptr inbounds nuw i8, ptr %9, i64 36
-  %i.de = load i32, ptr %i.dd, align 4            ; 6 uses
+  %i.de = load i32, ptr %i.dd, align 4            ; 3 uses
   store i32 %i.de, ptr %2, align 1, !tbaa !53
   %i.df = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.dg = load i32, ptr %i.df, align 8, !tbaa !53
@@ -219,17 +219,11 @@ bb.w:                                             ; preds = %is_regular_fmt.exit
   br i1 %.not36, label %bb.x, label %.sink.split
 
 .sink.split:                                      ; preds = %bb.w
-  %10 = lshr i32 %i.de, 24
-  %11 = lshr i32 %i.de, 16
-  %12 = lshr i32 %i.de, 8
-  %13 = and i32 %i.de, 255
-  %14 = and i32 %12, 255
-  %15 = add nuw nsw i32 %14, %13
-  %16 = and i32 %11, 255
-  %17 = add nuw nsw i32 %15, %16
-  %18 = add nuw nsw i32 %17, %10                  ; 2 uses
-  %i.dl = icmp samesign ugt i32 %18, 16
-  %i.dm = icmp samesign ugt i32 %18, 8
+  %10 = bitcast i32 %i.de to <4 x i8>
+  %11 = zext <4 x i8> %10 to <4 x i32>
+  %12 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %11) ; 2 uses
+  %i.dl = icmp samesign ugt i32 %12, 16
+  %i.dm = icmp samesign ugt i32 %12, 8
   %. = select i1 %i.dm, i32 2, i32 1
   %.sink = select i1 %i.dl, i32 3, i32 %.
   store i32 %.sink, ptr %6, align 4, !tbaa !23
@@ -631,6 +625,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

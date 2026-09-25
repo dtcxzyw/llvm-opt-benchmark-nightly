@@ -200,70 +200,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = load i32, ptr %i.c, align 8, !tbaa !20
   call void @PMurHash128x64_Result(ptr noundef %1, ptr noundef nonnull %i.b, i32 noundef %i.d, ptr noundef nonnull %i.a) #5
-  %2 = load i64, ptr %i.a, align 16, !tbaa !22    ; 8 uses
-  %3 = lshr i64 %2, 56
-  %4 = trunc nuw i64 %3 to i8
-  store i8 %4, ptr %0, align 1, !tbaa !12
-  %5 = lshr i64 %2, 48
-  %6 = trunc i64 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %6, ptr %7, align 1, !tbaa !12
-  %8 = lshr i64 %2, 40
-  %9 = trunc i64 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %9, ptr %10, align 1, !tbaa !12
-  %11 = lshr i64 %2, 32
-  %12 = trunc i64 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %12, ptr %13, align 1, !tbaa !12
-  %14 = lshr i64 %2, 24
-  %15 = trunc i64 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %15, ptr %16, align 1, !tbaa !12
-  %17 = lshr i64 %2, 16
-  %18 = trunc i64 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %18, ptr %19, align 1, !tbaa !12
-  %20 = lshr i64 %2, 8
-  %21 = trunc i64 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %21, ptr %22, align 1, !tbaa !12
-  %23 = trunc i64 %2 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %23, ptr %24, align 1, !tbaa !12
+  %2 = load <8 x i8>, ptr %i.a, align 16, !tbaa !22
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %0, align 1, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %25 = load i64, ptr %i.e, align 8, !tbaa !22    ; 8 uses
-  %26 = lshr i64 %25, 56
-  %27 = trunc nuw i64 %26 to i8
+  %4 = load <8 x i8>, ptr %i.e, align 8, !tbaa !22
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %27, ptr %i.f, align 1, !tbaa !12
-  %28 = lshr i64 %25, 48
-  %29 = trunc i64 %28 to i8
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %29, ptr %30, align 1, !tbaa !12
-  %31 = lshr i64 %25, 40
-  %32 = trunc i64 %31 to i8
-  %33 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %32, ptr %33, align 1, !tbaa !12
-  %34 = lshr i64 %25, 32
-  %35 = trunc i64 %34 to i8
-  %36 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %35, ptr %36, align 1, !tbaa !12
-  %37 = lshr i64 %25, 24
-  %38 = trunc i64 %37 to i8
-  %39 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %38, ptr %39, align 1, !tbaa !12
-  %40 = lshr i64 %25, 16
-  %41 = trunc i64 %40 to i8
-  %42 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  store i8 %41, ptr %42, align 1, !tbaa !12
-  %43 = lshr i64 %25, 8
-  %44 = trunc i64 %43 to i8
-  %45 = getelementptr inbounds nuw i8, ptr %0, i64 14
-  store i8 %44, ptr %45, align 1, !tbaa !12
-  %46 = trunc i64 %25 to i8
-  %47 = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %46, ptr %47, align 1, !tbaa !12
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.f, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret void
 }

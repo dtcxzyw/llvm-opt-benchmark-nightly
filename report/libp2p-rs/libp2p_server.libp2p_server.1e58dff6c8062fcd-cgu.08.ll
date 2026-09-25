@@ -205,7 +205,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxj
   br label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs4z_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %.lr.ph.i
-  %.sroa.018.0148.i = phi ptr [ %i.o, %.lr.ph.i ], [ %i.at, %_RNvXs4z_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ] ; 19 uses
+  %.sroa.018.0148.i = phi ptr [ %i.o, %.lr.ph.i ], [ %i.at, %_RNvXs4z_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ] ; 18 uses
   %.sroa.7.0145.i = phi i64 [ 0, %.lr.ph.i ], [ %i.au, %_RNvXs4z_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ] ; 7 uses
   %.sroa.10.0144.i = phi i64 [ %i.t, %.lr.ph.i ], [ %i.ar, %_RNvXs4z_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
   %i.ar = add i64 %.sroa.10.0144.i, -1            ; 2 uses
@@ -233,9 +233,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.018.0148.i, i64 32
-  %2 = load i16, ptr %i.ax, align 8, !range !30, !alias.scope !6144, !noalias !6145, !noundef !13 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.018.0148.i, i64 34
-  %4 = load i16, ptr %3, align 2, !alias.scope !6144, !noalias !6145 ; 2 uses
+  %2 = load <2 x i16>, ptr %i.ax, align 8, !alias.scope !6144, !noalias !6145 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6146)
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.018.0148.i, i64 24
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.018.0148.i, i64 16
@@ -392,10 +390,7 @@ _RNvXs4r_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_13HpkeKeyConfigNtNtCskKLDk
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.018.0148.i, i64 80 ; 2 uses
   %i.cl = load i64, ptr %i.ck, align 8, !range !26, !alias.scope !6167, !noalias !6168, !noundef !13
   %.not.i.i.i = icmp eq i64 %i.cl, -1
-  %i.cm = ptrtoint ptr %i.ce to i64               ; 2 uses
-  %5 = trunc i64 %i.cm to i16
-  %6 = lshr i64 %i.cm, 16
-  %7 = trunc i64 %6 to i16
+  %i.cm = ptrtoint ptr %i.ce to i64
   br i1 %.not.i.i.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %_RNvXs4r_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_13HpkeKeyConfigNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
@@ -625,30 +620,29 @@ _RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCsk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !6152
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.1028.i, ptr noundef nonnull align 4 dereferenceable(68) %.sroa.0.i.sroa.9.i, i64 68, i1 false), !noalias !6182
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.9.i)
+  %3 = bitcast i64 %i.cm to <4 x i16>
+  %4 = shufflevector <4 x i16> %3, <4 x i16> poison, <2 x i32> <i32 0, i32 1>
   br label %_RNvXs4z_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
 
 _RNvXs4z_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i: ; preds = %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i, %bb.g, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i
   %.sroa.1029.0.i = phi i8 [ %i.cj, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ undef, %bb.g ], [ undef, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
-  %.sroa.9.0.i = phi i16 [ %7, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %4, %bb.g ], [ %4, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
-  %.sroa.8.0.i = phi i16 [ %5, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %2, %bb.g ], [ %2, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
   %.sroa.724.0.i = phi i64 [ %i.cc, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %i.bb, %bb.g ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
   %.sroa.6.0.i = phi ptr [ %.sroa.0.i.sroa.5.0.copyload.i, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %i.bg, %bb.g ], [ %i.bg, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
   %.sroa.521.0.i = phi i64 [ %.sroa.0.i.sroa.4.0.copyload.i, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %i.be, %bb.g ], [ %i.be, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
   %.sroa.019.0.i = phi i64 [ %.sroa.0.i.sroa.0.0.copyload.i, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ -1, %bb.g ], [ -1, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
-  %i.ef = getelementptr inbounds nuw [112 x i8], ptr %i.w, i64 %.sroa.7.0145.i ; 8 uses
+  %5 = phi <2 x i16> [ %4, %_RNvXs4v_NtNtCshPShd8ZVvJf_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %2, %bb.g ], [ %2, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i ]
+  %i.ef = getelementptr inbounds nuw [112 x i8], ptr %i.w, i64 %.sroa.7.0145.i ; 7 uses
   %.sroa.954.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ef, i64 36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.954.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(68) %.sroa.1028.i, i64 68, i1 false), !noalias !6142
   store i64 %.sroa.019.0.i, ptr %i.ef, align 8, !noalias !6142
-  %.sroa.449.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
-  store i64 %.sroa.521.0.i, ptr %.sroa.449.0..sroa_idx.i, align 8, !noalias !6142
-  %.sroa.550.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ef, i64 16
-  store ptr %.sroa.6.0.i, ptr %.sroa.550.0..sroa_idx.i.a, align 8, !noalias !6142
-  %.sroa.651.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ef, i64 24
-  store i64 %.sroa.724.0.i, ptr %.sroa.651.0..sroa_idx.i.a, align 8, !noalias !6142
-  %.sroa.752.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ef, i64 32
-  store i16 %.sroa.8.0.i, ptr %.sroa.752.0..sroa_idx.i.a, align 8, !noalias !6142
-  %.sroa.853.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ef, i64 34
-  store i16 %.sroa.9.0.i, ptr %.sroa.853.0..sroa_idx.i, align 2, !noalias !6142
+  %.sroa.550.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
+  store i64 %.sroa.521.0.i, ptr %.sroa.550.0..sroa_idx.i.a, align 8, !noalias !6142
+  %.sroa.651.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ef, i64 16
+  store ptr %.sroa.6.0.i, ptr %.sroa.651.0..sroa_idx.i.a, align 8, !noalias !6142
+  %.sroa.752.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ef, i64 24
+  store i64 %.sroa.724.0.i, ptr %.sroa.752.0..sroa_idx.i.a, align 8, !noalias !6142
+  %.sroa.853.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ef, i64 32
+  store <2 x i16> %5, ptr %.sroa.853.0..sroa_idx.i, align 8, !noalias !6142
   %.sroa.1055.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ef, i64 104
   store i8 %.sroa.1029.0.i, ptr %.sroa.1055.0..sroa_idx.i, align 8, !noalias !6142
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.1028.i)

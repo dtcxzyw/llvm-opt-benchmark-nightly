@@ -204,7 +204,7 @@ define internal fastcc void @_RNvMs_NtCs5kzjBmDVxDj_21iceoryx2_bb_container11byt
 bb.a:
   %i.a = alloca [56 x i8], align 1                ; 4 uses
   %i.b = alloca [16 x i8], align 8                ; 9 uses
-  %i.c = alloca [56 x i8], align 1                ; 18 uses
+  %i.c = alloca [56 x i8], align 1                ; 11 uses
   %i.d = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr %1, ptr %i.d, align 8
@@ -220,7 +220,7 @@ bb.a:
   %i.g = load i8, ptr %1, align 8, !noalias !39, !noundef !4
   store i8 %i.g, ptr %i.c, align 1, !noalias !39
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val2.i = load i64, ptr %i.h, align 8, !alias.scope !37, !noalias !38, !noundef !4 ; 11 uses
+  %.val2.i = load i64, ptr %i.h, align 8, !alias.scope !37, !noalias !38, !noundef !4 ; 4 uses
   %i.i = icmp eq i64 %.val2.i, 0
   br i1 %i.i, label %_RINvXs2_NtCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common17byte_atomic_testsNtB6_11ComplexTypeNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits11atomic_copy10AtomicCopy16___for_each_fieldNCNvMs_NtCs5kzjBmDVxDj_21iceoryx2_bb_container11byte_atomicINtB39_10ByteAtomicB1f_Kj38_E3new0EB8_.exit, label %.lr.ph.i.i.i
 
@@ -287,41 +287,12 @@ bb.b:                                             ; preds = %.peel.next.i.i.i
   br i1 %i.ag, label %_RINvXs2_NtCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common17byte_atomic_testsNtB6_11ComplexTypeNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits11atomic_copy10AtomicCopy16___for_each_fieldNCNvMs_NtCs5kzjBmDVxDj_21iceoryx2_bb_container11byte_atomicINtB39_10ByteAtomicB1f_Kj38_E3new0EB8_.exit, label %.peel.next.i.i.i, !llvm.loop !33
 
 _RINvXs2_NtCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common17byte_atomic_testsNtB6_11ComplexTypeNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits11atomic_copy10AtomicCopy16___for_each_fieldNCNvMs_NtCs5kzjBmDVxDj_21iceoryx2_bb_container11byte_atomicINtB39_10ByteAtomicB1f_Kj38_E3new0EB8_.exit: ; preds = %.peel.next.i.i.i, %bb.b, %bb.a, %.lr.ph.i.i.i
-  %2 = lshr i64 %.val2.i, 56
-  %3 = trunc nuw i64 %2 to i8
-  %4 = lshr i64 %.val2.i, 48
-  %5 = trunc i64 %4 to i8
-  %6 = lshr i64 %.val2.i, 40
-  %7 = trunc i64 %6 to i8
-  %8 = lshr i64 %.val2.i, 32
-  %9 = trunc i64 %8 to i8
-  %10 = lshr i64 %.val2.i, 24
-  %11 = trunc i64 %10 to i8
-  %12 = lshr i64 %.val2.i, 16
-  %13 = trunc i64 %12 to i8
-  %14 = lshr i64 %.val2.i, 8
-  %15 = trunc i64 %14 to i8
-  %16 = trunc i64 %.val2.i to i8
   %.sroa.2.0.i9.pn.peel.ptr.i11.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 14
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 14
   %i.ai = load i8, ptr %i.ah, align 2, !noalias !39, !noundef !4
   store i8 %i.ai, ptr %.sroa.2.0.i9.pn.peel.ptr.i11.i.i, align 1, !noalias !39
   %.sroa.2.0.i9.pn.peel.ptr.i13.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store i8 %16, ptr %.sroa.2.0.i9.pn.peel.ptr.i13.i.i, align 1, !noalias !39
-  %.sroa.0.09.ptr.i19.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 17
-  store i8 %15, ptr %.sroa.0.09.ptr.i19.i.i, align 1, !noalias !39
-  %.sroa.0.09.ptr.i19.1.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 18
-  store i8 %13, ptr %.sroa.0.09.ptr.i19.1.i.i, align 1, !noalias !39
-  %.sroa.0.09.ptr.i19.2.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 19
-  store i8 %11, ptr %.sroa.0.09.ptr.i19.2.i.i, align 1, !noalias !39
-  %.sroa.0.09.ptr.i19.3.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 20
-  store i8 %9, ptr %.sroa.0.09.ptr.i19.3.i.i, align 1, !noalias !39
-  %.sroa.0.09.ptr.i19.4.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 21
-  store i8 %7, ptr %.sroa.0.09.ptr.i19.4.i.i, align 1, !noalias !39
-  %.sroa.0.09.ptr.i19.5.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 22
-  store i8 %5, ptr %.sroa.0.09.ptr.i19.5.i.i, align 1, !noalias !39
-  %.sroa.0.09.ptr.i19.6.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 23
-  store i8 %3, ptr %.sroa.0.09.ptr.i19.6.i.i, align 1, !noalias !39
+  store i64 %.val2.i, ptr %.sroa.2.0.i9.pn.peel.ptr.i13.i.i, align 1, !noalias !39
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @_RINvXs9_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits11atomic_copydNtB6_10AtomicCopy16___for_each_fieldNCNvMs_NtCs5kzjBmDVxDj_21iceoryx2_bb_container11byte_atomicINtB1M_10ByteAtomicNtNtCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common17byte_atomic_tests11ComplexTypeKj38_E3new0EB2Z_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.aj, i64 noundef 24, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b) #17
   call void @llvm.experimental.noalias.scope.decl(metadata !41)

@@ -202,16 +202,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit123.thread.invoke: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit123, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit120, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.br = phi ptr [ @.str.10, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit120 ], [ @.str.8, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ @.str.12, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit123 ]
-  %13 = load i32, ptr %i.aa, align 8              ; 4 uses
-  %14 = lshr i32 %13, 24
-  %15 = lshr i32 %13, 8
-  %16 = lshr i32 %13, 16
-  %17 = insertelement <4 x i32> poison, i32 %16, i64 0
-  %18 = insertelement <4 x i32> %17, i32 %15, i64 1
-  %19 = insertelement <4 x i32> %18, i32 %13, i64 2
-  %20 = insertelement <4 x i32> %19, i32 %14, i64 3
-  %21 = and <4 x i32> %20, <i32 255, i32 255, i32 255, i32 -1>
-  %i.bs = uitofp <4 x i32> %21 to <4 x float>
+  %13 = load <4 x i8>, ptr %i.aa, align 8
+  %14 = shufflevector <4 x i8> %13, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %i.bs = uitofp <4 x i8> %14 to <4 x float>
   %i.bt = fdiv <4 x float> %i.bs, splat (float 2.550000e+02)
   store <4 x float> %i.bt, ptr %3, align 16
   %i.bu = invoke noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull %3, i32 noundef 16, ptr noundef nonnull %i.br, i32 noundef 0, i32 noundef 0, i32 noundef 1)

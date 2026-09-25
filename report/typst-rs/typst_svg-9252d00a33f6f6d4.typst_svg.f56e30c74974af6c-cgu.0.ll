@@ -205,7 +205,7 @@ bb.a:
   %.sroa.0.i = alloca i32, align 4                ; 14 uses
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  %i.c = alloca [32 x i8], align 16               ; 5 uses
+  %i.c = alloca [32 x i8], align 1                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   store i32 0, ptr %.sroa.0.i, align 4
   %i.d = icmp samesign ult i32 %.16.val, 128
@@ -420,33 +420,17 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.cs = tail call i128 @llvm.bswap.i128(i128 %.0.val)
-  %0 = insertelement <8 x i128> poison, i128 %i.cs, i64 0
-  %1 = shufflevector <8 x i128> %0, <8 x i128> poison, <8 x i32> zeroinitializer ; 2 uses
-  %2 = lshr <8 x i128> %1, <i128 0, i128 8, i128 16, i128 24, i128 32, i128 40, i128 48, i128 56>
-  %3 = shufflevector <8 x i128> %2, <8 x i128> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
-  %4 = trunc <16 x i128> %3 to <16 x i8>          ; 3 uses
-  %5 = and <16 x i8> %4, <i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15>
-  %i.ct = lshr <16 x i8> %4, <i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15>
-  %6 = and <16 x i8> %4, <i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15>
-  %7 = shufflevector <16 x i8> %i.ct, <16 x i8> %6, <16 x i32> <i32 0, i32 17, i32 2, i32 19, i32 4, i32 21, i32 6, i32 23, i32 8, i32 25, i32 10, i32 27, i32 12, i32 29, i32 14, i32 31> ; 2 uses
-  %8 = icmp ult <16 x i8> %5, <i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10>
-  %9 = or disjoint <16 x i8> %7, splat (i8 48)
-  %10 = add nuw nsw <16 x i8> %7, splat (i8 55)
-  %11 = select <16 x i1> %8, <16 x i8> %9, <16 x i8> %10
-  store <16 x i8> %11, ptr %i.c, align 16
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %13 = lshr <8 x i128> %1, <i128 64, i128 72, i128 80, i128 88, i128 96, i128 104, i128 112, i128 120>
-  %14 = shufflevector <8 x i128> %13, <8 x i128> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
-  %15 = trunc <16 x i128> %14 to <16 x i8>        ; 3 uses
-  %16 = and <16 x i8> %15, <i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15>
-  %17 = lshr <16 x i8> %15, <i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15, i8 4, i8 15>
-  %i.cu = and <16 x i8> %15, <i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15, i8 poison, i8 15>
-  %18 = shufflevector <16 x i8> %17, <16 x i8> %i.cu, <16 x i32> <i32 0, i32 17, i32 2, i32 19, i32 4, i32 21, i32 6, i32 23, i32 8, i32 25, i32 10, i32 27, i32 12, i32 29, i32 14, i32 31> ; 2 uses
-  %19 = icmp ult <16 x i8> %16, <i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10>
-  %20 = or disjoint <16 x i8> %18, splat (i8 48)
-  %21 = add nuw nsw <16 x i8> %18, splat (i8 55)
-  %22 = select <16 x i1> %19, <16 x i8> %20, <16 x i8> %21
-  store <16 x i8> %22, ptr %12, align 16
+  %0 = bitcast i128 %i.cs to <16 x i8>            ; 3 uses
+  %i.ct = lshr <16 x i8> %0, splat (i8 4)
+  %1 = shufflevector <16 x i8> %0, <16 x i8> poison, <32 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7, i32 8, i32 8, i32 9, i32 9, i32 10, i32 10, i32 11, i32 11, i32 12, i32 12, i32 13, i32 13, i32 14, i32 14, i32 15, i32 15>
+  %2 = and <32 x i8> %1, <i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15, i8 -1, i8 15>
+  %i.cu = and <16 x i8> %0, splat (i8 15)
+  %3 = shufflevector <16 x i8> %i.ct, <16 x i8> %i.cu, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
+  %4 = icmp ult <32 x i8> %2, <i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10, i8 -96, i8 10>
+  %5 = or disjoint <32 x i8> %3, splat (i8 48)
+  %6 = add nuw nsw <32 x i8> %3, splat (i8 55)
+  %7 = select <32 x i1> %4, <32 x i8> %5, <32 x i8> %6
+  store <32 x i8> %7, ptr %i.c, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.c, i64 noundef 32)
   call void @llvm.experimental.noalias.scope.decl(metadata !2272)

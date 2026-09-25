@@ -204,18 +204,6 @@ randombytes_getentropy.exit.thread:               ; preds = %_randombytes_getent
 ; Function Attrs: nounwind ssp uwtable
 define internal void @randombytes_internal_random_buf(ptr noundef %0, i64 noundef %1) #1 {
 bb.a:
-  %2 = insertelement <4 x i64> poison, i64 %1, i64 0
-  %3 = shufflevector <4 x i64> %2, <4 x i64> poison, <4 x i32> zeroinitializer
-  %4 = lshr <4 x i64> %3, <i64 32, i64 40, i64 48, i64 56>
-  %.sroa.4.0.extract.shift = lshr i64 %1, 24
-  %.sroa.3.0.extract.shift = lshr i64 %1, 16
-  %.sroa.2.0.extract.shift = lshr i64 %1, 8
-  %5 = insertelement <2 x i64> poison, i64 %1, i64 0
-  %6 = insertelement <2 x i64> %5, i64 %.sroa.2.0.extract.shift, i64 1
-  %7 = trunc <2 x i64> %6 to <2 x i8>
-  %.sroa.3.0.extract.trunc = trunc i64 %.sroa.3.0.extract.shift to i8
-  %.sroa.4.0.extract.trunc = trunc i64 %.sroa.4.0.extract.shift to i8
-  %8 = trunc <4 x i64> %4 to <4 x i8>
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @stream) ; 4 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = icmp eq i32 %i.b, 0
@@ -244,12 +232,8 @@ randombytes_internal_random_stir_if_needed.exit:  ; preds = %bb.b, %bb.c
 
 .preheader.preheader:                             ; preds = %randombytes_internal_random_stir_if_needed.exit
   %i.j = load <8 x i8>, ptr %i.g, align 8
-  %9 = shufflevector <2 x i8> %7, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %10 = insertelement <8 x i8> %9, i8 %.sroa.3.0.extract.trunc, i64 2
-  %11 = insertelement <8 x i8> %10, i8 %.sroa.4.0.extract.trunc, i64 3
-  %12 = shufflevector <4 x i8> %8, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %13 = shufflevector <8 x i8> %11, <8 x i8> %12, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %i.k = xor <8 x i8> %i.j, %13
+  %2 = bitcast i64 %1 to <8 x i8>
+  %i.k = xor <8 x i8> %i.j, %2
   store <8 x i8> %i.k, ptr %i.g, align 8
   %i.l = load i32, ptr @global.4, align 4
   %i.m = icmp eq i32 %i.l, 0

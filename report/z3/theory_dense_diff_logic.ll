@@ -205,11 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.aa, label %..loopexit_crit_edge.us, label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %bb.c
-  %1 = load i64, ptr %i.u, align 4                ; 2 uses
-  %.sroa.4.0.extract.shift.us = lshr i64 %1, 32
-  %2 = insertelement <2 x i64> poison, i64 %1, i64 0
-  %3 = insertelement <2 x i64> %2, i64 %.sroa.4.0.extract.shift.us, i64 1
-  %4 = trunc <2 x i64> %3 to <2 x i32>
+  %1 = load <2 x i32>, ptr %i.u, align 4
   %i.ab = load ptr, ptr %i.q, align 8, !tbaa !124
   %i.ac = tail call noundef ptr @_ZNK4expr8get_sortEv(ptr noundef nonnull align 4 dereferenceable(16) %i.ab)
   br label %bb.d
@@ -228,7 +224,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = load ptr, ptr %i.f, align 8, !tbaa !949
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv ; 2 uses
   %i.al = load <2 x i32>, ptr %i.ak, align 4, !tbaa !56
-  %i.am = sub nsw <2 x i32> %i.al, %4
+  %i.am = sub nsw <2 x i32> %i.al, %1
   store <2 x i32> %i.am, ptr %i.ak, align 4, !tbaa !56
   br label %bb.f
 

@@ -205,7 +205,7 @@ define noundef zeroext i1 @_ZN7httplib6detail21write_websocket_frameERNS_6Stream
 bb.a:
   %i.a = alloca [2 x i8], align 1                 ; 8 uses
   %i.b = alloca [2 x i8], align 1                 ; 5 uses
-  %i.c = alloca [8 x i8], align 1                 ; 11 uses
+  %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %6 = alloca %"class.std::random_device", align 8 ; 7 uses
   %i.d = alloca [4 x i8], align 16                ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
@@ -271,36 +271,9 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
-  %7 = lshr i64 %3, 56
-  %8 = trunc nuw i64 %7 to i8
-  store i8 %8, ptr %i.c, align 1, !tbaa !184
-  %9 = lshr i64 %3, 48
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  store i8 %10, ptr %11, align 1, !tbaa !184
-  %12 = lshr i64 %3, 40
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  store i8 %13, ptr %14, align 1, !tbaa !184
-  %15 = lshr i64 %3, 32
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  store i8 %16, ptr %17, align 1, !tbaa !184
-  %18 = lshr i64 %3, 24
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i8 %19, ptr %20, align 1, !tbaa !184
-  %21 = lshr i64 %3, 16
-  %22 = trunc i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.c, i64 5
-  store i8 %22, ptr %23, align 1, !tbaa !184
-  %24 = lshr i64 %3, 8
-  %25 = trunc i64 %24 to i8
-  %26 = getelementptr inbounds nuw i8, ptr %i.c, i64 6
-  store i8 %25, ptr %26, align 1, !tbaa !184
-  %27 = trunc i64 %3 to i8
-  %28 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
-  store i8 %27, ptr %28, align 1, !tbaa !184
+  %7 = bitcast i64 %3 to <8 x i8>
+  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %8, ptr %i.c, align 8, !tbaa !184
   %i.ak = load ptr, ptr %0, align 8, !tbaa !201
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   %i.am = load ptr, ptr %i.al, align 8

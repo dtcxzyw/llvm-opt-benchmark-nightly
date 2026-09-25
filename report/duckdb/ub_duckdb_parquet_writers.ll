@@ -205,73 +205,21 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %..preheader.preheader_crit_edge, %bb.b
-  %i.k = phi i64 [ %.pre19, %..preheader.preheader_crit_edge ], [ %i.i, %bb.b ] ; 8 uses
-  %i.l = phi i64 [ %.pre, %..preheader.preheader_crit_edge ], [ %i.j, %bb.b ] ; 8 uses
-  %8 = lshr i64 %i.l, 56
-  %9 = trunc nuw i64 %8 to i8                     ; 2 uses
-  store i8 %9, ptr %2, align 1, !tbaa !46
-  %10 = lshr i64 %i.l, 48
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %11, ptr %12, align 1, !tbaa !46
-  %13 = lshr i64 %i.l, 40
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %14, ptr %15, align 1, !tbaa !46
-  %16 = lshr i64 %i.l, 32
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %2, i64 3
-  store i8 %17, ptr %18, align 1, !tbaa !46
-  %19 = lshr i64 %i.l, 24
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i8 %20, ptr %21, align 1, !tbaa !46
-  %22 = lshr i64 %i.l, 16
-  %23 = trunc i64 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %2, i64 5
-  store i8 %23, ptr %24, align 1, !tbaa !46
-  %25 = lshr i64 %i.l, 8
-  %26 = trunc i64 %25 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  store i8 %26, ptr %27, align 1, !tbaa !46
-  %28 = trunc i64 %i.l to i8
-  %29 = getelementptr inbounds nuw i8, ptr %2, i64 7
-  store i8 %28, ptr %29, align 1, !tbaa !46
-  %30 = lshr i64 %i.k, 56
-  %31 = trunc nuw i64 %30 to i8
+  %i.k = phi i64 [ %.pre19, %..preheader.preheader_crit_edge ], [ %i.i, %bb.b ]
+  %i.l = phi i64 [ %.pre, %..preheader.preheader_crit_edge ], [ %i.j, %bb.b ] ; 2 uses
+  %8 = bitcast i64 %i.l to <8 x i8>
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %9, ptr %2, align 1, !tbaa !46
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i8 %31, ptr %i.m, align 1, !tbaa !46
-  %32 = lshr i64 %i.k, 48
-  %33 = trunc i64 %32 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %2, i64 9
-  store i8 %33, ptr %34, align 1, !tbaa !46
-  %35 = lshr i64 %i.k, 40
-  %36 = trunc i64 %35 to i8
-  %37 = getelementptr inbounds nuw i8, ptr %2, i64 10
-  store i8 %36, ptr %37, align 1, !tbaa !46
-  %38 = lshr i64 %i.k, 32
-  %39 = trunc i64 %38 to i8
-  %40 = getelementptr inbounds nuw i8, ptr %2, i64 11
-  store i8 %39, ptr %40, align 1, !tbaa !46
-  %41 = lshr i64 %i.k, 24
-  %42 = trunc i64 %41 to i8
-  %43 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i8 %42, ptr %43, align 1, !tbaa !46
-  %44 = lshr i64 %i.k, 16
-  %45 = trunc i64 %44 to i8
-  %46 = getelementptr inbounds nuw i8, ptr %2, i64 13
-  store i8 %45, ptr %46, align 1, !tbaa !46
-  %47 = lshr i64 %i.k, 8
-  %48 = trunc i64 %47 to i8
-  %49 = getelementptr inbounds nuw i8, ptr %2, i64 14
-  store i8 %48, ptr %49, align 1, !tbaa !46
-  %50 = trunc i64 %i.k to i8
-  %51 = getelementptr inbounds nuw i8, ptr %2, i64 15
-  store i8 %50, ptr %51, align 1, !tbaa !46
+  %10 = bitcast i64 %i.k to <8 x i8>
+  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %11, ptr %i.m, align 1, !tbaa !46
   br i1 %i.b, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.preheader.preheader
-  %i.n = or i8 %9, -128
+  %12 = lshr i64 %i.l, 56
+  %13 = trunc nuw i64 %12 to i8
+  %i.n = or i8 %13, -128
   store i8 %i.n, ptr %2, align 1, !tbaa !46
   br label %bb.d
 

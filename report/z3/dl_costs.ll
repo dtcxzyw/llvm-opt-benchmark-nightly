@@ -174,27 +174,22 @@ declare void @_ZN7datalog12rule_manager7inc_refEPNS_4ruleE(ptr noundef nonnull a
 define hidden void @_ZN7datalog16accounted_object13process_costsEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(33) %0) local_unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
-  %.sroa.5.0.extract.shift = lshr i64 %i.b, 32    ; 2 uses
-  %1 = insertelement <2 x i64> poison, i64 %i.b, i64 0
-  %2 = insertelement <2 x i64> %1, i64 %.sroa.5.0.extract.shift, i64 1
-  %3 = trunc <2 x i64> %2 to <2 x i32>
-  %4 = and i64 %i.b, 4294967295
-  %5 = or i64 %4, %.sroa.5.0.extract.shift
-  %i.c = icmp eq i64 %5, 0
+  %i.b = load i64, ptr %i.a, align 8              ; 2 uses
+  %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.a, align 8, !tbaa !9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 0, ptr %i.d, align 4, !tbaa !10
+  %1 = bitcast i64 %i.b to <2 x i32>
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0 = phi ptr [ %0, %bb.b ], [ %i.i, %bb.c ]    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.0, i64 24 ; 2 uses
   %i.f = load <2 x i32>, ptr %i.e, align 4, !tbaa !11
-  %i.g = add <2 x i32> %i.f, %3
+  %i.g = add <2 x i32> %i.f, %1
   store <2 x i32> %i.g, ptr %i.e, align 4, !tbaa !11
   %i.h = getelementptr inbounds nuw i8, ptr %.0, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !17   ; 2 uses

@@ -150,7 +150,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4llvm17ARMTargetStreamer8emitInstEjc(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, i32 noundef %1, i8 noundef signext %2) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 23 uses
+  %i.a = alloca [4 x i8], align 4                 ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !19, !nonnull !20, !align !21 ; 3 uses
@@ -174,31 +174,18 @@ bb.a:
   %i.n = lshr i32 %1, 8
   %i.o = trunc i32 %i.n to i8
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %i.o, ptr %i.p, align 1, !tbaa !250
+  store i8 %i.o, ptr %i.p, align 2, !tbaa !250
   %i.q = lshr i32 %1, 16
   %i.r = trunc i32 %i.q to i8
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 %i.r, ptr %i.s, align 1, !tbaa !250
   %i.t = lshr i32 %1, 24
   %i.u = trunc nuw i32 %i.t to i8
-  store i8 %i.u, ptr %i.a, align 1, !tbaa !250
+  store i8 %i.u, ptr %i.a, align 4, !tbaa !250
   br label %.loopexit
 
 .preheader.split.us.preheader:                    ; preds = %.preheader
-  %3 = lshr i32 %1, 24
-  %4 = trunc nuw i32 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %4, ptr %5, align 1, !tbaa !250
-  %6 = lshr i32 %1, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %7, ptr %8, align 1, !tbaa !250
-  %9 = lshr i32 %1, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %10, ptr %11, align 1, !tbaa !250
-  %12 = trunc i32 %1 to i8
-  store i8 %12, ptr %i.a, align 1, !tbaa !250
+  store i32 %1, ptr %i.a, align 4, !tbaa !250
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
@@ -240,7 +227,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = add nsw i32 %i.ak, -2
   %i.am = zext i32 %i.al to i64
   %i.an = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.am
-  store i8 %i.ag, ptr %i.an, align 1, !tbaa !250
+  store i8 %i.ag, ptr %i.an, align 2, !tbaa !250
   %i.ao = or disjoint i32 %i.ai, 8
   %i.ap = lshr i32 %1, %i.ao
   %i.aq = trunc i32 %i.ap to i8
@@ -344,7 +331,7 @@ bb.b:                                             ; preds = %bb.a
   %i.cw = add nsw i32 %i.cv, -2
   %i.cx = zext i32 %i.cw to i64
   %i.cy = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cx
-  store i8 %i.ct, ptr %i.cy, align 1, !tbaa !250
+  store i8 %i.ct, ptr %i.cy, align 2, !tbaa !250
   %i.cz = add nsw i32 %i.cv, -1
   %i.da = zext i32 %i.cz to i64
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.da

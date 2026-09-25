@@ -148,7 +148,7 @@ bb.a:
   %.sroa.0 = alloca i32, align 4                  ; 4 uses
   %.sroa.5 = alloca i32, align 4                  ; 3 uses
   %i.c = alloca [40 x i16], align 16              ; 16 uses
-  %i.d = alloca [50 x i16], align 16              ; 8 uses
+  %i.d = alloca [50 x i16], align 16              ; 7 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca [40 x i16], align 16              ; 10 uses
   %i.g = ptrtoaddr ptr %i.f to i64
@@ -232,7 +232,6 @@ bb.h:                                             ; preds = %bb.f, %bb.d
   %i.at = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 96
   %wide.trip.count538 = zext nneg i32 %i.q to i64
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 84 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.aw = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -635,29 +634,15 @@ bb.cf:                                            ; preds = %.loopexit
 bb.cg:                                            ; preds = %bb.cf, %g729d_get_new_exc.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.ant, ptr noundef nonnull align 16 dereferenceable(20) %i.as, i64 20, i1 false)
   %.sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 4, !tbaa !64
-  %5 = load <32 x i16>, ptr %i.ar, align 4, !tbaa !37
-  %6 = call <32 x i16> @llvm.abs.v32i16(<32 x i16> %5, i1 false)
-  %7 = zext <32 x i16> %6 to <32 x i32>           ; 2 uses
-  %8 = load <8 x i16>, ptr %4, align 4, !tbaa !37
+  %4 = load <40 x i16>, ptr %i.ar, align 4, !tbaa !37
   call void @ff_g729_postfilter(ptr noundef %i.m, ptr noundef nonnull %i.any, ptr noundef nonnull %i.e, ptr noundef nonnull %indvars.iv532.sroa.phi604, i32 noundef %.sroa.0.0..sroa.0.0., ptr noundef nonnull %i.anz, ptr noundef nonnull %i.aoa, ptr noundef nonnull %i.aob, ptr noundef nonnull %i.ar, i32 noundef 40) #9
-  %9 = load <32 x i16>, ptr %i.ar, align 4, !tbaa !37
-  %10 = call <32 x i16> @llvm.abs.v32i16(<32 x i16> %9, i1 false)
-  %11 = zext <32 x i16> %10 to <32 x i32>         ; 2 uses
-  %12 = load <8 x i16>, ptr %4, align 4, !tbaa !37
-  %13 = call <8 x i16> @llvm.abs.v8i16(<8 x i16> %12, i1 false)
-  %14 = zext <8 x i16> %13 to <8 x i32>
-  %15 = shufflevector <32 x i32> %11, <32 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %rdx.op593 = add nuw nsw <8 x i32> %15, %14
-  %16 = shufflevector <8 x i32> %rdx.op593, <8 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %17 = shufflevector <32 x i32> %16, <32 x i32> %11, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.bcm = call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %17)
-  %18 = call <8 x i16> @llvm.abs.v8i16(<8 x i16> %8, i1 false)
-  %19 = zext <8 x i16> %18 to <8 x i32>
-  %20 = shufflevector <32 x i32> %7, <32 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %rdx.op = add nuw nsw <8 x i32> %20, %19
-  %21 = shufflevector <8 x i32> %rdx.op, <8 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %22 = shufflevector <32 x i32> %21, <32 x i32> %7, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.bcn = call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %22)
+  %5 = load <40 x i16>, ptr %i.ar, align 4, !tbaa !37
+  %6 = call <40 x i16> @llvm.abs.v40i16(<40 x i16> %5, i1 false)
+  %7 = zext <40 x i16> %6 to <40 x i32>
+  %i.bcm = call i32 @llvm.vector.reduce.add.v40i32(<40 x i32> %7)
+  %8 = call <40 x i16> @llvm.abs.v40i16(<40 x i16> %4, i1 false)
+  %9 = zext <40 x i16> %8 to <40 x i32>
+  %i.bcn = call i32 @llvm.vector.reduce.add.v40i32(<40 x i32> %9)
   %i.bco = load i32, ptr %i.aoc, align 4, !tbaa !35
   %i.bcp = trunc i32 %i.bco to i16
   %i.bcq = call signext i16 @ff_g729_adaptive_gain_control(i32 noundef %i.bcn, i32 noundef %i.bcm, ptr noundef nonnull %i.ar, i32 noundef 40, i16 noundef signext %i.bcp) #9
@@ -910,13 +895,10 @@ declare i64 @llvm.smin.i64(i64, i64) #5
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <32 x i16> @llvm.abs.v32i16(<32 x i16>, i1 immarg) #7
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.abs.v8i16(<8 x i16>, i1 immarg) #7
+declare <40 x i16> @llvm.abs.v40i16(<40 x i16>, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v32i32(<32 x i32>) #5
+declare i32 @llvm.vector.reduce.add.v40i32(<40 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i4 @llvm.ctpop.i4(i4) #5
