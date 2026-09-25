@@ -204,16 +204,17 @@ bb.ac:                                            ; preds = %bb.ab
   %.val70 = load i64, ptr %i.ae, align 8
   %.8.val.fr.i = freeze i64 %.val70               ; 46 uses
   %i.ak = icmp eq i64 %.8.val.fr.i, 0
-  %i.al = load ptr, ptr @button_names, align 16, !tbaa !31 ; 2 uses
-  %19 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.al) #27 ; 2 uses
+  %i.al = load ptr, ptr @button_names, align 16, !tbaa !31 ; 3 uses
   br i1 %i.ak, label %.split.us.preheader.i, label %.split.preheader.i
 
 .split.preheader.i:                               ; preds = %bb.ac
+  %19 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.al) #27
   %i.am = icmp eq i64 %.8.val.fr.i, %19
   br i1 %i.am, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread1.i
 
 .split.us.preheader.i:                            ; preds = %bb.ac
-  %i.an = icmp eq i64 %19, 0
+  %char0.i = load i8, ptr %i.al, align 1
+  %i.an = icmp eq i8 %char0.i, 0
   br i1 %i.an, label %_ZL17button_name_to_idRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread1.us.i
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread1.us.i: ; preds = %.split.us.preheader.i

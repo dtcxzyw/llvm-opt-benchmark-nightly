@@ -204,15 +204,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not26, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %.lobit = ashr i32 %1, 31                       ; 3 uses
-  %2 = icmp eq i32 %.lobit, %1                    ; 2 uses
+  %.lobit = ashr i32 %1, 31                       ; 2 uses
   br i1 %i.c, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %2 = icmp eq i32 %1, 0
   br i1 %2, label %.loopexit, label %.lr.ph44
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  br i1 %2, label %.loopexit, label %.lr.ph48
+  %3 = icmp eq i32 %1, -1
+  br i1 %3, label %.loopexit, label %.lr.ph48
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph48
   %i.d = add nsw i32 %.12027.us47, -1             ; 2 uses

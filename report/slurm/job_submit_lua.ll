@@ -202,11 +202,11 @@ bb.k:                                             ; preds = %bb.j
   %i.am = shl nuw nsw i64 %i.al, 3
   %i.an = call ptr @slurm_xrecalloc(ptr noundef nonnull %i.k, i64 noundef 1, i64 noundef %i.am, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.133, i32 noundef 411, ptr noundef nonnull @.str.19) #10
   store ptr %i.an, ptr %i.k, align 8
-  %1 = icmp sgt i32 %.0374565, 0
-  br i1 %1, label %.lr.ph51.preheader, label %._crit_edge
+  %.not52 = icmp eq i32 %.0374565, 0
+  br i1 %.not52, label %._crit_edge, label %.lr.ph51.preheader
 
 .lr.ph51.preheader:                               ; preds = %.loopexit.thread
-  %i.ao = zext nneg i32 %.0374565 to i64
+  %i.ao = zext i32 %.0374565 to i64
   br label %.lr.ph51
 
 .lr.ph51:                                         ; preds = %.lr.ph51.preheader, %.lr.ph51
@@ -217,7 +217,8 @@ bb.k:                                             ; preds = %bb.j
   %i.as = load ptr, ptr %i.ar, align 8
   store ptr %i.as, ptr %i.aq, align 8
   %indvars.iv.next58 = add nsw i64 %indvars.iv57, -1
-  %2 = icmp samesign ugt i64 %indvars.iv57, 1
+  %1 = trunc nuw i64 %indvars.iv57 to i32
+  %2 = icmp sgt i32 %1, 1
   br i1 %2, label %.lr.ph51, label %._crit_edge, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %.lr.ph51, %.loopexit.thread

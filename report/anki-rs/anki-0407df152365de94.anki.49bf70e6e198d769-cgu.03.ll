@@ -204,6 +204,7 @@ bb.a:
 .outer.outer:                                     ; preds = %.outer.outer.loopexit, %bb.a
   %.sroa.5.0.ph.ph = phi ptr [ %i.u, %bb.a ], [ %i.aa, %.outer.outer.loopexit ]
   %.sroa.820.0.ph.ph = phi i64 [ undef, %bb.a ], [ %i.aj, %.outer.outer.loopexit ] ; 8 uses
+  %.not58.ph = phi i1 [ true, %bb.a ], [ false, %.outer.outer.loopexit ]
   %.ph = phi i1 [ false, %bb.a ], [ true, %.outer.outer.loopexit ]
   %.sroa.512.0.ph.ph = phi i64 [ undef, %bb.a ], [ %.sroa.512.0.ph.ph.ph, %.outer.outer.loopexit ]
   %.sroa.010.0.ph.ph = phi i64 [ 0, %bb.a ], [ %.sroa.010.0.ph.ph.ph, %.outer.outer.loopexit ]
@@ -212,7 +213,8 @@ bb.a:
 
 .outer:                                           ; preds = %.outer.outer, %bb.n
   %.sroa.5.0.ph = phi ptr [ %i.aa, %bb.n ], [ %.sroa.5.0.ph.ph, %.outer.outer ]
-  %i.w = phi i1 [ false, %bb.n ], [ %.ph, %.outer.outer ] ; 3 uses
+  %.not58 = phi i1 [ true, %bb.n ], [ %.not58.ph, %.outer.outer ] ; 2 uses
+  %i.w = phi i1 [ false, %bb.n ], [ %.ph, %.outer.outer ]
   %.sroa.512.0.ph = phi i64 [ %.sroa.512.7, %bb.n ], [ %.sroa.512.0.ph.ph, %.outer.outer ] ; 5 uses
   %.sroa.010.0.ph = phi i64 [ %.sroa.010.7, %bb.n ], [ %.sroa.010.0.ph.ph, %.outer.outer ] ; 5 uses
   br label %bb.b
@@ -314,10 +316,10 @@ bb.m:                                             ; preds = %bb.k, %.critedge
 bb.n:                                             ; preds = %.critedge, %bb.k, %bb.m
   %.sroa.512.7 = phi i64 [ %.sroa.512.6, %bb.m ], [ %.sroa.512.3, %.critedge ], [ %i.aj, %bb.k ] ; 2 uses
   %.sroa.010.7 = phi i64 [ %.sroa.010.6, %bb.m ], [ %.sroa.010.3, %.critedge ], [ 1, %bb.k ] ; 2 uses
-  br i1 %i.w, label %.thread102, label %.outer
+  br i1 %.not58, label %.outer, label %.thread102
 
 bb.o:                                             ; preds = %bb.m
-  br i1 %i.w, label %.thread102, label %bb.p
+  br i1 %.not58, label %bb.p, label %.thread102
 
 bb.p:                                             ; preds = %bb.o
   %i.ay = icmp ne i64 %.sroa.010.6, 1
@@ -720,8 +722,8 @@ bb.d:                                             ; preds = %.lr.ph.i.i
   br i1 %i.ad, label %bb.i, label %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h720d9982d80b5061E.exit.thread.i.i", !prof !51
 
 ._crit_edge.i.i:                                  ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h720d9982d80b5061E.exit.thread.i.i", %bb.c
-  %.not12.i.i = icmp eq i64 %.sroa.01.0.i.i, 1
-  br i1 %.not12.i.i, label %.thread.i.i, label %bb.e, !prof !16
+  %.not12.i.i = icmp eq i64 %.sroa.01.0.i.i, 0
+  br i1 %.not12.i.i, label %bb.e, label %.thread.i.i, !prof !18
 
 "_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h720d9982d80b5061E.exit.thread.i.i": ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$24find_or_find_insert_slot28_$u7b$$u7b$closure$u7d$$u7d$17h720d9982d80b5061E.exit.i.i", %bb.d
   %i.ae = add i16 %.sroa.05.038.i.i, -1

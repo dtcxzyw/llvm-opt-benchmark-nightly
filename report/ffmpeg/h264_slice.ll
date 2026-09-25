@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.d
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 31728 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 31064
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 31068
-  %wide.trip.count125 = zext nneg i32 %i.d to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.d, i32 1)
+  %wide.trip.count125 = zext nneg i32 %smax to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph115, %._crit_edge

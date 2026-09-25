@@ -205,7 +205,7 @@ _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit.prol.loopexit: ;
   br i1 %i.bb, label %._crit_edge370, label %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit
 
 .lr.ph214:                                        ; preds = %bb.b
-  %i.bc = srem i32 %4, 2                          ; 2 uses
+  %i.bc = srem i32 %4, 2                          ; 3 uses
   %i.bd = sub i32 0, %1                           ; 52 uses
   %i.be = add i32 %1, -1                          ; 30 uses
   %.not.i128 = icmp slt i32 %i.be, %i.bd
@@ -304,7 +304,7 @@ bb.d:                                             ; preds = %.lr.ph214
   %i.cp = fmul float %i.vv, %i.co                 ; 3 uses
   %.not.i134 = icmp slt i32 %i.be, %i.bd
   %i.cq = icmp eq ptr %5, null                    ; 9 uses
-  %i.cr = icmp eq i32 %i.bc, 1                    ; 9 uses
+  %i.cr = icmp eq i32 %i.bc, 1                    ; 8 uses
   %i.cs = fdiv float 1.000000e+00, %i.co          ; 5 uses
   br i1 %.not.i134, label %bb.as, label %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139, !prof !11
 
@@ -707,6 +707,7 @@ _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit145: ; preds = %_
   br i1 %i.sk, label %.loopexit, label %.outer.preheader
 
 .outer.preheader:                                 ; preds = %.split293.us
+  %.not = icmp eq i32 %i.bc, 0
   %scevgep544 = getelementptr i8, ptr %3, i64 %0
   %i.sl = shl i64 %0, 2
   %scevgep545 = getelementptr i8, ptr %2, i64 %i.sl
@@ -872,7 +873,7 @@ bb.bf:                                            ; preds = %_RNvXs1d_NtNtCsf3Ta
   br label %bb.bh
 
 bb.bg:                                            ; preds = %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit151
-  br i1 %i.cr, label %bb.bi, label %bb.bh
+  br i1 %.not, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bi, %bb.bf
   %.sroa.093.0 = phi float [ %i.vf, %bb.bi ], [ %i.ux, %bb.bf ], [ 1.000000e+00, %bb.bg ] ; 2 uses
@@ -1275,7 +1276,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.q
   %.sroa.019.1 = phi i1 [ true, %bb.q ], [ %.sroa.019.086, %bb.o ] ; 2 uses
-  %4 = sitofp i32 %.sroa.0.0.i49 to float
+  %4 = uitofp nneg i32 %.sroa.0.0.i49 to float
   %i.fb = fmul float %i.dd, %4
   %i.fc = fadd float %.sroa.015.088, %i.fb        ; 2 uses
   %i.fd = mul i32 %.sroa.0.0.i49, %.sroa.0.0.i49

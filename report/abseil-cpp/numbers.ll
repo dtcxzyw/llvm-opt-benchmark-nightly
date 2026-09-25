@@ -202,9 +202,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %2 = bitcast float %0 to i32
-  %3 = icmp slt i32 %2, 0
-  br i1 %3, label %bb.e, label %bb.f
+  %.not = tail call i1 @llvm.is.fpclass.f32(float %0, /* (pzero) */ i32 64)
+  br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %1, ptr noundef nonnull align 1 dereferenceable(3) @.str.16, i64 3, i1 false) #21
@@ -607,9 +606,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %2 = bitcast double %0 to i64
-  %3 = icmp slt i64 %2, 0
-  br i1 %3, label %bb.e, label %bb.f
+  %.not201 = tail call i1 @llvm.is.fpclass.f64(double %0, /* (pzero) */ i32 64)
+  br i1 %.not201, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -1012,7 +1010,13 @@ declare i64 @llvm.cttz.i64(i64, i1 immarg) #16
 declare i32 @llvm.cttz.i32(i32, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f32(float, i32 immarg) #17
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare double @frexp(double noundef, ptr noundef captures(none)) local_unnamed_addr #18

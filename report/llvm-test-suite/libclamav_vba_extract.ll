@@ -205,8 +205,9 @@ bb.cq:                                            ; preds = %bb.co
   %i.jz = getelementptr inbounds nuw [8 x i8], ptr %i.jy, i64 %indvars.iv.next251
   %i.ka = load ptr, ptr %i.jz, align 8, !tbaa !22
   call void @free(ptr noundef %i.ka) #11
-  %2 = icmp samesign ugt i64 %indvars.iv250, 1
-  br i1 %2, label %.lr.ph215, label %._crit_edge, !llvm.loop !29
+  %2 = trunc nuw i64 %indvars.iv250 to i32
+  %3 = icmp sgt i32 %2, 1
+  br i1 %3, label %.lr.ph215, label %._crit_edge, !llvm.loop !29
 
 ._crit_edge:                                      ; preds = %.lr.ph215, %.preheader
   %i.kb = load ptr, ptr %i.ge, align 8, !tbaa !18

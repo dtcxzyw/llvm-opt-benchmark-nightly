@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %.tail, %bb.w
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.p, %bb.m, %bb.v, %bb.s, %bb.o
   %.2138 = phi i32 [ %i.en, %bb.v ], [ %i.cq, %bb.o ], [ -4, %bb.m ], [ %i.ee, %bb.s ], [ %i.cm, %bb.p ], [ %.2138.ph, %.loopexit.loopexit ] ; 3 uses
   %.0134 = phi i32 [ %i.en, %bb.v ], [ %i.cq, %bb.o ], [ -4, %bb.m ], [ %i.ee, %bb.s ], [ 0, %bb.p ], [ %.0134.ph, %.loopexit.loopexit ]
-  %.1 = phi i32 [ %i.ek, %bb.v ], [ 0, %bb.o ], [ 0, %bb.m ], [ %i.eb, %bb.s ], [ 0, %bb.p ], [ %indvars.le, %.loopexit.loopexit ] ; 4 uses
+  %.1 = phi i32 [ %i.ek, %bb.v ], [ 0, %bb.o ], [ 0, %bb.m ], [ %i.eb, %bb.s ], [ 0, %bb.p ], [ %indvars.le, %.loopexit.loopexit ] ; 3 uses
   call void @qemu_coroutine_yield() #23
   %i.ey = icmp sgt i32 %.2138, -1
   %i.ez = icmp ne i32 %.1, 0                      ; 2 uses
@@ -239,12 +239,13 @@ bb.z:                                             ; preds = %bb.y
   %i.fm = trunc i64 %i.fk to i32
   %i.fn = call ptr @g_memdup(ptr noundef %i.fl, i32 noundef %i.fm) #25
   store ptr %i.fn, ptr %i.bz, align 8
-  %6 = icmp sgt i32 %.1, 0
-  br i1 %6, label %.lr.ph247, label %same_stat_id.exit178.thread._crit_edge.thread
+  %.not259 = icmp eq i32 %.1, 0
+  br i1 %.not259, label %same_stat_id.exit178.thread._crit_edge.thread, label %.lr.ph247
 
 .lr.ph247:                                        ; preds = %bb.z
   %i.fo = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %wide.trip.count = zext nneg i32 %.1 to i64
+  %smax = call i32 @llvm.smax.i32(i32 %.1, i32 1) ; 2 uses
+  %wide.trip.count = zext nneg i32 %smax to i64
   %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted = load ptr, ptr %i.bz, align 8
   %.promoted335 = load i64, ptr %2, align 1
@@ -349,7 +350,7 @@ same_stat_id.exit178.thread._crit_edge.loopexit:  ; preds = %bb.ac
   br label %same_stat_id.exit178.thread._crit_edge
 
 same_stat_id.exit178.thread._crit_edge:           ; preds = %same_stat_id.exit178.thread._crit_edge.loopexit, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313
-  %.0.lcssa = phi i32 [ %i.he, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %.1, %same_stat_id.exit178.thread._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ %i.he, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %smax, %same_stat_id.exit178.thread._crit_edge.loopexit ] ; 3 uses
   %.5 = phi i32 [ %i.gq, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %.4, %same_stat_id.exit178.thread._crit_edge.loopexit ]
   %.3 = phi i1 [ true, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %i.hf, %same_stat_id.exit178.thread._crit_edge.loopexit ]
   br i1 %.3, label %bb.ad, label %bb.ae

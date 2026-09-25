@@ -205,7 +205,9 @@ define void @transpose64Simple(ptr nofree noundef readonly captures(none) %0, pt
 .preheader:                                       ; preds = %.preheader.preheader, %bb.f
   %indvars.iv20 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next21, %bb.f ] ; 3 uses
   %i.a = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv20 ; 2 uses
-  %2 = lshr exact i64 -9223372036854775808, %indvars.iv20 ; 2 uses
+  %2 = and i64 %indvars.iv20, 4294967295
+  %3 = xor i64 %2, 63
+  %4 = shl nuw i64 1, %3                          ; 2 uses
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.e, %.preheader
@@ -219,7 +221,7 @@ bb.a:                                             ; preds = %bb.e, %.preheader
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !50
-  %i.g = or i64 %i.f, %2
+  %i.g = or i64 %i.f, %4
   store i64 %i.g, ptr %i.e, align 8, !tbaa !50
   br label %bb.c
 
@@ -234,7 +236,7 @@ bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !50
-  %i.n = or i64 %i.m, %2
+  %i.n = or i64 %i.m, %4
   store i64 %i.n, ptr %i.l, align 8, !tbaa !50
   br label %bb.e
 
@@ -354,7 +356,8 @@ bb.b:                                             ; preds = %Abc_Clock.exit, %tr
 .preheader.i:                                     ; preds = %bb.h, %bb.b
   %indvars.iv20.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next21.i, %bb.h ] ; 3 uses
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv20.i
-  %4 = lshr exact i64 -9223372036854775808, %indvars.iv20.i ; 2 uses
+  %4 = xor i64 %indvars.iv20.i, 63
+  %5 = shl nuw i64 1, %4                          ; 2 uses
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !50 ; 2 uses
   br label %bb.c
 
@@ -368,7 +371,7 @@ bb.c:                                             ; preds = %bb.g, %.preheader.i
 bb.d:                                             ; preds = %bb.c
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i ; 2 uses
   %i.as = load i64, ptr %i.ar, align 16, !tbaa !50
-  %i.at = or i64 %i.as, %4
+  %i.at = or i64 %i.as, %5
   store i64 %i.at, ptr %i.ar, align 16, !tbaa !50
   br label %bb.e
 
@@ -382,7 +385,7 @@ bb.f:                                             ; preds = %bb.e
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 2 uses
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !50
-  %i.az = or i64 %i.ay, %4
+  %i.az = or i64 %i.ay, %5
   store i64 %i.az, ptr %i.ax, align 8, !tbaa !50
   br label %bb.g
 

@@ -87,15 +87,16 @@ bb.a:
   br label %.preheader171.us.us
 
 .preheader171.us.us:                              ; preds = %._crit_edge.us.us, %.preheader172.us
-  %.0145200.us.us = phi i32 [ 0, %.preheader172.us ], [ %i.ay, %._crit_edge.us.us ] ; 4 uses
+  %.0145200.us.us = phi i32 [ 0, %.preheader172.us ], [ %i.ay, %._crit_edge.us.us ] ; 5 uses
   %.1151198.us.us = phi ptr [ %.0150217.us, %.preheader172.us ], [ %.us-phi177.us.us.2, %._crit_edge.us.us ]
   %.1155197.us.us = phi ptr [ %.0154216.us, %.preheader172.us ], [ %.us-phi.us.us.2, %._crit_edge.us.us ]
   %reass.add.us.us = add i32 %.0145200.us.us, %i.aw
   %reass.mul.us.us = mul i32 %reass.add.us.us, %0
-  %7 = add i32 %.0145200.us.us, -1
+  %7 = icmp slt i32 %.0145200.us.us, 1
+  %.not = icmp sgt i32 %.0145200.us.us, %1
   %i.ax = icmp slt i32 %.0145200.us.us, %1
   %i.ay = add i32 %.0145200.us.us, 1              ; 3 uses
-  %brmerge.not = icmp ult i32 %7, %1
+  %brmerge = or i1 %7, %.not
   %brmerge264.not = icmp ult i32 %i.ay, %1
   br label %bb.b
 
@@ -136,7 +137,7 @@ bb.b:                                             ; preds = %bb.ad, %.preheader1
   %reass.add168.us.us = add nsw i32 %i.bn, -1
   %reass.mul169.us.us = mul i32 %reass.add168.us.us, %0 ; 2 uses
   %i.bo = add i32 %reass.mul169.us.us, %i.ba      ; 4 uses
-  br i1 %brmerge.not, label %.preheader.split.us.split.us209.us.preheader, label %.preheader.split.us.us.us.1
+  br i1 %brmerge, label %.preheader.split.us.us.us.1, label %.preheader.split.us.split.us209.us.preheader
 
 .preheader.split.us.split.us209.us.preheader:     ; preds = %.preheader170.us.us
   %i.bp = add i32 %i.bo, -1                       ; 3 uses

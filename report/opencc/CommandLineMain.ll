@@ -205,10 +205,9 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   tail call void @_ZN9rapidjson12PrettyWriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE12PrettyPrefixENS_4TypeE(ptr noundef nonnull align 8 dereferenceable(72) %0, i32 noundef 6)
-  %2 = bitcast double %1 to i64                   ; 2 uses
-  %3 = and i64 %2, 9218868437227405312
-  %4 = icmp ne i64 %3, 9218868437227405312        ; 2 uses
-  br i1 %4, label %bb.b, label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
+  %2 = tail call double @llvm.fabs.f64(double %1)
+  %3 = fcmp one double %2, +inf                   ; 2 uses
+  br i1 %3, label %bb.b, label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %0, align 8, !tbaa !121    ; 3 uses
@@ -237,8 +236,8 @@ _ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE4PushEm.exit.i
   br i1 %i.p, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %_ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE4PushEm.exit.i
-  %5 = icmp slt i64 %2, 0
-  br i1 %5, label %bb.e, label %bb.f
+  %.not.i.i = tail call i1 @llvm.is.fpclass.f64(double %1, /* (pzero) */ i32 64)
+  br i1 %.not.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 1
@@ -292,7 +291,7 @@ _ZN9rapidjson8internal4dtoaEdPci.exit.i:          ; preds = %bb.i, %bb.f
   br label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit
 
 _ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteDoubleEd.exit: ; preds = %bb.a, %_ZN9rapidjson8internal4dtoaEdPci.exit.i
-  ret i1 %4
+  ret i1 %3
 }
 
 declare noundef ptr @_ZN6opencc5tools12OpenFileUtf8ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef) local_unnamed_addr #11
@@ -695,8 +694,12 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   store i64 1, ptr %i.cy, align 8, !tbaa !45, !alias.scope !597
   %i.cz = getelementptr inbounds nuw i8, ptr %11, i64 17
   store i8 0, ptr %i.cz, align 1, !tbaa !47, !alias.scope !597
-  %i.da = icmp eq i64 %i.bg, 1
-  br i1 %i.da, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.thread368
+  %i.da = icmp eq i64 %i.bg, 0
+  br i1 %i.da, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.thread370, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.thread370: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #34
+  br label %._crit_edge.i.i.i.sink.split
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
   %i.db = load ptr, ptr %i.f, align 8, !tbaa !46
@@ -709,10 +712,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.thread366: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #34
   br label %bb.q
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.thread368: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #34
-  br label %._crit_edge.i.i.i.sink.split
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #34
@@ -933,7 +932,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #34
   br label %.sink.split375
 
-._crit_edge.i.i.i.sink.split:                     ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.thread368
+._crit_edge.i.i.i.sink.split:                     ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.thread370
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #34
   br label %._crit_edge.i.i.i
 
@@ -1335,6 +1334,12 @@ declare i32 @llvm.smax.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fabs.f64(double) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #27
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,8 +204,10 @@ bb.ak:                                            ; preds = %.noexc69
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 %i.ct
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.cx, ptr noundef nonnull align 1 dereferenceable(5) @93, i64 5, i1 false), !noalias !617
   %.pre.i.i.i.i68 = load i64, ptr %i.cs, align 8, !alias.scope !619, !noalias !617 ; 2 uses
-  %i.cy = add nsw i64 %.pre.i.i.i.i68, 5          ; 2 uses
+  %i.cy = add i64 %.pre.i.i.i.i68, 5              ; 3 uses
   store i64 %i.cy, ptr %i.cs, align 8, !alias.scope !619, !noalias !617
+  %5 = icmp sgt i64 %i.cy, -1
+  call void @llvm.assume(i1 %5)
   invoke void @_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE7reserveCslkzCjlEuW1f_5xtask(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.cr, i64 noundef 1)
           to label %bb.al unwind label %bb.ac
 

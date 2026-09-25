@@ -205,9 +205,10 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
 
 _ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.preheader: ; preds = %bb.o, %_ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.preheader.unr-lcssa
   %.lcssa152 = phi i64 [ %i.le, %_ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.preheader.unr-lcssa ], [ %i.ll, %bb.o ] ; 2 uses
+  %4 = xor i64 %i.ce, 131071
   %xtraiter160 = and i64 %i.cn, 3                 ; 3 uses
-  %4 = icmp ugt i64 %i.ce, 131068
-  br i1 %4, label %_ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.epil.preheader, label %_ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.preheader.new
+  %5 = icmp ult i64 %4, 3
+  br i1 %5, label %_ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.epil.preheader, label %_ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.preheader.new
 
 _ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.preheader.new: ; preds = %_ZN11duckdb_zstdL24ZSTD_rollingHash_computeEPKvm.exit62.i.preheader
   %unroll_iter165 = and i64 %i.cn, 262140

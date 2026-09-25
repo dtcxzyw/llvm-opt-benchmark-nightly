@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = zext nneg i32 %2 to i64                  ; 3 uses
+  %i.e = zext nneg i32 %2 to i64
   %.idx = shl nuw nsw i64 %i.e, 2                 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.093, i64 %.idx ; 3 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !11   ; 4 uses
@@ -266,12 +266,13 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not141, label %.preheader, label %.lr.ph116.preheader
 
 .lr.ph116.preheader:                              ; preds = %.preheader111
-  %xtraiter = and i64 %i.e, 7                     ; 3 uses
+  %wide.trip.count131 = zext nneg i32 %2 to i64   ; 2 uses
+  %xtraiter = and i64 %wide.trip.count131, 7      ; 3 uses
   %i.t = icmp ult i32 %2, 8
   br i1 %i.t, label %.lr.ph116.epil.preheader, label %.lr.ph116.preheader.new
 
 .lr.ph116.preheader.new:                          ; preds = %.lr.ph116.preheader
-  %unroll_iter = and i64 %i.e, 2147483640
+  %unroll_iter = and i64 %wide.trip.count131, 2147483640
   br label %.lr.ph116
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %.lr.ph116
@@ -286,9 +287,9 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph116.epil
 
 .lr.ph116.epil:                                   ; preds = %.lr.ph116.epil, %.lr.ph116.epil.preheader
-  %indvars.iv127.epil = phi i64 [ %indvars.iv.next128.epil, %.lr.ph116.epil ], [ %indvars.iv127.epil.init, %.lr.ph116.epil.preheader ] ; 2 uses
-  %.188115.epil = phi ptr [ %i.x, %.lr.ph116.epil ], [ %.188115.epil.init, %.lr.ph116.epil.preheader ]
-  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph116.epil ], [ 0, %.lr.ph116.epil.preheader ]
+  %indvars.iv127.epil = phi i64 [ %indvars.iv127.epil.init, %.lr.ph116.epil.preheader ], [ %indvars.iv.next128.epil, %.lr.ph116.epil ] ; 2 uses
+  %.188115.epil = phi ptr [ %.188115.epil.init, %.lr.ph116.epil.preheader ], [ %i.x, %.lr.ph116.epil ]
+  %epil.iter = phi i64 [ 0, %.lr.ph116.epil.preheader ], [ %epil.iter.next, %.lr.ph116.epil ]
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %.093, i64 %indvars.iv127.epil
   %i.v = load i32, ptr %i.u, align 4, !tbaa !11
   %i.w = sext i32 %i.v to i64

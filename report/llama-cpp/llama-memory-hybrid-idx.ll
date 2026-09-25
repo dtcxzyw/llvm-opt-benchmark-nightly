@@ -205,9 +205,10 @@ _ZSt4fillIPiiEvT_S1_RKT0_.exit:                   ; preds = %.lr.ph.i.i.i.prehea
   %i.cg = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.ch = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 4 uses
-  %18 = icmp sgt i64 %i.z, 0
+  %.not1009 = icmp eq i64 %i.z, 0
   %i.cj = getelementptr inbounds nuw i8, ptr %5, i64 40
   %.idx = shl nuw nsw i64 %i.w, 3
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.z, i64 1)
   br label %bb.af
 
 ._crit_edge1000.loopexit:                         ; preds = %._crit_edge985
@@ -610,7 +611,7 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw
   br i1 %exitcond1238.not, label %._crit_edge872, label %bb.cw, !llvm.loop !284
 
 .preheader:                                       ; preds = %.thread440, %._crit_edge872
-  br i1 %18, label %.lr.ph984, label %._crit_edge985
+  br i1 %.not1009, label %._crit_edge985, label %.lr.ph984
 
 .lr.ph984:                                        ; preds = %.preheader
   %i.tu = load ptr, ptr %i.bp, align 8, !tbaa !297
@@ -950,7 +951,7 @@ bb.eb:                                            ; preds = %bb.dx, %bb.dy, %bb.
 
 .loopexit:                                        ; preds = %bb.eb, %bb.dt, %bb.ds, %._crit_edge935, %bb.dr
   %i.zb = add nuw nsw i64 %.0201983, 1            ; 2 uses
-  %exitcond1244.not = icmp eq i64 %i.zb, %i.z
+  %exitcond1244.not = icmp eq i64 %i.zb, %smax
   br i1 %exitcond1244.not, label %._crit_edge985, label %bb.df, !llvm.loop !290
 
 bb.ec:                                            ; preds = %.loopexit451, %.loopexit.split-lp452, %.loopexit450, %.loopexit.split-lp, %.loopexit473, %.loopexit.split-lp474, %.loopexit461, %.loopexit.split-lp462, %.loopexit466, %.loopexit.split-lp467, %bb.cv, %bb.ea, %bb.do
@@ -1352,6 +1353,9 @@ declare i64 @llvm.umin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #19
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

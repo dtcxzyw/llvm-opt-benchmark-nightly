@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c, %bb.d
   %.2105.in = phi i64 [ %indvars.iv, %bb.c ], [ %indvars.iv.next, %bb.d ]
   %.2105 = trunc i64 %.2105.in to i32             ; 5 uses
-  %i.ad = call i32 @llvm.smax.i32(i32 %.2105, i32 1)
+  %i.ad = call i32 @llvm.umax.i32(i32 %.2105, i32 1)
   %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
   %i.af = call noalias ptr @calloc(i64 noundef range(i64 -844424929738752, 844424930131969) %i.ae, i64 noundef 8) #20 ; 16 uses
   %i.ag = icmp eq ptr %i.af, null
@@ -219,7 +219,7 @@ bb.f:                                             ; preds = %bb.e
 
 gv_calloc.exit120:                                ; preds = %bb.e
   %i.ak = add i32 %.2105, -1                      ; 5 uses
-  %3 = icmp sgt i32 %.2105, 1
+  %3 = icmp samesign ugt i32 %.2105, 1
   br i1 %3, label %.lr.ph141.preheader, label %._crit_edge145
 
 .lr.ph141.preheader:                              ; preds = %gv_calloc.exit120
@@ -233,7 +233,7 @@ gv_calloc.exit120:                                ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph141.preheader199, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph141.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483646   ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 4294967294   ; 3 uses
   %vector.recur.init = insertelement <2 x double> poison, double %.sroa.5.0.copyload.pre, i64 1
   %vector.recur.init192 = insertelement <2 x double> poison, double %.sroa.4.0.copyload.pre, i64 1
   %vector.recur.init194 = insertelement <2 x double> poison, double %.sroa.0.0.copyload.pre, i64 1
@@ -293,7 +293,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph144.preheader:                              ; preds = %.lr.ph141, %middle.block
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %i.br = add nsw i32 %.2105, -2
+  %i.br = add i32 %.2105, -2
   %i.bs = icmp ult i32 %i.br, 3
   br i1 %i.bs, label %.lr.ph144.epil.preheader, label %.lr.ph144.preheader.new
 
@@ -548,6 +548,9 @@ declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16

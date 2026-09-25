@@ -204,8 +204,8 @@ _ZN7rocksdb9MutexLockD2Ev.exit93:                 ; preds = %_ZNSt13unordered_ma
   br i1 %i.ft, label %bb.at, label %_ZN7rocksdb6StatusD2Ev.exit138
 
 bb.at:                                            ; preds = %_ZN7rocksdb9MutexLockD2Ev.exit93
-  %trunc = trunc nuw i32 %2 to i1
-  br i1 %trunc, label %bb.au, label %bb.bc
+  %cond = icmp eq i32 %2, 0
+  br i1 %cond, label %bb.bc, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #23
@@ -334,7 +334,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %i.gf, label %.thread160, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.at, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108
-  %.sroa.35193.2 = phi ptr [ %i.ge, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ], [ null, %bb.at ] ; 4 uses
+  %.sroa.35193.2 = phi ptr [ null, %bb.at ], [ %i.ge, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #23
   %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 392
   %i.hl = load ptr, ptr %i.hk, align 8, !tbaa !74, !nonnull !75, !align !76
@@ -347,7 +347,7 @@ bb.bd:                                            ; preds = %bb.bc
           to label %bb.be unwind label %bb.bi
 
 bb.be:                                            ; preds = %bb.bd
-  %i.hm = load i8, ptr %14, align 8, !tbaa !93    ; 2 uses
+  %i.hm = load i8, ptr %14, align 8, !tbaa !93    ; 3 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %14, i64 1
   %i.ho = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.hp = load <4 x i8>, ptr %i.hn, align 1, !tbaa !27 ; 2 uses
@@ -374,7 +374,7 @@ _ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_E
 
 _ZN7rocksdb6StatusaSEOS0_.exit112.thread:         ; preds = %bb.be, %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i114, %_ZN7rocksdb6StatusaSEOS0_.exit112
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
-  %i.hu = icmp eq i8 %i.hm, 0                     ; 2 uses
+  %i.hu = icmp eq i8 %i.hm, 0
   br i1 %i.hu, label %.critedge60, label %bb.bf
 
 bb.bf:                                            ; preds = %_ZN7rocksdb6StatusaSEOS0_.exit112.thread
@@ -469,12 +469,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126: ; preds = %.critedge60, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i125
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #23
-  br i1 %i.hu, label %.thread160, label %_ZN7rocksdb9MutexLockD2Ev.exit130
+  %17 = icmp eq i8 %i.hm, 0
+  br i1 %17, label %.thread160, label %_ZN7rocksdb9MutexLockD2Ev.exit130
 
 .thread160:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126
-  %.sroa.35193.5 = phi ptr [ %i.ge, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ], [ %i.ht, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ] ; 4 uses
-  %.sroa.30.0 = phi i8 [ %i.gc, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ], [ %i.hr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ] ; 2 uses
-  %i.ix = phi <4 x i8> [ %i.ga, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ], [ %i.hp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ] ; 2 uses
+  %.sroa.29.0250 = phi i8 [ %i.hr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ], [ %i.gc, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ] ; 2 uses
+  %.sroa.34190.5246 = phi ptr [ %i.ht, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ], [ %i.ge, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ] ; 4 uses
+  %i.ix = phi <4 x i8> [ %i.hp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ], [ %i.ga, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i108 ] ; 2 uses
   %i.iy = load i64, ptr %4, align 8, !tbaa !28
   %.not = icmp eq i64 %i.iy, 0
   br i1 %.not, label %_ZN7rocksdb9MutexLockD2Ev.exit130, label %bb.bm
@@ -524,17 +525,17 @@ bb.bq:                                            ; preds = %bb.bp
   unreachable
 
 _ZN7rocksdb9MutexLockD2Ev.exit130:                ; preds = %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit, %.thread160, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126
-  %.sroa.35193.6 = phi ptr [ %.sroa.35193.5, %.thread160 ], [ %.sroa.35193.5, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ %i.ht, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
-  %.sroa.30.1 = phi i8 [ %.sroa.30.0, %.thread160 ], [ %.sroa.30.0, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ %i.hr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
-  %17 = phi i8 [ 0, %.thread160 ], [ 0, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ %i.hm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
-  %i.ji = phi <4 x i8> [ %i.ix, %.thread160 ], [ %i.ix, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ %i.hp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
+  %.sroa.29.0249 = phi i8 [ %.sroa.29.0250, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ %.sroa.29.0250, %.thread160 ], [ %i.hr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
+  %.sroa.30.1 = phi i8 [ 0, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ 0, %.thread160 ], [ %i.hm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
+  %.sroa.34190.5245 = phi ptr [ %.sroa.34190.5246, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ %.sroa.34190.5246, %.thread160 ], [ %i.ht, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
+  %i.ji = phi <4 x i8> [ %i.ix, %_ZNSt13unordered_mapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE6insertEOS6_.exit ], [ %i.ix, %.thread160 ], [ %i.hp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i126 ]
   %i.jj = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %17, ptr %0, align 8, !tbaa !91
+  store i8 %.sroa.30.1, ptr %0, align 8, !tbaa !91
   %i.jk = getelementptr inbounds nuw i8, ptr %0, i64 1
   store <4 x i8> %i.ji, ptr %i.jk, align 1, !tbaa !27
   %i.jl = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %.sroa.30.1, ptr %i.jl, align 1, !tbaa !94
-  store ptr %.sroa.35193.6, ptr %i.jj, align 8, !tbaa !92
+  store i8 %.sroa.29.0249, ptr %i.jl, align 1, !tbaa !94
+  store ptr %.sroa.34190.5245, ptr %i.jj, align 8, !tbaa !92
   br label %_ZN7rocksdb6StatusD2Ev.exit138
 
 _ZN7rocksdb6StatusC2EOS0_.exit135:                ; preds = %bb.bk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i119
@@ -547,7 +548,7 @@ _ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_E
   br label %_ZN7rocksdb6StatusD2Ev.exit138
 
 _ZN7rocksdb9MutexLockD2Ev.exit131:                ; preds = %bb.bo, %bb.bp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106
-  %.sroa.35193.8 = phi ptr [ %.sroa.35193.5, %bb.bp ], [ %.sroa.35193.5, %bb.bo ], [ %.sroa.35193.4, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124 ], [ %.sroa.35193.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106 ] ; 2 uses
+  %.sroa.35193.8 = phi ptr [ %.sroa.34190.5246, %bb.bp ], [ %.sroa.34190.5246, %bb.bo ], [ %.sroa.35193.4, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124 ], [ %.sroa.35193.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106 ] ; 2 uses
   %.pn49.pn = phi { ptr, i32 } [ %i.jf, %bb.bp ], [ %i.je, %bb.bo ], [ %.pn46.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124 ], [ %.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106 ] ; 2 uses
   %.not.i.i139 = icmp eq ptr %.sroa.35193.8, null
   br i1 %.not.i.i139, label %_ZN7rocksdb6StatusD2Ev.exit141, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i140

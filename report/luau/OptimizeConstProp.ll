@@ -205,8 +205,8 @@ bb.ab:                                            ; preds = %.noexc77.i.i
   br label %_ZSt18uninitialized_moveIPjS0_ET0_T_S2_S1_.exit.i.i.i.i
 
 bb.ac:                                            ; preds = %.noexc77.i.i
-  %i.dh = icmp eq i32 %i.de, 1
-  br i1 %i.dh, label %bb.ad, label %_ZSt18uninitialized_moveIPjS0_ET0_T_S2_S1_.exit.i.i.i.i
+  %i.dh = icmp eq i32 %i.de, 0
+  br i1 %i.dh, label %_ZSt18uninitialized_moveIPjS0_ET0_T_S2_S1_.exit.i.i.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   %i.di = load i32, ptr %i.dd, align 4, !tbaa !167
@@ -394,8 +394,8 @@ bb.as:                                            ; preds = %.noexc90.i.i
   br label %_ZSt18uninitialized_moveIPjS0_ET0_T_S2_S1_.exit.i.i84.i.i
 
 bb.at:                                            ; preds = %.noexc90.i.i
-  %i.fo = icmp eq i32 %i.fl, 1
-  br i1 %i.fo, label %bb.au, label %_ZSt18uninitialized_moveIPjS0_ET0_T_S2_S1_.exit.i.i84.i.i
+  %i.fo = icmp eq i32 %i.fl, 0
+  br i1 %i.fo, label %_ZSt18uninitialized_moveIPjS0_ET0_T_S2_S1_.exit.i.i84.i.i, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %i.fp = load i32, ptr %i.fk, align 4, !tbaa !167
@@ -798,11 +798,10 @@ bb.abx:                                           ; preds = %bb.abw
   br i1 %i.cgh, label %bb.aby, label %bb.acb
 
 bb.aby:                                           ; preds = %bb.abx
-  %74 = bitcast double %i.cgg to i64
-  %75 = icmp slt i64 %74, 0
+  %74 = tail call i1 @llvm.is.fpclass.f64(double %i.cgg, /* (nzero) */ i32 32)
   %i.cgi = load i8, ptr %4, align 8, !tbaa !130
   %i.cgj = icmp ne i8 %i.cgi, 36
-  %i.cgk = xor i1 %75, %i.cgj
+  %i.cgk = xor i1 %74, %i.cgj
   br i1 %i.cgk, label %bb.abz, label %bb.acb
 
 bb.abz:                                           ; preds = %bb.aby
@@ -1205,17 +1204,16 @@ bb.agi:                                           ; preds = %_ZN4Luau7CodeGen5ge
 
 bb.agj:                                           ; preds = %bb.agi
   %i.cqa = getelementptr inbounds nuw i8, ptr %i.cpy, i64 8
-  %i.cqb = load double, ptr %i.cqa, align 8, !tbaa !296 ; 2 uses
-  %i.cqc = fptrunc double %i.cqb to float
+  %i.cqb = load double, ptr %i.cqa, align 8, !tbaa !296
+  %i.cqc = fptrunc double %i.cqb to float         ; 2 uses
   %i.cqd = fcmp oeq float %i.cqc, 0.000000e+00
   br i1 %i.cqd, label %bb.agk, label %bb.agn
 
 bb.agk:                                           ; preds = %bb.agj
-  %76 = bitcast double %i.cqb to i64
-  %77 = icmp slt i64 %76, 0
+  %75 = tail call i1 @llvm.is.fpclass.f32(float %i.cqc, /* (nzero) */ i32 32)
   %i.cqe = load i8, ptr %4, align 8, !tbaa !130
   %i.cqf = icmp ne i8 %i.cqe, 52
-  %i.cqg = xor i1 %77, %i.cqf
+  %i.cqg = xor i1 %75, %i.cqf
   br i1 %i.cqg, label %bb.agl, label %bb.agn
 
 bb.agl:                                           ; preds = %bb.agk
@@ -1618,8 +1616,8 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZSt4copyIPKN4Luau7CodeGen4IrOpEPS2_ET0_T_S7_S6_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.j = icmp eq i32 %i.c, 1
-  br i1 %i.j, label %bb.f, label %_ZSt4copyIPKN4Luau7CodeGen4IrOpEPS2_ET0_T_S7_S6_.exit
+  %i.j = icmp eq i32 %i.c, 0
+  br i1 %i.j, label %_ZSt4copyIPKN4Luau7CodeGen4IrOpEPS2_ET0_T_S7_S6_.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.k = load i32, ptr %i.f, align 4, !tbaa !52
@@ -1651,8 +1649,8 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZSt4copyIPKN4Luau7CodeGen4IrOpEPS2_ET0_T_S7_S6_.exit15
 
 bb.i:                                             ; preds = %bb.g
-  %i.u = icmp eq i32 %i.e, 1
-  br i1 %i.u, label %bb.j, label %_ZSt4copyIPKN4Luau7CodeGen4IrOpEPS2_ET0_T_S7_S6_.exit15
+  %i.u = icmp eq i32 %i.e, 0
+  br i1 %i.u, label %_ZSt4copyIPKN4Luau7CodeGen4IrOpEPS2_ET0_T_S7_S6_.exit15, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.v = load i32, ptr %i.f, align 4, !tbaa !52
@@ -2053,6 +2051,12 @@ declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f32(float, i32 immarg) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #20

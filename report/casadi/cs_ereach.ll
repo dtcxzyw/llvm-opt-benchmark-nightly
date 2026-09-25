@@ -81,7 +81,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph79:                                         ; preds = %.lr.ph79.preheader, %.loopexit
   %indvars.iv92 = phi i64 [ %i.v, %.lr.ph79.preheader ], [ %indvars.iv.next93, %.loopexit ] ; 2 uses
-  %.078 = phi i32 [ %i.h, %.lr.ph79.preheader ], [ %.2, %.loopexit ] ; 4 uses
+  %.078 = phi i32 [ %i.h, %.lr.ph79.preheader ], [ %.2, %.loopexit ] ; 3 uses
   %i.ah = getelementptr inbounds [4 x i8], ptr %i.l, i64 %indvars.iv92
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !22 ; 3 uses
   %i.aj = icmp sgt i32 %i.ai, %1
@@ -94,14 +94,14 @@ bb.c:                                             ; preds = %bb.b
   %i.an = icmp sgt i32 %i.am, -1
   br i1 %i.an, label %.lr.ph, label %.loopexit
 
-.preheader69:                                     ; preds = %.lr.ph
-  %5 = trunc nuw i64 %indvars.iv.next to i32
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph75.preheader.a, label %.loopexit
-
-.lr.ph75.preheader.a:                             ; preds = %.preheader69
+.lr.ph75.preheader.a:                             ; preds = %.lr.ph
+  %5 = trunc i64 %indvars.iv.next to i32          ; 2 uses
   %i.ao = sext i32 %.078 to i64                   ; 5 uses
-  %min.iters.check = icmp ult i64 %indvars.iv, 7
+  %6 = tail call i32 @llvm.smin.i32(i32 %5, i32 1)
+  %7 = sub i32 %5, %6                             ; 2 uses
+  %8 = zext i32 %7 to i64
+  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
+  %min.iters.check = icmp ult i32 %7, 7
   br i1 %min.iters.check, label %.lr.ph75.preheader110, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph75.preheader.a
@@ -111,8 +111,8 @@ vector.memcheck:                                  ; preds = %.lr.ph75.preheader.
   br i1 %diff.check, label %.lr.ph75.preheader110, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %indvars.iv.next, 2147483640   ; 3 uses
-  %7 = and i64 %indvars.iv.next, 7
+  %n.vec = and i64 %9, 8589934584                 ; 4 uses
+  %10 = sub i64 %indvars.iv.next, %n.vec
   %i.aq = sub nsw i64 %i.ao, %n.vec               ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %3, i64 %i.ao
   br label %vector.body
@@ -136,20 +136,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ay, label %middle.block, label %vector.body, !llvm.loop !9
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %indvars.iv.next, %n.vec
+  %cmp.n = icmp eq i64 %9, %n.vec
   br i1 %cmp.n, label %.loopexit.loopexit, label %.lr.ph75.preheader110
 
 .lr.ph75.preheader110:                            ; preds = %vector.memcheck, %.lr.ph75.preheader.a, %middle.block
-  %indvars.iv87.ph.a = phi i64 [ %indvars.iv.next, %vector.memcheck ], [ %indvars.iv.next, %.lr.ph75.preheader.a ], [ %7, %middle.block ]
+  %indvars.iv87.ph.a = phi i64 [ %indvars.iv.next, %vector.memcheck ], [ %indvars.iv.next, %.lr.ph75.preheader.a ], [ %10, %middle.block ]
   %indvars.iv85.ph = phi i64 [ %i.ao, %vector.memcheck ], [ %i.ao, %.lr.ph75.preheader.a ], [ %i.aq, %middle.block ]
   br label %.lr.ph75
 
 .lr.ph:                                           ; preds = %.preheader70, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %.preheader70 ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %.preheader70 ] ; 4 uses
   %i.az = phi ptr [ %i.bh, %.lr.ph ], [ %i.al, %.preheader70 ] ; 2 uses
   %i.ba = phi i64 [ %i.bg, %.lr.ph ], [ %i.ak, %.preheader70 ]
   %.06271 = phi i32 [ %i.bf, %.lr.ph ], [ %i.ai, %.preheader70 ]
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 7 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 5 uses
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   store i32 %.06271, ptr %i.bb, align 4, !tbaa !22
   %i.bc = load i32, ptr %i.az, align 4, !tbaa !22
@@ -161,7 +161,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bh = getelementptr inbounds [4 x i8], ptr %4, i64 %i.bg ; 2 uses
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !22
   %i.bj = icmp sgt i32 %i.bi, -1
-  br i1 %i.bj, label %.lr.ph, label %.preheader69, !llvm.loop !10
+  br i1 %i.bj, label %.lr.ph, label %.lr.ph75.preheader.a, !llvm.loop !10
 
 .lr.ph75:                                         ; preds = %.lr.ph75.preheader110, %.lr.ph75
   %indvars.iv87.a = phi i64 [ %indvars.iv.next88.a, %.lr.ph75 ], [ %indvars.iv87.ph.a, %.lr.ph75.preheader110 ] ; 2 uses
@@ -172,16 +172,17 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv.next86 = add nsw i64 %indvars.iv85, -1 ; 3 uses
   %i.bm = getelementptr inbounds [4 x i8], ptr %3, i64 %indvars.iv.next86
   store i32 %i.bl, ptr %i.bm, align 4, !tbaa !22
-  %8 = icmp samesign ugt i64 %indvars.iv87.a, 1
-  br i1 %8, label %.lr.ph75, label %.loopexit.loopexit, !llvm.loop !11
+  %11 = trunc nuw i64 %indvars.iv87.a to i32
+  %12 = icmp sgt i32 %11, 1
+  br i1 %12, label %.lr.ph75, label %.loopexit.loopexit, !llvm.loop !11
 
 .loopexit.loopexit:                               ; preds = %.lr.ph75, %middle.block
   %indvars.iv.next86.lcssa = phi i64 [ %i.aq, %middle.block ], [ %indvars.iv.next86, %.lr.ph75 ]
   %i.bn = trunc nsw i64 %indvars.iv.next86.lcssa to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader70, %.loopexit.loopexit, %.preheader69, %.lr.ph79
-  %.2 = phi i32 [ %.078, %.lr.ph79 ], [ %.078, %.preheader69 ], [ %i.bn, %.loopexit.loopexit ], [ %.078, %.preheader70 ] ; 6 uses
+.loopexit:                                        ; preds = %.preheader70, %.loopexit.loopexit, %.lr.ph79
+  %.2 = phi i32 [ %.078, %.lr.ph79 ], [ %.078, %.preheader70 ], [ %i.bn, %.loopexit.loopexit ] ; 6 uses
   %indvars.iv.next93 = add nsw i64 %indvars.iv92, 1 ; 2 uses
   %i.bo = load i32, ptr %i.s, align 4, !tbaa !22
   %i.bp = sext i32 %i.bo to i64
@@ -237,7 +238,11 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %._cri
   ret i32 %.063
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #1
+
 attributes #0 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

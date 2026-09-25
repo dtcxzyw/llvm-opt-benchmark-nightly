@@ -202,7 +202,7 @@ bb.a:
   %i.c = add i64 %i.b, 1
   store i64 %i.c, ptr %i.a, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  %i.e = load i64, ptr %i.d, align 8              ; 3 uses
+  %i.e = load i64, ptr %i.d, align 8              ; 4 uses
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %.thread.i.i, label %bb.b
 
@@ -293,15 +293,16 @@ bb.d:                                             ; preds = %_RNvNtNtCs4NRVxsYgn
   %i.bm = load i64, ptr %0, align 8
   %i.bn = xor i64 %i.bm, %i.bl
   store i64 %i.bn, ptr %0, align 8
-  %.not.i.i = icmp eq i64 %i.e, 7
-  br i1 %.not.i.i, label %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_leCshAipbVPsRtf_14zerovec_derive.exit17.i.i, label %.thread.i.i
+  %2 = add i64 %i.e, -7
+  %.not.i.i = icmp eq i64 %i.e, 8
+  br i1 %.not.i.i, label %.thread.i.i, label %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_leCshAipbVPsRtf_14zerovec_derive.exit17.i.i
 
 .thread.i.i:                                      ; preds = %bb.d, %bb.a
   %i.bo = zext i8 %1 to i64
   br label %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_leCshAipbVPsRtf_14zerovec_derive.exit17.i.i
 
 _RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_leCshAipbVPsRtf_14zerovec_derive.exit17.i.i: ; preds = %.thread.i.i, %bb.d
-  %i.bp = phi i64 [ 1, %.thread.i.i ], [ 0, %bb.d ]
+  %i.bp = phi i64 [ 1, %.thread.i.i ], [ %2, %bb.d ]
   %.sroa.0.2.i14.i.i = phi i64 [ %i.bo, %.thread.i.i ], [ 0, %bb.d ]
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %.sroa.0.2.i14.i.i, ptr %i.bq, align 8

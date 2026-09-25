@@ -204,7 +204,7 @@ bb.ap:                                            ; preds = %bb.al, %bb.ao, %fin
 
 bb.aq:                                            ; preds = %._crit_edge, %._crit_edge170
   %.2108215 = phi ptr [ %.pre201, %._crit_edge170 ], [ %.1107, %._crit_edge ] ; 10 uses
-  %i.ia = getelementptr inbounds nuw i8, ptr %2, i64 1800 ; 2 uses
+  %i.ia = getelementptr inbounds nuw i8, ptr %2, i64 1800 ; 3 uses
   %i.ib = load i32, ptr %i.ia, align 8, !tbaa !28 ; 3 uses
   %i.ic = and i32 %i.ib, 769
   %.not137 = icmp eq i32 %i.ic, 0
@@ -212,7 +212,7 @@ bb.aq:                                            ; preds = %._crit_edge, %._cri
 
 .preheader:                                       ; preds = %bb.aq
   %.not140172 = icmp eq ptr %.2108215, null
-  br i1 %.not140172, label %.loopexit156, label %.lr.ph174
+  br i1 %.not140172, label %.loopexit156.thread, label %.lr.ph174
 
 .lr.ph174:                                        ; preds = %.preheader, %.lr.ph174
   %.2111173 = phi ptr [ %i.id, %.lr.ph174 ], [ %.2108215, %.preheader ] ; 2 uses
@@ -442,17 +442,23 @@ handle_combined_callback.exit:                    ; preds = %.lr.ph23.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %.loopexit156
 
-.loopexit156:                                     ; preds = %.lr.ph174, %.preheader, %bb.ar, %handle_combined_callback.exit, %bb.as
-  %.not142 = phi i1 [ true, %bb.as ], [ false, %bb.ar ], [ true, %handle_combined_callback.exit ], [ false, %.preheader ], [ false, %.lr.ph174 ]
+.loopexit156:                                     ; preds = %.lr.ph174, %bb.ar, %handle_combined_callback.exit, %bb.as
+  %.not142 = phi i1 [ true, %bb.as ], [ false, %bb.ar ], [ true, %handle_combined_callback.exit ], [ false, %.lr.ph174 ]
   %i.mz = load i32, ptr %i.ia, align 8, !tbaa !28
   %i.na = and i32 %i.mz, 16
   %.not141 = icmp eq i32 %i.na, 0
   br i1 %.not141, label %.loopexit, label %bb.av
 
+.loopexit156.thread:                              ; preds = %.preheader
+  %5 = load i32, ptr %i.ia, align 8, !tbaa !28
+  %6 = and i32 %5, 16
+  %.not141223 = icmp eq i32 %6, 0
+  br i1 %.not141223, label %._crit_edge187, label %bb.aw
+
 bb.av:                                            ; preds = %.loopexit156
   br i1 %.not142, label %bb.ax, label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av
+bb.aw:                                            ; preds = %.loopexit156.thread, %bb.av
   %i.nb = call ptr @diff_line_prefix(ptr noundef nonnull %i.b) #16
   %i.nc = getelementptr inbounds nuw i8, ptr %2, i64 1796
   %i.nd = load i32, ptr %i.nc, align 4, !tbaa !29
@@ -509,7 +515,7 @@ bb.ay:                                            ; preds = %.lr.ph181.us, %bb.a
   %.not144 = icmp eq ptr %i.nl, null
   br i1 %.not144, label %._crit_edge187, label %.lr.ph186.split, !llvm.loop !234
 
-._crit_edge187:                                   ; preds = %.lr.ph186.split, %._crit_edge182.us, %bb.ap, %bb.ax, %.loopexit
+._crit_edge187:                                   ; preds = %.lr.ph186.split, %._crit_edge182.us, %.loopexit156.thread, %bb.ap, %bb.ax, %.loopexit
   call void @clear_pathspec(ptr noundef nonnull %i.z) #16
   br label %bb.az
 

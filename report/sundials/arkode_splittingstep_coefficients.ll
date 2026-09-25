@@ -55,7 +55,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 %2, ptr %i.h, align 8, !tbaa !16
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 28
   store i32 0, ptr %i.i, align 4, !tbaa !17
-  %i.j = zext nneg i32 %0 to i64                  ; 5 uses
+  %i.j = zext nneg i32 %0 to i64                  ; 4 uses
   %i.k = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #17 ; 4 uses
   store ptr %i.k, ptr %i.d, align 8, !tbaa !18
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
@@ -115,6 +115,7 @@ bb.c:                                             ; preds = %bb.b
 .preheader.preheader:                             ; preds = %._crit_edge
   %i.ae = zext nneg i32 %2 to i64                 ; 5 uses
   %i.af = zext nneg i32 %i.p to i64
+  %wide.trip.count100 = zext nneg i32 %0 to i64
   %xtraiter113 = and i64 %i.u, 3                  ; 3 uses
   %i.ag = icmp ult i32 %1, 3
   %unroll_iter117 = and i64 %i.u, 2147483644
@@ -200,7 +201,7 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 
 ._crit_edge86:                                    ; preds = %bb.h, %._crit_edge86.unr-lcssa
   %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1 ; 2 uses
-  %exitcond99.not = icmp eq i64 %indvars.iv.next96, %i.j
+  %exitcond99.not = icmp eq i64 %indvars.iv.next96, %wide.trip.count100
   br i1 %exitcond99.not, label %.loopexit, label %.preheader
 
 .preheader.new:                                   ; preds = %.preheader, %.preheader.new

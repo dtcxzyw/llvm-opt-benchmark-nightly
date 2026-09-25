@@ -204,7 +204,7 @@ bb.dy:                                            ; preds = %bb.ed
   br i1 %i.cpi, label %bb.ee, label %_ZN8ImGuizmoL17DrawRotationGizmoEi.exit
 
 bb.dz:                                            ; preds = %bb.ed, %bb.dx
-  %indvars.iv118.i = phi i64 [ 0, %bb.dx ], [ %indvars.iv.next119.i, %bb.ed ] ; 7 uses
+  %indvars.iv118.i = phi i64 [ 0, %bb.dx ], [ %indvars.iv.next119.i, %bb.ed ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %36, i8 0, i64 512, i1 false), !tbaa !10
   %.cmp.i = icmp eq i64 %indvars.iv118.i, 2
@@ -213,10 +213,13 @@ bb.dz:                                            ; preds = %bb.ed, %bb.dx
   %i.cpl = select i1 %.cmp.i, i64 2, i64 %i.cpk
   %i.cpm = getelementptr inbounds nuw [4 x i8], ptr %i.clz, i64 %i.cpl
   %i.cpn = load float, ptr %i.cpm, align 4
-  %65 = sub nuw nsw i64 3, %indvars.iv118.i       ; 2 uses
-  %.cmp113.not.i = icmp eq i64 %indvars.iv118.i, 0
-  %66 = select i1 %.cmp113.not.i, i64 0, i64 %65
-  %i.cpo = getelementptr inbounds nuw [4 x i8], ptr %i.clz, i64 %66
+  %65 = trunc nuw nsw i64 %indvars.iv118.i to i32 ; 3 uses
+  %66 = xor i32 %65, 3                            ; 3 uses
+  %.cmp113.i = icmp samesign ult i32 %66, 3
+  %67 = sub nsw i32 0, %65
+  %68 = select i1 %.cmp113.i, i32 %66, i32 %67
+  %69 = zext nneg i32 %68 to i64
+  %i.cpo = getelementptr inbounds nuw [4 x i8], ptr %i.clz, i64 %69
   %i.cpp = load float, ptr %i.cpo, align 4
   %i.cpq = call float @atan2f(float noundef %i.cpn, float noundef %i.cpp) #19
   %i.cpr = fadd float %i.cpq, f0x3FC90FDB
@@ -225,8 +228,7 @@ bb.dz:                                            ; preds = %bb.ed, %bb.dx
   %i.cpt = icmp eq i64 %indvars.iv.next119.i, 3   ; 2 uses
   %i.cpu = select i1 %i.cpt, i64 0, i64 %indvars.iv.next119.i
   %i.cpv = getelementptr inbounds nuw [4 x i8], ptr %37, i64 %i.cpu
-  %67 = trunc nuw nsw i64 %indvars.iv118.i to i32
-  %i.cpw = add nuw nsw i32 %67, 2
+  %i.cpw = add nuw nsw i32 %65, 2
   %i.cpx = urem i32 %i.cpw, 3
   %i.cpy = zext nneg i32 %i.cpx to i64
   %i.cpz = getelementptr inbounds nuw [4 x i8], ptr %37, i64 %i.cpy
@@ -352,7 +354,8 @@ bb.ec:                                            ; preds = %bb.ea
   br label %bb.ed
 
 bb.ed:                                            ; preds = %bb.ec, %bb.ea
-  %i.ctp = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %65
+  %70 = zext nneg i32 %66 to i64
+  %i.ctp = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %70
   %i.ctq = load i32, ptr %i.ctp, align 4, !tbaa !52
   call void @_ZN10ImDrawList11AddPolylineEPK6ImVec2ijif(ptr noundef nonnull align 8 dereferenceable(196) %i.cma, ptr noundef nonnull %36, i32 noundef 64, i32 noundef %i.ctq, i32 noundef 0, float noundef 2.000000e+00)
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #19
