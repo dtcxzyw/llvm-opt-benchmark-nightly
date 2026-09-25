@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.lr.ph, %.loopexit
   %.ptr.5.i = getelementptr inbounds nuw i8, ptr %.sroa.0.023, i64 2
   %.val.i.5.i = load i8, ptr %.ptr.5.i, align 1, !alias.scope !982, !noalias !983, !noundef !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !984
-  %i.ah = load i16, ptr %.sroa.0.023, align 1, !alias.scope !982, !noalias !983 ; 4 uses
+  %i.ah = load i16, ptr %.sroa.0.023, align 1, !alias.scope !982, !noalias !983 ; 5 uses
   %i.ai = zext i16 %i.ah to i64
   %i.aj = trunc i16 %i.ah to i8
   %i.ak = lshr i16 %i.ah, 8                       ; 8 uses
@@ -222,12 +222,13 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader9.i.i:                                  ; preds = %.lr.ph.i.preheader.i
   %i.aq = insertelement <4 x i16> poison, i16 %i.ak, i64 0
-  %i.ar = insertelement <4 x i16> %i.aq, i16 %i.ao, i64 1 ; 2 uses
+  %i.ar = insertelement <4 x i16> %i.aq, i16 %i.ao, i64 1
   %i.as = shufflevector <4 x i16> %i.ar, <4 x i16> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.at = mul nuw nsw <4 x i16> %i.as, <i16 4, i16 2, i16 3, i16 4>
-  %4 = shufflevector <4 x i16> %i.ar, <4 x i16> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 0>
-  %i.au = insertelement <4 x i16> %4, i16 %i.ap, i64 1
-  %i.av = insertelement <4 x i16> %i.au, i16 %i.an, i64 2
+  %4 = insertelement <4 x i16> poison, i16 %i.ao, i64 0
+  %5 = insertelement <4 x i16> %4, i16 %i.ap, i64 1
+  %i.au = insertelement <4 x i16> %5, i16 %i.an, i64 2
+  %i.av = insertelement <4 x i16> %i.au, i16 %i.ak, i64 3
   %i.aw = add nuw nsw <4 x i16> %i.at, %i.av
   %i.ax = udiv <4 x i16> %i.aw, splat (i16 5)
   br label %_RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt5_block.exit
@@ -236,10 +237,10 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = insertelement <2 x i16> poison, i16 %i.ao, i64 0
   %i.az = insertelement <2 x i16> %i.ay, i16 %i.ap, i64 1
   %i.ba = mul nuw nsw <2 x i16> %i.az, <i16 3, i16 1>
-  %5 = insertelement <4 x i16> poison, i16 %i.ak, i64 0
-  %6 = insertelement <4 x i16> %5, i16 %i.ao, i64 1
-  %7 = shufflevector <4 x i16> %6, <4 x i16> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bb = mul nuw nsw <4 x i16> %7, <i16 4, i16 4, i16 5, i16 6>
+  %6 = bitcast i16 %i.ah to <2 x i8>
+  %7 = shufflevector <2 x i8> %6, <2 x i8> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0>
+  %8 = zext <4 x i8> %7 to <4 x i16>
+  %i.bb = mul nuw nsw <4 x i16> %8, <i16 4, i16 4, i16 5, i16 6>
   %i.bc = shufflevector <2 x i16> %i.ba, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.bd = insertelement <4 x i16> %i.bc, i16 %i.an, i64 2
   %i.be = insertelement <4 x i16> %i.bd, i16 %i.ak, i64 3
@@ -642,7 +643,7 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.sroa.5112.0249.i = phi i64 [ %i.oi, %scalar.ph ], [ %.sroa.5112.0249.i.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.og = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0108.0.copyload.i, i64 %.sroa.5112.0249.i ; 2 uses
+  %i.og = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0108.0.copyload.i, i64 %.sroa.5112.0249.i ; 3 uses
   %i.oh = getelementptr inbounds nuw [4 x i8], ptr %.sroa.4110.0.copyload.i, i64 %.sroa.5112.0249.i
   %i.oi = add nuw i64 %.sroa.5112.0249.i, 1       ; 2 uses
   %.sroa.011.0.copyload.i = load i32, ptr %i.oh, align 1, !noalias !1561 ; 5 uses
@@ -656,21 +657,21 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.sroa.5.0.extract.shift.i.i = lshr i32 %.sroa.011.0.copyload.i, 16
   %.sroa.5.0.extract.trunc.i.i = trunc i32 %.sroa.5.0.extract.shift.i.i to i8
   %.sroa.42.0.extract.shift.i.i = lshr i32 %.sroa.011.0.copyload.i, 8
+  %.sroa.42.0.extract.trunc.i.i = trunc i32 %.sroa.42.0.extract.shift.i.i to i8
+  %.sroa.01.0.extract.trunc.i.i = trunc i32 %.sroa.011.0.copyload.i to i8
   %4 = bitcast i32 %.sroa.03.0.i.i to float
-  %5 = fmul float %4, 3.906250e-03                ; 2 uses
-  %6 = uitofp i8 %.sroa.5.0.extract.trunc.i.i to float
-  %i.oo = fmul float %5, %6
-  %7 = trunc i32 %.sroa.011.0.copyload.i to i8
-  %8 = insertelement <2 x i8> poison, i8 %7, i64 0
-  %9 = trunc i32 %.sroa.42.0.extract.shift.i.i to i8
-  %10 = insertelement <2 x i8> %8, i8 %9, i64 1
-  %11 = uitofp <2 x i8> %10 to <2 x float>
-  %12 = insertelement <2 x float> poison, float %5, i64 0
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
-  %14 = fmul <2 x float> %13, %11
-  store <2 x float> %14, ptr %i.og, align 1, !alias.scope !1691, !noalias !1692
+  %i.oo = fmul float %4, 3.906250e-03             ; 3 uses
+  %5 = uitofp i8 %.sroa.01.0.extract.trunc.i.i to float
+  %6 = fmul float %i.oo, %5
+  %7 = uitofp i8 %.sroa.42.0.extract.trunc.i.i to float
+  %8 = fmul float %i.oo, %7
+  %9 = uitofp i8 %.sroa.5.0.extract.trunc.i.i to float
+  %10 = fmul float %i.oo, %9
+  store float %6, ptr %i.og, align 1, !alias.scope !1691, !noalias !1692
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.og, i64 4
+  store float %8, ptr %.sroa.4.0..sroa_idx.i, align 1, !alias.scope !1691, !noalias !1692
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.og, i64 8
-  store float %i.oo, ptr %.sroa.5.0..sroa_idx.i, align 1, !alias.scope !1691, !noalias !1692
+  store float %10, ptr %.sroa.5.0..sroa_idx.i, align 1, !alias.scope !1691, !noalias !1692
   %exitcond.not.i = icmp eq i64 %i.oi, %.sroa.7113.0.copyload.i
   br i1 %exitcond.not.i, label %.thread151.loopexit.i, label %scalar.ph, !llvm.loop !1555
 

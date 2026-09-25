@@ -204,7 +204,7 @@ _ZN2cv6detail8tracking15online_boosting8Detector24prepareConfidencesMemoryEi.exi
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !62 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 56
-  %.sroa.0.0.copyload.i = load i64, ptr %i.ae, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.ae, align 8 ; 3 uses
   %.sroa.6.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i, 32
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 176
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 2 uses
@@ -212,8 +212,9 @@ _ZN2cv6detail8tracking15online_boosting8Detector24prepareConfidencesMemoryEi.exi
   %i.af = trunc nuw i64 %.sroa.6.0.extract.shift to i32
   %i.ag = insertelement <2 x i32> poison, i32 %i.af, i64 0
   %i.ah = trunc i64 %.sroa.0.0.copyload.i to i32
-  %i.ai = insertelement <2 x i32> %i.ag, i32 %i.ah, i64 1 ; 2 uses
-  %i.aj = sitofp <2 x i32> %i.ai to <2 x float>
+  %i.ai = insertelement <2 x i32> %i.ag, i32 %i.ah, i64 1
+  %6 = bitcast i64 %.sroa.0.0.copyload.i to <2 x i32>
+  %i.aj = sitofp <2 x i32> %6 to <2 x float>
   %i.ak = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aj, <2 x float> splat (float 9.999990e-03), <2 x float> splat (float 5.000000e-01))
   %i.al = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.ak)
   %i.am = fptosi <2 x float> %i.al to <2 x i32>
@@ -225,7 +226,8 @@ _ZN2cv6detail8tracking15online_boosting8Detector24prepareConfidencesMemoryEi.exi
   %i.as = sub nsw <2 x i32> %i.ar, %i.ai
   %i.at = sitofp <2 x i32> %i.as to <2 x float>
   %i.au = uitofp nneg <2 x i32> %i.an to <2 x float>
-  %i.av = fdiv <2 x float> %i.at, %i.au           ; 2 uses
+  %7 = shufflevector <2 x float> %i.au, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %i.av = fdiv <2 x float> %i.at, %7              ; 2 uses
   %i.aw = extractelement <2 x float> %i.av, i64 0
   %i.ax = fptosi float %i.aw to i32               ; 4 uses
   %i.ay = add i32 %i.ax, 1                        ; 9 uses

@@ -205,20 +205,22 @@ bb.cd:                                            ; preds = %bb.cb
   br label %bb.cg
 
 bb.ce:                                            ; preds = %bb.cg, %bb.cb
-  %storemerge.i = phi i64 [ %.sroa.4.0.i, %bb.cg ], [ %i.ji, %bb.cb ] ; 5 uses
-  %.sroa.6.0.extract.shift.i.a = lshr i64 %storemerge.i, 16
-  %3 = trunc i64 %storemerge.i to i16
-  %4 = insertelement <2 x i16> poison, i16 %3, i64 0
-  %5 = trunc i64 %.sroa.6.0.extract.shift.i.a to i16
-  %6 = insertelement <2 x i16> %4, i16 %5, i64 1  ; 3 uses
-  %.sroa.8.0.extract.shift.i = lshr i64 %storemerge.i, 32 ; 2 uses
+  %storemerge.i = phi i64 [ %.sroa.4.0.i, %bb.cg ], [ %i.ji, %bb.cb ] ; 6 uses
+  %.sroa.6.0.extract.shift.i.a = lshr i64 %storemerge.i, 32 ; 2 uses
   %.sroa.10.0.extract.shift.i = lshr i64 %storemerge.i, 48
+  %3 = bitcast i64 %storemerge.i to <4 x i16>
+  %4 = shufflevector <4 x i16> %3, <4 x i16> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
   br i1 %i.fm, label %_RNvNtCshxhuDJfZv4T_6fontbe4colr13quantize_bbox.exit.i, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
-  %.sroa.8.0.extract.trunc.i = trunc i64 %.sroa.8.0.extract.shift.i to i16
-  %i.jj = srem <2 x i16> %6, %i.fq
-  %i.jk = sub nsw <2 x i16> %6, %i.jj
+  %5 = trunc i64 %storemerge.i to i16
+  %6 = insertelement <2 x i16> poison, i16 %5, i64 0
+  %.sroa.6.0.extract.shift.i = lshr i64 %storemerge.i, 16
+  %7 = trunc i64 %.sroa.6.0.extract.shift.i to i16
+  %8 = insertelement <2 x i16> %6, i16 %7, i64 1
+  %.sroa.8.0.extract.trunc.i = trunc i64 %.sroa.6.0.extract.shift.i.a to i16
+  %i.jj = srem <2 x i16> %4, %i.fq
+  %i.jk = sub nsw <2 x i16> %8, %i.jj
   %i.jl = sext i16 %.sroa.8.0.extract.trunc.i to i32
   %i.jm = add nsw i32 %i.fo, %i.jl                ; 2 uses
   %i.jn = srem i32 %i.jm, %i.fn
@@ -234,8 +236,8 @@ bb.cf:                                            ; preds = %bb.ce
 
 _RNvNtCshxhuDJfZv4T_6fontbe4colr13quantize_bbox.exit.i: ; preds = %bb.cf, %bb.ce
   %.sroa.5.0.i.i = phi i64 [ %i.jv, %bb.cf ], [ %.sroa.10.0.extract.shift.i, %bb.ce ]
-  %.sroa.4.0.i.i = phi i64 [ %i.jp, %bb.cf ], [ %.sroa.8.0.extract.shift.i, %bb.ce ] ; 2 uses
-  %i.jw = phi <2 x i16> [ %i.jk, %bb.cf ], [ %6, %bb.ce ] ; 4 uses
+  %.sroa.4.0.i.i = phi i64 [ %i.jp, %bb.cf ], [ %.sroa.6.0.extract.shift.i.a, %bb.ce ] ; 2 uses
+  %i.jw = phi <2 x i16> [ %i.jk, %bb.cf ], [ %4, %bb.ce ] ; 4 uses
   %.sroa.513.0.extract.trunc.i = trunc i64 %.sroa.4.0.i.i to i16
   %.sroa.614.0.extract.trunc.i = trunc i64 %.sroa.5.0.i.i to i16 ; 2 uses
   %i.jx = load i64, ptr %i.eu, align 8, !alias.scope !2432, !noalias !2433, !noundef !8 ; 5 uses
@@ -638,7 +640,7 @@ bb.a:
   %i.n = alloca [24 x i8], align 8                ; 5 uses
   %i.o = alloca [40 x i8], align 8                ; 9 uses
   %i.p = alloca [8 x i8], align 8                 ; 8 uses
-  %i.q = alloca [80 x i8], align 8                ; 15 uses
+  %i.q = alloca [80 x i8], align 8                ; 16 uses
   %.sroa.0392 = alloca [32 x i8], align 8         ; 4 uses
   %.sroa.0356 = alloca [32 x i8], align 8         ; 6 uses
   %i.r = alloca [24 x i8], align 8                ; 6 uses
@@ -1041,6 +1043,7 @@ bb.di:                                            ; preds = %bb.dh
   %i.oh = getelementptr inbounds nuw i8, ptr %i.q, i64 54 ; 2 uses
   %.sroa.510.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 56 ; 4 uses
   %.sroa.712.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 60 ; 2 uses
+  %.sroa.8.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 62 ; 2 uses
   %i.oi = getelementptr inbounds nuw i8, ptr %i.q, i64 48 ; 4 uses
   %i.oj = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 3 uses
   %i.ok = getelementptr inbounds nuw i8, ptr %i.q, i64 52 ; 2 uses
@@ -1204,41 +1207,51 @@ bb.dx:                                            ; preds = %_RINvNtCsf3Ta7LF998
 bb.dy:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdEBF_.exit.i.i.i.i167
   br label %bb.dz
 
+3:                                                ; preds = %8, %bb.dz
+  %.sroa.78.0.i.i.i.i.i = phi i16 [ %16, %8 ], [ %.sroa.7.0.extract.trunc.i.i.i.i.i, %bb.dz ]
+  %.sroa.67.0.i.i.i.i.i = phi i16 [ %15, %8 ], [ %i.pp, %bb.dz ]
+  %4 = phi <2 x i16> [ %14, %8 ], [ %7, %bb.dz ]
+  store i16 1, ptr %i.oh, align 2, !alias.scope !3079, !noalias !3080
+  store <2 x i16> %4, ptr %.sroa.510.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !3079, !noalias !3080
+  store i16 %.sroa.67.0.i.i.i.i.i, ptr %.sroa.712.0..sroa_idx.i.i.i.i.i, align 4, !alias.scope !3079, !noalias !3080
+  store i16 %.sroa.78.0.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 2, !alias.scope !3079, !noalias !3080
+  %5 = icmp eq i64 %i.pn, 2
+  br i1 %5, label %bb.eb, label %bb.ea
+
 bb.dz:                                            ; preds = %bb.dy, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdEBF_.exit.i.i.i.i167
   %.sink.i.i.i.i.i = phi i64 [ 56, %bb.dy ], [ 48, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdEBF_.exit.i.i.i.i167 ]
   %i.po = getelementptr inbounds nuw i8, ptr %i.pi, i64 %.sink.i.i.i.i.i
-  %.sroa.5.0.i.i.i.i.i = load i64, ptr %i.po, align 8, !alias.scope !3077, !noalias !3078 ; 4 uses
-  %.sroa.54.0.extract.shift.i.i.i.i.i.a = lshr i64 %.sroa.5.0.i.i.i.i.i, 16
-  %3 = trunc i64 %.sroa.5.0.i.i.i.i.i to i16
-  %4 = insertelement <2 x i16> poison, i16 %3, i64 0
-  %i.pp = trunc i64 %.sroa.54.0.extract.shift.i.i.i.i.i.a to i16
-  %5 = insertelement <2 x i16> %4, i16 %i.pp, i64 1 ; 2 uses
-  %.sroa.7.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i, 48
-  %.sroa.6.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i, 32
-  %.sroa.6.0.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.6.0.extract.shift.i.i.i.i.i to i16
-  %.sroa.7.0.extract.trunc.i.i.i.i.i = trunc nuw i64 %.sroa.7.0.extract.shift.i.i.i.i.i to i16
+  %.sroa.5.0.i.i.i.i.i = load i64, ptr %i.po, align 8, !alias.scope !3077, !noalias !3078 ; 5 uses
+  %.sroa.54.0.extract.shift.i.i.i.i.i.a = lshr i64 %.sroa.5.0.i.i.i.i.i, 32
+  %i.pp = trunc i64 %.sroa.54.0.extract.shift.i.i.i.i.i.a to i16 ; 2 uses
+  %.sroa.6.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i, 48
+  %.sroa.7.0.extract.trunc.i.i.i.i.i = trunc nuw i64 %.sroa.6.0.extract.shift.i.i.i.i.i to i16 ; 2 uses
   %.sroa.09.0.copyload.i.i.i.i.i = load i16, ptr %i.oh, align 2, !alias.scope !3079, !noalias !3080
-  %i.pq = trunc i16 %.sroa.09.0.copyload.i.i.i.i.i to i1 ; 2 uses
-  %6 = insertelement <2 x i16> poison, i16 %.sroa.6.0.extract.trunc.i.i.i.i.i, i64 0
-  %7 = insertelement <2 x i16> %6, i16 %.sroa.7.0.extract.trunc.i.i.i.i.i, i64 1 ; 2 uses
-  %8 = load <2 x i16>, ptr %.sroa.712.0..sroa_idx.i.i.i.i.i, align 4
-  %9 = load <2 x i16>, ptr %.sroa.510.0..sroa_idx.i.i.i.i.i, align 8
-  %10 = call <2 x i16> @llvm.smin.v2i16(<2 x i16> %9, <2 x i16> %5)
-  %11 = call <2 x i16> @llvm.smax.v2i16(<2 x i16> %8, <2 x i16> %7)
-  %12 = select i1 %i.pq, <2 x i16> %10, <2 x i16> %5
-  %13 = select i1 %i.pq, <2 x i16> %11, <2 x i16> %7
-  store i16 1, ptr %i.oh, align 2, !alias.scope !3079, !noalias !3080
-  store <2 x i16> %12, ptr %.sroa.510.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !3079, !noalias !3080
-  store <2 x i16> %13, ptr %.sroa.712.0..sroa_idx.i.i.i.i.i, align 4, !alias.scope !3079, !noalias !3080
-  %14 = icmp eq i64 %i.pn, 2
-  br i1 %14, label %bb.eb, label %bb.ea
+  %i.pq = trunc i16 %.sroa.09.0.copyload.i.i.i.i.i to i1
+  %6 = bitcast i64 %.sroa.5.0.i.i.i.i.i to <4 x i16>
+  %7 = shufflevector <4 x i16> %6, <4 x i16> poison, <2 x i32> <i32 0, i32 1>
+  br i1 %i.pq, label %8, label %3
+
+8:                                                ; preds = %bb.dz
+  %9 = trunc i64 %.sroa.5.0.i.i.i.i.i to i16
+  %10 = insertelement <2 x i16> poison, i16 %9, i64 0
+  %.sroa.54.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i, 16
+  %11 = trunc i64 %.sroa.54.0.extract.shift.i.i.i.i.i to i16
+  %12 = insertelement <2 x i16> %10, i16 %11, i64 1
+  %.sroa.8.0.copyload.i.i.i.i.i = load i16, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 2, !alias.scope !3079, !noalias !3080
+  %.sroa.712.0.copyload.i.i.i.i.i = load i16, ptr %.sroa.712.0..sroa_idx.i.i.i.i.i, align 4, !alias.scope !3079, !noalias !3080
+  %13 = load <2 x i16>, ptr %.sroa.510.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !3079, !noalias !3080
+  %14 = call <2 x i16> @llvm.smin.v2i16(<2 x i16> %13, <2 x i16> %12)
+  %15 = call i16 @llvm.smax.i16(i16 %.sroa.712.0.copyload.i.i.i.i.i, i16 %i.pp)
+  %16 = call i16 @llvm.smax.i16(i16 %.sroa.8.0.copyload.i.i.i.i.i, i16 %.sroa.7.0.extract.trunc.i.i.i.i.i)
+  br label %3
 
 .thread.i.i.i.i.i:                                ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdEBF_.exit.i.i.i.i167
   store <4 x i16> <i16 1, i16 0, i16 0, i16 0>, ptr %i.oj, align 8, !noalias !3081
   store i64 -1, ptr %i.m, align 8, !noalias !3081
   br label %bb.ec
 
-bb.ea:                                            ; preds = %bb.dz
+bb.ea:                                            ; preds = %3
   %i.pr = getelementptr inbounds nuw i8, ptr %i.ph, i64 24
   %i.ps = load ptr, ptr %i.pr, align 8, !alias.scope !3077, !noalias !3078, !nonnull !8, !noundef !8 ; 5 uses
   %i.pt = getelementptr inbounds nuw i8, ptr %i.ph, i64 32
@@ -1335,7 +1348,7 @@ _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterNtNtNtNtCs6WnK4nVnpEz_11w
   store i64 -1, ptr %i.m, align 8, !noalias !3081
   br label %bb.ec
 
-bb.eb:                                            ; preds = %bb.dz
+bb.eb:                                            ; preds = %3
   %i.rc = getelementptr inbounds nuw i8, ptr %i.ph, i64 40
   %i.rd = load i64, ptr %i.rc, align 8, !alias.scope !3077, !noalias !3078, !noundef !8 ; 2 uses
   %i.re = trunc i64 %i.rd to i16
@@ -1737,9 +1750,6 @@ declare <2 x i16> @llvm.umax.v2i16(<2 x i16>, <2 x i16>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.smin.v2i16(<2 x i16>, <2 x i16>) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i16> @llvm.smax.v2i16(<2 x i16>, <2 x i16>) #22
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

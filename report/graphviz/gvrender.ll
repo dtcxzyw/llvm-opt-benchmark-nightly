@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %bb.a
   %i.n = tail call i64 @gvusershape_size_dpi(ptr noundef nonnull %i.c, double %i.k, double %i.m) #21 ; 3 uses
   %.sroa.5.0.extract.shift = lshr i64 %i.n, 32
   %.sroa.013.0.extract.trunc = trunc i64 %i.n to i32
-  %8 = bitcast i64 %i.n to <2 x i32>
   %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32
   %i.o = icmp slt i32 %.sroa.013.0.extract.trunc, 1
   %i.p = icmp slt i32 %.sroa.5.0.extract.trunc, 1
@@ -239,10 +238,10 @@ bb.f:                                             ; preds = %bb.e
   %.promoted126 = load double, ptr %i.x, align 8, !tbaa !157 ; 2 uses
   %i.y = add i64 %3, -1                           ; 3 uses
   %min.iters.check = icmp eq i64 %3, 2
-  %9 = insertelement <2 x double> poison, double %.promoted120, i64 0
-  %10 = insertelement <2 x double> %9, double %.promoted126, i64 1
-  %11 = insertelement <2 x double> poison, double %.promoted, i64 0
-  %12 = insertelement <2 x double> %11, double %.promoted124, i64 1
+  %8 = insertelement <4 x double> poison, double %.promoted, i64 0
+  %9 = insertelement <4 x double> %8, double %.promoted124, i64 1
+  %10 = insertelement <4 x double> %9, double %.promoted120, i64 2
+  %11 = insertelement <4 x double> %10, double %.promoted126, i64 3
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -288,23 +287,26 @@ middle.block:                                     ; preds = %vector.body
   %i.ao = select i1 %i.aj, <2 x double> %vec.phi170, <2 x double> %i.ac
   %i.ap = select i1 %i.aj, <2 x double> %vec.phi171, <2 x double> %i.af
   %i.aq = select i1 %i.aj, i64 %index, i64 %i.y
-  %i.ar = tail call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.am)
+  %i.ar = tail call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.am) ; 2 uses
   %i.as = or i64 %i.aq, 1
-  %i.at = tail call nsz double @llvm.vector.reduce.fmin.v2f64(<2 x double> %i.an)
-  %i.au = tail call nsz double @llvm.vector.reduce.fmin.v2f64(<2 x double> %i.ao)
-  %i.av = tail call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.ap)
+  %i.at = tail call nsz double @llvm.vector.reduce.fmin.v2f64(<2 x double> %i.an) ; 2 uses
+  %i.au = tail call nsz double @llvm.vector.reduce.fmin.v2f64(<2 x double> %i.ao) ; 2 uses
+  %i.av = tail call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.ap) ; 2 uses
   %cmp.n = icmp ne i64 %i.y, %n.vec
   %.not176 = or i1 %cmp.n, %i.aj
   %i.aw = insertelement <2 x double> poison, double %i.av, i64 0
-  %i.ax = insertelement <2 x double> %i.aw, double %i.ar, i64 1 ; 2 uses
+  %i.ax = insertelement <2 x double> %i.aw, double %i.ar, i64 1
   %i.ay = insertelement <2 x double> poison, double %i.au, i64 0
-  %i.az = insertelement <2 x double> %i.ay, double %i.at, i64 1 ; 2 uses
+  %i.az = insertelement <2 x double> %i.ay, double %i.at, i64 1
+  %12 = insertelement <4 x double> poison, double %i.au, i64 0
+  %13 = insertelement <4 x double> %12, double %i.at, i64 1
+  %14 = insertelement <4 x double> %13, double %i.av, i64 2
+  %15 = insertelement <4 x double> %14, double %i.ar, i64 3
   br i1 %.not176, label %scalar.ph.preheader, label %._crit_edge
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
   %.084122.ph = phi i64 [ 1, %.lr.ph ], [ %i.as, %middle.block ]
-  %.ph = phi <2 x double> [ %10, %.lr.ph ], [ %i.ax, %middle.block ]
-  %.ph190 = phi <2 x double> [ %12, %.lr.ph ], [ %i.az, %middle.block ]
+  %.ph = phi <4 x double> [ %11, %.lr.ph ], [ %15, %middle.block ]
   br label %scalar.ph
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block
@@ -328,7 +330,8 @@ bb.g:                                             ; preds = %._crit_edge132, %._
   %i.bk = fsub <2 x double> %i.bg, %i.bh          ; 5 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
-  %i.bn = sitofp <2 x i32> %8 to <2 x double>     ; 10 uses
+  %16 = bitcast i64 %i.n to <2 x i32>
+  %i.bn = sitofp <2 x i32> %16 to <2 x double>    ; 10 uses
   %i.bo = fdiv <2 x double> %i.bk, %i.bn          ; 7 uses
   %i.bp = load i8, ptr %5, align 1, !tbaa !63
   %i.bq = icmp eq i8 %i.bp, 0
@@ -355,14 +358,16 @@ get_imagescale.exit:                              ; preds = %bb.j
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.084122 = phi i64 [ %i.bx, %scalar.ph ], [ %.084122.ph, %scalar.ph.preheader ] ; 2 uses
-  %13 = phi <2 x double> [ %i.bw, %scalar.ph ], [ %.ph, %scalar.ph.preheader ]
-  %14 = phi <2 x double> [ %i.bv, %scalar.ph ], [ %.ph190, %scalar.ph.preheader ]
-  %15 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %.084122
-  %16 = load <2 x double>, ptr %15, align 8       ; 2 uses
-  %i.bv = tail call nsz <2 x double> @llvm.minnum.v2f64(<2 x double> %14, <2 x double> %16) ; 2 uses
-  %i.bw = tail call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %13, <2 x double> %16) ; 2 uses
+  %17 = phi <4 x double> [ %22, %scalar.ph ], [ %.ph, %scalar.ph.preheader ] ; 2 uses
+  %18 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %.084122
+  %19 = load <2 x double>, ptr %18, align 8       ; 2 uses
+  %20 = shufflevector <4 x double> %17, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %i.bv = tail call nsz <2 x double> @llvm.minnum.v2f64(<2 x double> %20, <2 x double> %19) ; 2 uses
+  %21 = shufflevector <4 x double> %17, <4 x double> poison, <2 x i32> <i32 2, i32 3>
+  %i.bw = tail call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %21, <2 x double> %19) ; 2 uses
   %i.bx = add nuw i64 %.084122, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.bx, %3
+  %22 = shufflevector <2 x double> %i.bv, <2 x double> %i.bw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !155
 
 bb.k:                                             ; preds = %get_imagescale.exit

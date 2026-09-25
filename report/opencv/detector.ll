@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %.sroa.013.4.insert.ext = phi i64 [ %i.cz, %bb.h ], [ %.sroa.013.0.insert.ext, %bb.g ] ; 2 uses
+  %.sroa.013.4.insert.ext = phi i64 [ %i.cz, %bb.h ], [ %.sroa.013.0.insert.ext, %bb.g ] ; 3 uses
   %i.da = load ptr, ptr %3, align 8, !tbaa !88    ; 2 uses
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !30
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 16
@@ -215,18 +215,19 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 24
   %i.di = load ptr, ptr %i.dh, align 8
   %i.dj = tail call noundef float %i.di(ptr noundef nonnull align 8 dereferenceable(20) %i.df)
-  %i.dk = bitcast i64 %.sroa.013.4.insert.ext to <2 x i32> ; 3 uses
+  %i.dk = bitcast i64 %.sroa.013.4.insert.ext to <2 x i32>
   %i.dl = sitofp <2 x i32> %i.dk to <2 x float>
   %i.dm = insertelement <2 x float> poison, float %i.de, i64 0
   %i.dn = insertelement <2 x float> %i.dm, float %i.dj, i64 1
   %i.do = fsub <2 x float> %i.dn, %i.dl
   %i.dp = fmul <2 x float> %i.do, splat (float 2.000000e+00)
   %i.dq = fptosi <2 x float> %i.dp to <2 x i32>   ; 2 uses
-  %i.dr = add nsw <2 x i32> %i.dq, %i.dk
+  %13 = bitcast i64 %.sroa.013.4.insert.ext to <2 x i32> ; 2 uses
+  %i.dr = add nsw <2 x i32> %i.dq, %13
   %i.ds = insertelement <2 x i32> poison, i32 %i.i, i64 0
   %i.dt = insertelement <2 x i32> %i.ds, i32 %i.k, i64 1 ; 2 uses
   %i.du = icmp sgt <2 x i32> %i.dr, %i.dt
-  %i.dv = sub nsw <2 x i32> %i.dt, %i.dk
+  %i.dv = sub nsw <2 x i32> %i.dt, %13
   %i.dw = select <2 x i1> %i.du, <2 x i32> %i.dv, <2 x i32> %i.dq
   %.sroa.12.1 = bitcast <2 x i32> %i.dw to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17

@@ -12,6 +12,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !33   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 92 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 108 ; 2 uses
+  %9 = load i64, ptr %i.d, align 4                ; 5 uses
   %i.e = sdiv i32 %i.b, -10                       ; 2 uses
   %.neg = mul nsw i32 %i.e, -10
   %i.f = sub i32 %.neg, %i.b                      ; 3 uses
@@ -20,9 +21,9 @@ bb.a:
   %i.i = add i16 %i.g, 90
   %i.j = add i16 %i.g, 91
   %i.k = sub nsw i32 10, %i.f                     ; 2 uses
-  %9 = load <2 x i32>, ptr %i.c, align 4, !tbaa !34
-  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 7 uses
-  %11 = load i64, ptr %i.d, align 4               ; 2 uses
+  %.sroa.97.48.extract.shift = lshr i64 %9, 32    ; 2 uses
+  %10 = load <2 x i32>, ptr %i.c, align 4, !tbaa !34 ; 2 uses
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 6 uses
   %i.l = tail call i32 @lv_trigo_sin(i16 noundef signext %i.g) #4
   %i.m = tail call i32 @lv_trigo_sin(i16 noundef signext %i.h) #4
   %i.n = tail call i32 @lv_trigo_sin(i16 noundef signext %i.i) #4
@@ -37,13 +38,16 @@ bb.a:
   %i.w = sdiv i32 %i.v, 10
   %i.x = ashr i32 %i.s, 5                         ; 12 uses
   %i.y = ashr i32 %i.w, 5                         ; 12 uses
-  %12 = insertelement <2 x i64> poison, i64 %11, i64 0
-  %13 = shufflevector <2 x i64> %12, <2 x i64> poison, <4 x i32> zeroinitializer
-  %14 = lshr <4 x i64> %13, <i64 32, i64 0, i64 32, i64 0>
-  %.sroa.97.44.extract.trunc.a = trunc i64 %11 to i32 ; 5 uses
-  %15 = trunc <4 x i64> %14 to <4 x i32>          ; 6 uses
-  %16 = shl nsw <4 x i32> %15, <i32 8, i32 8, i32 poison, i32 poison>
-  %i.z = shufflevector <4 x i32> %16, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 6 uses
+  %.sroa.97.44.extract.trunc = trunc i64 %9 to i32 ; 4 uses
+  %12 = trunc nuw i64 %.sroa.97.48.extract.shift to i32
+  %13 = insertelement <2 x i32> poison, i32 %12, i64 0
+  %.sroa.97.44.extract.trunc.a = trunc i64 %9 to i32
+  %14 = insertelement <2 x i32> %13, i32 %.sroa.97.44.extract.trunc.a, i64 1
+  %15 = bitcast i64 %9 to <2 x i32>
+  %16 = shufflevector <2 x i32> %15, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %.sroa.97.48.extract.trunc = trunc nuw i64 %.sroa.97.48.extract.shift to i32 ; 3 uses
+  %17 = shl nsw <2 x i32> %14, splat (i32 8)      ; 2 uses
+  %i.z = shufflevector <2 x i32> %17, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 5 uses
   %i.aa = tail call i32 @lv_area_get_width(ptr noundef %0) #4 ; 19 uses
   %i.ab = tail call i32 @lv_area_get_height(ptr noundef %0) #4 ; 6 uses
   switch i32 %7, label %bb.b [
@@ -115,13 +119,12 @@ bb.g:                                             ; preds = %bb.f
   %i.bc = add nsw <2 x i32> %i.bb, %i.au
   %i.bd = shufflevector <2 x i32> %i.bc, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.be = load <4 x i32>, ptr %0, align 4, !tbaa !34
-  %i.bf = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.be, <4 x i32> %i.bd) ; 4 uses
-  %17 = shufflevector <4 x i32> %i.bf, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 3 uses
+  %i.bf = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.be, <4 x i32> %i.bd) ; 6 uses
   %i.bg = icmp eq i32 %i.b, 0
   br i1 %i.bg, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.bh = shufflevector <4 x i32> %10, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %i.bh = shufflevector <4 x i32> %11, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
   %i.bi = icmp eq <2 x i32> %i.bh, splat (i32 256) ; 2 uses
   %i.bj = extractelement <2 x i1> %i.bi, i64 0
   %i.bk = extractelement <2 x i1> %i.bi, i64 1
@@ -130,46 +133,47 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.bl = extractelement <4 x i32> %i.bf, i64 0
-  %i.bm = sub nsw i32 %i.bl, %.sroa.97.44.extract.trunc.a ; 3 uses
-  %foldExtExtBinop = sub nsw <4 x i32> %17, %15
-  %18 = extractelement <4 x i32> %foldExtExtBinop, i64 0 ; 3 uses
-  %i.bn = shufflevector <4 x i32> %10, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %i.bm = sub nsw i32 %i.bl, %.sroa.97.44.extract.trunc ; 3 uses
+  %18 = extractelement <4 x i32> %i.bf, i64 1
+  %19 = sub nsw i32 %18, %.sroa.97.48.extract.trunc ; 3 uses
+  %i.bn = shufflevector <4 x i32> %11, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
   %i.bo = icmp eq <2 x i32> %i.bn, splat (i32 256) ; 2 uses
   %i.bp = extractelement <2 x i1> %i.bo, i64 0
   %i.bq = extractelement <2 x i1> %i.bo, i64 1
   %or.cond489 = select i1 %i.bq, i1 %i.bp, i1 false
-  %shift = shufflevector <4 x i32> %i.bf, <4 x i32> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop547 = sub nsw <4 x i32> %shift, %15
-  %19 = extractelement <4 x i32> %foldExtExtBinop547, i64 0 ; 4 uses
+  %20 = extractelement <4 x i32> %i.bf, i64 3
+  %21 = sub nsw i32 %20, %.sroa.97.48.extract.trunc ; 4 uses
   %i.br = extractelement <4 x i32> %i.bf, i64 2
-  %i.bs = sub nsw i32 %i.br, %.sroa.97.44.extract.trunc.a ; 4 uses
-  %i.bt = mul nsw i32 %18, %i.y
+  %i.bs = sub nsw i32 %i.br, %.sroa.97.44.extract.trunc ; 4 uses
+  %i.bt = mul nsw i32 %19, %i.y
   %i.bu = mul nsw i32 %i.bm, %i.x
   %i.bv = add nsw i32 %i.bt, %i.bu                ; 2 uses
   br i1 %or.cond489, label %.thread454, label %transform_point_upscaled.exit
 
 .thread442:                                       ; preds = %bb.h
-  %i.bw = shl nsw <4 x i32> %17, splat (i32 8)
+  %i.bw = shl nsw <4 x i32> %i.bf, splat (i32 8)
+  %22 = shufflevector <4 x i32> %i.bw, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
   br label %transform_point_upscaled.exit251
 
 bb.j:                                             ; preds = %bb.h
-  %20 = insertelement <4 x i32> poison, i32 %.sroa.97.44.extract.trunc.a, i64 0
-  %21 = shufflevector <4 x i32> %15, <4 x i32> %20, <4 x i32> <i32 0, i32 4, i32 0, i32 4>
-  %22 = sub nsw <4 x i32> %17, %21
-  %23 = shl nsw <4 x i32> %22, splat (i32 16)
-  %24 = sdiv <4 x i32> %23, %10
-  %i.bx = add nsw <4 x i32> %24, %i.z
+  %23 = sub nsw <4 x i32> %i.bf, %16
+  %24 = shl nsw <4 x i32> %23, splat (i32 16)
+  %25 = shufflevector <2 x i32> %10, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %26 = sdiv <4 x i32> %24, %25
+  %27 = shufflevector <4 x i32> %26, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
+  %28 = shufflevector <2 x i32> %17, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.bx = add nsw <4 x i32> %27, %28
   br label %transform_point_upscaled.exit251
 
 .thread454:                                       ; preds = %bb.i
   %i.by = mul nsw i32 %i.bm, %i.y
-  %i.bz = mul nsw i32 %18, %i.x
+  %i.bz = mul nsw i32 %19, %i.x
   %i.ca = sub nsw i32 %i.by, %i.bz
   %i.cb = mul nsw i32 %i.bs, %i.y
-  %i.cc = mul nsw i32 %19, %i.x
+  %i.cc = mul nsw i32 %21, %i.x
   %i.cd = sub nsw i32 %i.cb, %i.cc
   %i.ce = mul nsw i32 %i.bs, %i.x
-  %i.cf = mul nsw i32 %19, %i.y
+  %i.cf = mul nsw i32 %21, %i.y
   %i.cg = add nsw i32 %i.cf, %i.ce
   %i.ch = insertelement <4 x i32> poison, i32 %i.bv, i64 0
   %i.ci = insertelement <4 x i32> %i.ch, i32 %i.ca, i64 1
@@ -181,26 +185,26 @@ bb.j:                                             ; preds = %bb.h
 
 transform_point_upscaled.exit:                    ; preds = %bb.i
   %i.cn = mul nsw i32 %i.bm, %i.y
-  %i.co = mul nsw i32 %18, %i.x
+  %i.co = mul nsw i32 %19, %i.x
   %i.cp = sub nsw i32 %i.cn, %i.co
   %i.cq = mul nsw i32 %i.bs, %i.y
-  %i.cr = mul nsw i32 %19, %i.x
+  %i.cr = mul nsw i32 %21, %i.x
   %i.cs = sub nsw i32 %i.cq, %i.cr
   %i.ct = mul nsw i32 %i.bs, %i.x
-  %i.cu = mul nsw i32 %19, %i.y
+  %i.cu = mul nsw i32 %21, %i.y
   %i.cv = add nsw i32 %i.cu, %i.ct
   %i.cw = insertelement <4 x i32> poison, i32 %i.bv, i64 0
   %i.cx = insertelement <4 x i32> %i.cw, i32 %i.cp, i64 1
   %i.cy = insertelement <4 x i32> %i.cx, i32 %i.cv, i64 2
   %i.cz = insertelement <4 x i32> %i.cy, i32 %i.cs, i64 3
   %i.da = shl nsw <4 x i32> %i.cz, splat (i32 8)
-  %i.db = sdiv <4 x i32> %i.da, %10
+  %i.db = sdiv <4 x i32> %i.da, %11
   %i.dc = ashr <4 x i32> %i.db, splat (i32 2)
   %i.dd = add nsw <4 x i32> %i.dc, %i.z
   br label %transform_point_upscaled.exit251
 
 transform_point_upscaled.exit251:                 ; preds = %.thread442, %bb.j, %.thread454, %transform_point_upscaled.exit
-  %i.de = phi <4 x i32> [ %i.bw, %.thread442 ], [ %i.bx, %bb.j ], [ %i.cm, %.thread454 ], [ %i.dd, %transform_point_upscaled.exit ] ; 6 uses
+  %i.de = phi <4 x i32> [ %22, %.thread442 ], [ %i.bx, %bb.j ], [ %i.cm, %.thread454 ], [ %i.dd, %transform_point_upscaled.exit ] ; 6 uses
   %i.df = extractelement <4 x i32> %i.de, i64 0
   %shift549 = shufflevector <4 x i32> %i.de, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
   %foldExtExtBinop550 = sub nsw <4 x i32> %shift549, %i.de
@@ -246,7 +250,7 @@ bb.o:                                             ; preds = %bb.n, %bb.f
 .lr.ph:                                           ; preds = %bb.o
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.dv = icmp eq i32 %i.b, 0
-  %i.dw = shufflevector <4 x i32> %10, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %i.dw = shufflevector <4 x i32> %11, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
   %i.dx = icmp eq <2 x i32> %i.dw, splat (i32 256) ; 2 uses
   %i.dy = extractelement <2 x i1> %i.dx, i64 0
   %i.dz = extractelement <2 x i1> %i.dx, i64 1
@@ -260,7 +264,8 @@ bb.o:                                             ; preds = %bb.n, %bb.f
   %wide.trip.count.i284 = zext nneg i32 %i.aa to i64 ; 4 uses
   %i.eg = sext i32 %.0234425 to i64
   %i.eh = sext i32 %i.aa to i64
-  %25 = extractelement <4 x i32> %15, i64 0
+  %29 = bitcast i64 %9 to <2 x i32>
+  %30 = shufflevector <2 x i32> %29, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph, %transform_a8.exit
@@ -288,10 +293,10 @@ bb.s:                                             ; preds = %bb.r
   br i1 %or.cond493, label %.thread472, label %bb.u
 
 bb.t:                                             ; preds = %bb.r
-  %i.ep = sub nsw i32 %i.el, %.sroa.97.44.extract.trunc.a ; 3 uses
-  %i.eq = sub nsw i32 %i.en, %25                  ; 3 uses
+  %i.ep = sub nsw i32 %i.el, %.sroa.97.44.extract.trunc ; 3 uses
+  %i.eq = sub nsw i32 %i.en, %.sroa.97.48.extract.trunc ; 3 uses
   %i.er = load i32, ptr %i.ea, align 4, !tbaa !37
-  %i.es = sub nsw i32 %i.er, %.sroa.97.44.extract.trunc.a ; 4 uses
+  %i.es = sub nsw i32 %i.er, %.sroa.97.44.extract.trunc ; 4 uses
   %i.et = mul nsw i32 %i.eq, %i.y                 ; 3 uses
   %i.eu = mul nsw i32 %i.ep, %i.x
   %i.ev = add nsw i32 %i.et, %i.eu                ; 2 uses
@@ -310,9 +315,9 @@ bb.u:                                             ; preds = %bb.s
   %i.fc = insertelement <4 x i32> %i.fb, i32 %i.el, i64 1
   %i.fd = insertelement <4 x i32> %i.fc, i32 %i.eo, i64 3
   %i.fe = shufflevector <4 x i32> %i.fd, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
-  %i.ff = sub nsw <4 x i32> %i.fe, %15
+  %i.ff = sub nsw <4 x i32> %i.fe, %30
   %i.fg = shl nsw <4 x i32> %i.ff, splat (i32 16)
-  %i.fh = sdiv <4 x i32> %i.fg, %10
+  %i.fh = sdiv <4 x i32> %i.fg, %11
   %i.fi = add nsw <4 x i32> %i.fh, %i.z
   br label %transform_point_upscaled.exit255
 
@@ -345,7 +350,7 @@ bb.v:                                             ; preds = %bb.t
   %i.gf = insertelement <4 x i32> %i.ge, i32 %i.gc, i64 2
   %i.gg = insertelement <4 x i32> %i.gf, i32 %i.ga, i64 3
   %i.gh = shl nsw <4 x i32> %i.gg, splat (i32 8)
-  %i.gi = sdiv <4 x i32> %i.gh, %10
+  %i.gi = sdiv <4 x i32> %i.gh, %11
   %i.gj = ashr <4 x i32> %i.gi, splat (i32 2)
   %i.gk = add nsw <4 x i32> %i.gj, %i.z
   br label %transform_point_upscaled.exit255

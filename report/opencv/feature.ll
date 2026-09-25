@@ -205,9 +205,10 @@ bb.a:
   %3 = alloca %"class.std::allocator", align 1    ; 3 uses
   %.sroa.15.0.extract.shift = lshr i64 %1, 32
   %.sroa.15.0.extract.trunc = trunc nuw i64 %.sroa.15.0.extract.shift to i32 ; 6 uses
-  %i.a = bitcast i64 %1 to <2 x i32>              ; 2 uses
+  %i.a = bitcast i64 %1 to <2 x i32>
   %.sroa.099.0.extract.trunc = trunc i64 %1 to i32 ; 6 uses
-  %i.b = sitofp <2 x i32> %i.a to <2 x float>
+  %4 = bitcast i64 %1 to <2 x i32>
+  %i.b = sitofp <2 x i32> %4 to <2 x float>
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 21 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 19 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses

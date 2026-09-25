@@ -202,7 +202,7 @@ bb.a:
   %5 = alloca %"class.std::allocator", align 1    ; 3 uses
   %.sroa.11.0.extract.shift = lshr i64 %1, 32
   %.sroa.11.0.extract.trunc = trunc nuw i64 %.sroa.11.0.extract.shift to i32 ; 7 uses
-  %i.a = bitcast i64 %1 to <2 x i32>              ; 2 uses
+  %i.a = bitcast i64 %1 to <2 x i32>
   %.sroa.0271.0.extract.trunc = trunc i64 %1 to i32 ; 7 uses
   %i.b = icmp slt i32 %.sroa.0271.0.extract.trunc, 1
   %i.c = icmp slt i32 %.sroa.11.0.extract.trunc, 1
@@ -210,7 +210,8 @@ bb.a:
   br i1 %i.d, label %bb.b, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.e = uitofp <2 x i32> %i.a to <2 x float>
+  %6 = bitcast i64 %1 to <2 x i32>
+  %i.e = uitofp <2 x i32> %6 to <2 x float>
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 21 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 19 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses

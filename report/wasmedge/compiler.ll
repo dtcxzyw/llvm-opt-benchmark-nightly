@@ -205,7 +205,7 @@ begin_hunk_0_@_ZZN12_GLOBAL__N_116FunctionCompiler7compileEN5cxx204spanIKN8WasmE
   %419 = alloca %"class.WasmEdge::LLVM::Type", align 8 ; 2 uses
   %420 = alloca %"class.WasmEdge::LLVM::Value", align 8 ; 4 uses
   %i.a = alloca [2 x i64], align 16               ; 4 uses
-  %421 = alloca %"struct.std::array", align 16    ; 4 uses
+  %421 = alloca %"struct.std::array", align 1     ; 19 uses
   %422 = alloca %"class.WasmEdge::LLVM::Value", align 8 ; 2 uses
   %423 = alloca %"class.WasmEdge::LLVM::Type", align 8 ; 2 uses
   %424 = alloca %"class.WasmEdge::LLVM::Type", align 8 ; 2 uses
@@ -608,13 +608,70 @@ _ZN12_GLOBAL__N_116FunctionCompiler8stackPopEv.exit2562: ; preds = %bb.cn
   %i.gpm = inttoptr i64 %i.gpl to ptr
   %i.gpn = load ptr, ptr %i.got, align 8, !tbaa !108, !noalias !4310
   %i.gpo = tail call ptr @LLVMBuildBitCast(ptr noundef %i.gpn, ptr noundef %i.gpi, ptr noundef %i.gpm, ptr noundef nonnull @.str.13) #17, !noalias !4310
+  %533 = load i128, ptr %1, align 16, !tbaa !4012 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %421) #17
-  %533 = load i128, ptr %1, align 16, !tbaa !4012
-  %534 = insertelement <16 x i128> poison, i128 %533, i64 0
-  %535 = shufflevector <16 x i128> %534, <16 x i128> poison, <16 x i32> zeroinitializer
-  %536 = lshr <16 x i128> %535, <i128 0, i128 8, i128 16, i128 24, i128 32, i128 40, i128 48, i128 56, i128 64, i128 72, i128 80, i128 88, i128 96, i128 104, i128 112, i128 120>
-  %537 = trunc <16 x i128> %536 to <16 x i8>
-  store <16 x i8> %537, ptr %421, align 16, !tbaa !32
+  %534 = trunc i128 %533 to i8
+  store i8 %534, ptr %421, align 1, !tbaa !32
+  %535 = lshr i128 %533, 8
+  %536 = trunc i128 %535 to i8
+  %537 = getelementptr inbounds nuw i8, ptr %421, i64 1
+  store i8 %536, ptr %537, align 1, !tbaa !32
+  %538 = lshr i128 %533, 16
+  %539 = trunc i128 %538 to i8
+  %540 = getelementptr inbounds nuw i8, ptr %421, i64 2
+  store i8 %539, ptr %540, align 1, !tbaa !32
+  %541 = lshr i128 %533, 24
+  %542 = trunc i128 %541 to i8
+  %543 = getelementptr inbounds nuw i8, ptr %421, i64 3
+  store i8 %542, ptr %543, align 1, !tbaa !32
+  %544 = lshr i128 %533, 32
+  %545 = trunc i128 %544 to i8
+  %546 = getelementptr inbounds nuw i8, ptr %421, i64 4
+  store i8 %545, ptr %546, align 1, !tbaa !32
+  %547 = lshr i128 %533, 40
+  %548 = trunc i128 %547 to i8
+  %549 = getelementptr inbounds nuw i8, ptr %421, i64 5
+  store i8 %548, ptr %549, align 1, !tbaa !32
+  %550 = lshr i128 %533, 48
+  %551 = trunc i128 %550 to i8
+  %552 = getelementptr inbounds nuw i8, ptr %421, i64 6
+  store i8 %551, ptr %552, align 1, !tbaa !32
+  %553 = lshr i128 %533, 56
+  %554 = trunc i128 %553 to i8
+  %555 = getelementptr inbounds nuw i8, ptr %421, i64 7
+  store i8 %554, ptr %555, align 1, !tbaa !32
+  %556 = lshr i128 %533, 64
+  %557 = trunc i128 %556 to i8
+  %558 = getelementptr inbounds nuw i8, ptr %421, i64 8
+  store i8 %557, ptr %558, align 1, !tbaa !32
+  %559 = lshr i128 %533, 72
+  %560 = trunc i128 %559 to i8
+  %561 = getelementptr inbounds nuw i8, ptr %421, i64 9
+  store i8 %560, ptr %561, align 1, !tbaa !32
+  %562 = lshr i128 %533, 80
+  %563 = trunc i128 %562 to i8
+  %564 = getelementptr inbounds nuw i8, ptr %421, i64 10
+  store i8 %563, ptr %564, align 1, !tbaa !32
+  %565 = lshr i128 %533, 88
+  %566 = trunc i128 %565 to i8
+  %567 = getelementptr inbounds nuw i8, ptr %421, i64 11
+  store i8 %566, ptr %567, align 1, !tbaa !32
+  %568 = lshr i128 %533, 96
+  %569 = trunc i128 %568 to i8
+  %570 = getelementptr inbounds nuw i8, ptr %421, i64 12
+  store i8 %569, ptr %570, align 1, !tbaa !32
+  %571 = lshr i128 %533, 104
+  %572 = trunc i128 %571 to i8
+  %573 = getelementptr inbounds nuw i8, ptr %421, i64 13
+  store i8 %572, ptr %573, align 1, !tbaa !32
+  %574 = lshr i128 %533, 112
+  %575 = trunc i128 %574 to i8
+  %576 = getelementptr inbounds nuw i8, ptr %421, i64 14
+  store i8 %575, ptr %576, align 1, !tbaa !32
+  %577 = lshr i128 %533, 120
+  %578 = trunc nuw i128 %577 to i8
+  %579 = getelementptr inbounds nuw i8, ptr %421, i64 15
+  store i8 %578, ptr %579, align 1, !tbaa !32
   %i.gpp = getelementptr inbounds nuw i8, ptr %.0.val, i64 8
   call void @_ZN8WasmEdge4LLVM5Value15getConstVector8ERNS0_7ContextEN5cxx204spanIKhLm18446744073709551615EEE(ptr dead_on_unwind nonnull writable sret(%"class.WasmEdge::LLVM::Value") align 8 %422, ptr noundef nonnull align 8 dereferenceable(8) %i.gpp, ptr nonnull %421, i64 16) #17
   %i.gpq = load ptr, ptr %i.got, align 8, !tbaa !108, !noalias !4311
