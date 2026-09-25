@@ -42,8 +42,7 @@ bb.a:
   %.not32 = icmp eq i32 %i.r, 0
   %i.s = or i32 %.3, 128
   %.4 = select i1 %.not32, i32 %.3, i32 %i.s      ; 2 uses
-  %1 = and i32 %.4, 240
-  %.not33 = icmp eq i32 %1, 0
+  %.not33 = icmp samesign ult i32 %.4, 16
   br i1 %.not33, label %bb.b, label %vector.body
 
 vector.body:                                      ; preds = %bb.a
@@ -141,8 +140,7 @@ vector.body:                                      ; preds = %bb.a
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %2 = and i32 %.4, 8
-  %.not34 = icmp eq i32 %2, 0
+  %.not34 = icmp samesign ult i32 %.4, 8
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %wide.load73 = load <8 x i16>, ptr %i.cq, align 2, !tbaa !10
   %i.cr = sext <8 x i16> %wide.load73 to <8 x i32> ; 8 uses

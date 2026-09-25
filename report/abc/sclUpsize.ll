@@ -204,10 +204,10 @@ bb.a:
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
+  %2 = udiv i32 %.val22, 3
   %i.c = getelementptr i8, ptr %1, i64 8
   %i.d = getelementptr i8, ptr %0, i64 32
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 384
-  %2 = udiv i32 %.val22, 3
   %i.f = zext nneg i32 %2 to i64
   br label %bb.b
 
@@ -610,10 +610,10 @@ bb.bj:                                            ; preds = %.loopexit
   br i1 %i.nt, label %.lr.ph.i297, label %Abc_SclUndoRecentChanges.exit.thread
 
 .lr.ph.i297:                                      ; preds = %bb.bj
+  %19 = udiv i32 %.val22.i296, 3
   %i.nu = getelementptr i8, ptr %i.nr, i64 8
   %i.nv = getelementptr i8, ptr %i.nl, i64 32
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nl, i64 384
-  %19 = udiv i32 %.val22.i296, 3
   %i.nx = zext nneg i32 %19 to i64
   br label %bb.bk
 

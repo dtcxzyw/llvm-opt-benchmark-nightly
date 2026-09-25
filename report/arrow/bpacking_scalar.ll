@@ -205,7 +205,7 @@ _ZN5arrow8internal12unpack_exactILi1ELb1EmEEiPKhPT1_ii.exit: ; preds = %.lr.ph.i
   br i1 %i.ad, label %.lr.ph.i28.epil.preheader, label %.lr.ph.i28.preheader.new
 
 .lr.ph.i28.preheader.new:                         ; preds = %.lr.ph.i28.preheader
-  %unroll_iter = sub nsw i32 %i.y, %xtraiter
+  %unroll_iter = sub i32 %i.y, %xtraiter
   br label %.lr.ph.i28
 
 .lr.ph.i28:                                       ; preds = %.lr.ph.i28, %.lr.ph.i28.preheader.new

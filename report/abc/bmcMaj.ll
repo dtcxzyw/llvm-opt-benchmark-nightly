@@ -206,7 +206,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %1 = lshr i32 %.val35, 1
+  %1 = sdiv i32 %.val35, 2
   %i.c = getelementptr i8, ptr %0, i64 16
   %.val.i = load ptr, ptr %i.c, align 8, !tbaa !125
   %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 2)
@@ -218,7 +218,7 @@ bb.a:
   %.val.i39 = load ptr, ptr %i.d, align 8, !tbaa !125 ; 3 uses
   %i.e = add nsw i64 %wide.trip.count, -1         ; 3 uses
   %xtraiter = and i64 %i.e, 1
-  %2 = icmp ult i32 %.val35, 6
+  %2 = icmp slt i32 %.val35, 6
   br i1 %2, label %.epil.preheader, label %.lr.ph50.new
 
 .lr.ph50.new:                                     ; preds = %.lr.ph50

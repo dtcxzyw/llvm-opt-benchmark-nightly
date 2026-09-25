@@ -205,12 +205,12 @@ bb.a:
   %i.g = alloca i8, i64 %i.f, align 16            ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.i = load i32, ptr %i.h, align 8              ; 2 uses
-  %5 = tail call i32 @llvm.smax.i32(i32 %i.i, i32 5)
-  %narrow = lshr i32 %5, 1
-  %i.j = zext nneg i32 %narrow to i64
+  %5 = icmp sgt i32 %i.i, 5
+  %6 = sdiv i32 %i.i, 2                           ; 2 uses
+  %narrow = select i1 %5, i32 %6, i32 2           ; 2 uses
+  %i.j = zext i32 %narrow to i64
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.l = load float, ptr %i.k, align 4            ; 3 uses
-  %6 = sdiv i32 %i.i, 2
   %i.m = add nsw i32 %6, -2
   %i.n = sitofp i32 %i.m to float
   %i.o = fsub float %i.l, %i.n                    ; 2 uses
@@ -349,6 +349,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %.lr.ph195
 
 .preheader190:                                    ; preds = %.lr.ph195, %bb.d
+  %.not = icmp eq i32 %narrow, 0
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 32
   br label %.preheader
@@ -482,7 +483,7 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %i.fc = select i1 %i.fb, float %i.fa, float %i.et
   %i.fd = fcmp ogt float %i.et, %i.fa
   %i.fe = select i1 %i.fd, float %i.fa, float %i.et
-  br label %.lr.ph206
+  br i1 %.not, label %._crit_edge207, label %.lr.ph206
 
 .lr.ph206:                                        ; preds = %.lr.ph206.preheader, %.lr.ph206
   %.0204 = phi float [ %i.fm, %.lr.ph206 ], [ 9.999900e+04, %.lr.ph206.preheader ] ; 2 uses
@@ -503,9 +504,11 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %exitcond215.not = icmp eq i64 %i.fn, %i.j
   br i1 %exitcond215.not, label %._crit_edge207, label %.lr.ph206, !llvm.loop !639
 
-._crit_edge207:                                   ; preds = %.lr.ph206
-  %i.fo = fsub float %i.fe, %i.fm
-  %i.fp = fsub float %i.fc, %i.fk
+._crit_edge207:                                   ; preds = %.lr.ph206, %.lr.ph206.preheader
+  %.0150.lcssa = phi float [ -9.999900e+04, %.lr.ph206.preheader ], [ %i.fk, %.lr.ph206 ]
+  %.0.lcssa = phi float [ 9.999900e+04, %.lr.ph206.preheader ], [ %i.fm, %.lr.ph206 ]
+  %i.fo = fsub float %i.fe, %.0.lcssa
+  %i.fp = fsub float %i.fc, %.0150.lcssa
   %i.fq = sext i32 %i.ew to i64
   %i.fr = getelementptr inbounds [4 x i8], ptr %i.eu, i64 %i.fq
   store float %i.et, ptr %i.fr, align 4
