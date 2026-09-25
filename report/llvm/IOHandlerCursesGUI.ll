@@ -204,33 +204,33 @@ _ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a:
   %i.c = tail call noundef i32 @getmaxx(ptr noundef %i.b) #28 ; 4 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !123
   %i.e = tail call noundef i32 @getmaxy(ptr noundef %i.d) #28 ; 3 uses
-  %5 = icmp sgt i32 %i.c, 0                       ; 3 uses
-  %.sroa.2.0.insert.ext.i.i = zext i32 %i.e to i64
-  %.sroa.2.0.insert.shift.i.i = shl nuw i64 %.sroa.2.0.insert.ext.i.i, 32
-  %6 = lshr i32 %i.c, 1                           ; 3 uses
-  %7 = sub nuw nsw i32 %i.c, %6
-  %.sroa.9.8.insert.ext = zext i32 %7 to i64
-  %.sroa.9.12.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift.i.i, %.sroa.9.8.insert.ext
-  %.sroa.546.8.insert.ext.pn.in = select i1 %5, i32 %6, i32 %i.c ; 2 uses
-  %.sroa.038.sroa.0.0 = select i1 %5, i32 %6, i32 0 ; 3 uses
-  %.sroa.9.0 = select i1 %5, i64 %.sroa.9.12.insert.insert, i64 0 ; 4 uses
-  %.sroa.9.8.extract.trunc = trunc i64 %.sroa.9.0 to i32
-  %i.f = icmp sgt i32 %.sroa.9.8.extract.trunc, 1
-  br i1 %i.f, label %bb.a, label %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12
+  %i.f = icmp sgt i32 %i.c, 0
+  br i1 %i.f, label %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit, label %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12
 
-bb.a:                                             ; preds = %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a
-  %.sroa.5.8.insert.mask = and i64 %.sroa.9.0, -4294967296 ; 2 uses
-  %.sroa.5.8.insert.insert = or disjoint i64 %.sroa.5.8.insert.mask, 1
-  %i.g = add nuw nsw i32 %.sroa.038.sroa.0.0, 1
-  %i.h = add i64 %.sroa.9.0, 4294967295
+_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit: ; preds = %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a
+  %.sroa.2.0.insert.ext.i.i = zext i32 %i.e to i64
+  %.sroa.2.0.insert.shift.i.i = shl nuw i64 %.sroa.2.0.insert.ext.i.i, 32 ; 3 uses
+  %5 = lshr i32 %i.c, 1                           ; 6 uses
+  %6 = sub nuw nsw i32 %i.c, %5                   ; 2 uses
+  %.sroa.9.8.insert.ext = zext nneg i32 %6 to i64 ; 2 uses
+  %.sroa.9.12.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift.i.i, %.sroa.9.8.insert.ext
+  %7 = icmp sgt i32 %6, 1
+  br i1 %7, label %bb.a, label %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12
+
+bb.a:                                             ; preds = %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit
+  %.sroa.5.8.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift.i.i, 1
+  %i.g = add nuw nsw i32 %5, 1
+  %i.h = add nuw nsw i64 %.sroa.9.8.insert.ext, 4294967295
   %.sroa.7.8.insert.ext = and i64 %i.h, 4294967295
-  %.sroa.7.12.insert.insert = or disjoint i64 %.sroa.7.8.insert.ext, %.sroa.5.8.insert.mask
+  %.sroa.7.12.insert.insert = or disjoint i64 %.sroa.7.8.insert.ext, %.sroa.2.0.insert.shift.i.i
   br label %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12
 
-_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12: ; preds = %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a, %bb.a
-  %.sroa.5.0 = phi i64 [ %.sroa.5.8.insert.insert, %bb.a ], [ %.sroa.9.0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
-  %.sroa.036.sroa.0.0 = phi i32 [ %i.g, %bb.a ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
-  %.sroa.7.0 = phi i64 [ %.sroa.7.12.insert.insert, %bb.a ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
+_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12: ; preds = %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit, %bb.a
+  %.sroa.038.sroa.0.059 = phi i32 [ %5, %bb.a ], [ %5, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
+  %.sroa.546.8.insert.ext.pn.in58 = phi i32 [ %5, %bb.a ], [ %5, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit ], [ %i.c, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
+  %.sroa.5.0 = phi i64 [ %.sroa.5.8.insert.insert, %bb.a ], [ %.sroa.9.12.insert.insert, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
+  %.sroa.036.sroa.0.0 = phi i32 [ %i.g, %bb.a ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
+  %.sroa.7.0 = phi i64 [ %.sroa.7.12.insert.insert, %bb.a ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit ], [ 0, %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   %i.i = load i32, ptr %1, align 8, !tbaa !317    ; 2 uses
   %i.j = icmp eq i32 %i.i, 1
@@ -238,11 +238,11 @@ _ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12: ; preds = %_ZNK12
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12
-  %i.l = tail call ptr @subpad(ptr noundef %i.k, i32 noundef %i.e, i32 noundef %.sroa.546.8.insert.ext.pn.in, i32 noundef 0, i32 noundef 0) #28
+  %i.l = tail call ptr @subpad(ptr noundef %i.k, i32 noundef %i.e, i32 noundef %.sroa.546.8.insert.ext.pn.in58, i32 noundef 0, i32 noundef 0) #28
   br label %_ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit
 
 bb.c:                                             ; preds = %_ZNK12lldb_private6curses4Rect13VerticalSplitEiRS1_S2_.exit12
-  %i.m = tail call ptr @derwin(ptr noundef %i.k, i32 noundef %i.e, i32 noundef %.sroa.546.8.insert.ext.pn.in, i32 noundef 0, i32 noundef 0) #28
+  %i.m = tail call ptr @derwin(ptr noundef %i.k, i32 noundef %i.e, i32 noundef %.sroa.546.8.insert.ext.pn.in58, i32 noundef 0, i32 noundef 0) #28
   br label %_ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit
 
 _ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit: ; preds = %bb.b, %bb.c
@@ -259,11 +259,11 @@ _ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit: ; preds = %bb.b, %
   br i1 %i.p, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit
-  %i.r = tail call ptr @subpad(ptr noundef %i.q, i32 noundef %.sroa.8.8.extract.trunc.i19, i32 noundef %.sroa.5.8.extract.trunc.i17, i32 noundef 0, i32 noundef %.sroa.038.sroa.0.0) #28
+  %i.r = tail call ptr @subpad(ptr noundef %i.q, i32 noundef %.sroa.8.8.extract.trunc.i19, i32 noundef %.sroa.5.8.extract.trunc.i17, i32 noundef 0, i32 noundef %.sroa.038.sroa.0.059) #28
   br label %_ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit23
 
 bb.e:                                             ; preds = %_ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit
-  %i.s = tail call ptr @derwin(ptr noundef %i.q, i32 noundef %.sroa.8.8.extract.trunc.i19, i32 noundef %.sroa.5.8.extract.trunc.i17, i32 noundef 0, i32 noundef %.sroa.038.sroa.0.0) #28
+  %i.s = tail call ptr @derwin(ptr noundef %i.q, i32 noundef %.sroa.8.8.extract.trunc.i19, i32 noundef %.sroa.5.8.extract.trunc.i17, i32 noundef 0, i32 noundef %.sroa.038.sroa.0.059) #28
   br label %_ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit23
 
 _ZN12lldb_private6curses7Surface10SubSurfaceENS0_4RectE.exit23: ; preds = %bb.d, %bb.e

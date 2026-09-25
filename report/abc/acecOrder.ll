@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %.preheader, %._crit
   br i1 %i.dl, label %.lr.ph277, label %._crit_edge.thread
 
 .lr.ph277:                                        ; preds = %bb.s
-  %.val190 = load ptr, ptr %i.bb, align 8, !tbaa !13 ; 5 uses
   %5 = udiv i32 %.val173, 5
+  %.val190 = load ptr, ptr %i.bb, align 8, !tbaa !13 ; 5 uses
   %i.dm = zext nneg i32 %5 to i64
   br label %bb.t
 
@@ -362,8 +362,8 @@ bb.af:                                            ; preds = %bb.t, %bb.u, %bb.ae
   br i1 %i.gh, label %.lr.ph283, label %.critedge2
 
 .lr.ph283:                                        ; preds = %._crit_edge.thread
-  %.val180 = load ptr, ptr %i.bb, align 8, !tbaa !13 ; 4 uses
   %6 = lshr i32 %.val172, 1
+  %.val180 = load ptr, ptr %i.bb, align 8, !tbaa !13 ; 4 uses
   %i.gi = zext nneg i32 %6 to i64
   br label %bb.ag
 
