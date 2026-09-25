@@ -205,7 +205,7 @@ _ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3
 
 bb.f:                                             ; preds = %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, %bb.b
   %.sroa.37.1 = phi i32 [ %i.cb, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread ], [ %i.i, %bb.b ]
-  %.sroa.23.1 = phi i64 [ %.sroa.23.16.insert.insert44, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread ], [ %.sroa.0.0.insert.insert.i.i.i.i, %bb.b ] ; 2 uses
+  %.sroa.23.1 = phi i64 [ %.sroa.23.16.insert.insert44, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread ], [ %.sroa.0.0.insert.insert.i.i.i.i, %bb.b ]
   %.sroa.16.1 = phi i32 [ %i.by, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread ], [ %i.h, %bb.b ]
   %.sroa.09.sroa.0.1 = phi i32 [ %i.bu, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread ], [ %.sroa.09.sroa.0.0.extract.trunc, %bb.b ]
   %.sroa.09.sroa.10.1 = phi i32 [ %i.bw, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread ], [ %.sroa.09.sroa.10.0.extract.trunc, %bb.b ]
@@ -216,18 +216,12 @@ bb.f:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.cf = call i32 @llvm.smin.i32(i32 %.sroa.09.sroa.10.1, i32 %i.ce)
   store i32 %i.cf, ptr %i.l, align 4, !tbaa !741
   %i.cg = load i32, ptr %i.o, align 4, !tbaa !741
-  %4 = call i32 @llvm.smin.i32(i32 %.sroa.16.1, i32 %i.cg)
-  store i32 %4, ptr %i.o, align 4, !tbaa !741
-  %5 = load i32, ptr %i.r, align 4, !tbaa !741
-  %.sroa.23.12.extract.trunc33 = trunc i64 %.sroa.23.1 to i32
-  %i.ch = call i32 @llvm.smax.i32(i32 %5, i32 %.sroa.23.12.extract.trunc33)
-  store i32 %i.ch, ptr %i.r, align 4, !tbaa !741
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %7 = load i32, ptr %6, align 4, !tbaa !741
-  %.sroa.23.16.extract.shift46 = lshr i64 %.sroa.23.1, 32
-  %.sroa.23.16.extract.trunc47 = trunc nuw i64 %.sroa.23.16.extract.shift46 to i32
-  %8 = call i32 @llvm.smax.i32(i32 %7, i32 %.sroa.23.16.extract.trunc47)
-  store i32 %8, ptr %6, align 4, !tbaa !741
+  %i.ch = call i32 @llvm.smin.i32(i32 %.sroa.16.1, i32 %i.cg)
+  store i32 %i.ch, ptr %i.o, align 4, !tbaa !741
+  %4 = load <2 x i32>, ptr %i.r, align 4, !tbaa !741
+  %5 = bitcast i64 %.sroa.23.1 to <2 x i32>
+  %6 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %4, <2 x i32> %5)
+  store <2 x i32> %6, ptr %i.r, align 4, !tbaa !741
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !741
   %i.ck = call i32 @llvm.smax.i32(i32 %i.cj, i32 %.sroa.37.1)
@@ -630,7 +624,7 @@ _ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3
 
 bb.f:                                             ; preds = %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, %bb.b
   %.sroa.37.1 = phi i32 [ %i.cb, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread ], [ %i.i, %bb.b ]
-  %.sroa.23.1 = phi i64 [ %.sroa.23.16.insert.insert44, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread ], [ %.sroa.0.0.insert.insert.i.i.i.i, %bb.b ] ; 2 uses
+  %.sroa.23.1 = phi i64 [ %.sroa.23.16.insert.insert44, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread ], [ %.sroa.0.0.insert.insert.i.i.i.i, %bb.b ]
   %.sroa.16.1 = phi i32 [ %i.by, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread ], [ %i.h, %bb.b ]
   %.sroa.09.sroa.0.1 = phi i32 [ %i.bu, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread ], [ %.sroa.09.sroa.0.0.extract.trunc, %bb.b ]
   %.sroa.09.sroa.10.1 = phi i32 [ %i.bw, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread ], [ %.sroa.09.sroa.10.0.extract.trunc, %bb.b ]
@@ -641,18 +635,12 @@ bb.f:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.cf = call i32 @llvm.smin.i32(i32 %.sroa.09.sroa.10.1, i32 %i.ce)
   store i32 %i.cf, ptr %i.l, align 4, !tbaa !741
   %i.cg = load i32, ptr %i.o, align 4, !tbaa !741
-  %4 = call i32 @llvm.smin.i32(i32 %.sroa.16.1, i32 %i.cg)
-  store i32 %4, ptr %i.o, align 4, !tbaa !741
-  %5 = load i32, ptr %i.r, align 4, !tbaa !741
-  %.sroa.23.12.extract.trunc33 = trunc i64 %.sroa.23.1 to i32
-  %i.ch = call i32 @llvm.smax.i32(i32 %5, i32 %.sroa.23.12.extract.trunc33)
-  store i32 %i.ch, ptr %i.r, align 4, !tbaa !741
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %7 = load i32, ptr %6, align 4, !tbaa !741
-  %.sroa.23.16.extract.shift46 = lshr i64 %.sroa.23.1, 32
-  %.sroa.23.16.extract.trunc47 = trunc nuw i64 %.sroa.23.16.extract.shift46 to i32
-  %8 = call i32 @llvm.smax.i32(i32 %7, i32 %.sroa.23.16.extract.trunc47)
-  store i32 %8, ptr %6, align 4, !tbaa !741
+  %i.ch = call i32 @llvm.smin.i32(i32 %.sroa.16.1, i32 %i.cg)
+  store i32 %i.ch, ptr %i.o, align 4, !tbaa !741
+  %4 = load <2 x i32>, ptr %i.r, align 4, !tbaa !741
+  %5 = bitcast i64 %.sroa.23.1 to <2 x i32>
+  %6 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %4, <2 x i32> %5)
+  store <2 x i32> %6, ptr %i.r, align 4, !tbaa !741
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !741
   %i.ck = call i32 @llvm.smax.i32(i32 %i.cj, i32 %.sroa.37.1)

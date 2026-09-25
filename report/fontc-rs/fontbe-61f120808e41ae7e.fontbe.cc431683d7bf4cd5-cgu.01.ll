@@ -204,10 +204,9 @@ bb.i:                                             ; preds = %_RINvMs1_NtCsbDKHzk
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1, %.preheader.i.preheader.new
-  %.sroa.05.0.off0.i.i = phi i16 [ 0, %.preheader.i.preheader.new ], [ %3, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1 ]
-  %.sroa.05.0.off16.i.i = phi i16 [ 0, %.preheader.i.preheader.new ], [ %i.bp, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1 ]
-  %.sroa.05.0.off32.i.i = phi i16 [ 0, %.preheader.i.preheader.new ], [ %i.bq, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1 ]
+  %.sroa.05.0.off16.i.i = phi i16 [ 0, %.preheader.i.preheader.new ], [ %i.bq, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1 ]
   %.sroa.07.0.i.i = phi i64 [ 0, %.preheader.i.preheader.new ], [ %i.br, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1 ] ; 3 uses
+  %1 = phi <2 x i16> [ zeroinitializer, %.preheader.i.preheader.new ], [ %7, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1 ]
   %niter = phi i64 [ 0, %.preheader.i.preheader.new ], [ %niter.next.1, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1 ]
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %.sroa.07.0.i.i ; 2 uses
   %.val.i29.i = load i16, ptr %i.bg, align 2, !noalias !3246
@@ -227,27 +226,23 @@ _RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6Opti
 
 _RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.1: ; preds = %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i
   %i.bl = getelementptr i8, ptr %i.bg, i64 2
-  %.val22.i.i = load i48, ptr %i.bl, align 2, !noalias !3246 ; 3 uses
+  %.val22.i.i = load i48, ptr %i.bl, align 2, !noalias !3246 ; 2 uses
   %.sroa.05.4.extract.shift.i.i.i.i = lshr i48 %.val22.i.i, 32
   %.sroa.05.4.extract.trunc.i.i.i.i = trunc nuw i48 %.sroa.05.4.extract.shift.i.i.i.i to i16
   %i.bm = add i16 %.sroa.05.4.extract.trunc.i.i.i.i, 1
-  %i.bn = tail call i16 @llvm.umax.i16(i16 %.sroa.05.0.off32.i.i, i16 %i.bm)
-  %.sroa.05.2.extract.shift.i.i.i.i = lshr i48 %.val22.i.i, 16
-  %.sroa.05.2.extract.trunc.i.i.i.i = trunc i48 %.sroa.05.2.extract.shift.i.i.i.i to i16
-  %1 = add i16 %.sroa.05.0.off16.i.i, %.sroa.05.2.extract.trunc.i.i.i.i
-  %.sroa.05.0.extract.trunc.i.i.i.i = trunc i48 %.val22.i.i to i16
-  %2 = add i16 %.sroa.05.0.off0.i.i, %.sroa.05.0.extract.trunc.i.i.i.i
+  %i.bn = tail call i16 @llvm.umax.i16(i16 %.sroa.05.0.off16.i.i, i16 %i.bm)
+  %2 = bitcast i48 %.val22.i.i to <3 x i16>
+  %3 = shufflevector <3 x i16> %2, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
+  %4 = add <2 x i16> %1, %3
   %i.bo = getelementptr i8, ptr %i.bi, i64 10
-  %.val22.i.i.1 = load i48, ptr %i.bo, align 2, !noalias !3246 ; 3 uses
-  %.sroa.05.0.extract.trunc.i.i.i.i.1 = trunc i48 %.val22.i.i.1 to i16
-  %.sroa.05.2.extract.shift.i.i.i.i.1 = lshr i48 %.val22.i.i.1, 16
-  %.sroa.05.2.extract.trunc.i.i.i.i.1 = trunc i48 %.sroa.05.2.extract.shift.i.i.i.i.1 to i16
-  %.sroa.05.4.extract.shift.i.i.i.i.1 = lshr i48 %.val22.i.i.1, 32
-  %.sroa.05.4.extract.trunc.i.i.i.i.1 = trunc nuw i48 %.sroa.05.4.extract.shift.i.i.i.i.1 to i16
-  %3 = add i16 %2, %.sroa.05.0.extract.trunc.i.i.i.i.1 ; 3 uses
-  %4 = add i16 %.sroa.05.4.extract.trunc.i.i.i.i.1, 1
-  %i.bp = add i16 %1, %.sroa.05.2.extract.trunc.i.i.i.i.1 ; 3 uses
-  %i.bq = tail call i16 @llvm.umax.i16(i16 %i.bn, i16 %4) ; 3 uses
+  %.val22.i.i.1 = load i48, ptr %i.bo, align 2, !noalias !3246 ; 2 uses
+  %.sroa.05.2.extract.shift.i.i.i.i.1 = lshr i48 %.val22.i.i.1, 32
+  %.sroa.05.2.extract.trunc.i.i.i.i.1 = trunc nuw i48 %.sroa.05.2.extract.shift.i.i.i.i.1 to i16
+  %5 = bitcast i48 %.val22.i.i.1 to <3 x i16>
+  %6 = shufflevector <3 x i16> %5, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
+  %7 = add <2 x i16> %4, %6                       ; 3 uses
+  %i.bp = add i16 %.sroa.05.2.extract.trunc.i.i.i.i.1, 1
+  %i.bq = tail call i16 @llvm.umax.i16(i16 %i.bn, i16 %i.bp) ; 3 uses
   %i.br = add nuw i64 %.sroa.07.0.i.i, 2          ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -258,10 +253,9 @@ _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtN
   br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i, label %.preheader.i.epil.preheader
 
 .preheader.i.epil.preheader:                      ; preds = %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa, %.preheader.i.preheader
-  %.sroa.05.0.off0.i.i.epil.init = phi i16 [ 0, %.preheader.i.preheader ], [ %3, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ]
-  %.sroa.05.0.off16.i.i.epil.init = phi i16 [ 0, %.preheader.i.preheader ], [ %i.bp, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ]
   %.sroa.05.0.off32.i.i.epil.init = phi i16 [ 0, %.preheader.i.preheader ], [ %i.bq, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ]
   %.sroa.07.0.i.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %i.br, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ]
+  %.epil.init = phi <2 x i16> [ zeroinitializer, %.preheader.i.preheader ], [ %7, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ]
   %lcmp.mod40 = trunc i64 %i.bb to i1
   tail call void @llvm.assume(i1 %lcmp.mod40)
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %.sroa.07.0.i.i.epil.init ; 2 uses
@@ -271,22 +265,19 @@ _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtN
 
 _RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.epil: ; preds = %.preheader.i.epil.preheader
   %i.bu = getelementptr i8, ptr %i.bs, i64 2
-  %.val22.i.i.epil = load i48, ptr %i.bu, align 2, !noalias !3246 ; 3 uses
-  %.sroa.05.0.extract.trunc.i.i.i.i.epil = trunc i48 %.val22.i.i.epil to i16
-  %.sroa.05.2.extract.shift.i.i.i.i.epil = lshr i48 %.val22.i.i.epil, 16
-  %.sroa.05.2.extract.trunc.i.i.i.i.epil = trunc i48 %.sroa.05.2.extract.shift.i.i.i.i.epil to i16
-  %.sroa.05.4.extract.shift.i.i.i.i.epil = lshr i48 %.val22.i.i.epil, 32
-  %.sroa.05.4.extract.trunc.i.i.i.i.epil = trunc nuw i48 %.sroa.05.4.extract.shift.i.i.i.i.epil to i16
-  %5 = add i16 %.sroa.05.0.off0.i.i.epil.init, %.sroa.05.0.extract.trunc.i.i.i.i.epil
-  %6 = add i16 %.sroa.05.4.extract.trunc.i.i.i.i.epil, 1
-  %i.bv = add i16 %.sroa.05.0.off16.i.i.epil.init, %.sroa.05.2.extract.trunc.i.i.i.i.epil
-  %i.bw = tail call i16 @llvm.umax.i16(i16 %.sroa.05.0.off32.i.i.epil.init, i16 %6)
+  %.val22.i.i.epil = load i48, ptr %i.bu, align 2, !noalias !3246 ; 2 uses
+  %.sroa.05.2.extract.shift.i.i.i.i.epil = lshr i48 %.val22.i.i.epil, 32
+  %.sroa.05.2.extract.trunc.i.i.i.i.epil = trunc nuw i48 %.sroa.05.2.extract.shift.i.i.i.i.epil to i16
+  %8 = bitcast i48 %.val22.i.i.epil to <3 x i16>
+  %9 = shufflevector <3 x i16> %8, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
+  %10 = add <2 x i16> %.epil.init, %9
+  %i.bv = add i16 %.sroa.05.2.extract.trunc.i.i.i.i.epil, 1
+  %i.bw = tail call i16 @llvm.umax.i16(i16 %.sroa.05.0.off32.i.i.epil.init, i16 %i.bv)
   br label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i
 
 _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i: ; preds = %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.epil, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa, %_RINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB6_3VecINtNtCsf3Ta7LF998c_4core6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEE14extend_trustedINtNtNtNtBL_4iter8adapters3map3MapINtNtNtBL_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs1_B1k_NtB1k_10MaxBuilder23update_composite_limitss_00EEB1m_.exit.i
-  %.sroa.03.0.i.off0.i = phi i16 [ 0, %_RINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB6_3VecINtNtCsf3Ta7LF998c_4core6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEE14extend_trustedINtNtNtNtBL_4iter8adapters3map3MapINtNtNtBL_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs1_B1k_NtB1k_10MaxBuilder23update_composite_limitss_00EEB1m_.exit.i ], [ %3, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ], [ %5, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.epil ] ; 2 uses
-  %.sroa.03.0.i.off16.i = phi i16 [ 0, %_RINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB6_3VecINtNtCsf3Ta7LF998c_4core6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEE14extend_trustedINtNtNtNtBL_4iter8adapters3map3MapINtNtNtBL_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs1_B1k_NtB1k_10MaxBuilder23update_composite_limitss_00EEB1m_.exit.i ], [ %i.bp, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ], [ %i.bv, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.epil ] ; 2 uses
-  %.sroa.03.0.i.off32.i = phi i16 [ 0, %_RINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB6_3VecINtNtCsf3Ta7LF998c_4core6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEE14extend_trustedINtNtNtNtBL_4iter8adapters3map3MapINtNtNtBL_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs1_B1k_NtB1k_10MaxBuilder23update_composite_limitss_00EEB1m_.exit.i ], [ %i.bq, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ], [ %i.bw, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.epil ] ; 2 uses
+  %.sroa.03.0.i.off16.i = phi i16 [ 0, %_RINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB6_3VecINtNtCsf3Ta7LF998c_4core6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEE14extend_trustedINtNtNtNtBL_4iter8adapters3map3MapINtNtNtBL_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs1_B1k_NtB1k_10MaxBuilder23update_composite_limitss_00EEB1m_.exit.i ], [ %i.bq, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ], [ %i.bw, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.epil ] ; 2 uses
+  %11 = phi <2 x i16> [ zeroinitializer, %_RINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB6_3VecINtNtCsf3Ta7LF998c_4core6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEE14extend_trustedINtNtNtNtBL_4iter8adapters3map3MapINtNtNtBL_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16ENCNCNvMs1_B1k_NtB1k_10MaxBuilder23update_composite_limitss_00EEB1m_.exit.i ], [ %7, %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i.loopexit.unr-lcssa ], [ %10, %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldRINtNtBa_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEB1h_B1h_NCNCNvMs1_B1j_NtB1j_10MaxBuilder23update_composite_limitss_0s0_0NCB2o_s1_0E0B1l_.exit.i.i.epil ] ; 3 uses
   %i.bx = tail call noundef align 8 ptr @_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16NtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits9GlyphInfoNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE7get_mutBO_EB1F_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.c, ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(2) %0), !noalias !3246 ; 5 uses
   %.not26.i = icmp eq ptr %i.bx, null
   br i1 %.not26.i, label %bb.k, label %bb.j, !prof !9
@@ -295,22 +286,22 @@ bb.j:                                             ; preds = %_RINvXs2J_NtNtCsf3T
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 24
   store i16 1, ptr %i.by, align 8, !noalias !3246
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 26
-  store i16 %.sroa.03.0.i.off0.i, ptr %.sroa.413.0..sroa_idx.i, align 2, !noalias !3246
+  %12 = extractelement <2 x i16> %11, i64 0
+  store i16 %12, ptr %.sroa.413.0..sroa_idx.i, align 2, !noalias !3246
   %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 28
-  store i16 %.sroa.03.0.i.off16.i, ptr %.sroa.514.0..sroa_idx.i, align 4, !noalias !3246
+  %13 = extractelement <2 x i16> %11, i64 1
+  store i16 %13, ptr %.sroa.514.0..sroa_idx.i, align 4, !noalias !3246
   %.sroa.615.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 30
-  store i16 %.sroa.03.0.i.off32.i, ptr %.sroa.615.0..sroa_idx.i, align 2, !noalias !3246
+  store i16 %.sroa.03.0.i.off16.i, ptr %.sroa.615.0..sroa_idx.i, align 2, !noalias !3246
   %i.bz = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
   %i.ca = load ptr, ptr %i.bz, align 8, !alias.scope !3246, !noalias !3247, !nonnull !4, !align !3262, !noundef !4 ; 3 uses
-  %7 = load i16, ptr %i.ca, align 2, !noalias !3246, !noundef !4
-  %8 = tail call i16 @llvm.umax.i16(i16 %7, i16 %.sroa.03.0.i.off0.i)
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 2 ; 2 uses
-  store i16 %8, ptr %i.ca, align 2, !noalias !3246
-  %9 = load <2 x i16>, ptr %i.cb, align 2, !noalias !3246
-  %10 = insertelement <2 x i16> poison, i16 %.sroa.03.0.i.off16.i, i64 0
-  %11 = insertelement <2 x i16> %10, i16 %.sroa.03.0.i.off32.i, i64 1
-  %12 = tail call <2 x i16> @llvm.umax.v2i16(<2 x i16> %9, <2 x i16> %11)
-  store <2 x i16> %12, ptr %i.cb, align 2, !noalias !3246
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 4 ; 2 uses
+  %14 = load i16, ptr %i.cb, align 2, !noalias !3246, !noundef !4
+  %15 = tail call i16 @llvm.umax.i16(i16 %14, i16 %.sroa.03.0.i.off16.i)
+  %16 = load <2 x i16>, ptr %i.ca, align 2, !noalias !3246
+  %17 = tail call <2 x i16> @llvm.umax.v2i16(<2 x i16> %16, <2 x i16> %11)
+  store <2 x i16> %17, ptr %i.ca, align 2, !noalias !3246
+  store i16 %15, ptr %i.cb, align 2, !noalias !3246
   br label %_RNCNvMs1_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB7_10MaxBuilder23update_composite_limitss_0B9_.exit
 
 bb.k:                                             ; preds = %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCshxhuDJfZv4T_6fontbe18metrics_and_limits11GlyphLimitsEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldB1c_NCINvNtNtB2g_8adapters3map8map_foldRBQ_B1c_B1c_NCNCNvMs1_B1e_NtB1e_10MaxBuilder23update_composite_limitss_0s0_0NCB3L_s1_0E0EB1g_.exit.i

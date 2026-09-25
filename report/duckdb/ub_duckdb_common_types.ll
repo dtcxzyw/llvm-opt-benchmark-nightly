@@ -205,68 +205,14 @@ define { i64, i64 } @_ZN6duckdb8BaseUUID8FromBlobEPKh(ptr nofree noundef readonl
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN6duckdb8BaseUUID6ToBlobENS_9hugeint_tEPh(i64 %0, i64 %1, ptr nofree noundef writeonly captures(none) initializes((0, 16)) %2) local_unnamed_addr #19 align 2 {
 .preheader.preheader:
-  %3 = lshr i64 %1, 56
-  %4 = trunc nuw i64 %3 to i8
-  %5 = xor i8 %4, -128
-  store i8 %5, ptr %2, align 1, !tbaa !273
-  %6 = lshr i64 %1, 48
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !273
-  %9 = lshr i64 %1, 40
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %10, ptr %11, align 1, !tbaa !273
-  %12 = lshr i64 %1, 32
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %2, i64 3
-  store i8 %13, ptr %14, align 1, !tbaa !273
-  %15 = lshr i64 %1, 24
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i8 %16, ptr %17, align 1, !tbaa !273
-  %18 = lshr i64 %1, 16
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %2, i64 5
-  store i8 %19, ptr %20, align 1, !tbaa !273
-  %21 = lshr i64 %1, 8
-  %22 = trunc i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  store i8 %22, ptr %23, align 1, !tbaa !273
-  %24 = trunc i64 %1 to i8
-  %25 = getelementptr inbounds nuw i8, ptr %2, i64 7
-  store i8 %24, ptr %25, align 1, !tbaa !273
-  %26 = lshr i64 %0, 56
-  %27 = trunc nuw i64 %26 to i8
+  %3 = bitcast i64 %1 to <8 x i8>
+  %4 = xor <8 x i8> %3, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %2, align 1, !tbaa !273
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i8 %27, ptr %i.a, align 1, !tbaa !273
-  %28 = lshr i64 %0, 48
-  %29 = trunc i64 %28 to i8
-  %30 = getelementptr inbounds nuw i8, ptr %2, i64 9
-  store i8 %29, ptr %30, align 1, !tbaa !273
-  %31 = lshr i64 %0, 40
-  %32 = trunc i64 %31 to i8
-  %33 = getelementptr inbounds nuw i8, ptr %2, i64 10
-  store i8 %32, ptr %33, align 1, !tbaa !273
-  %34 = lshr i64 %0, 32
-  %35 = trunc i64 %34 to i8
-  %36 = getelementptr inbounds nuw i8, ptr %2, i64 11
-  store i8 %35, ptr %36, align 1, !tbaa !273
-  %37 = lshr i64 %0, 24
-  %38 = trunc i64 %37 to i8
-  %39 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i8 %38, ptr %39, align 1, !tbaa !273
-  %40 = lshr i64 %0, 16
-  %41 = trunc i64 %40 to i8
-  %42 = getelementptr inbounds nuw i8, ptr %2, i64 13
-  store i8 %41, ptr %42, align 1, !tbaa !273
-  %43 = lshr i64 %0, 8
-  %44 = trunc i64 %43 to i8
-  %45 = getelementptr inbounds nuw i8, ptr %2, i64 14
-  store i8 %44, ptr %45, align 1, !tbaa !273
-  %46 = trunc i64 %0 to i8
-  %47 = getelementptr inbounds nuw i8, ptr %2, i64 15
-  store i8 %46, ptr %47, align 1, !tbaa !273
+  %6 = bitcast i64 %0 to <8 x i8>
+  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %7, ptr %i.a, align 1, !tbaa !273
   ret void
 }
 

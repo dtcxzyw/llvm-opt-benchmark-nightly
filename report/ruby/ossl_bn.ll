@@ -204,7 +204,7 @@ declare i64 @rb_obj_is_kind_of(i64 noundef, i64 noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc nonnull ptr @integer_to_bnptr(i64 noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = trunc i64 %0 to i1
   br i1 %i.c, label %bb.b, label %bb.g
@@ -212,37 +212,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.d = ashr i64 %0, 1                           ; 2 uses
-  %i.e = tail call i64 @llvm.abs.i64(i64 %i.d, i1 true) ; 8 uses
-  %2 = trunc i64 %i.e to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %2, ptr %3, align 1, !tbaa !33
-  %4 = lshr i64 %i.e, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %5, ptr %6, align 1, !tbaa !33
-  %7 = lshr i64 %i.e, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %8, ptr %9, align 1, !tbaa !33
-  %10 = lshr i64 %i.e, 24
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %11, ptr %12, align 1, !tbaa !33
-  %13 = lshr i64 %i.e, 32
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %14, ptr %15, align 1, !tbaa !33
-  %16 = lshr i64 %i.e, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %17, ptr %18, align 1, !tbaa !33
-  %19 = lshr i64 %i.e, 48
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %20, ptr %21, align 1, !tbaa !33
-  %22 = lshr i64 %i.e, 56
-  %23 = trunc nuw nsw i64 %22 to i8
-  store i8 %23, ptr %i.a, align 1, !tbaa !33
+  %i.e = tail call i64 @llvm.abs.i64(i64 %i.d, i1 true)
+  %2 = bitcast i64 %i.e to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.a, align 8, !tbaa !33
   %i.f = call ptr @BN_bin2bn(ptr noundef nonnull %i.a, i32 noundef 8, ptr noundef %1) #10 ; 3 uses
   %.not31 = icmp eq ptr %i.f, null
   br i1 %.not31, label %bb.c, label %bb.d

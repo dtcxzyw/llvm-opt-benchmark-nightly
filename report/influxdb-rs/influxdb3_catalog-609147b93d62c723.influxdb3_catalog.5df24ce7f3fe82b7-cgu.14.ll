@@ -205,7 +205,7 @@ _RINvNtCs87O7Q65ve1k_7bitcode4pack22unpack_bytes_less_thanKj4_Kj0_ECs844E4pPEVZX
 define hidden noundef zeroext i1 @_RNvXs2_NtNtCs87O7Q65ve1k_7bitcode6derive7variantINtB5_14VariantDecoderKj5_Kb0_ENtNtB9_5coder4View8populateCs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef align 8 dereferenceable(72) initializes((16, 32)) %0, ptr noalias noundef align 8 dereferenceable(16) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 13 uses
-  %i.b = alloca [2048 x i8], align 8              ; 9 uses
+  %i.b = alloca [2048 x i8], align 8              ; 8 uses
   %i.c = alloca [1728 x i8], align 8              ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !450)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !451)
@@ -271,16 +271,10 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc67.i:                                       ; preds = %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 1728
-  %3 = load <32 x i64>, ptr %i.t, align 8, !alias.scope !461, !noalias !462 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1984
-  %5 = load <6 x i64>, ptr %4, align 8, !alias.scope !461, !noalias !462
+  %3 = load <38 x i64>, ptr %i.t, align 8, !alias.scope !461, !noalias !462
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 2032
   %.val.i.38.i.i.i = load i64, ptr %i.u, align 8, !alias.scope !461, !noalias !462, !noundef !4
-  %6 = shufflevector <32 x i64> %3, <32 x i64> poison, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5>
-  %rdx.op = add <6 x i64> %6, %5
-  %7 = shufflevector <6 x i64> %rdx.op, <6 x i64> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %8 = shufflevector <32 x i64> %7, <32 x i64> %3, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.v = call i64 @llvm.vector.reduce.add.v32i64(<32 x i64> %8)
+  %i.v = call i64 @llvm.vector.reduce.add.v38i64(<38 x i64> %3)
   %op.rdx = add i64 %i.v, %.val.i.38.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 2040
   %.val.i.39.i.i.i = load i64, ptr %i.w, align 8, !alias.scope !461, !noalias !462, !noundef !4
@@ -493,7 +487,7 @@ _RINvNtCs87O7Q65ve1k_7bitcode4pack22unpack_bytes_less_thanKj5_Kj0_ECs844E4pPEVZX
 define hidden noundef zeroext i1 @_RNvXs2_NtNtCs87O7Q65ve1k_7bitcode6derive7variantINtB5_14VariantDecoderKj6_Kb0_ENtNtB9_5coder4View8populateCs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef align 8 dereferenceable(80) initializes((16, 32)) %0, ptr noalias noundef align 8 dereferenceable(16) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 13 uses
-  %i.b = alloca [2048 x i8], align 8              ; 9 uses
+  %i.b = alloca [2048 x i8], align 8              ; 8 uses
   %i.c = alloca [1728 x i8], align 8              ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !491)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !492)
@@ -559,16 +553,10 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc67.i:                                       ; preds = %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 1728
-  %3 = load <32 x i64>, ptr %i.t, align 8, !alias.scope !502, !noalias !503 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1984
-  %5 = load <6 x i64>, ptr %4, align 8, !alias.scope !502, !noalias !503
+  %3 = load <38 x i64>, ptr %i.t, align 8, !alias.scope !502, !noalias !503
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 2032
   %.val.i.38.i.i.i = load i64, ptr %i.u, align 8, !alias.scope !502, !noalias !503, !noundef !4
-  %6 = shufflevector <32 x i64> %3, <32 x i64> poison, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5>
-  %rdx.op = add <6 x i64> %6, %5
-  %7 = shufflevector <6 x i64> %rdx.op, <6 x i64> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %8 = shufflevector <32 x i64> %7, <32 x i64> %3, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.v = call i64 @llvm.vector.reduce.add.v32i64(<32 x i64> %8)
+  %i.v = call i64 @llvm.vector.reduce.add.v38i64(<38 x i64> %3)
   %op.rdx = add i64 %i.v, %.val.i.38.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 2040
   %.val.i.39.i.i.i = load i64, ptr %i.w, align 8, !alias.scope !502, !noalias !503, !noundef !4
@@ -971,7 +959,7 @@ declare <2 x i8> @llvm.ctpop.v2i8(<2 x i8>) #15
 declare i64 @llvm.vector.reduce.add.v12i64(<12 x i64>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v32i64(<32 x i64>) #15
+declare i64 @llvm.vector.reduce.add.v38i64(<38 x i64>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #15

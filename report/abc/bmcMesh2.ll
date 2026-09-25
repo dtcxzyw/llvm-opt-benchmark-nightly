@@ -205,7 +205,7 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
 .lr.ph599.split:                                  ; preds = %.lr.ph599.split.preheader, %bb.d
   %indvars.iv = phi i64 [ 0, %.lr.ph599.split.preheader ], [ %indvars.iv.next, %bb.d ] ; 4 uses
   %i.ap = getelementptr inbounds nuw [12 x i8], ptr %.val469, i64 %indvars.iv
-  %.val470 = load i64, ptr %i.ap, align 4         ; 4 uses
+  %.val470 = load i64, ptr %i.ap, align 4         ; 3 uses
   %i.aq = and i64 %.val470, 2147483648
   %.not.i = icmp ne i64 %i.aq, 0
   %i.ar = and i64 %.val470, 536870911
@@ -214,21 +214,16 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   br i1 %narrow.i.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph599.split
-  %8 = trunc i64 %.val470 to i32
-  %9 = and i32 %8, 536870911
-  %10 = xor i32 %9, -1
-  %i.at = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
-  %11 = add nsw i32 %i.at, %10
-  %i.au = getelementptr [8 x i8], ptr %i.j, i64 %indvars.iv ; 2 uses
+  %i.at = trunc nsw i64 %indvars.iv to i32
+  %i.au = getelementptr [8 x i8], ptr %i.j, i64 %indvars.iv
   %i.av = getelementptr i8, ptr %i.au, i64 -8
-  store i32 %11, ptr %i.av, align 8, !tbaa !28
-  %12 = lshr i64 %.val470, 32
-  %13 = trunc nuw i64 %12 to i32
-  %14 = and i32 %13, 536870911
-  %15 = xor i32 %14, -1
-  %16 = add nsw i32 %i.at, %15
-  %17 = getelementptr i8, ptr %i.au, i64 -4
-  store i32 %16, ptr %17, align 4, !tbaa !28
+  %.inner = and i64 %.val470, 2305843005455597567
+  %.inner982 = xor i64 %.inner, -1
+  %8 = bitcast i64 %.inner982 to <2 x i32>
+  %9 = insertelement <2 x i32> poison, i32 %i.at, i64 0
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <2 x i32> zeroinitializer
+  %11 = add nsw <2 x i32> %10, %8
+  store <2 x i32> %11, ptr %i.av, align 8, !tbaa !28
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph599.split

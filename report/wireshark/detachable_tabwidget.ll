@@ -202,7 +202,7 @@ bb.a:
   %2 = alloca %class.QPointF, align 8             ; 4 uses
   %3 = alloca %class.QString, align 16            ; 5 uses
   %4 = alloca %class.QPointF, align 16            ; 5 uses
-  %5 = alloca %class.QPointF, align 8             ; 6 uses
+  %5 = alloca %class.QPointF, align 16            ; 5 uses
   %6 = alloca %class.QString, align 8             ; 9 uses
   %7 = alloca %class.QString, align 16            ; 10 uses
   %8 = alloca %class.QByteArray, align 8          ; 9 uses
@@ -280,17 +280,12 @@ bb.e:                                             ; preds = %bb.d
   store <2 x double> %i.an, ptr %4, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.ao = invoke i64 @_ZN7QCursor3posEv()
-          to label %bb.f unwind label %bb.r       ; 2 uses
+          to label %bb.f unwind label %bb.r
 
 bb.f:                                             ; preds = %bb.e
-  %.sroa.077.0.extract.trunc = trunc i64 %i.ao to i32
-  %.sroa.578.0.extract.shift = lshr i64 %i.ao, 32
-  %.sroa.578.0.extract.trunc = trunc nuw i64 %.sroa.578.0.extract.shift to i32
-  %15 = sitofp i32 %.sroa.077.0.extract.trunc to double
-  store double %15, ptr %5, align 8
-  %16 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %17 = sitofp i32 %.sroa.578.0.extract.trunc to double
-  store double %17, ptr %16, align 8
+  %15 = bitcast i64 %i.ao to <2 x i32>
+  %16 = sitofp <2 x i32> %15 to <2 x double>
+  store <2 x double> %16, ptr %5, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %6, i8 0, i64 24, i1 false)
   %i.ap = invoke noundef ptr @_ZN15QPointingDevice21primaryPointingDeviceERK7QString(ptr noundef nonnull align 8 dereferenceable(24) %6)

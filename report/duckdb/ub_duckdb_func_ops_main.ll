@@ -205,12 +205,10 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i.i53.i.i: ; pred
   br i1 %i.hq, label %.lr.ph.i.i57.i.i, label %.loopexit89.i.i54.i.i
 
 .lr.ph.i.i57.i.i:                                 ; preds = %.preheader90.i.i56.i.i
-  %i.hr = load <2 x i64>, ptr %i.go, align 8, !alias.scope !521, !noalias !525 ; 4 uses
-  %14 = trunc <2 x i64> %i.hr to <2 x i32>
-  %15 = bitcast <2 x i64> %i.hr to <4 x i32>
-  %16 = extractelement <4 x i32> %15, i64 1
-  %17 = insertelement <2 x i32> %14, i32 %16, i64 1
-  %i.hs = sitofp <2 x i32> %17 to <2 x double>    ; 3 uses
+  %i.hr = load <2 x i64>, ptr %i.go, align 8, !alias.scope !521, !noalias !525 ; 3 uses
+  %14 = extractelement <2 x i64> %i.hr, i64 0
+  %15 = bitcast i64 %14 to <2 x i32>
+  %i.hs = sitofp <2 x i32> %15 to <2 x double>    ; 3 uses
   %i.ht = extractelement <2 x i64> %i.hr, i64 1
   %i.hu = extractelement <2 x double> %i.hs, i64 0
   %i.hv = extractelement <2 x double> %i.hs, i64 1
@@ -276,10 +274,11 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.iu = fptosi double %i.iq to i32              ; 3 uses
-  %18 = insertelement <2 x i32> poison, i32 %i.ip, i64 0
-  %19 = insertelement <2 x i32> %18, i32 %i.iu, i64 1
-  %20 = sitofp <2 x i32> %19 to <2 x double>
-  %i.iv = fneg <2 x double> %20
+  %16 = sitofp i32 %i.iu to double
+  %17 = sitofp i32 %i.ip to double
+  %18 = insertelement <2 x double> poison, double %17, i64 0
+  %19 = insertelement <2 x double> %18, double %16, i64 1
+  %i.iv = fneg <2 x double> %19
   %i.iw = insertelement <2 x double> poison, double %i.ik, i64 0
   %i.ix = shufflevector <2 x double> %i.iw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.iy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hs, <2 x double> %i.ix, <2 x double> %i.iv) ; 2 uses
@@ -682,10 +681,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = fptosi double %i.ad to i32              ; 3 uses
-  %12 = insertelement <2 x i32> poison, i32 %i.ac, i64 0
-  %13 = insertelement <2 x i32> %12, i32 %i.ah, i64 1
-  %14 = sitofp <2 x i32> %13 to <2 x double>
-  %i.ai = fneg <2 x double> %14
+  %12 = sitofp i32 %i.ah to double
+  %13 = sitofp i32 %i.ac to double
+  %14 = insertelement <2 x double> poison, double %13, i64 0
+  %15 = insertelement <2 x double> %14, double %12, i64 1
+  %i.ai = fneg <2 x double> %15
   %i.aj = insertelement <2 x double> poison, double %i.x, i64 0
   %i.ak = shufflevector <2 x double> %i.aj, <2 x double> poison, <2 x i32> zeroinitializer
   %i.al = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.s, <2 x double> %i.ak, <2 x double> %i.ai) ; 2 uses
@@ -1088,10 +1088,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = fptosi double %i.ad to i32              ; 3 uses
-  %12 = insertelement <2 x i32> poison, i32 %i.ac, i64 0
-  %13 = insertelement <2 x i32> %12, i32 %i.ah, i64 1
-  %14 = sitofp <2 x i32> %13 to <2 x double>
-  %i.ai = fneg <2 x double> %14
+  %12 = sitofp i32 %i.ah to double
+  %13 = sitofp i32 %i.ac to double
+  %14 = insertelement <2 x double> poison, double %13, i64 0
+  %15 = insertelement <2 x double> %14, double %12, i64 1
+  %i.ai = fneg <2 x double> %15
   %i.aj = insertelement <2 x double> poison, double %i.x, i64 0
   %i.ak = shufflevector <2 x double> %i.aj, <2 x double> poison, <2 x i32> zeroinitializer
   %i.al = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.s, <2 x double> %i.ak, <2 x double> %i.ai) ; 2 uses

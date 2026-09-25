@@ -204,10 +204,10 @@ bb.a:
   %i.n = alloca [16 x i8], align 16               ; 7 uses
   %i.o = alloca [8 x i8], align 8                 ; 5 uses
   %i.p = alloca [32 x i8], align 8                ; 7 uses
-  %i.q = alloca [16 x i8], align 16               ; 5 uses
+  %i.q = alloca [16 x i8], align 16               ; 9 uses
   %i.r = alloca [8 x i8], align 8                 ; 5 uses
   %i.s = alloca [32 x i8], align 8                ; 7 uses
-  %i.t = alloca [16 x i8], align 16               ; 5 uses
+  %i.t = alloca [16 x i8], align 16               ; 21 uses
   %i.u = alloca [8 x i8], align 8                 ; 5 uses
   %i.v = alloca [64 x i8], align 8                ; 11 uses
   %i.w = alloca [96 x i8], align 8                ; 15 uses
@@ -516,7 +516,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.f
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.dg = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val47 = load i128, ptr %i.df, align 1         ; 12 uses
+  %.val47 = load i128, ptr %i.df, align 1         ; 28 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !566)
   %i.dh = load i8, ptr %i.dg, align 8, !range !567, !alias.scope !566, !noundef !4
   switch i8 %i.dh, label %default.unreachable [
@@ -560,14 +560,71 @@ bb.y:                                             ; preds = %bb.x
   %i.do = getelementptr inbounds nuw i8, ptr %2, i64 9 ; 2 uses
   store ptr %i.do, ptr %i.u, align 8, !noalias !566
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !566
-  %3 = insertelement <16 x i128> poison, i128 %.val47, i64 0
-  %4 = shufflevector <16 x i128> %3, <16 x i128> poison, <16 x i32> zeroinitializer
-  %5 = lshr <16 x i128> %4, <i128 0, i128 8, i128 16, i128 24, i128 32, i128 40, i128 48, i128 56, i128 64, i128 72, i128 80, i128 88, i128 96, i128 104, i128 112, i128 120>
-  %6 = trunc <16 x i128> %5 to <16 x i8>          ; 2 uses
-  store <16 x i8> %6, ptr %i.t, align 16, !noalias !566
-  %.cast99 = bitcast <16 x i8> %6 to i128
+  %3 = trunc i128 %.val47 to i8
+  %4 = lshr i128 %.val47, 8
+  %5 = trunc i128 %4 to i8
+  %6 = lshr i128 %.val47, 16
+  %7 = trunc i128 %6 to i8
+  %8 = lshr i128 %.val47, 24
+  %9 = trunc i128 %8 to i8
+  %10 = lshr i128 %.val47, 32
+  %11 = trunc i128 %10 to i8
+  %12 = lshr i128 %.val47, 40
+  %13 = trunc i128 %12 to i8
+  %14 = lshr i128 %.val47, 48
+  %15 = trunc i128 %14 to i8
+  %16 = lshr i128 %.val47, 56
+  %17 = trunc i128 %16 to i8
+  %18 = lshr i128 %.val47, 64
+  %19 = trunc i128 %18 to i8
+  %20 = lshr i128 %.val47, 72
+  %21 = trunc i128 %20 to i8
+  %22 = lshr i128 %.val47, 80
+  %23 = trunc i128 %22 to i8
+  %24 = lshr i128 %.val47, 88
+  %25 = trunc i128 %24 to i8
+  %26 = lshr i128 %.val47, 96
+  %27 = trunc i128 %26 to i8
+  %28 = lshr i128 %.val47, 104
+  %29 = trunc i128 %28 to i8
+  %30 = lshr i128 %.val47, 112
+  %31 = trunc i128 %30 to i8
+  %32 = lshr i128 %.val47, 120
+  %33 = trunc nuw i128 %32 to i8
+  store i8 %3, ptr %i.t, align 16, !noalias !566
+  %.sroa.416.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 1
+  store i8 %5, ptr %.sroa.416.0..sroa_idx.i, align 1, !noalias !566
+  %.sroa.517.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 2
+  store i8 %7, ptr %.sroa.517.0..sroa_idx.i, align 2, !noalias !566
+  %.sroa.618.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 3
+  store i8 %9, ptr %.sroa.618.0..sroa_idx.i, align 1, !noalias !566
+  %.sroa.719.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 4
+  store i8 %11, ptr %.sroa.719.0..sroa_idx.i, align 4, !noalias !566
+  %.sroa.820.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 5
+  store i8 %13, ptr %.sroa.820.0..sroa_idx.i, align 1, !noalias !566
+  %.sroa.921.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 6
+  store i8 %15, ptr %.sroa.921.0..sroa_idx.i, align 2, !noalias !566
+  %.sroa.1022.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 7
+  store i8 %17, ptr %.sroa.1022.0..sroa_idx.i, align 1, !noalias !566
+  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  store i8 %19, ptr %.sroa.11.0..sroa_idx.i, align 8, !noalias !566
+  %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 9
+  store i8 %21, ptr %.sroa.12.0..sroa_idx.i, align 1, !noalias !566
+  %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 10
+  store i8 %23, ptr %.sroa.13.0..sroa_idx.i, align 2, !noalias !566
+  %.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 11
+  store i8 %25, ptr %.sroa.14.0..sroa_idx.i, align 1, !noalias !566
+  %.sroa.15.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 12
+  store i8 %27, ptr %.sroa.15.0..sroa_idx.i, align 4, !noalias !566
+  %.sroa.16.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 13
+  store i8 %29, ptr %.sroa.16.0..sroa_idx.i, align 1, !noalias !566
+  %.sroa.17.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 14
+  store i8 %31, ptr %.sroa.17.0..sroa_idx.i, align 2, !noalias !566
+  %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 15
+  store i8 %33, ptr %.sroa.18.0..sroa_idx.i, align 1, !noalias !566
+  %34 = load i128, ptr %i.t, align 16, !noalias !566, !noundef !4
   %i.dp = load i128, ptr %i.do, align 1, !alias.scope !566, !noundef !4
-  %.not59.i = icmp eq i128 %i.dp, %.cast99
+  %.not59.i = icmp eq i128 %34, %i.dp
   br i1 %.not59.i, label %bb.ac, label %bb.ad, !prof !15
 
 bb.z:                                             ; preds = %bb.x
@@ -575,14 +632,27 @@ bb.z:                                             ; preds = %bb.x
   %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 2 uses
   store ptr %i.dq, ptr %i.r, align 8, !noalias !566
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !566
-  %7 = insertelement <8 x i128> poison, i128 %.val47, i64 0
-  %8 = shufflevector <8 x i128> %7, <8 x i128> poison, <8 x i32> zeroinitializer
-  %9 = lshr <8 x i128> %8, <i128 0, i128 16, i128 32, i128 48, i128 64, i128 80, i128 96, i128 112>
-  %10 = trunc <8 x i128> %9 to <8 x i16>          ; 2 uses
-  store <8 x i16> %10, ptr %i.q, align 16, !noalias !566
-  %.cast = bitcast <8 x i16> %10 to i128
+  %35 = lshr i128 %.val47, 16
+  %36 = insertelement <2 x i128> poison, i128 %.val47, i64 0 ; 2 uses
+  %37 = shufflevector <2 x i128> %36, <2 x i128> poison, <2 x i32> zeroinitializer ; 3 uses
+  %38 = lshr <2 x i128> %37, <i128 32, i128 48>
+  %39 = lshr <2 x i128> %37, <i128 64, i128 80>
+  %40 = lshr <2 x i128> %37, <i128 96, i128 112>
+  %41 = insertelement <2 x i128> %36, i128 %35, i64 1
+  %42 = trunc <2 x i128> %41 to <2 x i16>
+  store <2 x i16> %42, ptr %i.q, align 16, !noalias !566
+  %.sroa.512.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 4
+  %43 = trunc <2 x i128> %38 to <2 x i16>
+  store <2 x i16> %43, ptr %.sroa.512.0..sroa_idx.i, align 4, !noalias !566
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  %44 = trunc <2 x i128> %39 to <2 x i16>
+  store <2 x i16> %44, ptr %.sroa.7.0..sroa_idx.i, align 8, !noalias !566
+  %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 12
+  %45 = trunc <2 x i128> %40 to <2 x i16>
+  store <2 x i16> %45, ptr %.sroa.9.0..sroa_idx.i, align 4, !noalias !566
+  %46 = load i128, ptr %i.q, align 16, !noalias !566, !noundef !4
   %i.dr = load i128, ptr %i.dq, align 2, !alias.scope !566, !noundef !4
-  %.not58.i = icmp eq i128 %i.dr, %.cast
+  %.not58.i = icmp eq i128 %46, %i.dr
   br i1 %.not58.i, label %bb.ae, label %bb.af, !prof !15
 
 bb.aa:                                            ; preds = %bb.x

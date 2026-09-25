@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #47
   store i32 0, ptr %1, align 8, !tbaa !227
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   store i32 0, ptr %i.d, align 4, !tbaa !227
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
   store i32 0, ptr %2, align 8, !tbaa !227
@@ -224,15 +224,12 @@ bb.c:                                             ; preds = %bb.b
   %i.i = call { i64, i64 } @_ZN3tev12framePaddingEP10GLFWwindow(ptr noundef %i.h) ; 2 uses
   %i.j = extractvalue { i64, i64 } %i.i, 0        ; 3 uses
   %i.k = extractvalue { i64, i64 } %i.i, 1        ; 2 uses
-  %.sroa.030.0.extract.trunc = trunc i64 %i.j to i32
-  %3 = load i32, ptr %1, align 8, !tbaa !227
-  %4 = add nsw i32 %3, %.sroa.030.0.extract.trunc
-  store i32 %4, ptr %1, align 8, !tbaa !227
   %.sroa.030.4.extract.shift = lshr i64 %i.j, 32
-  %.sroa.030.4.extract.trunc = trunc nuw i64 %.sroa.030.4.extract.shift to i32 ; 2 uses
-  %5 = load i32, ptr %i.d, align 4, !tbaa !227
-  %6 = add nsw i32 %5, %.sroa.030.4.extract.trunc
-  store i32 %6, ptr %i.d, align 4, !tbaa !227
+  %.sroa.030.4.extract.trunc = trunc nuw i64 %.sroa.030.4.extract.shift to i32
+  %3 = load <2 x i32>, ptr %1, align 8, !tbaa !227
+  %4 = bitcast i64 %i.j to <2 x i32>
+  %5 = add nsw <2 x i32> %3, %4
+  store <2 x i32> %5, ptr %1, align 8, !tbaa !227
   %i.l = add i64 %i.k, %i.j
   %.sroa.7.12.extract.shift = lshr i64 %i.k, 32
   %.sroa.7.12.extract.trunc = trunc nuw i64 %.sroa.7.12.extract.shift to i32

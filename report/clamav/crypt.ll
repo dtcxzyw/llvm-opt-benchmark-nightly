@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.c
 ; Function Attrs: mustprogress uwtable
 define void @_ZN9CryptData8SetKey30EbP11SecPasswordPKwPKh(ptr noundef nonnull align 8 dereferenceable(2516) %0, i1 noundef zeroext %1, ptr noundef nonnull %2, ptr noundef %3, ptr nofree noundef readonly captures(address_is_null) %4) local_unnamed_addr #2 align 2 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 23 uses
+  %i.a = alloca [16 x i8], align 16               ; 11 uses
   %i.b = alloca [16 x i8], align 16               ; 7 uses
   %i.c = alloca [1032 x i8], align 16             ; 6 uses
   %5 = alloca %struct.sha1_context, align 8       ; 7 uses
@@ -375,72 +375,20 @@ bb.o:                                             ; preds = %bb.n, %.critedge
 .preheader:                                       ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #18
   call void @_Z9sha1_doneP12sha1_contextPj(ptr noundef nonnull %5, ptr noundef nonnull %i.f)
-  %7 = load i32, ptr %i.f, align 16, !tbaa !16    ; 4 uses
-  %8 = trunc i32 %7 to i8
-  store i8 %8, ptr %i.a, align 16, !tbaa !12
-  %9 = lshr i32 %7, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %10, ptr %11, align 1, !tbaa !12
-  %12 = lshr i32 %7, 16
-  %13 = trunc i32 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %13, ptr %14, align 2, !tbaa !12
-  %15 = lshr i32 %7, 24
-  %16 = trunc nuw i32 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %16, ptr %17, align 1, !tbaa !12
+  %7 = load <4 x i8>, ptr %i.f, align 16, !tbaa !16
+  store <4 x i8> %7, ptr %i.a, align 16, !tbaa !12
   %i.cb = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %18 = load i32, ptr %i.cb, align 4, !tbaa !16   ; 4 uses
-  %19 = trunc i32 %18 to i8
+  %8 = load <4 x i8>, ptr %i.cb, align 4, !tbaa !16
   %i.cc = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %19, ptr %i.cc, align 4, !tbaa !12
-  %20 = lshr i32 %18, 8
-  %21 = trunc i32 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %21, ptr %22, align 1, !tbaa !12
-  %23 = lshr i32 %18, 16
-  %24 = trunc i32 %23 to i8
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %24, ptr %25, align 2, !tbaa !12
-  %26 = lshr i32 %18, 24
-  %27 = trunc nuw i32 %26 to i8
-  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %27, ptr %28, align 1, !tbaa !12
+  store <4 x i8> %8, ptr %i.cc, align 4, !tbaa !12
   %i.cd = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %29 = load i32, ptr %i.cd, align 8, !tbaa !16   ; 4 uses
-  %30 = trunc i32 %29 to i8
+  %9 = load <4 x i8>, ptr %i.cd, align 8, !tbaa !16
   %i.ce = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %30, ptr %i.ce, align 8, !tbaa !12
-  %31 = lshr i32 %29, 8
-  %32 = trunc i32 %31 to i8
-  %33 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %32, ptr %33, align 1, !tbaa !12
-  %34 = lshr i32 %29, 16
-  %35 = trunc i32 %34 to i8
-  %36 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %35, ptr %36, align 2, !tbaa !12
-  %37 = lshr i32 %29, 24
-  %38 = trunc nuw i32 %37 to i8
-  %39 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %38, ptr %39, align 1, !tbaa !12
+  store <4 x i8> %9, ptr %i.ce, align 8, !tbaa !12
   %i.cf = getelementptr inbounds nuw i8, ptr %i.f, i64 12
-  %40 = load i32, ptr %i.cf, align 4, !tbaa !16   ; 4 uses
-  %41 = trunc i32 %40 to i8
+  %10 = load <4 x i8>, ptr %i.cf, align 4, !tbaa !16
   %i.cg = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i8 %41, ptr %i.cg, align 4, !tbaa !12
-  %42 = lshr i32 %40, 8
-  %43 = trunc i32 %42 to i8
-  %44 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  store i8 %43, ptr %44, align 1, !tbaa !12
-  %45 = lshr i32 %40, 16
-  %46 = trunc i32 %45 to i8
-  %47 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
-  store i8 %46, ptr %47, align 2, !tbaa !12
-  %48 = lshr i32 %40, 24
-  %49 = trunc nuw i32 %48 to i8
-  %50 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
-  store i8 %49, ptr %50, align 1, !tbaa !12
+  store <4 x i8> %10, ptr %i.cg, align 4, !tbaa !12
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 4 uses
   %i.ci = load i32, ptr %i.ch, align 8, !tbaa !31
   %i.cj = zext i32 %i.ci to i64

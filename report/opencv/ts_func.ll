@@ -205,18 +205,19 @@ bb.a:
   %11 = alloca %"class.cv::Rect_", align 8        ; 6 uses
   %.sroa.029.0.extract.trunc = trunc i64 %2 to i32
   %.sroa.3.0.extract.shift = lshr i64 %2, 32
-  %12 = bitcast i64 %2 to <2 x i32>               ; 3 uses
   %.sroa.3.0.extract.trunc = trunc nuw i64 %.sroa.3.0.extract.shift to i32
   store double %4, ptr %i.a, align 8, !tbaa !38
   store double %5, ptr %i.b, align 8, !tbaa !38
+  %12 = bitcast i64 %2 to <2 x i32>               ; 2 uses
   br i1 %6, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %13 = bitcast i64 %2 to <2 x i32>
   %i.c = load i64, ptr %1, align 8, !tbaa !32     ; 2 uses
   %i.d = and i64 %i.c, 4294967295
   %i.e = mul nuw i64 %i.d, 4164903690
   %i.f = lshr i64 %i.c, 32
-  %i.g = add <2 x i32> %12, splat (i32 -5)
+  %i.g = add <2 x i32> %13, splat (i32 -5)
   %i.h = add nuw i64 %i.e, %i.f                   ; 3 uses
   %i.i = and i64 %i.h, 4294967295
   %i.j = mul nuw i64 %i.i, 4164903690

@@ -202,11 +202,11 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit:  ; preds = %bb.c
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !108
   %i.j = getelementptr inbounds nuw [120 x i8], ptr %i.i, i64 %i.h
   %i.k = invoke i64 @_ZNK4cvc58internal6theory5arith6linear14ArithVariables7VarInfo13atBoundCountsEv(ptr noundef nonnull align 8 dereferenceable(113) %i.j)
-          to label %_ZNK4cvc58internal6theory5arith6linear14ArithVariables13atBoundCountsEj.exit unwind label %bb.r ; 2 uses
+          to label %_ZNK4cvc58internal6theory5arith6linear14ArithVariables13atBoundCountsEj.exit unwind label %bb.r ; 3 uses
 
 _ZNK4cvc58internal6theory5arith6linear14ArithVariables13atBoundCountsEj.exit: ; preds = %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit
-  %.sroa.0206.0.extract.trunc = trunc i64 %i.k to i32 ; 3 uses
-  %.sroa.6207.0.extract.shift = lshr i64 %i.k, 32 ; 3 uses
+  %.sroa.0206.0.extract.trunc = trunc i64 %i.k to i32 ; 2 uses
+  %.sroa.6207.0.extract.shift = lshr i64 %i.k, 32 ; 2 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !69, !nonnull !35, !align !70
   invoke void @_ZN4cvc58internal6theory5arith6linear14ArithVariables13setAssignmentEjRKNS0_13DeltaRationalE(ptr noundef nonnull align 8 dereferenceable(568) %i.l, i32 noundef %1, ptr noundef nonnull align 8 dereferenceable(64) %2)
           to label %bb.d unwind label %bb.r
@@ -217,12 +217,12 @@ bb.d:                                             ; preds = %_ZNK4cvc58internal6
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !108
   %i.p = getelementptr inbounds nuw [120 x i8], ptr %i.o, i64 %i.h
   %i.q = invoke i64 @_ZNK4cvc58internal6theory5arith6linear14ArithVariables7VarInfo13atBoundCountsEv(ptr noundef nonnull align 8 dereferenceable(113) %i.p)
-          to label %bb.e unwind label %bb.s       ; 2 uses
+          to label %bb.e unwind label %bb.s       ; 3 uses
 
 bb.e:                                             ; preds = %bb.d
-  %.sroa.0.0.extract.trunc.i = trunc i64 %i.q to i32 ; 3 uses
+  %.sroa.0.0.extract.trunc.i = trunc i64 %i.q to i32 ; 2 uses
   %.not.i100 = icmp ne i32 %.sroa.0206.0.extract.trunc, %.sroa.0.0.extract.trunc.i
-  %.sroa.2.0.extract.shift.i = lshr i64 %i.q, 32  ; 3 uses
+  %.sroa.2.0.extract.shift.i = lshr i64 %i.q, 32  ; 2 uses
   %i.r = icmp ne i64 %.sroa.6207.0.extract.shift, %.sroa.2.0.extract.shift.i
   %i.s = or i1 %.not.i100, %i.r
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -237,18 +237,19 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aa, label %.critedge69, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e
-  %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32
   %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 352
-  %.sroa.4.0.extract.trunc8.i.i = trunc nuw i64 %.sroa.6207.0.extract.shift to i32
   %i.ad = icmp eq i32 %.sroa.0206.0.extract.trunc, %.sroa.0.0.extract.trunc.i
   %i.ae = icmp eq i64 %.sroa.6207.0.extract.shift, %.sroa.2.0.extract.shift.i
   %i.af = and i1 %i.ad, %i.ae
-  %7 = sub i32 %.sroa.2.0.extract.trunc.i, %.sroa.4.0.extract.trunc8.i.i ; 2 uses
-  %8 = sub i32 %.sroa.0.0.extract.trunc.i, %.sroa.0206.0.extract.trunc ; 2 uses
+  %7 = bitcast i64 %i.q to <2 x i32>              ; 2 uses
+  %8 = bitcast i64 %i.k to <2 x i32>              ; 2 uses
+  %9 = sub <2 x i32> %7, %8
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 32
   %.pre = load ptr, ptr %i.z, align 8, !tbaa !117
+  %11 = sub <2 x i32> %7, %8
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN4cvc58internal13DeltaRationalD2Ev.exit169
@@ -329,7 +330,7 @@ _ZNK4cvc58internal6theory5arith6linear14ArithVariables13atBoundCountsEj.exit154:
   %i.bl = load ptr, ptr %i.ac, align 8, !tbaa !118, !nonnull !35, !align !70
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 48
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !121
-  %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.bn, i64 %i.ao ; 6 uses
+  %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.bn, i64 %i.ao ; 5 uses
   br i1 %i.s, label %bb.m, label %_ZN4cvc58internal6theory5arith6linear10BoundsInfo18addInAtBoundChangeEiNS3_11BoundCountsES5_.exit
 
 bb.m:                                             ; preds = %_ZNK4cvc58internal6theory5arith6linear14ArithVariables13atBoundCountsEj.exit154
@@ -346,15 +347,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not.i.i, label %_ZN4cvc58internal6theory5arith6linear10BoundsInfo18addInAtBoundChangeEiNS3_11BoundCountsES5_.exit, label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.o, %bb.n
-  %.sink224 = phi i32 [ %8, %bb.n ], [ %7, %bb.o ]
-  %.sink11.i.i = phi i32 [ %7, %bb.n ], [ %8, %bb.o ]
-  %9 = getelementptr inbounds nuw i8, ptr %i.bo, i64 4 ; 2 uses
-  %10 = load i32, ptr %9, align 4, !tbaa !125
-  %11 = add i32 %.sink224, %10
-  store i32 %11, ptr %9, align 4, !tbaa !125
-  %12 = load i32, ptr %i.bo, align 4, !tbaa !126
-  %13 = add i32 %12, %.sink11.i.i
-  store i32 %13, ptr %i.bo, align 4, !tbaa !126
+  %12 = phi <2 x i32> [ %10, %bb.n ], [ %11, %bb.o ]
+  %13 = load <2 x i32>, ptr %i.bo, align 4, !tbaa !36
+  %14 = add <2 x i32> %13, %12
+  store <2 x i32> %14, ptr %i.bo, align 4, !tbaa !36
   br label %_ZN4cvc58internal6theory5arith6linear10BoundsInfo18addInAtBoundChangeEiNS3_11BoundCountsES5_.exit
 
 bb.p:                                             ; preds = %bb.a

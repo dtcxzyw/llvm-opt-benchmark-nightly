@@ -204,7 +204,7 @@ _ZNSt6vectorISt4pairIlmESaIS1_EED2Ev.exit:        ; preds = %bb.e, %bb.f
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN17cmELFInternalImplI12cmELFTypes64E20EncodeDynamicEntriesERKSt6vectorISt4pairIlmESaIS4_EE(ptr dead_on_unwind noalias writable sret(%"class.std::vector.41") align 8 %0, ptr noundef nonnull align 8 dereferenceable(200) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %struct.Elf64_Dyn, align 8          ; 22 uses
+  %3 = alloca %struct.Elf64_Dyn, align 8          ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !112  ; 3 uses
@@ -244,20 +244,6 @@ _ZNSt6vectorIcSaIcEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_base
 .lr.ph:                                           ; preds = %_ZNSt6vectorIcSaIcEE7reserveEm.exit
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 34
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 7
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 6
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 5
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 15
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 9
-  %13 = getelementptr inbounds nuw i8, ptr %3, i64 14
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 10
-  %15 = getelementptr inbounds nuw i8, ptr %3, i64 13
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 11
-  %17 = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.c
@@ -268,62 +254,22 @@ _ZNSt6vectorIcSaIcEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_base
 bb.c:                                             ; preds = %.lr.ph, %_ZN2cm6appendISt6vectorIcSaIcEEPcTnNSt9enable_ifIXaaaasr2cm21is_sequence_containerIT_EE5valuesr2cm17is_input_iteratorIT0_EE5valuesr3std14is_convertibleINSt15iterator_traitsIS7_E10value_typeENS6_10value_typeEEE5valueEiE4typeELi0EEEvRS6_S7_S7_.exit
   %.sroa.017.021 = phi ptr [ %i.m, %.lr.ph ], [ %i.ac, %_ZN2cm6appendISt6vectorIcSaIcEEPcTnNSt9enable_ifIXaaaasr2cm21is_sequence_containerIT_EE5valuesr2cm17is_input_iteratorIT0_EE5valuesr3std14is_convertibleINSt15iterator_traitsIS7_E10value_typeENS6_10value_typeEEE5valueEiE4typeELi0EEEvRS6_S7_S7_.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  %i.r = load i64, ptr %.sroa.017.021, align 8, !tbaa !120 ; 9 uses
+  %i.r = load i64, ptr %.sroa.017.021, align 8, !tbaa !120 ; 2 uses
   store i64 %i.r, ptr %3, align 8, !tbaa !163
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.017.021, i64 8
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !123  ; 9 uses
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !123  ; 2 uses
   store i64 %i.t, ptr %i.n, align 8, !tbaa !22
   %i.u = load i8, ptr %i.o, align 2, !tbaa !78, !range !101, !noundef !102
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %18 = lshr i64 %i.t, 32
-  %19 = trunc i64 %18 to i8
-  %20 = lshr i64 %i.t, 24
-  %21 = trunc i64 %20 to i8
-  %22 = lshr i64 %i.t, 40
-  %23 = trunc i64 %22 to i8
-  %24 = lshr i64 %i.t, 16
-  %25 = trunc i64 %24 to i8
-  %26 = lshr i64 %i.t, 48
-  %27 = trunc i64 %26 to i8
-  %28 = lshr i64 %i.t, 8
-  %29 = trunc i64 %28 to i8
-  %30 = lshr i64 %i.t, 56
-  %31 = trunc nuw i64 %30 to i8
-  %32 = trunc i64 %i.t to i8
-  %33 = lshr i64 %i.r, 32
-  %34 = trunc i64 %33 to i8
-  %35 = lshr i64 %i.r, 24
-  %36 = trunc i64 %35 to i8
-  %37 = lshr i64 %i.r, 40
-  %38 = trunc i64 %37 to i8
-  %39 = lshr i64 %i.r, 16
-  %40 = trunc i64 %39 to i8
-  %41 = lshr i64 %i.r, 48
-  %42 = trunc i64 %41 to i8
-  %43 = lshr i64 %i.r, 8
-  %44 = trunc i64 %43 to i8
-  %45 = lshr i64 %i.r, 56
-  %46 = trunc nuw i64 %45 to i8
-  %47 = trunc i64 %i.r to i8
-  store i8 %46, ptr %3, align 8, !tbaa !22
-  store i8 %47, ptr %4, align 1, !tbaa !22
-  store i8 %42, ptr %5, align 1, !tbaa !22
-  store i8 %44, ptr %6, align 2, !tbaa !22
-  store i8 %38, ptr %7, align 2, !tbaa !22
-  store i8 %40, ptr %8, align 1, !tbaa !22
-  store i8 %34, ptr %9, align 1, !tbaa !22
-  store i8 %36, ptr %10, align 4, !tbaa !22
-  store i8 %31, ptr %i.n, align 8, !tbaa !22
-  store i8 %32, ptr %11, align 1, !tbaa !22
-  store i8 %27, ptr %12, align 1, !tbaa !22
-  store i8 %29, ptr %13, align 2, !tbaa !22
-  store i8 %23, ptr %14, align 2, !tbaa !22
-  store i8 %25, ptr %15, align 1, !tbaa !22
-  store i8 %19, ptr %16, align 1, !tbaa !22
-  store i8 %21, ptr %17, align 4, !tbaa !22
+  %4 = bitcast i64 %i.r to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %3, align 8, !tbaa !22
+  %6 = bitcast i64 %i.t to <8 x i8>
+  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %7, ptr %i.n, align 8, !tbaa !22
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c

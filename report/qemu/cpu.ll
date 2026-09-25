@@ -204,50 +204,11 @@ begin_hunk_0
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable
 define dso_local void @x86_cpu_vendor_words2str(ptr nofree noundef writeonly captures(none) initializes((0, 13)) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = trunc i32 %1 to i8
-  store i8 %4, ptr %0, align 1
-  %5 = trunc i32 %2 to i8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %5, ptr %i.a, align 1
-  %6 = trunc i32 %3 to i8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %6, ptr %i.b, align 1
-  %7 = lshr i32 %1, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %8, ptr %9, align 1
-  %10 = lshr i32 %2, 8
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %11, ptr %12, align 1
-  %13 = lshr i32 %3, 8
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %14, ptr %15, align 1
-  %16 = lshr i32 %1, 16
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %17, ptr %18, align 1
-  %19 = lshr i32 %2, 16
-  %20 = trunc i32 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %20, ptr %21, align 1
-  %22 = lshr i32 %3, 16
-  %23 = trunc i32 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %23, ptr %24, align 1
-  %25 = lshr i32 %1, 24
-  %26 = trunc nuw i32 %25 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %26, ptr %27, align 1
-  %28 = lshr i32 %2, 24
-  %29 = trunc nuw i32 %28 to i8
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %29, ptr %30, align 1
-  %31 = lshr i32 %3, 24
-  %32 = trunc nuw i32 %31 to i8
-  %33 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %32, ptr %33, align 1
+  store i32 %1, ptr %0, align 1
+  store i32 %2, ptr %i.a, align 1
+  store i32 %3, ptr %i.b, align 1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i8 0, ptr %i.c, align 1
   ret void
@@ -650,57 +611,18 @@ declare ptr @object_class_property_add_str(ptr noundef, ptr noundef, ptr noundef
 define internal noalias noundef ptr @x86_cpuid_get_vendor(ptr noundef %0, ptr nofree readnone captures(none) %1) #4 {
 bb.a:
   %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.461, ptr noundef nonnull @.str.462, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #20 ; 3 uses
-  %i.b = tail call noalias dereferenceable_or_null(13) ptr @g_malloc(i64 noundef 13) #23 ; 14 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 30188
-  %3 = load i32, ptr %2, align 4                  ; 4 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 30192
-  %5 = load i32, ptr %4, align 16                 ; 4 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 30196
-  %7 = load i32, ptr %6, align 4                  ; 4 uses
-  %8 = trunc i32 %3 to i8
-  store i8 %8, ptr %i.b, align 1
-  %9 = trunc i32 %5 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i8 %9, ptr %10, align 1
-  %11 = trunc i32 %7 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i8 %11, ptr %12, align 1
-  %13 = lshr i32 %3, 8
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %14, ptr %15, align 1
-  %16 = lshr i32 %5, 8
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  store i8 %17, ptr %18, align 1
-  %19 = lshr i32 %7, 8
-  %20 = trunc i32 %19 to i8
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 9
-  store i8 %20, ptr %i.c, align 1
-  %21 = lshr i32 %3, 16
-  %22 = trunc i32 %21 to i8
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i8 %22, ptr %i.d, align 1
-  %23 = lshr i32 %5, 16
-  %24 = trunc i32 %23 to i8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 6
-  store i8 %24, ptr %i.e, align 1
-  %25 = lshr i32 %7, 16
-  %26 = trunc i32 %25 to i8
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  store i8 %26, ptr %i.f, align 1
-  %27 = lshr i32 %3, 24
-  %28 = trunc nuw i32 %27 to i8
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  store i8 %28, ptr %i.g, align 1
-  %29 = lshr i32 %5, 24
-  %30 = trunc nuw i32 %29 to i8
-  %31 = getelementptr inbounds nuw i8, ptr %i.b, i64 7
-  store i8 %30, ptr %31, align 1
-  %32 = lshr i32 %7, 24
-  %33 = trunc nuw i32 %32 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %i.b, i64 11
-  store i8 %33, ptr %34, align 1
+  %i.b = tail call noalias dereferenceable_or_null(13) ptr @g_malloc(i64 noundef 13) #23 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 30188
+  %2 = load <4 x i8>, ptr %i.c, align 4
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 30192
+  %3 = load <4 x i8>, ptr %i.d, align 16
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 30196
+  %4 = load <4 x i8>, ptr %i.e, align 4
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store <4 x i8> %2, ptr %i.b, align 1
+  store <4 x i8> %3, ptr %i.f, align 1
+  store <4 x i8> %4, ptr %i.g, align 1
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   store i8 0, ptr %i.h, align 1
   ret ptr %i.b

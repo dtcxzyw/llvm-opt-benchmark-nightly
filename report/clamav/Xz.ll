@@ -171,37 +171,8 @@ bb.b:                                             ; preds = %bb.a
 .loopexit.loopexit:                               ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load i64, ptr %i.e, align 8, !tbaa !17
-  %i.g = xor i64 %i.f, -1                         ; 8 uses
-  %2 = trunc i64 %i.g to i8
-  store i8 %2, ptr %1, align 1, !tbaa !8
-  %3 = lshr i64 %i.g, 8
-  %4 = trunc i64 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %4, ptr %5, align 1, !tbaa !8
-  %6 = lshr i64 %i.g, 16
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %7, ptr %8, align 1, !tbaa !8
-  %9 = lshr i64 %i.g, 24
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !8
-  %12 = lshr i64 %i.g, 32
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %13, ptr %14, align 1, !tbaa !8
-  %15 = lshr i64 %i.g, 40
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %16, ptr %17, align 1, !tbaa !8
-  %18 = lshr i64 %i.g, 48
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %19, ptr %20, align 1, !tbaa !8
-  %21 = lshr i64 %i.g, 56
-  %22 = trunc nuw i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !8
+  %i.g = xor i64 %i.f, -1
+  store i64 %i.g, ptr %1, align 1, !tbaa !8
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a

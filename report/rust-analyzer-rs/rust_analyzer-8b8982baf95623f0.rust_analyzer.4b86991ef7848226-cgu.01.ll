@@ -204,32 +204,24 @@ _RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exi
 
 _RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit.thread: ; preds = %bb.gw, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit
   %i.ati = invoke i56 @_RNvMCsf8NQSppxkmK_14ide_completionNtB2_25CompletionFieldsToResolve24from_client_capabilities(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.v)
-          to label %bb.gx unwind label %.loopexit.split-lp553.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 7 uses
+          to label %bb.gx unwind label %.loopexit.split-lp553.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 bb.gx:                                            ; preds = %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit.thread
-  %.sroa.023.0.extract.trunc = trunc i56 %i.ati to i8
-  %.sroa.023.1.extract.shift = lshr i56 %i.ati, 8
-  %.sroa.023.1.extract.trunc = trunc i56 %.sroa.023.1.extract.shift to i8
-  %.sroa.023.2.extract.shift = lshr i56 %i.ati, 16
-  %.sroa.023.2.extract.trunc = trunc i56 %.sroa.023.2.extract.shift to i8
-  %.sroa.023.3.extract.shift = lshr i56 %i.ati, 24
+  %.sroa.023.3.extract.shift = lshr i56 %i.ati, 32
   %.sroa.023.3.extract.trunc = trunc i56 %.sroa.023.3.extract.shift to i8
-  %.sroa.023.4.extract.shift = lshr i56 %i.ati, 32
+  %.sroa.023.4.extract.shift = lshr i56 %i.ati, 40
   %.sroa.023.4.extract.trunc = trunc i56 %.sroa.023.4.extract.shift to i8
-  %.sroa.023.5.extract.shift = lshr i56 %i.ati, 40
-  %.sroa.023.5.extract.trunc = trunc i56 %.sroa.023.5.extract.shift to i8
-  %.sroa.023.6.extract.shift = lshr i56 %i.ati, 48
-  %.sroa.023.6.extract.trunc = trunc nuw i56 %.sroa.023.6.extract.shift to i8
+  %.sroa.023.5.extract.shift = lshr i56 %i.ati, 48
+  %.sroa.023.5.extract.trunc = trunc nuw i56 %.sroa.023.5.extract.shift to i8
+  %6 = bitcast i56 %i.ati to <7 x i8>
+  %7 = shufflevector <7 x i8> %6, <7 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   br label %bb.gy
 
 bb.gy:                                            ; preds = %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit, %bb.gx
-  %.sroa.10.0 = phi i8 [ %.sroa.023.6.extract.trunc, %bb.gx ], [ 0, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
   %.sroa.9.0.a = phi i8 [ %.sroa.023.5.extract.trunc, %bb.gx ], [ 0, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
   %.sroa.8.0.a = phi i8 [ %.sroa.023.4.extract.trunc, %bb.gx ], [ 0, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
   %.sroa.7.0 = phi i8 [ %.sroa.023.3.extract.trunc, %bb.gx ], [ 0, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
-  %.sroa.6.0 = phi i8 [ %.sroa.023.2.extract.trunc, %bb.gx ], [ 0, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
-  %.sroa.56.0 = phi i8 [ %.sroa.023.1.extract.trunc, %bb.gx ], [ 0, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
-  %.sroa.04.0 = phi i8 [ %.sroa.023.0.extract.trunc, %bb.gx ], [ 0, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
+  %8 = phi <4 x i8> [ %7, %bb.gx ], [ zeroinitializer, %_RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config16client_is_neovim.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.experimental.noalias.scope.decl(metadata !3938)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -632,19 +624,13 @@ _RNvMsa_NtCs6u1mgJOKDyY_13rust_analyzer6configNtB5_6Config10ra_fixture.exit: ; p
   %i.bbe = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.5.0, ptr %i.bbe, align 8
   %i.bbf = getelementptr inbounds nuw i8, ptr %0, i64 131
-  store i8 %.sroa.04.0, ptr %i.bbf, align 1
-  %.sroa.56.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %0, i64 132
-  store i8 %.sroa.56.0, ptr %.sroa.56.0..sroa_idx7, align 4
-  %.sroa.6.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %0, i64 133
-  store i8 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx9, align 1
-  %.sroa.7.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %0, i64 134
-  store i8 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx11, align 2
+  store <4 x i8> %8, ptr %i.bbf, align 1
   %.sroa.8.0..sroa_idx13 = getelementptr inbounds nuw i8, ptr %0, i64 135
-  store i8 %.sroa.8.0.a, ptr %.sroa.8.0..sroa_idx13, align 1
+  store i8 %.sroa.7.0, ptr %.sroa.8.0..sroa_idx13, align 1
   %.sroa.9.0..sroa_idx15 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i8 %.sroa.9.0.a, ptr %.sroa.9.0..sroa_idx15, align 8
+  store i8 %.sroa.8.0.a, ptr %.sroa.9.0..sroa_idx15, align 8
   %.sroa.10.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %0, i64 137
-  store i8 %.sroa.10.0, ptr %.sroa.10.0..sroa_idx17, align 1
+  store i8 %.sroa.9.0.a, ptr %.sroa.10.0..sroa_idx17, align 1
   %i.bbg = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bbg, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false)
   %i.bbh = getelementptr inbounds nuw i8, ptr %0, i64 88

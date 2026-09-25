@@ -205,7 +205,7 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i64 @Bcj2_Decode(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2) unnamed_addr #13 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 10 uses
+  %i.a = alloca [4 x i8], align 4                 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20136 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !156  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20112
@@ -411,9 +411,6 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 20664 ; 5 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 20668 ; 4 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 20672 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %i.dw = getelementptr i8, ptr %0, i64 20008
   br label %.outer
 
@@ -597,42 +594,19 @@ bb.ac:                                            ; preds = %bb.ab, %bb.z
   %.1197 = phi ptr [ %.0196.ph, %bb.z ], [ %i.gi, %bb.ab ]
   %.1192 = phi i64 [ %i.gg, %bb.z ], [ %.0191.ph, %bb.ab ] ; 2 uses
   %.1187 = phi i64 [ %.0186.ph, %bb.z ], [ %i.gj, %bb.ab ] ; 2 uses
-  %.0 = phi ptr [ %.0201.ph, %bb.z ], [ %.0196.ph, %bb.ab ] ; 4 uses
-  %6 = load i8, ptr %.0, align 1, !tbaa !41
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw i32 %7, 24
-  %9 = getelementptr inbounds nuw i8, ptr %.0, i64 1
-  %10 = load i8, ptr %9, align 1, !tbaa !41
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 16
-  %13 = or disjoint i32 %12, %8
-  %14 = getelementptr inbounds nuw i8, ptr %.0, i64 2
-  %15 = load i8, ptr %14, align 1, !tbaa !41
-  %16 = zext i8 %15 to i32
-  %17 = shl nuw nsw i32 %16, 8
-  %18 = or disjoint i32 %13, %17
-  %19 = getelementptr inbounds nuw i8, ptr %.0, i64 3
-  %20 = load i8, ptr %19, align 1, !tbaa !41
-  %21 = zext i8 %20 to i32
-  %22 = or disjoint i32 %18, %21
+  %.0 = phi ptr [ %.0201.ph, %bb.z ], [ %.0196.ph, %bb.ab ]
+  %3 = load i32, ptr %.0, align 1
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
   %i.gk = load i64, ptr %i.dv, align 8, !tbaa !139
   %i.gl = trunc i64 %i.gk to i32
   %i.gm = trunc i64 %.3209 to i32
   %i.gn = add i32 %i.gm, %i.gl
-  %reass.sub = sub i32 %22, %i.gn
-  %i.go = add i32 %reass.sub, -4                  ; 4 uses
-  %23 = trunc i32 %i.go to i8
-  store i8 %23, ptr %i.a, align 1, !tbaa !41
-  %24 = lshr i32 %i.go, 8
-  %25 = trunc i32 %24 to i8
-  store i8 %25, ptr %3, align 1, !tbaa !41
-  %26 = lshr i32 %i.go, 16
-  %27 = trunc i32 %26 to i8
-  store i8 %27, ptr %4, align 1, !tbaa !41
+  %reass.sub = sub i32 %4, %i.gn
+  %i.go = add i32 %reass.sub, -4                  ; 2 uses
   %i.gp = lshr i32 %i.go, 24
-  %i.gq = trunc nuw i32 %i.gp to i8               ; 2 uses
+  %i.gq = trunc nuw i32 %i.gp to i8
   store i8 %i.gq, ptr %i.dr, align 4, !tbaa !244
-  store i8 %i.gq, ptr %5, align 1, !tbaa !41
+  store i32 %i.go, ptr %i.a, align 4, !tbaa !41
   %i.gr = icmp ult i64 %.3209, %2
   br i1 %i.gr, label %.lr.ph316.preheader, label %._crit_edge317.thread
 
@@ -642,7 +616,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.z
   %i.gt = add i64 %2, %i.gs
   %umin = tail call i64 @llvm.umin.i64(i64 %i.gt, i64 3)
   %i.gu = add nuw nsw i64 %umin, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, ptr noundef nonnull align 1 dereferenceable(1) %i.a, i64 %i.gu, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %i.a, i64 %i.gu, i1 false), !tbaa !41
   %i.gv = add nuw i64 %.3209, 1                   ; 2 uses
   %i.gw = icmp ult i64 %i.gv, %2
   br i1 %i.gw, label %.lr.ph316.1, label %._crit_edge317

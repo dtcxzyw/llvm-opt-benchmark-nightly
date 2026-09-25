@@ -204,6 +204,10 @@ color_filter_new.exit.i:                          ; preds = %color_filter_new.ex
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = tail call i64 @strtoul(ptr noundef captures(none) %i.i, ptr noundef null, i32 noundef 16) #13 ; 2 uses
   %i.k = trunc i64 %i.j to i16                    ; 2 uses
+  %3 = lshr i16 %i.k, 8
+  %4 = mul nuw i16 %3, 257
+  %5 = and i16 %i.k, 255
+  %6 = mul nuw i16 %5, 257
   %i.l = getelementptr [8 x i8], ptr %i.d, i64 %i.g
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = tail call i64 @strtoul(ptr noundef captures(none) %i.m, ptr noundef null, i32 noundef 16) #13 ; 2 uses
@@ -221,7 +225,7 @@ color_filter_new.exit.i:                          ; preds = %color_filter_new.ex
   %i.z = insertelement <4 x i16> %i.y, i16 %i.u, i64 2
   %i.aa = insertelement <4 x i16> %i.z, i16 %i.t, i64 3
   %i.ab = mul nuw <4 x i16> %i.aa, splat (i16 257)
-  %i.ac = tail call noalias dereferenceable_or_null(40) ptr @g_malloc0(i64 noundef 40) #11 ; 6 uses
+  %i.ac = tail call noalias dereferenceable_or_null(40) ptr @g_malloc0(i64 noundef 40) #11 ; 7 uses
   %i.ad = tail call noalias ptr @g_strdup(ptr noundef %i.f)
   store ptr %i.ad, ptr %i.ac, align 8
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 2 uses
@@ -229,12 +233,9 @@ color_filter_new.exit.i:                          ; preds = %color_filter_new.ex
   %i.af = getelementptr i8, ptr %i.ac, i64 16
   store <4 x i16> %i.ab, ptr %i.af, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr i8, ptr %i.ac, i64 24
-  %3 = and i16 %i.k, 255
-  %4 = lshr i16 %i.k, 8
-  %5 = insertelement <2 x i16> poison, i16 %4, i64 0
-  %6 = insertelement <2 x i16> %5, i16 %3, i64 1
-  %7 = mul nuw <2 x i16> %6, splat (i16 257)
-  store <2 x i16> %7, ptr %.sroa.4.0..sroa_idx.i, align 8
+  store i16 %4, ptr %.sroa.4.0..sroa_idx.i, align 8
+  %.sroa.5.0..sroa_idx.i = getelementptr i8, ptr %i.ac, i64 26
+  store i16 %6, ptr %.sroa.5.0..sroa_idx.i, align 2
   %i.ag = getelementptr i8, ptr %i.ac, i64 28
   store i8 1, ptr %i.ag, align 4
   %i.ah = tail call noalias dereferenceable_or_null(6) ptr @g_malloc(i64 noundef 6) #11 ; 2 uses

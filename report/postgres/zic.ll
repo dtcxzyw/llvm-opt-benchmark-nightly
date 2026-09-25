@@ -205,14 +205,14 @@ define dso_local range(i32 0, 2) i32 @main(i32 noundef %0, ptr noundef %1) local
 bb.a:
   %i.a = alloca [4 x i8], align 1                 ; 7 uses
   %i.b = alloca [4 x i8], align 1                 ; 7 uses
-  %i.c = alloca [8 x i8], align 1                 ; 11 uses
+  %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [4 x i8], align 1                 ; 11 uses
   %i.e = alloca [4 x i8], align 1                 ; 7 uses
-  %i.f = alloca [8 x i8], align 1                 ; 11 uses
+  %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [4 x i8], align 1                 ; 7 uses
-  %i.h = alloca [8 x i8], align 1                 ; 11 uses
+  %i.h = alloca [8 x i8], align 8                 ; 4 uses
   %i.i = alloca [4 x i8], align 1                 ; 7 uses
-  %i.j = alloca [8 x i8], align 1                 ; 11 uses
+  %i.j = alloca [8 x i8], align 8                 ; 4 uses
   %i.k = alloca [4 x i8], align 4                 ; 4 uses
   %i.l = alloca [256 x i8], align 16              ; 24 uses
   %i.m = alloca [256 x i32], align 16             ; 7 uses
@@ -615,46 +615,18 @@ change_directory.exit:                            ; preds = %associate.exit, %bb
   %i.ng = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   %i.nh = getelementptr inbounds nuw i8, ptr %i.i, i64 2
   %i.ni = getelementptr inbounds nuw i8, ptr %i.i, i64 3
-  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 2
-  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 3
-  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
-  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 5
-  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 6
-  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 7
   %i.nj = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   %i.nk = getelementptr inbounds nuw i8, ptr %i.g, i64 2
   %i.nl = getelementptr inbounds nuw i8, ptr %i.g, i64 3
-  %12 = getelementptr inbounds nuw i8, ptr %i.h, i64 1
-  %13 = getelementptr inbounds nuw i8, ptr %i.h, i64 2
-  %14 = getelementptr inbounds nuw i8, ptr %i.h, i64 3
-  %15 = getelementptr inbounds nuw i8, ptr %i.h, i64 4
-  %16 = getelementptr inbounds nuw i8, ptr %i.h, i64 5
-  %17 = getelementptr inbounds nuw i8, ptr %i.h, i64 6
-  %18 = getelementptr inbounds nuw i8, ptr %i.h, i64 7
   %i.nm = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   %i.nn = getelementptr inbounds nuw i8, ptr %i.e, i64 2
   %i.no = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  %19 = getelementptr inbounds nuw i8, ptr %i.f, i64 1
-  %20 = getelementptr inbounds nuw i8, ptr %i.f, i64 2
-  %21 = getelementptr inbounds nuw i8, ptr %i.f, i64 3
-  %22 = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %23 = getelementptr inbounds nuw i8, ptr %i.f, i64 5
-  %24 = getelementptr inbounds nuw i8, ptr %i.f, i64 6
-  %25 = getelementptr inbounds nuw i8, ptr %i.f, i64 7
   %i.np = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 2 uses
   %i.nq = getelementptr inbounds nuw i8, ptr %i.d, i64 2 ; 2 uses
   %i.nr = getelementptr inbounds nuw i8, ptr %i.d, i64 3 ; 2 uses
   %i.ns = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %i.nt = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %i.nu = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %26 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %27 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %28 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  %29 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %30 = getelementptr inbounds nuw i8, ptr %i.c, i64 5
-  %31 = getelementptr inbounds nuw i8, ptr %i.c, i64 6
-  %32 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.nv = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.nw = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.nx = getelementptr inbounds nuw i8, ptr %i.a, i64 3
@@ -1057,31 +1029,11 @@ bb.op:                                            ; preds = %bb.oo, %bb.on
   br label %puttzcodepass.exit.i.i
 
 .thread569.i.i:                                   ; preds = %.thread568.i.i, %._crit_edge671.i.i
-  %i.bmz = phi i64 [ %i.bmq, %.thread568.i.i ], [ %i.bmn, %._crit_edge671.i.i ] ; 9 uses
+  %i.bmz = phi i64 [ %i.bmq, %.thread568.i.i ], [ %i.bmn, %._crit_edge671.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #25
-  %33 = lshr i64 %i.bmz, 56
-  %34 = trunc nuw i64 %33 to i8
-  store i8 %34, ptr %i.j, align 1
-  %35 = lshr i64 %i.bmz, 48
-  %36 = trunc i64 %35 to i8
-  store i8 %36, ptr %5, align 1
-  %37 = lshr i64 %i.bmz, 40
-  %38 = trunc i64 %37 to i8
-  store i8 %38, ptr %6, align 1
-  %39 = lshr i64 %i.bmz, 32
-  %40 = trunc i64 %39 to i8
-  store i8 %40, ptr %7, align 1
-  %41 = lshr i64 %i.bmz, 24
-  %42 = trunc i64 %41 to i8
-  store i8 %42, ptr %8, align 1
-  %43 = lshr i64 %i.bmz, 16
-  %44 = trunc i64 %43 to i8
-  store i8 %44, ptr %9, align 1
-  %45 = lshr i64 %i.bmz, 8
-  %46 = trunc i64 %45 to i8
-  store i8 %46, ptr %10, align 1
-  %47 = trunc i64 %i.bmz to i8
-  store i8 %47, ptr %11, align 1
+  %5 = bitcast i64 %i.bmz to <8 x i8>
+  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %6, ptr %i.j, align 8
   %i.bna = call i64 @fwrite(ptr noundef nonnull %i.j, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #25
   br label %puttzcodepass.exit.i.i
@@ -1095,7 +1047,7 @@ puttzcodepass.exit.i.i:                           ; preds = %.thread569.i.i, %.t
   %.9672.i.i = phi i64 [ %i.bno, %puttzcodepass.exit481.i.i ], [ %.1392.i.i, %puttzcodepass.exit.i.i ] ; 2 uses
   %i.bnd = getelementptr inbounds [8 x i8], ptr %i.apt, i64 %.9672.i.i
   %i.bne = load i64, ptr %i.bnd, align 8
-  %..i.i = call i64 @llvm.smax.i64(i64 %i.bne, i64 %i.bnb) ; 12 uses
+  %..i.i = call i64 @llvm.smax.i64(i64 %i.bne, i64 %i.bnb) ; 5 uses
   br i1 %i.azb, label %bb.or, label %bb.oq
 
 bb.oq:                                            ; preds = %.lr.ph673.i.i
@@ -1117,29 +1069,9 @@ bb.oq:                                            ; preds = %.lr.ph673.i.i
 
 bb.or:                                            ; preds = %.lr.ph673.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #25
-  %48 = lshr i64 %..i.i, 56
-  %49 = trunc nuw i64 %48 to i8
-  store i8 %49, ptr %i.h, align 1
-  %50 = lshr i64 %..i.i, 48
-  %51 = trunc i64 %50 to i8
-  store i8 %51, ptr %12, align 1
-  %52 = lshr i64 %..i.i, 40
-  %53 = trunc i64 %52 to i8
-  store i8 %53, ptr %13, align 1
-  %54 = lshr i64 %..i.i, 32
-  %55 = trunc i64 %54 to i8
-  store i8 %55, ptr %14, align 1
-  %56 = lshr i64 %..i.i, 24
-  %57 = trunc i64 %56 to i8
-  store i8 %57, ptr %15, align 1
-  %58 = lshr i64 %..i.i, 16
-  %59 = trunc i64 %58 to i8
-  store i8 %59, ptr %16, align 1
-  %60 = lshr i64 %..i.i, 8
-  %61 = trunc i64 %60 to i8
-  store i8 %61, ptr %17, align 1
-  %62 = trunc i64 %..i.i to i8
-  store i8 %62, ptr %18, align 1
+  %7 = bitcast i64 %..i.i to <8 x i8>
+  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %8, ptr %i.h, align 8
   %i.bnn = call i64 @fwrite(ptr noundef nonnull %i.h, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #25
   br label %puttzcodepass.exit481.i.i
@@ -1154,7 +1086,7 @@ puttzcodepass.exit481.i.i:                        ; preds = %bb.or, %bb.oq
 
 bb.os:                                            ; preds = %._crit_edge674.i.i
   %i.bnp = load i64, ptr @hi_time, align 8
-  %i.bnq = add i64 %i.bnp, 1                      ; 12 uses
+  %i.bnq = add i64 %i.bnp, 1                      ; 5 uses
   br i1 %i.azb, label %bb.ou, label %bb.ot
 
 bb.ot:                                            ; preds = %bb.os
@@ -1176,29 +1108,9 @@ bb.ot:                                            ; preds = %bb.os
 
 bb.ou:                                            ; preds = %bb.os
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #25
-  %63 = lshr i64 %i.bnq, 56
-  %64 = trunc nuw i64 %63 to i8
-  store i8 %64, ptr %i.f, align 1
-  %65 = lshr i64 %i.bnq, 48
-  %66 = trunc i64 %65 to i8
-  store i8 %66, ptr %19, align 1
-  %67 = lshr i64 %i.bnq, 40
-  %68 = trunc i64 %67 to i8
-  store i8 %68, ptr %20, align 1
-  %69 = lshr i64 %i.bnq, 32
-  %70 = trunc i64 %69 to i8
-  store i8 %70, ptr %21, align 1
-  %71 = lshr i64 %i.bnq, 24
-  %72 = trunc i64 %71 to i8
-  store i8 %72, ptr %22, align 1
-  %73 = lshr i64 %i.bnq, 16
-  %74 = trunc i64 %73 to i8
-  store i8 %74, ptr %23, align 1
-  %75 = lshr i64 %i.bnq, 8
-  %76 = trunc i64 %75 to i8
-  store i8 %76, ptr %24, align 1
-  %77 = trunc i64 %i.bnq to i8
-  store i8 %77, ptr %25, align 1
+  %9 = bitcast i64 %i.bnq to <8 x i8>
+  %10 = shufflevector <8 x i8> %9, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %10, ptr %i.f, align 8
   %i.bnz = call i64 @fwrite(ptr noundef nonnull %i.f, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #25
   br label %puttzcodepass.exit482.i.i
@@ -1460,7 +1372,7 @@ bb.ps:                                            ; preds = %.lr.ph691.i.i
   br label %tadd.exit486.i.i
 
 tadd.exit486.i.i:                                 ; preds = %bb.ps, %bb.pr, %bb.pp, %bb.pm
-  %.0.i406.i = phi i64 [ %i.bry, %bb.ps ], [ -9223372036854775808, %bb.pm ], [ %i.brw, %bb.pr ], [ 9223372036854775807, %bb.pp ] ; 12 uses
+  %.0.i406.i = phi i64 [ %i.bry, %bb.ps ], [ -9223372036854775808, %bb.pm ], [ %i.brw, %bb.pr ], [ 9223372036854775807, %bb.pp ] ; 5 uses
   br i1 %i.azb, label %bb.pu, label %bb.pt
 
 bb.pt:                                            ; preds = %tadd.exit486.i.i
@@ -1482,29 +1394,9 @@ bb.pt:                                            ; preds = %tadd.exit486.i.i
 
 bb.pu:                                            ; preds = %tadd.exit486.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
-  %78 = lshr i64 %.0.i406.i, 56
-  %79 = trunc nuw i64 %78 to i8
-  store i8 %79, ptr %i.c, align 1
-  %80 = lshr i64 %.0.i406.i, 48
-  %81 = trunc i64 %80 to i8
-  store i8 %81, ptr %26, align 1
-  %82 = lshr i64 %.0.i406.i, 40
-  %83 = trunc i64 %82 to i8
-  store i8 %83, ptr %27, align 1
-  %84 = lshr i64 %.0.i406.i, 32
-  %85 = trunc i64 %84 to i8
-  store i8 %85, ptr %28, align 1
-  %86 = lshr i64 %.0.i406.i, 24
-  %87 = trunc i64 %86 to i8
-  store i8 %87, ptr %29, align 1
-  %88 = lshr i64 %.0.i406.i, 16
-  %89 = trunc i64 %88 to i8
-  store i8 %89, ptr %30, align 1
-  %90 = lshr i64 %.0.i406.i, 8
-  %91 = trunc i64 %90 to i8
-  store i8 %91, ptr %31, align 1
-  %92 = trunc i64 %.0.i406.i to i8
-  store i8 %92, ptr %32, align 1
+  %11 = bitcast i64 %.0.i406.i to <8 x i8>
+  %12 = shufflevector <8 x i8> %11, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %12, ptr %i.c, align 8
   %i.bsh = call i64 @fwrite(ptr noundef nonnull %i.c, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
   br label %puttzcodepass.exit487.i.i

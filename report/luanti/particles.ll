@@ -204,10 +204,6 @@ bb.a:
   %9 = alloca %"class.std::unique_ptr.496", align 8 ; 4 uses
   %10 = alloca %struct.ClientParticleTexRef, align 8 ; 6 uses
   %.sroa.0.0.extract.trunc = trunc i48 %2 to i16
-  %.sroa.2.0.extract.shift = lshr i48 %2, 16
-  %.sroa.2.0.extract.trunc = trunc i48 %.sroa.2.0.extract.shift to i16
-  %.sroa.3.0.extract.shift = lshr i48 %2, 32
-  %.sroa.3.0.extract.trunc = trunc nuw i48 %.sroa.3.0.extract.shift to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i8 0, ptr %i.b, align 8, !tbaa !41
@@ -364,8 +360,8 @@ bb.j:                                             ; preds = %bb.i
           to label %bb.k unwind label %bb.v
 
 bb.k:                                             ; preds = %bb.j
-  %11 = insertelement <2 x i16> poison, i16 %.sroa.2.0.extract.trunc, i64 0
-  %12 = insertelement <2 x i16> %11, i16 %.sroa.3.0.extract.trunc, i64 1
+  %11 = bitcast i48 %2 to <3 x i16>
+  %12 = shufflevector <3 x i16> %11, <3 x i16> poison, <2 x i32> <i32 1, i32 2>
   %i.bp = sitofp <2 x i16> %12 to <2 x float>
   store float %i.bm, ptr %i.z, align 4, !tbaa !95
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 176

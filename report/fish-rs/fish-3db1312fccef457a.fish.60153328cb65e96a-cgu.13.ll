@@ -205,12 +205,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.y
-  %.sroa.022.061 = phi i8 [ 0, %.lr.ph ], [ %.sroa.022.1, %bb.y ] ; 2 uses
-  %.sroa.021.060 = phi i8 [ 0, %.lr.ph ], [ %.sroa.021.1, %bb.y ] ; 2 uses
-  %.sroa.020.059 = phi i8 [ 0, %.lr.ph ], [ %.sroa.020.1, %bb.y ] ; 2 uses
-  %.sroa.019.058 = phi i8 [ 0, %.lr.ph ], [ %.sroa.019.1, %bb.y ] ; 2 uses
   %.sroa.0.057 = phi ptr [ %1, %.lr.ph ], [ %i.x, %bb.y ] ; 2 uses
   %.sroa.7.056 = phi i64 [ 0, %.lr.ph ], [ %i.ad, %bb.y ] ; 3 uses
+  %7 = phi <4 x i8> [ zeroinitializer, %.lr.ph ], [ %12, %bb.y ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.057, i64 4 ; 2 uses
   %i.y = load i32, ptr %.sroa.0.057, align 4, !noalias !2509, !noundef !12 ; 5 uses
   %i.z = xor i32 %i.y, 55296
@@ -333,23 +330,14 @@ bb.p:                                             ; preds = %bb.r, %bb.i
 
 bb.q:                                             ; preds = %bb.f
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.sroa.7.056
-  %i.au = load i32, ptr %i.at, align 1            ; 5 uses
+  %i.au = load i32, ptr %i.at, align 1            ; 2 uses
   store i32 %i.au, ptr %i.f, align 4
-  %7 = trunc i32 %i.au to i8                      ; 2 uses
-  %8 = icmp eq i8 %.sroa.019.058, %7
-  %9 = lshr i32 %i.au, 8
-  %10 = trunc i32 %9 to i8                        ; 2 uses
-  %11 = icmp eq i8 %.sroa.022.061, %10
-  %or.cond35 = select i1 %8, i1 %11, i1 false
-  %12 = lshr i32 %i.au, 16
-  %13 = trunc i32 %12 to i8                       ; 2 uses
-  %14 = icmp eq i8 %.sroa.020.059, %13
-  %or.cond38 = select i1 %or.cond35, i1 %14, i1 false
-  %15 = lshr i32 %i.au, 24
-  %16 = trunc nuw i32 %15 to i8                   ; 2 uses
-  %.not31 = icmp eq i8 %.sroa.021.060, %16
-  %or.cond40 = select i1 %or.cond38, i1 %.not31, i1 false
-  br i1 %or.cond40, label %bb.u, label %bb.s
+  %8 = bitcast i32 %i.au to <4 x i8>              ; 2 uses
+  %9 = icmp eq <4 x i8> %7, %8
+  %10 = freeze <4 x i1> %9
+  %11 = bitcast <4 x i1> %10 to i4
+  %.not31 = icmp eq i4 %11, -1
+  br i1 %.not31, label %bb.u, label %bb.s
 
 bb.r:                                             ; preds = %bb.f
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %4, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @475) #53
@@ -365,10 +353,7 @@ bb.t:                                             ; preds = %bb.s
           to label %bb.u unwind label %.loopexit
 
 bb.u:                                             ; preds = %bb.t, %bb.q
-  %.sroa.019.1 = phi i8 [ %.sroa.019.058, %bb.q ], [ %7, %bb.t ]
-  %.sroa.020.1 = phi i8 [ %.sroa.020.059, %bb.q ], [ %13, %bb.t ]
-  %.sroa.021.1 = phi i8 [ %.sroa.021.060, %bb.q ], [ %16, %bb.t ]
-  %.sroa.022.1 = phi i8 [ %.sroa.022.061, %bb.q ], [ %10, %bb.t ]
+  %12 = phi <4 x i8> [ %7, %bb.q ], [ %8, %bb.t ]
   %i.av = icmp eq i64 %i.ad, %4
   %i.aw = icmp eq i32 %i.y, 10
   %or.cond = and i1 %i.av, %i.aw

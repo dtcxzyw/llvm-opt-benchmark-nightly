@@ -203,40 +203,14 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define noundef i32 @rb_Digest_MD5_Finish(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [8 x i8], align 1                 ; 13 uses
+  %i.a = alloca [8 x i8], align 4                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  %i.b = load i32, ptr %0, align 4, !tbaa !10     ; 6 uses
-  %2 = trunc i32 %i.b to i8
-  store i8 %2, ptr %i.a, align 1, !tbaa !12
-  %3 = lshr i32 %i.b, 8
-  %4 = trunc i32 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %4, ptr %5, align 1, !tbaa !12
-  %6 = lshr i32 %i.b, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %7, ptr %8, align 1, !tbaa !12
-  %9 = lshr i32 %i.b, 24
-  %10 = trunc nuw i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !12
+  %i.b = load i32, ptr %0, align 4, !tbaa !10     ; 3 uses
+  store i32 %i.b, ptr %i.a, align 4, !tbaa !12
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !10   ; 5 uses
-  %12 = trunc i32 %i.d to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %12, ptr %13, align 1, !tbaa !12
-  %14 = lshr i32 %i.d, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %15, ptr %16, align 1, !tbaa !12
-  %17 = lshr i32 %i.d, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %18, ptr %19, align 1, !tbaa !12
-  %20 = lshr i32 %i.d, 24
-  %21 = trunc nuw i32 %20 to i8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %21, ptr %i.e, align 1, !tbaa !12
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !10   ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  store i32 %i.d, ptr %i.e, align 4, !tbaa !12
   %i.f = lshr i32 %i.b, 3                         ; 2 uses
   %i.g = sub nsw i32 55, %i.f
   %i.h = and i32 %i.g, 63
@@ -329,7 +303,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ap = select i1 %i.an, i64 %i.ao, i64 8       ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ai
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ar, ptr noundef nonnull align 1 dereferenceable(1) %i.a, i64 %i.ap, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ar, ptr noundef nonnull align 4 dereferenceable(1) %i.a, i64 %i.ap, i1 false)
   %i.as = add nuw nsw i64 %i.ap, %i.ai
   %i.at = icmp samesign ugt i64 %i.as, 63
   br i1 %i.at, label %bb.k, label %rb_Digest_MD5_Update.exit25

@@ -205,40 +205,13 @@ bb.f:                                             ; preds = %bb.e, %.thread.us.u
   store i32 %.us-phi205.us, ptr %.sroa.19.0..sroa_idx.us, align 4
   store i32 %.us-phi204.us, ptr %.sroa.23.0..sroa_idx.us, align 4
   store i32 %.us-phi.us, ptr %.sroa.27.0..sroa_idx.us, align 4
-  %i.gu = shl i64 %.us-phi207.us, %i.dr           ; 8 uses
+  %i.gu = shl i64 %.us-phi207.us, %i.dr
   %i.gv = zext i32 %.2160209.us to i64
-  %i.gw = getelementptr inbounds nuw i8, ptr %3, i64 %i.gv ; 8 uses
+  %i.gw = getelementptr inbounds nuw i8, ptr %3, i64 %i.gv
   %i.gx = add i32 %.2160209.us, 8                 ; 3 uses
-  %4 = lshr i64 %i.gu, 56
-  %5 = trunc nuw i64 %4 to i8
-  store i8 %5, ptr %i.gw, align 1
-  %6 = lshr i64 %i.gu, 48
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.gw, i64 1
-  store i8 %7, ptr %8, align 1
-  %9 = lshr i64 %i.gu, 40
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.gw, i64 2
-  store i8 %10, ptr %11, align 1
-  %12 = lshr i64 %i.gu, 32
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.gw, i64 3
-  store i8 %13, ptr %14, align 1
-  %15 = lshr i64 %i.gu, 24
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.gw, i64 4
-  store i8 %16, ptr %17, align 1
-  %18 = lshr i64 %i.gu, 16
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.gw, i64 5
-  store i8 %19, ptr %20, align 1
-  %21 = lshr i64 %i.gu, 8
-  %22 = trunc i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.gw, i64 6
-  store i8 %22, ptr %23, align 1
-  %24 = trunc i64 %i.gu to i8
-  %25 = getelementptr inbounds nuw i8, ptr %i.gw, i64 7
-  store i8 %24, ptr %25, align 1
+  %4 = bitcast i64 %i.gu to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %5, ptr %i.gw, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0148)
   %indvars.iv.next260 = add nuw nsw i64 %indvars.iv259, 1 ; 2 uses
   %exitcond263.not = icmp eq i64 %indvars.iv.next260, %i.j

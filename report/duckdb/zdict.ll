@@ -205,7 +205,7 @@ middle.block380:                                  ; preds = %vector.body377
   store <4 x i32> splat (i32 1), ptr %i.cw, align 16, !tbaa !6
   %i.cx = getelementptr inbounds nuw i8, ptr %i.e, i64 112
   store <4 x i32> splat (i32 1), ptr %i.cx, align 16, !tbaa !6
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.e, i64 128 ; 2 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.e, i64 128
   store <4 x i32> splat (i32 1), ptr %i.cy, align 16, !tbaa !6
   %i.cz = getelementptr inbounds nuw i8, ptr %i.e, i64 144
   store <4 x i32> splat (i32 1), ptr %i.cz, align 16, !tbaa !6
@@ -232,7 +232,7 @@ middle.block380:                                  ; preds = %vector.body377
   store <4 x i32> splat (i32 1), ptr %i.dj, align 16, !tbaa !6
   %i.dk = getelementptr inbounds nuw i8, ptr %i.g, i64 112
   store <4 x i32> splat (i32 1), ptr %i.dk, align 16, !tbaa !6
-  %i.dl = getelementptr inbounds nuw i8, ptr %i.g, i64 128 ; 2 uses
+  %i.dl = getelementptr inbounds nuw i8, ptr %i.g, i64 128
   store <4 x i32> splat (i32 1), ptr %i.dl, align 16, !tbaa !6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.i, i8 0, i64 4096, i1 false)
   %i.dm = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -635,13 +635,9 @@ bb.t:                                             ; preds = %bb.s
   br label %.thread
 
 bb.u:                                             ; preds = %.loopexit405
-  %11 = load <32 x i32>, ptr %i.e, align 16, !tbaa !6 ; 2 uses
-  %12 = load <20 x i32>, ptr %i.cy, align 16, !tbaa !6
+  %11 = load <52 x i32>, ptr %i.e, align 16, !tbaa !6
   %i.pq = load i32, ptr %i.dd, align 16, !tbaa !6
-  %13 = shufflevector <20 x i32> %12, <20 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %14 = add <32 x i32> %11, %13
-  %15 = shufflevector <32 x i32> %14, <32 x i32> %11, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.pr = call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %15)
+  %i.pr = call i32 @llvm.vector.reduce.add.v52i32(<52 x i32> %11)
   %op.rdx = add i32 %i.pr, %i.pq
   %i.ps = trunc i64 %i.pl to i32
   %i.pt = zext i32 %op.rdx to i64
@@ -661,13 +657,8 @@ bb.w:                                             ; preds = %bb.v
   br label %.thread
 
 bb.x:                                             ; preds = %bb.u
-  %16 = load <32 x i32>, ptr %i.g, align 16, !tbaa !6 ; 2 uses
-  %17 = load <4 x i32>, ptr %i.dl, align 16, !tbaa !6
-  %18 = shufflevector <32 x i32> %16, <32 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %rdx.op = add <4 x i32> %18, %17
-  %19 = shufflevector <4 x i32> %rdx.op, <4 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <32 x i32> %19, <32 x i32> %16, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.pz = call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %20)
+  %12 = load <36 x i32>, ptr %i.g, align 16, !tbaa !6
+  %i.pz = call i32 @llvm.vector.reduce.add.v36i32(<36 x i32> %12)
   %i.qa = trunc i64 %i.pu to i32
   %i.qb = zext i32 %i.pz to i64
   %i.qc = call noundef i64 @_ZN11duckdb_zstd18FSE_normalizeCountEPsjPKjmjj(ptr noundef nonnull %i.h, i32 noundef 9, ptr noundef nonnull %i.g, i64 noundef %i.qb, i32 noundef 35, i32 noundef 1) ; 4 uses
@@ -1070,7 +1061,10 @@ declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #13
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v32i32(<32 x i32>) #13
+declare i32 @llvm.vector.reduce.add.v36i32(<36 x i32>) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v52i32(<52 x i32>) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

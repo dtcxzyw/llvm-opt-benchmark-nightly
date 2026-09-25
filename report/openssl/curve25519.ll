@@ -204,7 +204,7 @@ fe51_invert.exit:                                 ; preds = %bb.i
   %i.oe = add i64 %i.od, %i.nv
   %i.of = lshr i64 %i.oe, 51
   %i.og = mul nuw nsw i64 %i.of, 19
-  %i.oh = add i64 %i.og, %i.nr                    ; 8 uses
+  %i.oh = add i64 %i.og, %i.nr                    ; 5 uses
   %i.oi = lshr i64 %i.oh, 51
   %i.oj = add i64 %i.oi, %i.ns                    ; 8 uses
   %i.ok = lshr i64 %i.oj, 51
@@ -213,20 +213,9 @@ fe51_invert.exit:                                 ; preds = %bb.i
   %i.on = add i64 %i.om, %i.nu                    ; 8 uses
   %i.oo = lshr i64 %i.on, 51
   %i.op = add i64 %i.oo, %i.nv                    ; 7 uses
-  %3 = trunc i64 %i.oh to i8
-  store i8 %3, ptr %0, align 1, !tbaa !8
-  %4 = lshr i64 %i.oh, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !8
-  %7 = lshr i64 %i.oh, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !8
-  %10 = lshr i64 %i.oh, 24
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !8
+  %3 = bitcast i64 %i.oh to <8 x i8>
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %4, ptr %0, align 1, !tbaa !8
   %i.oq = lshr i64 %i.oh, 32
   %i.or = trunc i64 %i.oq to i8
   %i.os = getelementptr inbounds nuw i8, ptr %0, i64 4

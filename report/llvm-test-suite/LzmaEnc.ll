@@ -205,6 +205,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %spec.select = tail call i32 @llvm.umax.i32(i32 %i.b, i32 -1073741824)
+  %3 = bitcast i32 %spec.select to <4 x i8>
   br label %.loopexit.loopexit
 
 bb.ao:                                            ; preds = %bb.b
@@ -212,22 +213,9 @@ bb.ao:                                            ; preds = %bb.b
   br i1 %.not27, label %bb.c, label %.loopexit.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.ao, %bb.b
-  %.0 = phi i32 [ 50331648, %bb.ab ], [ 4096, %bb.b ], [ 6144, %bb.ao ], [ 8192, %bb.c ], [ 12288, %bb.d ], [ %spec.select, %bb.an ], [ 16384, %bb.e ], [ 24576, %bb.f ], [ -2147483648, %bb.am ], [ 32768, %bb.g ], [ 49152, %bb.h ], [ 201326592, %bb.af ], [ 65536, %bb.i ], [ 98304, %bb.j ], [ 1610612736, %bb.al ], [ 131072, %bb.k ], [ 196608, %bb.l ], [ 1073741824, %bb.ak ], [ 262144, %bb.m ], [ 393216, %bb.n ], [ 67108864, %bb.ac ], [ 524288, %bb.o ], [ 786432, %bb.p ], [ 805306368, %bb.aj ], [ 1048576, %bb.q ], [ 1572864, %bb.r ], [ 536870912, %bb.ai ], [ 2097152, %bb.s ], [ 3145728, %bb.t ], [ 100663296, %bb.ad ], [ 4194304, %bb.u ], [ 6291456, %bb.v ], [ 402653184, %bb.ah ], [ 8388608, %bb.w ], [ 12582912, %bb.x ], [ 268435456, %bb.ag ], [ 16777216, %bb.y ], [ 25165824, %bb.z ], [ 134217728, %bb.ae ], [ 33554432, %bb.aa ] ; 4 uses
-  %3 = trunc i32 %.0 to i8
+  %.0 = phi <4 x i8> [ <i8 0, i8 0, i8 0, i8 3>, %bb.ab ], [ <i8 0, i8 16, i8 0, i8 0>, %bb.b ], [ <i8 0, i8 24, i8 0, i8 0>, %bb.ao ], [ <i8 0, i8 32, i8 0, i8 0>, %bb.c ], [ <i8 0, i8 48, i8 0, i8 0>, %bb.d ], [ %3, %bb.an ], [ <i8 0, i8 64, i8 0, i8 0>, %bb.e ], [ <i8 0, i8 96, i8 0, i8 0>, %bb.f ], [ <i8 0, i8 0, i8 0, i8 -128>, %bb.am ], [ <i8 0, i8 -128, i8 0, i8 0>, %bb.g ], [ <i8 0, i8 -64, i8 0, i8 0>, %bb.h ], [ <i8 0, i8 0, i8 0, i8 12>, %bb.af ], [ <i8 0, i8 0, i8 1, i8 0>, %bb.i ], [ <i8 0, i8 -128, i8 1, i8 0>, %bb.j ], [ <i8 0, i8 0, i8 0, i8 96>, %bb.al ], [ <i8 0, i8 0, i8 2, i8 0>, %bb.k ], [ <i8 0, i8 0, i8 3, i8 0>, %bb.l ], [ <i8 0, i8 0, i8 0, i8 64>, %bb.ak ], [ <i8 0, i8 0, i8 4, i8 0>, %bb.m ], [ <i8 0, i8 0, i8 6, i8 0>, %bb.n ], [ <i8 0, i8 0, i8 0, i8 4>, %bb.ac ], [ <i8 0, i8 0, i8 8, i8 0>, %bb.o ], [ <i8 0, i8 0, i8 12, i8 0>, %bb.p ], [ <i8 0, i8 0, i8 0, i8 48>, %bb.aj ], [ <i8 0, i8 0, i8 16, i8 0>, %bb.q ], [ <i8 0, i8 0, i8 24, i8 0>, %bb.r ], [ <i8 0, i8 0, i8 0, i8 32>, %bb.ai ], [ <i8 0, i8 0, i8 32, i8 0>, %bb.s ], [ <i8 0, i8 0, i8 48, i8 0>, %bb.t ], [ <i8 0, i8 0, i8 0, i8 6>, %bb.ad ], [ <i8 0, i8 0, i8 64, i8 0>, %bb.u ], [ <i8 0, i8 0, i8 96, i8 0>, %bb.v ], [ <i8 0, i8 0, i8 0, i8 24>, %bb.ah ], [ <i8 0, i8 0, i8 -128, i8 0>, %bb.w ], [ <i8 0, i8 0, i8 -64, i8 0>, %bb.x ], [ <i8 0, i8 0, i8 0, i8 16>, %bb.ag ], [ <i8 0, i8 0, i8 0, i8 1>, %bb.y ], [ <i8 0, i8 0, i8 -128, i8 1>, %bb.z ], [ <i8 0, i8 0, i8 0, i8 8>, %bb.ae ], [ <i8 0, i8 0, i8 0, i8 2>, %bb.aa ]
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %3, ptr %i.p, align 1, !tbaa !21
-  %4 = lshr i32 %.0, 8
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %5, ptr %6, align 1, !tbaa !21
-  %7 = lshr i32 %.0, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %8, ptr %9, align 1, !tbaa !21
-  %10 = lshr i32 %.0, 24
-  %11 = trunc nuw i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %11, ptr %12, align 1, !tbaa !21
+  store <4 x i8> %.0, ptr %i.p, align 1, !tbaa !21
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.a

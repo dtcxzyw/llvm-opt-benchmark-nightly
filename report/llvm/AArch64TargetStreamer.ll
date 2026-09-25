@@ -204,22 +204,9 @@ declare noundef ptr @_ZN4llvm10MCStreamer10endSectionEPNS_9MCSectionE(ptr nounde
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4llvm21AArch64TargetStreamer8emitInstEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(199720) %0, i32 noundef %1) unnamed_addr #3 align 2 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  %2 = trunc i32 %1 to i8
-  store i8 %2, ptr %i.a, align 1, !tbaa !29
-  %3 = lshr i32 %1, 8
-  %.09.ptr.1 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %4 = trunc i32 %3 to i8
-  store i8 %4, ptr %.09.ptr.1, align 1, !tbaa !29
-  %5 = lshr i32 %1, 16
-  %.09.ptr.2 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %6 = trunc i32 %5 to i8
-  store i8 %6, ptr %.09.ptr.2, align 1, !tbaa !29
-  %7 = lshr i32 %1, 24
-  %.09.ptr.3 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %8 = trunc nuw i32 %7 to i8
-  store i8 %8, ptr %.09.ptr.3, align 1, !tbaa !29
+  store i32 %1, ptr %i.a, align 4, !tbaa !29
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !33, !nonnull !16, !align !34 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !12

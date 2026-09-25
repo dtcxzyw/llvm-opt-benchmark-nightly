@@ -202,36 +202,9 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define internal void @w8be(i64 noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) #9 {
 bb.a:
-  %2 = lshr i64 %0, 32
-  %3 = lshr i64 %0, 56
-  %4 = trunc nuw i64 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %4, ptr %1, align 1, !tbaa !12
-  %6 = lshr i64 %0, 48
-  %7 = trunc i64 %6 to i8
-  store i8 %7, ptr %5, align 1, !tbaa !12
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %9 = lshr i64 %0, 40
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %10, ptr %8, align 1, !tbaa !12
-  %12 = trunc i64 %2 to i8
-  store i8 %12, ptr %11, align 1, !tbaa !12
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %14 = lshr i64 %0, 24
-  %15 = trunc i64 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %15, ptr %13, align 1, !tbaa !12
-  %17 = lshr i64 %0, 16
-  %18 = trunc i64 %17 to i8
-  store i8 %18, ptr %16, align 1, !tbaa !12
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %20 = lshr i64 %0, 8
-  %21 = trunc i64 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %21, ptr %19, align 1, !tbaa !12
-  %23 = trunc i64 %0 to i8
-  store i8 %23, ptr %22, align 1, !tbaa !12
+  %2 = bitcast i64 %0 to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %1, align 1, !tbaa !12
   ret void
 }
 

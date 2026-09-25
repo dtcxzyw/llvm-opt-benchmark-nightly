@@ -204,7 +204,7 @@ define internal void @_ZN12_GLOBAL__N_127Time_NextTransitionNYC_Test8TestBodyEv(
   %i.a = alloca i64, align 8                      ; 5 uses
   %3 = alloca %"class.absl::lts_20260526::TimeZone", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %5 = alloca %"struct.absl::lts_20260526::TimeZone::CivilTransition", align 8 ; 22 uses
+  %5 = alloca %"struct.absl::lts_20260526::TimeZone::CivilTransition", align 8 ; 19 uses
   %6 = alloca %"struct.testing::internal::AssertionResultExpectation", align 8 ; 8 uses
   %7 = alloca %"class.testing::Message", align 8  ; 7 uses
   %8 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
@@ -288,11 +288,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a,
   store i8 0, ptr %i.q, align 4, !tbaa !225
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store i64 1970, ptr %i.r, align 8, !tbaa !224
-  %41 = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 4 uses
-  %42 = getelementptr inbounds nuw i8, ptr %5, i64 25
-  %43 = getelementptr inbounds nuw i8, ptr %5, i64 26
-  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 27
-  store <4 x i8> <i8 1, i8 1, i8 0, i8 0>, ptr %41, align 8, !tbaa !90
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 4 uses
+  store <4 x i8> <i8 1, i8 1, i8 0, i8 0>, ptr %i.s, align 8, !tbaa !90
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 28 ; 4 uses
   store i8 0, ptr %i.t, align 4, !tbaa !225
   %i.u = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 2018, i8 noundef signext 6, i64 noundef 30, i64 noundef 0, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #26 ; 2 uses
@@ -625,7 +622,7 @@ _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.z, %_ZNKSt14defa
   store i40 66571, ptr %.sroa.2.0..sroa_idx.i.i110, align 8
   %i.ct = load i64, ptr %i.r, align 8, !tbaa !100, !noalias !1860
   %i.cu = icmp eq i64 %i.ct, 2018
-  %i.cv = load <4 x i8>, ptr %41, align 8
+  %i.cv = load <4 x i8>, ptr %i.s, align 8
   %.fr470 = freeze <4 x i8> %i.cv
   %i.cw = load i8, ptr %i.t, align 4
   %i.cx = icmp eq i8 %i.cw, 0
@@ -1028,7 +1025,7 @@ bb.bo:                                            ; preds = %_ZN4absl12lts_20260
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #26
   %i.hd = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1918, i8 noundef signext 3, i64 noundef 31, i64 noundef 0, i8 noundef signext 3, i8 noundef signext 0, i8 noundef signext 0) #26 ; 2 uses
-  %.fca.1.extract.i.i283 = extractvalue { i64, i64 } %i.hd, 1 ; 6 uses
+  %.fca.1.extract.i.i283 = extractvalue { i64, i64 } %i.hd, 1 ; 3 uses
   %.fca.0.extract.i170 = extractvalue { i64, i64 } %i.hd, 0 ; 2 uses
   store i64 %.fca.0.extract.i170, ptr %30, align 8
   %.sroa.2.0..sroa_idx.i.i172 = getelementptr inbounds nuw i8, ptr %30, i64 8
@@ -1036,30 +1033,19 @@ bb.bo:                                            ; preds = %_ZN4absl12lts_20260
   store i40 %.sroa.2.0.extract.trunc.i.i173, ptr %.sroa.2.0..sroa_idx.i.i172, align 8
   %i.he = load i64, ptr %i.r, align 8, !tbaa !100, !noalias !1861
   %i.hf = icmp eq i64 %.fca.0.extract.i170, %i.he
-  %44 = lshr i64 %.fca.1.extract.i.i283, 8
-  %45 = trunc i64 %44 to i8
-  %46 = lshr i64 %.fca.1.extract.i.i283, 16
-  %47 = trunc i64 %46 to i8
-  %48 = lshr i64 %.fca.1.extract.i.i283, 24
-  %49 = trunc i64 %48 to i8
   %i.hg = lshr i64 %.fca.1.extract.i.i283, 32
-  %50 = trunc i64 %i.hg to i8
-  %i.hh = trunc i64 %.fca.1.extract.i.i283 to i8
-  %51 = load i8, ptr %41, align 8
-  %52 = icmp eq i8 %51, %i.hh
-  %or.cond435 = select i1 %i.hf, i1 %52, i1 false
-  %53 = load i8, ptr %42, align 1
-  %54 = icmp eq i8 %53, %45
-  %or.cond437 = select i1 %or.cond435, i1 %54, i1 false
-  %i.hi = load i8, ptr %43, align 2
-  %i.hj = icmp eq i8 %i.hi, %47
-  %or.cond439 = select i1 %or.cond437, i1 %i.hj, i1 false
-  %55 = load i8, ptr %i.s, align 1
-  %i.hk = icmp eq i8 %55, %49
-  %or.cond441 = select i1 %or.cond439, i1 %i.hk, i1 false
-  %56 = load i8, ptr %i.t, align 4
-  %57 = icmp eq i8 %56, %50
-  %or.cond443 = select i1 %or.cond441, i1 %57, i1 false
+  %i.hh = trunc i64 %i.hg to i8
+  %41 = load <4 x i8>, ptr %i.s, align 8
+  %42 = bitcast i64 %.fca.1.extract.i.i283 to <8 x i8>
+  %43 = shufflevector <8 x i8> %42, <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %44 = icmp eq <4 x i8> %41, %43
+  %i.hi = load i8, ptr %i.t, align 4
+  %i.hj = icmp eq i8 %i.hi, %i.hh
+  %45 = freeze <4 x i1> %44
+  %46 = bitcast <4 x i1> %45 to i4
+  %i.hk = icmp eq i4 %46, -1
+  %47 = and i1 %i.hf, %i.hk
+  %or.cond443 = select i1 %47, i1 %i.hj, i1 false
   br i1 %or.cond443, label %bb.bp, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i174
 
 bb.bp:                                            ; preds = %bb.bo
@@ -1323,7 +1309,7 @@ _ZN7testing15AssertionResultD2Ev.exit209:         ; preds = %bb.cl, %_ZNKSt14def
   store i40 791051, ptr %.sroa.2.0..sroa_idx.i.i212, align 8
   %i.jm = load i64, ptr %i.r, align 8, !tbaa !100, !noalias !1862
   %i.jn = icmp eq i64 %i.jm, 1883
-  %i.jo = load <4 x i8>, ptr %41, align 8
+  %i.jo = load <4 x i8>, ptr %i.s, align 8
   %.fr472 = freeze <4 x i8> %i.jo
   %i.jp = load i8, ptr %i.t, align 4
   %i.jq = icmp eq i8 %i.jp, 0

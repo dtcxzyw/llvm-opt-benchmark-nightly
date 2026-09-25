@@ -205,7 +205,7 @@ define internal void @_ZNK8facebook5velox12_GLOBAL__N_120IPPrefixCastOperator8ca
 bb.a:
   %6 = alloca %"struct.fmt::v11::detail::format_arg_store.195", align 16 ; 5 uses
   %7 = alloca %"struct.fmt::v11::detail::format_arg_store.846", align 16 ; 6 uses
-  %8 = alloca %"struct.std::array", align 16      ; 5 uses
+  %8 = alloca %"struct.std::array", align 1       ; 20 uses
   %9 = alloca %"class.folly::IPAddressV6", align 4 ; 7 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %11 = alloca %"class.folly::IPAddressV4", align 4 ; 4 uses
@@ -608,6 +608,21 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   br i1 %.not3345.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.ai
+  %.012.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 15
+  %27 = getelementptr inbounds nuw i8, ptr %8, i64 1
+  %.0.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 14
+  %28 = getelementptr inbounds nuw i8, ptr %8, i64 2
+  %.0.i.i.1.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 13
+  %29 = getelementptr inbounds nuw i8, ptr %8, i64 3
+  %.0.i.i.2.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 12
+  %30 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %.0.i.i.3.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 11
+  %31 = getelementptr inbounds nuw i8, ptr %8, i64 5
+  %.0.i.i.4.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 10
+  %32 = getelementptr inbounds nuw i8, ptr %8, i64 6
+  %.0.i.i.5.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 9
+  %33 = getelementptr inbounds nuw i8, ptr %8, i64 7
+  %.0.i.i.6.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.ep = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.eq = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.er = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -670,7 +685,7 @@ bb.al:                                            ; preds = %_ZZN8facebook5velox
           to label %.noexc.i.i.i.i.i.i.i.i unwind label %bb.aw, !inline_history !1069
 
 .noexc.i.i.i.i.i.i.i.i:                           ; preds = %bb.al
-  %27 = load <1 x i128>, ptr %i.fv, align 16
+  %34 = load i128, ptr %i.fv, align 16, !tbaa !186 ; 16 uses
   %i.fw = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !370, !nonnull !257, !align !283
   %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !364 ; 2 uses
   %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !118
@@ -681,10 +696,53 @@ bb.al:                                            ; preds = %_ZZN8facebook5velox
 
 .noexc20.i.i.i.i.i.i.i.i:                         ; preds = %.noexc.i.i.i.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #35
-  %28 = shufflevector <1 x i128> %27, <1 x i128> poison, <16 x i32> zeroinitializer
-  %29 = lshr <16 x i128> %28, <i128 120, i128 112, i128 104, i128 96, i128 88, i128 80, i128 72, i128 64, i128 56, i128 48, i128 40, i128 32, i128 24, i128 16, i128 8, i128 0>
-  %30 = trunc <16 x i128> %29 to <16 x i8>
-  store <16 x i8> %30, ptr %8, align 16, !tbaa !116
+  %35 = trunc i128 %34 to i8
+  %36 = lshr i128 %34, 120
+  %37 = trunc nuw i128 %36 to i8
+  store i8 %37, ptr %8, align 1, !tbaa !116
+  store i8 %35, ptr %.012.i.i.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
+  %38 = lshr i128 %34, 8
+  %39 = trunc i128 %38 to i8
+  %40 = lshr i128 %34, 112
+  %41 = trunc i128 %40 to i8
+  store i8 %41, ptr %27, align 1, !tbaa !116
+  store i8 %39, ptr %.0.i.i.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
+  %42 = lshr i128 %34, 16
+  %43 = trunc i128 %42 to i8
+  %44 = lshr i128 %34, 104
+  %45 = trunc i128 %44 to i8
+  store i8 %45, ptr %28, align 1, !tbaa !116
+  store i8 %43, ptr %.0.i.i.1.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
+  %46 = lshr i128 %34, 24
+  %47 = trunc i128 %46 to i8
+  %48 = lshr i128 %34, 96
+  %49 = trunc i128 %48 to i8
+  store i8 %49, ptr %29, align 1, !tbaa !116
+  store i8 %47, ptr %.0.i.i.2.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
+  %50 = lshr i128 %34, 32
+  %51 = trunc i128 %50 to i8
+  %52 = lshr i128 %34, 88
+  %53 = trunc i128 %52 to i8
+  store i8 %53, ptr %30, align 1, !tbaa !116
+  store i8 %51, ptr %.0.i.i.3.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
+  %54 = lshr i128 %34, 40
+  %55 = trunc i128 %54 to i8
+  %56 = lshr i128 %34, 80
+  %57 = trunc i128 %56 to i8
+  store i8 %57, ptr %31, align 1, !tbaa !116
+  store i8 %55, ptr %.0.i.i.4.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
+  %58 = lshr i128 %34, 48
+  %59 = trunc i128 %58 to i8
+  %60 = lshr i128 %34, 72
+  %61 = trunc i128 %60 to i8
+  store i8 %61, ptr %32, align 1, !tbaa !116
+  store i8 %59, ptr %.0.i.i.5.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
+  %62 = lshr i128 %34, 56
+  %63 = trunc i128 %62 to i8
+  %64 = lshr i128 %34, 64
+  %65 = trunc i128 %64 to i8
+  store i8 %65, ptr %33, align 1, !tbaa !116
+  store i8 %63, ptr %.0.i.i.6.i.i.i.i.i.i.i.i.i, align 1, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #35
   call void @_ZN5folly11IPAddressV6C1ERKSt5arrayIhLm16EE(ptr noundef nonnull align 4 dereferenceable(18) %9, ptr noundef nonnull align 1 dereferenceable(16) %8) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #35
@@ -1087,7 +1145,7 @@ declare void @__cxa_bad_cast() local_unnamed_addr
 define internal fastcc void @_ZZN8facebook5velox12_GLOBAL__N_120IPPrefixCastOperator12castToStringERKNS0_10BaseVectorERNS0_4exec7EvalCtxERKNS0_17SelectivityVectorERS3_ENKUlT_E_clIiEEDaSD_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, i32 noundef %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 .lr.ph.i.i:
   %2 = alloca %"struct.fmt::v11::detail::format_arg_store.846", align 16 ; 6 uses
-  %3 = alloca %"struct.std::array", align 16      ; 5 uses
+  %3 = alloca %"struct.std::array", align 1       ; 20 uses
   %4 = alloca %"class.folly::IPAddressV6", align 4 ; 7 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %6 = alloca %"class.folly::IPAddressV4", align 4 ; 4 uses
@@ -1099,19 +1157,77 @@ define internal fastcc void @_ZZN8facebook5velox12_GLOBAL__N_120IPPrefixCastOper
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 384
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = tail call noundef nonnull align 16 dereferenceable(16) ptr %i.e(ptr noundef nonnull align 16 dereferenceable(176) %i.b, i32 noundef %1)
+  %9 = load i128, ptr %i.f, align 16, !tbaa !186  ; 16 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !370, !nonnull !257, !align !283
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !364  ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !118
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 384
   %i.l = load ptr, ptr %i.k, align 8
-  %9 = load <1 x i128>, ptr %i.f, align 16
   %10 = tail call noundef signext i8 %i.l(ptr noundef nonnull align 8 dereferenceable(108) %i.i, i32 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #35
-  %11 = shufflevector <1 x i128> %9, <1 x i128> poison, <16 x i32> zeroinitializer
-  %12 = lshr <16 x i128> %11, <i128 120, i128 112, i128 104, i128 96, i128 88, i128 80, i128 72, i128 64, i128 56, i128 48, i128 40, i128 32, i128 24, i128 16, i128 8, i128 0>
-  %13 = trunc <16 x i128> %12 to <16 x i8>
-  store <16 x i8> %13, ptr %3, align 16, !tbaa !116
+  %.012.i.i = getelementptr inbounds nuw i8, ptr %3, i64 15
+  %11 = trunc i128 %9 to i8
+  %12 = lshr i128 %9, 120
+  %13 = trunc nuw i128 %12 to i8
+  store i8 %13, ptr %3, align 1, !tbaa !116
+  store i8 %11, ptr %.012.i.i, align 1, !tbaa !116
+  %14 = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %.0.i.i = getelementptr inbounds nuw i8, ptr %3, i64 14
+  %15 = lshr i128 %9, 8
+  %16 = trunc i128 %15 to i8
+  %17 = lshr i128 %9, 112
+  %18 = trunc i128 %17 to i8
+  store i8 %18, ptr %14, align 1, !tbaa !116
+  store i8 %16, ptr %.0.i.i, align 1, !tbaa !116
+  %19 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %.0.i.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 13
+  %20 = lshr i128 %9, 16
+  %21 = trunc i128 %20 to i8
+  %22 = lshr i128 %9, 104
+  %23 = trunc i128 %22 to i8
+  store i8 %23, ptr %19, align 1, !tbaa !116
+  store i8 %21, ptr %.0.i.i.1, align 1, !tbaa !116
+  %24 = getelementptr inbounds nuw i8, ptr %3, i64 3
+  %.0.i.i.2 = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %25 = lshr i128 %9, 24
+  %26 = trunc i128 %25 to i8
+  %27 = lshr i128 %9, 96
+  %28 = trunc i128 %27 to i8
+  store i8 %28, ptr %24, align 1, !tbaa !116
+  store i8 %26, ptr %.0.i.i.2, align 1, !tbaa !116
+  %29 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %.0.i.i.3 = getelementptr inbounds nuw i8, ptr %3, i64 11
+  %30 = lshr i128 %9, 32
+  %31 = trunc i128 %30 to i8
+  %32 = lshr i128 %9, 88
+  %33 = trunc i128 %32 to i8
+  store i8 %33, ptr %29, align 1, !tbaa !116
+  store i8 %31, ptr %.0.i.i.3, align 1, !tbaa !116
+  %34 = getelementptr inbounds nuw i8, ptr %3, i64 5
+  %.0.i.i.4 = getelementptr inbounds nuw i8, ptr %3, i64 10
+  %35 = lshr i128 %9, 40
+  %36 = trunc i128 %35 to i8
+  %37 = lshr i128 %9, 80
+  %38 = trunc i128 %37 to i8
+  store i8 %38, ptr %34, align 1, !tbaa !116
+  store i8 %36, ptr %.0.i.i.4, align 1, !tbaa !116
+  %39 = getelementptr inbounds nuw i8, ptr %3, i64 6
+  %.0.i.i.5 = getelementptr inbounds nuw i8, ptr %3, i64 9
+  %40 = lshr i128 %9, 48
+  %41 = trunc i128 %40 to i8
+  %42 = lshr i128 %9, 72
+  %43 = trunc i128 %42 to i8
+  store i8 %43, ptr %39, align 1, !tbaa !116
+  store i8 %41, ptr %.0.i.i.5, align 1, !tbaa !116
+  %44 = getelementptr inbounds nuw i8, ptr %3, i64 7
+  %.0.i.i.6 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %45 = lshr i128 %9, 56
+  %46 = trunc i128 %45 to i8
+  %47 = lshr i128 %9, 64
+  %48 = trunc i128 %47 to i8
+  store i8 %48, ptr %44, align 1, !tbaa !116
+  store i8 %46, ptr %.0.i.i.6, align 1, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
   call void @_ZN5folly11IPAddressV6C1ERKSt5arrayIhLm16EE(ptr noundef nonnull align 4 dereferenceable(18) %4, ptr noundef nonnull align 1 dereferenceable(16) %3) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35

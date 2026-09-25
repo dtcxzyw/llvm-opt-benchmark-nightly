@@ -204,7 +204,7 @@ bb.a:
   %i.k = alloca [16 x i8], align 16               ; 8 uses
   %i.l = alloca i64, align 8                      ; 6 uses
   %i.m = alloca i64, align 8                      ; 6 uses
-  %i.n = alloca [8 x i8], align 1                 ; 13 uses
+  %i.n = alloca [8 x i8], align 8                 ; 6 uses
   %2 = alloca %union.anon, align 4                ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 3392 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !240  ; 2 uses
@@ -298,37 +298,9 @@ bb.l:                                             ; preds = %bb.j
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 832
   store i32 %i.at, ptr %i.av, align 8, !tbaa !241
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 5912
-  %3 = load i64, ptr %i.aw, align 8, !tbaa !242   ; 8 uses
-  %4 = trunc i64 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %i.n, i64 7
-  store i8 %4, ptr %5, align 1, !tbaa !166
-  %6 = lshr i64 %3, 8
-  %7 = trunc i64 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.n, i64 6
-  store i8 %7, ptr %8, align 1, !tbaa !166
-  %9 = lshr i64 %3, 16
-  %10 = trunc i64 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.n, i64 5
-  store i8 %10, ptr %11, align 1, !tbaa !166
-  %12 = lshr i64 %3, 24
-  %13 = trunc i64 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.n, i64 4
-  store i8 %13, ptr %14, align 1, !tbaa !166
-  %15 = lshr i64 %3, 32
-  %16 = trunc i64 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.n, i64 3
-  store i8 %16, ptr %17, align 1, !tbaa !166
-  %18 = lshr i64 %3, 40
-  %19 = trunc i64 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.n, i64 2
-  store i8 %19, ptr %20, align 1, !tbaa !166
-  %21 = lshr i64 %3, 48
-  %22 = trunc i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.n, i64 1
-  store i8 %22, ptr %23, align 1, !tbaa !166
-  %24 = lshr i64 %3, 56
-  %25 = trunc nuw i64 %24 to i8
-  store i8 %25, ptr %i.n, align 1, !tbaa !166
+  %3 = load <8 x i8>, ptr %i.aw, align 8, !tbaa !242
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %4, ptr %i.n, align 8, !tbaa !166
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1596
   %i.ay = getelementptr inbounds nuw i8, ptr %i.au, i64 80
   %i.az = call i32 @tls13_hkdf_expand(ptr noundef nonnull %0, ptr noundef %i.z, ptr noundef nonnull %i.ax, ptr noundef nonnull @tls_construct_new_session_ticket.nonce_label, i64 noundef 10, ptr noundef nonnull %i.n, i64 noundef 8, ptr noundef nonnull %i.ay, i64 noundef %i.ac, i32 noundef 1) #12

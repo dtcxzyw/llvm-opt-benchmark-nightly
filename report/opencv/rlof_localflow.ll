@@ -205,8 +205,6 @@ bb.a:
   %24 = alloca %"class.cv::Scalar_", align 8      ; 5 uses
   %.sroa.0.0.extract.trunc = trunc i64 %2 to i32  ; 15 uses
   %.sroa.32.0.extract.shift = lshr i64 %2, 32
-  %25 = bitcast i64 %2 to <2 x i32>
-  %26 = bitcast i64 %2 to <2 x i32>
   %.sroa.32.0.extract.trunc = trunc nuw i64 %.sroa.32.0.extract.shift to i32 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   %i.a = tail call noundef i32 @_ZNK2cv11_InputArray4kindEv(ptr noundef nonnull align 8 dereferenceable(24) %0), !noalias !245
@@ -566,7 +564,8 @@ bb.ap:                                            ; preds = %.preheader
   %i.di = fdiv <2 x float> %i.dh, %i.de
   %i.dj = fptosi <2 x float> %i.di to <2 x i32>   ; 2 uses
   store <2 x i32> %i.dj, ptr %15, align 8
-  %i.dk = icmp sgt <2 x i32> %i.dj, %26           ; 2 uses
+  %25 = bitcast i64 %2 to <2 x i32>               ; 2 uses
+  %i.dk = icmp sgt <2 x i32> %i.dj, %25           ; 2 uses
   %i.dl = extractelement <2 x i1> %i.dk, i64 0
   %i.dm = extractelement <2 x i1> %i.dk, i64 1
   %or.cond204.peel = select i1 %i.dl, i1 %i.dm, i1 false

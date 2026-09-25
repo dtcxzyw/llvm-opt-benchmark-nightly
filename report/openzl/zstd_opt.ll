@@ -205,20 +205,15 @@ ZSTD_scaleStats.exit:                             ; preds = %ZSTD_scaleStats.exi
 sum_u32.exit.i102:                                ; preds = %ZSTD_scaleStats.exit, %bb.o
   %i.kw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.kx = load ptr, ptr %i.kw, align 8, !tbaa !60 ; 11 uses
-  %4 = load <32 x i32>, ptr %i.kx, align 4, !tbaa !44 ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.kx, i64 128 ; 3 uses
-  %6 = load <4 x i32>, ptr %5, align 4, !tbaa !44
-  %7 = shufflevector <32 x i32> %4, <32 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %rdx.op237 = add <4 x i32> %7, %6
-  %8 = shufflevector <4 x i32> %rdx.op237, <4 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %9 = shufflevector <32 x i32> %8, <32 x i32> %4, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.ky = tail call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %9) ; 3 uses
+  %4 = load <36 x i32>, ptr %i.kx, align 4, !tbaa !44 ; 2 uses
+  %i.ky = tail call i32 @llvm.vector.reduce.add.v36i32(<36 x i32> %4) ; 3 uses
   %i.kz = icmp ult i32 %i.ky, 4096
   br i1 %i.kz, label %ZSTD_scaleStats.exit109, label %.split.i.i103
 
 .split.i.i103:                                    ; preds = %sum_u32.exit.i102
   %i.la = getelementptr inbounds nuw i8, ptr %i.kx, i64 16 ; 2 uses
   %i.lb = load <4 x i32>, ptr %i.la, align 4, !tbaa !44
+  %5 = getelementptr inbounds nuw i8, ptr %i.kx, i64 128 ; 2 uses
   %i.lc = getelementptr inbounds nuw i8, ptr %i.kx, i64 112 ; 2 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %i.kx, i64 96 ; 2 uses
   %i.le = getelementptr inbounds nuw i8, ptr %i.kx, i64 80
@@ -227,62 +222,53 @@ sum_u32.exit.i102:                                ; preds = %ZSTD_scaleStats.exi
   %i.lh = getelementptr inbounds nuw i8, ptr %i.kx, i64 32
   %i.li = lshr i32 %i.ky, 11
   %i.lj = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.li, i1 true)
-  %i.lk = xor i32 %i.lj, 31                       ; 2 uses
+  %i.lk = xor i32 %i.lj, 31
   %i.ll = load <4 x i32>, ptr %i.kx, align 4, !tbaa !44
-  %i.lm = load <4 x i32>, ptr %i.ld, align 4, !tbaa !44
-  %i.ln = load <4 x i32>, ptr %i.lc, align 4, !tbaa !44
-  %10 = shufflevector <4 x i32> %i.ln, <4 x i32> %i.lm, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3>
-  %11 = shufflevector <32 x i32> %4, <32 x i32> %10, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %12 = shufflevector <4 x i32> %i.ll, <4 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %13 = shufflevector <32 x i32> %12, <32 x i32> %11, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %14 = shufflevector <4 x i32> %i.lb, <4 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %15 = shufflevector <32 x i32> %13, <32 x i32> %14, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 32, i32 33, i32 34, i32 35, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %16 = insertelement <32 x i32> poison, i32 %i.lk, i64 0
-  %17 = shufflevector <32 x i32> %16, <32 x i32> poison, <32 x i32> zeroinitializer
-  %18 = lshr <32 x i32> %15, %17
-  %19 = add nuw <32 x i32> %18, splat (i32 1)     ; 9 uses
-  %i.lo = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  %6 = load <4 x i32>, ptr %i.ld, align 4, !tbaa !44
+  %i.lm = load <4 x i32>, ptr %i.lc, align 4, !tbaa !44
+  %i.ln = load <4 x i32>, ptr %5, align 4, !tbaa !44
+  %7 = shufflevector <4 x i32> %i.ln, <4 x i32> %i.lm, <36 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3>
+  %8 = shufflevector <4 x i32> %6, <4 x i32> poison, <36 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <36 x i32> %7, <36 x i32> %8, <36 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 36, i32 37, i32 38, i32 39, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35>
+  %10 = shufflevector <36 x i32> %4, <36 x i32> %9, <36 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 60, i32 61, i32 62, i32 63, i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71>
+  %11 = shufflevector <4 x i32> %i.ll, <4 x i32> poison, <36 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = shufflevector <36 x i32> %11, <36 x i32> %10, <36 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71>
+  %13 = shufflevector <4 x i32> %i.lb, <4 x i32> poison, <36 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <36 x i32> %12, <36 x i32> %13, <36 x i32> <i32 0, i32 1, i32 2, i32 3, i32 36, i32 37, i32 38, i32 39, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35>
+  %15 = insertelement <36 x i32> poison, i32 %i.lk, i64 0
+  %16 = shufflevector <36 x i32> %15, <36 x i32> poison, <36 x i32> zeroinitializer
+  %17 = lshr <36 x i32> %14, %16
+  %18 = add nuw <36 x i32> %17, splat (i32 1)     ; 10 uses
+  %i.lo = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   store <4 x i32> %i.lo, ptr %i.kx, align 4, !tbaa !44
-  %i.lp = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %i.lp = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
   store <4 x i32> %i.lp, ptr %i.la, align 4, !tbaa !44
-  %i.lq = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 8, i32 9, i32 10, i32 11>
+  %i.lq = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 8, i32 9, i32 10, i32 11>
   store <4 x i32> %i.lq, ptr %i.lh, align 4, !tbaa !44
-  %i.lr = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 12, i32 13, i32 14, i32 15>
+  %i.lr = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 12, i32 13, i32 14, i32 15>
   store <4 x i32> %i.lr, ptr %i.lg, align 4, !tbaa !44
-  %i.ls = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 16, i32 17, i32 18, i32 19>
+  %i.ls = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 16, i32 17, i32 18, i32 19>
   store <4 x i32> %i.ls, ptr %i.lf, align 4, !tbaa !44
-  %i.lt = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 20, i32 21, i32 22, i32 23>
+  %i.lt = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 20, i32 21, i32 22, i32 23>
   store <4 x i32> %i.lt, ptr %i.le, align 4, !tbaa !44
-  %i.lu = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 24, i32 25, i32 26, i32 27>
+  %i.lu = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 24, i32 25, i32 26, i32 27>
   store <4 x i32> %i.lu, ptr %i.ld, align 4, !tbaa !44
-  %i.lv = shufflevector <32 x i32> %19, <32 x i32> poison, <4 x i32> <i32 28, i32 29, i32 30, i32 31>
+  %i.lv = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 28, i32 29, i32 30, i32 31>
   store <4 x i32> %i.lv, ptr %i.lc, align 4, !tbaa !44
-  %20 = load <4 x i32>, ptr %5, align 4, !tbaa !44
-  %21 = insertelement <4 x i32> poison, i32 %i.lk, i64 0
-  %22 = shufflevector <4 x i32> %21, <4 x i32> poison, <4 x i32> zeroinitializer
-  %23 = lshr <4 x i32> %20, %22
-  %24 = add nuw <4 x i32> %23, splat (i32 1)      ; 2 uses
-  %rdx.op238 = add <4 x i32> %i.lo, %24
-  %25 = shufflevector <4 x i32> %rdx.op238, <4 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %26 = shufflevector <32 x i32> %25, <32 x i32> %19, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %27 = tail call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %26)
-  store <4 x i32> %24, ptr %5, align 4, !tbaa !44
+  %19 = tail call i32 @llvm.vector.reduce.add.v36i32(<36 x i32> %18)
+  %20 = shufflevector <36 x i32> %18, <36 x i32> poison, <4 x i32> <i32 32, i32 33, i32 34, i32 35>
+  store <4 x i32> %20, ptr %5, align 4, !tbaa !44
   br label %ZSTD_scaleStats.exit109
 
 ZSTD_scaleStats.exit109:                          ; preds = %.split.i.i103, %sum_u32.exit.i102
-  %.0.i108 = phi i32 [ %i.ky, %sum_u32.exit.i102 ], [ %27, %.split.i.i103 ]
+  %.0.i108 = phi i32 [ %i.ky, %sum_u32.exit.i102 ], [ %19, %.split.i.i103 ]
   store i32 %.0.i108, ptr %i.d, align 4, !tbaa !79
   %i.lw = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.lx = load ptr, ptr %i.lw, align 8, !tbaa !70 ; 21 uses
-  %28 = load <32 x i32>, ptr %i.lx, align 4, !tbaa !44 ; 2 uses
-  %29 = getelementptr inbounds nuw i8, ptr %i.lx, i64 128
-  %30 = load <20 x i32>, ptr %29, align 4, !tbaa !44
+  %i.lx = load ptr, ptr %i.lw, align 8, !tbaa !70 ; 20 uses
+  %21 = load <52 x i32>, ptr %i.lx, align 4, !tbaa !44
   %i.ly = getelementptr inbounds nuw i8, ptr %i.lx, i64 208
   %i.lz = load i32, ptr %i.ly, align 4, !tbaa !44
-  %31 = shufflevector <20 x i32> %30, <20 x i32> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %32 = add <32 x i32> %28, %31
-  %33 = shufflevector <32 x i32> %32, <32 x i32> %28, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.ma = tail call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %33)
+  %i.ma = tail call i32 @llvm.vector.reduce.add.v52i32(<52 x i32> %21)
   %op.rdx236 = add i32 %i.ma, %i.lz               ; 3 uses
   %i.mb = icmp ult i32 %op.rdx236, 4096
   br i1 %i.mb, label %ZSTD_scaleStats.exit120, label %vector.ph210
@@ -684,6 +670,12 @@ declare i32 @llvm.vector.reduce.add.v32i32(<32 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v28i32(<28 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v52i32(<52 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v36i32(<36 x i32>) #9
 
 attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

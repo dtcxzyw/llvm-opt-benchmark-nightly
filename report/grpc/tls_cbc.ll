@@ -205,24 +205,14 @@ bb.b:                                             ; preds = %bb.a
   %i.s = add nuw nsw i64 %i.r, %i.m
   %i.t = lshr i64 %i.s, 6
   %i.u = shl i64 %3, 3
-  %i.v = add i64 %i.u, %i.g                       ; 4 uses
-  %5 = lshr i64 %i.v, 8
-  %6 = lshr i64 %i.v, 16
-  %7 = lshr i64 %i.v, 24
-  %8 = trunc i64 %7 to i8
-  %9 = trunc i64 %6 to i8
-  %10 = insertelement <2 x i64> poison, i64 %5, i64 0
-  %11 = insertelement <2 x i64> %10, i64 %i.v, i64 1
-  %12 = trunc <2 x i64> %11 to <2 x i8>
+  %i.v = add i64 %i.u, %i.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, i8 0, i64 64, i1 false)
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 60 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %13 = insertelement <4 x i8> poison, i8 %8, i64 0
-  %14 = insertelement <4 x i8> %13, i8 %9, i64 1
-  %15 = shufflevector <2 x i8> %12, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %16 = shufflevector <4 x i8> %14, <4 x i8> %15, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %5 = bitcast i64 %i.v to <8 x i8>
+  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   br label %bb.c
 
 .preheader:                                       ; preds = %.split97.us
@@ -410,7 +400,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 .split95.us.preheader:                            ; preds = %._crit_edge
   %i.co = load <4 x i8>, ptr %i.x, align 4, !tbaa !11
-  %i.cp = or <4 x i8> %i.co, %16
+  %i.cp = or <4 x i8> %i.co, %6
   store <4 x i8> %i.cp, ptr %i.x, align 4, !tbaa !11
   call void @SHA1_Transform(ptr noundef %0, ptr noundef nonnull %i.a) #8
   %i.cq = load <4 x i32>, ptr %0, align 4, !tbaa !19
@@ -470,24 +460,14 @@ bb.b:                                             ; preds = %bb.a
   %i.s = add nuw nsw i64 %i.r, %i.m
   %i.t = lshr i64 %i.s, 6
   %i.u = shl i64 %3, 3
-  %i.v = add i64 %i.u, %i.g                       ; 4 uses
-  %5 = lshr i64 %i.v, 8
-  %6 = lshr i64 %i.v, 16
-  %7 = lshr i64 %i.v, 24
-  %8 = trunc i64 %7 to i8
-  %9 = trunc i64 %6 to i8
-  %10 = insertelement <2 x i64> poison, i64 %5, i64 0
-  %11 = insertelement <2 x i64> %10, i64 %i.v, i64 1
-  %12 = trunc <2 x i64> %11 to <2 x i8>
+  %i.v = add i64 %i.u, %i.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, i8 0, i64 64, i1 false)
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 60 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %13 = insertelement <4 x i8> poison, i8 %8, i64 0
-  %14 = insertelement <4 x i8> %13, i8 %9, i64 1
-  %15 = shufflevector <2 x i8> %12, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %16 = shufflevector <4 x i8> %14, <4 x i8> %15, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %5 = bitcast i64 %i.v to <8 x i8>
+  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   br label %bb.c
 
 .preheader:                                       ; preds = %.split97.us
@@ -675,7 +655,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 .split95.us.preheader:                            ; preds = %._crit_edge
   %i.cp = load <4 x i8>, ptr %i.x, align 4, !tbaa !11
-  %i.cq = or <4 x i8> %i.cp, %16
+  %i.cq = or <4 x i8> %i.cp, %6
   store <4 x i8> %i.cq, ptr %i.x, align 4, !tbaa !11
   call void @SHA256_Transform(ptr noundef %0, ptr noundef nonnull %i.a) #8
   %i.cr = load <4 x i32>, ptr %0, align 4, !tbaa !19

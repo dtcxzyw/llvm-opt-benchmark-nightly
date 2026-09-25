@@ -204,7 +204,7 @@ define internal fastcc void @create_iv(ptr nofree noundef nonnull writeonly capt
   %i.a = tail call i32 @llvm.bswap.i32(i32 %3)    ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   store i32 %i.a, ptr %i.b, align 1, !tbaa !16
-  %i.c = tail call noundef i64 @llvm.bswap.i64(i64 %2) ; 8 uses
+  %i.c = tail call noundef i64 @llvm.bswap.i64(i64 %2) ; 9 uses
   %.sroa.0.0.extract.trunc = trunc i64 %i.c to i8
   %.sroa.4.0.extract.shift = lshr i64 %i.c, 8
   %.sroa.4.0.extract.trunc = trunc i64 %.sroa.4.0.extract.shift to i8
@@ -213,13 +213,13 @@ define internal fastcc void @create_iv(ptr nofree noundef nonnull writeonly capt
   %.sroa.6.0.extract.shift = lshr i64 %i.c, 24
   %.sroa.6.0.extract.trunc = trunc i64 %.sroa.6.0.extract.shift to i8 ; 2 uses
   %.sroa.7.0.extract.shift = lshr i64 %i.c, 32
-  %.sroa.7.0.extract.trunc = trunc i64 %.sroa.7.0.extract.shift to i8 ; 2 uses
+  %.sroa.7.0.extract.trunc = trunc i64 %.sroa.7.0.extract.shift to i8
   %.sroa.8.0.extract.shift = lshr i64 %i.c, 40
-  %.sroa.8.0.extract.trunc = trunc i64 %.sroa.8.0.extract.shift to i8 ; 2 uses
+  %.sroa.8.0.extract.trunc = trunc i64 %.sroa.8.0.extract.shift to i8
   %.sroa.9.0.extract.shift = lshr i64 %i.c, 48
-  %.sroa.9.0.extract.trunc = trunc i64 %.sroa.9.0.extract.shift to i8 ; 2 uses
+  %.sroa.9.0.extract.trunc = trunc i64 %.sroa.9.0.extract.shift to i8
   %.sroa.10.0.extract.shift = lshr i64 %i.c, 56
-  %.sroa.10.0.extract.trunc = trunc nuw i64 %.sroa.10.0.extract.shift to i8 ; 2 uses
+  %.sroa.10.0.extract.trunc = trunc nuw i64 %.sroa.10.0.extract.shift to i8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
   %i.e = lshr i32 %i.a, 16
   %i.f = trunc i32 %i.e to i8
@@ -238,15 +238,11 @@ define internal fastcc void @create_iv(ptr nofree noundef nonnull writeonly capt
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %.sroa.6.0.extract.trunc, ptr %i.p, align 1, !tbaa !16
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %.sroa.7.0.extract.trunc, ptr %i.q, align 1, !tbaa !16
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %.sroa.8.0.extract.trunc, ptr %4, align 1, !tbaa !16
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %.sroa.9.0.extract.trunc, ptr %i.s, align 1, !tbaa !16
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  store i8 %.sroa.10.0.extract.trunc, ptr %6, align 1, !tbaa !16
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %4 = bitcast i64 %i.c to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  store <4 x i8> %5, ptr %i.q, align 1, !tbaa !16
   %i.t = load i8, ptr %1, align 1, !tbaa !16
   store i8 %i.t, ptr %0, align 1, !tbaa !16
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -276,7 +272,7 @@ define internal fastcc void @create_iv(ptr nofree noundef nonnull writeonly capt
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 7
   %i.an = load i8, ptr %i.am, align 1, !tbaa !16
   %i.ao = xor i8 %i.l, %i.an
-  store i8 %i.ao, ptr %5, align 1, !tbaa !16
+  store i8 %i.ao, ptr %i.s, align 1, !tbaa !16
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !16
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -560,23 +556,20 @@ bb.l:                                             ; preds = %bb.k, %bb.h, %.thre
   %i.bz = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.ca = tail call noundef i64 @llvm.bswap.i64(i64 %.195) ; 5 uses
   %.sroa.0.0.extract.trunc.i = trunc i64 %i.ca to i8
-  %.sroa.4.0.extract.shift.i = lshr i64 %i.ca, 8
+  %.sroa.4.0.extract.shift.i = lshr i64 %i.ca, 40
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8
-  %.sroa.5.0.extract.shift.i = lshr i64 %i.ca, 16
+  %.sroa.5.0.extract.shift.i = lshr i64 %i.ca, 48
   %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i8
-  %.sroa.6.0.extract.shift.i = lshr i64 %i.ca, 24
-  %.sroa.6.0.extract.trunc.i = trunc i64 %.sroa.6.0.extract.shift.i to i8
-  %5 = insertelement <4 x i64> poison, i64 %i.ca, i64 0
-  %6 = shufflevector <4 x i64> %5, <4 x i64> poison, <4 x i32> zeroinitializer
-  %7 = lshr <4 x i64> %6, <i64 32, i64 40, i64 48, i64 56>
-  %8 = trunc <4 x i64> %7 to <4 x i8>
+  %.sroa.6.0.extract.shift.i = lshr i64 %i.ca, 56
+  %.sroa.6.0.extract.trunc.i = trunc nuw i64 %.sroa.6.0.extract.shift.i to i8
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   %i.cc = lshr i32 %.193, 16
   %i.cd = trunc i32 %i.cc to i8
   %i.ce = xor i8 %i.cd, %.sroa.0.0.extract.trunc.i
   %i.cf = lshr i32 %.193, 24
   %i.cg = trunc nuw i32 %i.cf to i8
-  %9 = xor i8 %i.cg, %.sroa.4.0.extract.trunc.i
+  %5 = insertelement <8 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, i8 %i.cg, i64 0
+  %6 = bitcast i64 %i.ca to <8 x i8>
   %i.ch = getelementptr inbounds nuw i8, ptr %i.b, i64 5
   %i.ci = load <4 x i8>, ptr %i.by, align 1, !tbaa !16
   store <4 x i8> %i.ci, ptr %i.b, align 16, !tbaa !16
@@ -594,12 +587,13 @@ bb.l:                                             ; preds = %bb.k, %bb.h, %.thre
   %i.cs = getelementptr inbounds nuw i8, ptr %i.by, i64 6
   %i.ct = load <8 x i8>, ptr %i.cs, align 1, !tbaa !16
   %i.cu = insertelement <8 x i8> poison, i8 %i.ce, i64 0
-  %10 = insertelement <8 x i8> %i.cu, i8 %9, i64 1
-  %11 = insertelement <8 x i8> %10, i8 %.sroa.5.0.extract.trunc.i, i64 2
-  %i.cv = insertelement <8 x i8> %11, i8 %.sroa.6.0.extract.trunc.i, i64 3
-  %12 = shufflevector <4 x i8> %8, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %13 = shufflevector <8 x i8> %i.cv, <8 x i8> %12, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %i.cw = xor <8 x i8> %i.ct, %13
+  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 1, i32 2, i32 3, i32 4, i32 poison, i32 poison, i32 poison, i32 poison>
+  %8 = xor <8 x i8> %5, %7
+  %9 = shufflevector <8 x i8> %i.cu, <8 x i8> %8, <8 x i32> <i32 0, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison, i32 poison>
+  %i.cv = insertelement <8 x i8> %9, i8 %.sroa.4.0.extract.trunc.i, i64 5
+  %10 = insertelement <8 x i8> %i.cv, i8 %.sroa.5.0.extract.trunc.i, i64 6
+  %11 = insertelement <8 x i8> %10, i8 %.sroa.6.0.extract.trunc.i, i64 7
+  %i.cw = xor <8 x i8> %i.ct, %11
   store <8 x i8> %i.cw, ptr %i.cb, align 2, !tbaa !16
   %i.cx = load ptr, ptr %0, align 8, !tbaa !15
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 %.v107

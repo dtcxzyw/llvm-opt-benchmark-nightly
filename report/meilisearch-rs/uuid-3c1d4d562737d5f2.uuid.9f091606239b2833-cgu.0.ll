@@ -204,7 +204,30 @@ bb.c:                                             ; preds = %bb.a
   %i.o = zext nneg i32 %i.n to i64
   %i.p = tail call i64 @llvm.uadd.sat.i64(i64 %i.m, i64 %i.o)
   %i.q = select i1 %i.l, i64 -1, i64 %i.p, !prof !7 ; 6 uses
+  %2 = tail call i128 @llvm.bswap.i128(i128 %.sroa.01.0) ; 10 uses
+  %.sroa.433.1.extract.trunc = trunc i128 %2 to i8
+  %.sroa.433.2.extract.shift35 = lshr i128 %2, 8
+  %.sroa.433.2.extract.trunc = trunc i128 %.sroa.433.2.extract.shift35 to i8
+  %.sroa.433.3.extract.shift36 = lshr i128 %2, 16
+  %.sroa.433.3.extract.trunc = trunc i128 %.sroa.433.3.extract.shift36 to i8
+  %.sroa.433.4.extract.shift37 = lshr i128 %2, 24
+  %.sroa.433.4.extract.trunc = trunc i128 %.sroa.433.4.extract.shift37 to i8
+  %.sroa.433.5.extract.shift38 = lshr i128 %2, 32
+  %.sroa.433.5.extract.trunc = trunc i128 %.sroa.433.5.extract.shift38 to i8
+  %.sroa.433.6.extract.shift39 = lshr i128 %2, 40
+  %.sroa.433.6.extract.trunc = trunc i128 %.sroa.433.6.extract.shift39 to i8
+  %.sroa.433.7.extract.shift40 = lshr i128 %2, 48
+  %.sroa.433.7.extract.trunc = trunc i128 %.sroa.433.7.extract.shift40 to i8
+  %.sroa.433.8.extract.shift41 = lshr i128 %2, 56
+  %.sroa.433.8.extract.trunc = trunc i128 %.sroa.433.8.extract.shift41 to i8
+  %.sroa.433.9.extract.shift42 = lshr i128 %2, 64
+  %.sroa.433.9.extract.trunc = trunc i128 %.sroa.433.9.extract.shift42 to i8
+  %.sroa.433.10.extract.shift43 = lshr i128 %2, 72
+  %.sroa.433.10.extract.trunc = trunc i128 %.sroa.433.10.extract.shift43 to i8
   %i.r = lshr i64 %i.q, 16
+  %3 = and i8 %.sroa.433.1.extract.trunc, 15
+  %4 = and i8 %.sroa.433.3.extract.trunc, 63
+  %5 = or disjoint i8 %4, -128
   %i.s = lshr i64 %i.q, 40
   %i.t = trunc i64 %i.s to i8
   %i.u = lshr i64 %i.q, 32
@@ -215,6 +238,7 @@ bb.c:                                             ; preds = %bb.a
   %i.z = lshr i64 %i.q, 8
   %i.aa = trunc i64 %i.z to i8
   %i.ab = trunc i64 %i.q to i8
+  %6 = or disjoint i8 %3, 112
   store i8 %i.t, ptr %0, align 1
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %i.v, ptr %.sroa.4.0..sroa_idx, align 1
@@ -227,22 +251,21 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 5
   store i8 %i.ab, ptr %.sroa.8.0..sroa_idx, align 1
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %2 = tail call i128 @llvm.bswap.i128(i128 %.sroa.01.0) ; 3 uses
-  %3 = insertelement <4 x i128> poison, i128 %2, i64 0
-  %4 = shufflevector <4 x i128> %3, <4 x i128> poison, <4 x i32> zeroinitializer ; 2 uses
-  %5 = lshr <4 x i128> %4, <i128 0, i128 8, i128 16, i128 24>
-  %6 = trunc <4 x i128> %5 to <4 x i8>
-  %.sroa.433.9.extract.shift42 = lshr i128 %2, 64
-  %.sroa.433.9.extract.trunc = trunc i128 %.sroa.433.9.extract.shift42 to i8
-  %.sroa.433.10.extract.shift43 = lshr i128 %2, 72
-  %.sroa.433.10.extract.trunc = trunc i128 %.sroa.433.10.extract.shift43 to i8
-  %7 = and <4 x i8> %6, <i8 15, i8 -1, i8 63, i8 -1>
-  %8 = or disjoint <4 x i8> %7, <i8 112, i8 0, i8 -128, i8 0>
-  store <4 x i8> %8, ptr %.sroa.9.0..sroa_idx, align 1
-  %.sroa.13.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %9 = lshr <4 x i128> %4, <i128 32, i128 40, i128 48, i128 56>
-  %10 = trunc <4 x i128> %9 to <4 x i8>
-  store <4 x i8> %10, ptr %.sroa.13.0..sroa_idx.a, align 1
+  store i8 %6, ptr %.sroa.9.0..sroa_idx, align 1
+  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 7
+  store i8 %.sroa.433.2.extract.trunc, ptr %.sroa.10.0..sroa_idx, align 1
+  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 %5, ptr %.sroa.11.0..sroa_idx, align 1
+  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
+  store i8 %.sroa.433.4.extract.trunc, ptr %.sroa.12.0..sroa_idx, align 1
+  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
+  store i8 %.sroa.433.5.extract.trunc, ptr %.sroa.13.0..sroa_idx, align 1
+  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 11
+  store i8 %.sroa.433.6.extract.trunc, ptr %.sroa.14.0..sroa_idx, align 1
+  %.sroa.13.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i8 %.sroa.433.7.extract.trunc, ptr %.sroa.13.0..sroa_idx.a, align 1
+  %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 13
+  store i8 %.sroa.433.8.extract.trunc, ptr %.sroa.16.0..sroa_idx, align 1
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 14
   store i8 %.sroa.433.9.extract.trunc, ptr %.sroa.17.0..sroa_idx, align 1
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 15

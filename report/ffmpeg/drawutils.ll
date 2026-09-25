@@ -205,24 +205,20 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i32, ptr %2, align 1                ; 5 uses
+  %i.f = load i32, ptr %2, align 1                ; 4 uses
   store i32 %i.f, ptr %1, align 4
   %i.g = lshr i32 %i.f, 8
   %i.h = trunc i32 %i.f to i8
   %i.i = insertelement <2 x i8> poison, i8 %i.h, i64 0
   %i.j = trunc i32 %i.g to i8
   %i.k = insertelement <2 x i8> %i.i, i8 %i.j, i64 1
-  %3 = lshr i32 %i.f, 24
-  %4 = lshr i32 %i.f, 16
-  %5 = trunc i32 %4 to i8
-  %6 = trunc nuw i32 %3 to i8
-  %7 = insertelement <2 x i8> poison, i8 %5, i64 0
-  %8 = insertelement <2 x i8> %7, i8 %6, i64 1
+  %3 = bitcast i32 %i.f to <4 x i8>
+  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge78, %bb.b
   %i.l = phi <2 x i8> [ %i.d, %._crit_edge78 ], [ %i.k, %bb.b ]
-  %i.m = phi <2 x i8> [ %i.e, %._crit_edge78 ], [ %8, %bb.b ]
+  %i.m = phi <2 x i8> [ %i.e, %._crit_edge78 ], [ %4, %bb.b ]
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.n, i8 0, i64 64, i1 false)
   %i.o = uitofp <2 x i8> %i.l to <2 x double>

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !51   ; 3 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !51   ; 2 uses
   %i.m = icmp eq i64 %i.l, -1
   br i1 %i.m, label %bb.g, label %bb.h
 
@@ -249,21 +249,10 @@ bb.m:                                             ; preds = %bb.k
   %i.w = load <4 x i8>, ptr %i.r, align 1, !tbaa !57
   store <4 x i8> %i.w, ptr %i.a, align 4, !tbaa !57
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 4
-  %7 = insertelement <2 x i64> poison, i64 %i.l, i64 0
-  %8 = shufflevector <2 x i64> %7, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %9 = lshr <2 x i64> %8, <i64 40, i64 32>
-  %10 = lshr <2 x i64> %8, <i64 56, i64 48>
-  %11 = insertelement <4 x i64> poison, i64 %i.l, i64 0
-  %12 = shufflevector <4 x i64> %11, <4 x i64> poison, <4 x i32> zeroinitializer
-  %13 = lshr <4 x i64> %12, <i64 24, i64 16, i64 8, i64 0>
-  %14 = trunc <4 x i64> %13 to <4 x i8>
-  %15 = trunc <2 x i64> %9 to <2 x i8>
-  %16 = trunc <2 x i64> %10 to <2 x i8>
   %i.y = load <8 x i8>, ptr %i.x, align 1, !tbaa !57
-  %17 = shufflevector <2 x i8> %16, <2 x i8> %15, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %18 = shufflevector <4 x i8> %14, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %19 = shufflevector <8 x i8> %17, <8 x i8> %18, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %i.z = xor <8 x i8> %i.y, %19
+  %7 = bitcast i64 %i.l to <8 x i8>
+  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %i.z = xor <8 x i8> %i.y, %8
   store <8 x i8> %i.z, ptr %i.v, align 4, !tbaa !57
   %i.aa = call fastcc i32 @hpke_aead_enc(ptr noundef %0, ptr noundef %i.a, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef %1, ptr noundef %2)
   %.not32.not = icmp eq i32 %i.aa, 0
@@ -504,7 +493,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !51   ; 3 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !51   ; 2 uses
   %i.m = icmp eq i64 %i.l, -1
   br i1 %i.m, label %bb.g, label %bb.h
 
@@ -549,21 +538,10 @@ bb.m:                                             ; preds = %bb.k
   %i.w = load <4 x i8>, ptr %i.r, align 1, !tbaa !57
   store <4 x i8> %i.w, ptr %i.a, align 4, !tbaa !57
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 4
-  %7 = insertelement <2 x i64> poison, i64 %i.l, i64 0
-  %8 = shufflevector <2 x i64> %7, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %9 = lshr <2 x i64> %8, <i64 40, i64 32>
-  %10 = lshr <2 x i64> %8, <i64 56, i64 48>
-  %11 = insertelement <4 x i64> poison, i64 %i.l, i64 0
-  %12 = shufflevector <4 x i64> %11, <4 x i64> poison, <4 x i32> zeroinitializer
-  %13 = lshr <4 x i64> %12, <i64 24, i64 16, i64 8, i64 0>
-  %14 = trunc <4 x i64> %13 to <4 x i8>
-  %15 = trunc <2 x i64> %9 to <2 x i8>
-  %16 = trunc <2 x i64> %10 to <2 x i8>
   %i.y = load <8 x i8>, ptr %i.x, align 1, !tbaa !57
-  %17 = shufflevector <2 x i8> %16, <2 x i8> %15, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %18 = shufflevector <4 x i8> %14, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %19 = shufflevector <8 x i8> %17, <8 x i8> %18, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %i.z = xor <8 x i8> %i.y, %19
+  %7 = bitcast i64 %i.l to <8 x i8>
+  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %i.z = xor <8 x i8> %i.y, %8
   store <8 x i8> %i.z, ptr %i.v, align 4, !tbaa !57
   %i.aa = call fastcc i32 @hpke_aead_dec(ptr noundef %0, ptr noundef %i.a, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef %1, ptr noundef %2)
   %.not32.not = icmp eq i32 %i.aa, 0

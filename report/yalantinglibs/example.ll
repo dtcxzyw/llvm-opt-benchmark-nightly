@@ -205,35 +205,30 @@ _ZN4asio15basic_streambufISaIcEE7consumeEm.exit166: ; preds = %bb.az, %.thread41
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(5) %i.jn, ptr noundef nonnull align 1 dereferenceable(5) @.str.1346, i64 5, i1 false)
   %i.jo = getelementptr inbounds nuw i8, ptr %0, i64 142 ; 2 uses
   store i16 -30840, ptr %i.jo, align 2
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.jp = tail call i32 @rand() #45               ; 6 uses
   store i32 %i.jp, ptr %scevgep.i752, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i32 %i.jp, ptr %1, align 8
-  %2 = lshr i32 %i.jp, 24
-  %3 = lshr i32 %i.jp, 16
+  %2 = trunc i32 %i.jp to i8
   %i.jq = lshr i32 %i.jp, 8
-  %4 = trunc nuw i32 %2 to i8
-  %i.jr = trunc i32 %3 to i8                      ; 2 uses
-  %5 = trunc i32 %i.jq to i8                      ; 2 uses
-  %i.js = trunc i32 %i.jp to i8                   ; 2 uses
+  %i.jr = trunc i32 %i.jq to i8
+  %3 = lshr i32 %i.jp, 16
+  %i.js = trunc i32 %3 to i8
   %i.jt = load <4 x i8>, ptr %i.jk, align 8, !tbaa !295
-  %6 = insertelement <4 x i8> poison, i8 %i.js, i64 0
-  %7 = insertelement <4 x i8> %6, i8 %5, i64 1
-  %8 = insertelement <4 x i8> %7, i8 %i.jr, i64 2
-  %9 = insertelement <4 x i8> %8, i8 %4, i64 3
-  %i.ju = xor <4 x i8> %i.jt, %9
+  %4 = bitcast i32 %i.jp to <4 x i8>
+  %i.ju = xor <4 x i8> %i.jt, %4
   store <4 x i8> %i.ju, ptr %i.jk, align 8, !tbaa !295
   %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 212 ; 2 uses
   %i.jw = load i8, ptr %i.jv, align 4, !tbaa !295
-  %i.jx = xor i8 %i.jw, %i.js
+  %i.jx = xor i8 %i.jw, %2
   store i8 %i.jx, ptr %i.jv, align 4, !tbaa !295
   %i.jy = getelementptr inbounds nuw i8, ptr %0, i64 213 ; 2 uses
   %i.jz = load i8, ptr %i.jy, align 1, !tbaa !295
-  %i.ka = xor i8 %i.jz, %5
+  %i.ka = xor i8 %i.jz, %i.jr
   store i8 %i.ka, ptr %i.jy, align 1, !tbaa !295
   %i.kb = getelementptr inbounds nuw i8, ptr %0, i64 214 ; 2 uses
   %i.kc = load i8, ptr %i.kb, align 2, !tbaa !295
-  %i.kd = xor i8 %i.kc, %i.jr
+  %i.kd = xor i8 %i.kc, %i.js
   store i8 %i.kd, ptr %i.kb, align 2, !tbaa !295
   %.pre509 = load i64, ptr %i.ji, align 8, !tbaa !304 ; 2 uses
   %.pre510 = load ptr, ptr %.reload.addr824, align 8

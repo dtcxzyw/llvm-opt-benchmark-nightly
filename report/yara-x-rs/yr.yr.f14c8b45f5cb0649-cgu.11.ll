@@ -204,19 +204,19 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 10 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
-  %i.e = alloca [24 x i8], align 8                ; 12 uses
+  %i.e = alloca [24 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
-  %i.g = alloca [24 x i8], align 8                ; 14 uses
+  %i.g = alloca [24 x i8], align 8                ; 13 uses
   %i.h = alloca [24 x i8], align 8                ; 6 uses
-  %i.i = alloca [24 x i8], align 8                ; 14 uses
+  %i.i = alloca [24 x i8], align 8                ; 13 uses
   %i.j = alloca [24 x i8], align 8                ; 6 uses
-  %i.k = alloca [24 x i8], align 8                ; 12 uses
+  %i.k = alloca [24 x i8], align 8                ; 11 uses
   %i.l = alloca [144 x i8], align 8               ; 30 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
-  %i.n = alloca [24 x i8], align 8                ; 11 uses
-  %i.o = alloca [24 x i8], align 8                ; 14 uses
-  %i.p = alloca [24 x i8], align 8                ; 17 uses
-  %i.q = alloca [24 x i8], align 8                ; 12 uses
+  %i.n = alloca [24 x i8], align 8                ; 10 uses
+  %i.o = alloca [24 x i8], align 8                ; 13 uses
+  %i.p = alloca [24 x i8], align 8                ; 16 uses
+  %i.q = alloca [24 x i8], align 8                ; 11 uses
   %i.r = alloca [48 x i8], align 8                ; 9 uses
   %i.s = alloca [32 x i8], align 8                ; 6 uses
   %.sroa.12 = alloca i64, align 8                 ; 10 uses
@@ -278,7 +278,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
   %i.ah = load i64, ptr %i.f, align 8, !range !19, !noalias !2017, !noundef !6
   %i.ai = trunc nuw i64 %i.ah to i1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.ak = load i64, ptr %i.aj, align 8, !range !20, !noalias !2017, !noundef !6 ; 5 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !range !20, !noalias !2017, !noundef !6 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   br i1 %i.ai, label %bb.d, label %bb.e, !prof !21
 
@@ -298,9 +298,7 @@ bb.e:                                             ; preds = %_RNvMNtCskKLDkoKarT
   %i.aq = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   store i64 0, ptr %i.aq, align 8, !noalias !2019
   %.not1378.i = icmp eq i32 %.sroa.0.0.copyload.i461.i, 0
-  %2 = trunc i64 %i.ak to i32
-  %3 = lshr i64 %i.ak, 32
-  %4 = trunc nuw nsw i64 %3 to i32
+  %2 = bitcast i64 %i.ak to <2 x i32>
   br i1 %.not1378.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtCsc2ZV4bV5Srq_9daachorse8bytewise5StatemEE8push_mutCskIqAKC4t9Ft_2yr.exit.i
@@ -385,23 +383,18 @@ bb.n:                                             ; preds = %bb.h
   unreachable
 
 ._crit_edge.loopexit.i:                           ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtCsc2ZV4bV5Srq_9daachorse8bytewise5StatemEE8push_mutCskIqAKC4t9Ft_2yr.exit.i
-  %.sroa.0893.0.copyload.pre.i = load i32, ptr %i.g, align 8, !noalias !2017
-  %.sroa.4894.0..sroa_idx.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %.sroa.4894.0.copyload.pre.i = load i32, ptr %.sroa.4894.0..sroa_idx.phi.trans.insert.i, align 4, !noalias !2017
+  %3 = load <2 x i32>, ptr %i.g, align 8, !noalias !2017
   %.sroa.5895.0.copyload.pre.i = load ptr, ptr %i.ap, align 8, !noalias !2017
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.e
   %.sroa.5895.0.copyload.i = phi ptr [ %i.an, %bb.e ], [ %.sroa.5895.0.copyload.pre.i, %._crit_edge.loopexit.i ]
-  %.sroa.4894.0.copyload.i = phi i32 [ %4, %bb.e ], [ %.sroa.4894.0.copyload.pre.i, %._crit_edge.loopexit.i ]
-  %.sroa.0893.0.copyload.i = phi i32 [ %2, %bb.e ], [ %.sroa.0893.0.copyload.pre.i, %._crit_edge.loopexit.i ]
   %.sroa.081.0.i372.lcssa.i = phi ptr [ %i.ac, %bb.e ], [ %i.bb, %._crit_edge.loopexit.i ] ; 2 uses
   %.sroa.584.0.i373.lcssa.i = phi i64 [ %i.ad, %bb.e ], [ %i.bc, %._crit_edge.loopexit.i ] ; 2 uses
+  %4 = phi <2 x i32> [ %2, %bb.e ], [ %3, %._crit_edge.loopexit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !2017
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !2028
-  store i32 %.sroa.0893.0.copyload.i, ptr %i.q, align 8, !noalias !2028
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  store i32 %.sroa.4894.0.copyload.i, ptr %.sroa.2.0..sroa_idx.i, align 4, !noalias !2028
+  store <2 x i32> %4, ptr %i.q, align 8, !noalias !2028
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
   store ptr %.sroa.5895.0.copyload.i, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !2028
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
@@ -428,7 +421,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
   %i.bo = load i64, ptr %i.h, align 8, !range !19, !noalias !2031, !noundef !6
   %i.bp = trunc nuw i64 %i.bo to i1
   %i.bq = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %i.br = load i64, ptr %i.bq, align 8, !range !20, !noalias !2031, !noundef !6 ; 5 uses
+  %i.br = load i64, ptr %i.bq, align 8, !range !20, !noalias !2031, !noundef !6 ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   br i1 %i.bp, label %bb.o, label %bb.p, !prof !21
 
@@ -451,9 +444,7 @@ bb.p:                                             ; preds = %.noexc331.i
   %i.bx = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   store i64 0, ptr %i.bx, align 8, !noalias !2032
   %.not1379.i = icmp eq i32 %.sroa.0.0.copyload.i466.i, 0
-  %5 = trunc i64 %i.br to i32
-  %6 = lshr i64 %i.br, 32
-  %7 = trunc nuw nsw i64 %6 to i32
+  %5 = bitcast i64 %i.br to <2 x i32>
   br i1 %.not1379.i, label %._crit_edge1357.i, label %.lr.ph1356.i
 
 .lr.ph1356.i:                                     ; preds = %bb.p, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtCsc2ZV4bV5Srq_9daachorse8bytewise5StateNtBK_5EmptyEE8push_mutCskIqAKC4t9Ft_2yr.exit.i
@@ -530,23 +521,18 @@ bb.y:                                             ; preds = %.noexc333.i, %_RNvM
   br label %bb.cj
 
 ._crit_edge1357.loopexit.i:                       ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtCsc2ZV4bV5Srq_9daachorse8bytewise5StateNtBK_5EmptyEE8push_mutCskIqAKC4t9Ft_2yr.exit.i
-  %.sroa.0853.0.copyload.pre.i = load i32, ptr %i.i, align 8, !noalias !2031
-  %.sroa.4854.0..sroa_idx.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 4
-  %.sroa.4854.0.copyload.pre.i = load i32, ptr %.sroa.4854.0..sroa_idx.phi.trans.insert.i, align 4, !noalias !2031
+  %6 = load <2 x i32>, ptr %i.i, align 8, !noalias !2031
   %.sroa.5855.0.copyload.pre.i = load ptr, ptr %i.bw, align 8, !noalias !2031
   br label %._crit_edge1357.i
 
 ._crit_edge1357.i:                                ; preds = %._crit_edge1357.loopexit.i, %bb.p
   %.sroa.5855.0.copyload.i = phi ptr [ %i.bu, %bb.p ], [ %.sroa.5855.0.copyload.pre.i, %._crit_edge1357.loopexit.i ]
-  %.sroa.4854.0.copyload.i = phi i32 [ %7, %bb.p ], [ %.sroa.4854.0.copyload.pre.i, %._crit_edge1357.loopexit.i ]
-  %.sroa.0853.0.copyload.i = phi i32 [ %5, %bb.p ], [ %.sroa.0853.0.copyload.pre.i, %._crit_edge1357.loopexit.i ]
   %.sroa.088.0.i.lcssa.i = phi ptr [ %i.bj, %bb.p ], [ %i.ce, %._crit_edge1357.loopexit.i ] ; 3 uses
   %.sroa.591.0.i.lcssa.i = phi i64 [ %i.bk, %bb.p ], [ %i.cf, %._crit_edge1357.loopexit.i ] ; 2 uses
+  %7 = phi <2 x i32> [ %5, %bb.p ], [ %6, %._crit_edge1357.loopexit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !2031
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !2028
-  store i32 %.sroa.0853.0.copyload.i, ptr %i.p, align 8, !noalias !2028
-  %.sroa.2733.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 4
-  store i32 %.sroa.4854.0.copyload.i, ptr %.sroa.2733.0..sroa_idx.i, align 4, !noalias !2028
+  store <2 x i32> %7, ptr %i.p, align 8, !noalias !2028
   %.sroa.3734.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store ptr %.sroa.5855.0.copyload.i, ptr %.sroa.3734.0..sroa_idx.i, align 8, !noalias !2028
   %.sroa.4735.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 16
@@ -572,7 +558,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
   %i.cs = load i64, ptr %i.d, align 8, !range !19, !noalias !2037, !noundef !6
   %i.ct = trunc nuw i64 %i.cs to i1
   %i.cu = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.cv = load i64, ptr %i.cu, align 8, !range !20, !noalias !2037, !noundef !6 ; 5 uses
+  %i.cv = load i64, ptr %i.cu, align 8, !range !20, !noalias !2037, !noundef !6 ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   br i1 %i.ct, label %bb.z, label %bb.aa, !prof !21
 
@@ -596,9 +582,7 @@ bb.aa:                                            ; preds = %.noexc400.i
   %.sroa.089.0.i1360.i = getelementptr inbounds nuw i8, ptr %.sroa.088.0.i.lcssa.i, i64 4 ; 2 uses
   store i64 0, ptr %i.db, align 8, !noalias !2038
   %.not1380.i = icmp eq i32 %.sroa.0.0.copyload.i451.i, 0
-  %8 = trunc i64 %i.cv to i32
-  %9 = lshr i64 %i.cv, 32
-  %10 = trunc nuw nsw i64 %9 to i32
+  %8 = bitcast i64 %i.cv to <2 x i32>
   br i1 %.not1380.i, label %._crit_edge1366.i, label %.lr.ph1365.i.preheader
 
 .lr.ph1365.i.preheader:                           ; preds = %bb.aa
@@ -680,24 +664,19 @@ bb.aj:                                            ; preds = %bb.ah
   unreachable
 
 ._crit_edge1366.loopexit.i:                       ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmE8push_mutCskIqAKC4t9Ft_2yr.exit.i
-  %.sroa.0931.0.copyload.pre.i = load i32, ptr %i.e, align 8, !noalias !2037
-  %.sroa.4932.0..sroa_idx.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %.sroa.4932.0.copyload.pre.i = load i32, ptr %.sroa.4932.0..sroa_idx.phi.trans.insert.i, align 4, !noalias !2037
+  %9 = load <2 x i32>, ptr %i.e, align 8, !noalias !2037
   %.sroa.5933.0.copyload.pre.i = load ptr, ptr %i.da, align 8, !noalias !2037
   br label %._crit_edge1366.i
 
 ._crit_edge1366.i:                                ; preds = %._crit_edge1366.loopexit.i, %bb.aa
   %.sroa.5933.0.copyload.i = phi ptr [ %i.cy, %bb.aa ], [ %.sroa.5933.0.copyload.pre.i, %._crit_edge1366.loopexit.i ]
-  %.sroa.4932.0.copyload.i = phi i32 [ %10, %bb.aa ], [ %.sroa.4932.0.copyload.pre.i, %._crit_edge1366.loopexit.i ]
-  %.sroa.0931.0.copyload.i = phi i32 [ %8, %bb.aa ], [ %.sroa.0931.0.copyload.pre.i, %._crit_edge1366.loopexit.i ]
   %.sroa.088.0.i.pn.lcssa.i = phi ptr [ %.sroa.088.0.i.lcssa.i, %bb.aa ], [ %.sroa.089.0.i1363.i, %._crit_edge1366.loopexit.i ]
   %.sroa.592.0.i.lcssa.i = phi i64 [ %i.co, %bb.aa ], [ %i.dg, %._crit_edge1366.loopexit.i ] ; 2 uses
   %.sroa.089.0.i.lcssa.i = phi ptr [ %.sroa.089.0.i1360.i, %bb.aa ], [ %.sroa.089.0.i.i, %._crit_edge1366.loopexit.i ]
+  %10 = phi <2 x i32> [ %8, %bb.aa ], [ %9, %._crit_edge1366.loopexit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !2037
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !2028
-  store i32 %.sroa.0931.0.copyload.i, ptr %i.o, align 8, !noalias !2028
-  %.sroa.2737.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 4
-  store i32 %.sroa.4932.0.copyload.i, ptr %.sroa.2737.0..sroa_idx.i, align 4, !noalias !2028
+  store <2 x i32> %10, ptr %i.o, align 8, !noalias !2028
   %.sroa.3738.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store ptr %.sroa.5933.0.copyload.i, ptr %.sroa.3738.0..sroa_idx.i, align 8, !noalias !2028
   %.sroa.4739.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 16
@@ -724,7 +703,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
   %i.dv = load i64, ptr %i.j, align 8, !range !19, !noalias !2045, !noundef !6
   %i.dw = trunc nuw i64 %i.dv to i1
   %i.dx = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %i.dy = load i64, ptr %i.dx, align 8, !range !20, !noalias !2045, !noundef !6 ; 5 uses
+  %i.dy = load i64, ptr %i.dx, align 8, !range !20, !noalias !2045, !noundef !6 ; 4 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   br i1 %i.dw, label %bb.ak, label %bb.al, !prof !21
 
@@ -747,9 +726,7 @@ bb.al:                                            ; preds = %.noexc316.i
   %i.ee = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   store i64 0, ptr %i.ee, align 8, !noalias !2046
   %.not1381.i = icmp eq i32 %.sroa.0.0.copyload.i471.i, 0
-  %11 = trunc i64 %i.dy to i32
-  %12 = lshr i64 %i.dy, 32
-  %13 = trunc nuw nsw i64 %12 to i32
+  %11 = bitcast i64 %i.dy to <2 x i32>
   br i1 %.not1381.i, label %._crit_edge1375.i, label %.lr.ph1374.i
 
 .lr.ph1374.i:                                     ; preds = %bb.al, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtCsc2ZV4bV5Srq_9daachorse6OutputmEE8push_mutCskIqAKC4t9Ft_2yr.exit.i
@@ -843,23 +820,18 @@ bb.ax:                                            ; preds = %bb.av
   unreachable
 
 ._crit_edge1375.loopexit.i:                       ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtCsc2ZV4bV5Srq_9daachorse6OutputmEE8push_mutCskIqAKC4t9Ft_2yr.exit.i
-  %.sroa.0797.0.copyload.pre.i = load i32, ptr %i.k, align 8, !noalias !2045
-  %.sroa.4798.0..sroa_idx.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %.sroa.4798.0.copyload.pre.i = load i32, ptr %.sroa.4798.0..sroa_idx.phi.trans.insert.i, align 4, !noalias !2045
+  %12 = load <2 x i32>, ptr %i.k, align 8, !noalias !2045
   %.sroa.5799.0.copyload.pre.i = load ptr, ptr %i.ed, align 8, !noalias !2045
   br label %._crit_edge1375.i
 
 ._crit_edge1375.i:                                ; preds = %._crit_edge1375.loopexit.i, %bb.al
   %.sroa.5799.0.copyload.i = phi ptr [ %i.eb, %bb.al ], [ %.sroa.5799.0.copyload.pre.i, %._crit_edge1375.loopexit.i ]
-  %.sroa.4798.0.copyload.i = phi i32 [ %13, %bb.al ], [ %.sroa.4798.0.copyload.pre.i, %._crit_edge1375.loopexit.i ]
-  %.sroa.0797.0.copyload.i = phi i32 [ %11, %bb.al ], [ %.sroa.0797.0.copyload.pre.i, %._crit_edge1375.loopexit.i ]
   %.sroa.081.0.i.lcssa.i = phi ptr [ %i.dq, %bb.al ], [ %i.en, %._crit_edge1375.loopexit.i ] ; 4 uses
   %.sroa.584.0.i.lcssa.i = phi i64 [ %i.dr, %bb.al ], [ %i.eo, %._crit_edge1375.loopexit.i ] ; 4 uses
+  %13 = phi <2 x i32> [ %11, %bb.al ], [ %12, %._crit_edge1375.loopexit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !2045
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !2028
-  store i32 %.sroa.0797.0.copyload.i, ptr %i.n, align 8, !noalias !2028
-  %.sroa.2741.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 4
-  store i32 %.sroa.4798.0.copyload.i, ptr %.sroa.2741.0..sroa_idx.i, align 4, !noalias !2028
+  store <2 x i32> %13, ptr %i.n, align 8, !noalias !2028
   %.sroa.3742.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store ptr %.sroa.5799.0.copyload.i, ptr %.sroa.3742.0..sroa_idx.i, align 8, !noalias !2028
   %.sroa.4743.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 16

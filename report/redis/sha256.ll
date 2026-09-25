@@ -202,39 +202,12 @@ bb.c:                                             ; preds = %bb.a
   %i.o = zext i32 %i.n to i64
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.q = load i64, ptr %i.p, align 8, !tbaa !18
-  %i.r = add i64 %i.q, %i.o                       ; 9 uses
+  %i.r = add i64 %i.q, %i.o                       ; 2 uses
   store i64 %i.r, ptr %i.p, align 8, !tbaa !18
-  %2 = trunc i64 %i.r to i8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 63
-  store i8 %2, ptr %3, align 1, !tbaa !13
-  %4 = lshr i64 %i.r, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 62
-  store i8 %5, ptr %6, align 2, !tbaa !13
-  %7 = lshr i64 %i.r, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 61
-  store i8 %8, ptr %9, align 1, !tbaa !13
-  %10 = lshr i64 %i.r, 24
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store i8 %11, ptr %12, align 4, !tbaa !13
-  %13 = lshr i64 %i.r, 32
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 59
-  store i8 %14, ptr %15, align 1, !tbaa !13
-  %16 = lshr i64 %i.r, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 58
-  store i8 %17, ptr %18, align 2, !tbaa !13
-  %19 = lshr i64 %i.r, 48
-  %20 = trunc i64 %19 to i8
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 57
-  store i8 %20, ptr %i.s, align 1, !tbaa !13
-  %21 = lshr i64 %i.r, 56
-  %22 = trunc nuw i64 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i8 %22, ptr %23, align 8, !tbaa !13
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %2 = bitcast i64 %i.r to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.s, align 8, !tbaa !13
   tail call void @sha256_transform(ptr noundef nonnull %0, ptr noundef nonnull %0)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 4 uses

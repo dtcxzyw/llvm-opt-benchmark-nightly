@@ -204,7 +204,7 @@ bb.a:
   %i.i = sitofp i32 %i.h to double
   %i.j = fmul double %i.g, %i.i
   %i.k = fptosi double %i.j to i32
-  %i.l = tail call i40 @_ZNK8TGAImage3getEii(ptr noundef nonnull align 8 dereferenceable(40) %i.a, i32 noundef %i.f, i32 noundef %i.k) ; 3 uses
+  %i.l = tail call i40 @_ZNK8TGAImage3getEii(ptr noundef nonnull align 8 dereferenceable(40) %i.a, i32 noundef %i.f, i32 noundef %i.k) ; 2 uses
   %.sroa.018.0.extract.trunc = trunc i40 %i.l to i8
   %i.m = uitofp i8 %.sroa.018.0.extract.trunc to double
   %i.n = fmul nnan double %i.m, 2.000000e+00
@@ -212,13 +212,11 @@ bb.a:
   %i.p = fadd double %i.o, -1.000000e+00          ; 3 uses
   %i.q = tail call double @llvm.fmuladd.f64(double %i.p, double %i.p, double 0.000000e+00)
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.419.0.extract.shift = lshr i40 %i.l, 8
-  %.sroa.520.0.extract.shift = lshr i40 %i.l, 16
-  %.sroa.419.0.extract.trunc = trunc i40 %.sroa.419.0.extract.shift to i8
-  %.sroa.520.0.extract.trunc = trunc i40 %.sroa.520.0.extract.shift to i8
-  %3 = insertelement <2 x i8> poison, i8 %.sroa.520.0.extract.trunc, i64 0
-  %4 = insertelement <2 x i8> %3, i8 %.sroa.419.0.extract.trunc, i64 1
-  %i.r = uitofp <2 x i8> %4 to <2 x double>
+  %3 = insertelement <2 x i40> poison, i40 %i.l, i64 0
+  %4 = shufflevector <2 x i40> %3, <2 x i40> poison, <2 x i32> zeroinitializer
+  %5 = lshr <2 x i40> %4, <i40 16, i40 8>
+  %6 = trunc <2 x i40> %5 to <2 x i8>
+  %i.r = uitofp <2 x i8> %6 to <2 x double>
   %i.s = fmul nnan <2 x double> %i.r, splat (double 2.000000e+00)
   %i.t = fdiv <2 x double> %i.s, splat (double 2.550000e+02)
   %i.u = fadd <2 x double> %i.t, splat (double -1.000000e+00) ; 3 uses

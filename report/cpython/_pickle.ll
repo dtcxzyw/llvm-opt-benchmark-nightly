@@ -205,7 +205,7 @@ _PyMemoTable_Lookup.exit:                         ; preds = %.preheader.i, %bb.a
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @memo_get(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [30 x i8], align 16               ; 20 uses
+  %i.a = alloca [30 x i8], align 16               ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.b = getelementptr i8, ptr %1, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !86   ; 2 uses
@@ -268,7 +268,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.c
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !65  ; 7 uses
+  %i.aj = load i64, ptr %i.y, align 8, !tbaa !65  ; 4 uses
   %i.ak = icmp slt i64 %i.aj, 256
   br i1 %i.ak, label %bb.f, label %bb.g
 
@@ -285,21 +285,10 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   store i8 106, ptr %i.a, align 16, !tbaa !51
-  %3 = trunc i64 %i.aj to i8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %3, ptr %i.ao, align 1, !tbaa !51
-  %4 = lshr i64 %i.aj, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %5, ptr %6, align 2, !tbaa !51
-  %7 = lshr i64 %i.aj, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %8, ptr %9, align 1, !tbaa !51
-  %10 = lshr i64 %i.aj, 24
-  %11 = trunc nuw i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %11, ptr %12, align 4, !tbaa !51
+  %3 = bitcast i64 %i.aj to <8 x i8>
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %4, ptr %i.ao, align 1, !tbaa !51
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g

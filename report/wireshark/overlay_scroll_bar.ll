@@ -202,7 +202,7 @@ bb.a:
   %4 = alloca %class.QLine, align 8               ; 5 uses
   %5 = alloca %class.QLine, align 8               ; 5 uses
   %6 = alloca %class.QRect, align 4               ; 7 uses
-  %7 = alloca %class.QRectF, align 8              ; 6 uses
+  %7 = alloca %class.QRectF, align 8              ; 5 uses
   %8 = alloca %class.QRectF, align 8              ; 6 uses
   %9 = alloca %class.QSize, align 8               ; 7 uses
   %10 = alloca %class.QPainter, align 8           ; 8 uses
@@ -283,7 +283,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.af = load i64, ptr %9, align 8               ; 5 uses
   %i.ag = lshr i64 %i.af, 32
-  %i.ah = trunc nuw i64 %i.ag to i32              ; 2 uses
+  %i.ah = trunc nuw i64 %i.ag to i32
   %i.ai = add i64 %i.af, 4294967295
   %.sroa.14.8.insert.ext = and i64 %i.ai, 4294967295 ; 2 uses
   %i.aj = and i64 %i.af, -4294967296
@@ -296,15 +296,12 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %bb.t
 
 bb.j:                                             ; preds = %bb.i
-  %17 = trunc i64 %i.af to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %18 = sitofp i32 %17 to double
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
-  store double %18, ptr %i.ak, align 8
-  %19 = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %20 = sitofp i32 %i.ah to double
-  store double %20, ptr %19, align 8
+  %17 = bitcast i64 %i.af to <2 x i32>
+  %18 = sitofp <2 x i32> %17 to <2 x double>
+  store <2 x double> %18, ptr %i.ak, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #11
   %i.al = invoke noundef i32 @_ZNK6QImage5widthEv(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %13)
           to label %.noexc unwind label %bb.u

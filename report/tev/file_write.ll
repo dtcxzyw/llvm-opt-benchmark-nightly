@@ -80,7 +80,7 @@ bb.a:
   %i.c = add i16 %i.b, 1
   store i16 %i.c, ptr %2, align 2, !tbaa !71
   %i.d = zext i16 %i.b to i64
-  %i.e = getelementptr inbounds nuw [12 x i8], ptr %i.a, i64 %i.d ; 11 uses
+  %i.e = getelementptr inbounds nuw [12 x i8], ptr %i.a, i64 %i.d ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 4 uses
   store i32 %6, ptr %i.f, align 4, !tbaa !72
   %i.g = icmp eq i16 %4, 1
@@ -89,20 +89,7 @@ bb.a:
   br i1 %or.cond, label %.preheader.preheader, label %bb.b
 
 .preheader.preheader:                             ; preds = %bb.a
-  %7 = trunc i32 %6 to i8
-  store i8 %7, ptr %i.f, align 4, !tbaa !72
-  %8 = lshr i32 %6, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 9
-  store i8 %9, ptr %10, align 1, !tbaa !72
-  %11 = lshr i32 %6, 16
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.e, i64 10
-  store i8 %12, ptr %13, align 2, !tbaa !72
-  %14 = lshr i32 %6, 24
-  %15 = trunc nuw i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.e, i64 11
-  store i8 %15, ptr %16, align 1, !tbaa !72
+  store i32 %6, ptr %i.f, align 4, !tbaa !72
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a

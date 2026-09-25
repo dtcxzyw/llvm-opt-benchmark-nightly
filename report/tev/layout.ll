@@ -175,7 +175,7 @@ bb.a:
 define hidden i64 @_ZNK7nanogui9BoxLayout14preferred_sizeEP10NVGcontextPKNS_6WidgetE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr noundef %1, ptr nofree noundef readonly %2) unnamed_addr #1 align 2 {
 bb.a:
   %3 = alloca %"struct.nanogui::Array", align 4   ; 7 uses
-  %4 = alloca %"struct.nanogui::Array", align 4   ; 6 uses
+  %4 = alloca %"struct.nanogui::Array", align 8   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !25   ; 2 uses
@@ -238,7 +238,6 @@ bb.e:                                             ; preds = %bb.d
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.ai = sext i32 %i.ae to i64                   ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ai ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ai
   %i.al = sext i32 %i.ag to i64                   ; 2 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.al ; 2 uses
@@ -264,7 +263,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.lr.ph, %bb.j
   %.045 = phi i1 [ true, %.lr.ph ], [ %.1, %bb.j ] ; 2 uses
   %.sroa.036.044 = phi ptr [ %i.aa, %.lr.ph ], [ %i.bi, %bb.j ] ; 2 uses
-  %i.ar = load ptr, ptr %.sroa.036.044, align 8, !tbaa !45 ; 4 uses
+  %i.ar = load ptr, ptr %.sroa.036.044, align 8, !tbaa !45 ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 104
   %i.at = load i8, ptr %i.as, align 8, !tbaa !56, !range !57, !noundef !58
   %i.au = trunc nuw i8 %i.at to i1
@@ -281,21 +280,14 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %i.ay = tail call i64 @_ZNK7nanogui6Widget14preferred_sizeEP10NVGcontext(ptr noundef nonnull align 8 dereferenceable(148) %i.ar, ptr noundef %1) ; 2 uses
-  %.sroa.033.0.extract.trunc = trunc i64 %i.ay to i32
-  %.sroa.434.0.extract.shift = lshr i64 %i.ay, 32
-  %.sroa.434.0.extract.trunc = trunc nuw i64 %.sroa.434.0.extract.shift to i32
+  %i.ay = tail call i64 @_ZNK7nanogui6Widget14preferred_sizeEP10NVGcontext(ptr noundef nonnull align 8 dereferenceable(148) %i.ar, ptr noundef %1)
   %i.az = getelementptr inbounds nuw i8, ptr %i.ar, i64 56
-  %6 = load i32, ptr %i.az, align 8               ; 2 uses
-  %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ar, i64 60
-  %7 = load i32, ptr %.sroa_idx, align 4          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
-  %.not23 = icmp eq i32 %6, 0
-  %spec.select = select i1 %.not23, i32 %.sroa.033.0.extract.trunc, i32 %6
-  %.not24 = icmp eq i32 %7, 0
-  %.in25.sroa.speculated = select i1 %.not24, i32 %.sroa.434.0.extract.trunc, i32 %7
-  store i32 %spec.select, ptr %4, align 4, !tbaa !27
-  store i32 %.in25.sroa.speculated, ptr %5, align 4, !tbaa !27
+  %5 = load <2 x i32>, ptr %i.az, align 8         ; 2 uses
+  %6 = icmp eq <2 x i32> %5, zeroinitializer
+  %7 = bitcast i64 %i.ay to <2 x i32>
+  %8 = select <2 x i1> %6, <2 x i32> %7, <2 x i32> %5
+  store <2 x i32> %8, ptr %4, align 8, !tbaa !27
   %i.ba = load i32, ptr %i.ak, align 4, !tbaa !27
   %i.bb = load i32, ptr %i.aj, align 4, !tbaa !27
   %i.bc = add nsw i32 %i.bb, %i.ba
@@ -698,7 +690,7 @@ bb.a:
   %4 = alloca %"struct.nanogui::Array", align 4   ; 4 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %5 = alloca %"struct.nanogui::Array", align 4   ; 6 uses
+  %5 = alloca %"struct.nanogui::Array", align 8   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !75   ; 2 uses
   %i.e = add nsw i32 %i.d, 1
@@ -772,7 +764,6 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEE6resizeEmRKi.exit63: ; preds = %_ZNSt3__16ve
 
 .preheader84.lr.ph:                               ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEE6resizeEmRKi.exit63
   %.not6291 = icmp sgt i32 %i.ac, 0
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.r
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.x
   br i1 %.not6291, label %.preheader84.preheader, label %.loopexit
@@ -818,28 +809,21 @@ bb.d:                                             ; preds = %.lr.ph116
   %.257115 = phi i64 [ %i.at, %bb.d ], [ %.15692, %.lr.ph116.preheader ] ; 2 uses
   %i.at = add i64 %.257115, 1                     ; 4 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %.257115
-  %i.av = load ptr, ptr %i.au, align 8, !tbaa !45 ; 4 uses
+  %i.av = load ptr, ptr %i.au, align 8, !tbaa !45 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 104
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !56, !range !57, !noundef !58
   %i.ay = trunc nuw i8 %i.ax to i1
   br i1 %i.ay, label %bb.e, label %bb.d, !llvm.loop !140
 
 bb.e:                                             ; preds = %.lr.ph116
-  %i.az = call i64 @_ZNK7nanogui6Widget14preferred_sizeEP10NVGcontext(ptr noundef nonnull align 8 dereferenceable(148) %i.av, ptr noundef %1) ; 2 uses
-  %.sroa.069.0.extract.trunc = trunc i64 %i.az to i32
-  %.sroa.4.0.extract.shift = lshr i64 %i.az, 32
-  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
+  %i.az = call i64 @_ZNK7nanogui6Widget14preferred_sizeEP10NVGcontext(ptr noundef nonnull align 8 dereferenceable(148) %i.av, ptr noundef %1)
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 56
-  %7 = load i32, ptr %i.ba, align 4               ; 2 uses
-  %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 60
-  %8 = load i32, ptr %.sroa_idx, align 4          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %.not59 = icmp eq i32 %7, 0
-  %spec.select = select i1 %.not59, i32 %.sroa.069.0.extract.trunc, i32 %7
-  %.not60 = icmp eq i32 %8, 0
-  %.in61.sroa.speculated = select i1 %.not60, i32 %.sroa.4.0.extract.trunc, i32 %8
-  store i32 %spec.select, ptr %5, align 4, !tbaa !27
-  store i32 %.in61.sroa.speculated, ptr %6, align 4, !tbaa !27
+  %6 = load <2 x i32>, ptr %i.ba, align 4         ; 2 uses
+  %7 = icmp eq <2 x i32> %6, zeroinitializer
+  %8 = bitcast i64 %i.az to <2 x i32>
+  %9 = select <2 x i1> %7, <2 x i32> %8, <2 x i32> %6
+  store <2 x i32> %9, ptr %5, align 8, !tbaa !27
   %i.bb = load ptr, ptr %i.z, align 8, !tbaa !69
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %indvars.iv ; 2 uses
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !27

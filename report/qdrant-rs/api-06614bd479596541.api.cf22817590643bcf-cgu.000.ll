@@ -202,37 +202,26 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.042.0.copyload = load i48, ptr %i.i, align 8 ; 6 uses
+  %.sroa.042.0.copyload = load i48, ptr %i.i, align 8 ; 3 uses
   %.sroa.01.5.extract.shift.i = lshr i48 %.sroa.042.0.copyload, 40 ; 2 uses
   %.not.i47 = icmp ne i48 %.sroa.01.5.extract.shift.i, 255 ; 2 uses
   %trunc.i48 = trunc nuw nsw i48 %.sroa.01.5.extract.shift.i to i32
   %switch.offset.i49 = add nuw nsw i32 %trunc.i48, 1
   %.sroa.015.0.i = zext i1 %.not.i47 to i32
   %.sroa.516.0.i = select i1 %.not.i47, i32 %switch.offset.i49, i32 undef
-  %.sroa.01.4.extract.shift.i = lshr i48 %.sroa.042.0.copyload, 32
-  %.sroa.01.4.extract.trunc.i = trunc i48 %.sroa.01.4.extract.shift.i to i8
-  %.sroa.01.3.extract.shift.i = lshr i48 %.sroa.042.0.copyload, 24
-  %.sroa.01.3.extract.trunc.i = trunc i48 %.sroa.01.3.extract.shift.i to i8
-  %.sroa.01.2.extract.shift.i = lshr i48 %.sroa.042.0.copyload, 16
-  %.sroa.01.2.extract.trunc.i = trunc i48 %.sroa.01.2.extract.shift.i to i8
-  %.sroa.01.1.extract.shift.i = lshr i48 %.sroa.042.0.copyload, 8
-  %.sroa.01.1.extract.trunc.i = trunc i48 %.sroa.01.1.extract.shift.i to i8
-  %.sroa.01.0.extract.trunc.i = trunc i48 %.sroa.042.0.copyload to i8
+  %.sroa.01.1.extract.shift.i = lshr i48 %.sroa.042.0.copyload, 32
+  %.sroa.01.0.extract.trunc.i = trunc i48 %.sroa.01.1.extract.shift.i to i8
   store i64 3, ptr %0, align 8, !alias.scope !4668
   %.sroa.48.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %.sroa.015.0.i, ptr %.sroa.48.0..sroa_idx.i, align 8, !alias.scope !4668
   %.sroa.48.sroa.4.0..sroa.48.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %.sroa.516.0.i, ptr %.sroa.48.sroa.4.0..sroa.48.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !4668
   %.sroa.48.sroa.5.0..sroa.48.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sroa.01.0.extract.trunc.i, ptr %.sroa.48.sroa.5.0..sroa.48.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !4668
-  %.sroa.48.sroa.6.0..sroa.48.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i8 %.sroa.01.1.extract.trunc.i, ptr %.sroa.48.sroa.6.0..sroa.48.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !4668
-  %.sroa.48.sroa.7.0..sroa.48.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i8 %.sroa.01.2.extract.trunc.i, ptr %.sroa.48.sroa.7.0..sroa.48.0..sroa_idx.sroa_idx.i, align 2, !alias.scope !4668
-  %.sroa.48.sroa.8.0..sroa.48.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 19
-  store i8 %.sroa.01.3.extract.trunc.i, ptr %.sroa.48.sroa.8.0..sroa.48.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !4668
+  %2 = bitcast i48 %.sroa.042.0.copyload to <6 x i8>
+  %3 = shufflevector <6 x i8> %2, <6 x i8> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i8> %3, ptr %.sroa.48.sroa.5.0..sroa.48.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !4668
   %.sroa.48.sroa.9.0..sroa.48.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %.sroa.01.4.extract.trunc.i, ptr %.sroa.48.sroa.9.0..sroa.48.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !4668
+  store i8 %.sroa.01.0.extract.trunc.i, ptr %.sroa.48.sroa.9.0..sroa.48.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !4668
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a

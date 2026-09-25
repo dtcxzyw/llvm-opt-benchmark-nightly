@@ -33,16 +33,10 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.g = tail call i32 @opal_datatype_compute_ptypes(ptr noundef nonnull %0) #3 ; 0 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !22   ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  %4 = load <16 x i64>, ptr %3, align 8, !tbaa !9 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 160
-  %5 = load <8 x i64>, ptr %i.j, align 8, !tbaa !9
-  %6 = shufflevector <16 x i64> %4, <16 x i64> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %rdx.op = add <8 x i64> %6, %5
-  %7 = shufflevector <8 x i64> %rdx.op, <8 x i64> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %8 = shufflevector <16 x i64> %7, <16 x i64> %4, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %i.k = tail call i64 @llvm.vector.reduce.add.v16i64(<16 x i64> %8)
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !22
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32
+  %3 = load <24 x i64>, ptr %i.j, align 8, !tbaa !9
+  %i.k = tail call i64 @llvm.vector.reduce.add.v24i64(<24 x i64> %3)
   %i.l = mul i64 %i.k, %i.c
   br label %bb.e
 
@@ -82,7 +76,7 @@ declare i32 @opal_datatype_compute_ptypes(ptr noundef) local_unnamed_addr #1
 declare i64 @opal_datatype_get_element_count(ptr noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v16i64(<16 x i64>) #2
+declare i64 @llvm.vector.reduce.add.v24i64(<24 x i64>) #2
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

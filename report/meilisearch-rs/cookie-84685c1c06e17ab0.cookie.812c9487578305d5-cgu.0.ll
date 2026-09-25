@@ -205,7 +205,7 @@ bb.a:
   %i.h = alloca [48 x i8], align 8                ; 8 uses
   %i.i = alloca [48 x i8], align 8                ; 8 uses
   %i.j = alloca [8 x i8], align 4                 ; 18 uses
-  %i.k = alloca [16 x i8], align 8                ; 23 uses
+  %i.k = alloca [16 x i8], align 8                ; 20 uses
   %i.l = alloca [24 x i8], align 8                ; 9 uses
   %i.m = alloca [16 x i8], align 8                ; 6 uses
   %i.n = alloca [16 x i8], align 8                ; 5 uses
@@ -580,11 +580,11 @@ bb.ag:                                            ; preds = %bb.af
   call void @llvm.experimental.noalias.scope.decl(metadata !2334)
   call void @llvm.experimental.noalias.scope.decl(metadata !2335)
   %i.ck = lshr i64 %.sroa.564.0.copyload, 32
-  %i.cl = trunc i64 %i.ck to i8                   ; 4 uses
+  %i.cl = trunc i64 %i.ck to i8                   ; 3 uses
   %i.cm = lshr i64 %.sroa.564.0.copyload, 40
-  %i.cn = trunc i64 %i.cm to i8                   ; 4 uses
+  %i.cn = trunc i64 %i.cm to i8                   ; 3 uses
   %i.co = lshr i64 %.sroa.564.0.copyload, 48
-  %i.cp = trunc i64 %i.co to i8                   ; 4 uses
+  %i.cp = trunc i64 %i.co to i8                   ; 3 uses
   %i.cq = icmp sgt i8 %i.cl, -60
   call void @llvm.assume(i1 %i.cq)
   %i.cr = icmp slt i8 %i.cl, 60
@@ -616,10 +616,10 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %or.cond.i, label %_ZN4time16offset_date_time14OffsetDateTime17checked_to_offset17h3927e3f3c3b27d89E.exit.thread, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ag
-  %1 = lshr i64 %.sroa.564.0.copyload, 56
-  %2 = trunc nuw i64 %1 to i8
-  %3 = trunc i64 %.sroa.564.0.copyload to i32
+  %1 = trunc i64 %.sroa.564.0.copyload to i32
   %.sroa.046.0.copyload47 = load i64, ptr %i.n, align 8, !alias.scope !2336
+  %2 = bitcast i64 %.sroa.564.0.copyload to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
   br label %_ZN4time16offset_date_time14OffsetDateTime17checked_to_offset17h3927e3f3c3b27d89E.exit
 
 bb.aj:                                            ; preds = %bb.ah
@@ -638,11 +638,8 @@ bb.aj:                                            ; preds = %bb.ah
 
 _ZN4time16offset_date_time14OffsetDateTime17checked_to_offset17h3927e3f3c3b27d89E.exit: ; preds = %bb.ai, %bb.aj
   %.sroa.046.sroa.0.sroa.0.0.in = phi i64 [ %.sroa.046.0.copyload47, %bb.ai ], [ %.sroa.012.0.copyload.i, %bb.aj ] ; 2 uses
-  %.sroa.1161.0 = phi i8 [ %2, %bb.ai ], [ undef, %bb.aj ]
-  %.sroa.1058.0 = phi i8 [ %i.cp, %bb.ai ], [ 0, %bb.aj ]
-  %.sroa.955.0 = phi i8 [ %i.cn, %bb.ai ], [ 0, %bb.aj ]
-  %.sroa.852.0 = phi i8 [ %i.cl, %bb.ai ], [ 0, %bb.aj ]
-  %.sroa.749.0 = phi i32 [ %3, %bb.ai ], [ %i.dl, %bb.aj ]
+  %.sroa.749.0 = phi i32 [ %1, %bb.ai ], [ %i.dl, %bb.aj ]
+  %4 = phi <4 x i8> [ %3, %bb.ai ], [ <i8 0, i8 0, i8 0, i8 undef>, %bb.aj ]
   %i.dn = and i64 %.sroa.046.sroa.0.sroa.0.0.in, 72057594037927936
   %.not140 = icmp eq i64 %i.dn, 0
   br i1 %.not140, label %bb.ak, label %_ZN4time16offset_date_time14OffsetDateTime17checked_to_offset17h3927e3f3c3b27d89E.exit.thread, !prof !19
@@ -655,13 +652,7 @@ bb.ak:                                            ; preds = %_ZN4time16offset_da
   %.sroa.569.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i32 %.sroa.749.0, ptr %.sroa.569.0..sroa_idx, align 8
   %.sroa.670.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 12
-  store i8 %.sroa.852.0, ptr %.sroa.670.0..sroa_idx, align 4
-  %.sroa.771.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 13
-  store i8 %.sroa.955.0, ptr %.sroa.771.0..sroa_idx, align 1
-  %.sroa.872.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 14
-  store i8 %.sroa.1058.0, ptr %.sroa.872.0..sroa_idx, align 2
-  %.sroa.973.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 15
-  store i8 %.sroa.1161.0, ptr %.sroa.973.0..sroa_idx, align 1
+  store <4 x i8> %4, ptr %.sroa.670.0..sroa_idx, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.do = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   store i32 0, ptr %i.do, align 4

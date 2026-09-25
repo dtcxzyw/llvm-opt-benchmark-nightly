@@ -205,50 +205,23 @@ copywithendian.exit:                              ; preds = %copywithendian.exit
 
 bb.q:                                             ; preds = %._crit_edge
   %i.fp = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.ad) #12 ; 2 uses
-  %i.fq = call ptr @luaL_prepbuffsize(ptr noundef nonnull %1, i64 noundef 8) #12 ; 9 uses
+  %i.fq = call ptr @luaL_prepbuffsize(ptr noundef nonnull %1, i64 noundef 8) #12
   %i.fr = load i32, ptr %i.h, align 8, !tbaa !49
   %i.fs = icmp eq i32 %i.fr, 1
   br i1 %i.fs, label %bb.r, label %copywithendian.exit100.loopexit
 
 bb.r:                                             ; preds = %bb.q
-  store double %i.fp, ptr %i.fq, align 1
+  %3 = bitcast double %i.fp to <8 x i8>
   br label %copywithendian.exit100
 
 copywithendian.exit100.loopexit:                  ; preds = %bb.q
-  %.0.i98 = getelementptr i8, ptr %i.fq, i64 7
-  %3 = bitcast double %i.fp to i64                ; 8 uses
-  %.0.extract.trunc147 = trunc i64 %3 to i8
-  store i8 %.0.extract.trunc147, ptr %.0.i98, align 1, !tbaa !13
-  %.0.i98.1 = getelementptr i8, ptr %i.fq, i64 6
-  %.1.extract.shift150 = lshr i64 %3, 8
-  %.1.extract.trunc151 = trunc i64 %.1.extract.shift150 to i8
-  store i8 %.1.extract.trunc151, ptr %.0.i98.1, align 1, !tbaa !13
-  %.0.i98.2 = getelementptr i8, ptr %i.fq, i64 5
-  %.2.extract.shift153 = lshr i64 %3, 16
-  %.2.extract.trunc154 = trunc i64 %.2.extract.shift153 to i8
-  store i8 %.2.extract.trunc154, ptr %.0.i98.2, align 1, !tbaa !13
-  %.0.i98.3 = getelementptr i8, ptr %i.fq, i64 4
-  %.3.extract.shift156 = lshr i64 %3, 24
-  %.3.extract.trunc157 = trunc i64 %.3.extract.shift156 to i8
-  store i8 %.3.extract.trunc157, ptr %.0.i98.3, align 1, !tbaa !13
-  %.0.i98.4 = getelementptr i8, ptr %i.fq, i64 3
-  %.4.extract.shift159 = lshr i64 %3, 32
-  %.4.extract.trunc160 = trunc i64 %.4.extract.shift159 to i8
-  store i8 %.4.extract.trunc160, ptr %.0.i98.4, align 1, !tbaa !13
-  %.0.i98.5 = getelementptr i8, ptr %i.fq, i64 2
-  %.5.extract.shift162 = lshr i64 %3, 40
-  %.5.extract.trunc163 = trunc i64 %.5.extract.shift162 to i8
-  store i8 %.5.extract.trunc163, ptr %.0.i98.5, align 1, !tbaa !13
-  %.0.i98.6 = getelementptr i8, ptr %i.fq, i64 1
-  %.6.extract.shift165 = lshr i64 %3, 48
-  %.6.extract.trunc166 = trunc i64 %.6.extract.shift165 to i8
-  store i8 %.6.extract.trunc166, ptr %.0.i98.6, align 1, !tbaa !13
-  %.7.extract.shift168 = lshr i64 %3, 56
-  %.7.extract.trunc169 = trunc nuw i64 %.7.extract.shift168 to i8
-  store i8 %.7.extract.trunc169, ptr %i.fq, align 1, !tbaa !13
+  %4 = bitcast double %i.fp to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   br label %copywithendian.exit100
 
 copywithendian.exit100:                           ; preds = %copywithendian.exit100.loopexit, %bb.r
+  %storemerge201 = phi <8 x i8> [ %5, %copywithendian.exit100.loopexit ], [ %3, %bb.r ]
+  store <8 x i8> %storemerge201, ptr %i.fq, align 1
   %i.ft = load i64, ptr %i.k, align 16, !tbaa !21
   %i.fu = add i64 %i.ft, %i.n
   store i64 %i.fu, ptr %i.k, align 16, !tbaa !21
@@ -256,50 +229,23 @@ copywithendian.exit100:                           ; preds = %copywithendian.exit
 
 bb.s:                                             ; preds = %._crit_edge
   %i.fv = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.ad) #12 ; 2 uses
-  %i.fw = call ptr @luaL_prepbuffsize(ptr noundef nonnull %1, i64 noundef 8) #12 ; 9 uses
+  %i.fw = call ptr @luaL_prepbuffsize(ptr noundef nonnull %1, i64 noundef 8) #12
   %i.fx = load i32, ptr %i.h, align 8, !tbaa !49
   %i.fy = icmp eq i32 %i.fx, 1
   br i1 %i.fy, label %bb.t, label %copywithendian.exit106.loopexit
 
 bb.t:                                             ; preds = %bb.s
-  store double %i.fv, ptr %i.fw, align 1
+  %6 = bitcast double %i.fv to <8 x i8>
   br label %copywithendian.exit106
 
 copywithendian.exit106.loopexit:                  ; preds = %bb.s
-  %.0.i104 = getelementptr i8, ptr %i.fw, i64 7
-  %4 = bitcast double %i.fv to i64                ; 8 uses
-  %.0.extract.trunc = trunc i64 %4 to i8
-  store i8 %.0.extract.trunc, ptr %.0.i104, align 1, !tbaa !13
-  %.0.i104.1 = getelementptr i8, ptr %i.fw, i64 6
-  %.1.extract.shift = lshr i64 %4, 8
-  %.1.extract.trunc = trunc i64 %.1.extract.shift to i8
-  store i8 %.1.extract.trunc, ptr %.0.i104.1, align 1, !tbaa !13
-  %.0.i104.2 = getelementptr i8, ptr %i.fw, i64 5
-  %.2.extract.shift = lshr i64 %4, 16
-  %.2.extract.trunc = trunc i64 %.2.extract.shift to i8
-  store i8 %.2.extract.trunc, ptr %.0.i104.2, align 1, !tbaa !13
-  %.0.i104.3 = getelementptr i8, ptr %i.fw, i64 4
-  %.3.extract.shift = lshr i64 %4, 24
-  %.3.extract.trunc = trunc i64 %.3.extract.shift to i8
-  store i8 %.3.extract.trunc, ptr %.0.i104.3, align 1, !tbaa !13
-  %.0.i104.4 = getelementptr i8, ptr %i.fw, i64 3
-  %.4.extract.shift = lshr i64 %4, 32
-  %.4.extract.trunc = trunc i64 %.4.extract.shift to i8
-  store i8 %.4.extract.trunc, ptr %.0.i104.4, align 1, !tbaa !13
-  %.0.i104.5 = getelementptr i8, ptr %i.fw, i64 2
-  %.5.extract.shift = lshr i64 %4, 40
-  %.5.extract.trunc = trunc i64 %.5.extract.shift to i8
-  store i8 %.5.extract.trunc, ptr %.0.i104.5, align 1, !tbaa !13
-  %.0.i104.6 = getelementptr i8, ptr %i.fw, i64 1
-  %.6.extract.shift = lshr i64 %4, 48
-  %.6.extract.trunc = trunc i64 %.6.extract.shift to i8
-  store i8 %.6.extract.trunc, ptr %.0.i104.6, align 1, !tbaa !13
-  %.7.extract.shift = lshr i64 %4, 56
-  %.7.extract.trunc = trunc nuw i64 %.7.extract.shift to i8
-  store i8 %.7.extract.trunc, ptr %i.fw, align 1, !tbaa !13
+  %7 = bitcast double %i.fv to <8 x i8>
+  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   br label %copywithendian.exit106
 
 copywithendian.exit106:                           ; preds = %copywithendian.exit106.loopexit, %bb.t
+  %storemerge = phi <8 x i8> [ %8, %copywithendian.exit106.loopexit ], [ %6, %bb.t ]
+  store <8 x i8> %storemerge, ptr %i.fw, align 1
   %i.fz = load i64, ptr %i.k, align 16, !tbaa !21
   %i.ga = add i64 %i.fz, %i.n
   store i64 %i.ga, ptr %i.k, align 16, !tbaa !21

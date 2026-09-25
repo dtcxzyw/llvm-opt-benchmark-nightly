@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN5faiss11hnsw_detail31search_from_candidates_panoramaERKNS_4HNSW
   br i1 %exitcond94.not.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i, !llvm.loop !522
 
 bb.bp:                                            ; preds = %.lr.ph833
-  %i.afo = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 12 uses
+  %i.afo = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !658)
   call void @llvm.experimental.noalias.scope.decl(metadata !659)
   call void @llvm.experimental.noalias.scope.decl(metadata !660)
@@ -240,9 +240,7 @@ bb.bp:                                            ; preds = %.lr.ph833
   br i1 %i.afy, label %.lr.ph87.preheader.i.i.i.i.i.i.i.i, label %.lr.ph827
 
 .lr.ph87.preheader.i.i.i.i.i.i.i.i:               ; preds = %.preheader.i.i.i.i.i.i.i.i
-  %14 = load <32 x float>, ptr %i.afo, align 4, !tbaa !163, !alias.scope !658, !noalias !661
-  %15 = getelementptr inbounds nuw i8, ptr %i.afo, i64 128
-  %16 = load <8 x float>, ptr %15, align 4, !tbaa !163, !alias.scope !658, !noalias !661
+  %14 = load <40 x float>, ptr %i.afo, align 4, !tbaa !163, !alias.scope !658, !noalias !661
   br label %.lr.ph87.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i
@@ -445,17 +443,10 @@ bb.bp:                                            ; preds = %.lr.ph833
   %i.all = load i32, ptr %i.alk, align 4, !tbaa !44, !noalias !662
   %i.alm = zext i32 %i.all to i64
   %i.aln = mul nsw i64 %i.gk, %i.alm
-  %i.alo = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %i.aln ; 2 uses
-  %17 = load <32 x float>, ptr %i.alo, align 4, !tbaa !163, !alias.scope !659, !noalias !663
-  %18 = fmul fast <32 x float> %17, %14           ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.alo, i64 128
-  %20 = load <8 x float>, ptr %19, align 4, !tbaa !163, !alias.scope !659, !noalias !663
-  %21 = fmul fast <8 x float> %20, %16
-  %22 = shufflevector <32 x float> %18, <32 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %rdx.op = fadd fast <8 x float> %22, %21
-  %23 = shufflevector <8 x float> %rdx.op, <8 x float> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %24 = shufflevector <32 x float> %23, <32 x float> %18, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.alp = call fast float @llvm.vector.reduce.fadd.v32f32(float 0.000000e+00, <32 x float> %24)
+  %i.alo = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %i.aln
+  %15 = load <40 x float>, ptr %i.alo, align 4, !tbaa !163, !alias.scope !659, !noalias !663
+  %16 = fmul fast <40 x float> %15, %14
+  %i.alp = call fast float @llvm.vector.reduce.fadd.v40f32(float 0.000000e+00, <40 x float> %16)
   %i.alq = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i
   store float %i.alp, ptr %i.alq, align 4, !tbaa !163, !alias.scope !660, !noalias !664
   %i.alr = add nuw i64 %.186.i.i.i.i.i.i.i.i, 1   ; 2 uses
@@ -463,7 +454,7 @@ bb.bp:                                            ; preds = %.lr.ph833
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i, !llvm.loop !528
 
 bb.bq:                                            ; preds = %.lr.ph833
-  %i.als = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 14 uses
+  %i.als = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 13 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !665)
   call void @llvm.experimental.noalias.scope.decl(metadata !666)
   call void @llvm.experimental.noalias.scope.decl(metadata !667)
@@ -502,9 +493,7 @@ bb.bq:                                            ; preds = %.lr.ph833
   br i1 %i.ame, label %.lr.ph87.preheader.i.i.i.i.i.i.i.i.i, label %.lr.ph827
 
 .lr.ph87.preheader.i.i.i.i.i.i.i.i.i:             ; preds = %.preheader.i.i.i.i.i.i.i.i.i
-  %25 = load <32 x float>, ptr %i.als, align 4, !tbaa !163, !alias.scope !665, !noalias !668
-  %26 = getelementptr inbounds nuw i8, ptr %i.als, i64 128
-  %27 = load <16 x float>, ptr %26, align 4, !tbaa !163, !alias.scope !665, !noalias !668
+  %17 = load <48 x float>, ptr %i.als, align 4, !tbaa !163, !alias.scope !665, !noalias !668
   br label %.lr.ph87.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i
@@ -739,17 +728,10 @@ bb.bq:                                            ; preds = %.lr.ph833
   %i.asp = load i32, ptr %i.aso, align 4, !tbaa !44, !noalias !669
   %i.asq = zext i32 %i.asp to i64
   %i.asr = mul nsw i64 %i.gj, %i.asq
-  %i.ass = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %i.asr ; 2 uses
-  %28 = load <32 x float>, ptr %i.ass, align 4, !tbaa !163, !alias.scope !666, !noalias !670
-  %29 = fmul fast <32 x float> %28, %25           ; 2 uses
-  %30 = getelementptr inbounds nuw i8, ptr %i.ass, i64 128
-  %31 = load <16 x float>, ptr %30, align 4, !tbaa !163, !alias.scope !666, !noalias !670
-  %32 = fmul fast <16 x float> %31, %27
-  %33 = shufflevector <32 x float> %29, <32 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %rdx.op1867 = fadd fast <16 x float> %33, %32
-  %34 = shufflevector <16 x float> %rdx.op1867, <16 x float> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %35 = shufflevector <32 x float> %34, <32 x float> %29, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.ast = call fast float @llvm.vector.reduce.fadd.v32f32(float 0.000000e+00, <32 x float> %35)
+  %i.ass = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %i.asr
+  %18 = load <48 x float>, ptr %i.ass, align 4, !tbaa !163, !alias.scope !666, !noalias !670
+  %19 = fmul fast <48 x float> %18, %17
+  %i.ast = call fast float @llvm.vector.reduce.fadd.v48f32(float 0.000000e+00, <48 x float> %19)
   %i.asu = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i
   store float %i.ast, ptr %i.asu, align 4, !tbaa !163, !alias.scope !667, !noalias !671
   %i.asv = add nuw i64 %.186.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
@@ -757,7 +739,7 @@ bb.bq:                                            ; preds = %.lr.ph833
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i, !llvm.loop !534
 
 bb.br:                                            ; preds = %.lr.ph833
-  %i.asw = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 16 uses
+  %i.asw = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 15 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !672)
   call void @llvm.experimental.noalias.scope.decl(metadata !673)
   call void @llvm.experimental.noalias.scope.decl(metadata !674)
@@ -800,9 +782,7 @@ bb.br:                                            ; preds = %.lr.ph833
   br i1 %i.atk, label %.lr.ph87.preheader.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827
 
 .lr.ph87.preheader.i.i.i.i.i.i.i.i.i.i:           ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i
-  %36 = load <32 x float>, ptr %i.asw, align 4, !tbaa !163, !alias.scope !672, !noalias !675
-  %37 = getelementptr inbounds nuw i8, ptr %i.asw, i64 128
-  %38 = load <24 x float>, ptr %37, align 4, !tbaa !163, !alias.scope !672, !noalias !675
+  %20 = load <56 x float>, ptr %i.asw, align 4, !tbaa !163, !alias.scope !672, !noalias !675
   br label %.lr.ph87.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -1069,16 +1049,10 @@ bb.br:                                            ; preds = %.lr.ph833
   %i.bat = load i32, ptr %i.bas, align 4, !tbaa !44, !noalias !676
   %i.bau = zext i32 %i.bat to i64
   %i.bav = mul nsw i64 %i.gi, %i.bau
-  %i.baw = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %i.bav ; 2 uses
-  %39 = load <32 x float>, ptr %i.baw, align 4, !tbaa !163, !alias.scope !673, !noalias !677
-  %40 = fmul fast <32 x float> %39, %36           ; 2 uses
-  %41 = getelementptr inbounds nuw i8, ptr %i.baw, i64 128
-  %42 = load <24 x float>, ptr %41, align 4, !tbaa !163, !alias.scope !673, !noalias !677
-  %43 = fmul fast <24 x float> %42, %38
-  %44 = shufflevector <24 x float> %43, <24 x float> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %45 = fadd fast <32 x float> %40, %44
-  %46 = shufflevector <32 x float> %45, <32 x float> %40, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
-  %i.bax = call fast float @llvm.vector.reduce.fadd.v32f32(float 0.000000e+00, <32 x float> %46)
+  %i.baw = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %i.bav
+  %21 = load <56 x float>, ptr %i.baw, align 4, !tbaa !163, !alias.scope !673, !noalias !677
+  %22 = fmul fast <56 x float> %21, %20
+  %i.bax = call fast float @llvm.vector.reduce.fadd.v56f32(float 0.000000e+00, <56 x float> %22)
   %i.bay = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i
   store float %i.bax, ptr %i.bay, align 4, !tbaa !163, !alias.scope !674, !noalias !678
   %i.baz = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
@@ -1480,6 +1454,15 @@ declare float @llvm.vector.reduce.fadd.v24f32(float, <24 x float>) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v32f32(float, <32 x float>) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v40f32(float, <40 x float>) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v48f32(float, <48 x float>) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v56f32(float, <56 x float>) #25
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

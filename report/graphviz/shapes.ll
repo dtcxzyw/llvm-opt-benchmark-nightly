@@ -205,12 +205,8 @@ bb.u:                                             ; preds = %bb.t
   %i.dr = call ptr @agget(ptr noundef nonnull %0, ptr noundef nonnull @.str.2) #26 ; 3 uses
   %i.ds = call ptr @agraphof(ptr noundef nonnull %0) #26
   %i.dt = call i64 @gvusershape_size(ptr noundef %i.ds, ptr noundef %i.dr) #26 ; 2 uses
-  %.sroa.0361.0.extract.trunc366 = trunc i64 %i.dt to i32 ; 2 uses
-  %.sroa.14.0.extract.shift367 = lshr i64 %i.dt, 32 ; 2 uses
-  %2 = icmp eq i32 %.sroa.0361.0.extract.trunc366, -1
-  %i.du = icmp eq i64 %.sroa.14.0.extract.shift367, 4294967295
-  %or.cond5 = and i1 %2, %i.du
-  br i1 %or.cond5, label %bb.v, label %bb.w
+  %i.du = icmp eq i64 %i.dt, -1
+  br i1 %i.du, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %.not532 = icmp eq ptr %i.dr, null
@@ -220,14 +216,13 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.ac
 
 bb.w:                                             ; preds = %bb.u
-  %.sroa.14.0.extract.trunc368 = trunc nuw i64 %.sroa.14.0.extract.shift367 to i32
   %i.dx = call ptr @agraphof(ptr noundef nonnull %0) #26
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !23
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 130
   store i8 1, ptr %i.ea, align 2, !tbaa !166
-  %3 = add nsw i32 %.sroa.0361.0.extract.trunc366, 2
-  %4 = add nsw i32 %.sroa.14.0.extract.trunc368, 2
+  %2 = bitcast i64 %i.dt to <2 x i32>
+  %3 = add nsw <2 x i32> %2, splat (i32 2)
   br label %bb.ac
 
 bb.x:                                             ; preds = %bb.s
@@ -243,12 +238,8 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.ed = call ptr @agraphof(ptr noundef nonnull %0) #26
   %i.ee = call i64 @gvusershape_size(ptr noundef %i.ed, ptr noundef nonnull %i.eb) #26 ; 2 uses
-  %.sroa.0361.0.extract.trunc = trunc i64 %i.ee to i32 ; 2 uses
-  %.sroa.14.0.extract.shift = lshr i64 %i.ee, 32  ; 2 uses
-  %5 = icmp eq i32 %.sroa.0361.0.extract.trunc, -1
-  %i.ef = icmp eq i64 %.sroa.14.0.extract.shift, 4294967295
-  %or.cond8 = and i1 %5, %i.ef
-  br i1 %or.cond8, label %bb.aa, label %bb.ab
+  %i.ef = icmp eq i64 %i.ee, -1
+  br i1 %i.ef, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
   %i.eg = call ptr @agnameof(ptr noundef nonnull %0) #26
@@ -256,26 +247,21 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.z
-  %.sroa.14.0.extract.trunc = trunc nuw i64 %.sroa.14.0.extract.shift to i32
   %i.eh = call ptr @agraphof(ptr noundef nonnull %0) #26
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 16
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !23
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 130
   store i8 1, ptr %i.ek, align 2, !tbaa !166
-  %6 = add nsw i32 %.sroa.0361.0.extract.trunc, 2
-  %7 = add nsw i32 %.sroa.14.0.extract.trunc, 2
+  %4 = bitcast i64 %i.ee to <2 x i32>
+  %5 = add nsw <2 x i32> %4, splat (i32 2)
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.x, %bb.y, %bb.ab, %bb.aa, %bb.t, %bb.w, %bb.v
-  %.sroa.0361.0 = phi i32 [ 0, %bb.v ], [ %3, %bb.w ], [ 0, %bb.t ], [ 0, %bb.aa ], [ %6, %bb.ab ], [ 0, %bb.y ], [ 0, %bb.x ]
-  %.sroa.14.0 = phi i32 [ 0, %bb.v ], [ %4, %bb.w ], [ 0, %bb.t ], [ 0, %bb.aa ], [ %7, %bb.ab ], [ 0, %bb.y ], [ 0, %bb.x ]
+  %6 = phi <2 x i32> [ zeroinitializer, %bb.v ], [ %3, %bb.w ], [ zeroinitializer, %bb.t ], [ zeroinitializer, %bb.aa ], [ %5, %bb.ab ], [ zeroinitializer, %bb.y ], [ zeroinitializer, %bb.x ]
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
-  %8 = sitofp nsz i32 %.sroa.0361.0 to double
+  %7 = sitofp <2 x i32> %6 to <2 x double>        ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 10 uses
-  %9 = sitofp i32 %.sroa.14.0 to double           ; 3 uses
-  %10 = insertelement <2 x double> poison, double %8, i64 0
-  %11 = insertelement <2 x double> %10, double %9, i64 1
-  %i.em = call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %i.dh, <2 x double> %11)
+  %i.em = call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %i.dh, <2 x double> %7)
   store <2 x double> %i.em, ptr %1, align 16, !tbaa !10
   %i.en = icmp ult i64 %.0509, 3
   br i1 %i.en, label %bb.ad, label %bb.ag
@@ -532,8 +518,9 @@ bb.bl:                                            ; preds = %bb.bk
   %i.iq = load double, ptr %i.el, align 8, !tbaa !17
   %i.ir = fsub double %i.iq, %.sroa.3.0.copyload  ; 2 uses
   %i.is = extractelement <2 x double> %i.dh, i64 1 ; 3 uses
-  %i.it = fcmp olt double %i.is, %9
-  %i.iu = fsub double %9, %i.is
+  %8 = extractelement <2 x double> %7, i64 1      ; 2 uses
+  %i.it = fcmp olt double %i.is, %8
+  %i.iu = fsub double %8, %i.is
   %i.iv = fadd double %i.iu, %i.ir
   %.0476 = select i1 %i.it, double %i.iv, double %i.ir
   %i.iw = fadd double %i.is, %.0476

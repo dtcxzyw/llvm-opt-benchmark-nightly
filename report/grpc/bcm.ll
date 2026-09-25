@@ -205,12 +205,10 @@ aes_nohw_encrypt.exit:                            ; preds = %.preheader.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #36
   %i.fq = add nuw nsw i64 %.02943, %i.g
-  %7 = insertelement <4 x i64> poison, i64 %i.fq, i64 0
-  %8 = shufflevector <4 x i64> %7, <4 x i64> poison, <4 x i32> zeroinitializer
-  %9 = lshr <4 x i64> %8, <i64 24, i64 16, i64 8, i64 0>
-  %10 = trunc <4 x i64> %9 to <4 x i8>
-  %11 = shufflevector <16 x i8> %i.fp, <16 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %i.fr = xor <4 x i8> %11, %10
+  %7 = shufflevector <16 x i8> %i.fp, <16 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %8 = bitcast i64 %i.fq to <8 x i8>
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.fr = xor <4 x i8> %7, %9
   %i.fs = shufflevector <4 x i8> %i.fr, <4 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0.4.vec.insert51 = shufflevector <16 x i8> %i.fp, <16 x i8> %i.fs, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 16, i32 17, i32 18, i32 19, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 3 uses
   %.sroa.0.8.vec.extract = shufflevector <16 x i8> %i.fp, <16 x i8> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
@@ -407,12 +405,10 @@ bb.b:                                             ; preds = %.preheader, %aes_no
 
 aes_nohw_decrypt.exit:                            ; preds = %.preheader.i.i
   %i.cq = add nuw nsw i64 %.02740, %i.h
-  %7 = insertelement <4 x i64> poison, i64 %i.cq, i64 0
-  %8 = shufflevector <4 x i64> %7, <4 x i64> poison, <4 x i32> zeroinitializer
-  %9 = lshr <4 x i64> %8, <i64 24, i64 16, i64 8, i64 0>
-  %10 = trunc <4 x i64> %9 to <4 x i8>
-  %11 = shufflevector <16 x i8> %.sroa.0.139, <16 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %i.cr = xor <4 x i8> %11, %10
+  %7 = shufflevector <16 x i8> %.sroa.0.139, <16 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %8 = bitcast i64 %i.cq to <8 x i8>
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.cr = xor <4 x i8> %7, %9
   %i.cs = shufflevector <4 x i8> %i.cr, <4 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0.4.vec.insert50 = shufflevector <16 x i8> %.sroa.0.139, <16 x i8> %i.cs, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 16, i32 17, i32 18, i32 19, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0.8.vec.expand = shufflevector <8 x i8> %.sroa.0.8.copyload, <8 x i8> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
@@ -815,20 +811,10 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.by = xor i8 %i.bh, -1
   store i8 %i.by, ptr %i.bg, align 1, !tbaa !80
-  %8 = lshr i64 %6, 56
-  %9 = lshr i64 %6, 48
-  %10 = lshr i64 %6, 40
-  %11 = lshr i64 %6, 32
-  %12 = trunc i64 %11 to i8
-  %13 = trunc i64 %10 to i8
-  %14 = trunc i64 %9 to i8
-  %15 = trunc nuw i64 %8 to i8
   %i.bz = load <4 x i8>, ptr %i.bi, align 2, !tbaa !80
-  %16 = insertelement <4 x i8> poison, i8 %15, i64 0
-  %17 = insertelement <4 x i8> %16, i8 %14, i64 1
-  %18 = insertelement <4 x i8> %17, i8 %13, i64 2
-  %19 = insertelement <4 x i8> %18, i8 %12, i64 3
-  %i.ca = xor <4 x i8> %i.bz, %19
+  %8 = bitcast i64 %6 to <8 x i8>
+  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <4 x i32> <i32 7, i32 6, i32 5, i32 4>
+  %i.ca = xor <4 x i8> %i.bz, %9
   store <4 x i8> %i.ca, ptr %i.bi, align 2, !tbaa !80
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 22 ; 2 uses
   %i.cc = load i8, ptr %i.cb, align 2, !tbaa !80

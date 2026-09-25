@@ -206,7 +206,7 @@ bb.a:
   %.sroa.4.i.i = alloca [72 x i8], align 8        ; 6 uses
   %i.x = alloca [192 x i8], align 8               ; 8 uses
   %.sroa.825.i = alloca [104 x i8], align 8       ; 6 uses
-  %i.y = alloca [192 x i8], align 8               ; 31 uses
+  %i.y = alloca [192 x i8], align 8               ; 30 uses
   %i.z = alloca [192 x i8], align 8               ; 10 uses
   %.sroa.6.i = alloca [112 x i8], align 8         ; 7 uses
   %.sroa.4.i = alloca [72 x i8], align 8          ; 6 uses
@@ -316,7 +316,6 @@ bb.e:                                             ; preds = %thread-pre-split, %
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.5.sroa.10.0..sroa.5.0..sroa_idx.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 73
   %i.cd = getelementptr inbounds nuw i8, ptr %i.y, i64 80
-  %3 = getelementptr inbounds nuw i8, ptr %i.y, i64 136
   %.sroa.0.24..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i.i, i64 24
   %i.ce = getelementptr inbounds nuw i8, ptr %i.s, i64 168 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.s, i64 176
@@ -326,7 +325,7 @@ bb.e:                                             ; preds = %thread-pre-split, %
   %.sroa.5.0..sroa_idx2.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 80 ; 5 uses
   %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 128 ; 3 uses
   %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 132 ; 2 uses
-  %.sroa.5.sroa.7.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 136 ; 2 uses
+  %.sroa.5.sroa.7.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %.sroa.5.sroa.8.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 140 ; 2 uses
   %.sroa.5.sroa.9.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 144 ; 3 uses
   %.sroa.5.sroa.10.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 145
@@ -729,7 +728,7 @@ bb.be:                                            ; preds = %bb.bc
   %i.fx = load i32, ptr %i.bq, align 8, !range !33, !alias.scope !5616, !noalias !5617, !noundef !5 ; 2 uses
   %i.fy = trunc nuw i32 %i.fx to i1
   %.sroa.55.0.copyload.i.i.i.i = load i64, ptr %.sroa.55.0..sroa_idx.i.i.i.i, align 4, !alias.scope !5616, !noalias !5617
-  %.sroa.55.0.i.i.i.i = select i1 %i.fy, i64 %.sroa.55.0.copyload.i.i.i.i, i64 undef ; 2 uses
+  %.sroa.55.0.i.i.i.i = select i1 %i.fy, i64 %.sroa.55.0.copyload.i.i.i.i, i64 undef
   %i.fz = load i32, ptr %i.br, align 4, !range !33, !alias.scope !5616, !noalias !5617, !noundef !5 ; 2 uses
   %i.ga = trunc nuw i32 %i.fz to i1
   %.sroa.510.0.copyload.i.i.i.i = load i64, ptr %.sroa.510.0..sroa_idx.i.i.i.i, align 8, !alias.scope !5616, !noalias !5617
@@ -750,19 +749,16 @@ bb.be:                                            ; preds = %bb.bc
   store float %.sroa.514.0.i.i.i.i, ptr %i.cc, align 4, !alias.scope !5614, !noalias !5618
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.h, align 8, !noalias !5606
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.5.0..sroa_idx.i.i.i, i64 48, i1 false), !noalias !5606
-  %4 = trunc i64 %.sroa.55.0.i.i.i.i to i32
-  %5 = lshr i64 %.sroa.55.0.i.i.i.i, 32
-  %6 = trunc nuw i64 %5 to i32
   %i.ge = trunc i64 %.sroa.510.0.i.i.i.i to i8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5.sroa.10.i.i.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5.sroa.10.0..sroa.5.0..sroa_idx.sroa_idx.i.i.i, i64 7, i1 false), !noalias !5606
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.bv, i64 16, i1 false), !noalias !5606
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !5606
+  %3 = bitcast i64 %.sroa.55.0.i.i.i.i to <2 x i32>
   br label %bb.bi
 
 bb.bf:                                            ; preds = %.noexc.i.i20.i
   %i.gf = load i32, ptr %i.bq, align 8, !alias.scope !5610, !noalias !5611, !noundef !5
-  %7 = load i32, ptr %.sroa.55.0..sroa_idx.i.i.i.i, align 4, !alias.scope !5610, !noalias !5611, !noundef !5
-  %8 = load i32, ptr %3, align 8, !alias.scope !5610, !noalias !5611, !noundef !5
+  %4 = load <2 x i32>, ptr %.sroa.55.0..sroa_idx.i.i.i.i, align 4, !alias.scope !5610, !noalias !5611
   %i.gg = load i32, ptr %i.br, align 4, !alias.scope !5610, !noalias !5611, !noundef !5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !5606
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.24..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !5606
@@ -787,10 +783,9 @@ bb.bh:                                            ; preds = %"_ZN4core3ptr117dro
 bb.bi:                                            ; preds = %bb.bf, %bb.be
   %.sroa.5.sroa.9.0.i.i.i = phi i8 [ %i.fk, %bb.bf ], [ %i.ge, %bb.be ]
   %.sroa.5.sroa.8.0.i.i.i = phi i32 [ %i.gg, %bb.bf ], [ %i.fz, %bb.be ]
-  %.sroa.5.sroa.7.0.i.i.i = phi i32 [ %8, %bb.bf ], [ %6, %bb.be ]
-  %.sroa.5.sroa.6.0.i.i.i = phi i32 [ %7, %bb.bf ], [ %4, %bb.be ]
   %.sroa.5.sroa.5.0.i.i.i = phi i32 [ %i.gf, %bb.bf ], [ %i.fx, %bb.be ]
   %.sroa.0.0.i.i.i = phi i64 [ -9223372036854775808, %bb.bf ], [ %.sroa.0.0.copyload.i.i.i, %bb.be ]
+  %5 = phi <2 x i32> [ %4, %bb.bf ], [ %3, %bb.be ]
   store i64 %i.fa, ptr %i.ce, align 8, !alias.scope !5602, !noalias !5619
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false), !noalias !5619
   store i64 %i.fb, ptr %i.cf, align 8, !alias.scope !5602, !noalias !5619
@@ -799,8 +794,7 @@ bb.bi:                                            ; preds = %bb.bf, %bb.be
   store i64 %.sroa.0.0.i.i.i, ptr %i.ci, align 8, !alias.scope !5602, !noalias !5619
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.5.0..sroa_idx2.i.i.i, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.i.i.i, i64 48, i1 false), !noalias !5619
   store i32 %.sroa.5.sroa.5.0.i.i.i, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i, align 8, !alias.scope !5602, !noalias !5619
-  store i32 %.sroa.5.sroa.6.0.i.i.i, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i, align 4, !alias.scope !5602, !noalias !5619
-  store i32 %.sroa.5.sroa.7.0.i.i.i, ptr %.sroa.5.sroa.7.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i, align 8, !alias.scope !5602, !noalias !5619
+  store <2 x i32> %5, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i, align 4, !alias.scope !5602, !noalias !5619
   store i32 %.sroa.5.sroa.8.0.i.i.i, ptr %.sroa.5.sroa.8.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i, align 4, !alias.scope !5602, !noalias !5619
   store i8 %.sroa.5.sroa.9.0.i.i.i, ptr %.sroa.5.sroa.9.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i, align 8, !alias.scope !5602, !noalias !5619
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5.sroa.10.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5.sroa.10.i.i.i, i64 7, i1 false), !noalias !5619

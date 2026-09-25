@@ -204,37 +204,10 @@ bb.a:
   br i1 %.not.i, label %cbb_add_u.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.c = load ptr, ptr %i.a, align 8, !tbaa !16   ; 8 uses
-  %2 = trunc i64 %1 to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
-  store i8 %2, ptr %3, align 1, !tbaa !14
-  %4 = lshr i64 %1, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 6
-  store i8 %5, ptr %6, align 1, !tbaa !14
-  %7 = lshr i64 %1, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 5
-  store i8 %8, ptr %9, align 1, !tbaa !14
-  %10 = lshr i64 %1, 24
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i8 %11, ptr %12, align 1, !tbaa !14
-  %13 = lshr i64 %1, 32
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  store i8 %14, ptr %15, align 1, !tbaa !14
-  %16 = lshr i64 %1, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  store i8 %17, ptr %18, align 1, !tbaa !14
-  %19 = lshr i64 %1, 48
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  store i8 %20, ptr %21, align 1, !tbaa !14
-  %22 = lshr i64 %1, 56
-  %23 = trunc nuw i64 %22 to i8
-  store i8 %23, ptr %i.c, align 1, !tbaa !14
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !16
+  %2 = bitcast i64 %1 to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.c, align 1, !tbaa !14
   br label %cbb_add_u.exit
 
 cbb_add_u.exit:                                   ; preds = %.lr.ph.i, %bb.a
@@ -253,38 +226,11 @@ bb.a:
   br i1 %.not.i.i, label %CBB_add_u64.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %i.c = call noundef i64 @llvm.bswap.i64(i64 %1) ; 8 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !16   ; 8 uses
-  %2 = trunc i64 %i.c to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 7
-  store i8 %2, ptr %3, align 1, !tbaa !14
-  %4 = lshr i64 %i.c, 8
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 6
-  store i8 %5, ptr %6, align 1, !tbaa !14
-  %7 = lshr i64 %i.c, 16
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 5
-  store i8 %8, ptr %9, align 1, !tbaa !14
-  %10 = lshr i64 %i.c, 24
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  store i8 %11, ptr %12, align 1, !tbaa !14
-  %13 = lshr i64 %i.c, 32
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
-  store i8 %14, ptr %15, align 1, !tbaa !14
-  %16 = lshr i64 %i.c, 40
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  store i8 %17, ptr %18, align 1, !tbaa !14
-  %19 = lshr i64 %i.c, 48
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  store i8 %20, ptr %21, align 1, !tbaa !14
-  %22 = lshr i64 %i.c, 56
-  %23 = trunc nuw i64 %22 to i8
-  store i8 %23, ptr %i.d, align 1, !tbaa !14
+  %i.c = call noundef i64 @llvm.bswap.i64(i64 %1)
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !16
+  %2 = bitcast i64 %i.c to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.d, align 1, !tbaa !14
   br label %CBB_add_u64.exit
 
 CBB_add_u64.exit:                                 ; preds = %bb.a, %.lr.ph.i.i

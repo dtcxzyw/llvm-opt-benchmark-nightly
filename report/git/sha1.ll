@@ -204,39 +204,12 @@ bb.d:                                             ; preds = %bb.c, %bb.a
 SHA1DCUpdate.exit:                                ; preds = %._crit_edge.i, %._crit_edge.thread.i
   %i.z = phi i64 [ %i.v, %._crit_edge.thread.i ], [ %.pre73, %._crit_edge.i ]
   %i.aa = sub i64 %i.z, %i.f
-  %i.ab = shl i64 %i.aa, 3                        ; 8 uses
-  %2 = lshr i64 %i.ab, 56
-  %3 = trunc nuw i64 %2 to i8
+  %i.ab = shl i64 %i.aa, 3
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 84
-  store i8 %3, ptr %i.ad, align 4, !tbaa !37
-  %4 = lshr i64 %i.ab, 48
-  %5 = trunc i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 85
-  store i8 %5, ptr %6, align 1, !tbaa !37
-  %7 = lshr i64 %i.ab, 40
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 86
-  store i8 %8, ptr %9, align 2, !tbaa !37
-  %10 = lshr i64 %i.ab, 32
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 87
-  store i8 %11, ptr %12, align 1, !tbaa !37
-  %13 = lshr i64 %i.ab, 24
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  store i8 %14, ptr %15, align 8, !tbaa !37
-  %16 = lshr i64 %i.ab, 16
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 89
-  store i8 %17, ptr %18, align 1, !tbaa !37
-  %19 = lshr i64 %i.ab, 8
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %1, i64 90
-  store i8 %20, ptr %21, align 2, !tbaa !37
-  %22 = trunc i64 %i.ab to i8
-  %23 = getelementptr inbounds nuw i8, ptr %1, i64 91
-  store i8 %22, ptr %23, align 1, !tbaa !37
+  %2 = bitcast i64 %i.ab to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %3, ptr %i.ad, align 4, !tbaa !37
   tail call fastcc void @sha1_process(ptr noundef nonnull %1, ptr noundef nonnull %i.ac)
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.af = load i32, ptr %i.ae, align 8, !tbaa !13

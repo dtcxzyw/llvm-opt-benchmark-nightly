@@ -204,28 +204,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
 define dso_local range(i32 0, 134744073) i32 @helper_neon_clz_u8(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.03.0.extract.trunc = trunc i32 %0 to i8
-  %.sroa.54.0.extract.shift = lshr i32 %0, 8
-  %.sroa.54.0.extract.trunc = trunc i32 %.sroa.54.0.extract.shift to i8
-  %.sroa.65.0.extract.shift = lshr i32 %0, 16
-  %.sroa.65.0.extract.trunc = trunc i32 %.sroa.65.0.extract.shift to i8
-  %.sroa.76.0.extract.shift = lshr i32 %0, 24
-  %.sroa.76.0.extract.trunc = trunc nuw i32 %.sroa.76.0.extract.shift to i8
-  %1 = tail call range(i8 0, 9) i8 @llvm.ctlz.i8(i8 %.sroa.03.0.extract.trunc, i1 false)
-  %2 = zext nneg i8 %1 to i32
-  %3 = tail call range(i8 0, 9) i8 @llvm.ctlz.i8(i8 %.sroa.54.0.extract.trunc, i1 false)
-  %4 = zext nneg i8 %3 to i32
-  %5 = tail call range(i8 0, 9) i8 @llvm.ctlz.i8(i8 %.sroa.65.0.extract.trunc, i1 false)
-  %6 = zext nneg i8 %5 to i32
-  %7 = tail call range(i8 0, 9) i8 @llvm.ctlz.i8(i8 %.sroa.76.0.extract.trunc, i1 false)
-  %8 = zext nneg i8 %7 to i32
-  %.sroa.7.0.insert.ext = shl nuw nsw i32 %8, 24
-  %.sroa.6.0.insert.ext = shl nuw nsw i32 %6, 16
-  %.sroa.6.0.insert.insert = or disjoint i32 %.sroa.7.0.insert.ext, %.sroa.6.0.insert.ext
-  %.sroa.5.0.insert.ext = shl nuw nsw i32 %4, 8
-  %.sroa.5.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.insert, %.sroa.5.0.insert.ext
-  %.sroa.02.0.insert.insert = or disjoint i32 %.sroa.5.0.insert.insert, %2
-  ret i32 %.sroa.02.0.insert.insert
+  %1 = bitcast i32 %0 to <4 x i8>
+  %2 = tail call range(i8 0, 9) <4 x i8> @llvm.ctlz.v4i8(<4 x i8> %1, i1 false)
+  %3 = bitcast <4 x i8> %2 to i32
+  ret i32 %3
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
@@ -627,6 +609,9 @@ declare void @llvm.assume(i1 noundef) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #7
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i8> @llvm.ctlz.v4i8(<4 x i8>, i1 immarg) #9
 
 attributes #0 = { mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }

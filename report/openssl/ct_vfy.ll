@@ -150,7 +150,7 @@ declare i32 @EVP_DigestVerifyInit_ex(ptr noundef, ptr noundef, ptr noundef, ptr 
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @sct_ctx_update(ptr noundef nonnull %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 1                ; 19 uses
+  %i.a = alloca [12 x i8], align 1                ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !15   ; 3 uses
@@ -173,41 +173,13 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   store i8 0, ptr %i.i, align 1, !tbaa !29
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %3 = load i64, ptr %i.k, align 8, !tbaa !18     ; 8 uses
-  %4 = lshr i64 %3, 56
-  %5 = trunc nuw i64 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %5, ptr %i.j, align 1, !tbaa !29
-  %7 = lshr i64 %3, 48
-  %8 = trunc i64 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %8, ptr %6, align 1, !tbaa !29
-  %10 = lshr i64 %3, 40
-  %11 = trunc i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %11, ptr %9, align 1, !tbaa !29
-  %13 = lshr i64 %3, 32
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %14, ptr %12, align 1, !tbaa !29
-  %16 = lshr i64 %3, 24
-  %17 = trunc i64 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %17, ptr %15, align 1, !tbaa !29
-  %19 = lshr i64 %3, 16
-  %20 = trunc i64 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %20, ptr %18, align 1, !tbaa !29
-  %22 = lshr i64 %3, 8
-  %23 = trunc i64 %22 to i8
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %23, ptr %21, align 1, !tbaa !29
-  %24 = trunc i64 %3 to i8
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %24, ptr %i.l, align 1, !tbaa !29
+  %3 = load <8 x i8>, ptr %i.k, align 8, !tbaa !18
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <8 x i8> %4, ptr %i.j, align 1, !tbaa !29
   %i.m = lshr i32 %i.c, 8
   %i.n = trunc i32 %i.m to i8
-  store i8 %i.n, ptr %25, align 1, !tbaa !29
+  store i8 %i.n, ptr %i.l, align 1, !tbaa !29
   %i.o = trunc i32 %i.c to i8
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   store i8 %i.o, ptr %i.p, align 1, !tbaa !29
