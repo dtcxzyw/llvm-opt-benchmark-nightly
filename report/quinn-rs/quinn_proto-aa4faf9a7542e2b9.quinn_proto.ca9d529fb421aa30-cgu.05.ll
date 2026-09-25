@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %_RNvMsc_NtNt
   unreachable, !dbg !17425
 
 _RINvMsb_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB6_13LazyLeafRangeNtNtNtB8_4node6marker5DyingINtNtBc_3vec3VechENtNtNtCsbxHpS8e17M7_6webpki3crl5types16OwnedRevokedCertE27deallocating_next_uncheckedNtNtBc_5alloc6GlobalECshovLROGBtMy_11quinn_proto.exit: ; preds = %.noexc.i.i
-    #dbg_value(ptr %i.ai, !17336, !DIExpression(), !17109)
+    #dbg_value(ptr poison, !17336, !DIExpression(), !17109)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !17426
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !17427, !noalias !17385
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !17428
@@ -607,7 +607,7 @@ bb.i:                                             ; preds = %bb.h, %_RNvMsc_NtNt
   unreachable, !dbg !17871
 
 _RINvMsb_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB6_13LazyLeafRangeNtNtNtB8_4node6marker5DyingNtNtBc_6string6StringNtNtCscFTfv2TGtgR_10serde_json5value5ValueE27deallocating_next_uncheckedNtNtBc_5alloc6GlobalECshovLROGBtMy_11quinn_proto.exit: ; preds = %.noexc.i.i
-    #dbg_value(ptr %i.ai, !17782, !DIExpression(), !17555)
+    #dbg_value(ptr poison, !17782, !DIExpression(), !17555)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !17872
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !17873, !noalias !17831
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !17874
@@ -1010,7 +1010,7 @@ bb.i:                                             ; preds = %bb.h, %_RNvMsc_NtNt
   unreachable, !dbg !18304
 
 _RINvMsb_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB6_13LazyLeafRangeNtNtNtB8_4node6marker5DyingyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketE27deallocating_next_uncheckedNtNtBc_5alloc6GlobalEB1R_.exit: ; preds = %.noexc.i.i
-    #dbg_value(ptr %i.ai, !18215, !DIExpression(), !17997)
+    #dbg_value(ptr poison, !18215, !DIExpression(), !17997)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !18305
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !18306, !noalias !18264
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !18307
@@ -1413,7 +1413,7 @@ bb.i:                                             ; preds = %bb.h, %_RNvMsc_NtNt
   unreachable, !dbg !18742
 
 _RINvMsb_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB6_13LazyLeafRangeNtNtNtB8_4node6marker5DyingyyE27deallocating_next_uncheckedNtNtBc_5alloc6GlobalECshovLROGBtMy_11quinn_proto.exit: ; preds = %.noexc.i.i
-    #dbg_value(ptr %i.ai, !18653, !DIExpression(), !18434)
+    #dbg_value(ptr poison, !18653, !DIExpression(), !18434)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !18743
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !18744, !noalias !18702
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !18745

@@ -205,9 +205,10 @@ bb.u:                                             ; preds = %bb.t
   br label %pow_ui_inv.exit
 
 bb.v:                                             ; preds = %bb.t
-  switch i32 %..i81, label %bb.x [
-    i32 0, label %pow_ui.exit.i
-    i32 1, label %bb.w
+  %trunc = trunc i32 %..i81 to i8
+  switch i8 %trunc, label %bb.x [
+    i8 0, label %pow_ui.exit.i
+    i8 1, label %bb.w
   ]
 
 bb.w:                                             ; preds = %bb.v

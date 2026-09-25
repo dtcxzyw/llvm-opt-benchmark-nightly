@@ -205,8 +205,10 @@ _m3dstbi__zreceive.exit.i.i:                      ; preds = %thread-pre-split.i.
 bb.j:                                             ; preds = %_m3dstbi__zreceive.exit.i.i
   %i.cc = load ptr, ptr %i.i, align 8             ; 3 uses
   %.promoted.i.i26.i.i = load ptr, ptr %6, align 8 ; 5 uses
-  %lcmp.mod.not.not.not = icmp eq i32 %i.as, 1
-  br i1 %lcmp.mod.not.not.not, label %.new, label %.prol.preheader
+  %7 = sub nuw nsw i32 9, %i.as
+  %8 = and i32 %7, 8
+  %lcmp.mod.not.not.not = icmp eq i32 %8, 0
+  br i1 %lcmp.mod.not.not.not, label %.prol.preheader, label %.new
 
 .prol.preheader:                                  ; preds = %bb.j
   %.not.i.i.i28.i.i.prol = icmp ult ptr %.promoted.i.i26.i.i, %i.cc
@@ -562,7 +564,9 @@ bb.ad:                                            ; preds = %_m3dstbi__zreceive.
 bb.ae:                                            ; preds = %bb.ad
   %i.gl = load ptr, ptr %i.i, align 8             ; 3 uses
   %.promoted.i.i.i50.i.i = load ptr, ptr %6, align 8 ; 5 uses
-  %lcmp.mod361.not.not = icmp ugt i32 %i.dc, 2
+  %9 = sub nuw nsw i32 10, %i.dc
+  %10 = and i32 %9, 8
+  %lcmp.mod361.not.not = icmp eq i32 %10, 0
   br i1 %lcmp.mod361.not.not, label %.prol.preheader357, label %.new359
 
 .prol.preheader357:                               ; preds = %bb.ae
@@ -840,8 +844,10 @@ bb.at:                                            ; preds = %_m3dstbi__zreceive.
   br i1 %i.ki, label %.preheader65.preheader, label %_m3dstbi__zreceive.exit87.i.i.i
 
 .preheader65.preheader:                           ; preds = %bb.at
-  %lcmp.mod382.not.not.not = icmp eq i32 %i.kh, 0
-  br i1 %lcmp.mod382.not.not.not, label %.preheader65.preheader.new, label %.preheader65.prol
+  %11 = sub nuw nsw i32 8, %i.kh
+  %12 = and i32 %11, 8
+  %lcmp.mod382.not.not.not = icmp eq i32 %12, 0
+  br i1 %lcmp.mod382.not.not.not, label %.preheader65.prol, label %.preheader65.preheader.new
 
 .preheader65.prol:                                ; preds = %.preheader65.preheader
   %.not.i.i.i84.i.i.i.prol = icmp ult ptr %i.kg, %i.jz
