@@ -205,29 +205,25 @@ Vec_IntPush.exit.i:                               ; preds = %Vec_IntGrow.exit11.
   %i.uu = getelementptr inbounds [4 x i8], ptr %i.ur, i64 %i.ut
   store i32 0, ptr %i.uu, align 4, !tbaa !17
   %i.uv = load i32, ptr %i.tw, align 4, !tbaa !15 ; 4 uses
-  %.011.i441 = add i32 %i.uv, -1                  ; 3 uses
+  %.011.i441 = add i32 %i.uv, -1                  ; 2 uses
   %i.uw = icmp sgt i32 %i.uv, 1
   br i1 %i.uw, label %.lr.ph.preheader.i, label %Vec_IntInsert.exit
 
 .lr.ph.preheader.i:                               ; preds = %Vec_IntPush.exit.i
-  %i.ux = zext i32 %.011.i441 to i64              ; 3 uses
-  %2 = zext nneg i32 %i.uv to i64                 ; 3 uses
-  %3 = icmp ne i32 %.011.i441, 0
-  %.neg = sext i1 %3 to i64
-  %i.uy = zext nneg i32 %i.uv to i64
-  %4 = add nsw i64 %.neg, %i.uy                   ; 3 uses
-  %min.iters.check1104 = icmp ult i64 %4, 8
+  %i.ux = zext i32 %.011.i441 to i64              ; 5 uses
+  %i.uy = zext nneg i32 %i.uv to i64              ; 3 uses
+  %min.iters.check1104 = icmp ult i32 %i.uv, 9
   br i1 %min.iters.check1104, label %.lr.ph.i443.preheader, label %vector.ph1105
 
 vector.ph1105:                                    ; preds = %.lr.ph.preheader.i
-  %n.vec1106 = and i64 %4, -8                     ; 4 uses
-  %i.uz = sub nsw i64 %2, %n.vec1106
-  %5 = sub nsw i64 %i.ux, %n.vec1106
+  %n.vec1106 = and i64 %i.ux, 4294967288          ; 3 uses
+  %i.uz = sub nsw i64 %i.uy, %n.vec1106
+  %2 = and i64 %i.ux, 7
   br label %vector.body1107
 
 vector.body1107:                                  ; preds = %vector.body1107, %vector.ph1105
   %index1108 = phi i64 [ 0, %vector.ph1105 ], [ %index.next1111, %vector.body1107 ] ; 3 uses
-  %i.va = sub i64 %2, %index1108
+  %i.va = sub i64 %i.uy, %index1108
   %i.vb = sub i64 %i.ux, %index1108
   %i.vc = getelementptr [4 x i8], ptr %i.ur, i64 %i.va ; 2 uses
   %i.vd = getelementptr i8, ptr %i.vc, i64 -20
@@ -244,12 +240,12 @@ vector.body1107:                                  ; preds = %vector.body1107, %v
   br i1 %i.vi, label %middle.block1112, label %vector.body1107, !llvm.loop !235
 
 middle.block1112:                                 ; preds = %vector.body1107
-  %cmp.n1113 = icmp eq i64 %4, %n.vec1106
+  %cmp.n1113 = icmp eq i64 %n.vec1106, %i.ux
   br i1 %cmp.n1113, label %Vec_IntInsert.exit, label %.lr.ph.i443.preheader
 
 .lr.ph.i443.preheader:                            ; preds = %.lr.ph.preheader.i, %middle.block1112
-  %indvars.iv16.i.ph = phi i64 [ %2, %.lr.ph.preheader.i ], [ %i.uz, %middle.block1112 ]
-  %indvars.iv.i444.ph = phi i64 [ %i.ux, %.lr.ph.preheader.i ], [ %5, %middle.block1112 ]
+  %indvars.iv16.i.ph = phi i64 [ %i.uy, %.lr.ph.preheader.i ], [ %i.uz, %middle.block1112 ]
+  %indvars.iv.i444.ph = phi i64 [ %i.ux, %.lr.ph.preheader.i ], [ %2, %middle.block1112 ]
   br label %.lr.ph.i443
 
 .lr.ph.i443:                                      ; preds = %.lr.ph.i443.preheader, %.lr.ph.i443
@@ -309,29 +305,25 @@ Vec_IntPush.exit.i454:                            ; preds = %Vec_IntGrow.exit11.
   %i.wd = getelementptr inbounds [4 x i8], ptr %i.vz, i64 %i.wc
   store i32 0, ptr %i.wd, align 4, !tbaa !17
   %i.we = load i32, ptr %i.tw, align 4, !tbaa !15 ; 4 uses
-  %.011.i455 = add i32 %i.we, -1                  ; 3 uses
+  %.011.i455 = add i32 %i.we, -1                  ; 2 uses
   %i.wf = icmp sgt i32 %i.we, 1
   br i1 %i.wf, label %.lr.ph.preheader.i457, label %.sink.split
 
 .lr.ph.preheader.i457:                            ; preds = %Vec_IntPush.exit.i454
-  %i.wg = zext i32 %.011.i455 to i64              ; 3 uses
-  %6 = zext nneg i32 %i.we to i64                 ; 3 uses
-  %7 = icmp ne i32 %.011.i455, 0
-  %.neg1132 = sext i1 %7 to i64
-  %i.wh = zext nneg i32 %i.we to i64
-  %8 = add nsw i64 %.neg1132, %i.wh               ; 3 uses
-  %min.iters.check1091 = icmp ult i64 %8, 8
+  %i.wg = zext i32 %.011.i455 to i64              ; 5 uses
+  %i.wh = zext nneg i32 %i.we to i64              ; 3 uses
+  %min.iters.check1091 = icmp ult i32 %i.we, 9
   br i1 %min.iters.check1091, label %.lr.ph.i458.preheader, label %vector.ph1092
 
 vector.ph1092:                                    ; preds = %.lr.ph.preheader.i457
-  %n.vec1093 = and i64 %8, -8                     ; 4 uses
-  %i.wi = sub nsw i64 %6, %n.vec1093
-  %9 = sub nsw i64 %i.wg, %n.vec1093
+  %n.vec1093 = and i64 %i.wg, 4294967288          ; 3 uses
+  %i.wi = sub nsw i64 %i.wh, %n.vec1093
+  %3 = and i64 %i.wg, 7
   br label %vector.body1094
 
 vector.body1094:                                  ; preds = %vector.body1094, %vector.ph1092
   %index1095 = phi i64 [ 0, %vector.ph1092 ], [ %index.next1098, %vector.body1094 ] ; 3 uses
-  %i.wj = sub i64 %6, %index1095
+  %i.wj = sub i64 %i.wh, %index1095
   %i.wk = sub i64 %i.wg, %index1095
   %i.wl = getelementptr [4 x i8], ptr %i.vz, i64 %i.wj ; 2 uses
   %i.wm = getelementptr i8, ptr %i.wl, i64 -20
@@ -348,12 +340,12 @@ vector.body1094:                                  ; preds = %vector.body1094, %v
   br i1 %i.wr, label %middle.block1099, label %vector.body1094, !llvm.loop !237
 
 middle.block1099:                                 ; preds = %vector.body1094
-  %cmp.n1100 = icmp eq i64 %8, %n.vec1093
+  %cmp.n1100 = icmp eq i64 %n.vec1093, %i.wg
   br i1 %cmp.n1100, label %.sink.split, label %.lr.ph.i458.preheader
 
 .lr.ph.i458.preheader:                            ; preds = %.lr.ph.preheader.i457, %middle.block1099
-  %indvars.iv16.i459.ph = phi i64 [ %6, %.lr.ph.preheader.i457 ], [ %i.wi, %middle.block1099 ]
-  %indvars.iv.i460.ph = phi i64 [ %i.wg, %.lr.ph.preheader.i457 ], [ %9, %middle.block1099 ]
+  %indvars.iv16.i459.ph = phi i64 [ %i.wh, %.lr.ph.preheader.i457 ], [ %i.wi, %middle.block1099 ]
+  %indvars.iv.i460.ph = phi i64 [ %i.wg, %.lr.ph.preheader.i457 ], [ %3, %middle.block1099 ]
   br label %.lr.ph.i458
 
 .lr.ph.i458:                                      ; preds = %.lr.ph.i458.preheader, %.lr.ph.i458
