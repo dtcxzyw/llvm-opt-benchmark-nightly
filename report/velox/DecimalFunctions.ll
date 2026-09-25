@@ -205,15 +205,15 @@ _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_
 _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.i.i: ; preds = %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.i.i, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader.i.i
   %.3.i.i = phi ptr [ %.4.i.i, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.i.i ], [ %.2.i.i, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader.i.i ] ; 2 uses
   %.0.i.i = phi ptr [ %.1.i.i, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.i.i ], [ %i.b, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader.i.i ] ; 3 uses
-  %i.ch = call noundef ptr @_ZZN3fmt3v116detail18for_each_codepointIZNS1_13compute_widthENS0_17basic_string_viewIcEEE17count_code_pointsEEvS4_T_ENKUlPKcS8_E_clES8_S8_(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef %.0.i.i, ptr noundef %.3.i.i) ; 3 uses
+  %i.ch = call noundef ptr @_ZZN3fmt3v116detail18for_each_codepointIZNS1_13compute_widthENS0_17basic_string_viewIcEEE17count_code_pointsEEvS4_T_ENKUlPKcS8_E_clES8_S8_(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef %.0.i.i, ptr noundef %.3.i.i) ; 4 uses
   %.not31.not.i.i = icmp ne ptr %i.ch, null       ; 3 uses
   %i.ci = ptrtoint ptr %i.ch to i64
   %i.cj = ptrtoint ptr %.0.i.i to i64
   %i.ck = sub i64 %i.ci, %i.cj
   %.4.idx.i.i = select i1 %.not31.not.i.i, i64 %i.ck, i64 0
   %.4.i.i = getelementptr inbounds i8, ptr %.3.i.i, i64 %.4.idx.i.i
-  %.1.i.i = select i1 %.not31.not.i.i, ptr %i.ch, ptr %.0.i.i ; 2 uses
-  %i.cl = icmp ult ptr %.1.i.i, %i.cg
+  %.1.i.i = select i1 %.not31.not.i.i, ptr %i.ch, ptr %.0.i.i
+  %i.cl = icmp ult ptr %i.ch, %i.cg
   %or.cond.i.i = select i1 %.not31.not.i.i, i1 %i.cl, i1 false
   br i1 %or.cond.i.i, label %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.i.i, label %bb.j, !llvm.loop !2770
 
@@ -616,14 +616,14 @@ _ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_stri
   %i.fz = and i32 %.not.i.i37, 1
   %i.ga = zext nneg i32 %i.fz to i64
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 %i.ga
-  %i.gc = select i1 %.not.i36, ptr %i.gb, ptr %i.eb ; 2 uses
+  %i.gc = select i1 %.not.i36, ptr %i.gb, ptr %i.eb ; 3 uses
   %i.gd = ptrtoint ptr %i.gc to i64
   %i.ge = ptrtoint ptr %.0 to i64
   %i.gf = sub i64 %i.gd, %i.ge
   %.4.idx = select i1 %.not.i8.not.i34, i64 %i.gf, i64 0
   %.4 = getelementptr inbounds i8, ptr %.3, i64 %.4.idx
-  %.1 = select i1 %.not.i8.not.i34, ptr %i.gc, ptr %.0 ; 2 uses
-  %i.gg = icmp ult ptr %.1, %i.dq
+  %.1 = select i1 %.not.i8.not.i34, ptr %i.gc, ptr %.0
+  %i.gg = icmp ult ptr %i.gc, %i.dq
   %or.cond = select i1 %.not.i8.not.i34, i1 %i.gg, i1 false
   br i1 %or.cond, label %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit, label %bb.i, !llvm.loop !2792
 

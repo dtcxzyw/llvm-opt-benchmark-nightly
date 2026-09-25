@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.critedge35.i.i.i.i, %bb.b, %bb.a
-  %.126.i.i.i.i = phi i64 [ 0, %bb.a ], [ %i.ac, %.critedge35.i.i.i.i ], [ 0, %bb.b ]
+  %.126.i.i.i.i = phi i64 [ 0, %bb.a ], [ %i.ac, %.critedge35.i.i.i.i ], [ 0, %bb.b ] ; 2 uses
   %.223.i.i.i.i = phi i32 [ %.0.i.i.i.i.i, %bb.a ], [ %.021.i.i.i.i, %.critedge35.i.i.i.i ], [ %.0.i.i.i.i.i, %bb.b ]
   %.2.i.i.i.i = phi i64 [ %i.l, %bb.a ], [ %.0.i.i.i.i, %.critedge35.i.i.i.i ], [ %i.l, %bb.b ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
@@ -214,9 +214,9 @@ bb.c:                                             ; preds = %.critedge35.i.i.i.i
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !24
   %i.am = and i8 %i.al, 8
   %i.an = icmp ne i8 %i.am, 0                     ; 2 uses
-  %spec.select.i.i.i.i = select i1 %i.an, i64 0, i64 %.126.i.i.i.i ; 2 uses
-  %i.ao = icmp ne i64 %spec.select.i.i.i.i, 0
-  %or.cond.i.i.i.i = or i1 %i.an, %i.ao
+  %spec.select.i.i.i.i = select i1 %i.an, i64 0, i64 %.126.i.i.i.i
+  %i.ao = icmp ne i64 %.126.i.i.i.i, 0
+  %or.cond.i.i.i.i = or i1 %i.ao, %i.an
   br i1 %or.cond.i.i.i.i, label %.critedge.thread.i.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -611,7 +611,7 @@ bb.d:                                             ; preds = %.thread135.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %.critedge75.i.i.i.i, %.split.i.i.i.i, %.thread135.i.i.i.i
-  %.152.i.i.i.i = phi i64 [ 0, %.thread135.i.i.i.i ], [ %i.ca, %.critedge75.i.i.i.i ], [ 0, %.split.i.i.i.i ]
+  %.152.i.i.i.i = phi i64 [ 0, %.thread135.i.i.i.i ], [ %i.ca, %.critedge75.i.i.i.i ], [ 0, %.split.i.i.i.i ] ; 2 uses
   %.450.i.i.i.i = phi i32 [ %.248.i.i.i.i, %.thread135.i.i.i.i ], [ %i.cj, %.critedge75.i.i.i.i ], [ %.248.i.i.i.i, %.split.i.i.i.i ] ; 2 uses
   %.4.i.i.i.i = phi i32 [ %.2.i.i.i.i, %.thread135.i.i.i.i ], [ %i.ch, %.critedge75.i.i.i.i ], [ %.2.i.i.i.i, %.split.i.i.i.i ]
   %i.ck = add i64 %i.ca, 1                        ; 2 uses
@@ -621,9 +621,9 @@ bb.e:                                             ; preds = %.critedge75.i.i.i.i
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !24
   %i.cp = and i8 %i.co, 8
   %i.cq = icmp ne i8 %i.cp, 0                     ; 3 uses
-  %spec.select.i.i.i.i = select i1 %i.cq, i64 0, i64 %.152.i.i.i.i ; 2 uses
-  %i.cr = icmp ne i64 %spec.select.i.i.i.i, 0
-  %or.cond.i.i.i.i = or i1 %i.cq, %i.cr
+  %spec.select.i.i.i.i = select i1 %i.cq, i64 0, i64 %.152.i.i.i.i
+  %i.cr = icmp ne i64 %.152.i.i.i.i, 0
+  %or.cond.i.i.i.i = or i1 %i.cr, %i.cq
   br i1 %or.cond.i.i.i.i, label %.critedge.i.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1026,7 +1026,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.critedge32.i.i.i.i, %bb.b, %bb.a
-  %.124.i.i.i.i = phi i64 [ 0, %bb.a ], [ %i.ac, %.critedge32.i.i.i.i ], [ 0, %bb.b ]
+  %.124.i.i.i.i = phi i64 [ 0, %bb.a ], [ %i.ac, %.critedge32.i.i.i.i ], [ 0, %bb.b ] ; 2 uses
   %.220.i.i.i.i = phi i32 [ %.0.i.i.i.i.i, %bb.a ], [ %.018.i.i.i.i, %.critedge32.i.i.i.i ], [ %.0.i.i.i.i.i, %bb.b ]
   %.2.i.i.i.i = phi i64 [ %i.l, %bb.a ], [ %.0.i.i.i.i, %.critedge32.i.i.i.i ], [ %i.l, %bb.b ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
@@ -1035,9 +1035,9 @@ bb.c:                                             ; preds = %.critedge32.i.i.i.i
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !24
   %i.am = and i8 %i.al, 8
   %i.an = icmp ne i8 %i.am, 0                     ; 2 uses
-  %spec.select.i.i.i.i = select i1 %i.an, i64 0, i64 %.124.i.i.i.i ; 2 uses
-  %i.ao = icmp ne i64 %spec.select.i.i.i.i, 0
-  %or.cond.i.i.i.i = or i1 %i.an, %i.ao
+  %spec.select.i.i.i.i = select i1 %i.an, i64 0, i64 %.124.i.i.i.i
+  %i.ao = icmp ne i64 %.124.i.i.i.i, 0
+  %or.cond.i.i.i.i = or i1 %i.ao, %i.an
   br i1 %or.cond.i.i.i.i, label %.critedge.thread.i.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -1431,7 +1431,7 @@ bb.d:                                             ; preds = %.thread134.i.i.i.i
 
 bb.e:                                             ; preds = %.critedge72.i.i.i.i, %.split.i.i.i.i, %.thread134.i.i.i.i
   %.455.i.i.i.i = phi i32 [ %.253.i.i.i.i, %.thread134.i.i.i.i ], [ %i.cj, %.critedge72.i.i.i.i ], [ %.253.i.i.i.i, %.split.i.i.i.i ] ; 2 uses
-  %.147.i.i.i.i = phi i64 [ 0, %.thread134.i.i.i.i ], [ %i.ca, %.critedge72.i.i.i.i ], [ 0, %.split.i.i.i.i ]
+  %.147.i.i.i.i = phi i64 [ 0, %.thread134.i.i.i.i ], [ %i.ca, %.critedge72.i.i.i.i ], [ 0, %.split.i.i.i.i ] ; 2 uses
   %.4.i.i.i.i = phi i32 [ %.2.i.i.i.i, %.thread134.i.i.i.i ], [ %i.ch, %.critedge72.i.i.i.i ], [ %.2.i.i.i.i, %.split.i.i.i.i ]
   %i.ck = add i64 %i.ca, 1                        ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.by, i64 16
@@ -1440,9 +1440,9 @@ bb.e:                                             ; preds = %.critedge72.i.i.i.i
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !24
   %i.cp = and i8 %i.co, 8
   %i.cq = icmp ne i8 %i.cp, 0                     ; 3 uses
-  %spec.select.i.i.i.i = select i1 %i.cq, i64 0, i64 %.147.i.i.i.i ; 2 uses
-  %i.cr = icmp ne i64 %spec.select.i.i.i.i, 0
-  %or.cond.i.i.i.i = or i1 %i.cq, %i.cr
+  %spec.select.i.i.i.i = select i1 %i.cq, i64 0, i64 %.147.i.i.i.i
+  %i.cr = icmp ne i64 %.147.i.i.i.i, 0
+  %or.cond.i.i.i.i = or i1 %i.cr, %i.cq
   br i1 %or.cond.i.i.i.i, label %.critedge.i.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

@@ -74,8 +74,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = call i32 @GetVbrTag(ptr noundef nonnull %5, ptr noundef nonnull @buf) #8
   %i.l = icmp ne i32 %i.k, 0                      ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.n = load i32, ptr %i.m, align 4
-  %narrow = select i1 %i.l, i32 %i.n, i32 0       ; 2 uses
+  %i.n = load i32, ptr %i.m, align 4              ; 2 uses
+  %narrow = select i1 %i.l, i32 %i.n, i32 0
   %.0 = sext i32 %narrow to i64
   store i32 0, ptr %i.a, align 4, !tbaa !7
   %i.o = trunc i64 %i.i to i32
@@ -113,7 +113,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !7
   store i32 %i.ak, ptr %3, align 4, !tbaa !7
   %i.al = load i32, ptr getelementptr inbounds nuw (i8, ptr @mp, i64 40), align 8, !tbaa !27
-  %i.am = icmp ne i32 %narrow, 0
+  %i.am = icmp ne i32 %i.n, 0
   %or.cond3 = select i1 %i.l, i1 %i.am, i1 false
   %i.an = icmp eq i32 %i.al, 0
   %i.ao = select i1 %i.an, i64 1152, i64 576

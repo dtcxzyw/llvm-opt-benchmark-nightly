@@ -205,10 +205,10 @@ bb.a:
   %i.b = fcmp oeq float %0, 0.000000e+00
   %spec.store.select.peel = select i1 %i.b, float 0.000000e+00, float %0 ; 2 uses
   %i.c = fcmp oeq float %1, 0.000000e+00          ; 2 uses
-  %spec.store.select1.peel = select i1 %i.c, float 0.000000e+00, float %1 ; 2 uses
-  %i.d = bitcast float %spec.store.select.peel to i32 ; 2 uses
-  %2 = bitcast float %spec.store.select1.peel to i32 ; 2 uses
-  %i.e = xor i32 %2, %i.d
+  %2 = bitcast float %spec.store.select.peel to i32 ; 2 uses
+  %i.d = bitcast float %1 to i32
+  %3 = select i1 %i.c, i32 0, i32 %i.d            ; 2 uses
+  %i.e = xor i32 %3, %2
   %i.f = icmp slt i32 %i.e, 0
   br i1 %i.f, label %tailrecurse.peel, label %bb.b
 
@@ -218,14 +218,14 @@ tailrecurse.peel:                                 ; preds = %.lr.ph.preheader
   br i1 %i.c, label %.loopexit, label %.loopexit34
 
 .loopexit34:                                      ; preds = %tailrecurse.peel
-  %i.i = tail call noundef float @llvm.fabs.f32(float %spec.store.select1.peel)
+  %i.i = tail call noundef float @llvm.fabs.f32(float %1)
   %i.j = bitcast float %i.i to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit34, %.lr.ph.preheader
   %accumulator.tr25.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ %i.h, %.loopexit34 ]
-  %.lcssa29 = phi i32 [ %i.d, %.lr.ph.preheader ], [ %i.j, %.loopexit34 ] ; 2 uses
-  %.lcssa = phi i32 [ %2, %.lr.ph.preheader ], [ 0, %.loopexit34 ] ; 2 uses
+  %.lcssa29 = phi i32 [ %2, %.lr.ph.preheader ], [ %i.j, %.loopexit34 ] ; 2 uses
+  %.lcssa = phi i32 [ %3, %.lr.ph.preheader ], [ 0, %.loopexit34 ] ; 2 uses
   %spec.select20 = tail call i32 @llvm.umax.i32(i32 %.lcssa29, i32 %.lcssa)
   %spec.select = zext i32 %spec.select20 to i64
   %spec.select19.v = tail call i32 @llvm.umin.i32(i32 %.lcssa29, i32 %.lcssa)
@@ -253,10 +253,10 @@ bb.a:
   %i.b = fcmp oeq double %0, 0.000000e+00
   %spec.store.select.peel = select i1 %i.b, double 0.000000e+00, double %0 ; 2 uses
   %i.c = fcmp oeq double %1, 0.000000e+00         ; 2 uses
-  %spec.store.select1.peel = select i1 %i.c, double 0.000000e+00, double %1 ; 2 uses
-  %i.d = bitcast double %spec.store.select.peel to i64 ; 2 uses
-  %2 = bitcast double %spec.store.select1.peel to i64 ; 2 uses
-  %i.e = xor i64 %2, %i.d
+  %2 = bitcast double %spec.store.select.peel to i64 ; 2 uses
+  %i.d = bitcast double %1 to i64
+  %3 = select i1 %i.c, i64 0, i64 %i.d            ; 2 uses
+  %i.e = xor i64 %3, %2
   %i.f = icmp slt i64 %i.e, 0
   br i1 %i.f, label %tailrecurse.peel, label %bb.b
 
@@ -266,14 +266,14 @@ tailrecurse.peel:                                 ; preds = %.lr.ph.preheader
   br i1 %i.c, label %.loopexit, label %.loopexit33
 
 .loopexit33:                                      ; preds = %tailrecurse.peel
-  %i.i = tail call noundef double @llvm.fabs.f64(double %spec.store.select1.peel)
+  %i.i = tail call noundef double @llvm.fabs.f64(double %1)
   %i.j = bitcast double %i.i to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit33, %.lr.ph.preheader
   %accumulator.tr24.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ %i.h, %.loopexit33 ]
-  %.lcssa28 = phi i64 [ %i.d, %.lr.ph.preheader ], [ %i.j, %.loopexit33 ] ; 2 uses
-  %.lcssa = phi i64 [ %2, %.lr.ph.preheader ], [ 0, %.loopexit33 ] ; 2 uses
+  %.lcssa28 = phi i64 [ %2, %.lr.ph.preheader ], [ %i.j, %.loopexit33 ] ; 2 uses
+  %.lcssa = phi i64 [ %3, %.lr.ph.preheader ], [ 0, %.loopexit33 ] ; 2 uses
   %spec.select = tail call i64 @llvm.umax.i64(i64 %.lcssa28, i64 %.lcssa)
   %spec.select19 = tail call i64 @llvm.umin.i64(i64 %.lcssa28, i64 %.lcssa)
   %i.k = sub nuw i64 %spec.select, %spec.select19

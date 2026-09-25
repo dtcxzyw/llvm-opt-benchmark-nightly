@@ -205,8 +205,8 @@ _RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4take4TakeINtNtB7_6copied6CopiedI
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ar = load i64, ptr %i.aq, align 8, !alias.scope !4065, !noalias !4064, !noundef !6 ; 4 uses
   %i.as = trunc nuw i64 %i.an to i1               ; 2 uses
-  %i.at = call i64 @llvm.usub.sat.i64(i64 %i.ap, i64 %i.ar)
-  %.sroa.3.0.i.i = select i1 %i.as, i64 %i.at, i64 undef ; 2 uses
+  %i.at = call i64 @llvm.usub.sat.i64(i64 %i.ap, i64 %i.ar) ; 2 uses
+  %.sroa.3.0.i.i = select i1 %i.as, i64 %i.at, i64 undef
   %i.au = call i64 @llvm.usub.sat.i64(i64 %i.al, i64 %i.ar) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !4061
   store i64 %i.an, ptr %i.n, align 8, !noalias !4061
@@ -216,7 +216,7 @@ _RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4take4TakeINtNtB7_6copied6CopiedI
   %i.aw = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store i64 %i.au, ptr %i.aw, align 8, !noalias !4061
   store i64 1, ptr %i.m, align 8, !noalias !4061
-  %i.ax = icmp eq i64 %.sroa.3.0.i.i, %i.au
+  %i.ax = icmp eq i64 %i.at, %i.au
   %or.cond.i = select i1 %i.as, i1 %i.ax, i1 false, !prof !17
   br i1 %or.cond.i, label %_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skip4SkipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEEENtNtNtB9_6traits10exact_size17ExactSizeIterator3lenB1I_.exit, label %bb.c, !prof !17
 
@@ -250,8 +250,8 @@ bb.e:                                             ; preds = %_RNvYINtNtNtNtCs4NR
   %i.bd = load i64, ptr %i.bc, align 8, !noalias !4068
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !4068
   %i.be = trunc nuw i64 %i.bb to i1               ; 2 uses
-  %i.bf = call i64 @llvm.usub.sat.i64(i64 %i.bd, i64 %i.ay) ; 3 uses
-  %.sroa.3.0.i.i10 = select i1 %i.be, i64 %i.bf, i64 undef ; 2 uses
+  %i.bf = call i64 @llvm.usub.sat.i64(i64 %i.bd, i64 %i.ay) ; 4 uses
+  %.sroa.3.0.i.i10 = select i1 %i.be, i64 %i.bf, i64 undef
   %i.bg = call i64 @llvm.usub.sat.i64(i64 %i.az, i64 %i.ay) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !4066
   store i64 %i.bb, ptr %i.k, align 8, !noalias !4066
@@ -261,7 +261,7 @@ bb.e:                                             ; preds = %_RNvYINtNtNtNtCs4NR
   %i.bi = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 %i.bg, ptr %i.bi, align 8, !noalias !4066
   store i64 1, ptr %i.j, align 8, !noalias !4066
-  %i.bj = icmp eq i64 %.sroa.3.0.i.i10, %i.bg
+  %i.bj = icmp eq i64 %i.bf, %i.bg
   %or.cond.i11 = select i1 %i.be, i1 %i.bj, i1 false, !prof !17
   br i1 %or.cond.i11, label %_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skip4SkipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEEENtNtNtB9_6traits10exact_size17ExactSizeIterator3lenB1I_.exit12, label %bb.f, !prof !17
 

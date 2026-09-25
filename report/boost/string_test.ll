@@ -205,7 +205,7 @@ bb.a:
   %i.c = trunc i8 %i.b to i1                      ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 33 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
-  %i.f = load ptr, ptr %i.e, align 8              ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8              ; 4 uses
   %i.g = ptrtoint ptr %1 to i64                   ; 19 uses
   %.not179 = icmp eq ptr %2, %3
   br i1 %.not179, label %bb.t, label %bb.b
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = add i64 %i.s, -1
   %i.u = select i1 %i.q, i64 22, i64 %i.t         ; 3 uses
   %i.v = sub i64 %i.u, %i.o
-  %i.w = select i1 %i.q, ptr %i.d, ptr %i.f       ; 20 uses
+  %i.w = select i1 %i.q, ptr %i.d, ptr %i.f       ; 19 uses
   %.not180 = icmp ult i64 %i.v, %i.j
   br i1 %.not180, label %bb.c, label %bb.i
 
@@ -629,7 +629,7 @@ _ZN5boost9container3dtl17basic_string_baseINS0_4test25expand_bwd_test_allocatorI
   br label %bb.t
 
 bb.p:                                             ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_4test25expand_bwd_test_allocatorIcEEvE18allocation_commandEjmRmRPc.exit
-  %i.il = icmp eq ptr %i.w, null
+  %i.il = icmp eq ptr %i.f, null
   %i.im = select i1 %i.q, i1 true, i1 %i.il
   br i1 %i.im, label %.thread, label %bb.q
 
@@ -1032,7 +1032,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.oe, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit158, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ao, ptr nonnull align 1 %i.w, i64 %i.od, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ao, ptr align 1 %i.w, i64 %i.od, i1 false)
   br label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit158
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit158:        ; preds = %bb.q, %bb.r

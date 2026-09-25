@@ -205,15 +205,15 @@ _ZNK7cxxopts11ParseResult5beginEv.exit:           ; preds = %_ZNSt7__cxx1112basi
   %i.buz = load ptr, ptr %i.buy, align 8, !tbaa !176, !noalias !839
   %i.bva = icmp ne ptr %i.bux, %i.buz             ; 3 uses
   %i.bvb = getelementptr inbounds nuw i8, ptr %158, i64 136 ; 2 uses
-  %i.bvc = load ptr, ptr %i.bvb, align 8
-  %.sroa.5.1 = select i1 %i.bva, ptr %i.bux, ptr %i.bvc ; 2 uses
+  %i.bvc = load ptr, ptr %i.bvb, align 8          ; 2 uses
   %i.bvd = getelementptr inbounds nuw i8, ptr %158, i64 144
   %i.bve = load ptr, ptr %i.bvd, align 8, !tbaa !176, !noalias !840 ; 2 uses
-  %i.bvf = icmp ne ptr %.sroa.5.1, %i.bve
+  %i.bvf = icmp ne ptr %i.bvc, %i.bve
   %.not3.i2287 = select i1 %i.bva, i1 true, i1 %i.bvf
   br i1 %.not3.i2287, label %.lr.ph, label %.loopexit2236
 
 .lr.ph:                                           ; preds = %_ZNK7cxxopts11ParseResult5beginEv.exit
+  %.sroa.5.1 = select i1 %i.bva, ptr %i.bux, ptr %i.bvc
   %.sroa.12.1 = zext i1 %i.bva to i8
   br label %bb.op
 

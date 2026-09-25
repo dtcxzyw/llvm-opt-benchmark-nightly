@@ -204,8 +204,8 @@ BufferGetPage.exit.i:                             ; preds = %bb.i, %bb.h
   %i.cz = load volatile i64, ptr %.0.i.i.i, align 8
   store volatile i64 %i.cz, ptr %14, align 8
   %.not275.i = icmp ne i16 %i.bk, 0               ; 2 uses
-  %i.da = add i16 %.0142, -1
-  %narrow.i = select i1 %.not275.i, i16 %i.da, i16 0 ; 4 uses
+  %i.da = add i16 %.0142, -1                      ; 2 uses
+  %narrow.i = select i1 %.not275.i, i16 %i.da, i16 0 ; 3 uses
   %i.db = load i8, ptr %i.a, align 1, !range !4, !noundef !5
   %i.dc = trunc nuw i8 %i.db to i1                ; 2 uses
   %.not281.i = xor i1 %i.dc, true
@@ -608,7 +608,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bi
   %i.ln = getelementptr inbounds nuw i8, ptr %16, i64 6
   store i16 %.0142, ptr %i.ln, align 2
   %i.lo = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
-  %i.lp = icmp ult i16 %narrow.i, %i.cm
+  %i.lp = icmp ult i16 %i.da, %i.cm
   %or.cond287.i = select i1 %.not275.i, i1 %i.lp, i1 false
   %spec.store.select.i = select i1 %or.cond287.i, i16 %i.bk, i16 0
   store i16 %spec.store.select.i, ptr %i.lo, align 4

@@ -202,10 +202,10 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !778
   %i.j = load ptr, ptr %i.i, align 8, !dbg !778, !nonnull !59 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !778
-  %i.l = load i64, ptr %i.k, align 8, !dbg !778   ; 3 uses
-  %.sroa.56.0 = select i1 %.not, i64 undef, i64 %i.l, !dbg !778 ; 5 uses
+  %i.l = load i64, ptr %i.k, align 8, !dbg !778   ; 4 uses
+  %.sroa.56.0 = select i1 %.not, i64 undef, i64 %i.l, !dbg !778 ; 4 uses
   %.sroa.05.0 = select i1 %.not, ptr null, ptr %i.j, !dbg !778 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.56.0, 0
+  %i.m = icmp eq i64 %i.l, 0
   %or.cond.i = select i1 %.not, i1 true, i1 %i.m, !dbg !779
   br i1 %or.cond.i, label %switch.lookup, label %bb.b, !dbg !779
 
@@ -352,10 +352,10 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !1182
   %i.t = load ptr, ptr %i.s, align 8, !dbg !1182, !nonnull !59 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !1182
-  %i.v = load i64, ptr %i.u, align 8, !dbg !1182  ; 3 uses
-  %.sroa.55.0 = select i1 %.not, i64 undef, i64 %i.v, !dbg !1182 ; 5 uses
+  %i.v = load i64, ptr %i.u, align 8, !dbg !1182  ; 4 uses
+  %.sroa.55.0 = select i1 %.not, i64 undef, i64 %i.v, !dbg !1182 ; 4 uses
   %.sroa.04.0 = select i1 %.not, ptr null, ptr %i.t, !dbg !1182
-  %i.w = icmp eq i64 %.sroa.55.0, 0
+  %i.w = icmp eq i64 %i.v, 0
   %or.cond.i = select i1 %.not, i1 true, i1 %i.w, !dbg !1183
   br i1 %or.cond.i, label %switch.lookup41, label %bb.b, !dbg !1183
 

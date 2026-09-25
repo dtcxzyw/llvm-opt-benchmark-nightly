@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 .critedge:                                        ; preds = %bb.g
   %i.s = load i32, ptr %2, align 4, !tbaa !22
   %i.t = icmp slt i32 %i.s, 1                     ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %spec.select, i64 1
-  %.260 = select i1 %i.t, ptr %i.u, ptr %.159     ; 2 uses
-  %i.v = icmp ult ptr %.260, %i.b
+  %i.u = getelementptr inbounds nuw i8, ptr %spec.select, i64 1 ; 2 uses
+  %.260 = select i1 %i.t, ptr %i.u, ptr %.159
+  %i.v = icmp ult ptr %i.u, %i.b
   %or.cond74 = select i1 %i.t, i1 %i.v, i1 false
   br i1 %or.cond74, label %bb.b, label %.thread, !llvm.loop !73
 
