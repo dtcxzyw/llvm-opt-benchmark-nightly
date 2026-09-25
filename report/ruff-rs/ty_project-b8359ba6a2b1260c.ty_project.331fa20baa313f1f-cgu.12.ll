@@ -205,13 +205,12 @@ bb.h:                                             ; preds = %_RNvMs2_NtNtNtCs98D
 bb.i:                                             ; preds = %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8, !nonnull !3, !align !6, !noundef !3 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 56
   %i.ae = load i64, ptr %i.ad, align 8, !noundef !3 ; 3 uses
   %i.af = icmp ult i64 %i.ae, 1152921504606846976
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = icmp eq i64 %i.ae, 0
-  br i1 %i.ag, label %.loopexit, label %.lr.ph
+  br i1 %i.ag, label %.loopexit, label %3
 
 .thread:                                          ; preds = %bb.h
   %i.ah = load ptr, ptr %i.v, align 8, !nonnull !3, !noundef !3 ; 2 uses
@@ -227,9 +226,13 @@ bb.i:                                             ; preds = %bb.h
   call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCs98D8VPWzHuM_14regex_automata4util4pool9PoolGuardINtNtCscdodAO9FK5_5alloc3vec3VecjEFEB1w_EECs4o81Y09oZk1_10ty_project(ptr noalias noundef align 8 dereferenceable(32) %i.b)
   br label %bb.o
 
-.lr.ph:                                           ; preds = %bb.i, %.thread
-  %i.am = phi i64 [ %i.ae, %bb.i ], [ %i.aj, %.thread ]
-  %.sroa.04.0 = phi ptr [ %3, %bb.i ], [ %i.ah, %.thread ]
+3:                                                ; preds = %bb.i
+  %4 = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %3, %.thread
+  %i.am = phi i64 [ %i.ae, %3 ], [ %i.aj, %.thread ]
+  %.sroa.04.0 = phi ptr [ %4, %3 ], [ %i.ah, %.thread ]
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.04.0, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %.idx = shl nuw nsw i64 %i.am, 3
