@@ -205,7 +205,7 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit.preheader.i: ; preds = %_ZL13gmx_snew_im
 
 iter.check:                                       ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit.preheader.i
   %wide.trip.count.i = zext nneg i32 %i.mj to i64 ; 6 uses
-  %min.iters.check = icmp ult i32 %i.mj, 4
+  %min.iters.check = icmp ult i32 %i.mj, 8
   br i1 %min.iters.check, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -213,22 +213,17 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check360, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.ml = and i64 %wide.trip.count.i, 28
+  %i.ml = and i64 %wide.trip.count.i, 24
   %n.vec = and i64 %wide.trip.count.i, 2147483616 ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
-  %43 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %44 = add <8 x i32> %43, splat (i32 1)
-  %45 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.mm = add <8 x i32> %45, splat (i32 9)
-  %46 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.mn = add <8 x i32> %46, splat (i32 17)
-  %47 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %i.mo = add <8 x i32> %47, splat (i32 25)
-  %i.mp = uitofp nneg <8 x i32> %44 to <8 x float>
+  %vec.ind = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
+  %i.mm = add <8 x i32> %vec.ind, splat (i32 8)
+  %i.mn = add <8 x i32> %vec.ind, splat (i32 16)
+  %i.mo = add <8 x i32> %vec.ind, splat (i32 24)
+  %i.mp = uitofp nneg <8 x i32> %vec.ind to <8 x float>
   %i.mq = uitofp nneg <8 x i32> %i.mm to <8 x float>
   %i.mr = uitofp nneg <8 x i32> %i.mn to <8 x float>
   %i.ms = uitofp nneg <8 x i32> %i.mo to <8 x float>
@@ -241,7 +236,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <8 x float> %i.mr, ptr %i.mv, align 4, !tbaa !56
   store <8 x float> %i.ms, ptr %i.mw, align 4, !tbaa !56
   %index.next = add nuw i64 %index, 32            ; 2 uses
-  %vec.ind.next = add nuw <8 x i64> %vec.ind, splat (i64 32)
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 32)
   %i.mx = icmp eq i64 %index.next, %n.vec
   br i1 %i.mx, label %middle.block, label %vector.body, !llvm.loop !30
 
@@ -255,22 +250,21 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %n.vec361 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
-  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val, i64 0
-  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
-  %induction = or disjoint <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3>
+  %n.vec361 = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
+  %43 = trunc nuw nsw i64 %vec.epilog.resume.val to i32
+  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %43, i64 0
+  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
+  %induction = or disjoint <8 x i32> %broadcast.splat, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index362 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next364, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind363 = phi <4 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next365, %vec.epilog.vector.body ] ; 2 uses
-  %48 = trunc <4 x i64> %vec.ind363 to <4 x i32>
-  %49 = add <4 x i32> %48, splat (i32 1)
-  %50 = uitofp nneg <4 x i32> %49 to <4 x float>
+  %vec.ind363 = phi <8 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next365, %vec.epilog.vector.body ] ; 2 uses
+  %44 = uitofp nneg <8 x i32> %vec.ind363 to <8 x float>
   %i.my = getelementptr inbounds nuw [4 x i8], ptr %i.mi, i64 %index362
-  store <4 x float> %50, ptr %i.my, align 4, !tbaa !56
-  %index.next364 = add nuw i64 %index362, 4       ; 2 uses
-  %vec.ind.next365 = add nuw nsw <4 x i64> %vec.ind363, splat (i64 4)
+  store <8 x float> %44, ptr %i.my, align 4, !tbaa !56
+  %index.next364 = add nuw i64 %index362, 8       ; 2 uses
+  %vec.ind.next365 = add <8 x i32> %vec.ind363, splat (i32 8)
   %i.mz = icmp eq i64 %index.next364, %n.vec361
   br i1 %i.mz, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !31
 
@@ -673,7 +667,7 @@ attributes #19 = { cold nounwind }
 !87 = !{!84, !76, i64 16}
 !88 = !{!"llvm.loop.isvectorized", i32 1}
 !89 = !{!"llvm.loop.unroll.runtime.disable"}
-!90 = !{!"branch_weights", i32 4, i32 28}
+!90 = !{!"branch_weights", i32 8, i32 24}
 !91 = !{!81, !57, i64 24}
 !92 = !{!81, !55, i64 28}
 !93 = !{!81, !57, i64 12}

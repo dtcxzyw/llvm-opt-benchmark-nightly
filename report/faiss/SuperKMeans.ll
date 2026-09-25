@@ -204,12 +204,9 @@ vector.ph303:                                     ; preds = %.lr.ph.i
 
 vector.body309:                                   ; preds = %vector.body309, %vector.ph303
   %index310 = phi i64 [ 0, %vector.ph303 ], [ %index.next311, %vector.body309 ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph303 ], [ %vec.ind.next, %vector.body309 ] ; 3 uses
-  %20 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %21 = add <4 x i32> %20, splat (i32 1)
-  %22 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %i.es = add <4 x i32> %22, splat (i32 5)
-  %i.et = mul nsw <4 x i32> %broadcast.splat306, %21
+  %vec.ind = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph303 ], [ %vec.ind.next, %vector.body309 ] ; 3 uses
+  %i.es = add <4 x i32> %vec.ind, splat (i32 4)
+  %i.et = mul nsw <4 x i32> %broadcast.splat306, %vec.ind
   %i.eu = mul nsw <4 x i32> %broadcast.splat306, %i.es
   %i.ev = add nsw <4 x i32> %i.et, %broadcast.splat308
   %i.ew = add nsw <4 x i32> %i.eu, %broadcast.splat308
@@ -218,7 +215,7 @@ vector.body309:                                   ; preds = %vector.body309, %ve
   store <4 x i32> %i.ev, ptr %i.ex, align 4, !tbaa !50
   store <4 x i32> %i.ew, ptr %i.ey, align 4, !tbaa !50
   %index.next311 = add nuw i64 %index310, 8       ; 2 uses
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %i.ez = icmp eq i64 %index.next311, %n.vec304
   br i1 %i.ez, label %middle.block312, label %vector.body309, !llvm.loop !127
 

@@ -1,8 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pocketpy/original/random?download=true
 inline.NumInlined: 19
 inline.NumDeleted: 5
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -71,7 +70,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %mt19937__seed.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = tail call i64 (...) @time_ns() #9
+  %i.e = tail call i64 (...) @time_ns() #8
   %i.f = trunc i64 %i.e to i32
   store i32 %i.f, ptr %0, align 4, !tbaa !11
   store i32 1, ptr %i.a, align 4, !tbaa !10
@@ -231,92 +230,92 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define void @pk__add_module_random() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @py_newmodule(ptr noundef nonnull @.str) #9 ; 8 uses
-  %i.b = tail call signext i16 @py_newtype(ptr noundef nonnull @.str.1, i16 noundef signext 1, ptr noundef %i.a, ptr noundef null) #9 ; 10 uses
+  %i.a = tail call ptr @py_newmodule(ptr noundef nonnull @.str) #8 ; 8 uses
+  %i.b = tail call signext i16 @py_newtype(ptr noundef nonnull @.str.1, i16 noundef signext 1, ptr noundef %i.a, ptr noundef null) #8 ; 10 uses
   %i.c = load ptr, ptr @__new__, align 8, !tbaa !28
-  tail call void @py_bindmagic(i16 noundef signext %i.b, ptr noundef %i.c, ptr noundef nonnull @Random__new__) #9
+  tail call void @py_bindmagic(i16 noundef signext %i.b, ptr noundef %i.c, ptr noundef nonnull @Random__new__) #8
   %i.d = load ptr, ptr @__init__, align 8, !tbaa !28
-  tail call void @py_bindmagic(i16 noundef signext %i.b, ptr noundef %i.d, ptr noundef nonnull @Random__init__) #9
-  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.2, ptr noundef nonnull @Random_seed) #9
-  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str, ptr noundef nonnull @Random_random) #9
-  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.3, ptr noundef nonnull @Random_uniform) #9
-  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.4, ptr noundef nonnull @Random_randint) #9
-  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.5, ptr noundef nonnull @Random_shuffle) #9
-  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.6, ptr noundef nonnull @Random_choice) #9
-  %i.e = tail call ptr @py_tpobject(i16 noundef signext %i.b) #9
-  tail call void @py_bind(ptr noundef %i.e, ptr noundef nonnull @.str.7, ptr noundef nonnull @Random_choices) #9
-  %i.f = tail call ptr (...) @py_pushtmp() #9     ; 8 uses
-  %i.g = tail call zeroext i1 @py_tpcall(i16 noundef signext %i.b, i32 noundef 0, ptr noundef null) #9
+  tail call void @py_bindmagic(i16 noundef signext %i.b, ptr noundef %i.d, ptr noundef nonnull @Random__init__) #8
+  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.2, ptr noundef nonnull @Random_seed) #8
+  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str, ptr noundef nonnull @Random_random) #8
+  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.3, ptr noundef nonnull @Random_uniform) #8
+  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.4, ptr noundef nonnull @Random_randint) #8
+  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.5, ptr noundef nonnull @Random_shuffle) #8
+  tail call void @py_bindmethod(i16 noundef signext %i.b, ptr noundef nonnull @.str.6, ptr noundef nonnull @Random_choice) #8
+  %i.e = tail call ptr @py_tpobject(i16 noundef signext %i.b) #8
+  tail call void @py_bind(ptr noundef %i.e, ptr noundef nonnull @.str.7, ptr noundef nonnull @Random_choices) #8
+  %i.f = tail call ptr (...) @py_pushtmp() #8     ; 8 uses
+  %i.g = tail call zeroext i1 @py_tpcall(i16 noundef signext %i.b, i32 noundef 0, ptr noundef null) #8
   br i1 %i.g, label %bb.b, label %bb.j
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = tail call ptr (...) @py_retval() #9
+  %i.h = tail call ptr (...) @py_retval() #8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !tbaa.struct !19
-  %i.i = tail call ptr @py_name(ptr noundef nonnull @.str.2) #9
-  %i.j = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.i) #9
+  %i.i = tail call ptr @py_name(ptr noundef nonnull @.str.2) #8
+  %i.j = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.i) #8
   br i1 %i.j, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = tail call ptr @py_name(ptr noundef nonnull @.str.2) #9
-  %i.l = tail call ptr (...) @py_retval() #9
-  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.k, ptr noundef %i.l) #9
-  %i.m = tail call ptr @py_name(ptr noundef nonnull @.str) #9
-  %i.n = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.m) #9
+  %i.k = tail call ptr @py_name(ptr noundef nonnull @.str.2) #8
+  %i.l = tail call ptr (...) @py_retval() #8
+  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.k, ptr noundef %i.l) #8
+  %i.m = tail call ptr @py_name(ptr noundef nonnull @.str) #8
+  %i.n = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.m) #8
   br i1 %i.n, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = tail call ptr @py_name(ptr noundef nonnull @.str) #9
-  %i.p = tail call ptr (...) @py_retval() #9
-  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.o, ptr noundef %i.p) #9
-  %i.q = tail call ptr @py_name(ptr noundef nonnull @.str.3) #9
-  %i.r = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.q) #9
+  %i.o = tail call ptr @py_name(ptr noundef nonnull @.str) #8
+  %i.p = tail call ptr (...) @py_retval() #8
+  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.o, ptr noundef %i.p) #8
+  %i.q = tail call ptr @py_name(ptr noundef nonnull @.str.3) #8
+  %i.r = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.q) #8
   br i1 %i.r, label %bb.e, label %bb.j
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = tail call ptr @py_name(ptr noundef nonnull @.str.3) #9
-  %i.t = tail call ptr (...) @py_retval() #9
-  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.s, ptr noundef %i.t) #9
-  %i.u = tail call ptr @py_name(ptr noundef nonnull @.str.4) #9
-  %i.v = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.u) #9
+  %i.s = tail call ptr @py_name(ptr noundef nonnull @.str.3) #8
+  %i.t = tail call ptr (...) @py_retval() #8
+  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.s, ptr noundef %i.t) #8
+  %i.u = tail call ptr @py_name(ptr noundef nonnull @.str.4) #8
+  %i.v = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.u) #8
   br i1 %i.v, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = tail call ptr @py_name(ptr noundef nonnull @.str.4) #9
-  %i.x = tail call ptr (...) @py_retval() #9
-  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.w, ptr noundef %i.x) #9
-  %i.y = tail call ptr @py_name(ptr noundef nonnull @.str.5) #9
-  %i.z = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.y) #9
+  %i.w = tail call ptr @py_name(ptr noundef nonnull @.str.4) #8
+  %i.x = tail call ptr (...) @py_retval() #8
+  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.w, ptr noundef %i.x) #8
+  %i.y = tail call ptr @py_name(ptr noundef nonnull @.str.5) #8
+  %i.z = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.y) #8
   br i1 %i.z, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
-  %i.aa = tail call ptr @py_name(ptr noundef nonnull @.str.5) #9
-  %i.ab = tail call ptr (...) @py_retval() #9
-  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.aa, ptr noundef %i.ab) #9
-  %i.ac = tail call ptr @py_name(ptr noundef nonnull @.str.6) #9
-  %i.ad = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.ac) #9
+  %i.aa = tail call ptr @py_name(ptr noundef nonnull @.str.5) #8
+  %i.ab = tail call ptr (...) @py_retval() #8
+  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.aa, ptr noundef %i.ab) #8
+  %i.ac = tail call ptr @py_name(ptr noundef nonnull @.str.6) #8
+  %i.ad = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.ac) #8
   br i1 %i.ad, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  %i.ae = tail call ptr @py_name(ptr noundef nonnull @.str.6) #9
-  %i.af = tail call ptr (...) @py_retval() #9
-  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.ae, ptr noundef %i.af) #9
-  %i.ag = tail call ptr @py_name(ptr noundef nonnull @.str.8) #9
-  %i.ah = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.ag) #9
+  %i.ae = tail call ptr @py_name(ptr noundef nonnull @.str.6) #8
+  %i.af = tail call ptr (...) @py_retval() #8
+  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.ae, ptr noundef %i.af) #8
+  %i.ag = tail call ptr @py_name(ptr noundef nonnull @.str.8) #8
+  %i.ah = tail call zeroext i1 @py_getattr(ptr noundef nonnull %i.f, ptr noundef %i.ag) #8
   br i1 %i.ah, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.ai = tail call ptr @py_name(ptr noundef nonnull @.str.8) #9
-  %i.aj = tail call ptr (...) @py_retval() #9
-  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.ai, ptr noundef %i.aj) #9
-  tail call void (...) @py_pop() #9
+  %i.ai = tail call ptr @py_name(ptr noundef nonnull @.str.8) #8
+  %i.aj = tail call ptr (...) @py_retval() #8
+  tail call void @py_setdict(ptr noundef %i.a, ptr noundef %i.ai, ptr noundef %i.aj) #8
+  tail call void (...) @py_pop() #8
   ret void
 
 bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  tail call void (...) @py_printexc() #9
+  tail call void (...) @py_printexc() #8
   %i.ak = load ptr, ptr @stderr, align 8, !tbaa !21
-  %fwrite = tail call i64 @fwrite(ptr nonnull @.str.9, i64 27, i64 1, ptr %i.ak) #10 ; 0 uses
+  %fwrite = tail call i64 @fwrite(ptr nonnull @.str.9, i64 27, i64 1, ptr %i.ak) #9 ; 0 uses
   %i.al = tail call i32 @putchar(i32 noundef 10)  ; 0 uses
-  tail call void @abort() #11
+  tail call void @abort() #10
   unreachable
 }
 
@@ -329,9 +328,9 @@ declare void @py_bindmagic(i16 noundef signext, ptr noundef, ptr noundef) local_
 ; Function Attrs: nounwind uwtable
 define internal noundef zeroext i1 @Random__new__(i32 %0, ptr noundef %1) #0 {
 bb.a:
-  %i.a = tail call ptr (...) @py_retval() #9
-  %i.b = tail call signext i16 @py_totype(ptr noundef %1) #9
-  %i.c = tail call ptr @py_newobject(ptr noundef %i.a, i16 noundef signext %i.b, i32 noundef 0, i32 noundef 2500) #9
+  %i.a = tail call ptr (...) @py_retval() #8
+  %i.b = tail call signext i16 @py_totype(ptr noundef %1) #8
+  %i.c = tail call ptr @py_newobject(ptr noundef %i.a, i16 noundef signext %i.b, i32 noundef 0, i32 noundef 2500) #8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2496
   store i32 625, ptr %i.d, align 4, !tbaa !10
   ret i1 true
@@ -346,17 +345,17 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call ptr @py_touserdata(ptr noundef %1) #9 ; 3 uses
+  %i.a = tail call ptr @py_touserdata(ptr noundef %1) #8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.c = tail call zeroext i1 @py_istype(ptr noundef nonnull %i.b, i16 noundef signext 33) #9
+  %i.c = tail call zeroext i1 @py_istype(ptr noundef nonnull %i.b, i16 noundef signext 33) #8
   br i1 %i.c, label %mt19937__seed.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.b, i16 noundef signext 3) #9
+  %i.d = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.b, i16 noundef signext 3) #8
   br i1 %i.d, label %bb.d, label %mt19937__seed.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = tail call i64 @py_toint(ptr noundef nonnull %i.b) #9
+  %i.e = tail call i64 @py_toint(ptr noundef nonnull %i.b) #8
   %i.f = trunc i64 %i.e to i32
   store i32 %i.f, ptr %i.a, align 4, !tbaa !11
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 2496 ; 3 uses
@@ -381,12 +380,12 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   br i1 %i.r, label %bb.e, label %mt19937__seed.exit.thread, !llvm.loop !0
 
 bb.f:                                             ; preds = %bb.a
-  %i.s = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.11) #9
+  %i.s = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.11) #8
   br label %mt19937__seed.exit
 
 mt19937__seed.exit.thread:                        ; preds = %bb.e, %bb.b, %bb.a
-  %i.t = tail call ptr (...) @py_retval() #9
-  tail call void @py_newnone(ptr noundef %i.t) #9
+  %i.t = tail call ptr (...) @py_retval() #8
+  tail call void @py_newnone(ptr noundef %i.t) #8
   br label %mt19937__seed.exit
 
 mt19937__seed.exit:                               ; preds = %bb.c, %mt19937__seed.exit.thread, %bb.f
@@ -403,25 +402,25 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 2, i32 noundef %0) #9
+  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 2, i32 noundef %0) #8
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = tail call ptr @py_touserdata(ptr noundef %1) #9 ; 3 uses
+  %i.b = tail call ptr @py_touserdata(ptr noundef %1) #8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.d = tail call zeroext i1 @py_istype(ptr noundef nonnull %i.c, i16 noundef signext 33) #9
+  %i.d = tail call zeroext i1 @py_istype(ptr noundef nonnull %i.c, i16 noundef signext 33) #8
   br i1 %i.d, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = tail call i64 (...) @time_ns() #9
+  %i.e = tail call i64 (...) @time_ns() #8
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.c
-  %i.f = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.c, i16 noundef signext 3) #9
+  %i.f = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.c, i16 noundef signext 3) #8
   br i1 %i.f, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.g = tail call i64 @py_toint(ptr noundef nonnull %i.c) #9
+  %i.g = tail call i64 @py_toint(ptr noundef nonnull %i.c) #8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.d
@@ -450,8 +449,8 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   br i1 %i.t, label %bb.h, label %mt19937__seed.exit, !llvm.loop !0
 
 mt19937__seed.exit:                               ; preds = %bb.h
-  %i.u = tail call ptr (...) @py_retval() #9
-  tail call void @py_newnone(ptr noundef %i.u) #9
+  %i.u = tail call ptr (...) @py_retval() #8
+  tail call void @py_newnone(ptr noundef %i.u) #8
   br label %bb.i
 
 bb.i:                                             ; preds = %mt19937__seed.exit, %bb.e, %bb.b
@@ -466,11 +465,11 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 1, i32 noundef %0) #9
+  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 1, i32 noundef %0) #8
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = tail call ptr @py_touserdata(ptr noundef %1) #9 ; 2 uses
+  %i.b = tail call ptr @py_touserdata(ptr noundef %1) #8 ; 2 uses
   %i.c = tail call fastcc i32 @mt19937__next_uint32(ptr noundef %i.b)
   %i.d = lshr i32 %i.c, 5
   %i.e = tail call fastcc i32 @mt19937__next_uint32(ptr noundef %i.b)
@@ -480,8 +479,8 @@ bb.c:                                             ; preds = %bb.a
   %i.i = uitofp nneg i32 %i.f to double
   %i.j = fadd nnan double %i.h, %i.i
   %i.k = fmul nnan double %i.j, f0x3CA0000000000000
-  %i.l = tail call ptr (...) @py_retval() #9
-  tail call void @py_newfloat(ptr noundef %i.l, double noundef %i.k) #9
+  %i.l = tail call ptr (...) @py_retval() #8
+  tail call void @py_newfloat(ptr noundef %i.l, double noundef %i.k) #8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -498,20 +497,20 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 3, i32 noundef %0) #9
+  %i.c = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 3, i32 noundef %0) #8
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call ptr @py_touserdata(ptr noundef %1) #9 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  %i.d = tail call ptr @py_touserdata(ptr noundef %1) #8 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.f = call zeroext i1 @py_castfloat(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a) #9
+  %i.f = call zeroext i1 @py_castfloat(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a) #8
   br i1 %i.f, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.h = call zeroext i1 @py_castfloat(ptr noundef nonnull %i.g, ptr noundef nonnull %i.b) #9
+  %i.h = call zeroext i1 @py_castfloat(ptr noundef nonnull %i.g, ptr noundef nonnull %i.b) #8
   br i1 %i.h, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -533,14 +532,14 @@ bb.e:                                             ; preds = %bb.d
   %.sink.i = select i1 %i.k, double %i.j, double %i.i
   %i.w = fmul double %.sink18.i, %i.t
   %i.x = fadd double %.sink.i, %i.w
-  %i.y = call ptr (...) @py_retval() #9
-  call void @py_newfloat(ptr noundef %i.y, double noundef %i.x) #9
+  %i.y = call ptr (...) @py_retval() #8
+  call void @py_newfloat(ptr noundef %i.y, double noundef %i.x) #8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.e
   %.0 = phi i1 [ true, %bb.e ], [ false, %bb.c ], [ false, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.b
@@ -555,28 +554,28 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 3, i32 noundef %0) #9
+  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 3, i32 noundef %0) #8
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.c = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.b, i16 noundef signext 3) #9
+  %i.c = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.b, i16 noundef signext 3) #8
   br i1 %i.c, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %i.e = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.d, i16 noundef signext 3) #9
+  %i.e = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.d, i16 noundef signext 3) #8
   br i1 %i.e, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = tail call ptr @py_touserdata(ptr noundef nonnull %1) #9 ; 2 uses
-  %i.g = tail call i64 @py_toint(ptr noundef nonnull %i.b) #9 ; 3 uses
-  %i.h = tail call i64 @py_toint(ptr noundef nonnull %i.d) #9 ; 2 uses
+  %i.f = tail call ptr @py_touserdata(ptr noundef nonnull %1) #8 ; 2 uses
+  %i.g = tail call i64 @py_toint(ptr noundef nonnull %i.b) #8 ; 3 uses
+  %i.h = tail call i64 @py_toint(ptr noundef nonnull %i.d) #8 ; 2 uses
   %i.i = icmp sgt i64 %i.g, %i.h
   br i1 %i.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.j = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 47, ptr noundef nonnull @.str.10) #9
+  %i.j = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 47, ptr noundef nonnull @.str.10) #8
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -598,8 +597,8 @@ mt19937__randint.exit:                            ; preds = %bb.g, %bb.h
   %.pn10.i = phi i64 [ %i.s, %bb.h ], [ %i.o, %bb.g ]
   %.pn.i = urem i64 %.pn10.i, %i.l
   %.0.i = add i64 %.pn.i, %i.g
-  %i.t = tail call ptr (...) @py_retval() #9
-  tail call void @py_newint(ptr noundef %i.t, i64 noundef %.0.i) #9
+  %i.t = tail call ptr (...) @py_retval() #8
+  tail call void @py_newint(ptr noundef %i.t, i64 noundef %.0.i) #8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.f, %mt19937__randint.exit, %bb.d, %bb.c, %bb.b
@@ -614,23 +613,23 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 2, i32 noundef %0) #9
+  %i.a = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 2, i32 noundef %0) #8
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.c = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.b, i16 noundef signext 8) #9
+  %i.c = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.b, i16 noundef signext 8) #8
   br i1 %i.c, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call ptr @py_touserdata(ptr noundef nonnull %1) #9
-  %i.e = tail call i32 @py_list_len(ptr noundef nonnull %i.b) #9 ; 2 uses
+  %i.d = tail call ptr @py_touserdata(ptr noundef nonnull %1) #8
+  %i.e = tail call i32 @py_list_len(ptr noundef nonnull %i.b) #8 ; 2 uses
   %i.f = icmp sgt i32 %i.e, 1
   br i1 %i.f, label %mt19937__randint.exit, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %mt19937__randint.exit, %bb.d
-  %i.g = tail call ptr (...) @py_retval() #9
-  tail call void @py_newnone(ptr noundef %i.g) #9
+  %i.g = tail call ptr (...) @py_retval() #8
+  tail call void @py_newnone(ptr noundef %i.g) #8
   br label %bb.e
 
 mt19937__randint.exit:                            ; preds = %bb.d, %mt19937__randint.exit
@@ -638,7 +637,7 @@ mt19937__randint.exit:                            ; preds = %bb.d, %mt19937__ran
   %.014 = add nsw i32 %.014.in16, -1              ; 2 uses
   %i.h = tail call fastcc i32 @mt19937__next_uint32(ptr noundef %i.d)
   %i.i = urem i32 %i.h, %.014.in16
-  tail call void @py_list_swap(ptr noundef nonnull %i.b, i32 noundef %.014, i32 noundef %i.i) #9
+  tail call void @py_list_swap(ptr noundef nonnull %i.b, i32 noundef %.014, i32 noundef %i.i) #8
   %i.j = icmp samesign ugt i32 %.014.in16, 2
   br i1 %i.j, label %mt19937__randint.exit, label %._crit_edge, !llvm.loop !29
 
@@ -655,25 +654,25 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 2, i32 noundef %0) #9
+  %i.b = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.12, i32 noundef 2, i32 noundef %0) #8
   br label %bb.n
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = tail call ptr @py_touserdata(ptr noundef %1) #9 ; 4 uses
+  %i.c = tail call ptr @py_touserdata(ptr noundef %1) #8 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.e = tail call zeroext i1 @py_istype(ptr noundef nonnull %i.d, i16 noundef signext 6) #9
+  %i.e = tail call zeroext i1 @py_istype(ptr noundef nonnull %i.d, i16 noundef signext 6) #8
   br i1 %i.e, label %bb.d, label %bb.h
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = tail call { ptr, i32 } @py_tosv(ptr noundef nonnull %i.d) #9 ; 2 uses
+  %i.f = tail call { ptr, i32 } @py_tosv(ptr noundef nonnull %i.d) #8 ; 2 uses
   %i.g = extractvalue { ptr, i32 } %i.f, 0        ; 2 uses
   %i.h = extractvalue { ptr, i32 } %i.f, 1        ; 2 uses
-  %i.i = tail call i32 @c11_sv__u8_length(ptr %i.g, i32 %i.h) #9 ; 3 uses
+  %i.i = tail call i32 @c11_sv__u8_length(ptr %i.g, i32 %i.h) #8 ; 3 uses
   %.not26 = icmp eq i32 %i.i, 0
   br i1 %.not26, label %.thread, label %bb.e
 
 .thread:                                          ; preds = %bb.d
-  %i.j = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 46, ptr noundef nonnull @.str.13) #9
+  %i.j = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 46, ptr noundef nonnull @.str.13) #8
   br label %bb.n
 
 bb.e:                                             ; preds = %bb.d
@@ -694,27 +693,27 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.pn10.i = phi i64 [ %i.r, %bb.f ], [ %i.n, %bb.e ]
   %.pn.i = urem i64 %.pn10.i, %i.k
   %i.s = trunc i64 %.pn.i to i32
-  %i.t = tail call { ptr, i32 } @c11_sv__u8_getitem(ptr %i.g, i32 %i.h, i32 noundef %i.s) #9 ; 2 uses
+  %i.t = tail call { ptr, i32 } @c11_sv__u8_getitem(ptr %i.g, i32 %i.h, i32 noundef %i.s) #8 ; 2 uses
   %i.u = extractvalue { ptr, i32 } %i.t, 0
   %i.v = extractvalue { ptr, i32 } %i.t, 1
-  %i.w = tail call ptr (...) @py_retval() #9
-  tail call void @py_newstrv(ptr noundef %i.w, ptr %i.u, i32 %i.v) #9
+  %i.w = tail call ptr (...) @py_retval() #8
+  tail call void @py_newstrv(ptr noundef %i.w, ptr %i.u, i32 %i.v) #8
   br label %bb.n
 
 bb.h:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  %i.x = call i32 @pk_arrayview(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a) #9 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  %i.x = call i32 @pk_arrayview(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a) #8 ; 3 uses
   switch i32 %i.x, label %bb.k [
     i32 -1, label %bb.i
     i32 0, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
-  %i.y = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.14) #9
+  %i.y = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.14) #8
   br label %.thread31
 
 bb.j:                                             ; preds = %bb.h
-  %i.z = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 46, ptr noundef nonnull @.str.13) #9
+  %i.z = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 46, ptr noundef nonnull @.str.13) #8
   br label %.thread31
 
 bb.k:                                             ; preds = %bb.h
@@ -733,19 +732,19 @@ bb.l:                                             ; preds = %bb.k
 
 .thread31:                                        ; preds = %bb.i, %bb.j
   %.1.ph = phi i1 [ %i.z, %bb.j ], [ %i.y, %bb.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.pn10.i27 = phi i64 [ %i.ah, %bb.l ], [ %i.ad, %bb.k ]
   %.pn.i28 = urem i64 %.pn10.i27, %i.aa
-  %i.ai = call ptr (...) @py_retval() #9
+  %i.ai = call ptr (...) @py_retval() #8
   %i.aj = load ptr, ptr %i.a, align 8, !tbaa !25
   %sext = shl i64 %.pn.i28, 32
   %i.ak = ashr exact i64 %sext, 32
   %i.al = getelementptr inbounds [24 x i8], ptr %i.aj, i64 %i.ak
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.al, i64 24, i1 false), !tbaa.struct !19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.g, %bb.m, %.thread31, %.thread, %bb.b
@@ -763,35 +762,35 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca double, align 8                   ; 5 uses
-  %i.d = tail call ptr @py_touserdata(ptr noundef %1) #9 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  %i.d = tail call ptr @py_touserdata(ptr noundef %1) #8 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.f = call i32 @pk_arrayview(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a) #9 ; 11 uses
+  %i.f = call i32 @pk_arrayview(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a) #8 ; 11 uses
   switch i32 %i.f, label %bb.d [
     i32 -1, label %bb.b
     i32 0, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.15) #9
+  %i.g = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.15) #8
   br label %bb.z
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 46, ptr noundef nonnull @.str.13) #9
+  %i.h = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 46, ptr noundef nonnull @.str.13) #8
   br label %bb.z
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
-  %i.k = call zeroext i1 @py_checktype(ptr noundef nonnull %i.j, i16 noundef signext 3) #9
+  %i.k = call zeroext i1 @py_checktype(ptr noundef nonnull %i.j, i16 noundef signext 3) #8
   br i1 %i.k, label %bb.e, label %bb.z
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = call i64 @py_toint(ptr noundef nonnull %i.j) #9 ; 3 uses
+  %i.l = call i64 @py_toint(ptr noundef nonnull %i.j) #8 ; 3 uses
   %i.m = sext i32 %i.f to i64                     ; 2 uses
   %i.n = shl nsw i64 %i.m, 3
-  %i.o = call noalias ptr @malloc(i64 noundef %i.n) #12 ; 17 uses
-  %i.p = call zeroext i1 @py_istype(ptr noundef nonnull %i.i, i16 noundef signext 33) #9
+  %i.o = call noalias ptr @malloc(i64 noundef %i.n) #11 ; 14 uses
+  %i.p = call zeroext i1 @py_istype(ptr noundef nonnull %i.i, i16 noundef signext 33) #8
   br i1 %i.p, label %.preheader, label %bb.f
 
 .preheader:                                       ; preds = %bb.e
@@ -799,51 +798,56 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.q, label %.lr.ph119.preheader, label %.loopexit
 
 .lr.ph119.preheader:                              ; preds = %.preheader
-  %wide.trip.count134 = zext nneg i32 %i.f to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count134, 3      ; 3 uses
+  %wide.trip.count134 = zext nneg i32 %i.f to i64 ; 3 uses
   %i.r = icmp ult i32 %i.f, 4
-  br i1 %i.r, label %.lr.ph119.epil.preheader, label %.lr.ph119.preheader.new
+  br i1 %i.r, label %.lr.ph119.preheader146, label %.lr.ph119.preheader.new
 
 .lr.ph119.preheader.new:                          ; preds = %.lr.ph119.preheader
-  %unroll_iter = and i64 %wide.trip.count134, 2147483644
+  %unroll_iter = and i64 %wide.trip.count134, 2147483644 ; 3 uses
   br label %.lr.ph119.a
 
 .lr.ph119.a:                                      ; preds = %.lr.ph119.a, %.lr.ph119.preheader.new
-  %indvars.iv131.a = phi i64 [ 0, %.lr.ph119.preheader.new ], [ %indvars.iv.next132.3, %.lr.ph119.a ] ; 5 uses
-  %niter = phi i64 [ 0, %.lr.ph119.preheader.new ], [ %niter.next.3, %.lr.ph119.a ]
-  %indvars.iv.next132 = or disjoint i64 %indvars.iv131.a, 1 ; 2 uses
-  %2 = trunc nuw nsw i64 %indvars.iv.next132 to i32
-  %3 = uitofp nneg i32 %2 to double
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv131.a
-  store double %3, ptr %i.s, align 8, !tbaa !23
-  %indvars.iv.next132.1 = or disjoint i64 %indvars.iv131.a, 2 ; 2 uses
-  %4 = trunc nuw nsw i64 %indvars.iv.next132.1 to i32
-  %5 = uitofp nneg i32 %4 to double
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next132
-  store double %5, ptr %6, align 8, !tbaa !23
-  %indvars.iv.next132.2 = or disjoint i64 %indvars.iv131.a, 3 ; 2 uses
-  %7 = trunc nuw nsw i64 %indvars.iv.next132.2 to i32
-  %8 = uitofp nneg i32 %7 to double
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next132.1
-  store double %8, ptr %9, align 8, !tbaa !23
-  %indvars.iv.next132.3 = add nuw nsw i64 %indvars.iv131.a, 4 ; 3 uses
-  %10 = trunc nuw nsw i64 %indvars.iv.next132.3 to i32
-  %11 = uitofp nneg i32 %10 to double
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next132.2
-  store double %11, ptr %12, align 8, !tbaa !23
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph119.a, !llvm.loop !30
+  %indvars.iv131.a = phi i64 [ 0, %.lr.ph119.preheader.new ], [ %indvars.iv.next132.3, %.lr.ph119.a ] ; 2 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %.lr.ph119.preheader.new ], [ %vec.ind.next, %.lr.ph119.a ] ; 3 uses
+  %step.add = add <2 x i32> %vec.ind, splat (i32 2)
+  %2 = uitofp nneg <2 x i32> %vec.ind to <2 x double>
+  %3 = uitofp nneg <2 x i32> %step.add to <2 x double>
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv131.a ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  store <2 x double> %2, ptr %i.s, align 8, !tbaa !23
+  store <2 x double> %3, ptr %4, align 8, !tbaa !23
+  %indvars.iv.next132.3 = add nuw i64 %indvars.iv131.a, 4 ; 2 uses
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
+  %niter.ncmp.3 = icmp eq i64 %indvars.iv.next132.3, %unroll_iter
+  br i1 %niter.ncmp.3, label %middle.block, label %.lr.ph119.a, !llvm.loop !30
+
+middle.block:                                     ; preds = %.lr.ph119.a
+  %cmp.n = icmp eq i64 %unroll_iter, %wide.trip.count134
+  br i1 %cmp.n, label %.loopexit, label %.lr.ph119.preheader146
+
+.lr.ph119.preheader146:                           ; preds = %.lr.ph119.preheader, %middle.block
+  %indvars.iv131.ph = phi i64 [ 0, %.lr.ph119.preheader ], [ %unroll_iter, %middle.block ]
+  br label %.lr.ph119
+
+.lr.ph119:                                        ; preds = %.lr.ph119.preheader146, %.lr.ph119
+  %indvars.iv131 = phi i64 [ %indvars.iv.next132, %.lr.ph119 ], [ %indvars.iv131.ph, %.lr.ph119.preheader146 ] ; 2 uses
+  %indvars.iv.next132 = add nuw nsw i64 %indvars.iv131, 1 ; 3 uses
+  %5 = trunc nuw nsw i64 %indvars.iv.next132 to i32
+  %6 = uitofp nneg i32 %5 to double
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv131
+  store double %6, ptr %7, align 8, !tbaa !23
+  %exitcond135.not = icmp eq i64 %indvars.iv.next132, %wide.trip.count134
+  br i1 %exitcond135.not, label %.loopexit, label %.lr.ph119, !llvm.loop !31
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  %i.t = call i32 @pk_arrayview(ptr noundef nonnull %i.i, ptr noundef nonnull %i.b) #9 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  %i.t = call i32 @pk_arrayview(ptr noundef nonnull %i.i, ptr noundef nonnull %i.b) #8 ; 2 uses
   %i.u = icmp eq i32 %i.t, -1
   br i1 %i.u, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  call void @free(ptr noundef %i.o) #9
-  %i.v = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.16) #9
+  call void @free(ptr noundef %i.o) #8
+  %i.v = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.16) #8
   br label %.thread112
 
 bb.h:                                             ; preds = %bb.f
@@ -851,38 +855,38 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  call void @free(ptr noundef %i.o) #9
-  %i.w = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 47, ptr noundef nonnull @.str.17) #9
+  call void @free(ptr noundef %i.o) #8
+  %i.w = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 47, ptr noundef nonnull @.str.17) #8
   br label %.thread112
 
 bb.j:                                             ; preds = %bb.h
   %i.x = load ptr, ptr %i.b, align 8, !tbaa !25
-  %i.y = call zeroext i1 @py_castfloat(ptr noundef %i.x, ptr noundef %i.o) #9
+  %i.y = call zeroext i1 @py_castfloat(ptr noundef %i.x, ptr noundef %i.o) #8
   br i1 %i.y, label %.preheader115, label %bb.k
 
 .preheader115:                                    ; preds = %bb.j
   %.not105.not116 = icmp sgt i32 %i.f, 1
-  br i1 %.not105.not116, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %.not105.not116, label %.lr.ph.preheader, label %.lr.ph119.epil.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader115
   %wide.trip.count = zext nneg i32 %i.f to i64
   br label %.lr.ph
 
 bb.k:                                             ; preds = %bb.j
-  call void @free(ptr noundef %i.o) #9
+  call void @free(ptr noundef %i.o) #8
   br label %.thread112
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.m ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   %i.z = load ptr, ptr %i.b, align 8, !tbaa !25
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %indvars.iv
-  %i.ab = call zeroext i1 @py_castfloat(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.c) #9
+  %i.ab = call zeroext i1 @py_castfloat(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.c) #8
   br i1 %i.ab, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  call void @free(ptr noundef %i.o) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @free(ptr noundef %i.o) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br label %.thread112
 
 bb.m:                                             ; preds = %.lr.ph
@@ -892,43 +896,21 @@ bb.m:                                             ; preds = %.lr.ph
   %i.af = load double, ptr %i.c, align 8, !tbaa !23
   %i.ag = fadd double %i.ae, %i.af
   store double %i.ag, ptr %i.ac, align 8, !tbaa !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !31
+  br i1 %exitcond.not, label %.lr.ph119.epil.preheader, label %.lr.ph, !llvm.loop !32
 
 .thread112:                                       ; preds = %bb.g, %bb.i, %bb.k, %bb.l
   %.397.ph = phi i1 [ false, %bb.l ], [ false, %bb.k ], [ %i.w, %bb.i ], [ %i.v, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   br label %bb.z
 
-._crit_edge:                                      ; preds = %bb.m, %.preheader115
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+.lr.ph119.epil.preheader:                         ; preds = %bb.m, %.preheader115
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   br label %.loopexit
 
-.loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph119.a
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph119.epil.preheader
-
-.lr.ph119.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph119.preheader
-  %indvars.iv131.epil.init = phi i64 [ 0, %.lr.ph119.preheader ], [ %indvars.iv.next132.3, %.loopexit.loopexit.unr-lcssa ]
-  %lcmp.mod146 = icmp ne i64 %xtraiter, 0
-  call void @llvm.assume(i1 %lcmp.mod146)
-  br label %.lr.ph119.epil
-
-.lr.ph119.epil:                                   ; preds = %.lr.ph119.epil, %.lr.ph119.epil.preheader
-  %indvars.iv131.epil = phi i64 [ %indvars.iv131.epil.init, %.lr.ph119.epil.preheader ], [ %indvars.iv.next132.epil, %.lr.ph119.epil ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph119.epil.preheader ], [ %epil.iter.next, %.lr.ph119.epil ]
-  %indvars.iv.next132.epil = add nuw nsw i64 %indvars.iv131.epil, 1 ; 2 uses
-  %13 = trunc nuw nsw i64 %indvars.iv.next132.epil to i32
-  %14 = uitofp nneg i32 %13 to double
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv131.epil
-  store double %14, ptr %15, align 8, !tbaa !23
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph119.epil, !llvm.loop !32
-
-.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph119.epil, %.preheader, %._crit_edge
+.loopexit:                                        ; preds = %.lr.ph119, %middle.block, %.preheader, %.lr.ph119.epil.preheader
   %i.ah = getelementptr [8 x i8], ptr %i.o, i64 %i.m
   %i.ai = getelementptr i8, ptr %i.ah, i64 -8
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !23 ; 2 uses
@@ -936,14 +918,14 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %i.ak, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %.loopexit
-  call void @free(ptr noundef nonnull %i.o) #9
-  %i.al = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 47, ptr noundef nonnull @.str.18) #9
+  call void @free(ptr noundef nonnull %i.o) #8
+  %i.al = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 47, ptr noundef nonnull @.str.18) #8
   br label %bb.z
 
 bb.o:                                             ; preds = %.loopexit
-  %i.am = call ptr (...) @py_retval() #9
+  %i.am = call ptr (...) @py_retval() #8
   %i.an = trunc i64 %i.l to i32
-  call void @py_newlistn(ptr noundef %i.am, i32 noundef %i.an) #9
+  call void @py_newlistn(ptr noundef %i.am, i32 noundef %i.an) #8
   %i.ao = icmp sgt i64 %i.l, 0
   br i1 %i.ao, label %.lr.ph128, label %._crit_edge129
 
@@ -953,7 +935,7 @@ bb.o:                                             ; preds = %.loopexit
   br label %bb.p
 
 ._crit_edge129:                                   ; preds = %bb.y, %bb.o
-  call void @free(ptr noundef %i.o) #9
+  call void @free(ptr noundef %i.o) #8
   br label %bb.z
 
 bb.p:                                             ; preds = %.lr.ph128, %bb.y
@@ -1062,20 +1044,20 @@ bb.y:                                             ; preds = %bb.w, %._crit_edge1
   %.8 = phi ptr [ %.086.lcssa, %._crit_edge124 ], [ %spec.select111, %bb.w ]
   %i.bx = ptrtoint ptr %.8 to i64
   %i.by = sub i64 %i.bx, %i.aq
-  %i.bz = call ptr (...) @py_retval() #9
+  %i.bz = call ptr (...) @py_retval() #8
   %i.ca = load ptr, ptr %i.a, align 8, !tbaa !25
   %sext = shl i64 %i.by, 29
   %i.cb = ashr i64 %sext, 32
   %i.cc = getelementptr inbounds [24 x i8], ptr %i.ca, i64 %i.cb
   %i.cd = trunc nuw nsw i64 %indvars.iv136 to i32
-  call void @py_list_setitem(ptr noundef %i.bz, i32 noundef %i.cd, ptr noundef %i.cc) #9
+  call void @py_list_setitem(ptr noundef %i.bz, i32 noundef %i.cd, ptr noundef %i.cc) #8
   %indvars.iv.next137 = add nuw nsw i64 %indvars.iv136, 1 ; 2 uses
   %exitcond139.not = icmp eq i64 %indvars.iv.next137, %i.l
   br i1 %exitcond139.not, label %._crit_edge129, label %bb.p, !llvm.loop !34
 
 bb.z:                                             ; preds = %.thread112, %bb.d, %bb.n, %._crit_edge129, %bb.c, %bb.b
   %.7101 = phi i1 [ %i.g, %bb.b ], [ %i.h, %bb.c ], [ false, %bb.d ], [ %.397.ph, %.thread112 ], [ %i.al, %bb.n ], [ true, %._crit_edge129 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i1 %.7101
 }
 
@@ -1107,9 +1089,9 @@ declare void @abort() local_unnamed_addr #4
 ; Function Attrs: nounwind uwtable
 define void @py_newRandom(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @py_name(ptr noundef nonnull @.str.1) #9
-  %i.b = tail call signext i16 @py_gettype(ptr noundef nonnull @.str, ptr noundef %i.a) #9
-  %i.c = tail call ptr @py_newobject(ptr noundef %0, i16 noundef signext %i.b, i32 noundef 0, i32 noundef 2500) #9
+  %i.a = tail call ptr @py_name(ptr noundef nonnull @.str.1) #8
+  %i.b = tail call signext i16 @py_gettype(ptr noundef nonnull @.str, ptr noundef %i.a) #8
+  %i.c = tail call ptr @py_newobject(ptr noundef %0, i16 noundef signext %i.b, i32 noundef 0, i32 noundef 2500) #8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2496
   store i32 625, ptr %i.d, align 4, !tbaa !10
   ret void
@@ -1122,7 +1104,7 @@ declare ptr @py_newobject(ptr noundef, i16 noundef signext, i32 noundef, i32 nou
 ; Function Attrs: nounwind uwtable
 define void @py_Random_seed(ptr noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #9 ; 3 uses
+  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #8 ; 3 uses
   %i.b = trunc i64 %1 to i32
   store i32 %i.b, ptr %i.a, align 4, !tbaa !11
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 2496 ; 3 uses
@@ -1155,7 +1137,7 @@ declare ptr @py_touserdata(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define double @py_Random_random(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #9 ; 2 uses
+  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #8 ; 2 uses
   %i.b = tail call fastcc i32 @mt19937__next_uint32(ptr noundef %i.a)
   %i.c = lshr i32 %i.b, 5
   %i.d = tail call fastcc i32 @mt19937__next_uint32(ptr noundef %i.a)
@@ -1171,7 +1153,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define double @py_Random_uniform(ptr noundef %0, double noundef %1, double noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #9 ; 2 uses
+  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #8 ; 2 uses
   %i.b = fcmp ogt double %1, %2                   ; 2 uses
   %i.c = tail call fastcc i32 @mt19937__next_uint32(ptr noundef %i.a)
   %i.d = lshr i32 %i.c, 5
@@ -1194,15 +1176,15 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define i64 @py_Random_randint(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #9 ; 2 uses
+  %i.a = tail call ptr @py_touserdata(ptr noundef %0) #8 ; 2 uses
   %i.b = icmp sgt i64 %1, %2
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr @stderr, align 8, !tbaa !21
-  %fwrite = tail call i64 @fwrite(ptr nonnull @.str.10, i64 48, i64 1, ptr %i.c) #10 ; 0 uses
+  %fwrite = tail call i64 @fwrite(ptr nonnull @.str.10, i64 48, i64 1, ptr %i.c) #9 ; 0 uses
   %i.d = tail call i32 @putchar(i32 noundef 10)   ; 0 uses
-  tail call void @abort() #11
+  tail call void @abort() #10
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -1274,9 +1256,6 @@ declare void @py_list_setitem(ptr noundef, i32 noundef, ptr noundef) local_unnam
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
-
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1285,11 +1264,10 @@ attributes #4 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack
 attributes #5 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nofree nounwind }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { nounwind }
-attributes #10 = { cold }
-attributes #11 = { noreturn nounwind }
-attributes #12 = { nounwind allocsize(0) }
+attributes #8 = { nounwind }
+attributes #9 = { cold }
+attributes #10 = { noreturn nounwind }
+attributes #11 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}
@@ -1325,10 +1303,11 @@ attributes #12 = { nounwind allocsize(0) }
 !27 = !{!"p1 _ZTS13py_OpaqueName", !13, i64 0}
 !28 = !{!27, !27, i64 0}
 !29 = distinct !{!29, !12}
-!30 = distinct !{!30, !12}
-!31 = distinct !{!31, !12}
-!32 = distinct !{!32, !35}
+!30 = distinct !{!30, !12, !35, !36}
+!31 = distinct !{!31, !12, !36, !35}
+!32 = distinct !{!32, !12}
 !33 = distinct !{!33, !12}
 !34 = distinct !{!34, !12}
-!35 = !{!"llvm.loop.unroll.disable"}
+!35 = !{!"llvm.loop.isvectorized", i32 1}
+!36 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

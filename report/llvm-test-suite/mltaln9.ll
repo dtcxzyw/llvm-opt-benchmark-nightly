@@ -205,21 +205,19 @@ vector.ph:                                        ; preds = %.lr.ph209
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %vec.ind298 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next301, %vector.body ] ; 3 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %.pre286, i64 %index
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %.pre286, i64 %index
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %5 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.w = shufflevector <2 x i32> %4, <2 x i32> %vec.ind298, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec = add <4 x i32> %i.w, <i32 1, i32 -1, i32 1, i32 -1>
-  store <4 x i32> %interleaved.vec, ptr %i.t, align 4, !tbaa !13
-  %i.x = shufflevector <2 x i32> %5, <2 x i32> %vec.ind298, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec300 = add <4 x i32> %i.x, <i32 3, i32 1, i32 3, i32 1>
+  %4 = add <2 x i32> %vec.ind298, splat (i32 -1)
+  %i.w = shufflevector <2 x i32> %vec.ind, <2 x i32> %4, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %i.w, ptr %i.t, align 4, !tbaa !13
+  %i.x = shufflevector <2 x i32> %vec.ind, <2 x i32> %vec.ind298, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %interleaved.vec300 = add <4 x i32> %i.x, <i32 2, i32 1, i32 2, i32 1>
   store <4 x i32> %interleaved.vec300, ptr %i.v, align 4, !tbaa !13
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next301 = add <2 x i32> %vec.ind298, splat (i32 4)
   %i.y = icmp eq i64 %index.next, %n.vec
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !184
@@ -622,21 +620,19 @@ vector.ph:                                        ; preds = %.lr.ph198
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %vec.ind289 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next292, %vector.body ] ; 3 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %.pre277, i64 %index
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %.pre277, i64 %index
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %5 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.w = shufflevector <2 x i32> %4, <2 x i32> %vec.ind289, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec = add <4 x i32> %i.w, <i32 1, i32 -1, i32 1, i32 -1>
-  store <4 x i32> %interleaved.vec, ptr %i.t, align 4, !tbaa !13
-  %i.x = shufflevector <2 x i32> %5, <2 x i32> %vec.ind289, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec291 = add <4 x i32> %i.x, <i32 3, i32 1, i32 3, i32 1>
+  %4 = add <2 x i32> %vec.ind289, splat (i32 -1)
+  %i.w = shufflevector <2 x i32> %vec.ind, <2 x i32> %4, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %i.w, ptr %i.t, align 4, !tbaa !13
+  %i.x = shufflevector <2 x i32> %vec.ind, <2 x i32> %vec.ind289, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %interleaved.vec291 = add <4 x i32> %i.x, <i32 2, i32 1, i32 2, i32 1>
   store <4 x i32> %interleaved.vec291, ptr %i.v, align 4, !tbaa !13
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next292 = add <2 x i32> %vec.ind289, splat (i32 4)
   %i.y = icmp eq i64 %index.next, %n.vec
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !193
@@ -1039,21 +1035,19 @@ vector.ph:                                        ; preds = %.preheader226
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %vec.ind343 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next346, %vector.body ] ; 3 uses
   %i.jh = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index
   %i.ji = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 16
-  %5 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %6 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.jk = shufflevector <2 x i32> %5, <2 x i32> %vec.ind343, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec = add <4 x i32> %i.jk, <i32 1, i32 -1, i32 1, i32 -1>
-  store <4 x i32> %interleaved.vec, ptr %i.jh, align 4, !tbaa !13
-  %i.jl = shufflevector <2 x i32> %6, <2 x i32> %vec.ind343, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec345 = add <4 x i32> %i.jl, <i32 3, i32 1, i32 3, i32 1>
+  %5 = add <2 x i32> %vec.ind343, splat (i32 -1)
+  %i.jk = shufflevector <2 x i32> %vec.ind, <2 x i32> %5, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %i.jk, ptr %i.jh, align 4, !tbaa !13
+  %i.jl = shufflevector <2 x i32> %vec.ind, <2 x i32> %vec.ind343, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %interleaved.vec345 = add <4 x i32> %i.jl, <i32 2, i32 1, i32 2, i32 1>
   store <4 x i32> %interleaved.vec345, ptr %i.jj, align 4, !tbaa !13
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next346 = add <2 x i32> %vec.ind343, splat (i32 4)
   %i.jm = icmp eq i64 %index.next, %n.vec
   br i1 %i.jm, label %middle.block, label %vector.body, !llvm.loop !203
@@ -1456,21 +1450,19 @@ vector.ph327:                                     ; preds = %.preheader207
 
 vector.body329:                                   ; preds = %vector.body329, %vector.ph327
   %index330 = phi i64 [ 0, %vector.ph327 ], [ %index.next334, %vector.body329 ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph327 ], [ %vec.ind.next, %vector.body329 ] ; 3 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph327 ], [ %vec.ind.next, %vector.body329 ] ; 3 uses
   %vec.ind331 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph327 ], [ %vec.ind.next335, %vector.body329 ] ; 3 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index330
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index330
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %5 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.ac = shufflevector <2 x i32> %4, <2 x i32> %vec.ind331, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec = add <4 x i32> %i.ac, <i32 1, i32 -1, i32 1, i32 -1>
-  store <4 x i32> %interleaved.vec, ptr %i.z, align 4, !tbaa !13
-  %i.ad = shufflevector <2 x i32> %5, <2 x i32> %vec.ind331, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec333 = add <4 x i32> %i.ad, <i32 3, i32 1, i32 3, i32 1>
+  %4 = add <2 x i32> %vec.ind331, splat (i32 -1)
+  %i.ac = shufflevector <2 x i32> %vec.ind, <2 x i32> %4, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %i.ac, ptr %i.z, align 4, !tbaa !13
+  %i.ad = shufflevector <2 x i32> %vec.ind, <2 x i32> %vec.ind331, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %interleaved.vec333 = add <4 x i32> %i.ad, <i32 2, i32 1, i32 2, i32 1>
   store <4 x i32> %interleaved.vec333, ptr %i.ab, align 4, !tbaa !13
   %index.next334 = add nuw i64 %index330, 4       ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next335 = add <2 x i32> %vec.ind331, splat (i32 4)
   %i.ae = icmp eq i64 %index.next334, %n.vec328
   br i1 %i.ae, label %middle.block336, label %vector.body329, !llvm.loop !215
@@ -1873,21 +1865,19 @@ vector.ph327:                                     ; preds = %.preheader207
 
 vector.body329:                                   ; preds = %vector.body329, %vector.ph327
   %index330 = phi i64 [ 0, %vector.ph327 ], [ %index.next334, %vector.body329 ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph327 ], [ %vec.ind.next, %vector.body329 ] ; 3 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph327 ], [ %vec.ind.next, %vector.body329 ] ; 3 uses
   %vec.ind331 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph327 ], [ %vec.ind.next335, %vector.body329 ] ; 3 uses
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index330
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index330
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %5 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.ah = shufflevector <2 x i32> %4, <2 x i32> %vec.ind331, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec = add <4 x i32> %i.ah, <i32 1, i32 -1, i32 1, i32 -1>
-  store <4 x i32> %interleaved.vec, ptr %i.ae, align 4, !tbaa !13
-  %i.ai = shufflevector <2 x i32> %5, <2 x i32> %vec.ind331, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec333 = add <4 x i32> %i.ai, <i32 3, i32 1, i32 3, i32 1>
+  %4 = add <2 x i32> %vec.ind331, splat (i32 -1)
+  %i.ah = shufflevector <2 x i32> %vec.ind, <2 x i32> %4, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %i.ah, ptr %i.ae, align 4, !tbaa !13
+  %i.ai = shufflevector <2 x i32> %vec.ind, <2 x i32> %vec.ind331, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %interleaved.vec333 = add <4 x i32> %i.ai, <i32 2, i32 1, i32 2, i32 1>
   store <4 x i32> %interleaved.vec333, ptr %i.ag, align 4, !tbaa !13
   %index.next334 = add nuw i64 %index330, 4       ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next335 = add <2 x i32> %vec.ind331, splat (i32 4)
   %i.aj = icmp eq i64 %index.next334, %n.vec328
   br i1 %i.aj, label %middle.block336, label %vector.body329, !llvm.loop !229
@@ -2290,21 +2280,19 @@ vector.ph302:                                     ; preds = %.preheader172
 
 vector.body304:                                   ; preds = %vector.body304, %vector.ph302
   %index305 = phi i64 [ 0, %vector.ph302 ], [ %index.next309, %vector.body304 ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph302 ], [ %vec.ind.next, %vector.body304 ] ; 3 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph302 ], [ %vec.ind.next, %vector.body304 ] ; 3 uses
   %vec.ind306 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph302 ], [ %vec.ind.next310, %vector.body304 ] ; 3 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index305
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %index305
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %5 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.aa = shufflevector <2 x i32> %4, <2 x i32> %vec.ind306, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec = add <4 x i32> %i.aa, <i32 1, i32 -1, i32 1, i32 -1>
-  store <4 x i32> %interleaved.vec, ptr %i.x, align 4, !tbaa !13
-  %i.ab = shufflevector <2 x i32> %5, <2 x i32> %vec.ind306, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %interleaved.vec308 = add <4 x i32> %i.ab, <i32 3, i32 1, i32 3, i32 1>
+  %4 = add <2 x i32> %vec.ind306, splat (i32 -1)
+  %i.aa = shufflevector <2 x i32> %vec.ind, <2 x i32> %4, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %i.aa, ptr %i.x, align 4, !tbaa !13
+  %i.ab = shufflevector <2 x i32> %vec.ind, <2 x i32> %vec.ind306, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %interleaved.vec308 = add <4 x i32> %i.ab, <i32 2, i32 1, i32 2, i32 1>
   store <4 x i32> %interleaved.vec308, ptr %i.z, align 4, !tbaa !13
   %index.next309 = add nuw i64 %index305, 4       ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next310 = add <2 x i32> %vec.ind306, splat (i32 4)
   %i.ac = icmp eq i64 %index.next309, %n.vec303
   br i1 %i.ac, label %middle.block311, label %vector.body304, !llvm.loop !242

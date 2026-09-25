@@ -204,24 +204,21 @@ vector.ph:                                        ; preds = %vector.memcheck
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
+  %7 = trunc i64 %index to i16
+  %8 = add i16 %7, 8
   %i.xt = getelementptr [4 x i8], ptr %i.pz, i64 %index ; 2 uses
   %i.xu = getelementptr i8, ptr %i.xt, i64 16
   %wide.load = load <4 x i32>, ptr %i.xt, align 4, !alias.scope !35
   %wide.load320 = load <4 x i32>, ptr %i.xu, align 4, !alias.scope !35
   %i.xv = trunc <4 x i32> %wide.load to <4 x i16>
   %i.xw = trunc <4 x i32> %wide.load320 to <4 x i16>
-  %7 = bitcast <4 x i64> %vec.ind to <16 x i16>
-  %8 = extractelement <16 x i16> %7, i64 12
-  %9 = add i16 %8, 5
-  store i16 %9, ptr %.069.i.i.i, align 4, !alias.scope !36, !noalias !35
+  store i16 %8, ptr %.069.i.i.i, align 4, !alias.scope !36, !noalias !35
   %i.xx = getelementptr [2 x i8], ptr %i.xn, i64 %index ; 2 uses
   %i.xy = getelementptr i8, ptr %i.xx, i64 8
   store <4 x i16> %i.xv, ptr %i.xx, align 2, !alias.scope !37, !noalias !35
   store <4 x i16> %i.xw, ptr %i.xy, align 2, !alias.scope !37, !noalias !35
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
   %i.xz = icmp eq i64 %index.next, %n.vec
   br i1 %i.xz, label %middle.block, label %vector.body, !llvm.loop !26
 

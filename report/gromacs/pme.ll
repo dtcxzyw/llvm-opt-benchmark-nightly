@@ -205,22 +205,20 @@ vector.ph:                                        ; preds = %.lr.ph.split.us
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind261 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next262, %vector.body ] ; 2 uses
-  %i.av = mul <8 x i32> %broadcast.splat258, %vec.ind261
+  %vec.ind = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.ind261 = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %vector.ph ], [ %vec.ind.next262, %vector.body ] ; 2 uses
+  %i.av = mul <8 x i32> %broadcast.splat258, %vec.ind
   %i.aw = sdiv <8 x i32> %i.av, %broadcast.splat260
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %index
   store <8 x i32> %i.aw, ptr %i.ax, align 4, !tbaa !256
-  %8 = trunc <8 x i64> %vec.ind to <8 x i32>
-  %9 = add <8 x i32> %8, splat (i32 1)
-  %i.ay = mul <8 x i32> %broadcast.splat258, %9
+  %i.ay = mul <8 x i32> %broadcast.splat258, %vec.ind261
   %i.az = add <8 x i32> %broadcast.splat256, %i.ay
   %i.ba = sdiv <8 x i32> %i.az, %broadcast.splat260
   %i.bb = add <8 x i32> %broadcast.splat, %i.ba
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %index
   store <8 x i32> %i.bb, ptr %i.bc, align 4, !tbaa !256
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw nsw <8 x i64> %vec.ind, splat (i64 8)
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next262 = add <8 x i32> %vec.ind261, splat (i32 8)
   %i.bd = icmp eq i64 %index.next, %n.vec
   br i1 %i.bd, label %middle.block, label %vector.body, !llvm.loop !607
