@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.cj = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.av) ; 2 uses
-  %i.ck = tail call noundef range(i64 0, 64) i64 @llvm.ctpop.i64(i64 %i.cj) ; 2 uses
+  %i.ck = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.cj) ; 2 uses
   %i.cl = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.cj, i1 false)
   %i.cm = sub nuw nsw i64 64, %i.cl
   %i.cn = getelementptr inbounds nuw i8, ptr %.0396404.i, i64 %i.cm
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.cn = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.az) ; 2 uses
-  %i.co = tail call noundef range(i64 0, 64) i64 @llvm.ctpop.i64(i64 %i.cn) ; 2 uses
+  %i.co = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.cn) ; 2 uses
   %i.cp = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.cn, i1 false)
   %i.cq = sub nuw nsw i64 64, %i.cp
   %i.cr = getelementptr inbounds nuw i8, ptr %.0440448.i, i64 %i.cq
@@ -1011,7 +1011,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.cj = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.av) ; 2 uses
-  %i.ck = tail call noundef range(i64 0, 64) i64 @llvm.ctpop.i64(i64 %i.cj) ; 2 uses
+  %i.ck = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.cj) ; 2 uses
   %i.cl = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.cj, i1 false)
   %i.cm = sub nuw nsw i64 64, %i.cl
   %i.cn = getelementptr inbounds nuw i8, ptr %.0433446.i, i64 %i.cm
@@ -1414,7 +1414,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.cn = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.az) ; 2 uses
-  %i.co = tail call noundef range(i64 0, 64) i64 @llvm.ctpop.i64(i64 %i.cn) ; 2 uses
+  %i.co = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.cn) ; 2 uses
   %i.cp = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.cn, i1 false)
   %i.cq = sub nuw nsw i64 64, %i.cp
   %i.cr = getelementptr inbounds nuw i8, ptr %.0477490.i, i64 %i.cq
@@ -1817,27 +1817,25 @@ bb.b:                                             ; preds = %bb.a
   %i.i = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.g, <8 x i16> %i.h) ; 2 uses
   %i.j = and <16 x i8> %i.i, splat (i8 -8)
   %i.k = icmp eq <16 x i8> %i.j, splat (i8 -40)
-  %i.l = bitcast <16 x i1> %i.k to i16            ; 2 uses
+  %i.l = bitcast <16 x i1> %i.k to i16            ; 3 uses
   %i.m = icmp eq i16 %i.l, 0
   br i1 %i.m, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
-  %3 = zext i16 %i.l to i32                       ; 2 uses
   %i.n = and <16 x i8> %i.i, splat (i8 -4)
   %i.o = icmp eq <16 x i8> %i.n, splat (i8 -36)
-  %i.p = bitcast <16 x i1> %i.o to i16
-  %4 = zext i16 %i.p to i32                       ; 2 uses
-  %5 = xor i32 %4, -1
-  %6 = lshr i32 %4, 1
-  %7 = and i32 %6, %5                             ; 2 uses
-  %8 = and i32 %7, %3
-  %9 = shl nuw nsw i32 %8, 1
-  %.masked45.i = xor i32 %3, 65535
-  %10 = or i32 %.masked45.i, %9
-  %11 = or i32 %10, %7
-  switch i32 %11, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE0EEEbPKDsm.exit [
-    i32 65535, label %bb.e
-    i32 32767, label %bb.d
+  %i.p = bitcast <16 x i1> %i.o to i16            ; 2 uses
+  %3 = xor i16 %i.p, -1
+  %4 = lshr i16 %i.p, 1
+  %5 = and i16 %4, %3                             ; 2 uses
+  %6 = and i16 %5, %i.l
+  %7 = shl nuw i16 %6, 1
+  %.masked45.i = xor i16 %i.l, -1
+  %8 = or i16 %7, %.masked45.i
+  %trunc.i = or i16 %8, %5
+  switch i16 %trunc.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE0EEEbPKDsm.exit [
+    i16 -1, label %bb.e
+    i16 32767, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -1920,27 +1918,25 @@ bb.b:                                             ; preds = %bb.a
   %i.i = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.g, <8 x i16> %i.h) ; 2 uses
   %i.j = and <16 x i8> %i.i, splat (i8 -8)
   %i.k = icmp eq <16 x i8> %i.j, splat (i8 -40)
-  %i.l = bitcast <16 x i1> %i.k to i16            ; 2 uses
+  %i.l = bitcast <16 x i1> %i.k to i16            ; 3 uses
   %i.m = icmp eq i16 %i.l, 0
   br i1 %i.m, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
-  %3 = zext i16 %i.l to i32                       ; 2 uses
   %i.n = and <16 x i8> %i.i, splat (i8 -4)
   %i.o = icmp eq <16 x i8> %i.n, splat (i8 -36)
-  %i.p = bitcast <16 x i1> %i.o to i16
-  %4 = zext i16 %i.p to i32                       ; 2 uses
-  %5 = xor i32 %4, -1
-  %6 = lshr i32 %4, 1
-  %7 = and i32 %6, %5                             ; 2 uses
-  %8 = and i32 %7, %3
-  %9 = shl nuw nsw i32 %8, 1
-  %.masked45.i = xor i32 %3, 65535
-  %10 = or i32 %.masked45.i, %9
-  %11 = or i32 %10, %7
-  switch i32 %11, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE1EEEbPKDsm.exit [
-    i32 65535, label %bb.e
-    i32 32767, label %bb.d
+  %i.p = bitcast <16 x i1> %i.o to i16            ; 2 uses
+  %3 = xor i16 %i.p, -1
+  %4 = lshr i16 %i.p, 1
+  %5 = and i16 %4, %3                             ; 2 uses
+  %6 = and i16 %5, %i.l
+  %7 = shl nuw i16 %6, 1
+  %.masked45.i = xor i16 %i.l, -1
+  %8 = or i16 %7, %.masked45.i
+  %trunc.i = or i16 %8, %5
+  switch i16 %trunc.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE1EEEbPKDsm.exit [
+    i16 -1, label %bb.e
+    i16 32767, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2024,27 +2020,25 @@ bb.b:                                             ; preds = %bb.a
   %i.i = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.g, <8 x i16> %i.h) ; 2 uses
   %i.j = and <16 x i8> %i.i, splat (i8 -8)
   %i.k = icmp eq <16 x i8> %i.j, splat (i8 -40)
-  %i.l = bitcast <16 x i1> %i.k to i16            ; 2 uses
+  %i.l = bitcast <16 x i1> %i.k to i16            ; 3 uses
   %i.m = icmp eq i16 %i.l, 0
   br i1 %i.m, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
-  %3 = zext i16 %i.l to i32                       ; 2 uses
   %i.n = and <16 x i8> %i.i, splat (i8 -4)
   %i.o = icmp eq <16 x i8> %i.n, splat (i8 -36)
-  %i.p = bitcast <16 x i1> %i.o to i16
-  %4 = zext i16 %i.p to i32                       ; 2 uses
-  %5 = xor i32 %4, -1
-  %6 = lshr i32 %4, 1
-  %7 = and i32 %6, %5                             ; 2 uses
-  %8 = and i32 %7, %3
-  %9 = shl nuw nsw i32 %8, 1
-  %.masked45.i = xor i32 %3, 65535
-  %10 = or i32 %.masked45.i, %9
-  %11 = or i32 %10, %7
-  switch i32 %11, label %.critedge.critedge.i [
-    i32 65535, label %bb.e
-    i32 32767, label %bb.d
+  %i.p = bitcast <16 x i1> %i.o to i16            ; 2 uses
+  %3 = xor i16 %i.p, -1
+  %4 = lshr i16 %i.p, 1
+  %5 = and i16 %4, %3                             ; 2 uses
+  %6 = and i16 %5, %i.l
+  %7 = shl nuw i16 %6, 1
+  %.masked45.i = xor i16 %i.l, -1
+  %8 = or i16 %7, %.masked45.i
+  %trunc.i = or i16 %8, %5
+  switch i16 %trunc.i, label %.critedge.critedge.i [
+    i16 -1, label %bb.e
+    i16 32767, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2151,27 +2145,25 @@ bb.b:                                             ; preds = %bb.a
   %i.i = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.g, <8 x i16> %i.h) ; 2 uses
   %i.j = and <16 x i8> %i.i, splat (i8 -8)
   %i.k = icmp eq <16 x i8> %i.j, splat (i8 -40)
-  %i.l = bitcast <16 x i1> %i.k to i16            ; 2 uses
+  %i.l = bitcast <16 x i1> %i.k to i16            ; 3 uses
   %i.m = icmp eq i16 %i.l, 0
   br i1 %i.m, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
-  %3 = zext i16 %i.l to i32                       ; 2 uses
   %i.n = and <16 x i8> %i.i, splat (i8 -4)
   %i.o = icmp eq <16 x i8> %i.n, splat (i8 -36)
-  %i.p = bitcast <16 x i1> %i.o to i16
-  %4 = zext i16 %i.p to i32                       ; 2 uses
-  %5 = xor i32 %4, -1
-  %6 = lshr i32 %4, 1
-  %7 = and i32 %6, %5                             ; 2 uses
-  %8 = and i32 %7, %3
-  %9 = shl nuw nsw i32 %8, 1
-  %.masked45.i = xor i32 %3, 65535
-  %10 = or i32 %.masked45.i, %9
-  %11 = or i32 %10, %7
-  switch i32 %11, label %.critedge.critedge.i [
-    i32 65535, label %bb.e
-    i32 32767, label %bb.d
+  %i.p = bitcast <16 x i1> %i.o to i16            ; 2 uses
+  %3 = xor i16 %i.p, -1
+  %4 = lshr i16 %i.p, 1
+  %5 = and i16 %4, %3                             ; 2 uses
+  %6 = and i16 %5, %i.l
+  %7 = shl nuw i16 %6, 1
+  %.masked45.i = xor i16 %i.l, -1
+  %8 = or i16 %7, %.masked45.i
+  %trunc.i = or i16 %8, %5
+  switch i16 %trunc.i, label %.critedge.critedge.i [
+    i16 -1, label %bb.e
+    i16 32767, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c

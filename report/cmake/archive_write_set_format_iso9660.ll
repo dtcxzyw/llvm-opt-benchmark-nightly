@@ -205,7 +205,7 @@ bb.dq:                                            ; preds = %bb.dp, %bb.do
   %i.tv = add nuw nsw i32 %.2399.i, 7
   %i.tw = or i8 %.2361.i, 8
   %.3400.i = select i1 %.not439.i, i32 %.2399.i, i32 %i.tv ; 5 uses
-  %.3362.i = select i1 %.not439.i, i8 %.2361.i, i8 %i.tw ; 2 uses
+  %.3362.i = select i1 %.not439.i, i8 %.2361.i, i8 %i.tw ; 3 uses
   %i.tx = load i32, ptr %i.ew, align 8, !tbaa !210
   %i.ty = sub nsw i32 %i.tx, %i.td
   %i.tz = icmp slt i32 %i.ty, %.3400.i
@@ -232,7 +232,7 @@ bb.dt:                                            ; preds = %bb.ds
   store i8 1, ptr %i.uf, align 1, !tbaa !68
   %i.ug = getelementptr inbounds nuw i8, ptr %.20.i, i64 5 ; 2 uses
   store i8 %.3362.i, ptr %i.ug, align 1, !tbaa !68
-  %i.uh = zext nneg i8 %.3362.i to i32            ; 4 uses
+  %i.uh = zext nneg i8 %.3362.i to i32            ; 3 uses
   %i.ui = and i32 %i.uh, 1
   %.not441.i = icmp eq i32 %i.ui, 0
   br i1 %.not441.i, label %bb.dv, label %bb.du
@@ -395,8 +395,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 bb.dz:                                            ; preds = %bb.dy, %bb.dx
   %.23.i = phi ptr [ %i.xy, %bb.dy ], [ %.22.i, %bb.dx ] ; 8 uses
-  %12 = and i32 %i.uh, 8
-  %.not444.i = icmp eq i32 %12, 0
+  %.not444.i = icmp samesign ult i8 %.3362.i, 8
   br i1 %.not444.i, label %bb.eb, label %bb.ea
 
 bb.ea:                                            ; preds = %bb.dz

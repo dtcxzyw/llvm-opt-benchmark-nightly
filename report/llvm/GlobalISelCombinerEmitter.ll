@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #29
   store ptr %0, ptr %10, align 8, !tbaa !340
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !167  ; 2 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !167
   %.not = icmp eq i32 %i.k, 2
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -224,8 +224,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.e, label %.critedge71
 
 bb.c:                                             ; preds = %bb.a
-  %.not144 = icmp eq i32 %i.k, 3
-  call void @llvm.assume(i1 %.not144)
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 304
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !283, !nonnull !47, !align !106
   %i.s = call noundef i32 @_ZNK4llvm2gi7PatFrag9num_rootsEv(ptr noundef nonnull align 8 dereferenceable(288) %i.r) #29

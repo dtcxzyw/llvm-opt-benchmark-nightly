@@ -205,8 +205,9 @@ bb.a:
   %.0152205 = phi i64 [ %.1153, %bb.aw ], [ %2, %bb.a ] ; 25 uses
   %.0154204 = phi ptr [ %.1155, %bb.aw ], [ %1, %bb.a ] ; 11 uses
   %.0156203 = phi ptr [ %.1157, %bb.aw ], [ %0, %bb.a ] ; 12 uses
-  %i.h = udiv i64 %i.e, 48
-  %i.i = getelementptr inbounds nuw [24 x i8], ptr %.0156203, i64 %i.h ; 2 uses
+  %i.h = udiv exact i64 %i.e, 24
+  %9 = lshr i64 %i.h, 1
+  %i.i = getelementptr inbounds nuw [24 x i8], ptr %.0156203, i64 %9 ; 2 uses
   %i.j = getelementptr inbounds i8, ptr %.0154204, i64 -24
   %i.k = getelementptr inbounds nuw i8, ptr %.0156203, i64 8
   %i.l = load i32, ptr %i.k, align 8, !tbaa !69
@@ -609,8 +610,9 @@ bb.a:
   %.0152205 = phi i64 [ %.1153, %bb.aw ], [ %2, %bb.a ] ; 24 uses
   %.0154204 = phi ptr [ %.1155, %bb.aw ], [ %1, %bb.a ] ; 11 uses
   %.0156203 = phi ptr [ %.1157, %bb.aw ], [ %0, %bb.a ] ; 12 uses
-  %i.h = udiv i64 %i.e, 48
-  %i.i = getelementptr inbounds nuw [24 x i8], ptr %.0156203, i64 %i.h ; 2 uses
+  %i.h = udiv exact i64 %i.e, 24
+  %9 = lshr i64 %i.h, 1
+  %i.i = getelementptr inbounds nuw [24 x i8], ptr %.0156203, i64 %9 ; 2 uses
   %i.j = getelementptr inbounds i8, ptr %.0154204, i64 -24
   %i.k = getelementptr inbounds nuw i8, ptr %.0156203, i64 8
   %i.l = load i32, ptr %i.k, align 8, !tbaa !164
