@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %_ZNK5clang4Type21is
 
 bb.g:                                             ; preds = %_ZNK5clang4Type21isSpecificBuiltinTypeEj.exit.thread
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ao = load i32, ptr %i.an, align 8, !tbaa !86 ; 5 uses
+  %i.ao = load i32, ptr %i.an, align 8, !tbaa !86 ; 4 uses
   %i.ap = add i32 %i.ao, -5
   %i.aq = icmp ult i32 %i.ap, 5
   br i1 %i.aq, label %_ZNK5clang4ento4SVal5getAsINS0_6nonloc9SymbolValEEESt8optionalIT_Ev.exit, label %bb.h
@@ -241,10 +241,9 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.h
   %i.bg = icmp ult i32 %i.ao, 4
   tail call void @llvm.assume(i1 %i.bg)
-  switch i32 %i.ao, label %.unreachabledefault [
+  switch i32 %i.ao, label %bb.n [
     i32 2, label %bb.l
     i32 1, label %bb.m
-    i32 3, label %bb.n
   ]
 
 bb.l:                                             ; preds = %bb.k
@@ -271,12 +270,7 @@ bb.m:                                             ; preds = %bb.k
   %i.bu = tail call noundef zeroext i1 %i.bt(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr %.fca.0.extract22, i8 %.fca.1.extract23) #21
   br label %_ZNK5clang4ento4SVal5getAsINS0_6nonloc9SymbolValEEESt8optionalIT_Ev.exit
 
-.unreachabledefault:                              ; preds = %bb.k
-  unreachable
-
 bb.n:                                             ; preds = %bb.k
-  %3 = icmp eq i32 %i.ao, 3
-  tail call void @llvm.assume(i1 %3)
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !117
   %i.bx = tail call { ptr, i8 } @_ZN5clang4ento11SValBuilder13makeSymbolValEPKNS0_7SymExprE(ptr noundef nonnull align 8 dereferenceable(412) %i.ar, ptr noundef %i.bw) ; 2 uses
