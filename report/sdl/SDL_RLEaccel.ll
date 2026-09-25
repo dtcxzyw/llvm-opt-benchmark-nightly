@@ -204,9 +204,9 @@ bb.eo:                                            ; preds = %bb.dy, %bb.dx
   %.36.i.ph = phi ptr [ %.37.i, %bb.ew ], [ %.13700.ph, %bb.eo ]
   br label %bb.ep
 
-bb.ep:                                            ; preds = %.outer2056, %bb.ev
-  %.0966.i = phi i32 [ %.1967.i, %bb.ev ], [ 0, %.outer2056 ]
-  %.36.i = phi ptr [ %.37.i, %bb.ev ], [ %.36.i.ph, %.outer2056 ] ; 3 uses
+bb.ep:                                            ; preds = %bb.ev, %.outer2056
+  %.0966.i = phi i32 [ 0, %.outer2056 ], [ %.1967.i, %bb.ev ]
+  %.36.i = phi ptr [ %.36.i.ph, %.outer2056 ], [ %.37.i, %bb.ev ] ; 3 uses
   %i.axa = load i16, ptr %.36.i, align 2
   %i.axb = zext i16 %i.axa to i32
   %i.axc = add nsw i32 %.0966.i, %i.axb           ; 6 uses
@@ -609,7 +609,7 @@ bb.in:                                            ; preds = %bb.im
   %.not1032 = icmp eq i32 %i.csq, 0
   br i1 %.not1032, label %RLEClipBlit.exit, label %.outer2012
 
-RLEClipBlit.exit:                                 ; preds = %bb.r, %bb.n, %bb.j, %bb.f, %bb.du, %bb.dw, %bb.dc, %bb.de, %bb.ct, %bb.cv, %bb.cg, %bb.ci, %bb.bx, %bb.bz, %bb.dl, %bb.dn, %bb.eu, %bb.ew, %bb.el, %bb.en, %bb.ee, %bb.eg, %bb.bi, %bb.bk, %bb.ay, %bb.ba, %bb.ao, %bb.aq, %bb.ae, %bb.ag, %bb.hs, %bb.hu, %bb.hc, %bb.he, %bb.gw, %bb.gy, %bb.gm, %bb.go, %bb.gg, %bb.gi, %bb.hk, %bb.hm, %bb.il, %bb.in, %bb.id, %bb.if, %bb.hz, %bb.ib, %bb.fu, %bb.fw, %bb.fo, %bb.fq, %bb.fi, %bb.fk, %bb.fc, %bb.fe, %bb.bl, %bb.w, %bb.ey, %bb.fx
+RLEClipBlit.exit:                                 ; preds = %bb.r, %bb.n, %bb.j, %bb.f, %bb.du, %bb.dw, %bb.dc, %bb.de, %bb.ct, %bb.cv, %bb.cg, %bb.ci, %bb.bx, %bb.bz, %bb.dl, %bb.dn, %bb.ew, %bb.eu, %bb.el, %bb.en, %bb.ee, %bb.eg, %bb.bi, %bb.bk, %bb.ay, %bb.ba, %bb.ao, %bb.aq, %bb.ae, %bb.ag, %bb.hs, %bb.hu, %bb.hc, %bb.he, %bb.gw, %bb.gy, %bb.gm, %bb.go, %bb.gg, %bb.gi, %bb.hk, %bb.hm, %bb.il, %bb.in, %bb.id, %bb.if, %bb.hz, %bb.ib, %bb.fu, %bb.fw, %bb.fo, %bb.fq, %bb.fi, %bb.fk, %bb.fc, %bb.fe, %bb.bl, %bb.w, %bb.ey, %bb.fx
   %i.csr = load i32, ptr %2, align 8
   %i.css = and i32 %i.csr, 2
   %.not1051 = icmp eq i32 %i.css, 0
