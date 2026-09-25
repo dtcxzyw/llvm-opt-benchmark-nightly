@@ -205,7 +205,8 @@ bb.j:                                             ; preds = %_ZNK11ImFontAtlas13
 
 vector.body:                                      ; preds = %vector.body, %.split.us
   %index = phi i64 [ 0, %.split.us ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %.split.us ], [ %vec.ind.next, %vector.body ] ; 4 uses
+  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %.split.us ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %vec.ind184 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %.split.us ], [ %vec.ind.next185, %vector.body ] ; 2 uses
   %i.da = sub nsw <4 x i64> %broadcast.splat181, %vec.ind
   %i.db = trunc nsw <4 x i64> %i.da to <4 x i32>
   %i.dc = sdiv <4 x i32> %i.db, splat (i32 2)     ; 2 uses
@@ -217,9 +218,7 @@ vector.body:                                      ; preds = %vector.body, %.spli
   %i.dh = uitofp nneg <4 x i32> %i.dg to <4 x float>
   %i.di = fmul <4 x float> %broadcast.splat177, %i.de
   %i.dj = fmul <4 x float> %broadcast.splat179, %i.dh
-  %1 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %2 = add <4 x i32> %1, splat (i32 1)
-  %i.dk = add <4 x i32> %i.dd, %2
+  %i.dk = add <4 x i32> %i.dd, %vec.ind184
   %i.dl = sitofp <4 x i32> %i.dk to <4 x float>
   %i.dm = add <4 x i32> %i.dg, splat (i32 1)
   %i.dn = uitofp nneg <4 x i32> %i.dm to <4 x float>
@@ -234,6 +233,7 @@ vector.body:                                      ; preds = %vector.body, %.spli
   store <16 x float> %interleaved.vec, ptr %i.ds, align 4, !tbaa !29
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw nsw <4 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next185 = add <4 x i32> %vec.ind184, splat (i32 4)
   %i.dv = icmp eq i64 %index.next, 32
   br i1 %i.dv, label %.critedge.us, label %vector.body, !llvm.loop !849
 
