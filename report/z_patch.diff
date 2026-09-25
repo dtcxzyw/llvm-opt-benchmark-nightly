@@ -1,0 +1,1175 @@
+diff --git a/llvm/include/llvm/ADT/DenseMap.h b/llvm/include/llvm/ADT/DenseMap.h
+index 56c56c489915e6..48378939acb425 100644
+--- a/llvm/include/llvm/ADT/DenseMap.h
++++ b/llvm/include/llvm/ADT/DenseMap.h
+@@ -614,6 +614,16 @@ class DenseMapBase : public DebugEpochBase {
+     }
+   }
+ 
++  iterator makeIterator(BucketT *TheBucket) {
++    return iterator::makeIterator(TheBucket, getBuckets(), getUsed(),
++                                  getNumBuckets(), *this);
++  }
++
++  const_iterator makeConstIterator(const BucketT *TheBucket) const {
++    return const_iterator::makeIterator(TheBucket, getBuckets(), getUsed(),
++                                        getNumBuckets(), *this);
++  }
++
+ private:
+   // ValueHandleBase caches pointers into the bucket array, so it needs the
+   // callback erase below to fix them up as entries shift. It is the only
+@@ -694,16 +704,6 @@ class DenseMapBase : public DebugEpochBase {
+     return {makeIterator(Bucket), Inserted};
+   }
+ 
+-  iterator makeIterator(BucketT *TheBucket) {
+-    return iterator::makeIterator(TheBucket, getBuckets(), getUsed(),
+-                                  getNumBuckets(), *this);
+-  }
+-
+-  const_iterator makeConstIterator(const BucketT *TheBucket) const {
+-    return const_iterator::makeIterator(TheBucket, getBuckets(), getUsed(),
+-                                        getNumBuckets(), *this);
+-  }
+-
+   unsigned getNumEntries() const { return derived().getNumEntries(); }
+ 
+   void setNumEntries(unsigned Num) { derived().setNumEntries(Num); }
+@@ -935,6 +935,9 @@ class DenseMap : public DenseMapBase<DenseMap<KeyT, ValueT, KeyInfoT, BucketT>,
+     return *this;
+   }
+ 
++protected:
++  typename BaseT::Rep getRep() const { return {Buckets, Used, NumBuckets}; }
++
+ private:
+   void swapImpl(DenseMap &RHS) {
+     std::swap(Buckets, RHS.Buckets);
+@@ -949,8 +952,6 @@ class DenseMap : public DenseMapBase<DenseMap<KeyT, ValueT, KeyInfoT, BucketT>,
+ 
+   BucketT *getBuckets() const { return Buckets; }
+ 
+-  typename BaseT::Rep getRep() const { return {Buckets, Used, NumBuckets}; }
+-
+   UsedT *getUsed() const { return Used; }
+ 
+   unsigned getNumBuckets() const { return NumBuckets; }
+diff --git a/llvm/include/llvm/Analysis/KnownBitsDataflow.h b/llvm/include/llvm/Analysis/KnownBitsDataflow.h
+new file mode 100644
+index 00000000000000..2fc75df7809267
+--- /dev/null
++++ b/llvm/include/llvm/Analysis/KnownBitsDataflow.h
+@@ -0,0 +1,212 @@
++//===- KnownBitsDataflow.h - Cache and invalidate KnownBits ---------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++#ifndef LLVM_ANALYSIS_KNOWNBITSDATAFLOW_H
++#define LLVM_ANALYSIS_KNOWNBITSDATAFLOW_H
++
++#include "llvm/ADT/ArrayRef.h"
++#include "llvm/ADT/DenseMap.h"
++#include "llvm/ADT/SmallVector.h"
++#include "llvm/IR/ValueHandle.h"
++#include "llvm/Support/Compiler.h"
++#include "llvm/Support/KnownBits.h"
++
++namespace llvm {
++class Value;
++class User;
++class Function;
++class DataLayout;
++class raw_ostream;
++class KnownBitsDataflow;
++struct SimplifyQuery;
++
++/// A custom ValueHandle with callback to erase KnownBits in the cache when a
++/// Value is deleted, or invalidate dependent KnownBits when RAUW'ed.
++class KnownBitsVH final : public CallbackVH {
++  friend class KnownBitsDataflow;
++  KnownBitsDataflow *KBD;
++
++  virtual void deleted() override;
++  virtual void allUsesReplacedWith(Value *New) override;
++
++  /// We must never produce duplicate ValueHandles.
++  KnownBitsVH(const Value *V, const KnownBitsDataflow *KBD)
++      : CallbackVH(V), KBD(const_cast<KnownBitsDataflow *>(KBD)) {}
++
++public:
++  const Value *getValue() const { return getValPtr(); }
++  operator const Value *() const { return getValPtr(); }
++  bool operator==(const KnownBitsVH &Other) const {
++    return getValue() == Other.getValue();
++  }
++};
++
++// The DenseMapInfo for our KnownBits ValueHandle is just the DenseMapInfo on
++// the Value pointer: there is no other information in the ValueHandle that's
++// relevant for a DenseMap.
++template <> struct DenseMapInfo<KnownBitsVH> {
++  static unsigned getHashValue(const KnownBitsVH &Val) {
++    return DenseMapInfo<const Value *>::getHashValue(Val.getValue());
++  }
++
++  static bool isEqual(const KnownBitsVH &LHS, const KnownBitsVH &RHS) {
++    return DenseMapInfo<const Value *>::isEqual(LHS.getValue(), RHS.getValue());
++  }
++};
++
++/// A custom DenseMap for our KnownBits ValueHandle, to enable its use as a
++/// DenseMap key effectively. The issue we address is that the DenseMap's key is
++/// a KnownBitsVH, and all lookups must be based on such a type: however,
++/// constructing a duplicate ValueHandle lookup trivially is an error, as it
++/// would not have the associated use-list. It is also expensive and wasteful to
++/// search through the DenseMap's keys for a matching ValueHandle. We directly
++/// write a specialized doFind, to look up Buckets based on underlying Values:
++/// this allows us to translate from an underlying Value to a ValueHandle
++/// cheaply.
++template <typename ValueT>
++class DenseMapForVH : protected DenseMap<KnownBitsVH, ValueT> {
++  using BaseT = DenseMap<KnownBitsVH, ValueT>;
++  using KeyInfoT = DenseMapInfo<KnownBitsVH>;
++  using BucketT = llvm::detail::DenseMapPair<KnownBitsVH, ValueT>;
++
++protected:
++  /// The core custom DenseMap routine that does an equivalent doFind on an
++  /// underlying Value instead of a ValueHandle.
++  const BucketT *doFind(const Value *V) const {
++    if (BaseT::empty())
++      return nullptr;
++    auto [BucketsPtr, U, NumBuckets] = BaseT::getRep();
++
++    const unsigned Mask = NumBuckets - 1;
++    unsigned BucketNo = DenseMapInfo<const Value *>::getHashValue(V) & Mask;
++    while (true) {
++      // An empty bucket terminates the probe: the key isn't in the map.
++      if (LLVM_LIKELY(!llvm::densemap::detail::used(U, BucketNo)))
++        return nullptr;
++      const BucketT *Bucket = BucketsPtr + BucketNo;
++      if (LLVM_LIKELY(DenseMapInfo<const Value *>::isEqual(
++              V, Bucket->getFirst().getValue())))
++        return Bucket;
++
++      // Hash collision: continue linear probing.
++      BucketNo = (BucketNo + 1) & Mask;
++    }
++  }
++
++  [[nodiscard]] typename BaseT::const_iterator
++  find_as(const Value *V) const { // NOLINT
++    if (const BucketT *Bucket = doFind(V))
++      return BaseT::makeConstIterator(Bucket);
++    return BaseT::end();
++  }
++};
++
++/// Distillation of compatibility of two different SimplifyQueries: the
++/// context-instruction and UseInstrInfo boolean.
++struct SQCompatibility {
++  WeakVH CxtI;
++  unsigned short UseInstrInfo : 1;
++
++public:
++  SQCompatibility() : UseInstrInfo(0) {}
++  SQCompatibility(const SimplifyQuery &SQ);
++  bool isRefinementOf(const SQCompatibility &Other) const;
++};
++
++/// The ValueT of our DenseMap is actually a KnownBits augmented with
++/// SimplifyQuery-compatability information.
++struct AugmentedKnownBits : public KnownBits, public SQCompatibility {
++  AugmentedKnownBits() = default;
++  AugmentedKnownBits(const KnownBits &Known,
++                     std::optional<SQCompatibility> Info = {})
++      : KnownBits(Known), SQCompatibility(Info ? *Info : SQCompatibility()) {}
++};
++
++/// A structure keeps a mapping between a custom ValueHandle and KnownBits, with
++/// core functionality to do forward dataflow analysis on the use-def graph.
++/// Used to cache information from computeKnownBits calls. It is populated
++/// on-demand.
++class LLVM_ABI KnownBitsDataflow : protected DenseMapForVH<AugmentedKnownBits> {
++  friend class KnownBitsVH;
++  const Function &F;
++  const DataLayout &getDataLayout() const;
++
++  /// Get an existing ValueHandle or create a fresh one, for insertion purposes.
++  KnownBitsVH getOrCreateVH(const Value *V) const;
++
++  /// Helper to insert ValueHandles in the entire subgraph starting at \p R,
++  /// with all-conflict KnownBits information. Used for testing purposes.
++  void insert_range(ArrayRef<KnownBitsVH> R); // NOLINT
++
++  /// Used to clean up after an IR Value is erased.
++  void cleanup() {
++    remove_if([&](const auto &KV) { return KV.first.getValue() == nullptr; });
++  }
++
++  /// Do a forward data-flow walk, and find all Values in the map whose
++  /// KnownBits depeends on the KnownBits of \p Root, skipping any nodes not in
++  /// the map. Pass \p Create to create fresh ValueHandles from the walk, for
++  /// insertion purposes.
++  SmallVector<KnownBitsVH> forwardDataflow(ArrayRef<KnownBitsVH> Roots,
++                                           bool Create = false) const;
++
++protected:
++  using BaseT = DenseMapForVH<AugmentedKnownBits>;
++
++  /// Get an existing ValueHandle.
++  LLVM_ABI_FOR_TEST KnownBitsVH getVH(const Value *V) const;
++
++  /// Invalidates KnownBits in the entire subgraph found from the
++  /// forwardDataflow walk starting from \p V. Used on IR manipulation.
++  LLVM_ABI_FOR_TEST void invalidate(const KnownBitsVH &V);
++
++  /// We compute the roots to walk KnownBits information on-demand, and this is
++  /// used in print, skipping any nodes not in the map. Pass \p Create to create
++  /// fresh ValueHandles from the walk, for insertion purposes.
++  LLVM_ABI_FOR_TEST SmallVector<KnownBitsVH>
++  computeRoots(bool Create = false) const;
++
++  /// A leaf is a Value whose users filtered on a KnownBits range is empty. Used
++  /// in print.
++  LLVM_ABI_FOR_TEST bool isLeaf(const KnownBitsVH &V) const;
++
++  /// Initializing the entire graph if the Function is expensive, and is used
++  /// only for testing purposes.
++  LLVM_ABI_FOR_TEST void initializeEntireGraph();
++
++public:
++  LLVM_ABI KnownBitsDataflow(const Function &F) : F(F) {}
++  LLVM_ABI KnownBitsDataflow(const KnownBitsDataflow &) = delete;
++  LLVM_ABI KnownBitsDataflow &operator=(const KnownBitsDataflow &) = delete;
++
++  /// A small helper extracted from ValueTracking.
++  static unsigned getBitWidth(Type *Ty, const DataLayout &DL);
++
++  LLVM_ABI bool empty() const { return BaseT::empty(); }
++  LLVM_ABI size_t size() const { return BaseT::size(); }
++  LLVM_ABI bool contains(const Value *V) const { return doFind(V); }
++
++  /// Looks up \p V if it is present in the map, and returns a valid
++  /// previously cached KnownBits that is not all-conflict, or std::nullopt.
++  /// Pass \p Info to filter on compatibility info.
++  LLVM_ABI std::optional<KnownBits>
++  lookup(const Value *V, std::optional<SQCompatibility> Info = {}) const;
++
++  /// Registers that \p V has KnownBits information \p Known, with
++  /// compatibility info \p Info, overwriting any existing value.
++  LLVM_ABI void insert(const Value *V, const KnownBits &Known,
++                       std::optional<SQCompatibility> Info = {});
++
++  LLVM_ABI void print(raw_ostream &OS) const;
++#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
++  LLVM_DUMP_METHOD void dump() const;
++#endif
++};
++} // end namespace llvm
++
++#endif // LLVM_ANALYSIS_KNOWNBITSDATAFLOW_H
+diff --git a/llvm/include/llvm/Analysis/SimplifyQuery.h b/llvm/include/llvm/Analysis/SimplifyQuery.h
+index 8cb2788a40d66d..986a0ce20c3bb5 100644
+--- a/llvm/include/llvm/Analysis/SimplifyQuery.h
++++ b/llvm/include/llvm/Analysis/SimplifyQuery.h
+@@ -19,6 +19,7 @@ class AssumptionCache;
+ class DomConditionCache;
+ class DominatorTree;
+ class TargetLibraryInfo;
++class KnownBitsDataflow;
+ 
+ /// InstrInfoQuery provides an interface to query additional information for
+ /// instructions like metadata or keywords like nsw, which provides conservative
+@@ -71,6 +72,7 @@ struct CondContext {
+ struct SimplifyQuery {
+ private:
+   const Function *CxtF = nullptr;
++  KnownBitsDataflow *KBCache = nullptr;
+ 
+ public:
+   const DataLayout &DL;
+@@ -159,6 +161,15 @@ struct SimplifyQuery {
+     Copy.CC = nullptr;
+     return Copy;
+   }
++
++  SimplifyQuery getWithKnownBitsCache(KnownBitsDataflow *KBCache) const {
++    SimplifyQuery Copy(*this);
++    Copy.KBCache = KBCache;
++    return Copy;
++  }
++
++  LLVM_ABI std::optional<KnownBits> getCachedKnownBits(const Value *V) const;
++  LLVM_ABI void cacheKnownBits(const Value *V, const KnownBits &Known);
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+index 8f9c5860662981..4977a7ad12e482 100644
+--- a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
++++ b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+@@ -21,6 +21,7 @@
+ #include "llvm/ADT/PostOrderIterator.h"
+ #include "llvm/Analysis/DomConditionCache.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
++#include "llvm/Analysis/KnownBitsDataflow.h"
+ #include "llvm/Analysis/TargetFolder.h"
+ #include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/IR/IRBuilder.h"
+@@ -97,6 +98,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+   BranchProbabilityInfo *BPI;
+   ProfileSummaryInfo *PSI;
+   DomConditionCache DC;
++  KnownBitsDataflow KBCache;
+ 
+   ReversePostOrderTraversal<BasicBlock *> &RPOT;
+ 
+@@ -132,7 +134,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+         TLI(TLI), DT(DT), DL(DL),
+         SQ(DL, &TLI, &DT, &AC, nullptr, /*UseInstrInfo*/ true,
+            /*CanUseUndef*/ true, &DC),
+-        ORE(ORE), BFI(BFI), BPI(BPI), PSI(PSI), RPOT(RPOT) {}
++        ORE(ORE), BFI(BFI), BPI(BPI), PSI(PSI), KBCache(F), RPOT(RPOT) {}
+ 
+   virtual ~InstCombiner() = default;
+ 
+@@ -446,6 +448,8 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+   /// Replace operand of instruction and add old operand to the worklist.
+   Instruction *replaceOperand(Instruction &I, unsigned OpNum, Value *V) {
+     Value *OldOp = I.getOperand(OpNum);
++    if (OldOp->hasValueHandle())
++      ValueHandleBase::ValueIsDeleted(OldOp);
+     I.setOperand(OpNum, V);
+     Worklist.handleUseCountDecrement(OldOp);
+     return &I;
+@@ -454,6 +458,8 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+   /// Replace use and add the previously used value to the worklist.
+   void replaceUse(Use &U, Value *NewValue) {
+     Value *OldOp = U;
++    if (OldOp->hasValueHandle())
++      ValueHandleBase::ValueIsDeleted(OldOp);
+     U = NewValue;
+     Worklist.handleUseCountDecrement(OldOp);
+   }
+@@ -467,12 +473,17 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+ 
+   void computeKnownBits(const Value *V, KnownBits &Known,
+                         const Instruction *CxtI, unsigned Depth = 0) const {
+-    llvm::computeKnownBits(V, Known, SQ.getWithInstruction(CxtI), Depth);
++    llvm::computeKnownBits(V, Known,
++                           SQ.getWithInstruction(CxtI).getWithKnownBitsCache(
++                               const_cast<KnownBitsDataflow *>(&KBCache)),
++                           Depth);
+   }
+ 
+   KnownBits computeKnownBits(const Value *V, const Instruction *CxtI,
+                              unsigned Depth = 0) const {
+-    return llvm::computeKnownBits(V, SQ.getWithInstruction(CxtI), Depth);
++    KnownBits Known(KnownBitsDataflow::getBitWidth(V->getType(), SQ.DL));
++    computeKnownBits(V, Known, CxtI, Depth);
++    return Known;
+   }
+ 
+   bool isKnownToBeAPowerOfTwo(const Value *V, bool OrZero = false,
+diff --git a/llvm/lib/Analysis/CMakeLists.txt b/llvm/lib/Analysis/CMakeLists.txt
+index 73250fc99e5a76..059c5d2d7000a7 100644
+--- a/llvm/lib/Analysis/CMakeLists.txt
++++ b/llvm/lib/Analysis/CMakeLists.txt
+@@ -108,6 +108,7 @@ add_llvm_component_library(LLVMAnalysis
+   InstructionSimplify.cpp
+   InteractiveModelRunner.cpp
+   KernelInfo.cpp
++  KnownBitsDataflow.cpp
+   LastRunTrackingAnalysis.cpp
+   LazyBranchProbabilityInfo.cpp
+   LazyBlockFrequencyInfo.cpp
+diff --git a/llvm/lib/Analysis/KnownBitsDataflow.cpp b/llvm/lib/Analysis/KnownBitsDataflow.cpp
+new file mode 100644
+index 00000000000000..dc4c87921c8565
+--- /dev/null
++++ b/llvm/lib/Analysis/KnownBitsDataflow.cpp
+@@ -0,0 +1,238 @@
++//===- KnownBitsDataflow.cpp - Cache and invalidate KnownBits -------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++#include "llvm/Analysis/KnownBitsDataflow.h"
++#include "llvm/ADT/ArrayRef.h"
++#include "llvm/ADT/DepthFirstIterator.h"
++#include "llvm/ADT/GraphTraits.h"
++#include "llvm/ADT/STLExtras.h"
++#include "llvm/ADT/SetVector.h"
++#include "llvm/ADT/SmallVector.h"
++#include "llvm/ADT/Statistic.h"
++#include "llvm/Analysis/SimplifyQuery.h"
++#include "llvm/IR/DataLayout.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Instruction.h"
++#include "llvm/IR/Value.h"
++#include "llvm/Support/Compiler.h"
++#include "llvm/Support/Debug.h"
++#include "llvm/Support/KnownBits.h"
++
++using namespace llvm;
++
++#define DEBUG_TYPE "known-bits-dataflow"
++
++STATISTIC(KnownBitsCacheHits, "Number of hits in the KnownBits cache");
++
++namespace llvm {
++template <typename NodeRef, typename ChildIteratorType>
++struct NodeGraphTraitsBase {
++  static NodeRef getEntryNode(NodeRef N) { return N; }
++  static ChildIteratorType child_begin(NodeRef N) { // NOLINT
++    return N->user_begin();
++  }
++  static ChildIteratorType child_end(NodeRef N) { // NOLINT
++    return N->user_end();
++  }
++};
++
++template <>
++struct GraphTraits<const Value *>
++    : public NodeGraphTraitsBase<const Value *, Value::const_user_iterator> {
++  using NodeRef = const Value *;
++  using ChildIteratorType = Value::const_user_iterator;
++};
++} // namespace llvm
++
++SQCompatibility::SQCompatibility(const SimplifyQuery &SQ)
++    : CxtI(const_cast<Instruction *>(SQ.CxtI)),
++      UseInstrInfo(SQ.IIQ.UseInstrInfo) {}
++
++bool SQCompatibility::isRefinementOf(const SQCompatibility &Other) const {
++  return (!CxtI || CxtI == Other.CxtI) &&
++         (!UseInstrInfo || UseInstrInfo == Other.UseInstrInfo);
++}
++
++void KnownBitsVH::deleted() {
++  // Carefully erase underlying null-pointers from map after nulling out the
++  // underlying Value pointer.
++  setValPtr(nullptr);
++  KBD->cleanup();
++}
++
++void KnownBitsVH::allUsesReplacedWith(Value *New) {
++  // Invalidate dependent KnownBits information with the current ValueHandle's
++  // use-list, before updating the underlying Value pointer.
++  KBD->invalidate(*this);
++  setValPtr(New);
++}
++
++/// We represent uninitialized KnownBits as an all-conflict value. This is
++/// different from a KnownBits that is computed as as an unknown value.
++static KnownBits getAllConflict(unsigned BitWidth) {
++  KnownBits Ret(BitWidth);
++  Ret.setAllConflict();
++  return Ret;
++}
++
++static bool isAllConflict(const KnownBits &Known) {
++  return Known.Zero.isAllOnes() && Known.One.isAllOnes();
++}
++
++KnownBitsVH KnownBitsDataflow::getVH(const Value *V) const {
++  auto It = find_as(V);
++  assert(It != end() && "Expected to find ValueHandle");
++  return It->first;
++}
++
++KnownBitsVH KnownBitsDataflow::getOrCreateVH(const Value *V) const {
++  auto It = find_as(V);
++  if (It != end())
++    return It->first;
++  return {V, this};
++}
++
++/// A wrapper around make_filter_range, that filters \p R on scalar types that
++/// are either integer or pointer type, as these are the only types handled by
++/// computeKnownBits.
++template <typename RangeT>
++static auto make_knownbits_range(RangeT &&R) { // NOLINT
++  return make_filter_range(R, [](const auto &V) {
++    return V->getType()->getScalarType()->isIntOrPtrTy();
++  });
++}
++
++SmallVector<KnownBitsVH>
++KnownBitsDataflow::forwardDataflow(ArrayRef<KnownBitsVH> R, bool Create) const {
++  SetVector<KnownBitsVH> Collected;
++  for (const auto &V : R)
++    for (const Value *N : make_knownbits_range(depth_first(V.getValue())))
++      if (!Create && contains(N))
++        Collected.insert(getVH(N));
++      else if (Create)
++        Collected.insert(getOrCreateVH(N));
++  return Collected.takeVector();
++}
++
++void KnownBitsDataflow::invalidate(const KnownBitsVH &V) {
++  for (const KnownBitsVH &N : forwardDataflow(V))
++    at(N).setAllConflict();
++}
++
++const DataLayout &KnownBitsDataflow::getDataLayout() const {
++  return F.getDataLayout();
++}
++
++unsigned KnownBitsDataflow::getBitWidth(Type *Ty, const DataLayout &DL) {
++  if (unsigned BitWidth = Ty->getScalarSizeInBits())
++    return BitWidth;
++  return DL.getPointerTypeSizeInBits(Ty);
++}
++
++void KnownBitsDataflow::insert_range(ArrayRef<KnownBitsVH> R) {
++  for (const KnownBitsVH &V : make_knownbits_range(R))
++    insert(V, getAllConflict(getBitWidth(V->getType(), getDataLayout())));
++}
++
++SmallVector<KnownBitsVH> KnownBitsDataflow::computeRoots(bool Create) const {
++  SmallVector<KnownBitsVH> Roots;
++
++  // First, collect function arguments.
++  for (const Value *V : make_knownbits_range(make_pointer_range(F.args())))
++    if (!Create && contains(V))
++      Roots.push_back(getVH(V));
++    else if (Create)
++      Roots.push_back(getOrCreateVH(V));
++
++  // A helper to find out whether a Value is reachable from Roots that computes
++  // the reachability information just in time, as Roots are updated.
++  auto IsReachableFromRoots = [&](const Value *V) {
++    for (const auto &R : Roots)
++      for (const Value *N : make_knownbits_range(depth_first(R.getValue())))
++        if (N == V)
++          return true;
++    return false;
++  };
++
++  // Now collect all Instructions that aren't reachable from the function's
++  // arguments, updating Roots, as we test for unreachability.
++  for (const BasicBlock &BB : F)
++    for (const Value *V : make_knownbits_range(make_pointer_range(BB)))
++      if (!IsReachableFromRoots(V)) {
++        if (!Create && contains(V))
++          Roots.push_back(getVH(V));
++        else if (Create)
++          Roots.push_back(getOrCreateVH(V));
++      }
++
++  return Roots;
++}
++
++void KnownBitsDataflow::initializeEntireGraph() {
++  insert_range(forwardDataflow(computeRoots(/*Create=*/true), /*Create=*/true));
++}
++
++bool KnownBitsDataflow::isLeaf(const KnownBitsVH &V) const {
++  return make_knownbits_range(V->users()).empty();
++}
++
++void KnownBitsDataflow::print(raw_ostream &OS) const {
++  auto Roots = computeRoots();
++  for (const KnownBitsVH &V : forwardDataflow(Roots)) {
++    if (is_contained(Roots, V))
++      OS << "^ ";
++    else if (isLeaf(V))
++      OS << "$ ";
++    else
++      OS << "  ";
++    V->print(OS);
++    OS << " | ";
++    at(V).print(OS);
++    OS << "\n";
++  }
++}
++
++#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
++LLVM_DUMP_METHOD void KnownBitsDataflow::dump() const { print(dbgs()); }
++#endif
++
++std::optional<KnownBits>
++KnownBitsDataflow::lookup(const Value *V,
++                          std::optional<SQCompatibility> Info) const {
++  auto It = find_as(V);
++  if (It == end())
++    return std::nullopt;
++  // If we had a context-instruction or UseInstrInfo in the cached result,
++  // re-using that result will produce a better optimization result.
++  if (Info && !Info->isRefinementOf(It->second))
++    return std::nullopt;
++  const KnownBits &Known = It->second;
++  if (isAllConflict(Known))
++    return std::nullopt;
++  ++KnownBitsCacheHits;
++  return Known;
++}
++
++void KnownBitsDataflow::insert(const Value *V, const KnownBits &Known,
++                               std::optional<SQCompatibility> Info) {
++  insert_or_assign(getOrCreateVH(V), AugmentedKnownBits(Known, Info));
++}
++
++std::optional<KnownBits>
++SimplifyQuery::getCachedKnownBits(const Value *V) const {
++  // We do not bother with checking compatibility of context-functions.
++  if (!KBCache || CxtF)
++    return std::nullopt;
++  return KBCache->lookup(V, *this);
++}
++
++void SimplifyQuery::cacheKnownBits(const Value *V, const KnownBits &Known) {
++  if (!KBCache)
++    return;
++  KBCache->insert(V, Known, *this);
++}
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 44ba5bdc4c6028..9b4d484913ebb9 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -2640,6 +2640,12 @@ void computeKnownBits(const Value *V, const APInt &DemandedElts,
+     return;
+   }
+ 
++  // Directly use any cached values.
++  if (auto K = Q.getCachedKnownBits(V)) {
++    Known = *K;
++    return;
++  }
++
+   // Start out not knowing anything.
+   Known.resetAll();
+ 
+@@ -2685,6 +2691,9 @@ void computeKnownBits(const Value *V, const APInt &DemandedElts,
+ 
+   // Check whether we can determine known bits from context such as assumes.
+   computeKnownBitsFromContext(V, Known, Q, Depth);
++
++  // Update the KnownBits cache.
++  const_cast<SimplifyQuery &>(Q).cacheKnownBits(V, Known);
+ }
+ 
+ /// Try to detect a recurrence that the value of the induction variable is
+diff --git a/llvm/unittests/Analysis/CMakeLists.txt b/llvm/unittests/Analysis/CMakeLists.txt
+index 9ca57024a61349..77a34a464153b9 100644
+--- a/llvm/unittests/Analysis/CMakeLists.txt
++++ b/llvm/unittests/Analysis/CMakeLists.txt
+@@ -35,6 +35,7 @@ set(ANALYSIS_TEST_SOURCES
+   InlineCostTest.cpp
+   IR2VecTest.cpp
+   IVDescriptorsTest.cpp
++  KnownBitsDataflowTest.cpp
+   LastRunTrackingAnalysisTest.cpp
+   LazyCallGraphTest.cpp
+   LoadsTest.cpp
+diff --git a/llvm/unittests/Analysis/KnownBitsDataflowTest.cpp b/llvm/unittests/Analysis/KnownBitsDataflowTest.cpp
+new file mode 100644
+index 00000000000000..9886495a81ba20
+--- /dev/null
++++ b/llvm/unittests/Analysis/KnownBitsDataflowTest.cpp
+@@ -0,0 +1,496 @@
++//===- KnownBitsDataflowTest.cpp ------------------------------------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++#include "llvm/Analysis/KnownBitsDataflow.h"
++#include "llvm/AsmParser/Parser.h"
++#include "llvm/IR/BasicBlock.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/InstIterator.h"
++#include "llvm/IR/LLVMContext.h"
++#include "llvm/IR/Module.h"
++#include "llvm/Support/SourceMgr.h"
++#include "gmock/gmock.h"
++#include "gtest/gtest.h"
++
++using namespace llvm;
++
++namespace {
++static Instruction *findInstructionByName(Function *F, StringRef Name) {
++  for (Instruction &I : instructions(F))
++    if (I.getName() == Name)
++      return &I;
++  return nullptr;
++}
++
++std::unique_ptr<Module> parseIR(LLVMContext &Ctx, StringRef Assembly) {
++  SMDiagnostic Err;
++  std::unique_ptr<Module> M = parseAssemblyString(Assembly, Err, Ctx);
++  if (!M)
++    Err.print(__FILE__, errs());
++  return M;
++}
++
++/// Simply exposes some routines in KnownBitsDataflow, and adds a few for
++/// testing.
++struct DataflowForTest : public KnownBitsDataflow {
++private:
++  AugmentedKnownBits &getValRef(const Value *V) {
++    return BaseT::operator[](getVH(V));
++  }
++
++public:
++  DataflowForTest(Function &F) : KnownBitsDataflow(F) {}
++  SmallVector<KnownBitsVH, 16> computeRoots() const {
++    return KnownBitsDataflow::computeRoots();
++  }
++  bool contains(const Value *V) const { return KnownBitsDataflow::contains(V); }
++  KnownBits at(const Value *V) const {
++    auto It = find_as(V);
++    assert(It != end() && "Expected key in Map");
++    return It->second;
++  }
++  // Returns an unordered list.
++  auto computeLeaves() const {
++    return make_filter_range(
++        keys(), [this](const KnownBitsVH &V) { return isLeaf(V); });
++  }
++  void intersectWith(const Value *V, KnownBits Known) {
++    KnownBits &K = getValRef(V);
++    K = K.intersectWith(Known);
++  }
++  void setAllZero(const Value *V) { getValRef(V).setAllZero(); }
++  void setAllOnes(const Value *V) { getValRef(V).setAllOnes(); }
++  void invalidate(const Value *V) {
++    return KnownBitsDataflow::invalidate(getVH(V));
++  }
++  bool isAllOnes(const Value *V) const {
++    KnownBits Known = at(V);
++    return Known.Zero.isZero() && Known.One.isAllOnes();
++  }
++};
++
++/// Additionally initializes the map with the entire graph.
++struct DataflowInitializerForTest : public DataflowForTest {
++  DataflowInitializerForTest(Function &F) : DataflowForTest(F) {
++    initializeEntireGraph();
++  }
++};
++
++TEST(KnownBitsDataflow, BasicConstruction) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %n) {
++entry:
++  br label %loop
++loop:
++  %phi_counter = phi i32 [ 0, %entry ], [ %next_counter, %loop ]
++  %phi_result = phi i32 [ 1, %entry ], [ %result, %loop ]
++  %counter = add i32 %phi_counter, 1
++  %result = mul i32 %phi_result, 2
++  %next_counter = add i32 %counter, 1
++  %cond = icmp slt i32 %next_counter, %n
++  br i1 %cond, label %loop, label %exit
++exit:
++  store i32 %result, ptr poison
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowInitializerForTest KBCache(*F);
++  Argument *ArgN = &*F->arg_begin();
++  Instruction *Counter = findInstructionByName(F, "counter");
++  Instruction *NextCounter = findInstructionByName(F, "next_counter");
++  Instruction *Result = findInstructionByName(F, "result");
++  Instruction *PhiCounter = findInstructionByName(F, "phi_counter");
++  Instruction *PhiResult = findInstructionByName(F, "phi_result");
++  Instruction *Cond = findInstructionByName(F, "cond");
++
++  EXPECT_FALSE(KBCache.lookup(ArgN));
++  EXPECT_FALSE(KBCache.lookup(PhiCounter));
++  EXPECT_FALSE(KBCache.lookup(PhiResult));
++  EXPECT_FALSE(KBCache.lookup(Counter));
++  EXPECT_FALSE(KBCache.lookup(Result));
++  EXPECT_FALSE(KBCache.lookup(NextCounter));
++  EXPECT_FALSE(KBCache.lookup(Cond));
++  EXPECT_EQ(KBCache.size(), 7u);
++}
++
++TEST(KnownBitsDataflow, ConstructionWithIntAndPtr) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %int_arg, float %float_arg, ptr %ptr_arg, <2 x i32> %vec_int_arg, <2 x ptr> %vec_ptr_arg) {
++entry:
++  br i1 poison, label %then, label %else
++then:
++  %int_val = add i32 %int_arg, 1
++  %float_val = fadd float %float_arg, 1.0
++  %vec_val = add <2 x i32> %vec_int_arg, <i32 1, i32 2>
++  br label %merge
++else:
++  %fpconv = fptoui float %float_arg to i32
++  %int_val2 = mul i32 %int_arg, %fpconv
++  %ptr_val = getelementptr i8, ptr %ptr_arg, i32 4
++  %vec_val2 = mul <2 x i32> %vec_int_arg, <i32 3, i32 4>
++  br label %merge
++merge:
++  %phi_int = phi i32 [ %int_val, %then ], [ %int_val2, %else ]
++  %phi_float = phi float [ %float_val, %then ], [ %float_arg, %else ]
++  %phi_ptr = phi ptr [ %ptr_arg, %then ], [ %ptr_val, %else ]
++  %phi_vec = phi <2 x i32> [ %vec_val, %then ], [ %vec_val2, %else ]
++  %final_int = add i32 %phi_int, 5
++  %vec_ptr_conv = ptrtoint <2 x ptr> %vec_ptr_arg to <2 x i32>
++  %final_vec = add <2 x i32> %phi_vec, %vec_ptr_conv
++  store float %phi_float, ptr %phi_ptr
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowInitializerForTest KBCache(*F);
++  auto *ArgIt = F->arg_begin();
++  Argument *IntArg = &*ArgIt++;
++  Argument *FloatArg = &*ArgIt++;
++  Argument *PtrArg = &*ArgIt++;
++  Argument *VecIntArg = &*ArgIt++;
++  Argument *VecPtrArg = &*ArgIt++;
++  Instruction *IntVal = findInstructionByName(F, "int_val");
++  Instruction *FloatVal = findInstructionByName(F, "float_val");
++  Instruction *VecVal = findInstructionByName(F, "vec_val");
++  Instruction *IntVal2 = findInstructionByName(F, "int_val2");
++  Instruction *PtrVal = findInstructionByName(F, "ptr_val");
++  Instruction *VecVal2 = findInstructionByName(F, "vec_val2");
++  Instruction *PhiInt = findInstructionByName(F, "phi_int");
++  Instruction *PhiFloat = findInstructionByName(F, "phi_float");
++  Instruction *PhiPtr = findInstructionByName(F, "phi_ptr");
++  Instruction *PhiVec = findInstructionByName(F, "phi_vec");
++  Instruction *FinalInt = findInstructionByName(F, "final_int");
++  Instruction *FPConv = findInstructionByName(F, "fpconv");
++  Instruction *VecPtrConv = findInstructionByName(F, "vec_ptr_conv");
++  Instruction *FinalVec = findInstructionByName(F, "final_vec");
++
++  EXPECT_THAT(
++      KBCache.computeRoots(),
++      ::testing::ElementsAre(IntArg, PtrArg, VecIntArg, VecPtrArg, FPConv));
++  EXPECT_THAT(KBCache.computeLeaves(),
++              ::testing::UnorderedElementsAre(FinalInt, PhiPtr, FinalVec));
++
++  EXPECT_FALSE(KBCache.lookup(IntArg));
++  EXPECT_FALSE(KBCache.contains(FloatArg));
++  EXPECT_FALSE(KBCache.lookup(PtrArg));
++  EXPECT_FALSE(KBCache.lookup(VecIntArg));
++  EXPECT_FALSE(KBCache.lookup(VecPtrArg));
++
++  EXPECT_FALSE(KBCache.lookup(IntVal));
++  EXPECT_FALSE(KBCache.lookup(IntVal2));
++  EXPECT_FALSE(KBCache.lookup(PhiInt));
++  EXPECT_FALSE(KBCache.lookup(FinalInt));
++  EXPECT_FALSE(KBCache.lookup(VecVal));
++  EXPECT_FALSE(KBCache.lookup(VecVal2));
++  EXPECT_FALSE(KBCache.lookup(PhiVec));
++  EXPECT_FALSE(KBCache.lookup(FPConv));
++  EXPECT_FALSE(KBCache.lookup(VecPtrConv));
++  EXPECT_FALSE(KBCache.lookup(FinalVec));
++  EXPECT_FALSE(KBCache.contains(FloatVal));
++  EXPECT_FALSE(KBCache.lookup(PtrVal));
++  EXPECT_FALSE(KBCache.contains(PhiFloat));
++  EXPECT_FALSE(KBCache.lookup(PhiPtr));
++
++  EXPECT_EQ(KBCache.size(), 16u);
++}
++
++TEST(KnownBitsDataflow, ConstructionWithNestedLoop) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %n, i32 %m) {
++entry:
++  br label %outer_loop
++outer_loop:
++  %outer_phi = phi i32 [ 0, %entry ], [ %outer_next, %outer_latch ]
++  br label %inner_loop
++inner_loop:
++  %inner_phi = phi i32 [ 0, %outer_loop ], [ %inner_next, %inner_loop ]
++  %inner_next = add i32 %inner_phi, 1
++  %inner_cond = icmp slt i32 %inner_next, %m
++  br i1 %inner_cond, label %inner_loop, label %outer_latch
++outer_latch:
++  %outer_next = add i32 %outer_phi, 1
++  %outer_cond = icmp slt i32 %outer_next, %n
++  br i1 %outer_cond, label %outer_loop, label %exit
++exit:
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowInitializerForTest KBCache(*F);
++  auto *ArgIt = F->arg_begin();
++  Argument *ArgN = &*ArgIt++;
++  Argument *ArgM = &*ArgIt;
++  Instruction *OuterPHI = findInstructionByName(F, "outer_phi");
++  Instruction *InnerPHI = findInstructionByName(F, "inner_phi");
++  Instruction *InnerNext = findInstructionByName(F, "inner_next");
++  Instruction *OuterNext = findInstructionByName(F, "outer_next");
++  Instruction *InnerCond = findInstructionByName(F, "inner_cond");
++  Instruction *OuterCond = findInstructionByName(F, "outer_cond");
++
++  EXPECT_THAT(KBCache.computeRoots(),
++              ::testing::ElementsAre(ArgN, ArgM, OuterPHI, InnerPHI));
++  EXPECT_THAT(KBCache.computeLeaves(),
++              ::testing::UnorderedElementsAre(OuterCond, InnerCond));
++
++  EXPECT_FALSE(KBCache.lookup(ArgN));
++  EXPECT_FALSE(KBCache.lookup(ArgM));
++  EXPECT_FALSE(KBCache.lookup(OuterPHI));
++  EXPECT_FALSE(KBCache.lookup(InnerPHI));
++  EXPECT_FALSE(KBCache.lookup(InnerNext));
++  EXPECT_FALSE(KBCache.lookup(OuterNext));
++  EXPECT_FALSE(KBCache.lookup(InnerCond));
++  EXPECT_FALSE(KBCache.lookup(OuterCond));
++  EXPECT_EQ(KBCache.size(), 8u);
++}
++
++TEST(KnownBitsDataflow, ForwardDataflowBitsSingleBB) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %arg, <2 x i32> %vec_arg) {
++  %counter = add i32 %arg, 1
++  %result = mul i32 %counter, 2
++  %next_counter = add i32 %result, 3
++  %branch_val = sub i32 %next_counter, 1
++  %merge_val = add i32 %branch_val, 5
++  store i32 %merge_val, ptr poison
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowInitializerForTest KBCache(*F);
++  Argument *Arg = &*F->arg_begin();
++  Argument *VecArg = &*F->arg_begin();
++  Instruction *Counter = findInstructionByName(F, "counter");
++  Instruction *NextCounter = findInstructionByName(F, "next_counter");
++  Instruction *Result = findInstructionByName(F, "result");
++  Instruction *BranchVal = findInstructionByName(F, "branch_val");
++  Instruction *MergeVal = findInstructionByName(F, "merge_val");
++  KnownBits Known32(32);
++  Known32.setAllOnes();
++
++  KBCache.intersectWith(Arg, Known32);
++  KBCache.intersectWith(Counter, Known32);
++  KBCache.intersectWith(Result, Known32);
++  KBCache.intersectWith(NextCounter, Known32);
++  KBCache.intersectWith(BranchVal, Known32);
++  KBCache.intersectWith(MergeVal, Known32);
++  KBCache.setAllOnes(VecArg);
++
++  EXPECT_TRUE(KBCache.isAllOnes(Arg));
++  EXPECT_TRUE(KBCache.isAllOnes(Counter));
++  EXPECT_TRUE(KBCache.isAllOnes(Result));
++  EXPECT_TRUE(KBCache.isAllOnes(NextCounter));
++  EXPECT_TRUE(KBCache.isAllOnes(BranchVal));
++  EXPECT_TRUE(KBCache.isAllOnes(MergeVal));
++  EXPECT_TRUE(KBCache.isAllOnes(VecArg));
++
++  KBCache.invalidate(Counter);
++
++  EXPECT_TRUE(KBCache.isAllOnes(Arg));
++  EXPECT_TRUE(KBCache.isAllOnes(VecArg));
++  EXPECT_FALSE(KBCache.lookup(Counter));
++  EXPECT_FALSE(KBCache.lookup(Result));
++  EXPECT_FALSE(KBCache.lookup(NextCounter));
++  EXPECT_FALSE(KBCache.lookup(BranchVal));
++  EXPECT_FALSE(KBCache.lookup(MergeVal));
++}
++
++TEST(KnownBitsDataflow, ForwardDataflowMultipleBBs) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %n, i1 %cond) {
++entry:
++  %counter = add i32 %n, 1
++  br i1 %cond, label %then, label %else
++then:
++  %branch_val = mul i32 %counter, 2
++  br label %merge
++else:
++  %result = add i32 %counter, 3
++  br label %merge
++merge:
++  %merge_val = phi i32 [ %branch_val, %then ], [ %result, %else ]
++  %next_counter = add i32 %merge_val, 1
++  store i32 %next_counter, ptr poison
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowInitializerForTest KBCache(*F);
++  auto *ArgIt = F->arg_begin();
++  Argument *ArgN = &*ArgIt++;
++  Argument *ArgCond = &*ArgIt;
++  Instruction *Counter = findInstructionByName(F, "counter");
++  Instruction *NextCounter = findInstructionByName(F, "next_counter");
++  Instruction *Result = findInstructionByName(F, "result");
++  Instruction *BranchVal = findInstructionByName(F, "branch_val");
++  Instruction *MergeVal = findInstructionByName(F, "merge_val");
++  KnownBits Known32(32);
++  Known32.setAllOnes();
++
++  KBCache.intersectWith(ArgN, Known32);
++  KBCache.intersectWith(Counter, Known32);
++  KBCache.intersectWith(BranchVal, Known32);
++  KBCache.intersectWith(Result, Known32);
++  KBCache.intersectWith(MergeVal, Known32);
++  KBCache.intersectWith(NextCounter, Known32);
++  KBCache.setAllOnes(ArgCond);
++
++  EXPECT_TRUE(KBCache.isAllOnes(Counter));
++  EXPECT_TRUE(KBCache.isAllOnes(BranchVal));
++  EXPECT_TRUE(KBCache.isAllOnes(Result));
++  EXPECT_TRUE(KBCache.isAllOnes(MergeVal));
++  EXPECT_TRUE(KBCache.isAllOnes(NextCounter));
++
++  KBCache.invalidate(Result);
++
++  EXPECT_TRUE(KBCache.isAllOnes(ArgN));
++  EXPECT_TRUE(KBCache.isAllOnes(ArgCond));
++  EXPECT_TRUE(KBCache.isAllOnes(Counter));
++  EXPECT_TRUE(KBCache.isAllOnes(BranchVal));
++  EXPECT_FALSE(KBCache.lookup(Result));
++  EXPECT_FALSE(KBCache.lookup(MergeVal));
++  EXPECT_FALSE(KBCache.lookup(NextCounter));
++}
++
++TEST(KnownBitsDataflow, ForwardDataflowPartialInitialization) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %n, i1 %cond) {
++entry:
++  %counter = add i32 %n, 1
++  br i1 %cond, label %then, label %else
++then:
++  %branch_val = mul i32 %counter, 2
++  br label %merge
++else:
++  %result = add i32 %counter, 3
++  br label %merge
++merge:
++  %merge_val = phi i32 [ %branch_val, %then ], [ %result, %else ]
++  %next_counter = add i32 %merge_val, 1
++  store i32 %next_counter, ptr poison
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowForTest KBCache(*F);
++  auto *ArgIt = F->arg_begin();
++  Argument *ArgN = &*ArgIt++;
++  Argument *ArgCond = &*ArgIt;
++  Instruction *Counter = findInstructionByName(F, "counter");
++  Instruction *NextCounter = findInstructionByName(F, "next_counter");
++  Instruction *Result = findInstructionByName(F, "result");
++  Instruction *BranchVal = findInstructionByName(F, "branch_val");
++  Instruction *MergeVal = findInstructionByName(F, "merge_val");
++  KnownBits Known32(32);
++  Known32.setAllOnes();
++
++  KBCache.insert(ArgN, Known32);
++  KBCache.insert(BranchVal, Known32);
++  KBCache.insert(NextCounter, Known32);
++  EXPECT_EQ(KBCache.size(), 3u);
++
++  EXPECT_FALSE(KBCache.contains(ArgCond));
++  EXPECT_FALSE(KBCache.contains(Result));
++  EXPECT_FALSE(KBCache.contains(Counter));
++  EXPECT_FALSE(KBCache.contains(MergeVal));
++
++  EXPECT_TRUE(KBCache.isAllOnes(ArgN));
++  EXPECT_TRUE(KBCache.isAllOnes(BranchVal));
++  EXPECT_TRUE(KBCache.isAllOnes(NextCounter));
++
++  KBCache.invalidate(BranchVal);
++
++  EXPECT_FALSE(KBCache.lookup(BranchVal));
++  EXPECT_FALSE(KBCache.lookup(NextCounter));
++  EXPECT_EQ(KBCache.size(), 3u);
++}
++
++TEST(KnownBitsDataflow, IRManipulation) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %int_arg, float %float_arg, ptr %ptr_arg, <2 x i32> %vec_int_arg, <2 x ptr> %vec_ptr_arg) {
++entry:
++  br i1 poison, label %then, label %else
++then:
++  %int_val = add i32 %int_arg, 1
++  %float_val = fadd float %float_arg, 1.0
++  %vec_val = add <2 x i32> %vec_int_arg, <i32 1, i32 2>
++  br label %merge
++else:
++  %fpconv = fptoui float %float_arg to i32
++  %int_val2 = mul i32 %int_arg, %fpconv
++  %ptr_val = getelementptr i8, ptr %ptr_arg, i32 4
++  %vec_val2 = mul <2 x i32> %vec_int_arg, <i32 3, i32 4>
++  br label %merge
++merge:
++  %phi_int = phi i32 [ %int_val, %then ], [ %int_val2, %else ]
++  %phi_float = phi float [ %float_val, %then ], [ %float_arg, %else ]
++  %phi_ptr = phi ptr [ %ptr_arg, %then ], [ %ptr_val, %else ]
++  %phi_vec = phi <2 x i32> [ %vec_val, %then ], [ %vec_val2, %else ]
++  %final_int = add i32 %phi_int, 5
++  %vec_ptr_conv = ptrtoint <2 x ptr> %vec_ptr_arg to <2 x i32>
++  %final_vec = add <2 x i32> %phi_vec, %vec_ptr_conv
++  %final_dead = mul <2 x i32> %final_vec, splat(i32 2)
++  store float %phi_float, ptr %phi_ptr
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowInitializerForTest KBCache(*F);
++  Instruction *PhiInt = findInstructionByName(F, "phi_int");
++  Instruction *PhiPtr = findInstructionByName(F, "phi_ptr");
++  Instruction *FinalVec = findInstructionByName(F, "final_vec");
++  Instruction *FinalInt = findInstructionByName(F, "final_int");
++  Instruction *VecPtrConv = findInstructionByName(F, "vec_ptr_conv");
++  Instruction *FinalDead = findInstructionByName(F, "final_dead");
++
++  EXPECT_EQ(KBCache.size(), 17u);
++  EXPECT_THAT(KBCache.computeLeaves(),
++              ::testing::UnorderedElementsAre(FinalInt, PhiPtr, FinalDead));
++  FinalInt->eraseFromParent();
++  FinalDead->eraseFromParent();
++  EXPECT_EQ(KBCache.size(), 15u);
++  EXPECT_THAT(KBCache.computeLeaves(),
++              ::testing::UnorderedElementsAre(PhiPtr, PhiInt, FinalVec));
++  VecPtrConv->replaceAllUsesWith(PoisonValue::get(VecPtrConv->getType()));
++  EXPECT_EQ(KBCache.size(), 15u);
++}
++
++TEST(KnownBitsDataflow, Print) {
++  LLVMContext Ctx;
++  std::unique_ptr<Module> M = parseIR(Ctx, R"(
++define void @test(i32 %n) {
++entry:
++  br label %loop
++loop:
++  %phi_counter = phi i32 [ 0, %entry ], [ %next_counter, %loop ]
++  %counter = add i32 %phi_counter, 1
++  %result = mul i32 %counter, 2
++  %next_counter = add i32 %result, 1
++  %cond = icmp slt i32 %next_counter, %n
++  br i1 %cond, label %loop, label %exit
++exit:
++  ret void
++})");
++  Function *F = M->getFunction("test");
++  DataflowInitializerForTest KBCache(*F);
++  Instruction *Result = findInstructionByName(F, "result");
++  KBCache.setAllZero(Result);
++  std::string ActualOutput;
++  raw_string_ostream OS(ActualOutput);
++  KBCache.print(OS);
++  std::string ExpectedOutput =
++      R"(^ i32 %n | !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
++$   %cond = icmp slt i32 %next_counter, %n | !
++^   %phi_counter = phi i32 [ 0, %entry ], [ %next_counter, %loop ] | !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
++    %counter = add i32 %phi_counter, 1 | !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
++    %result = mul i32 %counter, 2 | 00000000000000000000000000000000
++    %next_counter = add i32 %result, 1 | !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
++)";
++  EXPECT_EQ(ActualOutput, ExpectedOutput);
++}
++} // namespace
