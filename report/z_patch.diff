@@ -1,0 +1,769 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index f2549bad3a852..d05b9dfa0cbd0 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -831,6 +831,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+ 
+   bool replaceInInstruction(Value *V, Value *Old, Value *New,
+                             unsigned Depth = 0);
++  Instruction *foldInnerSelectOperandsOnSameCond(SelectInst &SI);
+ 
+   Value *insertRangeTest(Value *V, const APInt &Lo, const APInt &Hi,
+                          bool isSigned, bool Inside);
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index a4061bbd60770..c7bcf19ea66fe 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -1685,6 +1685,50 @@ bool InstCombinerImpl::replaceInInstruction(Value *V, Value *Old, Value *New,
+   return Changed;
+ }
+ 
++// select(C, I(..., select(C, X, Y), ...), Z) -> select(C, I(..., X, ...), Z)
++// select(C, Z, I(..., select(C, X, Y), ...)) -> select(C, Z, I(..., Y, ...))
++Instruction *
++InstCombinerImpl::foldInnerSelectOperandsOnSameCond(SelectInst &SI) {
++  Value *Cond = SI.getCondition();
++  for (unsigned OperandNo : {1, 2}) {
++    auto *I = dyn_cast<Instruction>(SI.getOperand(OperandNo));
++    if (!I || !isSafeToSpeculativelyExecuteWithVariableReplaced(
++                  I, /*IgnoreUBImplyingAttrs=*/false))
++      continue;
++
++    if (Cond->getType()->isVectorTy() && !isNotCrossLaneOperation(I))
++      continue;
++
++    auto GetInnerSelectValue = [&](Value *Operand) -> Value * {
++      auto *InnerSI = dyn_cast<SelectInst>(Operand);
++      if (!InnerSI || InnerSI->getCondition() != Cond)
++        return nullptr;
++      return InnerSI->getOperand(OperandNo);
++    };
++
++    // Every use of I must be the same operand of a select on C.
++    if (any_of(I->uses(), [&](Use &U) {
++          return U.getOperandNo() != OperandNo ||
++                 !match(U.getUser(),
++                        m_Select(m_Specific(Cond), m_Value(), m_Value()));
++        }))
++      continue;
++
++    bool Changed = false;
++    for (Use &Operand : I->operands()) {
++      if (Value *V = GetInnerSelectValue(Operand)) {
++        replaceUse(Operand, V);
++        Changed = true;
++      }
++    }
++    if (Changed) {
++      Worklist.add(I);
++      return &SI;
++    }
++  }
++  return nullptr;
++}
++
+ /// If we have a select with an equality comparison, then we know the value in
+ /// one of the arms of the select. See if substituting this value into an arm
+ /// and simplifying the result yields the same value as the other arm.
+@@ -4918,6 +4962,9 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+     if (Instruction *NewSel = foldSelectValueEquivalence(SI, *CI))
+       return NewSel;
+ 
++  if (Instruction *R = foldInnerSelectOperandsOnSameCond(SI))
++    return R;
++
+   if (ICmpInst *ICI = dyn_cast<ICmpInst>(CondVal))
+     if (Instruction *Result = foldSelectInstWithICmp(SI, ICI))
+       return Result;
+@@ -5105,49 +5152,6 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+     }
+   }
+ 
+-  // Try to simplify a binop sandwiched between 2 selects with the same
+-  // condition. This is not valid for div/rem because the select might be
+-  // preventing a division-by-zero.
+-  // TODO: A div/rem restriction is conservative; use something like
+-  //       isSafeToSpeculativelyExecute().
+-  // select(C, binop(select(C, X, Y), W), Z) -> select(C, binop(X, W), Z)
+-  BinaryOperator *TrueBO;
+-  if (match(TrueVal, m_OneUse(m_BinOp(TrueBO))) && !TrueBO->isIntDivRem()) {
+-    if (auto *TrueBOSI = dyn_cast<SelectInst>(TrueBO->getOperand(0))) {
+-      if (TrueBOSI->getCondition() == CondVal) {
+-        replaceOperand(*TrueBO, 0, TrueBOSI->getTrueValue());
+-        Worklist.push(TrueBO);
+-        return &SI;
+-      }
+-    }
+-    if (auto *TrueBOSI = dyn_cast<SelectInst>(TrueBO->getOperand(1))) {
+-      if (TrueBOSI->getCondition() == CondVal) {
+-        replaceOperand(*TrueBO, 1, TrueBOSI->getTrueValue());
+-        Worklist.push(TrueBO);
+-        return &SI;
+-      }
+-    }
+-  }
+-
+-  // select(C, Z, binop(select(C, X, Y), W)) -> select(C, Z, binop(Y, W))
+-  BinaryOperator *FalseBO;
+-  if (match(FalseVal, m_OneUse(m_BinOp(FalseBO))) && !FalseBO->isIntDivRem()) {
+-    if (auto *FalseBOSI = dyn_cast<SelectInst>(FalseBO->getOperand(0))) {
+-      if (FalseBOSI->getCondition() == CondVal) {
+-        replaceOperand(*FalseBO, 0, FalseBOSI->getFalseValue());
+-        Worklist.push(FalseBO);
+-        return &SI;
+-      }
+-    }
+-    if (auto *FalseBOSI = dyn_cast<SelectInst>(FalseBO->getOperand(1))) {
+-      if (FalseBOSI->getCondition() == CondVal) {
+-        replaceOperand(*FalseBO, 1, FalseBOSI->getFalseValue());
+-        Worklist.push(FalseBO);
+-        return &SI;
+-      }
+-    }
+-  }
+-
+   Value *NotCond;
+   if (match(CondVal, m_Not(m_Value(NotCond))) &&
+       !InstCombiner::shouldAvoidAbsorbingNotIntoSelect(SI)) {
+diff --git a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll
+index 80c073c7b94d7..49a469c4a5573 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll
+@@ -1396,13 +1396,12 @@ define float @test_pow_afn_f32_0.5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP18:%.*]] = and i1 [[TMP17]], [[TMP16]]
+ ; NOPRELINK-NEXT:    [[TMP19:%.*]] = select ninf nsz afn i1 [[TMP18]], float +qnan, float [[TMP14]]
+ ; NOPRELINK-NEXT:    [[TMP20:%.*]] = fcmp ninf nsz afn oeq float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = select ninf nsz afn i1 [[TMP20]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select ninf nsz afn i1 [[TMP12]], float [[X]], float 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP23:%.*]] = call ninf nsz afn float @llvm.copysign.f32(float [[TMP21]], float [[TMP22]])
+-; NOPRELINK-NEXT:    [[TMP24:%.*]] = select ninf nsz afn i1 [[TMP20]], float [[TMP23]], float [[TMP19]]
+-; NOPRELINK-NEXT:    [[TMP25:%.*]] = fcmp ninf nsz afn uno float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP26:%.*]] = select ninf nsz afn i1 [[TMP25]], float +qnan, float [[TMP24]]
+-; NOPRELINK-NEXT:    ret float [[TMP26]]
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = call ninf nsz afn float @llvm.copysign.f32(float 0.000000e+00, float [[X]])
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = select i1 [[TMP12]], float [[TMP21]], float 0.000000e+00
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select ninf nsz afn i1 [[TMP20]], float [[TMP22]], float [[TMP19]]
++; NOPRELINK-NEXT:    [[TMP24:%.*]] = fcmp ninf nsz afn uno float [[X]], 0.000000e+00
++; NOPRELINK-NEXT:    [[TMP25:%.*]] = select ninf nsz afn i1 [[TMP24]], float +qnan, float [[TMP23]]
++; NOPRELINK-NEXT:    ret float [[TMP25]]
+ ;
+   %pow = tail call nsz ninf afn float @_Z3powff(float %x, float 0.5)
+   ret float %pow
+@@ -1478,13 +1477,12 @@ define <2 x float> @test_pow_afn_v2f32_0.5(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP18:%.*]] = and <2 x i1> [[TMP17]], [[TMP16]]
+ ; NOPRELINK-NEXT:    [[TMP19:%.*]] = select ninf nsz afn <2 x i1> [[TMP18]], <2 x float> splat (float +qnan), <2 x float> [[TMP14]]
+ ; NOPRELINK-NEXT:    [[TMP20:%.*]] = fcmp ninf nsz afn oeq <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = select ninf nsz afn <2 x i1> [[TMP20]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select ninf nsz afn <2 x i1> [[TMP12]], <2 x float> [[X]], <2 x float> zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP23:%.*]] = call ninf nsz afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP21]], <2 x float> [[TMP22]])
+-; NOPRELINK-NEXT:    [[TMP24:%.*]] = select ninf nsz afn <2 x i1> [[TMP20]], <2 x float> [[TMP23]], <2 x float> [[TMP19]]
+-; NOPRELINK-NEXT:    [[TMP25:%.*]] = fcmp ninf nsz afn uno <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP26:%.*]] = select ninf nsz afn <2 x i1> [[TMP25]], <2 x float> splat (float +qnan), <2 x float> [[TMP24]]
+-; NOPRELINK-NEXT:    ret <2 x float> [[TMP26]]
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = call ninf nsz afn <2 x float> @llvm.copysign.v2f32(<2 x float> zeroinitializer, <2 x float> [[X]])
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = select <2 x i1> [[TMP12]], <2 x float> [[TMP21]], <2 x float> zeroinitializer
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select ninf nsz afn <2 x i1> [[TMP20]], <2 x float> [[TMP22]], <2 x float> [[TMP19]]
++; NOPRELINK-NEXT:    [[TMP24:%.*]] = fcmp ninf nsz afn uno <2 x float> [[X]], zeroinitializer
++; NOPRELINK-NEXT:    [[TMP25:%.*]] = select ninf nsz afn <2 x i1> [[TMP24]], <2 x float> splat (float +qnan), <2 x float> [[TMP23]]
++; NOPRELINK-NEXT:    ret <2 x float> [[TMP25]]
+ ;
+   %pow = tail call nsz ninf afn <2 x float> @_Z3powDv2_fS_(<2 x float> %x, <2 x float> <float 0.5, float 0.5>)
+   ret <2 x float> %pow
+@@ -1602,13 +1600,12 @@ define <3 x float> @test_pow_afn_v3f32_0.5_splat_undef(<3 x float> %x, <3 x floa
+ ; NOPRELINK-NEXT:    [[TMP18:%.*]] = and <3 x i1> [[TMP17]], [[TMP16]]
+ ; NOPRELINK-NEXT:    [[TMP19:%.*]] = select ninf nsz afn <3 x i1> [[TMP18]], <3 x float> splat (float +qnan), <3 x float> [[TMP14]]
+ ; NOPRELINK-NEXT:    [[TMP20:%.*]] = fcmp ninf nsz afn oeq <3 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = select ninf nsz afn <3 x i1> [[TMP20]], <3 x float> zeroinitializer, <3 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select ninf nsz afn <3 x i1> [[TMP12]], <3 x float> [[X]], <3 x float> zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP23:%.*]] = call ninf nsz afn <3 x float> @llvm.copysign.v3f32(<3 x float> [[TMP21]], <3 x float> [[TMP22]])
+-; NOPRELINK-NEXT:    [[TMP24:%.*]] = select ninf nsz afn <3 x i1> [[TMP20]], <3 x float> [[TMP23]], <3 x float> [[TMP19]]
+-; NOPRELINK-NEXT:    [[TMP25:%.*]] = fcmp ninf nsz afn uno <3 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP26:%.*]] = select ninf nsz afn <3 x i1> [[TMP25]], <3 x float> splat (float +qnan), <3 x float> [[TMP24]]
+-; NOPRELINK-NEXT:    ret <3 x float> [[TMP26]]
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = call ninf nsz afn <3 x float> @llvm.copysign.v3f32(<3 x float> zeroinitializer, <3 x float> [[X]])
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = select <3 x i1> [[TMP12]], <3 x float> [[TMP21]], <3 x float> zeroinitializer
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select ninf nsz afn <3 x i1> [[TMP20]], <3 x float> [[TMP22]], <3 x float> [[TMP19]]
++; NOPRELINK-NEXT:    [[TMP24:%.*]] = fcmp ninf nsz afn uno <3 x float> [[X]], zeroinitializer
++; NOPRELINK-NEXT:    [[TMP25:%.*]] = select ninf nsz afn <3 x i1> [[TMP24]], <3 x float> splat (float +qnan), <3 x float> [[TMP23]]
++; NOPRELINK-NEXT:    ret <3 x float> [[TMP25]]
+ ;
+   %pow = tail call nsz ninf afn <3 x float> @_Z3powDv3_fS_(<3 x float> %x, <3 x float> <float 0.5, float poison, float 0.5>)
+   ret <3 x float> %pow
+@@ -4333,11 +4330,10 @@ define float @test_pow_afn_f32_nnan_ninf__y_4_5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP18:%.*]] = and i1 [[TMP17]], [[TMP16]]
+ ; NOPRELINK-NEXT:    [[TMP19:%.*]] = select nnan ninf afn i1 [[TMP18]], float +qnan, float [[TMP14]]
+ ; NOPRELINK-NEXT:    [[TMP20:%.*]] = fcmp nnan ninf afn oeq float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = select nnan ninf afn i1 [[TMP20]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select nnan ninf afn i1 [[TMP12]], float [[X]], float 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP23:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP21]], float [[TMP22]])
+-; NOPRELINK-NEXT:    [[TMP24:%.*]] = select nnan ninf afn i1 [[TMP20]], float [[TMP23]], float [[TMP19]]
+-; NOPRELINK-NEXT:    ret float [[TMP24]]
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float 0.000000e+00, float [[X]])
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = select i1 [[TMP12]], float [[TMP21]], float 0.000000e+00
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select nnan ninf afn i1 [[TMP20]], float [[TMP22]], float [[TMP19]]
++; NOPRELINK-NEXT:    ret float [[TMP23]]
+ ;
+   %pow = tail call afn nnan ninf float @_Z3powff(float %x, float 4.5)
+   ret float %pow
+@@ -4528,11 +4524,10 @@ define <2 x float> @test_pow_afn_v2f32_nnan_ninf__y_4_5(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP18:%.*]] = and <2 x i1> [[TMP17]], [[TMP16]]
+ ; NOPRELINK-NEXT:    [[TMP19:%.*]] = select nnan ninf afn <2 x i1> [[TMP18]], <2 x float> splat (float +qnan), <2 x float> [[TMP14]]
+ ; NOPRELINK-NEXT:    [[TMP20:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = select nnan ninf afn <2 x i1> [[TMP20]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select nnan ninf afn <2 x i1> [[TMP12]], <2 x float> [[X]], <2 x float> zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP23:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP21]], <2 x float> [[TMP22]])
+-; NOPRELINK-NEXT:    [[TMP24:%.*]] = select nnan ninf afn <2 x i1> [[TMP20]], <2 x float> [[TMP23]], <2 x float> [[TMP19]]
+-; NOPRELINK-NEXT:    ret <2 x float> [[TMP24]]
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> zeroinitializer, <2 x float> [[X]])
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = select <2 x i1> [[TMP12]], <2 x float> [[TMP21]], <2 x float> zeroinitializer
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select nnan ninf afn <2 x i1> [[TMP20]], <2 x float> [[TMP22]], <2 x float> [[TMP19]]
++; NOPRELINK-NEXT:    ret <2 x float> [[TMP23]]
+ ;
+   %pow = tail call afn nnan ninf <2 x float> @_Z3powDv2_fS_(<2 x float> %x, <2 x float> <float 4.5, float 4.5>)
+   ret <2 x float> %pow
+@@ -4566,11 +4561,10 @@ define <2 x float> @test_pow_afn_v2f32_nnan_ninf__y_4_5_undef(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP18:%.*]] = and <2 x i1> [[TMP17]], [[TMP16]]
+ ; NOPRELINK-NEXT:    [[TMP19:%.*]] = select nnan ninf afn <2 x i1> [[TMP18]], <2 x float> splat (float +qnan), <2 x float> [[TMP14]]
+ ; NOPRELINK-NEXT:    [[TMP20:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = select nnan ninf afn <2 x i1> [[TMP20]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select nnan ninf afn <2 x i1> [[TMP12]], <2 x float> [[X]], <2 x float> zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP23:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP21]], <2 x float> [[TMP22]])
+-; NOPRELINK-NEXT:    [[TMP24:%.*]] = select nnan ninf afn <2 x i1> [[TMP20]], <2 x float> [[TMP23]], <2 x float> [[TMP19]]
+-; NOPRELINK-NEXT:    ret <2 x float> [[TMP24]]
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> zeroinitializer, <2 x float> [[X]])
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = select <2 x i1> [[TMP12]], <2 x float> [[TMP21]], <2 x float> zeroinitializer
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select nnan ninf afn <2 x i1> [[TMP20]], <2 x float> [[TMP22]], <2 x float> [[TMP19]]
++; NOPRELINK-NEXT:    ret <2 x float> [[TMP23]]
+ ;
+   %pow = tail call afn nnan ninf <2 x float> @_Z3powDv2_fS_(<2 x float> %x, <2 x float> <float 4.5, float poison>)
+   ret <2 x float> %pow
+diff --git a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll
+index 805e510bde37b..a342e675044cc 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll
+@@ -1362,8 +1362,7 @@ define float @test_rootn_afn_nnan_ninf_f32__y_3(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP4]], float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn oeq float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn i1 [[TMP6]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP7]], float [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float 0.000000e+00, float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn i1 [[TMP6]], float [[TMP8]], float [[TMP5]]
+ ; NOPRELINK-NEXT:    ret float [[TMP9]]
+ ;
+@@ -1385,8 +1384,7 @@ define float @test_rootn_afn_nnan_ninf_f32__y_neg3(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP4]], float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn une float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn i1 [[TMP6]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP7]], float [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float +inf, float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn i1 [[TMP6]], float [[TMP5]], float [[TMP8]]
+ ; NOPRELINK-NEXT:    ret float [[TMP9]]
+ ;
+@@ -1452,8 +1450,7 @@ define float @test_rootn_afn_nnan_ninf_f32__y_5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP4]], float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn oeq float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn i1 [[TMP6]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP7]], float [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float 0.000000e+00, float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn i1 [[TMP6]], float [[TMP8]], float [[TMP5]]
+ ; NOPRELINK-NEXT:    ret float [[TMP9]]
+ ;
+@@ -1475,8 +1472,7 @@ define float @test_rootn_afn_nnan_ninf_f32__y_neg5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP4]], float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn une float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn i1 [[TMP6]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP7]], float [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float +inf, float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn i1 [[TMP6]], float [[TMP5]], float [[TMP8]]
+ ; NOPRELINK-NEXT:    ret float [[TMP9]]
+ ;
+@@ -1498,8 +1494,7 @@ define float @test_rootn_afn_nnan_ninf_f32__y_7(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP4]], float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn oeq float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn i1 [[TMP6]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP7]], float [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float 0.000000e+00, float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn i1 [[TMP6]], float [[TMP8]], float [[TMP5]]
+ ; NOPRELINK-NEXT:    ret float [[TMP9]]
+ ;
+@@ -1521,8 +1516,7 @@ define float @test_rootn_afn_nnan_ninf_f32__y_neg7(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP4]], float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn une float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn i1 [[TMP6]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP7]], float [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float +inf, float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn i1 [[TMP6]], float [[TMP5]], float [[TMP8]]
+ ; NOPRELINK-NEXT:    ret float [[TMP9]]
+ ;
+@@ -1590,8 +1584,7 @@ define <2 x float> @test_rootn_afn_nnan_ninf_v2f32__y_3(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP4]], <2 x float> [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn <2 x i1> [[TMP6]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP7]], <2 x float> [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> zeroinitializer, <2 x float> [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn <2 x i1> [[TMP6]], <2 x float> [[TMP8]], <2 x float> [[TMP5]]
+ ; NOPRELINK-NEXT:    ret <2 x float> [[TMP9]]
+ ;
+@@ -1641,8 +1634,7 @@ define <2 x float> @test_rootn_afn_nnan_ninf_v2f32__y_neg3(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP4]], <2 x float> [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn une <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn <2 x i1> [[TMP6]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP7]], <2 x float> [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> splat (float +inf), <2 x float> [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn <2 x i1> [[TMP6]], <2 x float> [[TMP5]], <2 x float> [[TMP8]]
+ ; NOPRELINK-NEXT:    ret <2 x float> [[TMP9]]
+ ;
+@@ -1692,8 +1684,7 @@ define <2 x float> @test_rootn_afn_nnan_ninf_v2f32__y_5(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP4]], <2 x float> [[X]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = select nnan ninf afn <2 x i1> [[TMP6]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP7]], <2 x float> [[X]])
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> zeroinitializer, <2 x float> [[X]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select nnan ninf afn <2 x i1> [[TMP6]], <2 x float> [[TMP8]], <2 x float> [[TMP5]]
+ ; NOPRELINK-NEXT:    ret <2 x float> [[TMP9]]
+ ;
+diff --git a/llvm/test/CodeGen/AMDGPU/simplify-libcalls.ll b/llvm/test/CodeGen/AMDGPU/simplify-libcalls.ll
+index a3699102fc096..6cc6b87a0871d 100644
+--- a/llvm/test/CodeGen/AMDGPU/simplify-libcalls.ll
++++ b/llvm/test/CodeGen/AMDGPU/simplify-libcalls.ll
+@@ -483,8 +483,8 @@ entry:
+ ; GCN-POSTLINK: call fast float @llvm.log2.f32
+ ; GCN-POSTLINK: fmul
+ ; GCN-POSTLINK: call fast float @llvm.exp2.f32
+-; GCN-POSTLINK: select fast i1
+ ; GCN-POSTLINK: call fast float @llvm.copysign.f32
++; GCN-POSTLINK: select fast i1
+ 
+ ; GCN-PRELINK: %__rootn2cbrt = tail call fast float @_Z4cbrtf(float %tmp)
+ define amdgpu_kernel void @test_rootn_3(ptr addrspace(1) nocapture %a) {
+diff --git a/llvm/test/Transforms/InstCombine/select-select.ll b/llvm/test/Transforms/InstCombine/select-select.ll
+index e4a7b8f73143d..0a16820874f92 100644
+--- a/llvm/test/Transforms/InstCombine/select-select.ll
++++ b/llvm/test/Transforms/InstCombine/select-select.ll
+@@ -693,8 +693,393 @@ declare void @use32(i32)
+ !0 = !{!"function_entry_count", i64 1000}
+ !1 = !{!"branch_weights", i32 2, i32 3}
+ !2 = !{!"branch_weights", i32 5, i32 3}
++
++; select(C, op(select(C, X, Y), W), Z) -> select(C, op(X, W), Z)
++; op may have other uses if they are all the same operand of selects on C.
++define i8 @sel_op_sel_tval_multi_use(i1 %c, i8 %a, i8 %b, i8 %w, i8 %x, i8 %y) {
++; CHECK-LABEL: @sel_op_sel_tval_multi_use(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = add i8 [[A]], [[W:%.*]]
++; CHECK-NEXT:    [[R0:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select i1 [[C]], i8 [[I]], i8 [[Y:%.*]]
++; CHECK-NEXT:    ret i8 [[R1]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = add i8 %s, %w
++  %r0 = select i1 %c, i8 %i, i8 %x
++  call void @use8(i8 %r0)
++  %r1 = select i1 %c, i8 %i, i8 %y
++  ret i8 %r1
++}
++
++define i8 @sel_op_sel_fval_multi_use(i1 %c, i8 %a, i8 %b, i8 %w, i8 %x, i8 %y) {
++; CHECK-LABEL: @sel_op_sel_fval_multi_use(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = add i8 [[B]], [[W:%.*]]
++; CHECK-NEXT:    [[R0:%.*]] = select i1 [[C]], i8 [[X:%.*]], i8 [[I]]
++; CHECK-NEXT:    call void @use8(i8 [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select i1 [[C]], i8 [[Y:%.*]], i8 [[I]]
++; CHECK-NEXT:    ret i8 [[R1]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = add i8 %s, %w
++  %r0 = select i1 %c, i8 %x, i8 %i
++  call void @use8(i8 %r0)
++  %r1 = select i1 %c, i8 %y, i8 %i
++  ret i8 %r1
++}
++
++define i8 @sel_op_sel_commute(i1 %c, i8 %a, i8 %b, i8 %w, i8 %x, i8 %y) {
++; CHECK-LABEL: @sel_op_sel_commute(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = sub i8 [[W:%.*]], [[A]]
++; CHECK-NEXT:    [[R0:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select i1 [[C]], i8 [[I]], i8 [[Y:%.*]]
++; CHECK-NEXT:    ret i8 [[R1]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = sub i8 %w, %s
++  %r0 = select i1 %c, i8 %i, i8 %x
++  call void @use8(i8 %r0)
++  %r1 = select i1 %c, i8 %i, i8 %y
++  ret i8 %r1
++}
++
++define i8 @sel_op_sel_both_operands(i1 %c, i8 %a, i8 %b, i8 %d, i8 %e, i8 %x, i8 %y) {
++; CHECK-LABEL: @sel_op_sel_both_operands(
++; CHECK-NEXT:    [[S0:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S0]])
++; CHECK-NEXT:    [[S1:%.*]] = select i1 [[C]], i8 [[D:%.*]], i8 [[E:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S1]])
++; CHECK-NEXT:    [[I:%.*]] = mul i8 [[A]], [[D]]
++; CHECK-NEXT:    [[R0:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select i1 [[C]], i8 [[I]], i8 [[Y:%.*]]
++; CHECK-NEXT:    ret i8 [[R1]]
++;
++  %s0 = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s0)
++  %s1 = select i1 %c, i8 %d, i8 %e
++  call void @use8(i8 %s1)
++  %i = mul i8 %s0, %s1
++  %r0 = select i1 %c, i8 %i, i8 %x
++  call void @use8(i8 %r0)
++  %r1 = select i1 %c, i8 %i, i8 %y
++  ret i8 %r1
++}
++
++define i1 @sel_icmp_sel(i1 %c, i8 %a, i8 %b, i8 %w, i1 %x) {
++; CHECK-LABEL: @sel_icmp_sel(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = icmp ult i8 [[A]], [[W:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i1 [[I]], i1 [[X:%.*]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = icmp ult i8 %s, %w
++  %r = select i1 %c, i1 %i, i1 %x
++  ret i1 %r
++}
++
++define i16 @sel_zext_sel(i1 %c, i8 %a, i8 %b, i16 %x) {
++; CHECK-LABEL: @sel_zext_sel(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = zext i8 [[A]] to i16
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i16 [[I]], i16 [[X:%.*]]
++; CHECK-NEXT:    ret i16 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = zext i8 %s to i16
++  %r = select i1 %c, i16 %i, i16 %x
++  ret i16 %r
++}
++
++define i8 @sel_umin_sel(i1 %c, i8 %a, i8 %b, i8 %w, i8 %x) {
++; CHECK-LABEL: @sel_umin_sel(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = call i8 @llvm.umin.i8(i8 [[A]], i8 [[W:%.*]])
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = call i8 @llvm.umin.i8(i8 %s, i8 %w)
++  %r = select i1 %c, i8 %i, i8 %x
++  ret i8 %r
++}
++
++define ptr @sel_gep_sel(i1 %c, ptr %p, ptr %q, ptr %x) {
++; CHECK-LABEL: @sel_gep_sel(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], ptr [[P:%.*]], ptr [[Q:%.*]]
++; CHECK-NEXT:    call void @useptr(ptr [[S]])
++; CHECK-NEXT:    [[I:%.*]] = getelementptr inbounds nuw i8, ptr [[P]], i64 4
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], ptr [[I]], ptr [[X:%.*]]
++; CHECK-NEXT:    ret ptr [[R]]
++;
++  %s = select i1 %c, ptr %p, ptr %q
++  call void @useptr(ptr %s)
++  %i = getelementptr inbounds i8, ptr %s, i64 4
++  %r = select i1 %c, ptr %i, ptr %x
++  ret ptr %r
++}
++
++define float @sel_fneg_sel(i1 %c, float %a, float %b, float %x) {
++; CHECK-LABEL: @sel_fneg_sel(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], float [[A:%.*]], float [[B:%.*]]
++; CHECK-NEXT:    call void @usef(float [[S]])
++; CHECK-NEXT:    [[I:%.*]] = fneg float [[A]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], float [[I]], float [[X:%.*]]
++; CHECK-NEXT:    ret float [[R]]
++;
++  %s = select i1 %c, float %a, float %b
++  call void @usef(float %s)
++  %i = fneg float %s
++  %r = select i1 %c, float %i, float %x
++  ret float %r
++}
++
++define i8 @sel_op_sel_nuw_nsw(i1 %c, i8 %a, i8 %b, i8 %w, i8 %x, i8 %y) {
++; CHECK-LABEL: @sel_op_sel_nuw_nsw(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = add nuw nsw i8 [[A]], [[W:%.*]]
++; CHECK-NEXT:    [[R0:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select i1 [[C]], i8 [[I]], i8 [[Y:%.*]]
++; CHECK-NEXT:    ret i8 [[R1]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = add nuw nsw i8 %s, %w
++  %r0 = select i1 %c, i8 %i, i8 %x
++  call void @use8(i8 %r0)
++  %r1 = select i1 %c, i8 %i, i8 %y
++  ret i8 %r1
++}
++
++define float @sel_op_sel_fmf(i1 %c, float %a, float %b, float %w, float %x, float %y) {
++; CHECK-LABEL: @sel_op_sel_fmf(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], float [[A:%.*]], float [[B:%.*]]
++; CHECK-NEXT:    call void @usef(float [[S]])
++; CHECK-NEXT:    [[I:%.*]] = fadd nnan float [[A]], [[W:%.*]]
++; CHECK-NEXT:    [[R0:%.*]] = select i1 [[C]], float [[I]], float [[X:%.*]]
++; CHECK-NEXT:    call void @usef(float [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select i1 [[C]], float [[I]], float [[Y:%.*]]
++; CHECK-NEXT:    ret float [[R1]]
++;
++  %s = select i1 %c, float %a, float %b
++  call void @usef(float %s)
++  %i = fadd nnan float %s, %w
++  %r0 = select i1 %c, float %i, float %x
++  call void @usef(float %r0)
++  %r1 = select i1 %c, float %i, float %y
++  ret float %r1
++}
++
++define i8 @sel_udiv_sel_dividend(i1 %c, i8 %a, i8 %b, i8 %x) {
++; CHECK-LABEL: @sel_udiv_sel_dividend(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = udiv i8 [[A]], 7
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = udiv i8 %s, 7
++  %r = select i1 %c, i8 %i, i8 %x
++  ret i8 %r
++}
++
++define <2 x i8> @sel_op_sel_vec(<2 x i1> %c, <2 x i8> %a, <2 x i8> %b, <2 x i8> %x, <2 x i8> %y) {
++; CHECK-LABEL: @sel_op_sel_vec(
++; CHECK-NEXT:    [[S:%.*]] = select <2 x i1> [[C:%.*]], <2 x i8> [[A:%.*]], <2 x i8> [[B:%.*]]
++; CHECK-NEXT:    call void @usev(<2 x i8> [[S]])
++; CHECK-NEXT:    [[I:%.*]] = add <2 x i8> [[A]], splat (i8 1)
++; CHECK-NEXT:    [[R0:%.*]] = select <2 x i1> [[C]], <2 x i8> [[I]], <2 x i8> [[X:%.*]]
++; CHECK-NEXT:    call void @usev(<2 x i8> [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select <2 x i1> [[C]], <2 x i8> [[I]], <2 x i8> [[Y:%.*]]
++; CHECK-NEXT:    ret <2 x i8> [[R1]]
++;
++  %s = select <2 x i1> %c, <2 x i8> %a, <2 x i8> %b
++  call void @usev(<2 x i8> %s)
++  %i = add <2 x i8> %s, splat (i8 1)
++  %r0 = select <2 x i1> %c, <2 x i8> %i, <2 x i8> %x
++  call void @usev(<2 x i8> %r0)
++  %r1 = select <2 x i1> %c, <2 x i8> %i, <2 x i8> %y
++  ret <2 x i8> %r1
++}
++
++; Negative test - op has a use that is not a select on C.
++define i8 @sel_op_sel_extra_use(i1 %c, i8 %a, i8 %b, i8 %w, i8 %x) {
++; CHECK-LABEL: @sel_op_sel_extra_use(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = add i8 [[S]], [[W:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[I]])
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = add i8 %s, %w
++  call void @use8(i8 %i)
++  %r = select i1 %c, i8 %i, i8 %x
++  ret i8 %r
++}
++
++; Negative test - op is both a TValue and an FValue.
++define i8 @sel_op_sel_tval_and_fval_use(i1 %c, i8 %a, i8 %b) {
++; CHECK-LABEL: @sel_op_sel_tval_and_fval_use(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[B:%.*]], i8 [[A:%.*]]
++; CHECK-NEXT:    [[I:%.*]] = add i8 [[S]], 1
++; CHECK-NEXT:    [[AN:%.*]] = select i1 [[C]], i8 [[A]], i8 [[I]]
++; CHECK-NEXT:    call void @use8(i8 [[AN]])
++; CHECK-NEXT:    [[BN:%.*]] = select i1 [[C]], i8 [[I]], i8 [[B]]
++; CHECK-NEXT:    ret i8 [[BN]]
++;
++  %s = select i1 %c, i8 %b, i8 %a
++  %i = add i8 %s, 1
++  %an = select i1 %c, i8 %a, i8 %i
++  call void @use8(i8 %an)
++  %bn = select i1 %c, i8 %i, i8 %b
++  ret i8 %bn
++}
++
++; Negative test - op is used by a select on another condition.
++define i8 @sel_op_sel_wrong_cond_use(i1 %c, i1 %d, i8 %a, i8 %b, i8 %w, i8 %x, i8 %y) {
++; CHECK-LABEL: @sel_op_sel_wrong_cond_use(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = add i8 [[S]], [[W:%.*]]
++; CHECK-NEXT:    [[R0:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[R0]])
++; CHECK-NEXT:    [[R1:%.*]] = select i1 [[D:%.*]], i8 [[I]], i8 [[Y:%.*]]
++; CHECK-NEXT:    ret i8 [[R1]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = add i8 %s, %w
++  %r0 = select i1 %c, i8 %i, i8 %x
++  call void @use8(i8 %r0)
++  %r1 = select i1 %d, i8 %i, i8 %y
++  ret i8 %r1
++}
++
++; Negative test - the inner select is on another condition.
++define i8 @sel_op_sel_wrong_cond_inner(i1 %c, i1 %d, i8 %a, i8 %b, i8 %w, i8 %x) {
++; CHECK-LABEL: @sel_op_sel_wrong_cond_inner(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[D:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = add i8 [[S]], [[W:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C:%.*]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %s = select i1 %d, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = add i8 %s, %w
++  %r = select i1 %c, i8 %i, i8 %x
++  ret i8 %r
++}
++
++; Negative test - phi is not speculatable.
++define i8 @sel_phi_sel(i1 %c, i1 %e, i8 %a, i8 %b, i8 %x) {
++; CHECK-LABEL: @sel_phi_sel(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    br i1 [[E:%.*]], label [[THEN:%.*]], label [[JOIN:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    br label [[JOIN]]
++; CHECK:       join:
++; CHECK-NEXT:    [[I:%.*]] = phi i8 [ [[S]], [[ENTRY:%.*]] ], [ [[X:%.*]], [[THEN]] ]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  br i1 %e, label %then, label %join
++
++then:
++  br label %join
++
++join:
++  %i = phi i8 [ %s, %entry ], [ %x, %then ]
++  %r = select i1 %c, i8 %i, i8 %x
++  ret i8 %r
++}
++
++; Negative test - udiv by the inner select is not speculatable.
++define i8 @sel_udiv_sel_divisor(i1 %c, i8 %a, i8 %b, i8 %w, i8 %x) {
++; CHECK-LABEL: @sel_udiv_sel_divisor(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[I:%.*]] = udiv i8 [[W:%.*]], [[S]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 [[I]], i8 [[X:%.*]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  call void @use8(i8 %s)
++  %i = udiv i8 %w, %s
++  %r = select i1 %c, i8 %i, i8 %x
++  ret i8 %r
++}
++
++; Negative test - vec shuffle.
++define <2 x i8> @sel_shuf_sel_lane_crossing(<2 x i1> %c, <2 x i8> %a, <2 x i8> %b, <2 x i8> %x) {
++; CHECK-LABEL: @sel_shuf_sel_lane_crossing(
++; CHECK-NEXT:    [[S:%.*]] = select <2 x i1> [[C:%.*]], <2 x i8> [[A:%.*]], <2 x i8> [[B:%.*]]
++; CHECK-NEXT:    call void @usev(<2 x i8> [[S]])
++; CHECK-NEXT:    [[I:%.*]] = shufflevector <2 x i8> [[S]], <2 x i8> poison, <2 x i32> <i32 1, i32 0>
++; CHECK-NEXT:    [[R:%.*]] = select <2 x i1> [[C]], <2 x i8> [[I]], <2 x i8> [[X:%.*]]
++; CHECK-NEXT:    ret <2 x i8> [[R]]
++;
++  %s = select <2 x i1> %c, <2 x i8> %a, <2 x i8> %b
++  call void @usev(<2 x i8> %s)
++  %i = shufflevector <2 x i8> %s, <2 x i8> poison, <2 x i32> <i32 1, i32 0>
++  %r = select <2 x i1> %c, <2 x i8> %i, <2 x i8> %x
++  ret <2 x i8> %r
++}
++
++; Negative test - the noundef argument could become poison.
++define i8 @sel_call_sel_noundef(i1 %c, i8 %x, i8 %z) {
++; CHECK-LABEL: @sel_call_sel_noundef(
++; CHECK-NEXT:    [[P:%.*]] = add nsw i8 [[X:%.*]], 1
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[P]], i8 0
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[R:%.*]] = call i8 @speculatable_fn(i8 noundef [[S]])
++; CHECK-NEXT:    [[O:%.*]] = select i1 [[C]], i8 [[R]], i8 [[Z:%.*]]
++; CHECK-NEXT:    ret i8 [[O]]
++;
++  %p = add nsw i8 %x, 1
++  %s = select i1 %c, i8 %p, i8 0
++  call void @use8(i8 %s)
++  %r = call i8 @speculatable_fn(i8 noundef %s)
++  %o = select i1 %c, i8 %r, i8 %z
++  ret i8 %o
++}
++
++declare void @usev(<2 x i8>)
++declare void @useptr(ptr)
++declare void @usef(float)
++declare i8 @speculatable_fn(i8) speculatable memory(none) nounwind willreturn
+ ;.
+-; CHECK: attributes #[[ATTR0:[0-9]+]] = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
++; CHECK: attributes #[[ATTR0:[0-9]+]] = { nounwind speculatable willreturn memory(none) }
++; CHECK: attributes #[[ATTR1:[0-9]+]] = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+ ;.
+ ; CHECK: [[META0:![0-9]+]] = !{!"function_entry_count", i64 1000}
+ ; CHECK: [[PROF1]] = !{!"branch_weights", i32 5, i32 3}
+diff --git a/llvm/test/Transforms/InstCombine/select.ll b/llvm/test/Transforms/InstCombine/select.ll
+index 203f15cd6f2fc..133a4a614bb72 100644
+--- a/llvm/test/Transforms/InstCombine/select.ll
++++ b/llvm/test/Transforms/InstCombine/select.ll
+@@ -4943,8 +4943,7 @@ define i32 @sequence_select_with_same_cond_true(i1 %c1, i1 %c2){
+ define double @sequence_select_with_same_cond_double(double %a, i1 %c1, i1 %c2, double %r1, double %r2){
+ ; CHECK-LABEL: define double @sequence_select_with_same_cond_double(
+ ; CHECK-SAME: double [[A:%.*]], i1 [[C1:%.*]], i1 [[C2:%.*]], double [[R1:%.*]], double [[R2:%.*]]) {
+-; CHECK-NEXT:    [[S1:%.*]] = select i1 [[C1]], double 1.000000e+00, double 0.000000e+00
+-; CHECK-NEXT:    [[S2:%.*]] = select i1 [[C2]], double [[S1]], double 2.000000e+00
++; CHECK-NEXT:    [[S2:%.*]] = select i1 [[C2]], double 1.000000e+00, double 2.000000e+00
+ ; CHECK-NEXT:    [[S3:%.*]] = select i1 [[C1]], double [[S2]], double 3.000000e+00
+ ; CHECK-NEXT:    ret double [[S3]]
+ ;
+@@ -4961,7 +4960,7 @@ define i32 @sequence_select_with_same_cond_extra_use(i1 %c1, i1 %c2){
+ ; CHECK-SAME: i1 [[C1:%.*]], i1 [[C2:%.*]]) {
+ ; CHECK-NEXT:    [[S1:%.*]] = select i1 [[C1]], i32 23, i32 45
+ ; CHECK-NEXT:    call void @use32(i32 [[S1]])
+-; CHECK-NEXT:    [[S2:%.*]] = select i1 [[C2]], i32 666, i32 [[S1]]
++; CHECK-NEXT:    [[S2:%.*]] = select i1 [[C2]], i32 666, i32 45
+ ; CHECK-NEXT:    [[S3:%.*]] = select i1 [[C1]], i32 789, i32 [[S2]]
+ ; CHECK-NEXT:    ret i32 [[S3]]
+ ;
