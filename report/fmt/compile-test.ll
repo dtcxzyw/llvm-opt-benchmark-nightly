@@ -205,14 +205,14 @@ _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXoontcvNS1_23is_back_insert_iterat
   %i.ft = add nsw i64 %i.dv, %i.ds
   %i.fu = select i1 %.not.i36, i64 %i.ft, i64 1
   %i.fv = call noundef zeroext i1 @_ZZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEENKUljNSA_IcEEE_clEjSF_(ptr noundef nonnull align 8 dereferenceable(40) %3, i32 noundef %i.fs, ptr %.3, i64 %i.fu) ; 3 uses
-  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 2 uses
+  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 3 uses
   %i.fx = ptrtoint ptr %i.fw to i64
   %i.fy = ptrtoint ptr %.0 to i64
   %i.fz = sub i64 %i.fx, %i.fy
   %.4.idx = select i1 %i.fv, i64 %i.fz, i64 0
   %.4 = getelementptr inbounds i8, ptr %.3, i64 %.4.idx
-  %.1 = select i1 %i.fv, ptr %i.fw, ptr %.0       ; 2 uses
-  %i.ga = icmp ult ptr %.1, %i.dl
+  %.1 = select i1 %i.fv, ptr %i.fw, ptr %.0
+  %i.ga = icmp ult ptr %i.fw, %i.dl
   %or.cond = select i1 %i.fv, i1 %i.ga, i1 false
   br i1 %or.cond, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS8_T0_vEE_EcvNS1_10has_insertIS8_SD_vEE_EEiE4typeELi0EEES8_SD_SD_S8_.exit, label %bb.e, !llvm.loop !944
 
@@ -615,14 +615,14 @@ _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXoontcvNS1_23is_back_insert_iterat
   %i.ft = add nsw i64 %i.dv, %i.ds
   %i.fu = select i1 %.not.i36, i64 %i.ft, i64 1
   %i.fv = call noundef zeroext i1 @_ZZN3fmt3v126detail5writeIcSt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_SF_NS0_17basic_string_viewISC_EERKNS0_12format_specsEENKUljNSG_IcEEE_clEjSL_(ptr noundef nonnull align 8 dereferenceable(40) %3, i32 noundef %i.fs, ptr %.3, i64 %i.fu) ; 3 uses
-  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 2 uses
+  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 3 uses
   %i.fx = ptrtoint ptr %i.fw to i64
   %i.fy = ptrtoint ptr %.0 to i64
   %i.fz = sub i64 %i.fx, %i.fy
   %.4.idx = select i1 %i.fv, i64 %i.fz, i64 0
   %.4 = getelementptr inbounds i8, ptr %.3, i64 %.4.idx
-  %.1 = select i1 %i.fv, ptr %i.fw, ptr %.0       ; 2 uses
-  %i.ga = icmp ult ptr %.1, %i.dl
+  %.1 = select i1 %i.fv, ptr %i.fw, ptr %.0
+  %i.ga = icmp ult ptr %i.fw, %i.dl
   %or.cond = select i1 %i.fv, i1 %i.ga, i1 false
   br i1 %or.cond, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS8_T0_vEE_EcvNS1_10has_insertIS8_SD_vEE_EEiE4typeELi0EEES8_SD_SD_S8_.exit, label %bb.e, !llvm.loop !1053
 

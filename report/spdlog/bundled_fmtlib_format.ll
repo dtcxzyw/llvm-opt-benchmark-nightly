@@ -205,12 +205,12 @@ _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT
 _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.i: ; preds = %.noexc7, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader.i
   %.0.i = phi ptr [ %.1.i, %.noexc7 ], [ %i.b, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader.i ] ; 2 uses
   %i.bg = invoke fastcc noundef ptr @"_ZZN3fmt3v126detail18for_each_codepointIZNS1_13utf8_to_utf16C1ENS0_17basic_string_viewIcEEE3$_0EEvS5_T_ENKUlPKcS9_E_clES9_S9_"(ptr nonnull %0, ptr noundef %.0.i)
-          to label %.noexc7 unwind label %.loopexit ; 2 uses
+          to label %.noexc7 unwind label %.loopexit ; 3 uses
 
 .noexc7:                                          ; preds = %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.i
   %.not31.not.i = icmp ne ptr %i.bg, null         ; 2 uses
-  %.1.i = select i1 %.not31.not.i, ptr %i.bg, ptr %.0.i ; 2 uses
-  %i.bh = icmp ult ptr %.1.i, %i.bf
+  %.1.i = select i1 %.not31.not.i, ptr %i.bg, ptr %.0.i
+  %i.bh = icmp ult ptr %i.bg, %i.bf
   %or.cond.i = select i1 %.not31.not.i, i1 %i.bh, i1 false
   br i1 %or.cond.i, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.i, label %bb.e, !llvm.loop !275
 
@@ -613,14 +613,14 @@ _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT
   %i.ft = add nsw i64 %i.dv, %i.ds
   %i.fu = select i1 %.not.i36, i64 %i.ft, i64 1
   %i.fv = call noundef zeroext i1 @_ZZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEENKUljNSA_IcEEE_clEjSF_(ptr noundef nonnull align 8 dereferenceable(40) %3, i32 noundef %i.fs, ptr %.3, i64 %i.fu) ; 3 uses
-  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 2 uses
+  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 3 uses
   %i.fx = ptrtoint ptr %i.fw to i64
   %i.fy = ptrtoint ptr %.0 to i64
   %i.fz = sub i64 %i.fx, %i.fy
   %.4.idx = select i1 %i.fv, i64 %i.fz, i64 0
   %.4 = getelementptr inbounds i8, ptr %.3, i64 %.4.idx
-  %.1 = select i1 %i.fv, ptr %i.fw, ptr %.0       ; 2 uses
-  %i.ga = icmp ult ptr %.1, %i.dl
+  %.1 = select i1 %i.fv, ptr %i.fw, ptr %.0
+  %i.ga = icmp ult ptr %i.fw, %i.dl
   %or.cond = select i1 %i.fv, i1 %i.ga, i1 false
   br i1 %or.cond, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit, label %bb.e, !llvm.loop !688
 

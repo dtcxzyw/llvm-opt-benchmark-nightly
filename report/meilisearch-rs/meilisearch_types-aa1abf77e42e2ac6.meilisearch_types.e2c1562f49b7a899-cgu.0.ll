@@ -205,12 +205,12 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !21 ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.z = load i64, ptr %i.y, align 8
-  %.sroa.8.0 = select i1 %.not.not, i64 undef, i64 %i.z ; 5 uses
+  %i.z = load i64, ptr %i.y, align 8              ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   %i.aa = load i64, ptr %1, align 8, !range !25, !noundef !21
   %.not118 = icmp eq i64 %i.aa, -9223372036854775808 ; 2 uses
   %.sroa.0.0 = select i1 %.not.not, ptr null, ptr %i.x
+  %.sroa.8.0 = select i1 %.not.not, i64 undef, i64 %i.z
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !nonnull !21
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -613,13 +613,13 @@ bb.cd:                                            ; preds = %.split362.us
   call void @llvm.experimental.noalias.scope.decl(metadata !7625)
   %i.tf = getelementptr inbounds nuw i8, ptr %i.te, i64 16
   %i.tg = load i64, ptr %i.tf, align 8, !alias.scope !7625, !noalias !7627, !noundef !21
-  %.not3.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.tg, %.sroa.8.0
+  %.not3.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.tg, %i.z
   br i1 %.not3.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h270c08e4b65db64cE.exit.i.i.i.i.i.i.i.i.i.i.i.i", label %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h471827927bf63457E.exit.i.i.i.i.i.i.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h270c08e4b65db64cE.exit.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %.loopexit.i.i.i.i133
   %i.th = getelementptr inbounds nuw i8, ptr %i.te, i64 8
   %i.ti = load ptr, ptr %i.th, align 8, !alias.scope !7625, !noalias !7627, !nonnull !21, !noundef !21
-  %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.ti, ptr nonnull %i.x, i64 %.sroa.8.0), !noalias !7628
+  %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.ti, ptr nonnull %i.x, i64 %i.z), !noalias !7628
   %bcmp.i.i.fr.i.i.i.i.i.i.i.i.i.i.i.i = freeze i32 %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.not.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %bcmp.i.i.fr.i.i.i.i.i.i.i.i.i.i.i.i, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i, label %"_ZN4core4iter6traits8iterator8Iterator4find5check28_$u7b$$u7b$closure$u7d$$u7d$17hf2b4d0abee32cc2cE.exit.i.i.i.i.i.i.i.i.i.i.i", label %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h471827927bf63457E.exit.i.i.i.i.i.i.i"
@@ -920,13 +920,13 @@ bb.cp:                                            ; preds = %.split368.us
   call void @llvm.experimental.noalias.scope.decl(metadata !7639)
   %i.wj = getelementptr inbounds nuw i8, ptr %i.wi, i64 16
   %i.wk = load i64, ptr %i.wj, align 8, !alias.scope !7639, !noalias !7641, !noundef !21
-  %.not3.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.wk, %.sroa.8.0
+  %.not3.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.wk, %i.z
   br i1 %.not3.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h270c08e4b65db64cE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i", label %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h471827927bf63457E.exit.i.i.i.i.i.i.i.i.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h270c08e4b65db64cE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %.loopexit.i.i.i.i.i.i.i.i
   %i.wl = getelementptr inbounds nuw i8, ptr %i.wi, i64 8
   %i.wm = load ptr, ptr %i.wl, align 8, !alias.scope !7639, !noalias !7641, !nonnull !21, !noundef !21
-  %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.wm, ptr nonnull %i.x, i64 %.sroa.8.0), !noalias !7642
+  %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.wm, ptr nonnull %i.x, i64 %i.z), !noalias !7642
   %bcmp.i.i.fr.i.i.i.i.i.i.i.i.i.i.i.i.i.i = freeze i32 %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.not.i.i.i.i.i.i.i.i8.i.i.i.i.i.i = icmp eq i32 %bcmp.i.i.fr.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
   br i1 %.not.i.i.i.i.i.i.i.i8.i.i.i.i.i.i, label %"_ZN4core4iter6traits8iterator8Iterator4find5check28_$u7b$$u7b$closure$u7d$$u7d$17hf2b4d0abee32cc2cE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i", label %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h471827927bf63457E.exit.i.i.i.i.i.i.i.i.i"

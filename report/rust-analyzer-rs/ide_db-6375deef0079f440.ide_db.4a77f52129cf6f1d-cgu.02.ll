@@ -205,16 +205,16 @@ bb.c:                                             ; preds = %.noexc
   %i.q = load ptr, ptr %i.p, align 8, !alias.scope !1711, !noalias !1712, !align !15, !noundef !5 ; 2 uses
   %.val.i.i = load ptr, ptr %i.d, align 8, !alias.scope !1711, !noalias !1712, !noundef !5 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.val1.i.i = load ptr, ptr %i.r, align 8, !alias.scope !1711, !noalias !1712
+  %.val1.i.i = load ptr, ptr %i.r, align 8, !alias.scope !1711, !noalias !1712 ; 2 uses
   %.not.i.i.i = icmp eq ptr %.val.i.i, null       ; 2 uses
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr undef, ptr %.val1.i.i ; 2 uses
+  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr undef, ptr %.val1.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.t = load ptr, ptr %i.s, align 8, !alias.scope !1713, !noalias !1714, !align !15, !noundef !5 ; 2 uses
   %.val.i1.i = load ptr, ptr %i.o, align 8, !alias.scope !1713, !noalias !1714, !noundef !5 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %.val1.i2.i = load ptr, ptr %i.u, align 8, !alias.scope !1713, !noalias !1714
+  %.val1.i2.i = load ptr, ptr %i.u, align 8, !alias.scope !1713, !noalias !1714 ; 2 uses
   %.not.i.i3.i = icmp eq ptr %.val.i1.i, null     ; 2 uses
-  %spec.select.i.i4.i = select i1 %.not.i.i3.i, ptr undef, ptr %.val1.i2.i ; 2 uses
+  %spec.select.i.i4.i = select i1 %.not.i.i3.i, ptr undef, ptr %.val1.i2.i
   store ptr %.val.i.i, ptr %i.c, align 8, !alias.scope !1709, !noalias !1710
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   store ptr %spec.select.i.i.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1709, !noalias !1710
@@ -240,7 +240,7 @@ _RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3all5checkTRNt
 
 bb.d:                                             ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCs6oosyzwIepl_6ide_db9text_edit5IndelB1c_ENCINvB1f_14check_disjointINtNtCscFGNKo4Sl5v_9itertools10merge_join7MergeByINtNtNtBe_5slice4iter4IterB1d_EB39_NCNvMs_B1f_NtB1f_8TextEdit5union0EE0E0B1h_.exit.i.i
   %.not.i.i.i.i.i.i = icmp eq ptr %i.y, null
-  %i.z = icmp eq ptr %spec.select.i.i.i, %i.y
+  %i.z = icmp eq ptr %.val1.i.i, %i.y
   %i.aa = select i1 %.not.i.i.i, i1 undef, i1 %i.z
   %or.cond.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i1 true, i1 %i.aa ; 2 uses
   %spec.select.idx.i = select i1 %or.cond.i.i.i.i.i.i, i64 0, i64 32
@@ -256,7 +256,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtBb_5slice4
 
 bb.e:                                             ; preds = %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtBb_5slice4iter4IterNtNtCs6oosyzwIepl_6ide_db9text_edit5IndelEEINtB5_8FuseImplBY_E4nextB1s_.exit.i.i.i.i.i
   %.not.i22.i.i.i.i.i = icmp eq ptr %i.x, null
-  %i.ac = icmp eq ptr %spec.select.i.i4.i, %i.x
+  %i.ac = icmp eq ptr %.val1.i2.i, %i.x
   %i.ad = select i1 %.not.i.i3.i, i1 undef, i1 %i.ac
   %or.cond.i23.i.i.i.i.i = select i1 %.not.i22.i.i.i.i.i, i1 true, i1 %i.ad
   br i1 %or.cond.i23.i.i.i.i.i, label %_RNvXs5_NtCscFGNKo4Sl5v_9itertools10merge_joinINtB5_7MergeByINtNtNtCshzWfHUSfYae_4core5slice4iter4IterNtNtCs6oosyzwIepl_6ide_db9text_edit5IndelEBV_NCNvMs_B1D_NtB1D_8TextEdit5union0ENtNtNtNtB12_4iter6traits8iterator8Iterator4nextB1F_.exit.i.i.i.i, label %bb.f
