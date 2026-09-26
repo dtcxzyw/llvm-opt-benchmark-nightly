@@ -201,7 +201,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.k = icmp ugt i64 %i.g, 4294967295
   %i.l = or i1 %i.j, %i.k
   %i.m = sub i64 %i.a, %i.b
-  %diff.check = icmp ugt i64 %i.m, -32
+  %diff.check = icmp ugt i64 %i.m, -16
   %or.cond = or i1 %i.l, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
@@ -304,9 +304,9 @@ bb.a:
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.d = sub i64 %i.b, %i.c
-  %diff.check = icmp ugt i64 %i.d, -32
+  %diff.check = icmp ugt i64 %i.d, -16
   %i.e = sub i64 %i.a, %i.c
-  %diff.check10 = icmp ugt i64 %i.e, -32
+  %diff.check10 = icmp ugt i64 %i.e, -16
   %conflict.rdx = or i1 %diff.check, %diff.check10
   br i1 %conflict.rdx, label %.lr.ph.preheader12, label %vector.ph
 
@@ -375,9 +375,9 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
   %i.h = sub i64 %i.b, %i.c
-  %diff.check = icmp ugt i64 %i.h, -32
+  %diff.check = icmp ugt i64 %i.h, -16
   %i.i = sub i64 %i.a, %i.c
-  %diff.check68 = icmp ugt i64 %i.i, -32
+  %diff.check68 = icmp ugt i64 %i.i, -16
   %conflict.rdx = or i1 %diff.check, %diff.check68
   br i1 %conflict.rdx, label %.lr.ph.i.preheader, label %vector.ph
 

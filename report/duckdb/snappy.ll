@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.split94.us
 iter.check:                                       ; preds = %bb.j
   %min.iters.check = icmp ult i64 %spec.select57, 4
   %i.be = add nsw i64 %i.bc, -1
-  %diff.check = icmp ult i64 %i.be, 31
+  %diff.check = icmp ult i64 %i.be, 15
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -440,7 +440,7 @@ iter.check205:                                    ; preds = %bb.u
   %i.dk = add i64 %i.dj, %spec.select57           ; 7 uses
   %min.iters.check190 = icmp ult i64 %i.dk, 4
   %i.dl = sub i64 %.155.i188, %.3.i187
-  %diff.check189 = icmp ugt i64 %i.dl, -32
+  %diff.check189 = icmp ugt i64 %i.dl, -16
   %or.cond242 = select i1 %min.iters.check190, i1 true, i1 %diff.check189
   br i1 %or.cond242, label %.lr.ph.i79.i.preheader, label %vector.main.loop.iter.check191
 
@@ -594,7 +594,7 @@ iter.check160:                                    ; preds = %bb.c
   %i.l = sub i64 %i.a, %i.c                       ; 7 uses
   %min.iters.check144 = icmp ult i64 %i.l, 4
   %i.m = add nsw i64 %i.e, -1
-  %diff.check142 = icmp ult i64 %i.m, 31
+  %diff.check142 = icmp ult i64 %i.m, 15
   %or.cond = select i1 %min.iters.check144, i1 true, i1 %diff.check142
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check145
 
@@ -810,7 +810,7 @@ iter.check:                                       ; preds = %bb.n
   %i.bn = sub i64 %i.a, %.3115                    ; 7 uses
   %min.iters.check118 = icmp ult i64 %i.bn, 4
   %i.bo = sub i64 %.155116, %.3115
-  %diff.check = icmp ugt i64 %i.bo, -32
+  %diff.check = icmp ugt i64 %i.bo, -16
   %or.cond176 = select i1 %min.iters.check118, i1 true, i1 %diff.check
   br i1 %or.cond176, label %.lr.ph.i79.preheader, label %vector.main.loop.iter.check
 
