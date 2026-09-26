@@ -205,18 +205,18 @@ bb.j:                                             ; preds = %bb.f
   br i1 %.not43.i, label %php_charmask.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.j
-  %i.al = add nuw nsw i64 %i.x, 24                ; 2 uses
-  %invariant.op = add i64 %i.x, 23
-  %invariant.op45 = add i64 %i.x, 22
+  %i.al = add nuw i64 %i.x, 21
+  %invariant.op = add nuw i64 %i.x, 23            ; 2 uses
+  %invariant.op45 = add nuw i64 %i.x, 22
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.y
-  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.y ], [ 24, %.lr.ph.i.preheader ] ; 10 uses
+  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.y ], [ 24, %.lr.ph.i.preheader ] ; 11 uses
   %.03141.i.ptr = getelementptr inbounds nuw i8, ptr %i.t, i64 %.03141.i.idx ; 6 uses
   %i.am = load i8, ptr %.03141.i.ptr, align 1, !tbaa !32 ; 5 uses
-  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 3 uses
+  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 2 uses
   %.ptr40 = getelementptr inbounds nuw i8, ptr %i.t, i64 %.03141.i.add
-  %i.an = icmp samesign ult i64 %.03141.i.add, %i.al
+  %i.an = icmp ult i64 %.03141.i.idx, %i.al
   br i1 %i.an, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %.lr.ph.i
@@ -296,9 +296,9 @@ bb.x:                                             ; preds = %bb.p, %bb.o
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.t, %bb.r, %bb.n
-  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.n ], [ %.03141.i.idx, %bb.r ], [ %.03141.i.idx, %bb.t ], [ %.03141.i.idx, %bb.v ], [ %.03141.i.idx, %bb.w ], [ %.03141.i.idx, %bb.x ]
-  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1    ; 2 uses
-  %i.bl = icmp samesign ult i64 %.132.i.add, %i.al
+  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.n ], [ %.03141.i.idx, %bb.r ], [ %.03141.i.idx, %bb.t ], [ %.03141.i.idx, %bb.v ], [ %.03141.i.idx, %bb.w ], [ %.03141.i.idx, %bb.x ] ; 2 uses
+  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1
+  %i.bl = icmp ult i64 %.132.i.idx, %invariant.op
   br i1 %i.bl, label %.lr.ph.i, label %php_charmask.exit, !llvm.loop !5
 
 php_charmask.exit:                                ; preds = %bb.y, %bb.j
@@ -701,18 +701,18 @@ bb.o:                                             ; preds = %bb.k
   br i1 %.not43.i, label %php_charmask.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.o
-  %i.ax = add nuw nsw i64 %i.aj, 24               ; 2 uses
-  %invariant.op = add i64 %i.aj, 23
-  %invariant.op51 = add i64 %i.aj, 22
+  %i.ax = add nuw i64 %i.aj, 21
+  %invariant.op = add nuw i64 %i.aj, 23           ; 2 uses
+  %invariant.op51 = add nuw i64 %i.aj, 22
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.ad
-  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.ad ], [ 24, %.lr.ph.i.preheader ] ; 10 uses
+  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.ad ], [ 24, %.lr.ph.i.preheader ] ; 11 uses
   %.03141.i.ptr = getelementptr inbounds nuw i8, ptr %i.af, i64 %.03141.i.idx ; 6 uses
   %i.ay = load i8, ptr %.03141.i.ptr, align 1, !tbaa !32 ; 5 uses
-  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 3 uses
+  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 2 uses
   %.ptr49 = getelementptr inbounds nuw i8, ptr %i.af, i64 %.03141.i.add
-  %i.az = icmp samesign ult i64 %.03141.i.add, %i.ax
+  %i.az = icmp ult i64 %.03141.i.idx, %i.ax
   br i1 %i.az, label %bb.p, label %bb.t
 
 bb.p:                                             ; preds = %.lr.ph.i
@@ -792,9 +792,9 @@ bb.ac:                                            ; preds = %bb.u, %bb.t
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.y, %bb.w, %bb.s
-  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.s ], [ %.03141.i.idx, %bb.w ], [ %.03141.i.idx, %bb.y ], [ %.03141.i.idx, %bb.aa ], [ %.03141.i.idx, %bb.ab ], [ %.03141.i.idx, %bb.ac ]
-  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1    ; 2 uses
-  %i.bx = icmp samesign ult i64 %.132.i.add, %i.ax
+  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.s ], [ %.03141.i.idx, %bb.w ], [ %.03141.i.idx, %bb.y ], [ %.03141.i.idx, %bb.aa ], [ %.03141.i.idx, %bb.ab ], [ %.03141.i.idx, %bb.ac ] ; 2 uses
+  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1
+  %i.bx = icmp ult i64 %.132.i.idx, %invariant.op
   br i1 %i.bx, label %.lr.ph.i, label %php_charmask.exit, !llvm.loop !5
 
 php_charmask.exit:                                ; preds = %bb.ad, %bb.o
@@ -1045,18 +1045,18 @@ bb.i:                                             ; preds = %bb.f
   br i1 %.not43.i, label %php_charmask.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.i
-  %i.ad = add nuw nsw i64 %i.w, 24                ; 2 uses
-  %invariant.op = add i64 %i.w, 23
-  %invariant.op48 = add i64 %i.w, 22
+  %i.ad = add nuw i64 %i.w, 21
+  %invariant.op = add nuw i64 %i.w, 23            ; 2 uses
+  %invariant.op48 = add nuw i64 %i.w, 22
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.x
-  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.x ], [ 24, %.lr.ph.i.preheader ] ; 10 uses
+  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.x ], [ 24, %.lr.ph.i.preheader ] ; 11 uses
   %.03141.i.ptr = getelementptr inbounds nuw i8, ptr %i.t, i64 %.03141.i.idx ; 6 uses
   %i.ae = load i8, ptr %.03141.i.ptr, align 1, !tbaa !32 ; 5 uses
-  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 3 uses
+  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 2 uses
   %.ptr36 = getelementptr inbounds nuw i8, ptr %i.t, i64 %.03141.i.add
-  %i.af = icmp samesign ult i64 %.03141.i.add, %i.ad
+  %i.af = icmp ult i64 %.03141.i.idx, %i.ad
   br i1 %i.af, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %.lr.ph.i
@@ -1136,9 +1136,9 @@ bb.w:                                             ; preds = %bb.o, %bb.n
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.s, %bb.q, %bb.m
-  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.m ], [ %.03141.i.idx, %bb.q ], [ %.03141.i.idx, %bb.s ], [ %.03141.i.idx, %bb.u ], [ %.03141.i.idx, %bb.v ], [ %.03141.i.idx, %bb.w ]
-  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1    ; 2 uses
-  %i.bd = icmp samesign ult i64 %.132.i.add, %i.ad
+  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.m ], [ %.03141.i.idx, %bb.q ], [ %.03141.i.idx, %bb.s ], [ %.03141.i.idx, %bb.u ], [ %.03141.i.idx, %bb.v ], [ %.03141.i.idx, %bb.w ] ; 2 uses
+  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1
+  %i.bd = icmp ult i64 %.132.i.idx, %invariant.op
   br i1 %i.bd, label %.lr.ph.i, label %php_charmask.exit, !llvm.loop !5
 
 php_charmask.exit:                                ; preds = %bb.x, %bb.i
@@ -1381,18 +1381,18 @@ bb.i:                                             ; preds = %bb.f
   br i1 %.not43.i, label %php_charmask.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.i
-  %i.ag = add nuw nsw i64 %i.w, 24                ; 2 uses
-  %invariant.op = add i64 %i.w, 23
-  %invariant.op41 = add i64 %i.w, 22
+  %i.ag = add nuw i64 %i.w, 21
+  %invariant.op = add nuw i64 %i.w, 23            ; 2 uses
+  %invariant.op41 = add nuw i64 %i.w, 22
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.x
-  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.x ], [ 24, %.lr.ph.i.preheader ] ; 10 uses
+  %.03141.i.idx = phi i64 [ %.132.i.add, %bb.x ], [ 24, %.lr.ph.i.preheader ] ; 11 uses
   %.03141.i.ptr = getelementptr inbounds nuw i8, ptr %i.t, i64 %.03141.i.idx ; 6 uses
   %i.ah = load i8, ptr %.03141.i.ptr, align 1, !tbaa !32 ; 5 uses
-  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 3 uses
+  %.03141.i.add = add nuw nsw i64 %.03141.i.idx, 3 ; 2 uses
   %.ptr37 = getelementptr inbounds nuw i8, ptr %i.t, i64 %.03141.i.add
-  %i.ai = icmp samesign ult i64 %.03141.i.add, %i.ag
+  %i.ai = icmp ult i64 %.03141.i.idx, %i.ag
   br i1 %i.ai, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %.lr.ph.i
@@ -1472,9 +1472,9 @@ bb.w:                                             ; preds = %bb.o, %bb.n
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.s, %bb.q, %bb.m
-  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.m ], [ %.03141.i.idx, %bb.q ], [ %.03141.i.idx, %bb.s ], [ %.03141.i.idx, %bb.u ], [ %.03141.i.idx, %bb.v ], [ %.03141.i.idx, %bb.w ]
-  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1    ; 2 uses
-  %i.bg = icmp samesign ult i64 %.132.i.add, %i.ag
+  %.132.i.idx = phi i64 [ %.03141.i.add, %bb.m ], [ %.03141.i.idx, %bb.q ], [ %.03141.i.idx, %bb.s ], [ %.03141.i.idx, %bb.u ], [ %.03141.i.idx, %bb.v ], [ %.03141.i.idx, %bb.w ] ; 2 uses
+  %.132.i.add = add nuw nsw i64 %.132.i.idx, 1
+  %i.bg = icmp ult i64 %.132.i.idx, %invariant.op
   br i1 %i.bg, label %.lr.ph.i, label %php_charmask.exit, !llvm.loop !5
 
 php_charmask.exit:                                ; preds = %bb.x, %bb.i

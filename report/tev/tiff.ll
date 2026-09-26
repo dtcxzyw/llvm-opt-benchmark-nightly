@@ -205,23 +205,23 @@ _ZNK21libraw_static_table_tixEj.exit1148:         ; preds = %bb.mo, %bb.mn, %bb.
   %i.cef = add nuw nsw i32 %.085513571531, 24
   %spec.select1129 = select i1 %.not1079, i32 %.085513571531, i32 %i.cef ; 2 uses
   %i.ceg = add i32 %spec.select1129, 96           ; 2 uses
-  %3 = add nuw nsw i32 %spec.select1129, 111
-  %4 = zext i32 %i.ceg to i64                     ; 2 uses
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.bzz, i64 %4
-  %6 = zext i32 %3 to i64
-  %7 = sext i32 %i.ceg to i64
+  %3 = zext i32 %i.ceg to i64                     ; 2 uses
+  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.bzz, i64 %3
+  %5 = sext i32 %i.ceg to i64
+  %6 = add nuw i32 %spec.select1129, 108
+  %7 = zext i32 %6 to i64
   br label %bb.mq
 
 bb.mq:                                            ; preds = %.loopexit1202, %bb.mx
-  %indvars.iv1702 = phi i64 [ %7, %.loopexit1202 ], [ %indvars.iv.next1703, %bb.mx ] ; 2 uses
-  %indvars.iv1699 = phi i64 [ %4, %.loopexit1202 ], [ %indvars.iv.next1700, %bb.mx ] ; 4 uses
+  %indvars.iv1702 = phi i64 [ %5, %.loopexit1202 ], [ %indvars.iv.next1703, %bb.mx ] ; 2 uses
+  %indvars.iv1699 = phi i64 [ %3, %.loopexit1202 ], [ %indvars.iv.next1700, %bb.mx ] ; 5 uses
   %i.ceh = icmp samesign ugt i64 %indvars.iv1699, %.pre-phi1860
   br i1 %i.ceh, label %.critedge66, label %bb.mr
 
 bb.mr:                                            ; preds = %bb.mq
   %i.cei = getelementptr inbounds nuw [2 x i8], ptr %i.bzz, i64 %indvars.iv1699
   %i.cej = load i16, ptr %i.cei, align 2, !tbaa !93
-  %i.cek = load i16, ptr %5, align 2, !tbaa !93
+  %i.cek = load i16, ptr %4, align 2, !tbaa !93
   %.not1080 = icmp eq i16 %i.cej, %i.cek
   br i1 %.not1080, label %bb.mx, label %bb.ms
 
@@ -281,8 +281,8 @@ _ZNK21libraw_static_table_tixEj.exit1152:         ; preds = %bb.mv, %bb.mu, %bb.
   br i1 %or.cond1162, label %bb.mt, label %.critedge66, !llvm.loop !161
 
 bb.mx:                                            ; preds = %bb.mr
-  %indvars.iv.next1700 = add nuw nsw i64 %indvars.iv1699, 3 ; 2 uses
-  %i.cfg = icmp samesign ult i64 %indvars.iv.next1700, %6
+  %indvars.iv.next1700 = add nuw nsw i64 %indvars.iv1699, 3
+  %i.cfg = icmp samesign ult i64 %indvars.iv1699, %7
   %indvars.iv.next1703 = add nsw i64 %indvars.iv1702, 3
   br i1 %i.cfg, label %bb.mq, label %.critedge66, !llvm.loop !162
 
