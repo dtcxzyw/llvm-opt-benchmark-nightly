@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i21
   %i.bp = add i32 %i.bo, %.0126.lcssa.i
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !94
   %indvars.iv.next220.i = add nuw nsw i64 %indvars.iv219.i, 1 ; 2 uses
-  %indvars.iv.next213.i = add nsw i32 %indvars.iv212.i, -1
+  %indvars.iv.next213.i = add i32 %indvars.iv212.i, -1
   %exitcond.not.i = icmp eq i64 %indvars.iv.next220.i, %i.y
   br i1 %exitcond.not.i, label %.loopexit165.i, label %bb.e, !llvm.loop !270
 
