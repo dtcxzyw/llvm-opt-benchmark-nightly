@@ -102,13 +102,12 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ae = icmp ne i32 %i.i, 0
-  %or.cond110 = xor i1 %i.j, %i.ae                ; 5 uses
+  %or.cond110 = xor i1 %i.j, %i.ae                ; 4 uses
   %i.af = zext nneg i32 %i.q to i64
   %i.ag = select i1 %or.cond110, i64 %i.af, i64 1 ; 2 uses
   %i.ah = select i1 %or.cond110, i64 -1, i64 1    ; 2 uses
   %i.ai = sext i32 %i.d to i64                    ; 2 uses
-  %i.aj = zext nneg i32 %i.q to i64
-  %12 = select i1 %or.cond110, i64 1, i64 %i.aj   ; 4 uses
+  %i.aj = zext nneg i32 %i.q to i64               ; 2 uses
   br i1 %i.j, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %bb.l
@@ -146,9 +145,9 @@ bb.l:                                             ; preds = %bb.k
   %i.bd = getelementptr inbounds [8 x i8], ptr %i.f, i64 %i.bc
   store double %i.aw, ptr %i.bd, align 8, !tbaa !11
   %indvars.iv.next120 = add nsw i64 %indvars.iv119, %i.ah ; 3 uses
-  %13 = icmp sge i64 %indvars.iv.next120, %12
-  %i.be = icmp sle i64 %indvars.iv.next120, %12
-  %.in.us = select i1 %or.cond110, i1 %13, i1 %i.be
+  %12 = icmp sgt i64 %indvars.iv.next120, 0
+  %i.be = icmp sle i64 %indvars.iv.next120, %i.aj
+  %.in.us = select i1 %or.cond110, i1 %12, i1 %i.be
   br i1 %.in.us, label %.lr.ph.split.us, label %.loopexit, !llvm.loop !8
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.lr.ph.split
@@ -178,9 +177,9 @@ bb.l:                                             ; preds = %bb.k
   %i.by = getelementptr inbounds [8 x i8], ptr %i.f, i64 %i.bx
   store double %i.br, ptr %i.by, align 8, !tbaa !11
   %indvars.iv.next = add nsw i64 %indvars.iv, %i.ah ; 3 uses
-  %14 = icmp sge i64 %indvars.iv.next, %12
-  %i.bz = icmp sle i64 %indvars.iv.next, %12
-  %.in = select i1 %or.cond110, i1 %14, i1 %i.bz
+  %13 = icmp sgt i64 %indvars.iv.next, 0
+  %i.bz = icmp sle i64 %indvars.iv.next, %i.aj
+  %.in = select i1 %or.cond110, i1 %13, i1 %i.bz
   br i1 %.in, label %.lr.ph.split, label %.loopexit, !llvm.loop !8
 
 .loopexit:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us, %bb.k, %.thread

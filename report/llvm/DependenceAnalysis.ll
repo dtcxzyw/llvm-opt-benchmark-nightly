@@ -204,27 +204,19 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.n
 
 bb.b:                                             ; preds = %bb.a
-  %.not51 = icmp eq i16 %i.i, 16                  ; 2 uses
-  %9 = getelementptr inbounds i8, ptr %i.g, i64 -32
-  %spec.select.i.i35 = select i1 %.not51, ptr %9, ptr null
-  %.not50 = icmp eq i16 %i.e, 16                  ; 2 uses
-  %10 = getelementptr inbounds i8, ptr %i.c, i64 -32
-  %spec.select.i.i = select i1 %.not50, ptr %10, ptr null
+  %.not51 = icmp eq i16 %i.i, 16
+  %.not50 = icmp eq i16 %i.e, 16
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !38
   %i.o = ptrtoint ptr %3 to i64
   %i.p = and i64 %i.o, -7
-  %11 = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 32
-  %i.q = ptrtoint ptr %11 to i64
-  %12 = and i64 %i.q, -7
-  %i.r = select i1 %.not50, i64 %12, i64 0
+  %i.q = ptrtoint ptr %i.c to i64
+  %i.r = select i1 %.not50, i64 %i.q, i64 0
   %i.s = tail call noundef ptr @_ZN4llvm15ScalarEvolution12getMinusSCEVENS_8SCEVUseTIPKNS_4SCEVEEES5_NS_15SCEVNoWrapFlagsEj(ptr noundef nonnull align 8 dereferenceable(1152) %i.n, i64 %i.p, i64 %i.r, i32 noundef 0, i32 noundef 0) #26 ; 5 uses
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !38
   %i.u = ptrtoint ptr %4 to i64
   %i.v = and i64 %i.u, -7
-  %13 = getelementptr inbounds nuw i8, ptr %spec.select.i.i35, i64 32
-  %i.w = ptrtoint ptr %13 to i64
-  %14 = and i64 %i.w, -7
-  %i.x = select i1 %.not51, i64 %14, i64 0
+  %i.w = ptrtoint ptr %i.g to i64
+  %i.x = select i1 %.not51, i64 %i.w, i64 0
   %i.y = tail call noundef ptr @_ZN4llvm15ScalarEvolution12getMinusSCEVENS_8SCEVUseTIPKNS_4SCEVEEES5_NS_15SCEVNoWrapFlagsEj(ptr noundef nonnull align 8 dereferenceable(1152) %i.t, i64 %i.v, i64 %i.x, i32 noundef 0, i32 noundef 0) #26 ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %i.aa = load i16, ptr %i.z, align 8, !tbaa !153

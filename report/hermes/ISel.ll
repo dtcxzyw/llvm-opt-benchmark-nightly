@@ -205,10 +205,10 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN6hermes3hbc7HBCISel18generateBranchInstEPNS_10BranchInstEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(392) %0, ptr noundef nonnull %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20 ; 2 uses
-  %i.b = icmp eq ptr %i.a, null                   ; 2 uses
+  %i.a = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20 ; 3 uses
+  %i.b = icmp eq ptr %i.a, null
   %i.c = getelementptr inbounds i8, ptr %i.a, i64 -16
-  %i.d = select i1 %i.b, ptr null, ptr %i.c       ; 2 uses
+  %i.d = select i1 %i.b, ptr null, ptr %i.c
   %i.e = icmp eq ptr %i.d, %2
   br i1 %i.e, label %bb.i, label %bb.b
 
@@ -297,8 +297,6 @@ bb.h:                                             ; preds = %_ZN6hermes3hbc28Byt
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit, %bb.h
   %i.al = phi i32 [ %.pre.i.i, %bb.h ], [ %i.ah, %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit ]
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %spec.select.i = select i1 %i.b, ptr null, ptr %3
   %i.am = load ptr, ptr %i.af, align 8, !tbaa !89
   %i.an = zext i32 %i.al to i64
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %i.an ; 3 uses
@@ -306,7 +304,7 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i, align 1
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  store ptr %spec.select.i, ptr %.sroa.5.0..sroa_idx.i, align 1
+  store ptr %i.a, ptr %.sroa.5.0..sroa_idx.i, align 1
   %i.ap = load i32, ptr %i.ag, align 8, !tbaa !86
   %i.aq = add i32 %i.ap, 1
   store i32 %i.aq, ptr %i.ag, align 8, !tbaa !86
@@ -709,7 +707,7 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS
 
 _ZN6hermes3hbc28BytecodeInstructionGenerator21emitSaveGeneratorLongEl.exit: ; preds = %bb.d, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i.i
   tail call void @_ZN6hermes3hbc28BytecodeInstructionGenerator10emitAddr32El(ptr noundef nonnull align 8 dereferenceable(25) %i.j, i64 noundef 0)
-  %i.ah = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 1) #20 ; 2 uses
+  %i.ah = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 1) #20
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
   %i.ak = load i32, ptr %i.aj, align 8, !tbaa !86 ; 2 uses
@@ -726,12 +724,7 @@ bb.i:                                             ; preds = %_ZN6hermes3hbc28Byt
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator21emitSaveGeneratorLongEl.exit, %bb.i
   %i.ao = phi i32 [ %.pre.i.i, %bb.i ], [ %i.ak, %_ZN6hermes3hbc28BytecodeInstructionGenerator21emitSaveGeneratorLongEl.exit ]
-  %3 = icmp eq ptr %i.ah, null                    ; 2 uses
-  %4 = getelementptr inbounds i8, ptr %i.ah, i64 -16
-  %5 = select i1 %3, ptr null, ptr %4
   %i.ap = trunc i64 %i.p to i32
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %spec.select.i = select i1 %3, ptr null, ptr %6
   %i.aq = load ptr, ptr %i.ai, align 8, !tbaa !89
   %i.ar = zext i32 %i.ao to i64
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.aq, i64 %i.ar ; 3 uses
@@ -739,7 +732,7 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.as, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i, align 1
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  store ptr %spec.select.i, ptr %.sroa.5.0..sroa_idx.i, align 1
+  store ptr %i.ah, ptr %.sroa.5.0..sroa_idx.i, align 1
   %i.at = load i32, ptr %i.aj, align 8, !tbaa !86
   %i.au = add i32 %i.at, 1
   store i32 %i.au, ptr %i.aj, align 8, !tbaa !86
@@ -1142,14 +1135,14 @@ bb.c:                                             ; preds = %bb.a
 
 _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
   %.0.i = phi i32 [ %i.g, %bb.b ], [ %i.h, %bb.c ]
-  %i.i = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 1) #20 ; 2 uses
-  %i.j = icmp eq ptr %i.i, null                   ; 2 uses
+  %i.i = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 1) #20 ; 3 uses
+  %i.j = icmp eq ptr %i.i, null
   %i.k = getelementptr inbounds i8, ptr %i.i, i64 -16
-  %i.l = select i1 %i.j, ptr null, ptr %i.k       ; 2 uses
-  %i.m = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 2) #20 ; 2 uses
-  %i.n = icmp eq ptr %i.m, null                   ; 2 uses
+  %i.l = select i1 %i.j, ptr null, ptr %i.k
+  %i.m = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 2) #20 ; 3 uses
+  %i.n = icmp eq ptr %i.m, null
   %i.o = getelementptr inbounds i8, ptr %i.m, i64 -16
-  %i.p = select i1 %i.n, ptr null, ptr %i.o       ; 2 uses
+  %i.p = select i1 %i.n, ptr null, ptr %i.o
   %i.q = icmp eq ptr %2, %i.l
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !108  ; 2 uses
@@ -1181,8 +1174,6 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit22: ; preds = %bb.e, %bb.f
   %i.ae = phi i32 [ %.pre.i.i18, %bb.f ], [ %i.ab, %bb.e ]
-  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %spec.select.i19 = select i1 %i.j, ptr null, ptr %3
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !89
   %i.ag = zext i32 %i.ae to i64
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %i.af, i64 %i.ag ; 3 uses
@@ -1190,7 +1181,7 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit22: ; preds = %b
   %.sroa.4.0..sroa_idx.i20 = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i20, align 1
   %.sroa.5.0..sroa_idx.i21 = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
-  store ptr %spec.select.i19, ptr %.sroa.5.0..sroa_idx.i21, align 1
+  store ptr %i.i, ptr %.sroa.5.0..sroa_idx.i21, align 1
   %i.ai = load i32, ptr %i.v, align 8, !tbaa !86
   %i.aj = add i32 %i.ai, 1
   store i32 %i.aj, ptr %i.v, align 8, !tbaa !86
@@ -1280,8 +1271,6 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit: ; preds = %bb.
 .sink.split:                                      ; preds = %.sink.split.sink.split, %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit, %bb.d
   %.sink = phi i32 [ %i.y, %bb.d ], [ %i.bk, %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit ], [ %.pre.i.i24, %.sink.split.sink.split ]
   %.sink39 = phi i32 [ %i.x, %bb.d ], [ %i.bj, %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit ], [ %.sink39.ph, %.sink.split.sink.split ]
-  %4 = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %spec.select.i25 = select i1 %i.n, ptr null, ptr %4
   %i.bn = load ptr, ptr %i.u, align 8, !tbaa !89
   %i.bo = zext i32 %.sink to i64
   %i.bp = getelementptr inbounds nuw [16 x i8], ptr %i.bn, i64 %i.bo ; 3 uses
@@ -1289,7 +1278,7 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit: ; preds = %bb.
   %.sroa.4.0..sroa_idx.i26 = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i26, align 1
   %.sroa.5.0..sroa_idx.i27 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  store ptr %spec.select.i25, ptr %.sroa.5.0..sroa_idx.i27, align 1
+  store ptr %i.m, ptr %.sroa.5.0..sroa_idx.i27, align 1
   %i.bq = load i32, ptr %i.v, align 8, !tbaa !86
   %i.br = add i32 %i.bq, 1
   store i32 %i.br, ptr %i.v, align 8, !tbaa !86
@@ -1692,10 +1681,7 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit20: ; preds = %bb.h, %bb.i
   %i.am = tail call noundef i32 @_ZN6hermes3hbc28BytecodeInstructionGenerator16emitGetPNameListEllll(ptr noundef nonnull align 8 dereferenceable(25) %i.j, i64 noundef %i.k, i64 noundef %i.t, i64 noundef %i.ac, i64 noundef %i.al) ; 0 uses
   %i.an = load ptr, ptr %i.i, align 8, !tbaa !108
   %i.ao = tail call noundef i32 @_ZN6hermes3hbc28BytecodeInstructionGenerator20emitJmpUndefinedLongEll(ptr noundef nonnull align 8 dereferenceable(25) %i.an, i64 noundef 0, i64 noundef %i.k)
-  %i.ap = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 4) #20 ; 2 uses
-  %3 = icmp eq ptr %i.ap, null                    ; 2 uses
-  %4 = getelementptr inbounds i8, ptr %i.ap, i64 -16
-  %5 = select i1 %3, ptr null, ptr %4
+  %i.ap = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 4) #20
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 8 uses
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !86 ; 2 uses
@@ -1712,8 +1698,6 @@ bb.j:                                             ; preds = %_ZN6hermes3hbc7HBCI
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit20, %bb.j
   %i.aw = phi i32 [ %.pre.i.i, %bb.j ], [ %i.as, %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit20 ]
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %spec.select.i = select i1 %3, ptr null, ptr %6
   %i.ax = load ptr, ptr %i.aq, align 8, !tbaa !89
   %i.ay = zext i32 %i.aw to i64
   %i.az = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %i.ay ; 3 uses
@@ -1721,14 +1705,14 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i, align 1
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 8
-  store ptr %spec.select.i, ptr %.sroa.5.0..sroa_idx.i, align 1
+  store ptr %i.ap, ptr %.sroa.5.0..sroa_idx.i, align 1
   %i.ba = load i32, ptr %i.ar, align 8, !tbaa !86
   %i.bb = add i32 %i.ba, 1
   store i32 %i.bb, ptr %i.ar, align 8, !tbaa !86
-  %i.bc = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 5) #20 ; 2 uses
-  %i.bd = icmp eq ptr %i.bc, null                 ; 2 uses
+  %i.bc = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 5) #20 ; 3 uses
+  %i.bd = icmp eq ptr %i.bc, null
   %i.be = getelementptr inbounds i8, ptr %i.bc, i64 -16
-  %i.bf = select i1 %i.bd, ptr null, ptr %i.be    ; 2 uses
+  %i.bf = select i1 %i.bd, ptr null, ptr %i.be
   %.not = icmp eq ptr %2, %i.bf
   br i1 %.not, label %bb.r, label %bb.k
 
@@ -1813,8 +1797,6 @@ bb.q:                                             ; preds = %_ZN6hermes3hbc28Byt
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit26: ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit, %bb.q
   %i.ci = phi i32 [ %.pre.i.i22, %bb.q ], [ %i.cf, %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit ]
-  %7 = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
-  %spec.select.i23 = select i1 %i.bd, ptr null, ptr %7
   %i.cj = load ptr, ptr %i.aq, align 8, !tbaa !89
   %i.ck = zext i32 %i.ci to i64
   %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.cj, i64 %i.ck ; 3 uses
@@ -1822,7 +1804,7 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit26: ; preds = %_
   %.sroa.4.0..sroa_idx.i24 = getelementptr inbounds nuw i8, ptr %i.cl, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i24, align 1
   %.sroa.5.0..sroa_idx.i25 = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
-  store ptr %spec.select.i23, ptr %.sroa.5.0..sroa_idx.i25, align 1
+  store ptr %i.bc, ptr %.sroa.5.0..sroa_idx.i25, align 1
   %i.cm = load i32, ptr %i.ar, align 8, !tbaa !86
   %i.cn = add i32 %i.cm, 1
   store i32 %i.cn, ptr %i.ar, align 8, !tbaa !86
@@ -2225,10 +2207,7 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit26: ; preds = %bb.j, %bb.k
   %i.av = tail call noundef i32 @_ZN6hermes3hbc28BytecodeInstructionGenerator16emitGetNextPNameElllll(ptr noundef nonnull align 8 dereferenceable(25) %i.z, i64 noundef %i.aa, i64 noundef %i.aj, i64 noundef %i.as, i64 noundef %i.at, i64 noundef %i.au) ; 0 uses
   %i.aw = load ptr, ptr %i.y, align 8, !tbaa !108
   %i.ax = tail call noundef i32 @_ZN6hermes3hbc28BytecodeInstructionGenerator20emitJmpUndefinedLongEll(ptr noundef nonnull align 8 dereferenceable(25) %i.aw, i64 noundef 0, i64 noundef %i.aa)
-  %i.ay = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 5) #20 ; 2 uses
-  %3 = icmp eq ptr %i.ay, null                    ; 2 uses
-  %4 = getelementptr inbounds i8, ptr %i.ay, i64 -16
-  %5 = select i1 %3, ptr null, ptr %4
+  %i.ay = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 5) #20
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 8 uses
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !86 ; 2 uses
@@ -2245,8 +2224,6 @@ bb.l:                                             ; preds = %_ZN6hermes3hbc7HBCI
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit26, %bb.l
   %i.bf = phi i32 [ %.pre.i.i, %bb.l ], [ %i.bb, %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit26 ]
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %spec.select.i = select i1 %3, ptr null, ptr %6
   %i.bg = load ptr, ptr %i.az, align 8, !tbaa !89
   %i.bh = zext i32 %i.bf to i64
   %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.bg, i64 %i.bh ; 3 uses
@@ -2254,14 +2231,14 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bi, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i, align 1
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
-  store ptr %spec.select.i, ptr %.sroa.5.0..sroa_idx.i, align 1
+  store ptr %i.ay, ptr %.sroa.5.0..sroa_idx.i, align 1
   %i.bj = load i32, ptr %i.ba, align 8, !tbaa !86
   %i.bk = add i32 %i.bj, 1
   store i32 %i.bk, ptr %i.ba, align 8, !tbaa !86
-  %i.bl = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 6) #20 ; 2 uses
-  %i.bm = icmp eq ptr %i.bl, null                 ; 2 uses
+  %i.bl = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 6) #20 ; 3 uses
+  %i.bm = icmp eq ptr %i.bl, null
   %i.bn = getelementptr inbounds i8, ptr %i.bl, i64 -16
-  %i.bo = select i1 %i.bm, ptr null, ptr %i.bn    ; 2 uses
+  %i.bo = select i1 %i.bm, ptr null, ptr %i.bn
   %.not = icmp eq ptr %2, %i.bo
   br i1 %.not, label %bb.t, label %bb.m
 
@@ -2346,8 +2323,6 @@ bb.s:                                             ; preds = %_ZN6hermes3hbc28Byt
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit32: ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit, %bb.s
   %i.cr = phi i32 [ %.pre.i.i28, %bb.s ], [ %i.co, %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit ]
-  %7 = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
-  %spec.select.i29 = select i1 %i.bm, ptr null, ptr %7
   %i.cs = load ptr, ptr %i.az, align 8, !tbaa !89
   %i.ct = zext i32 %i.cr to i64
   %i.cu = getelementptr inbounds nuw [16 x i8], ptr %i.cs, i64 %i.ct ; 3 uses
@@ -2355,7 +2330,7 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit32: ; preds = %_
   %.sroa.4.0..sroa_idx.i30 = getelementptr inbounds nuw i8, ptr %i.cu, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i30, align 1
   %.sroa.5.0..sroa_idx.i31 = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
-  store ptr %spec.select.i29, ptr %.sroa.5.0..sroa_idx.i31, align 1
+  store ptr %i.bl, ptr %.sroa.5.0..sroa_idx.i31, align 1
   %i.cv = load i32, ptr %i.ba, align 8, !tbaa !86
   %i.cw = add i32 %i.cv, 1
   store i32 %i.cw, ptr %i.ba, align 8, !tbaa !86
@@ -2758,10 +2733,10 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN6hermes3hbc7HBCISel20generateTryStartInstEPNS_12TryStartInstEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(392) %0, ptr noundef nonnull %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 1) #20 ; 2 uses
-  %i.b = icmp eq ptr %i.a, null                   ; 2 uses
+  %i.a = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 1) #20 ; 3 uses
+  %i.b = icmp eq ptr %i.a, null
   %i.c = getelementptr inbounds i8, ptr %i.a, i64 -16
-  %i.d = select i1 %i.b, ptr null, ptr %i.c       ; 2 uses
+  %i.d = select i1 %i.b, ptr null, ptr %i.c
   %i.e = icmp eq ptr %2, %i.d
   br i1 %i.e, label %bb.i, label %bb.b
 
@@ -2850,8 +2825,6 @@ bb.h:                                             ; preds = %_ZN6hermes3hbc28Byt
 
 _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit, %bb.h
   %i.al = phi i32 [ %.pre.i.i, %bb.h ], [ %i.ah, %_ZN6hermes3hbc28BytecodeInstructionGenerator11emitJmpLongEl.exit ]
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %spec.select.i = select i1 %i.b, ptr null, ptr %3
   %i.am = load ptr, ptr %i.af, align 8, !tbaa !89
   %i.an = zext i32 %i.al to i64
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %i.an ; 3 uses
@@ -2859,7 +2832,7 @@ _ZN6hermes3hbc7HBCISel16registerLongJumpEjPNS_10BasicBlockE.exit: ; preds = %_ZN
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i, align 1
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  store ptr %spec.select.i, ptr %.sroa.5.0..sroa_idx.i, align 1
+  store ptr %i.a, ptr %.sroa.5.0..sroa_idx.i, align 1
   %i.ap = load i32, ptr %i.ag, align 8, !tbaa !86
   %i.aq = add i32 %i.ap, 1
   store i32 %i.aq, ptr %i.ag, align 8, !tbaa !86
@@ -3262,12 +3235,8 @@ bb.c:                                             ; preds = %bb.a
 
 _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
   %.0.i = phi i32 [ %i.g, %bb.b ], [ %i.h, %bb.c ] ; 3 uses
-  %i.i = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20 ; 2 uses
-  %.not = icmp eq ptr %i.i, null
-  %3 = getelementptr inbounds i8, ptr %i.i, i64 -16
-  %4 = select i1 %.not, ptr null, ptr %3
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %i.j = load i8, ptr %5, align 8, !tbaa !32
+  %i.i = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20 ; 3 uses
+  %i.j = load i8, ptr %i.i, align 8, !tbaa !32
   %i.k = add i8 %i.j, -2
   %i.l = icmp ult i8 %i.k, 107
   br i1 %i.l, label %bb.d, label %bb.e
@@ -3275,11 +3244,11 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
 bb.d:                                             ; preds = %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !83, !nonnull !84, !align !85
-  %i.o = tail call i32 @_ZN6hermes17RegisterAllocator11getRegisterEPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1952) %i.n, ptr noundef nonnull %5) #20
+  %i.o = tail call i32 @_ZN6hermes17RegisterAllocator11getRegisterEPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1952) %i.n, ptr noundef nonnull %i.i) #20
   br label %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit6
 
 bb.e:                                             ; preds = %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit
-  %i.p = tail call noundef i32 @_ZNK6hermes8Variable22getIndexInVariableListEv(ptr noundef nonnull align 8 dereferenceable(65) %5) #20
+  %i.p = tail call noundef i32 @_ZNK6hermes8Variable22getIndexInVariableListEv(ptr noundef nonnull align 8 dereferenceable(65) %i.i) #20
   br label %_ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit6
 
 _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit6: ; preds = %bb.d, %bb.e

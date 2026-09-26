@@ -202,12 +202,10 @@ bb.n:                                             ; preds = %.loopexit
 bb.o:                                             ; preds = %bb.n
   %i.cx = load i16, ptr %1, align 8
   %i.cy = and i16 %i.cx, 511
-  %.not.i.i.i.i = icmp eq i16 %i.cy, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i22 = select i1 %.not.i.i.i.i, ptr %5, ptr %i.cz
-  %i.da = load ptr, ptr %spec.select.i.i.i.i22, align 8, !tbaa !156
+  %.not.i.i.i.i = icmp eq i16 %i.cy, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !156
   call void @_ZN5clang8consumed19ConsumedStmtVisitor8copyInfoEPKNS_4ExprES4_NS0_13ConsumedStateE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef %i.da, ptr noundef nonnull %1, i32 noundef 3)
   br label %_ZL16isConsumableTypeRKN5clang8QualTypeE.exit.thread83
 
@@ -268,12 +266,10 @@ _ZL18isSetOnReadPtrTypeRKN5clang8QualTypeE.exit:  ; preds = %bb.q, %bb.r, %bb.s,
   %spec.select.i30 = phi i32 [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %bb.s ], [ %i.dw, %_ZN5clangneENS_22specific_attr_iteratorINS_23ConsumableSetOnReadAttrEN4llvm11SmallVectorIPNS_4AttrELj4EEEEES7_.exit.loopexit.i.i.i ]
   %i.dx = load i16, ptr %1, align 8
   %i.dy = and i16 %i.dx, 511
-  %.not.i.i.i.i31 = icmp eq i16 %i.dy, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i32 = select i1 %.not.i.i.i.i31, ptr %1, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i32, i64 48
-  %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i33 = select i1 %.not.i.i.i.i31, ptr %6, ptr %i.dz
-  %i.ea = load ptr, ptr %spec.select.i.i.i.i33, align 8, !tbaa !156
+  %.not.i.i.i.i31 = icmp eq i16 %i.dy, 118
+  %spec.select.v.i.i.i.i32 = select i1 %.not.i.i.i.i31, i64 48, i64 40
+  %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i32
+  %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !156
   call void @_ZN5clang8consumed19ConsumedStmtVisitor8copyInfoEPKNS_4ExprES4_NS0_13ConsumedStateE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef %i.ea, ptr noundef nonnull %1, i32 noundef %spec.select.i30)
   br label %_ZL16isConsumableTypeRKN5clang8QualTypeE.exit.thread83
 

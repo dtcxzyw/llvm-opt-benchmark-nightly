@@ -202,7 +202,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
 define dso_local noundef ptr @_ZN5clang7tooling20reallyIgnoreImplicitERKNS_4ExprE(ptr nofree noundef nonnull readonly align 8 dereferenceable(16) %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull align 8 dereferenceable(16) %0) #14 ; 8 uses
+  %i.a = tail call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull align 8 dereferenceable(16) %0) #14 ; 7 uses
   %i.b = load i16, ptr %i.a, align 8
   %i.c = and i16 %i.b, 511                        ; 2 uses
   %i.d = add nsw i16 %i.c, -119
@@ -216,12 +216,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not11, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not.i.i.i.i = icmp eq i16 %i.c, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.a, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr %i.g
-  %i.h = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !28 ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.c, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %spec.select.v.i.i.i.i
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !28   ; 2 uses
   %i.i = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #14
   %i.j = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.a) #14
   %i.k = icmp eq i64 %i.i, %i.j
@@ -242,7 +240,7 @@ declare i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 deref
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
 define dso_local noundef zeroext i1 @_ZN5clang7tooling17mayEverNeedParensERKNS_4ExprE(ptr nofree noundef nonnull readonly align 8 dereferenceable(16) %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull readonly align 8 dereferenceable(16) %0) #14 ; 8 uses
+  %i.a = tail call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull readonly align 8 dereferenceable(16) %0) #14 ; 7 uses
   %i.b = load i16, ptr %i.a, align 8              ; 4 uses
   %i.c = and i16 %i.b, 511                        ; 2 uses
   %i.d = add nsw i16 %i.c, -119
@@ -256,12 +254,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not11.i, label %_ZN5clang7tooling20reallyIgnoreImplicitERKNS_4ExprE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not.i.i.i.i.i = icmp eq i16 %i.c, 118         ; 2 uses
-  %spec.select.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr %i.a, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr %1, ptr %i.g
-  %i.h = load ptr, ptr %spec.select.i.i.i.i.i, align 8, !tbaa !28 ; 2 uses
+  %.not.i.i.i.i.i = icmp eq i16 %i.c, 118
+  %spec.select.v.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %spec.select.v.i.i.i.i.i
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !28   ; 2 uses
   %i.i = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #14
   %i.j = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.a) #14
   %i.k = icmp eq i64 %i.i, %i.j
@@ -306,7 +302,7 @@ switch.edge:                                      ; preds = %bb.e, %bb.f, %bb.d,
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
 define dso_local noundef zeroext i1 @_ZN5clang7tooling28needParensAfterUnaryOperatorERKNS_4ExprE(ptr nofree noundef nonnull readonly align 8 dereferenceable(16) %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull readonly align 8 dereferenceable(16) %0) #14 ; 8 uses
+  %i.a = tail call noundef ptr @_ZN5clang4Expr14IgnoreImplicitEv(ptr noundef nonnull readonly align 8 dereferenceable(16) %0) #14 ; 7 uses
   %i.b = load i16, ptr %i.a, align 8              ; 4 uses
   %i.c = and i16 %i.b, 511                        ; 2 uses
   %i.d = add nsw i16 %i.c, -119
@@ -320,12 +316,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not11.i, label %_ZN5clang7tooling20reallyIgnoreImplicitERKNS_4ExprE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not.i.i.i.i.i = icmp eq i16 %i.c, 118         ; 2 uses
-  %spec.select.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr %i.a, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr %1, ptr %i.g
-  %i.h = load ptr, ptr %spec.select.i.i.i.i.i, align 8, !tbaa !28 ; 2 uses
+  %.not.i.i.i.i.i = icmp eq i16 %i.c, 118
+  %spec.select.v.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %spec.select.v.i.i.i.i.i
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !28   ; 2 uses
   %i.i = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #14
   %i.j = tail call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.a) #14
   %i.k = icmp eq i64 %i.i, %i.j

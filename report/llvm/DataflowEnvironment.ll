@@ -204,15 +204,13 @@ _ZNK5clang8dataflow11Environment23getResultObjectLocationERKNS_4ExprE.exit12: ; 
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !464
   %i.cc = load i16, ptr %2, align 8
   %i.cd = and i16 %i.cc, 511
-  %.not.i.i.i = icmp eq i16 %i.cd, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %2, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %3, ptr %i.ce
+  %.not.i.i.i = icmp eq i16 %i.cd, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 %spec.select.v.i.i.i
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !465
   %i.ch = zext i32 %i.cg to i64
-  tail call void @_ZN5clang8dataflow11Environment16pushCallInternalEPKNS_12FunctionDeclEN4llvm8ArrayRefIPKNS_4ExprEEE(ptr noundef nonnull align 8 dereferenceable(228) %0, ptr noundef %i.cb, ptr nonnull %spec.select.i.i.i, i64 %i.ch)
+  tail call void @_ZN5clang8dataflow11Environment16pushCallInternalEPKNS_12FunctionDeclEN4llvm8ArrayRefIPKNS_4ExprEEE(ptr noundef nonnull align 8 dereferenceable(228) %0, ptr noundef %i.cb, ptr nonnull %i.ce, i64 %i.ch)
   ret void
 }
 

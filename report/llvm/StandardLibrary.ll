@@ -204,9 +204,6 @@ bb.g:                                             ; preds = %_ZN4llvm12DenseMapB
   br label %_ZNK4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEPNS1_IS2_jNS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES4_NS6_IS2_S9_EEEES2_S9_S4_SA_E6lookupERKS2_.exit
 
 bb.h:                                             ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKN5clang11DeclContextEPNS1_INS_9StringRefEjNS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_jEEEENS7_IS5_vEENSA_IS5_SD_EEEES5_SD_SE_SF_E4findES5_.exit
-  %7 = icmp eq ptr %1, null                       ; 2 uses
-  %8 = getelementptr inbounds i8, ptr %1, i64 -48 ; 2 uses
-  %9 = select i1 %7, ptr null, ptr %8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
   %i.bz = getelementptr inbounds i8, ptr %1, i64 -8
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !76 ; 2 uses
@@ -337,13 +334,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %_ZN
   br label %"_ZZN5clang7tooling6stdlib10Recognizer16namespaceSymbolsEPKNS_11DeclContextENS1_4LangEENK3$_0clEv.exit"
 
 _ZN4llvm16dyn_cast_or_nullIN5clang13NamespaceDeclEKNS1_11DeclContextEEEDaPT0_.exit.i: ; preds = %bb.aa, %.lr.ph.i
-  %.011.i = phi ptr [ %8, %.lr.ph.i ], [ %11, %bb.aa ] ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.011.i, i64 48 ; 2 uses
-  %i.ek = call noundef zeroext i1 @_ZNK5clang11DeclContext17isInlineNamespaceEv(ptr noundef nonnull align 8 dereferenceable(32) %10) #19
+  %.011.i = phi ptr [ %1, %.lr.ph.i ], [ %.0.i.i.i.i, %bb.aa ] ; 3 uses
+  %i.ek = call noundef zeroext i1 @_ZNK5clang11DeclContext17isInlineNamespaceEv(ptr noundef nonnull align 8 dereferenceable(32) %.011.i) #19
   br i1 %i.ek, label %bb.x, label %bb.j
 
 bb.j:                                             ; preds = %_ZN4llvm16dyn_cast_or_nullIN5clang13NamespaceDeclEKNS1_11DeclContextEEEDaPT0_.exit.i
-  %i.el = getelementptr inbounds nuw i8, ptr %.011.i, i64 40
+  %i.el = getelementptr inbounds i8, ptr %.011.i, i64 -8
   %i.em = load i64, ptr %i.el, align 8, !tbaa !76 ; 3 uses
   %i.en = and i64 %i.em, 7
   %i.eo = icmp ne i64 %i.en, 0
@@ -590,7 +586,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26.i: ; preds = %_
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26.i, %bb.j, %_ZN4llvm16dyn_cast_or_nullIN5clang13NamespaceDeclEKNS1_11DeclContextEEEDaPT0_.exit.i
-  %i.hh = call noundef ptr @_ZN5clang4Decl19castFromDeclContextEPKNS_11DeclContextE(ptr noundef nonnull align 8 dereferenceable(32) %10) #19
+  %i.hh = call noundef ptr @_ZN5clang4Decl19castFromDeclContextEPKNS_11DeclContextE(ptr noundef nonnull align 8 dereferenceable(32) %.011.i) #19
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 16
   %.0.copyload.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.hi, align 8 ; 3 uses
   %i.hj = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i.i, 4
@@ -617,16 +613,13 @@ bb.aa:                                            ; preds = %_ZNK5clang11DeclCon
   %i.hq = load i16, ptr %i.hp, align 8
   %i.hr = and i16 %i.hq, 127
   %i.hs = icmp eq i16 %i.hr, 78
-  %11 = getelementptr inbounds i8, ptr %.0.i.i.i.i, i64 -48
   br i1 %i.hs, label %_ZN4llvm16dyn_cast_or_nullIN5clang13NamespaceDeclEKNS1_11DeclContextEEEDaPT0_.exit.i, label %._crit_edge.i, !llvm.loop !182
 
 "_ZZN5clang7tooling6stdlib10Recognizer16namespaceSymbolsEPKNS_11DeclContextENS1_4LangEENK3$_0clEv.exit": ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   %.07.i = phi ptr [ %spec.select.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ null, %bb.h ]
   store ptr %.07.i, ptr %i.b, align 8, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
-  %12 = getelementptr inbounds nuw i8, ptr %9, i64 48
-  %spec.select = select i1 %7, ptr null, ptr %12
-  store ptr %spec.select, ptr %i.c, align 8, !tbaa !74
+  store ptr %1, ptr %i.c, align 8, !tbaa !74
   %i.ht = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPKN5clang11DeclContextEPNS1_INS_9StringRefEjNS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_jEEEENS7_IS5_vEENSA_IS5_SD_EEEES5_SD_SE_SF_E24lookupOrInsertIntoBucketIS5_JRSD_EEESt4pairIPSF_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.b), !noalias !202 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   %i.hu = load ptr, ptr %i.b, align 8, !tbaa !61

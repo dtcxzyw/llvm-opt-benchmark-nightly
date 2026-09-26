@@ -204,10 +204,10 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.no
-  %.sroa.0158.0779 = phi i64 [ 0, %bb.g ], [ %spec.select221, %bb.no ] ; 3 uses
-  %i.gt = icmp eq i64 %.sroa.0158.0779, 2         ; 2 uses
+  %.sroa.0158.0779 = phi i64 [ 0, %bb.g ], [ %spec.select221, %bb.no ] ; 4 uses
+  %i.gt = icmp eq i64 %.sroa.0158.0779, 2
   %i.gu = add nuw nsw i64 %.sroa.0158.0779, 1
-  %spec.select221 = select i1 %i.gt, i64 2, i64 %i.gu ; 2 uses
+  %spec.select221 = select i1 %i.gt, i64 2, i64 %i.gu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ec)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.622)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eb)
@@ -610,9 +610,8 @@ bb.no:                                            ; preds = %bb.nn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cz)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dy)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ec)
-  %.not.i = icmp ugt i64 %spec.select221, 2
-  %or.cond222 = select i1 %i.gt, i1 true, i1 %.not.i
-  br i1 %or.cond222, label %bb.w, label %bb.h
+  %.not.i = icmp ugt i64 %.sroa.0158.0779, 1
+  br i1 %.not.i, label %bb.w, label %bb.h
 
 bb.np:                                            ; preds = %bb.nn, %bb.nl
   %i.sa = landingpad { ptr, i32 }

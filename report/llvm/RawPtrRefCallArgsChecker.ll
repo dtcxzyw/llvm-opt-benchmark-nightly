@@ -202,15 +202,11 @@ bb.ag:                                            ; preds = %bb.af
   %i.db = zext i32 %i.da to i64
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %i.db
   %i.dd = icmp ult ptr %i.cx, %i.dc
-  br i1 %i.dd, label %.lr.ph.i.i, label %.critedge.i8.i
+  br i1 %i.dd, label %bb.ah, label %.critedge.i8.i
 
-.lr.ph.i.i:                                       ; preds = %.thread67.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  br label %bb.ah
-
-bb.ah:                                            ; preds = %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker8checkArgEPKN5clang9NamedDeclEPKNS1_4ExprENS1_8QualTypeEPKNS1_11ParmVarDeclEPKNS1_4DeclE.exit.i.i, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %i.cu, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker8checkArgEPKN5clang9NamedDeclEPKNS1_4ExprENS1_8QualTypeEPKNS1_11ParmVarDeclEPKNS1_4DeclE.exit.i.i ] ; 4 uses
-  %.02554.i.i = phi ptr [ %i.cx, %.lr.ph.i.i ], [ %i.ea, %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker8checkArgEPKN5clang9NamedDeclEPKNS1_4ExprENS1_8QualTypeEPKNS1_11ParmVarDeclEPKNS1_4DeclE.exit.i.i ] ; 2 uses
+bb.ah:                                            ; preds = %.thread67.i.i, %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker8checkArgEPKN5clang9NamedDeclEPKNS1_4ExprENS1_8QualTypeEPKNS1_11ParmVarDeclEPKNS1_4DeclE.exit.i.i
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker8checkArgEPKN5clang9NamedDeclEPKNS1_4ExprENS1_8QualTypeEPKNS1_11ParmVarDeclEPKNS1_4DeclE.exit.i.i ], [ %i.cu, %.thread67.i.i ] ; 4 uses
+  %.02554.i.i = phi ptr [ %i.ea, %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker8checkArgEPKN5clang9NamedDeclEPKNS1_4ExprENS1_8QualTypeEPKNS1_11ParmVarDeclEPKNS1_4DeclE.exit.i.i ], [ %i.cx, %.thread67.i.i ] ; 2 uses
   %i.de = load i32, ptr %i.u, align 8, !tbaa !325
   %i.df = zext i32 %i.de to i64
   %i.dg = icmp samesign ult i64 %indvars.iv.i.i, %i.df
@@ -228,18 +224,16 @@ bb.ah:                                            ; preds = %_ZNK12_GLOBAL__N_12
   br i1 %i.di, label %.lr.ph59.i.i.a, label %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker18visitConstructExprEPKN5clang16CXXConstructExprEPKNS1_4DeclE.exit
 
 .lr.ph59.i.i.a:                                   ; preds = %.critedge.i8.i
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.dj = zext i32 %.0.lcssa.i.i to i64
   br label %bb.an
 
 bb.ai:                                            ; preds = %bb.ah
   %i.dk = load i16, ptr %1, align 8
   %i.dl = and i16 %i.dk, 511
-  %.not.i.i.i.i27.i.i = icmp eq i16 %i.dl, 118    ; 2 uses
-  %spec.select.i.i.i.i.i.i28.i.i = select i1 %.not.i.i.i.i27.i.i, ptr %1, ptr null
-  %i.dm = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i28.i.i, i64 48
-  %spec.select.i.i.i.i29.i.i = select i1 %.not.i.i.i.i27.i.i, ptr %i.dm, ptr %3
-  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i29.i.i, i64 %indvars.iv.i.i
+  %.not.i.i.i.i27.i.i = icmp eq i16 %i.dl, 118
+  %spec.select.v.i.i.i.i28.i.i = select i1 %.not.i.i.i.i27.i.i, i64 48, i64 40
+  %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i28.i.i
+  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.dm, i64 %indvars.iv.i.i
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !188 ; 3 uses
   %i.dp = load ptr, ptr %.02554.i.i, align 8, !tbaa !205 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 48
@@ -285,11 +279,10 @@ bb.an:                                            ; preds = %_ZNK12_GLOBAL__N_12
   %indvars.iv61.i.i = phi i64 [ %i.dj, %.lr.ph59.i.i.a ], [ %indvars.iv.next62.i.i, %_ZNK12_GLOBAL__N_124RawPtrRefCallArgsChecker8checkArgEPKN5clang9NamedDeclEPKNS1_4ExprENS1_8QualTypeEPKNS1_11ParmVarDeclEPKNS1_4DeclE.exit38.i.i ] ; 2 uses
   %i.eg = load i16, ptr %1, align 8
   %i.eh = and i16 %i.eg, 511
-  %.not.i.i.i.i31.i.i = icmp eq i16 %i.eh, 118    ; 2 uses
-  %spec.select.i.i.i.i.i.i32.i.i = select i1 %.not.i.i.i.i31.i.i, ptr %1, ptr null
-  %i.ei = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i32.i.i, i64 48
-  %spec.select.i.i.i.i33.i.i = select i1 %.not.i.i.i.i31.i.i, ptr %i.ei, ptr %4
-  %i.ej = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i33.i.i, i64 %indvars.iv61.i.i
+  %.not.i.i.i.i31.i.i = icmp eq i16 %i.eh, 118
+  %spec.select.v.i.i.i.i32.i.i = select i1 %.not.i.i.i.i31.i.i, i64 48, i64 40
+  %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i32.i.i
+  %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %indvars.iv61.i.i
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !188 ; 4 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   %.sroa.0.0.copyload.i34.i.i = load i64, ptr %i.el, align 8, !tbaa !35

@@ -202,7 +202,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define internal fastcc void @_ZL21getMachoCPUFromTripleN4llvm9StringRefE(ptr dead_on_unwind noalias nofree nonnull writable align 8 captures(none) initializes((0, 8)) %0, ptr nofree readonly captures(address_is_null) %1, i64 %2) unnamed_addr #1 {
 bb.a:
   %3 = alloca %"class.llvm::Expected.143", align 8 ; 8 uses
-  %4 = alloca %"class.llvm::Expected.143", align 8 ; 11 uses
+  %4 = alloca %"class.llvm::Expected.143", align 8 ; 10 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %6 = alloca %"class.llvm::Triple", align 8      ; 5 uses
@@ -321,11 +321,8 @@ bb.g:                                             ; preds = %_ZN4llvm6TripleC2EN
   %.sroa.012.1.i = inttoptr i64 %i.af to ptr
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ah = load i8, ptr %i.ag, align 8, !noalias !329
-  %i.ai = trunc i8 %i.ah to i1                    ; 2 uses
-  %7 = load i32, ptr %4, align 8, !noalias !328
-  %.sroa.1317.16.insert.ext.i = zext i32 %7 to i64
-  %i.aj = load i64, ptr %4, align 8, !noalias !328
-  %.sroa.1317.16.insert.ext.sink.i = select i1 %i.ai, i64 %i.aj, i64 %.sroa.1317.16.insert.ext.i ; 2 uses
+  %i.ai = trunc i8 %i.ah to i1
+  %i.aj = load i64, ptr %4, align 8, !noalias !328 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20, !noalias !328
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20, !noalias !328
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -333,12 +330,12 @@ bb.g:                                             ; preds = %_ZN4llvm6TripleC2EN
   %i.am = or i8 %i.al, 1
   store i8 %i.am, ptr %i.ak, align 8, !alias.scope !328
   store ptr %.sroa.012.1.i, ptr %0, align 8, !tbaa !40, !alias.scope !331
-  %.not.i.i.i.i = icmp ne i64 %.sroa.1317.16.insert.ext.sink.i, 0
+  %.not.i.i.i.i = icmp ne i64 %i.aj, 0
   %or.cond.not.i = select i1 %i.ai, i1 %.not.i.i.i.i, i1 false
   br i1 %or.cond.not.i, label %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i.i.i.i, label %_ZL21getMachoCPUFromTripleN4llvm6TripleE.exit
 
 _ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i.i.i.i: ; preds = %bb.g
-  %.sroa.1317.12331.i = inttoptr i64 %.sroa.1317.16.insert.ext.sink.i to ptr ; 2 uses
+  %.sroa.1317.12331.i = inttoptr i64 %i.aj to ptr ; 2 uses
   %i.an = load ptr, ptr %.sroa.1317.12331.i, align 8, !tbaa !29, !noalias !328
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8, !noalias !328

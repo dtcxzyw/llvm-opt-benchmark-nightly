@@ -204,6 +204,7 @@ _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.us.lr.ph.split.us.spli
 
 _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us.us.preheader: ; preds = %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.us.lr.ph.split.us.split.split
   %.pre223 = load ptr, ptr %i.g, align 8, !tbaa !24
+  %5 = icmp ne i8 %.sroa.3.0.copyload.i, 1
   br label %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us.us
 
 _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us.us: ; preds = %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us.us.preheader, %_ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us.us
@@ -238,7 +239,7 @@ _ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us.us: ; preds = %_ZNSt10filesy
   %i.aj = icmp eq i64 %i.ai, 0                    ; 3 uses
   %.idx206 = select i1 %i.aj, i64 48, i64 0
   %i.ak = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx206 ; 3 uses
-  %i.al = select i1 %i.aj, i8 %i.v, i8 1          ; 3 uses
+  %i.al = select i1 %i.aj, i8 %i.v, i8 1          ; 2 uses
   %i.am = load ptr, ptr %i.g, align 8, !tbaa !24  ; 2 uses
   %i.an = ptrtoint ptr %i.am to i64
   %i.ao = and i64 %i.an, 3
@@ -246,7 +247,6 @@ _ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us.us: ; preds = %_ZNSt10filesy
   %.idx207 = select i1 %i.ap, i64 48, i64 0
   %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx207 ; 2 uses
   %i.ar = select i1 %i.ap, i8 %i.t, i8 1          ; 2 uses
-  %5 = icmp ne i8 %i.al, %.sroa.3.0.copyload.i
   %i.as = icmp ne ptr %i.ak, %.sroa.2.0.copyload.i
   %.0.i.i.us.us = select i1 %i.aj, i1 %i.as, i1 %5
   br i1 %.0.i.i.us.us, label %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us.us, label %.critedge
@@ -263,6 +263,7 @@ _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.us.lr.ph.split.split: 
 
 _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us.preheader: ; preds = %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.us.lr.ph.split.split
   %.pre222 = load ptr, ptr %i.g, align 8, !tbaa !24
+  %6 = icmp ne i8 %.sroa.3.0.copyload.i, 1
   br label %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us
 
 _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us: ; preds = %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us.preheader, %_ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us
@@ -291,7 +292,7 @@ _ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us: ; preds = %_ZNSt10filesyste
   %i.bq = icmp eq i64 %i.bp, 0                    ; 3 uses
   %.idx204 = select i1 %i.bq, i64 48, i64 0
   %i.br = getelementptr inbounds nuw i8, ptr %i.bd, i64 %.idx204 ; 3 uses
-  %i.bs = select i1 %i.bq, i8 %i.be, i8 1         ; 3 uses
+  %i.bs = select i1 %i.bq, i8 %i.be, i8 1         ; 2 uses
   %i.bt = load ptr, ptr %i.g, align 8, !tbaa !24  ; 2 uses
   %i.bu = ptrtoint ptr %i.bt to i64
   %i.bv = and i64 %i.bu, 3
@@ -299,7 +300,6 @@ _ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us: ; preds = %_ZNSt10filesyste
   %.idx205 = select i1 %i.bw, i64 48, i64 0
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.idx205 ; 2 uses
   %i.by = select i1 %i.bw, i8 %i.bc, i8 1         ; 2 uses
-  %6 = icmp ne i8 %i.bs, %.sroa.3.0.copyload.i
   %i.bz = icmp ne ptr %i.br, %.sroa.2.0.copyload.i
   %.0.i.i.us = select i1 %i.bq, i1 %i.bz, i1 %6
   br i1 %.0.i.i.us, label %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit.thread.us, label %.critedge
@@ -322,6 +322,7 @@ _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit8.us39.lr.ph.split: ; p
 
 _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit8.thread.us41.preheader: ; preds = %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit8.us39.lr.ph.split
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !24
+  %7 = icmp ne i8 %.sroa.3.0.copyload.i5, 1
   br label %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit8.thread.us41
 
 _ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit8.thread.us41: ; preds = %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit8.thread.us41.preheader, %_ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us44
@@ -357,8 +358,7 @@ _ZNSt10filesystem7__cxx114path8iteratorppEv.exit.us44: ; preds = %_ZNSt10filesys
   %i.dd = icmp eq i64 %i.dc, 0                    ; 3 uses
   %.idx203 = select i1 %i.dd, i64 48, i64 0
   %i.de = getelementptr inbounds nuw i8, ptr %i.ci, i64 %.idx203 ; 3 uses
-  %i.df = select i1 %i.dd, i8 %i.cj, i8 1         ; 3 uses
-  %7 = icmp ne i8 %i.df, %.sroa.3.0.copyload.i5
+  %i.df = select i1 %i.dd, i8 %i.cj, i8 1         ; 2 uses
   %i.dg = icmp ne ptr %i.de, %.sroa.2.0.copyload.i3
   %.0.i.i7.us40 = select i1 %i.dd, i1 %i.dg, i1 %7
   br i1 %.0.i.i7.us40, label %_ZNSt10filesystem7__cxx11neERKNS0_4path8iteratorES4_.exit8.thread.us41, label %.critedge
@@ -761,8 +761,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZNKSt10filesystem7__cxx114path5beginEv.exit:     ; preds = %bb.e
   %i.p = load i64, ptr %i.j, align 8, !tbaa !19, !noalias !489
-  %4 = icmp eq i64 %i.p, 0                        ; 2 uses
-  %5 = zext i1 %4 to i8
+  %4 = icmp ne i64 %i.p, 0                        ; 2 uses
   %i.q = and i64 %i.m, 3
   %i.r = icmp eq i64 %i.q, 0
   br i1 %i.r, label %_ZNKSt10filesystem7__cxx114path3endEv.exit, label %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread
@@ -776,10 +775,10 @@ _ZNKSt10filesystem7__cxx114path5beginEv.exit.thread: ; preds = %bb.e
   br i1 %i.u, label %_ZNKSt10filesystem7__cxx114path3endEv.exit, label %.lr.ph.preheader
 
 _ZNKSt10filesystem7__cxx114path3endEv.exit.thread: ; preds = %_ZNKSt10filesystem7__cxx114path5beginEv.exit
-  br i1 %4, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit, label %.lr.ph.preheader
+  br i1 %4, label %.lr.ph.preheader, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit
 
 _ZNKSt10filesystem7__cxx114path3endEv.exit:       ; preds = %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread, %_ZNKSt10filesystem7__cxx114path5beginEv.exit
-  %.sink.i60 = phi i8 [ 0, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ], [ %5, %_ZNKSt10filesystem7__cxx114path5beginEv.exit ] ; 3 uses
+  %.sink.i58 = phi i1 [ true, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ], [ %4, %_ZNKSt10filesystem7__cxx114path5beginEv.exit ]
   %.sink1.i57 = phi ptr [ %i.s, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ], [ null, %_ZNKSt10filesystem7__cxx114path5beginEv.exit ] ; 3 uses
   %i.v = call noundef ptr @_ZNKSt10filesystem7__cxx114path5_List3endEv(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #25, !noalias !490 ; 3 uses
   %.pre33 = load ptr, ptr %i.c, align 8, !tbaa !24
@@ -794,21 +793,18 @@ _ZNKSt10filesystem7__cxx114path3endEv.exit:       ; preds = %_ZNKSt10filesystem7
   br i1 %.not65, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit, label %.lr.ph.preheader
 
 bb.f:                                             ; preds = %_ZNKSt10filesystem7__cxx114path3endEv.exit
-  %.not = icmp eq i8 %.sink.i60, 0
-  br i1 %.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit, label %.lr.ph.preheader
+  br i1 %.sink.i58, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread, %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread, %.split, %bb.f
-  %.sink.i61 = phi i8 [ %.sink.i60, %.split ], [ %.sink.i60, %bb.f ], [ 0, %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread ], [ 0, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ]
+  %5 = phi i1 [ true, %.split ], [ true, %bb.f ], [ false, %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread ], [ false, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ]
   %.sink1.i58 = phi ptr [ %.sink1.i57, %.split ], [ %.sink1.i57, %bb.f ], [ null, %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread ], [ %i.s, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ]
   %i.x = phi ptr [ %.pre33.fr, %.split ], [ %.pre33.fr, %bb.f ], [ %i.l, %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread ], [ %.pre, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ]
   %.sink1.i144852 = phi ptr [ %i.v, %.split ], [ %i.v, %bb.f ], [ null, %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread ], [ null, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ]
-  %.sink.i154951 = phi i8 [ 0, %.split ], [ 0, %bb.f ], [ 1, %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread ], [ 1, %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit
   %i.y = phi ptr [ %i.bb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %i.x, %.lr.ph.preheader ]
   %.032 = phi i1 [ %i.ba, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ false, %.lr.ph.preheader ]
-  %.sroa.13.031 = phi i8 [ %spec.select28, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sink.i61, %.lr.ph.preheader ]
   %.sroa.8.030 = phi ptr [ %spec.select, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sink1.i58, %.lr.ph.preheader ] ; 2 uses
   %i.z = ptrtoint ptr %i.y to i64
   %i.aa = and i64 %i.z, 3
@@ -889,13 +885,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS
   %i.bb = load ptr, ptr %i.c, align 8, !tbaa !24  ; 2 uses
   %i.bc = ptrtoint ptr %i.bb to i64
   %i.bd = and i64 %i.bc, 3
-  %i.be = icmp eq i64 %i.bd, 0                    ; 3 uses
+  %i.be = icmp eq i64 %i.bd, 0                    ; 2 uses
   %spec.select.idx = select i1 %i.be, i64 48, i64 0
   %spec.select = getelementptr inbounds nuw i8, ptr %.sroa.8.030, i64 %spec.select.idx ; 2 uses
-  %spec.select28 = select i1 %i.be, i8 %.sroa.13.031, i8 1 ; 2 uses
-  %6 = icmp ne i8 %spec.select28, %.sink.i154951
   %i.bf = icmp ne ptr %spec.select, %.sink1.i144852
-  %.0.i.i = select i1 %i.be, i1 %i.bf, i1 %6
+  %.0.i.i = select i1 %i.be, i1 %i.bf, i1 %5
   br i1 %.0.i.i, label %.lr.ph, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit
 
 .loopexit:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit.i

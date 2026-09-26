@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %.sink.split, %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %i.gt = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.0371.0.copyload = load ptr, ptr %i.gt, align 8 ; 9 uses
+  %.sroa.0371.0.copyload = load ptr, ptr %i.gt, align 8 ; 8 uses
   %i.gu = load i16, ptr %.sroa.0371.0.copyload, align 8 ; 2 uses
   %i.gv = and i16 %i.gu, 510
   %spec.select.i.i.i.i.i.i.i.i.i.not = icmp eq i16 %i.gv, 122
@@ -331,12 +331,10 @@ _ZNSt5stackIPKN5clang4ento9SubRegionESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit: ; pr
 bb.au:                                            ; preds = %bb.ar
   %i.il = load i16, ptr %.sroa.0371.0.copyload, align 8
   %i.im = and i16 %i.il, 511
-  %.not.i.i.i.i = icmp eq i16 %i.im, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.sroa.0371.0.copyload, ptr null
-  %18 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.in = getelementptr inbounds nuw i8, ptr %.sroa.0371.0.copyload, i64 40
-  %spec.select.i.i.i.i271 = select i1 %.not.i.i.i.i, ptr %18, ptr %i.in
-  %i.io = load ptr, ptr %spec.select.i.i.i.i271, align 8, !tbaa !853 ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.im, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.in = getelementptr inbounds nuw i8, ptr %.sroa.0371.0.copyload, i64 %spec.select.v.i.i.i.i
+  %i.io = load ptr, ptr %i.in, align 8, !tbaa !853 ; 2 uses
   %.sroa.3.0.copyload.i = load i64, ptr %i.gg, align 8, !tbaa !115
   %i.ip = and i64 %.sroa.3.0.copyload.i, -8
   %i.iq = inttoptr i64 %i.ip to ptr
