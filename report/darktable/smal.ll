@@ -123,7 +123,7 @@ vector.body248:                                   ; preds = %vector.body.interim
   br i1 %.not255, label %vector.body.interim, label %vector.early.exit
 
 vector.body.interim:                              ; preds = %vector.body248
-  %vec.ind.next = add <32 x i32> %vec.ind, splat (i32 -32)
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, splat (i32 -32)
   %index.next250 = add nuw i32 %index249, 32      ; 2 uses
   %i.av = icmp eq i32 %index.next250, %n.vec245
   br i1 %i.av, label %middle.block251, label %vector.body248, !llvm.loop !91

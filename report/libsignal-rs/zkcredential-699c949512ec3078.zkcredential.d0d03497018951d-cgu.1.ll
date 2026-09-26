@@ -204,15 +204,15 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.z = getelementptr i8, ptr %i.k, i64 %i.y
   %i.aa = sub i64 %2, %n.vec
   %i.ab = add i64 %.promoted12, %n.vec
-  %i.ac = add i64 %.promoted12, 1
+  %i.ac = add nuw nsw i64 %.promoted12, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %i.ad = phi i64 [ %i.ac, %vector.ph ], [ %i.af, %vector.body ] ; 2 uses
-  %i.ae = add i64 %i.ad, 3
+  %i.ae = add nuw nsw i64 %i.ad, 3
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.af = add i64 %i.ad, 4
+  %i.af = add nuw nsw i64 %i.ad, 4
   %i.ag = icmp eq i64 %index.next, %n.vec
   br i1 %i.ag, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !60
 

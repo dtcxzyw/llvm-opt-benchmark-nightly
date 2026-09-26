@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert86 = insertelement <2 x i64> poison, i64 %i.d, i64 0
   %broadcast.splat87 = shufflevector <2 x i64> %broadcast.splatinsert86, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.bl
+  %i.bw = getelementptr [8 x i8], ptr %i.ak, i64 %i.bl
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -215,7 +215,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <2 x i64>, ptr %i.by, align 8, !tbaa !856, !alias.scope !8099
   %i.bz = lshr <2 x i64> %wide.load, %broadcast.splat87 ; 2 uses
   store <2 x i64> %i.bz, ptr %i.bx, align 8, !tbaa !856, !alias.scope !8100, !noalias !8101
-  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.bw, i64 %index
+  %i.ca = getelementptr [8 x i8], ptr %i.bw, i64 %index
   %wide.load88 = load <2 x i64>, ptr %i.ca, align 8, !tbaa !856, !alias.scope !8102
   %i.cb = shl <2 x i64> %wide.load88, %broadcast.splat
   %i.cc = or disjoint <2 x i64> %i.cb, %i.bz

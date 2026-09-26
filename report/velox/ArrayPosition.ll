@@ -205,8 +205,8 @@ vector.ph5752:                                    ; preds = %.critedge.us.us103.
   %broadcast.splat5757 = shufflevector <32 x i32> %broadcast.splatinsert5756, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5758 = insertelement <32 x i32> poison, i32 %i.ayq, i64 0
   %broadcast.splat5759 = shufflevector <32 x i32> %broadcast.splatinsert5758, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.bac = mul <32 x i32> %broadcast.splat5757, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5760 = add <32 x i32> %broadcast.splat5759, %i.bac
+  %i.bac = mul nsw <32 x i32> %broadcast.splat5757, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5760 = add nsw <32 x i32> %broadcast.splat5759, %i.bac
   %i.bad = shl nsw i32 %i.ayo, 5
   %broadcast.splatinsert5761 = insertelement <32 x i32> poison, i32 %i.bad, i64 0
   %broadcast.splat5762 = shufflevector <32 x i32> %broadcast.splatinsert5761, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -223,7 +223,7 @@ vector.body5763:                                  ; preds = %vector.body.interim
   br i1 %.not5836, label %vector.body.interim5768, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i48
 
 vector.body.interim5768:                          ; preds = %vector.body5763
-  %vec.ind.next5767 = add <32 x i32> %vec.ind5765, %broadcast.splat5762
+  %vec.ind.next5767 = add nsw <32 x i32> %vec.ind5765, %broadcast.splat5762
   %index.next5766 = add nuw i64 %index5764, 32    ; 2 uses
   %i.bai = icmp eq i64 %index.next5766, %n.vec5753
   br i1 %i.bai, label %middle.block5769, label %vector.body5763, !llvm.loop !3091
@@ -392,8 +392,8 @@ vector.ph5776:                                    ; preds = %.critedge.us65.us87
   %broadcast.splat5781 = shufflevector <32 x i32> %broadcast.splatinsert5780, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5782 = insertelement <32 x i32> poison, i32 %i.ayq, i64 0
   %broadcast.splat5783 = shufflevector <32 x i32> %broadcast.splatinsert5782, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.bcw = mul <32 x i32> %broadcast.splat5781, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5784 = add <32 x i32> %broadcast.splat5783, %i.bcw
+  %i.bcw = mul nsw <32 x i32> %broadcast.splat5781, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5784 = add nsw <32 x i32> %broadcast.splat5783, %i.bcw
   %i.bcx = shl nsw i32 %i.ayo, 5
   %broadcast.splatinsert5785 = insertelement <32 x i32> poison, i32 %i.bcx, i64 0
   %broadcast.splat5786 = shufflevector <32 x i32> %broadcast.splatinsert5785, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -410,7 +410,7 @@ vector.body5787:                                  ; preds = %vector.body.interim
   br i1 %.not5835, label %vector.body.interim5792, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i48
 
 vector.body.interim5792:                          ; preds = %vector.body5787
-  %vec.ind.next5791 = add <32 x i32> %vec.ind5789, %broadcast.splat5786
+  %vec.ind.next5791 = add nsw <32 x i32> %vec.ind5789, %broadcast.splat5786
   %index.next5790 = add nuw i64 %index5788, 32    ; 2 uses
   %i.bdc = icmp eq i64 %index.next5790, %n.vec5777
   br i1 %i.bdc, label %middle.block5793, label %vector.body5787, !llvm.loop !3093
@@ -813,8 +813,8 @@ vector.ph5704:                                    ; preds = %.critedge.us.us103.
   %broadcast.splat5709 = shufflevector <32 x i32> %broadcast.splatinsert5708, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5710 = insertelement <32 x i32> poison, i32 %i.cbk, i64 0
   %broadcast.splat5711 = shufflevector <32 x i32> %broadcast.splatinsert5710, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.ccw = mul <32 x i32> %broadcast.splat5709, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5712 = add <32 x i32> %broadcast.splat5711, %i.ccw
+  %i.ccw = mul nsw <32 x i32> %broadcast.splat5709, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5712 = add nsw <32 x i32> %broadcast.splat5711, %i.ccw
   %i.ccx = shl nsw i32 %i.cbi, 5
   %broadcast.splatinsert5713 = insertelement <32 x i32> poison, i32 %i.ccx, i64 0
   %broadcast.splat5714 = shufflevector <32 x i32> %broadcast.splatinsert5713, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -831,7 +831,7 @@ vector.body5715:                                  ; preds = %vector.body.interim
   br i1 %.not5834, label %vector.body.interim5720, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i298
 
 vector.body.interim5720:                          ; preds = %vector.body5715
-  %vec.ind.next5719 = add <32 x i32> %vec.ind5717, %broadcast.splat5714
+  %vec.ind.next5719 = add nsw <32 x i32> %vec.ind5717, %broadcast.splat5714
   %index.next5718 = add nuw i64 %index5716, 32    ; 2 uses
   %i.cdc = icmp eq i64 %index.next5718, %n.vec5705
   br i1 %i.cdc, label %middle.block5721, label %vector.body5715, !llvm.loop !3114
@@ -1000,8 +1000,8 @@ vector.ph5728:                                    ; preds = %.critedge.us65.us87
   %broadcast.splat5733 = shufflevector <32 x i32> %broadcast.splatinsert5732, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5734 = insertelement <32 x i32> poison, i32 %i.cbk, i64 0
   %broadcast.splat5735 = shufflevector <32 x i32> %broadcast.splatinsert5734, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.cfq = mul <32 x i32> %broadcast.splat5733, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5736 = add <32 x i32> %broadcast.splat5735, %i.cfq
+  %i.cfq = mul nsw <32 x i32> %broadcast.splat5733, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5736 = add nsw <32 x i32> %broadcast.splat5735, %i.cfq
   %i.cfr = shl nsw i32 %i.cbi, 5
   %broadcast.splatinsert5737 = insertelement <32 x i32> poison, i32 %i.cfr, i64 0
   %broadcast.splat5738 = shufflevector <32 x i32> %broadcast.splatinsert5737, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -1018,7 +1018,7 @@ vector.body5739:                                  ; preds = %vector.body.interim
   br i1 %.not5833, label %vector.body.interim5744, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i298
 
 vector.body.interim5744:                          ; preds = %vector.body5739
-  %vec.ind.next5743 = add <32 x i32> %vec.ind5741, %broadcast.splat5738
+  %vec.ind.next5743 = add nsw <32 x i32> %vec.ind5741, %broadcast.splat5738
   %index.next5742 = add nuw i64 %index5740, 32    ; 2 uses
   %i.cfw = icmp eq i64 %index.next5742, %n.vec5729
   br i1 %i.cfw, label %middle.block5745, label %vector.body5739, !llvm.loop !3116
@@ -1421,8 +1421,8 @@ vector.ph5656:                                    ; preds = %.critedge.us.us103.
   %broadcast.splat5661 = shufflevector <32 x i32> %broadcast.splatinsert5660, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5662 = insertelement <32 x i32> poison, i32 %i.dee, i64 0
   %broadcast.splat5663 = shufflevector <32 x i32> %broadcast.splatinsert5662, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.dfq = mul <32 x i32> %broadcast.splat5661, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5664 = add <32 x i32> %broadcast.splat5663, %i.dfq
+  %i.dfq = mul nsw <32 x i32> %broadcast.splat5661, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5664 = add nsw <32 x i32> %broadcast.splat5663, %i.dfq
   %i.dfr = shl nsw i32 %i.dec, 5
   %broadcast.splatinsert5665 = insertelement <32 x i32> poison, i32 %i.dfr, i64 0
   %broadcast.splat5666 = shufflevector <32 x i32> %broadcast.splatinsert5665, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -1439,7 +1439,7 @@ vector.body5667:                                  ; preds = %vector.body.interim
   br i1 %.not5832, label %vector.body.interim5672, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i613
 
 vector.body.interim5672:                          ; preds = %vector.body5667
-  %vec.ind.next5671 = add <32 x i32> %vec.ind5669, %broadcast.splat5666
+  %vec.ind.next5671 = add nsw <32 x i32> %vec.ind5669, %broadcast.splat5666
   %index.next5670 = add nuw i64 %index5668, 32    ; 2 uses
   %i.dfw = icmp eq i64 %index.next5670, %n.vec5657
   br i1 %i.dfw, label %middle.block5673, label %vector.body5667, !llvm.loop !3137
@@ -1608,8 +1608,8 @@ vector.ph5680:                                    ; preds = %.critedge.us65.us87
   %broadcast.splat5685 = shufflevector <32 x i32> %broadcast.splatinsert5684, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5686 = insertelement <32 x i32> poison, i32 %i.dee, i64 0
   %broadcast.splat5687 = shufflevector <32 x i32> %broadcast.splatinsert5686, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.dik = mul <32 x i32> %broadcast.splat5685, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5688 = add <32 x i32> %broadcast.splat5687, %i.dik
+  %i.dik = mul nsw <32 x i32> %broadcast.splat5685, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5688 = add nsw <32 x i32> %broadcast.splat5687, %i.dik
   %i.dil = shl nsw i32 %i.dec, 5
   %broadcast.splatinsert5689 = insertelement <32 x i32> poison, i32 %i.dil, i64 0
   %broadcast.splat5690 = shufflevector <32 x i32> %broadcast.splatinsert5689, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -1626,7 +1626,7 @@ vector.body5691:                                  ; preds = %vector.body.interim
   br i1 %.not5831, label %vector.body.interim5696, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i613
 
 vector.body.interim5696:                          ; preds = %vector.body5691
-  %vec.ind.next5695 = add <32 x i32> %vec.ind5693, %broadcast.splat5690
+  %vec.ind.next5695 = add nsw <32 x i32> %vec.ind5693, %broadcast.splat5690
   %index.next5694 = add nuw i64 %index5692, 32    ; 2 uses
   %i.diq = icmp eq i64 %index.next5694, %n.vec5681
   br i1 %i.diq, label %middle.block5697, label %vector.body5691, !llvm.loop !3139
@@ -2029,8 +2029,8 @@ vector.ph5608:                                    ; preds = %.critedge.us.us104.
   %broadcast.splat5613 = shufflevector <32 x i32> %broadcast.splatinsert5612, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5614 = insertelement <32 x i32> poison, i32 %i.egy, i64 0
   %broadcast.splat5615 = shufflevector <32 x i32> %broadcast.splatinsert5614, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.eik = mul <32 x i32> %broadcast.splat5613, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5616 = add <32 x i32> %broadcast.splat5615, %i.eik
+  %i.eik = mul nsw <32 x i32> %broadcast.splat5613, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5616 = add nsw <32 x i32> %broadcast.splat5615, %i.eik
   %i.eil = shl nsw i32 %i.egw, 5
   %broadcast.splatinsert5617 = insertelement <32 x i32> poison, i32 %i.eil, i64 0
   %broadcast.splat5618 = shufflevector <32 x i32> %broadcast.splatinsert5617, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -2047,7 +2047,7 @@ vector.body5619:                                  ; preds = %vector.body.interim
   br i1 %.not5830, label %vector.body.interim5624, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i915
 
 vector.body.interim5624:                          ; preds = %vector.body5619
-  %vec.ind.next5623 = add <32 x i32> %vec.ind5621, %broadcast.splat5618
+  %vec.ind.next5623 = add nsw <32 x i32> %vec.ind5621, %broadcast.splat5618
   %index.next5622 = add nuw i64 %index5620, 32    ; 2 uses
   %i.eiq = icmp eq i64 %index.next5622, %n.vec5609
   br i1 %i.eiq, label %middle.block5625, label %vector.body5619, !llvm.loop !3160
@@ -2216,8 +2216,8 @@ vector.ph5632:                                    ; preds = %.critedge.us66.us88
   %broadcast.splat5637 = shufflevector <32 x i32> %broadcast.splatinsert5636, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5638 = insertelement <32 x i32> poison, i32 %i.egy, i64 0
   %broadcast.splat5639 = shufflevector <32 x i32> %broadcast.splatinsert5638, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.ele = mul <32 x i32> %broadcast.splat5637, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5640 = add <32 x i32> %broadcast.splat5639, %i.ele
+  %i.ele = mul nsw <32 x i32> %broadcast.splat5637, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5640 = add nsw <32 x i32> %broadcast.splat5639, %i.ele
   %i.elf = shl nsw i32 %i.egw, 5
   %broadcast.splatinsert5641 = insertelement <32 x i32> poison, i32 %i.elf, i64 0
   %broadcast.splat5642 = shufflevector <32 x i32> %broadcast.splatinsert5641, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -2234,7 +2234,7 @@ vector.body5643:                                  ; preds = %vector.body.interim
   br i1 %.not5829, label %vector.body.interim5648, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i915
 
 vector.body.interim5648:                          ; preds = %vector.body5643
-  %vec.ind.next5647 = add <32 x i32> %vec.ind5645, %broadcast.splat5642
+  %vec.ind.next5647 = add nsw <32 x i32> %vec.ind5645, %broadcast.splat5642
   %index.next5646 = add nuw i64 %index5644, 32    ; 2 uses
   %i.elk = icmp eq i64 %index.next5646, %n.vec5633
   br i1 %i.elk, label %middle.block5649, label %vector.body5643, !llvm.loop !3162
@@ -2637,8 +2637,8 @@ vector.ph5584:                                    ; preds = %.critedge.us68.us91
   %broadcast.splat5589 = shufflevector <32 x i32> %broadcast.splatinsert5588, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5590 = insertelement <32 x i32> poison, i32 %i.fjs, i64 0
   %broadcast.splat5591 = shufflevector <32 x i32> %broadcast.splatinsert5590, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.fmu = mul <32 x i32> %broadcast.splat5589, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5592 = add <32 x i32> %broadcast.splat5591, %i.fmu
+  %i.fmu = mul nsw <32 x i32> %broadcast.splat5589, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5592 = add nsw <32 x i32> %broadcast.splat5591, %i.fmu
   %i.fmv = shl nsw i32 %i.fjq, 5
   %broadcast.splatinsert5593 = insertelement <32 x i32> poison, i32 %i.fmv, i64 0
   %broadcast.splat5594 = shufflevector <32 x i32> %broadcast.splatinsert5593, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -2655,7 +2655,7 @@ vector.body5595:                                  ; preds = %vector.body.interim
   br i1 %.not5828, label %vector.body.interim5600, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i1170
 
 vector.body.interim5600:                          ; preds = %vector.body5595
-  %vec.ind.next5599 = add <32 x i32> %vec.ind5597, %broadcast.splat5594
+  %vec.ind.next5599 = add nsw <32 x i32> %vec.ind5597, %broadcast.splat5594
   %index.next5598 = add nuw i64 %index5596, 32    ; 2 uses
   %i.fna = icmp eq i64 %index.next5598, %n.vec5585
   br i1 %i.fna, label %middle.block5601, label %vector.body5595, !llvm.loop !3183
@@ -3058,8 +3058,8 @@ vector.ph5560:                                    ; preds = %.critedge.us68.us92
   %broadcast.splat5565 = shufflevector <32 x i32> %broadcast.splatinsert5564, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5566 = insertelement <32 x i32> poison, i32 %i.glj, i64 0
   %broadcast.splat5567 = shufflevector <32 x i32> %broadcast.splatinsert5566, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.gop = mul <32 x i32> %broadcast.splat5565, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5568 = add <32 x i32> %broadcast.splat5567, %i.gop
+  %i.gop = mul nsw <32 x i32> %broadcast.splat5565, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5568 = add nsw <32 x i32> %broadcast.splat5567, %i.gop
   %i.goq = shl nsw i32 %i.glh, 5
   %broadcast.splatinsert5569 = insertelement <32 x i32> poison, i32 %i.goq, i64 0
   %broadcast.splat5570 = shufflevector <32 x i32> %broadcast.splatinsert5569, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -3076,7 +3076,7 @@ vector.body5571:                                  ; preds = %vector.body.interim
   br i1 %.not5827, label %vector.body.interim5576, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i1441
 
 vector.body.interim5576:                          ; preds = %vector.body5571
-  %vec.ind.next5575 = add <32 x i32> %vec.ind5573, %broadcast.splat5570
+  %vec.ind.next5575 = add nsw <32 x i32> %vec.ind5573, %broadcast.splat5570
   %index.next5574 = add nuw i64 %index5572, 32    ; 2 uses
   %i.gov = icmp eq i64 %index.next5574, %n.vec5561
   br i1 %i.gov, label %middle.block5577, label %vector.body5571, !llvm.loop !3204
@@ -3479,8 +3479,8 @@ vector.ph5536:                                    ; preds = %.critedge.us68.us92
   %broadcast.splat5541 = shufflevector <32 x i32> %broadcast.splatinsert5540, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5542 = insertelement <32 x i32> poison, i32 %i.hnf, i64 0
   %broadcast.splat5543 = shufflevector <32 x i32> %broadcast.splatinsert5542, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.hql = mul <32 x i32> %broadcast.splat5541, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction5544 = add <32 x i32> %broadcast.splat5543, %i.hql
+  %i.hql = mul nsw <32 x i32> %broadcast.splat5541, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction5544 = add nsw <32 x i32> %broadcast.splat5543, %i.hql
   %i.hqm = shl nsw i32 %i.hnd, 5
   %broadcast.splatinsert5545 = insertelement <32 x i32> poison, i32 %i.hqm, i64 0
   %broadcast.splat5546 = shufflevector <32 x i32> %broadcast.splatinsert5545, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -3497,7 +3497,7 @@ vector.body5547:                                  ; preds = %vector.body.interim
   br i1 %.not5826, label %vector.body.interim5552, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i1720
 
 vector.body.interim5552:                          ; preds = %vector.body5547
-  %vec.ind.next5551 = add <32 x i32> %vec.ind5549, %broadcast.splat5546
+  %vec.ind.next5551 = add nsw <32 x i32> %vec.ind5549, %broadcast.splat5546
   %index.next5550 = add nuw i64 %index5548, 32    ; 2 uses
   %i.hqr = icmp eq i64 %index.next5550, %n.vec5537
   br i1 %i.hqr, label %middle.block5553, label %vector.body5547, !llvm.loop !3225
@@ -3900,8 +3900,8 @@ vector.ph:                                        ; preds = %.critedge.us79.us10
   %broadcast.splat5432 = shufflevector <32 x i32> %broadcast.splatinsert5431, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5433 = insertelement <32 x i32> poison, i32 %i.kwr, i64 0
   %broadcast.splat5434 = shufflevector <32 x i32> %broadcast.splatinsert5433, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.kzw = mul <32 x i32> %broadcast.splat5432, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat5434, %i.kzw
+  %i.kzw = mul nsw <32 x i32> %broadcast.splat5432, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat5434, %i.kzw
   %i.kzx = shl nsw i32 %i.kwp, 5
   %broadcast.splatinsert5435 = insertelement <32 x i32> poison, i32 %i.kzx, i64 0
   %broadcast.splat5436 = shufflevector <32 x i32> %broadcast.splatinsert5435, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -3918,7 +3918,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.i.i.i.i.i.i.i.i.i2616
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat5436
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat5436
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.lac = icmp eq i64 %index.next, %n.vec
   br i1 %i.lac, label %middle.block, label %vector.body, !llvm.loop !3292
@@ -4321,8 +4321,8 @@ vector.ph223:                                     ; preds = %.critedge.us.us101.
   %broadcast.splat228 = shufflevector <32 x i32> %broadcast.splatinsert227, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert229 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat230 = shufflevector <32 x i32> %broadcast.splatinsert229, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.di = mul <32 x i32> %broadcast.splat228, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction231 = add <32 x i32> %broadcast.splat230, %i.di
+  %i.di = mul nsw <32 x i32> %broadcast.splat228, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction231 = add nsw <32 x i32> %broadcast.splat230, %i.di
   %i.dj = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert232 = insertelement <32 x i32> poison, i32 %i.dj, i64 0
   %broadcast.splat233 = shufflevector <32 x i32> %broadcast.splatinsert232, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -4339,7 +4339,7 @@ vector.body234:                                   ; preds = %vector.body.interim
   br i1 %.not246, label %vector.body.interim239, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim239:                           ; preds = %vector.body234
-  %vec.ind.next238 = add <32 x i32> %vec.ind236, %broadcast.splat233
+  %vec.ind.next238 = add nsw <32 x i32> %vec.ind236, %broadcast.splat233
   %index.next237 = add nuw i64 %index235, 32      ; 2 uses
   %i.do = icmp eq i64 %index.next237, %n.vec224
   br i1 %i.do, label %middle.block240, label %vector.body234, !llvm.loop !3639
@@ -4508,8 +4508,8 @@ vector.ph:                                        ; preds = %.critedge.us63.us85
   %broadcast.splat215 = shufflevector <32 x i32> %broadcast.splatinsert214, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert216 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat217 = shufflevector <32 x i32> %broadcast.splatinsert216, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.gc = mul <32 x i32> %broadcast.splat215, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat217, %i.gc
+  %i.gc = mul nsw <32 x i32> %broadcast.splat215, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat217, %i.gc
   %i.gd = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert218 = insertelement <32 x i32> poison, i32 %i.gd, i64 0
   %broadcast.splat219 = shufflevector <32 x i32> %broadcast.splatinsert218, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -4526,7 +4526,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not245, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat219
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat219
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.gi = icmp eq i64 %index.next, %n.vec
   br i1 %i.gi, label %middle.block, label %vector.body, !llvm.loop !3641
@@ -4929,8 +4929,8 @@ vector.ph223:                                     ; preds = %.critedge.us.us101.
   %broadcast.splat228 = shufflevector <32 x i32> %broadcast.splatinsert227, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert229 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat230 = shufflevector <32 x i32> %broadcast.splatinsert229, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.di = mul <32 x i32> %broadcast.splat228, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction231 = add <32 x i32> %broadcast.splat230, %i.di
+  %i.di = mul nsw <32 x i32> %broadcast.splat228, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction231 = add nsw <32 x i32> %broadcast.splat230, %i.di
   %i.dj = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert232 = insertelement <32 x i32> poison, i32 %i.dj, i64 0
   %broadcast.splat233 = shufflevector <32 x i32> %broadcast.splatinsert232, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -4947,7 +4947,7 @@ vector.body234:                                   ; preds = %vector.body.interim
   br i1 %.not246, label %vector.body.interim239, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim239:                           ; preds = %vector.body234
-  %vec.ind.next238 = add <32 x i32> %vec.ind236, %broadcast.splat233
+  %vec.ind.next238 = add nsw <32 x i32> %vec.ind236, %broadcast.splat233
   %index.next237 = add nuw i64 %index235, 32      ; 2 uses
   %i.do = icmp eq i64 %index.next237, %n.vec224
   br i1 %i.do, label %middle.block240, label %vector.body234, !llvm.loop !3669
@@ -5116,8 +5116,8 @@ vector.ph:                                        ; preds = %.critedge.us63.us85
   %broadcast.splat215 = shufflevector <32 x i32> %broadcast.splatinsert214, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert216 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat217 = shufflevector <32 x i32> %broadcast.splatinsert216, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.gc = mul <32 x i32> %broadcast.splat215, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat217, %i.gc
+  %i.gc = mul nsw <32 x i32> %broadcast.splat215, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat217, %i.gc
   %i.gd = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert218 = insertelement <32 x i32> poison, i32 %i.gd, i64 0
   %broadcast.splat219 = shufflevector <32 x i32> %broadcast.splatinsert218, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -5134,7 +5134,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not245, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat219
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat219
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.gi = icmp eq i64 %index.next, %n.vec
   br i1 %i.gi, label %middle.block, label %vector.body, !llvm.loop !3671
@@ -5537,8 +5537,8 @@ vector.ph223:                                     ; preds = %.critedge.us.us101.
   %broadcast.splat228 = shufflevector <32 x i32> %broadcast.splatinsert227, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert229 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat230 = shufflevector <32 x i32> %broadcast.splatinsert229, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.di = mul <32 x i32> %broadcast.splat228, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction231 = add <32 x i32> %broadcast.splat230, %i.di
+  %i.di = mul nsw <32 x i32> %broadcast.splat228, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction231 = add nsw <32 x i32> %broadcast.splat230, %i.di
   %i.dj = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert232 = insertelement <32 x i32> poison, i32 %i.dj, i64 0
   %broadcast.splat233 = shufflevector <32 x i32> %broadcast.splatinsert232, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -5555,7 +5555,7 @@ vector.body234:                                   ; preds = %vector.body.interim
   br i1 %.not246, label %vector.body.interim239, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim239:                           ; preds = %vector.body234
-  %vec.ind.next238 = add <32 x i32> %vec.ind236, %broadcast.splat233
+  %vec.ind.next238 = add nsw <32 x i32> %vec.ind236, %broadcast.splat233
   %index.next237 = add nuw i64 %index235, 32      ; 2 uses
   %i.do = icmp eq i64 %index.next237, %n.vec224
   br i1 %i.do, label %middle.block240, label %vector.body234, !llvm.loop !3699
@@ -5724,8 +5724,8 @@ vector.ph:                                        ; preds = %.critedge.us63.us85
   %broadcast.splat215 = shufflevector <32 x i32> %broadcast.splatinsert214, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert216 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat217 = shufflevector <32 x i32> %broadcast.splatinsert216, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.gc = mul <32 x i32> %broadcast.splat215, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat217, %i.gc
+  %i.gc = mul nsw <32 x i32> %broadcast.splat215, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat217, %i.gc
   %i.gd = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert218 = insertelement <32 x i32> poison, i32 %i.gd, i64 0
   %broadcast.splat219 = shufflevector <32 x i32> %broadcast.splatinsert218, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -5742,7 +5742,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not245, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat219
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat219
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.gi = icmp eq i64 %index.next, %n.vec
   br i1 %i.gi, label %middle.block, label %vector.body, !llvm.loop !3701
@@ -6145,8 +6145,8 @@ vector.ph224:                                     ; preds = %.critedge.us.us102.
   %broadcast.splat229 = shufflevector <32 x i32> %broadcast.splatinsert228, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert230 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat231 = shufflevector <32 x i32> %broadcast.splatinsert230, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.di = mul <32 x i32> %broadcast.splat229, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction232 = add <32 x i32> %broadcast.splat231, %i.di
+  %i.di = mul nsw <32 x i32> %broadcast.splat229, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction232 = add nsw <32 x i32> %broadcast.splat231, %i.di
   %i.dj = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert233 = insertelement <32 x i32> poison, i32 %i.dj, i64 0
   %broadcast.splat234 = shufflevector <32 x i32> %broadcast.splatinsert233, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -6163,7 +6163,7 @@ vector.body235:                                   ; preds = %vector.body.interim
   br i1 %.not247, label %vector.body.interim240, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim240:                           ; preds = %vector.body235
-  %vec.ind.next239 = add <32 x i32> %vec.ind237, %broadcast.splat234
+  %vec.ind.next239 = add nsw <32 x i32> %vec.ind237, %broadcast.splat234
   %index.next238 = add nuw i64 %index236, 32      ; 2 uses
   %i.do = icmp eq i64 %index.next238, %n.vec225
   br i1 %i.do, label %middle.block241, label %vector.body235, !llvm.loop !3729
@@ -6332,8 +6332,8 @@ vector.ph:                                        ; preds = %.critedge.us64.us86
   %broadcast.splat216 = shufflevector <32 x i32> %broadcast.splatinsert215, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert217 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat218 = shufflevector <32 x i32> %broadcast.splatinsert217, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.gc = mul <32 x i32> %broadcast.splat216, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat218, %i.gc
+  %i.gc = mul nsw <32 x i32> %broadcast.splat216, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat218, %i.gc
   %i.gd = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert219 = insertelement <32 x i32> poison, i32 %i.gd, i64 0
   %broadcast.splat220 = shufflevector <32 x i32> %broadcast.splatinsert219, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -6350,7 +6350,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not246, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat220
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat220
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.gi = icmp eq i64 %index.next, %n.vec
   br i1 %i.gi, label %middle.block, label %vector.body, !llvm.loop !3731
@@ -6753,8 +6753,8 @@ vector.ph:                                        ; preds = %.critedge.us66.us89
   %broadcast.splat172 = shufflevector <32 x i32> %broadcast.splatinsert171, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert173 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat174 = shufflevector <32 x i32> %broadcast.splatinsert173, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.ey = mul <32 x i32> %broadcast.splat172, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat174, %i.ey
+  %i.ey = mul nsw <32 x i32> %broadcast.splat172, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat174, %i.ey
   %i.ez = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert175 = insertelement <32 x i32> poison, i32 %i.ez, i64 0
   %broadcast.splat176 = shufflevector <32 x i32> %broadcast.splatinsert175, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -6771,7 +6771,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not178, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat176
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat176
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.fe = icmp eq i64 %index.next, %n.vec
   br i1 %i.fe, label %middle.block, label %vector.body, !llvm.loop !3759
@@ -7174,8 +7174,8 @@ vector.ph:                                        ; preds = %.critedge.us66.us90
   %broadcast.splat173 = shufflevector <32 x i32> %broadcast.splatinsert172, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert174 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat175 = shufflevector <32 x i32> %broadcast.splatinsert174, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.fc = mul <32 x i32> %broadcast.splat173, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat175, %i.fc
+  %i.fc = mul nsw <32 x i32> %broadcast.splat173, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat175, %i.fc
   %i.fd = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert176 = insertelement <32 x i32> poison, i32 %i.fd, i64 0
   %broadcast.splat177 = shufflevector <32 x i32> %broadcast.splatinsert176, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -7192,7 +7192,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not179, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat177
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat177
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.fi = icmp eq i64 %index.next, %n.vec
   br i1 %i.fi, label %middle.block, label %vector.body, !llvm.loop !3787
@@ -7595,8 +7595,8 @@ vector.ph:                                        ; preds = %.critedge.us66.us90
   %broadcast.splat173 = shufflevector <32 x i32> %broadcast.splatinsert172, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert174 = insertelement <32 x i32> poison, i32 %i.bv, i64 0
   %broadcast.splat175 = shufflevector <32 x i32> %broadcast.splatinsert174, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.fc = mul <32 x i32> %broadcast.splat173, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat175, %i.fc
+  %i.fc = mul nsw <32 x i32> %broadcast.splat173, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat175, %i.fc
   %i.fd = shl nsw i32 %i.bt, 5
   %broadcast.splatinsert176 = insertelement <32 x i32> poison, i32 %i.fd, i64 0
   %broadcast.splat177 = shufflevector <32 x i32> %broadcast.splatinsert176, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -7613,7 +7613,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not179, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat177
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat177
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.fi = icmp eq i64 %index.next, %n.vec
   br i1 %i.fi, label %middle.block, label %vector.body, !llvm.loop !3815
@@ -8016,8 +8016,8 @@ vector.ph:                                        ; preds = %.critedge.us77.us10
   %broadcast.splat185 = shufflevector <32 x i32> %broadcast.splatinsert184, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert186 = insertelement <32 x i32> poison, i32 %i.bu, i64 0
   %broadcast.splat187 = shufflevector <32 x i32> %broadcast.splatinsert186, <32 x i32> poison, <32 x i32> zeroinitializer
-  %i.fa = mul <32 x i32> %broadcast.splat185, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %induction = add <32 x i32> %broadcast.splat187, %i.fa
+  %i.fa = mul nsw <32 x i32> %broadcast.splat185, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %induction = add nsw <32 x i32> %broadcast.splat187, %i.fa
   %i.fb = shl nsw i32 %i.bs, 5
   %broadcast.splatinsert188 = insertelement <32 x i32> poison, i32 %i.fb, i64 0
   %broadcast.splat189 = shufflevector <32 x i32> %broadcast.splatinsert188, <32 x i32> poison, <32 x i32> zeroinitializer
@@ -8034,7 +8034,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not191, label %vector.body.interim, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <32 x i32> %vec.ind, %broadcast.splat189
+  %vec.ind.next = add nsw <32 x i32> %vec.ind, %broadcast.splat189
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.fg = icmp eq i64 %index.next, %n.vec
   br i1 %i.fg, label %middle.block, label %vector.body, !llvm.loop !3895
