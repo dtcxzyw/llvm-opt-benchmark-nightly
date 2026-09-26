@@ -77,11 +77,11 @@ bb.a:
   %.sroa.0.0.insert.ext = zext i32 %i.j to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.0.insert.ext, 4294967296
   %i.l = tail call i64 @av_div_q(i64 %i.k, i64 %.sroa.0.0.insert.insert) #4 ; 4 uses
-  store i64 %i.l, ptr %i.g, align 8
+  store i64 %i.l, ptr %i.g, align 8, !tbaa !41
   %i.m = load i32, ptr %i.i, align 8, !tbaa !31
-  %i.n = load i32, ptr %i.h, align 8, !tbaa !41
+  %i.n = load i32, ptr %i.h, align 8, !tbaa !42
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 284
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !42
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !43
   %i.q = load i64, ptr %i.h, align 8
   %i.r = trunc i64 %i.l to i32
   %i.s = insertelement <2 x i64> poison, i64 %i.q, i64 0
@@ -158,6 +158,7 @@ attributes #4 = { nounwind willreturn memory(none) }
 !38 = !{!26, !23, i64 56}
 !39 = !{!19, !10, i64 0}
 !40 = !{!26, !23, i64 32}
-!41 = !{!29, !6, i64 280}
-!42 = !{!29, !6, i64 284}
+!41 = !{!6, !6, i64 0}
+!42 = !{!29, !6, i64 280}
+!43 = !{!29, !6, i64 284}
 end_hunk_0

@@ -205,12 +205,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ad = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.ad ; 2 uses
-  %i.ae = load i64, ptr %i.t, align 4
+  %i.ae = load i64, ptr %i.t, align 4, !tbaa !96
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ae, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.af = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4
-  store <2 x i64> %broadcast.splat, ptr %i.af, align 4
+  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4, !tbaa !96
+  store <2 x i64> %broadcast.splat, ptr %i.af, align 4, !tbaa !96
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ag = icmp eq i64 %index.next, %n.vec
   br i1 %i.ag, label %middle.block, label %vector.body, !llvm.loop !705
@@ -221,8 +221,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i:                     ; preds = %middle.block, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
   %.06.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ac, %middle.block ] ; 2 uses
-  %i.ah = load i64, ptr %i.t, align 4
-  store i64 %i.ah, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, align 4
+  %i.ah = load i64, ptr %i.t, align 4, !tbaa !96
+  store i64 %i.ah, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, align 4, !tbaa !96
   %i.ai = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ai, %i.x
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_ZN12V3NumberData17initDynamicNumberIJiEEEvDpOT_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !706
@@ -490,12 +490,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ay = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.ap, i64 %i.ay ; 2 uses
-  %i.az = load i64, ptr %i.am, align 4
+  %i.az = load i64, ptr %i.am, align 4, !tbaa !96
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.az, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ba = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4
-  store <2 x i64> %broadcast.splat, ptr %i.ba, align 4
+  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4, !tbaa !96
+  store <2 x i64> %broadcast.splat, ptr %i.ba, align 4, !tbaa !96
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !708
@@ -510,8 +510,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i.i
   %.06.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bd, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
-  %i.bc = load i64, ptr %i.am, align 4
-  store i64 %i.bc, ptr %.06.i.i.i.i.i.i.i.i.i.i, align 4
+  %i.bc = load i64, ptr %i.am, align 4, !tbaa !96
+  store i64 %i.bc, ptr %.06.i.i.i.i.i.i.i.i.i.i, align 4, !tbaa !96
   %i.bd = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.bd, %i.as
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_ZN12V3NumberData17initDynamicNumberIJiEEEvDpOT_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, !llvm.loop !709
@@ -649,12 +649,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.y = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.p, i64 %i.y ; 2 uses
-  %i.z = load i64, ptr %i.b, align 4
+  %i.z = load i64, ptr %i.b, align 4, !tbaa !96
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.z, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.aa = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4
-  store <2 x i64> %broadcast.splat, ptr %i.aa, align 4
+  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4, !tbaa !96
+  store <2 x i64> %broadcast.splat, ptr %i.aa, align 4, !tbaa !96
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !710
@@ -669,8 +669,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i
   %.06.i.i.i.i.i.i.i = phi ptr [ %i.ad, %.lr.ph.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 2 uses
-  %i.ac = load i64, ptr %i.b, align 4
-  store i64 %i.ac, ptr %.06.i.i.i.i.i.i.i, align 4
+  %i.ac = load i64, ptr %i.b, align 4, !tbaa !96
+  store i64 %i.ac, ptr %.06.i.i.i.i.i.i.i, align 4, !tbaa !96
   %i.ad = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ad, %i.s
   br i1 %.not.i.i.i.i.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN12V3NumberData9ValueAndXEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !711
@@ -720,12 +720,12 @@ vector.body48:                                    ; preds = %vector.body48, %vec
   %index49 = phi i64 [ 0, %vector.ph46 ], [ %index.next53, %vector.body48 ] ; 2 uses
   %i.at = shl i64 %index49, 3
   %next.gep50 = getelementptr i8, ptr %i.am, i64 %i.at ; 2 uses
-  %i.au = load i64, ptr %i.aj, align 4
+  %i.au = load i64, ptr %i.aj, align 4, !tbaa !96
   %broadcast.splatinsert51 = insertelement <2 x i64> poison, i64 %i.au, i64 0
   %broadcast.splat52 = shufflevector <2 x i64> %broadcast.splatinsert51, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.av = getelementptr i8, ptr %next.gep50, i64 16
-  store <2 x i64> %broadcast.splat52, ptr %next.gep50, align 4
-  store <2 x i64> %broadcast.splat52, ptr %i.av, align 4
+  store <2 x i64> %broadcast.splat52, ptr %next.gep50, align 4, !tbaa !96
+  store <2 x i64> %broadcast.splat52, ptr %i.av, align 4, !tbaa !96
   %index.next53 = add nuw i64 %index49, 4         ; 2 uses
   %i.aw = icmp eq i64 %index.next53, %n.vec47
   br i1 %i.aw, label %middle.block54, label %vector.body48, !llvm.loop !712
@@ -740,8 +740,8 @@ middle.block54:                                   ; preds = %vector.body48
 
 .lr.ph.i.i.i.i.i.i.i31:                           ; preds = %.lr.ph.i.i.i.i.i.i.i31.preheader, %.lr.ph.i.i.i.i.i.i.i31
   %.06.i.i.i.i.i.i.i32 = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.i.i.i31 ], [ %.06.i.i.i.i.i.i.i32.ph, %.lr.ph.i.i.i.i.i.i.i31.preheader ] ; 2 uses
-  %i.ax = load i64, ptr %i.aj, align 4
-  store i64 %i.ax, ptr %.06.i.i.i.i.i.i.i32, align 4
+  %i.ax = load i64, ptr %i.aj, align 4, !tbaa !96
+  store i64 %i.ax, ptr %.06.i.i.i.i.i.i.i32, align 4, !tbaa !96
   %i.ay = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i32, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i33 = icmp eq ptr %i.ay, %i.an
   br i1 %.not.i.i.i.i.i.i.i33, label %_ZSt27__uninitialized_default_n_aIPN12V3NumberData9ValueAndXEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i.i.i.i.i31, !llvm.loop !713
@@ -1043,8 +1043,8 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.bd, label %bb.i, label %_ZN12V3NumberData17initDynamicNumberIJRKSt6vectorINS_9ValueAndXESaIS2_EEEEEvDpOT_.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.be = load i64, ptr %i.ax, align 4
-  store i64 %i.be, ptr %i.at, align 4
+  %i.be = load i64, ptr %i.ax, align 4, !tbaa !96
+  store i64 %i.be, ptr %i.at, align 4, !tbaa !96
   br label %_ZN12V3NumberData17initDynamicNumberIJRKSt6vectorINS_9ValueAndXESaIS2_EEEEEvDpOT_.exit
 
 _ZN12V3NumberData17initDynamicNumberIJRKSt6vectorINS_9ValueAndXESaIS2_EEEEEvDpOT_.exit: ; preds = %bb.g, %bb.h, %bb.i
@@ -1447,8 +1447,8 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ag, label %bb.i, label %_ZN12V3NumberData17initDynamicNumberIJRKSt6vectorINS_9ValueAndXESaIS2_EEEEEvDpOT_.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.ah = load i64, ptr %i.aa, align 4
-  store i64 %i.ah, ptr %i.w, align 4
+  %i.ah = load i64, ptr %i.aa, align 4, !tbaa !96
+  store i64 %i.ah, ptr %i.w, align 4, !tbaa !96
   br label %_ZN12V3NumberData17initDynamicNumberIJRKSt6vectorINS_9ValueAndXESaIS2_EEEEEvDpOT_.exit
 
 _ZN12V3NumberData17initDynamicNumberIJRKSt6vectorINS_9ValueAndXESaIS2_EEEEEvDpOT_.exit: ; preds = %bb.g, %bb.h, %bb.i
@@ -1469,8 +1469,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !287
-  %i.c = load ptr, ptr %1, align 8, !tbaa !208    ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64
+  %i.c = load ptr, ptr %1, align 8, !tbaa !208    ; 9 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 12 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -1504,8 +1504,8 @@ bb.f:                                             ; preds = %_ZNSt12_Vector_base
   br i1 %i.q, label %bb.g, label %_ZNSt6vectorIN12V3NumberData9ValueAndXESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.r = load i64, ptr %i.c, align 4
-  store i64 %i.r, ptr %i.o, align 4
+  %i.r = load i64, ptr %i.c, align 4, !tbaa !96
+  store i64 %i.r, ptr %i.o, align 4, !tbaa !96
   br label %_ZNSt6vectorIN12V3NumberData9ValueAndXESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
 
 _ZNSt6vectorIN12V3NumberData9ValueAndXESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %bb.e, %bb.f, %bb.g
@@ -1529,9 +1529,9 @@ _ZNSt12_Vector_baseIN12V3NumberData9ValueAndXESaIS1_EE13_M_deallocateEPS1_m.exit
 
 bb.i:                                             ; preds = %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !287
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !287  ; 3 uses
   %i.aa = ptrtoint ptr %i.z to i64
-  %i.ab = sub i64 %i.aa, %i.k                     ; 4 uses
+  %i.ab = sub i64 %i.aa, %i.k                     ; 5 uses
   %.not24 = icmp ult i64 %i.ab, %i.f
   br i1 %.not24, label %bb.n, label %bb.j
 
@@ -1548,8 +1548,8 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.ad, label %bb.m, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN12V3NumberData9ValueAndXESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit
 
 bb.m:                                             ; preds = %bb.l
-  %i.ae = load i64, ptr %i.c, align 4
-  store i64 %i.ae, ptr %i.i, align 4
+  %i.ae = load i64, ptr %i.c, align 4, !tbaa !96
+  store i64 %i.ae, ptr %i.i, align 4, !tbaa !96
   br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN12V3NumberData9ValueAndXESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit
 
 bb.n:                                             ; preds = %bb.i
@@ -1558,6 +1558,14 @@ bb.n:                                             ; preds = %bb.i
 
 bb.o:                                             ; preds = %bb.n
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.i, ptr align 4 %i.c, i64 %i.ab, i1 false)
+  %.pre = load ptr, ptr %1, align 8, !tbaa !208
+  %.pre25 = load ptr, ptr %i.y, align 8, !tbaa !287 ; 2 uses
+  %.pre26 = load ptr, ptr %0, align 8, !tbaa !208
+  %.pre27 = load ptr, ptr %i.a, align 8, !tbaa !287
+  %.pre28 = ptrtoint ptr %.pre25 to i64
+  %.pre29 = ptrtoint ptr %.pre26 to i64
+  %.pre31 = sub i64 %.pre28, %.pre29
+  %.pre33 = ptrtoint ptr %.pre27 to i64
   br label %_ZSt4copyIPN12V3NumberData9ValueAndXES2_ET0_T_S4_S3_.exit
 
 bb.p:                                             ; preds = %bb.n
@@ -1565,27 +1573,23 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.ag, label %bb.q, label %_ZSt4copyIPN12V3NumberData9ValueAndXES2_ET0_T_S4_S3_.exit
 
 bb.q:                                             ; preds = %bb.p
-  %i.ah = load i64, ptr %i.c, align 4
-  store i64 %i.ah, ptr %i.i, align 4
+  %i.ah = load i64, ptr %i.c, align 4, !tbaa !96
+  store i64 %i.ah, ptr %i.i, align 4, !tbaa !96
   br label %_ZSt4copyIPN12V3NumberData9ValueAndXES2_ET0_T_S4_S3_.exit
 
 _ZSt4copyIPN12V3NumberData9ValueAndXES2_ET0_T_S4_S3_.exit: ; preds = %bb.o, %bb.p, %bb.q
-  %2 = load ptr, ptr %1, align 8, !tbaa !208
-  %3 = load ptr, ptr %i.y, align 8, !tbaa !287    ; 3 uses
-  %4 = load ptr, ptr %0, align 8, !tbaa !208
-  %5 = ptrtoint ptr %3 to i64
-  %6 = ptrtoint ptr %4 to i64
-  %7 = sub i64 %5, %6
-  %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 %7 ; 3 uses
-  %8 = load ptr, ptr %i.a, align 8, !tbaa !287
-  %9 = ptrtoint ptr %8 to i64
+  %.pre-phi34 = phi i64 [ %.pre33, %bb.o ], [ %i.d, %bb.p ], [ %i.d, %bb.q ]
+  %.pre-phi32 = phi i64 [ %.pre31, %bb.o ], [ %i.ab, %bb.p ], [ 8, %bb.q ]
+  %2 = phi ptr [ %.pre25, %bb.o ], [ %i.z, %bb.p ], [ %i.z, %bb.q ] ; 2 uses
+  %3 = phi ptr [ %.pre, %bb.o ], [ %i.c, %bb.p ], [ %i.c, %bb.q ]
+  %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 %.pre-phi32 ; 3 uses
   %i.aj = ptrtoint ptr %i.ai to i64
-  %i.ak = sub i64 %9, %i.aj                       ; 3 uses
+  %i.ak = sub i64 %.pre-phi34, %i.aj              ; 3 uses
   %i.al = icmp sgt i64 %i.ak, 8
   br i1 %i.al, label %bb.r, label %bb.s, !prof !168
 
 bb.r:                                             ; preds = %_ZSt4copyIPN12V3NumberData9ValueAndXES2_ET0_T_S4_S3_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %3, ptr align 4 %i.ai, i64 %i.ak, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %2, ptr align 4 %i.ai, i64 %i.ak, i1 false)
   br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN12V3NumberData9ValueAndXESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit
 
 bb.s:                                             ; preds = %_ZSt4copyIPN12V3NumberData9ValueAndXES2_ET0_T_S4_S3_.exit
@@ -1593,8 +1597,8 @@ bb.s:                                             ; preds = %_ZSt4copyIPN12V3Num
   br i1 %i.am, label %bb.t, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN12V3NumberData9ValueAndXESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit
 
 bb.t:                                             ; preds = %bb.s
-  %i.an = load i64, ptr %i.ai, align 4
-  store i64 %i.an, ptr %3, align 4
+  %i.an = load i64, ptr %i.ai, align 4, !tbaa !96
+  store i64 %i.an, ptr %2, align 4, !tbaa !96
   br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN12V3NumberData9ValueAndXESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN12V3NumberData9ValueAndXESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit: ; preds = %bb.t, %bb.s, %bb.r, %bb.m, %bb.l, %bb.k, %_ZNSt12_Vector_baseIN12V3NumberData9ValueAndXESaIS1_EE13_M_deallocateEPS1_m.exit

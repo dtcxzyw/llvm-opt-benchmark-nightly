@@ -139,7 +139,7 @@ bb.d:                                             ; preds = %b3DestroyBitSet.exi
 b3CreateBitSet.exit:                              ; preds = %b3DestroyBitSet.exit
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.w, i8 0, i64 %i.v, i1 false)
   store ptr %i.w, ptr %0, align 8, !tbaa !21
-  store i64 %i.u, ptr %i.j, align 8
+  store i64 %i.u, ptr %i.j, align 8, !tbaa !22
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %b3CreateBitSet.exit, %bb.c
@@ -245,7 +245,7 @@ bb.m:                                             ; preds = %bb.l, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden void @b3InPlaceUnion(ptr noalias noundef %0, ptr noalias noundef %1) local_unnamed_addr #0 !func_sanitize !23 {
+define hidden void @b3InPlaceUnion(ptr noalias noundef %0, ptr noalias noundef %1) local_unnamed_addr #0 !func_sanitize !24 {
 bb.a:
   %i.a = icmp ne ptr %0, null, !nosanitize !9
   %i.b = ptrtoint ptr %0 to i64, !nosanitize !9   ; 2 uses
@@ -314,7 +314,7 @@ bb.e:                                             ; preds = %.lr.ph.split.split
   unreachable, !nosanitize !9
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = load i64, ptr %i.o, align 8, !tbaa !25
+  %i.u = load i64, ptr %i.o, align 8, !tbaa !26
   %i.v = load ptr, ptr %0, align 8, !tbaa !15     ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %indvars.iv ; 3 uses
   %i.x = ptrtoint ptr %i.v to i64, !nosanitize !9 ; 3 uses
@@ -342,12 +342,12 @@ bb.i:                                             ; preds = %bb.h
   unreachable, !nosanitize !9
 
 bb.j:                                             ; preds = %bb.h
-  %i.ai = load i64, ptr %i.w, align 8, !tbaa !25
+  %i.ai = load i64, ptr %i.w, align 8, !tbaa !26
   %i.aj = or i64 %i.ai, %i.u
-  store i64 %i.aj, ptr %i.w, align 8, !tbaa !25
+  store i64 %i.aj, ptr %i.w, align 8, !tbaa !26
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.split, !llvm.loop !22
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.split, !llvm.loop !23
 }
 
 ; Function Attrs: noreturn nounwind uwtable
@@ -387,9 +387,10 @@ attributes #6 = { noreturn nounwind }
 !19 = !{i32 -1056584962, i32 218820098}
 !20 = !{i32 -1056584962, i32 566416299}
 !21 = !{!13, !13, i64 0}
-!22 = distinct !{!22, !26}
-!23 = !{i32 -1056584962, i32 -1805867571}
-!24 = !{!"long", !5, i64 0}
-!25 = !{!24, !24, i64 0}
-!26 = !{!"llvm.loop.mustprogress"}
+!22 = !{!6, !6, i64 0}
+!23 = distinct !{!23, !27}
+!24 = !{i32 -1056584962, i32 -1805867571}
+!25 = !{!"long", !5, i64 0}
+!26 = !{!25, !25, i64 0}
+!27 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

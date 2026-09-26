@@ -157,7 +157,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 88
   %i.l = tail call i24 @lv_palette_main(i32 noundef 0) #4
-  store i24 %i.l, ptr %i.k, align 8
+  store i24 %i.l, ptr %i.k, align 8, !tbaa !18
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
@@ -173,7 +173,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 92
   %i.q = tail call i24 @lv_palette_main(i32 noundef 0) #4
-  store i24 %i.q, ptr %i.p, align 4
+  store i24 %i.q, ptr %i.p, align 4, !tbaa !18
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.g, %bb.f, %bb.a
@@ -321,4 +321,5 @@ attributes #4 = { nounwind }
 !15 = !{!"", !9, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !11, i64 24, !12, i64 32, !12, i64 34, !13, i64 36, !4, i64 39, !5, i64 40, !5, i64 42, !14, i64 48, !8, i64 56}
 !16 = !{!15, !5, i64 8}
 !17 = !{!15, !5, i64 12}
+!18 = !{!4, !4, i64 0}
 end_hunk_0

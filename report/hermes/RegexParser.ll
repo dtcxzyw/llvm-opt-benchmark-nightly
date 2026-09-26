@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.o
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cb, i64 4
   store i32 %i.cp, ptr %.sroa.4.0..sroa_idx.i.i, align 4, !tbaa !17
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cb, i64 8 ; 3 uses
-  %i.cr = load ptr, ptr %i.bt, align 8, !tbaa !39
+  %i.cr = load ptr, ptr %i.bt, align 8, !tbaa !39 ; 3 uses
   %i.cs = load i32, ptr %i.bw, align 8, !tbaa !40
   %i.ct = zext i32 %i.cs to i64
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %i.ct
@@ -216,6 +216,7 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.q
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cq, ptr nonnull align 4 %i.cc, i64 %i.cx, i1 false)
+  %.pre.i.i.i = load ptr, ptr %i.bt, align 8, !tbaa !39
   br label %_ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i
 
 bb.s:                                             ; preds = %bb.q
@@ -223,15 +224,15 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.cz, label %bb.t, label %_ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.da = load i64, ptr %i.cc, align 4
-  store i64 %i.da, ptr %i.cq, align 4
+  %i.da = load i64, ptr %i.cc, align 4, !tbaa !17
+  store i64 %i.da, ptr %i.cq, align 4, !tbaa !17
   br label %_ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i
 
 _ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i: ; preds = %bb.t, %bb.s, %bb.r
-  %7 = getelementptr inbounds i8, ptr %i.cq, i64 %i.cx
-  %8 = load ptr, ptr %i.bt, align 8, !tbaa !39
-  %i.db = ptrtoint ptr %7 to i64
-  %i.dc = ptrtoint ptr %8 to i64
+  %7 = phi ptr [ %.pre.i.i.i, %bb.r ], [ %i.cr, %bb.s ], [ %i.cr, %bb.t ]
+  %8 = getelementptr inbounds i8, ptr %i.cq, i64 %i.cx
+  %i.db = ptrtoint ptr %8 to i64
+  %i.dc = ptrtoint ptr %7 to i64
   %i.dd = sub i64 %i.db, %i.dc
   %i.de = lshr exact i64 %i.dd, 3
   %i.df = trunc i64 %i.de to i32
@@ -634,7 +635,7 @@ bb.k:                                             ; preds = %bb.i
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
   store i32 %i.ck, ptr %.sroa.4.0..sroa_idx.i.i.i, align 4, !tbaa !17
   %i.cl = getelementptr inbounds nuw i8, ptr %i.bv, i64 8 ; 3 uses
-  %i.cm = load ptr, ptr %i.bo, align 8, !tbaa !39
+  %i.cm = load ptr, ptr %i.bo, align 8, !tbaa !39 ; 3 uses
   %i.cn = load i32, ptr %i.bq, align 8, !tbaa !40
   %i.co = zext i32 %i.cn to i64
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %i.co
@@ -646,6 +647,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cl, ptr nonnull align 4 %i.bw, i64 %i.cs, i1 false)
+  %.pre.i.i.i.i = load ptr, ptr %i.bo, align 8, !tbaa !39
   br label %_ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i.i
 
 bb.m:                                             ; preds = %bb.k
@@ -653,15 +655,15 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.cu, label %bb.n, label %_ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.cv = load i64, ptr %i.bw, align 4
-  store i64 %i.cv, ptr %i.cl, align 4
+  %i.cv = load i64, ptr %i.bw, align 4, !tbaa !17
+  store i64 %i.cv, ptr %i.cl, align 4, !tbaa !17
   br label %_ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i.i
 
 _ZN4llvh15SmallVectorImplIN6hermes14CodePointRangeEE5eraseEPKS2_S5_.exit.i.i.i: ; preds = %bb.n, %bb.m, %bb.l
-  %3 = getelementptr inbounds i8, ptr %i.cl, i64 %i.cs
-  %4 = load ptr, ptr %i.bo, align 8, !tbaa !39
-  %i.cw = ptrtoint ptr %3 to i64
-  %i.cx = ptrtoint ptr %4 to i64
+  %3 = phi ptr [ %.pre.i.i.i.i, %bb.l ], [ %i.cm, %bb.m ], [ %i.cm, %bb.n ]
+  %4 = getelementptr inbounds i8, ptr %i.cl, i64 %i.cs
+  %i.cw = ptrtoint ptr %4 to i64
+  %i.cx = ptrtoint ptr %3 to i64
   %i.cy = sub i64 %i.cw, %i.cx
   %i.cz = lshr exact i64 %i.cy, 3
   %i.da = trunc i64 %i.cz to i32
@@ -733,16 +735,15 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.pre-phi22 = phi i64 [ %.pre21, %bb.e ], [ %i.d, %bb.d ]
-  %i.y = phi ptr [ %i.w, %bb.e ], [ %i.a, %bb.d ]
+  %i.y = phi ptr [ %i.w, %bb.e ], [ %i.a, %bb.d ] ; 2 uses
   %.015 = phi ptr [ %i.x, %bb.e ], [ %1, %bb.d ]  ; 6 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.pre-phi22 ; 2 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 -8
-  %i.ab = load i64, ptr %i.aa, align 4
-  store i64 %i.ab, ptr %i.z, align 4
-  %3 = load ptr, ptr %0, align 8, !tbaa !39
+  %i.ab = load i64, ptr %i.aa, align 4, !tbaa !17
+  store i64 %i.ab, ptr %i.z, align 4, !tbaa !17
   %i.ac = load i32, ptr %i.b, align 8, !tbaa !40
   %i.ad = zext i32 %i.ac to i64
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ad ; 2 uses
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.ad ; 2 uses
   %i.af = getelementptr inbounds i8, ptr %i.ae, i64 -8 ; 2 uses
   %i.ag = ptrtoint ptr %i.af to i64
   %i.ah = ptrtoint ptr %.015 to i64
@@ -762,8 +763,8 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.an, label %bb.i, label %_ZSt13move_backwardIPN6hermes14CodePointRangeES2_ET0_T_S4_S3_.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.ao = load i64, ptr %.015, align 4
-  store i64 %i.ao, ptr %i.af, align 4
+  %i.ao = load i64, ptr %.015, align 4, !tbaa !17
+  store i64 %i.ao, ptr %i.af, align 4, !tbaa !17
   br label %_ZSt13move_backwardIPN6hermes14CodePointRangeES2_ET0_T_S4_S3_.exit
 
 _ZSt13move_backwardIPN6hermes14CodePointRangeES2_ET0_T_S4_S3_.exit: ; preds = %bb.g, %bb.h, %bb.i
@@ -784,8 +785,8 @@ bb.j:                                             ; preds = %_ZSt13move_backward
 
 bb.k:                                             ; preds = %bb.j, %_ZSt13move_backwardIPN6hermes14CodePointRangeES2_ET0_T_S4_S3_.exit
   %.0 = phi ptr [ %2, %_ZSt13move_backwardIPN6hermes14CodePointRangeES2_ET0_T_S4_S3_.exit ], [ %spec.select, %bb.j ]
-  %i.av = load i64, ptr %.0, align 4
-  store i64 %i.av, ptr %.015, align 4
+  %i.av = load i64, ptr %.0, align 4, !tbaa !17
+  store i64 %i.av, ptr %.015, align 4, !tbaa !17
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes14CodePointRangeELb1EE9push_backERKS2_.exit
@@ -804,7 +805,7 @@ bb.a:
   br i1 %i.e, label %_ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph, label %_ZSt13__upper_boundIPN6hermes14CodePointRangeES1_N9__gnu_cxx5__ops14_Val_comp_iterIZNS0_12CodePointSet3addES1_EUlS1_S1_E_EEET_S9_S9_RKT0_T1_.exit
 
 _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph: ; preds = %bb.a
-  %.sroa.0.0.copyload.i = load i64, ptr %2, align 4 ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %2, align 4, !tbaa !17 ; 2 uses
   %.sroa.0.0.extract.trunc.i.i = trunc i64 %.sroa.0.0.copyload.i to i32 ; 12 uses
   %.sroa.4.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i, 32
   %.sroa.4.0.extract.trunc.i.i = trunc nuw i64 %.sroa.4.0.extract.shift.i.i to i32
@@ -817,7 +818,7 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %i.g = lshr i64 %.01368, 1                      ; 5 uses
   %.idx91 = shl nuw nsw i64 %i.g, 3               ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.067, i64 %.idx91 ; 3 uses
-  %.sroa.01.0.copyload.i = load i64, ptr %i.h, align 4 ; 2 uses
+  %.sroa.01.0.copyload.i = load i64, ptr %i.h, align 4, !tbaa !17 ; 2 uses
   %.sroa.04.0.extract.trunc.i.i = trunc i64 %.sroa.01.0.copyload.i to i32 ; 6 uses
   %.sroa.47.0.extract.shift.i.i = lshr i64 %.sroa.01.0.copyload.i, 32
   %.sroa.47.0.extract.trunc.i.i = trunc nuw i64 %.sroa.47.0.extract.shift.i.i to i32
@@ -862,7 +863,7 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %.01125.i = phi ptr [ %i.ai, %.thread.i ], [ %.067, %.critedge ] ; 3 uses
   %i.w = lshr i64 %.026.i, 1                      ; 4 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %.01125.i, i64 %i.w ; 2 uses
-  %.sroa.01.0.copyload.i.i = load i64, ptr %i.x, align 4 ; 2 uses
+  %.sroa.01.0.copyload.i.i = load i64, ptr %i.x, align 4, !tbaa !17 ; 2 uses
   %.sroa.04.0.extract.trunc.i.i.i = trunc i64 %.sroa.01.0.copyload.i.i to i32 ; 4 uses
   %.sroa.47.0.extract.shift.i.i.i = lshr i64 %.sroa.01.0.copyload.i.i, 32
   %.sroa.47.0.extract.trunc.i.i.i = trunc nuw i64 %.sroa.47.0.extract.shift.i.i.i to i32
@@ -907,7 +908,7 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %.01124.i = phi ptr [ %i.be, %.split.i ], [ %i.al, %_ZSt13__lower_boundIPN6hermes14CodePointRangeES1_N9__gnu_cxx5__ops14_Iter_comp_valIZNS0_12CodePointSet3addES1_EUlS1_S1_E_EEET_S9_S9_RKT0_T1_.exit ] ; 2 uses
   %i.ap = lshr i64 %.025.i, 1                     ; 4 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %.01124.i, i64 %i.ap ; 3 uses
-  %.sroa.0.0.copyload.i.i37 = load i64, ptr %i.aq, align 4 ; 2 uses
+  %.sroa.0.0.copyload.i.i37 = load i64, ptr %i.aq, align 4, !tbaa !17 ; 2 uses
   %.sroa.0.0.extract.trunc.i.i.i38 = trunc i64 %.sroa.0.0.copyload.i.i37 to i32 ; 4 uses
   %.sroa.4.0.extract.shift.i.i.i39 = lshr i64 %.sroa.0.0.copyload.i.i37, 32
   %.sroa.4.0.extract.trunc.i.i.i40 = trunc nuw i64 %.sroa.4.0.extract.shift.i.i.i39 to i32

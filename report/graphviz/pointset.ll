@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
 gv_alloc.exit:                                    ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = load i64, ptr %i.f, align 8
-  store i64 %i.g, ptr %i.e, align 8
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !34
+  store i64 %i.g, ptr %i.e, align 8, !tbaa !34
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = load i32, ptr %i.h, align 8, !tbaa !23
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -214,8 +214,8 @@ gv_alloc.exit:                                    ; preds = %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal range(i32 -1, 2) i32 @cmpmpair(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #4 {
 bb.a:
-  %i.a = load i32, ptr %0, align 4, !tbaa !34     ; 2 uses
-  %i.b = load i32, ptr %1, align 4, !tbaa !34     ; 2 uses
+  %i.a = load i32, ptr %0, align 4, !tbaa !35     ; 2 uses
+  %i.b = load i32, ptr %1, align 4, !tbaa !35     ; 2 uses
   %i.c = icmp sgt i32 %i.a, %i.b
   br i1 %i.c, label %bb.e, label %bb.b
 
@@ -225,9 +225,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !35   ; 2 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !36   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !35   ; 2 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !36   ; 2 uses
   %i.i = icmp sgt i32 %i.f, %i.h
   br i1 %i.i, label %bb.e, label %bb.d
 
@@ -295,6 +295,7 @@ attributes #14 = { cold noreturn nounwind }
 !31 = !{!"pointf_s", !12, i64 0, !12, i64 8}
 !32 = !{!31, !12, i64 0}
 !33 = !{!31, !12, i64 8}
-!34 = !{!21, !5, i64 0}
-!35 = !{!21, !5, i64 4}
+!34 = !{!5, !5, i64 0}
+!35 = !{!21, !5, i64 0}
+!36 = !{!21, !5, i64 4}
 end_hunk_0

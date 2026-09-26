@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 -1056833530, ptr %1, align 8, !tbaa !34
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %i.a, ptr %i.n, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.m, align 8
+  store i64 4294967297, ptr %i.m, align 8, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   store double 2.560000e+02, ptr %i.b, align 8, !tbaa !32
@@ -210,7 +210,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 -1056833530, ptr %2, align 8, !tbaa !34
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %i.b, ptr %i.p, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.o, align 8
+  store i64 4294967297, ptr %i.o, align 8, !tbaa !36
   call void @_ZN2cv5randuERKNS_17_InputOutputArrayERKNS_11_InputArrayES5_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
@@ -231,7 +231,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 -1056833530, ptr %3, align 8, !tbaa !34
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.c, ptr %i.t, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.s, align 8
+  store i64 4294967297, ptr %i.s, align 8, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
   store double 1.280000e+02, ptr %i.d, align 8, !tbaa !32
@@ -239,7 +239,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 -1056833530, ptr %4, align 8, !tbaa !34
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %i.d, ptr %i.v, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.u, align 8
+  store i64 4294967297, ptr %i.u, align 8, !tbaa !36
   call void @_ZN2cv5randuERKNS_17_InputOutputArrayERKNS_11_InputArrayES5_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
@@ -260,7 +260,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 -1056833530, ptr %5, align 8, !tbaa !34
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %i.e, ptr %i.z, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.y, align 8
+  store i64 4294967297, ptr %i.y, align 8, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
   store double 1.024000e+03, ptr %i.f, align 8, !tbaa !32
@@ -268,7 +268,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 -1056833530, ptr %6, align 8, !tbaa !34
   %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.f, ptr %i.ab, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.aa, align 8
+  store i64 4294967297, ptr %i.aa, align 8, !tbaa !36
   call void @_ZN2cv5randuERKNS_17_InputOutputArrayERKNS_11_InputArrayES5_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
@@ -299,7 +299,7 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
   store i32 -1056833530, ptr %7, align 8, !tbaa !34
   %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr %i.g, ptr %i.aj, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.ai, align 8
+  store i64 4294967297, ptr %i.ai, align 8, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #9
   store double 1.000000e+00, ptr %i.h, align 8, !tbaa !32
@@ -307,7 +307,7 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
   store i32 -1056833530, ptr %8, align 8, !tbaa !34
   %i.al = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %i.h, ptr %i.al, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.ak, align 8
+  store i64 4294967297, ptr %i.ak, align 8, !tbaa !36
   call void @_ZN2cv5randuERKNS_17_InputOutputArrayERKNS_11_InputArrayES5_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #9
@@ -333,7 +333,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   store i32 -1056833530, ptr %9, align 8, !tbaa !34
   %i.ar = getelementptr inbounds nuw i8, ptr %9, i64 8
   store ptr %i.i, ptr %i.ar, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.aq, align 8
+  store i64 4294967297, ptr %i.aq, align 8, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #9
   store double 4.096000e+03, ptr %i.j, align 8, !tbaa !32
@@ -341,7 +341,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   store i32 -1056833530, ptr %10, align 8, !tbaa !34
   %i.at = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr %i.j, ptr %i.at, align 8, !tbaa !35
-  store i64 4294967297, ptr %i.as, align 8
+  store i64 4294967297, ptr %i.as, align 8, !tbaa !36
   call void @_ZN2cv5randuERKNS_17_InputOutputArrayERKNS_11_InputArrayES5_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %9, ptr noundef nonnull align 8 dereferenceable(24) %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #9
@@ -466,4 +466,5 @@ attributes #11 = { builtin nounwind }
 !33 = !{!"_ZTSN2cv11_InputArrayE", !5, i64 0, !8, i64 8, !15, i64 16}
 !34 = !{!33, !5, i64 0}
 !35 = !{!33, !8, i64 8}
+!36 = !{!5, !5, i64 0}
 end_hunk_0

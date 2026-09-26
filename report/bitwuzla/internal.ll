@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !512
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !237  ; 11 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !237  ; 13 uses
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
   %i.g = sub i64 %i.e, %i.f
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not65, label %bb.q, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load i64, ptr %3, align 4                ; 11 uses
+  %i.i = load i64, ptr %3, align 4, !tbaa !174    ; 11 uses
   %i.j = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.k = sub i64 %i.f, %i.j                       ; 5 uses
   %i.l = ashr exact i64 %i.k, 3                   ; 3 uses
@@ -231,6 +231,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %.idx.neg = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
+  %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !237
   br label %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -238,12 +239,12 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.r, label %bb.g, label %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.s = load i64, ptr %i.o, align 4
-  store i64 %i.s, ptr %i.d, align 4
+  %i.s = load i64, ptr %i.o, align 4, !tbaa !174
+  store i64 %i.s, ptr %i.d, align 4, !tbaa !174
   br label %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit
 
 _ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %bb.g, %bb.f, %bb.e
-  %4 = load ptr, ptr %i.c, align 8, !tbaa !237
+  %4 = phi ptr [ %i.d, %bb.g ], [ %i.d, %bb.f ], [ %.pre97, %bb.e ]
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %2
   store ptr %i.t, ptr %i.c, align 8, !tbaa !237
   %i.u = sub i64 %i.p, %i.j                       ; 3 uses
@@ -263,8 +264,8 @@ bb.i:                                             ; preds = %_ZSt22__uninitializ
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = getelementptr inbounds i8, ptr %i.d, i64 -8
-  %i.ab = load i64, ptr %1, align 4
-  store i64 %i.ab, ptr %i.aa, align 4
+  %i.ab = load i64, ptr %1, align 4, !tbaa !174
+  store i64 %i.ab, ptr %i.aa, align 4, !tbaa !174
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
@@ -280,7 +281,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
 .lr.ph.i.i.i.prol:                                ; preds = %bb.k, %.lr.ph.i.i.i.prol
   %.06.i.i.i.prol = phi ptr [ %i.ag, %.lr.ph.i.i.i.prol ], [ %1, %bb.k ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %bb.k ]
-  store i64 %i.i, ptr %.06.i.i.i.prol, align 4
+  store i64 %i.i, ptr %.06.i.i.i.prol, align 4, !tbaa !174
   %i.ag = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 8 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -293,21 +294,21 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i
   %.06.i.i.i = phi ptr [ %i.ap, %.lr.ph.i.i.i ], [ %.06.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 9 uses
-  store i64 %i.i, ptr %.06.i.i.i, align 4
+  store i64 %i.i, ptr %.06.i.i.i, align 4, !tbaa !174
   %i.ai = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 8
-  store i64 %i.i, ptr %i.ai, align 4
+  store i64 %i.i, ptr %i.ai, align 4, !tbaa !174
   %i.aj = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 16
-  store i64 %i.i, ptr %i.aj, align 4
+  store i64 %i.i, ptr %i.aj, align 4, !tbaa !174
   %i.ak = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 24
-  store i64 %i.i, ptr %i.ak, align 4
+  store i64 %i.i, ptr %i.ak, align 4, !tbaa !174
   %i.al = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 32
-  store i64 %i.i, ptr %i.al, align 4
+  store i64 %i.i, ptr %i.al, align 4, !tbaa !174
   %i.am = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 40
-  store i64 %i.i, ptr %i.am, align 4
+  store i64 %i.i, ptr %i.am, align 4, !tbaa !174
   %i.an = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 48
-  store i64 %i.i, ptr %i.an, align 4
+  store i64 %i.i, ptr %i.an, align 4, !tbaa !174
   %i.ao = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 56
-  store i64 %i.i, ptr %i.ao, align 4
+  store i64 %i.i, ptr %i.ao, align 4, !tbaa !174
   %i.ap = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.7 = icmp eq ptr %i.ap, %i.ac
   br i1 %.not.i.i.i.7, label %_ZSt4fillIPN7CaDiCaL4LinkES1_EvT_S3_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !510
@@ -324,19 +325,20 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i, %bb.m
   %.06.i.i.i.i.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i.i.i.i.i ], [ %i.d, %bb.m ] ; 2 uses
-  store i64 %i.i, ptr %.06.i.i.i.i.i.i.i, align 4
+  store i64 %i.i, ptr %.06.i.i.i.i.i.i.i, align 4, !tbaa !174
   %i.at = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.at, %i.as
   br i1 %.not.i.i.i.i.i.i.i, label %_ZSt24__uninitialized_fill_n_aIPN7CaDiCaL4LinkEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !510
 
 _ZSt24__uninitialized_fill_n_aIPN7CaDiCaL4LinkEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %bb.l
-  %.0.i.i.i.i.i = phi ptr [ %i.d, %bb.l ], [ %i.as, %.lr.ph.i.i.i.i.i.i.i ] ; 3 uses
+  %.0.i.i.i.i.i = phi ptr [ %i.d, %bb.l ], [ %i.as, %.lr.ph.i.i.i.i.i.i.i ] ; 5 uses
   store ptr %.0.i.i.i.i.i, ptr %i.c, align 8, !tbaa !237
   %i.au = icmp sgt i64 %i.k, 8
   br i1 %i.au, label %bb.n, label %bb.o, !prof !305
 
 bb.n:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPN7CaDiCaL4LinkEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %.0.i.i.i.i.i, ptr align 4 %1, i64 %i.k, i1 false)
+  %.pre = load ptr, ptr %i.c, align 8, !tbaa !237
   br label %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit69
 
 bb.o:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPN7CaDiCaL4LinkEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit
@@ -344,12 +346,12 @@ bb.o:                                             ; preds = %_ZSt24__uninitializ
   br i1 %i.av, label %bb.p, label %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit69
 
 bb.p:                                             ; preds = %bb.o
-  %i.aw = load i64, ptr %1, align 4
-  store i64 %i.aw, ptr %.0.i.i.i.i.i, align 4
+  %i.aw = load i64, ptr %1, align 4, !tbaa !174
+  store i64 %i.aw, ptr %.0.i.i.i.i.i, align 4, !tbaa !174
   br label %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit69
 
 _ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit69: ; preds = %bb.p, %bb.o, %bb.n
-  %5 = load ptr, ptr %i.c, align 8, !tbaa !237
+  %5 = phi ptr [ %.0.i.i.i.i.i, %bb.p ], [ %.0.i.i.i.i.i, %bb.o ], [ %.pre, %bb.n ]
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 %i.k
   store ptr %i.ax, ptr %i.c, align 8, !tbaa !237
   %.not5.i.i.i70 = icmp eq ptr %1, %i.d
@@ -357,7 +359,7 @@ _ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit69: 
 
 .lr.ph.i.i.i71:                                   ; preds = %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit69, %.lr.ph.i.i.i71
   %.06.i.i.i72 = phi ptr [ %i.ay, %.lr.ph.i.i.i71 ], [ %1, %_ZSt22__uninitialized_move_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit69 ] ; 2 uses
-  store i64 %i.i, ptr %.06.i.i.i72, align 4
+  store i64 %i.i, ptr %.06.i.i.i72, align 4, !tbaa !174
   %i.ay = getelementptr inbounds nuw i8, ptr %.06.i.i.i72, i64 8 ; 2 uses
   %.not.i.i.i73 = icmp eq ptr %i.ay, %i.d
   br i1 %.not.i.i.i73, label %_ZSt4fillIPN7CaDiCaL4LinkES1_EvT_S3_RKT0_.exit, label %.lr.ph.i.i.i71, !llvm.loop !510
@@ -396,7 +398,7 @@ bb.t:                                             ; preds = %bb.s, %_ZNKSt6vecto
   %i.bo = getelementptr inbounds i8, ptr %i.bn, i64 %i.bk ; 4 uses
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 3       ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 %.idx.i.i.i.i.i75
-  %i.bq = load i64, ptr %3, align 4               ; 9 uses
+  %i.bq = load i64, ptr %3, align 4, !tbaa !174   ; 9 uses
   %i.br = add nsw i64 %.idx.i.i.i.i.i75, -8       ; 2 uses
   %i.bs = lshr exact i64 %i.br, 3
   %i.bt = add nuw nsw i64 %i.bs, 1
@@ -407,7 +409,7 @@ bb.t:                                             ; preds = %bb.s, %_ZNKSt6vecto
 .lr.ph.i.i.i.i.i.i.i76.prol:                      ; preds = %bb.t, %.lr.ph.i.i.i.i.i.i.i76.prol
   %.06.i.i.i.i.i.i.i77.prol = phi ptr [ %i.bu, %.lr.ph.i.i.i.i.i.i.i76.prol ], [ %i.bo, %bb.t ] ; 2 uses
   %prol.iter115 = phi i64 [ %prol.iter115.next, %.lr.ph.i.i.i.i.i.i.i76.prol ], [ 0, %bb.t ]
-  store i64 %i.bq, ptr %.06.i.i.i.i.i.i.i77.prol, align 4
+  store i64 %i.bq, ptr %.06.i.i.i.i.i.i.i77.prol, align 4, !tbaa !174
   %i.bu = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77.prol, i64 8 ; 2 uses
   %prol.iter115.next = add i64 %prol.iter115, 1   ; 2 uses
   %prol.iter115.cmp.not = icmp eq i64 %prol.iter115.next, %xtraiter113
@@ -420,21 +422,21 @@ bb.t:                                             ; preds = %bb.s, %_ZNKSt6vecto
 
 .lr.ph.i.i.i.i.i.i.i76:                           ; preds = %.lr.ph.i.i.i.i.i.i.i76.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i76
   %.06.i.i.i.i.i.i.i77 = phi ptr [ %i.cd, %.lr.ph.i.i.i.i.i.i.i76 ], [ %.06.i.i.i.i.i.i.i77.unr, %.lr.ph.i.i.i.i.i.i.i76.prol.loopexit ] ; 9 uses
-  store i64 %i.bq, ptr %.06.i.i.i.i.i.i.i77, align 4
+  store i64 %i.bq, ptr %.06.i.i.i.i.i.i.i77, align 4, !tbaa !174
   %i.bw = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 8
-  store i64 %i.bq, ptr %i.bw, align 4
+  store i64 %i.bq, ptr %i.bw, align 4, !tbaa !174
   %i.bx = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 16
-  store i64 %i.bq, ptr %i.bx, align 4
+  store i64 %i.bq, ptr %i.bx, align 4, !tbaa !174
   %i.by = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 24
-  store i64 %i.bq, ptr %i.by, align 4
+  store i64 %i.bq, ptr %i.by, align 4, !tbaa !174
   %i.bz = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 32
-  store i64 %i.bq, ptr %i.bz, align 4
+  store i64 %i.bq, ptr %i.bz, align 4, !tbaa !174
   %i.ca = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 40
-  store i64 %i.bq, ptr %i.ca, align 4
+  store i64 %i.bq, ptr %i.ca, align 4, !tbaa !174
   %i.cb = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 48
-  store i64 %i.bq, ptr %i.cb, align 4
+  store i64 %i.bq, ptr %i.cb, align 4, !tbaa !174
   %i.cc = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 56
-  store i64 %i.bq, ptr %i.cc, align 4
+  store i64 %i.bq, ptr %i.cc, align 4, !tbaa !174
   %i.cd = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i77, i64 64 ; 2 uses
   %.not.i.i.i.i.i.i.i78.7 = icmp eq ptr %i.cd, %i.bp
   br i1 %.not.i.i.i.i.i.i.i78.7, label %_ZSt24__uninitialized_fill_n_aIPN7CaDiCaL4LinkEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit80, label %.lr.ph.i.i.i.i.i.i.i76, !llvm.loop !510
@@ -452,8 +454,8 @@ bb.v:                                             ; preds = %_ZSt24__uninitializ
   br i1 %i.cf, label %bb.w, label %_ZSt34__uninitialized_move_if_noexcept_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit
 
 bb.w:                                             ; preds = %bb.v
-  %i.cg = load i64, ptr %i.az, align 4
-  store i64 %i.cg, ptr %i.bn, align 4
+  %i.cg = load i64, ptr %i.az, align 4, !tbaa !174
+  store i64 %i.cg, ptr %i.bn, align 4, !tbaa !174
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN7CaDiCaL4LinkES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %bb.w, %bb.v, %bb.u
@@ -471,8 +473,8 @@ bb.y:                                             ; preds = %_ZSt34__uninitializ
   br i1 %i.ck, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %i.cl = load i64, ptr %1, align 4
-  store i64 %i.cl, ptr %i.ch, align 4
+  %i.cl = load i64, ptr %1, align 4, !tbaa !174
+  store i64 %i.cl, ptr %i.ch, align 4, !tbaa !174
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x

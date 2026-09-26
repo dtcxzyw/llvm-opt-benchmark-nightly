@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %tailrecurse
   %i.ah = getelementptr i8, ptr %1, i64 20
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 44 ; 3 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 240 ; 3 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 240 ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 44 ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 224 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 232 ; 2 uses
   %i.ap = getelementptr i8, ptr %1, i64 48        ; 3 uses
@@ -264,9 +264,9 @@ concat_opt_anc_info.exit.i:                       ; preds = %bb.c
   %.0.i9.i = select i1 %or.cond10.i8.i, i64 -1, i64 %i.bw
   store i64 %.0.i9.i, ptr %i.ab, align 8, !tbaa !88
   %i.bx = load ptr, ptr %i.ac, align 8, !tbaa !75 ; 10 uses
-  %i.by = load i64, ptr %i.ae, align 8, !tbaa !97 ; 2 uses
+  %i.by = load i64, ptr %i.ae, align 8, !tbaa !97
   %i.bz = load i32, ptr %i.ad, align 8, !tbaa !95
-  %i.ca = icmp ne i64 %i.by, 0                    ; 2 uses
+  %i.ca = icmp ne i64 %i.by, 0                    ; 3 uses
   %i.cb = load i32, ptr %i.af, align 8
   %i.cc = select i1 %i.ca, i32 0, i32 %i.cb
   %.sroa.0.0.i = or i32 %i.cc, %i.bz              ; 3 uses
@@ -280,23 +280,24 @@ concat_opt_anc_info.exit.i:                       ; preds = %bb.c
   %.sroa.10.0.insert.shift97.i = shl nuw i64 %.sroa.10.0.insert.ext96.i, 32
   %.sroa.0.0.insert.ext93.i = zext i32 %.sroa.0.0.i to i64
   %.sroa.0.0.insert.insert95.i = or disjoint i64 %.sroa.10.0.insert.shift97.i, %.sroa.0.0.insert.ext93.i
-  store i64 %.sroa.0.0.insert.insert95.i, ptr %i.ad, align 8
+  store i64 %.sroa.0.0.insert.insert95.i, ptr %i.ad, align 8, !tbaa !17
   %i.ch = load i32, ptr %i.aj, align 8, !tbaa !84 ; 3 uses
-  %8 = icmp slt i32 %i.ch, 1                      ; 2 uses
-  %brmerge.i = or i1 %i.ca, %8
-  br i1 %brmerge.i, label %bb.d, label %.thread.a
+  %8 = icmp sgt i32 %i.ch, 0                      ; 2 uses
+  br i1 %8, label %9, label %bb.d
+
+9:                                                ; preds = %concat_opt_anc_info.exit.i
+  br i1 %i.ca, label %bb.f, label %.thread.a
 
 bb.d:                                             ; preds = %concat_opt_anc_info.exit.i
-  %i.ci = load i32, ptr %i.am, align 8, !tbaa !85
-  %9 = icmp sgt i32 %i.ci, 0
-  %10 = icmp eq i64 %i.by, 0
-  %or.cond381 = and i1 %10, %9
-  br i1 %or.cond381, label %.thread371, label %bb.f
+  %i.ci = load i32, ptr %i.ak, align 8, !tbaa !85
+  %10 = icmp slt i32 %i.ci, 1
+  %brmerge.i = or i1 %i.ca, %10
+  br i1 %brmerge.i, label %bb.f, label %.thread371
 
-.thread.a:                                        ; preds = %concat_opt_anc_info.exit.i
-  %i.cj = load i32, ptr %i.ak, align 8, !tbaa !95
+.thread.a:                                        ; preds = %9
+  %i.cj = load i32, ptr %i.al, align 8, !tbaa !95
   %i.ck = or i32 %i.cj, %.sroa.0.0.i
-  %i.cl = load i32, ptr %i.al, align 4, !tbaa !96
+  %i.cl = load i32, ptr %i.am, align 4, !tbaa !96
   %i.cm = and i32 %storemerge.i.i, 2048
   %.pn.i67.i = select i1 %i.ce, i32 %storemerge.i.i, i32 %i.cm
   %storemerge.i68.i = or i32 %i.cl, %.pn.i67.i
@@ -304,12 +305,12 @@ bb.d:                                             ; preds = %concat_opt_anc_info
   %.sroa.10.0.insert.shift.i = shl nuw i64 %.sroa.10.0.insert.ext.i, 32
   %.sroa.0.0.insert.ext.i = zext i32 %i.ck to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.10.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.ak, align 8
-  %i.cn = load i32, ptr %i.am, align 8, !tbaa !85
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.al, align 8, !tbaa !17
+  %i.cn = load i32, ptr %i.ak, align 8, !tbaa !85
   %i.co = icmp sgt i32 %i.cn, 0
   br i1 %i.co, label %.thread371, label %bb.f
 
-.thread371:                                       ; preds = %bb.d, %.thread.a
+.thread371:                                       ; preds = %.thread.a, %bb.d
   %i.cp = load i64, ptr %i.an, align 8, !tbaa !288
   %i.cq = icmp eq i64 %i.cp, 0
   br i1 %i.cq, label %bb.e, label %bb.f
@@ -320,7 +321,7 @@ bb.e:                                             ; preds = %.thread371
   store i32 %i.cs, ptr %i.ao, align 8, !tbaa !289
   br label %bb.f
 
-bb.f:                                             ; preds = %.thread.a, %bb.e, %.thread371, %bb.d
+bb.f:                                             ; preds = %bb.e, %.thread371, %.thread.a, %bb.d, %9
   %i.ct = load i32, ptr %i.ap, align 8, !tbaa !290
   %i.cu = load i32, ptr %i.aq, align 8, !tbaa !291
   br i1 %i.ce, label %bb.h, label %bb.g
@@ -331,7 +332,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  br i1 %8, label %bb.y, label %bb.i
+  br i1 %8, label %bb.i, label %bb.y
 
 bb.i:                                             ; preds = %bb.h
   %.not61.i = icmp eq i32 %i.ct, 0
@@ -516,7 +517,7 @@ vec.epilog.middle.block993:                       ; preds = %vec.epilog.vector.b
   %.fr.i.i = select i1 %i.fg, i32 %i.fi, i32 0    ; 2 uses
   store i32 %.fr.i.i, ptr %i.ap, align 8, !tbaa !164
   %i.fj = load i32, ptr %i.au, align 8, !tbaa !95
-  %i.fk = load i32, ptr %i.al, align 4, !tbaa !96
+  %i.fk = load i32, ptr %i.am, align 4, !tbaa !96
   %i.fl = load i32, ptr %i.av, align 4, !tbaa !96
   %i.fm = and i32 %i.fl, 2048
   %storemerge.i.i.i = or i32 %i.fm, %i.fk
@@ -526,7 +527,7 @@ vec.epilog.middle.block993:                       ; preds = %vec.epilog.vector.b
   %.sroa.5.0.insert.shift.i.i = shl nuw i64 %.sroa.5.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.fj to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.5.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.au, align 8
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.au, align 8, !tbaa !17
   br label %.sink.split.i
 
 bb.q:                                             ; preds = %bb.i
@@ -712,7 +713,7 @@ vec.epilog.middle.block955:                       ; preds = %vec.epilog.vector.b
   %.fr.i73.i = select i1 %i.hz, i32 %i.ib, i32 0  ; 2 uses
   store i32 %.fr.i73.i, ptr %i.aq, align 8, !tbaa !164
   %i.ic = load i32, ptr %i.aw, align 8, !tbaa !95
-  %i.id = load i32, ptr %i.al, align 4, !tbaa !96
+  %i.id = load i32, ptr %i.am, align 4, !tbaa !96
   %i.ie = load i32, ptr %i.ax, align 4, !tbaa !96
   %i.if = and i32 %i.ie, 2048
   %storemerge.i.i74.i = or i32 %i.if, %i.id
@@ -722,7 +723,7 @@ vec.epilog.middle.block955:                       ; preds = %vec.epilog.vector.b
   %.sroa.5.0.insert.shift.i78.i = shl nuw i64 %.sroa.5.0.insert.ext.i77.i, 32
   %.sroa.0.0.insert.ext.i79.i = zext i32 %i.ic to i64
   %.sroa.0.0.insert.insert.i80.i = or disjoint i64 %.sroa.5.0.insert.shift.i78.i, %.sroa.0.0.insert.ext.i79.i
-  store i64 %.sroa.0.0.insert.insert.i80.i, ptr %i.aw, align 8
+  store i64 %.sroa.0.0.insert.insert.i80.i, ptr %i.aw, align 8, !tbaa !17
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.t, %._crit_edge.i70.i, %bb.l, %._crit_edge.i.i
@@ -776,7 +777,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.z
-  %i.iq = load i32, ptr %i.am, align 8, !tbaa !165 ; 2 uses
+  %i.iq = load i32, ptr %i.ak, align 8, !tbaa !165 ; 2 uses
   %i.ir = icmp eq i32 %i.iq, 0
   br i1 %i.ir, label %concat_left_node_opt_info.exit, label %bb.ai
 
@@ -1179,7 +1180,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.sroa.5.0.insert.shift.i = shl nuw i64 %.sroa.5.0.insert.ext.i, 32
   %.sroa.0.0.insert.ext.i359 = zext i32 %i.afn to i64
   %.sroa.0.0.insert.insert.i360 = or disjoint i64 %.sroa.5.0.insert.shift.i, %.sroa.0.0.insert.ext.i359
-  store i64 %.sroa.0.0.insert.insert.i360, ptr %i.acp, align 8
+  store i64 %.sroa.0.0.insert.insert.i360, ptr %i.acp, align 8, !tbaa !17
   %.pre681 = load i32, ptr %i.abl, align 8, !tbaa !118
   br label %concat_opt_exact_info.exit
 

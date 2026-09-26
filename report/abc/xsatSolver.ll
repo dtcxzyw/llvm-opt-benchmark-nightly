@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %xSAT_SolverClaActBu
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !57
   %i.fu = getelementptr i8, ptr %i.ft, i64 8
-  %.val76 = load ptr, ptr %i.fu, align 8, !tbaa !60
+  %.val76 = load ptr, ptr %i.fu, align 8, !tbaa !60 ; 2 uses
   %i.fv = getelementptr inbounds [16 x i8], ptr %.val76, i64 %i.fr ; 6 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 4 ; 3 uses
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !63 ; 4 uses
@@ -252,9 +252,13 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   store i32 %i.gd, ptr %i.fv, align 8, !tbaa !64
   %.pre.i88 = load i32, ptr %i.fw, align 4, !tbaa !63
+  %.pre101 = load ptr, ptr %i.fs, align 8, !tbaa !57
+  %.phi.trans.insert102 = getelementptr i8, ptr %.pre101, i64 8
+  %.val75.pre = load ptr, ptr %.phi.trans.insert102, align 8, !tbaa !60
   br label %xSAT_WatchListPush.exit
 
 xSAT_WatchListPush.exit:                          ; preds = %bb.ae, %bb.ak
+  %.val75 = phi ptr [ %.val75.pre, %bb.ak ], [ %.val76, %bb.ae ]
   %i.gu = phi i32 [ %.pre.i88, %bb.ak ], [ %i.fx, %bb.ae ] ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %i.fv, i64 8
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !65
@@ -262,12 +266,9 @@ xSAT_WatchListPush.exit:                          ; preds = %bb.ae, %bb.ak
   store i32 %i.gx, ptr %i.fw, align 4, !tbaa !63
   %i.gy = sext i32 %i.gu to i64
   %i.gz = getelementptr inbounds [8 x i8], ptr %i.gw, i64 %i.gy
-  store i64 %.sroa.010.0.insert.insert, ptr %i.gz, align 4
-  %3 = load ptr, ptr %i.fs, align 8, !tbaa !57
+  store i64 %.sroa.010.0.insert.insert, ptr %i.gz, align 4, !tbaa !31
   %i.ha = load i32, ptr %i.fm, align 4, !tbaa !30
   %i.hb = xor i32 %i.ha, 1
-  %4 = getelementptr i8, ptr %3, i64 8
-  %.val75 = load ptr, ptr %4, align 8, !tbaa !60
   %i.hc = sext i32 %i.hb to i64
   %i.hd = getelementptr inbounds [16 x i8], ptr %.val75, i64 %i.hc ; 6 uses
   %i.he = getelementptr inbounds nuw i8, ptr %i.hd, i64 4 ; 3 uses
@@ -330,7 +331,7 @@ bb.ar:                                            ; preds = %xSAT_SolverClaActBu
   %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !68
   %i.ii = getelementptr i8, ptr %i.ih, i64 8
-  %.val74 = load ptr, ptr %i.ii, align 8, !tbaa !60
+  %.val74 = load ptr, ptr %i.ii, align 8, !tbaa !60 ; 2 uses
   %i.ij = getelementptr inbounds [16 x i8], ptr %.val74, i64 %i.fr ; 6 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 4 ; 3 uses
   %i.il = load i32, ptr %i.ik, align 4, !tbaa !63 ; 4 uses
@@ -378,9 +379,13 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.aw, %bb.av
   store i32 %i.ir, ptr %i.ij, align 8, !tbaa !64
   %.pre.i93 = load i32, ptr %i.ik, align 4, !tbaa !63
+  %.pre99 = load ptr, ptr %i.ig, align 8, !tbaa !68
+  %.phi.trans.insert = getelementptr i8, ptr %.pre99, i64 8
+  %.val73.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !60
   br label %xSAT_WatchListPush.exit94
 
 xSAT_WatchListPush.exit94:                        ; preds = %bb.ar, %bb.ax
+  %.val73 = phi ptr [ %.val73.pre, %bb.ax ], [ %.val74, %bb.ar ]
   %i.ji = phi i32 [ %.pre.i93, %bb.ax ], [ %i.il, %bb.ar ] ; 2 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ij, i64 8
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !65
@@ -388,12 +393,9 @@ xSAT_WatchListPush.exit94:                        ; preds = %bb.ar, %bb.ax
   store i32 %i.jl, ptr %i.ik, align 4, !tbaa !63
   %i.jm = sext i32 %i.ji to i64
   %i.jn = getelementptr inbounds [8 x i8], ptr %i.jk, i64 %i.jm
-  store i64 %.sroa.010.0.insert.insert, ptr %i.jn, align 4
-  %5 = load ptr, ptr %i.ig, align 8, !tbaa !68
+  store i64 %.sroa.010.0.insert.insert, ptr %i.jn, align 4, !tbaa !31
   %i.jo = load i32, ptr %i.fm, align 4, !tbaa !30
   %i.jp = xor i32 %i.jo, 1
-  %6 = getelementptr i8, ptr %5, i64 8
-  %.val73 = load ptr, ptr %6, align 8, !tbaa !60
   %i.jq = sext i32 %i.jp to i64
   %i.jr = getelementptr inbounds [16 x i8], ptr %.val73, i64 %i.jq ; 6 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.jr, i64 4 ; 3 uses
@@ -460,7 +462,7 @@ bb.be:                                            ; preds = %xSAT_WatchListPush.
   %.sroa.0.0.insert.insert4.sink = or disjoint i64 %.sroa.5.0.insert.shift7.pn, %.sroa.010.0.insert.ext
   %i.ku = sext i32 %.sink to i64
   %i.kv = getelementptr inbounds [8 x i8], ptr %.sink124, i64 %i.ku
-  store i64 %.sroa.0.0.insert.insert4.sink, ptr %i.kv, align 4
+  store i64 %.sroa.0.0.insert.insert4.sink, ptr %i.kv, align 4, !tbaa !31
   ret i32 %i.x
 }
 
@@ -863,8 +865,8 @@ bb.o:                                             ; preds = %.lr.ph169, %.loopex
 
 bb.p:                                             ; preds = %bb.o
   %i.cw = getelementptr inbounds nuw i8, ptr %.0102167, i64 8
-  %i.cx = load i64, ptr %.1105166, align 4
-  store i64 %i.cx, ptr %.0102167, align 4
+  %i.cx = load i64, ptr %.1105166, align 4, !tbaa !31
+  store i64 %i.cx, ptr %.0102167, align 4, !tbaa !31
   br label %.loopexit, !llvm.loop !85
 
 xSAT_SolverReadClause.exit:                       ; preds = %bb.o
@@ -1011,7 +1013,7 @@ xSAT_WatchListPush.exit:                          ; preds = %bb.v, %bb.ab
   store i32 %i.fp, ptr %i.eo, align 4, !tbaa !63
   %i.fq = sext i32 %i.fm to i64
   %i.fr = getelementptr inbounds [8 x i8], ptr %i.fo, i64 %i.fq
-  store i64 %.sroa.0.0.insert.insert, ptr %i.fr, align 4
+  store i64 %.sroa.0.0.insert.insert, ptr %i.fr, align 4, !tbaa !31
   br label %.loopexit
 
 bb.ac:                                            ; preds = %.lr.ph157
@@ -1049,8 +1051,8 @@ bb.ad:                                            ; preds = %._crit_edge158
   %.2106161 = phi ptr [ %.2106, %.lr.ph163 ], [ %.2106159, %bb.ad ] ; 2 uses
   %.1103160 = phi ptr [ %i.gi, %.lr.ph163 ], [ %i.fu, %bb.ad ] ; 2 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %.1103160, i64 8 ; 2 uses
-  %i.gj = load i64, ptr %.2106161, align 4
-  store i64 %i.gj, ptr %.1103160, align 4
+  %i.gj = load i64, ptr %.2106161, align 4, !tbaa !31
+  store i64 %i.gj, ptr %.1103160, align 4, !tbaa !31
   %.2106 = getelementptr inbounds nuw i8, ptr %.2106161, i64 8 ; 3 uses
   %i.gk = icmp ult ptr %.2106, %i.ci
   br i1 %i.gk, label %.lr.ph163, label %.loopexit, !llvm.loop !87

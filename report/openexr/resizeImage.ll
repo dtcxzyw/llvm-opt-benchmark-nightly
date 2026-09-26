@@ -20,14 +20,14 @@ bb.a:
   %6 = alloca %"class.Imath_3_2::Vec2.0", align 4 ; 5 uses
   %7 = alloca %"class.Imath_3_2::Vec3", align 8   ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !27   ; 2 uses
-  %i.c = load i32, ptr %2, align 4, !tbaa !28     ; 2 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !29   ; 2 uses
+  %i.c = load i32, ptr %2, align 4, !tbaa !30     ; 2 uses
   %i.d = sub nsw i32 %i.b, %i.c                   ; 2 uses
   %i.e = add nsw i32 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !29   ; 2 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !31   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !30   ; 2 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !32   ; 2 uses
   %i.j = fpext float %3 to double
   %i.k = fmul double %i.j, f0x400921FB54442D18
   %i.l = sitofp i32 %i.e to double
@@ -69,7 +69,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %bb.b
   %indvars.iv.next34 = add nuw nsw i64 %indvars.iv33, 1 ; 2 uses
   %exitcond37.not = icmp eq i64 %indvars.iv.next34, %wide.trip.count36
-  br i1 %exitcond37.not, label %._crit_edge30, label %.preheader, !llvm.loop !23
+  br i1 %exitcond37.not, label %._crit_edge30, label %.preheader, !llvm.loop !25
 
 bb.b:                                             ; preds = %.preheader, %bb.b
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
@@ -91,11 +91,11 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.ah = mul nsw i64 %i.ag, %indvars.iv33
   %i.ai = getelementptr inbounds [8 x i8], ptr %i.af, i64 %i.ah
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv
-  store i64 %i.ae, ptr %i.aj, align 2
+  store i64 %i.ae, ptr %i.aj, align 2, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #3
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !24
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !26
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -152,8 +152,8 @@ _ZNK9Imath_3_23BoxINS_4Vec2IiEEEeqERKS3_.exit:    ; preds = %bb.b
 
 bb.c:                                             ; preds = %_ZNK9Imath_3_23BoxINS_4Vec2IiEEEeqERKS3_.exit
   tail call void @_ZN11EnvmapImage6resizeEN7Imf_3_46EnvmapERKN9Imath_3_23BoxINS2_4Vec2IiEEEE(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef 1, ptr noundef nonnull align 4 dereferenceable(16) %2)
-  %i.r = load <2 x i32>, ptr %i.k, align 4, !tbaa !33
-  %i.s = load <2 x i32>, ptr %2, align 4, !tbaa !33
+  %i.r = load <2 x i32>, ptr %i.k, align 4, !tbaa !35
+  %i.s = load <2 x i32>, ptr %2, align 4, !tbaa !35
   %i.t = add <2 x i32> %i.r, splat (i32 1)
   %i.u = sub <2 x i32> %i.t, %i.s                 ; 2 uses
   %i.v = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZN11EnvmapImage6pixelsEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
@@ -227,18 +227,18 @@ bb.d:                                             ; preds = %bb.d, %.preheader.1
   %i.bj = fptosi float %i.bi to i32
   %i.bk = sext i32 %i.bj to i64
   %i.bl = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %i.bk
-  store i64 %i.ay, ptr %i.bl, align 2
+  store i64 %i.ay, ptr %i.bl, align 2, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #3
   %i.bm = add nuw nsw i32 %.043.1, 1              ; 2 uses
   %exitcond.not.1 = icmp eq i32 %i.bm, %i.ah
-  br i1 %exitcond.not.1, label %._crit_edge.1, label %bb.d, !llvm.loop !31
+  br i1 %exitcond.not.1, label %._crit_edge.1, label %bb.d, !llvm.loop !33
 
 ._crit_edge.1:                                    ; preds = %bb.d
   %i.bn = add nuw nsw i32 %.03844.1, 1            ; 2 uses
   %exitcond47.not.1 = icmp eq i32 %i.bn, %i.ah
-  br i1 %exitcond47.not.1, label %.preheader.2, label %.preheader.1, !llvm.loop !32
+  br i1 %exitcond47.not.1, label %.preheader.2, label %.preheader.1, !llvm.loop !34
 
 .preheader.2:                                     ; preds = %._crit_edge.1, %._crit_edge.2
   %.03844.2 = phi i32 [ %i.ci, %._crit_edge.2 ], [ 0, %._crit_edge.1 ] ; 2 uses
@@ -275,18 +275,18 @@ bb.e:                                             ; preds = %bb.e, %.preheader.2
   %i.ce = fptosi float %i.cd to i32
   %i.cf = sext i32 %i.ce to i64
   %i.cg = getelementptr inbounds [8 x i8], ptr %i.cc, i64 %i.cf
-  store i64 %i.bt, ptr %i.cg, align 2
+  store i64 %i.bt, ptr %i.cg, align 2, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #3
   %i.ch = add nuw nsw i32 %.043.2, 1              ; 2 uses
   %exitcond.not.2 = icmp eq i32 %i.ch, %i.ah
-  br i1 %exitcond.not.2, label %._crit_edge.2, label %bb.e, !llvm.loop !31
+  br i1 %exitcond.not.2, label %._crit_edge.2, label %bb.e, !llvm.loop !33
 
 ._crit_edge.2:                                    ; preds = %bb.e
   %i.ci = add nuw nsw i32 %.03844.2, 1            ; 2 uses
   %exitcond47.not.2 = icmp eq i32 %i.ci, %i.ah
-  br i1 %exitcond47.not.2, label %.preheader.3, label %.preheader.2, !llvm.loop !32
+  br i1 %exitcond47.not.2, label %.preheader.3, label %.preheader.2, !llvm.loop !34
 
 .preheader.3:                                     ; preds = %._crit_edge.2, %._crit_edge.3
   %.03844.3 = phi i32 [ %i.dd, %._crit_edge.3 ], [ 0, %._crit_edge.2 ] ; 2 uses
@@ -323,18 +323,18 @@ bb.f:                                             ; preds = %bb.f, %.preheader.3
   %i.cz = fptosi float %i.cy to i32
   %i.da = sext i32 %i.cz to i64
   %i.db = getelementptr inbounds [8 x i8], ptr %i.cx, i64 %i.da
-  store i64 %i.co, ptr %i.db, align 2
+  store i64 %i.co, ptr %i.db, align 2, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #3
   %i.dc = add nuw nsw i32 %.043.3, 1              ; 2 uses
   %exitcond.not.3 = icmp eq i32 %i.dc, %i.ah
-  br i1 %exitcond.not.3, label %._crit_edge.3, label %bb.f, !llvm.loop !31
+  br i1 %exitcond.not.3, label %._crit_edge.3, label %bb.f, !llvm.loop !33
 
 ._crit_edge.3:                                    ; preds = %bb.f
   %i.dd = add nuw nsw i32 %.03844.3, 1            ; 2 uses
   %exitcond47.not.3 = icmp eq i32 %i.dd, %i.ah
-  br i1 %exitcond47.not.3, label %.preheader.4, label %.preheader.3, !llvm.loop !32
+  br i1 %exitcond47.not.3, label %.preheader.4, label %.preheader.3, !llvm.loop !34
 
 .preheader.4:                                     ; preds = %._crit_edge.3, %._crit_edge.4
   %.03844.4 = phi i32 [ %i.dy, %._crit_edge.4 ], [ 0, %._crit_edge.3 ] ; 2 uses
@@ -371,18 +371,18 @@ bb.g:                                             ; preds = %bb.g, %.preheader.4
   %i.du = fptosi float %i.dt to i32
   %i.dv = sext i32 %i.du to i64
   %i.dw = getelementptr inbounds [8 x i8], ptr %i.ds, i64 %i.dv
-  store i64 %i.dj, ptr %i.dw, align 2
+  store i64 %i.dj, ptr %i.dw, align 2, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #3
   %i.dx = add nuw nsw i32 %.043.4, 1              ; 2 uses
   %exitcond.not.4 = icmp eq i32 %i.dx, %i.ah
-  br i1 %exitcond.not.4, label %._crit_edge.4, label %bb.g, !llvm.loop !31
+  br i1 %exitcond.not.4, label %._crit_edge.4, label %bb.g, !llvm.loop !33
 
 ._crit_edge.4:                                    ; preds = %bb.g
   %i.dy = add nuw nsw i32 %.03844.4, 1            ; 2 uses
   %exitcond47.not.4 = icmp eq i32 %i.dy, %i.ah
-  br i1 %exitcond47.not.4, label %.preheader.5, label %.preheader.4, !llvm.loop !32
+  br i1 %exitcond47.not.4, label %.preheader.5, label %.preheader.4, !llvm.loop !34
 
 .preheader.5:                                     ; preds = %._crit_edge.4, %._crit_edge.5
   %.03844.5 = phi i32 [ %i.et, %._crit_edge.5 ], [ 0, %._crit_edge.4 ] ; 2 uses
@@ -419,23 +419,23 @@ bb.h:                                             ; preds = %bb.h, %.preheader.5
   %i.ep = fptosi float %i.eo to i32
   %i.eq = sext i32 %i.ep to i64
   %i.er = getelementptr inbounds [8 x i8], ptr %i.en, i64 %i.eq
-  store i64 %i.ee, ptr %i.er, align 2
+  store i64 %i.ee, ptr %i.er, align 2, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #3
   %i.es = add nuw nsw i32 %.043.5, 1              ; 2 uses
   %exitcond.not.5 = icmp eq i32 %i.es, %i.ah
-  br i1 %exitcond.not.5, label %._crit_edge.5, label %bb.h, !llvm.loop !31
+  br i1 %exitcond.not.5, label %._crit_edge.5, label %bb.h, !llvm.loop !33
 
 ._crit_edge.5:                                    ; preds = %bb.h
   %i.et = add nuw nsw i32 %.03844.5, 1            ; 2 uses
   %exitcond47.not.5 = icmp eq i32 %i.et, %i.ah
-  br i1 %exitcond47.not.5, label %.loopexit.split, label %.preheader.5, !llvm.loop !32
+  br i1 %exitcond47.not.5, label %.loopexit.split, label %.preheader.5, !llvm.loop !34
 
 ._crit_edge:                                      ; preds = %bb.i
   %i.eu = add nuw nsw i32 %.03844, 1              ; 2 uses
   %exitcond47.not = icmp eq i32 %i.eu, %i.ah
-  br i1 %exitcond47.not, label %.preheader.1, label %.preheader, !llvm.loop !32
+  br i1 %exitcond47.not, label %.preheader.1, label %.preheader, !llvm.loop !34
 
 bb.i:                                             ; preds = %.preheader, %bb.i
   %.043 = phi i32 [ 0, %.preheader ], [ %i.fn, %bb.i ] ; 2 uses
@@ -467,13 +467,13 @@ bb.i:                                             ; preds = %.preheader, %bb.i
   %i.fk = fptosi float %i.fj to i32
   %i.fl = sext i32 %i.fk to i64
   %i.fm = getelementptr inbounds [8 x i8], ptr %i.fi, i64 %i.fl
-  store i64 %i.ez, ptr %i.fm, align 2
+  store i64 %i.ez, ptr %i.fm, align 2, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #3
   %i.fn = add nuw nsw i32 %.043, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.fn, %i.ah
-  br i1 %exitcond.not, label %._crit_edge, label %bb.i, !llvm.loop !31
+  br i1 %exitcond.not, label %._crit_edge, label %bb.i, !llvm.loop !33
 
 .loopexit.split:                                  ; preds = %._crit_edge.5, %_ZNK9Imath_3_23BoxINS_4Vec2IiEEEeqERKS3_.exit.thread, %bb.c
   ret void
@@ -523,15 +523,17 @@ attributes #3 = { nounwind }
 !20 = !{!"_ZTSN7Imf_3_47Array2DINS_4RgbaEEE", !17, i64 0, !17, i64 8, !19, i64 16}
 !21 = !{!20, !19, i64 16}
 !22 = !{!20, !17, i64 8}
-!23 = distinct !{!23, !9}
-!24 = distinct !{!24, !9}
-!25 = !{!"_ZTSN9Imath_3_24Vec2IiEE", !6, i64 0, !6, i64 4}
-!26 = !{!"_ZTSN9Imath_3_23BoxINS_4Vec2IiEEEE", !25, i64 0, !25, i64 8}
-!27 = !{!26, !6, i64 8}
-!28 = !{!26, !6, i64 0}
-!29 = !{!26, !6, i64 12}
-!30 = !{!26, !6, i64 4}
-!31 = distinct !{!31, !9}
-!32 = distinct !{!32, !9}
-!33 = !{!6, !6, i64 0}
+!23 = !{!"short", !5, i64 0}
+!24 = !{!23, !23, i64 0}
+!25 = distinct !{!25, !9}
+!26 = distinct !{!26, !9}
+!27 = !{!"_ZTSN9Imath_3_24Vec2IiEE", !6, i64 0, !6, i64 4}
+!28 = !{!"_ZTSN9Imath_3_23BoxINS_4Vec2IiEEEE", !27, i64 0, !27, i64 8}
+!29 = !{!28, !6, i64 8}
+!30 = !{!28, !6, i64 0}
+!31 = !{!28, !6, i64 12}
+!32 = !{!28, !6, i64 4}
+!33 = distinct !{!33, !9}
+!34 = distinct !{!34, !9}
+!35 = !{!6, !6, i64 0}
 end_hunk_0

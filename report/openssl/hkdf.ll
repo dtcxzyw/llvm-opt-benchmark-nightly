@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.0.0.copyload = load <2 x ptr>, ptr %i.d, align 8
+  %.sroa.0.0.copyload = load <2 x ptr>, ptr %i.d, align 8, !tbaa !53
   br label %bb.d
 
 .thread:                                          ; preds = %bb.a, %bb.b
@@ -247,7 +247,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i32 %i.f, ptr %i.z, align 8, !tbaa !28
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <2 x ptr> %.sroa.0.1, ptr %i.aa, align 8
+  store <2 x ptr> %.sroa.0.1, ptr %i.aa, align 8, !tbaa !53
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -412,7 +412,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   %indvars.iv.next = add nuw i64 %indvars.iv, 1
   %.not51.not = icmp ugt i64 %spec.select, %indvars.iv
-  br i1 %.not51.not, label %.lr.ph.peel.next, label %.loopexit, !llvm.loop !53
+  br i1 %.not51.not, label %.lr.ph.peel.next, label %.loopexit, !llvm.loop !54
 
 .loopexit:                                        ; preds = %bb.m, %bb.h, %.preheader, %.thread, %bb.d
   %.045 = phi i32 [ 0, %.thread ], [ 0, %bb.d ], [ 1, %.preheader ], [ 1, %bb.h ], [ 1, %bb.m ]
@@ -489,7 +489,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !55
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !56
   %i.r = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.q, ptr noundef nonnull @.str.17) #7
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %.sink.split, label %bb.h
@@ -497,7 +497,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.t = load ptr, ptr %1, align 8, !tbaa !40
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !55
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !56
   %i.w = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.v, ptr noundef nonnull @.str.18) #7
   %i.x = icmp eq i32 %i.w, 0
   br i1 %i.x, label %.sink.split, label %bb.i
@@ -505,7 +505,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.y = load ptr, ptr %1, align 8, !tbaa !40
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !55
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !56
   %i.ab = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.aa, ptr noundef nonnull @.str.19) #7
   %i.ac = icmp eq i32 %i.ab, 0
   br i1 %i.ac, label %.sink.split, label %bb.j
@@ -522,7 +522,7 @@ bb.k:                                             ; preds = %bb.f
   br i1 %.not45, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ae = load i32, ptr %i.a, align 4, !tbaa !56  ; 2 uses
+  %i.ae = load i32, ptr %i.a, align 4, !tbaa !57  ; 2 uses
   %or.cond3 = icmp ugt i32 %i.ae, 2
   br i1 %or.cond3, label %bb.m, label %.sink.split
 
@@ -720,7 +720,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
-  %i.n = load i64, ptr %i.a, align 8, !tbaa !57
+  %i.n = load i64, ptr %i.a, align 8, !tbaa !58
   %i.o = call fastcc i32 @HKDF_Expand(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef nonnull %i.b, i64 noundef %i.n, ptr noundef %9, i64 noundef %10)
   br label %bb.l
 
@@ -828,9 +828,10 @@ attributes #8 = { nounwind willreturn memory(read) }
 !50 = !{!34, !33, i64 56}
 !51 = !{!34, !33, i64 48}
 !52 = !{!34, !33, i64 40}
-!53 = distinct !{!53, !43, !54}
-!54 = !{!"llvm.loop.peeled.count", i32 1}
-!55 = !{!29, !8, i64 16}
-!56 = !{!5, !5, i64 0}
-!57 = !{!12, !12, i64 0}
+!53 = !{!9, !9, i64 0}
+!54 = distinct !{!54, !43, !55}
+!55 = !{!"llvm.loop.peeled.count", i32 1}
+!56 = !{!29, !8, i64 16}
+!57 = !{!5, !5, i64 0}
+!58 = !{!12, !12, i64 0}
 end_hunk_0

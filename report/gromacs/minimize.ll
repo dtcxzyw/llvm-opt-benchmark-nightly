@@ -205,7 +205,12 @@ bb.n:                                             ; preds = %bb.m
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !703
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !180
   call void @_ZN24CpuPpLongRangeNonbondeds20updateAfterPartitionERK9t_mdatoms(ptr noundef nonnull align 8 dereferenceable(216) %i.ei, ptr noundef nonnull align 8 dereferenceable(648) %i.el)
-  br i1 %.095100, label %bb.o, label %bb.r
+  br i1 %.095100, label %bb.o, label %.thread97._crit_edge
+
+.thread97._crit_edge:                             ; preds = %.thread97
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 152
+  %.pre107 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !251
+  br label %bb.r
 
 bb.o:                                             ; preds = %.thread97
   %i.em = load ptr, ptr %i.ef, align 8, !tbaa !712 ; 2 uses
@@ -233,27 +238,27 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.ez = call { i64, i16 } @_ZN3gmx27setupDomainLifetimeWorkloadERK10t_inputrecRK10t_forcerecPK6pull_tPK9gmx_edsamRK9t_mdatomsRKNS_18SimulationWorkloadE(ptr noundef nonnull align 8 dereferenceable(888) %i.es, ptr noundef nonnull align 8 dereferenceable(584) %i.er, ptr noundef %i.eu, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(648) %i.ew, ptr noundef nonnull align 1 dereferenceable(29) %i.ey) ; 2 uses
   %.fca.0.extract = extractvalue { i64, i16 } %i.ez, 0
   %.fca.1.extract = extractvalue { i64, i16 } %i.ez, 1
-  %i.fa = load ptr, ptr %i.ex, align 8, !tbaa !251 ; 2 uses
+  %i.fa = load ptr, ptr %i.ex, align 8, !tbaa !251 ; 3 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 29
-  store i64 %.fca.0.extract, ptr %i.fb, align 1
+  store i64 %.fca.0.extract, ptr %i.fb, align 1, !tbaa !716
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fa, i64 37
-  store i16 %.fca.1.extract, ptr %.sroa.4.0..sroa_idx, align 1
+  store i16 %.fca.1.extract, ptr %.sroa.4.0..sroa_idx, align 1, !tbaa !716
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %.thread97
-  %i.fc = phi i32 [ 981, %bb.q ], [ 977, %.thread97 ]
+bb.r:                                             ; preds = %.thread97._crit_edge, %bb.q
+  %21 = phi ptr [ %i.fa, %bb.q ], [ %.pre107, %.thread97._crit_edge ] ; 2 uses
+  %i.fc = phi i32 [ 981, %bb.q ], [ 977, %.thread97._crit_edge ]
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   %i.fd = load ptr, ptr %i.i, align 8, !tbaa !244 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 104
-  %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !716 ; 3 uses
+  %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !717 ; 3 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fd, i64 112
-  %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !717
+  %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !718
   %i.fi = ptrtoint ptr %i.fh to i64
   %i.fj = ptrtoint ptr %i.ff to i64
   %i.fk = sub i64 %i.fi, %i.fj
   %i.fl = getelementptr inbounds nuw i8, ptr %i.ff, i64 %i.fk
-  %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
-  %21 = load ptr, ptr %i.fm, align 8, !tbaa !251  ; 2 uses
+  %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %21, i64 29
   call void @_ZN3gmx17setupStepWorkloadEiNS_8ArrayRefIKNS_8MtsLevelEEElRKNS_22DomainLifetimeWorkloadERKNS_18SimulationWorkloadE(ptr dead_on_unwind nonnull writable sret(%"class.gmx::StepWorkload") align 1 %11, i32 noundef %i.fc, ptr %i.ff, ptr %i.fl, i64 noundef %7, ptr noundef nonnull align 1 dereferenceable(10) %i.fn, ptr noundef nonnull align 1 dereferenceable(29) %21)
   %i.fo = load ptr, ptr %i.fm, align 8, !tbaa !251
@@ -656,10 +661,10 @@ begin_hunk_1_@llvm.fmuladd.v4f32
 !713 = !{!240, !44, i64 88}
 !714 = !{!240, !45, i64 96}
 !715 = !{!526, !526, i64 0}
-!716 = !{!86, !85, i64 0}
-!717 = !{!86, !85, i64 8}
-!718 = !{!61, !61, i64 0}
-!719 = !{i64 0, i64 1, !718, i64 1, i64 1, !718, i64 2, i64 1, !718, i64 3, i64 1, !718, i64 4, i64 1, !718, i64 5, i64 1, !718, i64 6, i64 1, !718, i64 7, i64 1, !718, i64 8, i64 1, !718, i64 9, i64 1, !718, i64 10, i64 1, !718, i64 11, i64 1, !718, i64 12, i64 1, !718, i64 13, i64 1, !718, i64 14, i64 1, !718, i64 15, i64 1, !718, i64 16, i64 1, !718, i64 17, i64 1, !718, i64 18, i64 1, !718}
+!716 = !{!61, !61, i64 0}
+!717 = !{!86, !85, i64 0}
+!718 = !{!86, !85, i64 8}
+!719 = !{i64 0, i64 1, !716, i64 1, i64 1, !716, i64 2, i64 1, !716, i64 3, i64 1, !716, i64 4, i64 1, !716, i64 5, i64 1, !716, i64 6, i64 1, !716, i64 7, i64 1, !716, i64 8, i64 1, !716, i64 9, i64 1, !716, i64 10, i64 1, !716, i64 11, i64 1, !716, i64 12, i64 1, !716, i64 13, i64 1, !716, i64 14, i64 1, !716, i64 15, i64 1, !716, i64 16, i64 1, !716, i64 17, i64 1, !716, i64 18, i64 1, !716}
 !720 = !{!696}
 !721 = !{!"_ZTSN3gmx12ArrayRefIterIKfEE", !165, i64 0}
 !722 = !{!721, !165, i64 0}

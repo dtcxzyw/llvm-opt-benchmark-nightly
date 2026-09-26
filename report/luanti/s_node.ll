@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.h, %bb.x, %bb.s,
   br label %bb.aa
 
 bb.p:                                             ; preds = %bb.k
-  %.sroa.0.0.copyload = load i48, ptr %5, align 8
+  %.sroa.0.0.copyload = load i48, ptr %5, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.0.0.copyload)
           to label %bb.q unwind label %bb.o
 
@@ -475,7 +475,7 @@ bb.o:                                             ; preds = %bb.h, %bb.r, %bb.q,
   br label %bb.ae
 
 bb.p:                                             ; preds = %bb.k
-  %.sroa.0.0.copyload = load i48, ptr %4, align 8
+  %.sroa.0.0.copyload = load i48, ptr %4, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.0.0.copyload)
           to label %bb.q unwind label %bb.o
 
@@ -717,7 +717,7 @@ bb.o:                                             ; preds = %bb.h, %bb.u, %bb.p,
   br label %bb.x
 
 bb.p:                                             ; preds = %bb.k
-  %.sroa.0.0.copyload = load i48, ptr %3, align 8
+  %.sroa.0.0.copyload = load i48, ptr %3, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.0.0.copyload)
           to label %bb.q unwind label %bb.o
 
@@ -920,7 +920,7 @@ bb.o:                                             ; preds = %bb.h, %bb.u, %bb.p,
   br label %bb.x
 
 bb.p:                                             ; preds = %bb.k
-  %.sroa.0.0.copyload = load i48, ptr %3, align 8
+  %.sroa.0.0.copyload = load i48, ptr %3, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.0.0.copyload)
           to label %bb.q unwind label %bb.o
 
@@ -1127,7 +1127,7 @@ bb.o:                                             ; preds = %bb.h, %bb.w, %bb.r,
   br label %bb.ab
 
 bb.p:                                             ; preds = %bb.k
-  %.sroa.0.0.copyload = load i48, ptr %4, align 8
+  %.sroa.0.0.copyload = load i48, ptr %4, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.0.0.copyload)
           to label %bb.q unwind label %bb.o
 
@@ -1360,7 +1360,7 @@ bb.o:                                             ; preds = %bb.h, %bb.v, %bb.q,
   br label %bb.y
 
 bb.p:                                             ; preds = %bb.k
-  %.sroa.0.0.copyload = load i48, ptr %3, align 8
+  %.sroa.0.0.copyload = load i48, ptr %3, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.0.0.copyload)
           to label %bb.q unwind label %bb.o
 
@@ -1569,7 +1569,7 @@ bb.o:                                             ; preds = %bb.h, %bb.s, %bb.r,
   br label %bb.ad
 
 bb.p:                                             ; preds = %bb.k
-  %.sroa.0.0.copyload = load i48, ptr %5, align 8
+  %.sroa.0.0.copyload = load i48, ptr %5, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.0.0.copyload)
           to label %bb.q unwind label %bb.o
 
@@ -1763,7 +1763,7 @@ _ZN8IGameDef4ndefEv.exit:                         ; preds = %bb.h
   %i.an = load i64, ptr %i.am, align 8
   %i.ao = getelementptr inbounds i8, ptr %0, i64 %i.an
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 112
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !39 ; 2 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !41 ; 2 uses
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !11
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
   %i.at = load ptr, ptr %i.as, align 8
@@ -1838,7 +1838,7 @@ bb.s:                                             ; preds = %_ZNK14NodeDefManage
   br i1 %i.bu, label %bb.t, label %bb.aj
 
 bb.t:                                             ; preds = %bb.s
-  %.sroa.05.0.copyload = load i48, ptr %5, align 8
+  %.sroa.05.0.copyload = load i48, ptr %5, align 8, !tbaa !39
   invoke void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %i.x, i48 %.sroa.05.0.copyload)
           to label %bb.u unwind label %bb.o
 
@@ -1857,7 +1857,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.aa, %bb.w
   %.sroa.042.0.in = phi ptr [ %i.bw, %bb.w ], [ %.sroa.042.0, %bb.aa ]
-  %.sroa.042.0 = load ptr, ptr %.sroa.042.0.in, align 8, !tbaa !42 ; 5 uses
+  %.sroa.042.0 = load ptr, ptr %.sroa.042.0.in, align 8, !tbaa !44 ; 5 uses
   %.not53 = icmp eq ptr %.sroa.042.0, null
   br i1 %.not53, label %bb.ad, label %bb.y
 
@@ -1877,7 +1877,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   invoke void @lua_settable(ptr noundef %i.x, i32 noundef -3)
-          to label %bb.x unwind label %bb.ac, !llvm.loop !38
+          to label %bb.x unwind label %bb.ac, !llvm.loop !40
 
 bb.ab:                                            ; preds = %bb.ai, %bb.ad
   %i.cd = landingpad { ptr, i32 }
@@ -2053,10 +2053,12 @@ attributes #12 = { noreturn nounwind }
 !35 = !{!33, !32, i64 0}
 !36 = !{!20, !13, i64 8}
 !37 = !{!20, !18, i64 0}
-!38 = distinct !{!38, !43}
-!39 = !{!27, !24, i64 112}
-!40 = !{!"p1 _ZTSNSt8__detail15_Hash_node_baseE", !17, i64 0}
-!41 = !{!"_ZTSNSt8__detail15_Hash_node_baseE", !40, i64 0}
-!42 = !{!41, !40, i64 0}
-!43 = !{!"llvm.loop.mustprogress"}
+!38 = !{!"short", !6, i64 0}
+!39 = !{!38, !38, i64 0}
+!40 = distinct !{!40, !45}
+!41 = !{!27, !24, i64 112}
+!42 = !{!"p1 _ZTSNSt8__detail15_Hash_node_baseE", !17, i64 0}
+!43 = !{!"_ZTSNSt8__detail15_Hash_node_baseE", !42, i64 0}
+!44 = !{!43, !42, i64 0}
+!45 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

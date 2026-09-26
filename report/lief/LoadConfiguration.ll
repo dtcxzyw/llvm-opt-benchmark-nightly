@@ -205,8 +205,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_
   %.0911.i.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i ], [ %i.ar, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_allocateEm.exit.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !419)
   call void @llvm.experimental.noalias.scope.decl(metadata !420)
-  %i.at = load i64, ptr %.0911.i.i.i.i, align 4, !alias.scope !420, !noalias !419
-  store i64 %i.at, ptr %.012.i.i.i.i, align 4, !alias.scope !419, !noalias !420
+  %i.at = load i64, ptr %.0911.i.i.i.i, align 4, !tbaa !58, !alias.scope !420, !noalias !419
+  store i64 %i.at, ptr %.012.i.i.i.i, align 4, !tbaa !58, !alias.scope !419, !noalias !420
   %i.au = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8
   %.not.i.i.i.i = icmp eq ptr %i.au, %i.as
@@ -242,7 +242,7 @@ _ZNSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE7reserveEm.e
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE7reserveEm.exit
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 4 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.r
@@ -343,15 +343,14 @@ _ZNK4LIEF12BinaryStream4readIhEENS_6resultIT_EEv.exit: ; preds = %bb.h, %bb.i
 
 bb.j:                                             ; preds = %_ZNK4LIEF12BinaryStream4readIhEENS_6resultIT_EEv.exit, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit
   %.1 = phi i64 [ %i.cm, %_ZNK4LIEF12BinaryStream4readIhEENS_6resultIT_EEv.exit ], [ %i.bt, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit ] ; 2 uses
-  %i.cn = load ptr, ptr %i.be, align 8, !tbaa !213 ; 5 uses
+  %i.cn = load ptr, ptr %i.be, align 8, !tbaa !213 ; 6 uses
   %i.co = load ptr, ptr %i.ad, align 8, !tbaa !197
   %.not.i.i36 = icmp eq ptr %i.cn, %i.co
   br i1 %.not.i.i36, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  store i64 %.1, ptr %i.cn, align 4
-  %10 = load ptr, ptr %i.be, align 8, !tbaa !213
-  %i.cp = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store i64 %.1, ptr %i.cn, align 4, !tbaa !58
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
   store ptr %i.cp, ptr %i.be, align 8, !tbaa !213
   br label %_ZNSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE9push_backEOS3_.exit
 
@@ -379,7 +378,7 @@ _ZNKSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE12_M_check_
   %i.da = shl nuw nsw i64 %i.cz, 3
   %i.db = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.da) #26 ; 5 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.ct
-  store i64 %.1, ptr %i.dc, align 4
+  store i64 %.1, ptr %i.dc, align 4, !tbaa !58
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.cq, %i.cn
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -388,8 +387,8 @@ _ZNKSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE12_M_check_
   %.0911.i.i.i.i.i.i = phi ptr [ %i.de, %.lr.ph.i.i.i.i.i.i ], [ %i.cq, %_ZNKSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !421)
   call void @llvm.experimental.noalias.scope.decl(metadata !422)
-  %i.dd = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !422, !noalias !421
-  store i64 %i.dd, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !421, !noalias !422
+  %i.dd = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !58, !alias.scope !422, !noalias !421
+  store i64 %i.dd, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !58, !alias.scope !421, !noalias !422
   %i.de = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.de, %i.cn
@@ -792,8 +791,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i, %.lr.ph.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.et, %.lr.ph.i.i.i.i.i ], [ %i.el, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.es, %.lr.ph.i.i.i.i.i ], [ %i.ep, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
-  %i.er = load i64, ptr %.sroa.04.08.i.i.i.i.i, align 4
-  store i64 %i.er, ptr %.09.i.i.i.i.i, align 4
+  %i.er = load i64, ptr %.sroa.04.08.i.i.i.i.i, align 4, !tbaa !58
+  store i64 %i.er, ptr %.09.i.i.i.i.i, align 4, !tbaa !58
   %i.es = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i, i64 8 ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.es, %i.eq
@@ -842,8 +841,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
 .lr.ph.i.i.i.i.i75:                               ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i73, %.lr.ph.i.i.i.i.i75
   %.09.i.i.i.i.i76 = phi ptr [ %i.fm, %.lr.ph.i.i.i.i.i75 ], [ %i.fe, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i73 ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i77 = phi ptr [ %i.fl, %.lr.ph.i.i.i.i.i75 ], [ %i.fi, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i73 ] ; 2 uses
-  %i.fk = load i64, ptr %.sroa.04.08.i.i.i.i.i77, align 4
-  store i64 %i.fk, ptr %.09.i.i.i.i.i76, align 4
+  %i.fk = load i64, ptr %.sroa.04.08.i.i.i.i.i77, align 4, !tbaa !58
+  store i64 %i.fk, ptr %.09.i.i.i.i.i76, align 4, !tbaa !58
   %i.fl = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i77, i64 8 ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i76, i64 8 ; 2 uses
   %.not.i.i.i.i.i78 = icmp eq ptr %i.fl, %i.fj
@@ -892,8 +891,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
 .lr.ph.i.i.i.i.i85:                               ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i83, %.lr.ph.i.i.i.i.i85
   %.09.i.i.i.i.i86 = phi ptr [ %i.gf, %.lr.ph.i.i.i.i.i85 ], [ %i.fx, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i83 ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i87 = phi ptr [ %i.ge, %.lr.ph.i.i.i.i.i85 ], [ %i.gb, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i83 ] ; 2 uses
-  %i.gd = load i64, ptr %.sroa.04.08.i.i.i.i.i87, align 4
-  store i64 %i.gd, ptr %.09.i.i.i.i.i86, align 4
+  %i.gd = load i64, ptr %.sroa.04.08.i.i.i.i.i87, align 4, !tbaa !58
+  store i64 %i.gd, ptr %.09.i.i.i.i.i86, align 4, !tbaa !58
   %i.ge = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i87, i64 8 ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i86, i64 8 ; 2 uses
   %.not.i.i.i.i.i88 = icmp eq ptr %i.ge, %i.gc
@@ -942,8 +941,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
 .lr.ph.i.i.i.i.i95:                               ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i93, %.lr.ph.i.i.i.i.i95
   %.09.i.i.i.i.i96 = phi ptr [ %i.gy, %.lr.ph.i.i.i.i.i95 ], [ %i.gq, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i93 ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i97 = phi ptr [ %i.gx, %.lr.ph.i.i.i.i.i95 ], [ %i.gu, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmRKS4_.exit.i93 ] ; 2 uses
-  %i.gw = load i64, ptr %.sroa.04.08.i.i.i.i.i97, align 4
-  store i64 %i.gw, ptr %.09.i.i.i.i.i96, align 4
+  %i.gw = load i64, ptr %.sroa.04.08.i.i.i.i.i97, align 4, !tbaa !58
+  store i64 %i.gw, ptr %.09.i.i.i.i.i96, align 4, !tbaa !58
   %i.gx = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i97, i64 8 ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i96, i64 8 ; 2 uses
   %.not.i.i.i.i.i98 = icmp eq ptr %i.gx, %i.gv
@@ -1346,14 +1345,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !213  ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !203    ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !213  ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !203    ; 9 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !197
-  %i.i = load ptr, ptr %0, align 8, !tbaa !203    ; 5 uses
+  %i.i = load ptr, ptr %0, align 8, !tbaa !203    ; 9 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.l = sub i64 %i.j, %i.k
@@ -1369,7 +1368,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
-  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #26 ; 3 uses
+  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #26 ; 4 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.c, %i.b
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
@@ -1378,7 +1377,7 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_
   %i.q = sub i64 %i.p, %i.e
   %i.r = and i64 %i.q, -8
   %i.s = add i64 %i.r, 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.o, ptr align 4 %i.c, i64 %i.s, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.o, ptr align 4 %i.c, i64 %i.s, i1 false), !tbaa !58
   br label %_ZNSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
 
 _ZNSt6vectorIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
@@ -1402,9 +1401,9 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE13_M_
 
 bb.f:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !213
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !213 ; 3 uses
   %i.ab = ptrtoint ptr %i.aa to i64
-  %i.ac = sub i64 %i.ab, %i.k                     ; 4 uses
+  %i.ac = sub i64 %i.ab, %i.k                     ; 5 uses
   %.not24 = icmp ult i64 %i.ac, %i.f
   br i1 %.not24, label %bb.k, label %bb.g
 
@@ -1414,6 +1413,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.i, ptr align 4 %i.c, i64 %i.f, i1 false)
+  %.pre28 = load ptr, ptr %0, align 8, !tbaa !203
   br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE17LoadConfiguration16guard_function_tESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -1421,8 +1421,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.ae, label %bb.j, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE17LoadConfiguration16guard_function_tESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit
 
 bb.j:                                             ; preds = %bb.i
-  %i.af = load i64, ptr %i.c, align 4
-  store i64 %i.af, ptr %i.i, align 4
+  %i.af = load i64, ptr %i.c, align 4, !tbaa !58
+  store i64 %i.af, ptr %i.i, align 4, !tbaa !58
   br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE17LoadConfiguration16guard_function_tESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit
 
 bb.k:                                             ; preds = %bb.f
@@ -1431,6 +1431,13 @@ bb.k:                                             ; preds = %bb.f
 
 bb.l:                                             ; preds = %bb.k
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.i, ptr align 4 %i.c, i64 %i.ac, i1 false)
+  %.pre = load ptr, ptr %1, align 8, !tbaa !203
+  %.pre25 = load ptr, ptr %i.z, align 8, !tbaa !213 ; 2 uses
+  %.pre26 = load ptr, ptr %0, align 8, !tbaa !203 ; 2 uses
+  %.pre27 = load ptr, ptr %i.a, align 8, !tbaa !213
+  %.pre29 = ptrtoint ptr %.pre25 to i64
+  %.pre30 = ptrtoint ptr %.pre26 to i64
+  %.pre32 = sub i64 %.pre29, %.pre30
   br label %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit
 
 bb.m:                                             ; preds = %bb.k
@@ -1438,35 +1445,33 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.ah, label %bb.n, label %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.ai = load i64, ptr %i.c, align 4
-  store i64 %i.ai, ptr %i.i, align 4
+  %i.ai = load i64, ptr %i.c, align 4, !tbaa !58
+  store i64 %i.ai, ptr %i.i, align 4, !tbaa !58
   br label %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit
 
 _ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %2 = load ptr, ptr %1, align 8, !tbaa !203
-  %3 = load ptr, ptr %i.z, align 8, !tbaa !213    ; 2 uses
-  %4 = load ptr, ptr %0, align 8, !tbaa !203
-  %5 = ptrtoint ptr %3 to i64
-  %6 = ptrtoint ptr %4 to i64
-  %7 = sub i64 %5, %6
-  %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 %7 ; 2 uses
-  %8 = load ptr, ptr %i.a, align 8, !tbaa !213    ; 2 uses
-  %.not9.i.i.i.i = icmp eq ptr %i.aj, %8
+  %.pre-phi33 = phi i64 [ %.pre32, %bb.l ], [ %i.ac, %bb.m ], [ 8, %bb.n ]
+  %2 = phi ptr [ %.pre27, %bb.l ], [ %i.b, %bb.m ], [ %i.b, %bb.n ] ; 2 uses
+  %3 = phi ptr [ %.pre26, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.n ] ; 2 uses
+  %4 = phi ptr [ %.pre25, %bb.l ], [ %i.aa, %bb.m ], [ %i.aa, %bb.n ]
+  %5 = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ]
+  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 %.pre-phi33 ; 2 uses
+  %.not9.i.i.i.i = icmp eq ptr %i.aj, %2
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE17LoadConfiguration16guard_function_tESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit, %.lr.ph.i.i.i.i
-  %.011.i.i.i.i = phi ptr [ %i.am, %.lr.ph.i.i.i.i ], [ %3, %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit ] ; 2 uses
+  %.011.i.i.i.i = phi ptr [ %i.am, %.lr.ph.i.i.i.i ], [ %4, %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit ] ; 2 uses
   %.0810.i.i.i.i = phi ptr [ %i.al, %.lr.ph.i.i.i.i ], [ %i.aj, %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit ] ; 2 uses
-  %i.ak = load i64, ptr %.0810.i.i.i.i, align 4
-  store i64 %i.ak, ptr %.011.i.i.i.i, align 4
+  %i.ak = load i64, ptr %.0810.i.i.i.i, align 4, !tbaa !58
+  store i64 %i.ak, ptr %.011.i.i.i.i, align 4, !tbaa !58
   %i.al = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i, i64 8 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i, i64 8
-  %.not.i.i.i.i = icmp eq ptr %i.al, %8
+  %.not.i.i.i.i = icmp eq ptr %i.al, %2
   br i1 %.not.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE17LoadConfiguration16guard_function_tESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !593
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE17LoadConfiguration16guard_function_tESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit: ; preds = %.lr.ph.i.i.i.i, %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit, %bb.j, %bb.i, %bb.h, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE13_M_deallocateEPS3_m.exit
-  %9 = load ptr, ptr %0, align 8, !tbaa !203
-  %i.an = getelementptr inbounds nuw i8, ptr %9, i64 %i.f
+  %6 = phi ptr [ %i.o, %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE13_M_deallocateEPS3_m.exit ], [ %3, %_ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit ], [ %i.i, %bb.j ], [ %i.i, %bb.i ], [ %.pre28, %bb.h ], [ %3, %.lr.ph.i.i.i.i ]
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 %i.f
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.an, ptr %i.ao, align 8, !tbaa !213
   br label %bb.o
@@ -1869,8 +1874,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   store i32 %3, ptr %7, align 4, !tbaa !353
   %i.bh = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %i.bi = load i64, ptr %1, align 4
-  store i64 %i.bi, ptr %i.bh, align 4
+  %i.bi = load i64, ptr %1, align 4, !tbaa !58
+  store i64 %i.bi, ptr %i.bh, align 4, !tbaa !58
   %i.bj = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i32 %i.y, ptr %i.bj, align 4, !tbaa !354
   %i.bk = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -2273,8 +2278,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EEC2EmRKS4_.exit.i
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EEC2EmRKS4_.exit.i, %.lr.ph.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.ap, %.lr.ph.i.i.i.i.i ], [ %i.ah, %_ZNSt12_Vector_baseIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.ao, %.lr.ph.i.i.i.i.i ], [ %i.al, %_ZNSt12_Vector_baseIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
-  %i.an = load i64, ptr %.sroa.04.08.i.i.i.i.i, align 4
-  store i64 %i.an, ptr %.09.i.i.i.i.i, align 4
+  %i.an = load i64, ptr %.sroa.04.08.i.i.i.i.i, align 4, !tbaa !58
+  store i64 %i.an, ptr %.09.i.i.i.i.i, align 4, !tbaa !58
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i, i64 8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ao, %i.am

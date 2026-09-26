@@ -111,10 +111,10 @@ bb.e:                                             ; preds = %bb.d, %_ZN4llvmeqEN
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.ak = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %1) #4 ; 2 uses
   %.sroa.0.0.extract.trunc = trunc i32 %i.ak to i16
-  store i16 %.sroa.0.0.extract.trunc, ptr %i.aj, align 1
+  store i16 %.sroa.0.0.extract.trunc, ptr %i.aj, align 1, !tbaa !17
   %.sroa.0.2.extract.shift = lshr i32 %i.ak, 16
   %.sroa.0.2.extract.trunc = trunc nuw i32 %.sroa.0.2.extract.shift to i16
-  store i16 %.sroa.0.2.extract.trunc, ptr %i.a, align 1
+  store i16 %.sroa.0.2.extract.trunc, ptr %i.a, align 1, !tbaa !17
   ret void
 }
 
@@ -170,4 +170,6 @@ attributes #4 = { nounwind }
 !13 = !{!12, !8, i64 2}
 !14 = !{!"long", !4, i64 0}
 !15 = !{!14, !14, i64 0}
+!16 = !{!"_ZTSN4llvm12DenormalMode16DenormalModeKindE", !4, i64 0}
+!17 = !{!16, !16, i64 0}
 end_hunk_0

@@ -202,8 +202,8 @@ bb.a:
   br i1 %.0.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = load i64, ptr %1, align 4
-  store i64 %i.j, ptr %0, align 4
+  %i.j = load i64, ptr %1, align 4, !tbaa !12
+  store i64 %i.j, ptr %0, align 4, !tbaa !12
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -222,8 +222,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.0.i5, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.v = load i64, ptr %i.k, align 4
-  store i64 %i.v, ptr %i.l, align 4
+  %i.v = load i64, ptr %i.k, align 4, !tbaa !12
+  store i64 %i.v, ptr %i.l, align 4, !tbaa !12
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -338,4 +338,5 @@ attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !9 = !{!"_ZTSN4Luau8PositionE", !6, i64 0, !6, i64 4}
 !10 = !{!9, !6, i64 4}
 !11 = !{!9, !6, i64 0}
+!12 = !{!6, !6, i64 0}
 end_hunk_0

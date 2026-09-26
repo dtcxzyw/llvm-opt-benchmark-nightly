@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 10069
 inline.NumDeleted: 2207
 loop-unroll.NumCompletelyUnrolled: 129
-loop-unroll.NumRuntimeUnrolled: 14
-loop-unroll.NumUnrolled: 143
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 144
 begin_hunk_0_@_ZN5arrow12_GLOBAL__N_121DictionaryUnifierImplINS_9Int32TypeEE5UnifyERKNS_5ArrayEPSt10shared_ptrINS_6BufferEE:bb.a
 
 .noexc:                                           ; preds = %bb.d
@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i = shl nuw i64 %.sroa.5.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.bq to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.5.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !noalias !2864
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !tbaa !73, !noalias !2864
   %i.co = load i64, ptr %i.bn, align 8, !tbaa !294, !noalias !2864
   %i.cp = add i64 %i.co, 1                        ; 2 uses
   store i64 %i.cp, ptr %i.bn, align 8, !tbaa !294, !noalias !2864
@@ -429,7 +429,7 @@ bb.af:                                            ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i96 = shl nuw i64 %.sroa.5.0.insert.ext.i.i95, 32
   %.sroa.0.0.insert.ext.i.i97 = zext i32 %i.en to i64
   %.sroa.0.0.insert.insert.i.i98 = or disjoint i64 %.sroa.5.0.insert.shift.i.i96, %.sroa.0.0.insert.ext.i.i97
-  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !noalias !2866
+  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !tbaa !73, !noalias !2866
   %i.fi = load i64, ptr %i.ar, align 8, !tbaa !294, !noalias !2866
   %i.fj = add i64 %i.fi, 1                        ; 2 uses
   store i64 %i.fj, ptr %i.ar, align 8, !tbaa !294, !noalias !2866
@@ -832,7 +832,7 @@ bb.p:                                             ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.ext.i.i = zext i32 %i.cm to i64
   %.sroa.5.0.insert.shift.i.i = shl nuw i64 %.sroa.5.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.5.0.insert.shift.i.i, %i.bs
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !noalias !2963
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !tbaa !73, !noalias !2963
   %i.co = load i64, ptr %i.bn, align 8, !tbaa !305, !noalias !2963
   %i.cp = add i64 %i.co, 1                        ; 2 uses
   store i64 %i.cp, ptr %i.bn, align 8, !tbaa !305, !noalias !2963
@@ -1055,7 +1055,7 @@ bb.af:                                            ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.ext.i.i95 = zext i32 %i.fg to i64
   %.sroa.5.0.insert.shift.i.i96 = shl nuw i64 %.sroa.5.0.insert.ext.i.i95, 32
   %.sroa.0.0.insert.insert.i.i97 = or disjoint i64 %.sroa.5.0.insert.shift.i.i96, %i.eo
-  store i64 %.sroa.0.0.insert.insert.i.i97, ptr %i.fh, align 8, !noalias !2965
+  store i64 %.sroa.0.0.insert.insert.i.i97, ptr %i.fh, align 8, !tbaa !73, !noalias !2965
   %i.fi = load i64, ptr %i.ar, align 8, !tbaa !305, !noalias !2965
   %i.fj = add i64 %i.fi, 1                        ; 2 uses
   store i64 %i.fj, ptr %i.ar, align 8, !tbaa !305, !noalias !2965
@@ -1458,7 +1458,7 @@ bb.p:                                             ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i = shl nuw i64 %.sroa.5.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.bq to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.5.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !noalias !4332
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !tbaa !73, !noalias !4332
   %i.co = load i64, ptr %i.bn, align 8, !tbaa !294, !noalias !4332
   %i.cp = add i64 %i.co, 1                        ; 2 uses
   store i64 %i.cp, ptr %i.bn, align 8, !tbaa !294, !noalias !4332
@@ -1682,7 +1682,7 @@ bb.af:                                            ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i96 = shl nuw i64 %.sroa.5.0.insert.ext.i.i95, 32
   %.sroa.0.0.insert.ext.i.i97 = zext i32 %i.en to i64
   %.sroa.0.0.insert.insert.i.i98 = or disjoint i64 %.sroa.5.0.insert.shift.i.i96, %.sroa.0.0.insert.ext.i.i97
-  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !noalias !4334
+  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !tbaa !73, !noalias !4334
   %i.fi = load i64, ptr %i.ar, align 8, !tbaa !294, !noalias !4334
   %i.fj = add i64 %i.fi, 1                        ; 2 uses
   store i64 %i.fj, ptr %i.ar, align 8, !tbaa !294, !noalias !4334
@@ -2085,7 +2085,7 @@ bb.p:                                             ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i = shl nuw i64 %.sroa.5.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.bq to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.5.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !noalias !4539
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !tbaa !73, !noalias !4539
   %i.co = load i64, ptr %i.bn, align 8, !tbaa !294, !noalias !4539
   %i.cp = add i64 %i.co, 1                        ; 2 uses
   store i64 %i.cp, ptr %i.bn, align 8, !tbaa !294, !noalias !4539
@@ -2309,7 +2309,7 @@ bb.af:                                            ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i96 = shl nuw i64 %.sroa.5.0.insert.ext.i.i95, 32
   %.sroa.0.0.insert.ext.i.i97 = zext i32 %i.en to i64
   %.sroa.0.0.insert.insert.i.i98 = or disjoint i64 %.sroa.5.0.insert.shift.i.i96, %.sroa.0.0.insert.ext.i.i97
-  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !noalias !4541
+  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !tbaa !73, !noalias !4541
   %i.fi = load i64, ptr %i.ar, align 8, !tbaa !294, !noalias !4541
   %i.fj = add i64 %i.fi, 1                        ; 2 uses
   store i64 %i.fj, ptr %i.ar, align 8, !tbaa !294, !noalias !4541
@@ -2712,7 +2712,7 @@ bb.n:                                             ; preds = %_ZNK5arrow8internal
 
 _ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_24MonthDayNanoIntervalType13MonthDayNanosES1_E7PayloadEE12CompareEntryILNS7_11CompareKindE0ERZNS5_11GetOrInsertIRS4_ZNS5_11GetOrInsertIS4_EENS_6StatusEOT_PiEUliE_ZNSC_IS4_EESD_SF_SG_EUliE0_EESD_SF_OT0_OT1_SG_EUlPKS6_E_EEbmPKNS7_5EntryESK_.exit.i.i.i.i: ; preds = %bb.n
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.cc, align 8, !noalias !4677
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.cc, align 8, !tbaa !73, !noalias !4677
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   %.sroa.2.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !146, !noalias !4677
   %or.cond.i.i.i.i.i.i.i = icmp eq i64 %i.bn, %.sroa.0.0.copyload.i.i.i.i.i.i
@@ -2741,7 +2741,7 @@ bb.p:                                             ; preds = %_ZNK5arrow8internal
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25, !noalias !4677
   store i64 %i.by, ptr %i.bz, align 8, !tbaa !636, !noalias !4678
   %i.cm = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
-  store i64 %i.bn, ptr %i.cm, align 8, !noalias !4678
+  store i64 %i.bn, ptr %i.cm, align 8, !tbaa !73, !noalias !4678
   %.sroa.0.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   store i64 %i.bo, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !146, !noalias !4678
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
@@ -2950,7 +2950,7 @@ bb.ae:                                            ; preds = %_ZNK5arrow8internal
 
 _ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_24MonthDayNanoIntervalType13MonthDayNanosES1_E7PayloadEE12CompareEntryILNS7_11CompareKindE0ERZNS5_11GetOrInsertIRS4_ZNS5_11GetOrInsertIS4_EENS_6StatusEOT_PiEUliE_ZNSC_IS4_EESD_SF_SG_EUliE0_EESD_SF_OT0_OT1_SG_EUlPKS6_E_EEbmPKNS7_5EntryESK_.exit.i.i.i.i107: ; preds = %bb.ae
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
-  %.sroa.0.0.copyload.i.i.i.i.i.i108 = load i64, ptr %i.ez, align 8, !noalias !4679
+  %.sroa.0.0.copyload.i.i.i.i.i.i108 = load i64, ptr %i.ez, align 8, !tbaa !73, !noalias !4679
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i109 = getelementptr inbounds nuw i8, ptr %i.ew, i64 16
   %.sroa.2.0.copyload.i.i.i.i.i.i110 = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i109, align 8, !tbaa !146, !noalias !4679
   %or.cond.i.i.i.i.i.i.i111 = icmp eq i64 %i.el, %.sroa.0.0.copyload.i.i.i.i.i.i108
@@ -2971,7 +2971,7 @@ bb.af:                                            ; preds = %_ZNK5arrow8internal
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25, !noalias !4679
   store i64 %i.ev, ptr %i.ew, align 8, !tbaa !636, !noalias !4680
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
-  store i64 %i.el, ptr %i.fh, align 8, !noalias !4680
+  store i64 %i.el, ptr %i.fh, align 8, !tbaa !73, !noalias !4680
   %.sroa.0.sroa.5.0..sroa_idx.i.i99 = getelementptr inbounds nuw i8, ptr %i.ew, i64 16
   store i64 %i.em, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i99, align 8, !tbaa !146, !noalias !4680
   %.sroa.5.0..sroa_idx.i.i100 = getelementptr inbounds nuw i8, ptr %i.ew, i64 24
@@ -3374,7 +3374,7 @@ bb.p:                                             ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i = shl nuw i64 %.sroa.5.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.bq to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.5.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !noalias !4778
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.cn, align 8, !tbaa !73, !noalias !4778
   %i.co = load i64, ptr %i.bn, align 8, !tbaa !294, !noalias !4778
   %i.cp = add i64 %i.co, 1                        ; 2 uses
   store i64 %i.cp, ptr %i.bn, align 8, !tbaa !294, !noalias !4778
@@ -3598,7 +3598,7 @@ bb.af:                                            ; preds = %_ZNK5arrow8internal
   %.sroa.5.0.insert.shift.i.i96 = shl nuw i64 %.sroa.5.0.insert.ext.i.i95, 32
   %.sroa.0.0.insert.ext.i.i97 = zext i32 %i.en to i64
   %.sroa.0.0.insert.insert.i.i98 = or disjoint i64 %.sroa.5.0.insert.shift.i.i96, %.sroa.0.0.insert.ext.i.i97
-  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !noalias !4780
+  store i64 %.sroa.0.0.insert.insert.i.i98, ptr %i.fh, align 8, !tbaa !73, !noalias !4780
   %i.fi = load i64, ptr %i.ar, align 8, !tbaa !294, !noalias !4780
   %i.fj = add i64 %i.fi, 1                        ; 2 uses
   store i64 %i.fj, ptr %i.ar, align 8, !tbaa !294, !noalias !4780
@@ -4001,7 +4001,7 @@ bb.n:                                             ; preds = %_ZNK5arrow8internal
 
 _ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12CompareEntryILNS7_11CompareKindE0ERZNS5_11GetOrInsertIRS4_ZNS5_11GetOrInsertIS4_EENS_6StatusEOT_PiEUliE_ZNSC_IS4_EESD_SF_SG_EUliE0_EESD_SF_OT0_OT1_SG_EUlPKS6_E_EEbmPKNS7_5EntryESK_.exit.i.i.i.i: ; preds = %bb.n
   %i.cb = getelementptr inbounds nuw i8, ptr %i.by, i64 8
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.cb, align 8, !noalias !4847
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.cb, align 8, !tbaa !73, !noalias !4847
   %i.cc = icmp eq i64 %i.bm, %.sroa.0.0.copyload.i.i.i.i.i.i
   br i1 %i.cc, label %bb.o, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12CompareEntryILNS7_11CompareKindE0ERZNS5_11GetOrInsertIRS4_ZNS5_11GetOrInsertIS4_EENS_6StatusEOT_PiEUliE_ZNSC_IS4_EESD_SF_SG_EUliE0_EESD_SF_OT0_OT1_SG_EUlPKS6_E_EEbmPKNS7_5EntryESK_.exit.thread.i.i.i.i
 
@@ -4026,7 +4026,7 @@ bb.p:                                             ; preds = %_ZNK5arrow8internal
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25, !noalias !4847
   store i64 %i.bx, ptr %i.by, align 8, !tbaa !642, !noalias !4848
   %i.cl = getelementptr inbounds nuw i8, ptr %i.by, i64 8
-  store i64 %i.bm, ptr %i.cl, align 8, !noalias !4848
+  store i64 %i.bm, ptr %i.cl, align 8, !tbaa !73, !noalias !4848
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.by, i64 16
   store i32 %i.ck, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !73, !noalias !4848
   %i.cm = load i64, ptr %i.bl, align 8, !tbaa !432, !noalias !4848
@@ -4233,7 +4233,7 @@ bb.ae:                                            ; preds = %_ZNK5arrow8internal
 
 _ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12CompareEntryILNS7_11CompareKindE0ERZNS5_11GetOrInsertIRS4_ZNS5_11GetOrInsertIS4_EENS_6StatusEOT_PiEUliE_ZNSC_IS4_EESD_SF_SG_EUliE0_EESD_SF_OT0_OT1_SG_EUlPKS6_E_EEbmPKNS7_5EntryESK_.exit.i.i.i.i104: ; preds = %bb.ae
   %i.ex = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
-  %.sroa.0.0.copyload.i.i.i.i.i.i105 = load i64, ptr %i.ex, align 8, !noalias !4849
+  %.sroa.0.0.copyload.i.i.i.i.i.i105 = load i64, ptr %i.ex, align 8, !tbaa !73, !noalias !4849
   %i.ey = icmp eq i64 %i.ej, %.sroa.0.0.copyload.i.i.i.i.i.i105
   br i1 %i.ey, label %_ZN5arrow6StatusD2Ev.exit112, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12CompareEntryILNS7_11CompareKindE0ERZNS5_11GetOrInsertIRS4_ZNS5_11GetOrInsertIS4_EENS_6StatusEOT_PiEUliE_ZNSC_IS4_EESD_SF_SG_EUliE0_EESD_SF_OT0_OT1_SG_EUlPKS6_E_EEbmPKNS7_5EntryESK_.exit.thread.i.i.i.i96
 
@@ -4250,7 +4250,7 @@ bb.af:                                            ; preds = %_ZNK5arrow8internal
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25, !noalias !4849
   store i64 %i.et, ptr %i.eu, align 8, !tbaa !642, !noalias !4850
   %i.ff = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
-  store i64 %i.ej, ptr %i.ff, align 8, !noalias !4850
+  store i64 %i.ej, ptr %i.ff, align 8, !tbaa !73, !noalias !4850
   %.sroa.5.0..sroa_idx.i.i97 = getelementptr inbounds nuw i8, ptr %i.eu, i64 16
   store i32 %i.fe, ptr %.sroa.5.0..sroa_idx.i.i97, align 8, !tbaa !73, !noalias !4850
   %i.fg = load i64, ptr %i.aq, align 8, !tbaa !432, !noalias !4850
@@ -4653,51 +4653,106 @@ _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i: ; preds = %_ZNSt10shared_
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZNSt10shared_ptrIN5arrow6BufferEEC2IS1_St14default_deleteIS1_EvEEOSt10unique_ptrIT_T0_E.exit, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
-  %i.p = trunc i64 %4 to i32                      ; 2 uses
+  %i.p = trunc i64 %4 to i32                      ; 4 uses
   %i.q = load ptr, ptr %7, align 16, !tbaa !104
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !430  ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8              ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !430  ; 5 uses
   %.not7.i.i = icmp eq i64 %i.u, 0
   br i1 %.not7.i.i, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %16 = load ptr, ptr %i.v, align 8, !tbaa !433   ; 3 uses
+  %xtraiter = and i64 %i.u, 1
+  %17 = icmp eq i64 %i.u, 1
+  br i1 %17, label %.epil.preheader, label %.lr.ph.i.i.new
+
+.lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
+  %unroll_iter = and i64 %i.u, -2
   br label %bb.d
 
-bb.d:                                             ; preds = %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a, %.lr.ph.i.i
-  %i.w = phi i64 [ %i.u, %.lr.ph.i.i ], [ %17, %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a ] ; 2 uses
-  %.06.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ah, %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a ] ; 2 uses
-  %16 = load ptr, ptr %i.v, align 8, !tbaa !433
-  %i.x = getelementptr inbounds nuw [24 x i8], ptr %16, i64 %.06.i.i ; 3 uses
+bb.d:                                             ; preds = %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a, %.lr.ph.i.i.new
+  %i.w = phi i64 [ 0, %.lr.ph.i.i.new ], [ %31, %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a ] ; 3 uses
+  %.06.i.i = phi i64 [ 0, %.lr.ph.i.i.new ], [ %i.ah, %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a ]
+  %i.x = getelementptr inbounds nuw [24 x i8], ptr %16, i64 %i.w ; 3 uses
   %i.y = load i64, ptr %i.x, align 8, !tbaa !642
   %.not.i.i = icmp eq i64 %i.y, 0
-  br i1 %.not.i.i, label %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a, label %bb.e
+  br i1 %.not.i.i, label %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i, label %18
 
-bb.e:                                             ; preds = %bb.d
-  %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 16
+18:                                               ; preds = %bb.d
+  %19 = getelementptr inbounds nuw i8, ptr %i.x, i64 16
+  %20 = load i32, ptr %19, align 8, !tbaa !643
+  %21 = sub nsw i32 %20, %i.p                     ; 2 uses
+  %22 = icmp sgt i32 %21, -1
+  br i1 %22, label %23, label %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i
+
+23:                                               ; preds = %18
+  %24 = getelementptr inbounds nuw i8, ptr %i.x, i64 8
+  %25 = zext nneg i32 %21 to i64
+  %26 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %25
+  %27 = load i64, ptr %24, align 8, !tbaa !73
+  store i64 %27, ptr %26, align 4, !tbaa !73
+  br label %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i
+
+_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i: ; preds = %23, %18, %bb.d
+  %28 = getelementptr inbounds nuw [24 x i8], ptr %16, i64 %i.w ; 3 uses
+  %29 = getelementptr inbounds nuw i8, ptr %28, i64 24
+  %30 = load i64, ptr %29, align 8, !tbaa !642
+  %.not.i.i.1 = icmp eq i64 %30, 0
+  br i1 %.not.i.i.1, label %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a, label %bb.e
+
+bb.e:                                             ; preds = %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i
+  %i.z = getelementptr inbounds nuw i8, ptr %28, i64 40
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !643
   %i.ab = sub nsw i32 %i.aa, %i.p                 ; 2 uses
   %i.ac = icmp sgt i32 %i.ab, -1
   br i1 %i.ac, label %bb.f, label %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a
 
 bb.f:                                             ; preds = %bb.e
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 8
+  %i.ad = getelementptr inbounds nuw i8, ptr %28, i64 32
   %i.ae = zext nneg i32 %i.ab to i64
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.ae
-  %i.ag = load i64, ptr %i.ad, align 8
-  store i64 %i.ag, ptr %i.af, align 4
-  %.pre.i.i = load i64, ptr %i.t, align 8, !tbaa !430
+  %i.ag = load i64, ptr %i.ad, align 8, !tbaa !73
+  store i64 %i.ag, ptr %i.af, align 4, !tbaa !73
   br label %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a
 
-_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a: ; preds = %bb.f, %bb.e, %bb.d
-  %17 = phi i64 [ %.pre.i.i, %bb.f ], [ %i.w, %bb.e ], [ %i.w, %bb.d ] ; 2 uses
-  %i.ah = add nuw i64 %.06.i.i, 1                 ; 2 uses
-  %18 = icmp ult i64 %i.ah, %17
-  br i1 %18, label %bb.d, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i, !llvm.loop !4898
+_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a: ; preds = %bb.f, %bb.e, %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i
+  %31 = add nuw i64 %i.w, 2                       ; 2 uses
+  %i.ah = add nuw i64 %.06.i.i, 2                 ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %i.ah, %unroll_iter
+  br i1 %niter.ncmp.1, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i.loopexit.unr-lcssa, label %bb.d, !llvm.loop !4898
 
-_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i: ; preds = %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a, %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit
+_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i.loopexit.unr-lcssa: ; preds = %_ZZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_ENKUlPKNS4_INS5_7PayloadEE5EntryEE_clESD_.exit.i.i.a
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i.loopexit.unr-lcssa, %.lr.ph.i.i
+  %.06.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %31, %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i.loopexit.unr-lcssa ]
+  %lcmp.mod109 = trunc i64 %i.u to i1
+  call void @llvm.assume(i1 %lcmp.mod109)
+  %32 = getelementptr inbounds nuw [24 x i8], ptr %16, i64 %.06.i.i.epil.init ; 3 uses
+  %33 = load i64, ptr %32, align 8, !tbaa !642
+  %.not.i.i.epil = icmp eq i64 %33, 0
+  br i1 %.not.i.i.epil, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i, label %34
+
+34:                                               ; preds = %.epil.preheader
+  %35 = getelementptr inbounds nuw i8, ptr %32, i64 16
+  %36 = load i32, ptr %35, align 8, !tbaa !643
+  %37 = sub nsw i32 %36, %i.p                     ; 2 uses
+  %38 = icmp sgt i32 %37, -1
+  br i1 %38, label %39, label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i
+
+39:                                               ; preds = %34
+  %40 = getelementptr inbounds nuw i8, ptr %32, i64 8
+  %41 = zext nneg i32 %37 to i64
+  %42 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %41
+  %43 = load i64, ptr %40, align 8, !tbaa !73
+  store i64 %43, ptr %42, align 4, !tbaa !73
+  br label %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i
+
+_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i: ; preds = %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i.loopexit.unr-lcssa, %39, %34, %.epil.preheader, %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !434 ; 2 uses
   %.not.i31 = icmp eq i32 %i.aj, -1
@@ -4711,7 +4766,7 @@ bb.g:                                             ; preds = %_ZNK5arrow8internal
 bb.h:                                             ; preds = %bb.g
   %i.am = zext nneg i32 %i.ak to i64
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.am
-  store i64 0, ptr %i.an, align 4
+  store i64 0, ptr %i.an, align 4, !tbaa !73
   br label %_ZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_.exit
 
 _ZNK5arrow8internal15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsENS0_9HashTableEE10CopyValuesIS3_EEviPT_.exit: ; preds = %bb.h, %bb.g, %_ZNK5arrow8internal9HashTableINS0_15ScalarMemoTableINS_19DayTimeIntervalType15DayMillisecondsES1_E7PayloadEE12VisitEntriesIZNKS5_10CopyValuesIS4_EEviPT_EUlPKNS7_5EntryEE_EEvOSA_.exit.i

@@ -22,7 +22,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = zext nneg i32 %0 to i64
   %i.d = getelementptr inbounds nuw [3 x i8], ptr @lv_palette_main.colors, i64 %i.c
-  %.sroa.0.0.copyload = load i24, ptr %i.d, align 1
+  %.sroa.0.0.copyload = load i24, ptr %i.d, align 1, !tbaa !8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -57,7 +57,7 @@ bb.e:                                             ; preds = %bb.c
   %i.g = zext nneg i8 %1 to i64
   %i.h = getelementptr [3 x i8], ptr %i.f, i64 %i.g
   %i.i = getelementptr i8, ptr %i.h, i64 -3
-  %.sroa.0.0.copyload = load i24, ptr %i.i, align 1
+  %.sroa.0.0.copyload = load i24, ptr %i.i, align 1, !tbaa !8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
@@ -90,7 +90,7 @@ bb.e:                                             ; preds = %bb.c
   %i.g = zext nneg i8 %1 to i64
   %i.h = getelementptr [3 x i8], ptr %i.f, i64 %i.g
   %i.i = getelementptr i8, ptr %i.h, i64 -3
-  %.sroa.0.0.copyload = load i24, ptr %i.i, align 1
+  %.sroa.0.0.copyload = load i24, ptr %i.i, align 1, !tbaa !8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
@@ -114,4 +114,5 @@ attributes #2 = { nounwind }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
+!8 = !{!4, !4, i64 0}
 end_hunk_0

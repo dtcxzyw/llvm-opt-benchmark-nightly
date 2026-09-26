@@ -205,7 +205,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %.sroa.4109.0.insert.shift = select i1 %4, i16 256, i16 0
   %.sroa.0108.0.insert.ext = zext nneg i8 %i.ei to i16
   %.sroa.0108.0.insert.insert = or disjoint i16 %.sroa.4109.0.insert.shift, %.sroa.0108.0.insert.ext
-  store i16 %.sroa.0108.0.insert.insert, ptr %i.ej, align 8
+  store i16 %.sroa.0108.0.insert.insert, ptr %i.ej, align 8, !tbaa !514
   br label %bb.ai
 
 bb.ac:                                            ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit
@@ -305,7 +305,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %.sroa.4.0.insert.shift = select i1 %4, i16 256, i16 0
   %.sroa.0.0.insert.ext = zext nneg i8 %i.fw to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
-  store i16 %.sroa.0.0.insert.insert, ptr %i.ek, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.ek, align 8, !tbaa !514
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.ab, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit107, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_RSB_EEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit
@@ -325,8 +325,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr null, ptr %i.c, align 8, !tbaa !511
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %i.e = load i16, ptr %3, align 1
-  store i16 %i.e, ptr %i.d, align 8
+  %i.e = load i16, ptr %3, align 1, !tbaa !514
+  store i16 %i.e, ptr %i.d, align 8, !tbaa !514
   %i.f = invoke { ptr, ptr } @_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISG_ESt4lessIS3_ESaISG_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorISG_ERS5_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %1, ptr noundef nonnull align 4 dereferenceable(12) %i.b)
           to label %bb.b unwind label %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISG_ESt4lessIS3_ESaISG_EE10_Auto_nodeD2Ev.exit ; 2 uses
 
@@ -729,7 +729,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
 bb.e:                                             ; preds = %.lr.ph, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_RSB_EEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit
   %.sroa.070.084 = phi ptr [ %i.b, %.lr.ph ], [ %i.hs, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_RSB_EEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit ] ; 13 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.070.084, i64 32 ; 5 uses
-  %i.t = load ptr, ptr %i.d, align 8, !tbaa !644  ; 3 uses
+  %i.t = load ptr, ptr %i.d, align 8, !tbaa !644  ; 4 uses
   %.not12.i.i.i = icmp eq ptr %i.t, null          ; 2 uses
   br i1 %.not12.i.i.i, label %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE4findERSH_.exit, label %.lr.ph.i.i.i
 
@@ -829,7 +829,7 @@ bb.o:                                             ; preds = %bb.n
   store ptr null, ptr %i.ax, align 8, !tbaa !511
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.070.084, i64 56
   %.sroa.058.0.insert.ext = zext nneg i8 %i.ba to i16
-  store i16 %.sroa.058.0.insert.ext, ptr %i.bb, align 8
+  store i16 %.sroa.058.0.insert.ext, ptr %i.bb, align 8, !tbaa !514
   %i.bc = load i8, ptr %i.f, align 8, !tbaa !514, !range !512, !noundef !528
   %i.bd = load i8, ptr %i.g, align 8, !tbaa !514, !range !512, !noundef !528
   %i.be = icmp eq i8 %i.bc, %i.bd
@@ -921,10 +921,14 @@ _ZN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EE15r
 _ZN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EE15resetBackgroundERKbS8_.exit.i: ; preds = %bb.t, %_ZN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EE15resetBackgroundERKbS8_.exit.sink.split.i, %bb.u, %bb.q
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 32768
-  br i1 %exitcond.not.i, label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit, label %bb.p, !llvm.loop !4512
+  br i1 %exitcond.not.i, label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit.loopexit, label %bb.p, !llvm.loop !4512
 
-_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit: ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EE15resetBackgroundERKbS8_.exit.i, %bb.o
-  %2 = load ptr, ptr %i.d, align 8, !tbaa !644    ; 2 uses
+_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit.loopexit: ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EE15resetBackgroundERKbS8_.exit.i
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !644
+  br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit
+
+_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit: ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit.loopexit, %bb.o
+  %2 = phi ptr [ %.pre, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE15resetBackgroundERKbS9_.exit.loopexit ], [ %i.t, %bb.o ] ; 2 uses
   %.not12.i.i.i.i = icmp eq ptr %2, null
   br i1 %.not12.i.i.i.i, label %.critedge.i, label %.lr.ph.i.i.i.i
 
@@ -1027,7 +1031,7 @@ bb.af:                                            ; preds = %bb.ae
   store ptr null, ptr %i.ax, align 8, !tbaa !511
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.070.084, i64 56
   %.sroa.056.0.insert.ext = zext nneg i8 %i.ee to i16
-  store i16 %.sroa.056.0.insert.ext, ptr %i.ef, align 8
+  store i16 %.sroa.056.0.insert.ext, ptr %i.ef, align 8, !tbaa !514
   %i.eg = load i8, ptr %i.f, align 8, !tbaa !514, !range !512, !noundef !528
   %i.eh = load i8, ptr %i.g, align 8, !tbaa !514, !range !512, !noundef !528
   %i.ei = icmp eq i8 %i.eg, %i.eh
@@ -1259,7 +1263,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.hr = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 56
   %.sroa.0.0.insert.ext = zext nneg i8 %i.hq to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.hr, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.hr, align 8, !tbaa !514
   br label %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_RSB_EEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit
 
 _ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_RSB_EEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit: ; preds = %.critedge.i52, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i47, %bb.ay, %bb.aw, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.ac, %bb.aa, %bb.ao, %bb.az, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.ae, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.an
@@ -1662,8 +1666,8 @@ bb.p:                                             ; preds = %.lr.ph, %bb.ab
 bb.q:                                             ; preds = %bb.p
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.022.039, i64 56
   store ptr null, ptr %8, align 8, !tbaa !511
-  %i.bj = load i16, ptr %i.bi, align 8
-  store i16 %i.bj, ptr %i.bc, align 8
+  %i.bj = load i16, ptr %i.bi, align 8, !tbaa !514
+  store i16 %i.bj, ptr %i.bc, align 8, !tbaa !514
   br label %bb.s
 
 vector.memcheck64:                                ; preds = %bb.p
@@ -2066,8 +2070,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr null, ptr %i.c, align 8, !tbaa !511
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %i.e = load i16, ptr %3, align 1
-  store i16 %i.e, ptr %i.d, align 8
+  %i.e = load i16, ptr %3, align 1, !tbaa !514
+  store i16 %i.e, ptr %i.d, align 8, !tbaa !514
   %i.f = invoke { ptr, ptr } @_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISG_ESt4lessIS3_ESaISG_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorISG_ERS5_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %1, ptr noundef nonnull align 4 dereferenceable(12) %i.b)
           to label %bb.b unwind label %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISG_ESt4lessIS3_ESaISG_EE10_Auto_nodeD2Ev.exit ; 2 uses
 
@@ -2470,7 +2474,7 @@ bb.p:                                             ; preds = %_ZN7openvdb5v13_04t
 bb.q:                                             ; preds = %bb.p, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit
   store ptr null, ptr %i.cj, align 8, !tbaa !511
   %i.cm = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 56
-  store i16 %.sroa.047.0.insert.ext49, ptr %i.cm, align 8
+  store i16 %.sroa.047.0.insert.ext49, ptr %i.cm, align 8, !tbaa !514
   %i.cn = invoke noundef i64 @_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISG_ESt4lessIS3_ESaISG_EE5eraseERS5_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(12) %i.ae)
           to label %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE5eraseERSH_.exit unwind label %bb.r ; 0 uses
 
@@ -2622,7 +2626,7 @@ bb.ad:                                            ; preds = %_ZN7openvdb5v13_04t
 bb.ae:                                            ; preds = %bb.ad, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit36
   store ptr null, ptr %i.el, align 8, !tbaa !511
   %i.eo = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i34, i64 56
-  store i16 %.sroa.047.0.insert.ext49, ptr %i.eo, align 8
+  store i16 %.sroa.047.0.insert.ext49, ptr %i.eo, align 8, !tbaa !514
   %i.ep = getelementptr inbounds nuw i8, ptr %.sroa.041.062, i64 57
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !1613, !range !512, !noundef !528
   %i.er = trunc nuw i8 %i.eq to i1
@@ -3025,7 +3029,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %.sroa.4.0.insert.shift = select i1 %i.y, i16 256, i16 0
   %.sroa.0.0.insert.ext = zext nneg i8 %i.al to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
-  store i16 %.sroa.0.0.insert.insert, ptr %i.ba, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.ba, align 8, !tbaa !514
   br label %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE10isConstantERbS8_RKb.exit.thread
 
 _ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE10isConstantERbS8_RKb.exit.thread: ; preds = %bb.g, %bb.c, %bb.d, %bb.e, %.preheader.i.i, %.preheader.i.i.1, %.preheader.i.i.2, %.preheader.i.i.3, %bb.q, %bb.l, %bb.m, %bb.o, %bb.h, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %.lr.ph
@@ -3428,7 +3432,7 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i: ; preds = %bb.bc
   store ptr null, ptr %i.kj, align 8, !tbaa !511
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kh, i64 56
   %.sroa.0.0.insert.ext232 = zext nneg i8 %i.jh to i16
-  store i16 %.sroa.0.0.insert.ext232, ptr %i.kk, align 8
+  store i16 %.sroa.0.0.insert.ext232, ptr %i.kk, align 8, !tbaa !514
   %i.kl = invoke { ptr, ptr } @_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISG_ESt4lessIS3_ESaISG_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorISG_ERS5_(ptr noundef nonnull align 8 dereferenceable(68) %0, ptr %.08.lcssa.i.i.i14.i.i, ptr noundef nonnull align 4 dereferenceable(12) %i.ki)
           to label %bb.bd unwind label %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISG_ESt4lessIS3_ESaISG_EE10_Auto_nodeD2Ev.exit.i68 ; 2 uses
 
@@ -3710,7 +3714,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.oa = getelementptr inbounds nuw i8, ptr %.sroa.012.0.i.i, i64 56
   %.sroa.0.0.insert.ext = zext nneg i8 %i.lj to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %bb.bz
 
 bb.bz:                                            ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRS3_RSB_EEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit
@@ -4113,7 +4117,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -4516,7 +4520,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr null, ptr %i.g, align 8, !tbaa !511
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.06.012.i, i64 56
   %.sroa.0.0.insert.ext.i = zext nneg i8 %i.i to i16
-  store i16 %.sroa.0.0.insert.ext.i, ptr %i.j, align 8
+  store i16 %.sroa.0.0.insert.ext.i, ptr %i.j, align 8, !tbaa !514
   %i.k = load ptr, ptr %i.e, align 8, !tbaa !659  ; 4 uses
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !663
   %.not.i.i.i = icmp eq ptr %i.k, %i.l
@@ -4919,7 +4923,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %.sroa.4.0.insert.shift = select i1 %3, i16 256, i16 0
   %.sroa.0.0.insert.ext = zext nneg i8 %i.bx to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
-  store i16 %.sroa.0.0.insert.insert, ptr %i.cb, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.cb, align 8, !tbaa !514
   br label %bb.r
 
 bb.r:                                             ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit
@@ -5322,7 +5326,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -5725,7 +5729,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -6128,7 +6132,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4
   %.sroa.4109.0.insert.shift = select i1 %4, i16 256, i16 0
   %.sroa.0108.0.insert.ext = zext nneg i8 %i.ei to i16
   %.sroa.0108.0.insert.insert = or disjoint i16 %.sroa.4109.0.insert.shift, %.sroa.0108.0.insert.ext
-  store i16 %.sroa.0108.0.insert.insert, ptr %i.ej, align 8
+  store i16 %.sroa.0108.0.insert.insert, ptr %i.ej, align 8, !tbaa !514
   br label %bb.ai
 
 bb.ac:                                            ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit
@@ -6228,7 +6232,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4
   %.sroa.4.0.insert.shift = select i1 %4, i16 256, i16 0
   %.sroa.0.0.insert.ext = zext nneg i8 %i.fw to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
-  store i16 %.sroa.0.0.insert.insert, ptr %i.ek, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.ek, align 8, !tbaa !514
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEERKNS8_4TileE.exit, %bb.ab, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEERKNS8_4TileE.exit107, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEERS7_.exit, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SC_EEE7emplaceIJRSG_RSA_EEESF_ISt17_Rb_tree_iteratorISH_EbEDpOT_.exit, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SC_EEE7emplaceIJRSG_NSB_4TileEEEESF_ISt17_Rb_tree_iteratorISH_EbEDpOT_.exit
@@ -6248,8 +6252,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr null, ptr %i.c, align 8, !tbaa !741
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %i.e = load i16, ptr %3, align 1
-  store i16 %i.e, ptr %i.d, align 8
+  %i.e = load i16, ptr %3, align 1, !tbaa !514
+  store i16 %i.e, ptr %i.d, align 8, !tbaa !514
   %i.f = invoke { ptr, ptr } @_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorISF_ERS5_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %1, ptr noundef nonnull align 4 dereferenceable(12) %i.b)
           to label %bb.b unwind label %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE10_Auto_nodeD2Ev.exit ; 2 uses
 
@@ -6652,7 +6656,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -7055,7 +7059,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEERKNS8_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SC_EEE7emplaceIJRSG_NSB_4TileEEEESF_ISt17_Rb_tree_iteratorISH_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEERS7_.exit, %bb.w
@@ -7458,7 +7462,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -7861,7 +7865,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -8264,7 +8268,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -8667,7 +8671,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.ob = load i8, ptr %i.oa, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.ob to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oa, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -9070,7 +9074,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.of = load i8, ptr %i.oe, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.of to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oe, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oe, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -9473,7 +9477,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.of = load i8, ptr %i.oe, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.of to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oe, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oe, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -9876,7 +9880,7 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   %i.of = load i8, ptr %i.oe, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.0.0.insert.ext = zext nneg i8 %i.of to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
-  store i16 %.sroa.0.0.insert.insert, ptr %i.oe, align 8
+  store i16 %.sroa.0.0.insert.insert, ptr %i.oe, align 8, !tbaa !514
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73
 
 _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE11setValuesOnEv.exit73: ; preds = %bb.az, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i59, %.lr.ph.i56, %.lr.ph.i.i.i.i.i66.preheader, %.lr.ph.i.i.i.i.i66, %.critedge.i, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i, %bb.t, %bb.r, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit.i54, %bb.aj, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, %bb.bc, %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE7emplaceIJRSH_NSC_4TileEEEESG_ISt17_Rb_tree_iteratorISI_EbEDpOT_.exit, %bb.y, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE8setChildERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERS8_.exit, %bb.w
@@ -10279,7 +10283,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -10682,7 +10686,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   %i.ex = getelementptr inbounds nuw i8, ptr %.sroa.047.067, i64 56 ; 2 uses
   %i.ey = load i8, ptr %i.ex, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.034.0.insert.ext = zext nneg i8 %i.ey to i16
-  store i16 %.sroa.034.0.insert.ext, ptr %i.ex, align 8
+  store i16 %.sroa.034.0.insert.ext, ptr %i.ex, align 8, !tbaa !514
   br label %_ZNSt3setIN7openvdb5v13_04math5CoordESt4lessIS3_ESaIS3_EE6insertERKS3_.exit
 
 bb.u:                                             ; preds = %bb.s
@@ -11022,7 +11026,7 @@ bb.ak:                                            ; preds = %_ZN7openvdb5v13_04t
 bb.al:                                            ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit, %bb.ak
   store ptr null, ptr %i.jx, align 8, !tbaa !511
   %i.ka = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 56
-  store i16 0, ptr %i.ka, align 8
+  store i16 0, ptr %i.ka, align 8, !tbaa !514
   %i.kb = call noundef nonnull ptr @_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_(ptr noundef nonnull %.sroa.0.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.h) #21
   call void @_ZdlPvm(ptr noundef nonnull %i.kb, i64 noundef 64) #30
   %i.kc = load i64, ptr %i.x, align 8, !tbaa !646
@@ -11425,7 +11429,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -11828,7 +11832,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -12231,7 +12235,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   %i.ex = getelementptr inbounds nuw i8, ptr %.sroa.047.067, i64 56 ; 2 uses
   %i.ey = load i8, ptr %i.ex, align 8, !tbaa !514, !range !512, !noundef !528
   %.sroa.034.0.insert.ext = zext nneg i8 %i.ey to i16
-  store i16 %.sroa.034.0.insert.ext, ptr %i.ex, align 8
+  store i16 %.sroa.034.0.insert.ext, ptr %i.ex, align 8, !tbaa !514
   br label %_ZNSt3setIN7openvdb5v13_04math5CoordESt4lessIS3_ESaIS3_EE6insertERKS3_.exit
 
 bb.u:                                             ; preds = %bb.s
@@ -12571,7 +12575,7 @@ bb.ak:                                            ; preds = %_ZN7openvdb5v13_04t
 bb.al:                                            ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit, %bb.ak
   store ptr null, ptr %i.jx, align 8, !tbaa !741
   %i.ka = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 56
-  store i16 0, ptr %i.ka, align 8
+  store i16 0, ptr %i.ka, align 8, !tbaa !514
   %i.kb = call noundef nonnull ptr @_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_(ptr noundef nonnull %.sroa.0.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.h) #21
   call void @_ZdlPvm(ptr noundef nonnull %i.kb, i64 noundef 64) #30
   %i.kc = load i64, ptr %i.x, align 8, !tbaa !646
@@ -12974,7 +12978,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -13377,7 +13381,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -13780,7 +13784,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -14183,7 +14187,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -14586,7 +14590,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -14989,7 +14993,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -15392,7 +15396,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -15795,7 +15799,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 8
   %i.bf = or disjoint i16 %i.be, %.sroa.029.sroa.0.0.insert.ext
-  store i16 %i.bf, ptr %i.au, align 8
+  store i16 %i.bf, ptr %i.au, align 8, !tbaa !514
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n

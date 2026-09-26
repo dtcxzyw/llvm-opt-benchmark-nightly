@@ -63,24 +63,24 @@ bb.d:                                             ; preds = %bb.c
 ZL_cpuid.exit:                                    ; preds = %bb.b, %bb.c, %bb.d
   %.0610.i = phi i64 [ %i.i, %bb.d ], [ %i.i, %bb.c ], [ 0, %bb.b ]
   %.sroa.3.8.insert.insert.i = phi i64 [ %i.q, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
-  store i64 %.0610.i, ptr %1, align 8
+  store i64 %.0610.i, ptr %1, align 8, !tbaa !19
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i64 %.sroa.3.8.insert.insert.i, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.3.8.insert.insert.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !19
   br label %bb.e
 
 bb.e:                                             ; preds = %ZL_cpuid.exit, %bb.a
   %.05 = phi ptr [ %1, %ZL_cpuid.exit ], [ %0, %bb.a ] ; 3 uses
-  %i.r = load ptr, ptr @ZL_PivCoHuffmanEncode_avx512, align 8, !tbaa !21
+  %i.r = load ptr, ptr @ZL_PivCoHuffmanEncode_avx512, align 8, !tbaa !22
   %i.s = call zeroext i1 %i.r(ptr noundef nonnull %.05) #6
   br i1 %i.s, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.t = load ptr, ptr @ZL_PivCoHuffmanEncode_avx2, align 8, !tbaa !21
+  %i.t = load ptr, ptr @ZL_PivCoHuffmanEncode_avx2, align 8, !tbaa !22
   %i.u = call zeroext i1 %i.t(ptr noundef nonnull %.05) #6
   br i1 %i.u, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.v = load ptr, ptr @ZL_PivCoHuffmanEncode_arm, align 8, !tbaa !21
+  %i.v = load ptr, ptr @ZL_PivCoHuffmanEncode_arm, align 8, !tbaa !22
   %i.w = call zeroext i1 %i.v(ptr noundef nonnull %.05) #6
   %ZL_PivCoHuffmanEncode_arm.ZL_PivCoHuffmanEncode_generic = select i1 %i.w, ptr @ZL_PivCoHuffmanEncode_arm, ptr @ZL_PivCoHuffmanEncode_generic
   br label %bb.h
@@ -339,7 +339,7 @@ ZS_BitCStreamFF_finish.exit.loopexit.unr-lcssa:   ; preds = %.preheader
   %i.cc = add nuw nsw i64 %.07.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %ZS_BitCStreamFF_finish.exit, label %.preheader.epil, !llvm.loop !22
+  br i1 %epil.iter.cmp.not, label %ZS_BitCStreamFF_finish.exit, label %.preheader.epil, !llvm.loop !23
 
 ZS_BitCStreamFF_finish.exit:                      ; preds = %ZS_BitCStreamFF_finish.exit.loopexit.unr-lcssa, %.preheader.epil, %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #6
@@ -535,7 +535,7 @@ partitionGeneric.exit.loopexit.unr-lcssa:         ; preds = %.preheader.i
   %i.az = add nuw nsw i64 %.07.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %partitionGeneric.exit, label %.preheader.i.epil, !llvm.loop !23
+  br i1 %epil.iter.cmp.not, label %partitionGeneric.exit, label %.preheader.i.epil, !llvm.loop !24
 
 partitionGeneric.exit:                            ; preds = %partitionGeneric.exit.loopexit.unr-lcssa, %.preheader.i.epil, %.thread, %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
@@ -648,7 +648,7 @@ ZS_BitCStreamFF_finish.exit.loopexit.unr-lcssa:   ; preds = %.preheader
   %i.aq = add nuw nsw i64 %.07.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %ZS_BitCStreamFF_finish.exit, label %.preheader.epil, !llvm.loop !24
+  br i1 %epil.iter.cmp.not, label %ZS_BitCStreamFF_finish.exit, label %.preheader.epil, !llvm.loop !25
 
 ZS_BitCStreamFF_finish.exit:                      ; preds = %ZS_BitCStreamFF_finish.exit.loopexit.unr-lcssa, %.preheader.epil, %.thread, %bb.c, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
@@ -685,7 +685,7 @@ ZS_BitCStreamFF_flush.exit:                       ; preds = %bb.d, %bb.e
   %.sroa.9.1 = phi i64 [ %i.bb, %bb.e ], [ %i.ay, %bb.d ] ; 2 uses
   %i.be = add nuw i64 %.025, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.be, %3
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !25
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !26
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
@@ -730,11 +730,12 @@ attributes #7 = { nounwind memory(none) }
 !16 = !{i64 185324}
 !17 = !{i64 185431}
 !18 = !{i64 185554}
-!19 = !{!"any pointer", !9, i64 0}
-!20 = !{!"", !19, i64 0, !19, i64 8, !19, i64 16, !19, i64 24, !19, i64 32}
-!21 = !{!20, !19, i64 0}
-!22 = distinct !{!22, !15}
+!19 = !{!10, !10, i64 0}
+!20 = !{!"any pointer", !9, i64 0}
+!21 = !{!"", !20, i64 0, !20, i64 8, !20, i64 16, !20, i64 24, !20, i64 32}
+!22 = !{!21, !20, i64 0}
 !23 = distinct !{!23, !15}
 !24 = distinct !{!24, !15}
-!25 = distinct !{!25, !14}
+!25 = distinct !{!25, !15}
+!26 = distinct !{!26, !14}
 end_hunk_0

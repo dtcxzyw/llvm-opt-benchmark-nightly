@@ -116,9 +116,9 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.sink = phi i24 [ %i.ab, %bb.b ], [ %i.ac, %bb.c ]
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 88
-  store i24 %.sink, ptr %i.ad, align 8
+  store i24 %.sink, ptr %i.ad, align 8, !tbaa !28
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 64
-  store ptr %i.a, ptr %i.ae, align 8, !tbaa !28
+  store ptr %i.a, ptr %i.ae, align 8, !tbaa !29
   %i.af = load i16, ptr %i.k, align 2
   %i.ag = or i16 %i.af, 256
   store i16 %i.ag, ptr %i.k, align 2
@@ -223,5 +223,6 @@ attributes #3 = { nounwind }
 !25 = !{!23, !5, i64 4}
 !26 = !{!5, !5, i64 0}
 !27 = !{!16, !5, i64 0}
-!28 = !{!19, !15, i64 64}
+!28 = !{!4, !4, i64 0}
+!29 = !{!19, !15, i64 64}
 end_hunk_0
