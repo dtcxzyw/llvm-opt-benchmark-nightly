@@ -102,9 +102,9 @@ _ZNK4ojph5local9param_cod22get_num_decompositionsEv.exit: ; preds = %tailrecurse
   %.sroa.2.0.insert.ext.i = zext i8 %i.v to i64
   %.sroa.2.0.insert.shift.i = shl nuw nsw i64 %.sroa.2.0.insert.ext.i, 32
   %.sroa.0.0.insert.ext.i = zext i8 %i.t to i64
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.w, align 8
+  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.w, align 8, !tbaa !61
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.x, ptr noundef nonnull align 4 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !62
   store ptr %2, ptr %0, align 8, !tbaa !63
@@ -126,8 +126,7 @@ _ZNK4ojph5local9param_cod22get_num_decompositionsEv.exit: ; preds = %tailrecurse
   store i64 %i.aj, ptr %i.aa, align 8, !tbaa !47
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ag, ptr %i.ak, align 8, !tbaa !54
-  %.sroa.01.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
-  tail call void @_ZN4ojph5local10resolution14finalize_allocEPNS0_10codestreamERKNS_4rectES6_jjNS_5pointES7_PNS0_9tile_compEPS1_(ptr noundef nonnull align 8 dereferenceable(264) %i.ag, ptr noundef nonnull %1, ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %5, i32 noundef %3, i32 noundef %i.m, i64 %.sroa.01.0.copyload, i64 %.sroa.01.0.copyload, ptr noundef nonnull %0, ptr noundef null)
+  tail call void @_ZN4ojph5local10resolution14finalize_allocEPNS0_10codestreamERKNS_4rectES6_jjNS_5pointES7_PNS0_9tile_compEPS1_(ptr noundef nonnull align 8 dereferenceable(264) %i.ag, ptr noundef nonnull %1, ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %5, i32 noundef %3, i32 noundef %i.m, i64 %.sroa.0.0.insert.insert.i, i64 %.sroa.0.0.insert.insert.i, ptr noundef nonnull %0, ptr noundef null)
   ret void
 }
 

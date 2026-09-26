@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
 _ZnwmRKN5clang10ASTContextEm.exit14:              ; preds = %bb.g, %bb.h
   %.0.i.i.i.i13 = phi ptr [ %i.y, %bb.g ], [ %i.ae, %bb.h ] ; 9 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.af, align 8, !tbaa !1622 ; 4 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.af, align 8, !tbaa !1622 ; 3 uses
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !656 ; 3 uses
   store i32 0, ptr %.0.i.i.i.i13, align 4, !tbaa !517
@@ -226,7 +226,7 @@ _ZnwmRKN5clang10ASTContextEm.exit14:              ; preds = %bb.g, %bb.h
 
 bb.i:                                             ; preds = %_ZnwmRKN5clang10ASTContextEm.exit14
   %i.am = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !1624
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 4
+  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 4 ; 2 uses
   %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.an, align 4, !tbaa !517
   %i.ao = getelementptr [8 x i8], ptr %.sroa.0.0.copyload.i, i64 %.sroa.2.0.copyload.i
   %i.ap = getelementptr i8, ptr %i.ao, i64 -8
@@ -237,10 +237,8 @@ bb.i:                                             ; preds = %_ZnwmRKN5clang10AST
   %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
   %.sroa.0.0.insert.ext.i = zext i32 %.sroa.0.0.copyload.i.i.i to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.ag, align 4
-  %3 = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !1624
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %.sroa.0.0.copyload.i.i5.i = load i32, ptr %4, align 4, !tbaa !517
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.ag, align 4, !tbaa !517
+  %.sroa.0.0.copyload.i.i5.i = load i32, ptr %i.an, align 4, !tbaa !517
   store i32 %.sroa.0.0.copyload.i.i5.i, ptr %.0.i.i.i.i13, align 8, !tbaa !517
   br label %_ZN5clang8comments11FullCommentC2EN4llvm8ArrayRefIPNS0_19BlockContentCommentEEEPNS0_8DeclInfoE.exit
 

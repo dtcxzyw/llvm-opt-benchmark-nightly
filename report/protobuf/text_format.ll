@@ -205,19 +205,18 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicy
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 16 ; 4 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !89   ; 6 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 16 ; 3 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !89   ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 24 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !90
   %.not.i = icmp eq ptr %i.i, %i.k
   br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyIPKN6google8protobuf15FieldDescriptorESt6vectorINS5_10TextFormat18ParseLocationRangeESaISB_EEEENS1_6HashEqIS8_vE4HashENSG_2EqESaISt4pairIKS8_SD_EEEixIS8_SE_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISL_EPT_RSR_EclL_ZSt7declvalIRSL_EDTcl9__declvalISR_ELi0EEEvEEEEERKSR_.exit
-  store i64 %2, ptr %i.i, align 4
+  store i64 %2, ptr %i.i, align 4, !tbaa !24
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store i64 %3, ptr %.sroa.3.0..sroa_idx, align 4
-  %5 = load ptr, ptr %i.h, align 8, !tbaa !89
-  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
+  store i64 %3, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store ptr %i.l, ptr %i.h, align 8, !tbaa !89
   br label %_ZNSt6vectorIN6google8protobuf10TextFormat18ParseLocationRangeESaIS3_EE9push_backERKS3_.exit
 
@@ -245,9 +244,9 @@ _ZNKSt6vectorIN6google8protobuf10TextFormat18ParseLocationRangeESaIS3_EE12_M_che
   %i.w = shl nuw nsw i64 %i.v, 4
   %i.x = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #38 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.p ; 2 uses
-  store i64 %2, ptr %i.y, align 4
+  store i64 %2, ptr %i.y, align 4, !tbaa !24
   %.sroa.3.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  store i64 %3, ptr %.sroa.3.0..sroa_idx2, align 4
+  store i64 %3, ptr %.sroa.3.0..sroa_idx2, align 4, !tbaa !24
   %.not10.i.i.i.i.i = icmp eq ptr %i.m, %i.i
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN6google8protobuf10TextFormat18ParseLocationRangeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -600,9 +599,9 @@ bb.i:                                             ; preds = %_ZNK4absl12lts_2025
 
 bb.j:                                             ; preds = %bb.i
   %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.bd, i64 %i.az ; 2 uses
-  %.sroa.07.0.copyload = load i64, ptr %i.bi, align 4
+  %.sroa.07.0.copyload = load i64, ptr %i.bi, align 4, !tbaa !24
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
-  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 4
+  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !24
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.i, %_ZNK4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf15FieldDescriptorESt6vectorINS5_10TextFormat18ParseLocationRangeESaISB_EEEENS1_6HashEqIS8_vE4HashENSG_2EqESaISt4pairIKS8_SD_EEE4findIS8_EENSN_14const_iteratorERKT_.exit, %bb.j
@@ -1005,7 +1004,7 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20250
 
 "_ZZNK6google8protobuf10TextFormat7Printer19TryRedactFieldValueERKNS0_7MessageEPKNS0_15FieldDescriptorEPNS1_17BaseTextGeneratorEbENK3$_0clES8_.exit.i": ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  store i16 %i.r, ptr %i.s, align 8
+  store i16 %i.r, ptr %i.s, align 8, !tbaa !146
   invoke void @_ZN4absl12lts_202505125Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
           to label %_ZN4absl12lts_202505129MutexLockC2EPNS0_5MutexE.exit.i unwind label %bb.l
 

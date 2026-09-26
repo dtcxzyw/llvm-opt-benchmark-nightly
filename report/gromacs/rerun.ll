@@ -204,7 +204,7 @@ bb.dn:                                            ; preds = %bb.dl, %bb.dm
   %i.ig = getelementptr i8, ptr %i.if, i64 16
   %.val278 = load ptr, ptr %i.ig, align 8, !tbaa !107
   %i.ih = icmp ne ptr %.val278, null
-  %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 7 uses
+  %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 6 uses
   %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !295
   %i.ik = invoke noundef ptr @_Z18init_shell_flexconP8_IO_FILERK10gmx_mtop_tiibRKN3gmx18SimulationWorkloadE(ptr noundef %i.hx, ptr noundef nonnull align 8 dereferenceable(768) %i.hy, i32 noundef %i.ic, i32 noundef %i.ie, i1 noundef zeroext %i.ih, ptr noundef nonnull align 1 dereferenceable(29) %i.ij)
           to label %bb.do unwind label %bb.du     ; 4 uses
@@ -607,11 +607,11 @@ bb.hu:                                            ; preds = %._crit_edge, %bb.hs
 bb.hv:                                            ; preds = %bb.hu
   %.fca.0.extract = extractvalue { i64, i16 } %i.abx, 0
   %.fca.1.extract = extractvalue { i64, i16 } %i.abx, 1
-  %i.aby = load ptr, ptr %i.ii, align 8, !tbaa !295 ; 2 uses
-  %i.abz = getelementptr inbounds nuw i8, ptr %i.aby, i64 29
-  store i64 %.fca.0.extract, ptr %i.abz, align 1
+  %i.aby = load ptr, ptr %i.ii, align 8, !tbaa !295 ; 3 uses
+  %i.abz = getelementptr inbounds nuw i8, ptr %i.aby, i64 29 ; 2 uses
+  store i64 %.fca.0.extract, ptr %i.abz, align 1, !tbaa !104
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aby, i64 37
-  store i16 %.fca.1.extract, ptr %.sroa.5.0..sroa_idx, align 1
+  store i16 %.fca.1.extract, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !104
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #19
   %i.aca = load ptr, ptr %i.tn, align 8, !tbaa !651 ; 3 uses
   %i.acb = load ptr, ptr %i.to, align 8, !tbaa !652
@@ -620,9 +620,7 @@ bb.hv:                                            ; preds = %bb.hu
   %i.ace = sub i64 %i.acc, %i.acd
   %i.acf = getelementptr inbounds nuw i8, ptr %i.aca, i64 %i.ace
   %i.acg = load i64, ptr %i.h, align 8, !tbaa !20
-  %47 = load ptr, ptr %i.ii, align 8, !tbaa !295  ; 2 uses
-  %48 = getelementptr inbounds nuw i8, ptr %47, i64 29
-  invoke void @_ZN3gmx17setupStepWorkloadEiNS_8ArrayRefIKNS_8MtsLevelEEElRKNS_22DomainLifetimeWorkloadERKNS_18SimulationWorkloadE(ptr dead_on_unwind nonnull writable sret(%"class.gmx::StepWorkload") align 1 %32, i32 noundef %i.tm, ptr %i.aca, ptr %i.acf, i64 noundef %i.acg, ptr noundef nonnull align 1 dereferenceable(10) %48, ptr noundef nonnull align 1 dereferenceable(29) %47)
+  invoke void @_ZN3gmx17setupStepWorkloadEiNS_8ArrayRefIKNS_8MtsLevelEEElRKNS_22DomainLifetimeWorkloadERKNS_18SimulationWorkloadE(ptr dead_on_unwind nonnull writable sret(%"class.gmx::StepWorkload") align 1 %32, i32 noundef %i.tm, ptr %i.aca, ptr %i.acf, i64 noundef %i.acg, ptr noundef nonnull align 1 dereferenceable(10) %i.abz, ptr noundef nonnull align 1 dereferenceable(29) %i.aby)
           to label %bb.hw unwind label %bb.hz
 
 bb.hw:                                            ; preds = %bb.hv

@@ -205,7 +205,7 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit74
 
 _ZNSt6vectorIjSaIjEE9push_backERKj.exit74:        ; preds = %bb.y, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i73
-  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 6 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 5 uses
   %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !117, !nonnull !118, !align !119
   %i.fz = zext i32 %i.t to i64                    ; 6 uses
   %i.ga = load ptr, ptr %i.fy, align 8, !tbaa !123
@@ -275,7 +275,7 @@ bb.ae:                                            ; preds = %_ZNK14llama_kv_cell
   %i.hr = getelementptr inbounds nuw i8, ptr %i.he, i64 80
   %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !279
   %i.ht = getelementptr inbounds nuw [12 x i8], ptr %i.hs, i64 %indvars.iv ; 2 uses
-  %.sroa.03.0.copyload = load i64, ptr %i.ht, align 4
+  %.sroa.03.0.copyload = load i64, ptr %i.ht, align 4, !tbaa !110
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !110
   %.not63 = icmp eq i32 %i.hq, 0
@@ -392,20 +392,18 @@ bb.aj:                                            ; preds = %_ZN14llama_kv_cells
 
 bb.ak:                                            ; preds = %bb.aj, %_ZN14llama_kv_cells7seq_addEji.exit76
   %i.jr = load ptr, ptr %i.fx, align 8, !tbaa !117, !nonnull !118, !align !119
-  %i.js = load ptr, ptr %i.jr, align 8, !tbaa !123
+  %i.js = load ptr, ptr %i.jr, align 8, !tbaa !123 ; 2 uses
   %i.jt = getelementptr inbounds nuw [12440 x i8], ptr %i.js, i64 %i.fz
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 80
   %i.jv = load ptr, ptr %i.ju, align 8, !tbaa !279
   %i.jw = getelementptr inbounds nuw [12 x i8], ptr %i.jv, i64 %indvars.iv ; 2 uses
-  store i64 %.sroa.03.0.copyload, ptr %i.jw, align 4
+  store i64 %.sroa.03.0.copyload, ptr %i.jw, align 4, !tbaa !110
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jw, i64 8
   store i32 %.sroa.4.0.copyload, ptr %.sroa.22.0..sroa_idx.i, align 4, !tbaa !110
-  %.pre = load ptr, ptr %i.fx, align 8, !tbaa !117
-  %.pre135 = load ptr, ptr %.pre, align 8, !tbaa !123
   br label %bb.al
 
 bb.al:                                            ; preds = %_ZNK14llama_kv_cells7seq_hasEji.exit75, %bb.ak
-  %i.jx = phi ptr [ %i.hc, %_ZNK14llama_kv_cells7seq_hasEji.exit75 ], [ %.pre135, %bb.ak ] ; 2 uses
+  %i.jx = phi ptr [ %i.hc, %_ZNK14llama_kv_cells7seq_hasEji.exit75 ], [ %i.js, %bb.ak ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.jy = getelementptr inbounds nuw [12440 x i8], ptr %i.jx, i64 %i.gc ; 3 uses
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jy, i64 56
@@ -808,7 +806,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.thre
   %i.if = getelementptr inbounds nuw i8, ptr %i.bl, i64 80
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !279
   %i.ih = getelementptr inbounds nuw [12 x i8], ptr %i.ig, i64 %i.br ; 2 uses
-  store i64 %.sroa.0.0239, ptr %i.ih, align 4
+  store i64 %.sroa.0.0239, ptr %i.ih, align 4, !tbaa !110
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ih, i64 8
   store i32 %.sroa.7.0, ptr %.sroa.22.0..sroa_idx.i, align 4, !tbaa !110
   br label %bb.z
@@ -1211,8 +1209,11 @@ bb.ak:                                            ; preds = %bb.ae
   br i1 %.not270, label %._crit_edge, label %.lr.ph252
 
 .lr.ph252:                                        ; preds = %.preheader237
-  %i.gv = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
-  %i.gw = getelementptr inbounds nuw i8, ptr %i.l, i64 80 ; 3 uses
+  %i.gv = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %13 = load ptr, ptr %i.gv, align 8, !tbaa !343
+  %14 = load ptr, ptr %13, align 8, !tbaa !120    ; 3 uses
+  %i.gw = getelementptr inbounds nuw i8, ptr %i.l, i64 80
+  %15 = load ptr, ptr %i.gw, align 8, !tbaa !279  ; 3 uses
   %wide.trip.count291 = and i64 %i.gt, 4294967295
   %xtraiter414 = and i64 %i.gt, 1
   %i.gx = icmp eq i64 %wide.trip.count291, 1
@@ -1230,18 +1231,15 @@ bb.ak:                                            ; preds = %bb.ae
   %indvars.iv288.epil.init = phi i64 [ 0, %.lr.ph252 ], [ %indvars.iv.next289.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod416 = trunc i64 %i.gt to i1
   call void @llvm.assume(i1 %lcmp.mod416)
-  %13 = load ptr, ptr %i.gv, align 8, !tbaa !343
-  %14 = load ptr, ptr %13, align 8, !tbaa !120
   %i.gy = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %indvars.iv288.epil.init
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !110
   %i.ha = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0.1364, i64 %indvars.iv288.epil.init ; 2 uses
-  %.sroa.029.0.copyload.epil = load i64, ptr %i.ha, align 4
+  %.sroa.029.0.copyload.epil = load i64, ptr %i.ha, align 4, !tbaa !110
   %.sroa.230.0..sroa_idx.epil = getelementptr inbounds nuw i8, ptr %i.ha, i64 8
   %.sroa.230.0.copyload.epil = load i32, ptr %.sroa.230.0..sroa_idx.epil, align 4, !tbaa !110
   %i.hb = zext i32 %i.gz to i64
-  %15 = load ptr, ptr %i.gw, align 8, !tbaa !279
   %i.hc = getelementptr inbounds nuw [12 x i8], ptr %15, i64 %i.hb ; 2 uses
-  store i64 %.sroa.029.0.copyload.epil, ptr %i.hc, align 4
+  store i64 %.sroa.029.0.copyload.epil, ptr %i.hc, align 4, !tbaa !110
   %.sroa.22.0..sroa_idx.i.epil = getelementptr inbounds nuw i8, ptr %i.hc, i64 8
   store i32 %.sroa.230.0.copyload.epil, ptr %.sroa.22.0..sroa_idx.i.epil, align 4, !tbaa !110
   br label %._crit_edge
@@ -1254,33 +1252,27 @@ bb.ak:                                            ; preds = %bb.ae
 bb.al:                                            ; preds = %bb.al, %.lr.ph252.new
   %indvars.iv288 = phi i64 [ 0, %.lr.ph252.new ], [ %indvars.iv.next289.1, %bb.al ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph252.new ], [ %niter.next.1, %bb.al ]
-  %16 = load ptr, ptr %i.gv, align 8, !tbaa !343
-  %17 = load ptr, ptr %16, align 8, !tbaa !120
-  %i.he = getelementptr inbounds nuw [4 x i8], ptr %17, i64 %indvars.iv288
+  %i.he = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %indvars.iv288
   %i.hf = load i32, ptr %i.he, align 4, !tbaa !110
   %i.hg = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0.1364, i64 %indvars.iv288 ; 2 uses
-  %.sroa.029.0.copyload = load i64, ptr %i.hg, align 4
+  %.sroa.029.0.copyload = load i64, ptr %i.hg, align 4, !tbaa !110
   %.sroa.230.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hg, i64 8
   %.sroa.230.0.copyload = load i32, ptr %.sroa.230.0..sroa_idx, align 4, !tbaa !110
   %i.hh = zext i32 %i.hf to i64
-  %18 = load ptr, ptr %i.gw, align 8, !tbaa !279
-  %i.hi = getelementptr inbounds nuw [12 x i8], ptr %18, i64 %i.hh ; 2 uses
-  store i64 %.sroa.029.0.copyload, ptr %i.hi, align 4
+  %i.hi = getelementptr inbounds nuw [12 x i8], ptr %15, i64 %i.hh ; 2 uses
+  store i64 %.sroa.029.0.copyload, ptr %i.hi, align 4, !tbaa !110
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.hi, i64 8
   store i32 %.sroa.230.0.copyload, ptr %.sroa.22.0..sroa_idx.i, align 4, !tbaa !110
   %indvars.iv.next289 = or disjoint i64 %indvars.iv288, 1 ; 2 uses
-  %19 = load ptr, ptr %i.gv, align 8, !tbaa !343
-  %20 = load ptr, ptr %19, align 8, !tbaa !120
-  %i.hj = getelementptr inbounds nuw [4 x i8], ptr %20, i64 %indvars.iv.next289
+  %i.hj = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %indvars.iv.next289
   %i.hk = load i32, ptr %i.hj, align 4, !tbaa !110
   %i.hl = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0.1364, i64 %indvars.iv.next289 ; 2 uses
-  %.sroa.029.0.copyload.1 = load i64, ptr %i.hl, align 4
+  %.sroa.029.0.copyload.1 = load i64, ptr %i.hl, align 4, !tbaa !110
   %.sroa.230.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.hl, i64 8
   %.sroa.230.0.copyload.1 = load i32, ptr %.sroa.230.0..sroa_idx.1, align 4, !tbaa !110
   %i.hm = zext i32 %i.hk to i64
-  %21 = load ptr, ptr %i.gw, align 8, !tbaa !279
-  %i.hn = getelementptr inbounds nuw [12 x i8], ptr %21, i64 %i.hm ; 2 uses
-  store i64 %.sroa.029.0.copyload.1, ptr %i.hn, align 4
+  %i.hn = getelementptr inbounds nuw [12 x i8], ptr %15, i64 %i.hm ; 2 uses
+  store i64 %.sroa.029.0.copyload.1, ptr %i.hn, align 4, !tbaa !110
   %.sroa.22.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %i.hn, i64 8
   store i32 %.sroa.230.0.copyload.1, ptr %.sroa.22.0..sroa_idx.i.1, align 4, !tbaa !110
   %indvars.iv.next289.1 = add nuw nsw i64 %indvars.iv288, 2 ; 2 uses
@@ -1665,11 +1657,11 @@ _ZNK14llama_kv_cache12has_cell_extEv.exit202.thread: ; preds = %_ZN14llama_kv_ce
   %i.nm = getelementptr inbounds nuw i8, ptr %i.nl, i64 16
   %i.nn = load ptr, ptr %i.nm, align 8
   call void %i.nn(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %12, i64 noundef 12)
-  %.sroa.014.0.copyload = load i64, ptr %12, align 8
+  %.sroa.014.0.copyload = load i64, ptr %12, align 8, !tbaa !110
   %.sroa.215.0.copyload = load i32, ptr %i.lx, align 8, !tbaa !110
   %i.no = load ptr, ptr %i.ly, align 8, !tbaa !279
   %i.np = getelementptr inbounds nuw [12 x i8], ptr %i.no, i64 %indvars.iv298 ; 2 uses
-  store i64 %.sroa.014.0.copyload, ptr %i.np, align 4
+  store i64 %.sroa.014.0.copyload, ptr %i.np, align 4, !tbaa !110
   %.sroa.22.0..sroa_idx.i203 = getelementptr inbounds nuw i8, ptr %i.np, i64 8
   store i32 %.sroa.215.0.copyload, ptr %.sroa.22.0..sroa_idx.i203, align 4, !tbaa !110
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #30
@@ -2063,7 +2055,7 @@ bb.c:                                             ; preds = %.lr.ph791
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  store i64 %.sroa.0288.0.insert.insert, ptr %.sroa.11.0427, align 4
+  store i64 %.sroa.0288.0.insert.insert, ptr %.sroa.11.0427, align 4, !tbaa !110
   br label %_ZNSt6vectorIZN14llama_kv_cache15state_read_dataER15llama_io_read_ijjRKNS0_9slot_infoEE8cell_runSaIS6_EE9push_backEOS6_.exit
 
 bb.e:                                             ; preds = %.critedge
@@ -2096,7 +2088,7 @@ _ZNKSt6vectorIZN14llama_kv_cache15state_read_dataER15llama_io_read_ijjRKNS0_9slo
 
 .noexc268:                                        ; preds = %_ZNKSt6vectorIZN14llama_kv_cache15state_read_dataER15llama_io_read_ijjRKNS0_9slot_infoEE8cell_runSaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %i.ah ; 2 uses
-  store i64 %.sroa.0288.0.insert.insert, ptr %i.ar, align 4
+  store i64 %.sroa.0288.0.insert.insert, ptr %i.ar, align 4, !tbaa !110
   %i.as = icmp sgt i64 %i.ah, 0
   br i1 %i.as, label %bb.g, label %_ZNSt6vectorIZN14llama_kv_cache15state_read_dataER15llama_io_read_ijjRKNS0_9slot_infoEE8cell_runSaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit20.i.i.i
 

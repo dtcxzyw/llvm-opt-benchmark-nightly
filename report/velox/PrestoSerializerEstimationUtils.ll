@@ -205,7 +205,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.ck
   %.sroa.0148.0.insert.ext = zext i32 %.0481 to i64
   %.sroa.0148.0.insert.insert = or disjoint i64 %.sroa.0148.0.insert.ext, 4294967296
-  store i64 %.sroa.0148.0.insert.insert, ptr %.sroa.10.1476, align 4
+  store i64 %.sroa.0148.0.insert.insert, ptr %.sroa.10.1476, align 4, !tbaa !124
   br label %_ZNSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE9push_backEOS2_.exit
 
 bb.cm:                                            ; preds = %bb.ck
@@ -239,7 +239,7 @@ _ZNKSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.
   %i.aar = getelementptr inbounds i8, ptr %i.aaq, i64 %i.aai ; 2 uses
   %.sroa.0148.0.insert.ext150 = zext i32 %.0481 to i64
   %.sroa.0148.0.insert.insert152 = or disjoint i64 %.sroa.0148.0.insert.ext150, 4294967296
-  store i64 %.sroa.0148.0.insert.insert152, ptr %i.aar, align 4
+  store i64 %.sroa.0148.0.insert.insert152, ptr %i.aar, align 4, !tbaa !124
   %i.aas = icmp sgt i64 %i.aai, 0
   br i1 %i.aas, label %bb.co, label %_ZNSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
 
@@ -642,7 +642,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %.sroa.0.0.insert.ext = zext i32 %i.x to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.0.insert.ext, 4294967296
-  store i64 %.sroa.0.0.insert.insert, ptr %.sroa.966.1158, align 4
+  store i64 %.sroa.0.0.insert.insert, ptr %.sroa.966.1158, align 4, !tbaa !124
   br label %_ZNSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE9push_backEOS2_.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -676,7 +676,7 @@ _ZNKSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.
   %i.aj = getelementptr inbounds i8, ptr %i.ai, i64 %i.aa ; 2 uses
   %.sroa.0.0.insert.ext47 = zext i32 %i.x to i64
   %.sroa.0.0.insert.insert49 = or disjoint i64 %.sroa.0.0.insert.ext47, 4294967296
-  store i64 %.sroa.0.0.insert.insert49, ptr %i.aj, align 4
+  store i64 %.sroa.0.0.insert.insert49, ptr %i.aj, align 4, !tbaa !124
   %i.ak = icmp sgt i64 %i.aa, 0
   br i1 %i.ak, label %bb.i, label %_ZNSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
 
@@ -913,7 +913,7 @@ bb.a:
   br i1 %.not, label %._crit_edge47, label %.lr.ph46
 
 .lr.ph46:                                         ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
@@ -966,7 +966,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !124 ; 2 uses
   %i.ab = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !124 ; 2 uses
-  %i.ad = load ptr, ptr %i.d, align 8, !tbaa !221 ; 3 uses
+  %i.ad = load ptr, ptr %i.d, align 8, !tbaa !221 ; 4 uses
   %i.ae = load ptr, ptr %i.e, align 8, !tbaa !227
   %.not.i.i = icmp eq ptr %i.ad, %i.ae
   br i1 %.not.i.i, label %bb.f, label %bb.e
@@ -976,9 +976,8 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.5.0.insert.shift = shl nuw i64 %.sroa.5.0.insert.ext, 32
   %.sroa.0.0.insert.ext = zext i32 %i.aa to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.shift, %.sroa.0.0.insert.ext
-  store i64 %.sroa.0.0.insert.insert, ptr %i.ad, align 4
-  %7 = load ptr, ptr %i.d, align 8, !tbaa !221
-  %i.af = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store i64 %.sroa.0.0.insert.insert, ptr %i.ad, align 4, !tbaa !124
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store ptr %i.af, ptr %i.d, align 8, !tbaa !221
   br label %_ZNSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE9push_backEOS2_.exit
 
@@ -1010,7 +1009,7 @@ _ZNKSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.
   %.sroa.5.0.insert.shift37 = shl nuw i64 %.sroa.5.0.insert.ext36, 32
   %.sroa.0.0.insert.ext32 = zext i32 %i.aa to i64
   %.sroa.0.0.insert.insert34 = or disjoint i64 %.sroa.5.0.insert.shift37, %.sroa.0.0.insert.ext32
-  store i64 %.sroa.0.0.insert.insert34, ptr %i.as, align 4
+  store i64 %.sroa.0.0.insert.insert34, ptr %i.as, align 4, !tbaa !124
   %i.at = icmp sgt i64 %i.aj, 0
   br i1 %i.at, label %bb.h, label %_ZNSt6vectorIN8facebook5velox10IndexRangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
 

@@ -205,7 +205,7 @@ _ZNK4bzla6parser4smt26Parser18peek_item_is_tokenENS1_5TokenE.exit: ; preds = %bb
   br i1 %i.i, label %bb.b, label %_ZNK4bzla6parser4smt26Parser18peek_item_is_tokenENS1_5TokenE.exit.thread
 
 bb.b:                                             ; preds = %_ZNK4bzla6parser4smt26Parser18peek_item_is_tokenENS1_5TokenE.exit
-  %.sroa.0.sroa.0.0.copyload = load <2 x i64>, ptr %3, align 8
+  %.sroa.0.sroa.0.0.copyload = load <2 x i64>, ptr %3, align 8, !tbaa !164
   store i32 %1, ptr %i.g, align 8, !tbaa !240
   %i.j = getelementptr inbounds i8, ptr %i.e, i64 -128 ; 4 uses
   %i.k = getelementptr inbounds i8, ptr %i.e, i64 -112 ; 2 uses
@@ -241,7 +241,7 @@ _ZNSt7variantIJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEE
 _ZN4bzla6parser4smt26Parser8set_itemIPNS1_11SymbolTable4NodeEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit: ; preds = %_ZNSt7variantIJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEE7emplaceILm0EJRS5_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS5_S7_S8_EE4typeEDpT0_EERSF_E4typeEDpOSG_.exit.i.i, %_ZSt3getILm0EJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEERNSt19variant_alternativeIXT_ESt7variantIJDpT0_EEE4typeERSD_.exit.i.i
   %i.m = phi ptr [ %.pre, %_ZNSt7variantIJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEE7emplaceILm0EJRS5_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS5_S7_S8_EE4typeEDpT0_EERSF_E4typeEDpOSG_.exit.i.i ], [ %i.e, %_ZSt3getILm0EJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEERNSt19variant_alternativeIXT_ESt7variantIJDpT0_EEE4typeERSD_.exit.i.i ]
   %i.n = getelementptr inbounds i8, ptr %i.m, i64 -144
-  store <2 x i64> %.sroa.0.sroa.0.0.copyload, ptr %i.n, align 8
+  store <2 x i64> %.sroa.0.sroa.0.0.copyload, ptr %i.n, align 8, !tbaa !164
   br label %_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE12emplace_backIJRNS2_5TokenERPNS2_11SymbolTable4NodeERKNS2_5Lexer10CoordinateEEEERS4_DpOT_.exit
 
 _ZNK4bzla6parser4smt26Parser18peek_item_is_tokenENS1_5TokenE.exit.thread: ; preds = %bb.a, %_ZNK4bzla6parser4smt26Parser18peek_item_is_tokenENS1_5TokenE.exit
@@ -388,7 +388,7 @@ bb.e:                                             ; preds = %bb.a
   %i.af = getelementptr inbounds nuw [152 x i8], ptr %i.ae, i64 %i.ad ; 13 uses
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !240 ; 6 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 2 uses
-  %.sroa.0.0.copyload = load <2 x i64>, ptr %i.ah, align 8 ; 2 uses
+  %.sroa.0.0.copyload = load <2 x i64>, ptr %i.ah, align 8, !tbaa !164 ; 2 uses
   switch i32 %i.ag, label %bb.k [
     i32 7, label %._crit_edge.i.i72
     i32 8, label %.noexc.i83
@@ -465,7 +465,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit81: ; preds = %bb.
   store i8 0, ptr %i.bb, align 1, !tbaa !54
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
-  store <2 x i64> %.sroa.0.0.copyload, ptr %6, align 16
+  store <2 x i64> %.sroa.0.0.copyload, ptr %6, align 16, !tbaa !164
   %i.bc = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i8 1, ptr %i.bc, align 16, !tbaa !219
   %i.bd = invoke noundef zeroext i1 @_ZN4bzla6parser4smt26Parser5errorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt8optionalINS1_5Lexer10CoordinateEE(ptr noundef nonnull align 8 dereferenceable(2056) %0, ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(24) %6)
@@ -868,7 +868,7 @@ bb.am:                                            ; preds = %_ZNKSt7__cxx1112bas
   store i64 0, ptr %i.he, align 8, !tbaa !53
   store i8 0, ptr %i.gw, align 8, !tbaa !54
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #30
-  store <2 x i64> %.sroa.0.0.copyload, ptr %18, align 16
+  store <2 x i64> %.sroa.0.0.copyload, ptr %18, align 16, !tbaa !164
   %i.hg = getelementptr inbounds nuw i8, ptr %18, i64 16
   store i8 1, ptr %i.hg, align 16, !tbaa !219
   %i.hh = invoke noundef zeroext i1 @_ZN4bzla6parser4smt26Parser5errorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt8optionalINS1_5Lexer10CoordinateEE(ptr noundef nonnull align 8 dereferenceable(2056) %0, ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull align 8 dereferenceable(24) %18)
@@ -1271,13 +1271,13 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit
 
 _ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit: ; preds = %bb.b, %bb.d, %bb.e
-  %.sroa.0.sroa.0.0.copyload = load <2 x i64>, ptr %3, align 8
+  %.sroa.0.sroa.0.0.copyload = load <2 x i64>, ptr %3, align 8, !tbaa !164
   store i32 %1, ptr %i.f, align 8, !tbaa !240
   %i.q = getelementptr inbounds i8, ptr %i.d, i64 -128
   %i.r = call noundef nonnull align 8 dereferenceable(17) ptr @_ZNSt7variantIJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEEaSIRS8_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS5_S7_S8_EE4typeEE18is_constructible_vISH_SE_E15is_assignable_vIRSH_SE_EERS9_E4typeESF_(ptr noundef nonnull align 8 dereferenceable(17) %i.q, ptr noundef nonnull align 8 dereferenceable(16) %4) #30 ; 0 uses
   %i.s = load ptr, ptr %i.c, align 8, !tbaa !260
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -144
-  store <2 x i64> %.sroa.0.sroa.0.0.copyload, ptr %i.t, align 8
+  store <2 x i64> %.sroa.0.sroa.0.0.copyload, ptr %i.t, align 8, !tbaa !164
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %4) #30
   br label %bb.f
 
@@ -1680,7 +1680,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1328 ; 6 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !153
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 64
-  %.sroa.0.0.copyload = load <2 x i64>, ptr %i.i, align 8
+  %.sroa.0.0.copyload = load <2 x i64>, ptr %i.i, align 8, !tbaa !164
   %i.j = tail call noundef i32 @_ZN4bzla6parser4smt26Parser10next_tokenEb(ptr noundef nonnull align 8 dereferenceable(2056) %0, i1 noundef zeroext false) ; 6 uses
   switch i32 %i.j, label %_ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit [
     i32 1, label %bb.b
@@ -1702,7 +1702,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit.thread
 
 _ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit: ; preds = %bb.a
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1592 ; 6 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1592 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 8 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !316
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 -8
@@ -2105,12 +2105,11 @@ bb.ei:                                            ; preds = %bb.ef
   store i32 %spec.select, ptr %i.vt, align 8, !tbaa !240
   %i.wr = getelementptr inbounds nuw i8, ptr %i.vt, i64 24
   %i.ws = call noundef nonnull align 8 dereferenceable(17) ptr @_ZNSt7variantIJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEEaSIRS5_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS5_S7_S8_EE4typeEE18is_constructible_vISH_SE_E15is_assignable_vIRSH_SE_EERS9_E4typeESF_(ptr noundef nonnull align 8 dereferenceable(17) %i.wr, ptr noundef nonnull align 8 dereferenceable(8) %i.e) #30 ; 0 uses
-  %i.wt = load ptr, ptr %i.p, align 8, !tbaa !183
+  %i.wt = load ptr, ptr %i.p, align 8, !tbaa !183 ; 2 uses
   %i.wu = getelementptr inbounds nuw [152 x i8], ptr %i.wt, i64 %i.vq
   %i.wv = getelementptr inbounds nuw i8, ptr %i.wu, i64 8
-  store <2 x i64> %.sroa.0.0.copyload, ptr %i.wv, align 8
-  %38 = load ptr, ptr %i.p, align 8, !tbaa !260
-  %i.ww = getelementptr inbounds [152 x i8], ptr %38, i64 %i.vq
+  store <2 x i64> %.sroa.0.0.copyload, ptr %i.wv, align 8, !tbaa !164
+  %i.ww = getelementptr inbounds [152 x i8], ptr %i.wt, i64 %i.vq
   %i.wx = getelementptr inbounds i8, ptr %i.ww, i64 -152
   %i.wy = call ptr @_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr nonnull %i.wx) ; 0 uses
   %i.wz = load ptr, ptr %i.q, align 8, !tbaa !162

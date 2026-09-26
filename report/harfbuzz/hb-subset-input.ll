@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i32, ptr %2, align 4, !tbaa !56
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.k = zext i32 %4 to i64                       ; 3 uses
@@ -294,18 +294,17 @@ bb.j:                                             ; preds = %bb.i
   %i.ar = shl i32 %i.aq, 3
   %i.as = zext i32 %i.ar to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.an, ptr align 4 %i.am, i64 %i.as, i1 false)
-  %i.at = load ptr, ptr %i.h, align 8, !tbaa !120
+  %i.at = load ptr, ptr %i.h, align 8, !tbaa !120 ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.al
   %.sroa.5.0.insert.shift.i = shl nuw i64 %i.ah, 32
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.l to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.5.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.au, align 4
-  %.pre20.i = load ptr, ptr %i.h, align 8, !tbaa !120
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.au, align 4, !tbaa !56
   br label %_ZNK11hb_vector_tIN12hb_bit_set_t10page_map_tELb1EE5bfindIS1_Lb1ETnPN12hb_enable_ifIXT0_EvE4typeELPv0EEEbRKT_Pj14hb_not_found_tj.exit.i
 
 _ZNK11hb_vector_tIN12hb_bit_set_t10page_map_tELb1EE5bfindIS1_Lb1ETnPN12hb_enable_ifIXT0_EvE4typeELPv0EEEbRKT_Pj14hb_not_found_tj.exit.i: ; preds = %bb.f, %bb.j
   %.pre-phi.i = phi i64 [ %i.al, %bb.j ], [ %i.x, %bb.f ]
-  %i.av = phi ptr [ %.pre20.i, %bb.j ], [ %i.p, %bb.f ]
+  %i.av = phi ptr [ %i.at, %bb.j ], [ %i.p, %bb.f ]
   %storemerge.i.i.ph.sink.i.i17.i = phi i32 [ %storemerge.i.i.ph.sink.i.i.ph.i, %bb.j ], [ %i.w, %bb.f ]
   store atomic i32 %storemerge.i.i.ph.sink.i.i17.i, ptr %i.f monotonic, align 8
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %.pre-phi.i

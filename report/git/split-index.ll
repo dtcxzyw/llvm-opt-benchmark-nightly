@@ -204,7 +204,7 @@ define dso_local void @move_cache_to_base_index(ptr nofree noundef captures(none
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !31
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 8 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 7 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !63   ; 3 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %.thread, label %bb.b
@@ -259,17 +259,16 @@ bb.f:                                             ; preds = %.thread, %.thread70
   tail call void @index_state_init(ptr noundef %i.m, ptr noundef %i.o) #13
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load i32, ptr %i.p, align 8, !tbaa !78
-  %i.r = load ptr, ptr %i.c, align 8, !tbaa !63   ; 2 uses
+  %i.r = load ptr, ptr %i.c, align 8, !tbaa !63   ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store i32 %i.q, ptr %i.s, align 8, !tbaa !78
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 48
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.v = load i64, ptr %i.u, align 8
-  store i64 %i.v, ptr %i.t, align 8
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !36
+  store i64 %i.v, ptr %i.t, align 8, !tbaa !36
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !65   ; 3 uses
-  %1 = load ptr, ptr %i.c, align 8, !tbaa !63     ; 3 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
   %i.z = load i32, ptr %i.y, align 8, !tbaa !66   ; 2 uses
   %i.aa = icmp ugt i32 %i.x, %i.z
   br i1 %i.aa, label %st_mult.exit, label %bb.g
@@ -281,7 +280,7 @@ st_mult.exit:                                     ; preds = %bb.f
   %. = tail call i32 @llvm.umax.i32(i32 %i.ad, i32 %i.x) ; 2 uses
   store i32 %., ptr %i.y, align 8, !tbaa !66
   %i.ae = zext i32 %. to i64
-  %i.af = load ptr, ptr %1, align 8, !tbaa !67
+  %i.af = load ptr, ptr %i.r, align 8, !tbaa !67
   %i.ag = shl nuw nsw i64 %i.ae, 3
   %i.ah = tail call ptr @xrealloc(ptr noundef %i.af, i64 noundef %i.ag) #13
   %i.ai = load ptr, ptr %i.c, align 8, !tbaa !63  ; 2 uses
@@ -290,7 +289,7 @@ st_mult.exit:                                     ; preds = %bb.f
   br label %bb.g
 
 bb.g:                                             ; preds = %st_mult.exit, %bb.f
-  %i.aj = phi ptr [ %i.ai, %st_mult.exit ], [ %1, %bb.f ] ; 4 uses
+  %i.aj = phi ptr [ %i.ai, %st_mult.exit ], [ %i.r, %bb.f ] ; 4 uses
   %i.ak = phi i32 [ %.pre61, %st_mult.exit ], [ %i.x, %bb.f ] ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 12
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !65

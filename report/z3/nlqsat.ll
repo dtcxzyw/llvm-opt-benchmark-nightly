@@ -205,7 +205,7 @@ _ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.lr.ph: ; preds = %
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.gz = getelementptr inbounds nuw i8, ptr %12, i64 4
   %i.ha = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
+  %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
   br label %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit
 
 _ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit: ; preds = %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.lr.ph, %._crit_edge344
@@ -608,7 +608,7 @@ _ZN5nlsat21scoped_literal_vector9push_backEN3sat7literalE.exit.i: ; preds = %.no
 .noexc172:                                        ; preds = %_ZN5nlsat21scoped_literal_vector9push_backEN3sat7literalE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #19
   store i32 %i.kl, ptr %12, align 4, !tbaa !275
-  store i64 %.sroa.0290.0.insert.insert, ptr %i.gz, align 4
+  store i64 %.sroa.0290.0.insert.insert, ptr %i.gz, align 4, !tbaa !156
   invoke void @_ZN14core_hashtableI17default_map_entryIjN2qe9max_levelEEN9table2mapIS3_6u_hash4u_eqE15entry_hash_procENS7_13entry_eq_procEE6insertEO9_key_dataIjS2_E(ptr noundef nonnull align 8 dereferenceable(24) %i.gy, ptr noundef nonnull align 4 dereferenceable(12) %12)
           to label %bb.cr unwind label %.loopexit.split-lp314
 
@@ -834,7 +834,7 @@ bb.di:                                            ; preds = %_ZNK6vectorIN2qe9ma
   br label %bb.dt
 
 thread-pre-split.i.i:                             ; preds = %thread-pre-split.i.i.backedge, %thread-pre-split.i.i.preheader
-  %i.tb = phi ptr [ %.ph, %thread-pre-split.i.i.preheader ], [ %.be, %thread-pre-split.i.i.backedge ] ; 6 uses
+  %i.tb = phi ptr [ %.ph, %thread-pre-split.i.i.preheader ], [ %.be, %thread-pre-split.i.i.backedge ] ; 7 uses
   %i.tc = icmp eq ptr %i.tb, null
   br i1 %i.tc, label %bb.dj, label %_ZNK6vectorIN2qe9max_levelELb0EjE8capacityEv.exit.i.i
 
@@ -974,15 +974,14 @@ bb.ds:                                            ; preds = %_ZNK6vectorIN2qe9ma
   %i.us = getelementptr [8 x i8], ptr %i.tb, i64 %i.ur
   %i.ut = sub nsw i64 %i.uq, %i.ur
   %i.uu = shl nsw i64 %i.ut, 3
-  call void @llvm.memset.p0.i64(ptr align 4 %i.us, i8 -1, i64 %i.uu, i1 false)
-  %.pre.i188 = load ptr, ptr %i.hb, align 8, !tbaa !168
+  call void @llvm.memset.p0.i64(ptr align 4 %i.us, i8 -1, i64 %i.uu, i1 false), !tbaa !156
   br label %bb.dt
 
 bb.dt:                                            ; preds = %.lr.ph.preheader.i.i, %bb.ds, %bb.di, %_ZNK6vectorIN2qe9max_levelELb0EjE4sizeEv.exit.i
-  %i.uv = phi ptr [ %.pre.i188, %.lr.ph.preheader.i.i ], [ %i.tb, %bb.ds ], [ %i.sv, %bb.di ], [ %i.sv, %_ZNK6vectorIN2qe9max_levelELb0EjE4sizeEv.exit.i ]
+  %i.uv = phi ptr [ %i.sv, %_ZNK6vectorIN2qe9max_levelELb0EjE4sizeEv.exit.i ], [ %i.tb, %bb.ds ], [ %i.sv, %bb.di ], [ %i.tb, %.lr.ph.preheader.i.i ]
   %i.uw = zext i32 %i.qt to i64
   %i.ux = getelementptr inbounds nuw [8 x i8], ptr %i.uv, i64 %i.uw
-  store i64 %.sroa.0290.0.insert.insert, ptr %i.ux, align 4
+  store i64 %.sroa.0290.0.insert.insert, ptr %i.ux, align 4, !tbaa !156
   br label %_ZNK8expr2var6is_varEP4expr.exit178.thread
 
 bb.du:                                            ; preds = %bb.df, %bb.cx, %bb.cs
@@ -1385,8 +1384,8 @@ _ZN5nlsat21scoped_literal_vector9push_backEN3sat7literalE.exit: ; preds = %bb.h,
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   store i32 %1, ptr %3, align 4, !tbaa !275
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.aw = load i64, ptr %2, align 4
-  store i64 %i.aw, ptr %i.av, align 4
+  %i.aw = load i64, ptr %2, align 4, !tbaa !156
+  store i64 %i.aw, ptr %i.av, align 4, !tbaa !156
   call void @_ZN14core_hashtableI17default_map_entryIjN2qe9max_levelEEN9table2mapIS3_6u_hash4u_eqE15entry_hash_procENS7_13entry_eq_procEE6insertEO9_key_dataIjS2_E(ptr noundef nonnull align 8 dereferenceable(24) %i.au, ptr noundef nonnull align 4 dereferenceable(12) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   ret void
@@ -1789,7 +1788,7 @@ _ZN6vectorIN3sat7literalELb0EjE9push_backEOS1_.exit: ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   store i32 %i.b, ptr %3, align 4, !tbaa !275
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i64 -1, ptr %i.al, align 4
+  store i64 -1, ptr %i.al, align 4, !tbaa !156
   call void @_ZN14core_hashtableI17default_map_entryIjN2qe9max_levelEEN9table2mapIS3_6u_hash4u_eqE15entry_hash_procENS7_13entry_eq_procEE6insertEO9_key_dataIjS2_E(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, ptr noundef nonnull align 4 dereferenceable(12) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   ret void

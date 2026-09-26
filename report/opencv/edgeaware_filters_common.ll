@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit93: ; preds = %bb.
 
 bb.r:                                             ; preds = %bb.l
   %i.ab = tail call i64 @_ZNK2cv11_InputArray4sizeEi(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef -1)
-  store i64 %i.ab, ptr %1, align 4
+  store i64 %i.ab, ptr %1, align 4, !tbaa !52
   %i.ac = tail call noundef i32 @_ZNK2cv11_InputArray5depthEi(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef -1)
   br label %.sink.split
 
@@ -215,10 +215,10 @@ bb.s:                                             ; preds = %bb.k
 
 bb.t:                                             ; preds = %bb.s
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !17 ; 3 uses
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !17 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !20 ; 2 uses
-  %i.aj = load ptr, ptr %i.ag, align 8, !tbaa !21 ; 7 uses
+  %i.aj = load ptr, ptr %i.ag, align 8, !tbaa !21 ; 8 uses
   %i.ak = ptrtoint ptr %i.ai to i64
   %i.al = ptrtoint ptr %i.aj to i64
   %i.am = sub i64 %i.ak, %i.al
@@ -315,9 +315,8 @@ _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.ab, %bb.ac
   %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
   %.sroa.0.0.insert.ext.i = zext i32 %i.bn to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.0.insert.insert.i, ptr %1, align 4
-  %27 = load ptr, ptr %i.ag, align 8, !tbaa !21
-  %i.bp = load i32, ptr %27, align 8, !tbaa !28
+  store i64 %.sroa.0.0.insert.insert.i, ptr %1, align 4, !tbaa !52
+  %i.bp = load i32, ptr %i.aj, align 8, !tbaa !28
   %i.bq = and i32 %i.bp, 31
   br label %.sink.split
 
@@ -548,10 +547,10 @@ bb.bd:                                            ; preds = %bb.s
 
 bb.be:                                            ; preds = %bb.bd
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !17 ; 3 uses
+  %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !17 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !34 ; 2 uses
-  %i.em = load ptr, ptr %i.ej, align 8, !tbaa !35 ; 7 uses
+  %i.em = load ptr, ptr %i.ej, align 8, !tbaa !35 ; 8 uses
   %i.en = ptrtoint ptr %i.el to i64
   %i.eo = ptrtoint ptr %i.em to i64
   %i.ep = sub i64 %i.en, %i.eo
@@ -644,9 +643,8 @@ _ZNK2cv8MatShapeclEv.exit135:                     ; preds = %bb.bm, %bb.bn
   %.sroa.2.0.insert.shift.i131 = shl nuw i64 %.sroa.2.0.insert.ext.i130, 32
   %.sroa.0.0.insert.ext.i132 = zext i32 %i.fq to i64
   %.sroa.0.0.insert.insert.i133 = or disjoint i64 %.sroa.2.0.insert.shift.i131, %.sroa.0.0.insert.ext.i132
-  store i64 %.sroa.0.0.insert.insert.i133, ptr %1, align 4
-  %28 = load ptr, ptr %i.ej, align 8, !tbaa !35
-  %i.fs = load i32, ptr %28, align 8, !tbaa !38
+  store i64 %.sroa.0.0.insert.insert.i133, ptr %1, align 4, !tbaa !52
+  %i.fs = load i32, ptr %i.em, align 8, !tbaa !38
   %i.ft = and i32 %i.fs, 31
   br label %.sink.split
 

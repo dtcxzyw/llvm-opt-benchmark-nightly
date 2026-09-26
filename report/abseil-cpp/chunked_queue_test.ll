@@ -205,15 +205,14 @@ _ZN4absl12lts_2026052613chunked_queueIN12_GLOBAL__N_19TestEntryELm0ELm0ESaIS3_EE
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.e = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 8 uses
   store ptr null, ptr %i.e, align 8, !tbaa !1134
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.h = add i64 %i.g, 16
   %i.i = inttoptr i64 %i.h to ptr                 ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 4 uses
   store ptr %i.j, ptr %i.f, align 8, !tbaa !1135
-  store i64 8589934593, ptr %i.i, align 4
-  %.val.i.i.i.i.i.i56 = load ptr, ptr %i.f, align 8, !tbaa !1135
-  %i.k = ptrtoint ptr %.val.i.i.i.i.i.i56 to i64
+  store i64 8589934593, ptr %i.i, align 4, !tbaa !128
+  %i.k = ptrtoint ptr %i.j to i64
   %reass.sub = sub i64 %i.k, %i.g
   %i.l = add i64 %reass.sub, -16
   %i.m = ashr exact i64 %i.l, 2
@@ -233,7 +232,7 @@ _ZN4absl12lts_2026052613chunked_queueIN12_GLOBAL__N_19TestEntryELm0ELm0ESaIS3_EE
   store ptr %i.u, ptr %i.q, align 8, !tbaa !1135
   store ptr %i.p, ptr %i.e, align 8, !tbaa !1134
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  store i64 17179869187, ptr %i.t, align 4
+  store i64 17179869187, ptr %i.t, align 4, !tbaa !128
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   store i32 1, ptr %i.a, align 4, !tbaa !128

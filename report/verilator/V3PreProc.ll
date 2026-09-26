@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN12V3PreProcImp13getStateTokenEv:bb.a
   %i.hm = getelementptr inbounds nuw i8, ptr %63, i64 8
   %i.hn = getelementptr inbounds nuw i8, ptr %63, i64 16 ; 4 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %0, i64 440 ; 9 uses
-  %i.hp = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 8 uses
+  %i.hp = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 7 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 5 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 496 ; 4 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 4 uses
@@ -608,17 +608,16 @@ _ZNK12V3PreProcImp5stateEv.exit995:               ; preds = %bb.ey, %bb.ez
   %i.aig = zext i1 %spec.select742 to i8          ; 2 uses
   store i8 %i.aig, ptr %31, align 2, !tbaa !1450
   store i8 %i.aig, ptr %i.kc, align 1, !tbaa !1451
-  %i.aih = load ptr, ptr %i.hp, align 8, !tbaa !324 ; 2 uses
+  %i.aih = load ptr, ptr %i.hp, align 8, !tbaa !324 ; 3 uses
   %i.aii = load ptr, ptr %i.kd, align 8, !tbaa !325
   %i.aij = getelementptr inbounds i8, ptr %i.aii, i64 -2
   %.not.i.i996 = icmp eq ptr %i.aih, %i.aij
   br i1 %.not.i.i996, label %bb.fb, label %bb.fa
 
 bb.fa:                                            ; preds = %_ZNK12V3PreProcImp5stateEv.exit995
-  %i.aik = load i16, ptr %31, align 2
-  store i16 %i.aik, ptr %i.aih, align 1
-  %241 = load ptr, ptr %i.hp, align 8, !tbaa !324
-  %i.ail = getelementptr inbounds nuw i8, ptr %241, i64 2
+  %i.aik = load i16, ptr %31, align 2, !tbaa !199
+  store i16 %i.aik, ptr %i.aih, align 1, !tbaa !199
+  %i.ail = getelementptr inbounds nuw i8, ptr %i.aih, i64 2
   store ptr %i.ail, ptr %i.hp, align 8, !tbaa !324
   br label %_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE7emplaceIJS0_EEEDcDpOT_.exit
 
@@ -752,7 +751,7 @@ bb.fo:                                            ; preds = %bb.fn
 _ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3topEv.exit: ; preds = %bb.fn, %bb.fo
   %i.akd = phi ptr [ %i.akc, %bb.fo ], [ %i.aje, %bb.fn ]
   %i.ake = getelementptr inbounds i8, ptr %i.akd, i64 -2
-  %i.akf = load i16, ptr %i.ake, align 1          ; 2 uses
+  %i.akf = load i16, ptr %i.ake, align 1, !tbaa !199 ; 2 uses
   call void @_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3popEv(ptr noundef nonnull align 8 dereferenceable(80) %i.ho)
   %i.akg = trunc i16 %i.akf to i1
   br i1 %i.akg, label %bb.fq, label %bb.fp
@@ -1155,7 +1154,7 @@ bb.lb:                                            ; preds = %bb.la
 _ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3topEv.exit1243: ; preds = %bb.la, %bb.lb
   %i.bdc = phi ptr [ %i.bdb, %bb.lb ], [ %i.bcd, %bb.la ]
   %i.bdd = getelementptr inbounds i8, ptr %i.bdc, i64 -2
-  %i.bde = load i16, ptr %i.bdd, align 1          ; 2 uses
+  %i.bde = load i16, ptr %i.bdd, align 1, !tbaa !199 ; 2 uses
   call void @_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3popEv(ptr noundef nonnull align 8 dereferenceable(80) %i.ho)
   %i.bdf = trunc i16 %i.bde to i1
   br i1 %i.bdf, label %bb.ld, label %bb.lc
@@ -1558,7 +1557,7 @@ bb.afc:                                           ; preds = %bb.afb
 _ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3topEv.exit2168: ; preds = %bb.afb, %bb.afc
   %i.efa = phi ptr [ %i.eez, %bb.afc ], [ %i.eeb, %bb.afb ]
   %i.efb = getelementptr inbounds i8, ptr %i.efa, i64 -2
-  %i.efc = load i16, ptr %i.efb, align 1          ; 2 uses
+  %i.efc = load i16, ptr %i.efb, align 1, !tbaa !199 ; 2 uses
   call void @_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3popEv(ptr noundef nonnull align 8 dereferenceable(80) %i.ho)
   %i.efd = and i16 %i.efc, 256
   %.not2629 = icmp eq i16 %i.efd, 0               ; 4 uses
@@ -1961,7 +1960,7 @@ bb.agt:                                           ; preds = %bb.ags
 _ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3topEv.exit2236: ; preds = %bb.ags, %bb.agt
   %i.ekl = phi ptr [ %i.ekk, %bb.agt ], [ %i.ejm, %bb.ags ]
   %i.ekm = getelementptr inbounds i8, ptr %i.ekl, i64 -2
-  %i.ekn = load i16, ptr %i.ekm, align 1
+  %i.ekn = load i16, ptr %i.ekm, align 1, !tbaa !199
   call void @_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3popEv(ptr noundef nonnull align 8 dereferenceable(80) %i.ho)
   %i.eko = trunc i16 %i.ekn to i1
   br i1 %i.eko, label %_ZN12V3PreProcImp8statePopEv.exit.backedge, label %bb.agu
@@ -2364,8 +2363,8 @@ _ZN12V3PreProcImp8statePopEv.exit.thread:         ; preds = %bb.nh, %bb.in, %bb.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef nonnull align 1 dereferenceable(2) ptr @_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE7emplaceIJS0_EEEDcDpOT_(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 1 dereferenceable(2) %1) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !324  ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !324  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !325
   %i.e = getelementptr inbounds i8, ptr %i.d, i64 -2
@@ -2373,10 +2372,9 @@ bb.a:
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i16, ptr %1, align 1
-  store i16 %i.f, ptr %i.b, align 1
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !324
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 2 uses
+  %i.f = load i16, ptr %1, align 1, !tbaa !199
+  store i16 %i.f, ptr %i.b, align 1, !tbaa !199
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
   store ptr %i.g, ptr %i.a, align 8, !tbaa !324
   br label %bb.d
 
@@ -2779,7 +2777,7 @@ define linkonce_odr dso_local void @_ZNSt5dequeI11VPreIfEntrySaIS0_EE16_M_push_b
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !330  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !330
@@ -2830,22 +2828,19 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt5dequeI11VPreIfEntrySaIS0_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeI11VPreIfEntrySaIS0_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %i.am = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #50
+  %i.am = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #50 ; 4 uses
   %i.an = load ptr, ptr %i.c, align 8, !tbaa !341
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 2 uses
   store ptr %i.am, ptr %i.ao, align 8, !tbaa !331
   %i.ap = load ptr, ptr %i.a, align 8, !tbaa !324
-  %i.aq = load i16, ptr %1, align 1
-  store i16 %i.aq, ptr %i.ap, align 1
-  %2 = load ptr, ptr %i.c, align 8, !tbaa !341
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store ptr %3, ptr %i.c, align 8, !tbaa !330
-  %4 = load ptr, ptr %3, align 8, !tbaa !331      ; 3 uses
-  store ptr %4, ptr %i.o, align 8, !tbaa !329
-  %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 512
+  %i.aq = load i16, ptr %1, align 1, !tbaa !199
+  store i16 %i.aq, ptr %i.ap, align 1, !tbaa !199
+  store ptr %i.ao, ptr %i.c, align 8, !tbaa !330
+  store ptr %i.am, ptr %i.o, align 8, !tbaa !329
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 512
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.ar, ptr %i.as, align 8, !tbaa !342
-  store ptr %4, ptr %i.a, align 8, !tbaa !324
+  store ptr %i.am, ptr %i.a, align 8, !tbaa !324
   ret void
 }
 

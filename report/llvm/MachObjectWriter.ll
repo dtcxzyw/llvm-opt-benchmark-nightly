@@ -204,13 +204,13 @@ define linkonce_odr hidden void @_ZN4llvm16MachObjectWriter13addRelocationEPKNS_
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   store ptr %2, ptr %i.a, align 8, !tbaa !156
-  %i.b = load i64, ptr %3, align 4                ; 2 uses
+  %i.b = load i64, ptr %3, align 4, !tbaa !28     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.d = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_9MCSectionESt6vectorINS_16MachObjectWriter12RelAndSymbolESaIS7_EENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSE_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
   %.fca.0.extract.i = extractvalue { ptr, i8 } %i.d, 0 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i, i64 16 ; 4 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !394  ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i, i64 16 ; 3 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !394  ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i, i64 24 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !32
   %.not.i = icmp eq ptr %i.g, %i.i
@@ -219,9 +219,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr %1, ptr %i.g, align 8, !tbaa !226
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  store i64 %i.b, ptr %.sroa.5.0..sroa_idx, align 8
-  %4 = load ptr, ptr %i.f, align 8, !tbaa !394
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i64 %i.b, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !28
+  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store ptr %i.j, ptr %i.f, align 8, !tbaa !394
   br label %_ZNSt6vectorIN4llvm16MachObjectWriter12RelAndSymbolESaIS2_EE9push_backERKS2_.exit
 
@@ -251,7 +250,7 @@ _ZNKSt6vectorIN4llvm16MachObjectWriter12RelAndSymbolESaIS2_EE12_M_check_lenEmPKc
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.n ; 2 uses
   store ptr %1, ptr %i.w, align 8, !tbaa !226
   %.sroa.5.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  store i64 %i.b, ptr %.sroa.5.0..sroa_idx4, align 8
+  store i64 %i.b, ptr %.sroa.5.0..sroa_idx4, align 8, !tbaa !28
   %.not10.i.i.i.i.i = icmp eq ptr %i.k, %i.g
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN4llvm16MachObjectWriter12RelAndSymbolESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %.lr.ph.i.i.i.i.i
 

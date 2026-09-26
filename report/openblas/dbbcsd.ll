@@ -202,36 +202,24 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   %i.vj = getelementptr inbounds [8 x i8], ptr %i.ak, i64 %indvars.iv2051.in ; 2 uses
   %i.vk = call double @sin(double noundef %i.uu) #7
   %i.vl = call double @cos(double noundef %i.uu) #7
-  %29 = insertelement <2 x double> poison, double %i.uy, i64 0
-  %30 = insertelement <2 x double> %29, double %i.vi, i64 1
-  %31 = insertelement <2 x double> poison, double %i.va, i64 0
-  %32 = insertelement <2 x double> %31, double %i.us, i64 1
-  %33 = fmul <2 x double> %30, %32
-  %34 = insertelement <2 x double> poison, double %i.uv, i64 0
-  %35 = insertelement <2 x double> %34, double %i.vf, i64 1
-  %36 = insertelement <2 x double> poison, double %i.ux, i64 0
-  %37 = insertelement <2 x double> %36, double %i.vh, i64 1
-  %38 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %35, <2 x double> %37, <2 x double> %33) ; 4 uses
-  %39 = extractelement <2 x double> %38, i64 0
-  store double %39, ptr %i.e, align 8, !tbaa !36
-  %40 = insertelement <2 x double> poison, double %i.vd, i64 0
-  %41 = insertelement <2 x double> %40, double %i.vl, i64 1
-  %i.vm = insertelement <2 x double> poison, double %i.ve, i64 0
-  %i.vn = insertelement <2 x double> %i.vm, double %i.uq, i64 1
-  %i.vo = fmul <2 x double> %41, %i.vn
-  %42 = insertelement <2 x double> poison, double %i.vb, i64 0
-  %43 = insertelement <2 x double> %42, double %i.vk, i64 1
-  %i.vp = insertelement <2 x double> poison, double %i.vc, i64 0
-  %i.vq = insertelement <2 x double> %i.vp, double %i.ur, i64 1
-  %44 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %43, <2 x double> %i.vq, <2 x double> %i.vo) ; 4 uses
-  %45 = extractelement <2 x double> %44, i64 0
-  store double %45, ptr %i.f, align 8, !tbaa !36
-  %46 = extractelement <2 x double> %38, i64 1
-  store double %46, ptr %i.g, align 8, !tbaa !36
-  %47 = extractelement <2 x double> %44, i64 1
-  store double %47, ptr %i.h, align 8, !tbaa !36
-  %48 = fmul <2 x double> %44, %44
-  %i.vr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %38, <2 x double> %38, <2 x double> %48)
+  %29 = fmul double %i.uy, %i.va
+  %30 = call double @llvm.fmuladd.f64(double %i.uv, double %i.ux, double %29) ; 2 uses
+  store double %30, ptr %i.e, align 8, !tbaa !36
+  %31 = fmul double %i.vd, %i.ve
+  %32 = call double @llvm.fmuladd.f64(double %i.vb, double %i.vc, double %31) ; 2 uses
+  store double %32, ptr %i.f, align 8, !tbaa !36
+  %33 = fmul double %i.vi, %i.us
+  %34 = call double @llvm.fmuladd.f64(double %i.vf, double %i.vh, double %33) ; 2 uses
+  store double %34, ptr %i.g, align 8, !tbaa !36
+  %35 = fmul double %i.vl, %i.uq
+  %36 = call double @llvm.fmuladd.f64(double %i.vk, double %i.ur, double %35) ; 2 uses
+  store double %36, ptr %i.h, align 8, !tbaa !36
+  %i.vm = insertelement <2 x double> poison, double %32, i64 0
+  %i.vn = insertelement <2 x double> %i.vm, double %36, i64 1 ; 2 uses
+  %i.vo = fmul <2 x double> %i.vn, %i.vn
+  %i.vp = insertelement <2 x double> poison, double %30, i64 0
+  %i.vq = insertelement <2 x double> %i.vp, double %34, i64 1 ; 2 uses
+  %i.vr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vq, <2 x double> %i.vq, <2 x double> %i.vo)
   %i.vs = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.vr) ; 2 uses
   %i.vt = extractelement <2 x double> %i.vs, i64 0
   %i.vu = extractelement <2 x double> %i.vs, i64 1

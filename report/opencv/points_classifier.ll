@@ -205,7 +205,7 @@ bb.a:
   br i1 %or.cond.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @trainedPoints, i64 8), align 8, !tbaa !40 ; 5 uses
+  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @trainedPoints, i64 8), align 8, !tbaa !40 ; 6 uses
   %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @trainedPoints, i64 16), align 8, !tbaa !16
   %.not.i.i = icmp eq ptr %i.b, %i.c
   br i1 %.not.i.i, label %bb.d, label %bb.c
@@ -215,9 +215,8 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.519.0.insert.shift = shl nuw i64 %.sroa.519.0.insert.ext, 32
   %.sroa.014.0.insert.ext = zext i32 %1 to i64
   %.sroa.014.0.insert.insert = or disjoint i64 %.sroa.519.0.insert.shift, %.sroa.014.0.insert.ext
-  store i64 %.sroa.014.0.insert.insert, ptr %i.b, align 4
-  %9 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @trainedPoints, i64 8), align 8, !tbaa !40
-  %i.d = getelementptr inbounds nuw i8, ptr %9, i64 8
+  store i64 %.sroa.014.0.insert.insert, ptr %i.b, align 4, !tbaa !42
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.d, ptr getelementptr inbounds nuw (i8, ptr @trainedPoints, i64 8), align 8, !tbaa !40
   br label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backEOS2_.exit
 
@@ -249,7 +248,7 @@ _ZNKSt6vectorIN2cv6Point_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %
   %.sroa.519.0.insert.shift22 = shl nuw i64 %.sroa.519.0.insert.ext21, 32
   %.sroa.014.0.insert.ext16 = zext i32 %1 to i64
   %.sroa.014.0.insert.insert18 = or disjoint i64 %.sroa.519.0.insert.shift22, %.sroa.014.0.insert.ext16
-  store i64 %.sroa.014.0.insert.insert18, ptr %i.q, align 4
+  store i64 %.sroa.014.0.insert.insert18, ptr %i.q, align 4, !tbaa !42
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.e, %i.b
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -258,8 +257,8 @@ _ZNKSt6vectorIN2cv6Point_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %
   %.0911.i.i.i.i.i.i = phi ptr [ %i.s, %.lr.ph.i.i.i.i.i.i ], [ %i.e, %_ZNKSt6vectorIN2cv6Point_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !167)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !168)
-  %i.r = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !168, !noalias !167
-  store i64 %i.r, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !167, !noalias !168
+  %i.r = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !42, !alias.scope !168, !noalias !167
+  store i64 %i.r, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !42, !alias.scope !167, !noalias !168
   %i.s = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.s, %i.b
@@ -406,7 +405,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   store i64 0, ptr %i.bh, align 8
   store i32 50397184, ptr %6, align 8, !tbaa !38
   store ptr @img, ptr %i.bg, align 8, !tbaa !39
-  %.sroa.0.0.copyload = load i64, ptr %i.bw, align 4
+  %.sroa.0.0.copyload = load i64, ptr %i.bw, align 4, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
   %i.by = uitofp <2 x i8> %i.bx to <2 x double>
   store <2 x double> %i.by, ptr %7, align 16, !tbaa !44

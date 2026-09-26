@@ -204,15 +204,15 @@ bb.cw:                                            ; preds = %bb.cu
   %i.qv = getelementptr i8, ptr %i.qu, i64 -8
   %i.qw = load ptr, ptr %i.qv, align 8, !tbaa !33 ; 6 uses
   %i.qx = load i8, ptr %5, align 8, !tbaa !103, !range !104, !noundef !105
-  %i.qy = trunc nuw i8 %i.qx to i1
+  %i.qy = trunc nuw i8 %i.qx to i1                ; 2 uses
   %i.qz = load i8, ptr %i.dt, align 4, !range !104
   %i.ra = xor i8 %i.qz, 1
   %i.rb = select i1 %i.qy, i8 0, i8 %i.ra
   %i.rc = getelementptr inbounds nuw i8, ptr %i.qw, i64 56
   store i8 %i.rb, ptr %i.rc, align 8, !tbaa !119
   %i.rd = getelementptr inbounds nuw i8, ptr %i.qw, i64 48
-  %i.re = load i64, ptr %i.du, align 8
-  store i64 %i.re, ptr %i.rd, align 8
+  %i.re = load i64, ptr %i.du, align 8, !tbaa !8
+  store i64 %i.re, ptr %i.rd, align 8, !tbaa !8
   %i.rf = load i64, ptr %19, align 8, !tbaa !107
   %i.rg = load i64, ptr %i.cz, align 8, !tbaa !115
   %i.rh = add i64 %i.rg, %i.rf
@@ -221,9 +221,7 @@ bb.cw:                                            ; preds = %bb.cu
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dv, i8 0, i64 16, i1 false)
   store i64 4, ptr %i.dw, align 8, !tbaa !12
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV13CRecordVectorIjE, i64 16), ptr %10, align 8, !tbaa !14
-  %26 = load i8, ptr %5, align 8, !tbaa !103, !range !104, !noundef !105
-  %27 = trunc nuw i8 %26 to i1
-  br i1 %27, label %bb.dv, label %bb.cx
+  br i1 %i.qy, label %bb.dv, label %bb.cx
 
 bb.cx:                                            ; preds = %._crit_edge488
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14

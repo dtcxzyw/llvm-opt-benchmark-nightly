@@ -205,7 +205,7 @@ _ZN13poly_rewriterI19arith_rewriter_coreED2Ev.exit: ; preds = %_ZN7obj_mapI4expr
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN13macro_manager10push_scopeEv(ptr noundef nonnull align 8 dereferenceable(568) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !90   ; 4 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.b
@@ -226,18 +226,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %_ZN6vectorIN13macro_manager5scopeELb0EjE4backEv.exit
 
 _ZN6vectorIN13macro_manager5scopeELb0EjE4backEv.exit: ; preds = %bb.b, %bb.c
-  %i.i = phi i32 [ %.pre2.i, %bb.c ], [ %i.e, %bb.b ]
-  %i.j = phi ptr [ %.pre.i, %bb.c ], [ %i.b, %bb.b ]
-  %i.k = zext i32 %i.i to i64
+  %i.i = phi i32 [ %.pre2.i, %bb.c ], [ %i.e, %bb.b ] ; 2 uses
+  %i.j = phi ptr [ %.pre.i, %bb.c ], [ %i.b, %bb.b ] ; 3 uses
+  %1 = getelementptr inbounds i8, ptr %i.j, i64 -4
+  %i.k = zext i32 %i.i to i64                     ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.k
-  store i64 0, ptr %i.l, align 4
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !90     ; 2 uses
-  %2 = getelementptr inbounds i8, ptr %1, i64 -4  ; 2 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !117      ; 2 uses
-  %i.m = add i32 %3, 1
-  store i32 %i.m, ptr %2, align 4, !tbaa !117
-  %4 = zext i32 %3 to i64
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %4 ; 2 uses
+  store i64 0, ptr %i.l, align 4, !tbaa !117
+  %i.m = add i32 %i.i, 1
+  store i32 %i.m, ptr %1, align 4, !tbaa !117
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.k ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 408
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !70   ; 2 uses
   %i.q = icmp eq ptr %i.p, null

@@ -205,8 +205,8 @@ bb.a:
 
 _ZN5boost13re_detail_50020named_subexpressions4nameC2IcEEPKT_S6_i.exit: ; preds = %bb.a, %._crit_edge.loopexit.i.i
   %.0.lcssa.i.i = phi i64 [ 4611686018427387904, %bb.a ], [ %i.ah, %._crit_edge.loopexit.i.i ] ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !11268 ; 5 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !11268 ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !9200
   %.not.i.i4 = icmp eq ptr %i.aj, %i.al
@@ -215,9 +215,8 @@ _ZN5boost13re_detail_50020named_subexpressions4nameC2IcEEPKT_S6_i.exit: ; preds 
 bb.b:                                             ; preds = %_ZN5boost13re_detail_50020named_subexpressions4nameC2IcEEPKT_S6_i.exit
   %.sroa.0.0.insert.ext = zext i32 %3 to i64
   %.sroa.0.0.insert.insert = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext
-  store i64 %.sroa.0.0.insert.insert, ptr %i.aj, align 4
-  %4 = load ptr, ptr %i.ai, align 8, !tbaa !11268
-  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store i64 %.sroa.0.0.insert.insert, ptr %i.aj, align 4, !tbaa !527
+  %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
   store ptr %i.am, ptr %i.ai, align 8, !tbaa !11268
   %.pre = load ptr, ptr %0, align 8, !tbaa !9493
   br label %_ZNSt6vectorIN5boost13re_detail_50020named_subexpressions4nameESaIS3_EE9push_backEOS3_.exit
@@ -248,7 +247,7 @@ _ZNKSt6vectorIN5boost13re_detail_50020named_subexpressions4nameESaIS3_EE12_M_che
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.aq
   %.sroa.0.0.insert.ext6 = zext i32 %3 to i64
   %.sroa.0.0.insert.insert8 = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext6
-  store i64 %.sroa.0.0.insert.insert8, ptr %i.az, align 4
+  store i64 %.sroa.0.0.insert.insert8, ptr %i.az, align 4, !tbaa !527
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.an, %i.aj
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN5boost13re_detail_50020named_subexpressions4nameESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %iter.check
 
@@ -286,17 +285,17 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bl = getelementptr i8, ptr %next.gep28, i64 32
   %i.bm = getelementptr i8, ptr %next.gep28, i64 64
   %i.bn = getelementptr i8, ptr %next.gep28, i64 96
-  %wide.load = load <4 x i64>, ptr %next.gep28, align 4, !alias.scope !11270, !noalias !11269
-  %wide.load29 = load <4 x i64>, ptr %i.bl, align 4, !alias.scope !11270, !noalias !11269
-  %wide.load30 = load <4 x i64>, ptr %i.bm, align 4, !alias.scope !11270, !noalias !11269
-  %wide.load31 = load <4 x i64>, ptr %i.bn, align 4, !alias.scope !11270, !noalias !11269
+  %wide.load = load <4 x i64>, ptr %next.gep28, align 4, !tbaa !527, !alias.scope !11270, !noalias !11269
+  %wide.load29 = load <4 x i64>, ptr %i.bl, align 4, !tbaa !527, !alias.scope !11270, !noalias !11269
+  %wide.load30 = load <4 x i64>, ptr %i.bm, align 4, !tbaa !527, !alias.scope !11270, !noalias !11269
+  %wide.load31 = load <4 x i64>, ptr %i.bn, align 4, !tbaa !527, !alias.scope !11270, !noalias !11269
   %i.bo = getelementptr i8, ptr %next.gep, i64 32
   %i.bp = getelementptr i8, ptr %next.gep, i64 64
   %i.bq = getelementptr i8, ptr %next.gep, i64 96
-  store <4 x i64> %wide.load, ptr %next.gep, align 4, !alias.scope !11269, !noalias !11270
-  store <4 x i64> %wide.load29, ptr %i.bo, align 4, !alias.scope !11269, !noalias !11270
-  store <4 x i64> %wide.load30, ptr %i.bp, align 4, !alias.scope !11269, !noalias !11270
-  store <4 x i64> %wide.load31, ptr %i.bq, align 4, !alias.scope !11269, !noalias !11270
+  store <4 x i64> %wide.load, ptr %next.gep, align 4, !tbaa !527, !alias.scope !11269, !noalias !11270
+  store <4 x i64> %wide.load29, ptr %i.bo, align 4, !tbaa !527, !alias.scope !11269, !noalias !11270
+  store <4 x i64> %wide.load30, ptr %i.bp, align 4, !tbaa !527, !alias.scope !11269, !noalias !11270
+  store <4 x i64> %wide.load31, ptr %i.bq, align 4, !tbaa !527, !alias.scope !11269, !noalias !11270
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.br = icmp eq i64 %index.next, %n.vec
   br i1 %i.br, label %middle.block, label %vector.body, !llvm.loop !11264
@@ -324,8 +323,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %next.gep36 = getelementptr i8, ptr %i.an, i64 %i.bv
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11269)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11270)
-  %wide.load37 = load <4 x i64>, ptr %next.gep36, align 4, !alias.scope !11270, !noalias !11269
-  store <4 x i64> %wide.load37, ptr %next.gep35, align 4, !alias.scope !11269, !noalias !11270
+  %wide.load37 = load <4 x i64>, ptr %next.gep36, align 4, !tbaa !527, !alias.scope !11270, !noalias !11269
+  store <4 x i64> %wide.load37, ptr %next.gep35, align 4, !tbaa !527, !alias.scope !11269, !noalias !11270
   %index.next38 = add nuw i64 %index34, 4         ; 2 uses
   %i.bw = icmp eq i64 %index.next38, %n.vec33
   br i1 %i.bw, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !11265
@@ -344,8 +343,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.0911.i.i.i.i.i.i = phi ptr [ %i.by, %.lr.ph.i.i.i.i.i.i ], [ %.0911.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11269)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11270)
-  %i.bx = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !11270, !noalias !11269
-  store i64 %i.bx, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !11269, !noalias !11270
+  %i.bx = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !527, !alias.scope !11270, !noalias !11269
+  store i64 %i.bx, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !527, !alias.scope !11269, !noalias !11270
   %i.by = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.by, %i.aj

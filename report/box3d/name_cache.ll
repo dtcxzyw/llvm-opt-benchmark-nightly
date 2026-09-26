@@ -204,12 +204,12 @@ bb.a:
   %i.g = lshr i64 %i.d, 48
   %i.h = trunc nuw i64 %i.g to i16                ; 2 uses
   %i.i = and i16 %i.h, -4096                      ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = load i64, ptr %i.j, align 8, !tbaa !24   ; 19 uses
-  %i.l = and i64 %i.k, %i.f                       ; 16 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !16   ; 19 uses
-  %i.o = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.l
+  %i.l = and i64 %i.k, %i.f                       ; 14 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !16   ; 21 uses
+  %i.o = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.l ; 4 uses
   %i.p = load i16, ptr %i.o, align 2, !tbaa !30   ; 5 uses
   %i.q = and i16 %i.p, 2048
   %.not = icmp eq i16 %i.q, 0
@@ -229,12 +229,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.not84 = icmp eq i16 %i.p, 0
+  %.phi.trans.insert130 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.pre131 = load ptr, ptr %.phi.trans.insert130, align 8, !tbaa !25 ; 3 uses
   br i1 %.not84, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !25       ; 2 uses
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.l ; 2 uses
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.pre131, i64 %i.l ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !32
   %i.ac = zext i32 %i.ab to i64                   ; 2 uses
   %i.ad = lshr i64 %i.ac, 23
@@ -312,7 +312,7 @@ bb.f:                                             ; preds = %bb.e
   %.0.ph.i = phi i16 [ 1, %bb.f ], [ %i.bo, %.loopexit.loopexit.i ] ; 3 uses
   %i.bp = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.ai
   %i.bq = load i16, ptr %i.bp, align 2, !tbaa !30
-  %i.br = and i16 %i.bq, 2047                     ; 2 uses
+  %i.br = and i16 %i.bq, 2047                     ; 3 uses
   %.not16.i.i = icmp ugt i16 %i.br, %.0.ph.i
   br i1 %.not16.i.i, label %b3NameMap_evict.exit.thread, label %.lr.ph.i37.i
 
@@ -326,58 +326,46 @@ bb.f:                                             ; preds = %bb.e
   %i.by = and i64 %i.bx, %i.k                     ; 2 uses
   %i.bz = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.by
   %i.ca = load i16, ptr %i.bz, align 2, !tbaa !30
-  %i.cb = and i16 %i.ca, 2047                     ; 2 uses
+  %i.cb = and i16 %i.ca, 2047                     ; 3 uses
   %.not.i38.i = icmp ugt i16 %i.cb, %.0.ph.i
   br i1 %.not.i38.i, label %b3NameMap_evict.exit.thread, label %.lr.ph.i37.i
 
 b3NameMap_evict.exit.thread:                      ; preds = %.lr.ph.i37.i, %.loopexit.i
+  %.pre-phi.i = phi i16 [ %i.br, %.loopexit.i ], [ %i.cb, %.lr.ph.i37.i ]
   %.010.lcssa.i.i = phi i64 [ %i.ai, %.loopexit.i ], [ %i.by, %.lr.ph.i37.i ]
-  %i.cc = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.1.ph.i
-  %i.cd = load i64, ptr %i.aa, align 4
-  store i64 %i.cd, ptr %i.cc, align 4
-  %8 = load ptr, ptr %i.m, align 8, !tbaa !16     ; 4 uses
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %i.l
-  %i.ce = load i16, ptr %9, align 2, !tbaa !30
+  %i.cc = getelementptr inbounds nuw [8 x i8], ptr %.pre131, i64 %.1.ph.i
+  %i.cd = load i64, ptr %i.aa, align 4, !tbaa !35
+  store i64 %i.cd, ptr %i.cc, align 4, !tbaa !35
+  %i.ce = load i16, ptr %i.o, align 2, !tbaa !30
   %i.cf = and i16 %i.ce, -4096
-  %i.cg = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %.010.lcssa.i.i ; 3 uses
-  %10 = load i16, ptr %i.cg, align 2, !tbaa !30
-  %11 = and i16 %10, 2047
-  %i.ch = or disjoint i16 %11, %i.cf
-  %i.ci = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %.1.ph.i
+  %i.cg = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %.010.lcssa.i.i ; 2 uses
+  %i.ch = or disjoint i16 %i.cf, %.pre-phi.i
+  %i.ci = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %.1.ph.i
   store i16 %i.ch, ptr %i.ci, align 2, !tbaa !30
   %i.cj = load i16, ptr %i.cg, align 2, !tbaa !30
   %i.ck = and i16 %i.cj, -2048
   %i.cl = or i16 %i.ck, %.0.ph.i
   store i16 %i.cl, ptr %i.cg, align 2, !tbaa !30
-  %.pre128 = load i64, ptr %1, align 8, !tbaa !41
-  %.pre129 = load i64, ptr %i.j, align 8, !tbaa !24
-  %.pre130 = add i64 %.pre128, 1
   br label %bb.g
 
 b3NameMap_evict.exit:                             ; preds = %.lr.ph.i.i, %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 0, i64 32, i1 false), !alias.scope !66
   br label %bb.p
 
-bb.g:                                             ; preds = %b3NameMap_evict.exit.thread, %bb.c
-  %.pre-phi = phi i64 [ %.pre130, %b3NameMap_evict.exit.thread ], [ %i.s, %bb.c ]
-  %12 = phi i64 [ %.pre129, %b3NameMap_evict.exit.thread ], [ %i.k, %bb.c ]
-  %13 = phi ptr [ %8, %b3NameMap_evict.exit.thread ], [ %i.n, %bb.c ] ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %15 = load ptr, ptr %14, align 8, !tbaa !25
-  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %15, i64 %i.l ; 3 uses
+bb.g:                                             ; preds = %bb.c, %b3NameMap_evict.exit.thread
+  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %.pre131, i64 %i.l ; 3 uses
   store i32 %2, ptr %i.cm, align 4, !tbaa !32
   %i.cn = load i32, ptr %3, align 4, !tbaa !35
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 4
   store i32 %i.cn, ptr %i.co, align 4, !tbaa !34
   %i.cp = or i16 %i.h, 4095
-  %16 = getelementptr inbounds nuw [2 x i8], ptr %13, i64 %i.l ; 2 uses
-  store i16 %i.cp, ptr %16, align 2, !tbaa !30
-  store i64 %.pre-phi, ptr %1, align 8, !tbaa !41
+  store i16 %i.cp, ptr %i.o, align 2, !tbaa !30
+  store i64 %i.s, ptr %1, align 8, !tbaa !41
   store ptr %i.cm, ptr %0, align 8, !tbaa !67
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %16, ptr %i.cq, align 8, !tbaa !38
+  store ptr %i.o, ptr %i.cq, align 8, !tbaa !38
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.cs = getelementptr inbounds nuw [2 x i8], ptr %13, i64 %12
+  %i.cs = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.k
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 2
   store ptr %i.ct, ptr %i.cr, align 8, !tbaa !39
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 24

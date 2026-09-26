@@ -204,10 +204,12 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !164, !nonnull !165, !align !166
   %i.d = load i32, ptr %i.c, align 4, !tbaa !167  ; 5 uses
   %.not1516 = icmp eq i32 %i.d, 0
+  %.pre18 = load ptr, ptr %1, align 8             ; 11 uses
   br i1 %.not1516, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %2 = load ptr, ptr %i.e, align 8, !tbaa !163    ; 3 uses
   %xtraiter = and i32 %i.d, 1
   %i.f = icmp eq i32 %i.d, 1
   br i1 %i.f, label %.epil.preheader, label %.lr.ph.new
@@ -224,7 +226,6 @@ bb.a:
   %.sroa.012.017.epil.init = phi i32 [ 1, %.lr.ph ], [ %i.bi, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod30 = trunc i32 %i.d to i1
   tail call void @llvm.assume(i1 %lcmp.mod30)
-  %2 = load ptr, ptr %i.e, align 8, !tbaa !163
   %i.g = sext i32 %.sroa.012.017.epil.init to i64 ; 2 uses
   %i.h = getelementptr inbounds [4 x i8], ptr %2, i64 %i.g
   %i.i = load i32, ptr %i.h, align 4, !tbaa !167  ; 2 uses
@@ -232,22 +233,20 @@ bb.a:
   br i1 %.not.epil, label %._crit_edge, label %bb.b
 
 bb.b:                                             ; preds = %.epil.preheader
-  %3 = load ptr, ptr %1, align 8, !tbaa !185      ; 2 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.g
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %.pre18, i64 %i.g
   %i.k = sext i32 %i.i to i64
-  %i.l = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.k
-  %i.m = load i64, ptr %i.j, align 4
-  store i64 %i.m, ptr %i.l, align 4
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr %.pre18, i64 %i.k
+  %i.m = load i64, ptr %i.j, align 4, !tbaa !167
+  store i64 %i.m, ptr %i.l, align 4, !tbaa !167
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.b, %.epil.preheader, %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load i64, ptr %i.n, align 8, !tbaa !170  ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
-  %4 = load ptr, ptr %i.p, align 8, !tbaa !208    ; 4 uses
-  %i.q = load ptr, ptr %1, align 8, !tbaa !185    ; 5 uses
-  %i.r = ptrtoint ptr %4 to i64
-  %i.s = ptrtoint ptr %i.q to i64                 ; 4 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !208  ; 4 uses
+  %i.r = ptrtoint ptr %i.q to i64
+  %i.s = ptrtoint ptr %.pre18 to i64              ; 4 uses
   %i.t = sub i64 %i.r, %i.s
   %i.u = ashr exact i64 %i.t, 3                   ; 3 uses
   %i.v = icmp ugt i64 %i.o, %i.u
@@ -266,8 +265,8 @@ bb.d:                                             ; preds = %._crit_edge
   br i1 %i.x, label %bb.e, label %_ZNSt6vectorIN7CaDiCaL4LinkESaIS1_EE6resizeEm.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.o ; 3 uses
-  %.not.i.i = icmp eq ptr %4, %i.y
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %.pre18, i64 %i.o ; 3 uses
+  %.not.i.i = icmp eq ptr %i.q, %i.y
   br i1 %.not.i.i, label %_ZNSt6vectorIN7CaDiCaL4LinkESaIS1_EE6resizeEm.exit, label %_ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i
 
 _ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i: ; preds = %bb.e
@@ -276,8 +275,8 @@ _ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i: ; preds = %bb.e
 
 _ZNSt6vectorIN7CaDiCaL4LinkESaIS1_EE6resizeEm.exit: ; preds = %bb.c, %bb.d, %bb.e, %_ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i
   %.pre-phi = phi i64 [ %.pre19, %bb.c ], [ %i.s, %bb.d ], [ %i.s, %bb.e ], [ %i.s, %_ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i ] ; 4 uses
-  %i.z = phi ptr [ %.pre18.a, %bb.c ], [ %4, %bb.d ], [ %4, %bb.e ], [ %i.y, %_ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i ] ; 2 uses
-  %i.aa = phi ptr [ %.pre.a, %bb.c ], [ %i.q, %bb.d ], [ %i.q, %bb.e ], [ %i.q, %_ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i ] ; 2 uses
+  %i.z = phi ptr [ %.pre18.a, %bb.c ], [ %i.q, %bb.d ], [ %i.q, %bb.e ], [ %i.y, %_ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i ] ; 2 uses
+  %i.aa = phi ptr [ %.pre.a, %bb.c ], [ %.pre18, %bb.d ], [ %.pre18, %bb.e ], [ %.pre18, %_ZSt8_DestroyIPN7CaDiCaL4LinkES1_EvT_S3_RSaIT0_E.exit.i.i ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !209
   %i.ad = ptrtoint ptr %i.ac to i64
@@ -326,8 +325,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.ap, label %_ZNSt6vectorIN7CaDiCaL4LinkESaIS1_EEC2ERKS3_.exit.thread.i, label %_ZNSt6vectorIN7CaDiCaL4LinkESaIS1_EEC2ERKS3_.exit.i
 
 _ZNSt6vectorIN7CaDiCaL4LinkESaIS1_EEC2ERKS3_.exit.thread.i: ; preds = %bb.j
-  %i.aq = load i64, ptr %i.ak, align 4
-  store i64 %i.aq, ptr %i.al, align 4
+  %i.aq = load i64, ptr %i.ak, align 4, !tbaa !167
+  store i64 %i.aq, ptr %i.al, align 4, !tbaa !167
   %i.ar = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   store ptr %i.al, ptr %1, align 8, !tbaa !185
   store ptr %i.ar, ptr %i.p, align 8, !tbaa !208
@@ -352,38 +351,34 @@ _ZN7CaDiCaL13shrink_vectorINS_4LinkEEEvRSt6vectorIT_SaIS3_EE.exit: ; preds = %_Z
 bb.l:                                             ; preds = %bb.p, %.lr.ph.new
   %.sroa.012.017 = phi i32 [ 1, %.lr.ph.new ], [ %i.bi, %bb.p ] ; 3 uses
   %niter = phi i32 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.p ]
-  %5 = load ptr, ptr %i.e, align 8, !tbaa !163
   %i.at = sext i32 %.sroa.012.017 to i64          ; 2 uses
-  %i.au = getelementptr inbounds [4 x i8], ptr %5, i64 %i.at
+  %i.au = getelementptr inbounds [4 x i8], ptr %2, i64 %i.at
   %i.av = load i32, ptr %i.au, align 4, !tbaa !167 ; 2 uses
   %.not = icmp eq i32 %i.av, 0
   br i1 %.not, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %6 = load ptr, ptr %1, align 8, !tbaa !185      ; 2 uses
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.at
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %.pre18, i64 %i.at
   %i.ax = sext i32 %i.av to i64
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.ax
-  %i.az = load i64, ptr %i.aw, align 4
-  store i64 %i.az, ptr %i.ay, align 4
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %.pre18, i64 %i.ax
+  %i.az = load i64, ptr %i.aw, align 4, !tbaa !167
+  store i64 %i.az, ptr %i.ay, align 4, !tbaa !167
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m
   %i.ba = add nuw i32 %.sroa.012.017, 1
-  %7 = load ptr, ptr %i.e, align 8, !tbaa !163
   %i.bb = sext i32 %i.ba to i64                   ; 2 uses
-  %i.bc = getelementptr inbounds [4 x i8], ptr %7, i64 %i.bb
+  %i.bc = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bb
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !167 ; 2 uses
   %.not.1 = icmp eq i32 %i.bd, 0
   br i1 %.not.1, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %8 = load ptr, ptr %1, align 8, !tbaa !185      ; 2 uses
-  %i.be = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bb
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %.pre18, i64 %i.bb
   %i.bf = sext i32 %i.bd to i64
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bf
-  %i.bh = load i64, ptr %i.be, align 4
-  store i64 %i.bh, ptr %i.bg, align 4
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %.pre18, i64 %i.bf
+  %i.bh = load i64, ptr %i.be, align 4, !tbaa !167
+  store i64 %i.bh, ptr %i.bg, align 4, !tbaa !167
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -786,12 +781,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.y = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.p, i64 %i.y ; 2 uses
-  %i.z = load i64, ptr %i.b, align 4
+  %i.z = load i64, ptr %i.b, align 4, !tbaa !167
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.z, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.aa = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4
-  store <2 x i64> %broadcast.splat, ptr %i.aa, align 4
+  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4, !tbaa !167
+  store <2 x i64> %broadcast.splat, ptr %i.aa, align 4, !tbaa !167
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !303
@@ -806,8 +801,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i
   %.06.i.i.i.i.i.i.i = phi ptr [ %i.ad, %.lr.ph.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 2 uses
-  %i.ac = load i64, ptr %i.b, align 4
-  store i64 %i.ac, ptr %.06.i.i.i.i.i.i.i, align 4
+  %i.ac = load i64, ptr %i.b, align 4, !tbaa !167
+  store i64 %i.ac, ptr %.06.i.i.i.i.i.i.i, align 4, !tbaa !167
   %i.ad = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ad, %i.s
   br i1 %.not.i.i.i.i.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN7CaDiCaL4LinkEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !304
@@ -857,12 +852,12 @@ vector.body48:                                    ; preds = %vector.body48, %vec
   %index49 = phi i64 [ 0, %vector.ph46 ], [ %index.next53, %vector.body48 ] ; 2 uses
   %i.at = shl i64 %index49, 3
   %next.gep50 = getelementptr i8, ptr %i.am, i64 %i.at ; 2 uses
-  %i.au = load i64, ptr %i.aj, align 4
+  %i.au = load i64, ptr %i.aj, align 4, !tbaa !167
   %broadcast.splatinsert51 = insertelement <2 x i64> poison, i64 %i.au, i64 0
   %broadcast.splat52 = shufflevector <2 x i64> %broadcast.splatinsert51, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.av = getelementptr i8, ptr %next.gep50, i64 16
-  store <2 x i64> %broadcast.splat52, ptr %next.gep50, align 4
-  store <2 x i64> %broadcast.splat52, ptr %i.av, align 4
+  store <2 x i64> %broadcast.splat52, ptr %next.gep50, align 4, !tbaa !167
+  store <2 x i64> %broadcast.splat52, ptr %i.av, align 4, !tbaa !167
   %index.next53 = add nuw i64 %index49, 4         ; 2 uses
   %i.aw = icmp eq i64 %index.next53, %n.vec47
   br i1 %i.aw, label %middle.block54, label %vector.body48, !llvm.loop !305
@@ -877,8 +872,8 @@ middle.block54:                                   ; preds = %vector.body48
 
 .lr.ph.i.i.i.i.i.i.i31:                           ; preds = %.lr.ph.i.i.i.i.i.i.i31.preheader, %.lr.ph.i.i.i.i.i.i.i31
   %.06.i.i.i.i.i.i.i32 = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.i.i.i31 ], [ %.06.i.i.i.i.i.i.i32.ph, %.lr.ph.i.i.i.i.i.i.i31.preheader ] ; 2 uses
-  %i.ax = load i64, ptr %i.aj, align 4
-  store i64 %i.ax, ptr %.06.i.i.i.i.i.i.i32, align 4
+  %i.ax = load i64, ptr %i.aj, align 4, !tbaa !167
+  store i64 %i.ax, ptr %.06.i.i.i.i.i.i.i32, align 4, !tbaa !167
   %i.ay = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i32, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i33 = icmp eq ptr %i.ay, %i.an
   br i1 %.not.i.i.i.i.i.i.i33, label %_ZSt27__uninitialized_default_n_aIPN7CaDiCaL4LinkEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i.i.i.i.i31, !llvm.loop !306

@@ -149,19 +149,17 @@ declare void @glGetDoublev(i32 noundef, ptr noundef) local_unnamed_addr #2
 define dso_local void @_ZNK8AppState13updateUIScaleEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(936) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(3032) ptr @_ZN5ImGui5GetIOEv() #4 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = load <2 x i32>, ptr %i.b, align 8, !tbaa !54
-  %2 = sitofp <2 x i32> %1 to <2 x float>
-  store <2 x float> %2, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.f = load <2 x i32>, ptr %i.d, align 8, !tbaa !54
-  %i.g = sitofp <2 x i32> %i.f to <2 x float>
-  %i.h = load <2 x i32>, ptr %i.b, align 8, !tbaa !54
+  %i.f = load <2 x i32>, ptr %i.b, align 8, !tbaa !54
+  %i.g = sitofp <2 x i32> %i.f to <2 x float>     ; 2 uses
+  store <2 x float> %i.g, ptr %i.c, align 8, !tbaa !51
+  %i.h = load <2 x i32>, ptr %i.d, align 8, !tbaa !54
   %i.i = sitofp <2 x i32> %i.h to <2 x float>
-  %i.j = fdiv <2 x float> %i.g, %i.i
-  store <2 x float> %i.j, ptr %i.e, align 8
+  %i.j = fdiv <2 x float> %i.i, %i.g
+  store <2 x float> %i.j, ptr %i.e, align 8, !tbaa !51
   ret void
 }
 

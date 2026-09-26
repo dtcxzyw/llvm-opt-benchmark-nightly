@@ -205,8 +205,8 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %i.fk = load i64, ptr %i.ed, align 4            ; 3 uses
-  store i64 %i.fk, ptr %i.ec, align 4
+  %i.fk = load i64, ptr %i.ed, align 4, !tbaa !47 ; 3 uses
+  store i64 %i.fk, ptr %i.ec, align 4, !tbaa !47
   %i.fl = trunc i64 %i.fk to i32                  ; 2 uses
   %i.fm = icmp sgt i32 %i.fl, -1
   br i1 %i.fm, label %.lr.ph301, label %validpage.exit.thread
@@ -609,7 +609,7 @@ emit_page.exit:                                   ; preds = %bb.fu, %bb.fv
   %.sroa.24.0.insert.ext.i.i = and i64 %i.add, -4294967296
   %.sroa.03.0.insert.ext.i.i = and i64 %i.adc, 4294967295
   %.sroa.03.0.insert.insert.i.i = or disjoint i64 %.sroa.24.0.insert.ext.i.i, %.sroa.03.0.insert.ext.i.i
-  store i64 %.sroa.03.0.insert.insert.i.i, ptr %i.ec, align 4
+  store i64 %.sroa.03.0.insert.insert.i.i, ptr %i.ec, align 4, !tbaa !47
   %i.ade = trunc i64 %i.adc to i32                ; 2 uses
   %i.adf = icmp sgt i32 %i.ade, -1
   %i.adg = lshr i64 %i.add, 32
@@ -652,7 +652,7 @@ bb.fz:                                            ; preds = %bb.fy, %bb.fx
   %.sroa.24.0.insert.ext.i14.i = and i64 %i.adt, -4294967296
   %.sroa.03.0.insert.ext.i15.i = and i64 %i.ads, 4294967295
   %.sroa.03.0.insert.insert.i16.i = or disjoint i64 %.sroa.24.0.insert.ext.i14.i, %.sroa.03.0.insert.ext.i15.i
-  store i64 %.sroa.03.0.insert.insert.i16.i, ptr %i.ec, align 4
+  store i64 %.sroa.03.0.insert.insert.i16.i, ptr %i.ec, align 4, !tbaa !47
   br label %nextpage.exit
 
 nextpage.exit:                                    ; preds = %validpage.exit.i, %bb.fz
@@ -1055,7 +1055,7 @@ find_ortho_corners.exit.i:                        ; preds = %process_corner.exit
 
 bb.mo:                                            ; preds = %find_ortho_corners.exit.i
   call void @gv_list_sort_(ptr noundef nonnull %8, ptr noundef nonnull @compare_corners, i64 noundef 72) #27
-  %.sroa.0380.0.copyload = load <2 x double>, ptr %i.ath, align 8
+  %.sroa.0380.0.copyload = load <2 x double>, ptr %i.ath, align 8, !tbaa !110
   %.val476581.i = load i64, ptr %i.arr, align 8, !tbaa !109
   %i.axp = add i64 %i.atg, -1                     ; 2 uses
   %i.axq = getelementptr inbounds nuw [16 x i8], ptr %i.ath, i64 %i.axp
@@ -1209,7 +1209,7 @@ bb.nd:                                            ; preds = %bb.nc, %bb.nb
   %.sroa.0.0.copyload = load <2 x double>, ptr %.sink.i88, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %9, i8 0, i64 40, i1 false)
-  store <2 x double> %.sroa.0380.0, ptr %i.art, align 8
+  store <2 x double> %.sroa.0380.0, ptr %i.art, align 8, !tbaa !110
   %i.azh = call i64 @gv_list_append_slot_(ptr noundef nonnull %9, i64 noundef 16) #27
   %i.azi = load ptr, ptr %9, align 8, !tbaa !14
   %i.azj = getelementptr inbounds nuw [16 x i8], ptr %i.azi, i64 %i.azh
@@ -1229,7 +1229,7 @@ bb.nd:                                            ; preds = %bb.nc, %bb.nb
   br label %.lr.ph568.i
 
 ._crit_edge.i89:                                  ; preds = %.loopexit643.i, %bb.nd
-  store <2 x double> %.sroa.0.0.copyload, ptr %i.art, align 8
+  store <2 x double> %.sroa.0.0.copyload, ptr %i.art, align 8, !tbaa !110
   %i.azm = call i64 @gv_list_append_slot_(ptr noundef nonnull %9, i64 noundef 16) #27
   %i.azn = load ptr, ptr %9, align 8, !tbaa !14
   %i.azo = getelementptr inbounds nuw [16 x i8], ptr %i.azn, i64 %i.azm
@@ -1370,7 +1370,7 @@ bb.nj:                                            ; preds = %.lr.ph578.i
   %i.bbt = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %8, i64 noundef %.0383583.i) #27
   %i.bbu = getelementptr inbounds nuw [72 x i8], ptr %i.bbs, i64 %i.bbt
   %i.bbv = getelementptr inbounds nuw i8, ptr %i.bbu, i64 24
-  %.sroa.0380.0.copyload382 = load <2 x double>, ptr %i.bbv, align 8
+  %.sroa.0380.0.copyload382 = load <2 x double>, ptr %i.bbv, align 8, !tbaa !110
   %.val476.pre.i = load i64, ptr %i.arr, align 8, !tbaa !109
   br label %bb.nk
 
@@ -1773,9 +1773,9 @@ bb.do:                                            ; preds = %bb.dn, %bb.dk
   %i.wf = getelementptr inbounds nuw i8, ptr %.092145, i64 316 ; 2 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %.092145, i64 300 ; 3 uses
   %.sroa.223.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.092145, i64 304 ; 2 uses
-  %i.wh = getelementptr inbounds nuw i8, ptr %i.td, i64 360 ; 3 uses
+  %i.wh = getelementptr inbounds nuw i8, ptr %i.td, i64 360
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.wg, i8 0, i64 24, i1 false)
-  %i.wi = load ptr, ptr %i.wh, align 8, !tbaa !442
+  %i.wi = load ptr, ptr %i.wh, align 8, !tbaa !442 ; 3 uses
   %i.wj = load i8, ptr %i.wi, align 1, !tbaa !14
   switch i8 %i.wj, label %pagecode.exit.i [
     i8 84, label %bb.dp
@@ -1800,9 +1800,8 @@ bb.ds:                                            ; preds = %bb.do
 
 pagecode.exit.i:                                  ; preds = %bb.ds, %bb.dr, %bb.dq, %bb.dp, %bb.do
   %.sroa.0.0.insert.insert.i.i = phi i64 [ 0, %bb.do ], [ -4294967296, %bb.dp ], [ 4294967296, %bb.dq ], [ 1, %bb.dr ], [ 4294967295, %bb.ds ] ; 3 uses
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.we, align 4
-  %7 = load ptr, ptr %i.wh, align 8, !tbaa !442
-  %i.wk = getelementptr inbounds nuw i8, ptr %7, i64 1
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.we, align 4, !tbaa !47
+  %i.wk = getelementptr inbounds nuw i8, ptr %i.wi, i64 1
   %i.wl = load i8, ptr %i.wk, align 1, !tbaa !14
   %i.wm = trunc i64 %.sroa.0.0.insert.insert.i.i to i32
   %i.wn = lshr i64 %.sroa.0.0.insert.insert.i.i, 32
@@ -1830,7 +1829,7 @@ bb.dw:                                            ; preds = %pagecode.exit.i
 
 pagecode.exit224.i:                               ; preds = %bb.dw, %bb.dv, %bb.du, %bb.dt, %pagecode.exit.i
   %.sroa.0.0.insert.insert.i223.i = phi i64 [ 0, %pagecode.exit.i ], [ -4294967296, %bb.dt ], [ 4294967296, %bb.du ], [ 1, %bb.dv ], [ 4294967295, %bb.dw ] ; 3 uses
-  store i64 %.sroa.0.0.insert.insert.i223.i, ptr %i.wf, align 4
+  store i64 %.sroa.0.0.insert.insert.i223.i, ptr %i.wf, align 4, !tbaa !47
   %i.wp = getelementptr inbounds nuw i8, ptr %.092145, i64 324
   store i32 0, ptr %i.wp, align 4, !tbaa !47
   %.sroa.219.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.092145, i64 328
@@ -1850,10 +1849,9 @@ bb.dx:                                            ; preds = %pagecode.exit224.i
   br i1 %.not208.i, label %bb.dz, label %bb.dy
 
 bb.dy:                                            ; preds = %bb.dx, %pagecode.exit224.i
-  store i64 4294967296, ptr %i.we, align 4
-  store i64 1, ptr %i.wf, align 4
-  %8 = load ptr, ptr %i.wh, align 8, !tbaa !442
-  call void (ptr, ...) @agwarningf(ptr noundef nonnull @.str.132, ptr noundef %8) #27
+  store i64 4294967296, ptr %i.we, align 4, !tbaa !47
+  store i64 1, ptr %i.wf, align 4, !tbaa !47
+  call void (ptr, ...) @agwarningf(ptr noundef nonnull @.str.132, ptr noundef nonnull %i.wi) #27
   br label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy, %bb.dx
@@ -1938,10 +1936,10 @@ bb.ef:                                            ; preds = %bb.ee
   %i.yp = getelementptr inbounds nuw i8, ptr %.092145, i64 592 ; 2 uses
   %i.yq = load i64, ptr %i.yf, align 8            ; 2 uses
   %.sroa.01.0.insert.insert.i.i = call i64 @llvm.fshl.i64(i64 %i.yq, i64 %i.yq, i64 32)
-  store i64 %.sroa.01.0.insert.insert.i.i, ptr %i.yf, align 8
+  store i64 %.sroa.01.0.insert.insert.i.i, ptr %i.yf, align 8, !tbaa !47
   %i.yr = load i64, ptr %i.yp, align 8            ; 2 uses
   %.sroa.01.0.insert.insert.i239.i = call i64 @llvm.fshl.i64(i64 %i.yr, i64 %i.yr, i64 32)
-  store i64 %.sroa.01.0.insert.insert.i239.i, ptr %i.yp, align 8
+  store i64 %.sroa.01.0.insert.insert.i239.i, ptr %i.yp, align 8, !tbaa !47
   store double %i.xv, ptr %i.xq, align 8, !tbaa !110
   store double %i.xu, ptr %.sroa.49.0..sroa_idx.i, align 8, !tbaa !110
   store double %i.xz, ptr %i.xw, align 8, !tbaa !110

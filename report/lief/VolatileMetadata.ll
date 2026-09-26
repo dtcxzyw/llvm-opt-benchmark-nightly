@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.z
 .lr.ph156:                                        ; preds = %bb.aa
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ey, i64 16 ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.cn, i64 40 ; 2 uses
-  %i.fe = getelementptr inbounds nuw i8, ptr %i.cn, i64 48 ; 4 uses
+  %i.fe = getelementptr inbounds nuw i8, ptr %i.cn, i64 48 ; 3 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.cn, i64 56 ; 3 uses
   br label %bb.ab
 
@@ -274,7 +274,7 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit75: ; preds = %bb.ae, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   %i.ga = add i64 %i.fy, 4
   store i64 %i.ga, ptr %i.fa, align 8, !tbaa !97
-  %i.gb = load ptr, ptr %i.fe, align 8, !tbaa !91 ; 5 uses
+  %i.gb = load ptr, ptr %i.fe, align 8, !tbaa !91 ; 6 uses
   %i.gc = load ptr, ptr %i.ff, align 8, !tbaa !394
   %.not.i.i76 = icmp eq ptr %i.gb, %i.gc
   br i1 %.not.i.i76, label %bb.ah, label %bb.ag
@@ -284,9 +284,8 @@ bb.ag:                                            ; preds = %_ZNK4LIEF12BinarySt
   %.sroa.5.0.insert.shift = shl nuw i64 %.sroa.5.0.insert.ext, 32
   %.sroa.0.0.insert.ext = zext i32 %i.fp to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.shift, %.sroa.0.0.insert.ext
-  store i64 %.sroa.0.0.insert.insert, ptr %i.gb, align 4
-  %7 = load ptr, ptr %i.fe, align 8, !tbaa !91
-  %i.gd = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store i64 %.sroa.0.0.insert.insert, ptr %i.gb, align 4, !tbaa !94
+  %i.gd = getelementptr inbounds nuw i8, ptr %i.gb, i64 8
   store ptr %i.gd, ptr %i.fe, align 8, !tbaa !91
   br label %_ZNSt6vectorIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EE9push_backEOS3_.exit
 
@@ -318,7 +317,7 @@ _ZNKSt6vectorIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EE12_M_check_lenEmPKc.ex
   %.sroa.5.0.insert.shift83 = shl nuw i64 %.sroa.5.0.insert.ext82, 32
   %.sroa.0.0.insert.ext78 = zext i32 %i.fp to i64
   %.sroa.0.0.insert.insert80 = or disjoint i64 %.sroa.5.0.insert.shift83, %.sroa.0.0.insert.ext78
-  store i64 %.sroa.0.0.insert.insert80, ptr %i.gq, align 4
+  store i64 %.sroa.0.0.insert.insert80, ptr %i.gq, align 4, !tbaa !94
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.ge, %i.gb
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -327,8 +326,8 @@ _ZNKSt6vectorIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EE12_M_check_lenEmPKc.ex
   %.0911.i.i.i.i.i.i = phi ptr [ %i.gs, %.lr.ph.i.i.i.i.i.i ], [ %i.ge, %_ZNKSt6vectorIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !395)
   call void @llvm.experimental.noalias.scope.decl(metadata !396)
-  %i.gr = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !396, !noalias !395
-  store i64 %i.gr, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !395, !noalias !396
+  %i.gr = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !94, !alias.scope !396, !noalias !395
+  store i64 %i.gr, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !94, !alias.scope !395, !noalias !396
   %i.gs = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.gs, %i.gb
@@ -731,8 +730,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
   store i32 %3, ptr %7, align 4, !tbaa !219
   %i.bh = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %i.bi = load i64, ptr %1, align 4
-  store i64 %i.bi, ptr %i.bh, align 4
+  %i.bi = load i64, ptr %1, align 4, !tbaa !94
+  store i64 %i.bi, ptr %i.bh, align 4, !tbaa !94
   %i.bj = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i32 %i.y, ptr %i.bj, align 4, !tbaa !220
   %i.bk = getelementptr inbounds nuw i8, ptr %7, i64 16

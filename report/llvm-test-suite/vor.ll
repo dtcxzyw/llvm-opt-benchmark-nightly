@@ -103,23 +103,21 @@ declare i32 @__isoc99_fscanf(ptr noundef, ptr noundef, ...) local_unnamed_addr #
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: write, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @add_point(i64 %0) local_unnamed_addr #5 {
 bb.a:
-  %i.a = load ptr, ptr @K, align 8, !tbaa !11
+  %i.a = load ptr, ptr @K, align 8, !tbaa !11     ; 3 uses
   %i.b = load i32, ptr @Kcount, align 4, !tbaa !8
-  %i.c = sext i32 %i.b to i64                     ; 2 uses
-  %i.d = getelementptr inbounds [20 x i8], ptr %i.a, i64 %i.c
-  store i64 %0, ptr %i.d, align 4
-  %1 = load ptr, ptr @K, align 8, !tbaa !11       ; 3 uses
-  %2 = getelementptr inbounds [20 x i8], ptr %1, i64 %i.c
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.c = sext i32 %i.b to i64
+  %i.d = getelementptr inbounds [20 x i8], ptr %i.a, i64 %i.c ; 2 uses
+  store i64 %0, ptr %i.d, align 4, !tbaa !8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i32 0, ptr %i.e, align 4, !tbaa !21
   %i.f = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.g = sext i32 %i.f to i64
-  %i.h = getelementptr inbounds [20 x i8], ptr %1, i64 %i.g
+  %i.h = getelementptr inbounds [20 x i8], ptr %i.a, i64 %i.g
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 12
   store i32 0, ptr %i.i, align 4, !tbaa !22
   %i.j = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.k = sext i32 %i.j to i64
-  %i.l = getelementptr inbounds [20 x i8], ptr %1, i64 %i.k
+  %i.l = getelementptr inbounds [20 x i8], ptr %i.a, i64 %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store i32 0, ptr %i.m, align 4, !tbaa !23
   %i.n = load i32, ptr @Kcount, align 4, !tbaa !8
@@ -304,23 +302,21 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !28   ; 2 uses
   %i.l = tail call i64 @compute_v(ptr noundef %0)
-  %i.m = load ptr, ptr @K, align 8, !tbaa !11
+  %i.m = load ptr, ptr @K, align 8, !tbaa !11     ; 3 uses
   %i.n = load i32, ptr @Kcount, align 4, !tbaa !8
-  %i.o = sext i32 %i.n to i64                     ; 2 uses
-  %i.p = getelementptr inbounds [20 x i8], ptr %i.m, i64 %i.o
-  store i64 %i.l, ptr %i.p, align 4
-  %1 = load ptr, ptr @K, align 8, !tbaa !11       ; 3 uses
-  %2 = getelementptr inbounds [20 x i8], ptr %1, i64 %i.o
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.o = sext i32 %i.n to i64
+  %i.p = getelementptr inbounds [20 x i8], ptr %i.m, i64 %i.o ; 2 uses
+  store i64 %i.l, ptr %i.p, align 4, !tbaa !8
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i32 0, ptr %i.q, align 4, !tbaa !21
   %i.r = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.s = sext i32 %i.r to i64
-  %i.t = getelementptr inbounds [20 x i8], ptr %1, i64 %i.s
+  %i.t = getelementptr inbounds [20 x i8], ptr %i.m, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 12
   store i32 0, ptr %i.u, align 4, !tbaa !22
   %i.v = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.w = sext i32 %i.v to i64
-  %i.x = getelementptr inbounds [20 x i8], ptr %1, i64 %i.w
+  %i.x = getelementptr inbounds [20 x i8], ptr %i.m, i64 %i.w
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   store i32 0, ptr %i.y, align 4, !tbaa !23
   %i.z = load i32, ptr @Kcount, align 4, !tbaa !8 ; 2 uses
@@ -335,23 +331,21 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.012 = phi ptr [ %i.aw, %.lr.ph ], [ %i.k, %bb.a ] ; 4 uses
   %i.ad = tail call i64 @compute_v(ptr noundef %.012)
-  %i.ae = load ptr, ptr @K, align 8, !tbaa !11
+  %i.ae = load ptr, ptr @K, align 8, !tbaa !11    ; 3 uses
   %i.af = load i32, ptr @Kcount, align 4, !tbaa !8
-  %i.ag = sext i32 %i.af to i64                   ; 2 uses
-  %i.ah = getelementptr inbounds [20 x i8], ptr %i.ae, i64 %i.ag
-  store i64 %i.ad, ptr %i.ah, align 4
-  %3 = load ptr, ptr @K, align 8, !tbaa !11       ; 3 uses
-  %4 = getelementptr inbounds [20 x i8], ptr %3, i64 %i.ag
-  %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ag = sext i32 %i.af to i64
+  %i.ah = getelementptr inbounds [20 x i8], ptr %i.ae, i64 %i.ag ; 2 uses
+  store i64 %i.ad, ptr %i.ah, align 4, !tbaa !8
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   store i32 0, ptr %i.ai, align 4, !tbaa !21
   %i.aj = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.ak = sext i32 %i.aj to i64
-  %i.al = getelementptr inbounds [20 x i8], ptr %3, i64 %i.ak
+  %i.al = getelementptr inbounds [20 x i8], ptr %i.ae, i64 %i.ak
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 12
   store i32 0, ptr %i.am, align 4, !tbaa !22
   %i.an = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.ao = sext i32 %i.an to i64
-  %i.ap = getelementptr inbounds [20 x i8], ptr %3, i64 %i.ao
+  %i.ap = getelementptr inbounds [20 x i8], ptr %i.ae, i64 %i.ao
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   store i32 0, ptr %i.aq, align 4, !tbaa !23
   %i.ar = load i32, ptr @Kcount, align 4, !tbaa !8 ; 2 uses
@@ -754,23 +748,21 @@ bb.c:                                             ; preds = %bb.b, %.preheader
   %.sroa.420.0.insert.shift = shl nuw i64 %.sroa.420.0.insert.ext, 32
   %.sroa.019.0.insert.ext = zext i32 %i.r to i64
   %.sroa.019.0.insert.insert = or disjoint i64 %.sroa.420.0.insert.shift, %.sroa.019.0.insert.ext
-  %i.t = load ptr, ptr @K, align 8, !tbaa !11
+  %i.t = load ptr, ptr @K, align 8, !tbaa !11     ; 3 uses
   %i.u = load i32, ptr @Kcount, align 4, !tbaa !8
-  %i.v = sext i32 %i.u to i64                     ; 2 uses
-  %i.w = getelementptr inbounds [20 x i8], ptr %i.t, i64 %i.v
-  store i64 %.sroa.019.0.insert.insert, ptr %i.w, align 4
-  %0 = load ptr, ptr @K, align 8, !tbaa !11       ; 3 uses
-  %1 = getelementptr inbounds [20 x i8], ptr %0, i64 %i.v
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.v = sext i32 %i.u to i64
+  %i.w = getelementptr inbounds [20 x i8], ptr %i.t, i64 %i.v ; 2 uses
+  store i64 %.sroa.019.0.insert.insert, ptr %i.w, align 4, !tbaa !8
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   store i32 0, ptr %i.x, align 4, !tbaa !21
   %i.y = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.z = sext i32 %i.y to i64
-  %i.aa = getelementptr inbounds [20 x i8], ptr %0, i64 %i.z
+  %i.aa = getelementptr inbounds [20 x i8], ptr %i.t, i64 %i.z
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
   store i32 0, ptr %i.ab, align 4, !tbaa !22
   %i.ac = load i32, ptr @Kcount, align 4, !tbaa !8
   %i.ad = sext i32 %i.ac to i64
-  %i.ae = getelementptr inbounds [20 x i8], ptr %0, i64 %i.ad
+  %i.ae = getelementptr inbounds [20 x i8], ptr %i.t, i64 %i.ad
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   store i32 0, ptr %i.af, align 4, !tbaa !23
   %i.ag = load i32, ptr @Kcount, align 4, !tbaa !8 ; 2 uses

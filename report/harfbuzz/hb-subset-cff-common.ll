@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.4.0.insert.shift = shl nuw i64 %.sroa.4.0.insert.ext, 32
   %.sroa.0.0.insert.ext = and i64 %i.aa, 4294967295
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.0.insert.ext, %.sroa.4.0.insert.shift
-  store i64 %.sroa.0.0.insert.insert, ptr %i.am, align 4
+  store i64 %.sroa.0.0.insert.insert, ptr %i.am, align 4, !tbaa !11
   br label %_ZN11hb_vector_tIN3CFF11code_pair_tELb0EE4pushIJS1_EEEPS1_DpOT_.exit
 
 _ZN11hb_vector_tIN3CFF11code_pair_tELb0EE4pushIJS1_EEEPS1_DpOT_.exit: ; preds = %bb.l, %.critedge.i
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !75   ; 3 uses
   %i.j = icmp ult i32 %i.g, %i.i
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !66   ; 3 uses
   br i1 %i.j, label %bb.c, label %._crit_edge.i, !prof !43
 
@@ -683,18 +683,17 @@ bb.h:                                             ; preds = %.loopexit.i
   %i.ap = shl i32 %i.ao, 3
   %i.aq = zext i32 %i.ap to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.al, ptr align 4 %i.ak, i64 %i.aq, i1 false)
-  %i.ar = load ptr, ptr %i.k, align 8, !tbaa !86
+  %i.ar = load ptr, ptr %i.k, align 8, !tbaa !86  ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %i.aj
   %.sroa.5.0.insert.shift.i = shl nuw i64 %i.af, 32
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.e to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.5.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.as, align 4
-  %.pre20.i = load ptr, ptr %i.k, align 8, !tbaa !86
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.as, align 4, !tbaa !11
   br label %_ZNK11hb_vector_tIN12hb_bit_set_t10page_map_tELb1EE5bfindIS1_Lb1ETnPN12hb_enable_ifIXT0_EvE4typeELPv0EEEbRKT_Pj14hb_not_found_tj.exit.i
 
 _ZNK11hb_vector_tIN12hb_bit_set_t10page_map_tELb1EE5bfindIS1_Lb1ETnPN12hb_enable_ifIXT0_EvE4typeELPv0EEEbRKT_Pj14hb_not_found_tj.exit.i: ; preds = %bb.e, %bb.h
   %.pre-phi.i = phi i64 [ %i.aj, %bb.h ], [ %i.u, %bb.e ]
-  %i.at = phi ptr [ %.pre20.i, %bb.h ], [ %i.l, %bb.e ]
+  %i.at = phi ptr [ %i.ar, %bb.h ], [ %i.l, %bb.e ]
   %storemerge.i.i.ph.sink.i.i17.i = phi i32 [ %storemerge.i.i.ph.sink.i.i.ph.i, %bb.h ], [ %i.t, %bb.e ]
   store atomic i32 %storemerge.i.i.ph.sink.i.i17.i, ptr %i.f monotonic, align 8
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %.pre-phi.i

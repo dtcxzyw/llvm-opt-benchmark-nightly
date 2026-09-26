@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.a, %bb.x, %bb.e
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc void @b3NameMap_insert_raw(ptr dead_on_unwind noalias nofree nonnull writable writeonly align 8 captures(none) %0, ptr noundef %1, i32 noundef %2, ptr noundef nonnull %3, i1 noundef zeroext %4, i1 noundef zeroext %5) unnamed_addr #7 !func_sanitize !70 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i16, align 2                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 4 uses
   %i.d = alloca i16, align 2                      ; 5 uses
@@ -387,7 +387,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cv = load i16, ptr %i.b, align 2, !tbaa !42
   %i.cw = call fastcc i64 @b3NameMap_find_insert_location_in_chain(ptr noundef nonnull %1, i64 noundef %i.bx, i16 noundef zeroext %i.cv) ; 2 uses
   %i.cx = load ptr, ptr %i.ay, align 8, !tbaa !21 ; 4 uses
-  %i.cy = load i64, ptr %i.a, align 8, !tbaa !48  ; 3 uses
+  %i.cy = load i64, ptr %i.a, align 8, !tbaa !48  ; 5 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
   %i.da = add i64 %i.cy, 1152921504606846976
   %i.db = icmp ult i64 %i.da, 2305843009213693952
@@ -438,8 +438,8 @@ bb.y:                                             ; preds = %bb.x
   unreachable, !nosanitize !10
 
 bb.z:                                             ; preds = %bb.x
-  %i.du = load i64, ptr %i.dp, align 4
-  store i64 %i.du, ptr %i.cz, align 4
+  %i.du = load i64, ptr %i.dp, align 4, !tbaa !39
+  store i64 %i.du, ptr %i.cz, align 4, !tbaa !39
   %i.dv = load ptr, ptr %i.v, align 8, !tbaa !22  ; 6 uses
   %i.dw = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %i.u ; 2 uses
   %i.dx = ptrtoint ptr %i.dv to i64, !nosanitize !10 ; 10 uses
@@ -493,15 +493,11 @@ bb.ah:                                            ; preds = %bb.af
   %i.eq = load i16, ptr %i.ek, align 2, !tbaa !42
   %i.er = and i16 %i.eq, 2047
   %i.es = or disjoint i16 %i.er, %i.ej
-  %6 = load i64, ptr %i.a, align 8, !tbaa !48     ; 3 uses
-  %i.et = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %6 ; 2 uses
-  %7 = add i64 %6, 4611686018427387904
-  %8 = icmp sgt i64 %7, -1
-  %i.eu = shl i64 %6, 1
+  %i.et = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %i.cy ; 2 uses
+  %i.eu = shl nsw i64 %i.cy, 1
   %i.ev = add i64 %i.eu, %i.dx, !nosanitize !10   ; 2 uses
-  %9 = icmp uge i64 %i.ev, %i.dx, !nosanitize !10
-  %10 = and i1 %8, %9, !nosanitize !10
-  br i1 %10, label %bb.aj, label %bb.ai, !prof !14, !nosanitize !10
+  %.not59.i = icmp ult i64 %i.ev, %i.dx, !nosanitize !10
+  br i1 %.not59.i, label %bb.ai, label %bb.aj, !prof !11, !nosanitize !10
 
 bb.ai:                                            ; preds = %bb.ah
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @102, i64 %i.dx, i64 %i.ev) #10, !nosanitize !10
