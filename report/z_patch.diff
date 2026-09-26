@@ -1,0 +1,264 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index c5e1af4bf060f..04bfde6f89e8a 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -12212,6 +12212,113 @@ bool ScalarEvolution::isImpliedCond(CmpPredicate Pred, const SCEV *LHS,
+                                     FoundRHS, CtxI);
+ }
+ 
++namespace {
++/// A term Coef * Factors[0] * ... * Factors[N-1] of a linear combination.
++struct LinearTerm {
++  APInt Coef;
++  SmallVector<const SCEV *, 2> Factors;
++};
++} // namespace
++
++/// Decompose Coef * S into a constant, accumulated in \p K, and non-constant
++/// terms appended to \p Terms, distributing constant factors over adds.
++/// Returns false if \p S is too large. Does not create new SCEVs.
++static bool decomposeLinear(const SCEV *S, const APInt &Coef, APInt &K,
++                            SmallVectorImpl<LinearTerm> &Terms,
++                            unsigned Depth = 0) {
++  if (Depth > 3 || Terms.size() > 16)
++    return false;
++  if (auto *C = dyn_cast<SCEVConstant>(S)) {
++    K += Coef * C->getAPInt();
++    return true;
++  }
++  if (isa<SCEVAddExpr>(S))
++    return all_of(S->operands(), [&](const SCEV *Op) {
++      return decomposeLinear(Op, Coef, K, Terms, Depth + 1);
++    });
++  if (auto *Mul = dyn_cast<SCEVMulExpr>(S)) {
++    ArrayRef<SCEVUse> Ops = Mul->operands();
++    APInt NewCoef = Coef;
++    if (auto *C = dyn_cast<SCEVConstant>(Ops[0])) {
++      NewCoef *= C->getAPInt();
++      Ops = Ops.drop_front();
++    }
++    if (Ops.size() == 1 && isa<SCEVAddExpr>(Ops[0]))
++      return decomposeLinear(Ops[0], NewCoef, K, Terms, Depth + 1);
++    Terms.push_back({NewCoef, SmallVector<const SCEV *, 2>(Ops)});
++    return true;
++  }
++  Terms.push_back({Coef, {S}});
++  return true;
++}
++
++/// Return the constant A + B if it folds to one, without creating new SCEVs.
++static std::optional<APInt> computeConstantSum(ScalarEvolution &SE,
++                                               const SCEV *A, const SCEV *B,
++                                               unsigned Depth = 0) {
++  auto *AR = dyn_cast<SCEVAddRecExpr>(A);
++  auto *BR = dyn_cast<SCEVAddRecExpr>(B);
++  if (AR || BR) {
++    // {S1,+,X1} + {S2,+,X2} is the constant S1 + S2 if X1 + X2 == 0.
++    if (!AR || !BR || AR->getLoop() != BR->getLoop() || !AR->isAffine() ||
++        !BR->isAffine() || Depth > 2)
++      return std::nullopt;
++    std::optional<APInt> StepSum =
++        computeConstantSum(SE, AR->getOperand(1), BR->getOperand(1), Depth + 1);
++    if (!StepSum || !StepSum->isZero())
++      return std::nullopt;
++    return computeConstantSum(SE, AR->getStart(), BR->getStart(), Depth + 1);
++  }
++
++  unsigned BW = SE.getTypeSizeInBits(A->getType());
++  APInt K(BW, 0), One(BW, 1);
++  SmallVector<LinearTerm, 8> Terms;
++  if (!decomposeLinear(A, One, K, Terms) || !decomposeLinear(B, One, K, Terms))
++    return std::nullopt;
++  // All non-constant terms must cancel.
++  SmallVector<bool, 16> Merged(Terms.size());
++  for (auto [I, T] : enumerate(Terms)) {
++    if (Merged[I])
++      continue;
++    APInt Sum = T.Coef;
++    for (unsigned J = I + 1, E = Terms.size(); J != E; ++J) {
++      if (!Merged[J] && Terms[J].Factors == T.Factors) {
++        Sum += Terms[J].Coef;
++        Merged[J] = true;
++      }
++    }
++    if (!Sum.isZero())
++      return std::nullopt;
++  }
++  return K;
++}
++
++/// Check whether FoundLHS SwapPred FoundRHS implies LHS Pred RHS, for constant
++/// RHS and FoundRHS, when LHS + FoundLHS is a constant K: FoundLHS lies in the
++/// region R given by the found condition (and its own range), so LHS lies in
++/// K - R. This is equivalent to the implication
++///   LHS Pred RHS  <-  ~FoundLHS Pred ~FoundRHS
++/// checked via ranges, without forming ~LHS.
++static bool isImpliedCondViaNegation(ScalarEvolution &SE, CmpPredicate Pred,
++                                     const SCEV *LHS, const SCEV *RHS,
++                                     const SCEV *FoundLHS,
++                                     const SCEV *FoundRHS) {
++  auto *RHSC = dyn_cast<SCEVConstant>(RHS);
++  auto *FoundRHSC = dyn_cast<SCEVConstant>(FoundRHS);
++  if (!RHSC || !FoundRHSC || LHS->getType()->isPointerTy() ||
++      FoundLHS->getType()->isPointerTy())
++    return false;
++  std::optional<APInt> K = computeConstantSum(SE, LHS, FoundLHS);
++  if (!K)
++    return false;
++  ConstantRange FoundLHSRange =
++      ConstantRange::makeExactICmpRegion(ICmpInst::getSwappedCmpPredicate(Pred),
++                                         FoundRHSC->getAPInt())
++          .intersectWith(SE.getSignedRange(FoundLHS))
++          .intersectWith(SE.getUnsignedRange(FoundLHS));
++  return ConstantRange(*K).sub(FoundLHSRange).icmp(Pred, RHSC->getAPInt());
++}
++
+ bool ScalarEvolution::isImpliedCondBalancedTypes(
+     CmpPredicate Pred, SCEVUse LHS, SCEVUse RHS, CmpPredicate FoundPred,
+     SCEVUse FoundLHS, SCEVUse FoundRHS, const Instruction *CtxI) {
+@@ -12252,31 +12359,16 @@ bool ScalarEvolution::isImpliedCondBalancedTypes(
+     // 1.  LHS Pred      RHS  <-   FoundRHS Pred      FoundLHS
+     // 2.  RHS SwapPred  LHS  <-   FoundLHS SwapPred  FoundRHS
+     // 3.  LHS Pred      RHS  <-  ~FoundLHS Pred     ~FoundRHS
+-    // 4. ~LHS SwapPred ~RHS  <-   FoundLHS SwapPred  FoundRHS
+     // Forms 1. and 2. require swapping the operands of one condition. Don't
+-    // do this if it would break canonical constant/addrec ordering.
++    // do this if it would break canonical constant/addrec ordering. Form 3. is
++    // only checked via ranges, for constant RHS and FoundRHS.
+     if (!isa<SCEVConstant>(RHS) && !isa<SCEVAddRecExpr>(LHS))
+       return isImpliedCondOperands(ICmpInst::getSwappedCmpPredicate(*P), RHS,
+                                    LHS, FoundLHS, FoundRHS, CtxI);
+     if (!isa<SCEVConstant>(FoundRHS) && !isa<SCEVAddRecExpr>(FoundLHS))
+       return isImpliedCondOperands(*P, LHS, RHS, FoundRHS, FoundLHS, CtxI);
+ 
+-    // There's no clear preference between forms 3. and 4., try both.  Avoid
+-    // forming getNotSCEV of pointer values as the resulting subtract is
+-    // not legal.
+-    if (!LHS->getType()->isPointerTy() && !RHS->getType()->isPointerTy() &&
+-        isImpliedCondOperands(ICmpInst::getSwappedCmpPredicate(*P),
+-                              getNotSCEV(LHS), getNotSCEV(RHS), FoundLHS,
+-                              FoundRHS, CtxI))
+-      return true;
+-
+-    if (!FoundLHS->getType()->isPointerTy() &&
+-        !FoundRHS->getType()->isPointerTy() &&
+-        isImpliedCondOperands(*P, LHS, RHS, getNotSCEV(FoundLHS),
+-                              getNotSCEV(FoundRHS), CtxI))
+-      return true;
+-
+-    return false;
++    return isImpliedCondViaNegation(*this, *P, LHS, RHS, FoundLHS, FoundRHS);
+   }
+ 
+   auto IsSignFlippedPredicate = [](CmpInst::Predicate P1,
+diff --git a/llvm/test/Analysis/ScalarEvolution/implied-via-negation.ll b/llvm/test/Analysis/ScalarEvolution/implied-via-negation.ll
+new file mode 100644
+index 0000000000000..819e7a767ba8d
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/implied-via-negation.ll
+@@ -0,0 +1,60 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -disable-output -passes="print<scalar-evolution>" \
++; RUN:   -scalar-evolution-classify-expressions=0 2>&1 | FileCheck %s
++
++; (n s> 0) ===> (11 - n s< 11), via 11 - n == ~(n - 12).
++define void @guard_sub_from_constant(i32 %n) {
++; CHECK-LABEL: 'guard_sub_from_constant'
++; CHECK-NEXT:  Determining loop execution counts for: @guard_sub_from_constant
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + (sext i32 %n to i64))<nsw> /u 4)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 536870911
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + (sext i32 %n to i64))<nsw> /u 4)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %guard = icmp sgt i32 %n, 0
++  br i1 %guard, label %ph, label %exit
++
++ph:
++  %sub = sub nsw i32 15, %n
++  %start = sext i32 %sub to i64
++  br label %loop
++
++loop:
++  %iv = phi i64 [ %start, %ph ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 4
++  %cmp = icmp slt i64 %iv, 11
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; (sext x s< 0) ===> (8 - sext x s> -1). Needs the range of sext x to exclude
++; INT_MIN.
++define void @guard_sext_negative(i16 %x) {
++; CHECK-LABEL: 'guard_sext_negative'
++; CHECK-NEXT:  Determining loop execution counts for: @guard_sext_negative
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (9 + (-1 * (sext i16 %x to i32))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 32777
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (9 + (-1 * (sext i16 %x to i32))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %s = sext i16 %x to i32
++  %guard = icmp slt i32 %s, 0
++  br i1 %guard, label %ph, label %exit
++
++ph:
++  %start = sub nsw i32 8, %s
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %ph ], [ %iv.next, %loop ]
++  %iv.next = add nsw i32 %iv, -1
++  %cmp = icmp sgt i32 %iv, -1
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/implied-via-negation.ll b/llvm/test/Transforms/IndVarSimplify/implied-via-negation.ll
+new file mode 100644
+index 0000000000000..79bffb9c65321
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/implied-via-negation.ll
+@@ -0,0 +1,39 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=indvars -S < %s | FileCheck %s
++
++; %j == 8 - %i, so (%i u< 7) ===> (%j u> 1).
++define void @addrec_negated_addrec(ptr %p) {
++; CHECK-LABEL: define void @addrec_negated_addrec(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign ult i32 [[I]], 7
++; CHECK-NEXT:    br i1 [[C]], label %[[LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    store i1 true, ptr [[P]], align 1
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i32 [[I]], 1
++; CHECK-NEXT:    br label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %entry ], [ %i.next, %latch ]
++  %j = phi i32 [ 8, %entry ], [ %j.next, %latch ]
++  %c = icmp ult i32 %i, 7
++  br i1 %c, label %latch, label %exit
++
++latch:
++  %d = icmp ugt i32 %j, 1
++  store i1 %d, ptr %p
++  %i.next = add nuw nsw i32 %i, 1
++  %j.next = add nsw i32 %j, -1
++  br label %loop
++
++exit:
++  ret void
++}
