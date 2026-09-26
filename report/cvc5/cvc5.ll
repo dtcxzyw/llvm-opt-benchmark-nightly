@@ -205,7 +205,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store i32 %.0.i22.i.i.i.i.i.i, ptr %i.gb, align 4, !tbaa !749, !alias.scope !3628
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.gf = load i16, ptr %i.x, align 8, !noalias !3628
-  store i16 %i.gf, ptr %i.ge, align 8, !alias.scope !3628
+  store i16 %i.gf, ptr %i.ge, align 8, !tbaa !261, !alias.scope !3628
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 176
   store i8 1, ptr %i.gg, align 8, !tbaa !753, !alias.scope !3628
   br label %"_ZSt5visitIN4cvc510overloadedIJZNKS0_6Solver13getOptionInfoERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0ZNKS2_13getOptionInfoESA_E3$_1ZNKS2_13getOptionInfoESA_E3$_2ZNKS2_13getOptionInfoESA_E3$_3ZNKS2_13getOptionInfoESA_E3$_4ZNKS2_13getOptionInfoESA_E3$_5ZNKS2_13getOptionInfoESA_E3$_6EEEJRSt7variantIJNS0_8internal7options10OptionInfo8VoidInfoENSM_9ValueInfoIbEENSO_IS8_EENSM_10NumberInfoIlEENSR_ImEENSR_IdEENSM_8ModeInfoEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalIS11_EEEEE4typeEE4typeEOS1A_EEEE4typeEOSZ_DpOS11_.exit"
@@ -608,7 +608,7 @@ _ZNSt8__detail9__variant9__emplaceILm0ELb0EJN4cvc510OptionInfo8VoidInfoENS3_9Val
 
 bb.g:                                             ; preds = %bb.a
   %i.q = load ptr, ptr %0, align 8, !tbaa !752    ; 8 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 88 ; 3 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 88 ; 2 uses
   %i.s = load i8, ptr %i.r, align 8, !tbaa !753   ; 2 uses
   switch i8 %i.s, label %bb.i [
     i8 1, label %bb.h
@@ -616,8 +616,8 @@ bb.g:                                             ; preds = %bb.a
   ], !prof !847
 
 bb.h:                                             ; preds = %bb.g
-  %i.t = load i16, ptr %1, align 8
-  store i16 %i.t, ptr %i.q, align 8
+  %i.t = load i16, ptr %1, align 8, !tbaa !261
+  store i16 %i.t, ptr %i.q, align 8, !tbaa !261
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZNS0_17_Move_assign_baseILb0EJN4cvc510OptionInfo8VoidInfoENS6_9ValueInfoIbEENS8_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS6_10NumberInfoIlEENSH_ImEENSH_IdEENS6_8ModeInfoEEEaSEOSM_EUlOT_T0_E_RSt7variantIJS7_S9_SG_SI_SJ_SK_SL_EEEJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESS_SV_.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -665,12 +665,11 @@ bb.l:                                             ; preds = %bb.i
 
 _ZSt10__do_visitIvZNSt8__detail9__variant16_Variant_storageILb0EJN4cvc510OptionInfo8VoidInfoENS4_9ValueInfoIbEENS6_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS4_10NumberInfoIlEENSF_ImEENSF_IdEENS4_8ModeInfoEEE8_M_resetEvEUlOT_E_JRSt7variantIJS5_S7_SE_SG_SH_SI_SJ_EEEEDcOT0_DpOT1_.exit.i.i.i.i.i.i18: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i.i.i.i.i.i.i.i.i.i.i20, %bb.k, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i.i.i.i.i.i.i.i.i.i.i21, %bb.i, %bb.i, %bb.i, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
-  store i8 -1, ptr %i.r, align 8, !tbaa !753
   br label %_ZNSt8__detail9__variant9__emplaceILm1ELb0EJN4cvc510OptionInfo8VoidInfoENS3_9ValueInfoIbEENS5_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS3_10NumberInfoIlEENSE_ImEENSE_IdEENS3_8ModeInfoEEJS6_EEEvRNS0_16_Variant_storageIXT0_EJDpT1_EEEDpOT2_.exit.i.i.i.i
 
 _ZNSt8__detail9__variant9__emplaceILm1ELb0EJN4cvc510OptionInfo8VoidInfoENS3_9ValueInfoIbEENS5_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS3_10NumberInfoIlEENSE_ImEENSE_IdEENS3_8ModeInfoEEJS6_EEEvRNS0_16_Variant_storageIXT0_EJDpT1_EEEDpOT2_.exit.i.i.i.i: ; preds = %_ZSt10__do_visitIvZNSt8__detail9__variant16_Variant_storageILb0EJN4cvc510OptionInfo8VoidInfoENS4_9ValueInfoIbEENS6_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS4_10NumberInfoIlEENSF_ImEENSF_IdEENS4_8ModeInfoEEE8_M_resetEvEUlOT_E_JRSt7variantIJS5_S7_SE_SG_SH_SI_SJ_EEEEDcOT0_DpOT1_.exit.i.i.i.i.i.i18, %bb.g
-  %i.af = load i16, ptr %1, align 8
-  store i16 %i.af, ptr %i.q, align 8
+  %i.af = load i16, ptr %1, align 8, !tbaa !261
+  store i16 %i.af, ptr %i.q, align 8, !tbaa !261
   store i8 1, ptr %i.r, align 8, !tbaa !753
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZNS0_17_Move_assign_baseILb0EJN4cvc510OptionInfo8VoidInfoENS6_9ValueInfoIbEENS8_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS6_10NumberInfoIlEENSH_ImEENSH_IdEENS6_8ModeInfoEEEaSEOSM_EUlOT_T0_E_RSt7variantIJS7_S9_SG_SI_SJ_SK_SL_EEEJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESS_SV_.exit
 

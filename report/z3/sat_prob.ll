@@ -204,7 +204,7 @@ _ZN6vectorIPN3sat6clauseELb0EjE9push_backERKS2_.exit: ; preds = %bb.b, %_ZNK6vec
   store ptr %i.b, ptr %i.o, align 8, !tbaa !44
   %i.p = add i32 %i.k, 1
   store i32 %i.p, ptr %i.m, align 4, !tbaa !20
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 4 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 3 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !38   ; 4 uses
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %bb.d, label %bb.c
@@ -225,16 +225,14 @@ bb.d:                                             ; preds = %bb.c, %_ZN6vectorIP
   br label %_ZN6vectorIN3sat4prob11clause_infoELb0EjE9push_backEOS2_.exit
 
 _ZN6vectorIN3sat4prob11clause_infoELb0EjE9push_backEOS2_.exit: ; preds = %bb.c, %bb.d
-  %i.y = phi i32 [ %.pre2.i11, %bb.d ], [ %i.u, %bb.c ]
-  %i.z = phi ptr [ %.pre.i9, %bb.d ], [ %i.r, %bb.c ]
+  %i.y = phi i32 [ %.pre2.i11, %bb.d ], [ %i.u, %bb.c ] ; 2 uses
+  %i.z = phi ptr [ %.pre.i9, %bb.d ], [ %i.r, %bb.c ] ; 2 uses
+  %7 = getelementptr inbounds i8, ptr %i.z, i64 -4
   %i.aa = zext i32 %i.y to i64
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.aa
-  store i64 0, ptr %i.ab, align 4
-  %7 = load ptr, ptr %i.q, align 8, !tbaa !38
-  %8 = getelementptr inbounds i8, ptr %7, i64 -4  ; 2 uses
-  %9 = load i32, ptr %8, align 4, !tbaa !20
-  %i.ac = add i32 %9, 1
-  store i32 %i.ac, ptr %8, align 4, !tbaa !20
+  store i64 0, ptr %i.ab, align 4, !tbaa !20
+  %i.ac = add i32 %i.y, 1
+  store i32 %i.ac, ptr %7, align 4, !tbaa !20
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 20 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !88 ; 2 uses

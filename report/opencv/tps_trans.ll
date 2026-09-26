@@ -205,7 +205,7 @@ _ZNK2cv11_InputArray6getMatEi.exit:               ; preds = %bb.h, %bb.i
   %i.o = load i32, ptr %6, align 8, !tbaa !50
   %i.p = and i32 %i.o, 4064
   %i.q = icmp eq i32 %i.p, 32
-  %i.r = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 3 uses
   %i.s = load i32, ptr %i.r, align 4
   %i.t = icmp sgt i32 %i.s, 0
   %or.cond = select i1 %i.q, i1 %i.t, i1 false
@@ -291,15 +291,18 @@ bb.v:                                             ; preds = %.noexc36
           to label %_ZNK2cv11_InputArray6getMatEi.exit39 unwind label %bb.w
 
 _ZNK2cv11_InputArray6getMatEi.exit39:             ; preds = %bb.v, %bb.u
-  %i.aj = load i32, ptr %i.r, align 4, !tbaa !35
+  %i.aj = load i32, ptr %i.r, align 4, !tbaa !35  ; 2 uses
   %i.ak = icmp sgt i32 %i.aj, 0
   br i1 %i.ak, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNK2cv11_InputArray6getMatEi.exit39
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %10 = load ptr, ptr %i.al, align 8, !tbaa !48
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %9, i64 24
+  %11 = load ptr, ptr %i.ao, align 8, !tbaa !48
+  %wide.trip.count = zext nneg i32 %i.aj to i64
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %bb.x, %_ZNK2cv11_InputArray6getMatEi.exit39
@@ -315,18 +318,14 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
 
 bb.x:                                             ; preds = %.lr.ph, %bb.x
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.x ] ; 3 uses
-  %10 = load ptr, ptr %i.al, align 8, !tbaa !48
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv
-  %.sroa.04.0.copyload = load <2 x float>, ptr %i.aq, align 4
+  %.sroa.04.0.copyload = load <2 x float>, ptr %i.aq, align 4, !tbaa !36
   %i.ar = call fastcc <2 x float> @_ZN2cvL20_applyTransformationERKNS_3MatENS_6Point_IfEES2_(ptr noundef nonnull align 8 dereferenceable(208) %i.am, <2 x float> %.sroa.04.0.copyload, ptr noundef nonnull align 8 dereferenceable(208) %i.an)
-  %11 = load ptr, ptr %i.ao, align 8, !tbaa !48
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %indvars.iv
-  store <2 x float> %i.ar, ptr %i.as, align 4
+  store <2 x float> %i.ar, ptr %i.as, align 4, !tbaa !36
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %12 = load i32, ptr %i.r, align 4, !tbaa !35
-  %13 = sext i32 %12 to i64
-  %14 = icmp slt i64 %indvars.iv.next, %13
-  br i1 %14, label %bb.x, label %._crit_edge, !llvm.loop !73
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !73
 
 bb.y:                                             ; preds = %._crit_edge, %bb.r
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 24

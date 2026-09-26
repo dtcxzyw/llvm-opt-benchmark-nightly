@@ -205,8 +205,8 @@ bb.a:
 
 _ZN5boost13re_detail_60020named_subexpressions4nameC2IcEEPKT_S6_i.exit: ; preds = %bb.a, %._crit_edge.loopexit.i.i
   %.0.lcssa.i.i = phi i64 [ 4611686018427387904, %bb.a ], [ %i.ah, %._crit_edge.loopexit.i.i ] ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !895 ; 5 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !895 ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !176
   %.not.i.i4 = icmp eq ptr %i.aj, %i.al
@@ -215,9 +215,8 @@ _ZN5boost13re_detail_60020named_subexpressions4nameC2IcEEPKT_S6_i.exit: ; preds 
 bb.b:                                             ; preds = %_ZN5boost13re_detail_60020named_subexpressions4nameC2IcEEPKT_S6_i.exit
   %.sroa.0.0.insert.ext = zext i32 %3 to i64
   %.sroa.0.0.insert.insert = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext
-  store i64 %.sroa.0.0.insert.insert, ptr %i.aj, align 4
-  %4 = load ptr, ptr %i.ai, align 8, !tbaa !895
-  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store i64 %.sroa.0.0.insert.insert, ptr %i.aj, align 4, !tbaa !132
+  %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
   store ptr %i.am, ptr %i.ai, align 8, !tbaa !895
   %.pre = load ptr, ptr %0, align 8, !tbaa !368
   br label %_ZNSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE9push_backEOS3_.exit
@@ -248,7 +247,7 @@ _ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_che
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.aq
   %.sroa.0.0.insert.ext6 = zext i32 %3 to i64
   %.sroa.0.0.insert.insert8 = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext6
-  store i64 %.sroa.0.0.insert.insert8, ptr %i.az, align 4
+  store i64 %.sroa.0.0.insert.insert8, ptr %i.az, align 4, !tbaa !132
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.an, %i.aj
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -257,8 +256,8 @@ _ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_che
   %.0911.i.i.i.i.i.i = phi ptr [ %i.bb, %.lr.ph.i.i.i.i.i.i ], [ %i.an, %_ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !896)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !897)
-  %i.ba = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !897, !noalias !896
-  store i64 %i.ba, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !896, !noalias !897
+  %i.ba = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !132, !alias.scope !897, !noalias !896
+  store i64 %i.ba, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !132, !alias.scope !896, !noalias !897
   %i.bb = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.bb, %i.aj

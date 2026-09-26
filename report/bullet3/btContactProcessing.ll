@@ -204,12 +204,12 @@ declare void @_ZSt9terminatev() local_unnamed_addr #6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN20btAlignedObjectArrayI17CONTACT_KEY_TOKENE17quickSortInternalI22CONTACT_KEY_TOKEN_COMPEEvRKT_ii(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #7 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.j, %bb.a
   %.tr36 = phi i32 [ %2, %bb.a ], [ %.230, %bb.j ] ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !32
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !32   ; 5 uses
   %i.c = add nsw i32 %.tr36, %3
   %i.d = sdiv i32 %i.c, 2
   %i.e = sext i32 %i.d to i64
@@ -220,26 +220,25 @@ tailrecurse:                                      ; preds = %bb.j, %bb.a
 bb.b:                                             ; preds = %bb.g, %tailrecurse
   %.028 = phi i32 [ %.tr36, %tailrecurse ], [ %.230, %bb.g ]
   %.0 = phi i32 [ %3, %tailrecurse ], [ %.2, %bb.g ]
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !32     ; 4 uses
   %i.h = sext i32 %.028 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ %i.h, %bb.b ] ; 5 uses
-  %i.i = getelementptr inbounds [8 x i8], ptr %4, i64 %indvars.iv
+  %i.i = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv
   %i.j = load i32, ptr %i.i, align 4, !tbaa !34
   %i.k = icmp ult i32 %i.j, %i.g
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
   br i1 %i.k, label %bb.c, label %.preheader, !llvm.loop !54
 
 .preheader:                                       ; preds = %bb.c
-  %i.l = getelementptr inbounds [8 x i8], ptr %4, i64 %indvars.iv ; 2 uses
+  %i.l = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv ; 2 uses
   %i.m = sext i32 %.0 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.preheader
-  %indvars.iv45 = phi i64 [ %indvars.iv.next46, %bb.d ], [ %i.m, %.preheader ] ; 6 uses
-  %i.n = getelementptr inbounds [8 x i8], ptr %4, i64 %indvars.iv45
+  %indvars.iv45 = phi i64 [ %indvars.iv.next46, %bb.d ], [ %i.m, %.preheader ] ; 5 uses
+  %i.n = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv45
   %i.o = load i32, ptr %i.n, align 4, !tbaa !34
   %i.p = icmp ult i32 %i.g, %i.o
   %indvars.iv.next46 = add nsw i64 %indvars.iv45, -1
@@ -252,13 +251,11 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.s = getelementptr inbounds [8 x i8], ptr %4, i64 %indvars.iv45
+  %i.s = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv45 ; 2 uses
   %i.t = load i64, ptr %i.l, align 4
-  %i.u = load i64, ptr %i.s, align 4
-  store i64 %i.u, ptr %i.l, align 4
-  %5 = load ptr, ptr %i.a, align 8, !tbaa !32
-  %6 = getelementptr inbounds [8 x i8], ptr %5, i64 %indvars.iv45
-  store i64 %i.t, ptr %6, align 4
+  %i.u = load i64, ptr %i.s, align 4, !tbaa !26
+  store i64 %i.u, ptr %i.l, align 4, !tbaa !26
+  store i64 %i.t, ptr %i.s, align 4, !tbaa !26
   %i.v = add nsw i32 %i.q, 1
   %i.w = add nsw i32 %i.r, -1
   br label %bb.g

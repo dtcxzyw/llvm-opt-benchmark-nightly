@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.c
   store i32 %i.aj, ptr %i.ak, align 4, !tbaa !46
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.am = getelementptr inbounds nuw i8, ptr %i.f, i64 48
-  %i.an = load i64, ptr %i.am, align 8
-  store i64 %i.an, ptr %i.al, align 8
+  %i.an = load i64, ptr %i.am, align 8, !tbaa !62
+  store i64 %i.an, ptr %i.al, align 8, !tbaa !62
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 280
   %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 36
@@ -216,7 +216,7 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, 1
   %i.av = load i64, ptr %i.ap, align 8
   %i.aw = tail call i64 @av_mul_q(i64 %i.av, i64 %.sroa.0.0.insert.insert.i) #6
-  store i64 %i.aw, ptr %i.ao, align 8
+  store i64 %i.aw, ptr %i.ao, align 8, !tbaa !62
   %i.ax = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 2 uses
   %i.ay = tail call i32 @ff_draw_init_from_link(ptr noundef nonnull %i.ax, ptr noundef nonnull %i.f, i32 noundef 0) #5 ; 2 uses
   %i.az = icmp slt i32 %i.ay, 0
@@ -331,4 +331,5 @@ attributes #6 = { nounwind willreturn memory(none) }
 !59 = !{!58, !6, i64 104}
 !60 = !{!58, !6, i64 108}
 !61 = distinct !{!61, !49}
+!62 = !{!6, !6, i64 0}
 end_hunk_0

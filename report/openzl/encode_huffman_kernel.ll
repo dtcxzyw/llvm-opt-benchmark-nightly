@@ -205,7 +205,7 @@ ZS_largeHuffmanUncompressed.exit:                 ; preds = %bb.c, %bb.d
   br label %bb.ac
 
 bb.e:                                             ; preds = %bb.a
-  %.sroa.0.0.copyload = load <3 x ptr>, ptr %0, align 8
+  %.sroa.0.0.copyload = load <3 x ptr>, ptr %0, align 8, !tbaa !74
   %i.t = getelementptr i8, ptr %0, i64 8          ; 26 uses
   %.val119 = load ptr, ptr %i.t, align 8, !tbaa !30 ; 5 uses
   %i.u = getelementptr i8, ptr %0, i64 16         ; 5 uses
@@ -455,7 +455,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br i1 %.not113, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.t, %bb.s, %bb.r
-  store <3 x ptr> %.sroa.0.0.copyload, ptr %0, align 8
+  store <3 x ptr> %.sroa.0.0.copyload, ptr %0, align 8, !tbaa !74
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.du = getelementptr inbounds nuw i8, ptr %5, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.du, i8 0, i64 24, i1 false)
@@ -652,9 +652,9 @@ bb.a:
   %i.k = zext nneg i32 %i.j to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4 ; 2 uses
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !80
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !81
   %i.o = add nsw i32 %i.n, 1
-  store i32 %i.o, ptr %i.m, align 4, !tbaa !80
+  store i32 %i.o, ptr %i.m, align 4, !tbaa !81
   br label %.preheader66
 
 .preheader66:                                     ; preds = %.preheader66.unr-lcssa, %.epil.preheader
@@ -678,14 +678,14 @@ bb.a:
   %epil.iter = phi i64 [ 0, %.lr.ph.epil.preheader ], [ %epil.iter.next, %.lr.ph.epil ]
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv75.epil ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 4 ; 2 uses
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !80
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !81
   %i.t = add nsw i32 %i.s, %.06069.epil
-  store i32 %.06069.epil, ptr %i.r, align 4, !tbaa !80
-  store i32 %.06069.epil, ptr %i.q, align 4, !tbaa !81
+  store i32 %.06069.epil, ptr %i.r, align 4, !tbaa !81
+  store i32 %.06069.epil, ptr %i.q, align 4, !tbaa !82
   %indvars.iv.next76.epil = add nsw i64 %indvars.iv75.epil, -1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter90
-  br i1 %epil.iter.cmp.not, label %.preheader.preheader, label %.lr.ph.epil, !llvm.loop !74
+  br i1 %epil.iter.cmp.not, label %.preheader.preheader, label %.lr.ph.epil, !llvm.loop !75
 
 .preheader.preheader:                             ; preds = %.preheader.preheader.loopexit.unr-lcssa, %.lr.ph.epil, %.preheader66
   br label %.preheader
@@ -712,9 +712,9 @@ bb.b:                                             ; preds = %bb.b, %.new
   %i.ac = zext nneg i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 4 ; 2 uses
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !80
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !81
   %i.ag = add nsw i32 %i.af, 1
-  store i32 %i.ag, ptr %i.ae, align 4, !tbaa !80
+  store i32 %i.ag, ptr %i.ae, align 4, !tbaa !81
   %i.ah = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %indvars.iv
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 12
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !22
@@ -724,13 +724,13 @@ bb.b:                                             ; preds = %bb.b, %.new
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.an
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 4 ; 2 uses
-  %i.aq = load i32, ptr %i.ap, align 4, !tbaa !80
+  %i.aq = load i32, ptr %i.ap, align 4, !tbaa !81
   %i.ar = add nsw i32 %i.aq, 1
-  store i32 %i.ar, ptr %i.ap, align 4, !tbaa !80
+  store i32 %i.ar, ptr %i.ap, align 4, !tbaa !81
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.preheader66.unr-lcssa, label %bb.b, !llvm.loop !75
+  br i1 %niter.ncmp.1, label %.preheader66.unr-lcssa, label %bb.b, !llvm.loop !76
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %indvars.iv75 = phi i64 [ %i.u, %.lr.ph.preheader.new ], [ %indvars.iv.next76.3, %.lr.ph ] ; 5 uses
@@ -738,35 +738,35 @@ bb.b:                                             ; preds = %bb.b, %.new
   %niter94 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter94.next.3, %.lr.ph ]
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv75 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 4 ; 2 uses
-  %i.au = load i32, ptr %i.at, align 4, !tbaa !80
+  %i.au = load i32, ptr %i.at, align 4, !tbaa !81
   %i.av = add nsw i32 %i.au, %.06069              ; 3 uses
-  store i32 %.06069, ptr %i.at, align 4, !tbaa !80
-  store i32 %.06069, ptr %i.as, align 4, !tbaa !81
+  store i32 %.06069, ptr %i.at, align 4, !tbaa !81
+  store i32 %.06069, ptr %i.as, align 4, !tbaa !82
   %i.aw = getelementptr [8 x i8], ptr %4, i64 %indvars.iv75 ; 2 uses
   %i.ax = getelementptr i8, ptr %i.aw, i64 -8
   %i.ay = getelementptr i8, ptr %i.aw, i64 -4     ; 2 uses
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !80
+  %i.az = load i32, ptr %i.ay, align 4, !tbaa !81
   %i.ba = add nsw i32 %i.az, %i.av                ; 3 uses
-  store i32 %i.av, ptr %i.ay, align 4, !tbaa !80
-  store i32 %i.av, ptr %i.ax, align 4, !tbaa !81
+  store i32 %i.av, ptr %i.ay, align 4, !tbaa !81
+  store i32 %i.av, ptr %i.ax, align 4, !tbaa !82
   %i.bb = getelementptr [8 x i8], ptr %4, i64 %indvars.iv75 ; 2 uses
   %i.bc = getelementptr i8, ptr %i.bb, i64 -16
   %i.bd = getelementptr i8, ptr %i.bb, i64 -12    ; 2 uses
-  %i.be = load i32, ptr %i.bd, align 4, !tbaa !80
+  %i.be = load i32, ptr %i.bd, align 4, !tbaa !81
   %i.bf = add nsw i32 %i.be, %i.ba                ; 3 uses
-  store i32 %i.ba, ptr %i.bd, align 4, !tbaa !80
-  store i32 %i.ba, ptr %i.bc, align 4, !tbaa !81
+  store i32 %i.ba, ptr %i.bd, align 4, !tbaa !81
+  store i32 %i.ba, ptr %i.bc, align 4, !tbaa !82
   %i.bg = getelementptr [8 x i8], ptr %4, i64 %indvars.iv75 ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bg, i64 -24
   %i.bi = getelementptr i8, ptr %i.bg, i64 -20    ; 2 uses
-  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !80
+  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !81
   %i.bk = add nsw i32 %i.bj, %i.bf                ; 2 uses
-  store i32 %i.bf, ptr %i.bi, align 4, !tbaa !80
-  store i32 %i.bf, ptr %i.bh, align 4, !tbaa !81
+  store i32 %i.bf, ptr %i.bi, align 4, !tbaa !81
+  store i32 %i.bf, ptr %i.bh, align 4, !tbaa !82
   %indvars.iv.next76.3 = add nsw i64 %indvars.iv75, -4 ; 2 uses
   %niter94.next.3 = add i64 %niter94, 4           ; 2 uses
   %niter94.ncmp.3 = icmp eq i64 %niter94.next.3, %unroll_iter93
-  br i1 %niter94.ncmp.3, label %.preheader.preheader.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !76
+  br i1 %niter94.ncmp.3, label %.preheader.preheader.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !77
 
 bb.c:                                             ; preds = %.preheader
   %i.bl = mul nuw nsw i64 %wide.trip.count, 12
@@ -788,15 +788,15 @@ bb.c:                                             ; preds = %.preheader
   %i.br = zext nneg i32 %i.bq to i64
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.br
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 4 ; 2 uses
-  %i.bu = load i32, ptr %i.bt, align 4, !tbaa !80 ; 2 uses
+  %i.bu = load i32, ptr %i.bt, align 4, !tbaa !81 ; 2 uses
   %i.bv = add nsw i32 %i.bu, 1
-  store i32 %i.bv, ptr %i.bt, align 4, !tbaa !80
+  store i32 %i.bv, ptr %i.bt, align 4, !tbaa !81
   %i.bw = sext i32 %i.bu to i64
   %i.bx = getelementptr inbounds [12 x i8], ptr %3, i64 %i.bw
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bx, ptr noundef nonnull align 4 dereferenceable(12) %i.bm, i64 12, i1 false), !tbaa.struct !82
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bx, ptr noundef nonnull align 4 dereferenceable(12) %i.bm, i64 12, i1 false), !tbaa.struct !83
   %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 1 ; 2 uses
   %exitcond82.not = icmp eq i64 %indvars.iv.next79, %wide.trip.count
-  br i1 %exitcond82.not, label %bb.c, label %.preheader, !llvm.loop !77
+  br i1 %exitcond82.not, label %bb.c, label %.preheader, !llvm.loop !78
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.c
   ret void
@@ -804,9 +804,9 @@ bb.c:                                             ; preds = %.preheader
 .lr.ph73:                                         ; preds = %.lr.ph73.preheader, %bb.e
   %indvars.iv83 = phi i64 [ 2, %.lr.ph73.preheader ], [ %indvars.iv.next84, %bb.e ] ; 3 uses
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv83 ; 2 uses
-  %i.bz = load i32, ptr %i.by, align 4, !tbaa !81 ; 2 uses
+  %i.bz = load i32, ptr %i.by, align 4, !tbaa !82 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 4
-  %i.cb = load i32, ptr %i.ca, align 4, !tbaa !80
+  %i.cb = load i32, ptr %i.ca, align 4, !tbaa !81
   %i.cc = sub nsw i32 %i.cb, %i.bz                ; 2 uses
   %i.cd = icmp sgt i32 %i.cc, 0
   br i1 %i.cd, label %bb.d, label %bb.e
@@ -822,7 +822,7 @@ bb.d:                                             ; preds = %.lr.ph73
 bb.e:                                             ; preds = %bb.d, %.lr.ph73
   %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
   %exitcond87.not = icmp eq i64 %indvars.iv.next84, %wide.trip.count86
-  br i1 %exitcond87.not, label %._crit_edge, label %.lr.ph73, !llvm.loop !78
+  br i1 %exitcond87.not, label %._crit_edge, label %.lr.ph73, !llvm.loop !79
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
@@ -935,13 +935,14 @@ attributes #15 = { nounwind allocsize(0) }
 !71 = distinct !{!71, !23}
 !72 = distinct !{!72, !23}
 !73 = distinct !{!73, !24}
-!74 = distinct !{!74, !24}
-!75 = distinct !{!75, !23}
+!74 = !{!14, !14, i64 0}
+!75 = distinct !{!75, !24}
 !76 = distinct !{!76, !23}
 !77 = distinct !{!77, !23}
 !78 = distinct !{!78, !23}
-!79 = !{!"", !8, i64 0, !8, i64 4}
-!80 = !{!79, !8, i64 4}
-!81 = !{!79, !8, i64 0}
-!82 = !{i64 0, i64 4, !19, i64 4, i64 4, !19, i64 8, i64 2, !25, i64 10, i64 2, !25}
+!79 = distinct !{!79, !23}
+!80 = !{!"", !8, i64 0, !8, i64 4}
+!81 = !{!80, !8, i64 4}
+!82 = !{!80, !8, i64 0}
+!83 = !{i64 0, i64 4, !19, i64 4, i64 4, !19, i64 8, i64 2, !25, i64 10, i64 2, !25}
 end_hunk_0

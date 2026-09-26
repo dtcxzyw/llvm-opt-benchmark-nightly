@@ -204,7 +204,7 @@ _ZNSt8multimapIN3igl9MshLoader10msh_structEiSt4lessIS2_ESaISt4pairIKS2_iEEE5clea
   store i64 0, ptr %i.i, align 8, !tbaa !23
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 4 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !85   ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 8 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 7 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !182
   %.not.i.i = icmp eq ptr %i.m, %i.k
   br i1 %.not.i.i, label %_ZNSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE5clearEv.exit, label %_ZSt8_DestroyIPN3igl9MshLoader10msh_structES2_EvT_S4_RSaIT0_E.exit.i.i
@@ -264,7 +264,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZNSt8mult
   %.sroa.067.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.067.0.insert.ext
   %i.ak = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #24 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
-  store i64 %.sroa.067.0.insert.insert, ptr %i.al, align 4
+  store i64 %.sroa.067.0.insert.insert, ptr %i.al, align 4, !tbaa !31
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
   %i.an = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %i.an, ptr %i.am, align 4, !tbaa !185
@@ -429,20 +429,20 @@ _ZNSt20back_insert_iteratorISt6vectorISt4pairIKN3igl9MshLoader10msh_structEiESaI
   %.sroa.054.587 = phi ptr [ %.sroa.054.4, %"_ZSt11unique_copyISt17_Rb_tree_iteratorISt4pairIKN3igl9MshLoader10msh_structEiEESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEZNS3_16index_structuresEiE3$_0ET0_T_SF_SE_T1_.exit" ], [ %i.bm, %_ZNSt20back_insert_iteratorISt6vectorISt4pairIKN3igl9MshLoader10msh_structEiESaIS6_EEEaSERKS6_.exit.i.i ] ; 4 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 3 uses
   %.pre.i = load ptr, ptr %i.l, align 8, !tbaa !182
+  %.pre7.i = load ptr, ptr %i.ct, align 8, !tbaa !86
   br label %bb.k
 
 bb.k:                                             ; preds = %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i", %.lr.ph.i
-  %i.cu = phi ptr [ %.pre.i, %.lr.ph.i ], [ %i.dt, %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i" ] ; 5 uses
-  %.sroa.02.06.i.a = phi ptr [ %.sroa.054.587, %.lr.ph.i ], [ %i.du, %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i" ] ; 3 uses
-  %2 = load ptr, ptr %i.ct, align 8, !tbaa !86
-  %.not.i.i.i23 = icmp eq ptr %i.cu, %2
+  %i.cu = phi ptr [ %.pre7.i, %.lr.ph.i ], [ %2, %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i" ] ; 5 uses
+  %.sroa.02.06.i.a = phi ptr [ %.pre.i, %.lr.ph.i ], [ %i.dt, %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i" ] ; 3 uses
+  %.sroa.02.06.i = phi ptr [ %.sroa.054.587, %.lr.ph.i ], [ %i.du, %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i" ] ; 3 uses
+  %.not.i.i.i23 = icmp eq ptr %.sroa.02.06.i.a, %i.cu
   br i1 %.not.i.i.i23, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.cv = load i64, ptr %.sroa.02.06.i.a, align 4
-  store i64 %i.cv, ptr %i.cu, align 4
-  %3 = load ptr, ptr %i.l, align 8, !tbaa !182
-  %i.cw = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.cv = load i64, ptr %.sroa.02.06.i, align 4, !tbaa !31
+  store i64 %i.cv, ptr %.sroa.02.06.i.a, align 4, !tbaa !31
+  %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.a, i64 8 ; 2 uses
   store ptr %i.cw, ptr %i.l, align 8, !tbaa !182
   br label %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i"
 
@@ -476,8 +476,8 @@ _ZNKSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
 .noexc25:                                         ; preds = %_ZNKSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.da
-  %i.dk = load i64, ptr %.sroa.02.06.i.a, align 4
-  store i64 %i.dk, ptr %i.dj, align 4
+  %i.dk = load i64, ptr %.sroa.02.06.i, align 4, !tbaa !31
+  store i64 %i.dk, ptr %i.dj, align 4, !tbaa !31
   %.not10.i.i.i.i.i.i.i = icmp eq ptr %i.cx, %i.cu
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
@@ -486,8 +486,8 @@ _ZNKSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %.0911.i.i.i.i.i.i.i = phi ptr [ %i.dm, %.lr.ph.i.i.i.i.i.i.i ], [ %i.cx, %.noexc25 ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !190)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !191)
-  %i.dl = load i64, ptr %.0911.i.i.i.i.i.i.i, align 4, !alias.scope !191, !noalias !190
-  store i64 %i.dl, ptr %.012.i.i.i.i.i.i.i, align 4, !alias.scope !190, !noalias !191
+  %i.dl = load i64, ptr %.0911.i.i.i.i.i.i.i, align 4, !tbaa !31, !alias.scope !191, !noalias !190
+  store i64 %i.dl, ptr %.012.i.i.i.i.i.i.i, align 4, !tbaa !31, !alias.scope !190, !noalias !191
   %i.dm = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.dm, %i.cu
@@ -509,13 +509,14 @@ bb.o:                                             ; preds = %_ZNSt6vectorIN3igl9
 _ZNSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i: ; preds = %bb.o, %_ZNSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i.i
   store ptr %i.di, ptr %i.j, align 8, !tbaa !85
   store ptr %i.do, ptr %i.l, align 8, !tbaa !182
-  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %i.dg
+  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %i.dg ; 2 uses
   store ptr %i.ds, ptr %i.ct, align 8, !tbaa !86
   br label %"_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i"
 
 "_ZZN3igl9MshLoader16index_structuresEiENK3$_1clERKSt4pairIKNS0_10msh_structEiE.exit.i": ; preds = %_ZNSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i, %bb.l
+  %2 = phi ptr [ %i.cu, %bb.l ], [ %i.ds, %_ZNSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i ]
   %i.dt = phi ptr [ %i.cw, %bb.l ], [ %i.do, %_ZNSt6vectorIN3igl9MshLoader10msh_structESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i ]
-  %i.du = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.a, i64 12 ; 2 uses
+  %i.du = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i, i64 12 ; 2 uses
   %.not.i = icmp eq ptr %i.du, %.sroa.11.388
   br i1 %.not.i, label %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPSt4pairIKN3igl9MshLoader10msh_structEiESt6vectorIS7_SaIS7_EEEEZNS4_16index_structuresEiE3$_1ET0_T_SF_SE_.exit", label %bb.k, !llvm.loop !176
 
@@ -650,13 +651,13 @@ bb.t:                                             ; preds = %bb.r, %bb.q
 
 ._crit_edge121:                                   ; preds = %bb.t, %.lr.ph120, %.lr.ph124, %.loopexit
   %.0.lcssa = phi i32 [ 0, %.loopexit ], [ %i.fx, %.lr.ph120 ], [ 0, %.lr.ph124 ], [ 0, %bb.t ]
-  %i.fg = load i64, ptr %.sroa.050.0123, align 4  ; 3 uses
+  %i.fg = load i64, ptr %.sroa.050.0123, align 4, !tbaa !31 ; 3 uses
   %i.fh = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #24
           to label %.noexc41 unwind label %bb.x   ; 3 uses
 
 .noexc41:                                         ; preds = %._crit_edge121
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 32
-  store i64 %i.fg, ptr %i.fi, align 4
+  store i64 %i.fg, ptr %i.fi, align 4, !tbaa !31
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fh, i64 40
   store i32 %.0.lcssa, ptr %i.fj, align 4, !tbaa !185
   %.078.i.i.i31 = load ptr, ptr %i.o, align 8, !tbaa !186 ; 2 uses

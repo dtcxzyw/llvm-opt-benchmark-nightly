@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = zext i32 %2 to i64
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !41
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %i.i, i64 %i.h ; 4 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !75   ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !75   ; 6 uses
   %i.m = load ptr, ptr %i.j, align 8, !tbaa !76   ; 5 uses
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = ptrtoint ptr %i.m to i64
@@ -227,9 +227,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.l, align 4
-  %5 = load ptr, ptr %i.k, align 8, !tbaa !75
-  %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 12
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.l, align 4, !tbaa !37
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   store ptr %i.ab, ptr %i.k, align 8, !tbaa !75
   br label %_ZNSt6vectorIN2lp8row_cellINS0_12empty_structEEE13std_allocatorIS3_EE9push_backEOS3_.exit
 
@@ -252,7 +251,7 @@ _ZNKSt6vectorIN2lp8row_cellINS0_12empty_structEEE13std_allocatorIS3_EE12_M_check
   %i.ah = mul nuw nsw i64 %i.ag, 12
   %i.ai = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.ah) ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.p
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.aj, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.aj, align 4, !tbaa !37
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.m, %i.l
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN2lp8row_cellINS0_12empty_structEEE13std_allocatorIS3_EE11_S_relocateEPS3_S7_S7_RS5_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -655,8 +654,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = zext i32 %2 to i64
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !41
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %i.i, i64 %i.h ; 4 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !75   ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !75   ; 6 uses
   %i.m = load ptr, ptr %i.j, align 8, !tbaa !76   ; 5 uses
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = ptrtoint ptr %i.m to i64
@@ -678,9 +677,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.l, align 4
-  %5 = load ptr, ptr %i.k, align 8, !tbaa !75
-  %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 12
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.l, align 4, !tbaa !37
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   store ptr %i.ab, ptr %i.k, align 8, !tbaa !75
   br label %_ZNSt6vectorIN2lp8row_cellINS0_12empty_structEEE13std_allocatorIS3_EE9push_backEOS3_.exit
 
@@ -703,7 +701,7 @@ _ZNKSt6vectorIN2lp8row_cellINS0_12empty_structEEE13std_allocatorIS3_EE12_M_check
   %i.ah = mul nuw nsw i64 %i.ag, 12
   %i.ai = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.ah) ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.p
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.aj, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.aj, align 4, !tbaa !37
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.m, %i.l
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN2lp8row_cellINS0_12empty_structEEE13std_allocatorIS3_EE11_S_relocateEPS3_S7_S7_RS5_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 

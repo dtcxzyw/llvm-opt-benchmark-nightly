@@ -205,7 +205,11 @@ bb.nc:                                            ; preds = %bb.nf
 
 bb.nd:                                            ; preds = %_Z11do_per_stepll.exit983, %_Z11do_per_stepll.exit983.thread, %_Z11do_per_stepll.exit980
   %.0560 = phi i32 [ %i.bju, %_Z11do_per_stepll.exit980 ], [ %i.bjy, %_Z11do_per_stepll.exit983.thread ], [ %spec.select1498, %_Z11do_per_stepll.exit983 ] ; 2 uses
-  br i1 %i.ayd, label %bb.ne, label %bb.nl
+  br i1 %i.ayd, label %bb.ne, label %._crit_edge1621
+
+._crit_edge1621:                                  ; preds = %bb.nd
+  %.pre1622 = load ptr, ptr %i.hw, align 8, !tbaa !367
+  br label %bb.nl
 
 bb.ne:                                            ; preds = %bb.nd
   %i.bkg = load ptr, ptr %i.ez, align 8, !tbaa !329 ; 2 uses
@@ -242,11 +246,11 @@ bb.ni:                                            ; preds = %bb.ng, %bb.nh
 bb.nj:                                            ; preds = %bb.ni
   %.fca.0.extract = extractvalue { i64, i16 } %i.bkp, 0
   %.fca.1.extract = extractvalue { i64, i16 } %i.bkp, 1
-  %i.bkq = load ptr, ptr %i.hw, align 8, !tbaa !367 ; 2 uses
+  %i.bkq = load ptr, ptr %i.hw, align 8, !tbaa !367 ; 3 uses
   %i.bkr = getelementptr inbounds nuw i8, ptr %i.bkq, i64 29
-  store i64 %.fca.0.extract, ptr %i.bkr, align 1
+  store i64 %.fca.0.extract, ptr %i.bkr, align 1, !tbaa !58
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bkq, i64 37
-  store i16 %.fca.1.extract, ptr %.sroa.5.0..sroa_idx, align 1
+  store i16 %.fca.1.extract, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !58
   %i.bks = or i32 %.0560, 4
   br label %bb.nl
 
@@ -255,8 +259,9 @@ bb.nk:                                            ; preds = %bb.ni, %bb.nh
           cleanup
   br label %_ZNSt10unique_ptrIN3gmx12ResetHandlerESt14default_deleteIS1_EED2Ev.exit1130
 
-bb.nl:                                            ; preds = %bb.nj, %bb.nd
-  %i.bku = phi i32 [ %i.bks, %bb.nj ], [ %.0560, %bb.nd ]
+bb.nl:                                            ; preds = %._crit_edge1621, %bb.nj
+  %88 = phi ptr [ %i.bkq, %bb.nj ], [ %.pre1622, %._crit_edge1621 ]
+  %i.bku = phi i32 [ %i.bks, %bb.nj ], [ %.0560, %._crit_edge1621 ]
   %i.bkv = load ptr, ptr %i.y, align 8, !tbaa !269, !nonnull !270, !align !271
   %i.bkw = getelementptr inbounds nuw i8, ptr %i.bkv, i64 48
   %i.bkx = load i8, ptr %i.bkw, align 8, !tbaa !794, !range !278, !noundef !270
@@ -272,7 +277,6 @@ bb.nl:                                            ; preds = %bb.nj, %bb.nd
   %i.blg = sub i64 %i.ble, %i.blf
   %i.blh = getelementptr inbounds nuw i8, ptr %i.blc, i64 %i.blg
   %i.bli = load i64, ptr %i.o, align 8, !tbaa !50
-  %88 = load ptr, ptr %i.hw, align 8, !tbaa !367
   %i.blj = getelementptr inbounds nuw i8, ptr %88, i64 29
   invoke void @_ZN3gmx17setupStepWorkloadEiNS_8ArrayRefIKNS_8MtsLevelEEElRKNS_22DomainLifetimeWorkloadERKNS_18SimulationWorkloadE(ptr dead_on_unwind nonnull writable sret(%"class.gmx::StepWorkload") align 1 %44, i32 noundef %i.blb, ptr %i.blc, ptr %i.blh, i64 noundef %i.bli, ptr noundef nonnull align 1 dereferenceable(10) %i.blj, ptr noundef nonnull align 1 dereferenceable(29) %i.hx)
           to label %bb.nm unwind label %bb.nw

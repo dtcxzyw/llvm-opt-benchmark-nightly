@@ -204,12 +204,12 @@ __cxx_global_var_init.exit:                       ; preds = %bb.a
   store ptr %i.a, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueHueCtrlE, align 8, !tbaa !16
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
   store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueHueCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float f0x3E2AAAAB, float f0x3E2AAAAB>, ptr %i.a, align 4
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float f0x3E2AAAAB, float f0x3E2AAAAB>, ptr %i.a, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store <4 x float> <float f0x3EAAAAAB, float f0x3EAAAAAB, float 5.000000e-01, float 5.000000e-01>, ptr %.sroa.8.0..sroa_idx.i, align 4
+  store <4 x float> <float f0x3EAAAAAB, float f0x3EAAAAAB, float 5.000000e-01, float 5.000000e-01>, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !89
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store <4 x float> <float f0x3F2AAAAB, float f0x3F2AAAAB, float f0x3F555555, float f0x3F555555>, ptr %.sroa.12.0..sroa_idx.i, align 4
-  store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueHueCtrlE, i64 8), align 8, !tbaa !88
+  store <4 x float> <float f0x3F2AAAAB, float f0x3F2AAAAB, float f0x3F555555, float f0x3F555555>, ptr %.sroa.12.0..sroa_idx.i, align 4, !tbaa !89
+  store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueHueCtrlE, i64 8), align 8, !tbaa !90
   %i.h = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueHueCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueSatCtrlE, i8 0, i64 24, i1 false)
   %i.i = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #25
@@ -226,12 +226,12 @@ __cxx_global_var_init.1.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.i, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueSatCtrlE, align 8, !tbaa !16
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 48 ; 2 uses
   store ptr %i.l, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueSatCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float f0x3E2AAAAB, float 1.000000e+00>, ptr %i.i, align 4
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float f0x3E2AAAAB, float 1.000000e+00>, ptr %i.i, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i6 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store <4 x float> <float f0x3EAAAAAB, float 1.000000e+00, float 5.000000e-01, float 1.000000e+00>, ptr %.sroa.8.0..sroa_idx.i6, align 4
+  store <4 x float> <float f0x3EAAAAAB, float 1.000000e+00, float 5.000000e-01, float 1.000000e+00>, ptr %.sroa.8.0..sroa_idx.i6, align 4, !tbaa !89
   %.sroa.12.0..sroa_idx.i10 = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  store <4 x float> <float f0x3F2AAAAB, float 1.000000e+00, float f0x3F555555, float 1.000000e+00>, ptr %.sroa.12.0..sroa_idx.i10, align 4
-  store ptr %i.l, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueSatCtrlE, i64 8), align 8, !tbaa !88
+  store <4 x float> <float f0x3F2AAAAB, float 1.000000e+00, float f0x3F555555, float 1.000000e+00>, ptr %.sroa.12.0..sroa_idx.i10, align 4, !tbaa !89
+  store ptr %i.l, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueSatCtrlE, i64 8), align 8, !tbaa !90
   %i.m = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueSatCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_116DefaultHueFxCtrlE, i8 0, i64 24, i1 false)
   %i.n = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #25
@@ -248,12 +248,12 @@ __cxx_global_var_init.2.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.n, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_116DefaultHueFxCtrlE, align 8, !tbaa !16
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 48 ; 2 uses
   store ptr %i.q, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_116DefaultHueFxCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float f0x3E2AAAAB, float 0.000000e+00>, ptr %i.n, align 4
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float f0x3E2AAAAB, float 0.000000e+00>, ptr %i.n, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i19 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  store <4 x float> <float f0x3EAAAAAB, float 0.000000e+00, float 5.000000e-01, float 0.000000e+00>, ptr %.sroa.8.0..sroa_idx.i19, align 4
+  store <4 x float> <float f0x3EAAAAAB, float 0.000000e+00, float 5.000000e-01, float 0.000000e+00>, ptr %.sroa.8.0..sroa_idx.i19, align 4, !tbaa !89
   %.sroa.12.0..sroa_idx.i23 = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  store <4 x float> <float f0x3F2AAAAB, float 0.000000e+00, float f0x3F555555, float 0.000000e+00>, ptr %.sroa.12.0..sroa_idx.i23, align 4
-  store ptr %i.q, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_116DefaultHueFxCtrlE, i64 8), align 8, !tbaa !88
+  store <4 x float> <float f0x3F2AAAAB, float 0.000000e+00, float f0x3F555555, float 0.000000e+00>, ptr %.sroa.12.0..sroa_idx.i23, align 4, !tbaa !89
+  store ptr %i.q, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_116DefaultHueFxCtrlE, i64 8), align 8, !tbaa !90
   %i.r = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_116DefaultHueFxCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumSatCtrlE, i8 0, i64 24, i1 false)
   %i.s = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #25
@@ -270,10 +270,10 @@ __cxx_global_var_init.3.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.s, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumSatCtrlE, align 8, !tbaa !16
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   store ptr %i.v, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumSatCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 5.000000e-01, float 1.000000e+00>, ptr %i.s, align 4
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 5.000000e-01, float 1.000000e+00>, ptr %i.s, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i32 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i32, align 4
-  store ptr %i.v, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumSatCtrlE, i64 8), align 8, !tbaa !88
+  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i32, align 4, !tbaa !89
+  store ptr %i.v, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumSatCtrlE, i64 8), align 8, !tbaa !90
   %i.w = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumSatCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumSatLinCtrlE, i8 0, i64 24, i1 false)
   %i.x = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #25
@@ -290,10 +290,10 @@ __cxx_global_var_init.4.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.x, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumSatLinCtrlE, align 8, !tbaa !16
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 24 ; 2 uses
   store ptr %i.aa, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumSatLinCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float -7.000000e+00, float 1.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.x, align 4
+  store <4 x float> <float -7.000000e+00, float 1.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.x, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i39 = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  store <2 x float> <float 7.000000e+00, float 1.000000e+00>, ptr %.sroa.8.0..sroa_idx.i39, align 4
-  store ptr %i.aa, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumSatLinCtrlE, i64 8), align 8, !tbaa !88
+  store <2 x float> <float 7.000000e+00, float 1.000000e+00>, ptr %.sroa.8.0..sroa_idx.i39, align 4, !tbaa !89
+  store ptr %i.aa, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumSatLinCtrlE, i64 8), align 8, !tbaa !90
   %i.ab = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumSatLinCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatSatCtrlE, i8 0, i64 24, i1 false)
   %i.ac = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #25
@@ -310,10 +310,10 @@ __cxx_global_var_init.5.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.ac, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatSatCtrlE, align 8, !tbaa !16
   %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 24 ; 2 uses
   store ptr %i.af, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatSatCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 5.000000e-01, float 5.000000e-01>, ptr %i.ac, align 4
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 5.000000e-01, float 5.000000e-01>, ptr %i.ac, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i46 = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i46, align 4
-  store ptr %i.af, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatSatCtrlE, i64 8), align 8, !tbaa !88
+  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i46, align 4, !tbaa !89
+  store ptr %i.af, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatSatCtrlE, i64 8), align 8, !tbaa !90
   %i.ag = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatSatCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatLumCtrlE, i8 0, i64 24, i1 false)
   %i.ah = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #25
@@ -330,10 +330,10 @@ __cxx_global_var_init.6.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.ah, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatLumCtrlE, align 8, !tbaa !16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 2 uses
   store ptr %i.ak, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatLumCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 5.000000e-01, float 1.000000e+00>, ptr %i.ah, align 4
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 5.000000e-01, float 1.000000e+00>, ptr %i.ah, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i53 = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i53, align 4
-  store ptr %i.ak, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatLumCtrlE, i64 8), align 8, !tbaa !88
+  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i53, align 4, !tbaa !89
+  store ptr %i.ak, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatLumCtrlE, i64 8), align 8, !tbaa !90
   %i.al = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultSatLumCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumLumCtrlE, i8 0, i64 24, i1 false)
   %i.am = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #25
@@ -350,10 +350,10 @@ __cxx_global_var_init.7.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.am, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumLumCtrlE, align 8, !tbaa !16
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 24 ; 2 uses
   store ptr %i.ap, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumLumCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 5.000000e-01, float 5.000000e-01>, ptr %i.am, align 4
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 5.000000e-01, float 5.000000e-01>, ptr %i.am, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i60 = getelementptr inbounds nuw i8, ptr %i.am, i64 16
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i60, align 4
-  store ptr %i.ap, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumLumCtrlE, i64 8), align 8, !tbaa !88
+  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.8.0..sroa_idx.i60, align 4, !tbaa !89
+  store ptr %i.ap, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumLumCtrlE, i64 8), align 8, !tbaa !90
   %i.aq = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultLumLumCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumLumLinCtrlE, i8 0, i64 24, i1 false)
   %i.ar = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #25
@@ -370,10 +370,10 @@ __cxx_global_var_init.8.exit:                     ; preds = %__cxx_global_var_in
   store ptr %i.ar, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumLumLinCtrlE, align 8, !tbaa !16
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 24 ; 2 uses
   store ptr %i.au, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumLumLinCtrlE, i64 16), align 8, !tbaa !17
-  store <4 x float> <float -7.000000e+00, float -7.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.ar, align 4
+  store <4 x float> <float -7.000000e+00, float -7.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.ar, align 4, !tbaa !89
   %.sroa.8.0..sroa_idx.i67 = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
-  store <2 x float> splat (float 7.000000e+00), ptr %.sroa.8.0..sroa_idx.i67, align 4
-  store ptr %i.au, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumLumLinCtrlE, i64 8), align 8, !tbaa !88
+  store <2 x float> splat (float 7.000000e+00), ptr %.sroa.8.0..sroa_idx.i67, align 4, !tbaa !89
+  store ptr %i.au, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumLumLinCtrlE, i64 8), align 8, !tbaa !90
   %i.av = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_512_GLOBAL__N_120DefaultLumLumLinCtrlE, ptr nonnull @__dso_handle) #24 ; 0 uses
   tail call void @_ZN16OpenColorIO_v2_523GradingBSplineCurveImplC1ERKSt6vectorINS_19GradingControlPointESaIS2_EENS_11BSplineTypeE(ptr noundef nonnull align 8 dereferenceable(60) @_ZN16OpenColorIO_v2_519GradingHueCurveImpl13DefaultHueHueE, ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_512_GLOBAL__N_117DefaultHueHueCtrlE, i32 noundef 2)
   %i.aw = tail call i32 @__cxa_atexit(ptr nonnull @_ZN16OpenColorIO_v2_523GradingBSplineCurveImplD2Ev, ptr nonnull @_ZN16OpenColorIO_v2_519GradingHueCurveImpl13DefaultHueHueE, ptr nonnull @__dso_handle) #24 ; 0 uses
@@ -543,5 +543,7 @@ attributes #27 = { noreturn nounwind }
 !85 = distinct !{null}
 !86 = !{!"_ZTSSt9type_info", !48, i64 8}
 !87 = !{!86, !48, i64 8}
-!88 = !{!15, !14, i64 8}
+!88 = !{!"float", !9, i64 0}
+!89 = !{!88, !88, i64 0}
+!90 = !{!15, !14, i64 8}
 end_hunk_0

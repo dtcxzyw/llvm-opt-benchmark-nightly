@@ -205,8 +205,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE11_M_all
   %.0911.i.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i.i ], [ %i.aq, %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE11_M_allocateEm.exit.i ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !302)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !303)
-  %i.as = load i64, ptr %.0911.i.i.i.i, align 4, !alias.scope !303, !noalias !302
-  store i64 %i.as, ptr %.012.i.i.i.i, align 4, !alias.scope !302, !noalias !303
+  %i.as = load i64, ptr %.0911.i.i.i.i, align 4, !tbaa !49, !alias.scope !303, !noalias !302
+  store i64 %i.as, ptr %.012.i.i.i.i, align 4, !tbaa !49, !alias.scope !302, !noalias !303
   %i.at = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8
   %.not.i.i.i.i = icmp eq ptr %i.at, %i.ar
@@ -238,7 +238,7 @@ _ZNSt6vectorIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE7reserveEm.exit
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE7reserveEm.exit
   %i.bb = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 4 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 3 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
@@ -306,7 +306,7 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit22: ; preds = %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %i.bx = add i64 %i.bv, 4
   store i64 %i.bx, ptr %i.o, align 8, !tbaa !48
-  %i.by = load ptr, ptr %i.bc, align 8, !tbaa !108 ; 5 uses
+  %i.by = load ptr, ptr %i.bc, align 8, !tbaa !108 ; 6 uses
   %i.bz = load ptr, ptr %i.ac, align 8, !tbaa !106
   %.not.i.i23 = icmp eq ptr %i.by, %i.bz
   br i1 %.not.i.i23, label %bb.i, label %bb.h
@@ -316,9 +316,8 @@ bb.h:                                             ; preds = %_ZNK4LIEF12BinarySt
   %.sroa.5.0.insert.shift = shl nuw i64 %.sroa.5.0.insert.ext, 32
   %.sroa.025.0.insert.ext = zext i32 %i.bm to i64
   %.sroa.025.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.shift, %.sroa.025.0.insert.ext
-  store i64 %.sroa.025.0.insert.insert, ptr %i.by, align 4
-  %2 = load ptr, ptr %i.bc, align 8, !tbaa !108
-  %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 %.sroa.025.0.insert.insert, ptr %i.by, align 4, !tbaa !49
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   store ptr %i.ca, ptr %i.bc, align 8, !tbaa !108
   br label %bb.l
 
@@ -350,7 +349,7 @@ _ZNKSt6vectorIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE12_M_check_len
   %.sroa.5.0.insert.shift32 = shl nuw i64 %.sroa.5.0.insert.ext31, 32
   %.sroa.025.0.insert.ext27 = zext i32 %i.bm to i64
   %.sroa.025.0.insert.insert29 = or disjoint i64 %.sroa.5.0.insert.shift32, %.sroa.025.0.insert.ext27
-  store i64 %.sroa.025.0.insert.insert29, ptr %i.cn, align 4
+  store i64 %.sroa.025.0.insert.insert29, ptr %i.cn, align 4, !tbaa !49
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.cb, %i.by
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -359,8 +358,8 @@ _ZNKSt6vectorIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE12_M_check_len
   %.0911.i.i.i.i.i.i = phi ptr [ %i.cp, %.lr.ph.i.i.i.i.i.i ], [ %i.cb, %_ZNKSt6vectorIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !304)
   call void @llvm.experimental.noalias.scope.decl(metadata !305)
-  %i.co = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !305, !noalias !304
-  store i64 %i.co, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !304, !noalias !305
+  %i.co = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !49, !alias.scope !305, !noalias !304
+  store i64 %i.co, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !49, !alias.scope !304, !noalias !305
   %i.cp = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.cp, %i.by
@@ -459,8 +458,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE11
   %.0911.i.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i.i ], [ %i.aq, %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE11_M_allocateEm.exit.i ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !314)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !315)
-  %i.as = load i64, ptr %.0911.i.i.i.i, align 4, !alias.scope !315, !noalias !314
-  store i64 %i.as, ptr %.012.i.i.i.i, align 4, !alias.scope !314, !noalias !315
+  %i.as = load i64, ptr %.0911.i.i.i.i, align 4, !tbaa !49, !alias.scope !315, !noalias !314
+  store i64 %i.as, ptr %.012.i.i.i.i, align 4, !tbaa !49, !alias.scope !314, !noalias !315
   %i.at = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8
   %.not.i.i.i.i = icmp eq ptr %i.at, %i.ar
@@ -492,7 +491,7 @@ _ZNSt6vectorIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE7reserveE
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE7reserveEm.exit
   %i.bb = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 4 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 3 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
@@ -560,7 +559,7 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit22: ; preds = %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %i.bx = add i64 %i.bv, 4
   store i64 %i.bx, ptr %i.o, align 8, !tbaa !48
-  %i.by = load ptr, ptr %i.bc, align 8, !tbaa !112 ; 5 uses
+  %i.by = load ptr, ptr %i.bc, align 8, !tbaa !112 ; 6 uses
   %i.bz = load ptr, ptr %i.ac, align 8, !tbaa !110
   %.not.i.i23 = icmp eq ptr %i.by, %i.bz
   br i1 %.not.i.i23, label %bb.i, label %bb.h
@@ -570,9 +569,8 @@ bb.h:                                             ; preds = %_ZNK4LIEF12BinarySt
   %.sroa.5.0.insert.shift = shl nuw i64 %.sroa.5.0.insert.ext, 32
   %.sroa.025.0.insert.ext = zext i32 %i.bm to i64
   %.sroa.025.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.shift, %.sroa.025.0.insert.ext
-  store i64 %.sroa.025.0.insert.insert, ptr %i.by, align 4
-  %2 = load ptr, ptr %i.bc, align 8, !tbaa !112
-  %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 %.sroa.025.0.insert.insert, ptr %i.by, align 4, !tbaa !49
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   store ptr %i.ca, ptr %i.bc, align 8, !tbaa !112
   br label %bb.l
 
@@ -604,7 +602,7 @@ _ZNKSt6vectorIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE12_M_che
   %.sroa.5.0.insert.shift32 = shl nuw i64 %.sroa.5.0.insert.ext31, 32
   %.sroa.025.0.insert.ext27 = zext i32 %i.bm to i64
   %.sroa.025.0.insert.insert29 = or disjoint i64 %.sroa.5.0.insert.shift32, %.sroa.025.0.insert.ext27
-  store i64 %.sroa.025.0.insert.insert29, ptr %i.cn, align 4
+  store i64 %.sroa.025.0.insert.insert29, ptr %i.cn, align 4, !tbaa !49
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.cb, %i.by
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -613,8 +611,8 @@ _ZNKSt6vectorIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE12_M_che
   %.0911.i.i.i.i.i.i = phi ptr [ %i.cp, %.lr.ph.i.i.i.i.i.i ], [ %i.cb, %_ZNKSt6vectorIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !316)
   call void @llvm.experimental.noalias.scope.decl(metadata !317)
-  %i.co = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !317, !noalias !316
-  store i64 %i.co, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !316, !noalias !317
+  %i.co = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !49, !alias.scope !317, !noalias !316
+  store i64 %i.co, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !49, !alias.scope !316, !noalias !317
   %i.cp = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.cp, %i.by
@@ -1017,8 +1015,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   store i32 %3, ptr %7, align 4, !tbaa !259
   %i.bh = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %i.bi = load i64, ptr %1, align 4
-  store i64 %i.bi, ptr %i.bh, align 4
+  %i.bi = load i64, ptr %1, align 4, !tbaa !49
+  store i64 %i.bi, ptr %i.bh, align 4, !tbaa !49
   %i.bj = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i32 %i.y, ptr %i.bj, align 4, !tbaa !260
   %i.bk = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -1421,8 +1419,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EEC2EmRKS4
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EEC2EmRKS4_.exit.i, %.lr.ph.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.w, %.lr.ph.i.i.i.i.i ], [ %i.t, %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6413range_entry_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
-  %i.v = load i64, ptr %.sroa.04.08.i.i.i.i.i, align 4
-  store i64 %i.v, ptr %.09.i.i.i.i.i, align 4
+  %i.v = load i64, ptr %.sroa.04.08.i.i.i.i.i, align 4, !tbaa !49
+  store i64 %i.v, ptr %.09.i.i.i.i.i, align 4, !tbaa !49
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i, i64 8 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.w, %i.u
@@ -1471,8 +1469,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EEC2
 .lr.ph.i.i.i.i.i8:                                ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EEC2EmRKS4_.exit.i, %.lr.ph.i.i.i.i.i8
   %.09.i.i.i.i.i9 = phi ptr [ %i.aq, %.lr.ph.i.i.i.i.i8 ], [ %i.ai, %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
   %.sroa.04.08.i.i.i.i.i10 = phi ptr [ %i.ap, %.lr.ph.i.i.i.i.i8 ], [ %i.am, %_ZNSt12_Vector_baseIN4LIEF2PE17CHPEMetadataARM6419redirection_entry_tESaIS3_EEC2EmRKS4_.exit.i ] ; 2 uses
-  %i.ao = load i64, ptr %.sroa.04.08.i.i.i.i.i10, align 4
-  store i64 %i.ao, ptr %.09.i.i.i.i.i9, align 4
+  %i.ao = load i64, ptr %.sroa.04.08.i.i.i.i.i10, align 4, !tbaa !49
+  store i64 %i.ao, ptr %.09.i.i.i.i.i9, align 4, !tbaa !49
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i10, i64 8 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i9, i64 8 ; 2 uses
   %.not.i.i.i.i.i11 = icmp eq ptr %i.ap, %i.an

@@ -204,8 +204,8 @@ bb.bb:                                            ; preds = %_ZNSt6vectorIN3gmx1
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 8 ; 2 uses
   %i.jl = getelementptr inbounds nuw i8, ptr %.sroa.0277.0328, i64 12
   %i.jm = load i32, ptr %i.jl, align 4, !tbaa !297 ; 2 uses
-  %i.jn = getelementptr inbounds nuw i8, ptr %i.jj, i64 16 ; 4 uses
-  %i.jo = load ptr, ptr %i.jn, align 8, !tbaa !298 ; 3 uses
+  %i.jn = getelementptr inbounds nuw i8, ptr %i.jj, i64 16 ; 3 uses
+  %i.jo = load ptr, ptr %i.jn, align 8, !tbaa !298 ; 4 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jj, i64 24 ; 3 uses
   %i.jq = load ptr, ptr %i.jp, align 8, !tbaa !151
   %.not.i.i172 = icmp eq ptr %i.jo, %i.jq
@@ -215,9 +215,8 @@ bb.bc:                                            ; preds = %bb.bb
   %.sroa.6260.0.insert.ext = zext i32 %i.jm to i64
   %.sroa.6260.0.insert.shift = shl nuw i64 %.sroa.6260.0.insert.ext, 32
   %.sroa.0255.0.insert.insert = or disjoint i64 %.sroa.6260.0.insert.shift, 4294967295
-  store i64 %.sroa.0255.0.insert.insert, ptr %i.jo, align 4
-  %8 = load ptr, ptr %i.jn, align 8, !tbaa !298
-  %i.jr = getelementptr inbounds nuw i8, ptr %8, i64 8
+  store i64 %.sroa.0255.0.insert.insert, ptr %i.jo, align 4, !tbaa !113
+  %i.jr = getelementptr inbounds nuw i8, ptr %i.jo, i64 8
   store ptr %i.jr, ptr %i.jn, align 8, !tbaa !298
   br label %_ZNSt6vectorIN3gmx16HardwareTopology14ProcessingUnitESaIS2_EE9push_backEOS2_.exit
 
@@ -254,7 +253,7 @@ _ZNKSt6vectorIN3gmx16HardwareTopology14ProcessingUnitESaIS2_EE12_M_check_lenEmPK
   %.sroa.6260.0.insert.ext262 = zext i32 %i.jm to i64
   %.sroa.6260.0.insert.shift263 = shl nuw i64 %.sroa.6260.0.insert.ext262, 32
   %.sroa.0255.0.insert.insert259 = or disjoint i64 %.sroa.6260.0.insert.shift263, 4294967295
-  store i64 %.sroa.0255.0.insert.insert259, ptr %i.ke, align 4
+  store i64 %.sroa.0255.0.insert.insert259, ptr %i.ke, align 4, !tbaa !113
   %i.kf = icmp sgt i64 %i.jv, 0
   br i1 %i.kf, label %bb.bf, label %_ZNSt6vectorIN3gmx16HardwareTopology14ProcessingUnitESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
 

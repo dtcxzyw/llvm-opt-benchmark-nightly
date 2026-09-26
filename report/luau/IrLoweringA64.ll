@@ -205,8 +205,8 @@ bb.apj:                                           ; preds = %bb.a
   %i.gij = call i64 @_ZN4Luau7CodeGen3A6418AssemblyBuilderA648setLabelEv(ptr noundef nonnull align 8 dereferenceable(184) %i.gii)
   %i.gik = getelementptr inbounds nuw i8, ptr %0, i64 2520
   call void @llvm.lifetime.start.p0(ptr nonnull %102) #15
-  %i.gil = load i64, ptr %101, align 8
-  store i64 %i.gil, ptr %102, align 8
+  %i.gil = load i64, ptr %101, align 8, !tbaa !103
+  store i64 %i.gil, ptr %102, align 8, !tbaa !103
   %i.gim = getelementptr inbounds nuw i8, ptr %102, i64 8
   %i.gin = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.gio = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -232,7 +232,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit6032:   ; preds = %bb.apj, %bb.apk
   %i.giz = load i32, ptr %i.giy, align 8, !tbaa !48
   store i32 %i.giz, ptr %i.gim, align 8, !tbaa !109
   %i.gja = getelementptr inbounds nuw i8, ptr %102, i64 12
-  store i64 %i.gij, ptr %i.gja, align 4
+  store i64 %i.gij, ptr %i.gja, align 4, !tbaa !103
   call void @_ZNSt6vectorIN4Luau7CodeGen3A6413IrLoweringA6416InterruptHandlerESaIS4_EE9push_backEOS4_(ptr noundef nonnull align 8 dereferenceable(24) %i.gik, ptr noundef nonnull align 4 dereferenceable(20) %102)
   call void @llvm.lifetime.end.p0(ptr nonnull %102) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %101) #15
@@ -635,7 +635,7 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 2544 ; 3 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 2552 ; 5 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 2552 ; 4 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !244
   %i.ax = load ptr, ptr %i.au, align 8, !tbaa !53
   %i.ay = ptrtoint ptr %i.aw to i64
@@ -740,19 +740,18 @@ _ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEEixERKj.exit: ; preds = %.lr.ph
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %i.cv
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 4
   store i32 %i.bc, ptr %i.cx, align 4, !tbaa !103
-  %i.cy = load i64, ptr %3, align 4               ; 2 uses
-  %i.cz = load ptr, ptr %i.av, align 8, !tbaa !244 ; 6 uses
+  %i.cy = load i64, ptr %3, align 4, !tbaa !103   ; 2 uses
+  %i.cz = load ptr, ptr %i.av, align 8, !tbaa !244 ; 7 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 2560 ; 3 uses
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !54
   %.not.i.i25 = icmp eq ptr %i.cz, %i.db
   br i1 %.not.i.i25, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %_ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEEixERKj.exit
-  store i64 %i.cy, ptr %i.cz, align 4
+  store i64 %i.cy, ptr %i.cz, align 4, !tbaa !103
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   store i32 %i.be, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !103
-  %5 = load ptr, ptr %i.av, align 8, !tbaa !244
-  %i.dc = getelementptr inbounds nuw i8, ptr %5, i64 12
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.cz, i64 12
   store ptr %i.dc, ptr %i.av, align 8, !tbaa !244
   br label %_ZNSt6vectorIN4Luau7CodeGen3A6413IrLoweringA6411ExitHandlerESaIS4_EE9push_backEOS4_.exit
 
@@ -780,7 +779,7 @@ _ZNKSt6vectorIN4Luau7CodeGen3A6413IrLoweringA6411ExitHandlerESaIS4_EE12_M_check_
   %i.dn = mul nuw nsw i64 %i.dm, 12
   %i.do = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dn) #18 ; 5 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.dg ; 2 uses
-  store i64 %i.cy, ptr %i.dp, align 4
+  store i64 %i.cy, ptr %i.dp, align 4, !tbaa !103
   %.sroa.5.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
   store i32 %i.be, ptr %.sroa.5.0..sroa_idx27, align 4, !tbaa !103
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.dd, %i.cz

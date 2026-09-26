@@ -202,7 +202,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   %i.i = tail call nsz noundef float @_Z7readF32PKh(ptr noundef nonnull %i.h)
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.i, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %1, align 4
+  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %1, align 4, !tbaa !40
   %i.j = load i32, ptr %i.a, align 4, !tbaa !31
   %i.k = add i32 %i.j, 8
   store i32 %i.k, ptr %i.a, align 4, !tbaa !31
@@ -226,7 +226,7 @@ bb.a:
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.i, i64 1
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.k = tail call nsz noundef float @_Z7readF32PKh(ptr noundef nonnull %i.j)
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %1, align 4
+  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %1, align 4, !tbaa !40
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   store float %i.k, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !40
   %i.l = load i32, ptr %i.a, align 4, !tbaa !31
@@ -387,10 +387,10 @@ _ZN13NetworkPacketlsEj.exit:                      ; preds = %bb.a, %bb.c, %bb.d,
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef nonnull align 8 dereferenceable(36) ptr @_ZN13NetworkPacketrsERN4core8vector3dIsEE(ptr nofree noundef nonnull returned align 8 captures(ret: address, provenance) dereferenceable(36) %0, ptr nofree noundef nonnull writeonly align 2 captures(none) dereferenceable(6) initializes((0, 6)) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !31
   tail call void @_ZNK13NetworkPacket15checkReadOffsetEjj(ptr noundef nonnull align 8 dereferenceable(36) %0, i32 noundef %i.b, i32 noundef 6)
-  %i.c = load i32, ptr %i.a, align 4, !tbaa !31
+  %i.c = load i32, ptr %i.a, align 4, !tbaa !31   ; 2 uses
   %i.d = zext i32 %i.c to i64
   %i.e = load ptr, ptr %0, align 8, !tbaa !30
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d ; 3 uses
@@ -409,9 +409,8 @@ bb.a:
   %.sroa.3.0.insert.insert.i = or disjoint i48 %.sroa.5.0.insert.shift.i, %.sroa.3.0.insert.shift.i
   %.sroa.0.0.insert.ext.i = zext i16 %rev.i.i.i.i to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.3.0.insert.insert.i, %.sroa.0.0.insert.ext.i
-  store i48 %.sroa.0.0.insert.insert.i, ptr %1, align 2
-  %2 = load i32, ptr %i.a, align 4, !tbaa !31
-  %i.i = add i32 %2, 6
+  store i48 %.sroa.0.0.insert.insert.i, ptr %1, align 2, !tbaa !37
+  %i.i = add i32 %i.c, 6
   store i32 %i.i, ptr %i.a, align 4, !tbaa !31
   ret ptr %0
 }
@@ -434,7 +433,7 @@ bb.a:
   %i.j = shl nuw i64 %i.i, 32
   %i.k = or disjoint i64 %i.j, %i.h
   %.sroa.0.0.insert.insert.i = tail call i64 @llvm.bswap.i64(i64 %i.k)
-  store i64 %.sroa.0.0.insert.insert.i, ptr %1, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %1, align 4, !tbaa !38
   %i.l = load i32, ptr %i.a, align 4, !tbaa !31
   %i.m = add i32 %i.l, 8
   store i32 %i.m, ptr %i.a, align 4, !tbaa !31
@@ -462,7 +461,7 @@ bb.a:
   %i.l = shl nuw i64 %i.k, 32
   %i.m = or disjoint i64 %i.l, %i.j
   %.sroa.0.0.insert.insert.i = tail call i64 @llvm.bswap.i64(i64 %i.m)
-  store i64 %.sroa.0.0.insert.insert.i, ptr %1, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %1, align 4, !tbaa !38
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !38
   %i.n = load i32, ptr %i.a, align 4, !tbaa !31

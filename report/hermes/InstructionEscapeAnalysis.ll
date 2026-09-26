@@ -204,7 +204,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !61
   store ptr %.sroa.072.092, ptr %i.dc, align 8, !tbaa !30, !noalias !61
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
-  store i64 %.sroa.061.0.insert.insert, ptr %i.dh, align 8, !noalias !61
+  store i64 %.sroa.061.0.insert.insert, ptr %i.dh, align 8, !tbaa !10, !noalias !61
   %.val34.pre = load i32, ptr %i.t, align 8, !tbaa !36
   br label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E11try_emplaceIJSE_EEESt4pairINS_16DenseMapIteratorIS5_SE_SG_SJ_Lb0EEEbERKS5_DpOT_.exit
 
@@ -607,7 +607,7 @@ _ZNK4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionE
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E4growEj(ptr nofree noundef nonnull align 1 captures(none) dereferenceable(1) initializes((8, 16)) %0, i32 noundef %1) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !39   ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !38     ; 4 uses
   %i.d = add i32 %1, -1
@@ -628,7 +628,7 @@ bb.a:
   store i32 %.sroa.speculated.i, ptr %i.a, align 8, !tbaa !39
   %i.r = zext i32 %.sroa.speculated.i to i64
   %i.s = shl nuw nsw i64 %i.r, 4
-  %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #13 ; 7 uses
+  %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #13 ; 9 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !38
   %.not.i = icmp eq ptr %i.c, null
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -692,11 +692,11 @@ bb.c:                                             ; preds = %bb.a
   %i.al = zext i32 %i.b to i64
   %.idx.i = shl nuw nsw i64 %i.al, 4
   %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store i32 0, ptr %i.an, align 8, !tbaa !36
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 0, ptr %i.ao, align 4, !tbaa !37
-  %.val7.i.i.i = load i32, ptr %i.a, align 8, !tbaa !39 ; 2 uses
+  %.val7.i.i.i = load i32, ptr %i.a, align 8, !tbaa !39 ; 4 uses
   %i.ap = zext i32 %.val7.i.i.i to i64
   %.idx.i.i.i = shl nuw nsw i64 %i.ap, 4          ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx.i.i.i
@@ -748,10 +748,16 @@ bb.c:                                             ; preds = %bb.a
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E9initEmptyEv.exit.i.i: ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %bb.c
   %.not22.i.i = icmp eq i32 %i.b, 0
-  br i1 %.not22.i.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E18moveFromOldBucketsEPSJ_SM_.exit.i, label %.lr.ph.i6.i
+  br i1 %.not22.i.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E18moveFromOldBucketsEPSJ_SM_.exit.i, label %.lr.ph.i6.preheader.i
 
-.lr.ph.i6.i:                                      ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E9initEmptyEv.exit.i.i, %bb.g
-  %.023.i.i = phi ptr [ %i.cd, %bb.g ], [ %i.c, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E9initEmptyEv.exit.i.i ] ; 3 uses
+.lr.ph.i6.preheader.i:                            ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E9initEmptyEv.exit.i.i
+  %2 = icmp ne i32 %.val7.i.i.i, 0
+  %3 = add i32 %.val7.i.i.i, -1                   ; 2 uses
+  br label %.lr.ph.i6.i
+
+.lr.ph.i6.i:                                      ; preds = %bb.g, %.lr.ph.i6.preheader.i
+  %.val.i17.i.i = phi i32 [ %.val.i17.i17.i, %bb.g ], [ 0, %.lr.ph.i6.preheader.i ] ; 3 uses
+  %.023.i.i = phi ptr [ %i.cd, %bb.g ], [ %i.c, %.lr.ph.i6.preheader.i ] ; 3 uses
   %i.be = load ptr, ptr %.023.i.i, align 8, !tbaa !30 ; 4 uses
   %magicptr.i.i = ptrtoint ptr %i.be to i64       ; 2 uses
   switch i64 %magicptr.i.i, label %bb.d [
@@ -760,18 +766,14 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEs
   ]
 
 bb.d:                                             ; preds = %.lr.ph.i6.i
-  %.val.i8.i = load ptr, ptr %0, align 8, !tbaa !38 ; 2 uses
-  %.val15.i.i = load i32, ptr %i.a, align 8, !tbaa !39 ; 2 uses
-  %2 = icmp ne i32 %.val15.i.i, 0
   tail call void @llvm.assume(i1 %2)
   %i.bf = trunc i64 %magicptr.i.i to i32          ; 2 uses
   %i.bg = lshr i32 %i.bf, 4
   %i.bh = lshr i32 %i.bf, 9
   %i.bi = xor i32 %i.bg, %i.bh
-  %3 = add i32 %.val15.i.i, -1                    ; 2 uses
-  %.02710.i.i.i.i = and i32 %3, %i.bi             ; 2 uses
+  %.02710.i.i.i.i = and i32 %i.bi, %3             ; 2 uses
   %i.bj = zext nneg i32 %.02710.i.i.i.i to i64
-  %i.bk = getelementptr inbounds nuw [16 x i8], ptr %.val.i8.i, i64 %i.bj ; 3 uses
+  %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %i.bj ; 3 uses
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !30 ; 2 uses
   %i.bm = icmp eq ptr %i.be, %i.bl
   br i1 %i.bm, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E15LookupBucketForIS5_EEbRKT_RPSJ_.exit.i.i, label %.lr.ph.i.i.i.i, !prof !31
@@ -799,7 +801,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i
   %i.bu = add i32 %.012.i.i.i.i, %.02713.i.i.i.i
   %.027.i.i.i.i = and i32 %i.bu, %3               ; 2 uses
   %i.bv = zext i32 %.027.i.i.i.i to i64
-  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %.val.i8.i, i64 %i.bv ; 3 uses
+  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %i.bv ; 3 uses
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !30 ; 2 uses
   %i.by = icmp eq ptr %i.be, %i.bx
   br i1 %i.by, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E15LookupBucketForIS5_EEbRKT_RPSJ_.exit.i.i, label %.lr.ph.i.i.i.i, !prof !33, !llvm.loop !1
@@ -809,14 +811,14 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEs
   store ptr %i.be, ptr %.sink.i.i.i.i, align 8, !tbaa !30
   %i.bz = getelementptr inbounds nuw i8, ptr %.sink.i.i.i.i, i64 8
   %i.ca = getelementptr inbounds nuw i8, ptr %.023.i.i, i64 8
-  %i.cb = load i64, ptr %i.ca, align 8
-  store i64 %i.cb, ptr %i.bz, align 8
-  %.val.i17.i.i = load i32, ptr %i.an, align 8, !tbaa !36
-  %i.cc = add i32 %.val.i17.i.i, 1
+  %i.cb = load i64, ptr %i.ca, align 8, !tbaa !10
+  store i64 %i.cb, ptr %i.bz, align 8, !tbaa !10
+  %i.cc = add i32 %.val.i17.i.i, 1                ; 2 uses
   store i32 %i.cc, ptr %i.an, align 8, !tbaa !36
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E15LookupBucketForIS5_EEbRKT_RPSJ_.exit.i.i, %.lr.ph.i6.i, %.lr.ph.i6.i
+  %.val.i17.i17.i = phi i32 [ %i.cc, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E15LookupBucketForIS5_EEbRKT_RPSJ_.exit.i.i ], [ %.val.i17.i.i, %.lr.ph.i6.i ], [ %.val.i17.i.i, %.lr.ph.i6.i ]
   %i.cd = getelementptr inbounds nuw i8, ptr %.023.i.i, i64 16 ; 2 uses
   %.not.i7.i = icmp eq ptr %i.cd, %i.am
   br i1 %.not.i7.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes11InstructionEZNS2_25InstructionEscapeAnalysis8addRangeENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsIS3_Lb0ELb0EvEELb0ELb0EEEEEE6EscapeNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_SE_EEEES5_SE_SG_SJ_E18moveFromOldBucketsEPSJ_SM_.exit.i, label %.lr.ph.i6.i, !llvm.loop !74

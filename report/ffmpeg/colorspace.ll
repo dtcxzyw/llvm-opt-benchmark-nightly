@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 72
   %i.l = fmul nsz double %1, 1.000000e+02
   %i.m = tail call i64 @av_d2q(double noundef %i.l, i32 noundef 10000) #7
-  store i64 %i.m, ptr %i.k, align 4
+  store i64 %i.m, ptr %i.k, align 4, !tbaa !30
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
@@ -260,4 +260,5 @@ attributes #7 = { nounwind willreturn memory(none) }
 !27 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !5, i64 8, !11, i64 16}
 !28 = !{!"AVFrame", !5, i64 0, !5, i64 64, !24, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !20, i64 124, !13, i64 136, !13, i64 144, !20, i64 152, !6, i64 160, !11, i64 168, !6, i64 176, !6, i64 180, !5, i64 184, !25, i64 248, !6, i64 256, !26, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !13, i64 304, !14, i64 312, !6, i64 320, !15, i64 328, !15, i64 336, !13, i64 344, !13, i64 352, !13, i64 360, !13, i64 368, !11, i64 376, !27, i64 384, !13, i64 408, !6, i64 416}
 !29 = !{!28, !6, i64 288}
+!30 = !{!6, !6, i64 0}
 end_hunk_0

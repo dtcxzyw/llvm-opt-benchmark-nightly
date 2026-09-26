@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !262  ; 3 uses
   %i.j = icmp ult i32 %i.g, %i.i
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !124  ; 3 uses
   br i1 %i.j, label %bb.c, label %._crit_edge.i, !prof !33
 
@@ -280,18 +280,17 @@ bb.h:                                             ; preds = %.loopexit.i
   %i.ap = shl i32 %i.ao, 3
   %i.aq = zext i32 %i.ap to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.al, ptr align 4 %i.ak, i64 %i.aq, i1 false)
-  %i.ar = load ptr, ptr %i.k, align 8, !tbaa !330
+  %i.ar = load ptr, ptr %i.k, align 8, !tbaa !330 ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %i.aj
   %.sroa.5.0.insert.shift.i = shl nuw i64 %i.af, 32
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.e to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.5.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.as, align 4
-  %.pre20.i = load ptr, ptr %i.k, align 8, !tbaa !330
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.as, align 4, !tbaa !19
   br label %_ZNK11hb_vector_tIN12hb_bit_set_t10page_map_tELb1EE5bfindIS1_Lb1ETnPN12hb_enable_ifIXT0_EvE4typeELPv0EEEbRKT_Pj14hb_not_found_tj.exit.i
 
 _ZNK11hb_vector_tIN12hb_bit_set_t10page_map_tELb1EE5bfindIS1_Lb1ETnPN12hb_enable_ifIXT0_EvE4typeELPv0EEEbRKT_Pj14hb_not_found_tj.exit.i: ; preds = %bb.e, %bb.h
   %.pre-phi.i = phi i64 [ %i.aj, %bb.h ], [ %i.u, %bb.e ]
-  %i.at = phi ptr [ %.pre20.i, %bb.h ], [ %i.l, %bb.e ]
+  %i.at = phi ptr [ %i.ar, %bb.h ], [ %i.l, %bb.e ]
   %storemerge.i.i.ph.sink.i.i17.i = phi i32 [ %storemerge.i.i.ph.sink.i.i.ph.i, %bb.h ], [ %i.t, %bb.e ]
   store atomic i32 %storemerge.i.i.ph.sink.i.i17.i, ptr %i.f monotonic, align 8
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %.pre-phi.i
@@ -694,8 +693,8 @@ bb.h:                                             ; preds = %bb.g, %.loopexit.th
   %i.az = load i32, ptr %1, align 4, !tbaa !19
   store i32 %i.az, ptr %i.ao, align 4, !tbaa !338
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  %i.bb = load i64, ptr %3, align 4
-  store i64 %i.bb, ptr %i.ba, align 4
+  %i.bb = load i64, ptr %3, align 4, !tbaa !19
+  store i64 %i.bb, ptr %i.ba, align 4, !tbaa !19
   %i.bc = shl nuw i32 %i.k, 2
   %i.bd = or disjoint i32 %i.bc, 3
   store i32 %i.bd, ptr %i.ap, align 4
@@ -939,8 +938,8 @@ bb.h:                                             ; preds = %bb.g, %.loopexit.th
   %i.az = load i32, ptr %1, align 4, !tbaa !19
   store i32 %i.az, ptr %i.ao, align 4, !tbaa !338
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  %i.bb = load i64, ptr %3, align 4
-  store i64 %i.bb, ptr %i.ba, align 4
+  %i.bb = load i64, ptr %3, align 4, !tbaa !19
+  store i64 %i.bb, ptr %i.ba, align 4, !tbaa !19
   %i.bc = shl nuw i32 %i.k, 2
   %i.bd = or disjoint i32 %i.bc, 3
   store i32 %i.bd, ptr %i.ap, align 4
@@ -1343,7 +1342,7 @@ bb.h:                                             ; preds = %bb.g, %.loopexit.th
   %.sroa.0.0.insert.ext.i = zext i32 %i.ba to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   %i.be = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.be, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.be, align 4, !tbaa !19
   %i.bf = shl nuw i32 %i.k, 2
   %i.bg = or disjoint i32 %i.bf, 3
   store i32 %i.bg, ptr %i.ap, align 4

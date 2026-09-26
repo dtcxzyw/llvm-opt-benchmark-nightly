@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.x = fcmp ogt double %i.w, 4.500000e-01
   %i.y = uitofp i1 %i.x to float                  ; 2 uses
   %i.z = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 8), align 8, !tbaa !42 ; 7 uses
-  %i.aa = load i32, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, align 16, !tbaa !44
+  %i.aa = load i32, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, align 16, !tbaa !44 ; 2 uses
   %i.ab = icmp slt i32 %i.z, %i.aa
   br i1 %i.ab, label %bb.g, label %bb.l
 
@@ -266,17 +266,15 @@ _ZN8ImVectorI6ImVec2E9push_backERKS0_.exit.i:     ; preds = %bb.k, %._ZN8ImVecto
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit
 
 bb.l:                                             ; preds = %bb.f
-  %i.ax = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 4), align 4, !tbaa !47
+  %i.ax = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 4), align 4, !tbaa !47 ; 2 uses
   %i.ay = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 16), align 16, !tbaa !46
   %i.az = sext i32 %i.ax to i64
   %i.ba = getelementptr inbounds [8 x i8], ptr %i.ay, i64 %i.az ; 2 uses
-  store float %i.r, ptr %i.ba, align 4
+  store float %i.r, ptr %i.ba, align 4, !tbaa !32
   %.sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
-  store float %i.y, ptr %.sroa_idx5.i, align 4
-  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 4), align 4, !tbaa !47
-  %i.bb = add nsw i32 %1, 1
-  %2 = load i32, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, align 16, !tbaa !44
-  %i.bc = srem i32 %i.bb, %2
+  store float %i.y, ptr %.sroa_idx5.i, align 4, !tbaa !32
+  %i.bb = add nsw i32 %i.ax, 1
+  %i.bc = srem i32 %i.bb, %i.aa
   store i32 %i.bc, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 4), align 4, !tbaa !47
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit
 
@@ -293,7 +291,7 @@ bb.m:                                             ; preds = %_ZN6ImPlot15Scrolli
   %i.bj = fcmp olt double %i.bi, 4.500000e-01
   %i.bk = uitofp i1 %i.bj to float                ; 2 uses
   %i.bl = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 32), align 16, !tbaa !42 ; 7 uses
-  %i.bm = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 24), align 8, !tbaa !44
+  %i.bm = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 24), align 8, !tbaa !44 ; 2 uses
   %i.bn = icmp slt i32 %i.bl, %i.bm
   br i1 %i.bn, label %bb.n, label %bb.s
 
@@ -355,17 +353,15 @@ _ZN8ImVectorI6ImVec2E9push_backERKS0_.exit.i28:   ; preds = %bb.r, %._ZN8ImVecto
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit34
 
 bb.s:                                             ; preds = %bb.m
-  %i.cj = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 28), align 4, !tbaa !47
+  %i.cj = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 28), align 4, !tbaa !47 ; 2 uses
   %i.ck = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 40), align 8, !tbaa !46
   %i.cl = sext i32 %i.cj to i64
   %i.cm = getelementptr inbounds [8 x i8], ptr %i.ck, i64 %i.cl ; 2 uses
-  store float %i.bf, ptr %i.cm, align 4
+  store float %i.bf, ptr %i.cm, align 4, !tbaa !32
   %.sroa_idx5.i25 = getelementptr inbounds nuw i8, ptr %i.cm, i64 4
-  store float %i.bk, ptr %.sroa_idx5.i25, align 4
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 28), align 4, !tbaa !47
-  %i.cn = add nsw i32 %3, 1
-  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 24), align 8, !tbaa !44
-  %i.co = srem i32 %i.cn, %4
+  store float %i.bk, ptr %.sroa_idx5.i25, align 4, !tbaa !32
+  %i.cn = add nsw i32 %i.cj, 1
+  %i.co = srem i32 %i.cn, %i.bm
   store i32 %i.co, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE11dataDigital, i64 28), align 4, !tbaa !47
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit34
 
@@ -379,7 +375,7 @@ bb.t:                                             ; preds = %_ZN6ImPlot15Scrolli
   %i.cs = fmul float %i.cr, 2.000000e+00
   %i.ct = tail call float @sinf(float noundef %i.cs) #20 ; 2 uses
   %i.cu = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 8), align 8, !tbaa !42 ; 7 uses
-  %i.cv = load i32, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, align 16, !tbaa !44
+  %i.cv = load i32, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, align 16, !tbaa !44 ; 2 uses
   %i.cw = icmp slt i32 %i.cu, %i.cv
   br i1 %i.cw, label %bb.u, label %bb.z
 
@@ -441,17 +437,15 @@ _ZN8ImVectorI6ImVec2E9push_backERKS0_.exit.i38:   ; preds = %bb.y, %._ZN8ImVecto
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit44
 
 bb.z:                                             ; preds = %bb.t
-  %i.ds = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 4), align 4, !tbaa !47
+  %i.ds = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 4), align 4, !tbaa !47 ; 2 uses
   %i.dt = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 16), align 16, !tbaa !46
   %i.du = sext i32 %i.ds to i64
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.dt, i64 %i.du ; 2 uses
-  store float %i.cr, ptr %i.dv, align 4
+  store float %i.cr, ptr %i.dv, align 4, !tbaa !32
   %.sroa_idx5.i35 = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
-  store float %i.ct, ptr %.sroa_idx5.i35, align 4
-  %5 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 4), align 4, !tbaa !47
-  %i.dw = add nsw i32 %5, 1
-  %6 = load i32, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, align 16, !tbaa !44
-  %i.dx = srem i32 %i.dw, %6
+  store float %i.ct, ptr %.sroa_idx5.i35, align 4, !tbaa !32
+  %i.dw = add nsw i32 %i.ds, 1
+  %i.dx = srem i32 %i.dw, %i.cv
   store i32 %i.dx, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 4), align 4, !tbaa !47
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit44
 
@@ -465,7 +459,7 @@ bb.aa:                                            ; preds = %_ZN6ImPlot15Scrolli
   %i.eb = fmul float %i.ea, 2.000000e+00
   %i.ec = tail call float @cosf(float noundef %i.eb) #20 ; 2 uses
   %i.ed = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 32), align 16, !tbaa !42 ; 7 uses
-  %i.ee = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 24), align 8, !tbaa !44
+  %i.ee = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 24), align 8, !tbaa !44 ; 2 uses
   %i.ef = icmp slt i32 %i.ed, %i.ee
   br i1 %i.ef, label %bb.ab, label %bb.ag
 
@@ -527,17 +521,15 @@ _ZN8ImVectorI6ImVec2E9push_backERKS0_.exit.i48:   ; preds = %bb.af, %._ZN8ImVect
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit54
 
 bb.ag:                                            ; preds = %bb.aa
-  %i.fb = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 28), align 4, !tbaa !47
+  %i.fb = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 28), align 4, !tbaa !47 ; 2 uses
   %i.fc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 40), align 8, !tbaa !46
   %i.fd = sext i32 %i.fb to i64
   %i.fe = getelementptr inbounds [8 x i8], ptr %i.fc, i64 %i.fd ; 2 uses
-  store float %i.ea, ptr %i.fe, align 4
+  store float %i.ea, ptr %i.fe, align 4, !tbaa !32
   %.sroa_idx5.i45 = getelementptr inbounds nuw i8, ptr %i.fe, i64 4
-  store float %i.ec, ptr %.sroa_idx5.i45, align 4
-  %7 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 28), align 4, !tbaa !47
-  %i.ff = add nsw i32 %7, 1
-  %8 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 24), align 8, !tbaa !44
-  %i.fg = srem i32 %i.ff, %8
+  store float %i.ec, ptr %.sroa_idx5.i45, align 4, !tbaa !32
+  %i.ff = add nsw i32 %i.fb, 1
+  %i.fg = srem i32 %i.ff, %i.ee
   store i32 %i.fg, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot17Demo_DigitalPlotsEvE10dataAnalog, i64 28), align 4, !tbaa !47
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit54
 
@@ -880,7 +872,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   %.sroa.0.0.vec.extract = extractelement <2 x float> %i.q, i64 0
   %i.w = fmul float %.sroa.0.0.vec.extract, 5.000000e-04 ; 3 uses
   %i.x = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, i64 8), align 8, !tbaa !42 ; 7 uses
-  %i.y = load i32, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, align 8, !tbaa !44
+  %i.y = load i32, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, align 8, !tbaa !44 ; 2 uses
   %i.z = icmp slt i32 %i.x, %i.y
   br i1 %i.z, label %bb.n, label %bb.s
 
@@ -944,17 +936,15 @@ _ZN8ImVectorI6ImVec2E9push_backERKS0_.exit.i:     ; preds = %bb.r, %._ZN8ImVecto
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit
 
 bb.s:                                             ; preds = %bb.m
-  %i.av = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, i64 4), align 4, !tbaa !47
+  %i.av = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, i64 4), align 4, !tbaa !47 ; 2 uses
   %i.aw = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, i64 16), align 8, !tbaa !46
   %i.ax = sext i32 %i.av to i64
   %i.ay = getelementptr inbounds [8 x i8], ptr %i.aw, i64 %i.ax ; 2 uses
-  store float %i.v, ptr %i.ay, align 4
+  store float %i.v, ptr %i.ay, align 4, !tbaa !32
   %.sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
-  store float %i.w, ptr %.sroa_idx5.i, align 4
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, i64 4), align 4, !tbaa !47
-  %i.az = add nsw i32 %3, 1
-  %4 = load i32, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, align 8, !tbaa !44
-  %i.ba = srem i32 %i.az, %4
+  store float %i.w, ptr %.sroa_idx5.i, align 4, !tbaa !32
+  %i.az = add nsw i32 %i.av, 1
+  %i.ba = srem i32 %i.az, %i.y
   store i32 %i.ba, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata1, i64 4), align 4, !tbaa !47
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit
 
@@ -965,7 +955,7 @@ _ZN6ImPlot15ScrollingBuffer8AddPointEff.exit:     ; preds = %_ZN8ImVectorI6ImVec
   %.sroa.0.4.vec.extract = extractelement <2 x float> %i.q, i64 1
   %i.bd = fmul float %.sroa.0.4.vec.extract, 5.000000e-04 ; 3 uses
   %i.be = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, i64 8), align 8, !tbaa !42 ; 7 uses
-  %i.bf = load i32, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, align 8, !tbaa !44
+  %i.bf = load i32, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, align 8, !tbaa !44 ; 2 uses
   %i.bg = icmp slt i32 %i.be, %i.bf
   br i1 %i.bg, label %bb.t, label %bb.y
 
@@ -1029,17 +1019,15 @@ _ZN8ImVectorI6ImVec2E9push_backERKS0_.exit.i11:   ; preds = %bb.x, %._ZN8ImVecto
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit17
 
 bb.y:                                             ; preds = %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit
-  %i.cc = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, i64 4), align 4, !tbaa !47
+  %i.cc = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, i64 4), align 4, !tbaa !47 ; 2 uses
   %i.cd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, i64 16), align 8, !tbaa !46
   %i.ce = sext i32 %i.cc to i64
   %i.cf = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %i.ce ; 2 uses
-  store float %i.bc, ptr %i.cf, align 4
+  store float %i.bc, ptr %i.cf, align 4, !tbaa !32
   %.sroa_idx5.i8 = getelementptr inbounds nuw i8, ptr %i.cf, i64 4
-  store float %i.bd, ptr %.sroa_idx5.i8, align 4
-  %5 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, i64 4), align 4, !tbaa !47
-  %i.cg = add nsw i32 %5, 1
-  %6 = load i32, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, align 8, !tbaa !44
-  %i.ch = srem i32 %i.cg, %6
+  store float %i.bd, ptr %.sroa_idx5.i8, align 4, !tbaa !32
+  %i.cg = add nsw i32 %i.cc, 1
+  %i.ch = srem i32 %i.cg, %i.bf
   store i32 %i.ch, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot18Demo_RealtimePlotsEvE6sdata2, i64 4), align 4, !tbaa !47
   br label %_ZN6ImPlot15ScrollingBuffer8AddPointEff.exit17
 
@@ -1442,9 +1430,9 @@ bb.a:
   %i.r = fmul nnan float %i.q, f0x30000000
   %i.s = fadd float %i.r, 0.000000e+00
   %.sroa.4.12.vec.insert.i = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.s, i64 0
-  store <2 x float> %i.o, ptr %i.b, align 8
+  store <2 x float> %i.o, ptr %i.b, align 8, !tbaa !32
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store <2 x float> %.sroa.4.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 8
+  store <2 x float> %.sroa.4.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !32
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 4 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !45
   %.not.i = icmp slt i32 %i.u, 1001
@@ -1847,21 +1835,21 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 44
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 76
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.y, i8 0, i64 32, i1 false)
-  store <4 x i32> splat (i32 1067030938), ptr %i.z, align 4
+  store <4 x i32> splat (i32 1067030938), ptr %i.z, align 4, !tbaa !32
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 92
-  store <4 x i32> <i32 1094713344, i32 1094713344, i32 1084227584, i32 1084227584>, ptr %i.aa, align 4
+  store <4 x i32> <i32 1094713344, i32 1094713344, i32 1084227584, i32 1084227584>, ptr %i.aa, align 4, !tbaa !32
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 108
-  store i32 1084227584, ptr %i.ab, align 4
+  store i32 1084227584, ptr %i.ab, align 4, !tbaa !32
   %.sroa_idx46 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  store i32 1084227584, ptr %.sroa_idx46, align 4
+  store i32 1084227584, ptr %.sroa_idx46, align 4, !tbaa !32
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 132
-  store i32 1084227584, ptr %i.ac, align 4
+  store i32 1084227584, ptr %i.ac, align 4, !tbaa !32
   %.sroa_idx43 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  store i32 1084227584, ptr %.sroa_idx43, align 4
+  store i32 1084227584, ptr %.sroa_idx43, align 4, !tbaa !32
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 164
-  store i32 1133903872, ptr %i.ad, align 4
+  store i32 1133903872, ptr %i.ad, align 4, !tbaa !32
   %.sroa_idx42 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  store i32 1130430464, ptr %.sroa_idx42, align 4
+  store i32 1130430464, ptr %.sroa_idx42, align 4, !tbaa !32
   ret void
 }
 
@@ -2148,10 +2136,10 @@ bb.b:                                             ; preds = %bb.a
   call void @_ZN6ImPlot15SetupAxisFormatEiPKc(i32 noundef 3, ptr noundef nonnull @.str.465) #20
   %i.g = load i8, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7tooltip, align 1, !tbaa !34, !range !35, !noundef !36
   %i.h = trunc nuw i8 %i.g to i1
-  %.sroa.01.0.copyload = load <2 x float>, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bullCol, align 8
-  %.sroa.22.0.copyload = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bullCol, i64 8), align 8
-  %.sroa.0.0.copyload = load <2 x float>, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bearCol, align 8
-  %.sroa.2.0.copyload = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bearCol, i64 8), align 8
+  %.sroa.01.0.copyload = load <2 x float>, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bullCol, align 8, !tbaa !32
+  %.sroa.22.0.copyload = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bullCol, i64 8), align 8, !tbaa !32
+  %.sroa.0.0.copyload = load <2 x float>, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bearCol, align 8, !tbaa !32
+  %.sroa.2.0.copyload = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6ImPlot30Demo_CustomPlottersAndTooltipsEvE7bearCol, i64 8), align 8, !tbaa !32
   call void @_ZN8MyImPlot15PlotCandlestickEPKcPKdS3_S3_S3_S3_ibf6ImVec4S4_(ptr noundef nonnull @.str.466, ptr noundef nonnull @__const._ZN6ImPlot30Demo_CustomPlottersAndTooltipsEv.dates, ptr noundef nonnull @__const._ZN6ImPlot30Demo_CustomPlottersAndTooltipsEv.opens, ptr noundef nonnull @__const._ZN6ImPlot30Demo_CustomPlottersAndTooltipsEv.closes, ptr noundef nonnull @__const._ZN6ImPlot30Demo_CustomPlottersAndTooltipsEv.lows, ptr noundef nonnull @__const._ZN6ImPlot30Demo_CustomPlottersAndTooltipsEv.highs, i32 noundef 218, i1 noundef zeroext %i.h, float noundef 2.500000e-01, <2 x float> %.sroa.01.0.copyload, <2 x float> %.sroa.22.0.copyload, <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.2.0.copyload)
   call void @_ZN6ImPlot7EndPlotEv() #20
   br label %bb.c

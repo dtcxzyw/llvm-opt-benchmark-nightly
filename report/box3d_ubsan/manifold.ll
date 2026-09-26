@@ -202,7 +202,7 @@ bb.z:                                             ; preds = %bb.y
   unreachable, !nosanitize !9
 
 bb.aa:                                            ; preds = %bb.y
-  %.sroa.042.0.copyload = load <2 x float>, ptr %i.bm, align 4
+  %.sroa.042.0.copyload = load <2 x float>, ptr %i.bm, align 4, !tbaa !13
   %.sroa.443.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   %.sroa.443.0.copyload = load float, ptr %.sroa.443.0..sroa_idx, align 4, !tbaa !13
   br label %bb.ab
@@ -252,7 +252,7 @@ bb.ag:                                            ; preds = %bb.af
   unreachable, !nosanitize !9
 
 bb.ah:                                            ; preds = %bb.af
-  %.sroa.038.0.copyload = load <2 x float>, ptr %i.ck, align 4
+  %.sroa.038.0.copyload = load <2 x float>, ptr %i.ck, align 4, !tbaa !13
   %.sroa.439.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
   %.sroa.439.0.copyload = load float, ptr %.sroa.439.0..sroa_idx, align 4, !tbaa !13
   %i.cq = fsub <2 x float> %.sroa.038.0.copyload, %.sroa.042.0.copyload ; 3 uses
@@ -352,7 +352,7 @@ bb.aq:                                            ; preds = %bb.ap
   unreachable, !nosanitize !9
 
 bb.ar:                                            ; preds = %bb.ap
-  %.sroa.09.0.copyload = load <2 x float>, ptr %i.ea, align 4
+  %.sroa.09.0.copyload = load <2 x float>, ptr %i.ea, align 4, !tbaa !13
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %.sroa.410.0.copyload = load float, ptr %.sroa.410.0..sroa_idx, align 4, !tbaa !13
   %i.en = getelementptr inbounds nuw i8, ptr %i.dp, i64 1
@@ -393,7 +393,7 @@ bb.aw:                                            ; preds = %bb.av
   unreachable, !nosanitize !9
 
 bb.ax:                                            ; preds = %bb.av
-  %.sroa.07.0.copyload = load <2 x float>, ptr %i.ew, align 4
+  %.sroa.07.0.copyload = load <2 x float>, ptr %i.ew, align 4, !tbaa !13
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   %.sroa.4.0.copyload = load float, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !13
   %i.fc = fmul <2 x float> %1, %.sroa.09.0.copyload ; 2 uses
@@ -511,7 +511,7 @@ bb.g:                                             ; preds = %bb.e
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.8.0.copyload = load float, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !13 ; 2 uses
   %i.v = fmul float %.sroa.1.8.vec.extract.i, %.sroa.8.0.copyload
-  %.sroa.0171.0.copyload = load <2 x float>, ptr %i.f, align 4 ; 2 uses
+  %.sroa.0171.0.copyload = load <2 x float>, ptr %i.f, align 4, !tbaa !13 ; 2 uses
   %i.w = fmul <2 x float> %3, %.sroa.0171.0.copyload ; 2 uses
   %shift = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x float> %i.w, %shift
@@ -519,7 +519,7 @@ bb.g:                                             ; preds = %bb.e
   %i.y = fadd float %i.v, %i.x
   %i.z = fsub float %i.y, %.sroa.1.12.vec.extract.i
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %.sroa.14.0.copyload = load i32, ptr %.sroa.14.0..sroa_idx, align 4
+  %.sroa.14.0.copyload = load i32, ptr %.sroa.14.0..sroa_idx, align 4, !tbaa !37
   %.sroa.1.8.vec.extract.i135 = extractelement <2 x float> %7, i64 0 ; 2 uses
   %.sroa.1.12.vec.extract.i140 = extractelement <2 x float> %7, i64 1 ; 2 uses
   %.sroa.6.17.insert.ext = shl i32 %5, 8
@@ -562,12 +562,12 @@ bb.k:                                             ; preds = %bb.j
   unreachable, !nosanitize !9
 
 bb.l:                                             ; preds = %bb.j
-  %.sroa.0146.0.copyload = load <2 x float>, ptr %i.ac, align 4 ; 6 uses
+  %.sroa.0146.0.copyload = load <2 x float>, ptr %i.ac, align 4, !tbaa !13 ; 6 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ai = load <2 x float>, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !13 ; 4 uses
   %i.aj = extractelement <2 x float> %i.ai, i64 0 ; 3 uses
   %.sroa.12164.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
-  %.sroa.12164.0.copyload = load i32, ptr %.sroa.12164.0..sroa_idx, align 4 ; 4 uses
+  %.sroa.12164.0.copyload = load i32, ptr %.sroa.12164.0..sroa_idx, align 4, !tbaa !37 ; 4 uses
   %i.ak = fmul <2 x float> %3, %.sroa.0146.0.copyload ; 2 uses
   %shift487 = shufflevector <2 x float> %i.ak, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop488 = fadd <2 x float> %i.ak, %shift487
@@ -609,11 +609,11 @@ bb.p:                                             ; preds = %bb.o
   unreachable, !nosanitize !9
 
 bb.q:                                             ; preds = %bb.o
-  store <2 x float> %.sroa.0146.0.copyload, ptr %i.aq, align 4
+  store <2 x float> %.sroa.0146.0.copyload, ptr %i.aq, align 4, !tbaa !13
   %.sroa.9.0..sroa_idx152 = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   store <2 x float> %i.ai, ptr %.sroa.9.0..sroa_idx152, align 4, !tbaa !13
   %.sroa.12164.0..sroa_idx165 = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
-  store i32 %.sroa.12164.0.copyload, ptr %.sroa.12164.0..sroa_idx165, align 4
+  store i32 %.sroa.12164.0.copyload, ptr %.sroa.12164.0..sroa_idx165, align 4, !tbaa !37
   %i.bd = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.091261, i32 1), !nosanitize !9 ; 2 uses
   %i.be = extractvalue { i32, i1 } %i.bd, 1, !nosanitize !9
   br i1 %i.be, label %bb.r, label %bb.s, !prof !12, !nosanitize !9
@@ -681,13 +681,13 @@ bb.x:                                             ; preds = %bb.w
   unreachable, !nosanitize !9
 
 bb.y:                                             ; preds = %bb.w
-  store <2 x float> %i.bp, ptr %i.bx, align 4
+  store <2 x float> %i.bp, ptr %i.bx, align 4, !tbaa !13
   %.sroa.4143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store float %i.br, ptr %.sroa.4143.0..sroa_idx, align 4, !tbaa !13
   %.sroa.5144.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 12
   store float %i.bv, ptr %.sroa.5144.0..sroa_idx, align 4, !tbaa !13
   %.sroa.6145.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
-  store i32 %.sroa.6145.19.insert.insert, ptr %.sroa.6145.0..sroa_idx, align 4
+  store i32 %.sroa.6145.19.insert.insert, ptr %.sroa.6145.0..sroa_idx, align 4, !tbaa !37
   %i.ck = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.091261, i32 1), !nosanitize !9 ; 2 uses
   %i.cl = extractvalue { i32, i1 } %i.ck, 1, !nosanitize !9
   br i1 %i.cl, label %bb.z, label %bb.aa, !prof !12, !nosanitize !9
@@ -755,13 +755,13 @@ bb.af:                                            ; preds = %bb.ae
   unreachable, !nosanitize !9
 
 bb.ag:                                            ; preds = %bb.ae
-  store <2 x float> %i.cw, ptr %i.de, align 4
+  store <2 x float> %i.cw, ptr %i.de, align 4, !tbaa !13
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   store float %i.cy, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !13
   %.sroa.5.0..sroa_idx141 = getelementptr inbounds nuw i8, ptr %i.de, i64 12
   store float %i.dc, ptr %.sroa.5.0..sroa_idx141, align 4, !tbaa !13
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.de, i64 16
-  store i32 %.sroa.6.17.insert.insert, ptr %.sroa.6.0..sroa_idx, align 4
+  store i32 %.sroa.6.17.insert.insert, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !37
   %i.dr = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.091261, i32 1), !nosanitize !9 ; 2 uses
   %i.ds = extractvalue { i32, i1 } %i.dr, 0, !nosanitize !9 ; 4 uses
   %i.dt = extractvalue { i32, i1 } %i.dr, 1, !nosanitize !9
@@ -799,11 +799,11 @@ bb.al:                                            ; preds = %bb.ak
   unreachable, !nosanitize !9
 
 bb.am:                                            ; preds = %bb.ak
-  store <2 x float> %.sroa.0146.0.copyload, ptr %i.dw, align 4
+  store <2 x float> %.sroa.0146.0.copyload, ptr %i.dw, align 4, !tbaa !13
   %.sroa.9.0..sroa_idx154 = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   store <2 x float> %i.ai, ptr %.sroa.9.0..sroa_idx154, align 4, !tbaa !13
   %.sroa.12164.0..sroa_idx167 = getelementptr inbounds nuw i8, ptr %i.dw, i64 16
-  store i32 %.sroa.12164.0.copyload, ptr %.sroa.12164.0..sroa_idx167, align 4
+  store i32 %.sroa.12164.0.copyload, ptr %.sroa.12164.0..sroa_idx167, align 4, !tbaa !37
   %i.eh = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ds, i32 1), !nosanitize !9 ; 2 uses
   %i.ei = extractvalue { i32, i1 } %i.eh, 1, !nosanitize !9
   br i1 %i.ei, label %bb.an, label %bb.ao, !prof !12, !nosanitize !9
@@ -880,4 +880,5 @@ attributes #4 = { noreturn nounwind }
 !34 = !{i32 -1056584962, i32 -1668940752}
 !35 = distinct !{!35, !14}
 !36 = !{i32 -1056584962, i32 1240342547}
+!37 = !{!5, !5, i64 0}
 end_hunk_0

@@ -205,63 +205,69 @@ _ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE6resizeEm.exit: ; preds = %bb.a,
   %.val = phi ptr [ %.val.pre, %bb.b ], [ %.val13, %bb.a ] ; 2 uses
   %.val14 = phi ptr [ %.val14.pre, %bb.b ], [ %.val12, %bb.a ] ; 2 uses
   %.not11 = icmp eq ptr %.val14, %.val
-  br i1 %.not11, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not11, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE6resizeEm.exit
+  %3 = load ptr, ptr %i.n, align 8, !tbaa !156
+  %4 = load ptr, ptr %0, align 8, !tbaa !70       ; 2 uses
+  %5 = ptrtoint ptr %3 to i64
+  %6 = ptrtoint ptr %4 to i64
+  %7 = sub i64 %5, %6
+  %8 = ashr exact i64 %7, 3                       ; 2 uses
+  br label %9
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE6resizeEm.exit
   %.val19 = load ptr, ptr %i.g, align 8, !tbaa !136 ; 2 uses
   %.val16 = load ptr, ptr %i.h, align 8, !tbaa !136 ; 2 uses
   %.not713 = icmp eq ptr %.val19, %.val16
-  br i1 %.not713, label %._crit_edge17, label %.lr.ph16
+  br i1 %.not713, label %._crit_edge17, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE6resizeEm.exit, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit
-  %.sroa.06.012 = phi ptr [ %i.z, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit ], [ %.val14, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE6resizeEm.exit ] ; 4 uses
-  %3 = load i32, ptr %.sroa.06.012, align 8, !tbaa !106
-  %4 = zext i32 %3 to i64                         ; 3 uses
+.lr.ph.a:                                         ; preds = %._crit_edge
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !156
   %i.p = load ptr, ptr %0, align 8, !tbaa !70     ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = sub i64 %i.q, %i.r
   %i.t = ashr exact i64 %i.s, 3                   ; 2 uses
-  %.not.i.i25 = icmp ugt i64 %i.t, %4
+  br label %.lr.ph16
+
+9:                                                ; preds = %.lr.ph, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit
+  %.sroa.06.012 = phi ptr [ %.val14, %.lr.ph ], [ %i.z, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit ] ; 4 uses
+  %10 = load i32, ptr %.sroa.06.012, align 8, !tbaa !106
+  %11 = zext i32 %10 to i64                       ; 3 uses
+  %.not.i.i25 = icmp ugt i64 %8, %11
   br i1 %.not.i.i25, label %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit, label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph.a
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.8, i64 noundef %4, i64 noundef %i.t) #17
+bb.c:                                             ; preds = %9
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.8, i64 noundef %11, i64 noundef %8) #17
   unreachable
 
-_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit: ; preds = %.lr.ph.a
+_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit: ; preds = %9
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.06.012, i64 16
   %i.v = load i64, ptr %i.u, align 8, !tbaa !55
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.06.012, i64 24
   %i.x = load i64, ptr %i.w, align 8, !tbaa !152
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %4
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %11
   %.sroa.44.0.insert.ext = shl i64 %i.v, 32
   %.sroa.03.0.insert.ext = and i64 %i.x, 4294967295
   %.sroa.03.0.insert.insert = or disjoint i64 %.sroa.03.0.insert.ext, %.sroa.44.0.insert.ext
-  store i64 %.sroa.03.0.insert.insert, ptr %i.y, align 4
+  store i64 %.sroa.03.0.insert.insert, ptr %i.y, align 4, !tbaa !13
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.06.012, i64 96 ; 2 uses
   %.not = icmp eq ptr %i.z, %.val
-  br i1 %.not, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not, label %._crit_edge, label %9
 
 ._crit_edge17:                                    ; preds = %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27, %._crit_edge
   ret void
 
-.lr.ph16:                                         ; preds = %._crit_edge, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27
-  %.sroa.02.014 = phi ptr [ %i.ak, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27 ], [ %.val19, %._crit_edge ] ; 4 uses
+.lr.ph16:                                         ; preds = %.lr.ph.a, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27
+  %.sroa.02.014 = phi ptr [ %.val19, %.lr.ph.a ], [ %i.ak, %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27 ] ; 4 uses
   %i.aa = load i32, ptr %.sroa.02.014, align 8, !tbaa !144
   %i.ab = zext i32 %i.aa to i64                   ; 3 uses
-  %5 = load ptr, ptr %i.n, align 8, !tbaa !156
-  %6 = load ptr, ptr %0, align 8, !tbaa !70       ; 2 uses
-  %7 = ptrtoint ptr %5 to i64
-  %8 = ptrtoint ptr %6 to i64
-  %9 = sub i64 %7, %8
-  %10 = ashr exact i64 %9, 3                      ; 2 uses
-  %.not.i.i26 = icmp ugt i64 %10, %i.ab
+  %.not.i.i26 = icmp ugt i64 %i.t, %i.ab
   br i1 %.not.i.i26, label %_ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph16
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.8, i64 noundef %i.ab, i64 noundef %10) #17
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.8, i64 noundef %i.ab, i64 noundef %i.t) #17
   unreachable
 
 _ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27: ; preds = %.lr.ph16
@@ -271,12 +277,12 @@ _ZNSt6vectorIN6hermes16StringTableEntryESaIS1_EE2atEm.exit27: ; preds = %.lr.ph1
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !153
   %i.ag = shl i64 %i.af, 1
   %i.ah = add i64 %i.ag, %2
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.ab
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.ab
   %i.aj = shl i64 %i.ad, 32
   %.sroa.0.0.insert.ext = and i64 %i.ah, 4294967295
   %.sroa.4.0.insert.shift = or disjoint i64 %.sroa.0.0.insert.ext, %i.aj
   %.sroa.0.0.insert.insert = or i64 %.sroa.4.0.insert.shift, -9223372036854775808
-  store i64 %.sroa.0.0.insert.insert, ptr %i.ai, align 4
+  store i64 %.sroa.0.0.insert.insert, ptr %i.ai, align 4, !tbaa !13
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 96 ; 2 uses
   %.not7 = icmp eq ptr %i.ak, %.val16
   br i1 %.not7, label %._crit_edge17, label %.lr.ph16
@@ -679,12 +685,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.y = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.p, i64 %i.y ; 2 uses
-  %i.z = load i64, ptr %i.b, align 4
+  %i.z = load i64, ptr %i.b, align 4, !tbaa !13
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.z, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.aa = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4
-  store <2 x i64> %broadcast.splat, ptr %i.aa, align 4
+  store <2 x i64> %broadcast.splat, ptr %next.gep, align 4, !tbaa !13
+  store <2 x i64> %broadcast.splat, ptr %i.aa, align 4, !tbaa !13
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !430
@@ -699,8 +705,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i
   %.06.i.i.i.i.i.i.i = phi ptr [ %i.ad, %.lr.ph.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 2 uses
-  %i.ac = load i64, ptr %i.b, align 4
-  store i64 %i.ac, ptr %.06.i.i.i.i.i.i.i, align 4
+  %i.ac = load i64, ptr %i.b, align 4, !tbaa !13
+  store i64 %i.ac, ptr %.06.i.i.i.i.i.i.i, align 4, !tbaa !13
   %i.ad = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ad, %i.s
   br i1 %.not.i.i.i.i.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN6hermes16StringTableEntryEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !431
@@ -750,12 +756,12 @@ vector.body41:                                    ; preds = %vector.body41, %vec
   %index42 = phi i64 [ 0, %vector.ph39 ], [ %index.next46, %vector.body41 ] ; 2 uses
   %i.at = shl i64 %index42, 3
   %next.gep43 = getelementptr i8, ptr %i.am, i64 %i.at ; 2 uses
-  %i.au = load i64, ptr %i.aj, align 4
+  %i.au = load i64, ptr %i.aj, align 4, !tbaa !13
   %broadcast.splatinsert44 = insertelement <2 x i64> poison, i64 %i.au, i64 0
   %broadcast.splat45 = shufflevector <2 x i64> %broadcast.splatinsert44, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.av = getelementptr i8, ptr %next.gep43, i64 16
-  store <2 x i64> %broadcast.splat45, ptr %next.gep43, align 4
-  store <2 x i64> %broadcast.splat45, ptr %i.av, align 4
+  store <2 x i64> %broadcast.splat45, ptr %next.gep43, align 4, !tbaa !13
+  store <2 x i64> %broadcast.splat45, ptr %i.av, align 4, !tbaa !13
   %index.next46 = add nuw i64 %index42, 4         ; 2 uses
   %i.aw = icmp eq i64 %index.next46, %n.vec40
   br i1 %i.aw, label %middle.block47, label %vector.body41, !llvm.loop !432
@@ -770,8 +776,8 @@ middle.block47:                                   ; preds = %vector.body41
 
 .lr.ph.i.i.i.i.i.i.i26:                           ; preds = %.lr.ph.i.i.i.i.i.i.i26.preheader, %.lr.ph.i.i.i.i.i.i.i26
   %.06.i.i.i.i.i.i.i27 = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.i.i.i26 ], [ %.06.i.i.i.i.i.i.i27.ph, %.lr.ph.i.i.i.i.i.i.i26.preheader ] ; 2 uses
-  %i.ax = load i64, ptr %i.aj, align 4
-  store i64 %i.ax, ptr %.06.i.i.i.i.i.i.i27, align 4
+  %i.ax = load i64, ptr %i.aj, align 4, !tbaa !13
+  store i64 %i.ax, ptr %.06.i.i.i.i.i.i.i27, align 4, !tbaa !13
   %i.ay = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i27, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i28 = icmp eq ptr %i.ay, %i.an
   br i1 %.not.i.i.i.i.i.i.i28, label %_ZSt27__uninitialized_default_n_aIPN6hermes16StringTableEntryEmS1_ET_S3_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i.i.i.i.i26, !llvm.loop !433

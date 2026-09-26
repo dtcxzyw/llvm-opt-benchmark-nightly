@@ -204,8 +204,8 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.d
   %.014 = phi ptr [ %i.s, %bb.d ], [ %2, %bb.a ]  ; 6 uses
   %.sroa.08.013 = phi ptr [ %i.r, %bb.d ], [ %0, %bb.a ] ; 4 uses
-  %i.b = load i64, ptr %.sroa.08.013, align 8
-  store i64 %i.b, ptr %.014, align 8
+  %i.b = load i64, ptr %.sroa.08.013, align 8, !tbaa !125
+  store i64 %i.b, ptr %.014, align 8, !tbaa !125
   %i.c = getelementptr inbounds nuw i8, ptr %.014, i64 8 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.08.013, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %.014, i64 24 ; 3 uses
@@ -608,4 +608,5 @@ attributes #23 = { nounwind willreturn memory(read) }
 !122 = !{!"_ZTSSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN4Json5ValueEE", !18, i64 0, !121, i64 32}
 !123 = !{!122, !121, i64 32}
 !124 = distinct !{!124, !42}
+!125 = !{!10, !10, i64 0}
 end_hunk_1

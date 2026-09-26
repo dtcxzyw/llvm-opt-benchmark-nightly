@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %._crit_edge, %bb.w, %bb.v
   %i.cb = phi i32 [ %.pre352, %._crit_edge ], [ %i.bw, %bb.w ], [ %i.by, %bb.v ]
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.f, i64 344 ; 4 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.f, i64 344 ; 3 uses
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !86
   %i.ce = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.cd, i32 noundef 24, ptr noundef nonnull @.str.4, i32 noundef %i.bu, i32 noundef %i.cb) #15
@@ -217,7 +217,7 @@ bb.x:                                             ; preds = %._crit_edge, %bb.w,
   br i1 %.not283, label %bb.y, label %.thread
 
 bb.y:                                             ; preds = %bb.x
-  %i.cj = load ptr, ptr %i.cc, align 8, !tbaa !86
+  %i.cj = load ptr, ptr %i.cc, align 8, !tbaa !86 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 128 ; 2 uses
   %i.cl = load i32, ptr %i.br, align 16, !tbaa !84
   %i.cm = getelementptr inbounds nuw i8, ptr %i.f, i64 356 ; 2 uses
@@ -226,11 +226,10 @@ bb.y:                                             ; preds = %bb.x
   %i.cp = load i32, ptr %i.ce, align 4, !tbaa !142 ; 3 uses
   %i.cq = load i64, ptr %i.ck, align 8
   %i.cr = call fastcc i64 @update_sar(i32 noundef %i.cl, i32 noundef %i.cn, i64 %i.cq, i32 noundef %i.co, i32 noundef %i.cp)
-  store i64 %i.cr, ptr %i.ck, align 8
+  store i64 %i.cr, ptr %i.ck, align 8, !tbaa !68
   store i32 %i.co, ptr %i.br, align 16, !tbaa !84
   store i32 %i.cp, ptr %i.cm, align 4, !tbaa !85
-  %5 = load ptr, ptr %i.cc, align 8, !tbaa !86
-  %i.cs = call i32 @ff_set_dimensions(ptr noundef %5, i32 noundef %i.co, i32 noundef %i.cp) #15 ; 2 uses
+  %i.cs = call i32 @ff_set_dimensions(ptr noundef %i.cj, i32 noundef %i.co, i32 noundef %i.cp) #15 ; 2 uses
   %i.ct = icmp slt i32 %i.cs, 0
   br i1 %i.ct, label %.thread, label %bb.z
 

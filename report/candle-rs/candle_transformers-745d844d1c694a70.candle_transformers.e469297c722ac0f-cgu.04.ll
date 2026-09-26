@@ -204,14 +204,14 @@ bb.a:
   %i.l = alloca [40 x i8], align 8                ; 7 uses
   %i.m = alloca [184 x i8], align 8               ; 28 uses
   %i.n = alloca [40 x i8], align 8                ; 4 uses
-  %i.o = alloca [80 x i8], align 8                ; 14 uses
+  %i.o = alloca [80 x i8], align 8                ; 13 uses
   %i.p = alloca [40 x i8], align 8                ; 4 uses
-  %i.q = alloca [80 x i8], align 8                ; 14 uses
+  %i.q = alloca [80 x i8], align 8                ; 13 uses
   %i.r = alloca [32 x i8], align 8                ; 12 uses
   %i.s = alloca [40 x i8], align 8                ; 4 uses
-  %i.t = alloca [80 x i8], align 8                ; 14 uses
+  %i.t = alloca [80 x i8], align 8                ; 13 uses
   %i.u = alloca [40 x i8], align 8                ; 4 uses
-  %i.v = alloca [80 x i8], align 8                ; 14 uses
+  %i.v = alloca [80 x i8], align 8                ; 13 uses
   %i.w = alloca [32 x i8], align 8                ; 11 uses
   %i.x = alloca [80 x i8], align 8                ; 13 uses
   %i.y = alloca [8 x i8], align 8                 ; 11 uses
@@ -241,7 +241,7 @@ bb.a:
   %i.aw = alloca [40 x i8], align 8               ; 4 uses
   %i.ax = alloca [80 x i8], align 8               ; 13 uses
   %i.ay = alloca [32 x i8], align 8               ; 18 uses
-  %i.az = alloca [368 x i8], align 8              ; 33 uses
+  %i.az = alloca [368 x i8], align 8              ; 32 uses
   %i.ba = alloca [40 x i8], align 8               ; 11 uses
   %.sroa.34.i = alloca [96 x i8], align 8         ; 5 uses
   %.sroa.40.i = alloca [32 x i8], align 8         ; 5 uses
@@ -255,7 +255,7 @@ bb.a:
   %i.bh = alloca [80 x i8], align 8               ; 7 uses
   %.sroa.617 = alloca [56 x i8], align 8          ; 6 uses
   %i.bi = alloca [40 x i8], align 8               ; 10 uses
-  %i.bj = alloca [64 x i8], align 8               ; 14 uses
+  %i.bj = alloca [64 x i8], align 8               ; 13 uses
   %i.bk = alloca [40 x i8], align 8               ; 6 uses
   %.sroa.15 = alloca [55 x i8], align 1           ; 6 uses
   %.sroa.6.sroa.9 = alloca [7 x i8], align 1      ; 6 uses
@@ -484,7 +484,6 @@ bb.y:                                             ; preds = %bb.w
   %.sroa.567.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 40
   %.sroa.26.sroa.19.24..sroa.567.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 48
   %.sroa.26.sroa.20.24..sroa.567.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 56
-  %.sroa.31.48..sroa.567.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 64
   %.sroa.33.48..sroa.567.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 72
   %.sroa.67.i.sroa.7.0..sroa_idx145.i = getelementptr inbounds nuw i8, ptr %i.w, i64 8 ; 6 uses
   %.sroa.67.i.sroa.7.sroa.7.0..sroa.67.i.sroa.7.0..sroa_idx145.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
@@ -496,7 +495,6 @@ bb.y:                                             ; preds = %bb.w
   %.sroa.585.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %.sroa.26.sroa.19.24..sroa.585.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 48
   %.sroa.26.sroa.20.24..sroa.585.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 56
-  %.sroa.31.48..sroa.585.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 64
   %.sroa.33.48..sroa.585.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 72
   %.sroa.625.i.sroa.7.0..sroa_idx151.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %.sroa.625.i.sroa.7.sroa.7.0..sroa.625.i.sroa.7.0..sroa_idx151.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 16
@@ -508,7 +506,6 @@ bb.y:                                             ; preds = %bb.w
   %.sroa.558.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 40
   %.sroa.26.sroa.19.24..sroa.558.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 48
   %.sroa.26.sroa.20.24..sroa.558.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 56
-  %.sroa.31.48..sroa.558.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 64
   %.sroa.33.48..sroa.558.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 72
   %.sroa.475.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %.sroa.616.i.sroa.7.0..sroa.475.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
@@ -517,7 +514,6 @@ bb.y:                                             ; preds = %bb.w
   %.sroa.576.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 40
   %.sroa.26.sroa.19.24..sroa.576.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %.sroa.26.sroa.20.24..sroa.576.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 56
-  %.sroa.31.48..sroa.576.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 64
   %.sroa.33.48..sroa.576.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 72
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.da = load i64, ptr %i.cz, align 8, !alias.scope !25427, !noalias !25431 ; 3 uses
@@ -583,7 +579,7 @@ bb.y:                                             ; preds = %bb.w
   %.sroa.634.sroa.8.sroa.0.sroa.0.i.sroa.11.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.m, i64 64 ; 2 uses
   %.sroa.439.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %.sroa.439.sroa.4.0..sroa.439.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
-  %.sroa.439.sroa.5.sroa.0.sroa.4.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 72 ; 2 uses
+  %.sroa.439.sroa.5.sroa.0.sroa.4.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   %.sroa.439.sroa.5.sroa.4.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 80 ; 2 uses
   %.sroa.540.sroa.4.0..sroa.540.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 136
   %.sroa.540.sroa.5.0..sroa.540.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 144
@@ -627,7 +623,6 @@ bb.y:                                             ; preds = %bb.w
   %.sroa.6.sroa.8.sroa.9.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 48
   %.sroa.6.sroa.8.sroa.10.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 56
   %.sroa.6.sroa.8.sroa.11.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 64
-  %.sroa.6.sroa.9.0..sroa.6.0..sroa_idx3.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 72
   %.sroa.6.sroa.10.0..sroa.6.0..sroa_idx3.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 80
   %.sroa.8.0..sroa_idx4.i = getelementptr inbounds nuw i8, ptr %i.az, i64 88
   %.sroa.8.sroa.5.0..sroa.8.0..sroa_idx4.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 184
@@ -739,9 +734,9 @@ bb.ad:                                            ; preds = %.noexc74.i
   %.sroa.27.i.sroa.16.0..sroa.591.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.am, i64 48
   %.sroa.27.i.sroa.16.0.copyload = load double, ptr %.sroa.27.i.sroa.16.0..sroa.591.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   %.sroa.27.i.sroa.17.0..sroa.591.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.am, i64 56
-  %.sroa.27.i.sroa.17.0.copyload = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.591.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
-  %.sroa.27.i.sroa.18.0..sroa.591.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.am, i64 64
-  %3 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.591.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %3 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.591.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %.sroa.27.i.sroa.18.0..sroa.591.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.am, i64 72
+  %.sroa.27.i.sroa.19.0.copyload = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.591.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !25432
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !25432
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit188.i.i
@@ -787,9 +782,9 @@ bb.ai:                                            ; preds = %bb.ah
   %.sroa.27.i.sroa.16.0..sroa.5100.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 48
   %.sroa.27.i.sroa.16.0.copyload200 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5100.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
   %.sroa.27.i.sroa.17.0..sroa.5100.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 56
-  %.sroa.27.i.sroa.17.0.copyload208 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5100.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
-  %.sroa.27.i.sroa.18.0..sroa.5100.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 64
-  %4 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5100.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
+  %4 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5100.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
+  %.sroa.27.i.sroa.18.0..sroa.5100.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 72
+  %.sroa.27.i.sroa.19.0.copyload224 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5100.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !25432
   call void @llvm.experimental.noalias.scope.decl(metadata !25440)
   call void @llvm.experimental.noalias.scope.decl(metadata !25441)
@@ -871,9 +866,9 @@ bb.ap:                                            ; preds = %bb.ao
   %.sroa.27.i.sroa.16.0..sroa.5109.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 48
   %.sroa.27.i.sroa.16.0.copyload201 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5109.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   %.sroa.27.i.sroa.17.0..sroa.5109.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 56
-  %.sroa.27.i.sroa.17.0.copyload209 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5109.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
-  %.sroa.27.i.sroa.18.0..sroa.5109.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 64
-  %5 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5109.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %5 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5109.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %.sroa.27.i.sroa.18.0..sroa.5109.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 72
+  %.sroa.27.i.sroa.19.0.copyload225 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5109.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !25432
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !25432
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !25432
@@ -924,9 +919,9 @@ bb.au:                                            ; preds = %bb.at
   %.sroa.27.i.sroa.16.0..sroa.5118.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
   %.sroa.27.i.sroa.16.0.copyload202 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5118.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   %.sroa.27.i.sroa.17.0..sroa.5118.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ai, i64 56
-  %.sroa.27.i.sroa.17.0.copyload210 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5118.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
-  %.sroa.27.i.sroa.18.0..sroa.5118.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
-  %6 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5118.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %6 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5118.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %.sroa.27.i.sroa.18.0..sroa.5118.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ai, i64 72
+  %.sroa.27.i.sroa.19.0.copyload226 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5118.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !25432
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !25432
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i
@@ -972,9 +967,9 @@ bb.az:                                            ; preds = %bb.ay
   %.sroa.27.i.sroa.16.0..sroa.5127.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
   %.sroa.27.i.sroa.16.0.copyload203 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5127.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
   %.sroa.27.i.sroa.17.0..sroa.5127.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
-  %.sroa.27.i.sroa.17.0.copyload211 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5127.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
-  %.sroa.27.i.sroa.18.0..sroa.5127.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
-  %7 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5127.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
+  %7 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5127.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
+  %.sroa.27.i.sroa.18.0..sroa.5127.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 72
+  %.sroa.27.i.sroa.19.0.copyload227 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5127.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !25432
   call void @llvm.experimental.noalias.scope.decl(metadata !25465)
   call void @llvm.experimental.noalias.scope.decl(metadata !25466)
@@ -1082,9 +1077,9 @@ bb.bj:                                            ; preds = %bb.bi
   %.sroa.27.i.sroa.16.0..sroa.5136.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 48
   %.sroa.27.i.sroa.16.0.copyload204 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5136.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   %.sroa.27.i.sroa.17.0..sroa.5136.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 56
-  %.sroa.27.i.sroa.17.0.copyload212 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5136.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
-  %.sroa.27.i.sroa.18.0..sroa.5136.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
-  %8 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5136.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %8 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5136.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %.sroa.27.i.sroa.18.0..sroa.5136.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 72
+  %.sroa.27.i.sroa.19.0.copyload228 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5136.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !25432
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit231.i.i
 
@@ -1138,9 +1133,9 @@ bb.bo:                                            ; preds = %bb.bn
   %.sroa.27.i.sroa.16.0..sroa.5145.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 48
   %.sroa.27.i.sroa.16.0.copyload205 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5145.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   %.sroa.27.i.sroa.17.0..sroa.5145.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 56
-  %.sroa.27.i.sroa.17.0.copyload213 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5145.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
-  %.sroa.27.i.sroa.18.0..sroa.5145.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 64
-  %9 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5145.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %9 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5145.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %.sroa.27.i.sroa.18.0..sroa.5145.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 72
+  %.sroa.27.i.sroa.19.0.copyload229 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5145.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !25432
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !25432
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i
@@ -1192,9 +1187,9 @@ bb.bt:                                            ; preds = %bb.bs
   %.sroa.27.i.sroa.16.0..sroa.5154.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.x, i64 48
   %.sroa.27.i.sroa.16.0.copyload206 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5154.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   %.sroa.27.i.sroa.17.0..sroa.5154.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.x, i64 56
-  %.sroa.27.i.sroa.17.0.copyload214 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5154.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
-  %.sroa.27.i.sroa.18.0..sroa.5154.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.x, i64 64
-  %10 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5154.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %10 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5154.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
+  %.sroa.27.i.sroa.18.0..sroa.5154.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.x, i64 72
+  %.sroa.27.i.sroa.19.0.copyload230 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5154.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !25432
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !25432
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i
@@ -1243,9 +1238,9 @@ bb.by:                                            ; preds = %bb.bx
   %.sroa.27.i.sroa.16.0..sroa.5163.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   %.sroa.27.i.sroa.16.0.copyload207 = load double, ptr %.sroa.27.i.sroa.16.0..sroa.5163.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
   %.sroa.27.i.sroa.17.0..sroa.5163.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 56
-  %.sroa.27.i.sroa.17.0.copyload215 = load i64, ptr %.sroa.27.i.sroa.17.0..sroa.5163.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
-  %.sroa.27.i.sroa.18.0..sroa.5163.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 64
-  %11 = load <2 x i64>, ptr %.sroa.27.i.sroa.18.0..sroa.5163.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
+  %11 = load <2 x i64>, ptr %.sroa.27.i.sroa.17.0..sroa.5163.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
+  %.sroa.27.i.sroa.18.0..sroa.5163.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 72
+  %.sroa.27.i.sroa.19.0.copyload231 = load i64, ptr %.sroa.27.i.sroa.18.0..sroa.5163.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !25433 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !25432
   call void @llvm.experimental.noalias.scope.decl(metadata !25505)
   call void @llvm.experimental.noalias.scope.decl(metadata !25506)
@@ -1387,7 +1382,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
   %.sroa.27.i.sroa.14.7 = phi double [ %.sroa.27.i.sroa.14.0.copyload191, %bb.bz ], [ %.sroa.27.i.sroa.14.0.copyload191, %bb.by ], [ %.sroa.27.i.sroa.14.0.copyload190, %bb.bt ] ; 2 uses
   %.sroa.27.i.sroa.15.7 = phi i64 [ %.sroa.27.i.sroa.15.0.copyload199, %bb.bz ], [ %.sroa.27.i.sroa.15.0.copyload199, %bb.by ], [ %.sroa.27.i.sroa.15.0.copyload198, %bb.bt ] ; 2 uses
   %.sroa.27.i.sroa.16.7 = phi double [ %.sroa.27.i.sroa.16.0.copyload207, %bb.bz ], [ %.sroa.27.i.sroa.16.0.copyload207, %bb.by ], [ %.sroa.27.i.sroa.16.0.copyload206, %bb.bt ] ; 2 uses
-  %.sroa.27.i.sroa.17.7 = phi i64 [ %.sroa.27.i.sroa.17.0.copyload215, %bb.bz ], [ %.sroa.27.i.sroa.17.0.copyload215, %bb.by ], [ %.sroa.27.i.sroa.17.0.copyload214, %bb.bt ] ; 2 uses
+  %.sroa.27.i.sroa.17.7 = phi i64 [ %.sroa.27.i.sroa.19.0.copyload231, %bb.bz ], [ %.sroa.27.i.sroa.19.0.copyload231, %bb.by ], [ %.sroa.27.i.sroa.19.0.copyload230, %bb.bt ] ; 2 uses
   %.sroa.15.6.i = phi ptr [ %i.ic, %bb.bz ], [ %i.ic, %bb.by ], [ %i.hu, %bb.bt ] ; 2 uses
   %.sroa.0111.6.i = phi i64 [ %i.ia, %bb.bz ], [ %i.ia, %bb.by ], [ %i.hs, %bb.bt ] ; 2 uses
   %i.jf = phi <2 x i64> [ %11, %bb.bz ], [ %11, %bb.by ], [ %10, %bb.bt ] ; 2 uses
@@ -1411,7 +1406,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
   %.sroa.27.i.sroa.14.6 = phi double [ %.sroa.27.i.sroa.14.7, %bb.cl ], [ %.sroa.27.i.sroa.14.7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %.sroa.27.i.sroa.14.0.copyload189, %bb.bo ] ; 2 uses
   %.sroa.27.i.sroa.15.6 = phi i64 [ %.sroa.27.i.sroa.15.7, %bb.cl ], [ %.sroa.27.i.sroa.15.7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %.sroa.27.i.sroa.15.0.copyload197, %bb.bo ] ; 2 uses
   %.sroa.27.i.sroa.16.6 = phi double [ %.sroa.27.i.sroa.16.7, %bb.cl ], [ %.sroa.27.i.sroa.16.7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %.sroa.27.i.sroa.16.0.copyload205, %bb.bo ] ; 2 uses
-  %.sroa.27.i.sroa.17.6 = phi i64 [ %.sroa.27.i.sroa.17.7, %bb.cl ], [ %.sroa.27.i.sroa.17.7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %.sroa.27.i.sroa.17.0.copyload213, %bb.bo ] ; 2 uses
+  %.sroa.27.i.sroa.17.6 = phi i64 [ %.sroa.27.i.sroa.17.7, %bb.cl ], [ %.sroa.27.i.sroa.17.7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %.sroa.27.i.sroa.19.0.copyload229, %bb.bo ] ; 2 uses
   %.sroa.15.5.i = phi ptr [ %.sroa.15.6.i, %bb.cl ], [ %.sroa.15.6.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %i.hn, %bb.bo ] ; 2 uses
   %.sroa.0111.5.i = phi i64 [ %.sroa.0111.6.i, %bb.cl ], [ %.sroa.0111.6.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %i.hl, %bb.bo ] ; 2 uses
   %i.jj = phi <2 x i64> [ %i.jf, %bb.cl ], [ %i.jf, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit214.i.i ], [ %9, %bb.bo ] ; 2 uses
@@ -1437,7 +1432,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
   %.sroa.27.i.sroa.14.5 = phi double [ %.sroa.27.i.sroa.14.6, %bb.cm ], [ %.sroa.27.i.sroa.14.6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %.sroa.27.i.sroa.14.0.copyload188, %bb.bj ] ; 2 uses
   %.sroa.27.i.sroa.15.5 = phi i64 [ %.sroa.27.i.sroa.15.6, %bb.cm ], [ %.sroa.27.i.sroa.15.6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %.sroa.27.i.sroa.15.0.copyload196, %bb.bj ] ; 2 uses
   %.sroa.27.i.sroa.16.5 = phi double [ %.sroa.27.i.sroa.16.6, %bb.cm ], [ %.sroa.27.i.sroa.16.6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %.sroa.27.i.sroa.16.0.copyload204, %bb.bj ] ; 2 uses
-  %.sroa.27.i.sroa.17.5 = phi i64 [ %.sroa.27.i.sroa.17.6, %bb.cm ], [ %.sroa.27.i.sroa.17.6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %.sroa.27.i.sroa.17.0.copyload212, %bb.bj ] ; 2 uses
+  %.sroa.27.i.sroa.17.5 = phi i64 [ %.sroa.27.i.sroa.17.6, %bb.cm ], [ %.sroa.27.i.sroa.17.6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %.sroa.27.i.sroa.19.0.copyload228, %bb.bj ] ; 2 uses
   %.sroa.15.4.i = phi ptr [ %.sroa.15.5.i, %bb.cm ], [ %.sroa.15.5.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %i.hg, %bb.bj ] ; 2 uses
   %.sroa.0111.4.i = phi i64 [ %.sroa.0111.5.i, %bb.cm ], [ %.sroa.0111.5.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %i.he, %bb.bj ] ; 2 uses
   %i.jn = phi <2 x i64> [ %i.jj, %bb.cm ], [ %i.jj, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit229.i.i ], [ %8, %bb.bj ] ; 2 uses
@@ -1485,7 +1480,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
   %.sroa.27.i.sroa.14.4 = phi double [ %.sroa.27.i.sroa.14.0.copyload187, %bb.ba ], [ %.sroa.27.i.sroa.14.0.copyload187, %bb.az ], [ %.sroa.27.i.sroa.14.0.copyload186, %bb.au ] ; 2 uses
   %.sroa.27.i.sroa.15.4 = phi i64 [ %.sroa.27.i.sroa.15.0.copyload195, %bb.ba ], [ %.sroa.27.i.sroa.15.0.copyload195, %bb.az ], [ %.sroa.27.i.sroa.15.0.copyload194, %bb.au ] ; 2 uses
   %.sroa.27.i.sroa.16.4 = phi double [ %.sroa.27.i.sroa.16.0.copyload203, %bb.ba ], [ %.sroa.27.i.sroa.16.0.copyload203, %bb.az ], [ %.sroa.27.i.sroa.16.0.copyload202, %bb.au ] ; 2 uses
-  %.sroa.27.i.sroa.17.4 = phi i64 [ %.sroa.27.i.sroa.17.0.copyload211, %bb.ba ], [ %.sroa.27.i.sroa.17.0.copyload211, %bb.az ], [ %.sroa.27.i.sroa.17.0.copyload210, %bb.au ] ; 2 uses
+  %.sroa.27.i.sroa.17.4 = phi i64 [ %.sroa.27.i.sroa.19.0.copyload227, %bb.ba ], [ %.sroa.27.i.sroa.19.0.copyload227, %bb.az ], [ %.sroa.27.i.sroa.19.0.copyload226, %bb.au ] ; 2 uses
   %.sroa.15.3.i = phi ptr [ %i.gm, %bb.ba ], [ %i.gm, %bb.az ], [ %i.gf, %bb.au ] ; 2 uses
   %.sroa.0111.3.i = phi i64 [ %i.gk, %bb.ba ], [ %i.gk, %bb.az ], [ %i.gd, %bb.au ] ; 2 uses
   %i.jv = phi <2 x i64> [ %7, %bb.ba ], [ %7, %bb.az ], [ %6, %bb.au ] ; 2 uses
@@ -1508,7 +1503,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
   %.sroa.27.i.sroa.14.2 = phi double [ %.sroa.27.i.sroa.14.4, %bb.cp ], [ %.sroa.27.i.sroa.14.4, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %.sroa.27.i.sroa.14.0.copyload185, %bb.ap ]
   %.sroa.27.i.sroa.15.2 = phi i64 [ %.sroa.27.i.sroa.15.4, %bb.cp ], [ %.sroa.27.i.sroa.15.4, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %.sroa.27.i.sroa.15.0.copyload193, %bb.ap ]
   %.sroa.27.i.sroa.16.2 = phi double [ %.sroa.27.i.sroa.16.4, %bb.cp ], [ %.sroa.27.i.sroa.16.4, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %.sroa.27.i.sroa.16.0.copyload201, %bb.ap ]
-  %.sroa.27.i.sroa.17.2 = phi i64 [ %.sroa.27.i.sroa.17.4, %bb.cp ], [ %.sroa.27.i.sroa.17.4, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %.sroa.27.i.sroa.17.0.copyload209, %bb.ap ]
+  %.sroa.27.i.sroa.17.2 = phi i64 [ %.sroa.27.i.sroa.17.4, %bb.cp ], [ %.sroa.27.i.sroa.17.4, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %.sroa.27.i.sroa.19.0.copyload225, %bb.ap ]
   %.sroa.15.1.i = phi ptr [ %.sroa.15.3.i, %bb.cp ], [ %.sroa.15.3.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %i.fy, %bb.ap ]
   %.sroa.0111.1.i = phi i64 [ %.sroa.0111.3.i, %bb.cp ], [ %.sroa.0111.3.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %i.fw, %bb.ap ]
   %i.jz = phi <2 x i64> [ %i.jv, %bb.cp ], [ %i.jv, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit198.i.i ], [ %5, %bb.ap ]
@@ -1522,7 +1517,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
   %.sroa.27.i.sroa.14.0 = phi double [ %.sroa.27.i.sroa.14.0.copyload184, %bb.aj ], [ %.sroa.27.i.sroa.14.0.copyload184, %bb.ai ], [ %.sroa.27.i.sroa.14.0.copyload, %bb.ad ]
   %.sroa.27.i.sroa.15.0 = phi i64 [ %.sroa.27.i.sroa.15.0.copyload192, %bb.aj ], [ %.sroa.27.i.sroa.15.0.copyload192, %bb.ai ], [ %.sroa.27.i.sroa.15.0.copyload, %bb.ad ]
   %.sroa.27.i.sroa.16.0 = phi double [ %.sroa.27.i.sroa.16.0.copyload200, %bb.aj ], [ %.sroa.27.i.sroa.16.0.copyload200, %bb.ai ], [ %.sroa.27.i.sroa.16.0.copyload, %bb.ad ]
-  %.sroa.27.i.sroa.17.0 = phi i64 [ %.sroa.27.i.sroa.17.0.copyload208, %bb.aj ], [ %.sroa.27.i.sroa.17.0.copyload208, %bb.ai ], [ %.sroa.27.i.sroa.17.0.copyload, %bb.ad ]
+  %.sroa.27.i.sroa.17.0 = phi i64 [ %.sroa.27.i.sroa.19.0.copyload224, %bb.aj ], [ %.sroa.27.i.sroa.19.0.copyload224, %bb.ai ], [ %.sroa.27.i.sroa.19.0.copyload, %bb.ad ]
   %.sroa.15.0.i = phi ptr [ %i.fk, %bb.aj ], [ %i.fk, %bb.ai ], [ %i.fd, %bb.ad ]
   %.sroa.0111.0.i = phi i64 [ %i.fi, %bb.aj ], [ %i.fi, %bb.ai ], [ %i.fb, %bb.ad ]
   %i.ka = phi <2 x i64> [ %4, %bb.aj ], [ %4, %bb.ai ], [ %3, %bb.ad ]
@@ -1582,9 +1577,9 @@ bb.cu:                                            ; preds = %bb.ct
   %.sroa.24.40..sroa.553.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 48
   %.sroa.24.40.copyload = load double, ptr %.sroa.24.40..sroa.553.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
   %.sroa.25.40..sroa.553.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 56
-  %.sroa.25.40.copyload = load i64, ptr %.sroa.25.40..sroa.553.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
-  %.sroa.26.40..sroa.553.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 64
-  %12 = load <2 x i64>, ptr %.sroa.26.40..sroa.553.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
+  %12 = load <2 x i64>, ptr %.sroa.25.40..sroa.553.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
+  %.sroa.26.40..sroa.553.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 72
+  %.sroa.28.40.copyload = load i64, ptr %.sroa.26.40..sroa.553.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !25429
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i
 
@@ -1630,9 +1625,9 @@ bb.cz:                                            ; preds = %bb.cy
   %.sroa.24.40..sroa.544.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
   %.sroa.24.40.copyload92 = load double, ptr %.sroa.24.40..sroa.544.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
   %.sroa.25.40..sroa.544.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 56
-  %.sroa.25.40.copyload95 = load i64, ptr %.sroa.25.40..sroa.544.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
-  %.sroa.26.40..sroa.544.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 64
-  %13 = load <2 x i64>, ptr %.sroa.26.40..sroa.544.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
+  %13 = load <2 x i64>, ptr %.sroa.25.40..sroa.544.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
+  %.sroa.26.40..sroa.544.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 72
+  %.sroa.28.40.copyload98 = load i64, ptr %.sroa.26.40..sroa.544.0..sroa_idx.i.sroa_idx, align 8, !noalias !25570
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax), !noalias !25429
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i
 
@@ -1743,7 +1738,8 @@ bb.dl:                                            ; preds = %bb.cj, %_RINvNtCsf3
   %.sroa.032.i.sroa.10.24.copyload = load i64, ptr %.sroa.032.i.sroa.10.24..sroa_idx, align 8, !noalias !25429
   %i.lc = ptrtoint ptr %i.iu to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay), !noalias !25429
-  %i.ld = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %i.lc, i64 0
+  %14 = insertelement <2 x i64> poison, i64 %.sroa.032.i.sroa.10.24.copyload, i64 0
+  %i.ld = insertelement <2 x i64> %14, i64 %i.lc, i64 1
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglm5BlockEEB1e_.exit.invoke.i
 
 bb.dm:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglm5BlockEEB1e_.exit.invoke.i
@@ -1752,7 +1748,7 @@ bb.dm:                                            ; preds = %_RINvNtCsf3Ta7LF998
           to label %bb.gv unwind label %bb.q
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i: ; preds = %bb.dj, %bb.di, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i.i, %bb.dc, %bb.cz, %bb.cu
-  %.sroa.25.0 = phi i64 [ %.sroa.27.i.sroa.17.1, %bb.dc ], [ %.sroa.27.i.sroa.17.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i.i ], [ %.sroa.27.i.sroa.17.1, %bb.dj ], [ %.sroa.27.i.sroa.17.1, %bb.di ], [ %.sroa.25.40.copyload95, %bb.cz ], [ %.sroa.25.40.copyload, %bb.cu ]
+  %.sroa.25.0 = phi i64 [ %.sroa.27.i.sroa.17.1, %bb.dc ], [ %.sroa.27.i.sroa.17.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i.i ], [ %.sroa.27.i.sroa.17.1, %bb.dj ], [ %.sroa.27.i.sroa.17.1, %bb.di ], [ %.sroa.28.40.copyload98, %bb.cz ], [ %.sroa.28.40.copyload, %bb.cu ]
   %.sroa.24.0 = phi double [ %.sroa.27.i.sroa.16.1, %bb.dc ], [ %.sroa.27.i.sroa.16.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i.i ], [ %.sroa.27.i.sroa.16.1, %bb.dj ], [ %.sroa.27.i.sroa.16.1, %bb.di ], [ %.sroa.24.40.copyload92, %bb.cz ], [ %.sroa.24.40.copyload, %bb.cu ]
   %.sroa.21.0 = phi i64 [ %.sroa.27.i.sroa.15.1, %bb.dc ], [ %.sroa.27.i.sroa.15.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i.i ], [ %.sroa.27.i.sroa.15.1, %bb.dj ], [ %.sroa.27.i.sroa.15.1, %bb.di ], [ %.sroa.21.40.copyload89, %bb.cz ], [ %.sroa.21.40.copyload, %bb.cu ]
   %.sroa.20.0 = phi double [ %.sroa.27.i.sroa.14.1, %bb.dc ], [ %.sroa.27.i.sroa.14.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i.i ], [ %.sroa.27.i.sroa.14.1, %bb.dj ], [ %.sroa.27.i.sroa.14.1, %bb.di ], [ %.sroa.67.i.sroa.9.0.copyload150, %bb.cz ], [ %.sroa.615.i.sroa.9.0.copyload161, %bb.cu ]
@@ -1771,7 +1767,7 @@ bb.dn:                                            ; preds = %.body.i, %.body79.i
   unreachable
 
 bb.do:                                            ; preds = %bb.gp, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i
-  %.sroa.25.1 = phi i64 [ %.sroa.25.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.sroa.26.sroa.20.0.i, %bb.gp ]
+  %.sroa.25.1 = phi i64 [ %.sroa.25.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %i.nn, %bb.gp ]
   %.sroa.24.1 = phi double [ %.sroa.24.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.sroa.26.sroa.19.0.i, %bb.gp ]
   %.sroa.21.1 = phi i64 [ %.sroa.21.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.sroa.26.sroa.14.0.i, %bb.gp ]
   %.sroa.20.1 = phi double [ %.sroa.20.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.sroa.26.sroa.13.0.i, %bb.gp ]
@@ -1779,7 +1775,7 @@ bb.do:                                            ; preds = %bb.gp, %_RINvNtCsf3
   %.sroa.17.1 = phi i64 [ %.sroa.17.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.sroa.26.sroa.0.0.i, %bb.gp ]
   %.sroa.10.1 = phi i64 [ %.sroa.10.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %i.nm, %bb.gp ]
   %.sroa.069.1 = phi i64 [ %.sroa.069.0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.sroa.12.0.i, %bb.gp ]
-  %i.lg = phi <2 x i64> [ %i.le, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %15, %bb.gp ]
+  %i.lg = phi <2 x i64> [ %i.le, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormEECs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %21, %bb.gp ]
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglm5BlockENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropBL_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bb)
           to label %bb.dq unwind label %bb.dp, !noalias !25430
 
@@ -1842,8 +1838,7 @@ bb.dx:                                            ; preds = %bb.dw
 bb.dy:                                            ; preds = %bb.dx
   %.sroa.26.sroa.14.24.copyload.i = load i64, ptr %.sroa.567.0..sroa_idx.i.i, align 8, !noalias !25586
   %.sroa.26.sroa.19.24.copyload.i = load double, ptr %.sroa.26.sroa.19.24..sroa.567.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.26.sroa.20.24.copyload.i = load i64, ptr %.sroa.26.sroa.20.24..sroa.567.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.31.48.copyload.i = load i64, ptr %.sroa.31.48..sroa.567.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
+  %15 = load <2 x i64>, ptr %.sroa.26.sroa.20.24..sroa.567.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   %.sroa.33.48.copyload.i = load double, ptr %.sroa.33.48..sroa.567.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !25584
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit.i.i
@@ -1887,8 +1882,7 @@ bb.ec:                                            ; preds = %bb.eb
 bb.ed:                                            ; preds = %bb.ec
   %.sroa.26.sroa.14.24.copyload232.i = load i64, ptr %.sroa.585.0..sroa_idx.i.i, align 8, !noalias !25586
   %.sroa.26.sroa.19.24.copyload238.i = load double, ptr %.sroa.26.sroa.19.24..sroa.585.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.26.sroa.20.24.copyload244.i = load i64, ptr %.sroa.26.sroa.20.24..sroa.585.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.31.48.copyload104.i = load i64, ptr %.sroa.31.48..sroa.585.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
+  %16 = load <2 x i64>, ptr %.sroa.26.sroa.20.24..sroa.585.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   %.sroa.33.48.copyload108.i = load double, ptr %.sroa.33.48..sroa.585.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !25584
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit119.i.i
@@ -1912,16 +1906,15 @@ bb.ef:                                            ; preds = %bb.eu, %bb.ee
           to label %bb.ew unwind label %bb.ev, !noalias !25585
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit119.i.i: ; preds = %bb.gm, %bb.gl, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i, %bb.et, %bb.ed
-  %.sroa.26.sroa.20.1.i = phi i64 [ %.sroa.26.sroa.20.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.26.sroa.20.2.i, %bb.gm ], [ %.sroa.26.sroa.20.2.i, %bb.gl ], [ %.sroa.26.sroa.20.24.copyload246.i, %bb.et ], [ %.sroa.26.sroa.20.24.copyload244.i, %bb.ed ] ; 3 uses
   %.sroa.26.sroa.19.1.i = phi double [ %.sroa.26.sroa.19.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.26.sroa.19.2.i, %bb.gm ], [ %.sroa.26.sroa.19.2.i, %bb.gl ], [ %.sroa.26.sroa.19.24.copyload240.i, %bb.et ], [ %.sroa.26.sroa.19.24.copyload238.i, %bb.ed ] ; 3 uses
   %.sroa.26.sroa.14.1.i = phi i64 [ %.sroa.26.sroa.14.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.26.sroa.14.2.i, %bb.gm ], [ %.sroa.26.sroa.14.2.i, %bb.gl ], [ %.sroa.26.sroa.14.24.copyload234.i, %bb.et ], [ %.sroa.26.sroa.14.24.copyload232.i, %bb.ed ] ; 3 uses
   %.sroa.26.sroa.13.1.i = phi double [ %.sroa.26.sroa.13.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.26.sroa.13.2.i, %bb.gm ], [ %.sroa.26.sroa.13.2.i, %bb.gl ], [ %.sroa.616.i.sroa.7.sroa.8.0.copyload257.i, %bb.et ], [ %.sroa.625.i.sroa.7.sroa.8.0.copyload251.i, %bb.ed ] ; 3 uses
   %.sroa.26.sroa.12.1.i = phi i64 [ %.sroa.26.sroa.12.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.26.sroa.12.2.i, %bb.gm ], [ %.sroa.26.sroa.12.2.i, %bb.gl ], [ %.sroa.616.i.sroa.7.sroa.7.0.copyload255.i, %bb.et ], [ %.sroa.625.i.sroa.7.sroa.7.0.copyload249.i, %bb.ed ] ; 3 uses
   %.sroa.26.sroa.0.1.i = phi i64 [ %.sroa.26.sroa.0.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.26.sroa.0.2.i, %bb.gm ], [ %.sroa.26.sroa.0.2.i, %bb.gl ], [ %.sroa.616.i.sroa.7.sroa.0.0.copyload253.i, %bb.et ], [ %.sroa.625.i.sroa.7.sroa.0.0.copyload247.i, %bb.ed ] ; 3 uses
   %.sroa.33.1.i = phi double [ %.sroa.33.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.33.2.i, %bb.gm ], [ %.sroa.33.2.i, %bb.gl ], [ %.sroa.33.48.copyload110.i, %bb.et ], [ %.sroa.33.48.copyload108.i, %bb.ed ] ; 3 uses
-  %.sroa.31.1.i = phi i64 [ %.sroa.31.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.31.2.i, %bb.gm ], [ %.sroa.31.2.i, %bb.gl ], [ %.sroa.31.48.copyload106.i, %bb.et ], [ %.sroa.31.48.copyload104.i, %bb.ed ] ; 3 uses
   %.sroa.20.1.i = phi double [ %.sroa.20.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.20.2.i, %bb.gm ], [ %.sroa.20.2.i, %bb.gl ], [ %.sroa.616.i.sroa.0.0.copyload146.i, %bb.et ], [ %.sroa.625.i.sroa.0.0.copyload149.i, %bb.ed ] ; 3 uses
   %.sroa.12.1.i = phi i64 [ %.sroa.12.2.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %.sroa.12.2.i, %bb.gm ], [ %.sroa.12.2.i, %bb.gl ], [ %i.mb, %bb.et ], [ %i.lm, %bb.ed ] ; 3 uses
+  %17 = phi <2 x i64> [ %23, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i ], [ %23, %bb.gm ], [ %23, %bb.gl ], [ %19, %bb.et ], [ %16, %bb.ed ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !25584
   call void @llvm.experimental.noalias.scope.decl(metadata !25587)
   call void @llvm.experimental.noalias.scope.decl(metadata !25588)
@@ -1994,8 +1987,7 @@ bb.eo:                                            ; preds = %bb.en
 bb.ep:                                            ; preds = %bb.eo
   %.sroa.26.sroa.14.24.copyload233.i = load i64, ptr %.sroa.558.0..sroa_idx.i.i, align 8, !noalias !25586
   %.sroa.26.sroa.19.24.copyload239.i = load double, ptr %.sroa.26.sroa.19.24..sroa.558.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.26.sroa.20.24.copyload245.i = load i64, ptr %.sroa.26.sroa.20.24..sroa.558.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.31.48.copyload105.i = load i64, ptr %.sroa.31.48..sroa.558.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
+  %18 = load <2 x i64>, ptr %.sroa.26.sroa.20.24..sroa.558.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   %.sroa.33.48.copyload109.i = load double, ptr %.sroa.33.48..sroa.558.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !25584
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit.i.i
@@ -2029,8 +2021,7 @@ bb.es:                                            ; preds = %bb.er
 bb.et:                                            ; preds = %bb.es
   %.sroa.26.sroa.14.24.copyload234.i = load i64, ptr %.sroa.576.0..sroa_idx.i.i, align 8, !noalias !25586
   %.sroa.26.sroa.19.24.copyload240.i = load double, ptr %.sroa.26.sroa.19.24..sroa.576.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.26.sroa.20.24.copyload246.i = load i64, ptr %.sroa.26.sroa.20.24..sroa.576.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.31.48.copyload106.i = load i64, ptr %.sroa.31.48..sroa.576.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
+  %19 = load <2 x i64>, ptr %.sroa.26.sroa.20.24..sroa.576.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   %.sroa.33.48.copyload110.i = load double, ptr %.sroa.33.48..sroa.576.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !25584
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit119.i.i
@@ -2384,8 +2375,7 @@ bb.gf:                                            ; preds = %_RNvMs2_NtNtCs1dZk1
   %.sroa.26.sroa.13.0.copyload.i = load double, ptr %.sroa.634.sroa.8.sroa.0.sroa.0.i.sroa.8.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   %.sroa.26.sroa.14.0.copyload.i = load i64, ptr %.sroa.634.sroa.8.sroa.0.sroa.0.i.sroa.9.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   %.sroa.26.sroa.19.0.copyload.i = load double, ptr %.sroa.634.sroa.8.sroa.0.sroa.0.i.sroa.10.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.26.sroa.20.0.copyload.i = load i64, ptr %.sroa.634.sroa.8.sroa.0.sroa.0.i.sroa.11.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
-  %.sroa.31.0.copyload.i = load i64, ptr %.sroa.439.sroa.5.sroa.0.sroa.4.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.sroa_idx.i.i, align 8, !noalias !25586
+  %20 = load <2 x i64>, ptr %.sroa.634.sroa.8.sroa.0.sroa.0.i.sroa.11.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.i.sroa_idx.i, align 8, !noalias !25586
   %.sroa.33.0.copyload.i = load double, ptr %.sroa.439.sroa.5.sroa.4.0..sroa.439.sroa.5.0..sroa.439.0..sroa_idx.sroa_idx.sroa_idx.i.i, align 8, !noalias !25586
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.34.i, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.540.0..sroa_idx.i.i, i64 96, i1 false), !noalias !25586
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.41.i, ptr noundef nonnull align 8 dereferenceable(32) %i.r, i64 32, i1 false), !noalias !25586
@@ -2394,7 +2384,6 @@ bb.gf:                                            ; preds = %_RNvMs2_NtNtCs1dZk1
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit.i.i
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit.i.i: ; preds = %bb.gf, %bb.ep, %bb.el, %bb.ek, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i, %bb.dy
-  %.sroa.26.sroa.20.0.i = phi i64 [ %.sroa.26.sroa.20.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.26.sroa.20.1.i, %bb.el ], [ %.sroa.26.sroa.20.1.i, %bb.ek ], [ %.sroa.26.sroa.20.0.copyload.i, %bb.gf ], [ %.sroa.26.sroa.20.24.copyload245.i, %bb.ep ], [ %.sroa.26.sroa.20.24.copyload.i, %bb.dy ] ; 2 uses
   %.sroa.26.sroa.19.0.i = phi double [ %.sroa.26.sroa.19.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.26.sroa.19.1.i, %bb.el ], [ %.sroa.26.sroa.19.1.i, %bb.ek ], [ %.sroa.26.sroa.19.0.copyload.i, %bb.gf ], [ %.sroa.26.sroa.19.24.copyload239.i, %bb.ep ], [ %.sroa.26.sroa.19.24.copyload.i, %bb.dy ] ; 2 uses
   %.sroa.26.sroa.14.0.i = phi i64 [ %.sroa.26.sroa.14.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.26.sroa.14.1.i, %bb.el ], [ %.sroa.26.sroa.14.1.i, %bb.ek ], [ %.sroa.26.sroa.14.0.copyload.i, %bb.gf ], [ %.sroa.26.sroa.14.24.copyload233.i, %bb.ep ], [ %.sroa.26.sroa.14.24.copyload.i, %bb.dy ] ; 2 uses
   %.sroa.26.sroa.13.0.i = phi double [ %.sroa.26.sroa.13.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.26.sroa.13.1.i, %bb.el ], [ %.sroa.26.sroa.13.1.i, %bb.ek ], [ %.sroa.26.sroa.13.0.copyload.i, %bb.gf ], [ %.sroa.6.i.sroa.7.sroa.8.0.copyload269.i, %bb.ep ], [ %.sroa.67.i.sroa.7.sroa.8.0.copyload263.i, %bb.dy ] ; 2 uses
@@ -2416,23 +2405,23 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm
   %.sroa.36.0.i = phi i64 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ undef, %bb.el ], [ undef, %bb.ek ], [ %.sroa.8128.0.i.i, %bb.gf ], [ undef, %bb.ep ], [ undef, %bb.dy ]
   %.sroa.35.0.i = phi i64 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ undef, %bb.el ], [ undef, %bb.ek ], [ %.sroa.0127.0.i.i, %bb.gf ], [ undef, %bb.ep ], [ undef, %bb.dy ]
   %.sroa.33.0.i = phi double [ %.sroa.33.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.33.1.i, %bb.el ], [ %.sroa.33.1.i, %bb.ek ], [ %.sroa.33.0.copyload.i, %bb.gf ], [ %.sroa.33.48.copyload109.i, %bb.ep ], [ %.sroa.33.48.copyload.i, %bb.dy ] ; 2 uses
-  %.sroa.31.0.i = phi i64 [ %.sroa.31.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.31.1.i, %bb.el ], [ %.sroa.31.1.i, %bb.ek ], [ %.sroa.31.0.copyload.i, %bb.gf ], [ %.sroa.31.48.copyload105.i, %bb.ep ], [ %.sroa.31.48.copyload.i, %bb.dy ] ; 2 uses
   %.sroa.20.0.i = phi double [ %.sroa.20.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.20.1.i, %bb.el ], [ %.sroa.20.1.i, %bb.ek ], [ %.sroa.20.0.copyload.i, %bb.gf ], [ %.sroa.6.i.sroa.0.0.copyload140.i, %bb.ep ], [ %.sroa.67.i.sroa.0.0.copyload143.i, %bb.dy ] ; 2 uses
   %.sroa.12.0.i = phi i64 [ %.sroa.12.1.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %.sroa.12.1.i, %bb.el ], [ %.sroa.12.1.i, %bb.ek ], [ %.sroa.12.0.copyload.i, %bb.gf ], [ %i.ma, %bb.ep ], [ %i.lk, %bb.dy ] ; 2 uses
   %.sroa.0.0.i = phi i64 [ 2, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ 2, %bb.el ], [ 2, %bb.ek ], [ %.sroa.0.0.copyload.i, %bb.gf ], [ 2, %bb.ep ], [ 2, %bb.dy ] ; 2 uses
+  %21 = phi <2 x i64> [ %17, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i85.i ], [ %17, %bb.el ], [ %17, %bb.ek ], [ %20, %bb.gf ], [ %18, %bb.ep ], [ %15, %bb.dy ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !25584
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs3NyA1pFSltE_9candle_nn11var_builder14VarBuilderArgsINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtBE_13SimpleBackendEL_EEECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.ba)
           to label %_RNvMs4_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_5Block3new.exit.i unwind label %.loopexit.i, !noalias !25430
 
 bb.gg:                                            ; preds = %bb.ge, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i
-  %.sroa.26.sroa.20.2.i = phi i64 [ %.sroa.12.i.sroa.8.sroa.12.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.0.i.sroa.16.0.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
+  %.sroa.26.sroa.20.2.i = phi i64 [ %.sroa.12.i.sroa.8.sroa.12.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.0.i.sroa.16.0.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ]
   %.sroa.26.sroa.19.2.i = phi double [ %.sroa.12.i.sroa.8.sroa.11.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.0.i.sroa.14.0.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
   %.sroa.26.sroa.14.2.i = phi i64 [ %.sroa.12.i.sroa.8.sroa.10.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.0.i.sroa.12.0.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
   %.sroa.26.sroa.13.2.i = phi double [ %.sroa.12.i.sroa.8.sroa.9.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.0.i.sroa.10.0.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
   %.sroa.26.sroa.12.2.i = phi i64 [ %.sroa.12.i.sroa.8.sroa.8.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.0.i.sroa.8.0.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
   %.sroa.26.sroa.0.2.i = phi i64 [ %.sroa.12.i.sroa.8.sroa.0.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.0.i.sroa.0.0.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
   %.sroa.33.2.i = phi double [ %.sroa.14.i.sroa.8.0.i, %bb.ge ], [ %.sroa.16.sroa.10.0.i.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
-  %.sroa.31.2.i = phi i64 [ %.sroa.14.i.sroa.0.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.8.0.i.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
+  %.sroa.31.2.i = phi i64 [ %.sroa.14.i.sroa.0.0.i, %bb.ge ], [ %.sroa.16.sroa.0.sroa.8.0.i.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ]
   %.sroa.20.2.i = phi double [ %.sroa.12.i.sroa.0.0.i, %bb.ge ], [ %.sroa.13.0.i.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
   %.sroa.12.2.i = phi i64 [ %.sroa.8128.0.i.i, %bb.ge ], [ %.sroa.8121.0.i.i, %_RNvMs1_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_13SelfAttention3new.exit.i.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !25584
@@ -2472,6 +2461,8 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
   call void @llvm.experimental.noalias.scope.decl(metadata !25615)
   %i.nf = load ptr, ptr %.sroa.625.i.sroa.7.0..sroa_idx151.i, align 8, !alias.scope !25616, !noalias !25584, !noundef !4 ; 2 uses
   %i.ng = icmp eq ptr %i.nf, null
+  %22 = insertelement <2 x i64> poison, i64 %.sroa.26.sroa.20.2.i, i64 0
+  %23 = insertelement <2 x i64> %22, i64 %.sroa.31.2.i, i64 1 ; 3 uses
   br i1 %i.ng, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10layer_norm9LayerNormECs1dZk1kIfPhr_19candle_transformers.exit119.i.i, label %bb.gl
 
 bb.gl:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i114.i.i
@@ -2507,8 +2498,6 @@ bb.gp:                                            ; preds = %_RNvMs4_NtNtCs1dZk1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.41.i)
   %i.nm = bitcast double %.sroa.20.0.i to i64
   %i.nn = bitcast double %.sroa.33.0.i to i64
-  %14 = insertelement <2 x i64> poison, i64 %.sroa.31.0.i, i64 0
-  %15 = insertelement <2 x i64> %14, i64 %i.nn, i64 1
   br label %bb.do
 
 bb.gq:                                            ; preds = %_RNvMs4_NtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglmNtB5_5Block3new.exit.i
@@ -2526,8 +2515,7 @@ bb.gq:                                            ; preds = %_RNvMs4_NtNtCs1dZk1
   store double %.sroa.26.sroa.13.0.i, ptr %.sroa.6.sroa.8.sroa.8.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i, align 8, !noalias !25429
   store i64 %.sroa.26.sroa.14.0.i, ptr %.sroa.6.sroa.8.sroa.9.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i, align 8, !noalias !25429
   store double %.sroa.26.sroa.19.0.i, ptr %.sroa.6.sroa.8.sroa.10.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i, align 8, !noalias !25429
-  store i64 %.sroa.26.sroa.20.0.i, ptr %.sroa.6.sroa.8.sroa.11.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i, align 8, !noalias !25429
-  store i64 %.sroa.31.0.i, ptr %.sroa.6.sroa.9.0..sroa.6.0..sroa_idx3.sroa_idx.i, align 8, !noalias !25429
+  store <2 x i64> %21, ptr %.sroa.6.sroa.8.sroa.11.0..sroa.6.sroa.8.0..sroa.6.0..sroa_idx3.sroa_idx.sroa_idx.i, align 8, !noalias !25429
   store double %.sroa.33.0.i, ptr %.sroa.6.sroa.10.0..sroa.6.0..sroa_idx3.sroa_idx.i, align 8, !noalias !25429
   store i64 %.sroa.35.0.i, ptr %.sroa.8.sroa.5.0..sroa.8.0..sroa_idx4.sroa_idx.i, align 8, !noalias !25429
   store i64 %.sroa.36.0.i, ptr %.sroa.8.sroa.6.0..sroa.8.0..sroa_idx4.sroa_idx.i, align 8, !noalias !25429
@@ -2575,7 +2563,7 @@ _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs1dZk1kIfPhr_19candle_transfo
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.z
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCs1dZk1kIfPhr_19candle_transformers6models7chatglm5BlockEEB1e_.exit.invoke.i: ; preds = %bb.dq, %bb.dl
-  %.sroa.25.2 = phi i64 [ %.sroa.032.i.sroa.10.24.copyload, %bb.dl ], [ %.sroa.25.1, %bb.dq ] ; 2 uses
+  %.sroa.25.2 = phi i64 [ undef, %bb.dl ], [ %.sroa.25.1, %bb.dq ]
   %.sroa.24.2 = phi double [ %.sroa.032.i.sroa.9.24.copyload, %bb.dl ], [ %.sroa.24.1, %bb.dq ] ; 2 uses
   %.sroa.21.2 = phi i64 [ %.sroa.032.i.sroa.8.24.copyload, %bb.dl ], [ %.sroa.21.1, %bb.dq ] ; 2 uses
   %.sroa.20.2 = phi double [ %.sroa.032.i.sroa.6.24.copyload, %bb.dl ], [ %.sroa.20.1, %bb.dq ] ; 2 uses
@@ -2613,9 +2601,9 @@ bb.gw:                                            ; preds = %bb.gv
   %.sroa.440.sroa.8.0..sroa.440.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store double %.sroa.24.2, ptr %.sroa.440.sroa.8.0..sroa.440.0..sroa_idx.sroa_idx, align 8
   %.sroa.440.sroa.9.0..sroa.440.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 %.sroa.25.2, ptr %.sroa.440.sroa.9.0..sroa.440.0..sroa_idx.sroa_idx, align 8
-  %.sroa.440.sroa.10.0..sroa.440.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store <2 x i64> %i.nw, ptr %.sroa.440.sroa.10.0..sroa.440.0..sroa_idx.sroa_idx, align 8
+  store <2 x i64> %i.nw, ptr %.sroa.440.sroa.9.0..sroa.440.0..sroa_idx.sroa_idx, align 8
+  %.sroa.440.sroa.10.0..sroa.440.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
+  store i64 %.sroa.25.2, ptr %.sroa.440.sroa.10.0..sroa.440.0..sroa_idx.sroa_idx, align 8
   store i64 -1, ptr %0, align 8
   br label %bb.he
 
@@ -2632,10 +2620,7 @@ bb.gx:                                            ; preds = %bb.gv
   %.sroa.8139.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bj, i64 40
   store double %.sroa.24.2, ptr %.sroa.8139.0..sroa_idx, align 8
   %.sroa.9140.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bj, i64 48
-  store i64 %.sroa.25.2, ptr %.sroa.9140.0..sroa_idx, align 8
-  %.sroa.10141.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bj, i64 56
-  %16 = extractelement <2 x i64> %i.nw, i64 0
-  store i64 %16, ptr %.sroa.10141.0..sroa_idx, align 8
+  store <2 x i64> %i.nw, ptr %.sroa.9140.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.617)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bh)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg)

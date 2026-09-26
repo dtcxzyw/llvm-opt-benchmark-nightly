@@ -205,16 +205,16 @@ bb.bj:                                            ; preds = %_ZNK7Imf_3_412_GLOB
           to label %.noexc147 unwind label %.loopexit.split-lp.loopexit
 
 .noexc147:                                        ; preds = %bb.bj
-  %.val91.i = load i64, ptr %i.gb, align 8
-  %.val92.i = load i64, ptr %i.gc, align 8
+  %.val91.i = load i64, ptr %i.gb, align 8, !tbaa !134
+  %.val92.i = load i64, ptr %i.gc, align 8, !tbaa !134
   %i.gn = invoke fastcc { i64, i64 } @_ZN7Imf_3_419DeepTiledOutputFile4Data13nextTileCoordERKNS_12_GLOBAL__N_19TileCoordE(ptr noundef nonnull align 8 dereferenceable(385) %i.dc, i64 %.val91.i, i64 %.val92.i)
           to label %.noexc148 unwind label %.loopexit.split-lp.loopexit ; 2 uses
 
 .noexc148:                                        ; preds = %.noexc147
   %i.go = extractvalue { i64, i64 } %i.gn, 0      ; 3 uses
   %i.gp = extractvalue { i64, i64 } %i.gn, 1      ; 3 uses
-  store i64 %i.go, ptr %i.gb, align 8
-  store i64 %i.gp, ptr %i.gc, align 8
+  store i64 %i.go, ptr %i.gb, align 8, !tbaa !134
+  store i64 %i.gp, ptr %i.gc, align 8, !tbaa !134
   %.val.i.i102.i = load ptr, ptr %i.eh, align 8, !tbaa !70 ; 2 uses
   %.not12.i.i.i103.i = icmp eq ptr %.val.i.i102.i, null
   %i.gq = lshr i64 %i.gp, 32
@@ -410,16 +410,16 @@ _ZNSt3__13mapIN7Imf_3_412_GLOBAL__N_19TileCoordEPNS2_12BufferedTileENS_4lessIS3_
   %i.jo = load ptr, ptr %i.eh, align 8, !tbaa !70
   call void @_ZNSt3__113__tree_removeB8ne180100IPNS_16__tree_node_baseIPvEEEEvT_S5_(ptr noundef %i.jo, ptr noundef nonnull %storemerge172.i) #23
   call void @_ZdlPvm(ptr noundef nonnull %storemerge172.i, i64 noundef 56) #25
-  %.val89.i = load i64, ptr %i.gb, align 8
-  %.val90.i = load i64, ptr %i.gc, align 8
+  %.val89.i = load i64, ptr %i.gb, align 8, !tbaa !134
+  %.val90.i = load i64, ptr %i.gc, align 8, !tbaa !134
   %i.jp = invoke fastcc { i64, i64 } @_ZN7Imf_3_419DeepTiledOutputFile4Data13nextTileCoordERKNS_12_GLOBAL__N_19TileCoordE(ptr noundef nonnull align 8 dereferenceable(385) %i.dc, i64 %.val89.i, i64 %.val90.i)
           to label %.noexc150 unwind label %.loopexit ; 2 uses
 
 .noexc150:                                        ; preds = %_ZNSt3__13mapIN7Imf_3_412_GLOBAL__N_19TileCoordEPNS2_12BufferedTileENS_4lessIS3_EENS_9allocatorINS_4pairIKS3_S5_EEEEE5eraseB8ne180100ENS_14__map_iteratorINS_15__tree_iteratorINS_12__value_typeIS3_S5_EEPNS_11__tree_nodeISH_PvEElEEEE.exit.i
   %i.jq = extractvalue { i64, i64 } %i.jp, 0      ; 3 uses
   %i.jr = extractvalue { i64, i64 } %i.jp, 1      ; 3 uses
-  store i64 %i.jq, ptr %i.gb, align 8
-  store i64 %i.jr, ptr %i.gc, align 8
+  store i64 %i.jq, ptr %i.gb, align 8, !tbaa !134
+  store i64 %i.jr, ptr %i.gc, align 8, !tbaa !134
   %.val.i.i122.i = load ptr, ptr %i.eh, align 8, !tbaa !70 ; 2 uses
   %.not12.i.i.i123.i = icmp eq ptr %.val.i.i122.i, null
   %i.js = lshr i64 %i.jr, 32
@@ -822,6 +822,7 @@ _ZNSt3__16vectorIcNS_9allocatorIcEEEC2Em.exit:    ; preds = %bb.bh
 
 .lr.ph:                                           ; preds = %_ZNSt3__16vectorIcNS_9allocatorIcEEEC2Em.exit
   %i.jo = add i64 %i.fv, -1
+  %.pre173 = load ptr, ptr %i.f, align 8, !tbaa !123
   br label %bb.bo
 
 ._crit_edge:                                      ; preds = %bb.ca
@@ -889,9 +890,9 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8ne180100Ev.exit154: ; preds = %_ZNSt3__1
   ret void
 
 bb.bo:                                            ; preds = %.lr.ph, %bb.ca
+  %13 = phi ptr [ %.pre173, %.lr.ph ], [ %14, %bb.ca ] ; 4 uses
   %.0166 = phi i64 [ 0, %.lr.ph ], [ %i.mo, %bb.ca ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  %13 = load ptr, ptr %i.f, align 8, !tbaa !123   ; 4 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %13, i64 320
   %i.kd = load i32, ptr %i.kc, align 8, !tbaa !295
   store i32 %i.kd, ptr %i.a, align 4, !tbaa !134
@@ -965,7 +966,7 @@ bb.bs:                                            ; preds = %_ZNSt3__16vectorIcN
           to label %bb.bt unwind label %bb.bw
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.ln = load ptr, ptr %i.f, align 8, !tbaa !123 ; 8 uses
+  %i.ln = load ptr, ptr %i.f, align 8, !tbaa !123 ; 10 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %i.ln, i64 144
   %i.lp = load i32, ptr %i.lo, align 8, !tbaa !133
   %i.lq = icmp eq i32 %i.lp, 2
@@ -1002,20 +1003,20 @@ bb.bw:                                            ; preds = %bb.bs
 
 bb.bx:                                            ; preds = %bb.bt
   %i.mg = getelementptr inbounds nuw i8, ptr %i.ln, i64 320
-  %.val = load i64, ptr %i.mg, align 8
+  %.val = load i64, ptr %i.mg, align 8, !tbaa !134
   %i.mh = getelementptr i8, ptr %i.ln, i64 328
-  %.val81 = load i64, ptr %i.mh, align 8
+  %.val81 = load i64, ptr %i.mh, align 8, !tbaa !134
   %i.mi = invoke fastcc { i64, i64 } @_ZN7Imf_3_419DeepTiledOutputFile4Data13nextTileCoordERKNS_12_GLOBAL__N_19TileCoordE(ptr noundef nonnull align 8 dereferenceable(385) %i.ln, i64 %.val, i64 %.val81)
           to label %bb.by unwind label %bb.bz     ; 2 uses
 
 bb.by:                                            ; preds = %bb.bx
   %i.mj = extractvalue { i64, i64 } %i.mi, 0
   %i.mk = extractvalue { i64, i64 } %i.mi, 1
-  %i.ml = load ptr, ptr %i.f, align 8, !tbaa !123 ; 2 uses
+  %i.ml = load ptr, ptr %i.f, align 8, !tbaa !123 ; 3 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %i.ml, i64 320
-  store i64 %i.mj, ptr %i.mm, align 8
+  store i64 %i.mj, ptr %i.mm, align 8, !tbaa !134
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ml, i64 328
-  store i64 %i.mk, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %i.mk, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !134
   br label %bb.ca
 
 bb.bz:                                            ; preds = %bb.bx
@@ -1024,6 +1025,7 @@ bb.bz:                                            ; preds = %bb.bx
   br label %bb.cb
 
 bb.ca:                                            ; preds = %bb.bu, %bb.bv, %bb.by
+  %14 = phi ptr [ %i.ln, %bb.bu ], [ %i.ln, %bb.bv ], [ %i.ml, %bb.by ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #23
@@ -1426,11 +1428,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index ; 2 uses
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %index ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
-  %wide.load = load <4 x i32>, ptr %i.ao, align 1
-  %wide.load53 = load <4 x i32>, ptr %i.aq, align 1
+  %wide.load = load <4 x i32>, ptr %i.ao, align 1, !tbaa !10
+  %wide.load53 = load <4 x i32>, ptr %i.aq, align 1, !tbaa !10
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
-  store <4 x i32> %wide.load, ptr %i.ap, align 1
-  store <4 x i32> %wide.load53, ptr %i.ar, align 1
+  store <4 x i32> %wide.load, ptr %i.ap, align 1, !tbaa !10
+  store <4 x i32> %wide.load53, ptr %i.ar, align 1, !tbaa !10
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.as = icmp eq i64 %index.next, %n.vec
   br i1 %i.as, label %middle.block, label %vector.body, !llvm.loop !304
@@ -1450,8 +1452,8 @@ middle.block:                                     ; preds = %vector.body
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader54 ]
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.prol
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv.prol
-  %i.av = load i32, ptr %i.at, align 1
-  store i32 %i.av, ptr %i.au, align 1
+  %i.av = load i32, ptr %i.at, align 1, !tbaa !10
+  store i32 %i.av, ptr %i.au, align 1, !tbaa !10
   %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1484,23 +1486,23 @@ bb.p:                                             ; preds = %bb.n, %bb.l
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 6 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv
-  %i.bk = load i32, ptr %i.bi, align 1
-  store i32 %i.bk, ptr %i.bj, align 1
+  %i.bk = load i32, ptr %i.bi, align 1, !tbaa !10
+  store i32 %i.bk, ptr %i.bj, align 1, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv.next
-  %i.bn = load i32, ptr %i.bl, align 1
-  store i32 %i.bn, ptr %i.bm, align 1
+  %i.bn = load i32, ptr %i.bl, align 1, !tbaa !10
+  store i32 %i.bn, ptr %i.bm, align 1, !tbaa !10
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next.1
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv.next.1
-  %i.bq = load i32, ptr %i.bo, align 1
-  store i32 %i.bq, ptr %i.bp, align 1
+  %i.bq = load i32, ptr %i.bo, align 1, !tbaa !10
+  store i32 %i.bq, ptr %i.bp, align 1, !tbaa !10
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next.2
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv.next.2
-  %i.bt = load i32, ptr %i.br, align 1
-  store i32 %i.bt, ptr %i.bs, align 1
+  %i.bt = load i32, ptr %i.br, align 1, !tbaa !10
+  store i32 %i.bt, ptr %i.bs, align 1, !tbaa !10
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !306

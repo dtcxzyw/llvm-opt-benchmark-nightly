@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.av, ptr %i.am, align 8, !tbaa !229
   %i.aw = getelementptr inbounds nuw i8, ptr %7, i64 72
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 72
-  %i.ay = load i64, ptr %i.ax, align 8
-  store i64 %i.ay, ptr %i.aw, align 8
+  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !40
+  store i64 %i.ay, ptr %i.aw, align 8, !tbaa !40
   store i8 1, ptr %i.f, align 8, !tbaa !331
   br label %bb.j
 
@@ -608,8 +608,8 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.aw, ptr %i.an, align 8, !tbaa !229
   %i.ax = getelementptr inbounds nuw i8, ptr %8, i64 72
   %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 72
-  %i.az = load i64, ptr %i.ay, align 8
-  store i64 %i.az, ptr %i.ax, align 8
+  %i.az = load i64, ptr %i.ay, align 8, !tbaa !40
+  store i64 %i.az, ptr %i.ax, align 8, !tbaa !40
   store i8 1, ptr %i.g, align 8, !tbaa !331
   br label %bb.j
 
@@ -1012,7 +1012,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !562  ; 3 uses
   %i.c = icmp eq i64 %i.b, 0
   %i.d = shl i64 %i.b, 1
-  %spec.select = select i1 %i.c, i64 16, i64 %i.d ; 7 uses
+  %spec.select = select i1 %i.c, i64 16, i64 %i.d ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !533  ; 2 uses
   %.not.i = icmp eq i64 %spec.select, 0
@@ -1085,33 +1085,31 @@ _ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10Table
 
 _ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit: ; preds = %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit.loopexit, %bb.a
   %i.z = phi i64 [ %i.b, %bb.a ], [ %.pre, %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit.loopexit ] ; 2 uses
-  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ %i.h, %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit.loopexit ] ; 3 uses
+  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ %i.h, %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit.loopexit ] ; 4 uses
   %.not = icmp eq i64 %i.z, 0
+  %.pre32 = load ptr, ptr %0, align 8, !tbaa !890 ; 3 uses
   br i1 %.not, label %._crit_edge27, label %.lr.ph26
 
 .lr.ph26:                                         ; preds = %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit
   %i.aa = add i64 %spec.select, -1                ; 3 uses
   br label %bb.d
 
-._crit_edge27:                                    ; preds = %bb.f, %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit
-  %1 = load ptr, ptr %0, align 8, !tbaa !890      ; 2 uses
+._crit_edge27:                                    ; preds = %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERS8_m.exit
   store ptr %.sroa.0.0, ptr %0, align 8, !tbaa !890
   store i64 %spec.select, ptr %i.a, align 8, !tbaa !54
-  %.not.i11 = icmp eq ptr %1, null
+  %.not.i11 = icmp eq ptr %.pre32, null
   br i1 %.not.i11, label %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EED2Ev.exit, label %bb.c
 
-bb.c:                                             ; preds = %._crit_edge27
-  tail call void @_ZdlPv(ptr noundef nonnull %1) #30
+bb.c:                                             ; preds = %._crit_edge27.thread, %._crit_edge27
+  tail call void @_ZdlPv(ptr noundef nonnull %.pre32) #30
   br label %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EED2Ev.exit
 
 _ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EED2Ev.exit: ; preds = %._crit_edge27, %bb.c
   ret void
 
 bb.d:                                             ; preds = %.lr.ph26, %bb.f
-  %2 = phi i64 [ %i.z, %.lr.ph26 ], [ %4, %bb.f ]
   %.025 = phi i64 [ 0, %.lr.ph26 ], [ %i.ax, %bb.f ] ; 2 uses
-  %3 = load ptr, ptr %0, align 8, !tbaa !245
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.025 ; 2 uses
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %.pre32, i64 %.025 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !533 ; 6 uses
   %i.ad = load ptr, ptr %i.e, align 8, !tbaa !533
   %i.ae = icmp eq ptr %i.ac, %i.ad
@@ -1159,16 +1157,19 @@ _ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10Table
   store ptr %i.ac, ptr %i.at, align 8, !tbaa !565
   %i.au = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  %i.aw = load i64, ptr %i.au, align 8
-  store i64 %i.aw, ptr %i.av, align 8
-  %.pre31 = load i64, ptr %i.a, align 8, !tbaa !562
+  %i.aw = load i64, ptr %i.au, align 8, !tbaa !40
+  store i64 %i.aw, ptr %i.av, align 8, !tbaa !40
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERS8_.exit, %bb.d
-  %4 = phi i64 [ %2, %bb.d ], [ %.pre31, %_ZN4Luau6detail14DenseHashTableIPNS_12AstExprTableESt4pairIS3_NS_7Compile10TableShapeEES4_IKS3_S6_ENS0_16ItemInterfaceMapIS3_S6_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERS8_.exit ] ; 2 uses
   %i.ax = add nuw i64 %.025, 1                    ; 2 uses
-  %5 = icmp ult i64 %i.ax, %4
-  br i1 %5, label %bb.d, label %._crit_edge27, !llvm.loop !889
+  %exitcond.not = icmp eq i64 %i.ax, %i.z
+  br i1 %exitcond.not, label %._crit_edge27.thread, label %bb.d, !llvm.loop !889
+
+._crit_edge27.thread:                             ; preds = %bb.f
+  store ptr %.sroa.0.0, ptr %0, align 8, !tbaa !890
+  store i64 %spec.select, ptr %i.a, align 8, !tbaa !54
+  br label %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable

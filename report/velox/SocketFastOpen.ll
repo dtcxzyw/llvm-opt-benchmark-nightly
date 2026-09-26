@@ -102,7 +102,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
-  %.sroa.0.0.copyload = load i64, ptr @_ZZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings.0, align 8
+  %.sroa.0.0.copyload = load i64, ptr @_ZZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings.0, align 8, !tbaa !17
   ret i64 %.sroa.0.0.copyload
 
 bb.f:                                             ; preds = %bb.c
@@ -249,4 +249,6 @@ attributes #12 = { nounwind willreturn memory(read) }
 !13 = !{!12, !12, i64 0}
 !14 = !{!9, !9, i64 0}
 !15 = !{!"branch_weights", i32 1, i32 1048575}
+!16 = !{!"_ZTSN5folly6detail15TFOAvailabilityE", !8, i64 0}
+!17 = !{!16, !16, i64 0}
 end_hunk_0

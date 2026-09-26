@@ -93,7 +93,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = add nsw i32 %i.ae, %i.aa
   %i.aj = trunc i32 %i.ai to i8
   %i.ak = tail call i24 @lv_color_mix(i24 %i.ag, i24 %i.ah, i8 noundef zeroext %i.aj) #2
-  store i24 %i.ak, ptr %i.af, align 1
+  store i24 %i.ak, ptr %i.af, align 1, !tbaa !23
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -184,4 +184,5 @@ attributes #2 = { nounwind }
 !20 = !{!"", !16, i64 0, !5, i64 64, !4, i64 68, !14, i64 69, !19, i64 72}
 !21 = !{!20, !4, i64 68}
 !22 = !{!5, !5, i64 0}
+!23 = !{!4, !4, i64 0}
 end_hunk_0

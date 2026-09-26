@@ -134,7 +134,7 @@ bb.a:
   %i.r = load i8, ptr %i.b, align 1, !tbaa !11, !range !18, !noundef !19 ; 2 uses
   %i.s = or i8 %i.r, %i.q
   %or.cond.i.not = icmp eq i8 %i.s, 0
-  %i.t = load <2 x i64>, ptr %1, align 16         ; 4 uses
+  %i.t = load <2 x i64>, ptr %1, align 16, !tbaa !20 ; 4 uses
   %i.u = bitcast <2 x i64> %i.t to <4 x i32>
   %.sroa.14.8.extract.trunc.i = extractelement <4 x i32> %i.u, i64 2 ; 4 uses
   %i.v = lshr <2 x i64> %i.t, splat (i64 32)
@@ -358,7 +358,7 @@ tailrecurse.i71.preheader:                        ; preds = %_ZN7xgboost6detail1
   store i16 %i.u, ptr %i.r, align 1
   %i.v = add i32 %.06687, 4                       ; 2 uses
   %.not = icmp ult i32 %.06488, 100000000
-  br i1 %.not, label %._crit_edge, label %tailrecurse.i71.preheader, !llvm.loop !20
+  br i1 %.not, label %._crit_edge, label %tailrecurse.i71.preheader, !llvm.loop !21
 
 ._crit_edge:                                      ; preds = %tailrecurse.i71.preheader, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit
   %.066.lcssa = phi i32 [ 0, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit ], [ %i.v, %tailrecurse.i71.preheader ] ; 3 uses
@@ -573,7 +573,7 @@ bb.d:                                             ; preds = %tailrecurse.i14.pre
 _ZN7xgboost6detail15ShortestDigit10Em.exit:       ; preds = %tailrecurse.i18.preheader.i.i, %bb.a, %bb.b, %bb.c, %bb.d
   %i.k = phi i32 [ %i.j, %bb.d ], [ %i.d, %bb.b ], [ %i.f, %bb.c ], [ 1, %bb.a ], [ %i.h, %tailrecurse.i18.preheader.i.i ] ; 2 uses
   %i.l = icmp eq ptr %1, %0
-  br i1 %i.l, label %bb.h, label %bb.e, !prof !21
+  br i1 %i.l, label %bb.h, label %bb.e, !prof !22
 
 bb.e:                                             ; preds = %_ZN7xgboost6detail15ShortestDigit10Em.exit
   %.not.i11 = icmp ult i64 %2, 100
@@ -697,7 +697,7 @@ select.unfold:                                    ; preds = %bb.c, %bb.f
   %.1170.ph = phi i32 [ %i.n, %bb.f ], [ %.0169274, %bb.c ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit.thread.thread, label %.lr.ph, !llvm.loop !22
+  br i1 %exitcond.not, label %.loopexit.thread.thread, label %.lr.ph, !llvm.loop !23
 
 bb.g:                                             ; preds = %bb.d
   %i.p = trunc nuw nsw i64 %indvars.iv to i32     ; 5 uses
@@ -760,7 +760,7 @@ bb.m:                                             ; preds = %bb.l
   %indvars.iv.next306 = add nsw i64 %indvars.iv305, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next306 to i32
   %exitcond308.not = icmp eq i32 %1, %lftr.wideiv
-  br i1 %exitcond308.not, label %.loopexit.thread, label %.lr.ph283, !llvm.loop !23
+  br i1 %exitcond308.not, label %.loopexit.thread, label %.lr.ph283, !llvm.loop !24
 
 .loopexit:                                        ; preds = %bb.b, %bb.k, %bb.g
   %.0179268 = phi i32 [ %.0179272, %bb.k ], [ %.0179272, %bb.g ], [ 0, %bb.b ]
@@ -804,7 +804,7 @@ bb.n:                                             ; preds = %.loopexit
 
 bb.o:                                             ; preds = %.loopexit.thread.thread
   %i.as = select i1 %i.c, float -0.000000e+00, float 0.000000e+00
-  store float %i.as, ptr %2, align 4, !tbaa !25
+  store float %i.as, ptr %2, align 4, !tbaa !26
   br label %.thread
 
 bb.p:                                             ; preds = %.loopexit.thread.thread
@@ -814,7 +814,7 @@ bb.p:                                             ; preds = %.loopexit.thread.th
 
 bb.q:                                             ; preds = %bb.p
   %i.av = select i1 %i.c, float -0.000000e+00, float 0.000000e+00
-  store float %i.av, ptr %2, align 4, !tbaa !25
+  store float %i.av, ptr %2, align 4, !tbaa !26
   br label %.thread
 
 bb.r:                                             ; preds = %bb.p
@@ -823,7 +823,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.ax = select i1 %i.c, float -inf, float +inf
-  store float %i.ax, ptr %2, align 4, !tbaa !25
+  store float %i.ax, ptr %2, align 4, !tbaa !26
   br label %.thread
 
 bb.t:                                             ; preds = %bb.r
@@ -935,7 +935,7 @@ _ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit: ; preds = %bb.z,
 
 bb.aa:                                            ; preds = %_ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit
   %i.df = select i1 %i.c, float -inf, float +inf
-  store float %i.df, ptr %2, align 4, !tbaa !25
+  store float %i.df, ptr %2, align 4, !tbaa !26
   br label %.thread
 
 bb.ab:                                            ; preds = %_ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit
@@ -975,7 +975,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad, %bb.
   %i.ea = or i32 %spec.select203, %i.dz
   %i.eb = shl nuw i32 %i.ea, 23
   %i.ec = or disjoint i32 %i.eb, %i.dw
-  store i32 %i.ec, ptr %2, align 4, !tbaa !25
+  store i32 %i.ec, ptr %2, align 4, !tbaa !26
   br label %.thread
 
 .thread.loopexit:                                 ; preds = %.lr.ph283, %bb.l
@@ -1013,7 +1013,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = mul i64 %i.b, 169464822037455            ; 2 uses
   %i.d = lshr i64 %i.c, 49                        ; 5 uses
   %i.e = trunc nuw nsw i64 %i.d to i32            ; 5 uses
-  store i32 %i.e, ptr %4, align 4, !tbaa !27
+  store i32 %i.e, ptr %4, align 4, !tbaa !28
   %i.f = mul nuw nsw i64 %i.d, 163391164108059
   %i.g = lshr i64 %i.f, 46
   %i.h = trunc nuw nsw i64 %i.g to i32
@@ -1032,7 +1032,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = lshr i64 %i.q, %i.t
   %i.v = trunc i64 %i.u to i32                    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 %i.v, ptr %i.w, align 4, !tbaa !28
+  store i32 %i.v, ptr %i.w, align 4, !tbaa !29
   %i.x = and i64 %3, 4294967295                   ; 4 uses
   %i.y = mul nuw i64 %i.m, %i.x
   %i.z = mul nuw i64 %i.l, %i.x
@@ -1041,7 +1041,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = lshr i64 %i.ab, %i.t
   %i.ad = trunc i64 %i.ac to i32
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %i.ad, ptr %i.ae, align 4, !tbaa !29
+  store i32 %i.ad, ptr %i.ae, align 4, !tbaa !30
   %i.af = mul nuw i64 %i.m, %.sroa.19.8.extract.shift
   %i.ag = mul nuw i64 %i.l, %.sroa.19.8.extract.shift
   %i.ah = lshr i64 %i.af, 32
@@ -1049,7 +1049,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = lshr i64 %i.ai, %i.t
   %i.ak = trunc i64 %i.aj to i32                  ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
-  store i32 %i.ak, ptr %i.al, align 4, !tbaa !30
+  store i32 %i.ak, ptr %i.al, align 4, !tbaa !31
   %.not81 = icmp eq i64 %i.d, 0
   br i1 %.not81, label %.thread, label %bb.c
 
@@ -1151,7 +1151,7 @@ _ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit96: ; preds = %.lr
   %i.ca = icmp uge i32 %.07.lcssa.i.i91, %i.e
   %.neg = sext i1 %i.ca to i32
   %i.cb = add i32 %.neg, %i.ak
-  store i32 %i.cb, ptr %i.al, align 4, !tbaa !30
+  store i32 %i.cb, ptr %i.al, align 4, !tbaa !31
   br label %bb.q
 
 bb.i:                                             ; preds = %bb.a
@@ -1161,7 +1161,7 @@ bb.i:                                             ; preds = %bb.a
   %i.cf = lshr i64 %i.ce, 48                      ; 5 uses
   %i.cg = trunc nuw nsw i64 %i.cf to i32          ; 2 uses
   %i.ch = add nsw i32 %i.cg, %.sroa.0.0.extract.trunc ; 3 uses
-  store i32 %i.ch, ptr %4, align 4, !tbaa !27
+  store i32 %i.ch, ptr %4, align 4, !tbaa !28
   %i.ci = sub i32 0, %i.ch                        ; 2 uses
   %i.cj = sext i32 %i.ci to i64
   %i.ck = mul i64 %i.cj, 163391164108059
@@ -1181,7 +1181,7 @@ bb.i:                                             ; preds = %bb.a
   %i.cy = lshr i64 %i.cv, %i.cx
   %i.cz = trunc i64 %i.cy to i32
   %i.da = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %i.cz, ptr %i.da, align 4, !tbaa !29
+  store i32 %i.cz, ptr %i.da, align 4, !tbaa !30
   %i.db = mul nuw i64 %i.cr, %.sroa.19.8.extract.shift
   %i.dc = mul nuw i64 %i.cp, %.sroa.19.8.extract.shift
   %i.dd = lshr i64 %i.db, 32
@@ -1189,7 +1189,7 @@ bb.i:                                             ; preds = %bb.a
   %i.df = lshr i64 %i.de, %i.cx
   %i.dg = trunc i64 %i.df to i32                  ; 3 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
-  store i32 %i.dg, ptr %i.dh, align 4, !tbaa !30
+  store i32 %i.dg, ptr %i.dh, align 4, !tbaa !31
   %i.di = mul nuw i64 %i.cr, %.sroa.8.0.extract.shift
   %i.dj = mul nuw i64 %i.cp, %.sroa.8.0.extract.shift
   %i.dk = lshr i64 %i.di, 32
@@ -1197,7 +1197,7 @@ bb.i:                                             ; preds = %bb.a
   %i.dm = lshr i64 %i.dl, %i.cx
   %i.dn = trunc i64 %i.dm to i32                  ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 %i.dn, ptr %i.do, align 4, !tbaa !28
+  store i32 %i.dn, ptr %i.do, align 4, !tbaa !29
   %.not = icmp eq i64 %i.cf, 0
   br i1 %.not, label %.thread99, label %bb.j
 
@@ -1248,7 +1248,7 @@ bb.m:                                             ; preds = %.thread99
 
 bb.n:                                             ; preds = %.thread99
   %i.eo = add i32 %i.dg, -1
-  store i32 %i.eo, ptr %i.dh, align 4, !tbaa !30
+  store i32 %i.eo, ptr %i.dh, align 4, !tbaa !31
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.l
@@ -1311,15 +1311,16 @@ attributes #6 = { nounwind }
 !17 = distinct !{!17, !12}
 !18 = !{i8 0, i8 2}
 !19 = !{}
-!20 = distinct !{!20, !12}
-!21 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!22 = distinct !{!22, !12}
+!20 = !{!6, !6, i64 0}
+!21 = distinct !{!21, !12}
+!22 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !23 = distinct !{!23, !12}
-!24 = !{!"float", !5, i64 0}
-!25 = !{!24, !24, i64 0}
-!26 = !{!"_ZTSN7xgboost6detail15MantissaIntevalE", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12}
-!27 = !{!26, !6, i64 0}
-!28 = !{!26, !6, i64 4}
-!29 = !{!26, !6, i64 8}
-!30 = !{!26, !6, i64 12}
+!24 = distinct !{!24, !12}
+!25 = !{!"float", !5, i64 0}
+!26 = !{!25, !25, i64 0}
+!27 = !{!"_ZTSN7xgboost6detail15MantissaIntevalE", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12}
+!28 = !{!27, !6, i64 0}
+!29 = !{!27, !6, i64 4}
+!30 = !{!27, !6, i64 8}
+!31 = !{!27, !6, i64 12}
 end_hunk_0

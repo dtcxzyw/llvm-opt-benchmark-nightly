@@ -204,7 +204,7 @@ define linkonce_odr void @_ZN9grpc_core8channelz15ZTraceCollectorINS_29http2_ztr
 bb.a:
   %2 = alloca %"class.std::vector.625", align 8   ; 5 uses
   %i.a = tail call noundef double @_Z21gpr_get_cycle_counterv() ; 2 uses
-  %i.b = load i64, ptr %1, align 4                ; 2 uses
+  %i.b = load i64, ptr %1, align 4, !tbaa !97     ; 2 uses
   %i.c = load atomic ptr, ptr %0 acquire, align 8 ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   tail call void @_ZN4absl12lts_202505125Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
@@ -412,6 +412,7 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit14.us: ; preds = %_ZTWN9grpc_core
 
 _ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us: ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit14.us, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit.us
   %i.e = phi ptr [ %.pre, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit14.us ], [ %i.c, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit.us ] ; 3 uses
+  %8 = ptrtoint ptr %i.e to i64                   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = load i64, ptr %i.f, align 8, !tbaa !115  ; 2 uses
   %i.h = add i64 %i.g, 32                         ; 2 uses
@@ -424,7 +425,6 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us: ; preds = %_ZTWN9grpc_core
   br i1 %i.n, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread.us, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit
 
 _ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread.us: ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us
-  %8 = ptrtoint ptr %i.e to i64
   %i.o = load ptr, ptr %0, align 8, !tbaa !51
   store i64 %8, ptr %6, align 8, !tbaa !119
   store ptr null, ptr %i.a, align 8, !tbaa !119
@@ -458,7 +458,7 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit14: ; preds = %_ZTWN9grpc_core10l
 
 .thread24:                                        ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit14, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit.thread
   call void @_ZTHN9grpc_core10latent_see8Appender4bin_E()
-  %i.t = load ptr, ptr %i.a, align 8, !tbaa !119  ; 2 uses
+  %i.t = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load i64, ptr %i.u, align 8, !tbaa !115  ; 2 uses
   %i.w = add i64 %i.v, 32                         ; 2 uses
@@ -468,18 +468,23 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit14: ; preds = %_ZTWN9grpc_core10l
   %i.aa = zext i32 %i.z to i64
   %i.ab = add i64 %i.w, %i.aa
   %i.ac = icmp ugt i64 %i.ab, 8192
-  br i1 %i.ac, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit
+  br i1 %i.ac, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48
 
-_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit: ; preds = %.thread24, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us
-  %.us-phi = phi ptr [ %i.e, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ], [ %i.t, %.thread24 ] ; 2 uses
-  %.us-phi42 = phi i64 [ %i.g, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ], [ %i.v, %.thread24 ]
-  %.us-phi43 = phi i64 [ %i.h, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ], [ %i.w, %.thread24 ]
+_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48: ; preds = %.thread24
+  %9 = ptrtoint ptr %i.t to i64
+  br label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit
+
+_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit: ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48
+  %10 = phi i64 [ %9, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %8, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ]
+  %.us-phi = phi ptr [ %i.t, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %i.e, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ] ; 2 uses
+  %.us-phi42 = phi i64 [ %i.v, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %i.g, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ]
+  %.us-phi43 = phi i64 [ %i.w, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb0EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %i.h, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.us-phi, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %.us-phi, i64 32
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.us-phi42 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 32
-  %i.ah = load i64, ptr %4, align 4
-  store i64 %i.ah, ptr %i.ag, align 4
+  %i.ah = load i64, ptr %4, align 4, !tbaa !97
+  store i64 %i.ah, ptr %i.ag, align 4, !tbaa !97
   store ptr %1, ptr %i.af, align 16, !tbaa !121
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store i64 %2, ptr %i.ai, align 8, !tbaa !122
@@ -518,11 +523,12 @@ bb.b:                                             ; preds = %_ZN9grpc_core10late
 
 bb.c:                                             ; preds = %bb.b
   call void @_ZTHN9grpc_core10latent_see8Appender4bin_E()
+  %.pre60 = load i64, ptr %i.a, align 8, !tbaa !119
   br label %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit22
 
 _ZTWN9grpc_core10latent_see8Appender4bin_E.exit22: ; preds = %bb.b, %bb.c
-  %9 = load i64, ptr %i.a, align 8, !tbaa !119
-  store i64 %9, ptr %7, align 8, !tbaa !119
+  %11 = phi i64 [ %10, %bb.b ], [ %.pre60, %bb.c ]
+  store i64 %11, ptr %7, align 8, !tbaa !119
   store ptr null, ptr %i.a, align 8, !tbaa !119
   invoke void @_ZN9grpc_core10latent_see4Sink6AppendESt10unique_ptrINS0_3BinESt14default_deleteIS3_EE(ptr noundef nonnull align 8 dereferenceable(136) %i.as, ptr noundef nonnull align 8 %7)
           to label %bb.d unwind label %bb.e
@@ -925,7 +931,7 @@ bb.b:                                             ; preds = %switch.lookup, %bb.
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.sroa.01.0.copyload = load i64, ptr %i.h, align 8
+  %.sroa.01.0.copyload = load i64, ptr %i.h, align 8, !tbaa !97
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.sroa.22.0.copyload = load i32, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !97
   %i.i = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZN9grpc_core8channelz12PropertyList3SetIN4absl12lts_202505124TimeEEERS1_St17basic_string_viewIcSt11char_traitsIcEET_(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 19, ptr nonnull @.str.88, i64 %.sroa.01.0.copyload, i32 %.sroa.22.0.copyload)
@@ -1230,7 +1236,7 @@ bb.a:
   %8 = alloca %"class.std::optional.346", align 8 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1535)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #29, !noalias !1535
-  store i64 %3, ptr %7, align 8, !noalias !1535
+  store i64 %3, ptr %7, align 8, !tbaa !97, !noalias !1535
   %.sroa.2.0..sroa_idx1.i = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i32 %4, ptr %.sroa.2.0..sroa_idx1.i, align 8, !tbaa !97, !noalias !1535
   %i.a = getelementptr inbounds nuw i8, ptr %7, i64 32
@@ -1545,7 +1551,7 @@ define linkonce_odr void @_ZN9grpc_core8channelz15ZTraceCollectorINS_29http2_ztr
 bb.a:
   %2 = alloca %"class.std::vector.625", align 8   ; 5 uses
   %i.a = tail call noundef double @_Z21gpr_get_cycle_counterv() ; 2 uses
-  %i.b = load i64, ptr %1, align 4                ; 2 uses
+  %i.b = load i64, ptr %1, align 4, !tbaa !97     ; 2 uses
   %i.c = load atomic ptr, ptr %0 acquire, align 8 ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   tail call void @_ZN4absl12lts_202505125Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
@@ -1751,6 +1757,7 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit14.us: ; preds = %_ZTWN9grpc_core
 
 _ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us: ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit14.us, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit.us
   %i.e = phi ptr [ %.pre, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit14.us ], [ %i.c, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit.us ] ; 3 uses
+  %8 = ptrtoint ptr %i.e to i64                   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = load i64, ptr %i.f, align 8, !tbaa !115  ; 2 uses
   %i.h = add i64 %i.g, 32                         ; 2 uses
@@ -1763,7 +1770,6 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us: ; preds = %_ZTWN9grpc_core
   br i1 %i.n, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread.us, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit
 
 _ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread.us: ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us
-  %8 = ptrtoint ptr %i.e to i64
   %i.o = load ptr, ptr %0, align 8, !tbaa !51
   store i64 %8, ptr %6, align 8, !tbaa !119
   store ptr null, ptr %i.a, align 8, !tbaa !119
@@ -1797,7 +1803,7 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit14: ; preds = %_ZTWN9grpc_core10l
 
 .thread24:                                        ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit14, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit.thread
   call void @_ZTHN9grpc_core10latent_see8Appender4bin_E()
-  %i.t = load ptr, ptr %i.a, align 8, !tbaa !119  ; 2 uses
+  %i.t = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load i64, ptr %i.u, align 8, !tbaa !115  ; 2 uses
   %i.w = add i64 %i.v, 32                         ; 2 uses
@@ -1807,18 +1813,23 @@ _ZTWN9grpc_core10latent_see8Appender4bin_E.exit14: ; preds = %_ZTWN9grpc_core10l
   %i.aa = zext i32 %i.z to i64
   %i.ab = add i64 %i.w, %i.aa
   %i.ac = icmp ugt i64 %i.ab, 8192
-  br i1 %i.ac, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit
+  br i1 %i.ac, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.thread, label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48
 
-_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit: ; preds = %.thread24, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us
-  %.us-phi = phi ptr [ %i.e, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ], [ %i.t, %.thread24 ] ; 2 uses
-  %.us-phi42 = phi i64 [ %i.g, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ], [ %i.v, %.thread24 ]
-  %.us-phi43 = phi i64 [ %i.h, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ], [ %i.w, %.thread24 ]
+_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48: ; preds = %.thread24
+  %9 = ptrtoint ptr %i.t to i64
+  br label %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit
+
+_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit: ; preds = %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48
+  %10 = phi i64 [ %9, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %8, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ]
+  %.us-phi = phi ptr [ %i.t, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %i.e, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ] ; 2 uses
+  %.us-phi42 = phi i64 [ %i.v, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %i.g, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ]
+  %.us-phi43 = phi i64 [ %i.w, %_ZN9grpc_core10latent_see3Bin6AppendINS_16H2RstStreamTraceILb1EEEEENS1_12AppendResultEPKNS0_8MetadataEllRKT_.exit.loopexit48 ], [ %i.h, %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit16.us ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.us-phi, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %.us-phi, i64 32
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.us-phi42 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 32
-  %i.ah = load i64, ptr %4, align 4
-  store i64 %i.ah, ptr %i.ag, align 4
+  %i.ah = load i64, ptr %4, align 4, !tbaa !97
+  store i64 %i.ah, ptr %i.ag, align 4, !tbaa !97
   store ptr %1, ptr %i.af, align 16, !tbaa !121
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store i64 %2, ptr %i.ai, align 8, !tbaa !122
@@ -1857,11 +1868,12 @@ bb.b:                                             ; preds = %_ZN9grpc_core10late
 
 bb.c:                                             ; preds = %bb.b
   call void @_ZTHN9grpc_core10latent_see8Appender4bin_E()
+  %.pre60 = load i64, ptr %i.a, align 8, !tbaa !119
   br label %_ZTWN9grpc_core10latent_see8Appender4bin_E.exit22
 
 _ZTWN9grpc_core10latent_see8Appender4bin_E.exit22: ; preds = %bb.b, %bb.c
-  %9 = load i64, ptr %i.a, align 8, !tbaa !119
-  store i64 %9, ptr %7, align 8, !tbaa !119
+  %11 = phi i64 [ %10, %bb.b ], [ %.pre60, %bb.c ]
+  store i64 %11, ptr %7, align 8, !tbaa !119
   store ptr null, ptr %i.a, align 8, !tbaa !119
   invoke void @_ZN9grpc_core10latent_see4Sink6AppendESt10unique_ptrINS0_3BinESt14default_deleteIS3_EE(ptr noundef nonnull align 8 dereferenceable(136) %i.as, ptr noundef nonnull align 8 %7)
           to label %bb.d unwind label %bb.e

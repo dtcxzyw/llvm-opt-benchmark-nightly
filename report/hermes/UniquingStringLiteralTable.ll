@@ -204,7 +204,11 @@ _ZNSt6vectorIN4llvh9StringRefESaIS1_EE12emplace_backIJRS1_EEES5_DpOT_.exit: ; pr
   call fastcc void @_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES4_bE11KindedEntrySt6vectorIS5_SaIS5_EEEEEvT_SB_(ptr %i.gf, ptr %i.gg)
   %i.gh = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0209.0.lcssa, i64 %i.am
   call fastcc void @_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES4_bE11KindedEntrySt6vectorIS5_SaIS5_EEEEEvT_SB_(ptr %i.gg, ptr %i.gh)
-  br i1 %.not, label %._crit_edge296, label %.lr.ph295
+  br i1 %.not, label %._crit_edge296, label %.lr.ph294
+
+.lr.ph294:                                        ; preds = %._crit_edge289
+  %7 = load ptr, ptr %i.a, align 8, !tbaa !58
+  br label %.lr.ph295
 
 .lr.ph288:                                        ; preds = %.lr.ph288.preheader, %_ZNSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE11KindedEntrySaIS3_EE12emplace_backIJRNS0_10StringKind4KindERNS0_16StringTableEntryEEEERS3_DpOT_.exit
   %.055287 = phi i64 [ %i.hg, %_ZNSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE11KindedEntrySaIS3_EE12emplace_backIJRNS0_10StringKind4KindERNS0_16StringTableEntryEEEERS3_DpOT_.exit ], [ %i.i, %.lr.ph288.preheader ] ; 2 uses
@@ -220,10 +224,10 @@ _ZNSt6vectorIN4llvh9StringRefESaIS1_EE12emplace_backIJRS1_EEES5_DpOT_.exit: ; pr
 
 bb.aa:                                            ; preds = %.lr.ph288
   %i.gl = load i32, ptr %i.gj, align 4, !tbaa !60
-  %.sroa.0.0.copyload.i.i = load i64, ptr %i.gk, align 4
+  %.sroa.0.0.copyload.i.i = load i64, ptr %i.gk, align 4, !tbaa !15
   store i32 %i.gl, ptr %.sroa.17.0284, align 4, !tbaa !136
   %i.gm = getelementptr inbounds nuw i8, ptr %.sroa.17.0284, i64 4
-  store i64 %.sroa.0.0.copyload.i.i, ptr %i.gm, align 4
+  store i64 %.sroa.0.0.copyload.i.i, ptr %i.gm, align 4, !tbaa !15
   br label %_ZNSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE11KindedEntrySaIS3_EE12emplace_backIJRNS0_10StringKind4KindERNS0_16StringTableEntryEEEERS3_DpOT_.exit
 
 bb.ab:                                            ; preds = %.lr.ph288
@@ -251,10 +255,10 @@ _ZNKSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE11Kin
   %i.gy = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gx) #20 ; 5 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 %i.gp ; 2 uses
   %i.ha = load i32, ptr %i.gj, align 4, !tbaa !60
-  %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.gk, align 4
+  %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.gk, align 4, !tbaa !15
   store i32 %i.ha, ptr %i.gz, align 4, !tbaa !136
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gz, i64 4
-  store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.hb, align 4
+  store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.hb, align 4, !tbaa !15
   br i1 %i.gs, label %_ZNSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE11KindedEntrySaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit27.i.i, label %.lr.ph.i.i.i.i.i162
 
 .lr.ph.i.i.i.i.i162:                              ; preds = %_ZNKSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE11KindedEntrySaIS3_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i162
@@ -389,17 +393,16 @@ bb.ai:                                            ; preds = %_ZNSt6vectorIZN6her
 _ZNSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE5IndexSaIS3_EED2Ev.exit: ; preds = %_ZNSt6vectorIZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES2_bE11KindedEntrySaIS3_EED2Ev.exit, %bb.ai
   ret void
 
-.lr.ph295:                                        ; preds = %._crit_edge289, %_ZNSt14_Bit_referenceaSEb.exit
-  %.0293 = phi i64 [ %i.jn, %_ZNSt14_Bit_referenceaSEb.exit ], [ %i.i, %._crit_edge289 ] ; 5 uses
-  %.054292 = phi i64 [ %i.jm, %_ZNSt14_Bit_referenceaSEb.exit ], [ 0, %._crit_edge289 ] ; 2 uses
+.lr.ph295:                                        ; preds = %.lr.ph294, %_ZNSt14_Bit_referenceaSEb.exit
+  %.0293 = phi i64 [ %i.i, %.lr.ph294 ], [ %i.jn, %_ZNSt14_Bit_referenceaSEb.exit ] ; 5 uses
+  %.054292 = phi i64 [ 0, %.lr.ph294 ], [ %i.jm, %_ZNSt14_Bit_referenceaSEb.exit ] ; 2 uses
   %i.iw = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0209.0.lcssa, i64 %.054292 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 4
   %i.iy = getelementptr inbounds nuw [8 x i8], ptr %i.fi, i64 %.0293
-  %i.iz = load i64, ptr %i.ix, align 4
-  store i64 %i.iz, ptr %i.iy, align 4
+  %i.iz = load i64, ptr %i.ix, align 4, !tbaa !15
+  store i64 %i.iz, ptr %i.iy, align 4, !tbaa !15
   %i.ja = load i32, ptr %i.iw, align 4, !tbaa !136
   %.not248 = icmp eq i32 %i.ja, 0
-  %7 = load ptr, ptr %i.a, align 8, !tbaa !58
   %i.jb = sdiv i64 %.0293, 64
   %i.jc = getelementptr inbounds [8 x i8], ptr %7, i64 %i.jb
   %i.jd = and i64 %.0293, -9223372036854775745

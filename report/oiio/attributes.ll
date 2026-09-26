@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.thread3
 bb.w:                                             ; preds = %.thread3
   %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !32
-  store i64 0, ptr %i.cr, align 1
+  store i64 0, ptr %i.cr, align 1, !tbaa !9
   br label %exr_attr_list_remove.exit
 
 bb.x:                                             ; preds = %.thread3
@@ -229,19 +229,19 @@ bb.z:                                             ; preds = %.thread3
 bb.aa:                                            ; preds = %.thread3
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !32
-  store i64 0, ptr %i.cz, align 1
+  store i64 0, ptr %i.cz, align 1, !tbaa !9
   br label %exr_attr_list_remove.exit
 
 bb.ab:                                            ; preds = %.thread3
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !32
-  store i64 0, ptr %i.db, align 1
+  store i64 0, ptr %i.db, align 1, !tbaa !9
   br label %exr_attr_list_remove.exit
 
 bb.ac:                                            ; preds = %.thread3
   %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !32
-  store i64 0, ptr %i.dd, align 1
+  store i64 0, ptr %i.dd, align 1, !tbaa !77
   br label %exr_attr_list_remove.exit
 
 bb.ad:                                            ; preds = %.thread3
@@ -304,7 +304,7 @@ bb.aj:                                            ; preds = %.lr.ph.i
 ._crit_edge.i:                                    ; preds = %bb.aj, %bb.ai
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !33
-  %i.eb = tail call i32 %i.ea(ptr noundef nonnull %0, i32 noundef 3, ptr noundef nonnull @.str.15) #8, !inline_history !77 ; 0 uses
+  %i.eb = tail call i32 %i.ea(ptr noundef nonnull %0, i32 noundef 3, ptr noundef nonnull @.str.15) #8, !inline_history !78 ; 0 uses
   br label %exr_attr_list_remove.exit
 
 bb.ak:                                            ; preds = %.lr.ph.i
@@ -428,7 +428,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !33
-  %i.k = tail call i32 %i.j(ptr noundef nonnull %0, i32 noundef 3, ptr noundef nonnull @.str.4) #8, !inline_history !78 ; 0 uses
+  %i.k = tail call i32 %i.j(ptr noundef nonnull %0, i32 noundef 3, ptr noundef nonnull @.str.4) #8, !inline_history !79 ; 0 uses
   br label %exr_attr_list_find_by_name.exit.thread
 
 bb.e:                                             ; preds = %bb.c
@@ -483,23 +483,23 @@ exr_attr_list_find_by_name.exit:                  ; preds = %.lr.ph.i, %bb.h
   %i.ah = getelementptr inbounds nuw i8, ptr %.0, i64 24 ; 3 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !32
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !79
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !80
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !32
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 32
-  store ptr %i.ak, ptr %i.an, align 8, !tbaa !79
+  store ptr %i.ak, ptr %i.an, align 8, !tbaa !80
   %i.ao = load ptr, ptr %i.ah, align 8, !tbaa !32
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 40
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !80
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !81
   %i.ar = load ptr, ptr %i.al, align 8, !tbaa !32
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 40
-  store ptr %i.aq, ptr %i.as, align 8, !tbaa !80
+  store ptr %i.aq, ptr %i.as, align 8, !tbaa !81
   %i.at = load ptr, ptr %i.ah, align 8, !tbaa !32
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 48
-  %i.av = load ptr, ptr %i.au, align 8, !tbaa !81
+  %i.av = load ptr, ptr %i.au, align 8, !tbaa !82
   %i.aw = load ptr, ptr %i.al, align 8, !tbaa !32
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
-  store ptr %i.av, ptr %i.ax, align 8, !tbaa !81
+  store ptr %i.av, ptr %i.ax, align 8, !tbaa !82
   br label %exr_attr_list_find_by_name.exit.thread
 
 exr_attr_list_find_by_name.exit.thread:           ; preds = %bb.d, %._crit_edge.i, %bb.e, %bb.h, %exr_attr_list_find_by_name.exit, %bb.a
@@ -902,9 +902,10 @@ attributes #8 = { nounwind }
 !74 = distinct !{!74, !29}
 !75 = distinct !{null}
 !76 = !{!12, !8, i64 4}
-!77 = !{ptr @exr_attr_list_remove}
-!78 = !{ptr @exr_attr_list_find_by_name}
-!79 = !{!36, !10, i64 32}
-!80 = !{!36, !10, i64 40}
-!81 = !{!36, !10, i64 48}
+!77 = !{!17, !17, i64 0}
+!78 = !{ptr @exr_attr_list_remove}
+!79 = !{ptr @exr_attr_list_find_by_name}
+!80 = !{!36, !10, i64 32}
+!81 = !{!36, !10, i64 40}
+!82 = !{!36, !10, i64 48}
 end_hunk_1

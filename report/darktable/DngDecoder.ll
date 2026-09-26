@@ -204,9 +204,9 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.i
   %.sroa.0.sroa.7.0.insert.shift = shl nuw nsw i64 %.sroa.0.sroa.7.0.insert.ext, 32
   %.sroa.0.sroa.0.0.insert.ext = zext nneg i32 %i.ab to i64
   %.sroa.0.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.sroa.7.0.insert.shift, %.sroa.0.sroa.0.0.insert.ext
-  store i64 %.sroa.0.sroa.0.0.insert.insert, ptr %0, align 4
+  store i64 %.sroa.0.sroa.0.0.insert.insert, ptr %0, align 4, !tbaa !143
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.0.0.insert.insert.i.i33, ptr %.sroa.8.0..sroa_idx, align 4
+  store i64 %.sroa.0.0.insert.insert.i.i33, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !143
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 1, ptr %i.as, align 4, !tbaa !145
   tail call void @_ZdlPvm(ptr noundef nonnull %i.t, i64 noundef 16) #31
@@ -489,16 +489,16 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aa = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.q, i64 %i.aa ; 4 uses
-  %i.ab = load i64, ptr %i.p, align 4, !noalias !301
+  %i.ab = load i64, ptr %i.p, align 4, !tbaa !143, !noalias !301
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.ab, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.ac = getelementptr i8, ptr %next.gep, i64 32
   %i.ad = getelementptr i8, ptr %next.gep, i64 64
   %i.ae = getelementptr i8, ptr %next.gep, i64 96
-  store <4 x i64> %broadcast.splat, ptr %next.gep, align 4, !noalias !301
-  store <4 x i64> %broadcast.splat, ptr %i.ac, align 4, !noalias !301
-  store <4 x i64> %broadcast.splat, ptr %i.ad, align 4, !noalias !301
-  store <4 x i64> %broadcast.splat, ptr %i.ae, align 4, !noalias !301
+  store <4 x i64> %broadcast.splat, ptr %next.gep, align 4, !tbaa !143, !noalias !301
+  store <4 x i64> %broadcast.splat, ptr %i.ac, align 4, !tbaa !143, !noalias !301
+  store <4 x i64> %broadcast.splat, ptr %i.ad, align 4, !tbaa !143, !noalias !301
+  store <4 x i64> %broadcast.splat, ptr %i.ae, align 4, !tbaa !143, !noalias !301
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.af = icmp eq i64 %index.next, %n.vec
   br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !297
@@ -522,10 +522,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index98 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next102, %vec.epilog.vector.body ] ; 2 uses
   %i.ai = shl i64 %index98, 3
   %next.gep99 = getelementptr i8, ptr %i.q, i64 %i.ai
-  %i.aj = load i64, ptr %i.p, align 4, !noalias !301
+  %i.aj = load i64, ptr %i.p, align 4, !tbaa !143, !noalias !301
   %broadcast.splatinsert100 = insertelement <4 x i64> poison, i64 %i.aj, i64 0
   %broadcast.splat101 = shufflevector <4 x i64> %broadcast.splatinsert100, <4 x i64> poison, <4 x i32> zeroinitializer
-  store <4 x i64> %broadcast.splat101, ptr %next.gep99, align 4, !noalias !301
+  store <4 x i64> %broadcast.splat101, ptr %next.gep99, align 4, !tbaa !143, !noalias !301
   %index.next102 = add nuw i64 %index98, 4        ; 2 uses
   %i.ak = icmp eq i64 %index.next102, %n.vec97
   br i1 %i.ak, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !298
@@ -540,8 +540,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
   %.06.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.am, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
-  %i.al = load i64, ptr %i.p, align 4, !noalias !301
-  store i64 %i.al, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, align 4, !noalias !301
+  %i.al = load i64, ptr %i.p, align 4, !tbaa !143, !noalias !301
+  store i64 %i.al, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, align 4, !tbaa !143, !noalias !301
   %i.am = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.am, %i.t
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !299
@@ -558,7 +558,7 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i.i
 
 bb.e:                                             ; preds = %bb.d
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv.i.i
-  store i64 %i.ao, ptr %i.ap, align 4, !noalias !301
+  store i64 %i.ao, ptr %i.ap, align 4, !tbaa !143, !noalias !301
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %i.n
   br i1 %exitcond.not.i.i, label %_ZNK8rawspeed9TiffEntry17getSRationalArrayEj.exit, label %bb.d, !llvm.loop !300
@@ -650,18 +650,17 @@ bb.h:                                             ; preds = %_ZNSt12_Vector_base
   br i1 %.not23.not, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 288 ; 4 uses
-  %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !305 ; 3 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 288 ; 3 uses
+  %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !305 ; 4 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.by, i64 296 ; 3 uses
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !150
   %.not.i30 = icmp eq ptr %i.cb, %i.cd
   br i1 %.not.i30, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ce = load i64, ptr %.sroa.036.053, align 4
-  store i64 %i.ce, ptr %i.cb, align 4
-  %1 = load ptr, ptr %i.ca, align 8, !tbaa !305
-  %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.ce = load i64, ptr %.sroa.036.053, align 4, !tbaa !143
+  store i64 %i.ce, ptr %i.cb, align 4, !tbaa !143
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   store ptr %i.cf, ptr %i.ca, align 8, !tbaa !305
   br label %_ZNSt6vectorIN8rawspeed12NotARationalIiEESaIS2_EE12emplace_backIJRKS2_EEERS2_DpOT_.exit
 
@@ -695,8 +694,8 @@ _ZNKSt6vectorIN8rawspeed12NotARationalIiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i: 
 
 .noexc32:                                         ; preds = %_ZNKSt6vectorIN8rawspeed12NotARationalIiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %i.cs = getelementptr inbounds i8, ptr %i.cr, i64 %i.cj ; 2 uses
-  %i.ct = load i64, ptr %.sroa.036.053, align 4
-  store i64 %i.ct, ptr %i.cs, align 4
+  %i.ct = load i64, ptr %.sroa.036.053, align 4, !tbaa !143
+  store i64 %i.ct, ptr %i.cs, align 4, !tbaa !143
   %i.cu = icmp sgt i64 %i.cj, 0
   br i1 %i.cu, label %bb.m, label %_ZNSt6vectorIN8rawspeed12NotARationalIiEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
 
@@ -1099,9 +1098,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !78
-  %.sroa.023.0.copyload = load i64, ptr %3, align 8
+  %.sroa.023.0.copyload = load i64, ptr %3, align 8, !tbaa !143
   %.sroa.224.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.224.0.copyload = load i64, ptr %.sroa.224.0..sroa_idx, align 8
+  %.sroa.224.0.copyload = load i64, ptr %.sroa.224.0..sroa_idx, align 8, !tbaa !143
   tail call void @_ZN8rawspeed12RawImageData8subFrameENS_12iRectangle2DE(ptr noundef nonnull align 8 dereferenceable(624) %i.e, i64 %.sroa.023.0.copyload, i64 %.sroa.224.0.copyload)
   br label %bb.c
 
@@ -1175,12 +1174,12 @@ _ZNK8rawspeed7TiffIFD8hasEntryENS_7TiffTagE.exit79: ; preds = %_ZNKSt8_Rb_treeIN
           to label %.lr.ph.i.i.1 unwind label %_ZNSt6vectorIN8rawspeed12NotARationalIjEESaIS2_EED2Ev.exit.i.i, !noalias !371
 
 .lr.ph.i.i.1:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
-  store i64 %i.af, ptr %i.ae, align 4, !noalias !371
+  store i64 %i.af, ptr %i.ae, align 4, !tbaa !143, !noalias !371
   %i.ag = invoke i64 @_ZNK8rawspeed9TiffEntry11getRationalEj(ptr noundef nonnull align 8 dereferenceable(48) %i.ac, i32 noundef 1)
           to label %_ZNK8rawspeed9TiffEntry16getRationalArrayEj.exit unwind label %_ZNSt6vectorIN8rawspeed12NotARationalIjEESaIS2_EED2Ev.exit.i.i, !noalias !371 ; 3 uses
 
 _ZNK8rawspeed9TiffEntry16getRationalArrayEj.exit: ; preds = %.lr.ph.i.i.1
-  store i64 %i.ag, ptr %.06.i.i.i.i.i.i.i.i.i.i.i.ptr, align 4, !noalias !371
+  store i64 %i.ag, ptr %.06.i.i.i.i.i.i.i.i.i.i.i.ptr, align 4, !tbaa !143, !noalias !371
   %.val.i = load i32, ptr %i.ae, align 4          ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
   %.val3.i = load i32, ptr %i.ah, align 4, !tbaa !373 ; 3 uses
@@ -1263,12 +1262,12 @@ bb.g:                                             ; preds = %bb.e
           to label %.lr.ph.i.i84.1 unwind label %_ZNSt6vectorIN8rawspeed12NotARationalIjEESaIS2_EED2Ev.exit.i.i86, !noalias !374
 
 .lr.ph.i.i84.1:                                   ; preds = %.noexc89
-  store i64 %i.bg, ptr %i.be, align 4, !noalias !374
+  store i64 %i.bg, ptr %i.be, align 4, !tbaa !143, !noalias !374
   %i.bh = invoke i64 @_ZNK8rawspeed9TiffEntry11getRationalEj(ptr noundef nonnull align 8 dereferenceable(48) %i.ad, i32 noundef 1)
           to label %_ZNK8rawspeed9TiffEntry16getRationalArrayEj.exit90 unwind label %_ZNSt6vectorIN8rawspeed12NotARationalIjEESaIS2_EED2Ev.exit.i.i86, !noalias !374 ; 3 uses
 
 _ZNK8rawspeed9TiffEntry16getRationalArrayEj.exit90: ; preds = %.lr.ph.i.i84.1
-  store i64 %i.bh, ptr %.06.i.i.i.i.i.i.i.i.i.i.i82.ptr, align 4, !noalias !374
+  store i64 %i.bh, ptr %.06.i.i.i.i.i.i.i.i.i.i.i82.ptr, align 4, !tbaa !143, !noalias !374
   %.val.i94 = load i32, ptr %i.be, align 4        ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 4
   %.val3.i95 = load i32, ptr %i.bi, align 4, !tbaa !373 ; 3 uses
@@ -1393,12 +1392,12 @@ _ZNK8rawspeed7TiffIFD8hasEntryENS_7TiffTagE.exit122: ; preds = %_ZNKSt8_Rb_treeI
           to label %.lr.ph.i.i126.1 unwind label %_ZNSt6vectorIN8rawspeed12NotARationalIjEESaIS2_EED2Ev.exit.i.i128, !noalias !375
 
 .lr.ph.i.i126.1:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i123
-  store i64 %i.cp, ptr %i.co, align 4, !noalias !375
+  store i64 %i.cp, ptr %i.co, align 4, !tbaa !143, !noalias !375
   %i.cq = invoke i64 @_ZNK8rawspeed9TiffEntry11getRationalEj(ptr noundef nonnull align 8 dereferenceable(48) %i.cn, i32 noundef 1)
           to label %_ZNK8rawspeed9TiffEntry16getRationalArrayEj.exit131.preheader.preheader unwind label %_ZNSt6vectorIN8rawspeed12NotARationalIjEESaIS2_EED2Ev.exit.i.i128, !noalias !375 ; 3 uses
 
 _ZNK8rawspeed9TiffEntry16getRationalArrayEj.exit131.preheader.preheader: ; preds = %.lr.ph.i.i126.1
-  store i64 %i.cq, ptr %.ptr281, align 4, !noalias !375
+  store i64 %i.cq, ptr %.ptr281, align 4, !tbaa !143, !noalias !375
   %i.cr = getelementptr inbounds nuw i8, ptr %i.co, i64 4
   %i.cs = load <2 x i32>, ptr %i.co, align 4      ; 2 uses
   %i.ct = load i32, ptr %i.cr, align 4

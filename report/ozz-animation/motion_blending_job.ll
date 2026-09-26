@@ -139,8 +139,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZNK3ozz9animation17MotionBlendingJob3RunEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 7 uses
   %i.c = icmp ne ptr %i.b, null                   ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !16     ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -289,7 +289,7 @@ _ZNK3ozz9animation17MotionBlendingJob8ValidateEv.exit.thread: ; preds = %.lr.ph.
   %i.bj = shufflevector <2 x float> %i.bi, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bk = fmul <2 x float> %.sroa.0114.0.lcssa, %i.bj
   %i.bl = fmul float %.sroa.11.0.lcssa, %i.bh
-  store <2 x float> %i.bk, ptr %i.b, align 4
+  store <2 x float> %i.bk, ptr %i.b, align 4, !tbaa !30
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store float %i.bl, ptr %.sroa.43.0..sroa_idx, align 4, !tbaa !30
   %.sroa.085.0.vec.extract90 = extractelement <2 x float> %.sroa.085.0.lcssa, i64 0 ; 2 uses
@@ -315,15 +315,13 @@ bb.b:                                             ; preds = %._crit_edge
 _ZN3ozz4math13NormalizeSafeERKNS0_10QuaternionES3_.exit: ; preds = %._crit_edge, %bb.b
   %.sroa.0144.0 = phi <2 x float> [ %i.bu, %bb.b ], [ zeroinitializer, %._crit_edge ]
   %.sroa.6.0 = phi <2 x float> [ %i.bv, %bb.b ], [ <float 0.000000e+00, float 1.000000e+00>, %._crit_edge ]
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !15     ; 2 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store <2 x float> %.sroa.0144.0, ptr %i.bw, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store <2 x float> %.sroa.6.0, ptr %.sroa.4.0..sroa_idx, align 4
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !15     ; 2 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %2, i64 28
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  store <2 x float> %.sroa.0144.0, ptr %i.bw, align 4, !tbaa !30
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 20
+  store <2 x float> %.sroa.6.0, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !30
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   store <2 x float> splat (float 1.000000e+00), ptr %i.bx, align 4, !tbaa !30
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 36
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 36
   store float 1.000000e+00, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !30
   br label %bb.e
 

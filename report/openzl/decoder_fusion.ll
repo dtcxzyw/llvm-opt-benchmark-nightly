@@ -204,26 +204,31 @@ bb.v:                                             ; preds = %.lr.ph
   %i.gh = getelementptr i8, ptr %i.gg, i64 -24    ; 2 uses
   %i.gi = load i32, ptr %i.gh, align 8, !tbaa !47
   %i.gj = icmp ult i32 %i.ge, %i.gi
-  br i1 %i.gj, label %bb.w, label %.critedge
+  br i1 %i.gj, label %bb.w, label %.critedge.loopexit
 
 bb.w:                                             ; preds = %.lr.ph156
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gg, ptr noundef nonnull align 8 dereferenceable(24) %i.gh, i64 24, i1 false), !tbaa.struct !105
   %i.gk = add i64 %.0154, -1                      ; 2 uses
   %.not115 = icmp eq i64 %i.gk, 0
-  br i1 %.not115, label %.critedge, label %.lr.ph156, !llvm.loop !98
+  br i1 %.not115, label %.critedge.loopexit, label %.lr.ph156, !llvm.loop !98
 
-.critedge:                                        ; preds = %.lr.ph156, %bb.w, %._crit_edge
-  %.0.lcssa = phi i64 [ 0, %._crit_edge ], [ 0, %bb.w ], [ %.0154, %.lr.ph156 ]
+.critedge.loopexit:                               ; preds = %bb.w, %.lr.ph156
+  %.0.lcssa.ph = phi i64 [ %.0154, %.lr.ph156 ], [ 0, %bb.w ]
+  %.pre166 = load i64, ptr %i.dy, align 8, !tbaa !32
+  %6 = add i64 %.pre166, 1
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %._crit_edge
+  %7 = phi i64 [ 1, %._crit_edge ], [ %6, %.critedge.loopexit ]
+  %.0.lcssa = phi i64 [ 0, %._crit_edge ], [ %.0.lcssa.ph, %.critedge.loopexit ]
   %i.gl = getelementptr inbounds nuw [24 x i8], ptr %i.eb, i64 %.0.lcssa ; 3 uses
-  store i64 %i.ep, ptr %i.gl, align 8
+  store i64 %i.ep, ptr %i.gl, align 8, !tbaa !30
   %.sroa.4.0..sroa_idx47 = getelementptr inbounds nuw i8, ptr %i.gl, i64 8
   store ptr %i.et, ptr %.sroa.4.0..sroa_idx47, align 8, !tbaa !55
   %.sroa.549.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %i.gl, i64 16
   store ptr %.sroa.549.0.copyload, ptr %.sroa.549.0..sroa_idx50, align 8, !tbaa !55
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.eb, ptr %i.gm, align 8, !tbaa !31
-  %6 = load i64, ptr %i.dy, align 8, !tbaa !32
-  %7 = add i64 %6, 1
   store i64 %7, ptr %i.dy, align 8, !tbaa !32
   %i.gn = call fastcc { i32, i64 } @ZL_DecoderFusionState_buildMap(ptr noundef nonnull %0)
   br label %.thread143

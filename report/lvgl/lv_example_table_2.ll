@@ -129,19 +129,19 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %storemerge = phi i24 [ %i.n, %bb.e ], [ %i.m, %bb.d ]
-  store i24 %storemerge, ptr %i.l, align 2
+  store i24 %storemerge, ptr %i.l, align 2, !tbaa !22
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 64
-  store i32 32767, ptr %i.o, align 8, !tbaa !24
+  store i32 32767, ptr %i.o, align 8, !tbaa !25
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #3
   store <4 x i32> <i32 0, i32 0, i32 40, i32 24>, ptr %2, align 16, !tbaa !9
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #3
   call void @lv_draw_task_get_area(ptr noundef %i.b, ptr noundef nonnull %3) #3
   call void @lv_area_align(ptr noundef nonnull %3, ptr noundef nonnull %2, i32 noundef 8, i32 noundef -15, i32 noundef 0) #3
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !25
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !26
   call void @lv_draw_rect(ptr noundef %i.q, ptr noundef nonnull %1, ptr noundef nonnull %2) #3
   %i.r = call i24 @lv_color_white() #3
-  store i24 %i.r, ptr %i.l, align 2
+  store i24 %i.r, ptr %i.l, align 2, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #3
   store <4 x i32> <i32 0, i32 0, i32 18, i32 18>, ptr %4, align 16, !tbaa !9
   br i1 %i.k, label %bb.g, label %bb.h
@@ -155,7 +155,7 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.s = load ptr, ptr %i.p, align 8, !tbaa !25
+  %i.s = load ptr, ptr %i.p, align 8, !tbaa !26
   call void @lv_draw_rect(ptr noundef %i.s, ptr noundef nonnull %1, ptr noundef nonnull %4) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #3
@@ -267,8 +267,9 @@ attributes #3 = { nounwind }
 !19 = !{!"", !15, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !16, i64 24, !17, i64 32, !17, i64 34, !18, i64 36, !4, i64 39, !5, i64 40, !5, i64 42, !8, i64 48, !14, i64 56}
 !20 = !{!19, !5, i64 8}
 !21 = !{!19, !5, i64 12}
-!22 = !{!"", !4, i64 0, !4, i64 10, !5, i64 11, !5, i64 11, !4, i64 12, !14, i64 48}
-!23 = !{!"", !19, i64 0, !5, i64 64, !14, i64 72, !14, i64 80, !18, i64 88, !4, i64 91, !4, i64 92, !4, i64 93, !4, i64 94, !4, i64 95, !4, i64 96, !4, i64 97, !18, i64 98, !22, i64 104, !14, i64 160, !18, i64 168, !5, i64 172, !5, i64 176, !4, i64 176, !18, i64 177, !5, i64 180, !5, i64 184, !18, i64 188, !5, i64 192, !5, i64 196, !5, i64 200, !5, i64 204}
-!24 = !{!23, !5, i64 64}
-!25 = !{!19, !16, i64 24}
+!22 = !{!4, !4, i64 0}
+!23 = !{!"", !4, i64 0, !4, i64 10, !5, i64 11, !5, i64 11, !4, i64 12, !14, i64 48}
+!24 = !{!"", !19, i64 0, !5, i64 64, !14, i64 72, !14, i64 80, !18, i64 88, !4, i64 91, !4, i64 92, !4, i64 93, !4, i64 94, !4, i64 95, !4, i64 96, !4, i64 97, !18, i64 98, !23, i64 104, !14, i64 160, !18, i64 168, !5, i64 172, !5, i64 176, !4, i64 176, !18, i64 177, !5, i64 180, !5, i64 184, !18, i64 188, !5, i64 192, !5, i64 196, !5, i64 200, !5, i64 204}
+!25 = !{!24, !5, i64 64}
+!26 = !{!19, !16, i64 24}
 end_hunk_0

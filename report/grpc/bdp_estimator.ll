@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %bb.u
   store i32 100, ptr %1, align 8, !tbaa !39
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 99, ptr %i.bq, align 4, !tbaa !40
-  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %1, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %1, align 8, !tbaa !41 ; 2 uses
   %.sroa.0.0.extract.trunc.i.i.i.i = trunc i64 %.sroa.0.0.copyload.i.i.i.i.i to i32
   %.sroa.4.0.extract.shift.i.i.i.i = lshr i64 %.sroa.0.0.copyload.i.i.i.i.i, 32
   %.sroa.4.0.extract.trunc.i.i.i.i = trunc nuw i64 %.sroa.4.0.extract.shift.i.i.i.i to i32
@@ -286,8 +286,8 @@ bb.ac:                                            ; preds = %.critedge61
 
 _ZN9grpc_core9Timestamp3NowEv.exit:               ; preds = %.critedge61, %bb.ac
   %i.ce = call noundef align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN9grpc_core9Timestamp25thread_local_time_source_E)
-  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !42 ; 2 uses
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !44
+  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !43 ; 2 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !45
   %i.ch = load ptr, ptr %i.cg, align 8
   %i.ci = call i64 %i.ch(ptr noundef nonnull align 8 dereferenceable(8) %i.cf), !inline_history !31 ; 6 uses
   %.sroa.0.0.copyload = load i64, ptr %i.w, align 8, !tbaa !20 ; 5 uses
@@ -441,7 +441,7 @@ bb.h:                                             ; preds = %bb.g
   %i.af = mul nuw i64 %i.ae, %i.w                 ; 2 uses
   %i.ag = trunc i64 %i.af to i32
   %i.ah = icmp ugt i32 %i.ab, %i.ag
-  br i1 %i.ah, label %.lr.ph, label %.loopexit, !llvm.loop !45
+  br i1 %i.ah, label %.lr.ph, label %.loopexit, !llvm.loop !46
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.h, %bb.g
   %.1 = phi i64 [ %i.x, %bb.g ], [ %i.x, %bb.h ], [ %i.af, %.lr.ph ]
@@ -579,10 +579,11 @@ attributes #13 = { noreturn nounwind }
 !38 = !{!"_ZTSN4absl12lts_2025051224uniform_int_distributionIiE10param_typeE", !5, i64 0, !5, i64 4}
 !39 = !{!38, !5, i64 0}
 !40 = !{!38, !5, i64 4}
-!41 = !{!"p1 _ZTSN9grpc_core9Timestamp6SourceE", !14, i64 0}
-!42 = !{!41, !41, i64 0}
-!43 = !{!"vtable pointer", !3, i64 0}
-!44 = !{!43, !43, i64 0}
-!45 = distinct !{!45, !46}
-!46 = !{!"llvm.loop.mustprogress"}
+!41 = !{!5, !5, i64 0}
+!42 = !{!"p1 _ZTSN9grpc_core9Timestamp6SourceE", !14, i64 0}
+!43 = !{!42, !42, i64 0}
+!44 = !{!"vtable pointer", !3, i64 0}
+!45 = !{!44, !44, i64 0}
+!46 = distinct !{!46, !47}
+!47 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

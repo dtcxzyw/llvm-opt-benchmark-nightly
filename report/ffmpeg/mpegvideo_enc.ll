@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
 
 .lr.ph209:                                        ; preds = %.preheader195
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 9880
-  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 10176 ; 2 uses
   %i.bo = zext nneg i32 %i.r to i64               ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.k, i64 32
@@ -304,7 +304,7 @@ bb.k:                                             ; preds = %bb.j
   store i32 %i.j, ptr %i.dm, align 4, !tbaa !124
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dk, i64 64 ; 2 uses
   store i32 32770, ptr %i.dn, align 8, !tbaa !108
-  %i.do = load ptr, ptr %i.bm, align 8, !tbaa !56 ; 5 uses
+  %i.do = load ptr, ptr %i.bm, align 8, !tbaa !56 ; 6 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 64
   %i.dq = load i32, ptr %i.dp, align 8, !tbaa !108
   %i.dr = and i32 %i.dq, 16
@@ -326,13 +326,12 @@ bb.k:                                             ; preds = %bb.j
   store i32 0, ptr %i.ec, align 8, !tbaa !92
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dk, i64 84
   %i.ee = getelementptr inbounds nuw i8, ptr %i.do, i64 84
-  %i.ef = load i64, ptr %i.ee, align 4
-  store i64 %i.ef, ptr %i.ed, align 4
+  %i.ef = load i64, ptr %i.ee, align 4, !tbaa !54
+  store i64 %i.ef, ptr %i.ed, align 4, !tbaa !54
   %i.eg = load i32, ptr %i.s, align 8, !tbaa !102
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dk, i64 200
   store i32 %i.eg, ptr %i.eh, align 8, !tbaa !101
-  %1 = load ptr, ptr %i.bm, align 8, !tbaa !56
-  %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.ei = getelementptr inbounds nuw i8, ptr %i.do, i64 16
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !103
   %i.ek = call i32 @avcodec_open2(ptr noundef nonnull %i.dk, ptr noundef %i.ej, ptr noundef null) #14 ; 3 uses
   %i.el = icmp slt i32 %i.ek, 0

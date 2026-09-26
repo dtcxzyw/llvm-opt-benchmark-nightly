@@ -204,7 +204,7 @@ _ZN6duckdb12Deserializer12ReadPropertyINS_9CSVOptionINSt7__cxx1112basic_stringIc
 
 bb.bz:                                            ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_9CSVOptionINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEET_tPKc.exit
   %i.aba = getelementptr inbounds nuw i8, ptr %0, i64 144
-  store i16 %.0.i, ptr %i.aba, align 8
+  store i16 %.0.i, ptr %i.aba, align 8, !tbaa !422
   %i.abb = getelementptr inbounds nuw i8, ptr %0, i64 240
   store i64 %.0.i157, ptr %i.abb, align 8, !tbaa !2715
   %i.abc = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
@@ -607,7 +607,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit491: ; preds = %_Z
   %i.agw = getelementptr inbounds nuw i8, ptr %0, i64 42
   store i16 %.sroa.0.0.insert.insert.i.i.i279, ptr %i.agw, align 2
   %i.agx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i16 %.sroa.0.0.insert.insert.i.i.i293, ptr %i.agx, align 8
+  store i16 %.sroa.0.0.insert.insert.i.i.i293, ptr %i.agx, align 8, !tbaa !422
   %i.agy = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %.0.i305, ptr %i.agy, align 8, !tbaa !2724
   %i.agz = getelementptr inbounds nuw i8, ptr %0, i64 46
@@ -917,7 +917,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit535: ; preds = 
   store i64 0, ptr %i.akq, align 8, !tbaa !436
   store i8 0, ptr %i.akp, align 1, !tbaa !435
   %i.akr = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i16 %.sroa.0.0.insert.insert.i.i.i431, ptr %i.akr, align 8
+  store i16 %.sroa.0.0.insert.insert.i.i.i431, ptr %i.akr, align 8, !tbaa !422
   %i.aks = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.akt = load ptr, ptr %1, align 8, !tbaa !322
   %i.aku = getelementptr inbounds nuw i8, ptr %i.akt, i64 40
@@ -1320,7 +1320,7 @@ bb.k:                                             ; preds = %_ZN6duckdb12Deseria
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.aj, ptr %i.ct, align 8, !tbaa !423
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.0.i.i.i.i, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %.0.i.i.i.i, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !320
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 %.0.i.i, ptr %i.cu, align 8, !tbaa !3653
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
@@ -1723,7 +1723,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit, %.preheader
@@ -1742,7 +1742,8 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit
-  %i.l = phi ptr [ null, %.lr.ph ], [ %i.bg, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit ] ; 7 uses
+  %2 = phi ptr [ null, %.lr.ph ], [ %3, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit ] ; 5 uses
+  %i.l = phi ptr [ null, %.lr.ph ], [ %i.bg, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit ] ; 4 uses
   %.024 = phi i64 [ 0, %.lr.ph ], [ %i.bi, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit ]
   %i.m = phi ptr [ null, %.lr.ph ], [ %i.bh, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit ] ; 10 uses
   %i.n = load ptr, ptr %1, align 8, !tbaa !322
@@ -1810,20 +1811,19 @@ _ZN6duckdb12BlockPointer11DeserializeERNS_12DeserializerE.exit.i: ; preds = %.no
           to label %_ZN6duckdb12Deserializer4ReadINS_12BlockPointerEEENSt9enable_ifIXsr15has_deserializeIT_EE5valueES4_E4typeEv.exit unwind label %.loopexit, !inline_history !4867
 
 _ZN6duckdb12Deserializer4ReadINS_12BlockPointerEEENSt9enable_ifIXsr15has_deserializeIT_EE5valueES4_E4typeEv.exit: ; preds = %.noexc14
-  %2 = load ptr, ptr %i.f, align 8, !tbaa !1384
   %.not.i.i = icmp eq ptr %i.l, %2
   br i1 %.not.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZN6duckdb12Deserializer4ReadINS_12BlockPointerEEENSt9enable_ifIXsr15has_deserializeIT_EE5valueES4_E4typeEv.exit
   store i64 %i.w, ptr %i.l, align 8, !tbaa !423
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  store i64 %.0.i.i.i, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %.0.i.i.i, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !320
   %i.ap = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   store ptr %i.ap, ptr %i.e, align 8, !tbaa !1550
   br label %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit
 
 bb.f:                                             ; preds = %_ZN6duckdb12Deserializer4ReadINS_12BlockPointerEEENSt9enable_ifIXsr15has_deserializeIT_EE5valueES4_E4typeEv.exit
-  %i.aq = ptrtoint ptr %i.l to i64
+  %i.aq = ptrtoint ptr %2 to i64
   %i.ar = ptrtoint ptr %i.m to i64
   %i.as = sub i64 %i.aq, %i.ar                    ; 3 uses
   %i.at = icmp eq i64 %i.as, 9223372036854775792
@@ -1854,8 +1854,8 @@ _ZNKSt6vectorIN6duckdb12BlockPointerESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; p
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.as ; 2 uses
   store i64 %i.w, ptr %i.bb, align 8, !tbaa !423
   %.sroa.6.0..sroa_idx19 = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  store i64 %.0.i.i.i, ptr %.sroa.6.0..sroa_idx19, align 8
-  %.not10.i.i.i.i.i.i.i = icmp eq ptr %i.m, %i.l
+  store i64 %.0.i.i.i, ptr %.sroa.6.0..sroa_idx19, align 8, !tbaa !320
+  %.not10.i.i.i.i.i.i.i = icmp eq ptr %i.m, %2
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.noexc17, %.lr.ph.i.i.i.i.i.i.i
@@ -1864,7 +1864,7 @@ _ZNKSt6vectorIN6duckdb12BlockPointerESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; p
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !4873, !alias.scope !4874
   %i.bc = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i.i.i.i.i = icmp eq ptr %i.bc, %i.l
+  %.not.i.i.i.i.i.i.i = icmp eq ptr %i.bc, %2
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !4871
 
 _ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %.noexc17
@@ -1879,11 +1879,12 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN6duck
 
 _ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.h, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
   store ptr %i.be, ptr %i.e, align 8, !tbaa !1550
-  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.ba, i64 %i.ay
+  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.ba, i64 %i.ay ; 2 uses
   store ptr %i.bf, ptr %i.f, align 8, !tbaa !1384
   br label %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit
 
 _ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, %bb.e
+  %3 = phi ptr [ %i.bf, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %2, %bb.e ]
   %i.bg = phi ptr [ %i.be, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %i.ap, %bb.e ]
   %i.bh = phi ptr [ %i.ba, %_ZNSt6vectorIN6duckdb12BlockPointerESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %i.m, %bb.e ] ; 2 uses
   %i.bi = add nuw i64 %.024, 1                    ; 2 uses

@@ -179,7 +179,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   %.sroa.4.0.insert.shift = shl nuw i64 %.sroa.4.0.insert.ext, 32
   %.sroa.0157.0.insert.ext = zext i32 %1 to i64
   %.sroa.0157.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.0157.0.insert.ext ; 2 uses
-  store i64 %.sroa.0157.0.insert.insert, ptr @point, align 8
+  store i64 %.sroa.0157.0.insert.insert, ptr @point, align 8, !tbaa !34
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #19
   %i.j = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %10, i64 16
@@ -193,16 +193,15 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   call void @_ZN2cv6circleERKNS_17_InputOutputArrayENS_6Point_IiEEiRKNS_7Scalar_IdEEiii(ptr noundef nonnull align 8 dereferenceable(24) %10, i64 %.sroa.0157.0.insert.insert, i32 noundef 2, ptr noundef nonnull align 8 dereferenceable(32) %11, i32 noundef -1, i32 noundef 8, i32 noundef 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
-  %i.m = load ptr, ptr getelementptr inbounds nuw (i8, ptr @pts, i64 8), align 8, !tbaa !37 ; 5 uses
+  %i.m = load ptr, ptr getelementptr inbounds nuw (i8, ptr @pts, i64 8), align 8, !tbaa !37 ; 6 uses
   %i.n = load ptr, ptr getelementptr inbounds nuw (i8, ptr @pts, i64 16), align 8, !tbaa !13
   %.not.i = icmp eq ptr %i.m, %i.n
   br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.o = load i64, ptr @point, align 8
-  store i64 %i.o, ptr %i.m, align 4
-  %41 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @pts, i64 8), align 8, !tbaa !37
-  %i.p = getelementptr inbounds nuw i8, ptr %41, i64 8
+  %i.o = load i64, ptr @point, align 8, !tbaa !34
+  store i64 %i.o, ptr %i.m, align 4, !tbaa !34
+  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @pts, i64 8), align 8, !tbaa !37
   br label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backERKS2_.exit
 
@@ -230,8 +229,8 @@ _ZNKSt6vectorIN2cv6Point_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   %i.aa = shl nuw nsw i64 %i.z, 3
   %i.ab = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aa) #21 ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.t
-  %i.ad = load i64, ptr @point, align 8
-  store i64 %i.ad, ptr %i.ac, align 4
+  %i.ad = load i64, ptr @point, align 8, !tbaa !34
+  store i64 %i.ad, ptr %i.ac, align 4, !tbaa !34
   %.not10.i.i.i.i.i = icmp eq ptr %i.q, %i.m
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -240,8 +239,8 @@ _ZNKSt6vectorIN2cv6Point_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   %.0911.i.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i.i ], [ %i.q, %_ZNKSt6vectorIN2cv6Point_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !38)
   call void @llvm.experimental.noalias.scope.decl(metadata !39)
-  %i.ae = load i64, ptr %.0911.i.i.i.i.i, align 4, !alias.scope !39, !noalias !38
-  store i64 %i.ae, ptr %.012.i.i.i.i.i, align 4, !alias.scope !38, !noalias !39
+  %i.ae = load i64, ptr %.0911.i.i.i.i.i, align 4, !tbaa !34, !alias.scope !39, !noalias !38
+  store i64 %i.ae, ptr %.012.i.i.i.i.i, align 4, !tbaa !34, !alias.scope !38, !noalias !39
   %i.af = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.af, %i.m
@@ -286,8 +285,8 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN2cv6P
   %i.as = zext nneg i32 %i.am to i64
   %i.at = getelementptr [8 x i8], ptr %i.ar, i64 %i.as
   %i.au = getelementptr i8, ptr %i.at, i64 -8
-  %.sroa.08.0.copyload = load i64, ptr %i.au, align 4
-  %.sroa.07.0.copyload = load i64, ptr @point, align 8
+  %.sroa.08.0.copyload = load i64, ptr %i.au, align 4, !tbaa !34
+  %.sroa.07.0.copyload = load i64, ptr @point, align 8, !tbaa !34
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
   %i.av = getelementptr inbounds nuw i8, ptr %13, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %13, i8 0, i64 16, i1 false)

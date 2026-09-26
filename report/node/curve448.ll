@@ -205,11 +205,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.au = zext i32 %i.at to i64
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.au ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
-  %wide.load = load <2 x i64>, ptr %i.av, align 8
-  %wide.load107 = load <2 x i64>, ptr %i.aw, align 8
+  %wide.load = load <2 x i64>, ptr %i.av, align 8, !tbaa !55
+  %wide.load107 = load <2 x i64>, ptr %i.aw, align 8, !tbaa !55
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
-  store <2 x i64> %wide.load, ptr %i.ar, align 16
-  store <2 x i64> %wide.load107, ptr %i.ax, align 16
+  store <2 x i64> %wide.load, ptr %i.ar, align 16, !tbaa !55
+  store <2 x i64> %wide.load107, ptr %i.ax, align 16, !tbaa !55
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ay = icmp eq i64 %index.next, %n.vec
   br i1 %i.ay, label %middle.block, label %vector.body, !llvm.loop !45
@@ -232,8 +232,8 @@ middle.block:                                     ; preds = %vector.body
   %i.bb = add i32 %i.aj, %i.ba
   %i.bc = zext i32 %i.bb to i64
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.bc
-  %i.be = load i64, ptr %i.bd, align 8
-  store i64 %i.be, ptr %i.az, align 8
+  %i.be = load i64, ptr %i.bd, align 8, !tbaa !55
+  store i64 %i.be, ptr %i.az, align 8, !tbaa !55
   %indvars.iv.next71.i.prol = add nuw nsw i64 %indvars.iv70.i.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -252,32 +252,32 @@ middle.block:                                     ; preds = %vector.body
   %i.bj = add i32 %i.aj, %i.bi
   %i.bk = zext i32 %i.bj to i64
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.bk
-  %i.bm = load i64, ptr %i.bl, align 8
-  store i64 %i.bm, ptr %i.bh, align 8
+  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !55
+  store i64 %i.bm, ptr %i.bh, align 8, !tbaa !55
   %indvars.iv.next71.i = add nuw nsw i64 %indvars.iv70.i, 1 ; 2 uses
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %indvars.iv.next71.i
   %i.bo = trunc nuw i64 %indvars.iv.next71.i to i32
   %i.bp = add i32 %i.aj, %i.bo
   %i.bq = zext i32 %i.bp to i64
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.bq
-  %i.bs = load i64, ptr %i.br, align 8
-  store i64 %i.bs, ptr %i.bn, align 8
+  %i.bs = load i64, ptr %i.br, align 8, !tbaa !55
+  store i64 %i.bs, ptr %i.bn, align 8, !tbaa !55
   %indvars.iv.next71.i.1 = add nuw nsw i64 %indvars.iv70.i, 2 ; 2 uses
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %indvars.iv.next71.i.1
   %i.bu = trunc nuw i64 %indvars.iv.next71.i.1 to i32
   %i.bv = add i32 %i.aj, %i.bu
   %i.bw = zext i32 %i.bv to i64
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.bw
-  %i.by = load i64, ptr %i.bx, align 8
-  store i64 %i.by, ptr %i.bt, align 8
+  %i.by = load i64, ptr %i.bx, align 8, !tbaa !55
+  store i64 %i.by, ptr %i.bt, align 8, !tbaa !55
   %indvars.iv.next71.i.2 = add nuw nsw i64 %indvars.iv70.i, 3 ; 2 uses
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %indvars.iv.next71.i.2
   %i.ca = trunc nuw i64 %indvars.iv.next71.i.2 to i32
   %i.cb = add i32 %i.aj, %i.ca
   %i.cc = zext i32 %i.cb to i64
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.cc
-  %i.ce = load i64, ptr %i.cd, align 8
-  store i64 %i.ce, ptr %i.bz, align 8
+  %i.ce = load i64, ptr %i.cd, align 8, !tbaa !55
+  store i64 %i.ce, ptr %i.bz, align 8, !tbaa !55
   %indvars.iv.next71.i.3 = add nuw nsw i64 %indvars.iv70.i, 4 ; 2 uses
   %exitcond73.not.i.3 = icmp eq i64 %indvars.iv.next71.i.3, %wide.trip.count.i
   br i1 %exitcond73.not.i.3, label %recode_wnaf.exit, label %.lr.ph65.i, !llvm.loop !47
@@ -390,11 +390,11 @@ vector.body113:                                   ; preds = %vector.body113, %ve
   %i.dz = zext i32 %i.dy to i64
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.dz ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 16
-  %wide.load115 = load <2 x i64>, ptr %i.ea, align 8
-  %wide.load116 = load <2 x i64>, ptr %i.eb, align 8
+  %wide.load115 = load <2 x i64>, ptr %i.ea, align 8, !tbaa !55
+  %wide.load116 = load <2 x i64>, ptr %i.eb, align 8, !tbaa !55
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dw, i64 16
-  store <2 x i64> %wide.load115, ptr %i.dw, align 16
-  store <2 x i64> %wide.load116, ptr %i.ec, align 16
+  store <2 x i64> %wide.load115, ptr %i.dw, align 16, !tbaa !55
+  store <2 x i64> %wide.load116, ptr %i.ec, align 16, !tbaa !55
   %index.next117 = add nuw i64 %index114, 4       ; 2 uses
   %i.ed = icmp eq i64 %index.next117, %n.vec112
   br i1 %i.ed, label %middle.block118, label %vector.body113, !llvm.loop !48
@@ -417,8 +417,8 @@ middle.block118:                                  ; preds = %vector.body113
   %i.eg = add i32 %i.do, %i.ef
   %i.eh = zext i32 %i.eg to i64
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.eh
-  %i.ej = load i64, ptr %i.ei, align 8
-  store i64 %i.ej, ptr %i.ee, align 8
+  %i.ej = load i64, ptr %i.ei, align 8, !tbaa !55
+  store i64 %i.ej, ptr %i.ee, align 8, !tbaa !55
   %indvars.iv.next71.i86.prol = add nuw nsw i64 %indvars.iv70.i85.prol, 1 ; 2 uses
   %prol.iter124.next = add i64 %prol.iter124, 1   ; 2 uses
   %prol.iter124.cmp.not = icmp eq i64 %prol.iter124.next, %xtraiter122
@@ -437,32 +437,32 @@ middle.block118:                                  ; preds = %vector.body113
   %i.eo = add i32 %i.do, %i.en
   %i.ep = zext i32 %i.eo to i64
   %i.eq = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.ep
-  %i.er = load i64, ptr %i.eq, align 8
-  store i64 %i.er, ptr %i.em, align 8
+  %i.er = load i64, ptr %i.eq, align 8, !tbaa !55
+  store i64 %i.er, ptr %i.em, align 8, !tbaa !55
   %indvars.iv.next71.i86 = add nuw nsw i64 %indvars.iv70.i85, 1 ; 2 uses
   %i.es = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %indvars.iv.next71.i86
   %i.et = trunc nuw i64 %indvars.iv.next71.i86 to i32
   %i.eu = add i32 %i.do, %i.et
   %i.ev = zext i32 %i.eu to i64
   %i.ew = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.ev
-  %i.ex = load i64, ptr %i.ew, align 8
-  store i64 %i.ex, ptr %i.es, align 8
+  %i.ex = load i64, ptr %i.ew, align 8, !tbaa !55
+  store i64 %i.ex, ptr %i.es, align 8, !tbaa !55
   %indvars.iv.next71.i86.1 = add nuw nsw i64 %indvars.iv70.i85, 2 ; 2 uses
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %indvars.iv.next71.i86.1
   %i.ez = trunc nuw i64 %indvars.iv.next71.i86.1 to i32
   %i.fa = add i32 %i.do, %i.ez
   %i.fb = zext i32 %i.fa to i64
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.fb
-  %i.fd = load i64, ptr %i.fc, align 8
-  store i64 %i.fd, ptr %i.ey, align 8
+  %i.fd = load i64, ptr %i.fc, align 8, !tbaa !55
+  store i64 %i.fd, ptr %i.ey, align 8, !tbaa !55
   %indvars.iv.next71.i86.2 = add nuw nsw i64 %indvars.iv70.i85, 3 ; 2 uses
   %i.fe = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %indvars.iv.next71.i86.2
   %i.ff = trunc nuw i64 %indvars.iv.next71.i86.2 to i32
   %i.fg = add i32 %i.do, %i.ff
   %i.fh = zext i32 %i.fg to i64
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.fh
-  %i.fj = load i64, ptr %i.fi, align 8
-  store i64 %i.fj, ptr %i.fe, align 8
+  %i.fj = load i64, ptr %i.fi, align 8, !tbaa !55
+  store i64 %i.fj, ptr %i.fe, align 8, !tbaa !55
   %indvars.iv.next71.i86.3 = add nuw nsw i64 %indvars.iv70.i85, 4 ; 2 uses
   %exitcond73.not.i87.3 = icmp eq i64 %indvars.iv.next71.i86.3, %wide.trip.count.i83
   br i1 %exitcond73.not.i87.3, label %recode_wnaf.exit88, label %.lr.ph65.i84, !llvm.loop !50
@@ -653,7 +653,7 @@ bb.p:                                             ; preds = %bb.o
   %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 128
   call void @ossl_gf_sqr(ptr noundef nonnull %i.hw, ptr noundef nonnull %i.hv) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #6
-  %i.hx = load ptr, ptr @ossl_curve448_wnaf_base, align 8, !tbaa !58
+  %i.hx = load ptr, ptr @ossl_curve448_wnaf_base, align 8, !tbaa !59
   %i.hy = getelementptr inbounds nuw i8, ptr %13, i64 4
   %i.hz = load i32, ptr %i.hy, align 4, !tbaa !54
   %i.ia = ashr i32 %i.hz, 1
@@ -663,7 +663,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  %i.id = load ptr, ptr @ossl_curve448_wnaf_base, align 8, !tbaa !58
+  %i.id = load ptr, ptr @ossl_curve448_wnaf_base, align 8, !tbaa !59
   %i.ie = getelementptr inbounds nuw i8, ptr %13, i64 4
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !54
   %i.ig = ashr i32 %i.if, 1
@@ -756,7 +756,7 @@ bb.y:                                             ; preds = %bb.x
   %i.jk = getelementptr inbounds nuw i8, ptr %i.is, i64 4
   %i.jl = load i32, ptr %i.jk, align 4, !tbaa !54 ; 3 uses
   %i.jm = icmp sgt i32 %i.jl, 0
-  %i.jn = load ptr, ptr @ossl_curve448_wnaf_base, align 8, !tbaa !58 ; 2 uses
+  %i.jn = load ptr, ptr @ossl_curve448_wnaf_base, align 8, !tbaa !59 ; 2 uses
   br i1 %i.jm, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
@@ -1159,18 +1159,19 @@ attributes #7 = { nounwind memory(none) }
 !42 = !{!41, !41, i64 0}
 !43 = distinct !{!43, !13}
 !44 = distinct !{!44, !13}
-!45 = distinct !{!45, !13, !55, !56}
-!46 = distinct !{!46, !57}
-!47 = distinct !{!47, !13, !55}
-!48 = distinct !{!48, !13, !55, !56}
-!49 = distinct !{!49, !57}
-!50 = distinct !{!50, !13, !55}
+!45 = distinct !{!45, !13, !56, !57}
+!46 = distinct !{!46, !58}
+!47 = distinct !{!47, !13, !56}
+!48 = distinct !{!48, !13, !56, !57}
+!49 = distinct !{!49, !58}
+!50 = distinct !{!50, !13, !56}
 !51 = distinct !{!51, !13}
 !52 = !{!"smvt_control", !7, i64 0, !7, i64 4}
 !53 = !{!52, !7, i64 0}
 !54 = !{!52, !7, i64 4}
-!55 = !{!"llvm.loop.isvectorized", i32 1}
-!56 = !{!"llvm.loop.unroll.runtime.disable"}
-!57 = !{!"llvm.loop.unroll.disable"}
-!58 = !{!17, !17, i64 0}
+!55 = !{!7, !7, i64 0}
+!56 = !{!"llvm.loop.isvectorized", i32 1}
+!57 = !{!"llvm.loop.unroll.runtime.disable"}
+!58 = !{!"llvm.loop.unroll.disable"}
+!59 = !{!17, !17, i64 0}
 end_hunk_1

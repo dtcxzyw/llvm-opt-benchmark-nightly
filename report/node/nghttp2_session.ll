@@ -204,7 +204,7 @@ bb.a:
 define dso_local i64 @nghttp2_session_mem_recv2(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 7 uses
-  %3 = alloca %struct.nghttp2_settings_entry, align 8 ; 9 uses
+  %3 = alloca %struct.nghttp2_settings_entry, align 8 ; 8 uses
   %i.b = alloca i32, align 4                      ; 14 uses
   %4 = alloca %struct.nghttp2_hd_nv, align 8      ; 16 uses
   %5 = alloca %struct.nghttp2_frame_hd, align 8   ; 8 uses
@@ -280,8 +280,8 @@ nghttp2_session_want_read.exit:                   ; preds = %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 13
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 2288 ; 3 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 9 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 8 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 8 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 5 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 712 ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 616 ; 18 uses
@@ -684,59 +684,45 @@ bb.lh:                                            ; preds = %bb.lg
   %i.aci = add i64 %i.ach, 1
   store i64 %i.aci, ptr %i.ay, align 8, !tbaa !280
   %i.acj = getelementptr inbounds nuw [8 x i8], ptr %i.acg, i64 %i.ach
-  %i.ack = load i64, ptr %3, align 8
-  store i64 %i.ack, ptr %i.acj, align 4
+  %i.ack = load i64, ptr %3, align 8, !tbaa !57
+  store i64 %i.ack, ptr %i.acj, align 4, !tbaa !57
   br label %inbound_frame_set_settings_entry.exit
 
 bb.li:                                            ; preds = %bb.lg, %bb.lg, %bb.lg, %bb.lg, %bb.lg, %bb.lg, %bb.lg, %bb.lg
-  %i.acl = load i64, ptr %i.ay, align 8, !tbaa !280 ; 3 uses
+  %i.acl = load i64, ptr %i.ay, align 8, !tbaa !280 ; 4 uses
   %.not.i1061 = icmp eq i64 %i.acl, 0
-  %.pre1869 = load ptr, ptr %i.az, align 8, !tbaa !85 ; 4 uses
-  br i1 %.not.i1061, label %.loopexit.thread.i, label %.lr.ph.i
+  %.pre1869 = load ptr, ptr %i.az, align 8, !tbaa !85 ; 3 uses
+  br i1 %.not.i1061, label %.loopexit.i.a, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.li, %bb.lj
-  %.025.i = phi i64 [ %i.acp, %bb.lj ], [ 0, %bb.li ] ; 5 uses
+  %.025.i = phi i64 [ %i.acp, %bb.lj ], [ 0, %bb.li ] ; 3 uses
   %i.acm = getelementptr inbounds nuw [8 x i8], ptr %.pre1869, i64 %.025.i
   %i.acn = load i32, ptr %i.acm, align 4, !tbaa !138
   %i.aco = icmp eq i32 %i.acn, %i.acf
-  br i1 %i.aco, label %.loopexit.i.a, label %bb.lj
+  br i1 %i.aco, label %.loopexit.thread.i, label %bb.lj
 
 bb.lj:                                            ; preds = %.lr.ph.i
   %i.acp = add nuw i64 %.025.i, 1                 ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.acp, %i.acl
-  br i1 %exitcond.not.i, label %.loopexit.thread.i, label %.lr.ph.i, !llvm.loop !252
+  br i1 %exitcond.not.i, label %.loopexit.i.a, label %.lr.ph.i, !llvm.loop !252
 
-.loopexit.i.a:                                    ; preds = %.lr.ph.i
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %.pre1869, i64 %.025.i
-  %7 = load i64, ptr %3, align 8
-  store i64 %7, ptr %6, align 4
-  %.pre.i = load i64, ptr %i.ay, align 8, !tbaa !280
-  %8 = icmp eq i64 %.025.i, %.pre.i
-  br i1 %8, label %.loopexit.i..loopexit.thread.i_crit_edge, label %14
-
-.loopexit.i..loopexit.thread.i_crit_edge:         ; preds = %.loopexit.i.a
-  %.pre = load ptr, ptr %i.az, align 8, !tbaa !85
+.loopexit.i.a:                                    ; preds = %bb.lj, %bb.li
+  %6 = add i64 %i.acl, 1
+  store i64 %6, ptr %i.ay, align 8, !tbaa !280
   br label %.loopexit.thread.i
 
-.loopexit.thread.i:                               ; preds = %bb.lj, %.loopexit.i..loopexit.thread.i_crit_edge, %bb.li
-  %9 = phi ptr [ %.pre, %.loopexit.i..loopexit.thread.i_crit_edge ], [ %.pre1869, %bb.li ], [ %.pre1869, %bb.lj ]
-  %10 = phi i64 [ %.025.i, %.loopexit.i..loopexit.thread.i_crit_edge ], [ 0, %bb.li ], [ %i.acl, %bb.lj ] ; 2 uses
-  %11 = add i64 %10, 1
-  store i64 %11, ptr %i.ay, align 8, !tbaa !280
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %10
-  %13 = load i64, ptr %3, align 8
-  store i64 %13, ptr %12, align 4
-  br label %14
+.loopexit.thread.i:                               ; preds = %.lr.ph.i, %.loopexit.i.a
+  %.027.i.lcssa.sink = phi i64 [ %i.acl, %.loopexit.i.a ], [ %.025.i, %.lr.ph.i ]
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %.pre1869, i64 %.027.i.lcssa.sink
+  %8 = load i64, ptr %3, align 8, !tbaa !57
+  store i64 %8, ptr %7, align 4, !tbaa !57
+  %9 = load i32, ptr %3, align 8, !tbaa !138
+  %10 = icmp eq i32 %9, 1
+  br i1 %10, label %bb.lk, label %inbound_frame_set_settings_entry.exit
 
-14:                                               ; preds = %.loopexit.thread.i, %.loopexit.i.a
-  %15 = load i32, ptr %3, align 8, !tbaa !138
-  %16 = icmp eq i32 %15, 1
-  br i1 %16, label %bb.lk, label %inbound_frame_set_settings_entry.exit
-
-bb.lk:                                            ; preds = %14
-  %17 = load ptr, ptr %i.az, align 8, !tbaa !85
+bb.lk:                                            ; preds = %.loopexit.thread.i
   %i.acq = load i64, ptr %i.ba, align 8, !tbaa !263
-  %i.acr = getelementptr [8 x i8], ptr %17, i64 %i.acq
+  %i.acr = getelementptr [8 x i8], ptr %.pre1869, i64 %i.acq
   %i.acs = load i32, ptr %i.bb, align 4, !tbaa !139 ; 2 uses
   %i.act = getelementptr i8, ptr %i.acr, i64 -4   ; 2 uses
   %i.acu = load i32, ptr %i.act, align 4, !tbaa !139
@@ -747,7 +733,7 @@ bb.ll:                                            ; preds = %bb.lk
   store i32 %i.acs, ptr %i.act, align 4, !tbaa !139
   br label %inbound_frame_set_settings_entry.exit
 
-inbound_frame_set_settings_entry.exit:            ; preds = %bb.lh, %14, %bb.lk, %bb.ll
+inbound_frame_set_settings_entry.exit:            ; preds = %bb.lh, %.loopexit.thread.i, %bb.lk, %bb.ll
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   %.pre1870 = load i64, ptr %i.t, align 8, !tbaa !73
   br label %bb.lm
@@ -767,8 +753,12 @@ bb.ln:                                            ; preds = %bb.lm
 bb.lo:                                            ; preds = %bb.lm
   %i.acz = load i64, ptr %i.ba, align 8, !tbaa !263 ; 2 uses
   %.not.i1062 = icmp eq i64 %i.acz, 0
-  %.pre.i1063 = load ptr, ptr %i.az, align 8, !tbaa !85 ; 7 uses
-  br i1 %.not.i1062, label %session_process_settings_frame.exit, label %bb.lp
+  %.pre.i1063 = load ptr, ptr %i.az, align 8, !tbaa !85 ; 5 uses
+  br i1 %.not.i1062, label %.session_process_settings_frame.exit_crit_edge, label %bb.lp
+
+.session_process_settings_frame.exit_crit_edge:   ; preds = %bb.lo
+  %.pre1865 = load i64, ptr %i.ay, align 8, !tbaa !280
+  br label %session_process_settings_frame.exit
 
 bb.lp:                                            ; preds = %bb.lo
   %i.ada = getelementptr [8 x i8], ptr %.pre.i1063, i64 %i.acz ; 2 uses
@@ -777,15 +767,15 @@ bb.lp:                                            ; preds = %bb.lo
   %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !57 ; 2 uses
   %i.adc = load <2 x i32>, ptr %i.adb, align 4, !tbaa !57
   %.not33.i = icmp eq i32 %.sroa.4.0.copyload.i, -1
+  %.pre1866 = load i64, ptr %i.ay, align 8, !tbaa !280 ; 6 uses
   br i1 %.not33.i, label %session_process_settings_frame.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.lp
-  %18 = load i64, ptr %i.ay, align 8, !tbaa !280  ; 4 uses
-  %.not40.i = icmp eq i64 %18, 0
+  %.not40.i = icmp eq i64 %.pre1866, 0
   br i1 %.not40.i, label %._crit_edge.i, label %.lr.ph.i1064
 
 .lr.ph.i1064:                                     ; preds = %.preheader.i, %bb.lq
-  %.039.i = phi i64 [ %i.adg, %bb.lq ], [ 0, %.preheader.i ] ; 4 uses
+  %.039.i = phi i64 [ %i.adg, %bb.lq ], [ 0, %.preheader.i ] ; 3 uses
   %i.add = getelementptr inbounds nuw [8 x i8], ptr %.pre.i1063, i64 %.039.i
   %i.ade = load i32, ptr %i.add, align 4, !tbaa !138
   %i.adf = icmp eq i32 %i.ade, 1
@@ -793,7 +783,7 @@ bb.lp:                                            ; preds = %bb.lo
 
 bb.lq:                                            ; preds = %.lr.ph.i1064
   %i.adg = add nuw i64 %.039.i, 1                 ; 2 uses
-  %exitcond.not.i1065 = icmp eq i64 %i.adg, %18
+  %exitcond.not.i1065 = icmp eq i64 %i.adg, %.pre1866
   br i1 %exitcond.not.i1065, label %._crit_edge.i, label %.lr.ph.i1064, !llvm.loop !253
 
 ._crit_edge.i:                                    ; preds = %.preheader.i, %bb.lq
@@ -801,27 +791,24 @@ bb.lq:                                            ; preds = %.lr.ph.i1064
   unreachable
 
 bb.lr:                                            ; preds = %.lr.ph.i1064
-  %i.adh = getelementptr inbounds nuw [8 x i8], ptr %.pre.i1063, i64 %.039.i ; 2 uses
+  %i.adh = getelementptr inbounds nuw [8 x i8], ptr %.pre.i1063, i64 %.039.i ; 3 uses
   %i.adi = getelementptr inbounds nuw i8, ptr %i.adh, i64 4
   %i.adj = load i32, ptr %i.adi, align 4, !tbaa !139
   %.not34.i = icmp eq i32 %.sroa.4.0.copyload.i, %i.adj
   br i1 %.not34.i, label %session_process_settings_frame.exit, label %bb.ls
 
 bb.ls:                                            ; preds = %bb.lr
-  %i.adk = add i64 %18, 1
+  %i.adk = add i64 %.pre1866, 1                   ; 2 uses
   store i64 %i.adk, ptr %i.ay, align 8, !tbaa !280
-  %i.adl = getelementptr inbounds nuw [8 x i8], ptr %.pre.i1063, i64 %18
-  %i.adm = load i64, ptr %i.adh, align 4
-  store i64 %i.adm, ptr %i.adl, align 4
-  %19 = load ptr, ptr %i.az, align 8, !tbaa !85   ; 2 uses
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %19, i64 %.039.i
-  store <2 x i32> %i.adc, ptr %20, align 4, !tbaa !57
+  %i.adl = getelementptr inbounds nuw [8 x i8], ptr %.pre.i1063, i64 %.pre1866
+  %i.adm = load i64, ptr %i.adh, align 4, !tbaa !57
+  store i64 %i.adm, ptr %i.adl, align 4, !tbaa !57
+  store <2 x i32> %i.adc, ptr %i.adh, align 4, !tbaa !57
   br label %session_process_settings_frame.exit
 
-session_process_settings_frame.exit:              ; preds = %bb.lo, %bb.lp, %bb.lr, %bb.ls
-  %21 = phi ptr [ %.pre.i1063, %bb.lr ], [ %.pre.i1063, %bb.lp ], [ %19, %bb.ls ], [ %.pre.i1063, %bb.lo ]
-  %22 = load i64, ptr %i.ay, align 8, !tbaa !280
-  call void @nghttp2_frame_unpack_settings_payload(ptr noundef nonnull %i.c, ptr noundef %21, i64 noundef %22) #15
+session_process_settings_frame.exit:              ; preds = %.session_process_settings_frame.exit_crit_edge, %bb.lp, %bb.lr, %bb.ls
+  %11 = phi i64 [ %.pre1865, %.session_process_settings_frame.exit_crit_edge ], [ %.pre1866, %bb.lp ], [ %.pre1866, %bb.lr ], [ %i.adk, %bb.ls ]
+  call void @nghttp2_frame_unpack_settings_payload(ptr noundef nonnull %i.c, ptr noundef %.pre.i1063, i64 noundef %11) #15
   store ptr null, ptr %i.az, align 8, !tbaa !85
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ay, i8 0, i64 16, i1 false)
   %i.adn = call i32 @nghttp2_session_on_settings_received(ptr noundef nonnull %0, ptr noundef nonnull %i.c, i32 noundef 0) ; 2 uses
@@ -1224,8 +1211,8 @@ define dso_local i32 @nghttp2_session_change_extpri_stream_priority(ptr noundef 
 bb.a:
   %4 = alloca %struct.nghttp2_extpri, align 8     ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
-  %i.a = load i64, ptr %2, align 4                ; 2 uses
-  store i64 %i.a, ptr %4, align 8
+  %i.a = load i64, ptr %2, align 4, !tbaa !57     ; 2 uses
+  store i64 %i.a, ptr %4, align 8, !tbaa !57
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2723
   %i.c = load i8, ptr %i.b, align 1, !tbaa !46
   %.not = icmp eq i8 %i.c, 0

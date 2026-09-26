@@ -204,7 +204,7 @@ declare i32 @ompi_win_set_name(ptr noundef, ptr noundef) local_unnamed_addr #1
 define internal fastcc i32 @ompi_osc_rdma_share_data(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !110  ; 4 uses
   %i.d = getelementptr i8, ptr %i.c, i64 220
   %.val82 = load i32, ptr %i.d, align 4, !tbaa !129
@@ -330,7 +330,7 @@ bb.k:                                             ; preds = %._crit_edge, %bb.g
   %i.bu = load ptr, ptr %i.b, align 8, !tbaa !110
   %i.bv = getelementptr i8, ptr %i.bu, i64 264
   %.val83 = load ptr, ptr %i.bv, align 8, !tbaa !86
-  %i.bw = getelementptr i8, ptr %.val83, i64 16
+  %i.bw = getelementptr i8, ptr %.val83, i64 16   ; 2 uses
   %.val.val84 = load i32, ptr %i.bw, align 8, !tbaa !89
   %i.bx = add i32 %.val.val84, -1
   %i.by = add i32 %i.bx, %i.bt
@@ -350,6 +350,7 @@ bb.k:                                             ; preds = %._crit_edge, %bb.g
   br i1 %.not7393, label %.lr.ph95.preheader, label %.critedge
 
 .lr.ph95.preheader:                               ; preds = %.lr.ph.preheader
+  %1 = load ptr, ptr %i.an, align 64, !tbaa !133
   %invariant.gep = getelementptr [8 x i8], ptr %i.i, i64 %i.cg
   %invariant.op = sub nsw i64 %i.g, %i.cg
   br label %.lr.ph95
@@ -360,17 +361,12 @@ bb.k:                                             ; preds = %._crit_edge, %bb.g
 
 .lr.ph95:                                         ; preds = %.lr.ph95.preheader, %.lr.ph
   %indvars.iv94 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %.lr.ph95.preheader ] ; 3 uses
-  %1 = load ptr, ptr %i.an, align 64, !tbaa !133
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv94
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv94
-  %i.ci = load i64, ptr %gep, align 4
-  store i64 %i.ci, ptr %i.ch, align 4
+  %i.ci = load i64, ptr %gep, align 4, !tbaa !45
+  store i64 %i.ci, ptr %i.ch, align 4, !tbaa !45
   %indvars.iv.next = add nuw nsw i64 %indvars.iv94, 1 ; 3 uses
-  %2 = load ptr, ptr %i.b, align 8, !tbaa !110
-  %3 = getelementptr i8, ptr %2, i64 264
-  %.val = load ptr, ptr %3, align 8, !tbaa !86
-  %4 = getelementptr i8, ptr %.val, i64 16
-  %.val.val = load i32, ptr %4, align 8, !tbaa !89
+  %.val.val = load i32, ptr %i.bw, align 8, !tbaa !89
   %i.cj = load i32, ptr %i.bs, align 4, !tbaa !131 ; 2 uses
   %i.ck = add i32 %.val.val, -1
   %i.cl = add i32 %i.ck, %i.cj

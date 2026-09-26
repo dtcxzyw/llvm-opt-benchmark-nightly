@@ -202,17 +202,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.i7: ; preds =
 
 _ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.i7
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !38 ; 5 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !38 ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !29
   %.not.i8 = icmp eq ptr %i.ah, %i.aj
   br i1 %.not.i8, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit
-  store i16 257, ptr %i.ah, align 1
-  %2 = load ptr, ptr %i.ag, align 8, !tbaa !38
-  %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 2
+  store i16 257, ptr %i.ah, align 1, !tbaa !39
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
   store ptr %i.ak, ptr %i.ag, align 8, !tbaa !38
   br label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit
 
@@ -240,7 +239,7 @@ _ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenE
   %i.av = shl nuw nsw i64 %i.au, 1
   %i.aw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #19 ; 10 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ao
-  store i16 257, ptr %i.ax, align 1
+  store i16 257, ptr %i.ax, align 1, !tbaa !39
   %.not10.i.i.i.i.i = icmp eq ptr %i.al, %i.ah
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %iter.check
 
@@ -273,17 +272,17 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bi = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.aw, i64 %i.bi ; 2 uses
   %next.gep31 = getelementptr i8, ptr %i.al, i64 %i.bi ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !50)
   call void @llvm.experimental.noalias.scope.decl(metadata !51)
+  call void @llvm.experimental.noalias.scope.decl(metadata !52)
   %i.bj = getelementptr i8, ptr %next.gep31, i64 16
-  %wide.load = load <8 x i16>, ptr %next.gep31, align 1, !alias.scope !51, !noalias !50
-  %wide.load32 = load <8 x i16>, ptr %i.bj, align 1, !alias.scope !51, !noalias !50
+  %wide.load = load <8 x i16>, ptr %next.gep31, align 1, !tbaa !39, !alias.scope !52, !noalias !51
+  %wide.load32 = load <8 x i16>, ptr %i.bj, align 1, !tbaa !39, !alias.scope !52, !noalias !51
   %i.bk = getelementptr i8, ptr %next.gep, i64 16
-  store <8 x i16> %wide.load, ptr %next.gep, align 1, !alias.scope !50, !noalias !51
-  store <8 x i16> %wide.load32, ptr %i.bk, align 1, !alias.scope !50, !noalias !51
+  store <8 x i16> %wide.load, ptr %next.gep, align 1, !tbaa !39, !alias.scope !51, !noalias !52
+  store <8 x i16> %wide.load32, ptr %i.bk, align 1, !tbaa !39, !alias.scope !51, !noalias !52
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bl = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !47
+  br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !48
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.bc, %n.vec
@@ -291,7 +290,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.be, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vec.epilog.ph, !prof !42
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vec.epilog.ph, !prof !43
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -306,13 +305,13 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.bp = shl i64 %index35, 1                     ; 2 uses
   %next.gep36 = getelementptr i8, ptr %i.aw, i64 %i.bp
   %next.gep37 = getelementptr i8, ptr %i.al, i64 %i.bp
-  call void @llvm.experimental.noalias.scope.decl(metadata !50)
   call void @llvm.experimental.noalias.scope.decl(metadata !51)
-  %wide.load38 = load <4 x i16>, ptr %next.gep37, align 1, !alias.scope !51, !noalias !50
-  store <4 x i16> %wide.load38, ptr %next.gep36, align 1, !alias.scope !50, !noalias !51
+  call void @llvm.experimental.noalias.scope.decl(metadata !52)
+  %wide.load38 = load <4 x i16>, ptr %next.gep37, align 1, !tbaa !39, !alias.scope !52, !noalias !51
+  store <4 x i16> %wide.load38, ptr %next.gep36, align 1, !tbaa !39, !alias.scope !51, !noalias !52
   %index.next39 = add nuw i64 %index35, 4         ; 2 uses
   %i.bq = icmp eq i64 %index.next39, %n.vec34
-  br i1 %i.bq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !48
+  br i1 %i.bq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !49
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n40 = icmp eq i64 %i.bc, %n.vec34
@@ -326,14 +325,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.bt, %.lr.ph.i.i.i.i.i ], [ %.012.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.bs, %.lr.ph.i.i.i.i.i ], [ %.0911.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ] ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !50)
   call void @llvm.experimental.noalias.scope.decl(metadata !51)
-  %i.br = load i16, ptr %.0911.i.i.i.i.i, align 1, !alias.scope !51, !noalias !50
-  store i16 %i.br, ptr %.012.i.i.i.i.i, align 1, !alias.scope !50, !noalias !51
+  call void @llvm.experimental.noalias.scope.decl(metadata !52)
+  %i.br = load i16, ptr %.0911.i.i.i.i.i, align 1, !tbaa !39, !alias.scope !52, !noalias !51
+  store i16 %i.br, ptr %.012.i.i.i.i.i, align 1, !tbaa !39, !alias.scope !51, !noalias !52
   %i.bs = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 2 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 2 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.bs, %i.ah
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !49
+  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !50
 
 _ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %middle.block, %vec.epilog.middle.block, %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.aw, %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.bn, %vec.epilog.middle.block ], [ %i.bg, %middle.block ], [ %i.bt, %.lr.ph.i.i.i.i.i ]
@@ -678,17 +677,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.i7: ; preds =
 
 _ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.i7
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !38 ; 5 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !38 ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !29
   %.not.i8 = icmp eq ptr %i.ah, %i.aj
   br i1 %.not.i8, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit
-  store i16 256, ptr %i.ah, align 1
-  %2 = load ptr, ptr %i.ag, align 8, !tbaa !38
-  %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 2
+  store i16 256, ptr %i.ah, align 1, !tbaa !39
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
   store ptr %i.ak, ptr %i.ag, align 8, !tbaa !38
   br label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit
 
@@ -716,7 +714,7 @@ _ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenE
   %i.av = shl nuw nsw i64 %i.au, 1
   %i.aw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #19 ; 10 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ao
-  store i16 256, ptr %i.ax, align 1
+  store i16 256, ptr %i.ax, align 1, !tbaa !39
   %.not10.i.i.i.i.i = icmp eq ptr %i.al, %i.ah
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %iter.check
 
@@ -749,17 +747,17 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bi = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.aw, i64 %i.bi ; 2 uses
   %next.gep31 = getelementptr i8, ptr %i.al, i64 %i.bi ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !58)
   call void @llvm.experimental.noalias.scope.decl(metadata !59)
+  call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.bj = getelementptr i8, ptr %next.gep31, i64 16
-  %wide.load = load <8 x i16>, ptr %next.gep31, align 1, !alias.scope !59, !noalias !58
-  %wide.load32 = load <8 x i16>, ptr %i.bj, align 1, !alias.scope !59, !noalias !58
+  %wide.load = load <8 x i16>, ptr %next.gep31, align 1, !tbaa !39, !alias.scope !60, !noalias !59
+  %wide.load32 = load <8 x i16>, ptr %i.bj, align 1, !tbaa !39, !alias.scope !60, !noalias !59
   %i.bk = getelementptr i8, ptr %next.gep, i64 16
-  store <8 x i16> %wide.load, ptr %next.gep, align 1, !alias.scope !58, !noalias !59
-  store <8 x i16> %wide.load32, ptr %i.bk, align 1, !alias.scope !58, !noalias !59
+  store <8 x i16> %wide.load, ptr %next.gep, align 1, !tbaa !39, !alias.scope !59, !noalias !60
+  store <8 x i16> %wide.load32, ptr %i.bk, align 1, !tbaa !39, !alias.scope !59, !noalias !60
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bl = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !55
+  br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !56
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.bc, %n.vec
@@ -767,7 +765,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.be, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vec.epilog.ph, !prof !42
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vec.epilog.ph, !prof !43
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -782,13 +780,13 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.bp = shl i64 %index35, 1                     ; 2 uses
   %next.gep36 = getelementptr i8, ptr %i.aw, i64 %i.bp
   %next.gep37 = getelementptr i8, ptr %i.al, i64 %i.bp
-  call void @llvm.experimental.noalias.scope.decl(metadata !58)
   call void @llvm.experimental.noalias.scope.decl(metadata !59)
-  %wide.load38 = load <4 x i16>, ptr %next.gep37, align 1, !alias.scope !59, !noalias !58
-  store <4 x i16> %wide.load38, ptr %next.gep36, align 1, !alias.scope !58, !noalias !59
+  call void @llvm.experimental.noalias.scope.decl(metadata !60)
+  %wide.load38 = load <4 x i16>, ptr %next.gep37, align 1, !tbaa !39, !alias.scope !60, !noalias !59
+  store <4 x i16> %wide.load38, ptr %next.gep36, align 1, !tbaa !39, !alias.scope !59, !noalias !60
   %index.next39 = add nuw i64 %index35, 4         ; 2 uses
   %i.bq = icmp eq i64 %index.next39, %n.vec34
-  br i1 %i.bq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !56
+  br i1 %i.bq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !57
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n40 = icmp eq i64 %i.bc, %n.vec34
@@ -802,14 +800,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.bt, %.lr.ph.i.i.i.i.i ], [ %.012.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.bs, %.lr.ph.i.i.i.i.i ], [ %.0911.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ] ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !58)
   call void @llvm.experimental.noalias.scope.decl(metadata !59)
-  %i.br = load i16, ptr %.0911.i.i.i.i.i, align 1, !alias.scope !59, !noalias !58
-  store i16 %i.br, ptr %.012.i.i.i.i.i, align 1, !alias.scope !58, !noalias !59
+  call void @llvm.experimental.noalias.scope.decl(metadata !60)
+  %i.br = load i16, ptr %.0911.i.i.i.i.i, align 1, !tbaa !39, !alias.scope !60, !noalias !59
+  store i16 %i.br, ptr %.012.i.i.i.i.i, align 1, !tbaa !39, !alias.scope !59, !noalias !60
   %i.bs = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 2 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 2 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.bs, %i.ah
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !57
+  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !58
 
 _ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %middle.block, %vec.epilog.middle.block, %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.aw, %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.bn, %vec.epilog.middle.block ], [ %i.bg, %middle.block ], [ %i.bt, %.lr.ph.i.i.i.i.i ]
@@ -1212,14 +1210,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #17 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
-  store i64 %i.d, ptr %i.a, align 8, !tbaa !43
+  store i64 %i.d, ptr %i.a, align 8, !tbaa !44
   %i.e = icmp ugt i64 %i.d, 15
   br i1 %i.e, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.b
   %i.f = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.f, ptr %3, align 8, !tbaa !30
-  %i.g = load i64, ptr %i.a, align 8, !tbaa !43
+  %i.g = load i64, ptr %i.a, align 8, !tbaa !44
   store i64 %i.g, ptr %i.b, align 8, !tbaa !15
   br label %._crit_edge.i.i
 
@@ -1240,7 +1238,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %._crit_edge.i.i
-  %i.j = load i64, ptr %i.a, align 8, !tbaa !43   ; 2 uses
+  %i.j = load i64, ptr %i.a, align 8, !tbaa !44   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.j, ptr %i.k, align 8, !tbaa !14
   %i.l = load ptr, ptr %3, align 8, !tbaa !30
@@ -1368,14 +1366,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #17 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
-  store i64 %i.d, ptr %i.a, align 8, !tbaa !43
+  store i64 %i.d, ptr %i.a, align 8, !tbaa !44
   %i.e = icmp ugt i64 %i.d, 15
   br i1 %i.e, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.b
   %i.f = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.f, ptr %2, align 8, !tbaa !30
-  %i.g = load i64, ptr %i.a, align 8, !tbaa !43
+  %i.g = load i64, ptr %i.a, align 8, !tbaa !44
   store i64 %i.g, ptr %i.b, align 8, !tbaa !15
   br label %._crit_edge.i.i
 
@@ -1396,7 +1394,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %._crit_edge.i.i
-  %i.j = load i64, ptr %i.a, align 8, !tbaa !43   ; 2 uses
+  %i.j = load i64, ptr %i.a, align 8, !tbaa !44   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store i64 %i.j, ptr %i.k, align 8, !tbaa !14
   %i.l = load ptr, ptr %2, align 8, !tbaa !30
@@ -1799,25 +1797,26 @@ attributes #19 = { builtin allocsize(0) }
 !36 = !{!35, !16, i64 1}
 !37 = !{ptr @_ZN5osgeo4proj22CPLJSonStreamingWriter5PrintERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE}
 !38 = !{!18, !17, i64 8}
-!39 = !{!"llvm.loop.mustprogress"}
-!40 = !{!"llvm.loop.isvectorized", i32 1}
-!41 = !{!"llvm.loop.unroll.runtime.disable"}
-!42 = !{!"branch_weights", i32 4, i32 12}
-!43 = !{!12, !12, i64 0}
-!44 = distinct !{!44, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_"}
-!45 = distinct !{!45, !44, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!46 = distinct !{!46, !44, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!47 = distinct !{!47, !39, !40, !41}
-!48 = distinct !{!48, !39, !40, !41}
-!49 = distinct !{!49, !39, !40}
-!50 = !{!45}
+!39 = !{!16, !16, i64 0}
+!40 = !{!"llvm.loop.mustprogress"}
+!41 = !{!"llvm.loop.isvectorized", i32 1}
+!42 = !{!"llvm.loop.unroll.runtime.disable"}
+!43 = !{!"branch_weights", i32 4, i32 12}
+!44 = !{!12, !12, i64 0}
+!45 = distinct !{!45, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_"}
+!46 = distinct !{!46, !45, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!47 = distinct !{!47, !45, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!48 = distinct !{!48, !40, !41, !42}
+!49 = distinct !{!49, !40, !41, !42}
+!50 = distinct !{!50, !40, !41}
 !51 = !{!46}
-!52 = distinct !{!52, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_"}
-!53 = distinct !{!53, !52, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!54 = distinct !{!54, !52, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!55 = distinct !{!55, !39, !40, !41}
-!56 = distinct !{!56, !39, !40, !41}
-!57 = distinct !{!57, !39, !40}
-!58 = !{!53}
+!52 = !{!47}
+!53 = distinct !{!53, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_"}
+!54 = distinct !{!54, !53, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!55 = distinct !{!55, !53, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!56 = distinct !{!56, !40, !41, !42}
+!57 = distinct !{!57, !40, !41, !42}
+!58 = distinct !{!58, !40, !41}
 !59 = !{!54}
+!60 = !{!55}
 end_hunk_2

@@ -205,8 +205,8 @@ bb.a:
 
 _ZN5boost13re_detail_60020named_subexpressions4nameC2IcEEPKT_S6_i.exit: ; preds = %bb.a, %._crit_edge.loopexit.i.i
   %.0.lcssa.i.i = phi i64 [ 4611686018427387904, %bb.a ], [ %i.ah, %._crit_edge.loopexit.i.i ] ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !346 ; 5 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !346 ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !142
   %.not.i.i4 = icmp eq ptr %i.aj, %i.al
@@ -215,9 +215,8 @@ _ZN5boost13re_detail_60020named_subexpressions4nameC2IcEEPKT_S6_i.exit: ; preds 
 bb.b:                                             ; preds = %_ZN5boost13re_detail_60020named_subexpressions4nameC2IcEEPKT_S6_i.exit
   %.sroa.0.0.insert.ext = zext i32 %3 to i64
   %.sroa.0.0.insert.insert = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext
-  store i64 %.sroa.0.0.insert.insert, ptr %i.aj, align 4
-  %4 = load ptr, ptr %i.ai, align 8, !tbaa !346
-  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store i64 %.sroa.0.0.insert.insert, ptr %i.aj, align 4, !tbaa !86
+  %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
   store ptr %i.am, ptr %i.ai, align 8, !tbaa !346
   %.pre = load ptr, ptr %0, align 8, !tbaa !347
   br label %_ZNSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE9push_backEOS3_.exit
@@ -248,7 +247,7 @@ _ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_che
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.aq
   %.sroa.0.0.insert.ext6 = zext i32 %3 to i64
   %.sroa.0.0.insert.insert8 = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext6
-  store i64 %.sroa.0.0.insert.insert8, ptr %i.az, align 4
+  store i64 %.sroa.0.0.insert.insert8, ptr %i.az, align 4, !tbaa !86
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.an, %i.aj
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -257,8 +256,8 @@ _ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_che
   %.0911.i.i.i.i.i.i = phi ptr [ %i.bb, %.lr.ph.i.i.i.i.i.i ], [ %i.an, %_ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1002)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1003)
-  %i.ba = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !1003, !noalias !1002
-  store i64 %i.ba, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !1002, !noalias !1003
+  %i.ba = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !86, !alias.scope !1003, !noalias !1002
+  store i64 %i.ba, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !86, !alias.scope !1002, !noalias !1003
   %i.bb = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.bb, %i.aj
@@ -661,8 +660,8 @@ bb.a:
 
 _ZN5boost13re_detail_60020named_subexpressions4nameC2IwEEPKT_S6_i.exit: ; preds = %bb.a, %._crit_edge.loopexit.i.i
   %.0.lcssa.i.i = phi i64 [ 4611686018427387904, %bb.a ], [ %i.l, %._crit_edge.loopexit.i.i ] ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !346  ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !346  ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !142
   %.not.i.i4 = icmp eq ptr %i.n, %i.p
@@ -671,9 +670,8 @@ _ZN5boost13re_detail_60020named_subexpressions4nameC2IwEEPKT_S6_i.exit: ; preds 
 bb.b:                                             ; preds = %_ZN5boost13re_detail_60020named_subexpressions4nameC2IwEEPKT_S6_i.exit
   %.sroa.0.0.insert.ext = zext i32 %3 to i64
   %.sroa.0.0.insert.insert = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext
-  store i64 %.sroa.0.0.insert.insert, ptr %i.n, align 4
-  %4 = load ptr, ptr %i.m, align 8, !tbaa !346
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store i64 %.sroa.0.0.insert.insert, ptr %i.n, align 4, !tbaa !86
+  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 2 uses
   store ptr %i.q, ptr %i.m, align 8, !tbaa !346
   %.pre = load ptr, ptr %0, align 8, !tbaa !347
   br label %_ZNSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE9push_backEOS3_.exit
@@ -704,7 +702,7 @@ _ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_che
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.u
   %.sroa.0.0.insert.ext6 = zext i32 %3 to i64
   %.sroa.0.0.insert.insert8 = or i64 %.0.lcssa.i.i, %.sroa.0.0.insert.ext6
-  store i64 %.sroa.0.0.insert.insert8, ptr %i.ad, align 4
+  store i64 %.sroa.0.0.insert.insert8, ptr %i.ad, align 4, !tbaa !86
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.r, %i.n
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -713,8 +711,8 @@ _ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_che
   %.0911.i.i.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i.i.i ], [ %i.r, %_ZNKSt6vectorIN5boost13re_detail_60020named_subexpressions4nameESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1448)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1449)
-  %i.ae = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !alias.scope !1449, !noalias !1448
-  store i64 %i.ae, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !1448, !noalias !1449
+  %i.ae = load i64, ptr %.0911.i.i.i.i.i.i, align 4, !tbaa !86, !alias.scope !1449, !noalias !1448
+  store i64 %i.ae, ptr %.012.i.i.i.i.i.i, align 4, !tbaa !86, !alias.scope !1448, !noalias !1449
   %i.af = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.af, %i.n

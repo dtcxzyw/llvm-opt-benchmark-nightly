@@ -205,18 +205,17 @@ declare noundef nonnull align 8 dereferenceable(24) ptr @_ZN18llama_batch_allocr
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN13llama_context9swap_infoESaIS1_EE9push_backEOS1_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(8) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !410  ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !410  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !345
   %.not.i = icmp eq ptr %i.b, %i.d
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load i64, ptr %1, align 4
-  store i64 %i.e, ptr %i.b, align 4
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !410
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.e = load i64, ptr %1, align 4, !tbaa !199
+  store i64 %i.e, ptr %i.b, align 4, !tbaa !199
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.f, ptr %i.a, align 8, !tbaa !410
   br label %_ZNSt6vectorIN13llama_context9swap_infoESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit
 
@@ -244,8 +243,8 @@ _ZNKSt6vectorIN13llama_context9swap_infoESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ;
   %i.q = shl nuw nsw i64 %i.p, 3
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #31 ; 4 uses
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 %i.j ; 2 uses
-  %i.t = load i64, ptr %1, align 4
-  store i64 %i.t, ptr %i.s, align 4
+  %i.t = load i64, ptr %1, align 4, !tbaa !199
+  store i64 %i.t, ptr %i.s, align 4, !tbaa !199
   %i.u = icmp sgt i64 %i.j, 0
   br i1 %i.u, label %bb.e, label %_ZNSt6vectorIN13llama_context9swap_infoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
 

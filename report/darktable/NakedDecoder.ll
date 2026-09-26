@@ -202,10 +202,10 @@ bb.a:
   tail call void @_ZN8rawspeed12NakedDecoder10parseHintsEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !86
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !86   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  store i64 %i.b, ptr %i.e, align 8
+  store i64 %i.b, ptr %i.e, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.g = load i32, ptr %i.f, align 8, !tbaa !55   ; 3 uses
@@ -233,8 +233,7 @@ _ZNK8rawspeed6Buffer10getSubViewEj.exit:          ; preds = %bb.a
   store i64 %.sroa.2.8.insert.insert, ptr %.sroa.2.0..0..sroa_idx.i6, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i32 0, ptr %i.p, align 8, !tbaa !92
-  %6 = load ptr, ptr %i.c, align 8, !tbaa !86     ; 3 uses
-  store ptr %6, ptr %4, align 8, !tbaa !86
+  store ptr %i.d, ptr %4, align 8, !tbaa !86
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !63   ; 3 uses
@@ -260,13 +259,13 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN8rawspeed8RawImageC2ERKS0_.exit
 
 _ZN8rawspeed8RawImageC2ERKS0_.exit:               ; preds = %_ZNK8rawspeed6Buffer10getSubViewEj.exit, %bb.d, %bb.e
-  %i.y = phi ptr [ %6, %_ZNK8rawspeed6Buffer10getSubViewEj.exit ], [ %6, %bb.d ], [ %.pre, %bb.e ]
+  %i.y = phi ptr [ %i.d, %_ZNK8rawspeed6Buffer10getSubViewEj.exit ], [ %i.d, %bb.d ], [ %.pre, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 40
-  store i64 0, ptr %5, align 8
+  store i64 0, ptr %5, align 8, !tbaa !60
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.ab = load i64, ptr %i.z, align 4
-  store i64 %i.ab, ptr %i.aa, align 8
+  %i.ab = load i64, ptr %i.z, align 4, !tbaa !60
+  store i64 %i.ab, ptr %i.aa, align 8, !tbaa !60
   %i.ac = load i32, ptr %i.a, align 8, !tbaa !54
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 116
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !56 ; 2 uses

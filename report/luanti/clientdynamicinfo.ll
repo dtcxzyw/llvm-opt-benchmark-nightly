@@ -95,11 +95,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %bb.
   %i.x = load ptr, ptr @g_touchcontrols, align 8, !tbaa !23
   %i.y = icmp ne ptr %i.x, null
   %i.z = zext i1 %i.y to i8
-  store i64 %i.b, ptr %0, align 4
+  store i64 %i.b, ptr %0, align 4, !tbaa !24
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store float %i.v, ptr %i.aa, align 4, !tbaa !29
+  store float %i.v, ptr %i.aa, align 4, !tbaa !30
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store float %i.w, ptr %i.ab, align 4, !tbaa !30
+  store float %i.w, ptr %i.ab, align 4, !tbaa !31
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.3.0.extract.shift.i = lshr i64 %i.b, 32
   %i.ad = fmul nsz float %i.c, 9.600000e+01
@@ -118,7 +118,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %bb.
   %i.ao = fptrunc <2 x double> %i.an to <2 x float>
   store <2 x float> %i.ao, ptr %i.ac, align 4
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 %i.z, ptr %i.ap, align 4, !tbaa !31
+  store i8 %i.z, ptr %i.ap, align 4, !tbaa !32
   ret void
 
 bb.e:                                             ; preds = %_ZN15RenderingEngine13getWindowSizeEv.exit
@@ -243,12 +243,13 @@ attributes #7 = { builtin nounwind }
 !21 = !{!18, !14, i64 0}
 !22 = !{!"p1 _ZTS13TouchControls", !9, i64 0}
 !23 = !{!22, !22, i64 0}
-!24 = !{!"_ZTSN4core8vector2dIjEE", !6, i64 0, !6, i64 4}
-!25 = !{!"float", !5, i64 0}
-!26 = !{!"_ZTSN4core8vector2dIfEE", !25, i64 0, !25, i64 4}
-!27 = !{!"bool", !5, i64 0}
-!28 = !{!"_ZTS17ClientDynamicInfo", !24, i64 0, !25, i64 8, !25, i64 12, !26, i64 16, !27, i64 24}
-!29 = !{!28, !25, i64 8}
-!30 = !{!28, !25, i64 12}
-!31 = !{!28, !27, i64 24}
+!24 = !{!6, !6, i64 0}
+!25 = !{!"_ZTSN4core8vector2dIjEE", !6, i64 0, !6, i64 4}
+!26 = !{!"float", !5, i64 0}
+!27 = !{!"_ZTSN4core8vector2dIfEE", !26, i64 0, !26, i64 4}
+!28 = !{!"bool", !5, i64 0}
+!29 = !{!"_ZTS17ClientDynamicInfo", !25, i64 0, !26, i64 8, !26, i64 12, !27, i64 16, !28, i64 24}
+!30 = !{!29, !26, i64 8}
+!31 = !{!29, !26, i64 12}
+!32 = !{!29, !28, i64 24}
 end_hunk_0

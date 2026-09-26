@@ -204,7 +204,7 @@ _ZN6duckdb14MetadataHandleC2Ev.exit:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %2, ptr %i.d, align 8, !tbaa !54
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 %3, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !24
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i8 1, ptr %i.e, align 8, !tbaa !160
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -254,7 +254,7 @@ _ZN6duckdb15MetadataManager16FromBlockPointerENS_12BlockPointerEm.exit: ; preds 
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %.sroa.05.0.i, ptr %i.q, align 8, !tbaa !54
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 %.sroa.4.0.i, ptr %.sroa.2.0..sroa_idx.i, align 8
+  store i64 %.sroa.4.0.i, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !24
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i8 1, ptr %i.r, align 8, !tbaa !160
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -604,7 +604,7 @@ _ZNSt6vectorIN6duckdb16MetaBlockPointerESaIS1_EE9push_backERKS1_.exit: ; preds =
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.ak, align 8, !tbaa !54 ; 4 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !24 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.am = load i32, ptr %i.al, align 8, !tbaa !159
   %i.an = icmp eq i32 %i.am, 0
@@ -1007,8 +1007,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.bl = load ptr, ptr %i.bj, align 8, !tbaa !167 ; 4 uses
   %i.bm = load i64, ptr %i.af, align 8            ; 2 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 8 ; 4 uses
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !169 ; 6 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 8 ; 3 uses
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !169 ; 7 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 16 ; 2 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !170
   %.not.i.i = icmp eq ptr %i.bo, %i.bq
@@ -1017,9 +1017,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   store i64 %i.bm, ptr %i.bo, align 8, !tbaa !54
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
-  store i64 0, ptr %.sroa.6.0..sroa_idx, align 8
-  %2 = load ptr, ptr %i.bn, align 8, !tbaa !169
-  %i.br = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i64 0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !24
+  %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   store ptr %i.br, ptr %i.bn, align 8, !tbaa !169
   br label %_ZNSt6vectorIN6duckdb16MetaBlockPointerESaIS1_EE9push_backEOS1_.exit
 
@@ -1055,7 +1054,7 @@ _ZNKSt6vectorIN6duckdb16MetaBlockPointerESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i:
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 %i.bv ; 2 uses
   store i64 %i.bm, ptr %i.ce, align 8, !tbaa !54
   %.sroa.6.0..sroa_idx18 = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
-  store i64 0, ptr %.sroa.6.0..sroa_idx18, align 8
+  store i64 0, ptr %.sroa.6.0..sroa_idx18, align 8, !tbaa !24
   %.not10.i.i.i.i.i.i.i = icmp eq ptr %i.bs, %i.bo
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb16MetaBlockPointerESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
@@ -1136,8 +1135,8 @@ bb.c:                                             ; preds = %bb.b
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !167  ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.i = load i64, ptr %i.h, align 8              ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 4 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !169  ; 6 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !169  ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !170
   %.not.i.i = icmp eq ptr %i.k, %i.m
@@ -1146,9 +1145,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   store i64 %i.i, ptr %i.k, align 8, !tbaa !54
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
-  %2 = load ptr, ptr %i.j, align 8, !tbaa !169
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i64 0, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !24
+  %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   store ptr %i.n, ptr %i.j, align 8, !tbaa !169
   br label %_ZNSt6vectorIN6duckdb16MetaBlockPointerESaIS1_EE9push_backEOS1_.exit
 
@@ -1178,7 +1176,7 @@ _ZNKSt6vectorIN6duckdb16MetaBlockPointerESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i:
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.r ; 2 uses
   store i64 %i.i, ptr %i.aa, align 8, !tbaa !54
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store i64 0, ptr %.sroa.5.0..sroa_idx2, align 8
+  store i64 0, ptr %.sroa.5.0..sroa_idx2, align 8, !tbaa !24
   %.not10.i.i.i.i.i.i.i = icmp eq ptr %i.o, %i.k
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb16MetaBlockPointerESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 

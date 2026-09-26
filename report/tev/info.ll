@@ -150,12 +150,12 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %2, ptr %i.c, align 4, !tbaa !15
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load i16, ptr %3, align 1                ; 2 uses
-  store i16 %i.e, ptr %i.d, align 4
+  %i.e = load i16, ptr %3, align 1, !tbaa !16     ; 2 uses
+  store i16 %i.e, ptr %i.d, align 4, !tbaa !16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %i.a, ptr %i.f, align 2, !tbaa !16
+  store i8 %i.a, ptr %i.f, align 2, !tbaa !17
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %i.b, ptr %i.g, align 1, !tbaa !17
+  store i8 %i.b, ptr %i.g, align 1, !tbaa !18
   %i.h = or i32 %2, %1
   %or.cond.not = icmp sgt i32 %i.h, -1
   br i1 %or.cond.not, label %bb.e, label %bb.b
@@ -234,6 +234,7 @@ attributes #8 = { noreturn }
 !13 = !{!"_ZTSN3rle10image_infoE", !6, i64 0, !6, i64 4, !9, i64 8, !12, i64 10, !12, i64 11}
 !14 = !{!13, !6, i64 0}
 !15 = !{!13, !6, i64 4}
-!16 = !{!13, !12, i64 10}
-!17 = !{!13, !12, i64 11}
+!16 = !{!5, !5, i64 0}
+!17 = !{!13, !12, i64 10}
+!18 = !{!13, !12, i64 11}
 end_hunk_0

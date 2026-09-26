@@ -202,7 +202,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = ptrtoint ptr %2 to i64                   ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
   br label %bb.b
 
@@ -389,17 +389,16 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.3.0.insert.ext.i = zext i32 %.049260 to i64
   %.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.3.0.insert.ext.i, 32
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.3.0.insert.shift.i, 4294967295 ; 2 uses
-  %i.bl = load ptr, ptr %i.e, align 8, !tbaa !36  ; 6 uses
+  %i.bl = load ptr, ptr %i.e, align 8, !tbaa !36  ; 7 uses
   %i.bm = load ptr, ptr %i.f, align 8, !tbaa !37
   %.not.i.i = icmp eq ptr %i.bl, %i.bm
   br i1 %.not.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.bl, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.bl, align 4, !tbaa !38
   %.sroa.6190.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   store i32 %i.bk, ptr %.sroa.6190.0..sroa_idx, align 4, !tbaa !38
-  %18 = load ptr, ptr %i.e, align 8, !tbaa !36
-  %i.bn = getelementptr inbounds nuw i8, ptr %18, i64 12
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 12
   store ptr %i.bn, ptr %i.e, align 8, !tbaa !36
   br label %_ZNSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE9push_backEOS4_.exit
 
@@ -433,7 +432,7 @@ _ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_le
 
 .noexc106:                                        ; preds = %_ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.br ; 2 uses
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.ca, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.ca, align 4, !tbaa !38
   %.sroa.6190.0..sroa_idx191 = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i32 %i.bk, ptr %.sroa.6190.0..sroa_idx191, align 4, !tbaa !38
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.bo, %i.bl
@@ -816,17 +815,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %bb
 bb.be:                                            ; preds = %bb.av
   %i.fz = add nsw i32 %.0199206, -1
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.fz to i64 ; 2 uses
-  %i.ga = load ptr, ptr %i.e, align 8, !tbaa !36  ; 6 uses
+  %i.ga = load ptr, ptr %i.e, align 8, !tbaa !36  ; 7 uses
   %i.gb = load ptr, ptr %i.f, align 8, !tbaa !37
   %.not.i.i118 = icmp eq ptr %i.ga, %i.gb
   br i1 %.not.i.i118, label %bb.bg, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
-  store i64 %.sroa.0.0.insert.ext.i, ptr %i.ga, align 4
+  store i64 %.sroa.0.0.insert.ext.i, ptr %i.ga, align 4, !tbaa !38
   %.sroa.6174.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
   store i32 0, ptr %.sroa.6174.0..sroa_idx, align 4, !tbaa !38
-  %19 = load ptr, ptr %i.e, align 8, !tbaa !36
-  %i.gc = getelementptr inbounds nuw i8, ptr %19, i64 12
+  %i.gc = getelementptr inbounds nuw i8, ptr %i.ga, i64 12
   store ptr %i.gc, ptr %i.e, align 8, !tbaa !36
   br label %_ZNSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE9push_backEOS4_.exit133
 
@@ -860,7 +858,7 @@ _ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_le
 
 .noexc132:                                        ; preds = %_ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i119
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 %i.gg ; 2 uses
-  store i64 %.sroa.0.0.insert.ext.i, ptr %i.gp, align 4
+  store i64 %.sroa.0.0.insert.ext.i, ptr %i.gp, align 4, !tbaa !38
   %.sroa.6174.0..sroa_idx175 = getelementptr inbounds nuw i8, ptr %i.gp, i64 8
   store i32 0, ptr %.sroa.6174.0..sroa_idx175, align 4, !tbaa !38
   %.not10.i.i.i.i.i.i122 = icmp eq ptr %i.gd, %i.ga
@@ -1051,19 +1049,18 @@ bb.bv:                                            ; preds = %._crit_edge
   %.sroa.3.0.insert.ext.i145 = zext i32 %.3329 to i64
   %.sroa.3.0.insert.shift.i146 = shl nuw i64 %.sroa.3.0.insert.ext.i145, 32
   %.sroa.0.0.insert.insert.i147 = or disjoint i64 %.sroa.3.0.insert.shift.i146, 4294967295 ; 2 uses
-  %i.if = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %i.ig = load ptr, ptr %i.if, align 8, !tbaa !36 ; 6 uses
+  %i.if = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.ig = load ptr, ptr %i.if, align 8, !tbaa !36 ; 7 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !37
   %.not.i.i150 = icmp eq ptr %i.ig, %i.ii
   br i1 %.not.i.i150, label %bb.bx, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  store i64 %.sroa.0.0.insert.insert.i147, ptr %i.ig, align 4
+  store i64 %.sroa.0.0.insert.insert.i147, ptr %i.ig, align 4, !tbaa !38
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ig, i64 8
   store i32 %i.ie, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !38
-  %20 = load ptr, ptr %i.if, align 8, !tbaa !36
-  %i.ij = getelementptr inbounds nuw i8, ptr %20, i64 12
+  %i.ij = getelementptr inbounds nuw i8, ptr %i.ig, i64 12
   store ptr %i.ij, ptr %i.if, align 8, !tbaa !36
   br label %_ZNSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE9push_backEOS4_.exit165
 
@@ -1097,7 +1094,7 @@ _ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_le
 
 .noexc164:                                        ; preds = %_ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i151
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iv, i64 %i.in ; 2 uses
-  store i64 %.sroa.0.0.insert.insert.i147, ptr %i.iw, align 4
+  store i64 %.sroa.0.0.insert.insert.i147, ptr %i.iw, align 4, !tbaa !38
   %.sroa.6.0..sroa_idx168 = getelementptr inbounds nuw i8, ptr %i.iw, i64 8
   store i32 %i.ie, ptr %.sroa.6.0..sroa_idx168, align 4, !tbaa !38
   %.not10.i.i.i.i.i.i154 = icmp eq ptr %i.ik, %i.ig
@@ -1322,7 +1319,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = ptrtoint ptr %2 to i64                   ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
   br label %bb.b
 
@@ -1510,17 +1507,16 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.3.0.insert.ext.i = zext i32 %.048257 to i64
   %.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.3.0.insert.ext.i, 32
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.3.0.insert.shift.i, 4294967295 ; 2 uses
-  %i.bl = load ptr, ptr %i.e, align 8, !tbaa !36  ; 6 uses
+  %i.bl = load ptr, ptr %i.e, align 8, !tbaa !36  ; 7 uses
   %i.bm = load ptr, ptr %i.f, align 8, !tbaa !37
   %.not.i.i = icmp eq ptr %i.bl, %i.bm
   br i1 %.not.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.bl, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.bl, align 4, !tbaa !38
   %.sroa.6187.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   store i32 %i.bk, ptr %.sroa.6187.0..sroa_idx, align 4, !tbaa !38
-  %18 = load ptr, ptr %i.e, align 8, !tbaa !36
-  %i.bn = getelementptr inbounds nuw i8, ptr %18, i64 12
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 12
   store ptr %i.bn, ptr %i.e, align 8, !tbaa !36
   br label %bb.w
 
@@ -1554,7 +1550,7 @@ _ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_le
 
 .noexc105:                                        ; preds = %_ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.br ; 2 uses
-  store i64 %.sroa.0.0.insert.insert.i, ptr %i.ca, align 4
+  store i64 %.sroa.0.0.insert.insert.i, ptr %i.ca, align 4, !tbaa !38
   %.sroa.6187.0..sroa_idx188 = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i32 %i.bk, ptr %.sroa.6187.0..sroa_idx188, align 4, !tbaa !38
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.bo, %i.bl
@@ -1921,17 +1917,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit112: ; preds = %bb
 bb.bf:                                            ; preds = %bb.aw
   %i.fn = add nsw i32 %.0196207, -1
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.fn to i64 ; 2 uses
-  %i.fo = load ptr, ptr %i.e, align 8, !tbaa !36  ; 6 uses
+  %i.fo = load ptr, ptr %i.e, align 8, !tbaa !36  ; 7 uses
   %i.fp = load ptr, ptr %i.f, align 8, !tbaa !37
   %.not.i.i115 = icmp eq ptr %i.fo, %i.fp
   br i1 %.not.i.i115, label %bb.bh, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  store i64 %.sroa.0.0.insert.ext.i, ptr %i.fo, align 4
+  store i64 %.sroa.0.0.insert.ext.i, ptr %i.fo, align 4, !tbaa !38
   %.sroa.6171.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
   store i32 0, ptr %.sroa.6171.0..sroa_idx, align 4, !tbaa !38
-  %19 = load ptr, ptr %i.e, align 8, !tbaa !36
-  %i.fq = getelementptr inbounds nuw i8, ptr %19, i64 12
+  %i.fq = getelementptr inbounds nuw i8, ptr %i.fo, i64 12
   store ptr %i.fq, ptr %i.e, align 8, !tbaa !36
   br label %_ZNSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE9push_backEOS4_.exit130
 
@@ -1965,7 +1960,7 @@ _ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_le
 
 .noexc129:                                        ; preds = %_ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i116
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 %i.fu ; 2 uses
-  store i64 %.sroa.0.0.insert.ext.i, ptr %i.gd, align 4
+  store i64 %.sroa.0.0.insert.ext.i, ptr %i.gd, align 4, !tbaa !38
   %.sroa.6171.0..sroa_idx172 = getelementptr inbounds nuw i8, ptr %i.gd, i64 8
   store i32 0, ptr %.sroa.6171.0..sroa_idx172, align 4, !tbaa !38
   %.not10.i.i.i.i.i.i119 = icmp eq ptr %i.fr, %i.fo
@@ -2156,19 +2151,18 @@ bb.bw:                                            ; preds = %._crit_edge
   %.sroa.3.0.insert.ext.i142 = zext i32 %.3329 to i64
   %.sroa.3.0.insert.shift.i143 = shl nuw i64 %.sroa.3.0.insert.ext.i142, 32
   %.sroa.0.0.insert.insert.i144 = or disjoint i64 %.sroa.3.0.insert.shift.i143, 4294967295 ; 2 uses
-  %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !36 ; 6 uses
+  %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !36 ; 7 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !37
   %.not.i.i147 = icmp eq ptr %i.hu, %i.hw
   br i1 %.not.i.i147, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  store i64 %.sroa.0.0.insert.insert.i144, ptr %i.hu, align 4
+  store i64 %.sroa.0.0.insert.insert.i144, ptr %i.hu, align 4, !tbaa !38
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 8
   store i32 %i.hs, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !38
-  %20 = load ptr, ptr %i.ht, align 8, !tbaa !36
-  %i.hx = getelementptr inbounds nuw i8, ptr %20, i64 12
+  %i.hx = getelementptr inbounds nuw i8, ptr %i.hu, i64 12
   store ptr %i.hx, ptr %i.ht, align 8, !tbaa !36
   br label %_ZNSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE9push_backEOS4_.exit162
 
@@ -2202,7 +2196,7 @@ _ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_le
 
 .noexc161:                                        ; preds = %_ZNKSt6vectorIN5boost3log11v2_mt_posix3aux14format_elementESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i148
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 %i.ib ; 2 uses
-  store i64 %.sroa.0.0.insert.insert.i144, ptr %i.ik, align 4
+  store i64 %.sroa.0.0.insert.insert.i144, ptr %i.ik, align 4, !tbaa !38
   %.sroa.6.0..sroa_idx165 = getelementptr inbounds nuw i8, ptr %i.ik, i64 8
   store i32 %i.hs, ptr %.sroa.6.0..sroa_idx165, align 4, !tbaa !38
   %.not10.i.i.i.i.i.i151 = icmp eq ptr %i.hy, %i.hu

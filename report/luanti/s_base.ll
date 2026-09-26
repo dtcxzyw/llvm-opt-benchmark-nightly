@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
   call void @lua_pushstring(ptr noundef %1, ptr noundef %i.aa)
   call void @lua_setfield(ptr noundef %1, i32 noundef -2, ptr noundef nonnull @.str.51)
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %.sroa.0.0.copyload = load i48, ptr %i.ab, align 8
+  %.sroa.0.0.copyload = load i48, ptr %i.ab, align 8, !tbaa !149
   call void @_Z10push_v3s16P9lua_StateN4core8vector3dIsEE(ptr noundef %1, i48 %.sroa.0.0.copyload)
   call void @lua_setfield(ptr noundef %1, i32 noundef -2, ptr noundef nonnull @.str.52)
   br label %bb.l
@@ -605,4 +605,5 @@ attributes #26 = { nounwind willreturn memory(none) }
 !146 = !{!143, !141, i64 0}
 !147 = !{!143, !60, i64 1}
 !148 = !{!143, !142, i64 8}
+!149 = !{!12, !12, i64 0}
 end_hunk_1
