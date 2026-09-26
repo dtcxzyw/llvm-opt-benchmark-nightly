@@ -204,8 +204,9 @@ define internal range(i32 0, 4) i32 @test_ForceZero() #0 {
 
 .preheader156:                                    ; preds = %._crit_edge.i, %._crit_edge
   %indvars.iv178 = phi i64 [ 0, %._crit_edge.i ], [ %indvars.iv.next179, %._crit_edge ] ; 9 uses
-  %indvars.iv175 = phi i64 [ 32, %._crit_edge.i ], [ %indvars.iv.next176, %._crit_edge ] ; 4 uses
+  %indvars.iv175 = phi i64 [ 32, %._crit_edge.i ], [ %indvars.iv.next176, %._crit_edge ] ; 2 uses
   %.090166 = phi i32 [ 3, %._crit_edge.i ], [ %.191.lcssa, %._crit_edge ] ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %indvars.iv175, i64 2) ; 3 uses
   %i.d = icmp samesign ult i64 %indvars.iv178, 31
   br i1 %i.d, label %.preheader.lr.ph, label %._crit_edge
 
@@ -418,7 +419,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %.thread.jt0.preheader
   %indvars.iv.next173.jt0.peel = add nuw nsw i64 %indvars.iv172192.ph221, 1 ; 7 uses
-  %exitcond177.not.jt0.peel = icmp eq i64 %indvars.iv.next173.jt0.peel, %indvars.iv175
+  %exitcond177.not.jt0.peel = icmp eq i64 %indvars.iv.next173.jt0.peel, %umax
   br i1 %exitcond177.not.jt0.peel, label %._crit_edge, label %.preheader.jt0.peel, !llvm.loop !161
 
 .preheader.jt0.peel:                              ; preds = %bb.j
@@ -478,12 +479,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %.thread
   %indvars.iv.next173 = add nuw nsw i64 %indvars.iv172188, 1 ; 2 uses
-  %exitcond177.not = icmp eq i64 %indvars.iv.next173, %indvars.iv175
+  %exitcond177.not = icmp eq i64 %indvars.iv.next173, %umax
   br i1 %exitcond177.not, label %._crit_edge, label %.preheader, !llvm.loop !161
 
 bb.o:                                             ; preds = %.thread.jt0
   %indvars.iv.next173.jt0 = add nuw nsw i64 %indvars.iv172192, 1 ; 7 uses
-  %exitcond177.not.jt0 = icmp eq i64 %indvars.iv.next173.jt0, %indvars.iv175
+  %exitcond177.not.jt0 = icmp eq i64 %indvars.iv.next173.jt0, %umax
   br i1 %exitcond177.not.jt0, label %._crit_edge, label %.preheader.jt0, !llvm.loop !161
 
 ._crit_edge:                                      ; preds = %bb.n, %bb.o, %bb.j, %.preheader156
@@ -884,6 +885,9 @@ declare i16 @llvm.bswap.i16(i16) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #23
