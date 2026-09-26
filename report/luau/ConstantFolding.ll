@@ -204,7 +204,7 @@ define internal fastcc void @_ZN4Luau7CompileL10foldBinaryERNS0_8ConstantENS_13A
 bb.a:
   %i.a = ptrtoaddr ptr %3 to i64                  ; 8 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 8 uses
-  %i.c = ptrtoaddr ptr %0 to i64                  ; 12 uses
+  %i.c = ptrtoaddr ptr %0 to i64                  ; 16 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   switch i32 %1, label %.thread629 [
     i32 0, label %bb.b
@@ -607,16 +607,15 @@ bb.am:                                            ; preds = %bb.al
   br i1 %or.cond13, label %bb.an, label %.thread629
 
 bb.an:                                            ; preds = %bb.am
-  %6 = add nuw i64 %i.c, 24                       ; 2 uses
-  %i.li = add nuw i64 %i.b, 8
-  %i.lj = add nuw i64 %i.b, 20
-  %7 = add nuw i64 %i.a, 8
-  %i.lk = add nuw i64 %i.a, 20
-  %rt.bound0.a = icmp ugt i64 %i.lj, %i.c
-  %rt.bound1 = icmp ult i64 %i.li, %6
-  %rt.conflict = and i1 %rt.bound0.a, %rt.bound1
-  %rt.bound0656 = icmp ugt i64 %i.lk, %i.c
-  %rt.bound1657 = icmp ult i64 %7, %6
+  %i.li = add nuw i64 %i.b, 20
+  %i.lj = add nuw i64 %i.a, 20
+  %rt.bound0 = icmp ugt i64 %i.li, %i.c
+  %i.lk = add nuw i64 %i.c, 16
+  %rt.bound0.a = icmp ugt i64 %i.lk, %i.b
+  %rt.conflict = and i1 %rt.bound0, %rt.bound0.a
+  %rt.bound0656 = icmp ugt i64 %i.lj, %i.c
+  %6 = add nuw i64 %i.c, 16
+  %rt.bound1657 = icmp ugt i64 %6, %i.a
   %rt.conflict658 = and i1 %rt.bound0656, %rt.bound1657
   %rt.conflict.all = or i1 %rt.conflict, %rt.conflict658
   %rt.guard = freeze i1 %rt.conflict.all
@@ -639,16 +638,15 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %or.cond15, label %bb.aq, label %.thread629
 
 bb.aq:                                            ; preds = %bb.ap
-  %8 = add nuw i64 %i.c, 24                       ; 2 uses
-  %i.lt = add nuw i64 %i.b, 8
-  %i.lu = add nuw i64 %i.b, 16
-  %9 = add nuw i64 %i.a, 8
-  %i.lv = add nuw i64 %i.a, 20
-  %rt.bound0662.a = icmp ugt i64 %i.lu, %i.c
-  %rt.bound1663 = icmp ult i64 %i.lt, %8
-  %rt.conflict664 = and i1 %rt.bound0662.a, %rt.bound1663
-  %rt.bound0665 = icmp ugt i64 %i.lv, %i.c
-  %rt.bound1666 = icmp ult i64 %9, %8
+  %i.lt = add nuw i64 %i.b, 16
+  %i.lu = add nuw i64 %i.a, 20
+  %rt.bound0662 = icmp ugt i64 %i.lt, %i.c
+  %i.lv = add nuw i64 %i.c, 16
+  %rt.bound0662.a = icmp ugt i64 %i.lv, %i.b
+  %rt.conflict664 = and i1 %rt.bound0662, %rt.bound0662.a
+  %rt.bound0665 = icmp ugt i64 %i.lu, %i.c
+  %7 = add nuw i64 %i.c, 16
+  %rt.bound1666 = icmp ugt i64 %7, %i.a
   %rt.conflict667 = and i1 %rt.bound0665, %rt.bound1666
   %rt.conflict.all668 = or i1 %rt.conflict664, %rt.conflict667
   %rt.guard669 = freeze i1 %rt.conflict.all668
@@ -671,16 +669,15 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %or.cond17, label %bb.at, label %.thread629
 
 bb.at:                                            ; preds = %bb.as
-  %10 = add nuw i64 %i.c, 24                      ; 2 uses
-  %i.me = add nuw i64 %i.b, 8
-  %i.mf = add nuw i64 %i.b, 20
-  %11 = add nuw i64 %i.a, 8
-  %i.mg = add nuw i64 %i.a, 16
-  %rt.bound0673.a = icmp ugt i64 %i.mf, %i.c
-  %rt.bound1674 = icmp ult i64 %i.me, %10
-  %rt.conflict675 = and i1 %rt.bound0673.a, %rt.bound1674
-  %rt.bound0676 = icmp ugt i64 %i.mg, %i.c
-  %rt.bound1677 = icmp ult i64 %11, %10
+  %i.me = add nuw i64 %i.b, 20
+  %i.mf = add nuw i64 %i.a, 16
+  %rt.bound0673 = icmp ugt i64 %i.me, %i.c
+  %i.mg = add nuw i64 %i.c, 16
+  %rt.bound0673.a = icmp ugt i64 %i.mg, %i.b
+  %rt.conflict675 = and i1 %rt.bound0673, %rt.bound0673.a
+  %rt.bound0676 = icmp ugt i64 %i.mf, %i.c
+  %8 = add nuw i64 %i.c, 16
+  %rt.bound1677 = icmp ugt i64 %8, %i.a
   %rt.conflict678 = and i1 %rt.bound0676, %rt.bound1677
   %rt.conflict.all679 = or i1 %rt.conflict675, %rt.conflict678
   %rt.guard680 = freeze i1 %rt.conflict.all679
@@ -954,16 +951,15 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %or.cond29, label %bb.bp, label %.thread629
 
 bb.bp:                                            ; preds = %bb.bo
-  %12 = add nuw i64 %i.c, 24                      ; 2 uses
-  %i.so = add nuw i64 %i.b, 8
-  %i.sp = add nuw i64 %i.b, 24
-  %13 = add nuw i64 %i.a, 8
-  %i.sq = add nuw i64 %i.a, 16
-  %rt.bound0684.a = icmp ugt i64 %i.sp, %i.c
-  %rt.bound1685 = icmp ult i64 %i.so, %12
-  %rt.conflict686 = and i1 %rt.bound0684.a, %rt.bound1685
-  %rt.bound0687 = icmp ugt i64 %i.sq, %i.c
-  %rt.bound1688 = icmp ult i64 %13, %12
+  %i.so = add nuw i64 %i.b, 24
+  %i.sp = add nuw i64 %i.a, 16
+  %rt.bound0684 = icmp ugt i64 %i.so, %i.c
+  %i.sq = add nuw i64 %i.c, 16
+  %rt.bound0684.a = icmp ugt i64 %i.sq, %i.b
+  %rt.conflict686 = and i1 %rt.bound0684, %rt.bound0684.a
+  %rt.bound0687 = icmp ugt i64 %i.sp, %i.c
+  %9 = add nuw i64 %i.c, 16
+  %rt.bound1688 = icmp ugt i64 %9, %i.a
   %rt.conflict689 = and i1 %rt.bound0687, %rt.bound1688
   %rt.conflict.all690 = or i1 %rt.conflict686, %rt.conflict689
   %rt.guard691 = freeze i1 %rt.conflict.all690

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.f
   ret void
 
 bb.f:                                             ; preds = %bb.d, %bb.f
-  %indvars.iv = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.f ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.f ] ; 6 uses
   %gep = getelementptr [111 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.bh = load i8, ptr %gep, align 1, !tbaa !108
   %i.bi = sext i8 %i.bh to i32
@@ -227,16 +227,15 @@ bb.f:                                             ; preds = %bb.d, %bb.f
   %.0.i = select i1 %i.bw, i32 %i.bv, i32 %..i
   %i.bx = trunc i32 %.0.i to i8
   %i.by = add i8 %i.bt, %i.bx
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.next
   store i8 %i.by, ptr %i.bz, align 1, !tbaa !108
   %i.ca = load ptr, ptr %i.e, align 8, !tbaa !111
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 15501
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !213
   %i.cd = zext i8 %i.cc to i64
-  %1 = add nuw nsw i64 %i.cd, 2
-  %2 = icmp samesign ult i64 %indvars.iv.next, %1
-  br i1 %2, label %bb.f, label %bb.e, !llvm.loop !377
+  %.not = icmp samesign ugt i64 %indvars.iv, %i.cd
+  br i1 %.not, label %bb.e, label %bb.f, !llvm.loop !377
 }
 
 declare ptr @av_refstruct_pool_get(ptr noundef) local_unnamed_addr #2

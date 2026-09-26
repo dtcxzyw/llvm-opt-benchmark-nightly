@@ -202,12 +202,11 @@ define void @_ZN3gmx8MttkDataC2ERKS0_(ptr noundef nonnull align 8 dereferenceabl
 ._crit_edge.i.i:
   %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.c = add nuw i64 %i.b, 145
-  %2 = add nuw i64 %i.a, 8
-  %i.d = add nuw i64 %i.a, 120
-  %rt.bound0.a = icmp ugt i64 %i.d, %i.b
-  %rt.bound1 = icmp ult i64 %2, %i.c
-  %rt.conflict = and i1 %rt.bound0.a, %rt.bound1
+  %i.c = add nuw i64 %i.a, 120
+  %rt.bound0 = icmp ugt i64 %i.c, %i.b
+  %i.d = add nuw i64 %i.b, 137
+  %rt.bound0.a = icmp ugt i64 %i.d, %i.a
+  %rt.conflict = and i1 %rt.bound0, %rt.bound0.a
   %rt.guard = freeze i1 %rt.conflict
   br i1 %rt.guard, label %._crit_edge.i.i.rtscalar, label %._crit_edge.i.i.rtvec, !prof !414
 

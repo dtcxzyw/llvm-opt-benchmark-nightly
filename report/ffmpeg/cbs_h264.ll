@@ -204,7 +204,7 @@ bb.gc:                                            ; preds = %bb.ga
   br label %bb.gd
 
 bb.gd:                                            ; preds = %bb.gj, %.preheader.i98
-  %indvars.iv469.i = phi i64 [ 0, %.preheader.i98 ], [ %indvars.iv.next470.i, %bb.gj ] ; 6 uses
+  %indvars.iv469.i = phi i64 [ 0, %.preheader.i98 ], [ %indvars.iv.next470.i, %bb.gj ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bl) #8
   store i32 1, ptr %i.bm, align 4, !tbaa !31
   %i.yg = trunc nuw nsw i64 %indvars.iv469.i to i32
@@ -244,15 +244,15 @@ bb.gi:                                            ; preds = %bb.gg
   br i1 %i.yt, label %cbs_h264_read_pps.exit.thread, label %bb.gj
 
 bb.gj:                                            ; preds = %bb.gi, %bb.gh, %bb.gf
-  %indvars.iv.next470.i = add nuw nsw i64 %indvars.iv469.i, 1 ; 2 uses
+  %indvars.iv.next470.i = add nuw nsw i64 %indvars.iv469.i, 1
   %i.yu = load i8, ptr %i.yc, align 2, !tbaa !47
   %.not347.i = icmp eq i8 %i.yu, 3
   %i.yv = select i1 %.not347.i, i64 6, i64 2
   %i.yw = load i8, ptr %i.xw, align 1, !tbaa !111
   %i.yx = zext i8 %i.yw to i64
   %i.yy = mul nuw nsw i64 %i.yv, %i.yx
-  %i.yz = add nuw nsw i64 %i.yy, 6
-  %i.za = icmp samesign ult i64 %indvars.iv.next470.i, %i.yz
+  %i.yz = add nuw nsw i64 %i.yy, 5
+  %i.za = icmp samesign ult i64 %indvars.iv469.i, %i.yz
   br i1 %i.za, label %bb.gd, label %.loopexit.i99, !llvm.loop !313
 
 .loopexit.i99:                                    ; preds = %bb.gj, %bb.gc
@@ -655,7 +655,7 @@ bb.dv:                                            ; preds = %bb.du
   br label %bb.dw
 
 bb.dw:                                            ; preds = %bb.eb, %.preheader.i100
-  %indvars.iv422.i = phi i64 [ 0, %.preheader.i100 ], [ %indvars.iv.next423.i, %bb.eb ] ; 6 uses
+  %indvars.iv422.i = phi i64 [ 0, %.preheader.i100 ], [ %indvars.iv.next423.i, %bb.eb ] ; 7 uses
   %i.uw = getelementptr inbounds nuw i8, ptr %i.ut, i64 %indvars.iv422.i ; 2 uses
   %i.ux = load i8, ptr %i.uw, align 1, !tbaa !19
   %i.uy = zext i8 %i.ux to i32
@@ -689,15 +689,15 @@ bb.ea:                                            ; preds = %bb.dy
   br i1 %i.vk, label %cbs_h264_write_pps.exit.thread, label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea, %bb.dz, %bb.dx
-  %indvars.iv.next423.i = add nuw nsw i64 %indvars.iv422.i, 1 ; 2 uses
+  %indvars.iv.next423.i = add nuw nsw i64 %indvars.iv422.i, 1
   %i.vl = load i8, ptr %i.us, align 2, !tbaa !47
   %.not379.i = icmp eq i8 %i.vl, 3
   %i.vm = select i1 %.not379.i, i64 6, i64 2
   %i.vn = load i8, ptr %i.uh, align 1, !tbaa !111
   %i.vo = zext i8 %i.vn to i64
   %i.vp = mul nuw nsw i64 %i.vm, %i.vo
-  %i.vq = add nuw nsw i64 %i.vp, 6
-  %i.vr = icmp samesign ult i64 %indvars.iv.next423.i, %i.vq
+  %i.vq = add nuw nsw i64 %i.vp, 5
+  %i.vr = icmp samesign ult i64 %indvars.iv422.i, %i.vq
   br i1 %i.vr, label %bb.dw, label %.loopexit.i101, !llvm.loop !333
 
 .loopexit.i101:                                   ; preds = %bb.eb, %bb.dv

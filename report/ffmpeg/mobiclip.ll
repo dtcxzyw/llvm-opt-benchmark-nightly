@@ -205,9 +205,8 @@ get_se_golomb.exit:                               ; preds = %bb.h, %bb.i
 .preheader249:                                    ; preds = %.preheader249.lr.ph, %._crit_edge269
   %i.fh = phi i32 [ %i.pt, %._crit_edge269 ], [ %i.fd, %.preheader249.lr.ph ]
   %i.fi = phi i32 [ %i.pu, %._crit_edge269 ], [ %i.ff, %.preheader249.lr.ph ] ; 2 uses
-  %.0155271 = phi i32 [ %4, %._crit_edge269 ], [ 0, %.preheader249.lr.ph ] ; 5 uses
+  %.0155271 = phi i32 [ %4, %._crit_edge269 ], [ 0, %.preheader249.lr.ph ] ; 6 uses
   %.not182266 = icmp sgt i32 %i.fi, 0
-  %4 = add nuw nsw i32 %.0155271, 16              ; 3 uses
   br i1 %.not182266, label %.lr.ph268, label %._crit_edge269
 
 .lr.ph268:                                        ; preds = %.preheader249
@@ -354,7 +353,7 @@ bb.p:                                             ; preds = %get_ue_golomb.exit
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.p, %add_pframe_coefficients.exit.1
-  %.0152265 = phi i32 [ %.0155271, %bb.p ], [ %i.ml, %add_pframe_coefficients.exit.1 ] ; 9 uses
+  %.0152265 = phi i32 [ %.0155271, %bb.p ], [ %i.ml, %add_pframe_coefficients.exit.1 ] ; 10 uses
   %.0153264 = phi i32 [ %i.is, %bb.p ], [ %i.mk, %add_pframe_coefficients.exit.1 ] ; 5 uses
   %i.jd = and i32 %.0153264, 1
   %.not181 = icmp eq i32 %i.jd, 0
@@ -544,9 +543,9 @@ bb.ai:                                            ; preds = %bb.aa
 
 add_pframe_coefficients.exit.1:                   ; preds = %bb.ah, %bb.ag, %bb.ac, %bb.ae, %bb.af, %bb.ai, %bb.ab, %add_pframe_coefficients.exit
   %i.mk = lshr i32 %.0153264, 2
-  %i.ml = add nuw nsw i32 %.0152265, 8            ; 2 uses
-  %5 = icmp samesign ult i32 %i.ml, %4
-  br i1 %5, label %.preheader, label %bb.q, !llvm.loop !63
+  %i.ml = add nuw nsw i32 %.0152265, 8
+  %.not273 = icmp samesign ugt i32 %.0152265, %.0155271
+  br i1 %.not273, label %bb.q, label %.preheader, !llvm.loop !63
 
 bb.aj:                                            ; preds = %bb.q
   %i.mm = lshr exact i64 %indvars.iv, 1           ; 3 uses
@@ -722,9 +721,10 @@ add_pframe_coefficients.exit224:                  ; preds = %bb.ay, %bb.aw, %bb.
   %.pre292 = load i32, ptr %i.i, align 4, !tbaa !30
   br label %._crit_edge269
 
-._crit_edge269:                                   ; preds = %.preheader249, %._crit_edge269.loopexit
+._crit_edge269:                                   ; preds = %._crit_edge269.loopexit, %.preheader249
   %i.pt = phi i32 [ %.pre292, %._crit_edge269.loopexit ], [ %i.fh, %.preheader249 ] ; 2 uses
   %i.pu = phi i32 [ %i.pr, %._crit_edge269.loopexit ], [ %i.fi, %.preheader249 ]
+  %4 = add nuw nsw i32 %.0155271, 16              ; 2 uses
   %.not244 = icmp slt i32 %4, %i.pt
   br i1 %.not244, label %.preheader249, label %.thread226, !llvm.loop !67
 

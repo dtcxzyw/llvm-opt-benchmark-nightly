@@ -205,36 +205,36 @@ bb.lg:                                            ; preds = %bb.lf
 
 bb.lh:                                            ; preds = %bb.lg
   %i.dhp = sub i32 6, %.098.i.us.i
-  %i.dhq = and i32 %i.dhp, 7
-  %5 = add nuw nsw i32 %i.dhq, 2                  ; 2 uses
+  %i.dhq = and i32 %i.dhp, 7                      ; 2 uses
   %i.dhr = sub i32 6, %.097.i.us.i
-  %i.dhs = and i32 %i.dhr, 7
-  %6 = add nuw nsw i32 %i.dhs, 2                  ; 2 uses
+  %i.dhs = and i32 %i.dhr, 7                      ; 2 uses
   %i.dht = load ptr, ptr %i.cxe, align 16, !tbaa !167
   %i.dhu = getelementptr inbounds i8, ptr %i.dgm, i64 %i.ddg
   %i.dhv = getelementptr inbounds i8, ptr %i.dhu, i64 -1
   %i.dhw = add nsw i32 %i.dgb, -1
   %i.dhx = add nsw i32 %i.dgd, -1
   call void %i.dht(ptr noundef nonnull %i.a, ptr noundef nonnull %i.dhv, i64 noundef 12, i64 noundef range(i64 -2147483648, 2147483649) %spec.select.i325, i32 noundef 12, i32 noundef 12, i32 noundef %i.dhw, i32 noundef %i.dhx, i32 noundef %i.dgw, i32 noundef %i.dgz) #11, !inline_history !133
-  %7 = or disjoint i32 %i.dhc, 8
-  %.not118.i.us.i = icmp samesign ugt i32 %5, %7
+  %5 = add nuw nsw i32 %i.dhc, 6
+  %.not118.i.us.i = icmp samesign ugt i32 %i.dhq, %5
   br i1 %.not118.i.us.i, label %bb.lj, label %bb.li
 
 bb.li:                                            ; preds = %bb.lh
-  %i.dhy = zext nneg i32 %5 to i64
-  %i.dhz = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dhy
+  %i.dhy = zext nneg i32 %i.dhq to i64
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dhy
+  %i.dhz = getelementptr inbounds nuw i8, ptr %6, i64 2
   call void @ff_vp3dsp_h_loop_filter_12(ptr noundef nonnull %i.dhz, i64 noundef 12, ptr noundef nonnull %i.cxd) #11
   br label %bb.lj
 
 bb.lj:                                            ; preds = %bb.li, %bb.lh
-  %8 = or disjoint i32 %i.dhd, 8
-  %.not119.i.us.i = icmp samesign ugt i32 %6, %8
+  %7 = add nuw nsw i32 %i.dhd, 6
+  %.not119.i.us.i = icmp samesign ugt i32 %i.dhs, %7
   br i1 %.not119.i.us.i, label %bb.lq, label %bb.lk
 
 bb.lk:                                            ; preds = %bb.lj
-  %i.dia = mul nuw nsw i32 %6, 12
+  %i.dia = mul nuw nsw i32 %i.dhs, 12
   %i.dib = zext nneg i32 %i.dia to i64
-  %i.dic = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dib
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dib
+  %i.dic = getelementptr inbounds nuw i8, ptr %8, i64 24
   call void @ff_vp3dsp_v_loop_filter_12(ptr noundef nonnull %i.dic, i64 noundef 12, ptr noundef nonnull %i.cxd) #11
   br label %bb.lq
 

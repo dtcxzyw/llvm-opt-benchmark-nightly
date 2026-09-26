@@ -205,15 +205,15 @@ iter.check:                                       ; preds = %bb.t
   %i.en = load i32, ptr %i.bq, align 4, !tbaa !33
   %i.eo = add i32 %i.en, %i.em
   %i.ep = shl i32 768, %i.eo
-  %6 = add nuw i32 %i.ep, 1846
-  %7 = load ptr, ptr %i.br, align 8, !tbaa !34    ; 4 uses
-  %wide.trip.count.i = zext i32 %6 to i64         ; 3 uses
+  %6 = load ptr, ptr %i.br, align 8, !tbaa !34    ; 4 uses
+  %7 = add nuw i32 %i.ep, 1846
+  %wide.trip.count.i = zext i32 %7 to i64         ; 3 uses
   %n.vec314 = add nsw i64 %wide.trip.count.i, -6  ; 2 uses
   br label %vector.body315
 
 vector.body315:                                   ; preds = %iter.check, %vector.body315
   %index316 = phi i64 [ 0, %iter.check ], [ %index.next317, %vector.body315 ] ; 2 uses
-  %i.eq = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %index316 ; 2 uses
+  %i.eq = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %index316 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 16
   store <8 x i16> splat (i16 1024), ptr %i.eq, align 2, !tbaa !36
   store <8 x i16> splat (i16 1024), ptr %i.er, align 2, !tbaa !36
@@ -222,12 +222,12 @@ vector.body315:                                   ; preds = %iter.check, %vector
   br i1 %i.es, label %vec.epilog.vector.body, label %vector.body315, !llvm.loop !47
 
 vec.epilog.vector.body:                           ; preds = %vector.body315
-  %i.et = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %n.vec314
+  %i.et = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %n.vec314
   store <4 x i16> splat (i16 1024), ptr %i.et, align 2, !tbaa !36
-  %i.eu = getelementptr [2 x i8], ptr %7, i64 %wide.trip.count.i
+  %i.eu = getelementptr [2 x i8], ptr %6, i64 %wide.trip.count.i
   %i.ev = getelementptr i8, ptr %i.eu, i64 -4
   store i16 1024, ptr %i.ev, align 2, !tbaa !36
-  %i.ew = getelementptr [2 x i8], ptr %7, i64 %wide.trip.count.i
+  %i.ew = getelementptr [2 x i8], ptr %6, i64 %wide.trip.count.i
   %i.ex = getelementptr i8, ptr %i.ew, i64 -2
   store i16 1024, ptr %i.ex, align 2, !tbaa !36
   store i32 1, ptr %i.bs, align 8, !tbaa !27
