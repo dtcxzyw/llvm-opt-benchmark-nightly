@@ -204,14 +204,14 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !17
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 584
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %2, i1 noundef zeroext false) #27 ; 6 uses
+  %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %2, i1 noundef zeroext false) #27 ; 4 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !17
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 584
   %i.g = load ptr, ptr %i.f, align 8
-  %i.h = tail call noundef zeroext i1 %i.g(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %3, i1 noundef zeroext false) #27 ; 6 uses
+  %i.h = tail call noundef zeroext i1 %i.g(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %3, i1 noundef zeroext false) #27 ; 4 uses
   %or.cond = and i1 %i.d, %i.h
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 52
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !187  ; 7 uses
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !187  ; 6 uses
   br i1 %or.cond, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -219,14 +219,14 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 616
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = tail call i64 %i.m(ptr noundef nonnull align 8 dereferenceable(112) %0, i32 noundef %i.j) #27
-  %.sroa.0.0.extract.trunc = trunc i64 %i.n to i32 ; 4 uses
-  %i.o = select i1 %i.d, i32 %i.j, i32 %.sroa.0.0.extract.trunc ; 7 uses
-  %i.p = select i1 %i.d, i32 %.sroa.0.0.extract.trunc, i32 %i.j ; 13 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %i.n to i32 ; 3 uses
+  %i.o = select i1 %i.d, i32 %i.j, i32 %.sroa.0.0.extract.trunc ; 6 uses
+  %i.p = select i1 %i.d, i32 %.sroa.0.0.extract.trunc, i32 %i.j ; 12 uses
   %.not = xor i1 %i.d, true                       ; 3 uses
-  %or.cond3 = and i1 %i.h, %.not                  ; 4 uses
+  %or.cond3 = and i1 %i.h, %.not                  ; 6 uses
   switch i32 %1, label %bb.c [
-    i32 0, label %4
-    i32 2, label %5
+    i32 0, label %bb.d
+    i32 2, label %bb.e
     i32 1, label %bb.f
     i32 3, label %bb.h
   ]
@@ -234,20 +234,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   unreachable
 
-4:                                                ; preds = %bb.b
-  br i1 %or.cond3, label %bb.j, label %bb.d
-
-bb.d:                                             ; preds = %4
-  %spec.select = select i1 %i.h, i32 %i.j, i32 %i.p
-  %spec.select96 = select i1 %i.d, i32 %spec.select, i32 %.sroa.0.0.extract.trunc
+bb.d:                                             ; preds = %bb.b
+  %spec.select = select i1 %or.cond3, i32 %i.o, i32 %i.p
+  %spec.select96 = select i1 %or.cond3, i32 %i.p, i32 %.sroa.0.0.extract.trunc
   br label %bb.j
 
-5:                                                ; preds = %bb.b
-  br i1 %or.cond3, label %bb.j, label %bb.e
-
-bb.e:                                             ; preds = %5
-  %spec.select95 = select i1 %i.h, i32 %.sroa.0.0.extract.trunc, i32 %i.o
-  %spec.select97 = select i1 %i.d, i32 %spec.select95, i32 %i.j
+bb.e:                                             ; preds = %bb.b
+  %spec.select95 = select i1 %or.cond3, i32 %i.o, i32 %i.p
+  %spec.select97 = select i1 %or.cond3, i32 %i.p, i32 %i.j
   br label %bb.j
 
 bb.f:                                             ; preds = %bb.b
@@ -268,9 +262,9 @@ bb.i:                                             ; preds = %bb.h
   %spec.select101 = select i1 %or.cond30, i32 %i.p, i32 %i.o
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.a, %bb.i, %bb.g, %bb.e, %bb.d, %4, %5, %bb.f, %bb.h
-  %.sroa.093.1 = phi i32 [ %i.p, %bb.e ], [ %i.p, %bb.h ], [ %i.p, %bb.f ], [ %i.o, %4 ], [ %spec.select100, %bb.i ], [ %i.p, %bb.d ], [ %i.o, %5 ], [ %spec.select98, %bb.g ], [ %i.j, %bb.a ]
-  %.sroa.14.1 = phi i32 [ %spec.select97, %bb.e ], [ %i.p, %bb.h ], [ %i.p, %bb.f ], [ %i.p, %4 ], [ %spec.select101, %bb.i ], [ %spec.select96, %bb.d ], [ %i.p, %5 ], [ %spec.select99, %bb.g ], [ %i.j, %bb.a ]
+bb.j:                                             ; preds = %bb.e, %bb.d, %bb.a, %bb.i, %bb.g, %bb.f, %bb.h
+  %.sroa.093.1 = phi i32 [ %spec.select98, %bb.g ], [ %i.p, %bb.h ], [ %i.p, %bb.f ], [ %spec.select, %bb.d ], [ %spec.select100, %bb.i ], [ %i.j, %bb.a ], [ %spec.select95, %bb.e ]
+  %.sroa.14.1 = phi i32 [ %spec.select99, %bb.g ], [ %i.p, %bb.h ], [ %i.p, %bb.f ], [ %spec.select96, %bb.d ], [ %spec.select101, %bb.i ], [ %i.j, %bb.a ], [ %spec.select97, %bb.e ]
   %.sroa.14.0.insert.ext = zext i32 %.sroa.14.1 to i64
   %.sroa.14.0.insert.shift = shl nuw i64 %.sroa.14.0.insert.ext, 32
   %.sroa.093.0.insert.ext = zext i32 %.sroa.093.1 to i64
@@ -423,14 +417,14 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bn = load ptr, ptr %0, align 8, !tbaa !17
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 584
   %i.bp = load ptr, ptr %i.bo, align 8
-  %i.bq = call noundef zeroext i1 %i.bp(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %1, i1 noundef zeroext false) #27, !inline_history !573 ; 6 uses
+  %i.bq = call noundef zeroext i1 %i.bp(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %1, i1 noundef zeroext false) #27, !inline_history !573 ; 4 uses
   %i.br = load ptr, ptr %0, align 8, !tbaa !17
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 584
   %i.bt = load ptr, ptr %i.bs, align 8
-  %i.bu = call noundef zeroext i1 %i.bt(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %2, i1 noundef zeroext false) #27, !inline_history !573 ; 6 uses
+  %i.bu = call noundef zeroext i1 %i.bt(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(80) %2, i1 noundef zeroext false) #27, !inline_history !573 ; 4 uses
   %or.cond.i = and i1 %i.bq, %i.bu
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 52
-  %i.bw = load i32, ptr %i.bv, align 4, !tbaa !187 ; 7 uses
+  %i.bw = load i32, ptr %i.bv, align 4, !tbaa !187 ; 6 uses
   br i1 %or.cond.i, label %_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -438,14 +432,14 @@ bb.l:                                             ; preds = %bb.k
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 616
   %i.bz = load ptr, ptr %i.by, align 8
   %i.ca = call i64 %i.bz(ptr noundef nonnull align 8 dereferenceable(112) %0, i32 noundef %i.bw) #27, !inline_history !573
-  %.sroa.0.0.extract.trunc.i = trunc i64 %i.ca to i32 ; 4 uses
-  %i.cb = select i1 %i.bq, i32 %i.bw, i32 %.sroa.0.0.extract.trunc.i ; 7 uses
-  %i.cc = select i1 %i.bq, i32 %.sroa.0.0.extract.trunc.i, i32 %i.bw ; 13 uses
+  %.sroa.0.0.extract.trunc.i = trunc i64 %i.ca to i32 ; 3 uses
+  %i.cb = select i1 %i.bq, i32 %i.bw, i32 %.sroa.0.0.extract.trunc.i ; 6 uses
+  %i.cc = select i1 %i.bq, i32 %.sroa.0.0.extract.trunc.i, i32 %i.bw ; 12 uses
   %.not.i = xor i1 %i.bq, true                    ; 3 uses
-  %or.cond3.i = and i1 %i.bu, %.not.i             ; 4 uses
+  %or.cond3.i = and i1 %i.bu, %.not.i             ; 6 uses
   switch i32 %3, label %bb.m [
-    i32 0, label %15
-    i32 2, label %16
+    i32 0, label %bb.n
+    i32 2, label %bb.o
     i32 1, label %bb.p
     i32 3, label %bb.r
   ]
@@ -453,20 +447,14 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   unreachable
 
-15:                                               ; preds = %bb.l
-  br i1 %or.cond3.i, label %_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit, label %bb.n
-
-bb.n:                                             ; preds = %15
-  %spec.select.i = select i1 %i.bu, i32 %i.bw, i32 %i.cc
-  %spec.select96.i = select i1 %i.bq, i32 %spec.select.i, i32 %.sroa.0.0.extract.trunc.i
+bb.n:                                             ; preds = %bb.l
+  %spec.select.i = select i1 %or.cond3.i, i32 %i.cb, i32 %i.cc
+  %spec.select96.i = select i1 %or.cond3.i, i32 %i.cc, i32 %.sroa.0.0.extract.trunc.i
   br label %_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit
 
-16:                                               ; preds = %bb.l
-  br i1 %or.cond3.i, label %_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit, label %bb.o
-
-bb.o:                                             ; preds = %16
-  %spec.select95.i = select i1 %i.bu, i32 %.sroa.0.0.extract.trunc.i, i32 %i.cb
-  %spec.select97.i = select i1 %i.bq, i32 %spec.select95.i, i32 %i.bw
+bb.o:                                             ; preds = %bb.l
+  %spec.select95.i = select i1 %or.cond3.i, i32 %i.cb, i32 %i.cc
+  %spec.select97.i = select i1 %or.cond3.i, i32 %i.cc, i32 %i.bw
   br label %_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit
 
 bb.p:                                             ; preds = %bb.l
@@ -487,9 +475,9 @@ bb.s:                                             ; preds = %bb.r
   %spec.select101.i = select i1 %or.cond30.i, i32 %i.cc, i32 %i.cb
   br label %_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit
 
-_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit: ; preds = %bb.k, %15, %bb.n, %16, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s
-  %.sroa.093.1.i = phi i32 [ %i.cc, %bb.o ], [ %i.cc, %bb.r ], [ %i.cc, %bb.p ], [ %i.cb, %15 ], [ %spec.select100.i, %bb.s ], [ %i.cc, %bb.n ], [ %i.cb, %16 ], [ %spec.select98.i, %bb.q ], [ %i.bw, %bb.k ]
-  %.sroa.14.1.i = phi i32 [ %spec.select97.i, %bb.o ], [ %i.cc, %bb.r ], [ %i.cc, %bb.p ], [ %i.cc, %15 ], [ %spec.select101.i, %bb.s ], [ %spec.select96.i, %bb.n ], [ %i.cc, %16 ], [ %spec.select99.i, %bb.q ], [ %i.bw, %bb.k ]
+_ZNK4llvm15TargetInstrInfo23getReassociationOpcodesEjRKNS_12MachineInstrES3_.exit: ; preds = %bb.k, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s
+  %.sroa.093.1.i = phi i32 [ %spec.select98.i, %bb.q ], [ %i.cc, %bb.r ], [ %i.cc, %bb.p ], [ %spec.select.i, %bb.n ], [ %spec.select100.i, %bb.s ], [ %i.bw, %bb.k ], [ %spec.select95.i, %bb.o ]
+  %.sroa.14.1.i = phi i32 [ %spec.select99.i, %bb.q ], [ %i.cc, %bb.r ], [ %i.cc, %bb.p ], [ %spec.select96.i, %bb.n ], [ %spec.select101.i, %bb.s ], [ %i.bw, %bb.k ], [ %spec.select97.i, %bb.o ]
   %.sroa.14.0.insert.ext.i = zext i32 %.sroa.14.1.i to i64
   %i.cd = load i32, ptr %i.s, align 8             ; 2 uses
   %i.ce = lshr i32 %i.cd, 26

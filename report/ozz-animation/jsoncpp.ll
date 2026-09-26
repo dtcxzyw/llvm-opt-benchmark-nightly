@@ -204,7 +204,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !111  ; 2 uses
   %i.c = load i8, ptr %i.b, align 1, !tbaa !50
   %i.d = icmp eq i8 %i.c, 45                      ; 5 uses
-  %spec.select = select i1 %i.d, i64 -9223372036854775808, i64 -1 ; 3 uses
+  %spec.select = select i1 %i.d, i64 -9223372036854775808, i64 -1 ; 2 uses
   %spec.select58.idx = zext i1 %i.d to i64
   %spec.select58 = getelementptr inbounds nuw i8, ptr %i.b, i64 %spec.select58.idx ; 2 uses
   %i.e = udiv i64 %spec.select, 10                ; 2 uses
@@ -258,7 +258,7 @@ bb.f:                                             ; preds = %._crit_edge79, %bb.
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !335
 
 ._crit_edge:                                      ; preds = %bb.f
-  %i.v = icmp eq i64 %i.u, %spec.select
+  %i.v = icmp eq i64 %i.u, -9223372036854775808
   %or.cond63 = select i1 %i.d, i1 %i.v, i1 false
   br i1 %or.cond63, label %bb.g, label %bb.j
 

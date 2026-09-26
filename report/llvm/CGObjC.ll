@@ -204,7 +204,7 @@ _ZN5clang7CodeGen12AggValueSlot7forAddrENS0_7AddressENS_10QualifiersENS1_14IsDes
   %i.dw = load ptr, ptr %i.dv, align 16, !tbaa !301
   %i.dx = call i64 @_ZNK5clang4Type14getPointeeTypeEv(ptr noundef nonnull align 16 dereferenceable(24) %i.dw) #21
   %i.dy = call noundef ptr @_ZN5clang13UnaryOperator6CreateERKNS_10ASTContextEPNS_4ExprENS_17UnaryOperatorKindENS_8QualTypeENS_13ExprValueKindENS_14ExprObjectKindENS_14SourceLocationEbNS_17FPOptionsOverrideE(ptr noundef nonnull align 8 dereferenceable(23904) %i.k, ptr noundef nonnull %11, i32 noundef 5, i64 %i.dx, i32 noundef 1, i32 noundef 0, i32 0, i1 noundef zeroext false, i64 0) #21
-  %i.dz = load ptr, ptr %i.at, align 8, !tbaa !771 ; 6 uses
+  %i.dz = load ptr, ptr %i.at, align 8, !tbaa !771 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #21
   %i.ea = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   store ptr %i.ea, ptr %13, align 8, !tbaa !273
@@ -215,16 +215,14 @@ _ZN5clang7CodeGen12AggValueSlot7forAddrENS0_7AddressENS_10QualifiersENS1_14IsDes
   call void @_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef %i.dy)
   %i.ed = load i16, ptr %i.dz, align 8
   %i.ee = and i16 %i.ed, 511
-  %.not.i.i = icmp eq i16 %i.ee, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %i.dz, ptr null
-  %20 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.ef = getelementptr inbounds nuw i8, ptr %i.dz, i64 40
-  %spec.select.i.i = select i1 %.not.i.i, ptr %20, ptr %i.ef ; 2 uses
-  %i.eg = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 8
+  %.not.i.i = icmp eq i16 %i.ee, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.dz, i64 %spec.select.v.i.i ; 2 uses
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dz, i64 32
   %i.ei = load i32, ptr %i.eh, align 8, !tbaa !1504
   %i.ej = zext i32 %i.ei to i64
-  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i, i64 %i.ej
+  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.ef, i64 %i.ej
   call void @_ZN4llvm15SmallVectorImplIPN5clang4ExprEE6appendINS1_4Stmt12CastIteratorIS2_S3_PS6_EEvEEvT_SA_(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr nonnull %i.eg, ptr nonnull %i.ek)
   %.sroa.06.0.copyload = load i64, ptr %4, align 8, !tbaa !276
   %i.el = getelementptr inbounds nuw i8, ptr %i.dz, i64 16

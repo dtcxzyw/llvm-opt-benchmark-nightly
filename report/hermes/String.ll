@@ -202,11 +202,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.critedge
 
 _ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit: ; preds = %bb.b
-  %i.e = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i.i1, i64 -1
-  %.sroa.076.0 = select i1 %.not.i.i7, ptr null, ptr %i.e ; 2 uses
+  %i.e = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i.i1, i64 -1 ; 2 uses
+  %.sroa.076.0 = select i1 %.not.i.i7, ptr null, ptr %i.e
   %.sroa.7.0.idx = select i1 %.not.i.i7, i64 -2, i64 0
   %.sroa.7.0 = getelementptr inbounds i8, ptr %.sroa.2.0.copyload.i.i3, i64 %.sroa.7.0.idx ; 2 uses
-  %i.f = icmp eq ptr %.sroa.076.0, %.sroa.0.0.copyload.i2.i4
+  %i.f = icmp eq ptr %i.e, %.sroa.0.0.copyload.i2.i4
   %i.g = icmp eq ptr %.sroa.7.0, %.sroa.2.0.copyload.i4.i6
   %.0.i.i17 = select i1 %.not.i.i7, i1 %i.g, i1 %i.f
   br i1 %.0.i.i17, label %bb.d, label %.preheader77
@@ -253,24 +253,27 @@ bb.e:                                             ; preds = %.preheader77
   br label %.critedge
 
 _ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27: ; preds = %.preheader77
-  %i.j = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i.i18, i64 -1 ; 2 uses
-  %.sroa.066.1 = select i1 %.not.i.i24, ptr null, ptr %i.j ; 2 uses
+  %i.j = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i.i18, i64 -1 ; 3 uses
   %.sroa.11.1.idx = select i1 %.not.i.i24, i64 -2, i64 0
   %.sroa.11.1 = getelementptr inbounds i8, ptr %.sroa.2.0.copyload.i.i20, i64 %.sroa.11.1.idx ; 2 uses
-  %i.k = icmp eq ptr %.sroa.066.1, %.sroa.0.0.copyload.i2.i21
+  %i.k = icmp eq ptr %i.j, %.sroa.0.0.copyload.i2.i21
   %i.l = icmp eq ptr %.sroa.11.1, %.sroa.2.0.copyload.i4.i23
   %.0.i.i35 = select i1 %.not.i.i24, i1 %i.l, i1 %i.k
-  br i1 %.0.i.i35, label %bb.f, label %.preheader
+  br i1 %.0.i.i35, label %bb.f, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27
+  %spec.select = select i1 %.not.i.i24, ptr null, ptr %i.j
+  br label %.preheader
 
 bb.f:                                             ; preds = %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !376
   br label %.critedge
 
-.preheader:                                       ; preds = %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48
-  %.sroa.8.0 = phi ptr [ %.sroa.8.1, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %.sroa.7.0, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27 ] ; 2 uses
-  %.sroa.061.0 = phi ptr [ %.sroa.061.1, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %.sroa.076.0, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27 ] ; 2 uses
-  %.sroa.066.0 = phi ptr [ %.sroa.066.2, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %.sroa.066.1, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27 ] ; 3 uses
-  %.sroa.11.0 = phi ptr [ %.sroa.11.2, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %.sroa.11.1, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit27 ] ; 2 uses
+.preheader:                                       ; preds = %.preheader.preheader, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48
+  %.sroa.8.0 = phi ptr [ %.sroa.8.1, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %.sroa.7.0, %.preheader.preheader ] ; 2 uses
+  %.sroa.061.0 = phi ptr [ %.sroa.061.1, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %.sroa.076.0, %.preheader.preheader ] ; 2 uses
+  %.sroa.066.0 = phi ptr [ %.sroa.066.2, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %spec.select, %.preheader.preheader ] ; 3 uses
+  %.sroa.11.0 = phi ptr [ %.sroa.11.2, %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48 ], [ %.sroa.11.1, %.preheader.preheader ] ; 2 uses
   %.not.i.i.i = icmp eq ptr %.sroa.066.0, null    ; 4 uses
   br i1 %.not.i.i.i, label %bb.h, label %bb.g
 
@@ -319,11 +322,11 @@ bb.i:                                             ; preds = %_ZNSt16reverse_iter
   br label %.critedge
 
 _ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit48: ; preds = %_ZNSt16reverse_iteratorIN6hermes2vm10StringView14const_iteratorEEppEv.exit38
-  %i.ab = getelementptr inbounds i8, ptr %.sroa.066.0, i64 -1
-  %.sroa.066.2 = select i1 %.not.i.i.i, ptr null, ptr %i.ab ; 2 uses
+  %i.ab = getelementptr inbounds i8, ptr %.sroa.066.0, i64 -1 ; 2 uses
+  %.sroa.066.2 = select i1 %.not.i.i.i, ptr null, ptr %i.ab
   %.sroa.11.2.idx = select i1 %.not.i.i.i, i64 -2, i64 0
   %.sroa.11.2 = getelementptr inbounds i8, ptr %.sroa.11.0, i64 %.sroa.11.2.idx ; 2 uses
-  %i.ac = icmp eq ptr %.sroa.066.2, %.sroa.0.0.copyload.i2.i21
+  %i.ac = icmp eq ptr %i.ab, %.sroa.0.0.copyload.i2.i21
   %i.ad = icmp eq ptr %.sroa.11.2, %.sroa.2.0.copyload.i4.i23
   %.0.i.i56 = select i1 %.not.i.i.i, i1 %i.ad, i1 %i.ac
   br i1 %.0.i.i56, label %bb.j, label %.preheader, !llvm.loop !374

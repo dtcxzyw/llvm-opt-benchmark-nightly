@@ -204,16 +204,14 @@ _ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5
   %spec.select.i.i.i.i.i.i.i.i343 = icmp ult i16 %i.nc, 2
   %spec.select.i.i344 = select i1 %spec.select.i.i.i.i.i.i.i.i343, ptr %1, ptr null ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %spec.select.i.i344) ]
-  %.not.i.i.i.i345 = icmp eq i16 %i.mu, 118       ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i345, ptr %1, ptr null
-  %46 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.nd = getelementptr inbounds nuw i8, ptr %spec.select.i.i344, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i345, ptr %46, ptr %i.nd
+  %.not.i.i.i.i345 = icmp eq i16 %i.mu, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i345, i64 48, i64 40
+  %i.nd = getelementptr inbounds nuw i8, ptr %spec.select.i.i344, i64 %spec.select.v.i.i.i.i
   br label %.sink.split
 
 .sink.split:                                      ; preds = %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit348, %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit
   %.sink887 = phi i64 [ 16, %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit ], [ 32, %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit348 ]
-  %.sink = phi ptr [ %i.nb, %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit ], [ %spec.select.i.i.i.i, %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit348 ] ; 2 uses
+  %.sink = phi ptr [ %i.nb, %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit ], [ %i.nd, %_ZNSt8optionalIN4llvm14iterator_rangeIN5clang4Stmt12CastIteratorINS2_4ExprEKPKS5_KPKS3_EEEEEaSISD_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameISE_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESH_ISt6__and_IJSt9is_scalarISD_ESI_ISD_NSt5decayISL_E4typeEEEEESt16is_constructibleISD_JSL_EESt13is_assignableIRSD_SL_EEERSE_E4typeEOSL_.exit348 ] ; 2 uses
   %i.ne = getelementptr inbounds nuw i8, ptr %1, i64 %.sink887
   %i.nf = load i32, ptr %i.ne, align 8, !tbaa !255
   %i.ng = zext i32 %i.nf to i64
@@ -616,23 +614,21 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   %i.e = load i16, ptr %1, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i.i21 = icmp eq i16 %i.f, 118         ; 2 uses
-  %spec.select.i.i.i.i.i.i22 = select i1 %.not.i.i.i.i21, ptr %1, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i22, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i23 = select i1 %.not.i.i.i.i21, ptr %2, ptr %i.g ; 3 uses
+  %.not.i.i.i.i21 = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i.i22 = select i1 %.not.i.i.i.i21, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i22 ; 3 uses
   br i1 %i.d, label %bb.c, label %.split14
 
 .split14:                                         ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.i = load i32, ptr %i.h, align 8, !tbaa !1205
   %i.j = zext i32 %i.i to i64
-  %i.k = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i23, i64 %i.j
-  call fastcc void @_ZN12_GLOBAL__N_112BuildLockset16examineArgumentsEPKN5clang12FunctionDeclENS1_4Stmt12CastIteratorINS1_4ExprEKPKS7_KPKS5_EESE_b(ptr noundef nonnull align 8 dereferenceable(60) %0, ptr noundef nonnull %i.c, ptr nonnull %spec.select.i.i.i.i23, ptr nonnull %i.k, i1 noundef zeroext false)
+  %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.j
+  call fastcc void @_ZN12_GLOBAL__N_112BuildLockset16examineArgumentsEPKN5clang12FunctionDeclENS1_4Stmt12CastIteratorINS1_4ExprEKPKS7_KPKS5_EESE_b(ptr noundef nonnull align 8 dereferenceable(60) %0, ptr noundef nonnull %i.c, ptr nonnull %i.g, ptr nonnull %i.k, i1 noundef zeroext false)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = load ptr, ptr %spec.select.i.i.i.i23, align 8, !tbaa !379
+  %i.l = load ptr, ptr %i.g, align 8, !tbaa !379
   %i.m = load ptr, ptr %0, align 8, !tbaa !362
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   call fastcc void @_ZN12_GLOBAL__N_120ThreadSafetyAnalyzer11checkAccessERKNS_7FactSetEPKN5clang4ExprENS4_12threadSafety10AccessKindENS8_22ProtectedOperationKindE(ptr noundef nonnull align 8 dereferenceable(656) %i.m, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.n, ptr noundef nonnull %i.l, i32 noundef 0, i32 noundef 1)

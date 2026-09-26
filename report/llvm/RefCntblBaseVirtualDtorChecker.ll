@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %tailrecurse
 
 bb.c:                                             ; preds = %bb.b, %tailrecurse
   %.028 = phi ptr [ %i.f, %bb.b ], [ %i.b, %tailrecurse ]
-  %i.g = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %.028) #20 ; 8 uses
+  %i.g = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %.028) #20 ; 7 uses
   %i.h = load i16, ptr %i.g, align 8
   %i.i = and i16 %i.h, 511
   switch i16 %i.i, label %.loopexit [
@@ -263,11 +263,7 @@ _ZN12_GLOBAL__N_126DerefFuncDeleteExprVisitor9VisitBodyEPKN5clang4StmtE.exit: ; 
   %i.aa = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !536
   %.not4371.not = icmp eq i32 %i.ab, 0
-  br i1 %.not4371.not, label %.thread54, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 40
-  br label %bb.j
+  br i1 %.not4371.not, label %.thread54, label %bb.j
 
 bb.i:                                             ; preds = %bb.j
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -276,15 +272,14 @@ bb.i:                                             ; preds = %bb.j
   %.not43 = icmp samesign ult i64 %indvars.iv.next, %i.ad
   br i1 %.not43, label %bb.j, label %.thread54, !llvm.loop !525
 
-bb.j:                                             ; preds = %.lr.ph, %bb.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
+bb.j:                                             ; preds = %.preheader, %bb.i
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.preheader ] ; 2 uses
   %i.ae = load i16, ptr %i.g, align 8
   %i.af = and i16 %i.ae, 511
-  %.not.i.i.i.i = icmp eq i16 %i.af, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.g, ptr null
-  %i.ag = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.ag, ptr %2
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %indvars.iv
+  %.not.i.i.i.i = icmp eq i16 %i.af, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.g, i64 %spec.select.v.i.i.i.i
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !195
   %i.aj = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_126DerefFuncDeleteExprVisitor19VisitLambdaArgumentEPKN5clang4ExprE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef %i.ai) ; 3 uses
   br i1 %i.aj, label %.thread54, label %bb.i

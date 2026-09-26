@@ -205,28 +205,27 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   ret void
 
 bb.e:                                             ; preds = %.lr.ph, %bb.af
-  %.0158197 = phi i32 [ %.0163, %.lr.ph ], [ %12, %bb.af ] ; 3 uses
+  %.0158197 = phi i32 [ %.0163, %.lr.ph ], [ %i.au, %bb.af ] ; 3 uses
   %.1196 = phi ptr [ %i.ao, %.lr.ph ], [ %i.hh, %bb.af ] ; 4 uses
   %.1161194 = phi ptr [ %i.ak, %.lr.ph ], [ %i.hi, %bb.af ] ; 7 uses
-  %.0164193 = phi i32 [ %i.k, %.lr.ph ], [ %.0164..0158.a, %bb.af ] ; 4 uses
-  %.0166192 = phi i32 [ %i.j, %.lr.ph ], [ %.0158..0166, %bb.af ] ; 4 uses
-  %i.au = add nsw i32 %.0164193, -1
-  %i.av = add nsw i32 %.0166192, -1
-  %i.aw = add nsw i32 %.0164193, 1
-  %i.ax = add nsw i32 %.0166192, 1
-  %.0158..0166 = select i1 %i.i, i32 %.0158197, i32 %.0166192 ; 5 uses
-  %.0164..0158.a = select i1 %i.i, i32 %.0164193, i32 %.0158197 ; 5 uses
-  %10 = add nsw i32 %.0164..0158.a, %5            ; 3 uses
-  %i.ay = select i1 %i.i, i32 %.0164193, i32 %10
-  %11 = add nsw i32 %.0158..0166, %5              ; 3 uses
-  %i.az = select i1 %i.i, i32 %11, i32 %.0166192
-  %i.ba = select i1 %i.i, i32 %i.au, i32 %10
-  %i.bb = select i1 %i.i, i32 %11, i32 %i.av
-  %i.bc = select i1 %i.i, i32 %i.aw, i32 %10
-  %i.bd = select i1 %i.i, i32 %11, i32 %i.ax
-  %i.be = insertelement <8 x i32> poison, i32 %.0164..0158.a, i64 0
-  %i.bf = insertelement <8 x i32> %i.be, i32 %.0158..0166, i64 1
-  %i.bg = insertelement <8 x i32> %i.bf, i32 %i.ay, i64 2
+  %.0164193 = phi i32 [ %i.k, %.lr.ph ], [ %i.ay, %bb.af ] ; 4 uses
+  %.0166192 = phi i32 [ %i.j, %.lr.ph ], [ %.0164..0158.a, %bb.af ] ; 4 uses
+  %i.au = add nsw i32 %.0158197, %5               ; 8 uses
+  %i.av = add nsw i32 %.0164193, -1
+  %i.aw = add nsw i32 %.0166192, -1
+  %i.ax = add nsw i32 %.0164193, 1
+  %10 = add nsw i32 %.0166192, 1
+  %.0164..0158.a = select i1 %i.i, i32 %.0158197, i32 %.0166192 ; 4 uses
+  %i.ay = select i1 %i.i, i32 %.0164193, i32 %.0158197 ; 4 uses
+  %11 = select i1 %i.i, i32 %.0164193, i32 %i.au
+  %i.az = select i1 %i.i, i32 %i.au, i32 %.0166192
+  %i.ba = select i1 %i.i, i32 %i.av, i32 %i.au
+  %i.bb = select i1 %i.i, i32 %i.au, i32 %i.aw
+  %i.bc = select i1 %i.i, i32 %i.ax, i32 %i.au
+  %i.bd = select i1 %i.i, i32 %i.au, i32 %10
+  %i.be = insertelement <8 x i32> poison, i32 %i.ay, i64 0
+  %i.bf = insertelement <8 x i32> %i.be, i32 %.0164..0158.a, i64 1
+  %i.bg = insertelement <8 x i32> %i.bf, i32 %11, i64 2
   %i.bh = insertelement <8 x i32> %i.bg, i32 %i.az, i64 3
   %i.bi = insertelement <8 x i32> %i.bh, i32 %i.ba, i64 4
   %i.bj = insertelement <8 x i32> %i.bi, i32 %i.bb, i64 5
@@ -279,19 +278,19 @@ bb.e:                                             ; preds = %.lr.ph, %bb.af
   %i.de = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.dc, float %i.dd)
   %i.df = load float, ptr %i.aq, align 4, !tbaa !12
   %i.dg = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.de, float %i.df) ; 2 uses
-  %i.dh = icmp eq i32 %.0158..0166, 0
+  %i.dh = icmp eq i32 %.0164..0158.a, 0
   br i1 %i.dh, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.di = icmp eq i32 %.0158..0166, %i.at
-  %i.dj = icmp eq i32 %.0164..0158.a, 0
+  %i.di = icmp eq i32 %.0164..0158.a, %i.at
+  %i.dj = icmp eq i32 %i.ay, 0
   %or.cond = or i1 %i.dj, %i.di
   br i1 %or.cond, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.dk = load i32, ptr %i.ar, align 4, !tbaa !78
   %i.dl = add nsw i32 %i.dk, -1
-  %i.dm = icmp eq i32 %.0164..0158.a, %i.dl
+  %i.dm = icmp eq i32 %i.ay, %i.dl
   br i1 %i.dm, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
@@ -491,8 +490,7 @@ bb.ae:                                            ; preds = %.thread189, %bb.p
 bb.af:                                            ; preds = %.sink.split, %bb.ae, %bb.h
   %i.hh = getelementptr inbounds [4 x i8], ptr %.1196, i64 %i.y
   %i.hi = getelementptr inbounds [4 x i8], ptr %.1161194, i64 %i.y
-  %12 = add nsw i32 %.0158197, %5                 ; 2 uses
-  %.not178 = icmp eq i32 %12, %.0162
+  %.not178 = icmp eq i32 %i.au, %.0162
   br i1 %.not178, label %._crit_edge, label %bb.e
 }
 

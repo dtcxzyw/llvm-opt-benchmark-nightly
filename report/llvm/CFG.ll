@@ -205,7 +205,6 @@ bb.a:
   br i1 %.not16.i, label %_ZN12_GLOBAL__N_110CFGBuilder36findConstructionContextsForArgumentsIN5clang16CXXConstructExprEvEEvPT_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 12
@@ -216,11 +215,10 @@ bb.b:                                             ; preds = %.critedge.i, %.lr.p
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.critedge.i ] ; 3 uses
   %i.g = load i16, ptr %1, align 8
   %i.h = and i16 %i.g, 511
-  %.not.i.i.i.i = icmp eq i16 %i.h, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %i.i = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.i, ptr %4
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %indvars.iv.i
+  %.not.i.i.i.i = icmp eq i16 %i.h, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !432  ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.l, align 8, !tbaa !74
@@ -623,7 +621,6 @@ bb.a:
   br i1 %.not16.i, label %_ZN12_GLOBAL__N_110CFGBuilder36findConstructionContextsForArgumentsIN5clang22CXXTemporaryObjectExprEvEEvPT_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 12
@@ -634,11 +631,10 @@ bb.b:                                             ; preds = %.critedge.i, %.lr.p
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.critedge.i ] ; 3 uses
   %i.g = load i16, ptr %1, align 8
   %i.h = and i16 %i.g, 511
-  %.not.i.i.i.i = icmp eq i16 %i.h, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %i.i = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.i, ptr %4
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %indvars.iv.i
+  %.not.i.i.i.i = icmp eq i16 %i.h, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !432  ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.l, align 8, !tbaa !74
@@ -1041,7 +1037,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %tailrecurse.backedge
   %i.j = phi ptr [ %i.d, %.lr.ph ], [ %i.ea, %tailrecurse.backedge ]
-  %.tr6074 = phi ptr [ %2, %.lr.ph ], [ %.tr60.be, %tailrecurse.backedge ] ; 27 uses
+  %.tr6074 = phi ptr [ %2, %.lr.ph ], [ %.tr60.be, %tailrecurse.backedge ] ; 26 uses
   %i.k = load i16, ptr %.tr6074, align 8
   %i.l = and i16 %i.k, 511
   switch i16 %i.l, label %_ZN5clang21CFGCXXRecordTypedCall20isCXXRecordTypedCallEPKNS_4ExprE.exit.thread [
@@ -1087,12 +1083,10 @@ bb.e:                                             ; preds = %bb.d
   %i.v = call noundef ptr @_ZN5clang24ConstructionContextLayer6createERNS_17BumpVectorContextERKNS_23ConstructionContextItemEPKS0_(ptr noundef nonnull align 8 dereferenceable(8) %i.u, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %1) #24
   %i.w = load i16, ptr %.tr6074, align 8
   %i.x = and i16 %i.w, 511
-  %.not.i.i.i = icmp eq i16 %i.x, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %.tr6074, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.y = getelementptr inbounds nuw i8, ptr %.tr6074, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %6, ptr %i.y
-  %i.z = load ptr, ptr %spec.select.i.i.i, align 8, !tbaa !432
+  %.not.i.i.i = icmp eq i16 %i.x, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.y = getelementptr inbounds nuw i8, ptr %.tr6074, i64 %spec.select.v.i.i.i
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !432
   call fastcc void @_ZN12_GLOBAL__N_110CFGBuilder24findConstructionContextsEPKN5clang24ConstructionContextLayerEPNS1_4StmtE(ptr noundef nonnull align 8 dereferenceable(392) %0, ptr noundef %i.v, ptr noundef %i.z)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
   br label %bb.f

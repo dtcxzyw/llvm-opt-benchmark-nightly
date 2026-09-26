@@ -202,17 +202,16 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.ac = call fastcc i32 @CopyReadBinaryData(ptr noundef %0, ptr noundef nonnull %i.a, i32 noundef 4)
-  %.not.i10 = icmp eq i32 %i.ac, 4                ; 2 uses
+  %.not.i10 = icmp eq i32 %i.ac, 4
   %i.ad = load i32, ptr %i.a, align 4
-  %i.ae = tail call i32 @llvm.bswap.i32(i32 %i.ad)
-  %storemerge.i11 = select i1 %.not.i10, i32 %i.ae, i32 0 ; 3 uses
+  %i.ae = tail call i32 @llvm.bswap.i32(i32 %i.ad) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
-  %i.af = icmp sgt i32 %storemerge.i11, -1
+  %i.af = icmp sgt i32 %i.ae, -1
   %or.cond.not = select i1 %.not.i10, i1 %i.af, i1 false
   br i1 %or.cond.not, label %.preheader.preheader, label %bb.k
 
 .preheader.preheader:                             ; preds = %bb.j
-  %i.ag = icmp sgt i32 %storemerge.i11, 0
+  %i.ag = icmp sgt i32 %i.ae, 0
   br i1 %i.ag, label %.lr.ph, label %.preheader._crit_edge
 
 bb.k:                                             ; preds = %bb.j
@@ -228,7 +227,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.al, label %.lr.ph, label %.preheader._crit_edge, !llvm.loop !21
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.preheader
-  %.014 = phi i32 [ %i.ak, %.preheader ], [ %storemerge.i11, %.preheader.preheader ] ; 2 uses
+  %.014 = phi i32 [ %i.ak, %.preheader ], [ %i.ae, %.preheader.preheader ] ; 2 uses
   %i.am = call fastcc i32 @CopyReadBinaryData(ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 1)
   %.not = icmp eq i32 %i.am, 1
   br i1 %.not, label %.preheader, label %bb.l, !llvm.loop !21

@@ -205,15 +205,15 @@ _ZN4llvm8dyn_castINS_16FrameIndexSDNodeENS_7SDValueEEEDcRKT0_.exit.i: ; preds = 
   %i.bs = and i32 %i.br, 3
   %.not13.i = icmp ne i32 %i.bs, 0                ; 2 uses
   %i.bt = and i32 %i.aw, -257
-  %i.bu = select i1 %.not13.i, i32 %i.bt, i32 %i.aw ; 2 uses
+  %i.bu = select i1 %.not13.i, i32 %i.bt, i32 %i.aw ; 3 uses
   %i.bv = and i32 %i.br, 15
   %.not14.i = icmp eq i32 %i.bv, 0                ; 2 uses
-  %i.bw = and i32 %i.bu, -513
-  %5 = select i1 %.not14.i, i32 %i.bu, i32 %i.bw  ; 2 uses
+  %i.bw = and i32 %i.bu, -513                     ; 2 uses
   %.demorgan = icmp ult i8 %.sroa.0.0.copyload.i.i, 4
   br i1 %.demorgan, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %_ZN4llvm8dyn_castINS_16FrameIndexSDNodeENS_7SDValueEEEDcRKT0_.exit.i
+  %5 = select i1 %.not14.i, i32 %i.bu, i32 %i.bw
   store i32 %5, ptr %2, align 4, !tbaa !332
   br label %bb.m
 
@@ -222,9 +222,10 @@ bb.m:                                             ; preds = %_ZN4llvm8dyn_castIN
   br i1 %brmerge, label %_ZL18setAlignFlagsForFIN4llvm7SDValueERjRNS_12SelectionDAGE.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %simplifycfg.merge.v = select i1 %.not14.i, i32 768, i32 256
-  %simplifycfg.merge.a = or i32 %5, %simplifycfg.merge.v
-  store i32 %simplifycfg.merge.a, ptr %2, align 4, !tbaa !332
+  %6 = or i32 %i.bw, 256
+  %simplifycfg.merge.a = or i32 %i.bu, 768
+  %simplifycfg.merge = select i1 %.not14.i, i32 %simplifycfg.merge.a, i32 %6
+  store i32 %simplifycfg.merge, ptr %2, align 4, !tbaa !332
   br label %_ZL18setAlignFlagsForFIN4llvm7SDValueERjRNS_12SelectionDAGE.exit
 
 _ZL18setAlignFlagsForFIN4llvm7SDValueERjRNS_12SelectionDAGE.exit: ; preds = %bb.m, %bb.n, %bb.k, %_ZNK4llvm5APInt12isSignedIntNEj.exit
@@ -436,16 +437,16 @@ _ZN4llvm8dyn_castINS_16FrameIndexSDNodeENS_7SDValueEEEDcRKT0_.exit.i59: ; preds 
   %i.fv = and i32 %i.fu, 3
   %.not13.i61 = icmp ne i32 %i.fv, 0              ; 2 uses
   %i.fw = and i32 %i.fb, -257
-  %i.fx = select i1 %.not13.i61, i32 %i.fw, i32 %i.fb ; 2 uses
+  %i.fx = select i1 %.not13.i61, i32 %i.fw, i32 %i.fb ; 3 uses
   %i.fy = and i32 %i.fu, 15
   %.not14.i62 = icmp eq i32 %i.fy, 0              ; 2 uses
-  %i.fz = and i32 %i.fx, -513
-  %6 = select i1 %.not14.i62, i32 %i.fx, i32 %i.fz ; 2 uses
+  %i.fz = and i32 %i.fx, -513                     ; 2 uses
   %.demorgan99 = icmp ult i8 %.sroa.0.0.copyload.i.i60, 4
   br i1 %.demorgan99, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %_ZN4llvm8dyn_castINS_16FrameIndexSDNodeENS_7SDValueEEEDcRKT0_.exit.i59
-  store i32 %6, ptr %2, align 4, !tbaa !332
+  %7 = select i1 %.not14.i62, i32 %i.fx, i32 %i.fz
+  store i32 %7, ptr %2, align 4, !tbaa !332
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_ZN4llvm8dyn_castINS_16FrameIndexSDNodeENS_7SDValueEEEDcRKT0_.exit.i59, %bb.ah
@@ -453,9 +454,10 @@ bb.ai:                                            ; preds = %_ZN4llvm8dyn_castIN
   br i1 %brmerge100, label %_ZL18setAlignFlagsForFIN4llvm7SDValueERjRNS_12SelectionDAGE.exit63, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %simplifycfg.merge95.v = select i1 %.not14.i62, i32 768, i32 256
-  %simplifycfg.merge95.a = or i32 %6, %simplifycfg.merge95.v
-  store i32 %simplifycfg.merge95.a, ptr %2, align 4, !tbaa !332
+  %8 = or i32 %i.fz, 256
+  %simplifycfg.merge95.a = or i32 %i.fx, 768
+  %simplifycfg.merge95 = select i1 %.not14.i62, i32 %simplifycfg.merge95.a, i32 %8
+  store i32 %simplifycfg.merge95, ptr %2, align 4, !tbaa !332
   br label %_ZL18setAlignFlagsForFIN4llvm7SDValueERjRNS_12SelectionDAGE.exit63
 
 _ZL18setAlignFlagsForFIN4llvm7SDValueERjRNS_12SelectionDAGE.exit63: ; preds = %bb.ai, %bb.aj, %bb.ag, %_ZNK4llvm5APInt12isSignedIntNEj.exit50

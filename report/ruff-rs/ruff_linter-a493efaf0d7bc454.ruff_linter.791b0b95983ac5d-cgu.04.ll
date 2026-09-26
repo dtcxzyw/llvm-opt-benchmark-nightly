@@ -205,23 +205,20 @@ bb.a:
   %i.e = alloca [40 x i8], align 8                ; 4 uses
   %i.f = alloca [88 x i8], align 8                ; 11 uses
   %i.g = alloca [48 x i8], align 8                ; 7 uses
-  %i.h = tail call noundef align 8 ptr @_RNvMs23_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_9Arguments12find_keyword(ptr noundef nonnull align 8 %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3) ; 5 uses
+  %i.h = tail call noundef align 8 ptr @_RNvMs23_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_9Arguments12find_keyword(ptr noundef nonnull align 8 %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3) ; 4 uses
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %bb.o, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 95
   %i.j = load i8, ptr %i.i, align 1, !range !28, !noundef !14
-  %.not34 = icmp eq i8 %i.j, -1                   ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 72 ; 2 uses
-  %.sroa.07.0 = select i1 %.not34, ptr null, ptr %6
-  %i.k = getelementptr i8, ptr %.sroa.07.0, i64 4
-  %7 = getelementptr i8, ptr %i.h, i64 104
-  %i.l = getelementptr i8, ptr %i.h, i64 108
-  %.val.pn.in.i = select i1 %.not34, ptr %7, ptr %6
-  %.val7.pn.in.i = select i1 %.not34, ptr %i.l, ptr %i.k
-  %.val7.pn.i = load i32, ptr %.val7.pn.in.i, align 4, !noundef !14 ; 3 uses
-  %.val.pn.i = load i32, ptr %.val.pn.in.i, align 8, !noundef !14 ; 3 uses
+  %.not34 = icmp eq i8 %i.j, -1                   ; 2 uses
+  %.val.pn.in.i.v = select i1 %.not34, i64 104, i64 72
+  %i.k = getelementptr i8, ptr %i.h, i64 %.val.pn.in.i.v
+  %.val7.pn.in.i.v = select i1 %.not34, i64 108, i64 76
+  %i.l = getelementptr i8, ptr %i.h, i64 %.val7.pn.in.i.v
+  %.val7.pn.i = load i32, ptr %i.l, align 4, !noundef !14 ; 3 uses
+  %.val.pn.i = load i32, ptr %i.k, align 8, !noundef !14 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)

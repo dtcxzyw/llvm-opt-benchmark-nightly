@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.pre-phi = phi i16 [ %.pre148, %bb.h ], [ %i.p, %bb.g ] ; 2 uses
-  %.1 = phi ptr [ %i.r, %bb.h ], [ %.066, %bb.g ] ; 14 uses
+  %.1 = phi ptr [ %i.r, %bb.h ], [ %.066, %bb.g ] ; 13 uses
   %i.s = add nsw i16 %.pre-phi, -96
   %spec.select.i.i.i.i.i.i.i.i = icmp ult i16 %i.s, -5
   br i1 %spec.select.i.i.i.i.i.i.i.i, label %bb.ab, label %bb.j
@@ -496,12 +496,10 @@ bb.ag:                                            ; preds = %_ZN5clang13CXXMetho
 bb.ah:                                            ; preds = %bb.ag
   %i.ef = load i16, ptr %.1, align 8
   %i.eg = and i16 %i.ef, 511
-  %.not.i.i.i110 = icmp eq i16 %i.eg, 118         ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i110, ptr %.1, ptr null
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.eh = getelementptr inbounds nuw i8, ptr %.1, i64 40
-  %spec.select.i.i.i111 = select i1 %.not.i.i.i110, ptr %4, ptr %i.eh
-  %i.ei = load ptr, ptr %spec.select.i.i.i111, align 8, !tbaa !184 ; 3 uses
+  %.not.i.i.i110 = icmp eq i16 %i.eg, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i110, i64 48, i64 40
+  %i.eh = getelementptr inbounds nuw i8, ptr %.1, i64 %spec.select.v.i.i.i
+  %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !184 ; 3 uses
   %i.ej = load i16, ptr %i.ei, align 8
   %i.ek = and i16 %i.ej, 511
   %.not140 = icmp eq i16 %i.ek, 50
@@ -904,7 +902,6 @@ bb.d:                                             ; preds = %.loopexit
 
 .lr.ph:                                           ; preds = %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
@@ -922,11 +919,10 @@ bb.e:                                             ; preds = %.lr.ph, %bb.k
 bb.f:                                             ; preds = %bb.e
   %i.ax = load i16, ptr %1, align 8
   %i.ay = and i16 %i.ax, 511
-  %.not.i.i.i = icmp eq i16 %i.ay, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %i.az = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %i.az, ptr %2
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i, i64 %indvars.iv
+  %.not.i.i.i = icmp eq i16 %i.ay, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.az = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %indvars.iv
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !184
   %i.bc = call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bb) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
@@ -1329,7 +1325,7 @@ bb.f:                                             ; preds = %.backedge.i
 
 bb.g:                                             ; preds = %bb.f, %.backedge.i
   %.pre-phi.i = phi i16 [ %.pre225.i, %bb.f ], [ %i.aa, %.backedge.i ] ; 2 uses
-  %.1.i = phi ptr [ %i.ad, %bb.f ], [ %.0.i, %.backedge.i ] ; 27 uses
+  %.1.i = phi ptr [ %i.ad, %bb.f ], [ %.0.i, %.backedge.i ] ; 26 uses
   %i.ae = add nsw i16 %.pre-phi.i, -119
   %spec.select.i.i.i.i.i.i.i.i.i = icmp ult i16 %i.ae, -2
   br i1 %spec.select.i.i.i.i.i.i.i.i.i, label %.thread167.i, label %bb.h
@@ -1516,12 +1512,10 @@ bb.y:                                             ; preds = %bb.x
 _ZNK5clang8QualType16getTypePtrOrNullEv.exit.thread.sink.split.i: ; preds = %bb.y, %bb.r
   %i.ck = load i16, ptr %.1.i, align 8
   %i.cl = and i16 %i.ck, 511
-  %.not.i.i.i.i122.i = icmp eq i16 %i.cl, 118     ; 2 uses
-  %spec.select.i.i.i.i.i.i123.i = select i1 %.not.i.i.i.i122.i, ptr %.1.i, ptr null
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i123.i, i64 48
-  %i.cm = getelementptr inbounds nuw i8, ptr %.1.i, i64 40
-  %spec.select.i.i.i.i124.i = select i1 %.not.i.i.i.i122.i, ptr %4, ptr %i.cm
-  %i.cn = load ptr, ptr %spec.select.i.i.i.i124.i, align 8, !tbaa !184
+  %.not.i.i.i.i122.i = icmp eq i16 %i.cl, 118
+  %spec.select.v.i.i.i.i123.i = select i1 %.not.i.i.i.i122.i, i64 48, i64 40
+  %i.cm = getelementptr inbounds nuw i8, ptr %.1.i, i64 %spec.select.v.i.i.i.i123.i
+  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !184
   %i.co = call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cn) #23
   br label %_ZNK5clang8QualType16getTypePtrOrNullEv.exit.thread.i
 
@@ -1924,7 +1918,7 @@ _ZN4llvm16dyn_cast_or_nullIN5clang16CXXConstructExprENS1_4ExprEEEDaPT0_.exit: ; 
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.k = add nsw i16 %i.j, -117
   %spec.select.i.i.i.i.i.i.i.i.i = icmp ult i16 %i.k, 2
-  %spec.select.i.i.i80 = select i1 %spec.select.i.i.i.i.i.i.i.i.i, ptr %i.h, ptr null ; 3 uses
+  %spec.select.i.i.i80 = select i1 %spec.select.i.i.i.i.i.i.i.i.i, ptr %i.h, ptr null ; 2 uses
   store ptr %spec.select.i.i.i80, ptr %i.a, align 8, !tbaa !212
   %.not63 = icmp eq ptr %spec.select.i.i.i80, null
   br i1 %.not63, label %bb.q, label %bb.c
@@ -1936,12 +1930,10 @@ bb.c:                                             ; preds = %_ZN4llvm16dyn_cast_
   br i1 %.not64, label %bb.q, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.not.i.i.i = icmp eq i16 %i.j, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %i.h, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.n = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i80, i64 40
-  %spec.select.i.i.i82 = select i1 %.not.i.i.i, ptr %3, ptr %i.n
-  %i.o = load ptr, ptr %spec.select.i.i.i82, align 8, !tbaa !184
+  %.not.i.i.i = icmp eq i16 %i.j, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 %spec.select.v.i.i.i
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !184
   %i.p = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.o) #23 ; 7 uses
   %.not65 = icmp eq ptr %i.p, null
   br i1 %.not65, label %bb.q, label %_ZN4llvm16dyn_cast_or_nullIN5clang16CXXConstructExprENS1_4ExprEEEDaPT0_.exit87
@@ -1952,7 +1944,7 @@ _ZN4llvm16dyn_cast_or_nullIN5clang16CXXConstructExprENS1_4ExprEEEDaPT0_.exit87: 
   %i.r = and i16 %i.q, 511                        ; 2 uses
   %i.s = add nsw i16 %i.r, -117
   %spec.select.i.i.i.i.i.i.i.i.i84 = icmp ult i16 %i.s, 2
-  %spec.select.i.i.i85 = select i1 %spec.select.i.i.i.i.i.i.i.i.i84, ptr %i.p, ptr null ; 3 uses
+  %spec.select.i.i.i85 = select i1 %spec.select.i.i.i.i.i.i.i.i.i84, ptr %i.p, ptr null ; 2 uses
   store ptr %spec.select.i.i.i85, ptr %i.b, align 8, !tbaa !212
   %.not66 = icmp eq ptr %spec.select.i.i.i85, null
   br i1 %.not66, label %bb.g, label %bb.e
@@ -1964,12 +1956,10 @@ bb.e:                                             ; preds = %_ZN4llvm16dyn_cast_
   br i1 %.not67, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %.not.i.i.i88 = icmp eq i16 %i.r, 118           ; 2 uses
-  %spec.select.i.i.i.i.i89 = select i1 %.not.i.i.i88, ptr %i.p, ptr null
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i89, i64 48
-  %i.v = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i85, i64 40
-  %spec.select.i.i.i90 = select i1 %.not.i.i.i88, ptr %4, ptr %i.v
-  %i.w = load ptr, ptr %spec.select.i.i.i90, align 8, !tbaa !184
+  %.not.i.i.i88 = icmp eq i16 %i.r, 118
+  %spec.select.v.i.i.i89 = select i1 %.not.i.i.i88, i64 48, i64 40
+  %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 %spec.select.v.i.i.i89
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !184
   %i.x = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.w) #23 ; 2 uses
   %.pre = load i16, ptr %i.x, align 8
   br label %bb.g

@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.lr.ph.i.i55.i.i.i.
   br i1 %.not53.i.i59.i.i.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i36.i.i.i.i, label %.lr.ph.i.i55.i.i.i.i
 
 _RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i36.i.i.i.i: ; preds = %bb.u, %.preheader56.i.i47.i.i.i.i.preheader, %.preheader56.i.i47.i.i.i.i, %bb.v, %.lr.ph.i.i55.i.i.i.i, %.preheader.i.i53.i.i.i.i, %bb.s, %bb.s, %bb.r
-  %.sroa.105.0.i37.i.i.i.i = phi i64 [ undef, %bb.s ], [ 0, %.preheader.i.i53.i.i.i.i ], [ undef, %bb.r ], [ undef, %bb.s ], [ undef, %.lr.ph.i.i55.i.i.i.i ], [ %i.dd, %bb.v ], [ undef, %bb.u ], [ undef, %.preheader56.i.i47.i.i.i.i.preheader ], [ %i.ct, %.preheader56.i.i47.i.i.i.i ]
+  %.sroa.105.0.i37.i.i.i.i = phi i64 [ undef, %bb.s ], [ 0, %.preheader.i.i53.i.i.i.i ], [ undef, %bb.r ], [ undef, %bb.s ], [ undef, %.lr.ph.i.i55.i.i.i.i ], [ %i.dd, %bb.v ], [ undef, %bb.u ], [ undef, %.preheader56.i.i47.i.i.i.i.preheader ], [ %i.ct, %.preheader56.i.i47.i.i.i.i ] ; 2 uses
   %.sink.i.i38.i.i.i.i = phi i1 [ true, %bb.s ], [ false, %.preheader.i.i53.i.i.i.i ], [ true, %bb.r ], [ true, %bb.s ], [ %i.cy, %bb.v ], [ %i.cy, %.lr.ph.i.i55.i.i.i.i ], [ true, %bb.u ], [ true, %.preheader56.i.i47.i.i.i.i.preheader ], [ false, %.preheader56.i.i47.i.i.i.i ] ; 2 uses
   %i.de = icmp eq i64 %.sroa.021.0.copyload.i.i.i.i, 0
   br i1 %i.de, label %_RNCNvMs2_Csf1gSX8u3EQ2_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0Cs9fPPV5zPXBl_5typst.exit.i.i.i.i, label %bb.w
@@ -215,8 +215,8 @@ bb.w:                                             ; preds = %_RNvMsv_NtCs3oUPovF
   br label %_RNCNvMs2_Csf1gSX8u3EQ2_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0Cs9fPPV5zPXBl_5typst.exit.i.i.i.i
 
 _RNCNvMs2_Csf1gSX8u3EQ2_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0Cs9fPPV5zPXBl_5typst.exit.i.i.i.i: ; preds = %bb.w, %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i36.i.i.i.i
-  %.sroa.3.0.i42.i.i.i.i = select i1 %.sink.i.i38.i.i.i.i, i64 undef, i64 %.sroa.105.0.i37.i.i.i.i ; 2 uses
-  %i.df = icmp eq i64 %.sroa.3.0.i42.i.i.i.i, 0
+  %.sroa.3.0.i42.i.i.i.i = select i1 %.sink.i.i38.i.i.i.i, i64 undef, i64 %.sroa.105.0.i37.i.i.i.i
+  %i.df = icmp eq i64 %.sroa.105.0.i37.i.i.i.i, 0
   %or.cond.not.i.i.i.i = select i1 %.sink.i.i38.i.i.i.i, i1 true, i1 %i.df
   br i1 %or.cond.not.i.i.i.i, label %bb.x, label %bb.ac
 

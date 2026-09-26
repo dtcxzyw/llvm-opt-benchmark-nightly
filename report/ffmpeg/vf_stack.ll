@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %.lr.ph573, %bb.ab
   %.0358572 = phi i32 [ 0, %.lr.ph573 ], [ %.1359.lcssa, %bb.ab ] ; 2 uses
   %.0360571 = phi i32 [ 0, %.lr.ph573 ], [ %i.io, %bb.ab ] ; 4 uses
   %.2375570 = phi i32 [ 0, %.lr.ph573 ], [ %i.in, %bb.ab ] ; 4 uses
-  %.3382569 = phi i32 [ 0, %.lr.ph573 ], [ %spec.select, %bb.ab ] ; 2 uses
+  %.3382569 = phi i32 [ 0, %.lr.ph573 ], [ %spec.select, %bb.ab ] ; 3 uses
   %.3392568 = phi i32 [ 0, %.lr.ph573 ], [ %i.im, %bb.ab ] ; 2 uses
   %i.ga = mul nsw i32 %i.fy, %.2375570
   %i.gb = sext i32 %i.ga to i64
@@ -319,8 +319,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %._crit_edge
   %.not437 = icmp eq i32 %.2375570, 0             ; 2 uses
-  %spec.select = select i1 %.not437, i32 %.0361.lcssa, i32 %.3382569 ; 3 uses
-  %.not438 = icmp eq i32 %spec.select, %.0361.lcssa
+  %.not438 = icmp eq i32 %.3382569, %.0361.lcssa
   %or.cond447 = select i1 %.not437, i1 true, i1 %.not438
   br i1 %or.cond447, label %bb.ab, label %bb.aa
 
@@ -329,6 +328,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %.thread
 
 bb.ab:                                            ; preds = %bb.z
+  %spec.select = select i1 %.not437, i32 %.0361.lcssa, i32 %.3382569 ; 2 uses
   %i.im = add nsw i32 %i.gf, %.3392568            ; 2 uses
   %i.in = add nuw nsw i32 %.2375570, 1            ; 2 uses
   %i.io = add nsw i32 %i.gf, %.0360571

@@ -96,13 +96,14 @@ bb.g:                                             ; preds = %bb.g, %dnscache_loc
   store i32 %i.v, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !83
   store i64 0, ptr %i.r, align 8, !tbaa !84
   call void @Curl_hash_clean_with_criterium(ptr noundef nonnull %.0.i, ptr noundef nonnull %1, ptr noundef nonnull @dnscache_entry_is_stale) #6
-  %i.w = load i64, ptr %i.r, align 8, !tbaa !84
+  %i.w = load i64, ptr %i.r, align 8, !tbaa !84   ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
   %i.x = call i64 @Curl_hash_count(ptr noundef nonnull %.0.i) #6
   %i.y = icmp ult i64 %i.x, 30000                 ; 2 uses
   %i.z = sdiv i64 %i.w, 2
-  %.1 = select i1 %i.y, i64 %.015, i64 %i.z       ; 2 uses
-  %.not = icmp eq i64 %.1, 0
+  %.1 = select i1 %i.y, i64 %.015, i64 %i.z
+  %.off = add i64 %i.w, 1
+  %.not = icmp ult i64 %.off, 3
   %or.cond19 = select i1 %i.y, i1 true, i1 %.not
   br i1 %or.cond19, label %bb.h, label %bb.g, !llvm.loop !106
 

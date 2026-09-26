@@ -205,9 +205,8 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %i.ao = add i8 %i.a, -3
-  %spec.select.i.i.i.i.i.i.i.i = icmp ult i8 %i.ao, -2 ; 2 uses
-  %spec.select.i.i19 = select i1 %spec.select.i.i.i.i.i.i.i.i, ptr null, ptr %0
-  %i.ap = getelementptr inbounds nuw i8, ptr %spec.select.i.i19, i64 8
+  %spec.select.i.i.i.i.i.i.i.i = icmp ult i8 %i.ao, -2
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   %spec.select1 = select i1 %spec.select.i.i.i.i.i.i.i.i, ptr null, ptr %i.ap
   br label %.thread
 
@@ -283,9 +282,8 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.o = add i8 %i.a, -3
-  %spec.select.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.o, -2 ; 2 uses
-  %spec.select.i.i19.i = select i1 %spec.select.i.i.i.i.i.i.i.i.i, ptr null, ptr %1
-  %i.p = getelementptr inbounds nuw i8, ptr %spec.select.i.i19.i, i64 8
+  %spec.select.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.o, -2
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   br i1 %spec.select.i.i.i.i.i.i.i.i.i, label %_ZN4llvm23ReplaceableMetadataImpl11getIfExistsERNS_8MetadataE.exit.thread, label %_ZN4llvm23ReplaceableMetadataImpl11getIfExistsERNS_8MetadataE.exit.thread13
 
 _ZN4llvm23ReplaceableMetadataImpl11getIfExistsERNS_8MetadataE.exit.thread13: ; preds = %_ZNK4llvm6MDNode10isResolvedEv.exit.thread.i, %bb.c, %bb.d
@@ -404,9 +402,8 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.o = add i8 %i.a, -3
-  %spec.select.i.i.i.i.i.i.i.i = icmp ult i8 %i.o, -2 ; 2 uses
-  %spec.select.i.i19 = select i1 %spec.select.i.i.i.i.i.i.i.i, ptr null, ptr %0
-  %i.p = getelementptr inbounds nuw i8, ptr %spec.select.i.i19, i64 8
+  %spec.select.i.i.i.i.i.i.i.i = icmp ult i8 %i.o, -2
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %spec.select1 = select i1 %spec.select.i.i.i.i.i.i.i.i, ptr null, ptr %i.p
   br label %.thread
 
@@ -527,9 +524,8 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.o = add i8 %i.a, -3
-  %spec.select.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.o, -2 ; 2 uses
-  %spec.select.i.i19.i = select i1 %spec.select.i.i.i.i.i.i.i.i.i, ptr null, ptr %1
-  %i.p = getelementptr inbounds nuw i8, ptr %spec.select.i.i19.i, i64 8
+  %spec.select.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.o, -2
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   br i1 %spec.select.i.i.i.i.i.i.i.i.i, label %_ZN4llvm23ReplaceableMetadataImpl11getIfExistsERNS_8MetadataE.exit.thread, label %_ZN4llvm23ReplaceableMetadataImpl11getIfExistsERNS_8MetadataE.exit.thread14
 
 _ZN4llvm23ReplaceableMetadataImpl11getIfExistsERNS_8MetadataE.exit.thread14: ; preds = %_ZNK4llvm6MDNode10isResolvedEv.exit.thread.i, %bb.c, %bb.d
