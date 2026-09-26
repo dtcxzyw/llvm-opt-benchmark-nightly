@@ -205,19 +205,18 @@ bb.nf:                                            ; preds = %bb.ne, %bb.nd
   br label %arch_set_bit.exit859
 
 arch_set_bit.exit859:                             ; preds = %.lr.ph1161, %arch_set_bit.exit859
-  %indvars.iv = phi i64 [ %i.iy, %.lr.ph1161 ], [ %indvars.iv.next, %arch_set_bit.exit859 ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.iy, %.lr.ph1161 ], [ %indvars.iv.next, %arch_set_bit.exit859 ] ; 5 uses
   %i.iz = trunc nuw nsw i64 %indvars.iv to i32
   call void @input_set_abs_params(ptr noundef %i.d, i32 noundef %i.iz, i32 noundef -1, i32 noundef 1, i32 noundef 0, i32 noundef 0) #12
   call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.ix, i64 range(i64 0, 4294967296) %indvars.iv) #14, !srcloc !22
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.ja = load i16, ptr %i.gi, align 2            ; 2 uses
   %i.jb = zext i16 %i.ja to i64
-  %4 = add nuw nsw i64 %i.jb, 2
-  %5 = icmp samesign ult i64 %indvars.iv.next, %4
+  %4 = icmp samesign ule i64 %indvars.iv, %i.jb
   %i.jc = load i32, ptr %i.a, align 4
   %i.jd = sext i32 %i.jc to i64
   %i.je = icmp slt i64 %indvars.iv, %i.jd
-  %i.jf = select i1 %5, i1 %i.je, i1 false
+  %i.jf = select i1 %4, i1 %i.je, i1 false
   br i1 %i.jf, label %arch_set_bit.exit859, label %._crit_edge, !llvm.loop !71
 
 ._crit_edge:                                      ; preds = %arch_set_bit.exit859, %bb.nf

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not356, label %._crit_edge253, label %.lr.ph252
 
 bb.e:                                             ; preds = %.lr.ph242, %._crit_edge
-  %indvars.iv273 = phi i64 [ 2, %.lr.ph242 ], [ %indvars.iv.next274, %._crit_edge ] ; 5 uses
+  %indvars.iv273 = phi i64 [ 2, %.lr.ph242 ], [ %indvars.iv.next274, %._crit_edge ] ; 6 uses
   %.0240 = phi i32 [ 0, %.lr.ph242 ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
   %.0170239 = phi i32 [ 2, %.lr.ph242 ], [ %i.dh, %._crit_edge ] ; 2 uses
   %i.r = and i32 %.0170239, 1
@@ -415,13 +415,12 @@ bb.p:                                             ; preds = %bb.n, %bb.o
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.df
   store i8 %.pre-phi298.a, ptr %i.dg, align 1, !tbaa !99
-  %indvars.iv.next274 = add nuw nsw i64 %indvars.iv273, 1 ; 2 uses
+  %indvars.iv.next274 = add nuw nsw i64 %indvars.iv273, 1
   %i.dh = add nuw nsw i32 %.0170239, 1
   %i.di = load i16, ptr %i.e, align 4, !tbaa !137 ; 2 uses
   %i.dj = zext i16 %i.di to i64
-  %1 = add nuw nsw i64 %i.dj, 2
-  %2 = icmp samesign ult i64 %indvars.iv.next274, %1
-  br i1 %2, label %bb.e, label %.preheader221, !llvm.loop !233
+  %.not266 = icmp samesign ugt i64 %indvars.iv273, %i.dj
+  br i1 %.not266, label %.preheader221, label %bb.e, !llvm.loop !233
 
 .lr.ph252:                                        ; preds = %.preheader221, %._crit_edge249
   %indvars.iv279 = phi i64 [ %indvars.iv.next280, %._crit_edge249 ], [ 2, %.preheader221 ] ; 4 uses
@@ -824,7 +823,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   br label %bb.ax
 
 .lr.ph260:                                        ; preds = %._crit_edge253.1, %._crit_edge258
-  %indvars.iv285 = phi i64 [ %indvars.iv.next286, %._crit_edge258 ], [ 2, %._crit_edge253.1 ] ; 3 uses
+  %indvars.iv285 = phi i64 [ %indvars.iv.next286, %._crit_edge258 ], [ 2, %._crit_edge253.1 ] ; 4 uses
   invoke void @_ZN6LibRaw11checkCancelEv(ptr noundef nonnull align 8 dereferenceable(768512) %0)
           to label %bb.aw unwind label %_ZNSt6vectorIhSaIhEED2Ev.exit.loopexit.split-lp.loopexit
 
@@ -962,12 +961,11 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %i.ok, label %vec.epilog.scalar.ph, label %._crit_edge258, !llvm.loop !238
 
 ._crit_edge258:                                   ; preds = %vec.epilog.scalar.ph, %bb.aw
-  %indvars.iv.next286 = add nuw nsw i64 %indvars.iv285, 1 ; 2 uses
+  %indvars.iv.next286 = add nuw nsw i64 %indvars.iv285, 1
   %i.ol = load i16, ptr %i.e, align 4, !tbaa !137 ; 2 uses
   %i.om = zext i16 %i.ol to i64
-  %3 = add nuw nsw i64 %i.om, 2
-  %4 = icmp samesign ult i64 %indvars.iv.next286, %3
-  br i1 %4, label %.lr.ph260, label %.preheader209, !llvm.loop !239
+  %.not268 = icmp samesign ugt i64 %indvars.iv285, %i.om
+  br i1 %.not268, label %.preheader209, label %.lr.ph260, !llvm.loop !239
 
 bb.ax:                                            ; preds = %.lr.ph265, %._crit_edge263
   %indvars.iv291 = phi i64 [ 0, %.lr.ph265 ], [ %indvars.iv.next292, %._crit_edge263 ] ; 3 uses

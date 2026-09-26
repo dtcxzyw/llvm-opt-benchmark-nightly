@@ -204,16 +204,15 @@ _kmalloc_noprof.exit:                             ; preds = %.preheader236.a
   br i1 %.not175, label %ext4_groupinfo_create_slab.exit.thread, label %.preheader235
 
 .preheader235:                                    ; preds = %_kmalloc_noprof.exit, %.preheader235
-  %indvars.iv254 = phi i64 [ %indvars.iv.next255, %.preheader235 ], [ 0, %_kmalloc_noprof.exit ] ; 2 uses
+  %indvars.iv254 = phi i64 [ %indvars.iv.next255, %.preheader235 ], [ 0, %_kmalloc_noprof.exit ] ; 3 uses
   %i.bv = load ptr, ptr %i.bu, align 8
   %i.bw = getelementptr [16 x i8], ptr %i.bv, i64 %indvars.iv254
   call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(16) %i.bw, i8 0, i64 16, i1 false)
-  %indvars.iv.next255 = add nuw nsw i64 %indvars.iv254, 1 ; 2 uses
+  %indvars.iv.next255 = add nuw nsw i64 %indvars.iv254, 1
   %i.bx = load i8, ptr %i.b, align 4
   %i.by = zext i8 %i.bx to i64
-  %2 = add nuw nsw i64 %i.by, 2
-  %3 = icmp samesign ult i64 %indvars.iv.next255, %2
-  br i1 %3, label %.preheader235, label %bb.h, !llvm.loop !99
+  %.not246 = icmp samesign ugt i64 %indvars.iv254, %i.by
+  br i1 %.not246, label %bb.h, label %.preheader235, !llvm.loop !99
 
 bb.h:                                             ; preds = %.preheader235
   %i.bz = getelementptr i8, ptr %.val, i64 728
@@ -616,18 +615,17 @@ bb.ad:                                            ; preds = %bb.ae
   br label %ext4_mb_avg_fragment_size_destroy.exit
 
 bb.ae:                                            ; preds = %bb.ae, %.preheader.i
-  %indvars.iv.i220 = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %bb.ae ] ; 2 uses
+  %indvars.iv.i220 = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %bb.ae ] ; 3 uses
   %i.ii = load ptr, ptr %i.ie, align 16
   %i.ij = getelementptr [16 x i8], ptr %i.ii, i64 %indvars.iv.i220
   call void @xa_destroy(ptr noundef %i.ij) #15
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i220, 1 ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i220, 1
   %i.ik = load ptr, ptr %i.ig, align 16
   %i.il = getelementptr i8, ptr %i.ik, i64 20
   %i.im = load i8, ptr %i.il, align 4
   %i.in = zext i8 %i.im to i64
-  %4 = add nuw nsw i64 %i.in, 2
-  %5 = icmp samesign ult i64 %indvars.iv.next.i, %4
-  br i1 %5, label %bb.ae, label %bb.ad, !llvm.loop !1
+  %.not8.i = icmp samesign ugt i64 %indvars.iv.i220, %i.in
+  br i1 %.not8.i, label %bb.ad, label %bb.ae, !llvm.loop !1
 
 ext4_mb_avg_fragment_size_destroy.exit:           ; preds = %ext4_groupinfo_create_slab.exit.thread, %bb.ad
   %i.io = getelementptr i8, ptr %.val, i64 856    ; 4 uses
@@ -646,18 +644,17 @@ bb.af:                                            ; preds = %bb.ag
   br label %ext4_mb_largest_free_orders_destroy.exit
 
 bb.ag:                                            ; preds = %bb.ag, %.preheader.i222
-  %indvars.iv.i223 = phi i64 [ 0, %.preheader.i222 ], [ %indvars.iv.next.i224, %bb.ag ] ; 2 uses
+  %indvars.iv.i223 = phi i64 [ 0, %.preheader.i222 ], [ %indvars.iv.next.i224, %bb.ag ] ; 3 uses
   %i.is = load ptr, ptr %i.io, align 8
   %i.it = getelementptr [16 x i8], ptr %i.is, i64 %indvars.iv.i223
   call void @xa_destroy(ptr noundef %i.it) #15
-  %indvars.iv.next.i224 = add nuw nsw i64 %indvars.iv.i223, 1 ; 2 uses
+  %indvars.iv.next.i224 = add nuw nsw i64 %indvars.iv.i223, 1
   %i.iu = load ptr, ptr %i.iq, align 16
   %i.iv = getelementptr i8, ptr %i.iu, i64 20
   %i.iw = load i8, ptr %i.iv, align 4
   %i.ix = zext i8 %i.iw to i64
-  %6 = add nuw nsw i64 %i.ix, 2
-  %7 = icmp samesign ult i64 %indvars.iv.next.i224, %6
-  br i1 %7, label %bb.ag, label %bb.af, !llvm.loop !2
+  %.not8.i225 = icmp samesign ugt i64 %indvars.iv.i223, %i.ix
+  br i1 %.not8.i225, label %bb.af, label %bb.ag, !llvm.loop !2
 
 ext4_mb_largest_free_orders_destroy.exit:         ; preds = %ext4_mb_avg_fragment_size_destroy.exit, %bb.af
   %i.iy = load ptr, ptr %i.h, align 32
@@ -1060,18 +1057,17 @@ bb.i:                                             ; preds = %bb.j
   br label %ext4_mb_avg_fragment_size_destroy.exit
 
 bb.j:                                             ; preds = %bb.j, %.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 3 uses
   %i.bp = load ptr, ptr %i.bl, align 16
   %i.bq = getelementptr [16 x i8], ptr %i.bp, i64 %indvars.iv.i
   tail call void @xa_destroy(ptr noundef %i.bq) #15
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %i.br = load ptr, ptr %i.bn, align 16
   %i.bs = getelementptr i8, ptr %i.br, i64 20
   %i.bt = load i8, ptr %i.bs, align 4
   %i.bu = zext i8 %i.bt to i64
-  %1 = add nuw nsw i64 %i.bu, 2
-  %2 = icmp samesign ult i64 %indvars.iv.next.i, %1
-  br i1 %2, label %bb.j, label %bb.i, !llvm.loop !1
+  %.not8.i = icmp samesign ugt i64 %indvars.iv.i, %i.bu
+  br i1 %.not8.i, label %bb.i, label %bb.j, !llvm.loop !1
 
 ext4_mb_avg_fragment_size_destroy.exit:           ; preds = %bb.h, %bb.i
   %i.bv = getelementptr i8, ptr %.val69, i64 856  ; 4 uses
@@ -1090,18 +1086,17 @@ bb.k:                                             ; preds = %bb.l
   br label %ext4_mb_largest_free_orders_destroy.exit
 
 bb.l:                                             ; preds = %bb.l, %.preheader.i76
-  %indvars.iv.i77 = phi i64 [ 0, %.preheader.i76 ], [ %indvars.iv.next.i78, %bb.l ] ; 2 uses
+  %indvars.iv.i77 = phi i64 [ 0, %.preheader.i76 ], [ %indvars.iv.next.i78, %bb.l ] ; 3 uses
   %i.bz = load ptr, ptr %i.bv, align 8
   %i.ca = getelementptr [16 x i8], ptr %i.bz, i64 %indvars.iv.i77
   tail call void @xa_destroy(ptr noundef %i.ca) #15
-  %indvars.iv.next.i78 = add nuw nsw i64 %indvars.iv.i77, 1 ; 2 uses
+  %indvars.iv.next.i78 = add nuw nsw i64 %indvars.iv.i77, 1
   %i.cb = load ptr, ptr %i.bx, align 16
   %i.cc = getelementptr i8, ptr %i.cb, i64 20
   %i.cd = load i8, ptr %i.cc, align 4
   %i.ce = zext i8 %i.cd to i64
-  %3 = add nuw nsw i64 %i.ce, 2
-  %4 = icmp samesign ult i64 %indvars.iv.next.i78, %3
-  br i1 %4, label %bb.l, label %bb.k, !llvm.loop !2
+  %.not8.i79 = icmp samesign ugt i64 %indvars.iv.i77, %i.ce
+  br i1 %.not8.i79, label %bb.k, label %bb.l, !llvm.loop !2
 
 ext4_mb_largest_free_orders_destroy.exit:         ; preds = %ext4_mb_avg_fragment_size_destroy.exit, %bb.k
   %i.cf = getelementptr i8, ptr %.val69, i64 736
@@ -1504,17 +1499,16 @@ bb.z:                                             ; preds = %._crit_edge.i54.i, 
   br label %.lr.ph.i56.i
 
 bb.aa:                                            ; preds = %ext4_mb_scan_groups_largest_free_order_range.exit.thread.i.i
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
   %i.eb = load ptr, ptr %i.a, align 8             ; 3 uses
   %i.ec = getelementptr i8, ptr %i.eb, i64 20
   %i.ed = load i8, ptr %i.ec, align 4
   %i.ee = zext i8 %i.ed to i64
-  %2 = add nuw nsw i64 %i.ee, 2
-  %3 = icmp samesign ult i64 %indvars.iv.next.i.i, %2
-  br i1 %3, label %.lr.ph.i56.i, label %._crit_edge.i54.i, !llvm.loop !206
+  %.not35.i.i = icmp samesign ugt i64 %indvars.iv.i.i, %i.ee
+  br i1 %.not35.i.i, label %._crit_edge.i54.i, label %.lr.ph.i56.i, !llvm.loop !206
 
 .lr.ph.i56.i:                                     ; preds = %bb.aa, %.lr.ph.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %i.ea, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.aa ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %i.ea, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.aa ] ; 3 uses
   %i.ef = phi ptr [ %i.ds, %.lr.ph.preheader.i.i ], [ %i.eb, %bb.aa ]
   %i.eg = getelementptr i8, ptr %i.ef, i64 864
   %.val.i29.i.i = load ptr, ptr %i.eg, align 32
@@ -1637,17 +1631,16 @@ mb_avg_fragment_size_order.exit.i.i:              ; preds = %bb.ah, %bb.ag
   br label %.lr.ph.i70.i
 
 bb.ai:                                            ; preds = %ext4_mb_scan_groups_avg_frag_order_range.exit.thread.i.i
-  %indvars.iv.next.i73.i = add nuw nsw i64 %indvars.iv.i71.i, 1 ; 2 uses
+  %indvars.iv.next.i73.i = add nuw nsw i64 %indvars.iv.i71.i, 1
   %i.ga = load ptr, ptr %i.a, align 8             ; 3 uses
   %i.gb = getelementptr i8, ptr %i.ga, i64 20
   %i.gc = load i8, ptr %i.gb, align 4
   %i.gd = zext i8 %i.gc to i64
-  %4 = add nuw nsw i64 %i.gd, 2
-  %5 = icmp samesign ult i64 %indvars.iv.next.i73.i, %4
-  br i1 %5, label %.lr.ph.i70.i, label %._crit_edge.i66.i, !llvm.loop !207
+  %.not40.i.i = icmp samesign ugt i64 %indvars.iv.i71.i, %i.gd
+  br i1 %.not40.i.i, label %._crit_edge.i66.i, label %.lr.ph.i70.i, !llvm.loop !207
 
 .lr.ph.i70.i:                                     ; preds = %bb.ai, %.lr.ph.preheader.i69.i
-  %indvars.iv.i71.i = phi i64 [ %i.fz, %.lr.ph.preheader.i69.i ], [ %indvars.iv.next.i73.i, %bb.ai ] ; 2 uses
+  %indvars.iv.i71.i = phi i64 [ %i.fz, %.lr.ph.preheader.i69.i ], [ %indvars.iv.next.i73.i, %bb.ai ] ; 3 uses
   %i.ge = phi ptr [ %i.fy, %.lr.ph.preheader.i69.i ], [ %i.ga, %bb.ai ]
   %i.gf = getelementptr i8, ptr %i.ge, i64 864
   %.val.i34.i.i = load ptr, ptr %i.gf, align 32
@@ -2050,7 +2043,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %.critedge
-  %indvars.iv = phi i64 [ %i.s, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 8 uses
+  %indvars.iv = phi i64 [ %i.s, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 9 uses
   %i.t = getelementptr [4 x i8], ptr %i.n, i64 %indvars.iv
   %i.u = load i32, ptr %i.t, align 4
   %i.v = icmp eq i32 %i.u, 0
@@ -2182,12 +2175,11 @@ bb.m:                                             ; preds = %bb.l
   br label %.loopexit
 
 .critedge:                                        ; preds = %mb_find_buddy.exit.thread, %bb.h, %bb.d
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.cl = load i8, ptr %i.i, align 4
   %i.cm = zext i8 %i.cl to i64
-  %2 = add nuw nsw i64 %i.cm, 2
-  %3 = icmp samesign ult i64 %indvars.iv.next, %2
-  br i1 %3, label %bb.d, label %.loopexit, !llvm.loop !401
+  %.not72 = icmp samesign ugt i64 %indvars.iv, %i.cm
+  br i1 %.not72, label %.loopexit, label %bb.d, !llvm.loop !401
 
 .loopexit:                                        ; preds = %.critedge, %bb.c, %bb.l, %bb.m, %bb.i
   ret void
