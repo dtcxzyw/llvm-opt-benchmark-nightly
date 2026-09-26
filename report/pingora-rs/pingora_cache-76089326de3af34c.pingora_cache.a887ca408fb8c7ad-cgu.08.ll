@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_RNvMs0_NtNtNtCs2aw
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef nonnull %2, ptr nonnull %3) unnamed_addr #5 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef nonnull %2, ptr nonnull %3) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [72 x i8], align 8                ; 10 uses
@@ -607,7 +607,7 @@ bb.c:                                             ; preds = %_RNvMs_NtCset5b41vf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !560
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
-  %i.u = call fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noundef %i.s, ptr %i.t)
+  %i.u = call fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noundef %i.s, ptr %i.t)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !560
   %i.v = ptrtoint ptr %i.u to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -895,7 +895,7 @@ _RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thre
   %i.cj = extractvalue { ptr, ptr } %i.ch, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ci) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cj) ]
-  %i.ck = call fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noundef %i.ci, ptr %i.cj)
+  %i.ck = call fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noundef %i.ci, ptr %i.cj)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !566
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ck, ptr %i.cl, align 8

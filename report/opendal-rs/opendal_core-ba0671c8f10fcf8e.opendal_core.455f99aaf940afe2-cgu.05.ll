@@ -204,7 +204,7 @@ begin_hunk_0
 @switch.table._RNvXsg_NtCs8HcOsDT3sMt_3url6parserNtB5_10ParseErrorNtNtCsgxBkk5gSRhY_4core3fmt5Debug3fmt.128 = private unnamed_addr constant [10 x ptr] [ptr @225, ptr @226, ptr @227, ptr @228, ptr @229, ptr @230, ptr @231, ptr @232, ptr @233, ptr @234], align 8
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -247,7 +247,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http3uri10InvalidUriECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 12) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http3uri10InvalidUriECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 12) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -296,7 +296,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http5error5ErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 7) %0, i8 %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http5error5ErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 7) %0, i8 %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -347,7 +347,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http6status17InvalidStatusCodeECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http6status17InvalidStatusCodeECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -394,7 +394,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs8HcOsDT3sMt_3url6parser10ParseErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 10) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs8HcOsDT3sMt_3url6parser10ParseErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 10) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -443,7 +443,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCsdMEyVxnODSb_10serde_json5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCsdMEyVxnODSb_10serde_json5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -486,7 +486,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7DeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7DeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [104 x i8], align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -529,7 +529,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7SeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7SeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -572,7 +572,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header4name17InvalidHeaderNameECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header4name17InvalidHeaderNameECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -619,7 +619,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value10ToStrErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value10ToStrErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -666,7 +666,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value18InvalidHeaderValueECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value18InvalidHeaderValueECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -713,7 +713,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core2io5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core2io5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -756,7 +756,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core3num5error13ParseIntErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 6) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core3num5error13ParseIntErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 6) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -805,7 +805,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCskkYVyhWgx5W_10serde_core2de5value5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCskkYVyhWgx5W_10serde_core2de5value5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1208,7 +1208,7 @@ bb.ad:                                            ; preds = %.body
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull ptr @_RNvMs_NtNtNtCs5XgW7KoffLW_12opendal_core8services6memory4coreNtB4_10MemoryCore3new() unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull ptr @_RNvMs_NtNtNtCs5XgW7KoffLW_12opendal_core8services6memory4coreNtB4_10MemoryCore3new() unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1611,7 +1611,7 @@ bb.a:
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -1625,7 +1625,7 @@ bb.a:
 _RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error18construct_from_stdNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorECs5XgW7KoffLW_12opendal_core.exit: ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.d = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.d = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.d
 
@@ -1656,51 +1656,51 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs76KlaVGnJsc_4http3uri10InvalidUriE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 12) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs76KlaVGnJsc_4http3uri10InvalidUriE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 12) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http3uri10InvalidUriECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 12) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http3uri10InvalidUriECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 12) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs76KlaVGnJsc_4http5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 7) %0, i8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs76KlaVGnJsc_4http5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 7) %0, i8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http5error5ErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 7) %0, i8 %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http5error5ErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 7) %0, i8 %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs76KlaVGnJsc_4http6status17InvalidStatusCodeE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs76KlaVGnJsc_4http6status17InvalidStatusCodeE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http6status17InvalidStatusCodeECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http6status17InvalidStatusCodeECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs8HcOsDT3sMt_3url6parser10ParseErrorE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 10) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCs8HcOsDT3sMt_3url6parser10ParseErrorE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 10) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs8HcOsDT3sMt_3url6parser10ParseErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 10) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs8HcOsDT3sMt_3url6parser10ParseErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 10) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCsdMEyVxnODSb_10serde_json5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtCsdMEyVxnODSb_10serde_json5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -1714,7 +1714,7 @@ bb.a:
 _RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error18construct_from_stdNtNtCsdMEyVxnODSb_10serde_json5error5ErrorECs5XgW7KoffLW_12opendal_core.exit: ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.d = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCsdMEyVxnODSb_10serde_json5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.d = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCsdMEyVxnODSb_10serde_json5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.d
 
@@ -1735,7 +1735,7 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtBN_2io5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noundef nonnull %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtBN_2io5error5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noundef nonnull %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -1749,7 +1749,7 @@ bb.a:
 _RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error18construct_from_stdNtNtNtCsgxBkk5gSRhY_4core2io5error5ErrorECs5XgW7KoffLW_12opendal_core.exit: ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.d = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core2io5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.d = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core2io5error5ErrorECs5XgW7KoffLW_12opendal_core(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.d
 
@@ -1770,18 +1770,18 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtBN_3num5error13ParseIntErrorE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 6) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtBN_3num5error13ParseIntErrorE4fromCs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 6) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core3num5error13ParseIntErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 6) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCsgxBkk5gSRhY_4core3num5error13ParseIntErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 6) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7DeErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7DeErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -1793,7 +1793,7 @@ bb.a:
 _RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error18construct_from_stdNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7DeErrorECs5XgW7KoffLW_12opendal_core.exit: ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.c = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7DeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.c = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7DeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.c
 
@@ -1814,7 +1814,7 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7SeErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7SeErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -1826,7 +1826,7 @@ bb.a:
 _RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error18construct_from_stdNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7SeErrorECs5XgW7KoffLW_12opendal_core.exit: ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.c = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7SeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.c = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs2GTOvRHBi2K_9quick_xml6errors9serialize7SeErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.c
 
@@ -1847,40 +1847,40 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs76KlaVGnJsc_4http6header4name17InvalidHeaderNameE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs76KlaVGnJsc_4http6header4name17InvalidHeaderNameE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header4name17InvalidHeaderNameECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header4name17InvalidHeaderNameECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs76KlaVGnJsc_4http6header5value10ToStrErrorE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs76KlaVGnJsc_4http6header5value10ToStrErrorE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value10ToStrErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value10ToStrErrorECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs76KlaVGnJsc_4http6header5value18InvalidHeaderValueE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCs76KlaVGnJsc_4http6header5value18InvalidHeaderValueE4fromCs5XgW7KoffLW_12opendal_core() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs9k3SxhrAWiO_3std9backtraceNtB5_9Backtrace7capture(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value18InvalidHeaderValueECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCs76KlaVGnJsc_4http6header5value18InvalidHeaderValueECs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCskkYVyhWgx5W_10serde_core2de5value5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull ptr @_RNvXs_NtCselJpgKOOZlr_6anyhow5errorNtB6_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtNtNtCskkYVyhWgx5W_10serde_core2de5value5ErrorE4fromCs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -1892,7 +1892,7 @@ bb.a:
 _RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error18construct_from_stdNtNtNtCskkYVyhWgx5W_10serde_core2de5value5ErrorECs5XgW7KoffLW_12opendal_core.exit: ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.c = call fastcc noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCskkYVyhWgx5W_10serde_core2de5value5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.c = call fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtNtCskkYVyhWgx5W_10serde_core2de5value5ErrorECs5XgW7KoffLW_12opendal_core(ptr noalias noundef nonnull %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.c
 

@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.3 = private unnamed_addr constant [50 x i8] c"invalid memory allocation request size %zu * %zu\0A\00", align 1
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @pg_malloc(i64 noundef %0) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @pg_malloc(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %spec.store.select.i = tail call i64 @llvm.umax.i64(i64 %0, i64 1)
   %i.a = tail call noalias ptr @malloc(i64 noundef %spec.store.select.i) #13 ; 2 uses
@@ -129,7 +129,7 @@ pg_malloc_internal.exit:                          ; preds = %pg_malloc_internal.
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @pg_realloc(ptr noundef captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @pg_realloc(ptr noundef captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq i64 %1, 0
@@ -158,7 +158,7 @@ declare i32 @pg_fprintf(ptr noundef, ptr noundef, ...) local_unnamed_addr #2
 declare void @exit(i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @pg_strdup(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @pg_strdup(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #0 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.b, label %bb.c
@@ -198,7 +198,7 @@ bb.a:
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #6
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @palloc(i64 noundef %0) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @palloc(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %spec.store.select.i = tail call i64 @llvm.umax.i64(i64 %0, i64 1)
   %i.a = tail call noalias ptr @malloc(i64 noundef %spec.store.select.i) #13 ; 2 uses
@@ -322,7 +322,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @pstrdup(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @pstrdup(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #0 {
 bb.a:
   %.not.i = icmp eq ptr %0, null
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -349,7 +349,7 @@ pg_strdup.exit:                                   ; preds = %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @pnstrdup(ptr nofree noundef readonly captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @pnstrdup(ptr nofree noundef readonly captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.b, label %bb.c
@@ -393,7 +393,7 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #8
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #9
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @repalloc(ptr noundef captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @repalloc(ptr noundef captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq i64 %1, 0
@@ -468,7 +468,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @pg_malloc_mul(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @pg_malloc_mul(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %1) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
@@ -621,7 +621,7 @@ pg_malloc_extended.exit:                          ; preds = %bb.d, %bb.f, %pg_ma
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @pg_realloc_mul(ptr noundef captures(address_is_null) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @pg_realloc_mul(ptr noundef captures(address_is_null) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 %2) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
@@ -654,7 +654,7 @@ pg_realloc.exit:                                  ; preds = %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @palloc_mul(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @palloc_mul(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %1) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
@@ -807,7 +807,7 @@ palloc_extended.exit:                             ; preds = %bb.d, %bb.f, %pg_ma
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @repalloc_mul(ptr noundef captures(address_is_null) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define dso_local noalias nonnull ptr @repalloc_mul(ptr noundef captures(address_is_null) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 %2) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1

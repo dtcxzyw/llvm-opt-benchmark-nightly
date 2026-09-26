@@ -205,7 +205,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.aw
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_ZN10serde_core3ser10Serializer11collect_seq17h3121c50c8bb62f3bE(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @_ZN10serde_core3ser10Serializer11collect_seq17h3121c50c8bb62f3bE(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val10 = load ptr, ptr %i.a, align 8, !nonnull !28, !noundef !28 ; 3 uses
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_ZN10serde_core3ser12SerializeMap15serialize_entry17h9b2a9c37623a8d40E(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef range(i64 12, 22) %2, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) unnamed_addr #1 {
+define internal fastcc noalias noundef align 8 ptr @_ZN10serde_core3ser12SerializeMap15serialize_entry17h9b2a9c37623a8d40E(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef range(i64 12, 22) %2, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) unnamed_addr #1 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6991)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !6991, !noalias !6992, !nonnull !28, !align !35, !noundef !28 ; 5 uses
@@ -716,7 +716,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 "_ZN10serde_core3ser5impls86_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$core..option..Option$LT$T$GT$$GT$9serialize17h3f6c72f7cfb91b40E.exit.i": ; preds = %_ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i
-  %i.ak = tail call fastcc noundef align 8 ptr @"_ZN10serde_json5value3ser81_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$serde_json..value..Value$GT$9serialize17hcf298494b73328fcE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %3, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.a) ; 2 uses
+  %i.ak = tail call fastcc noalias noundef align 8 ptr @"_ZN10serde_json5value3ser81_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$serde_json..value..Value$GT$9serialize17hcf298494b73328fcE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %3, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.a) ; 2 uses
   %.not.i = icmp eq ptr %i.ak, null
   br i1 %.not.i, label %bb.g, label %"_ZN88_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeMap$GT$15serialize_value17h7c88de191677cd44E.exit"
 
@@ -1119,7 +1119,7 @@ bb.bi:                                            ; preds = %bb.bf, %bb.be
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @"_ZN10serde_json5value3ser81_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$serde_json..value..Value$GT$9serialize17hcf298494b73328fcE"(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @"_ZN10serde_json5value3ser81_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$serde_json..value..Value$GT$9serialize17hcf298494b73328fcE"(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 1                ; 4 uses
   %i.b = alloca [40 x i8], align 1                ; 9 uses
@@ -1522,7 +1522,7 @@ bb.r:                                             ; preds = %bb.q
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef ptr @_ZN11lsp_harness7jsonrpc6Server10send_pause17h0993c8b3c236fb9dE(ptr noalias noundef align 8 dereferenceable(112) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef ptr @_ZN11lsp_harness7jsonrpc6Server10send_pause17h0993c8b3c236fb9dE(ptr noalias noundef align 8 dereferenceable(112) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 16 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 3 uses
@@ -1612,7 +1612,7 @@ bb.f:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef ptr @_ZN11lsp_harness7jsonrpc6Server12replace_file17hf488ee301c2a4e91E(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(112) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(88) %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef ptr @_ZN11lsp_harness7jsonrpc6Server12replace_file17hf488ee301c2a4e91E(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(112) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(88) %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [128 x i8], align 8               ; 19 uses
@@ -2015,7 +2015,7 @@ _ZN10serde_core3ser12SerializeMap15serialize_entry17h4f2fce116e75914bE.exit.i.i.
   store i8 58, ptr %i.gz, align 1, !noalias !23439
   %i.ha = add nuw i64 %i.gv, 1
   store i64 %i.ha, ptr %i.gr, align 8, !alias.scope !23438, !noalias !23437
-  %i.hb = invoke fastcc noundef align 8 ptr @"_ZN9lsp_types1_86_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..ClientCapabilities$GT$9serialize17h2bd87c333e64325dE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(936) %.sroa.855.0..sroa_idx.i, ptr noalias noundef align 8 dereferenceable(8) %i.gq)
+  %i.hb = invoke fastcc noalias noundef align 8 ptr @"_ZN9lsp_types1_86_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..ClientCapabilities$GT$9serialize17h2bd87c333e64325dE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(936) %.sroa.855.0..sroa_idx.i, ptr noalias noundef align 8 dereferenceable(8) %i.gq)
           to label %.noexc25.i.i.i.i.i unwind label %bb.ar, !noalias !23321 ; 2 uses
 
 .noexc25.i.i.i.i.i:                               ; preds = %_ZN10serde_core3ser12SerializeMap15serialize_entry17h4f2fce116e75914bE.exit.i.i.i.i.i.i.i.i.i.i.i
@@ -2418,7 +2418,7 @@ bb.h:                                             ; preds = %bb.g
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.h
-  %i.cq = invoke fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hd1a9549722c5cff0E"(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.bs)
+  %i.cq = invoke fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hd1a9549722c5cff0E"(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.bs)
           to label %bb.bb unwind label %.loopexit.split-lp
 
 "_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit": ; preds = %bb.f
@@ -2821,7 +2821,7 @@ bb.bq:                                            ; preds = %bb.bp
   store ptr %i.kp, ptr %.sroa.4.0..sroa_idx4.i, align 8, !noalias !24268
   %.sroa.1011.16..sroa.4.0..sroa_idx4.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bn, i64 40
   store <2 x i64> %i.le, ptr %.sroa.1011.16..sroa.4.0..sroa_idx4.i.sroa_idx, align 8, !noalias !24268
-  %i.li = invoke fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h49f9684de57ab835E"(ptr noalias noundef align 8 captures(address) dereferenceable(56) %i.bn, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.bp)
+  %i.li = invoke fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h49f9684de57ab835E"(ptr noalias noundef align 8 captures(address) dereferenceable(56) %i.bn, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.bp)
           to label %.thread97 unwind label %bb.bh
 
 .thread97:                                        ; preds = %"_ZN52_$LT$E$u20$as$u20$anyhow..context..ext..StdError$GT$11ext_context17he697b7610e0a09cdE.exit.i"
@@ -3224,7 +3224,7 @@ bb.nb:                                            ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef ptr @_ZN11lsp_harness7jsonrpc6Server4send17h0f2670fecb7a5d35E(ptr %.48.val, ptr nofree readonly captures(none) %.56.val, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(112) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef ptr @_ZN11lsp_harness7jsonrpc6Server4send17h0f2670fecb7a5d35E(ptr %.48.val, ptr nofree readonly captures(none) %.56.val, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(112) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [128 x i8], align 8               ; 19 uses
@@ -3581,7 +3581,7 @@ _ZN10serde_core3ser12SerializeMap15serialize_entry17h10bf954709f4ce16E.exit.i.i.
   store i8 58, ptr %i.dc, align 1, !noalias !24959
   %i.dd = add nuw i64 %i.cy, 1
   store i64 %i.dd, ptr %i.cu, align 8, !alias.scope !24958, !noalias !24957
-  %i.de = invoke fastcc noundef align 8 ptr @_ZN10serde_core3ser10Serializer11collect_seq17h3121c50c8bb62f3bE(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.ch, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cg)
+  %i.de = invoke fastcc noalias noundef align 8 ptr @_ZN10serde_core3ser10Serializer11collect_seq17h3121c50c8bb62f3bE(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.ch, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cg)
           to label %.noexc18.i unwind label %bb.t, !noalias !24960 ; 2 uses
 
 .noexc18.i:                                       ; preds = %_ZN10serde_core3ser12SerializeMap15serialize_entry17h10bf954709f4ce16E.exit.i.i.i.i.i.i.i
@@ -3961,7 +3961,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef ptr @_ZN11lsp_harness7jsonrpc6Server9send_file17h7202c2f29dc839fbE(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(112) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(88) %1, ptr noalias noundef nonnull readonly align 1 captures(none) %2, i64 noundef %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef ptr @_ZN11lsp_harness7jsonrpc6Server9send_file17h7202c2f29dc839fbE(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(112) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(88) %1, ptr noalias noundef nonnull readonly align 1 captures(none) %2, i64 noundef %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [128 x i8], align 8               ; 19 uses
@@ -4364,7 +4364,7 @@ bb.n:                                             ; preds = %_ZN3std2io17default
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_ZN6anyhow4kind5Adhoc3new17h0351cfcee6145591E(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_ZN6anyhow4kind5Adhoc3new17h0351cfcee6145591E(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -4376,7 +4376,7 @@ bb.a:
 "_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$20construct_from_adhoc17hab94eb97c1770d21E.exit": ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.c = call fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h2d6e91a3c4b97d0eE"(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
+  %i.c = call fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h2d6e91a3c4b97d0eE"(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.c
 
@@ -4779,7 +4779,7 @@ bb.i:                                             ; preds = %.body, %bb.f
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$3msg17h792e733ac900a247E"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$3msg17h792e733ac900a247E"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -4791,7 +4791,7 @@ bb.a:
 "_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$20construct_from_adhoc17hab94eb97c1770d21E.exit": ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.c = call fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h2d6e91a3c4b97d0eE"(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
+  %i.c = call fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h2d6e91a3c4b97d0eE"(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %i.c
 
@@ -4815,7 +4815,7 @@ bb.c:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h2d6e91a3c4b97d0eE"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h2d6e91a3c4b97d0eE"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [80 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4858,7 +4858,7 @@ bb.e:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h49f9684de57ab835E"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h49f9684de57ab835E"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4901,7 +4901,7 @@ bb.e:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h8fa325f6bdf1c0fdE"(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h8fa325f6bdf1c0fdE"(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4944,7 +4944,7 @@ bb.e:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17ha74da4a90167bd44E"(ptr noalias noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17ha74da4a90167bd44E"(ptr noalias noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4987,7 +4987,7 @@ bb.e:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hc76a2bb4fa3be0b7E"(i8 noundef range(i8 0, 5) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hc76a2bb4fa3be0b7E"(i8 noundef range(i8 0, 5) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5030,7 +5030,7 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hd1a9549722c5cff0E"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hd1a9549722c5cff0E"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5075,7 +5075,7 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17h8072883e216f0184E"(ptr noundef nonnull %0) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17h8072883e216f0184E"(ptr noundef nonnull %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 2 uses
@@ -5088,7 +5088,7 @@ bb.a:
 "_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$18construct_from_std17h275c623054df4a2bE.exit": ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.d = call fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h8fa325f6bdf1c0fdE"(ptr noundef nonnull %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
+  %i.d = call fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17h8fa325f6bdf1c0fdE"(ptr noundef nonnull %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   ret ptr %i.d
 
 bb.b:                                             ; preds = %bb.c
@@ -5108,16 +5108,16 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17h84ef7a26cbe0b75cE"(i8 noundef range(i8 0, 5) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17h84ef7a26cbe0b75cE"(i8 noundef range(i8 0, 5) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 2 uses
   call void @_ZN3std9backtrace9Backtrace7capture17hfe657b1debc7ecd5E(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hc76a2bb4fa3be0b7E"(i8 noundef range(i8 0, 5) %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a)
+  %i.b = call fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17hc76a2bb4fa3be0b7E"(i8 noundef range(i8 0, 5) %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17hee33797341eabdd8E"(ptr noalias noundef nonnull align 8 %0) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17hee33797341eabdd8E"(ptr noalias noundef nonnull align 8 %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 2 uses
@@ -5130,7 +5130,7 @@ bb.a:
 "_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$18construct_from_std17h256ac404889d5562E.exit": ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.d = call fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17ha74da4a90167bd44E"(ptr noalias noundef nonnull align 8 %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
+  %i.d = call fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$9construct17ha74da4a90167bd44E"(ptr noalias noundef nonnull align 8 %0, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   ret ptr %i.d
 
 bb.b:                                             ; preds = %bb.c
@@ -5533,7 +5533,7 @@ _ZN10serde_core3ser12SerializeMap15serialize_entry17h12b847f2424f0830E.exit: ; p
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17h52414fd0b8c82780E"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17h52414fd0b8c82780E"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59815)
@@ -5936,7 +5936,7 @@ _ZN10serde_core3ser12SerializeMap15serialize_entry17h3f0ea0003678eb98E.exit: ; p
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17h8725bcecdb54237dE"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef range(i64 11, 13) %2, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) unnamed_addr #0 {
+define internal fastcc noalias noundef align 8 ptr @"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17h8725bcecdb54237dE"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef range(i64 11, 13) %2, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) unnamed_addr #0 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61674)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61675)
@@ -6339,7 +6339,7 @@ _ZN10serde_core3ser12SerializeMap15serialize_entry17h844b217b95cae474E.exit: ; p
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17hd27a190834708ba2E"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17hd27a190834708ba2E"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62240)
@@ -6742,7 +6742,7 @@ bb.cm:                                            ; preds = %.body
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @"_ZN9lsp_types1_86_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..ClientCapabilities$GT$9serialize17h2bd87c333e64325dE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(936) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @"_ZN9lsp_types1_86_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..ClientCapabilities$GT$9serialize17h2bd87c333e64325dE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(936) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 9 uses
@@ -7145,7 +7145,7 @@ bb.go:                                            ; preds = %"_ZN88_$LT$serde_js
   store i8 58, ptr %i.aht, align 1, !noalias !71349
   %i.ahu = add nuw i64 %i.ahp, 1
   store i64 %i.ahu, ptr %i.ahl, align 8, !alias.scope !71348, !noalias !71347
-  %i.ahv = tail call fastcc noundef align 8 ptr @"_ZN9lsp_types1_98_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..TextDocumentClientCapabilities$GT$9serialize17h29ee3bea61d8554fE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(584) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %i.agy), !noalias !71350 ; 2 uses
+  %i.ahv = tail call fastcc noalias noundef align 8 ptr @"_ZN9lsp_types1_98_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..TextDocumentClientCapabilities$GT$9serialize17h29ee3bea61d8554fE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(584) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %i.agy), !noalias !71350 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ahv, null
   br i1 %.not.i.i.i, label %"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17he1c772983012d6b4E.exit.thread", label %"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17he1c772983012d6b4E.exit"
 
@@ -7548,7 +7548,7 @@ _ZN10serde_json3ser9Formatter10end_object17h325f3d47e1b1e2e2E.exit.i.i95.i.i.i.i
   br i1 %.not51, label %bb.kg, label %bb.kh
 
 bb.kg:                                            ; preds = %"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17h43cdcb1e12291d8fE.exit.thread"
-  %i.bat = call fastcc noundef align 8 ptr @_ZN10serde_core3ser12SerializeMap15serialize_entry17h9b2a9c37623a8d40E(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.r, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @547, i64 noundef 12, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ac) ; 2 uses
+  %i.bat = call fastcc noalias noundef align 8 ptr @_ZN10serde_core3ser12SerializeMap15serialize_entry17h9b2a9c37623a8d40E(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.r, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @547, i64 noundef 12, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ac) ; 2 uses
   %.not64 = icmp eq ptr %i.bat, null
   br i1 %.not64, label %bb.kh, label %"_ZN91_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeStruct$GT$15serialize_field17he1c772983012d6b4E.exit"
 
@@ -7595,7 +7595,7 @@ _ZN10serde_json3ser9Formatter10end_object17h325f3d47e1b1e2e2E.exit.i.i179: ; pre
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @"_ZN9lsp_types1_98_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..TextDocumentClientCapabilities$GT$9serialize17h29ee3bea61d8554fE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(584) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @"_ZN9lsp_types1_98_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$lsp_types..TextDocumentClientCapabilities$GT$9serialize17h29ee3bea61d8554fE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(584) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 10 uses
   %i.b = alloca [16 x i8], align 8                ; 6 uses

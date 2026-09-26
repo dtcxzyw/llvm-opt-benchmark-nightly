@@ -13,14 +13,14 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.5 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @gzopen(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
+define noalias noundef ptr @gzopen(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc ptr @gz_open(ptr noundef %0, i32 noundef -1, ptr noundef %1)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @gz_open(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2) unnamed_addr #0 {
+define internal fastcc noalias noundef ptr @gz_open(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2) unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %2, null
@@ -298,14 +298,14 @@ bb.al:                                            ; preds = %bb.b, %bb.a, %gz_re
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @gzopen64(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
+define noalias noundef ptr @gzopen64(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc ptr @gz_open(ptr noundef %0, i32 noundef -1, ptr noundef %1)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @gzdopen(i32 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
+define noalias noundef ptr @gzdopen(i32 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i32 %0, -1
   br i1 %i.a, label %bb.d, label %bb.b

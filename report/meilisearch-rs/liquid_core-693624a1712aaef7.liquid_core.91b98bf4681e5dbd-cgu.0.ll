@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.body
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 10 uses
   %.sroa.0.0.copyload = load ptr, ptr %0, align 8 ; 3 uses
@@ -470,7 +470,7 @@ bb.i:                                             ; preds = %"_ZN4core3ptr85drop
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core5model3ser20key_must_be_a_string17hd8397ed50d19af25E() unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core5model3ser20key_must_be_a_string17hd8397ed50d19af25E() unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -485,7 +485,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core5model3ser8SerError12invalid_type17ha5a42d70a1dc4bbeE(ptr noundef nonnull align 1 %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(160) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core5model3ser8SerError12invalid_type17ha5a42d70a1dc4bbeE(ptr noundef nonnull align 1 %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(160) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [15 x i8], align 8                ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -602,7 +602,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core5model3ser8SerError12unknown_type17h5ade88046dbcce21E(ptr noundef nonnull align 1 %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(160) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core5model3ser8SerError12unknown_type17h5ade88046dbcce21E(ptr noundef nonnull align 1 %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(160) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [15 x i8], align 8                ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -1005,7 +1005,7 @@ bb.e:                                             ; preds = %"_ZN9hashbrown3raw2
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core5model6object3ser25object_cannot_be_a_scalar17h7c7bbba1f18deda3E() unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core5model6object3ser25object_cannot_be_a_scalar17h7c7bbba1f18deda3E() unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1408,7 +1408,7 @@ bb.d:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core5model6scalar3ser23scalar_must_be_a_string17hd619324c6cdf633dE() unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core5model6scalar3ser23scalar_must_be_a_string17hd619324c6cdf633dE() unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1811,7 +1811,7 @@ _ZN11liquid_core6parser6parser12TagTokenIter11raise_error17h8aed728ee11bd026E.ex
   call fastcc void @"_ZN4pest5error14Error$LT$R$GT$12new_from_pos17h1834878f83f7e23aE"(ptr noalias noundef align 8 captures(address) dereferenceable(120) %i.c, ptr noalias noundef align 8 captures(address) dereferenceable(48) %i.b, ptr noalias noundef readonly align 8 captures(address) dereferenceable(24) %i.a), !noalias !4742
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !4742
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !4742
-  %i.l = call fastcc noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser18convert_pest_error17h1b49e119442899d5E(ptr noalias noundef align 8 captures(address) dereferenceable(120) %i.c), !noalias !4742
+  %i.l = call fastcc noalias noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser18convert_pest_error17h1b49e119442899d5E(ptr noalias noundef align 8 captures(address) dereferenceable(120) %i.c), !noalias !4742
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.l, ptr %i.m, align 8
@@ -1824,7 +1824,7 @@ bb.e:                                             ; preds = %_ZN11liquid_core6pa
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser12TagTokenIter11raise_error17h8aed728ee11bd026E(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser12TagTokenIter11raise_error17h8aed728ee11bd026E(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 7 uses
@@ -1869,7 +1869,7 @@ bb.b:                                             ; preds = %"_ZN63_$LT$alloc..a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef align 8 ptr @_ZN11liquid_core6parser6parser12TagTokenIter14expect_nothing17h9ba7d5fd9938dd14E(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #1 {
+define noalias noundef align 8 ptr @_ZN11liquid_core6parser6parser12TagTokenIter14expect_nothing17h9ba7d5fd9938dd14E(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 3 uses
   call void @"_ZN100_$LT$liquid_core..parser..parser..TagTokenIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hf73ba06344106499E"(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(40) %0)
@@ -2272,7 +2272,7 @@ bb.k:                                             ; preds = %"_ZN4core3ptr98drop
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser15error_from_pair17h610605060f03e103E(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser15error_from_pair17h610605060f03e103E(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [48 x i8], align 8                ; 6 uses
@@ -2675,7 +2675,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser18convert_pest_error17h1b49e119442899d5E(ptr noalias nofree noundef nonnull align 8 captures(none) dead_on_return dereferenceable(120) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser18convert_pest_error17h1b49e119442899d5E(ptr noalias nofree noundef nonnull align 8 captures(none) dead_on_return dereferenceable(120) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [15 x i8], align 8                ; 6 uses
@@ -3078,7 +3078,7 @@ bb.i:                                             ; preds = %"_ZN4core3ptr96drop
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser8TagToken11raise_error17hf92ecdb3f3700967E(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(64) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser8TagToken11raise_error17hf92ecdb3f3700967E(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(64) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [48 x i8], align 8                ; 10 uses
@@ -3481,7 +3481,7 @@ bb.ao:                                            ; preds = %bb.ae, %bb.af
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser8TagToken18raise_custom_error17h4d2cf0e699454331E(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(64) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_ZN11liquid_core6parser6parser8TagToken18raise_custom_error17h4d2cf0e699454331E(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(64) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -3884,7 +3884,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -3902,7 +3902,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -4305,7 +4305,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_map17h3682d48c3bdf71f5E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_map17h3682d48c3bdf71f5E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4314,13 +4314,13 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_seq17hbbd2eb67cbe50c29E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_seq17hbbd2eb67cbe50c29E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4329,7 +4329,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -4557,7 +4557,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -4575,7 +4575,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -4593,7 +4593,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -4611,7 +4611,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -4620,7 +4620,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$15serialize_tuple17h1e5e24d16736ee8dE"(i64 noundef %0) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$15serialize_tuple17h1e5e24d16736ee8dE"(i64 noundef %0) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4629,13 +4629,13 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$16serialize_struct17h920d718328817012E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$16serialize_struct17h920d718328817012E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4644,7 +4644,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -4659,7 +4659,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -4668,7 +4668,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$22serialize_tuple_struct17haf0b85ab49ad928bE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$22serialize_tuple_struct17haf0b85ab49ad928bE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4677,13 +4677,13 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$23serialize_tuple_variant17h2fca5b477445ec00E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$23serialize_tuple_variant17h2fca5b477445ec00E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4692,13 +4692,13 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$24serialize_struct_variant17hab29c8ff386aadffE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN89_$LT$liquid_core..model..ser..MapKeySerializer$u20$as$u20$serde_core..ser..Serializer$GT$24serialize_struct_variant17hab29c8ff386aadffE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4707,7 +4707,7 @@ bb.a:
   store i64 21, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -5110,7 +5110,7 @@ bb.f:                                             ; preds = %bb.a, %bb.e, %bb.d,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef align 8 ptr @"_ZN96_$LT$liquid_core..parser..text..Text$u20$as$u20$liquid_core..runtime..renderable..Renderable$GT$9render_to17h47758e2ea333665cE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noundef nonnull align 1 %1, ptr noalias noundef readonly align 8 captures(none) dereferenceable(80) %2, ptr nofree nonnull readnone align 1 captures(none) %3, ptr noalias readonly align 8 captures(none) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef align 8 ptr @"_ZN96_$LT$liquid_core..parser..text..Text$u20$as$u20$liquid_core..runtime..renderable..Renderable$GT$9render_to17h47758e2ea333665cE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noundef nonnull align 1 %1, ptr noalias noundef readonly align 8 captures(none) dereferenceable(80) %2, ptr nofree nonnull readnone align 1 captures(none) %3, ptr noalias readonly align 8 captures(none) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -5186,7 +5186,7 @@ bb.a:
   store i64 26, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -5234,7 +5234,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..object..ser..ObjectSerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_seq17ha4c1e4301831ced7E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..object..ser..ObjectSerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_seq17ha4c1e4301831ced7E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5243,7 +5243,7 @@ bb.a:
   store i64 26, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -5258,7 +5258,7 @@ bb.a:
   store i64 26, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -5267,7 +5267,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..object..ser..ObjectSerializer$u20$as$u20$serde_core..ser..Serializer$GT$15serialize_tuple17h11a626243a6d0580E"(i64 noundef %0) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..object..ser..ObjectSerializer$u20$as$u20$serde_core..ser..Serializer$GT$15serialize_tuple17h11a626243a6d0580E"(i64 noundef %0) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5276,7 +5276,7 @@ bb.a:
   store i64 26, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -5322,7 +5322,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..object..ser..ObjectSerializer$u20$as$u20$serde_core..ser..Serializer$GT$22serialize_tuple_struct17hd3e691bb0283029bE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..object..ser..ObjectSerializer$u20$as$u20$serde_core..ser..Serializer$GT$22serialize_tuple_struct17hd3e691bb0283029bE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5331,7 +5331,7 @@ bb.a:
   store i64 26, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -5421,7 +5421,7 @@ bb.b:                                             ; preds = %"_ZN3std3sys12threa
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_map17h59f83211b6c9c87dE"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_map17h59f83211b6c9c87dE"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5430,13 +5430,13 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_seq17h9bfe4712acccd7d5E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_seq17h9bfe4712acccd7d5E"(i64 noundef range(i64 0, 2) %0, i64 %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5445,7 +5445,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -5460,7 +5460,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -5478,7 +5478,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -5496,7 +5496,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -5505,7 +5505,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$15serialize_tuple17h35a8b8eb99b508dbE"(i64 noundef %0) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$15serialize_tuple17h35a8b8eb99b508dbE"(i64 noundef %0) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5514,13 +5514,13 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$16serialize_struct17hc8fb4cff5f5b3670E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$16serialize_struct17hc8fb4cff5f5b3670E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5529,7 +5529,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -5544,7 +5544,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
@@ -5553,7 +5553,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$22serialize_tuple_struct17h158a1b1e59e92947E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$22serialize_tuple_struct17h158a1b1e59e92947E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5562,7 +5562,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
@@ -5622,7 +5622,7 @@ bb.d:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$23serialize_tuple_variant17hdd8afb6505629fb9E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$23serialize_tuple_variant17hdd8afb6505629fb9E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5631,13 +5631,13 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$24serialize_struct_variant17h048c74c8956a9bb3E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
+define noalias noundef nonnull align 8 ptr @"_ZN97_$LT$liquid_core..model..scalar..ser..ScalarSerializer$u20$as$u20$serde_core..ser..Serializer$GT$24serialize_struct_variant17h048c74c8956a9bb3E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, i64 noundef %1, i32 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(none) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5646,7 +5646,7 @@ bb.a:
   store i64 24, ptr %.sroa.42.0..sroa_idx.i, align 8
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i8 0, ptr %.sroa.64.0..sroa_idx.i, align 1
-  %i.b = call noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
+  %i.b = call noalias noundef nonnull align 8 ptr @_ZN11liquid_core5error5error5Error12with_msg_cow17h5a84d6384d669046E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }

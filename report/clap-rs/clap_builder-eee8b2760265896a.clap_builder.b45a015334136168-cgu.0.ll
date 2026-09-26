@@ -205,7 +205,7 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE15append_elementsCsfu0rQaTkGUu_12cl
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RINvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB5_6Parser21parse_help_subcommandINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringENCNvMCs3RZUOUhPFQ6_8clap_lexNtB3r_7RawArgs9remaining0EEB9_(ptr nofree nonnull readonly captures(address, read_provenance) %.16.val, ptr nofree noundef nonnull readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RINvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB5_6Parser21parse_help_subcommandINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringENCNvMCs3RZUOUhPFQ6_8clap_lexNtB3r_7RawArgs9remaining0EEB9_(ptr nofree nonnull readonly captures(address, read_provenance) %.16.val, ptr nofree noundef nonnull readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -293,7 +293,7 @@ _RNCINvMs2_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB8_7Command15find_s
   %.sroa.06.0.lcssa = phi ptr [ %i.k, %bb.a ], [ %i.cj, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsfu0rQaTkGUu_12clap_builder.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call fastcc void @_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command14write_help_err(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %.sroa.06.0.lcssa, i1 noundef zeroext true) #43
-  %i.am = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %.sroa.06.0.lcssa, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.f) #42
+  %i.am = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %.sroa.06.0.lcssa, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.f) #42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.d
 
@@ -696,7 +696,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #43, !noalias !1364
@@ -811,7 +811,7 @@ bb.d:                                             ; preds = %bb.c, %_RNvNtCs4wP2
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %2, i64 noundef range(i64 0, 384307168202282326) %3, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %2, i64 noundef range(i64 0, 384307168202282326) %3, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 9 uses
@@ -1214,7 +1214,7 @@ bb.r:                                             ; preds = %bb.q, %_RNvXNtNtCs4
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error15too_many_valuesB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error15too_many_valuesB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.49 = alloca [31 x i8], align 1           ; 2 uses
@@ -1350,7 +1350,7 @@ bb.d:                                             ; preds = %bb.c, %_RNvNtCs4wP2
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error16unknown_argumentB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2, i1 noundef zeroext %3, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error16unknown_argumentB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2, i1 noundef zeroext %3, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [32 x i8], align 8                ; 5 uses
@@ -1732,7 +1732,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error16value_validationB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef nonnull %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error16value_validationB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef nonnull %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.48 = alloca [31 x i8], align 1           ; 2 uses
   %.sroa.44 = alloca [31 x i8], align 1           ; 2 uses
@@ -1854,7 +1854,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error17argument_conflictB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error17argument_conflictB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.4 = alloca [31 x i8], align 1            ; 2 uses
@@ -2055,7 +2055,7 @@ bb.i:                                             ; preds = %_RNvXsp_NtCs4wP2HXf
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error19subcommand_conflictB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error19subcommand_conflictB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.4 = alloca [31 x i8], align 1            ; 2 uses
@@ -2256,7 +2256,7 @@ bb.i:                                             ; preds = %_RNvXsp_NtCs4wP2HXf
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error23unrecognized_subcommandB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error23unrecognized_subcommandB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.45 = alloca [31 x i8], align 1           ; 2 uses
@@ -2646,7 +2646,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder6outpu
 }
 
 ; Function Attrs: noinline nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef range(i8 12, 15) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef range(i8 12, 15) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #43, !noalias !1577
   %i.a = tail call noundef align 8 dereferenceable_or_null(256) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 256, i64 noundef range(i64 1, 9) 8) #43, !noalias !1577 ; 49 uses
@@ -2912,7 +2912,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error9no_equalsB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error9no_equalsB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.45 = alloca [31 x i8], align 1           ; 2 uses
@@ -3315,7 +3315,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsfu0rQaTk
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator18validate_conflicts(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(120) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator18validate_conflicts(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(120) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 3 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
@@ -3635,7 +3635,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator18validate_
   call fastcc void @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr8trim_end(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ab) #43, !noalias !2186, !inline_history !23
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ag, ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i64 24, i1 false), !noalias !2187
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !2183
-  %i.dz = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error17argument_conflictB4_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.au, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.ai, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.ah, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.ag) #43, !noalias !2188
+  %i.dz = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error17argument_conflictB4_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.au, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.ai, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.ah, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.ag) #43, !noalias !2188
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !2170
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !2170
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !2170
@@ -4038,7 +4038,7 @@ _RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB4_6Parser17add_default_v
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB4_6Parser15match_arg_error(ptr nofree noundef nonnull readonly align 8 captures(none) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, i1 noundef zeroext %2, i1 noundef zeroext %3, ptr nofree readonly captures(address) %.72.val, i64 %.80.val) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB4_6Parser15match_arg_error(ptr nofree noundef nonnull readonly align 8 captures(none) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, i1 noundef zeroext %2, i1 noundef zeroext %3, ptr nofree readonly captures(address) %.72.val, i64 %.80.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 2 uses
   %i.b = alloca [16 x i8], align 16               ; 4 uses
@@ -4441,7 +4441,7 @@ _RNvXs1_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filterINtB5_6FilterINtNtNtCsfu0r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eh), !noalias !10889
   call fastcc void @_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command14write_help_err(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.eh, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.cdv, i1 noundef zeroext false) #43, !noalias !10888
   %i.cfb = load ptr, ptr %i.cck, align 8, !alias.scope !10887, !noalias !10888, !nonnull !11, !align !17, !noundef !11
-  %i.cfc = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 13, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.cfb, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.eh) #42, !noalias !10888
+  %i.cfc = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 13, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.cfb, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.eh) #42, !noalias !10888
   call void @llvm.lifetime.end.p0(ptr nonnull %i.eh), !noalias !10889
   br label %bb.oy
 
@@ -4844,7 +4844,7 @@ _RNvXsC_NtCs4wP2HXfJTCR_5alloc6stringNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx.i19.i, align 8, !noalias !11716
   %.sroa.5.0..sroa_idx.i20.i = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx.i20.i, align 8, !noalias !11716
-  %i.ep = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.cc, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.ah, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %.sroa.5164.0.i, i64 noundef range(i64 0, 384307168202282326) %.sroa.8165.0.i, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.av) #43, !noalias !11690
+  %i.ep = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.cc, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.ah, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %.sroa.5164.0.i, i64 noundef range(i64 0, 384307168202282326) %.sroa.8165.0.i, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.av) #43, !noalias !11690
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !11716
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !11690
   call void @llvm.experimental.noalias.scope.decl(metadata !11717)
@@ -5247,7 +5247,7 @@ bb.de:                                            ; preds = %bb.cy
   %i.rd = load ptr, ptr %i.rc, align 8, !nonnull !11, !align !17, !noundef !11
   call fastcc void @_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command14write_help_err(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.h, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.rd, i1 noundef zeroext %i.rb) #43
   %i.re = load ptr, ptr %i.rc, align 8, !nonnull !11, !align !17, !noundef !11
-  %i.rf = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.re, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.h) #42
+  %i.rf = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.re, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.h) #42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   br label %.sink.split
 
@@ -5257,7 +5257,7 @@ bb.df:                                            ; preds = %bb.cy
   %i.rh = load ptr, ptr %i.rg, align 8, !nonnull !11, !align !17, !noundef !11
   call fastcc void @_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command14write_help_err(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.rh, i1 noundef zeroext false) #43
   %i.ri = load ptr, ptr %i.rg, align 8, !nonnull !11, !align !17, !noundef !11
-  %i.rj = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.ri, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.g) #42
+  %i.rj = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.ri, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.g) #42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %.sink.split
 
@@ -5267,7 +5267,7 @@ bb.dg:                                            ; preds = %bb.cy
   %i.rl = load ptr, ptr %i.rk, align 8, !nonnull !11, !align !17, !noundef !11
   call fastcc void @_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command14write_help_err(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.rl, i1 noundef zeroext true) #43
   %i.rm = load ptr, ptr %i.rk, align 8, !nonnull !11, !align !17, !noundef !11
-  %i.rn = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.rm, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.f) #42
+  %i.rn = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.rm, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.f) #42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.sink.split
 
@@ -5361,7 +5361,7 @@ _RNvMs0_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB5_6Parser11version_err.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !11821
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !11821
   %i.sn = load ptr, ptr %i.ro, align 8, !nonnull !11, !align !17, !noundef !11
-  %i.so = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 14, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.sn, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.e) #42
+  %i.so = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 14, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(712) %i.sn, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.e) #42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %.sink.split
 
@@ -5764,7 +5764,7 @@ _RNvXs2_NtNtCsfu0rQaTkGUu_12clap_builder7builder3strNtNtCs4wP2HXfJTCR_5alloc6str
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define noundef nonnull align 8 ptr @_RNvXs6_NtCsfu0rQaTkGUu_12clap_builder6deriveNtNtCsj6eKBz9Db1c_4core7convert10InfallibleNtB5_14FromArgMatches16from_arg_matches(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(56) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_RNvXs6_NtCsfu0rQaTkGUu_12clap_builder6deriveNtNtCsj6eKBz9Db1c_4core7convert10InfallibleNtB5_14FromArgMatches16from_arg_matches(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(56) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #43, !noalias !13230
   %i.a = tail call noundef align 8 dereferenceable_or_null(256) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 256, i64 noundef range(i64 1, 9) 8) #43, !noalias !13230 ; 48 uses
@@ -6167,7 +6167,7 @@ _RNCNvXsF_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_17FalseyVal
   call fastcc void @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr8trim_end(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #43, !noalias !13417, !inline_history !23
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !13418
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !13414
-  %i.as = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.h) #43
+  %i.as = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.h) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !13405
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !13405
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -6396,7 +6396,7 @@ _RNCNvXsI_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_18BoolishVa
   call fastcc void @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr8trim_end(ptr noalias nofree noundef align 8 dereferenceable(24) %i.j) #43, !noalias !13471, !inline_history !23
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false), !noalias !13472
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !13468
-  %i.ax = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.m) #43
+  %i.ax = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.m) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !13459
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !13459
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -6725,7 +6725,7 @@ _RNCNvXsL_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_25NonEmptyS
   call fastcc void @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr8trim_end(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h) #43, !noalias !13525, !inline_history !23
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !noalias !13526
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !13522
-  %i.ax = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.k) #43
+  %i.ax = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.k) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !13513
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !13513
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -6826,7 +6826,7 @@ bb.s:                                             ; preds = %_RNCNvXsL_NtNtCsfu0
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx.i12, align 8, !noalias !13532
   %.sroa.5.0..sroa_idx.i13 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx.i13, align 8, !noalias !13532
-  %i.bm = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) inttoptr (i64 8 to ptr), i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.m) #43
+  %i.bm = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) inttoptr (i64 8 to ptr), i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.m) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !13532
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -7229,7 +7229,7 @@ bb.h:                                             ; preds = %_RNCNvXsl_NtNtCsfu0
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx.i3, align 8, !noalias !14716
   %.sroa.5.0..sroa_idx.i4 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx.i4, align 8, !noalias !14716
-  %i.n = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) inttoptr (i64 8 to ptr), i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e) #43
+  %i.n = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error13invalid_valueB4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) inttoptr (i64 8 to ptr), i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !14716
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -7632,7 +7632,7 @@ _RNCNvXsu_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserINtB7_20RangedI6
   call fastcc void @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr8trim_end(ptr noalias nofree noundef align 8 dereferenceable(24) %i.v) #43, !noalias !15028, !inline_history !14921
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false), !noalias !15029
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !15025
-  %i.bq = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.y) #43, !inline_history !14913
+  %i.bq = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.y) #43, !inline_history !14913
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !15016
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !15016
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -8035,7 +8035,7 @@ _RNCNvXsu_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_20RangedI64
   call fastcc void @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr8trim_end(ptr noalias nofree noundef align 8 dereferenceable(24) %i.q) #43, !noalias !15201, !inline_history !23
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 24, i1 false), !noalias !15202
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !15198
-  %i.bl = call fastcc noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.t) #43
+  %i.bl = call fastcc noalias noundef nonnull align 8 ptr @_RNvMNtCsfu0rQaTkGUu_12clap_builder5errorNtB2_5Error12invalid_utf8B4_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(712) %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.t) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !15189
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !15189
   br label %bb.bl

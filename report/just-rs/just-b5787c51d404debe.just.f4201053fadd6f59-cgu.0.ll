@@ -205,7 +205,7 @@ _RINvYINtNtCshTCYgcDtIbU_10serde_json3ser8CompoundQINtNtCs4wP2HXfJTCR_5alloc3vec
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCsj6eKBz9Db1c_4core6option6OptionINtNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3map8BTreeMapNtNtB3B_6string6StringNtBU_4HashEEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCsj6eKBz9Db1c_4core6option6OptionINtNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3map8BTreeMapNtNtB3B_6string6StringNtBU_4HashEEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 1                ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31167)
@@ -608,7 +608,7 @@ _RINvYINtNtCshTCYgcDtIbU_10serde_json3ser8CompoundQNtCs7q5LCsEFjLc_6blake36Hashe
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtCskXtk6F4WjxZ_4just5value5ValueEEB3w_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtCskXtk6F4WjxZ_4just5value5ValueEEB3w_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31226)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31227)
@@ -651,7 +651,7 @@ _RINvXs3_NtNtCsfxuqquxiU4q_10serde_core3ser5implsINtNtCsj6eKBz9Db1c_4core6option
   %.val1.i.i.i = load ptr, ptr %i.j, align 8, !alias.scope !31237, !noalias !31238, !nonnull !28, !noundef !28
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val2.i.i.i = load i64, ptr %i.k, align 8, !alias.scope !31237, !noalias !31238, !noundef !28
-  %i.l = tail call fastcc noundef align 8 ptr @_RINvYQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerQNtCs7q5LCsEFjLc_6blake36HasherENtNtCsfxuqquxiU4q_10serde_core3ser10Serializer11collect_seqRINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtB2o_6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %i.a, ptr nonnull readonly %.val1.i.i.i, i64 %.val2.i.i.i), !noalias !31239 ; 2 uses
+  %i.l = tail call fastcc noalias noundef align 8 ptr @_RINvYQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerQNtCs7q5LCsEFjLc_6blake36HasherENtNtCsfxuqquxiU4q_10serde_core3ser10Serializer11collect_seqRINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtB2o_6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %i.a, ptr nonnull readonly %.val1.i.i.i, i64 %.val2.i.i.i), !noalias !31239 ; 2 uses
   %.not8.i.i = icmp eq ptr %i.l, null
   br i1 %.not8.i.i, label %bb.d, label %_RINvYINtNtCshTCYgcDtIbU_10serde_json3ser8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser12SerializeMap15serialize_entryeINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtCskXtk6F4WjxZ_4just5value5ValueEEB3o_.exit
 
@@ -731,7 +731,7 @@ _RINvYINtNtCshTCYgcDtIbU_10serde_json3ser8CompoundQNtCs7q5LCsEFjLc_6blake36Hashe
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCsj6eKBz9Db1c_4core6option6OptionRSNtNtCs4wP2HXfJTCR_5alloc6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCsj6eKBz9Db1c_4core6option6OptionRSNtNtCs4wP2HXfJTCR_5alloc6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31278)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31279)
@@ -820,7 +820,7 @@ _RINvYINtNtCshTCYgcDtIbU_10serde_json3ser8CompoundQNtCs7q5LCsEFjLc_6blake36Hashe
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldRNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathEB2V_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(none) %.0.val) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldRNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathEB2V_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(none) %.0.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [24 x i8], align 8                ; 6 uses
@@ -1223,7 +1223,7 @@ _RNvXs2_NtCshTCYgcDtIbU_10serde_json3serINtB5_8CompoundQINtNtCs4wP2HXfJTCR_5allo
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef align 8 ptr @_RINvYQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerQNtCs7q5LCsEFjLc_6blake36HasherENtNtCsfxuqquxiU4q_10serde_core3ser10Serializer11collect_seqRINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtB2o_6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree readonly captures(address) %.8.val, i64 %.16.val) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef align 8 ptr @_RINvYQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerQNtCs7q5LCsEFjLc_6blake36HasherENtNtCsfxuqquxiU4q_10serde_core3ser10Serializer11collect_seqRINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtB2o_6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree readonly captures(address) %.8.val, i64 %.16.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.idx = mul nuw nsw i64 %.16.val, 24
   %i.a = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx
@@ -1626,7 +1626,7 @@ _RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake3
 
 .noexc419:                                        ; preds = %_RINvXs7_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundQNtCs7q5LCsEFjLc_6blake36HasherNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtB2V_6string6StringEECskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i18.i.i.i.i.i.i.i) ]
-  %i.iv = invoke fastcc noundef align 8 ptr @_RINvYQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerQNtCs7q5LCsEFjLc_6blake36HasherENtNtCsfxuqquxiU4q_10serde_core3ser10Serializer11collect_seqRINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtB2o_6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %i.v, ptr nonnull readonly %.val13.i18.i.i.i.i.i.i.i, i64 %.val14.i19.i.i.i.i.i.i.i)
+  %i.iv = invoke fastcc noalias noundef align 8 ptr @_RINvYQINtNtCshTCYgcDtIbU_10serde_json3ser10SerializerQNtCs7q5LCsEFjLc_6blake36HasherENtNtCsfxuqquxiU4q_10serde_core3ser10Serializer11collect_seqRINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtB2o_6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %i.v, ptr nonnull readonly %.val13.i18.i.i.i.i.i.i.i, i64 %.val14.i19.i.i.i.i.i.i.i)
           to label %.noexc420 unwind label %.loopexit.split-lp845.loopexit.split-lp ; 2 uses
 
 .noexc420:                                        ; preds = %.noexc419

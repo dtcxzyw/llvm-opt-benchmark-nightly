@@ -21,7 +21,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.11 = private unnamed_addr constant [28 x i8] c"ARKODE_SPRK_SOFRONIOU_10_36\00", align 1
 
 ; Function Attrs: nounwind memory(readwrite, argmem: read, target_mem: none) uwtable
-define noundef ptr @ARKodeSPRKTable_Create(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, ptr nofree noundef readonly captures(address_is_null) %3) local_unnamed_addr #0 {
+define noalias noundef ptr @ARKodeSPRKTable_Create(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, ptr nofree noundef readonly captures(address_is_null) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp sgt i32 %0, 0
   %i.b = icmp ne ptr %2, null
@@ -123,7 +123,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %scalar.ph, %middle.
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define noundef ptr @ARKodeSPRKTable_Alloc(i32 noundef %0) local_unnamed_addr #2 {
+define noalias noundef ptr @ARKodeSPRKTable_Alloc(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %calloc = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 7 uses
   %.not = icmp eq ptr %calloc, null
@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.a
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noundef ptr @ARKodeSPRKTable_Load(i32 noundef %0) local_unnamed_addr #4 {
+define noalias noundef ptr @ARKodeSPRKTable_Load(i32 noundef %0) local_unnamed_addr #4 {
 bb.a:
   switch i32 %0, label %arkodeSymplecticEuler.exit [
     i32 0, label %bb.b
@@ -308,7 +308,7 @@ arkodeSymplecticEuler.exit:                       ; preds = %bb.e, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticLeapfrog2() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticLeapfrog2() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -351,7 +351,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticPseudoLeapfrog2() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticPseudoLeapfrog2() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -394,7 +394,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticRuth3() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticRuth3() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -441,7 +441,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticMcLachlan2() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticMcLachlan2() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -484,7 +484,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticMcLachlan3() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticMcLachlan3() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -531,7 +531,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticMcLachlan4() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticMcLachlan4() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -578,7 +578,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticCandyRozmus4() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticCandyRozmus4() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -625,7 +625,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticMcLachlan5() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticMcLachlan5() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -676,7 +676,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticYoshida6() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticYoshida6() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -731,7 +731,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticSuzukiUmeno816() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticSuzukiUmeno816() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -802,7 +802,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @arkodeSymplecticSofroniou10() unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @arkodeSymplecticSofroniou10() unnamed_addr #2 {
 bb.a:
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 8 uses
   %.not.i = icmp eq ptr %calloc.i, null
@@ -913,7 +913,7 @@ ARKodeSPRKTable_Alloc.exit.thread:                ; preds = %bb.a, %ARKodeSPRKTa
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noundef ptr @ARKodeSPRKTable_LoadByName(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
+define noalias noundef ptr @ARKodeSPRKTable_LoadByName(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(22) @.str) #15
   %.not = icmp eq i32 %i.a, 0
