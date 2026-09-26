@@ -1,0 +1,41 @@
+opencv/tree.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/tree.bc?download=true
+ffmpeg/pvq.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/pvq.bc?download=true
+
+Reproduce first opt error with backtrace: opencv/tree.bc: failed to run opt
+Command: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/opencv/original/tree.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/opencv-s-tree.bc
+Exit code: -6
+Stderr:
+Instruction does not dominate all uses!
+  %333 = insertelement <2 x double> poison, double %330, i64 0
+  %332 = insertelement <2 x double> %333, double %331, i64 1
+Instruction does not dominate all uses!
+  %344 = insertelement <2 x double> poison, double %341, i64 0
+  %343 = insertelement <2 x double> %344, double %342, i64 1
+Instruction does not dominate all uses!
+  %355 = insertelement <2 x double> poison, double %352, i64 0
+  %354 = insertelement <2 x double> %355, double %353, i64 1
+LLVM ERROR: Broken module found, compilation aborted!
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and instructions to reproduce the bug.
+Stack dump:
+0.	Program arguments: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/opencv/original/tree.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/opencv-s-tree.bc
+1.	Running pass "verify" on module "/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/opencv/original/tree.bc"
+ #0 0x000055555597587b llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x42187b)
+ #1 0x0000555555972651 llvm::sys::RunSignalHandlers() (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x41e651)
+ #2 0x00005555559765db SignalHandler(int, siginfo_t*, void*) Signals.cpp:0:0
+ #3 0x00007ffff7a3a330 (/lib/x86_64-linux-gnu/libc.so.6+0x45330)
+ #4 0x00007ffff7a93c0c pthread_kill (/lib/x86_64-linux-gnu/libc.so.6+0x9ec0c)
+ #5 0x00007ffff7a3a27e raise (/lib/x86_64-linux-gnu/libc.so.6+0x4527e)
+ #6 0x00007ffff7a1d8ff abort (/lib/x86_64-linux-gnu/libc.so.6+0x288ff)
+ #7 0x00005555559957f5 llvm::report_fatal_error(llvm::Twine const&, bool) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4417f5)
+ #8 0x0000555555995636 (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x441636)
+ #9 0x00005555583280e5 (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2dd40e5)
+#10 0x00005555582ef9fd llvm::PassManager<llvm::Module, llvm::AnalysisManager<llvm::Module>>::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d9b9fd)
+#11 0x0000555555a222f3 llvm::runPassPipeline(llvm::StringRef, llvm::Module&, llvm::TargetMachine*, llvm::TargetLibraryInfoImpl*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::StringRef, llvm::ArrayRef<llvm::PassPlugin>, llvm::ArrayRef<std::function<void (llvm::PassBuilder&)>>, llvm::opt_tool::OutputKind, llvm::opt_tool::VerifierKind, bool, bool, bool, bool, bool, bool, bool, bool) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4ce2f3)
+#12 0x0000555555a18bb5 optMain (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4c4bb5)
+#13 0x000055555595b9e3 main (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4079e3)
+#14 0x00007ffff7a1f1ca (/lib/x86_64-linux-gnu/libc.so.6+0x2a1ca)
+#15 0x00007ffff7a1f28b __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28b)
+#16 0x000055555595b8d5 _start (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4078d5)
+
