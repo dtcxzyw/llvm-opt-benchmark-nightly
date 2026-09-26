@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit() unnamed_addr #5 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit() unnamed_addr #5 {
 bb.a:
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #24
   %i.a = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef 32, i64 noundef 8) #24 ; 2 uses
@@ -607,7 +607,7 @@ bb.a:
   %i.n = load i64, ptr %i.d, align 8, !range !1006, !noalias !1004, !noundef !4 ; 2 uses
   %.not.i = icmp eq i64 %i.n, -1
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.p = load i64, ptr %i.o, align 8, !noalias !1004 ; 2 uses
+  %i.p = load i64, ptr %i.o, align 8, !noalias !1004 ; 7 uses
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -628,7 +628,7 @@ bb.c:                                             ; preds = %bb.a
   %i.r = load i64, ptr %i.c, align 8, !range !1006, !noalias !1004, !noundef !4 ; 2 uses
   %.not75.i = icmp eq i64 %i.r, -1
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.t = load i64, ptr %i.s, align 8, !noalias !1004 ; 2 uses
+  %i.t = load i64, ptr %i.s, align 8, !noalias !1004 ; 7 uses
   br i1 %.not75.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -649,7 +649,7 @@ bb.e:                                             ; preds = %bb.c
   %i.v = load i64, ptr %i.b, align 8, !range !1006, !noalias !1004, !noundef !4 ; 2 uses
   %.not76.i = icmp eq i64 %i.v, -1
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.x = load i64, ptr %i.w, align 8, !noalias !1004 ; 2 uses
+  %i.x = load i64, ptr %i.w, align 8, !noalias !1004 ; 7 uses
   br i1 %.not76.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -721,11 +721,11 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecjEECs8k
 
 _RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit: ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1004
-  %i.ae = tail call fastcc noundef ptr @_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit() #28 ; 6 uses
+  %i.ae = tail call fastcc noundef ptr @_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit() #28 ; 5 uses
   store i64 %i.p, ptr %i.ae, align 8, !noalias !1005
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   store i64 %i.t, ptr %i.af, align 8, !noalias !1005
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   store i64 %i.x, ptr %i.ag, align 8, !noalias !1005
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
   store i64 %i.ab, ptr %i.ah, align 8, !noalias !1005
@@ -737,37 +737,34 @@ _RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.aj = load i64, ptr %i.ai, align 8            ; 5 uses
   %i.ak = icmp ult i64 %i.aj, 1152921504606846976
-  %5 = load i64, ptr %i.ae, align 8, !noundef !4  ; 5 uses
   tail call void @llvm.assume(i1 %i.ak)
-  %.not24 = icmp ult i64 %5, %i.aj
+  %.not24 = icmp ult i64 %i.p, %i.aj
   br i1 %.not24, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit
-  %6 = load i64, ptr %i.af, align 8, !noundef !4  ; 5 uses
-  %i.al = icmp eq i64 %5, %6
+  %i.al = icmp eq i64 %i.p, %i.t
   br i1 %i.al, label %.loopexit, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.1
 
 _RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.1: ; preds = %bb.m
-  %.not24.1 = icmp ult i64 %6, %i.aj
+  %.not24.1 = icmp ult i64 %i.t, %i.aj
   br i1 %.not24.1, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.1
-  %7 = load i64, ptr %i.ag, align 8, !noundef !4  ; 5 uses
-  %i.am = icmp eq i64 %5, %7
-  %i.an = icmp eq i64 %6, %7
-  %or.cond = or i1 %i.am, %i.an
+  %i.am = icmp eq i64 %i.p, %i.x
+  %i.an = icmp eq i64 %i.t, %i.x
+  %or.cond = select i1 %i.am, i1 true, i1 %i.an
   br i1 %or.cond, label %.loopexit, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.2
 
 _RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.2: ; preds = %bb.n
-  %.not24.2 = icmp ult i64 %7, %i.aj
+  %.not24.2 = icmp ult i64 %i.x, %i.aj
   br i1 %.not24.2, label %.preheader.preheader.3, label %bb.o
 
 .preheader.preheader.3:                           ; preds = %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.2
-  %i.ao = icmp eq i64 %5, %i.ab
-  %i.ap = icmp eq i64 %6, %i.ab
-  %or.cond96 = or i1 %i.ao, %i.ap
-  %i.aq = icmp eq i64 %7, %i.ab
-  %or.cond97 = or i1 %or.cond96, %i.aq
+  %i.ao = icmp eq i64 %i.p, %i.ab
+  %i.ap = icmp eq i64 %i.t, %i.ab
+  %or.cond96 = select i1 %i.ao, i1 true, i1 %i.ap
+  %i.aq = icmp eq i64 %i.x, %i.ab
+  %or.cond97 = select i1 %or.cond96, i1 true, i1 %i.aq
   br i1 %or.cond97, label %.loopexit, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.3
 
 _RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.3: ; preds = %.preheader.preheader.3
@@ -782,7 +779,7 @@ _RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
           to label %bb.w unwind label %bb.k
 
 bb.o:                                             ; preds = %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.3, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.2, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.1, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit
-  %.lcssa83 = phi i64 [ %5, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit ], [ %6, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.1 ], [ %7, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.2 ], [ %i.ab, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.3 ]
+  %.lcssa83 = phi i64 [ %i.p, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit ], [ %i.t, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.1 ], [ %i.x, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.2 ], [ %i.ab, %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.3 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   invoke void @_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecjENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCs8k3UfHgJ3Xe_15candle_datasets(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2)

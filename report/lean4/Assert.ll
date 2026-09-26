@@ -204,7 +204,7 @@ lean_dec_ref.exit9:                               ; preds = %bb.k, %bb.j, %bb.i,
 declare ptr @l_Lean_Meta_Grind_Order_mkTrans(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: inlinehint nounwind uwtable
-define internal fastcc nonnull ptr @lean_alloc_ctor(i32 noundef range(i32 0, 10) %0, i32 noundef range(i32 1, 23) %1, i32 noundef range(i32 0, 18) %2) unnamed_addr #0 {
+define internal fastcc noalias nonnull ptr @lean_alloc_ctor(i32 noundef range(i32 0, 10) %0, i32 noundef range(i32 1, 23) %1, i32 noundef range(i32 0, 18) %2) unnamed_addr #0 {
 lean_usize_add_checked.exit:
   %i.a = shl nuw nsw i32 %1, 3
   %narrow = add nuw nsw i32 %i.a, 8
@@ -607,7 +607,7 @@ bb.ct:                                            ; preds = %bb.cq, %lean_alloc_
 }
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_pushToPropagate_spec__0_spec__0(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #1 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_pushToPropagate_spec__0_spec__0(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call ptr @lean_st_ref_get(ptr noundef %4) #5 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -786,7 +786,7 @@ lean_alloc_ctor.exit42:                           ; preds = %lean_alloc_ctor.exi
 declare ptr @lean_st_ref_get(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_pushToPropagate_spec__0_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #1 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_pushToPropagate_spec__0_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_pushToPropagate_spec__0_spec__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
   %i.b = ptrtoint ptr %4 to i64
@@ -881,10 +881,10 @@ define ptr @l_Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Asse
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !12   ; 5 uses
-  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_pushToPropagate_spec__0_spec__0(ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) ; 6 uses
+  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00__private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_pushToPropagate_spec__0_spec__0(ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !12   ; 5 uses
-  %.val162 = load i32, ptr %i.c, align 8, !tbaa !15
+  %.val162 = load i32, ptr %i.c, align 8, !tbaa !15 ; 4 uses
   %i.f = icmp eq i32 %.val162, 1                  ; 2 uses
   br i1 %i.f, label %lean_dec.exit155, label %bb.b
 
@@ -913,17 +913,16 @@ bb.f:                                             ; preds = %bb.e
   br label %lean_inc.exit150
 
 lean_inc.exit150:                                 ; preds = %bb.b, %bb.d, %bb.e, %bb.f
-  %6 = load i32, ptr %i.c, align 8, !tbaa !15     ; 3 uses
-  %i.l = icmp sgt i32 %6, 1
+  %i.l = icmp sgt i32 %.val162, 1
   br i1 %i.l, label %bb.g, label %bb.h, !prof !10
 
 bb.g:                                             ; preds = %lean_inc.exit150
-  %i.m = add nsw i32 %6, -1
+  %i.m = add nsw i32 %.val162, -1
   store i32 %i.m, ptr %i.c, align 8, !tbaa !15
   br label %lean_dec.exit155
 
 bb.h:                                             ; preds = %lean_inc.exit150
-  %.not.i156 = icmp eq i32 %6, 0
+  %.not.i156 = icmp eq i32 %.val162, 0
   br i1 %.not.i156, label %lean_dec.exit155, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -1326,7 +1325,7 @@ declare ptr @l_Lean_Meta_Grind_Order_mkLePreorderPrefix(ptr noundef, ptr noundef
 declare ptr @l_Lean_Meta_Grind_Order_mkOrdRingPrefix(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal nonnull ptr @_init_l___private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_processNewEq_go___closed__8() #1 {
+define internal noalias nonnull ptr @_init_l___private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_processNewEq_go___closed__8() #1 {
 bb.a:
   %i.a = load atomic i32, ptr @l___private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_assertIneqFalse___closed__4_once seq_cst, align 4, !tbaa !23
   %i.b = icmp eq i32 %i.a, 1
@@ -1729,7 +1728,7 @@ bb.ak:                                            ; preds = %lean_dec_ref.exit31
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define internal fastcc nonnull ptr @lean_io_result_mk_ok(ptr noundef %0) unnamed_addr #0 {
+define internal fastcc noalias nonnull ptr @lean_io_result_mk_ok(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   tail call void @lean_inc_heartbeat() #5
   %i.a = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #5 ; 5 uses
@@ -1762,7 +1761,7 @@ declare ptr @runtime_initialize_Lean_Meta_Tactic_Grind_Order_Util(i8 noundef zer
 declare ptr @runtime_initialize_Lean_Meta_Tactic_Grind_Order_Proof(i8 noundef zeroext) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @meta_initialize_Lean_Meta_Tactic_Grind_Order_Assert(i8 zeroext %0) local_unnamed_addr #1 {
+define noalias noundef nonnull ptr @meta_initialize_Lean_Meta_Tactic_Grind_Order_Assert(i8 zeroext %0) local_unnamed_addr #1 {
 bb.a:
   %.b = load i1, ptr @_G_meta_initialized, align 1
   br i1 %.b, label %bb.b, label %bb.d
@@ -2165,7 +2164,7 @@ declare ptr @l_instDecidableEqNat___boxed(ptr noundef, ptr noundef) #2
 declare ptr @l_instBEqOfDecidableEq___redArg___lam__0___boxed(ptr noundef, ptr noundef, ptr noundef) #2
 
 ; Function Attrs: nounwind uwtable
-define internal nonnull ptr @_init_l___private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_assertIneqFalse___closed__9() #1 {
+define internal noalias nonnull ptr @_init_l___private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_assertIneqFalse___closed__9() #1 {
 bb.a:
   %i.a = load atomic i32, ptr @l___private_Lean_Meta_Tactic_Grind_Order_Assert_0__Lean_Meta_Grind_Order_assertIneqFalse___closed__8_once seq_cst, align 4, !tbaa !23
   %i.b = icmp eq i32 %i.a, 1

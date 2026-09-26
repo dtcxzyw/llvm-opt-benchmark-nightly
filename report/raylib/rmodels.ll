@@ -205,7 +205,7 @@ bb.dz:                                            ; preds = %_m3dstbi__do_zlib.e
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef ptr @_m3d_safestr(ptr nofree noundef readonly captures(address) %0, i32 noundef %1) local_unnamed_addr #10 {
+define hidden noalias noundef ptr @_m3d_safestr(ptr nofree noundef readonly captures(address) %0, i32 noundef %1) local_unnamed_addr #10 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.e, label %bb.b
@@ -608,7 +608,7 @@ bb.r:                                             ; preds = %.lr.ph84, %bb.r
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef ptr @m3d_pose(ptr nofree noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #10 {
+define hidden noalias noundef ptr @m3d_pose(ptr nofree noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #10 {
 bb.a:
   %i.a = alloca [16 x float], align 16            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #54
@@ -1011,7 +1011,7 @@ bb.d:                                             ; preds = %bb.a, %par_shapes_c
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @par_shapes_create_parametric_disk(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define hidden noalias noundef ptr @par_shapes_create_parametric_disk(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @par_shapes_create_cone(i32 noundef %0, i32 noundef %1) ; 5 uses
   %.not = icmp eq ptr %i.a, null
@@ -1414,9 +1414,9 @@ bb.an:                                            ; preds = %._crit_edge317.i, %
   %indvars.iv325.i = phi i64 [ %indvars.iv.next326.i, %bb.ap ], [ 0, %.preheader.i11 ] ; 18 uses
   %i.ua = load ptr, ptr %i.sg, align 8
   %i.ub = getelementptr inbounds nuw [104 x i8], ptr %i.tx, i64 %indvars.iv325.i ; 2 uses
-  %i.uc = getelementptr inbounds nuw i8, ptr %i.ub, i64 16 ; 3 uses
+  %i.uc = getelementptr inbounds nuw i8, ptr %i.ub, i64 16
   %i.ud = load i32, ptr %i.uc, align 8
-  %i.ue = zext i32 %i.ud to i64
+  %i.ue = zext i32 %i.ud to i64                   ; 3 uses
   %i.uf = getelementptr inbounds nuw [24 x i8], ptr %i.ua, i64 %i.ue
   %i.ug = load float, ptr %i.uf, align 4
   %i.uh = load float, ptr %i.sh, align 8
@@ -1427,9 +1427,7 @@ bb.an:                                            ; preds = %._crit_edge317.i, %
   %i.um = getelementptr inbounds nuw [40 x i8], ptr %i.ul, i64 %indvars.iv325.i
   store float %i.ui, ptr %i.um, align 4
   %i.un = load ptr, ptr %i.sg, align 8
-  %9 = load i32, ptr %i.uc, align 8
-  %10 = zext i32 %9 to i64
-  %i.uo = getelementptr inbounds nuw [24 x i8], ptr %i.un, i64 %10
+  %i.uo = getelementptr inbounds nuw [24 x i8], ptr %i.un, i64 %i.ue
   %i.up = getelementptr inbounds nuw i8, ptr %i.uo, i64 4
   %i.uq = load float, ptr %i.up, align 4
   %i.ur = load float, ptr %i.sh, align 8
@@ -1441,9 +1439,7 @@ bb.an:                                            ; preds = %._crit_edge317.i, %
   %i.ux = getelementptr inbounds nuw i8, ptr %i.uw, i64 4
   store float %i.us, ptr %i.ux, align 4
   %i.uy = load ptr, ptr %i.sg, align 8
-  %11 = load i32, ptr %i.uc, align 8
-  %12 = zext i32 %11 to i64
-  %i.uz = getelementptr inbounds nuw [24 x i8], ptr %i.uy, i64 %12
+  %i.uz = getelementptr inbounds nuw [24 x i8], ptr %i.uy, i64 %i.ue
   %i.va = getelementptr inbounds nuw i8, ptr %i.uz, i64 8
   %i.vb = load float, ptr %i.va, align 4
   %i.vc = load float, ptr %i.sh, align 8
@@ -1455,9 +1451,9 @@ bb.an:                                            ; preds = %._crit_edge317.i, %
   %i.vi = getelementptr inbounds nuw i8, ptr %i.vh, i64 8
   store float %i.vd, ptr %i.vi, align 4
   %i.vj = load ptr, ptr %i.sg, align 8
-  %i.vk = getelementptr inbounds nuw i8, ptr %i.ub, i64 20 ; 4 uses
+  %i.vk = getelementptr inbounds nuw i8, ptr %i.ub, i64 20
   %i.vl = load i32, ptr %i.vk, align 4
-  %i.vm = zext i32 %i.vl to i64
+  %i.vm = zext i32 %i.vl to i64                   ; 4 uses
   %i.vn = getelementptr inbounds nuw [24 x i8], ptr %i.vj, i64 %i.vm
   %i.vo = load float, ptr %i.vn, align 4
   %i.vp = load ptr, ptr %i.sw, align 8
@@ -1467,9 +1463,7 @@ bb.an:                                            ; preds = %._crit_edge317.i, %
   %i.vt = getelementptr inbounds nuw i8, ptr %i.vs, i64 12
   store float %i.vo, ptr %i.vt, align 4
   %i.vu = load ptr, ptr %i.sg, align 8
-  %13 = load i32, ptr %i.vk, align 4
-  %14 = zext i32 %13 to i64
-  %i.vv = getelementptr inbounds nuw [24 x i8], ptr %i.vu, i64 %14
+  %i.vv = getelementptr inbounds nuw [24 x i8], ptr %i.vu, i64 %i.vm
   %i.vw = getelementptr inbounds nuw i8, ptr %i.vv, i64 4
   %i.vx = load float, ptr %i.vw, align 4
   %i.vy = load ptr, ptr %i.sw, align 8
@@ -1479,9 +1473,7 @@ bb.an:                                            ; preds = %._crit_edge317.i, %
   %i.wc = getelementptr inbounds nuw i8, ptr %i.wb, i64 16
   store float %i.vx, ptr %i.wc, align 4
   %i.wd = load ptr, ptr %i.sg, align 8
-  %15 = load i32, ptr %i.vk, align 4
-  %16 = zext i32 %15 to i64
-  %i.we = getelementptr inbounds nuw [24 x i8], ptr %i.wd, i64 %16
+  %i.we = getelementptr inbounds nuw [24 x i8], ptr %i.wd, i64 %i.vm
   %i.wf = getelementptr inbounds nuw i8, ptr %i.we, i64 8
   %i.wg = load float, ptr %i.wf, align 4
   %i.wh = load ptr, ptr %i.sw, align 8
@@ -1491,9 +1483,7 @@ bb.an:                                            ; preds = %._crit_edge317.i, %
   %i.wl = getelementptr inbounds nuw i8, ptr %i.wk, i64 20
   store float %i.wg, ptr %i.wl, align 4
   %i.wm = load ptr, ptr %i.sg, align 8
-  %17 = load i32, ptr %i.vk, align 4
-  %18 = zext i32 %17 to i64
-  %i.wn = getelementptr inbounds nuw [24 x i8], ptr %i.wm, i64 %18
+  %i.wn = getelementptr inbounds nuw [24 x i8], ptr %i.wm, i64 %i.vm
   %i.wo = getelementptr inbounds nuw i8, ptr %i.wn, i64 12
   %i.wp = load float, ptr %i.wo, align 4
   %i.wq = load ptr, ptr %i.sw, align 8

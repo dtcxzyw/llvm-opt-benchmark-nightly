@@ -202,8 +202,8 @@ ompi_osc_rdma_post_peer.exit:                     ; preds = %bb.n, %ompi_osc_rdm
 .lr.ph.i:                                         ; preds = %bb.ap, %.lr.ph.preheader.i
   %i.fp = phi i8 [ %.pre13.i, %.lr.ph.preheader.i ], [ %i.gh, %bb.ap ] ; 2 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.ap ] ; 2 uses
-  %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv.i ; 4 uses
-  %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !74
+  %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv.i ; 2 uses
+  %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !74 ; 4 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 8 ; 4 uses
   %i.ft = trunc nuw i8 %i.fp to i1
   br i1 %i.ft, label %bb.am, label %bb.an, !prof !35
@@ -226,8 +226,7 @@ opal_thread_add_fetch_32.exit.i:                  ; preds = %bb.an, %bb.am
   br i1 %i.fz, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %opal_thread_add_fetch_32.exit.i
-  %4 = load ptr, ptr %i.fq, align 8, !tbaa !74    ; 3 uses
-  %i.ga = load ptr, ptr %4, align 8, !tbaa !97
+  %i.ga = load ptr, ptr %i.fr, align 8, !tbaa !97
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 48
   %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !119 ; 2 uses
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !100 ; 2 uses
@@ -237,19 +236,14 @@ bb.ao:                                            ; preds = %opal_thread_add_fet
 .lr.ph.i.i38:                                     ; preds = %bb.ao, %.lr.ph.i.i38
   %i.ge = phi ptr [ %i.gg, %.lr.ph.i.i38 ], [ %i.gd, %bb.ao ]
   %.07.i.i = phi ptr [ %i.gf, %.lr.ph.i.i38 ], [ %i.gc, %bb.ao ]
-  call void %i.ge(ptr noundef nonnull %4) #14, !inline_history !2
+  call void %i.ge(ptr noundef nonnull %i.fr) #14, !inline_history !2
   %i.gf = getelementptr inbounds nuw i8, ptr %.07.i.i, i64 8 ; 2 uses
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !100 ; 2 uses
   %.not.i.i39 = icmp eq ptr %i.gg, null
-  br i1 %.not.i.i39, label %opal_obj_run_destructors.exit.loopexit.i, label %.lr.ph.i.i38, !llvm.loop !1
+  br i1 %.not.i.i39, label %opal_obj_run_destructors.exit.i, label %.lr.ph.i.i38, !llvm.loop !1
 
-opal_obj_run_destructors.exit.loopexit.i:         ; preds = %.lr.ph.i.i38
-  %.pre14.i = load ptr, ptr %i.fq, align 8, !tbaa !74
-  br label %opal_obj_run_destructors.exit.i
-
-opal_obj_run_destructors.exit.i:                  ; preds = %opal_obj_run_destructors.exit.loopexit.i, %bb.ao
-  %5 = phi ptr [ %.pre14.i, %opal_obj_run_destructors.exit.loopexit.i ], [ %4, %bb.ao ]
-  call void @free(ptr noundef %5) #14
+opal_obj_run_destructors.exit.i:                  ; preds = %.lr.ph.i.i38, %bb.ao
+  call void @free(ptr noundef nonnull %i.fr) #14
   store ptr null, ptr %i.fq, align 8, !tbaa !74
   %.pre.i40 = load i8, ptr @opal_uses_threads, align 1, !tbaa !32, !range !33
   br label %bb.ap
@@ -274,7 +268,7 @@ bb.aq:                                            ; preds = %bb.j, %bb.h, %bb.i,
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #3
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @ompi_osc_rdma_get_peers(ptr noundef %0, ptr noundef %1) unnamed_addr #2 {
+define internal fastcc noalias noundef ptr @ompi_osc_rdma_get_peers(ptr noundef %0, ptr noundef %1) unnamed_addr #2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = getelementptr i8, ptr %1, i64 16

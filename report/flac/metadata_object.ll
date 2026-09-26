@@ -43,7 +43,7 @@ target triple = "x86_64-pc-linux-gnu"
 @FLAC__STREAM_METADATA_CUESHEET_INDEX_RESERVED_LEN = external local_unnamed_addr constant i32, align 4
 
 ; Function Attrs: nounwind sspstrong memory(readwrite, target_mem: none) uwtable
-define noundef ptr @FLAC__metadata_object_new(i32 noundef %0) local_unnamed_addr #0 {
+define noalias noundef ptr @FLAC__metadata_object_new(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp ugt i32 %0, 126
   br i1 %i.a, label %vorbiscomment_calculate_length_.exit, label %bb.b
@@ -196,7 +196,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define noundef ptr @FLAC__metadata_object_clone(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !13
-  %i.b = tail call ptr @FLAC__metadata_object_new(i32 noundef %i.a) ; 58 uses
+  %i.b = tail call ptr @FLAC__metadata_object_new(i32 noundef %i.a) ; 56 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.aq, label %bb.b
 
@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load <2 x i32>, ptr %0, align 8, !tbaa !15
   %i.d = load i32, ptr %0, align 8, !tbaa !13
   store <2 x i32> %i.c, ptr %i.b, align 8, !tbaa !15
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !14   ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !14   ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 %i.f, ptr %i.g, align 8, !tbaa !14
   switch i32 %i.d, label %bb.an [
@@ -243,14 +243,13 @@ bb.f:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !19   ; 2 uses
-  %1 = load i32, ptr %i.e, align 8, !tbaa !14     ; 2 uses
-  %i.s = icmp ne i32 %1, %i.k
+  %i.s = icmp ne i32 %i.f, %i.k
   %i.t = icmp ne ptr %i.r, null
-  %or.cond.i = and i1 %i.t, %i.s
+  %or.cond.i = and i1 %i.s, %i.t
   br i1 %or.cond.i, label %bb.g, label %copy_bytes_.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = sub i32 %1, %i.k
+  %i.u = sub nuw i32 %i.f, %i.k
   %i.v = zext i32 %i.u to i64                     ; 2 uses
   %i.w = tail call noalias noundef ptr @malloc(i64 noundef %i.v) #30 ; 3 uses
   %i.x = icmp eq ptr %i.w, null
@@ -289,7 +288,7 @@ bb.k:                                             ; preds = %bb.i
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !19 ; 2 uses
   %i.af = icmp ne i32 %i.z, 0
   %i.ag = icmp ne ptr %i.ae, null
-  %or.cond.i91 = and i1 %i.ag, %i.af
+  %or.cond.i91 = and i1 %i.af, %i.ag
   br i1 %or.cond.i91, label %bb.l, label %copy_bytes_.exit96
 
 bb.l:                                             ; preds = %bb.k
@@ -367,7 +366,12 @@ copy_vcentry_.exit:                               ; preds = %.thread.i97, %bb.r
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !19 ; 2 uses
   %i.bc = icmp eq i32 %i.bb, 0
-  br i1 %i.bc, label %vorbiscomment_entry_array_copy_.exit.a, label %bb.u
+  br i1 %i.bc, label %1, label %bb.u
+
+1:                                                ; preds = %copy_vcentry_.exit
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  store ptr null, ptr %2, align 8, !tbaa !19
+  br label %vorbiscomment_entry_array_copy_.exit.a
 
 bb.u:                                             ; preds = %copy_vcentry_.exit
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -434,7 +438,13 @@ vorbiscomment_entry_array_delete_.exit.i:         ; preds = %.lr.ph.i.i
 copy_vcentry_.exit.i:                             ; preds = %.thread.i.i, %bb.w
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.bf
-  br i1 %exitcond.not.i, label %vorbiscomment_entry_array_copy_.exit.a, label %.preheader.i, !llvm.loop !59
+  br i1 %exitcond.not.i, label %vorbiscomment_entry_array_copy_.exit, label %.preheader.i, !llvm.loop !59
+
+vorbiscomment_entry_array_copy_.exit:             ; preds = %copy_vcentry_.exit.i
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  store ptr %i.bg, ptr %3, align 8, !tbaa !19
+  %.pre = load i32, ptr %i.ba, align 8, !tbaa !19
+  br label %vorbiscomment_entry_array_copy_.exit.a
 
 bb.y:                                             ; preds = %vorbiscomment_entry_array_delete_.exit.i, %bb.u
   %i.bz = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -445,13 +455,10 @@ bb.y:                                             ; preds = %vorbiscomment_entry
   tail call void @free(ptr noundef nonnull %i.b) #31
   br label %bb.aq
 
-vorbiscomment_entry_array_copy_.exit.a:           ; preds = %copy_vcentry_.exit.i, %copy_vcentry_.exit
-  %.sink = phi ptr [ null, %copy_vcentry_.exit ], [ %i.bg, %copy_vcentry_.exit.i ]
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store ptr %.sink, ptr %2, align 8, !tbaa !19
-  %3 = load i32, ptr %i.ba, align 8, !tbaa !19
+vorbiscomment_entry_array_copy_.exit.a:           ; preds = %vorbiscomment_entry_array_copy_.exit, %1
+  %4 = phi i32 [ %.pre, %vorbiscomment_entry_array_copy_.exit ], [ 0, %1 ]
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store i32 %3, ptr %i.cb, align 8, !tbaa !19
+  store i32 %4, ptr %i.cb, align 8, !tbaa !19
   br label %bb.aq
 
 bb.z:                                             ; preds = %bb.b
@@ -575,21 +582,9 @@ bb.ak:                                            ; preds = %bb.ai
   tail call void @free(ptr noundef %i.dr) #31
   store ptr %i.dp, ptr %i.dq, align 8, !tbaa !18
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = load i32, ptr %i.ds, align 8, !tbaa !19
   %i.dt = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store i32 %4, ptr %i.dt, align 8, !tbaa !19
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %6 = load i32, ptr %5, align 4, !tbaa !19
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 44
-  store i32 %6, ptr %7, align 4, !tbaa !19
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %9 = load i32, ptr %8, align 8, !tbaa !19
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  store i32 %9, ptr %10, align 8, !tbaa !19
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %12 = load i32, ptr %11, align 4, !tbaa !19
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 52
-  store i32 %12, ptr %13, align 4, !tbaa !19
+  %5 = load <4 x i32>, ptr %i.ds, align 8, !tbaa !19
+  store <4 x i32> %5, ptr %i.dt, align 8, !tbaa !19
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.dv = load i32, ptr %i.du, align 8, !tbaa !19 ; 3 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.b, i64 56
@@ -599,7 +594,7 @@ bb.ak:                                            ; preds = %bb.ai
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !19 ; 2 uses
   %i.ea = icmp ne i32 %i.dv, 0
   %i.eb = icmp ne ptr %i.dz, null
-  %or.cond.i115 = and i1 %i.eb, %i.ea
+  %or.cond.i115 = and i1 %i.ea, %i.eb
   br i1 %or.cond.i115, label %bb.al, label %copy_bytes_.exit120
 
 bb.al:                                            ; preds = %bb.ak
@@ -628,7 +623,7 @@ bb.an:                                            ; preds = %bb.b
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !19 ; 2 uses
   %i.ei = icmp ne i32 %i.f, 0
   %i.ej = icmp ne ptr %i.eh, null
-  %or.cond.i121 = and i1 %i.ej, %i.ei
+  %or.cond.i121 = and i1 %i.ei, %i.ej
   br i1 %or.cond.i121, label %bb.ao, label %copy_bytes_.exit126
 
 bb.ao:                                            ; preds = %bb.an
@@ -1031,7 +1026,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define noundef ptr @FLAC__metadata_object_cuesheet_track_clone(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define noalias noundef ptr @FLAC__metadata_object_cuesheet_track_clone(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(32) ptr @calloc(i64 noundef 1, i64 noundef 32) #28 ; 7 uses
   %.not = icmp eq ptr %i.a, null

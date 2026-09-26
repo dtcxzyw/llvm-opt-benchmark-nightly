@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %.thread120, %.loope
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @cli_vba_readdir(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define noalias noundef ptr @cli_vba_readdir(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 9 uses
   %i.b = alloca i16, align 2                      ; 18 uses
@@ -464,6 +464,7 @@ bb.aq:                                            ; preds = %bb.ao
 .lr.ph:                                           ; preds = %.preheader
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
+  %.pre = load ptr, ptr %i.bx, align 8, !tbaa !58
   br label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
@@ -471,11 +472,11 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.bn
 
 bb.as:                                            ; preds = %.lr.ph, %.thread213
+  %4 = phi ptr [ %.pre, %.lr.ph ], [ %i.cu, %.thread213 ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.thread213 ] ; 6 uses
   %.0110238 = phi i16 [ 0, %.lr.ph ], [ %.2, %.thread213 ] ; 2 uses
   %.0112237 = phi ptr [ null, %.lr.ph ], [ %.2114, %.thread213 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #15
-  %4 = load ptr, ptr %i.bx, align 8, !tbaa !58
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
   store i32 0, ptr %i.ca, align 4, !tbaa !14
   %i.cb = call i64 @cli_readn(i32 noundef %i.p, ptr noundef nonnull %i.h, i64 noundef 2) #15
@@ -540,7 +541,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.ba
   %i.ct = load i32, ptr %i.g, align 4, !tbaa !14  ; 2 uses
-  %i.cu = load ptr, ptr %i.bx, align 8, !tbaa !58
+  %i.cu = load ptr, ptr %i.bx, align 8, !tbaa !58 ; 2 uses
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %indvars.iv
   store i32 %i.ct, ptr %i.cv, align 4, !tbaa !14
   %i.cw = icmp eq i32 %i.ct, 0
@@ -672,7 +673,7 @@ bb.bm:                                            ; preds = %.loopexit.thread
   %i.en = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !60
   call void @free(ptr noundef %i.eo) #15
-  call void @free(ptr noundef nonnull %i.bu) #15
+  call void @free(ptr noundef %i.bu) #15
   br label %bb.bn
 
 bb.bn:                                            ; preds = %.loopexit.thread, %bb.e, %bb.d, %bb.a, %bb.bm, %bb.ar, %bb.ap, %bb.an, %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ac, %bb.aa, %bb.x, %bb.u, %bb.r, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g, %bb.c
@@ -933,7 +934,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @create_vba_project(i32 noundef range(i32 1, 65536) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
+define internal fastcc noalias noundef ptr @create_vba_project(i32 noundef range(i32 1, 65536) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(64) ptr @calloc(i64 noundef 1, i64 noundef 64) #18 ; 9 uses
   %i.b = icmp eq ptr %i.a, null
@@ -1336,7 +1337,7 @@ declare void @cli_errmsg(ptr noundef, ...) local_unnamed_addr #2
 declare i32 @cli_rmdirs(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @cli_wm_readdir(i32 noundef %0) local_unnamed_addr #0 {
+define noalias noundef ptr @cli_wm_readdir(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 9 uses
   %i.b = alloca i8, align 1                       ; 5 uses
@@ -1739,17 +1740,16 @@ bb.az:                                            ; preds = %bb.ay
   %i.ff = load i16, ptr %i.u, align 8, !tbaa !94
   %i.fg = zext i16 %i.ff to i64
   %i.fh = shl nuw nsw i64 %i.fg, 2
-  %i.fi = call ptr @cli_max_malloc(i64 noundef %i.fh) #15
-  %i.fj = getelementptr inbounds nuw i8, ptr %i.fe, i64 24 ; 4 uses
+  %i.fi = call ptr @cli_max_malloc(i64 noundef %i.fh) #15 ; 4 uses
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.fe, i64 24
   store ptr %i.fi, ptr %i.fj, align 8, !tbaa !62
   %i.fk = load i16, ptr %i.u, align 8, !tbaa !94
   %i.fl = zext i16 %i.fk to i64
-  %i.fm = call ptr @cli_max_malloc(i64 noundef %i.fl) #15 ; 2 uses
-  %i.fn = getelementptr inbounds nuw i8, ptr %i.fe, i64 32 ; 3 uses
+  %i.fm = call ptr @cli_max_malloc(i64 noundef %i.fl) #15 ; 4 uses
+  %i.fn = getelementptr inbounds nuw i8, ptr %i.fe, i64 32
   store ptr %i.fm, ptr %i.fn, align 8, !tbaa !63
-  %3 = load ptr, ptr %i.fj, align 8, !tbaa !62
-  %.not56 = icmp eq ptr %3, null
-  %.not57 = icmp eq ptr %i.fm, null
+  %.not56 = icmp eq ptr %i.fi, null               ; 2 uses
+  %.not57 = icmp eq ptr %i.fm, null               ; 2 uses
   %or.cond63 = select i1 %.not56, i1 true, i1 %.not57
   br i1 %or.cond63, label %bb.bc, label %bb.ba
 
@@ -1761,6 +1761,7 @@ bb.ba:                                            ; preds = %bb.az
 .lr.ph107:                                        ; preds = %bb.ba
   %i.fp = load ptr, ptr %2, align 8, !tbaa !93
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fe, i64 16
+  %3 = load ptr, ptr %i.fq, align 8, !tbaa !60
   br label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph107, %bb.bb
@@ -1768,17 +1769,14 @@ bb.bb:                                            ; preds = %.lr.ph107, %bb.bb
   %.0106 = phi ptr [ %i.fp, %.lr.ph107 ], [ %i.fz, %bb.bb ] ; 4 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %.0106, i64 4
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !102
-  %4 = load ptr, ptr %i.fq, align 8, !tbaa !60
-  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
+  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   store i32 %i.fs, ptr %i.ft, align 4, !tbaa !14
   %i.fu = load i32, ptr %.0106, align 4, !tbaa !100
-  %5 = load ptr, ptr %i.fj, align 8, !tbaa !62
-  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv
+  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %indvars.iv
   store i32 %i.fu, ptr %i.fv, align 4, !tbaa !14
   %i.fw = getelementptr inbounds nuw i8, ptr %.0106, i64 8
   %i.fx = load i8, ptr %i.fw, align 4, !tbaa !98
-  %6 = load ptr, ptr %i.fn, align 8, !tbaa !63
-  %i.fy = getelementptr inbounds nuw i8, ptr %6, i64 %indvars.iv
+  %i.fy = getelementptr inbounds nuw i8, ptr %i.fm, i64 %indvars.iv
   store i8 %i.fx, ptr %i.fy, align 1, !tbaa !13
   %i.fz = getelementptr inbounds nuw i8, ptr %.0106, i64 12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -1800,21 +1798,17 @@ bb.bc:                                            ; preds = %bb.az
   %i.gi = getelementptr inbounds nuw i8, ptr %i.fe, i64 16
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !60
   call void @free(ptr noundef %i.gj) #15
-  %7 = load ptr, ptr %i.fj, align 8, !tbaa !62    ; 2 uses
-  %.not58 = icmp eq ptr %7, null
-  br i1 %.not58, label %bb.be, label %bb.bd
+  br i1 %.not56, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  call void @free(ptr noundef nonnull %7) #15
+  call void @free(ptr noundef nonnull %i.fi) #15
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc
-  %8 = load ptr, ptr %i.fn, align 8, !tbaa !63    ; 2 uses
-  %.not59 = icmp eq ptr %8, null
-  br i1 %.not59, label %bb.bg, label %bb.bf
+  br i1 %.not57, label %bb.bg, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
-  call void @free(ptr noundef nonnull %8) #15
+  call void @free(ptr noundef nonnull %i.fm) #15
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be
