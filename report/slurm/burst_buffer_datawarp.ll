@@ -202,7 +202,7 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.q = sub i64 %i.p, %i.a
   %i.r = add i64 %i.q, 7
-  %diff.check = icmp ult i64 %i.r, 31
+  %diff.check = icmp ult i64 %i.r, 15
   br i1 %diff.check, label %.lr.ph.preheader8, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
