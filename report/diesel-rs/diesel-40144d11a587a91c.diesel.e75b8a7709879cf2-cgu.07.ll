@@ -202,7 +202,7 @@ _RINvXs6_NtCsc61CYD6Y1ak_10serde_json3serINtB6_8CompoundQINtNtCsjRvGck33osM_6die
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef align 8 ptr @_RINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBR_NtNtB9_5value5ValueEECsjRvGck33osM_6diesel(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef align 8 ptr @_RINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBR_NtNtB9_5value5ValueEECsjRvGck33osM_6diesel(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val = load ptr, ptr %i.a, align 8, !nonnull !3, !noundef !3 ; 3 uses
@@ -211,7 +211,7 @@ bb.a:
   %.idx = shl nuw nsw i64 %.val10, 5
   %i.c = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx
   tail call void @llvm.experimental.noalias.scope.decl(metadata !165)
-  %.val.i = load ptr, ptr %0, align 8, !alias.scope !165, !noalias !166, !nonnull !3, !align !4, !noundef !3 ; 3 uses
+  %.val.i = load ptr, ptr %0, align 8, !alias.scope !165, !noalias !166, !nonnull !3, !align !4, !noundef !3 ; 2 uses
   tail call void @_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE17extend_from_sliceCsjRvGck33osM_6diesel(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !167
   %.not = icmp eq i64 %.val10, 0
   br i1 %.not, label %_RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit.sink.split, label %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.peel
@@ -223,10 +223,12 @@ _RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin
 
 _RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit.preheader: ; preds = %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.peel
   %i.e = icmp eq i64 %.val10, 1
+  %.val1344 = load ptr, ptr %0, align 8, !nonnull !3, !noundef !3 ; 2 uses
   br i1 %i.e, label %_RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit.sink.split, label %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.lr.ph
 
 _RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.lr.ph: ; preds = %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit.preheader
   %.sroa.0.02043 = getelementptr inbounds nuw i8, ptr %.val, i64 32
+  %.val13 = load ptr, ptr %0, align 8, !nonnull !3 ; 2 uses
   br label %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i
 
 _RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit: ; preds = %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i
@@ -235,14 +237,16 @@ _RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5all
   br i1 %i.f, label %_RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit.sink.split, label %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i, !llvm.loop !162
 
 _RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i: ; preds = %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.lr.ph, %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit
+  %.val1346 = phi ptr [ %.val1344, %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.lr.ph ], [ %.val13, %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit ]
   %.sroa.0.02044 = phi ptr [ %.sroa.0.02043, %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.lr.ph ], [ %.sroa.0.020, %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit ] ; 2 uses
-  tail call void @_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE17extend_from_sliceCsjRvGck33osM_6diesel(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !169, !inline_history !164
+  tail call void @_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE17extend_from_sliceCsjRvGck33osM_6diesel(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val1346, ptr noalias noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !169, !inline_history !164
   %i.g = tail call fastcc noundef align 8 ptr @_RINvXNtNtCsc61CYD6Y1ak_10serde_json5value3serNtB5_5ValueNtNtCseMV7gzmhUlG_10serde_core3ser9Serialize9serializeQINtNtB7_3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEEECsjRvGck33osM_6diesel(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.0.02044, ptr noalias noundef nonnull align 8 dereferenceable(8) %0), !noalias !168, !inline_history !161 ; 2 uses
   %.not.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i, label %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit, label %_RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit, !llvm.loop !162
 
 _RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit.sink.split: ; preds = %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit, %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit.preheader, %bb.a
-  tail call void @_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE17extend_from_sliceCsjRvGck33osM_6diesel(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef range(i64 0, -9223372036854775808) 1)
+  %.val.i.sink = phi ptr [ %.val.i, %bb.a ], [ %.val1344, %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit.preheader ], [ %.val13, %_RNCINvYQINtNtCsc61CYD6Y1ak_10serde_json3ser10SerializerQINtNtCs40k4W9msRzi_5alloc3vec3VechEENtNtCseMV7gzmhUlG_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsjRvGck33osM_6diesel.exit ]
+  tail call void @_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE17extend_from_sliceCsjRvGck33osM_6diesel(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i.sink, ptr noalias noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef range(i64 0, -9223372036854775808) 1)
   br label %_RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit
 
 _RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit: ; preds = %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i, %_RNvXs2_NtCsc61CYD6Y1ak_10serde_json3serINtB5_8CompoundQINtNtCs40k4W9msRzi_5alloc3vec3VechENtB5_16CompactFormatterENtNtCseMV7gzmhUlG_10serde_core3ser12SerializeSeq3endCsjRvGck33osM_6diesel.exit.sink.split, %_RINvYNtNtCsc61CYD6Y1ak_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i.peel
@@ -645,7 +649,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit(i64 noundef range(i64 1, 9) %0, i64 noundef range(i64 1, 25) %1) unnamed_addr #1 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit(i64 noundef range(i64 1, 9) %0, i64 noundef range(i64 1, 25) %1) unnamed_addr #1 {
 bb.a:
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #24
   %i.a = tail call noundef ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef range(i64 1, 25) %1, i64 noundef range(i64 1, 9) %0) #24 ; 2 uses
