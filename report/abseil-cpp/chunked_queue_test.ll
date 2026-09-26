@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.aq = getelementptr i8, ptr %i.y, i64 %i.ao
   %i.ar = add i64 %i.j, %n.vec
   %i.as = add i64 %i.j, 1
-  %i.at = getelementptr i8, ptr @constinit.214, i64 %.015.i.i.i.idx
+  %i.at = getelementptr inbounds nuw i8, ptr @constinit.214, i64 %.015.i.i.i.idx
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -214,8 +214,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.au = phi i64 [ %i.as, %vector.ph ], [ %i.bd, %vector.body ] ; 2 uses
   %vector.gep = getelementptr i8, ptr %pointer.phi, <2 x i64> <i64 0, i64 4> ; 2 uses
   %i.av = extractelement <2 x ptr> %vector.gep, i64 0 ; 2 uses
-  %i.aw = shl i64 %index, 2
-  %i.ax = getelementptr i8, ptr %i.at, i64 %i.aw  ; 2 uses
+  %i.aw = shl nuw i64 %index, 2
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.aw ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   %wide.load = load <2 x i32>, ptr %i.ax, align 4, !tbaa !128
   %wide.load197 = load <2 x i32>, ptr %i.ay, align 4, !tbaa !128

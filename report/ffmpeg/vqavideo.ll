@@ -205,10 +205,10 @@ vector.ph:                                        ; preds = %.lr.ph
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
   %broadcast.splatinsert194 = insertelement <16 x i32> poison, i32 %i.wb, i64 0
   %broadcast.splat195 = shufflevector <16 x i32> %broadcast.splatinsert194, <16 x i32> poison, <16 x i32> zeroinitializer
-  %i.wn = add <16 x i32> %broadcast.splat195, <i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 -8, i32 -9, i32 -10, i32 -11, i32 -12, i32 -13, i32 -14, i32 -15>
+  %i.wn = add nsw <16 x i32> %broadcast.splat195, <i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 -8, i32 -9, i32 -10, i32 -11, i32 -12, i32 -13, i32 -14, i32 -15>
   %broadcast.splatinsert196 = insertelement <16 x i32> poison, i32 %.013389.i, i64 0
   %broadcast.splat197 = shufflevector <16 x i32> %broadcast.splatinsert196, <16 x i32> poison, <16 x i32> zeroinitializer
-  %induction = add <16 x i32> %broadcast.splat197, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
+  %induction = add nsw <16 x i32> %broadcast.splat197, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body.interim, %vector.ph
@@ -223,8 +223,8 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not, label %vector.body.interim, label %vector.early.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next199 = add <16 x i32> %vec.ind198, splat (i32 64)
-  %vec.ind.next = add <16 x i32> %vec.ind, splat (i32 -16)
+  %vec.ind.next199 = add nsw <16 x i32> %vec.ind198, splat (i32 64)
+  %vec.ind.next = add nsw <16 x i32> %vec.ind, splat (i32 -16)
   %index.next = add nuw i32 %index, 16            ; 2 uses
   %i.ws = icmp eq i32 %index.next, %n.vec
   br i1 %i.ws, label %middle.block, label %vector.body, !llvm.loop !72

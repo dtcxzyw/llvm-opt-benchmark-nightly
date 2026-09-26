@@ -205,7 +205,7 @@ vector.body735:                                   ; preds = %vector.body.interim
   br i1 %.not762, label %vector.body.interim, label %"_ZZL24match1BitShuffleAsKSHIFTRjN4llvm8ArrayRefIiEEiRKNS0_5APIntEENK3$_0clEib.exit.thread.1.i"
 
 vector.body.interim:                              ; preds = %vector.body735
-  %vec.ind.next = add <16 x i32> %vec.ind, splat (i32 16)
+  %vec.ind.next = add nuw <16 x i32> %vec.ind, splat (i32 16)
   %index.next737 = add nuw i32 %index736, 16      ; 2 uses
   %i.eg = icmp eq i32 %index.next737, %n.vec730
   br i1 %i.eg, label %middle.block738, label %vector.body735, !llvm.loop !4278
@@ -497,7 +497,7 @@ vector.body751:                                   ; preds = %vector.body.interim
   br i1 %.not764, label %vector.body.interim756, label %"_ZZL24match1BitShuffleAsKSHIFTRjN4llvm8ArrayRefIiEEiRKNS0_5APIntEENK3$_0clEib.exit.thread.1.i.1"
 
 vector.body.interim756:                           ; preds = %vector.body751
-  %vec.ind.next755 = add <16 x i32> %vec.ind753, splat (i32 16)
+  %vec.ind.next755 = add nuw <16 x i32> %vec.ind753, splat (i32 16)
   %index.next754 = add nuw i32 %index752, 16      ; 2 uses
   %i.ib = icmp eq i32 %index.next754, %n.vec746
   br i1 %i.ib, label %middle.block757, label %vector.body751, !llvm.loop !4281
