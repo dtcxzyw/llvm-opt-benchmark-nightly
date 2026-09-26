@@ -204,15 +204,18 @@ bb.ac:                                            ; preds = %bb.ab
   %i.en = call ptr @proto_tree_add_item(ptr noundef %i.dz, i32 noundef %i.em, ptr noundef %0, i32 noundef 36, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.eo = load i32, ptr @hf_ospf_hello_backup_designated_router, align 4
   %i.ep = call ptr @proto_tree_add_item(ptr noundef %i.dz, i32 noundef %i.eo, ptr noundef %0, i32 noundef 40, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %5 = add nuw nsw i32 %i.dw, 24
-  br i1 %i.ea, label %.lr.ph67.i, label %dissect_ospf_hello.exit.thread237
+  br i1 %i.ea, label %.lr.ph67.i.preheader, label %dissect_ospf_hello.exit.thread237
 
-.lr.ph67.i:                                       ; preds = %bb.ac, %.lr.ph67.i
-  %.066.i = phi i32 [ %i.es, %.lr.ph67.i ], [ 44, %bb.ac ] ; 2 uses
+.lr.ph67.i.preheader:                             ; preds = %bb.ac
+  %5 = add nuw nsw i32 %i.dw, 20
+  br label %.lr.ph67.i
+
+.lr.ph67.i:                                       ; preds = %.lr.ph67.i.preheader, %.lr.ph67.i
+  %.066.i = phi i32 [ %i.es, %.lr.ph67.i ], [ 44, %.lr.ph67.i.preheader ] ; 3 uses
   %i.eq = load i32, ptr @hf_ospf_hello_active_neighbor, align 4
   %i.er = call ptr @proto_tree_add_item(ptr noundef %i.dz, i32 noundef %i.eq, ptr noundef %0, i32 noundef %.066.i, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %i.es = add nuw nsw i32 %.066.i, 4              ; 2 uses
-  %i.et = icmp samesign ugt i32 %5, %i.es
+  %i.es = add nuw nsw i32 %.066.i, 4
+  %i.et = icmp samesign ugt i32 %5, %.066.i
   br i1 %i.et, label %.lr.ph67.i, label %dissect_ospf_hello.exit.thread237, !llvm.loop !8
 
 bb.ad:                                            ; preds = %bb.ab
@@ -231,15 +234,18 @@ bb.ad:                                            ; preds = %bb.ab
   %i.fg = call ptr @proto_tree_add_item(ptr noundef %i.dz, i32 noundef %i.ff, ptr noundef %0, i32 noundef 28, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.fh = load i32, ptr @hf_ospf_hello_backup_designated_router, align 4
   %i.fi = call ptr @proto_tree_add_item(ptr noundef %i.dz, i32 noundef %i.fh, ptr noundef %0, i32 noundef 32, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %6 = add nuw nsw i32 %i.dw, 16
-  br i1 %i.ea, label %.lr.ph.i, label %dissect_ospf_hello.exit.thread237
+  br i1 %i.ea, label %.lr.ph.i.preheader, label %dissect_ospf_hello.exit.thread237
 
-.lr.ph.i:                                         ; preds = %bb.ad, %.lr.ph.i
-  %.165.i = phi i32 [ %i.fl, %.lr.ph.i ], [ 36, %bb.ad ] ; 2 uses
+.lr.ph.i.preheader:                               ; preds = %bb.ad
+  %6 = add nuw nsw i32 %i.dw, 12
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %.165.i = phi i32 [ %i.fl, %.lr.ph.i ], [ 36, %.lr.ph.i.preheader ] ; 3 uses
   %i.fj = load i32, ptr @hf_ospf_hello_active_neighbor, align 4
   %i.fk = call ptr @proto_tree_add_item(ptr noundef %i.dz, i32 noundef %i.fj, ptr noundef %0, i32 noundef %.165.i, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %i.fl = add nuw nsw i32 %.165.i, 4              ; 2 uses
-  %i.fm = icmp samesign ugt i32 %6, %i.fl
+  %i.fl = add nuw nsw i32 %.165.i, 4
+  %i.fm = icmp samesign ugt i32 %6, %.165.i
   br i1 %i.fm, label %.lr.ph.i, label %dissect_ospf_hello.exit.thread237, !llvm.loop !9
 
 bb.ae:                                            ; preds = %bb.aa

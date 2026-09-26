@@ -205,7 +205,7 @@ update_crc.exit:                                  ; preds = %advance_multivolume
 define internal fastcc noundef range(i32 -30, 2) i32 @uncompress_file(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = alloca [20 x i8], align 16               ; 6 uses
+  %i.b = alloca [20 x i8], align 16               ; 7 uses
   %i.c = alloca [430 x i8], align 16              ; 11 uses
   %i.d = alloca i16, align 2                      ; 6 uses
   %i.e = alloca i32, align 4                      ; 5 uses
@@ -608,7 +608,7 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %.loopexit.i, %bb.ar
   %.090165.i = phi i8 [ 4, %bb.ar ], [ %.191.i, %.loopexit.i ] ; 4 uses
   %.092164.i = phi i32 [ 240, %bb.ar ], [ %.193.i, %.loopexit.i ] ; 6 uses
-  %.094163.i = phi i32 [ 0, %bb.ar ], [ %.296.i, %.loopexit.i ] ; 6 uses
+  %.094163.i = phi i32 [ 0, %bb.ar ], [ %.296.i, %.loopexit.i ] ; 7 uses
   %.097162.i = phi i32 [ 0, %bb.ar ], [ %.3.i, %.loopexit.i ] ; 2 uses
   %i.gs = sext i32 %.097162.i to i64              ; 2 uses
   %.not117.i = icmp sgt i64 %.sink.i.i, %i.gs
@@ -645,17 +645,17 @@ bb.av:                                            ; preds = %bb.au
   %i.hm = zext i1 %i.hl to i32
   %spec.select118.i = add nsw i32 %spec.select.i, %i.hm ; 2 uses
   %i.hn = icmp eq i32 %i.hk, 0
-  %1 = sext i32 %.094163.i to i64                 ; 2 uses
-  %2 = getelementptr i8, ptr %i.b, i64 %1         ; 2 uses
   br i1 %i.hn, label %bb.aw, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.av
+  %1 = sext i32 %.094163.i to i64                 ; 2 uses
+  %scevgep.i = getelementptr i8, ptr %i.b, i64 %1
   %narrow193.i = add nuw nsw i32 %i.hk, 1
   %i.ho = sub i32 19, %.094163.i
   %i.hp = call i32 @llvm.umin.i32(i32 %narrow193.i, i32 %i.ho)
   %narrow194.i = add nuw nsw i32 %i.hp, 1
   %i.hq = zext nneg i32 %narrow194.i to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %2, i8 0, i64 %i.hq, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i, i8 0, i64 %i.hq, i1 false), !tbaa !32
   %i.hr = sub nsw i64 19, %1
   %narrow = add nuw nsw i32 %i.hk, 1
   %i.hs = zext nneg i32 %narrow to i64
@@ -667,7 +667,9 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %i.hw = add nsw i32 %.094163.i, 1
-  store i8 15, ptr %2, align 1, !tbaa !32
+  %2 = sext i32 %.094163.i to i64
+  %3 = getelementptr inbounds i8, ptr %i.b, i64 %2
+  store i8 15, ptr %3, align 1, !tbaa !32
   br label %.loopexit.i
 
 bb.ax:                                            ; preds = %bb.au
