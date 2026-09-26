@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.b, %_RINvNtCsf3T
 }
 
 ; Function Attrs: cold nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvMNtCsfS4ZeCxwza6_6anyhow5errorNtB5_5Error9constructNtCsJovr8ELaM0_3log14SetLoggerErrorECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RINvMNtCsfS4ZeCxwza6_6anyhow5errorNtB5_5Error9constructNtCsJovr8ELaM0_3log14SetLoggerErrorECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !85
   %i.a = tail call noundef align 8 dereferenceable_or_null(56) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef 56, i64 noundef range(i64 1, -9223372036854775807) 8) #30, !noalias !85 ; 4 uses
@@ -608,7 +608,7 @@ bb.ag:                                            ; preds = %.thread139
   store ptr %i.cu, ptr %i.ct, align 8, !noalias !4725
   %.sroa.42.0..sroa_idx.i83 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i83, align 8, !noalias !4725
-  %i.ir = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.ct) #30
+  %i.ir = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.ct) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ct), !noalias !4725
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cu)
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
@@ -961,7 +961,7 @@ bb.bv:                                            ; preds = %bb.bu
   store ptr %i.cq, ptr %i.cp, align 8, !noalias !4737
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !4737
-  %i.mp = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.cp) #30, !noalias !4732
+  %i.mp = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.cp) #30, !noalias !4732
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cp), !noalias !4737
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cq), !noalias !4736
   br label %.loopexit.i.i.i.i.i.i
@@ -1003,7 +1003,7 @@ bb.by:                                            ; preds = %.thread144
   store ptr %i.co, ptr %i.cn, align 8, !noalias !4738
   %.sroa.42.0..sroa_idx.i86 = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i86, align 8, !noalias !4738
-  %i.mv = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.cn) #30
+  %i.mv = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.cn) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cn), !noalias !4738
   call void @llvm.lifetime.end.p0(ptr nonnull %i.co)
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
@@ -1406,7 +1406,7 @@ bb.eq:                                            ; preds = %.thread48.i.i.i.i.i
   store ptr %i.cf, ptr %i.ce, align 8, !noalias !4762
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4762
-  %i.vw = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.ce) #30, !noalias !4761
+  %i.vw = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.ce) #30, !noalias !4761
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ce), !noalias !4762
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cf), !noalias !4760
   br label %.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1446,7 +1446,7 @@ bb.et:                                            ; preds = %.thread53.i.i.i.i.i
   store ptr %i.cd, ptr %i.cc, align 8, !noalias !4763
   %.sroa.42.0..sroa_idx.i34.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i34.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4763
-  %i.we = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.cc) #30, !noalias !4761
+  %i.we = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.cc) #30, !noalias !4761
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cc), !noalias !4763
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cd), !noalias !4760
   br label %.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1753,7 +1753,7 @@ bb.gc:                                            ; preds = %bb.fq
   store ptr %i.bv, ptr %i.bu, align 8, !noalias !4771
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4771
-  %i.aaa = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bu) #30, !noalias !4769
+  %i.aaa = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bu) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bu), !noalias !4771
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1805,7 +1805,7 @@ bb.gg:                                            ; preds = %bb.fr
   store ptr %i.bt, ptr %i.bs, align 8, !noalias !4772
   %.sroa.42.0..sroa_idx.i143.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i143.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4772
-  %i.aai = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bs) #30, !noalias !4769
+  %i.aai = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bs) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bs), !noalias !4772
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1888,7 +1888,7 @@ bb.gu:                                            ; preds = %bb.fs
   store ptr %i.bq, ptr %i.bp, align 8, !noalias !4779
   %.sroa.42.0..sroa_idx.i149.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i149.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4779
-  %i.aay = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bp) #30, !noalias !4769
+  %i.aay = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bp) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bp), !noalias !4779
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bq), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2270,7 +2270,7 @@ bb.ih:                                            ; preds = %bb.ft
   store ptr %i.bl, ptr %i.bk, align 8, !noalias !4796
   %.sroa.42.0..sroa_idx.i155.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i155.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4796
-  %i.agz = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bk) #30, !noalias !4769
+  %i.agz = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bk) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bk), !noalias !4796
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bl), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2297,7 +2297,7 @@ bb.ij:                                            ; preds = %bb.fu
   store ptr %i.bj, ptr %i.bi, align 8, !noalias !4797
   %.sroa.42.0..sroa_idx.i156.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i156.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4797
-  %i.ahe = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bi) #30, !noalias !4769
+  %i.ahe = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bi) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bi), !noalias !4797
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bj), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2328,7 +2328,7 @@ bb.im:                                            ; preds = %bb.fv
   store ptr %i.bh, ptr %i.bg, align 8, !noalias !4798
   %.sroa.42.0..sroa_idx.i159.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i159.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4798
-  %i.ahj = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bg) #30, !noalias !4769
+  %i.ahj = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.bg) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bg), !noalias !4798
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bh), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2358,7 +2358,7 @@ bb.io:                                            ; preds = %bb.fw
   store ptr %i.bf, ptr %i.be, align 8, !noalias !4799
   %.sroa.42.0..sroa_idx.i163.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i163.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4799
-  %i.ahn = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.be) #30, !noalias !4769
+  %i.ahn = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.be) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be), !noalias !4799
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bf), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2393,7 +2393,7 @@ bb.ir:                                            ; preds = %_RINvYNtNtCseuwcdgG
   store ptr %i.bd, ptr %i.bc, align 8, !noalias !4770
   %.sroa.42.0..sroa_idx.i164.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i164.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4770
-  %i.ahs = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @896, ptr noundef nonnull %i.bc) #30, !noalias !4769
+  %i.ahs = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @896, ptr noundef nonnull %i.bc) #30, !noalias !4769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc), !noalias !4770
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bd), !noalias !4770
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2773,7 +2773,7 @@ bb.ke:                                            ; preds = %.thread105.i.i.i.i.
   store ptr %i.ax, ptr %i.aw, align 8, !noalias !4814
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i43.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i43.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4814
-  %i.alm = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.aw) #30, !noalias !4812
+  %i.alm = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.aw) #30, !noalias !4812
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw), !noalias !4814
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax), !noalias !4813
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2818,7 +2818,7 @@ bb.kj:                                            ; preds = %.thread110.i.i.i.i.
   store ptr %i.av, ptr %i.au, align 8, !noalias !4815
   %.sroa.42.0..sroa_idx.i77.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i77.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4815
-  %i.alu = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.au) #30, !noalias !4812
+  %i.alu = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.au) #30, !noalias !4812
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au), !noalias !4815
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !4813
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2851,7 +2851,7 @@ bb.kn:                                            ; preds = %.thread114.i.i.i.i.
   store ptr %i.at, ptr %i.as, align 8, !noalias !4816
   %.sroa.42.0..sroa_idx.i78.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i78.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4816
-  %i.amc = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.as) #30, !noalias !4812
+  %i.amc = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.as) #30, !noalias !4812
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !noalias !4816
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !4813
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i
@@ -2958,7 +2958,7 @@ bb.lb:                                            ; preds = %bb.ky
   store ptr %i.ao, ptr %i.amy, align 8, !noalias !4823
   %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.an, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4823
-  %i.amz = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.an) #30, !noalias !4824
+  %i.amz = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.an) #30, !noalias !4824
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !4823
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !4822
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !4822
@@ -2986,7 +2986,7 @@ bb.ld:                                            ; preds = %bb.lc
   store ptr %i.al, ptr %i.ane, align 8, !noalias !4826
   %.sroa.46.0..sroa_idx.i.i14.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i14.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4826
-  %i.anf = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.ak) #30, !noalias !4827
+  %i.anf = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.ak) #30, !noalias !4827
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !4826
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al), !noalias !4825
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !4825
@@ -3037,7 +3037,7 @@ _RINvYNtNvXsR_NtNtCs2d6kDCn68sB_10serde_core2de5implslNtBd_11Deserialize11deseri
   store ptr %i.ae, ptr %i.anp, align 8, !noalias !4830
   %.sroa.46.0..sroa_idx.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4830
-  %i.anq = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.ad) #30, !noalias !4829
+  %i.anq = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.ad) #30, !noalias !4829
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !4830
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !4828
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !4828
@@ -3069,7 +3069,7 @@ _RINvXNvXsR_NtNtCs2d6kDCn68sB_10serde_core2de5implslNtBb_11Deserialize11deserial
   store ptr %i.ab, ptr %i.anv, align 8, !noalias !4832
   %.sroa.46.0..sroa_idx.i.i19.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i19.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4832
-  %i.anw = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.aa) #30, !noalias !4833
+  %i.anw = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.aa) #30, !noalias !4833
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !4832
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !4831
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !4831
@@ -3120,7 +3120,7 @@ _RINvYNtNvXsR_NtNtCs2d6kDCn68sB_10serde_core2de5implslNtBd_11Deserialize11deseri
   store ptr %i.u, ptr %i.aog, align 8, !noalias !4836
   %.sroa.46.0..sroa_idx.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4836
-  %i.aoh = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.t) #30, !noalias !4835
+  %i.aoh = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.t) #30, !noalias !4835
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !4836
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !4834
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !4834
@@ -3156,7 +3156,7 @@ bb.lm:                                            ; preds = %.thread118.i.i.i.i.
   store ptr %i.s, ptr %i.r, align 8, !noalias !4837
   %.sroa.42.0..sroa_idx.i82.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i82.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4837
-  %i.aon = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.r) #30, !noalias !4812
+  %i.aon = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.r) #30, !noalias !4812
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !4837
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !4813
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i
@@ -3376,7 +3376,7 @@ bb.mg:                                            ; preds = %_RINvYNtNvXNvNtCsat
   store ptr %i.o, ptr %i.arb, align 8, !noalias !4846
   %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4846
-  %i.arc = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.n) #30, !noalias !4847
+  %i.arc = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.n) #30, !noalias !4847
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !4846
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !4845
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !4845
@@ -3397,7 +3397,7 @@ bb.mg:                                            ; preds = %_RINvYNtNvXNvNtCsat
   store ptr %i.l, ptr %i.are, align 8, !noalias !4849
   %.sroa.46.0..sroa_idx.i.i.i5.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i.i5.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4849
-  %i.arf = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.k) #30, !noalias !4850
+  %i.arf = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.k) #30, !noalias !4850
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !4849
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !4848
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !4848
@@ -3418,7 +3418,7 @@ bb.mg:                                            ; preds = %_RINvYNtNvXNvNtCsat
   store ptr %i.i, ptr %i.arh, align 8, !noalias !4852
   %.sroa.46.0..sroa_idx.i.i.i7.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i.i7.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !4852
-  %i.ari = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.h) #30, !noalias !4853
+  %i.ari = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.h) #30, !noalias !4853
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !4852
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !4851
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !4851
@@ -3643,7 +3643,7 @@ bb.mu:                                            ; preds = %.thread148
   store ptr %i.g, ptr %i.f, align 8, !noalias !4863
   %.sroa.42.0..sroa_idx.i89 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i89, align 8, !noalias !4863
-  %i.aso = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.f) #30
+  %i.aso = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.f) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !4863
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
@@ -3774,7 +3774,7 @@ bb.no:                                            ; preds = %.thread152
   store ptr %i.c, ptr %i.b, align 8, !noalias !4873
   %.sroa.42.0..sroa_idx.i96 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i96, align 8, !noalias !4873
-  %i.atp = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.b) #30
+  %i.atp = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.b) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !4873
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
@@ -3929,7 +3929,7 @@ bb.f:                                             ; preds = %bb.c
   store ptr %i.w, ptr %i.ai, align 8, !noalias !4908
   %.sroa.46.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i.i, align 8, !noalias !4908
-  %i.aj = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.v) #30, !noalias !4909
+  %i.aj = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.v) #30, !noalias !4909
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !4908
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !4907
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !4907
@@ -3957,7 +3957,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.t, ptr %i.ao, align 8, !noalias !4911
   %.sroa.46.0..sroa_idx.i.i14.i = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i14.i, align 8, !noalias !4911
-  %i.ap = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.s) #30, !noalias !4912
+  %i.ap = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.s) #30, !noalias !4912
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !4911
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !4910
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !4910
@@ -4008,7 +4008,7 @@ _RINvYNtNvXs16_NtNtCs2d6kDCn68sB_10serde_core2de5implsmNtBe_11Deserialize11deser
   store ptr %i.m, ptr %i.az, align 8, !noalias !4915
   %.sroa.46.0..sroa_idx.i.i16.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i16.i, align 8, !noalias !4915
-  %i.ba = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.l) #30, !noalias !4914
+  %i.ba = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.l) #30, !noalias !4914
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !4915
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !4913
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !4913
@@ -4039,7 +4039,7 @@ _RINvXNvXs16_NtNtCs2d6kDCn68sB_10serde_core2de5implsmNtBc_11Deserialize11deseria
   store ptr %i.j, ptr %i.bf, align 8, !noalias !4917
   %.sroa.46.0..sroa_idx.i.i19.i = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i19.i, align 8, !noalias !4917
-  %i.bg = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.i) #30, !noalias !4918
+  %i.bg = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.i) #30, !noalias !4918
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !4917
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !4916
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !4916
@@ -4090,7 +4090,7 @@ _RINvYNtNvXs16_NtNtCs2d6kDCn68sB_10serde_core2de5implsmNtBe_11Deserialize11deser
   store ptr %i.c, ptr %i.bq, align 8, !noalias !4921
   %.sroa.46.0..sroa_idx.i.i22.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i22.i, align 8, !noalias !4921
-  %i.br = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.b) #30, !noalias !4920
+  %i.br = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.b) #30, !noalias !4920
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !4921
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4919
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !4919
@@ -4119,7 +4119,7 @@ _RINvXs0_NtCseuwcdgGPBeX_5json52deQNtB6_12DeserializerNtNtCs2d6kDCn68sB_10serde_
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %.sroa.4.i = alloca [40 x i8], align 8          ; 4 uses
@@ -4473,7 +4473,7 @@ bb.p:                                             ; preds = %bb.m
   store ptr %i.t, ptr %i.ay, align 8, !noalias !5027
   %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !5027
-  %i.az = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.s) #30, !noalias !5026
+  %i.az = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.s) #30, !noalias !5026
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !5027
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !5025
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !5025
@@ -4528,7 +4528,7 @@ _RINvYNtNvXs1c_NtNtCs2d6kDCn68sB_10serde_core2de5implsjNtBe_11Deserialize11deser
   store ptr %i.m, ptr %i.bk, align 8, !noalias !5028
   %.sroa.46.0..sroa_idx.i.i18.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i18.i.i.i.i.i.i.i, align 8, !noalias !5028
-  %i.bl = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.l) #30, !noalias !5026
+  %i.bl = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.l) #30, !noalias !5026
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !5028
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !5025
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !5025
@@ -4559,7 +4559,7 @@ bb.s:                                             ; preds = %bb.o
   store ptr %i.j, ptr %i.bq, align 8, !noalias !5029
   %.sroa.46.0..sroa_idx.i.i20.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i20.i.i.i.i.i.i.i, align 8, !noalias !5029
-  %i.br = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.i) #30, !noalias !5026
+  %i.br = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @895, ptr noundef nonnull %i.i) #30, !noalias !5026
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !5029
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !5025
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !5025
@@ -4610,7 +4610,7 @@ _RINvYNtNvXs1c_NtNtCs2d6kDCn68sB_10serde_core2de5implsjNtBe_11Deserialize11deser
   store ptr %i.c, ptr %i.cb, align 8, !noalias !5030
   %.sroa.46.0..sroa_idx.i.i23.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRDNtNtCs2d6kDCn68sB_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.46.0..sroa_idx.i.i23.i.i.i.i.i.i.i, align 8, !noalias !5030
-  %i.cc = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.b) #30, !noalias !5026
+  %i.cc = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @894, ptr noundef nonnull %i.b) #30, !noalias !5026
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5030
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5025
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !5025
@@ -5013,7 +5013,7 @@ bb.ay:                                            ; preds = %bb.ax
   store ptr %i.b, ptr %i.a, align 8, !noalias !5136
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !5136
-  %i.ea = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.a) #30, !noalias !5129
+  %i.ea = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.a) #30, !noalias !5129
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5136
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5135
   br label %.loopexit.i.i.i.i.i
@@ -5416,7 +5416,7 @@ _RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9Map
   store ptr %i.m, ptr %i.l, align 8, !noalias !5438
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !5438
-  %i.dw = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.l) #30, !noalias !5431
+  %i.dw = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.l) #30, !noalias !5431
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !5438
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !5424
   br label %bb.cz
@@ -5679,7 +5679,7 @@ bb.bk:                                            ; preds = %.thread55.i.i.i.i.i
   store ptr %i.i, ptr %i.h, align 8, !noalias !5447
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !5447
-  %i.gn = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.h) #30, !noalias !5445
+  %i.gn = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.h) #30, !noalias !5445
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !5447
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !5446
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i
@@ -6066,7 +6066,7 @@ bb.cv:                                            ; preds = %.thread60.i.i.i.i.i
   store ptr %i.d, ptr %i.c, align 8, !noalias !5464
   %.sroa.42.0..sroa_idx.i36.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i36.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !5464
-  %i.kz = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.c) #30, !noalias !5445
+  %i.kz = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.c) #30, !noalias !5445
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5464
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !5446
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i
@@ -6117,7 +6117,7 @@ bb.cx:                                            ; preds = %.thread105.i.i.i.i.
   store ptr %i.b, ptr %i.a, align 8, !noalias !5466
   %.sroa.42.0..sroa_idx.i82.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsat9HgdBb3qc_16shadowsocks_rust, ptr %.sroa.42.0..sroa_idx.i82.i.i.i.i.i, align 8, !noalias !5466
-  %i.le = call fastcc noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.a) #30, !noalias !5431
+  %i.le = call fastcc noalias noundef nonnull align 8 ptr @_RINvXs3_NtCseuwcdgGPBeX_5json55errorNtB6_5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error6customNtNtCsf3Ta7LF998c_4core3fmt9ArgumentsECsat9HgdBb3qc_16shadowsocks_rust(ptr noundef nonnull @897, ptr noundef nonnull %i.a) #30, !noalias !5431
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5466
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5424
   br label %bb.cy
@@ -6520,7 +6520,7 @@ _RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
 }
 
 ; Function Attrs: cold nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvXs_NtCsfS4ZeCxwza6_6anyhow5errorNtB6_5ErrorINtNtCsf3Ta7LF998c_4core7convert4FromNtCsJovr8ELaM0_3log14SetLoggerErrorE4fromCsat9HgdBb3qc_16shadowsocks_rust() unnamed_addr #1 {
+define internal fastcc noalias noundef nonnull ptr @_RNvXs_NtCsfS4ZeCxwza6_6anyhow5errorNtB6_5ErrorINtNtCsf3Ta7LF998c_4core7convert4FromNtCsJovr8ELaM0_3log14SetLoggerErrorE4fromCsat9HgdBb3qc_16shadowsocks_rust() unnamed_addr #1 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [48 x i8], align 8                ; 3 uses
@@ -6537,7 +6537,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.d = call fastcc noundef nonnull ptr @_RINvMNtCsfS4ZeCxwza6_6anyhow5errorNtB5_5Error9constructNtCsJovr8ELaM0_3log14SetLoggerErrorECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b) #30
+  %i.d = call fastcc noalias noundef nonnull ptr @_RINvMNtCsfS4ZeCxwza6_6anyhow5errorNtB5_5Error9constructNtCsJovr8ELaM0_3log14SetLoggerErrorECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b) #30
   ret ptr %i.d
 }
 
@@ -6940,7 +6940,7 @@ _RINvNtNtCsf3Ta7LF998c_4core2io5write17default_write_fmtNtNtCs5Xr050g3D4S_3std2f
 }
 
 ; Function Attrs: cold nounwind nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvYNtNtCseuwcdgGPBeX_5json55error5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error15unknown_variantCsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %2, i64 noundef range(i64 2, 4) %3) unnamed_addr #1 {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvYNtNtCseuwcdgGPBeX_5json55error5ErrorNtNtCs2d6kDCn68sB_10serde_core2de5Error15unknown_variantCsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %2, i64 noundef range(i64 2, 4) %3) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses

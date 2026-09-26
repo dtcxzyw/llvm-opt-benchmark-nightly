@@ -204,7 +204,7 @@ declare i32 @shapeOf(ptr noundef) local_unnamed_addr #4
 declare double @hypot(double noundef, double noundef) local_unnamed_addr #5
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc nonnull ptr @genRound(ptr noundef %0, ptr nofree noundef nonnull writeonly captures(none) %1, double noundef %2, double noundef %3) unnamed_addr #2 {
+define internal fastcc noalias nonnull ptr @genRound(ptr noundef %0, ptr nofree noundef nonnull writeonly captures(none) %1, double noundef %2, double noundef %3) unnamed_addr #2 {
 bb.a:
   %i.a = tail call ptr @agget(ptr noundef %0, ptr noundef nonnull @.str.6) #15 ; 2 uses
   %.not = icmp eq ptr %i.a, null
@@ -607,55 +607,35 @@ bb.h:                                             ; preds = %bb.r, %bb.g
   %i.bm = add i32 %i.bf, %.071.i
   %i.bn = srem i32 %i.bm, %i.bd
   %i.bo = sext i32 %.066.i to i64
-  %i.bp = getelementptr inbounds [16 x i8], ptr %i.aw, i64 %i.bo ; 5 uses
+  %i.bp = getelementptr inbounds [16 x i8], ptr %i.aw, i64 %i.bo ; 2 uses
   %i.bq = sext i32 %i.bl to i64
-  %i.br = getelementptr inbounds [16 x i8], ptr %i.aw, i64 %i.bq ; 4 uses
-  %i.bs = load double, ptr %i.bp, align 8
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 8 ; 4 uses
-  %i.bu = load double, ptr %i.bt, align 8
-  %i.bv = load double, ptr %i.br, align 8
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.br, i64 8 ; 3 uses
-  %i.bx = load double, ptr %i.bw, align 8
+  %i.br = getelementptr inbounds [16 x i8], ptr %i.aw, i64 %i.bq ; 2 uses
+  %i.bs = load double, ptr %i.bp, align 8         ; 4 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
+  %i.bu = load double, ptr %i.bt, align 8         ; 4 uses
+  %i.bv = load double, ptr %i.br, align 8         ; 3 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.br, i64 8
+  %i.bx = load double, ptr %i.bw, align 8         ; 3 uses
   call void @subpt(ptr noundef nonnull %6, double %i.bs, double %i.bu, double %i.bv, double %i.bx) #15
   %i.by = sext i32 %.071.i to i64
-  %i.bz = getelementptr inbounds [16 x i8], ptr %i.bb, i64 %i.by ; 5 uses
+  %i.bz = getelementptr inbounds [16 x i8], ptr %i.bb, i64 %i.by ; 2 uses
   %i.ca = sext i32 %i.bn to i64
-  %i.cb = getelementptr inbounds [16 x i8], ptr %i.bb, i64 %i.ca ; 4 uses
-  %i.cc = load double, ptr %i.bz, align 8
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 8 ; 4 uses
-  %i.ce = load double, ptr %i.cd, align 8
-  %i.cf = load double, ptr %i.cb, align 8
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.cb, i64 8 ; 3 uses
-  %i.ch = load double, ptr %i.cg, align 8
+  %i.cb = getelementptr inbounds [16 x i8], ptr %i.bb, i64 %i.ca ; 2 uses
+  %i.cc = load double, ptr %i.bz, align 8         ; 4 uses
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
+  %i.ce = load double, ptr %i.cd, align 8         ; 4 uses
+  %i.cf = load double, ptr %i.cb, align 8         ; 3 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
+  %i.ch = load double, ptr %i.cg, align 8         ; 3 uses
   call void @subpt(ptr noundef nonnull %7, double %i.cc, double %i.ce, double %i.cf, double %i.ch) #15
   %i.ci = load double, ptr %6, align 8
   %i.cj = load double, ptr %i.bg, align 8
   %i.ck = load double, ptr %7, align 8
   %i.cl = load double, ptr %i.bh, align 8
   %i.cm = call double @area_2(double 0.000000e+00, double 0.000000e+00, double %i.ci, double %i.cj, double %i.ck, double %i.cl) #15 ; 2 uses
-  %13 = load double, ptr %i.br, align 8
-  %14 = load double, ptr %i.bw, align 8
-  %15 = load double, ptr %i.bp, align 8
-  %16 = load double, ptr %i.bt, align 8
-  %17 = load double, ptr %i.bz, align 8
-  %18 = load double, ptr %i.cd, align 8
-  %i.cn = call i32 @leftOf(double %13, double %14, double %15, double %16, double %17, double %18) #15
-  %19 = load double, ptr %i.cb, align 8
-  %20 = load double, ptr %i.cg, align 8
-  %21 = load double, ptr %i.bz, align 8
-  %22 = load double, ptr %i.cd, align 8
-  %23 = load double, ptr %i.bp, align 8
-  %24 = load double, ptr %i.bt, align 8
-  %i.co = call i32 @leftOf(double %19, double %20, double %21, double %22, double %23, double %24) #15
-  %25 = load double, ptr %i.br, align 8
-  %26 = load double, ptr %i.bw, align 8
-  %27 = load double, ptr %i.bp, align 8
-  %28 = load double, ptr %i.bt, align 8
-  %29 = load double, ptr %i.cb, align 8
-  %30 = load double, ptr %i.cg, align 8
-  %31 = load double, ptr %i.bz, align 8
-  %32 = load double, ptr %i.cd, align 8
-  %i.cp = call i32 @intersection(double %25, double %26, double %27, double %28, double %29, double %30, double %31, double %32, ptr noundef nonnull %8) #15
+  %i.cn = call i32 @leftOf(double %i.bv, double %i.bx, double %i.bs, double %i.bu, double %i.cc, double %i.ce) #15
+  %i.co = call i32 @leftOf(double %i.cf, double %i.ch, double %i.cc, double %i.ce, double %i.bs, double %i.bu) #15
+  %i.cp = call i32 @intersection(double %i.bv, double %i.bx, double %i.bs, double %i.bu, double %i.cf, double %i.ch, double %i.cc, double %i.ce, ptr noundef nonnull %8) #15
   %.not.not.not.not.i.not = icmp eq i32 %i.cp, 0
   br i1 %.not.not.not.not.i.not, label %bb.i, label %edgesIntersect.exit.thread
 
@@ -791,7 +771,7 @@ declare hidden void @addpt(ptr noundef, double, double, double, double) local_un
 declare double @llvm.fmuladd.f64(double, double, double) #6
 
 ; Function Attrs: nofree nounwind uwtable
-define internal fastcc noundef ptr @transCopy(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, double %2, double %3) unnamed_addr #7 {
+define internal fastcc noalias noundef ptr @transCopy(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, double %2, double %3) unnamed_addr #7 {
 bb.a:
   %i.a = sext i32 %1 to i64                       ; 3 uses
   %mul.ov.i = icmp slt i32 %1, 0

@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef %2, ptr %3) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef %2, ptr %3) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [72 x i8], align 8                ; 10 uses
@@ -606,7 +606,7 @@ _RINvMs2_CsfsXztIhCltD_13pingora_errorNtB6_5Error7becauseNtNtCsexYYUdYSQU6_5allo
   %i.eh = extractvalue { ptr, ptr } %i.dy, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eg) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eh) ]
-  %i.ei = invoke fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.ag, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.t, ptr noundef nonnull %i.eg, ptr nonnull %i.eh)
+  %i.ei = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.ag, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.t, ptr noundef nonnull %i.eg, ptr nonnull %i.eh)
           to label %.noexc32 unwind label %.loopexit.split-lp
 
 .noexc32:                                         ; preds = %_RINvMs2_CsfsXztIhCltD_13pingora_errorNtB6_5Error7becauseNtNtCsexYYUdYSQU6_5alloc6string6StringNtCs1ll6eLl40nD_8httparse5ErrorECset5b41vfmiv_13pingora_cache.exit.i
@@ -1009,7 +1009,7 @@ _RNvMs_NtCs1eA6bChxBZF_5bytes9bytes_mutNtB4_8BytesMut13with_capacity.exit: ; pre
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef align 8 ptr @_RNvMs_NtNtCset5b41vfmiv_13pingora_cache3put14parse_responseNtB4_13ResponseParse6finish(ptr noalias nofree noundef align 8 dereferenceable(88) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define noalias noundef align 8 ptr @_RNvMs_NtNtCset5b41vfmiv_13pingora_cache3put14parse_responseNtB4_13ResponseParse6finish(ptr noalias nofree noundef align 8 dereferenceable(88) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 9 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses

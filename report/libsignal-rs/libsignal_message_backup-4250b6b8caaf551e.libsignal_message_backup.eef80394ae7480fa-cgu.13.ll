@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.e, ptr %i.ad, align 8, !noalias !550
   %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store ptr @_RNvXs1i_NtCsgxBkk5gSRhY_4core3fmtRDNtNtCs6yNvtpc0TEA_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCskw1zp9IbpTW_24libsignal_message_backup, ptr %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !550
-  %i.ae = invoke fastcc noundef nonnull align 8 ptr @_RINvXs1_NtCsfzLoC2LLPWN_7bincode5errorINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtB6_9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error6customNtNtCsgxBkk5gSRhY_4core3fmt9ArgumentsECskw1zp9IbpTW_24libsignal_message_backup(ptr noundef nonnull @88, ptr noundef nonnull %i.d)
+  %i.ae = invoke fastcc noalias noundef nonnull align 8 ptr @_RINvXs1_NtCsfzLoC2LLPWN_7bincode5errorINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtB6_9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error6customNtNtCsgxBkk5gSRhY_4core3fmt9ArgumentsECskw1zp9IbpTW_24libsignal_message_backup(ptr noundef nonnull @88, ptr noundef nonnull %i.d)
           to label %bb.g unwind label %bb.f, !noalias !549
 
 bb.f:                                             ; preds = %bb.e
@@ -457,7 +457,7 @@ _RINvXs0_NvXNvNtNtNtCs807GXlIGG3x_7zkgroup3api8receipts31receipt_credential_pres
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RINvXs1_NtCsfzLoC2LLPWN_7bincode5errorINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtB6_9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error6customNtNtCsgxBkk5gSRhY_4core3fmt9ArgumentsECskw1zp9IbpTW_24libsignal_message_backup(ptr noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RINvXs1_NtCsfzLoC2LLPWN_7bincode5errorINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtB6_9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error6customNtNtCsgxBkk5gSRhY_4core3fmt9ArgumentsECskw1zp9IbpTW_24libsignal_message_backup(ptr noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
@@ -552,7 +552,7 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxNtNtCsfzLoC2LLPWN_7bincode5error9Error
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RINvXs1_NtCsfzLoC2LLPWN_7bincode5errorINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtB6_9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error6customReECskw1zp9IbpTW_24libsignal_message_backup(ptr noalias nofree noundef nonnull readonly captures(none) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RINvXs1_NtCsfzLoC2LLPWN_7bincode5errorINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtB6_9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error6customReECskw1zp9IbpTW_24libsignal_message_backup(ptr noalias nofree noundef nonnull readonly captures(none) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
@@ -955,7 +955,7 @@ bb.ab:                                            ; preds = %.body31, %.body
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull ptr @_RNvXse_NtNtCskw1zp9IbpTW_24libsignal_message_backup6backup9recipientNtB5_17FullRecipientDataINtNtCsgxBkk5gSRhY_4core7convert4FromINtB5_11DestinationB14_EE4from(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(440) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noalias noundef nonnull ptr @_RNvXse_NtNtCskw1zp9IbpTW_24libsignal_message_backup6backup9recipientNtB5_17FullRecipientDataINtNtCsgxBkk5gSRhY_4core7convert4FromINtB5_11DestinationB14_EE4from(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(440) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
@@ -1358,7 +1358,7 @@ bb.a:
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvYINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtNtCsfzLoC2LLPWN_7bincode5error9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error14invalid_lengthCskw1zp9IbpTW_24libsignal_message_backup(i64 noundef %0, ptr noundef nonnull %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %2) unnamed_addr #0 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvYINtNtCs6i54tJFfzR_5alloc5boxed3BoxNtNtCsfzLoC2LLPWN_7bincode5error9ErrorKindENtNtCs6yNvtpc0TEA_10serde_core2de5Error14invalid_lengthCskw1zp9IbpTW_24libsignal_message_backup(i64 noundef %0, ptr noundef nonnull %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 3 uses

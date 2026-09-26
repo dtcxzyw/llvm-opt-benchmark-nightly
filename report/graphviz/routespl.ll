@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 43
 inline.NumDeleted: 16
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -48,7 +48,7 @@ target triple = "x86_64-pc-linux-gnu"
 @__const.find_all_cycles.cycles = private unnamed_addr constant %struct.cycles_t { %union.anon.0 zeroinitializer, ptr @nodes_delete, ptr null }, align 8
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @simpleSplineRoute(double %0, double %1, double %2, double %3, ptr %4, i64 %5, ptr nofree noundef writeonly captures(none) %6, i32 noundef %7) local_unnamed_addr #0 {
+define noalias noundef ptr @simpleSplineRoute(double %0, double %1, double %2, double %3, ptr %4, i64 %5, ptr nofree noundef writeonly captures(none) %6, i32 noundef %7) local_unnamed_addr #0 {
 bb.a:
   %8 = alloca %struct.Ppoly_t, align 8            ; 4 uses
   %9 = alloca %struct.Ppoly_t, align 8            ; 7 uses
@@ -232,7 +232,7 @@ declare i32 @Pshortestpath(ptr noundef, ptr noundef, ptr noundef) local_unnamed_
 declare void @make_polyline(ptr, i64, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: inlinehint nofree nounwind uwtable
-define internal fastcc noundef ptr @gv_calloc(i64 noundef %0, i64 noundef range(i64 8, 49) %1) unnamed_addr #3 {
+define internal fastcc noalias noundef ptr @gv_calloc(i64 noundef %0, i64 noundef range(i64 8, 49) %1) unnamed_addr #3 {
 bb.a:
   %.not = icmp eq i64 %0, 0
   br i1 %.not, label %.thread, label %bb.b
@@ -377,14 +377,14 @@ declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly ca
 declare double @elapsed_sec() local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @routesplines(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) local_unnamed_addr #0 {
+define noalias noundef ptr @routesplines(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc ptr @routesplines_(ptr noundef %0, ptr noundef %1, i32 noundef 0)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @routesplines_(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
+define internal fastcc noalias noundef ptr @routesplines_(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.Ppoly_t, align 8            ; 5 uses
   %4 = alloca %struct.Ppoly_t, align 8            ; 9 uses
@@ -787,7 +787,7 @@ bb.bt:                                            ; preds = %bb.bs
   unreachable
 
 gv_calloc.exit:                                   ; preds = %.thread.i421, %bb.bs
-  %i.hp = phi ptr [ %i.hh, %.thread.i421 ], [ %i.hk, %bb.bs ] ; 26 uses
+  %i.hp = phi ptr [ %i.hh, %.thread.i421 ], [ %i.hk, %bb.bs ] ; 32 uses
   %i.hq = icmp ugt i64 %i.f, 1                    ; 2 uses
   br i1 %i.hq, label %bb.bu, label %.loopexit443
 
@@ -1190,7 +1190,7 @@ bb.ck:                                            ; preds = %.loopexit443
 ._crit_edge472:                                   ; preds = %._crit_edge472.loopexit.unr-lcssa, %.lr.ph471.epil, %.preheader441
   %.2385.lcssa593600 = phi i64 [ 0, %.preheader441 ], [ %.2385.lcssa593, %.lr.ph471.epil ], [ %.2385.lcssa593, %._crit_edge472.loopexit.unr-lcssa ]
   store ptr %i.hp, ptr %3, align 8, !tbaa !19
-  %i.ph = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
+  %i.ph = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   store i64 %.2385.lcssa593600, ptr %i.ph, align 8, !tbaa !16
   store <2 x double> %i.gj, ptr %6, align 16, !tbaa !20
   %i.pi = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -1233,7 +1233,7 @@ bb.cl:                                            ; preds = %._crit_edge472
 
 bb.cm:                                            ; preds = %._crit_edge472
   %.not415 = icmp eq i32 %2, 0
-  br i1 %.not415, label %bb.co, label %bb.cn
+  br i1 %.not415, label %9, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
   %i.px = load ptr, ptr %4, align 8
@@ -1242,15 +1242,56 @@ bb.cn:                                            ; preds = %bb.cm
   call void @make_polyline(ptr %i.px, i64 %i.pz, ptr noundef nonnull %5) #17
   br label %bb.cu
 
-bb.co:                                            ; preds = %bb.cm
-  %9 = load i64, ptr %i.ph, align 8, !tbaa !16
-  %10 = call fastcc ptr @gv_calloc(i64 noundef %9, i64 noundef 32) ; 3 uses
-  %11 = load i64, ptr %i.ph, align 8, !tbaa !16
-  %.not505 = icmp eq i64 %11, 0
-  br i1 %.not505, label %._crit_edge476, label %.lr.ph475
+9:                                                ; preds = %bb.cm
+  %10 = load i64, ptr %i.ph, align 8, !tbaa !16
+  %11 = call fastcc ptr @gv_calloc(i64 noundef %10, i64 noundef 32) ; 6 uses
+  %12 = load i64, ptr %i.ph, align 8, !tbaa !16   ; 5 uses
+  switch i64 %12, label %.lr.ph475.preheader.split [
+    i64 0, label %._crit_edge476
+    i64 1, label %bb.co
+  ]
 
-._crit_edge476:                                   ; preds = %.lr.ph475, %bb.co
-  %.lcssa = phi i64 [ 0, %bb.co ], [ %15, %.lr.ph475 ]
+.lr.ph475.preheader.split:                        ; preds = %9
+  %13 = add i64 %12, -1                           ; 3 uses
+  %xtraiter695 = and i64 %13, 1
+  %14 = icmp eq i64 %12, 2
+  br i1 %14, label %.lr.ph475.epil.preheader, label %.lr.ph475.preheader.split.new
+
+.lr.ph475.preheader.split.new:                    ; preds = %.lr.ph475.preheader.split
+  %unroll_iter700 = and i64 %13, -2
+  br label %.lr.ph475
+
+._crit_edge476.loopexit.peel.begin.loopexit.unr-lcssa: ; preds = %.lr.ph475
+  %lcmp.mod697.not = icmp eq i64 %xtraiter695, 0
+  br i1 %lcmp.mod697.not, label %bb.co, label %.lr.ph475.epil.preheader
+
+.lr.ph475.epil.preheader:                         ; preds = %._crit_edge476.loopexit.peel.begin.loopexit.unr-lcssa, %.lr.ph475.preheader.split
+  %.0375473.epil.init = phi i64 [ 0, %.lr.ph475.preheader.split ], [ %32, %._crit_edge476.loopexit.peel.begin.loopexit.unr-lcssa ] ; 3 uses
+  %lcmp.mod699 = trunc i64 %13 to i1
+  call void @llvm.assume(i1 %lcmp.mod699)
+  %15 = getelementptr inbounds nuw [32 x i8], ptr %11, i64 %.0375473.epil.init ; 2 uses
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %.0375473.epil.init
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull align 8 dereferenceable(16) %16, i64 16, i1 false), !tbaa.struct !21
+  %17 = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %18 = add nuw i64 %.0375473.epil.init, 1        ; 2 uses
+  %19 = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %18
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(16) %19, i64 16, i1 false), !tbaa.struct !21
+  br label %bb.co
+
+bb.co:                                            ; preds = %.lr.ph475.epil.preheader, %._crit_edge476.loopexit.peel.begin.loopexit.unr-lcssa, %9
+  %20 = phi i64 [ 0, %9 ], [ %32, %._crit_edge476.loopexit.peel.begin.loopexit.unr-lcssa ], [ %18, %.lr.ph475.epil.preheader ] ; 3 uses
+  %21 = getelementptr inbounds nuw [32 x i8], ptr %11, i64 %20 ; 2 uses
+  %22 = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %21, ptr noundef nonnull align 8 dereferenceable(16) %22, i64 16, i1 false), !tbaa.struct !21
+  %23 = getelementptr inbounds nuw i8, ptr %21, i64 16
+  %24 = add nuw i64 %20, 1                        ; 2 uses
+  %.not505 = icmp eq i64 %24, %12
+  %25 = select i1 %.not505, i64 0, i64 %24
+  %26 = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %23, ptr noundef nonnull align 8 dereferenceable(16) %26, i64 16, i1 false), !tbaa.struct !21
+  br label %._crit_edge476
+
+._crit_edge476:                                   ; preds = %9, %bb.co
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %7, i8 0, i64 32, i1 false)
   %i.qa = getelementptr inbounds nuw i8, ptr %0, i64 33
@@ -1258,20 +1299,26 @@ bb.co:                                            ; preds = %bb.cm
   %i.qc = trunc nuw i8 %i.qb to i1
   br i1 %i.qc, label %bb.cp, label %bb.cq
 
-.lr.ph475:                                        ; preds = %bb.co, %.lr.ph475
-  %.0375473.a = phi i64 [ %12, %.lr.ph475 ], [ 0, %bb.co ] ; 3 uses
-  %i.qd = getelementptr inbounds nuw [32 x i8], ptr %10, i64 %.0375473.a ; 2 uses
-  %i.qe = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %.0375473.a
+.lr.ph475:                                        ; preds = %.lr.ph475, %.lr.ph475.preheader.split.new
+  %.0375473 = phi i64 [ 0, %.lr.ph475.preheader.split.new ], [ %32, %.lr.ph475 ] ; 4 uses
+  %.0375473.a = phi i64 [ 0, %.lr.ph475.preheader.split.new ], [ %niter701.next.1, %.lr.ph475 ]
+  %i.qd = getelementptr inbounds nuw [32 x i8], ptr %11, i64 %.0375473 ; 2 uses
+  %i.qe = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %.0375473
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.qd, ptr noundef nonnull align 8 dereferenceable(16) %i.qe, i64 16, i1 false), !tbaa.struct !21
   %i.qf = getelementptr inbounds nuw i8, ptr %i.qd, i64 16
-  %12 = add nuw i64 %.0375473.a, 1                ; 3 uses
-  %13 = load i64, ptr %i.ph, align 8, !tbaa !16
-  %14 = urem i64 %12, %13
-  %i.qg = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %14
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.qf, ptr noundef nonnull align 8 dereferenceable(16) %i.qg, i64 16, i1 false), !tbaa.struct !21
-  %15 = load i64, ptr %i.ph, align 8, !tbaa !16   ; 2 uses
-  %16 = icmp ult i64 %12, %15
-  br i1 %16, label %.lr.ph475, label %._crit_edge476, !llvm.loop !91
+  %27 = or disjoint i64 %.0375473, 1              ; 3 uses
+  %28 = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %27
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.qf, ptr noundef nonnull align 8 dereferenceable(16) %28, i64 16, i1 false), !tbaa.struct !21
+  %29 = getelementptr inbounds nuw [32 x i8], ptr %11, i64 %27 ; 2 uses
+  %30 = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %27
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %29, ptr noundef nonnull align 8 dereferenceable(16) %30, i64 16, i1 false), !tbaa.struct !21
+  %31 = getelementptr inbounds nuw i8, ptr %29, i64 16
+  %32 = add nuw i64 %.0375473, 2                  ; 4 uses
+  %i.qg = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %31, ptr noundef nonnull align 8 dereferenceable(16) %i.qg, i64 16, i1 false), !tbaa.struct !21
+  %niter701.next.1 = add nuw i64 %.0375473.a, 2   ; 2 uses
+  %niter701.ncmp.1 = icmp eq i64 %niter701.next.1, %unroll_iter700
+  br i1 %niter701.ncmp.1, label %._crit_edge476.loopexit.peel.begin.loopexit.unr-lcssa, label %.lr.ph475, !llvm.loop !91
 
 bb.cp:                                            ; preds = %._crit_edge476
   %i.qh = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1305,9 +1352,9 @@ bb.cs:                                            ; preds = %bb.cr, %bb.cq
   %i.qx = load ptr, ptr %4, align 8
   %i.qy = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.qz = load i64, ptr %i.qy, align 8
-  %i.ra = call i32 @Proutespline(ptr noundef %10, i64 noundef %.lcssa, ptr %i.qx, i64 %i.qz, ptr noundef nonnull %7, ptr noundef nonnull %5) #17
+  %i.ra = call i32 @Proutespline(ptr noundef %11, i64 noundef %12, ptr %i.qx, i64 %i.qz, ptr noundef nonnull %7, ptr noundef nonnull %5) #17
   %i.rb = icmp sgt i32 %i.ra, -1
-  call void @free(ptr noundef %10) #17
+  call void @free(ptr noundef %11) #17
   br i1 %i.rb, label %.thread, label %bb.ct
 
 .thread:                                          ; preds = %bb.cs
@@ -1629,7 +1676,7 @@ bb.df:                                            ; preds = %bb.df, %.epil.prehe
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @routepolylines(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) local_unnamed_addr #0 {
+define noalias noundef ptr @routepolylines(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc ptr @routesplines_(ptr noundef %0, ptr noundef %1, i32 noundef 1)
   ret ptr %i.a
@@ -2032,7 +2079,7 @@ attributes #21 = { cold noreturn nounwind }
 !88 = distinct !{!88, !63}
 !89 = distinct !{!89, !63}
 !90 = distinct !{!90, !22}
-!91 = distinct !{!91, !22}
+!91 = distinct !{!91, !22, !23}
 !92 = distinct !{!92, !22}
 !93 = distinct !{!93, !22}
 !94 = distinct !{!94, !22}

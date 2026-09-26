@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #7
 
 ; Function Attrs: nounwind uwtable
-define dso_local nonnull ptr @CHcreate_node(ptr noundef %0) local_unnamed_addr #8 {
+define dso_local noalias nonnull ptr @CHcreate_node(ptr noundef %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #16 ; 7 uses
   %.not = icmp eq ptr %i.a, null
@@ -270,14 +270,14 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local noalias ptr @CHinsert(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call ptr @CHcreate_node(ptr noundef %1) ; 10 uses
+  %i.a = tail call ptr @CHcreate_node(ptr noundef %1) ; 12 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !22
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @CHsplay(ptr noundef nonnull %0, ptr noundef nonnull byval(%struct.key) align 8 %i.a) ; 0 uses
-  %i.d = load ptr, ptr %0, align 8, !tbaa !22     ; 5 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !22     ; 7 uses
   %i.e = load double, ptr %i.d, align 8, !tbaa !16 ; 2 uses
   %i.f = load double, ptr %i.a, align 8, !tbaa !16 ; 2 uses
   %i.g = fcmp ogt double %i.e, %i.f
@@ -313,7 +313,21 @@ bb.g:                                             ; preds = %bb.f, %bb.d, %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr %i.u, ptr %i.v, align 8, !tbaa !20
   %.not41 = icmp eq ptr %i.u, null
-  br i1 %.not41, label %bb.i, label %.sink.split
+  br i1 %.not41, label %4, label %2
+
+2:                                                ; preds = %bb.g
+  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 32
+  store ptr %i.a, ptr %3, align 8, !tbaa !21
+  %.pre42 = load ptr, ptr %0, align 8, !tbaa !22
+  br label %4
+
+4:                                                ; preds = %2, %bb.g
+  %5 = phi ptr [ %.pre42, %2 ], [ %i.d, %bb.g ]   ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  store ptr %5, ptr %6, align 8, !tbaa !19
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 40
+  store ptr null, ptr %7, align 8, !tbaa !20
+  br label %bb.i
 
 bb.h:                                             ; preds = %bb.c, %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 48
@@ -321,24 +335,23 @@ bb.h:                                             ; preds = %bb.c, %bb.f, %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr %i.x, ptr %i.y, align 8, !tbaa !19
   %.not40 = icmp eq ptr %i.x, null
-  br i1 %.not40, label %bb.i, label %.sink.split
+  br i1 %.not40, label %.sink.split, label %8
 
-.sink.split:                                      ; preds = %bb.h, %bb.g
-  %.sink51 = phi ptr [ %i.u, %bb.g ], [ %i.x, %bb.h ]
-  %.sink50.ph = phi i64 [ 48, %bb.g ], [ 40, %bb.h ]
-  %.sink48.ph = phi i64 [ 40, %bb.g ], [ 48, %bb.h ]
-  %i.z = getelementptr inbounds nuw i8, ptr %.sink51, i64 32
-  store ptr %i.a, ptr %i.z, align 8, !tbaa !21
+8:                                                ; preds = %bb.h
+  %9 = getelementptr inbounds nuw i8, ptr %i.x, i64 32
+  store ptr %i.a, ptr %9, align 8, !tbaa !21
+  %.pre = load ptr, ptr %0, align 8, !tbaa !22
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %8, %bb.h
+  %.sink51 = phi ptr [ %.pre, %8 ], [ %i.d, %bb.h ] ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  store ptr %.sink51, ptr %10, align 8, !tbaa !20
+  %i.z = getelementptr inbounds nuw i8, ptr %.sink51, i64 48
+  store ptr null, ptr %i.z, align 8, !tbaa !19
   br label %bb.i
 
-bb.i:                                             ; preds = %.sink.split, %bb.h, %bb.g
-  %.sink50 = phi i64 [ 48, %bb.g ], [ 40, %bb.h ], [ %.sink50.ph, %.sink.split ]
-  %.sink48 = phi i64 [ 40, %bb.g ], [ 48, %bb.h ], [ %.sink48.ph, %.sink.split ]
-  %2 = load ptr, ptr %0, align 8, !tbaa !22       ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sink50
-  store ptr %2, ptr %3, align 8, !tbaa !22
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 %.sink48
-  store ptr null, ptr %4, align 8, !tbaa !22
+bb.i:                                             ; preds = %.sink.split, %4
   %i.aa = load ptr, ptr %0, align 8, !tbaa !22
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
   store ptr %i.a, ptr %i.ab, align 8, !tbaa !21

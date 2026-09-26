@@ -127,7 +127,7 @@ target triple = "x86_64-pc-linux-gnu"
 @l_Lean_Meta_Grind_Arith_CommRing_getInvFn___redArg___lam__3___closed__7_value = internal constant <{ { i32, i8, i8, i8, i8 }, i64, i64, i64, [44 x i8] }> <{ { i32, i8, i8, i8, i8 } { i32 0, i8 0, i8 0, i8 0, i8 -7 }, i64 44, i64 44, i64 43, [44 x i8] c"`grind` internal error, type is not a field\00" }>, align 8
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_spec__0_spec__0(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #0 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_spec__0_spec__0(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @lean_st_ref_get(ptr noundef %4) #3 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -306,7 +306,7 @@ lean_alloc_ctor.exit42:                           ; preds = %lean_alloc_ctor.exi
 declare ptr @lean_st_ref_get(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_spec__0_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #0 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_spec__0_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_spec__0_spec__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
   %i.b = ptrtoint ptr %4 to i64
@@ -401,10 +401,10 @@ define ptr @l_Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !10   ; 5 uses
-  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_spec__0_spec__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) ; 6 uses
+  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00Lean_Meta_Grind_Arith_CommRing_checkInst_spec__0_spec__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !10   ; 5 uses
-  %.val = load i32, ptr %i.c, align 8, !tbaa !12
+  %.val = load i32, ptr %i.c, align 8, !tbaa !12  ; 4 uses
   %i.f = icmp eq i32 %.val, 1                     ; 2 uses
   br i1 %i.f, label %lean_dec.exit, label %bb.b
 
@@ -433,17 +433,16 @@ bb.f:                                             ; preds = %bb.e
   br label %lean_inc.exit35
 
 lean_inc.exit35:                                  ; preds = %bb.b, %bb.d, %bb.e, %bb.f
-  %5 = load i32, ptr %i.c, align 8, !tbaa !12     ; 3 uses
-  %i.l = icmp sgt i32 %5, 1
+  %i.l = icmp sgt i32 %.val, 1
   br i1 %i.l, label %bb.g, label %bb.h, !prof !13
 
 bb.g:                                             ; preds = %lean_inc.exit35
-  %i.m = add nsw i32 %5, -1
+  %i.m = add nsw i32 %.val, -1
   store i32 %i.m, ptr %i.c, align 8, !tbaa !12
   br label %lean_dec.exit
 
 bb.h:                                             ; preds = %lean_inc.exit35
-  %.not.i32 = icmp eq i32 %5, 0
+  %.not.i32 = icmp eq i32 %.val, 0
   br i1 %.not.i32, label %lean_dec.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -846,7 +845,7 @@ bb.j:                                             ; preds = %.sink.split, %bb.d
 declare ptr @runtime_initialize_Lean_Meta_Tactic_Grind_Arith_CommRing_MonadRing(i8 noundef zeroext) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @meta_initialize_Lean_Meta_Tactic_Grind_Arith_CommRing_Functions(i8 noundef zeroext %0) local_unnamed_addr #0 {
+define noalias noundef nonnull ptr @meta_initialize_Lean_Meta_Tactic_Grind_Arith_CommRing_Functions(i8 noundef zeroext %0) local_unnamed_addr #0 {
 bb.a:
   %.b = load i1, ptr @_G_meta_initialized, align 1
   br i1 %.b, label %bb.b, label %bb.d

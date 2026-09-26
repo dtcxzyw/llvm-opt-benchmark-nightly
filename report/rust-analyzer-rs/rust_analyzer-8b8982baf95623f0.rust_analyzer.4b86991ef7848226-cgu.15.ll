@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.body
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueEE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueEE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(728) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 728, i64 noundef 8) #59 ; 2 uses
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueEE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueEE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(632) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 632, i64 noundef 8) #59 ; 2 uses
@@ -237,7 +237,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxINtNtNtNtCscAsMj0W7j8b_3std4sync4mpmc4list5BlockNtNtNtCs9GitHPCrz2Q_5rowan5green4node9GreenNodeEE13new_zeroed_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxINtNtNtNtCscAsMj0W7j8b_3std4sync4mpmc4list5BlockNtNtNtCs9GitHPCrz2Q_5rowan5green4node9GreenNodeEE13new_zeroed_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(504) ptr @_RNvCsiZ68L5R9VjM_7___rustc19___rust_alloc_zeroed(i64 noundef 504, i64 noundef 8) #59 ; 2 uses
@@ -253,7 +253,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgExprE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgExprE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(24) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 24, i64 noundef 8) #59 ; 2 uses
@@ -269,7 +269,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics3FixE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics3FixE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(560) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 560, i64 noundef 8) #59 ; 2 uses
@@ -285,7 +285,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCs8K4cjrcxBsw_6hir_ty9consteval14ConstEvalErrorE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCs8K4cjrcxBsw_6hir_ty9consteval14ConstEvalErrorE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(48) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 48, i64 noundef 8) #59 ; 2 uses
@@ -301,7 +301,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCsdcPuHeDsw6v_13project_model12project_json11ProjectJsonE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCsdcPuHeDsw6v_13project_model12project_json11ProjectJsonE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(152) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 152, i64 noundef 8) #59 ; 2 uses
@@ -317,7 +317,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCsdcPuHeDsw6v_13project_model12project_json15ProjectJsonDataE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtCsdcPuHeDsw6v_13project_model12project_json15ProjectJsonDataE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(136) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 136, i64 noundef 8) #59 ; 2 uses
@@ -333,7 +333,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtNtCs8K4cjrcxBsw_6hir_ty3mir4eval12MirEvalErrorE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtNtCs8K4cjrcxBsw_6hir_ty3mir4eval12MirEvalErrorE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(48) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 48, i64 noundef 8) #59 ; 2 uses
@@ -349,7 +349,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtNtCs8Xq8PKFYOms_3hir11term_search4expr4ExprE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxNtNtNtCs8Xq8PKFYOms_3hir11term_search4expr4ExprE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 72, i64 noundef 8) #59 ; 2 uses
@@ -365,7 +365,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxTNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace14CargoWorkspaceNtNtBL_18build_dependencies21WorkspaceBuildScriptsEE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsbSS6DM8SDEO_5alloc5boxedINtB4_3BoxTNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace14CargoWorkspaceNtNtBL_18build_dependencies21WorkspaceBuildScriptsEE13new_uninit_inCs6u1mgJOKDyY_13rust_analyzer() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(208) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) 208, i64 noundef 8) #59 ; 2 uses
@@ -768,7 +768,7 @@ bb.n:                                             ; preds = %bb.l
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCsbSS6DM8SDEO_5alloc5boxed14box_new_uninit(i64 noundef range(i64 16, 1553) %0) unnamed_addr #4 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCsbSS6DM8SDEO_5alloc5boxed14box_new_uninit(i64 noundef range(i64 16, 1553) %0) unnamed_addr #4 {
 bb.a:
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59
   %i.a = tail call noundef align 8 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 16, 1553) %0, i64 noundef 8) #59 ; 2 uses
@@ -1171,8 +1171,6 @@ bb.a:
   %i.d = alloca [32 x i8], align 8                ; 7 uses
   %i.e = alloca [48 x i8], align 8                ; 4 uses
   %i.f = alloca [64 x i8], align 8                ; 6 uses
-  %.sroa.45.i = alloca [24 x i8], align 8         ; 4 uses
-  %.sroa.67.i = alloca [12 x i8], align 8         ; 4 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses
   %i.h = alloca [12 x i8], align 4                ; 4 uses
   %i.i = alloca [24 x i8], align 8                ; 6 uses
@@ -1184,7 +1182,7 @@ bb.a:
   %i.o = alloca [12 x i8], align 4                ; 4 uses
   %i.p = alloca [12 x i8], align 4                ; 4 uses
   %i.q = alloca [24 x i8], align 8                ; 4 uses
-  %i.r = alloca [24 x i8], align 8                ; 9 uses
+  %i.r = alloca [24 x i8], align 8                ; 8 uses
   %i.s = alloca [32 x i8], align 8                ; 7 uses
   %i.t = alloca [24 x i8], align 8                ; 6 uses
   %i.u = alloca [24 x i8], align 8                ; 13 uses
@@ -1508,42 +1506,34 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.al, %bb.aj
   %i.de = phi i64 [ 1, %bb.al ], [ %.pre26.i, %bb.aj ]
   %i.df = phi ptr [ %i.cz, %bb.al ], [ %.pre24.i, %bb.aj ] ; 2 uses
-  %3 = phi ptr [ %.pre.i, %bb.al ], [ %i.bw, %bb.aj ]
   %.sroa.011.2.i = phi i8 [ 1, %bb.al ], [ 0, %bb.aj ] ; 2 uses
   %.sroa.013.3.i = phi i8 [ 0, %bb.al ], [ 1, %bb.aj ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !9035
   %i.dg = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.dh = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.dh, ptr noundef nonnull align 8 dereferenceable(12) %i.dg, i64 12, i1 false), !noalias !9035
-  store ptr %3, ptr %i.c, align 8, !noalias !9035
+  store ptr %i.bw, ptr %i.c, align 8, !noalias !9035
   %i.di = getelementptr inbounds nuw [72 x i8], ptr %i.df, i64 %i.de
   invoke void @_RINvMs_NtCs8Xq8PKFYOms_3hir11term_searchNtB5_11LookupTable6insertINtNtNtNtCshzWfHUSfYae_4core4iter8adapters6cloned6ClonedINtNtNtB1a_5slice4iter4IterNtNtB5_4expr4ExprEEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.ci, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.c, ptr noundef nonnull %i.df, ptr noundef nonnull %i.di)
           to label %bb.an unwind label %bb.am, !noalias !9035
 
 bb.al:                                            ; preds = %bb.af
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.45.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.67.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.67.i, ptr noundef nonnull align 4 dereferenceable(12) %i.aq, i64 12, i1 false), !noalias !9035
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.45.i, ptr noundef nonnull align 8 dereferenceable(24) %i.u, i64 24, i1 false), !noalias !9035
-  store i64 -9223372036854775803, ptr %i.cz, align 8, !noalias !9035
+  %.sroa.67.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 56
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.67.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(12) %i.aq, i64 12, i1 false), !noalias !9035
   %.sroa.45.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.45.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.45.i, i64 24, i1 false), !noalias !9035
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.45.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %i.u, i64 24, i1 false), !noalias !9035
+  store i64 -9223372036854775803, ptr %i.cz, align 8, !noalias !9035
   %.sroa.56.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 32
   store i64 0, ptr %.sroa.56.0..sroa_idx.i, align 8, !noalias !9035
   %.sroa.56.sroa.4.0..sroa.56.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 40
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.56.sroa.4.0..sroa.56.0..sroa_idx.sroa_idx.i, align 8, !noalias !9035
   %.sroa.56.sroa.5.0..sroa.56.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 48
   store i64 0, ptr %.sroa.56.sroa.5.0..sroa.56.0..sroa_idx.sroa_idx.i, align 8, !noalias !9035
-  %.sroa.67.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.67.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.67.i, i64 12, i1 false), !noalias !9035
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.45.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.67.i)
   store i64 1, ptr %i.g, align 8, !noalias !9035
   %i.dj = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %i.cz, ptr %i.dj, align 8, !noalias !9035
   %i.dk = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store i64 1, ptr %i.dk, align 8, !noalias !9035
-  %.pre.i = load ptr, ptr %i.r, align 8, !noalias !9035
   br label %bb.ak
 
 bb.am:                                            ; preds = %bb.ak

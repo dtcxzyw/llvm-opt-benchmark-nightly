@@ -205,7 +205,7 @@ bb.ki:                                            ; preds = %_RINvNtCsf3Ta7LF998
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit945.i unwind label %.loopexit.split-lp363, !noalias !24079
 
 bb.kj:                                            ; preds = %._crit_edge1993.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.mh, ptr noundef nonnull align 8 dereferenceable(24) %i.bq, i64 24, i1 false), !noalias !24079
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.mh, ptr noundef nonnull align 8 dereferenceable(24) %i.bq, i64 24, i1 false), !noalias !24079
   store i64 1, ptr %i.e, align 8, !noalias !24077
   store ptr %i.mh, ptr %i.jz, align 8, !noalias !24077
   store i64 1, ptr %i.ka, align 8, !noalias !24077
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %.unr-lcssa, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit(i64 noundef range(i64 1, 9) %0, i64 noundef range(i64 1, 1201) %1) unnamed_addr #0 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit(i64 noundef range(i64 1, 9) %0, i64 noundef range(i64 1, 1201) %1) unnamed_addr #0 {
 bb.a:
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #31
   %i.a = tail call noundef ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 1, 1201) %1, i64 noundef range(i64 1, 9) %0) #31 ; 2 uses
@@ -1010,9 +1010,6 @@ declare { float, float } @llvm.sincos.f32(float) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #25
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.umin.v8i16(<8 x i16>, <8 x i16>) #17

@@ -202,7 +202,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc2rc4WeakINtNtB4
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn2ty4TypeE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn2ty4TypeE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(248) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 248, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn2ty8NamedArgE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn2ty8NamedArgE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(304) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 304, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -234,7 +234,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn3lit10LitIntReprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn3lit10LitIntReprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(56) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 56, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -250,7 +250,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn3lit12LitFloatReprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn3lit12LitFloatReprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(56) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 56, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -266,7 +266,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(40) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -282,7 +282,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4data5FieldE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4data5FieldE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(512) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 512, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -298,7 +298,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4data7VariantE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4data7VariantE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(280) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 280, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -314,7 +314,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4expr10FieldValueE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4expr10FieldValueE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(224) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 224, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -330,7 +330,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4expr4ExprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4expr4ExprE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(168) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 168, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -346,7 +346,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4path11PathSegmentE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4path11PathSegmentE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(88) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 88, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -362,7 +362,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4path15GenericArgumentE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn4path15GenericArgumentE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(336) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 336, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -378,7 +378,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8generics12GenericParamE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8generics12GenericParamE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(480) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 480, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -394,7 +394,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8generics14TypeParamBoundE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8generics14TypeParamBoundE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(120) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 120, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -410,7 +410,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8generics14WherePredicateE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8generics14WherePredicateE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(360) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 360, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -426,7 +426,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8lifetime8LifetimeE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn8lifetime8LifetimeE13new_uninit_inBK_() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noalias noundef align 8 dereferenceable_or_null(32) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 32, i64 noundef range(i64 1, -9223372036854775807) 8) #16 ; 2 uses
@@ -442,7 +442,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit(i64 noundef range(i64 48, 249) %0) unnamed_addr #3 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit(i64 noundef range(i64 48, 249) %0) unnamed_addr #3 {
 bb.a:
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   %i.a = tail call noundef align 8 ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef %0, i64 noundef 8) #16 ; 2 uses

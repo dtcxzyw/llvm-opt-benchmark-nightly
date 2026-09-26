@@ -100,23 +100,22 @@ declare ptr @N_VNewEmpty(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define noundef ptr @N_VClone_SensWrapper(ptr nofree noundef readonly captures(address_is_null) %0) #0 {
 bb.a:
-  %i.a = tail call ptr @N_VCloneEmpty_SensWrapper(ptr noundef %0) ; 6 uses
+  %i.a = tail call ptr @N_VCloneEmpty_SensWrapper(ptr noundef %0) ; 5 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %i.a, align 8, !tbaa !20   ; 2 uses
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !20   ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   store i32 1, ptr %i.d, align 4, !tbaa !18
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !17
   %i.g = icmp sgt i32 %i.f, 0
   br i1 %i.g, label %.lr.ph, label %.loopexit
 
 bb.c:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.h = load i32, ptr %1, align 8, !tbaa !17
+  %i.h = load i32, ptr %i.e, align 8, !tbaa !17
   %i.i = sext i32 %i.h to i64
   %i.j = icmp slt i64 %indvars.iv.next, %i.i
   br i1 %i.j, label %.lr.ph, label %.loopexit
@@ -128,8 +127,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !22
   %i.o = tail call ptr @N_VClone(ptr noundef %i.n) #7 ; 2 uses
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !20     ; 2 uses
-  %i.p = load ptr, ptr %2, align 8, !tbaa !19
+  %i.p = load ptr, ptr %i.c, align 8, !tbaa !19
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv
   store ptr %i.o, ptr %i.q, align 8, !tbaa !22
   %i.r = icmp eq ptr %i.o, null
@@ -145,7 +143,7 @@ bb.d:                                             ; preds = %.lr.ph
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: read, target_mem: none) uwtable
-define noundef ptr @N_VCloneEmpty_SensWrapper(ptr nofree noundef readonly captures(address_is_null) %0) #2 {
+define noalias noundef ptr @N_VCloneEmpty_SensWrapper(ptr nofree noundef readonly captures(address_is_null) %0) #2 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.j, label %bb.b

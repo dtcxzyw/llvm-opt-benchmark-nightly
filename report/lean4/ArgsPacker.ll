@@ -204,7 +204,7 @@ lean_dec.exit:                                    ; preds = %bb.bv, %bb.bu, %bb.
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define internal fastcc nonnull ptr @lean_alloc_ctor(i32 noundef range(i32 0, 8) %0, i32 noundef range(i32 1, 5) %1) unnamed_addr #0 {
+define internal fastcc noalias nonnull ptr @lean_alloc_ctor(i32 noundef range(i32 0, 8) %0, i32 noundef range(i32 1, 5) %1) unnamed_addr #0 {
 lean_usize_add_checked.exit:
   %i.a = shl nuw nsw i32 %1, 3
   %narrow = add nuw nsw i32 %i.a, 8               ; 2 uses
@@ -607,7 +607,7 @@ lean_dec_ref.exit19:                              ; preds = %bb.m, %bb.n, %bb.o
 }
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Meta_ArgsPacker_Unary_casesOn_spec__0_spec__0(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #1 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Meta_ArgsPacker_Unary_casesOn_spec__0_spec__0(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call ptr @lean_st_ref_get(ptr noundef %4) #6 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -786,7 +786,7 @@ lean_alloc_ctor.exit42:                           ; preds = %lean_alloc_ctor.exi
 declare ptr @lean_st_ref_get(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Meta_ArgsPacker_Unary_casesOn_spec__0_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #1 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Meta_ArgsPacker_Unary_casesOn_spec__0_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Meta_ArgsPacker_Unary_casesOn_spec__0_spec__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
   %i.b = ptrtoint ptr %4 to i64
@@ -881,10 +881,10 @@ define ptr @l_Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Me
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !12   ; 5 uses
-  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Meta_ArgsPacker_Unary_casesOn_spec__0_spec__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) ; 6 uses
+  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_throwError___at___00__private_Lean_Meta_ArgsPacker_0__Lean_Meta_ArgsPacker_Unary_casesOn_spec__0_spec__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !12   ; 5 uses
-  %.val = load i32, ptr %i.c, align 8, !tbaa !14
+  %.val = load i32, ptr %i.c, align 8, !tbaa !14  ; 4 uses
   %i.f = icmp eq i32 %.val, 1                     ; 2 uses
   br i1 %i.f, label %lean_dec.exit, label %bb.b
 
@@ -913,17 +913,16 @@ bb.f:                                             ; preds = %bb.e
   br label %lean_inc.exit33
 
 lean_inc.exit33:                                  ; preds = %bb.b, %bb.d, %bb.e, %bb.f
-  %5 = load i32, ptr %i.c, align 8, !tbaa !14     ; 3 uses
-  %i.l = icmp sgt i32 %5, 1
+  %i.l = icmp sgt i32 %.val, 1
   br i1 %i.l, label %bb.g, label %bb.h, !prof !15
 
 bb.g:                                             ; preds = %lean_inc.exit33
-  %i.m = add nsw i32 %5, -1
+  %i.m = add nsw i32 %.val, -1
   store i32 %i.m, ptr %i.c, align 8, !tbaa !14
   br label %lean_dec.exit
 
 bb.h:                                             ; preds = %lean_inc.exit33
-  %.not.i35 = icmp eq i32 %5, 0
+  %.not.i35 = icmp eq i32 %.val, 0
   br i1 %.not.i35, label %lean_dec.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -1326,7 +1325,7 @@ bb.y:                                             ; preds = %lean_dec_ref.exit21
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define internal fastcc nonnull ptr @lean_io_result_mk_ok(ptr noundef %0) unnamed_addr #0 {
+define internal fastcc noalias nonnull ptr @lean_io_result_mk_ok(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   tail call void @lean_inc_heartbeat() #6
   %i.a = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #6 ; 5 uses
@@ -1357,7 +1356,7 @@ declare ptr @runtime_initialize_Init_Omega(i8 noundef zeroext) local_unnamed_add
 declare ptr @runtime_initialize_Init_While(i8 noundef zeroext) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @meta_initialize_Lean_Meta_ArgsPacker(i8 zeroext %0) local_unnamed_addr #1 {
+define noalias noundef nonnull ptr @meta_initialize_Lean_Meta_ArgsPacker(i8 zeroext %0) local_unnamed_addr #1 {
 bb.a:
   %.b = load i1, ptr @_G_meta_initialized, align 1
   br i1 %.b, label %bb.b, label %bb.d

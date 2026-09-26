@@ -202,12 +202,12 @@ switch.lookup:                                    ; preds = %_Py_LibHacl_Hacl_St
 
 block_len.exit103:                                ; preds = %switch.lookup, %switch.lookup243
   %.087 = phi i32 [ %i.i, %switch.lookup243 ], [ %switch.ext242, %switch.lookup ] ; 4 uses
-  %i.j = tail call fastcc ptr @malloc_(i8 noundef zeroext %.val.i) ; 9 uses
+  %i.j = tail call fastcc ptr @malloc_(i8 noundef zeroext %.val.i) ; 6 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %block_len.exit103
-  %i.l = tail call fastcc ptr @malloc_(i8 noundef zeroext %.val.i) ; 7 uses
+  %i.l = tail call fastcc ptr @malloc_(i8 noundef zeroext %.val.i) ; 5 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %.critedge.sink.split, label %switch.lookup247
 
@@ -250,15 +250,12 @@ block_len.exit123:                                ; preds = %switch.lookup250, %
   %i.x = getelementptr i8, ptr %.sroa.671.0.copyload, i64 %i.p
   %i.y = sub nsw i64 0, %switch.ext253
   %i.z = getelementptr i8, ptr %i.x, i64 %i.y
-  %.sroa.11.1.val = load i8, ptr %i.j, align 8, !tbaa !18
-  %i.aa = getelementptr i8, ptr %i.j, i64 8       ; 4 uses
-  %.sroa.11.1.val91 = load ptr, ptr %i.aa, align 8, !tbaa !18
+  %.sroa.11.1.val = load i8, ptr %i.j, align 8, !tbaa !18 ; 6 uses
+  %i.aa = getelementptr i8, ptr %i.j, i64 8
+  %.sroa.11.1.val91 = load ptr, ptr %i.aa, align 8, !tbaa !18 ; 13 uses
   tail call fastcc void @update_multi(i8 %.sroa.11.1.val, ptr %.sroa.11.1.val91, i64 noundef %i.q, ptr noundef %.sroa.671.0.copyload, i32 noundef 0)
-  %.sroa.11.1.val94 = load i8, ptr %i.j, align 8, !tbaa !18
-  %.sroa.11.1.val95 = load ptr, ptr %i.aa, align 8, !tbaa !18
-  tail call fastcc void @update_last(i8 %.sroa.11.1.val94, ptr %.sroa.11.1.val95, i64 noundef %i.q, ptr noundef %i.z, i32 noundef %.087)
-  %.val.i130 = load i8, ptr %i.j, align 8         ; 4 uses
-  %switch.i.i.i131 = icmp ult i8 %.val.i130, 14
+  tail call fastcc void @update_last(i8 %.sroa.11.1.val, ptr %.sroa.11.1.val91, i64 noundef %i.q, ptr noundef %i.z, i32 noundef %.087)
+  %switch.i.i.i131 = icmp ult i8 %.sroa.11.1.val, 14
   br i1 %switch.i.i.i131, label %impl_of_state.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %block_len.exit123
@@ -268,8 +265,7 @@ bb.d:                                             ; preds = %block_len.exit123
   unreachable
 
 impl_of_state.exit.i:                             ; preds = %block_len.exit123
-  %.val142.i219 = load ptr, ptr %i.aa, align 8, !tbaa !18 ; 10 uses
-  switch i8 %.val.i130, label %default.unreachable239 [
+  switch i8 %.sroa.11.1.val, label %default.unreachable239 [
     i8 0, label %block_len.exit.i.thread216
     i8 1, label %bb.e
     i8 2, label %bb.f
@@ -287,82 +283,66 @@ impl_of_state.exit.i:                             ; preds = %block_len.exit123
   ]
 
 block_len.exit.i.thread216:                       ; preds = %impl_of_state.exit.i
-  tail call fastcc void @finish(i8 0, ptr %.val142.i219, ptr noundef %1)
+  tail call fastcc void @finish(i8 0, ptr %.sroa.11.1.val91, ptr noundef %1)
   br label %finish0.exit
 
 block_len.exit.thread.i:                          ; preds = %impl_of_state.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(28) %1, ptr noundef nonnull align 8 dereferenceable(28) %.val142.i219, i64 28, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(28) %1, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.11.1.val91, i64 28, i1 false)
   br label %finish0.exit
 
 block_len.exit.thread26.i:                        ; preds = %impl_of_state.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %.val142.i219, i64 32, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.11.1.val91, i64 32, i1 false)
   br label %finish0.exit
 
 block_len.exit.thread29.i:                        ; preds = %impl_of_state.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) %.val142.i219, i64 48, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.11.1.val91, i64 48, i1 false)
   br label %finish0.exit
 
 block_len.exit.thread32.i:                        ; preds = %impl_of_state.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %.val142.i219, i64 64, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.11.1.val91, i64 64, i1 false)
   br label %finish0.exit
 
 bb.e:                                             ; preds = %impl_of_state.exit.i
-  tail call fastcc void @finish(i8 1, ptr %.val142.i219, ptr noundef %1)
+  tail call fastcc void @finish(i8 1, ptr %.sroa.11.1.val91, ptr noundef %1)
   br label %finish0.exit
 
 bb.f:                                             ; preds = %impl_of_state.exit.i
-  tail call fastcc void @finish(i8 2, ptr %.val142.i219, ptr noundef %1)
+  tail call fastcc void @finish(i8 2, ptr %.sroa.11.1.val91, ptr noundef %1)
   br label %finish0.exit
 
 bb.g:                                             ; preds = %impl_of_state.exit.i, %impl_of_state.exit.i, %impl_of_state.exit.i
-  tail call fastcc void @finish(i8 %.val.i130, ptr %.val142.i219, ptr noundef %1)
+  tail call fastcc void @finish(i8 %.sroa.11.1.val, ptr %.sroa.11.1.val91, ptr noundef %1)
   br label %finish0.exit
 
 bb.h:                                             ; preds = %impl_of_state.exit.i
-  tail call fastcc void @finish(i8 4, ptr %.val142.i219, ptr noundef %1)
+  tail call fastcc void @finish(i8 4, ptr %.sroa.11.1.val91, ptr noundef %1)
   br label %finish0.exit
 
 bb.i:                                             ; preds = %impl_of_state.exit.i, %impl_of_state.exit.i, %impl_of_state.exit.i
-  tail call fastcc void @finish(i8 %.val.i130, ptr %.val142.i219, ptr noundef %1)
+  tail call fastcc void @finish(i8 %.sroa.11.1.val, ptr %.sroa.11.1.val91, ptr noundef %1)
   br label %finish0.exit
 
-finish0.exit:                                     ; preds = %block_len.exit.i.thread216, %block_len.exit.thread.i, %block_len.exit.thread26.i, %block_len.exit.thread29.i, %block_len.exit.thread32.i, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
+finish0.exit:                                     ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %block_len.exit.thread32.i, %block_len.exit.thread29.i, %block_len.exit.thread26.i, %block_len.exit.thread.i, %block_len.exit.i.thread216
   %i.ad = phi i64 [ 64, %block_len.exit.i.thread216 ], [ 64, %bb.e ], [ 128, %bb.h ], [ 64, %bb.f ], [ 64, %bb.g ], [ 144, %block_len.exit.thread.i ], [ 136, %block_len.exit.thread26.i ], [ 104, %block_len.exit.thread29.i ], [ 72, %block_len.exit.thread32.i ], [ 128, %bb.i ]
   %.0.i16.i = phi i32 [ 16, %block_len.exit.i.thread216 ], [ 20, %bb.e ], [ 48, %bb.h ], [ 28, %bb.f ], [ 32, %bb.g ], [ 28, %block_len.exit.thread.i ], [ 32, %block_len.exit.thread26.i ], [ 48, %block_len.exit.thread29.i ], [ 64, %block_len.exit.thread32.i ], [ 64, %bb.i ]
-  %.val9.i = load i8, ptr %i.l, align 8, !tbaa !18
-  %i.ae = getelementptr i8, ptr %i.l, i64 8       ; 3 uses
-  %.val10.i = load ptr, ptr %i.ae, align 8, !tbaa !18
+  %.val9.i = load i8, ptr %i.l, align 8, !tbaa !18 ; 3 uses
+  %i.ae = getelementptr i8, ptr %i.l, i64 8
+  %.val10.i = load ptr, ptr %i.ae, align 8, !tbaa !18 ; 3 uses
   tail call fastcc void @update_last(i8 %.val9.i, ptr %.val10.i, i64 noundef %i.ad, ptr noundef %1, i32 noundef %.0.i16.i)
-  %.val11.i = load i8, ptr %i.l, align 8, !tbaa !18
-  %.val12.i = load ptr, ptr %i.ae, align 8, !tbaa !18
-  tail call fastcc void @finish(i8 %.val11.i, ptr %.val12.i, ptr noundef %1)
-  %.sroa.0.0.copyload.i = load i8, ptr %i.j, align 8, !tbaa !18
-  %switch.i = icmp ult i8 %.sroa.0.0.copyload.i, 14
-  br i1 %switch.i, label %free_.exit, label %3
-
-3:                                                ; preds = %finish0.exit
-  %4 = load ptr, ptr @stderr, align 8, !tbaa !16
-  %5 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %4, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 1152, ptr noundef nonnull @.str.2) #11 ; 0 uses
-  tail call void @exit(i32 noundef 255) #12
-  unreachable
-
-free_.exit:                                       ; preds = %finish0.exit
-  %.sroa.1727.0.copyload.i = load ptr, ptr %i.aa, align 8, !tbaa !18
-  tail call void @free(ptr noundef %.sroa.1727.0.copyload.i) #15
+  tail call fastcc void @finish(i8 %.val9.i, ptr %.val10.i, ptr noundef %1)
+  tail call void @free(ptr noundef %.sroa.11.1.val91) #15
   tail call void @free(ptr noundef nonnull %i.j) #15
-  %.sroa.0.0.copyload.i132 = load i8, ptr %i.l, align 8, !tbaa !18
-  %switch.i133 = icmp ult i8 %.sroa.0.0.copyload.i132, 14
-  br i1 %switch.i133, label %free_.exit136, label %bb.j
+  %switch.i = icmp ult i8 %.val9.i, 14
+  br i1 %switch.i, label %free_.exit136, label %bb.j
 
-bb.j:                                             ; preds = %free_.exit
+bb.j:                                             ; preds = %finish0.exit
   %i.af = load ptr, ptr @stderr, align 8, !tbaa !16
   %i.ag = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.af, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 1152, ptr noundef nonnull @.str.2) #11 ; 0 uses
   tail call void @exit(i32 noundef 255) #12
   unreachable
 
-free_.exit136:                                    ; preds = %free_.exit
-  %.sroa.1727.0.copyload.i135 = load ptr, ptr %i.ae, align 8, !tbaa !18
-  tail call void @free(ptr noundef %.sroa.1727.0.copyload.i135) #15
+free_.exit136:                                    ; preds = %finish0.exit
+  tail call void @free(ptr noundef %.val10.i) #15
   br label %.critedge.sink.split
 
 .critedge.sink.split:                             ; preds = %bb.c, %free_.exit136
@@ -377,7 +357,7 @@ free_.exit136:                                    ; preds = %free_.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @malloc_(i8 noundef zeroext %0) unnamed_addr #4 {
+define internal fastcc noalias noundef ptr @malloc_(i8 noundef zeroext %0) unnamed_addr #4 {
 bb.a:
   switch i8 %0, label %bb.az [
     i8 0, label %bb.b
@@ -780,7 +760,7 @@ free_.exit13:                                     ; preds = %free_.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @_Py_LibHacl_Hacl_Streaming_HMAC_copy(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
+define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Streaming_HMAC_copy(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %.sroa.065.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.065.sroa.4.0.copyload = load ptr, ptr %.sroa.065.sroa.4.0..sroa_idx, align 8, !tbaa !23 ; 3 uses

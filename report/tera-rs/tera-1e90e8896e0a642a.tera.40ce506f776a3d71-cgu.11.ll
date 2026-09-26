@@ -204,7 +204,7 @@ _RNvMNtCsgCecv3eZDcN_5alloc5boxedINtB2_3BoxNtNtCs5yXxDE1DkoT_4tera6errors11Repor
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeINtNtB6_6borrow3CoweENtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1T_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19046 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeINtNtB6_6borrow3CoweENtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1T_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19046 {
 bb.a:
     #dbg_declare(ptr poison, !19077, !DIExpression(), !19082)
     #dbg_value(i64 8, !19078, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19083)
@@ -239,7 +239,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtBL_7set_val9SetValZSTEE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19118 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtBL_7set_val9SetValZSTEE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19118 {
 bb.a:
     #dbg_declare(ptr poison, !19149, !DIExpression(), !19154)
     #dbg_value(i64 8, !19150, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19155)
@@ -274,7 +274,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1T_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19190 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1T_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19190 {
 bb.a:
     #dbg_declare(ptr poison, !19221, !DIExpression(), !19226)
     #dbg_value(i64 8, !19222, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19227)
@@ -309,7 +309,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ExpressionEE13new_uninit_inB1V_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19262 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ExpressionEE13new_uninit_inB1V_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19262 {
 bb.a:
     #dbg_declare(ptr poison, !19293, !DIExpression(), !19298)
     #dbg_value(i64 8, !19294, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19299)
@@ -344,7 +344,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEE13new_uninit_inB1V_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19334 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEE13new_uninit_inB1V_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19334 {
 bb.a:
     #dbg_declare(ptr poison, !19365, !DIExpression(), !19370)
     #dbg_value(i64 8, !19366, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19371)
@@ -379,7 +379,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeINtNtB6_6borrow3CoweENtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1O_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19406 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeINtNtB6_6borrow3CoweENtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1O_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19406 {
 bb.a:
     #dbg_declare(ptr poison, !19437, !DIExpression(), !19442)
     #dbg_value(i64 8, !19438, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19443)
@@ -414,7 +414,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtBL_7set_val9SetValZSTEE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19478 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtBL_7set_val9SetValZSTEE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19478 {
 bb.a:
     #dbg_declare(ptr poison, !19509, !DIExpression(), !19514)
     #dbg_value(i64 8, !19510, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19515)
@@ -449,7 +449,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1O_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19550 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtCs5yXxDE1DkoT_4tera5value5ValueEE13new_uninit_inB1O_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19550 {
 bb.a:
     #dbg_declare(ptr poison, !19581, !DIExpression(), !19586)
     #dbg_value(i64 8, !19582, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19587)
@@ -484,7 +484,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ExpressionEE13new_uninit_inB1Q_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19622 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ExpressionEE13new_uninit_inB1Q_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19622 {
 bb.a:
     #dbg_declare(ptr poison, !19653, !DIExpression(), !19658)
     #dbg_value(i64 8, !19654, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19659)
@@ -519,7 +519,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEE13new_uninit_inB1Q_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19694 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node8LeafNodeNtNtB6_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEE13new_uninit_inB1Q_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19694 {
 bb.a:
     #dbg_declare(ptr poison, !19725, !DIExpression(), !19730)
     #dbg_value(i64 8, !19726, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19731)
@@ -554,7 +554,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtB6_6string6StringE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19764 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtB6_6string6StringE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19764 {
 bb.a:
     #dbg_declare(ptr poison, !19790, !DIExpression(), !19794)
     #dbg_value(i64 8, !19791, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19795)
@@ -589,7 +589,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtCs5yXxDE1DkoT_4tera5value5ValueE13new_uninit_inBK_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19828 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtCs5yXxDE1DkoT_4tera5value5ValueE13new_uninit_inBK_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19828 {
 bb.a:
     #dbg_declare(ptr poison, !19854, !DIExpression(), !19858)
     #dbg_value(i64 8, !19855, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19859)
@@ -624,7 +624,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtCs5yXxDE1DkoT_4tera6errors11ReportErrorE13new_uninit_inBK_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19894 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtCs5yXxDE1DkoT_4tera6errors11ReportErrorE13new_uninit_inBK_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19894 {
 bb.a:
     #dbg_declare(ptr poison, !19925, !DIExpression(), !19929)
     #dbg_value(i64 8, !19926, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19930)
@@ -659,7 +659,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast12FunctionCallE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19965 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast12FunctionCallE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !19965 {
 bb.a:
     #dbg_declare(ptr poison, !19996, !DIExpression(), !20001)
     #dbg_value(i64 8, !19997, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20002)
@@ -694,7 +694,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast13ComponentCallE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20037 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast13ComponentCallE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20037 {
 bb.a:
     #dbg_declare(ptr poison, !20068, !DIExpression(), !20073)
     #dbg_value(i64 8, !20069, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20074)
@@ -729,7 +729,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast14UnaryOperationE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20109 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast14UnaryOperationE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20109 {
 bb.a:
     #dbg_declare(ptr poison, !20140, !DIExpression(), !20145)
     #dbg_value(i64 8, !20141, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20146)
@@ -764,7 +764,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast15BinaryOperationE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20181 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast15BinaryOperationE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20181 {
 bb.a:
     #dbg_declare(ptr poison, !20212, !DIExpression(), !20217)
     #dbg_value(i64 8, !20213, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20218)
@@ -799,7 +799,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ListComprehensionE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20253 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ListComprehensionE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20253 {
 bb.a:
     #dbg_declare(ptr poison, !20284, !DIExpression(), !20289)
     #dbg_value(i64 8, !20285, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20290)
@@ -834,7 +834,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast3MapE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20325 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast3MapE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20325 {
 bb.a:
     #dbg_declare(ptr poison, !20356, !DIExpression(), !20361)
     #dbg_value(i64 8, !20357, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20362)
@@ -869,7 +869,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast3VarE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20397 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast3VarE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20397 {
 bb.a:
     #dbg_declare(ptr poison, !20428, !DIExpression(), !20433)
     #dbg_value(i64 8, !20429, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20434)
@@ -904,7 +904,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4TestE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20469 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4TestE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20469 {
 bb.a:
     #dbg_declare(ptr poison, !20500, !DIExpression(), !20505)
     #dbg_value(i64 8, !20501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20506)
@@ -939,7 +939,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast5ArrayE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20541 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast5ArrayE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20541 {
 bb.a:
     #dbg_declare(ptr poison, !20572, !DIExpression(), !20577)
     #dbg_value(i64 8, !20573, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20578)
@@ -974,7 +974,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast5SliceE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20613 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast5SliceE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20613 {
 bb.a:
     #dbg_declare(ptr poison, !20644, !DIExpression(), !20649)
     #dbg_value(i64 8, !20645, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20650)
@@ -1009,7 +1009,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast6FilterE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20685 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast6FilterE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20685 {
 bb.a:
     #dbg_declare(ptr poison, !20716, !DIExpression(), !20721)
     #dbg_value(i64 8, !20717, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20722)
@@ -1044,7 +1044,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast7GetAttrE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20757 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast7GetAttrE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20757 {
 bb.a:
     #dbg_declare(ptr poison, !20788, !DIExpression(), !20793)
     #dbg_value(i64 8, !20789, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20794)
@@ -1079,7 +1079,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast7GetItemE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20829 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast7GetItemE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20829 {
 bb.a:
     #dbg_declare(ptr poison, !20860, !DIExpression(), !20865)
     #dbg_value(i64 8, !20861, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20866)
@@ -1114,7 +1114,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast7TernaryE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20901 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast7TernaryE13new_uninit_inBM_() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20901 {
 bb.a:
     #dbg_declare(ptr poison, !20932, !DIExpression(), !20937)
     #dbg_value(i64 8, !20933, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20938)
@@ -1149,7 +1149,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 16 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxnE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20973 {
+define hidden noalias noundef nonnull align 16 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxnE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !20973 {
 bb.a:
     #dbg_declare(ptr poison, !21005, !DIExpression(), !21009)
     #dbg_value(i64 16, !21006, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !21010)
@@ -1184,7 +1184,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 16 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxoE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !21045 {
+define hidden noalias noundef nonnull align 16 ptr @_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxoE13new_uninit_inCs5yXxDE1DkoT_4tera() unnamed_addr #1 personality ptr @rust_eh_personality !dbg !21045 {
 bb.a:
     #dbg_declare(ptr poison, !21077, !DIExpression(), !21081)
     #dbg_value(i64 16, !21078, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !21082)

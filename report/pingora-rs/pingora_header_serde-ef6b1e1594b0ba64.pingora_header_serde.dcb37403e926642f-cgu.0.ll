@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ao = extractvalue { ptr, ptr } %i.am, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  %i.ap = invoke fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.j, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.f, ptr noundef nonnull %i.an, ptr nonnull %i.ao)
+  %i.ap = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.j, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.f, ptr noundef nonnull %i.an, ptr nonnull %i.ao)
           to label %bb.dz unwind label %.thread.i
 
 bb.k:                                             ; preds = %bb.i
@@ -608,7 +608,7 @@ _RNvXs2_NtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB7_3VechEINtB5_10SpecExtendR
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef %2, ptr %3) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noundef %2, ptr %3) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [72 x i8], align 8                ; 10 uses

@@ -204,7 +204,7 @@ declare ptr @l_ReaderT_instFunctorOfMonad___redArg___lam__0(ptr noundef, ptr nou
 declare ptr @l_ReaderT_instFunctorOfMonad___redArg___lam__1(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) #1
 
 ; Function Attrs: inlinehint nounwind uwtable
-define internal fastcc nonnull ptr @lean_alloc_ctor(i32 noundef range(i32 0, 10) %0, i32 noundef range(i32 1, 10) %1, i32 noundef range(i32 0, 18) %2) unnamed_addr #2 {
+define internal fastcc noalias nonnull ptr @lean_alloc_ctor(i32 noundef range(i32 0, 10) %0, i32 noundef range(i32 1, 10) %1, i32 noundef range(i32 0, 18) %2) unnamed_addr #2 {
 lean_usize_add_checked.exit:
   %i.a = shl nuw nsw i32 %1, 3
   %narrow = add nuw nsw i32 %i.a, 8
@@ -607,7 +607,7 @@ lean_dec_ref.exit21:                              ; preds = %bb.l, %bb.m, %bb.n
 }
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1_spec__1(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #0 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1_spec__1(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @lean_st_ref_get(ptr noundef %4) #4 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -784,7 +784,7 @@ lean_alloc_ctor.exit42:                           ; preds = %lean_alloc_ctor.exi
 }
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1_spec__1___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #0 {
+define noalias nonnull ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1_spec__1___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1_spec__1(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
   %i.b = ptrtoint ptr %4 to i64
@@ -879,10 +879,10 @@ define ptr @l_Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1___
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 5 uses
-  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1_spec__1(ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) ; 6 uses
+  %i.c = tail call ptr @l_Lean_addMessageContextFull___at___00Lean_addTrace___at___00Lean_Meta_Grind_propagateBetaEqs_spec__1_spec__1(ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !13   ; 5 uses
-  %.val162 = load i32, ptr %i.c, align 8, !tbaa !15
+  %.val162 = load i32, ptr %i.c, align 8, !tbaa !15 ; 4 uses
   %i.f = icmp eq i32 %.val162, 1                  ; 2 uses
   br i1 %i.f, label %lean_dec.exit132, label %bb.b
 
@@ -911,17 +911,16 @@ bb.f:                                             ; preds = %bb.e
   br label %lean_inc.exit155
 
 lean_inc.exit155:                                 ; preds = %bb.b, %bb.d, %bb.e, %bb.f
-  %6 = load i32, ptr %i.c, align 8, !tbaa !15     ; 3 uses
-  %i.l = icmp sgt i32 %6, 1
+  %i.l = icmp sgt i32 %.val162, 1
   br i1 %i.l, label %bb.g, label %bb.h, !prof !11
 
 bb.g:                                             ; preds = %lean_inc.exit155
-  %i.m = add nsw i32 %6, -1
+  %i.m = add nsw i32 %.val162, -1
   store i32 %i.m, ptr %i.c, align 8, !tbaa !15
   br label %lean_dec.exit132
 
 bb.h:                                             ; preds = %lean_inc.exit155
-  %.not.i156 = icmp eq i32 %6, 0
+  %.not.i156 = icmp eq i32 %.val162, 0
   br i1 %.not.i156, label %lean_dec.exit132, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -1324,7 +1323,7 @@ lean_dec_ref.exit45:                              ; preds = %bb.aq, %bb.ar, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l___private_Init_While_0__whileM_erased___at___00Lean_Meta_Grind_propagateBetaForNewApp_spec__0___redArg___lam__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3, ptr nofree readnone captures(none) %4, ptr nofree readnone captures(none) %5, ptr nofree readnone captures(none) %6, ptr nofree readnone captures(none) %7, ptr nofree readnone captures(none) %8, ptr nofree readnone captures(none) %9, ptr nofree readnone captures(none) %10, ptr nofree readnone captures(none) %11, ptr nofree readnone captures(none) %12, ptr nofree readnone captures(none) %13) local_unnamed_addr #0 {
+define noalias noundef nonnull ptr @l___private_Init_While_0__whileM_erased___at___00Lean_Meta_Grind_propagateBetaForNewApp_spec__0___redArg___lam__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3, ptr nofree readnone captures(none) %4, ptr nofree readnone captures(none) %5, ptr nofree readnone captures(none) %6, ptr nofree readnone captures(none) %7, ptr nofree readnone captures(none) %8, ptr nofree readnone captures(none) %9, ptr nofree readnone captures(none) %10, ptr nofree readnone captures(none) %11, ptr nofree readnone captures(none) %12, ptr nofree readnone captures(none) %13) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
@@ -1619,7 +1618,7 @@ lean_alloc_ctor.exit45:                           ; preds = %lean_alloc_ctor.exi
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @l___private_Init_While_0__whileM_erased___at___00Lean_Meta_Grind_propagateBetaForNewApp_spec__0___redArg___lam__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readnone captures(none) %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef %12, ptr noundef %13, ptr nofree noundef readnone captures(none) %14) local_unnamed_addr #0 {
+define noalias noundef nonnull ptr @l___private_Init_While_0__whileM_erased___at___00Lean_Meta_Grind_propagateBetaForNewApp_spec__0___redArg___lam__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readnone captures(none) %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef %12, ptr noundef %13, ptr nofree noundef readnone captures(none) %14) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @l___private_Init_While_0__whileM_erased___at___00Lean_Meta_Grind_propagateBetaForNewApp_spec__0___redArg___lam__0(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison)
   %i.b = ptrtoint ptr %13 to i64
@@ -2022,7 +2021,7 @@ bb.j:                                             ; preds = %.sink.split, %bb.d
 declare ptr @runtime_initialize_Lean_Meta_Tactic_Grind_Types(i8 noundef zeroext) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define noundef nonnull ptr @meta_initialize_Lean_Meta_Tactic_Grind_Beta(i8 noundef zeroext %0) local_unnamed_addr #0 {
+define noalias noundef nonnull ptr @meta_initialize_Lean_Meta_Tactic_Grind_Beta(i8 noundef zeroext %0) local_unnamed_addr #0 {
 bb.a:
   %.b = load i1, ptr @_G_meta_initialized, align 1
   br i1 %.b, label %bb.b, label %bb.d

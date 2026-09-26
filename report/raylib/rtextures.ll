@@ -205,7 +205,7 @@ stbi__vertical_flip_slices.exit:                  ; preds = %stbi__vertical_flip
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @stbi_loadf_from_memory(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #4 {
+define hidden noalias noundef ptr @stbi_loadf_from_memory(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #4 {
 bb.a:
   %6 = alloca %struct.stbi__context, align 8      ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #52
@@ -231,7 +231,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @stbi__loadf_main(ptr noundef nonnull %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) unnamed_addr #4 {
+define internal fastcc noalias noundef ptr @stbi__loadf_main(ptr noundef nonnull %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) unnamed_addr #4 {
 bb.a:
   %i.a = tail call fastcc ptr @stbi__load_and_postprocess_8bit(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) ; 9 uses
   %.not = icmp eq ptr %i.a, null
@@ -452,7 +452,7 @@ stbi__ldr_to_hdr.exit:                            ; preds = %.loopexit.i, %stbi_
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @stbi_loadf_from_callbacks(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #4 {
+define hidden noalias noundef ptr @stbi_loadf_from_callbacks(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #4 {
 bb.a:
   %6 = alloca %struct.stbi__context, align 8      ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #52
@@ -509,7 +509,7 @@ stbi__start_callbacks.exit:                       ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @stbi_loadf(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #4 {
+define hidden noalias noundef ptr @stbi_loadf(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #4 {
 bb.a:
   %5 = alloca %struct.stbi__context, align 8      ; 14 uses
   %i.a = tail call noalias noundef ptr @fopen(ptr noundef readonly %0, ptr noundef nonnull @.str) ; 4 uses
@@ -569,7 +569,7 @@ stbi_loadf_from_file.exit:                        ; preds = %bb.d, %bb.e
   store ptr %.sink.i.i.i.i, ptr %i.x, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 216
   store ptr %.sink.i.i.i.i, ptr %i.y, align 8
-  %i.z = call fastcc noundef ptr @stbi__loadf_main(ptr noundef %5, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4)
+  %i.z = call fastcc noalias noundef ptr @stbi__loadf_main(ptr noundef %5, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #52
   %i.aa = call i32 @fclose(ptr noundef nonnull %i.a) ; 0 uses
   br label %bb.f
@@ -580,7 +580,7 @@ bb.f:                                             ; preds = %stbi_loadf_from_fil
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @stbi_loadf_from_file(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #4 {
+define hidden noalias noundef ptr @stbi_loadf_from_file(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #4 {
 bb.a:
   %5 = alloca %struct.stbi__context, align 8      ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #52
@@ -983,7 +983,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden noundef ptr @qoi_encode(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2) local_unnamed_addr #12 {
+define hidden noalias noundef ptr @qoi_encode(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2) local_unnamed_addr #12 {
 bb.a:
   %3 = alloca [64 x %union.qoi_rgba_t], align 16  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #52
@@ -1313,7 +1313,7 @@ bb.z:                                             ; preds = %bb.g, %bb.a, %bb.b,
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
 ; Function Attrs: nofree nounwind memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden noundef ptr @qoi_decode(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, i32 noundef %3) local_unnamed_addr #12 {
+define hidden noalias noundef ptr @qoi_decode(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, i32 noundef %3) local_unnamed_addr #12 {
 bb.a:
   %4 = alloca [64 x %union.qoi_rgba_t], align 16  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #52
@@ -1636,7 +1636,7 @@ declare noundef i32 @fflush(ptr noundef captures(none)) local_unnamed_addr #6
 declare noundef i32 @ferror(ptr noundef captures(none)) local_unnamed_addr #14
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @qoi_read(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address_is_null) %1, i32 noundef %2) local_unnamed_addr #4 {
+define hidden noalias noundef ptr @qoi_read(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address_is_null) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = tail call noalias ptr @fopen(ptr noundef %0, ptr noundef nonnull @.str) ; 8 uses
   %.not = icmp eq ptr %i.a, null
@@ -2039,7 +2039,7 @@ bb.bm:                                            ; preds = %bb.a, %stbiw__sbgro
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #5
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef ptr @stbi_write_png_to_mem(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5) local_unnamed_addr #9 {
+define hidden noalias noundef ptr @stbi_write_png_to_mem(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5) local_unnamed_addr #9 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = load i32, ptr @stbi_write_force_png_filter, align 4 ; 3 uses
@@ -2442,7 +2442,7 @@ bb.u:                                             ; preds = %bb.h, %bb.i, %bb.j,
 declare zeroext i1 @SaveFileData(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #10
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define noundef ptr @ExportImageToMemory(ptr nofree noundef readonly byval(%struct.Image) align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %2) local_unnamed_addr #9 {
+define noalias noundef ptr @ExportImageToMemory(ptr nofree noundef readonly byval(%struct.Image) align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %2) local_unnamed_addr #9 {
 bb.a:
   store i32 0, ptr %2, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
