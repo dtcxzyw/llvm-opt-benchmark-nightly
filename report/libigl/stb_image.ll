@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %invariant.gep.i = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.x ; 4 uses
   %invariant.gep200.i = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.y ; 4 uses
   %invariant.gep202.i = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.z ; 4 uses
-  %i.ab = zext nneg i32 %2 to i64
+  %i.ab = zext nneg i32 %2 to i64                 ; 5 uses
   %invariant.op.i = add nsw i32 %0, -2            ; 2 uses
   %invariant.op212.i = add nsw i64 %i.x, -3
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 3 ; 2 uses
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %i.af = sub nsw i64 %i.y, %i.x                  ; 2 uses
   %i.ag = sub nsw i64 %i.z, %i.x                  ; 2 uses
   %i.ah = sub nsw i64 %i.z, %i.y                  ; 2 uses
-  %ident.check.not = icmp eq i32 %2, 1            ; 2 uses
+  %ident.check.not = icmp eq i32 %2, 1
   %i.ai = add nsw i32 %0, -1
   %diff.check61 = icmp ult i32 %i.ai, 3
   %i.aj = add nsw i32 %i.v, -1
@@ -390,7 +390,7 @@ _ZL25stbiw__write_hdr_scanlineP19stbi__write_contextiiPhPf.exit.loopexit.us.spli
   %i.cy = select i1 %.not, i32 %.06, i32 %i.cx
   %i.cz = mul nsw i32 %i.o, %i.cy
   %i.da = sext i32 %i.cz to i64
-  %i.db = getelementptr inbounds [4 x i8], ptr %3, i64 %i.da ; 4 uses
+  %i.db = getelementptr inbounds [4 x i8], ptr %3, i64 %i.da ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #33
   store i32 514, ptr %i.d, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #33
@@ -439,33 +439,68 @@ middle.block81:                                   ; preds = %vector.body75
   br label %.preheader131.split.i
 
 vector.scevcheck:                                 ; preds = %.preheader131.i
-  %ident.check.not.not94 = xor i1 %ident.check.not, true
-  %brmerge95 = select i1 %ident.check.not.not94, i1 true, i1 %conflict.rdx52
-  br i1 %brmerge95, label %.preheader131.split.us.i.preheader, label %vector.body
+  br i1 %conflict.rdx52, label %.preheader131.split.us.i.preheader, label %vector.body
 
 vector.body:                                      ; preds = %vector.scevcheck, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.scevcheck ] ; 6 uses
-  %i.ds = getelementptr [4 x i8], ptr %i.db, i64 %index ; 3 uses
-  %i.dt = getelementptr i8, ptr %i.ds, i64 8
-  %wide.load = load <4 x float>, ptr %i.dt, align 4, !tbaa !55 ; 3 uses
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.scevcheck ] ; 9 uses
+  %4 = or disjoint i64 %index, 1
+  %5 = or disjoint i64 %index, 2
+  %6 = or disjoint i64 %index, 3
+  %7 = mul nuw nsw i64 %index, %i.ab
+  %8 = mul nuw nsw i64 %4, %i.ab
+  %9 = mul nuw nsw i64 %5, %i.ab
+  %10 = mul nuw nsw i64 %6, %i.ab
+  %11 = getelementptr [4 x i8], ptr %i.db, i64 %7 ; 3 uses
+  %12 = getelementptr [4 x i8], ptr %i.db, i64 %8 ; 3 uses
+  %13 = getelementptr [4 x i8], ptr %i.db, i64 %9 ; 3 uses
+  %i.ds = getelementptr [4 x i8], ptr %i.db, i64 %10 ; 3 uses
+  %14 = getelementptr i8, ptr %11, i64 8
+  %15 = getelementptr i8, ptr %12, i64 8
+  %16 = getelementptr i8, ptr %13, i64 8
+  %17 = getelementptr i8, ptr %i.ds, i64 8
+  %18 = load float, ptr %14, align 4, !tbaa !55
+  %19 = load float, ptr %15, align 4, !tbaa !55
+  %20 = load float, ptr %16, align 4, !tbaa !55
+  %21 = load float, ptr %17, align 4, !tbaa !55
+  %22 = insertelement <4 x float> poison, float %18, i64 0
+  %23 = insertelement <4 x float> %22, float %19, i64 1
+  %24 = insertelement <4 x float> %23, float %20, i64 2
+  %25 = insertelement <4 x float> %24, float %21, i64 3 ; 3 uses
+  %26 = getelementptr i8, ptr %11, i64 4
+  %i.dt = getelementptr i8, ptr %12, i64 4
+  %27 = getelementptr i8, ptr %13, i64 4
   %i.du = getelementptr i8, ptr %i.ds, i64 4
-  %wide.load53 = load <4 x float>, ptr %i.du, align 4, !tbaa !55 ; 3 uses
-  %wide.load54 = load <4 x float>, ptr %i.ds, align 4, !tbaa !55 ; 3 uses
-  %i.dv = fcmp ogt <4 x float> %wide.load53, %wide.load
-  %i.dw = select <4 x i1> %i.dv, <4 x float> %wide.load53, <4 x float> %wide.load ; 2 uses
-  %i.dx = fcmp ogt <4 x float> %wide.load54, %i.dw
-  %i.dy = select <4 x i1> %i.dx, <4 x float> %wide.load54, <4 x float> %i.dw ; 3 uses
+  %28 = load float, ptr %26, align 4, !tbaa !55
+  %29 = load float, ptr %i.dt, align 4, !tbaa !55
+  %30 = load float, ptr %27, align 4, !tbaa !55
+  %31 = load float, ptr %i.du, align 4, !tbaa !55
+  %32 = insertelement <4 x float> poison, float %28, i64 0
+  %33 = insertelement <4 x float> %32, float %29, i64 1
+  %34 = insertelement <4 x float> %33, float %30, i64 2
+  %35 = insertelement <4 x float> %34, float %31, i64 3 ; 3 uses
+  %36 = load float, ptr %11, align 4, !tbaa !55
+  %37 = load float, ptr %12, align 4, !tbaa !55
+  %38 = load float, ptr %13, align 4, !tbaa !55
+  %39 = load float, ptr %i.ds, align 4, !tbaa !55
+  %40 = insertelement <4 x float> poison, float %36, i64 0
+  %41 = insertelement <4 x float> %40, float %37, i64 1
+  %42 = insertelement <4 x float> %41, float %38, i64 2
+  %43 = insertelement <4 x float> %42, float %39, i64 3 ; 3 uses
+  %i.dv = fcmp ogt <4 x float> %35, %25
+  %i.dw = select <4 x i1> %i.dv, <4 x float> %35, <4 x float> %25 ; 2 uses
+  %i.dx = fcmp ogt <4 x float> %43, %i.dw
+  %i.dy = select <4 x i1> %i.dx, <4 x float> %43, <4 x float> %i.dw ; 3 uses
   %i.dz = fcmp olt <4 x float> %i.dy, splat (float 1.000000e-32) ; 4 uses
   %i.ea = call { <4 x float>, <4 x i32> } @llvm.frexp.v4f32.v4i32(<4 x float> %i.dy) ; 2 uses
   %i.eb = extractvalue { <4 x float>, <4 x i32> } %i.ea, 1
   %i.ec = extractvalue { <4 x float>, <4 x i32> } %i.ea, 0
   %i.ed = fmul <4 x float> %i.ec, splat (float 2.560000e+02)
   %i.ee = fdiv <4 x float> %i.ed, %i.dy           ; 3 uses
-  %i.ef = fmul <4 x float> %wide.load54, %i.ee
+  %i.ef = fmul <4 x float> %43, %i.ee
   %i.eg = fptoui <4 x float> %i.ef to <4 x i8>
-  %i.eh = fmul <4 x float> %wide.load53, %i.ee
+  %i.eh = fmul <4 x float> %35, %i.ee
   %i.ei = fptoui <4 x float> %i.eh to <4 x i8>
-  %i.ej = fmul <4 x float> %wide.load, %i.ee
+  %i.ej = fmul <4 x float> %25, %i.ee
   %i.ek = fptoui <4 x float> %i.ej to <4 x i8>
   %i.el = trunc <4 x i32> %i.eb to <4 x i8>
   %i.em = xor <4 x i8> %i.el, splat (i8 -128)
@@ -489,7 +524,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %.split.us.i, label %.preheader131.split.us.i.preheader
 
 .preheader131.split.us.i.preheader:               ; preds = %vector.scevcheck, %middle.block
-  %indvars.iv163.i.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %vector.scevcheck ]
+  %indvars.iv163.i.ph = phi i64 [ 0, %vector.scevcheck ], [ %n.vec, %middle.block ]
   br label %.preheader131.split.us.i
 
 .preheader131.split.us.i:                         ; preds = %.preheader131.split.us.i.preheader, %_ZL21stbiw__linear_to_rgbePhPf.exit119.us.i
