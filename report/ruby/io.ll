@@ -206,11 +206,9 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.a, %bb.b
   %.1.i17 = phi i64 [ %i.g, %bb.b ], [ 4, %bb.a ] ; 2 uses
-  %.193.i16 = phi i32 [ %i.h, %bb.b ], [ %0, %bb.a ] ; 3 uses
-  %3 = icmp samesign ugt i32 %.193.i16, 1
-  %spec.select18 = select i1 %3, i32 2, i32 1
-  %4 = icmp eq i32 %spec.select18, %.193.i16
-  br i1 %4, label %rb_scan_args_set.exit, label %.thread
+  %.193.i16 = phi i32 [ %i.h, %bb.b ], [ %0, %bb.a ] ; 2 uses
+  %3 = icmp ult i32 %.193.i16, 3
+  br i1 %3, label %rb_scan_args_set.exit, label %.thread
 
 .thread:                                          ; preds = %rb_scan_args_n_opt.exit, %.preheader, %bb.b
   %.193.i7 = phi i32 [ 0, %bb.b ], [ %.193.i16, %.preheader ], [ %0, %rb_scan_args_n_opt.exit ]

@@ -202,9 +202,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef ptr @_ZN4llvm11AArch64GICR20lookupGICRByEncodingEt(i16 noundef zeroext %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = icmp ult i16 %0, 1561
-  %.sroa.speculated = select i1 %1, i16 1560, i16 1561
-  %.not = icmp eq i16 %0, %.sroa.speculated
+  %1 = and i16 %0, -2
+  %.not = icmp eq i16 %1, 1560
   %i.a = zext i16 %0 to i64
   %i.b = getelementptr [64 x i8], ptr @_ZN4llvm11AArch64GICRL9GICRTableE, i64 %i.a
   %i.c = getelementptr i8, ptr %i.b, i64 -99840
@@ -345,9 +344,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef ptr @_ZN4llvm10AArch64GSB19lookupGSBByEncodingEt(i16 noundef zeroext %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = icmp ult i16 %0, 1537
-  %.sroa.speculated = select i1 %1, i16 1536, i16 1537
-  %.not = icmp eq i16 %0, %.sroa.speculated
+  %1 = and i16 %0, -2
+  %.not = icmp eq i16 %1, 1536
   %i.a = zext i16 %0 to i64
   %i.b = getelementptr [56 x i8], ptr @_ZN4llvm10AArch64GSBL8GSBTableE, i64 %i.a
   %i.c = getelementptr i8, ptr %i.b, i64 -86016
