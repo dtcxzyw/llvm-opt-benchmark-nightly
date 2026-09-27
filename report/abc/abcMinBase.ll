@@ -204,18 +204,18 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph48, %.critedge2
   %indvars.iv52 = phi i64 [ 0, %.lr.ph48 ], [ %indvars.iv.next53, %.critedge2 ] ; 4 uses
+  %1 = trunc nuw nsw i64 %indvars.iv52 to i32     ; 2 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %.val42, i64 %indvars.iv52
   %i.g = load i32, ptr %i.f, align 4, !tbaa !54
   %i.h = sext i32 %i.g to i64
   %i.i = getelementptr inbounds [8 x i8], ptr %.val41.val.val, i64 %i.h
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !41
-  %1 = trunc nuw nsw i64 %indvars.iv52 to i32     ; 2 uses
   %or.cond45.not = icmp eq i64 %indvars.iv52, 0
   br i1 %or.cond45.not, label %.critedge2, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %invariant.smin = tail call i32 @llvm.smin.i32(i32 %.val38, i32 %1)
-  %2 = sext i32 %invariant.smin to i64
+  %wide.trip.count = zext i32 %invariant.smin to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
@@ -248,8 +248,8 @@ bb.c:                                             ; preds = %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %or.cond = icmp slt i64 %indvars.iv.next, %2
-  br i1 %or.cond, label %.lr.ph, label %.critedge2, !llvm.loop !1
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.critedge2, label %.lr.ph, !llvm.loop !1
 
 .critedge2:                                       ; preds = %bb.d, %bb.b
   %indvars.iv.next53 = add nuw nsw i64 %indvars.iv52, 1 ; 2 uses

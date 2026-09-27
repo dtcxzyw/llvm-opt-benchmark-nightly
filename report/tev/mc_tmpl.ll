@@ -205,7 +205,7 @@ bb.a:
   %.055.us.us = phi ptr [ %.156.lcssa.us.us, %._crit_edge.us72.us ], [ %2, %.split.us.split.us.preheader ] ; 2 uses
   %.054.us.us = phi ptr [ %i.ce, %._crit_edge.us72.us ], [ %0, %.split.us.split.us.preheader ] ; 3 uses
   %.052.us.us = phi i32 [ %.153.lcssa.us.us, %._crit_edge.us72.us ], [ -2, %.split.us.split.us.preheader ] ; 3 uses
-  %i.l = ashr i32 %.058.us.us, 10                 ; 3 uses
+  %i.l = ashr i32 %.058.us.us, 10                 ; 4 uses
   %i.m = shl nsw i32 %i.l, 7
   %i.n = and i32 %i.m, 128                        ; 2 uses
   %i.o = zext nneg i32 %i.n to i64
@@ -260,14 +260,14 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
 
 ._crit_edge.us.us.us:                             ; preds = %bb.b
   %i.as = getelementptr inbounds i8, ptr %.15664.us.us.us, i64 %3 ; 2 uses
-  %i.at = add nsw i32 %.15365.us.us.us, 1         ; 3 uses
-  %11 = icmp slt i32 %i.at, %i.l
-  br i1 %11, label %.lr.ph.us.us.us, label %.preheader.us.us
+  %i.at = add nsw i32 %.15365.us.us.us, 1         ; 2 uses
+  %exitcond91.not = icmp eq i32 %i.at, %i.l
+  br i1 %exitcond91.not, label %.preheader.us.us, label %.lr.ph.us.us.us
 
 .preheader.us.us:                                 ; preds = %._crit_edge.us.us.us, %.split.us.split.us
   %wide.trip.count94.pre-phi = phi i64 [ %.pre, %.split.us.split.us ], [ %wide.trip.count, %._crit_edge.us.us.us ] ; 4 uses
   %.156.lcssa.us.us = phi ptr [ %.055.us.us, %.split.us.split.us ], [ %i.as, %._crit_edge.us.us.us ]
-  %.153.lcssa.us.us = phi i32 [ %.052.us.us, %.split.us.split.us ], [ %i.at, %._crit_edge.us.us.us ]
+  %.153.lcssa.us.us = phi i32 [ %.052.us.us, %.split.us.split.us ], [ %i.l, %._crit_edge.us.us.us ]
   %i.au = lshr i32 %.058.us.us, 6
   %i.av = and i32 %i.au, 15                       ; 2 uses
   %min.iters.check = icmp samesign ult i64 %wide.trip.count94.pre-phi, 8
@@ -670,7 +670,7 @@ bb.a:
   %.052.us.us = phi ptr [ %.153.lcssa.us.us, %._crit_edge.us69.us ], [ %1, %.split.us.split.us.preheader ] ; 2 uses
   %.051.us.us = phi ptr [ %i.bx, %._crit_edge.us69.us ], [ %0, %.split.us.split.us.preheader ] ; 3 uses
   %.049.us.us = phi i32 [ %.150.lcssa.us.us, %._crit_edge.us69.us ], [ -2, %.split.us.split.us.preheader ] ; 3 uses
-  %i.i = ashr i32 %.055.us.us, 10                 ; 3 uses
+  %i.i = ashr i32 %.055.us.us, 10                 ; 4 uses
   %i.j = shl nsw i32 %i.i, 7
   %i.k = and i32 %i.j, 128                        ; 2 uses
   %i.l = zext nneg i32 %i.k to i64
@@ -725,14 +725,14 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
 
 ._crit_edge.us.us.us:                             ; preds = %bb.b
   %i.ap = getelementptr inbounds i8, ptr %.15361.us.us.us, i64 %2 ; 2 uses
-  %i.aq = add nsw i32 %.15062.us.us.us, 1         ; 3 uses
-  %10 = icmp slt i32 %i.aq, %i.i
-  br i1 %10, label %.lr.ph.us.us.us, label %.preheader.us.us
+  %i.aq = add nsw i32 %.15062.us.us.us, 1         ; 2 uses
+  %exitcond88.not = icmp eq i32 %i.aq, %i.i
+  br i1 %exitcond88.not, label %.preheader.us.us, label %.lr.ph.us.us.us
 
 .preheader.us.us:                                 ; preds = %._crit_edge.us.us.us, %.split.us.split.us
   %wide.trip.count91.pre-phi = phi i64 [ %.pre, %.split.us.split.us ], [ %wide.trip.count, %._crit_edge.us.us.us ] ; 4 uses
   %.153.lcssa.us.us = phi ptr [ %.052.us.us, %.split.us.split.us ], [ %i.ap, %._crit_edge.us.us.us ]
-  %.150.lcssa.us.us = phi i32 [ %.049.us.us, %.split.us.split.us ], [ %i.aq, %._crit_edge.us.us.us ]
+  %.150.lcssa.us.us = phi i32 [ %.049.us.us, %.split.us.split.us ], [ %i.i, %._crit_edge.us.us.us ]
   %i.ar = lshr i32 %.055.us.us, 6
   %i.as = and i32 %i.ar, 15                       ; 2 uses
   %min.iters.check = icmp samesign ult i64 %wide.trip.count91.pre-phi, 8
