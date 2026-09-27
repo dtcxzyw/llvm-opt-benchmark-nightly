@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs4G_NtCs8frGy5WneL6_4fish3astNtB6_7String_NtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs4G_NtCs8frGy5WneL6_4fish3astNtB6_7String_NtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @164, i64 1 }
 }
@@ -347,7 +347,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs4P_NtCs8frGy5WneL6_4fish3astNtB6_15TokenBackgroundNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs4P_NtCs8frGy5WneL6_4fish3astNtB6_15TokenBackgroundNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @144, i64 1 }
 }
@@ -490,7 +490,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs4Y_NtCs8frGy5WneL6_4fish3astNtB6_16TokenConjunctionNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs4Y_NtCs8frGy5WneL6_4fish3astNtB6_16TokenConjunctionNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @534, i64 2 }
 }
@@ -808,7 +808,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs4x_NtCs8frGy5WneL6_4fish3astNtB6_6SemiNlNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs4x_NtCs8frGy5WneL6_4fish3astNtB6_6SemiNlNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @139, i64 1 }
 }
@@ -951,7 +951,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs57_NtCs8frGy5WneL6_4fish3astNtB6_9TokenPipeNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs57_NtCs8frGy5WneL6_4fish3astNtB6_9TokenPipeNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @545, i64 1 }
 }
@@ -1093,7 +1093,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs5H_NtCs8frGy5WneL6_4fish3astNtB6_27DecoratedStatementDecoratorNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs5H_NtCs8frGy5WneL6_4fish3astNtB6_27DecoratedStatementDecoratorNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @548, i64 3 }
 }
@@ -1175,7 +1175,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs5O_NtCs8frGy5WneL6_4fish3astNtB6_23JobConjunctionDecoratorNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs5O_NtCs8frGy5WneL6_4fish3astNtB6_23JobConjunctionDecoratorNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @554, i64 2 }
 }
@@ -1257,7 +1257,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs5V_NtCs8frGy5WneL6_4fish3astNtB6_12KeywordBeginNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs5V_NtCs8frGy5WneL6_4fish3astNtB6_12KeywordBeginNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @164, i64 1 }
 }
@@ -1416,7 +1416,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs5g_NtCs8frGy5WneL6_4fish3astNtB6_14TokenLeftBraceNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs5g_NtCs8frGy5WneL6_4fish3astNtB6_14TokenLeftBraceNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @163, i64 1 }
 }
@@ -1559,7 +1559,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs5p_NtCs8frGy5WneL6_4fish3astNtB6_15TokenRightBraceNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs5p_NtCs8frGy5WneL6_4fish3astNtB6_15TokenRightBraceNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @566, i64 1 }
 }
@@ -1702,7 +1702,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs5y_NtCs8frGy5WneL6_4fish3astNtB6_16TokenRedirectionNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs5y_NtCs8frGy5WneL6_4fish3astNtB6_16TokenRedirectionNtB6_5Token14allowed_tokens(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @570, i64 1 }
 }
@@ -1825,7 +1825,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs62_NtCs8frGy5WneL6_4fish3astNtB6_11KeywordCaseNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs62_NtCs8frGy5WneL6_4fish3astNtB6_11KeywordCaseNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @163, i64 1 }
 }
@@ -1907,7 +1907,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs69_NtCs8frGy5WneL6_4fish3astNtB6_11KeywordElseNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs69_NtCs8frGy5WneL6_4fish3astNtB6_11KeywordElseNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @570, i64 1 }
 }
@@ -1958,7 +1958,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs6B_NtCs8frGy5WneL6_4fish3astNtB6_9KeywordIfNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs6B_NtCs8frGy5WneL6_4fish3astNtB6_9KeywordIfNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @579, i64 1 }
 }
@@ -2040,7 +2040,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs6I_NtCs8frGy5WneL6_4fish3astNtB6_9KeywordInNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs6I_NtCs8frGy5WneL6_4fish3astNtB6_9KeywordInNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @583, i64 1 }
 }
@@ -2122,7 +2122,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs6P_NtCs8frGy5WneL6_4fish3astNtB6_10KeywordNotNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs6P_NtCs8frGy5WneL6_4fish3astNtB6_10KeywordNotNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @587, i64 2 }
 }
@@ -2204,7 +2204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs6W_NtCs8frGy5WneL6_4fish3astNtB6_13KeywordSwitchNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs6W_NtCs8frGy5WneL6_4fish3astNtB6_13KeywordSwitchNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @591, i64 1 }
 }
@@ -2305,7 +2305,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs6g_NtCs8frGy5WneL6_4fish3astNtB6_10KeywordEndNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs6g_NtCs8frGy5WneL6_4fish3astNtB6_10KeywordEndNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @144, i64 1 }
 }
@@ -2387,7 +2387,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs6n_NtCs8frGy5WneL6_4fish3astNtB6_10KeywordForNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs6n_NtCs8frGy5WneL6_4fish3astNtB6_10KeywordForNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @139, i64 1 }
 }
@@ -2469,7 +2469,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs6u_NtCs8frGy5WneL6_4fish3astNtB6_15KeywordFunctionNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs6u_NtCs8frGy5WneL6_4fish3astNtB6_15KeywordFunctionNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @6, i64 1 }
 }
@@ -2563,7 +2563,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs73_NtCs8frGy5WneL6_4fish3astNtB6_11KeywordTimeNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs73_NtCs8frGy5WneL6_4fish3astNtB6_11KeywordTimeNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @605, i64 1 }
 }
@@ -2671,7 +2671,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs7a_NtCs8frGy5WneL6_4fish3astNtB6_12KeywordWhileNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs7a_NtCs8frGy5WneL6_4fish3astNtB6_12KeywordWhileNtB6_7Keyword16allowed_keywords(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @609, i64 1 }
 }

@@ -205,7 +205,7 @@ JS_ThrowOutOfMemory.exit:                         ; preds = %bb.k, %bb.j, %js_ca
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowOutOfMemory(ptr noundef %0) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowOutOfMemory(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !232
@@ -608,7 +608,7 @@ JS_DupAtomRT.exit:                                ; preds = %.thread, %bb.h
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowRangeError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowRangeError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 4 uses
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
@@ -1011,7 +1011,7 @@ js_dup.exit:                                      ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_Throw(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 %2) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_Throw(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !232  ; 3 uses
@@ -1414,7 +1414,7 @@ declare void @llvm.va_start.p0(ptr) #19
 declare void @llvm.va_end.p0(ptr) #19
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowInternalError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowInternalError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 4 uses
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
@@ -1619,7 +1619,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowPlainError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowPlainError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
 bb.a:
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #49
@@ -1663,7 +1663,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowReferenceError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowReferenceError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 4 uses
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
@@ -1776,7 +1776,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowSyntaxError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowSyntaxError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 4 uses
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
@@ -1889,7 +1889,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowTypeError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowTypeError(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 4 uses
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
@@ -2292,7 +2292,7 @@ call_promise_rejection_tracker.exit:              ; preds = %bb.ac, %bb.ad, %JS_
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_promise_resolve_function_call(ptr noundef %0, i64 %1, i64 %2, i64 %3, i64 %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6, i32 %7) #2 {
+define internal noundef { i64, i64 } @js_promise_resolve_function_call(ptr noundef %0, i64 %1, i64 %2, i64 %3, i64 %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6, i32 %7) #2 {
 bb.a:
   %8 = alloca [3 x %struct.JSValue], align 16     ; 8 uses
   %i.a = inttoptr i64 %1 to ptr                   ; 2 uses
@@ -2695,7 +2695,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_typed_array_base_constructor(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4) #2 {
+define internal noundef { i64, i64 } @js_typed_array_base_constructor(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4) #2 {
 bb.a:
   %i.a = tail call { i64, i64 } (ptr, ptr, ...) @JS_ThrowTypeError(ptr noundef %0, ptr noundef nonnull @.str.994) ; 0 uses
   ret { i64, i64 } { i64 0, i64 6 }
@@ -3098,7 +3098,7 @@ JS_FreeValue.exit:                                ; preds = %bb.s, %bb.r, %bb.q,
 }
 
 ; Function Attrs: nounwind uwtable
-define { i64, i64 } @JS_ThrowDOMException(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ...) local_unnamed_addr #2 {
+define noundef { i64, i64 } @JS_ThrowDOMException(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ...) local_unnamed_addr #2 {
 bb.a:
   %3 = alloca [2 x %struct.JSValue], align 16     ; 7 uses
   %4 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
@@ -3501,7 +3501,7 @@ JS_ToInt32Free.exit:                              ; preds = %bb.g, %bb.f, %bb.e,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_dynamic_import_job(ptr noundef %0, i32 %1, ptr nofree noundef readonly captures(none) %2) #2 {
+define internal noundef { i64, i64 } @js_dynamic_import_job(ptr noundef %0, i32 %1, ptr nofree noundef readonly captures(none) %2) #2 {
 bb.a:
   %3 = alloca %struct.JSValue, align 16           ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -3904,7 +3904,7 @@ js_default_module_normalize_name.exit.thread:     ; preds = %bb.l, %bb.k, %js_de
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_load_module_fulfilled(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree noundef readonly captures(none) %6) #2 {
+define internal noundef { i64, i64 } @js_load_module_fulfilled(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree noundef readonly captures(none) %6) #2 {
 bb.a:
   %7 = alloca %struct.JSValue, align 16           ; 4 uses
   %8 = alloca %struct.JSValue, align 8            ; 6 uses
@@ -4016,7 +4016,7 @@ JS_FreeValue.exit24:                              ; preds = %bb.i, %bb.h, %JS_Fr
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_load_module_rejected(ptr noundef %0, i64 %1, i64 %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 %5, ptr nofree noundef readonly captures(none) %6) #2 {
+define internal noundef { i64, i64 } @js_load_module_rejected(ptr noundef %0, i64 %1, i64 %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 %5, ptr nofree noundef readonly captures(none) %6) #2 {
 bb.a:
   %7 = alloca %struct.JSValue, align 8            ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #49
@@ -4419,7 +4419,7 @@ JS_DefinePropertyValue.exit36:                    ; preds = %bb.m, %bb.l, %JS_Fr
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_proxy_revoke(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree noundef captures(none) %6) #2 {
+define internal noundef { i64, i64 } @js_proxy_revoke(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree noundef captures(none) %6) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8
@@ -4822,7 +4822,7 @@ js_dup.exit:                                      ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_promise_finally_thrower(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree noundef readonly captures(none) %6) #2 {
+define internal noundef { i64, i64 } @js_promise_finally_thrower(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree noundef readonly captures(none) %6) #2 {
 bb.a:
   %i.a = load i64, ptr %6, align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -5225,7 +5225,7 @@ JS_FreeValue.exit75:                              ; preds = %bb.s, %bb.r, %bb.q,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, i64 } @js_async_dispose_to_undef(ptr nofree readnone captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree readnone captures(none) %6) #0 {
+define internal noundef { i64, i64 } @js_async_dispose_to_undef(ptr nofree readnone captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4, i32 %5, ptr nofree readnone captures(none) %6) #0 {
 bb.a:
   ret { i64, i64 } { i64 0, i64 3 }
 }
@@ -5628,7 +5628,7 @@ JS_FreeValue.exit21:                              ; preds = %JS_FreeValue.exit20
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_async_generator_resolve_function(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6) #2 {
+define internal noundef { i64, i64 } @js_async_generator_resolve_function(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6) #2 {
 bb.a:
   %i.a = trunc i32 %5 to i1                       ; 2 uses
   %i.b = trunc i32 %5 to i8
@@ -6031,7 +6031,7 @@ bb.al:                                            ; preds = %JS_Throw.exit90, %J
 }
 
 ; Function Attrs: nounwind uwtable
-define internal { i64, i64 } @js_async_dispose_rethrow(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6) #2 {
+define internal noundef { i64, i64 } @js_async_dispose_rethrow(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6) #2 {
 bb.a:
   %i.a = load i64, ptr %6, align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -6434,7 +6434,7 @@ js_thisBigIntValue.exit:                          ; preds = %bb.b, %bb.c, %bb.g,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, i64 } @js_function_proto(ptr nofree readnone captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4) #0 {
+define internal noundef { i64, i64 } @js_function_proto(ptr nofree readnone captures(none) %0, i64 %1, i64 %2, i32 %3, ptr nofree readnone captures(none) %4) #0 {
 bb.a:
   ret { i64, i64 } { i64 0, i64 3 }
 }

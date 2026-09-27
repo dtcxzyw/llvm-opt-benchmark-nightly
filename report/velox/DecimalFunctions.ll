@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -608,7 +608,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -1011,7 +1011,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -1414,7 +1414,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -1817,7 +1817,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119DecimalPlusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -2220,7 +2220,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -2623,7 +2623,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -3026,7 +3026,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -3429,7 +3429,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -3832,7 +3832,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalMinusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -4235,7 +4235,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -4638,7 +4638,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -5041,7 +5041,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -5444,7 +5444,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -5847,7 +5847,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalMultiplyFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -6250,7 +6250,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -6653,7 +6653,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -7056,7 +7056,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENSF_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -7459,7 +7459,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -7862,7 +7862,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -8265,7 +8265,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_11LongDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_11LongDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -8668,7 +8668,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121DecimalDivideFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -9071,7 +9071,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -9474,7 +9474,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_11LongDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_11LongDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -9877,7 +9877,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -10280,7 +10280,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSI_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -10683,7 +10683,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS0_12ShortDecimalINSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SL_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -11086,7 +11086,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122DecimalModulusFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm3EEENSA_ILm7EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEENS9_INSA_ILm2EEENSA_ILm6EEEEEEEEJSH_SK_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -11489,7 +11489,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalFloorFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalFloorFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -11892,7 +11892,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalFloorFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEEEEEJSI_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalFloorFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEEEEEJSI_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -12295,7 +12295,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalFloorFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalFloorFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -12698,7 +12698,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -13101,7 +13101,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEEEEEJSI_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEEEEEJSI_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -13504,7 +13504,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -13907,7 +13907,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm5EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEESC_EEiEEEJSG_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm5EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEESC_EEiEEEJSG_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -14310,7 +14310,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm5EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEESC_EEiEEEJSG_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm5EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEESC_EEiEEEJSG_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -14713,7 +14713,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm5EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEESC_EEiEEEJSH_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120DecimalRoundFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm5EEEEENS0_15ConstantCheckerIJNS0_12ShortDecimalINSA_ILm1EEESC_EEiEEEJSH_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -15116,7 +15116,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -15519,7 +15519,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS9_INSA_ILm1EEENSA_ILm5EEEEEEEEJSH_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -15922,7 +15922,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEEEEEJSI_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm2EEENSA_ILm6EEEEENS0_15ConstantCheckerIJNS0_11LongDecimalINSA_ILm1EEENSA_ILm5EEEEEEEEJSI_EE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -16325,7 +16325,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm1EEENSA_ILm5EEEEENS0_15ConstantCheckerIJSD_iEEEJSD_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm1EEENSA_ILm5EEEEENS0_15ConstantCheckerIJSD_iEEEJSD_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }
@@ -16728,7 +16728,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm1EEENSA_ILm5EEEEENS0_15ConstantCheckerIJSD_iEEEJSD_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123DecimalTruncateFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm1EEENSA_ILm5EEEEENS0_15ConstantCheckerIJSD_iEEEJSD_iEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #16 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.53 }
 }

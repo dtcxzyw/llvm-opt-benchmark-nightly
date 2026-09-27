@@ -202,7 +202,7 @@ _ZN3std2io6cursor11slice_write17hd4e386f21041e25bE.exit: ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN110_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$$u5b$u8$u5d$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17h7bde8a63a4cbed8dE"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN110_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$$u5b$u8$u5d$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17h7bde8a63a4cbed8dE"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -252,7 +252,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN110_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$$u5b$u8$u5d$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h314dbaceb2dbcfb2E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN110_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$$u5b$u8$u5d$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h314dbaceb2dbcfb2E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -342,7 +342,7 @@ bb.e:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN111_$LT$std..io..cursor..Cursor$LT$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17hf5c5a6fb702fc246E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN111_$LT$std..io..cursor..Cursor$LT$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17hf5c5a6fb702fc246E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -409,7 +409,7 @@ bb.e:                                             ; preds = %_ZN3std2io6cursor15
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN111_$LT$std..io..cursor..Cursor$LT$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h44d3920d045081b1E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN111_$LT$std..io..cursor..Cursor$LT$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h44d3920d045081b1E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -437,7 +437,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17hef8e346a834c4412E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17hef8e346a834c4412E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -505,7 +505,7 @@ bb.e:                                             ; preds = %_ZN3std2io6cursor15
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h7a9e67d67adcdc05E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$$RF$mut$u20$alloc..vec..Vec$LT$u8$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h7a9e67d67adcdc05E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -534,7 +534,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$alloc..boxed..Box$LT$$u5b$u8$u5d$$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17hf46e72f460667ca5E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$alloc..boxed..Box$LT$$u5b$u8$u5d$$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17hf46e72f460667ca5E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -584,7 +584,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$alloc..boxed..Box$LT$$u5b$u8$u5d$$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h6858274518176934E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define noundef { i64, ptr } @"_ZN123_$LT$std..io..cursor..Cursor$LT$alloc..boxed..Box$LT$$u5b$u8$u5d$$GT$$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h6858274518176934E"(ptr align 8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -987,7 +987,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { i64, ptr } @"_ZN80_$LT$alloc..vec..Vec$LT$u8$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17ha4451af774c90a2aE"(ptr nofree readnone align 8 captures(none) %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #3 {
+define noundef { i64, ptr } @"_ZN80_$LT$alloc..vec..Vec$LT$u8$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$10poll_flush17ha4451af774c90a2aE"(ptr nofree readnone align 8 captures(none) %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #3 {
 bb.a:
   ret { i64, ptr } zeroinitializer
 }
@@ -1002,7 +1002,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { i64, ptr } @"_ZN80_$LT$alloc..vec..Vec$LT$u8$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h9a03d3911331d017E"(ptr nofree readnone align 8 captures(none) %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #3 {
+define noundef { i64, ptr } @"_ZN80_$LT$alloc..vec..Vec$LT$u8$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$13poll_shutdown17h9a03d3911331d017E"(ptr nofree readnone align 8 captures(none) %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #3 {
 bb.a:
   ret { i64, ptr } zeroinitializer
 }

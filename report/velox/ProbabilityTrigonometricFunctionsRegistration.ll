@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_111CosFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_111CosFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -608,7 +608,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112CoshFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112CoshFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -1011,7 +1011,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112AcosFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112AcosFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -1414,7 +1414,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_111SinFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_111SinFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -1817,7 +1817,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112AsinFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112AsinFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -2220,7 +2220,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_111TanFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_111TanFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -2623,7 +2623,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112TanhFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112TanhFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -3026,7 +3026,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112AtanFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112AtanFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdEEEJdEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -3429,7 +3429,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_113Atan2FunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_113Atan2FunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -3832,7 +3832,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_115BetaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_115BetaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -4235,7 +4235,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_117NormalCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_117NormalCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -4638,7 +4638,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119BinomialCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJldlEEEJldlEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119BinomialCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJldlEEEJldlEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -5041,7 +5041,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119BinomialCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJidiEEEJidiEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119BinomialCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJidiEEEJidiEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -5444,7 +5444,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_117CauchyCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_117CauchyCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -5847,7 +5847,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121ChiSquaredCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_121ChiSquaredCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -6250,7 +6250,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112FCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112FCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -6653,7 +6653,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122InverseBetaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_122InverseBetaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -7056,7 +7056,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_124InverseNormalCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_124InverseNormalCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -7459,7 +7459,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_118PoissonCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdiEEEJdiEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_118PoissonCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdiEEEJdiEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -7862,7 +7862,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_116GammaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_116GammaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -8265,7 +8265,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_118LaplaceCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_118LaplaceCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -8668,7 +8668,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_127WilsonIntervalUpperFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJlldEEEJlldEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_127WilsonIntervalUpperFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJlldEEEJlldEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -9071,7 +9071,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_127WilsonIntervalLowerFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJlldEEEJlldEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_127WilsonIntervalLowerFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJlldEEEJlldEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -9474,7 +9474,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_118WeibullCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_118WeibullCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -9877,7 +9877,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_125InverseWeibullCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_125InverseWeibullCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -10280,7 +10280,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_124InverseCauchyCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_124InverseCauchyCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -10683,7 +10683,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_125InverseLaplaceCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_125InverseLaplaceCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -11086,7 +11086,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123InverseGammaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_123InverseGammaCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -11489,7 +11489,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_126InverseBinomialCDFFunctionINS0_4exec10VectorExecEEEiNS0_15ConstantCheckerIJiddEEEJiddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_126InverseBinomialCDFFunctionINS0_4exec10VectorExecEEEiNS0_15ConstantCheckerIJiddEEEJiddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -11892,7 +11892,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_125InversePoissonCDFFunctionINS0_4exec10VectorExecEEEiNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_125InversePoissonCDFFunctionINS0_4exec10VectorExecEEEiNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -12295,7 +12295,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119InverseFCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119InverseFCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJdddEEEJdddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -12698,7 +12698,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120InverseChiSquaredCdfINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_120InverseChiSquaredCdfINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -13101,7 +13101,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112TCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_112TCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }
@@ -13504,7 +13504,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119InverseTCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
+define internal noundef { i64, ptr } @_ZNK8facebook5velox4core22SimpleFunctionMetadataINS0_9functions12_GLOBAL__N_119InverseTCDFFunctionINS0_4exec10VectorExecEEEdNS0_15ConstantCheckerIJddEEEJddEE5ownerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #18 align 2 {
 bb.a:
   ret { i64, ptr } { i64 0, ptr @.str.65 }
 }

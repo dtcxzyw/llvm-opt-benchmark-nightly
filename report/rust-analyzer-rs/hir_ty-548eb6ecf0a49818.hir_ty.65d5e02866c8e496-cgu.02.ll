@@ -204,199 +204,199 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db11AnonConstIdEEB1j_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db11AnonConstIdEEB1j_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @61, i64 51 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db17InternedClosureIdEEB1j_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db17InternedClosureIdEEB1j_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @62, i64 57 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db18InternedOpaqueTyIdEEB1j_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db18InternedOpaqueTyIdEEB1j_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @63, i64 58 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db19InternedCoroutineIdEEB1j_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db19InternedCoroutineIdEEB1j_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @64, i64 59 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db26InternedCoroutineClosureIdEEB1j_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNtCs8K4cjrcxBsw_6hir_ty2db26InternedCoroutineClosureIdEEB1j_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @65, i64 66 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtCs8K4cjrcxBsw_6hir_ty14specialization1__32specializes_query_Configuration_EEB1l_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtCs8K4cjrcxBsw_6hir_ty14specialization1__32specializes_query_Configuration_EEB1l_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @66, i64 83 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__54resolve_type_param_assoc_type_shorthand_Configuration_EEB1l_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__54resolve_type_param_assoc_type_shorthand_Configuration_EEB1l_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @67, i64 96 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtCs8K4cjrcxBsw_6hir_ty6layout1__33layout_of_ty_query_Configuration_EEB1l_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtCs8K4cjrcxBsw_6hir_ty6layout1__33layout_of_ty_query_Configuration_EEB1l_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @68, i64 76 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtNtCs8K4cjrcxBsw_6hir_ty3mir16monomorphization1__43monomorphized_mir_body_query_Configuration_EEB1n_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtNtCs8K4cjrcxBsw_6hir_ty3mir16monomorphization1__43monomorphized_mir_body_query_Configuration_EEB1n_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @69, i64 101 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtNtCs8K4cjrcxBsw_6hir_ty3mir16monomorphizations_1__55monomorphized_mir_body_for_closure_query_Configuration_EEB1n_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtNtCs8K4cjrcxBsw_6hir_ty3mir16monomorphizations_1__55monomorphized_mir_body_for_closure_query_Configuration_EEB1n_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @70, i64 113 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtNtCs8K4cjrcxBsw_6hir_ty6layout3adt1__34layout_of_adt_query_Configuration_EEB1n_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNtNtCs8K4cjrcxBsw_6hir_ty6layout3adt1__34layout_of_adt_query_Configuration_EEB1n_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @71, i64 82 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNvNtCs8K4cjrcxBsw_6hir_ty9consteval10const_eval1__31const_eval_query_Configuration_EEB1n_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNvNtCs8K4cjrcxBsw_6hir_ty9consteval10const_eval1__31const_eval_query_Configuration_EEB1n_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @72, i64 89 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNvNtCs8K4cjrcxBsw_6hir_ty9consteval15anon_const_eval1__36anon_const_eval_query_Configuration_EEB1n_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned5ValueNtNvNvNtCs8K4cjrcxBsw_6hir_ty9consteval15anon_const_eval1__36anon_const_eval_query_Configuration_EEB1n_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @73, i64 99 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty16representability16representabilityEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty16representability16representabilityEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @74, i64 42 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower27impl_trait_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower27impl_trait_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @75, i64 42 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower28field_types_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower28field_types_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @76, i64 43 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower29impl_self_ty_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower29impl_self_ty_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @77, i64 44 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower31type_for_const_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower31type_for_const_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @78, i64 46 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower32type_for_static_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower32type_for_static_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @79, i64 47 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower33generic_defaults_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower33generic_defaults_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @80, i64 48 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower34const_param_types_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower34const_param_types_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @81, i64 49 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower34type_alias_bounds_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower34type_alias_bounds_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @82, i64 49 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower36type_for_type_alias_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower36type_for_type_alias_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @83, i64 51 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower39resolve_type_param_assoc_type_shorthandEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower39resolve_type_param_assoc_type_shorthandEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @7, i64 54 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower40callable_item_signature_with_diagnosticsEBF_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNtCs8K4cjrcxBsw_6hir_ty5lower40callable_item_signature_with_diagnosticsEBF_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @84, i64 55 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBK_10ImplTraits22type_alias_impl_traits23type_alias_impl_traits_EBM_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBK_10ImplTraits22type_alias_impl_traits23type_alias_impl_traits_EBM_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @85, i64 74 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBK_10ImplTraits23return_type_impl_traits24return_type_impl_traits_EBM_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBK_10ImplTraits23return_type_impl_traits24return_type_impl_traits_EBM_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @86, i64 76 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs1X_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBK_17GenericPredicates22query_with_diagnostics23query_with_diagnostics_EBM_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs1X_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBK_17GenericPredicates22query_with_diagnostics23query_with_diagnostics_EBM_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @87, i64 81 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs8_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBJ_15SupertraitsInfo5query16supertraits_infoEBL_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs8_NtCs8K4cjrcxBsw_6hir_ty5lowerNtBJ_15SupertraitsInfo5query16supertraits_infoEBL_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @88, i64 55 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty5lower17trait_environment23trait_environment_queryEBH_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty5lower17trait_environment23trait_environment_queryEBH_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @89, i64 57 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned21body_upvars_mentionedEBH_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned21body_upvars_mentionedEBH_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @90, i64 55 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned26signature_upvars_mentionedEBH_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned26signature_upvars_mentionedEBH_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @91, i64 60 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned31variant_fields_upvars_mentionedEBH_() unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned31variant_fields_upvars_mentionedEBH_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @92, i64 65 }
 }
@@ -799,7 +799,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs7_NtCsd9Lm8bEdjjY_5salsa8internedINtB5_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__54resolve_type_param_assoc_type_shorthand_Configuration_ENtNtB7_10ingredient10Ingredient10debug_nameB12_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs7_NtCsd9Lm8bEdjjY_5salsa8internedINtB5_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__54resolve_type_param_assoc_type_shorthand_Configuration_ENtNtB7_10ingredient10Ingredient10debug_nameB12_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @613, i64 59 }
 }
@@ -1202,7 +1202,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty16representability1__31representability_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty16representability1__31representability_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @628, i64 16 }
 }
@@ -1246,7 +1246,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lower1__42impl_trait_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lower1__42impl_trait_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @631, i64 27 }
 }
@@ -1290,7 +1290,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers0_1__46type_for_const_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers0_1__46type_for_const_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @633, i64 31 }
 }
@@ -1334,7 +1334,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers1_1__47type_for_static_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers1_1__47type_for_static_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @635, i64 32 }
 }
@@ -1378,7 +1378,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers2_1__51type_for_type_alias_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers2_1__51type_for_type_alias_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @637, i64 36 }
 }
@@ -1422,7 +1422,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers3_1__44impl_self_ty_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers3_1__44impl_self_ty_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @639, i64 29 }
 }
@@ -1466,7 +1466,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers4_1__49const_param_types_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers4_1__49const_param_types_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @641, i64 34 }
 }
@@ -1510,7 +1510,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers5_1__43field_types_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers5_1__43field_types_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @643, i64 28 }
 }
@@ -1554,7 +1554,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__54resolve_type_param_assoc_type_shorthand_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers6_1__54resolve_type_param_assoc_type_shorthand_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @347, i64 39 }
 }
@@ -1598,7 +1598,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers7_1__49type_alias_bounds_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers7_1__49type_alias_bounds_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @645, i64 34 }
 }
@@ -1642,7 +1642,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers8_1__48generic_defaults_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers8_1__48generic_defaults_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @647, i64 33 }
 }
@@ -1686,7 +1686,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers9_1__55callable_item_signature_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNtCs8K4cjrcxBsw_6hir_ty5lowers9_1__55callable_item_signature_with_diagnostics_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB11_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @649, i64 40 }
 }
@@ -1730,7 +1730,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB16_10ImplTraits22type_alias_impl_traits1__38type_alias_impl_traits__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB18_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB16_10ImplTraits22type_alias_impl_traits1__38type_alias_impl_traits__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB18_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @651, i64 35 }
 }
@@ -1774,7 +1774,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB16_10ImplTraits23return_type_impl_traits1__39return_type_impl_traits__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB18_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs12_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB16_10ImplTraits23return_type_impl_traits1__39return_type_impl_traits__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB18_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @653, i64 36 }
 }
@@ -1818,7 +1818,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs1X_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB16_17GenericPredicates22query_with_diagnostics1__38query_with_diagnostics__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB18_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs1X_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB16_17GenericPredicates22query_with_diagnostics1__38query_with_diagnostics__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB18_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @655, i64 42 }
 }
@@ -1862,7 +1862,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs8_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB15_15SupertraitsInfo5query1__31supertraits_info_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB17_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs8_NtCs8K4cjrcxBsw_6hir_ty5lowerNtB15_15SupertraitsInfo5query1__31supertraits_info_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB17_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @657, i64 16 }
 }
@@ -1906,7 +1906,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty5lower17trait_environment1__38trait_environment_query_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty5lower17trait_environment1__38trait_environment_query_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @659, i64 23 }
 }
@@ -1950,7 +1950,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned1__41signature_upvars_mentioned_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioned1__41signature_upvars_mentioned_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @661, i64 26 }
 }
@@ -1994,7 +1994,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioneds0_1__46variant_fields_upvars_mentioned_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioneds0_1__46variant_fields_upvars_mentioned_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @664, i64 31 }
 }
@@ -2038,7 +2038,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioneds_1__36body_upvars_mentioned_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvNtCs8K4cjrcxBsw_6hir_ty6upvars16upvars_mentioneds_1__36body_upvars_mentioned_Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB13_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @666, i64 21 }
 }

@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs7_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_3LitNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXs7_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_3LitNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @55, i64 7 }
 }
@@ -223,7 +223,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs9_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_6LitStrNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXs9_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_6LitStrNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @56, i64 14 }
 }
@@ -626,7 +626,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXsb_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_10LitByteStrNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXsb_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_10LitByteStrNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @59, i64 19 }
 }
@@ -708,7 +708,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXsd_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitCStrNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXsd_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitCStrNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @60, i64 16 }
 }
@@ -739,7 +739,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXsf_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitByteNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXsf_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitByteNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @61, i64 12 }
 }
@@ -770,7 +770,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXsh_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitCharNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXsh_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitCharNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @62, i64 17 }
 }
@@ -801,7 +801,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXsj_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_6LitIntNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXsj_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_6LitIntNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @63, i64 15 }
 }
@@ -907,7 +907,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXsl_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_8LitFloatNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXsl_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_8LitFloatNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @64, i64 22 }
 }
@@ -934,7 +934,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXsn_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitBoolNtNtB9_5token5Token7display() unnamed_addr #6 {
+define noundef { ptr, i64 } @_RNvXsn_NtNtCsJWcWohxsl6_3syn3lit7parsingNtB7_7LitBoolNtNtB9_5token5Token7display() unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @65, i64 15 }
 }

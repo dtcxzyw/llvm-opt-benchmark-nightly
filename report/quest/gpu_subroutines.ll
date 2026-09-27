@@ -202,7 +202,7 @@ $_Z36gpu_densmatr_multiQubitProjector_subILin1EEv5QuregSt6vectorIiSaIiEES3_d = c
 @.str = private unnamed_addr constant [6 x i8] c"qubit\00", align 1
 
 ; Function Attrs: mustprogress uwtable
-define { double, double } @_Z23gpu_statevec_getAmp_sub5Quregx(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define noundef { double, double } @_Z23gpu_statevec_getAmp_sub5Quregx(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   tail call void @_Z30error_gpuCopyButGpuNotCompiledv()
   ret { double, double } { double -1.000000e+00, double 0.000000e+00 }
@@ -605,7 +605,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define { double, double } @_Z33gpu_statevec_calcInnerProduct_sub5QuregS_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %1) local_unnamed_addr #0 {
+define noundef { double, double } @_Z33gpu_statevec_calcInnerProduct_sub5QuregS_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   tail call void @_Z29error_gpuSimButGpuNotCompiledv()
   ret { double, double } { double -1.000000e+00, double 0.000000e+00 }
@@ -640,28 +640,28 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define { double, double } @_Z34gpu_densmatr_calcExpecAnyTargZ_sub5QuregSt6vectorIiSaIiEE(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #0 {
+define noundef { double, double } @_Z34gpu_densmatr_calcExpecAnyTargZ_sub5QuregSt6vectorIiSaIiEE(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #0 {
 bb.a:
   tail call void @_Z29error_gpuSimButGpuNotCompiledv()
   ret { double, double } { double -1.000000e+00, double 0.000000e+00 }
 }
 
 ; Function Attrs: mustprogress uwtable
-define { double, double } @_Z35gpu_statevec_calcExpecPauliStr_subA5QuregSt6vectorIiSaIiEES2_S2_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 {
+define noundef { double, double } @_Z35gpu_statevec_calcExpecPauliStr_subA5QuregSt6vectorIiSaIiEES2_S2_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 {
 bb.a:
   tail call void @_Z29error_gpuSimButGpuNotCompiledv()
   ret { double, double } { double -1.000000e+00, double 0.000000e+00 }
 }
 
 ; Function Attrs: mustprogress uwtable
-define { double, double } @_Z35gpu_statevec_calcExpecPauliStr_subB5QuregSt6vectorIiSaIiEES2_S2_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 {
+define noundef { double, double } @_Z35gpu_statevec_calcExpecPauliStr_subB5QuregSt6vectorIiSaIiEES2_S2_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 {
 bb.a:
   tail call void @_Z29error_gpuSimButGpuNotCompiledv()
   ret { double, double } { double -1.000000e+00, double 0.000000e+00 }
 }
 
 ; Function Attrs: mustprogress uwtable
-define { double, double } @_Z34gpu_densmatr_calcExpecPauliStr_sub5QuregSt6vectorIiSaIiEES2_S2_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 {
+define noundef { double, double } @_Z34gpu_densmatr_calcExpecPauliStr_sub5QuregSt6vectorIiSaIiEES2_S2_(ptr nofree noundef readnone byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef readnone align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 {
 bb.a:
   tail call void @_Z29error_gpuSimButGpuNotCompiledv()
   ret { double, double } { double -1.000000e+00, double 0.000000e+00 }

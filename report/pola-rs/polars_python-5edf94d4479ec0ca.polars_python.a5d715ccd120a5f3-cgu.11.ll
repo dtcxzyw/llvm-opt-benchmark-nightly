@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCseeLknQCOKOd_13polars_python(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !353888 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCsgZ49sUHp3tW_5alloc5boxed7convertINtBc_3BoxDNtNtCscgRAwXFJnXP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCseeLknQCOKOd_13polars_python(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !353888 {
 bb.a:
   ret { ptr, i64 } { ptr @3385, i64 40 }, !dbg !353889
 }
