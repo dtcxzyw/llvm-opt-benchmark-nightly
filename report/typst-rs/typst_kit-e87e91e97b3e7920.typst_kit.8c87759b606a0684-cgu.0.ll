@@ -206,13 +206,13 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read11read_to_end(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree readnone align 8 captures(none) %1) unnamed_addr #17 {
+define internal noundef { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read11read_to_end(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree readnone align 8 captures(none) %1) unnamed_addr #17 {
 bb.a:
   ret { i64, ptr } zeroinitializer
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read13read_vectored(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree nonnull readnone align 8 captures(none) %1, i64 range(i64 0, 576460752303423488) %2) unnamed_addr #17 {
+define internal noundef { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read13read_vectored(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree nonnull readnone align 8 captures(none) %1, i64 range(i64 0, 576460752303423488) %2) unnamed_addr #17 {
 bb.a:
   ret { i64, ptr } zeroinitializer
 }
@@ -230,7 +230,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read14read_to_string(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree readnone align 8 captures(none) %1) unnamed_addr #17 {
+define internal noundef { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read14read_to_string(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree readnone align 8 captures(none) %1) unnamed_addr #17 {
 bb.a:
   ret { i64, ptr } zeroinitializer
 }
@@ -242,7 +242,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read4read(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree nonnull readnone captures(none) %1, i64 range(i64 0, -9223372036854775808) %2) unnamed_addr #17 {
+define internal noundef { i64, ptr } @_RNvXNtNtCs1xwejQucwHj_5alloc2io4utilNtNtNtCs3oUPovFnLWP_4core2io4util5EmptyNtNtB4_4read4Read4read(ptr noalias nofree nonnull readnone captures(none) %0, ptr noalias nofree nonnull readnone captures(none) %1, i64 range(i64 0, -9223372036854775808) %2) unnamed_addr #17 {
 bb.a:
   ret { i64, ptr } zeroinitializer
 }
@@ -645,7 +645,7 @@ _RNvXs_NvNtNtCs3oUPovFnLWP_4core3fmt5Write9write_fmtQINtNvNtNtBa_2io5write17defa
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtCsgSlMZLQvLVR_10native_tls5ErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
+define internal noundef { ptr, i64 } @_RNvYNtCsgSlMZLQvLVR_10native_tls5ErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
 bb.a:
   ret { ptr, i64 } { ptr @396, i64 40 }
 }
@@ -731,7 +731,7 @@ _RNvXs_NvNtNtCs3oUPovFnLWP_4core3fmt5Write9write_fmtQNtNtCsakL8LGkl72C_4ecow6str
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsdaEETE4DqmE_13typst_library4diag9FileErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsdaEETE4DqmE_13typst_library4diag9FileErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
 bb.a:
   ret { ptr, i64 } { ptr @396, i64 40 }
 }
@@ -762,7 +762,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsl8oL64ujIrP_7openssl5error10ErrorStackNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsl8oL64ujIrP_7openssl5error10ErrorStackNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
 bb.a:
   ret { ptr, i64 } { ptr @396, i64 40 }
 }
@@ -793,7 +793,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCsc4241EHy6Do_9typst_kit(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #22 {
 bb.a:
   ret { ptr, i64 } { ptr @396, i64 40 }
 }

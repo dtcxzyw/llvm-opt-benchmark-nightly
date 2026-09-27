@@ -205,7 +205,7 @@ _RINvNtNtCs3oUPovFnLWP_4core2io5write17default_write_fmtINtNtCs1xwejQucwHj_5allo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtNtCs89doag9UmMt_9toml_edit6parser5errorNtB4_11CustomErrorNtNtCs3oUPovFnLWP_4core5error5Error11description(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #31 {
+define internal noundef { ptr, i64 } @_RNvXs_NtNtCs89doag9UmMt_9toml_edit6parser5errorNtB4_11CustomErrorNtNtCs3oUPovFnLWP_4core5error5Error11description(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #31 {
 bb.a:
   ret { ptr, i64 } { ptr @1200, i64 16 }
 }
@@ -608,7 +608,7 @@ _RINvXs_NtCs89doag9UmMt_9toml_edit2deNtB5_5ErrorNtNtCs7PiwjADO7TO_10serde_core2d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCs8SJOCDJuMgL_6semver5parse5ErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #31 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCs8SJOCDJuMgL_6semver5parse5ErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly align 4 captures(none) %0) unnamed_addr #31 {
 bb.a:
   ret { ptr, i64 } { ptr @1331, i64 40 }
 }
@@ -1011,7 +1011,7 @@ _RNvXs_NvNtNtCs3oUPovFnLWP_4core3fmt5Write9write_fmtQNtNtCsakL8LGkl72C_4ecow6str
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsj1PC5XHMKi0_12clap_builder5error5ErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #31 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsj1PC5XHMKi0_12clap_builder5error5ErrorNtNtCs3oUPovFnLWP_4core5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #31 {
 bb.a:
   ret { ptr, i64 } { ptr @1331, i64 40 }
 }
@@ -1052,7 +1052,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core3num11float_parse15ParseFloatErrorNtNtB8_5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly captures(none) %0) unnamed_addr #31 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core3num11float_parse15ParseFloatErrorNtNtB8_5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly captures(none) %0) unnamed_addr #31 {
 bb.a:
   ret { ptr, i64 } { ptr @1331, i64 40 }
 }
@@ -1083,7 +1083,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly captures(none) %0) unnamed_addr #31 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly captures(none) %0) unnamed_addr #31 {
 bb.a:
   ret { ptr, i64 } { ptr @1331, i64 40 }
 }
@@ -1114,7 +1114,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core3num5error15TryFromIntErrorNtNtB8_5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly captures(none) %0) unnamed_addr #31 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs3oUPovFnLWP_4core3num5error15TryFromIntErrorNtNtB8_5error5Error11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly captures(none) %0) unnamed_addr #31 {
 bb.a:
   ret { ptr, i64 } { ptr @1331, i64 40 }
 }
@@ -1517,7 +1517,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCs1xwejQucwHj_5alloc5boxed7convertINtBc_3BoxDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #31 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCs1xwejQucwHj_5alloc5boxed7convertINtBc_3BoxDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCs9fPPV5zPXBl_5typst(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #31 {
 bb.a:
   ret { ptr, i64 } { ptr @1331, i64 40 }
 }

@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCsj6eKBz9Db1c_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCskXtk6F4WjxZ_4just(ptr noalias nofree readonly captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCsj6eKBz9Db1c_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCskXtk6F4WjxZ_4just(ptr noalias nofree readonly captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2893, i64 40 }
 }
@@ -236,7 +236,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCsj6eKBz9Db1c_4core3num5error15TryFromIntErrorNtNtB8_5error5Error11descriptionCskXtk6F4WjxZ_4just(ptr noalias nofree readonly captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCsj6eKBz9Db1c_4core3num5error15TryFromIntErrorNtNtB8_5error5Error11descriptionCskXtk6F4WjxZ_4just(ptr noalias nofree readonly captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2893, i64 40 }
 }
@@ -418,7 +418,7 @@ bb.o:                                             ; preds = %bb.m
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCs4wP2HXfJTCR_5alloc5boxed7convertINtBc_3BoxDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCskXtk6F4WjxZ_4just(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCs4wP2HXfJTCR_5alloc5boxed7convertINtBc_3BoxDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCskXtk6F4WjxZ_4just(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2893, i64 40 }
 }

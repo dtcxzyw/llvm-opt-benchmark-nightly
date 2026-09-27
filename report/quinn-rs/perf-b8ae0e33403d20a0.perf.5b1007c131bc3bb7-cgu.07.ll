@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11recv_stream14ReadExactErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11417 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11recv_stream14ReadExactErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11417 {
 bb.a:
     #dbg_value(ptr poison, !11420, !DIExpression(), !11422)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11423
@@ -220,7 +220,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11437 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11437 {
 bb.a:
     #dbg_value(ptr poison, !11440, !DIExpression(), !11442)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11443
@@ -236,7 +236,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCseEeXhZwqjpo_16rustls_pki_types3pem5ErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !11457 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCseEeXhZwqjpo_16rustls_pki_types3pem5ErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !11457 {
 bb.a:
     #dbg_value(ptr poison, !11460, !DIExpression(), !11462)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11463
@@ -252,7 +252,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11477 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11477 {
 bb.a:
     #dbg_value(ptr poison, !11480, !DIExpression(), !11482)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11483
@@ -268,7 +268,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtNtCskKLDkoKarTP_4core2io5error5ErrorENtNtBU_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !11497 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtNtCskKLDkoKarTP_4core2io5error5ErrorENtNtBU_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !11497 {
 bb.a:
     #dbg_value(ptr poison, !11500, !DIExpression(), !11502)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11503
@@ -284,7 +284,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtNtCskKLDkoKarTP_4core3num5error13ParseIntErrorENtNtBU_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !11517 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error12ContextErrorReNtNtNtCskKLDkoKarTP_4core3num5error13ParseIntErrorENtNtBU_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !11517 {
 bb.a:
     #dbg_value(ptr poison, !11520, !DIExpression(), !11522)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11523
@@ -300,7 +300,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11recv_stream14ReadExactErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11539 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11recv_stream14ReadExactErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11539 {
 bb.a:
     #dbg_value(ptr poison, !11542, !DIExpression(), !11544)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11545
@@ -316,7 +316,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11559 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11559 {
 bb.a:
     #dbg_value(ptr poison, !11562, !DIExpression(), !11564)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11565
@@ -332,7 +332,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCseEeXhZwqjpo_16rustls_pki_types3pem5ErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11579 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCseEeXhZwqjpo_16rustls_pki_types3pem5ErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11579 {
 bb.a:
     #dbg_value(ptr poison, !11582, !DIExpression(), !11584)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11585
@@ -348,7 +348,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11599 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorEENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11599 {
 bb.a:
     #dbg_value(ptr poison, !11602, !DIExpression(), !11604)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11605
@@ -364,7 +364,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtNtCskKLDkoKarTP_4core2io5error5ErrorEENtNtB1a_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11619 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtNtCskKLDkoKarTP_4core2io5error5ErrorEENtNtB1a_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11619 {
 bb.a:
     #dbg_value(ptr poison, !11622, !DIExpression(), !11624)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11625
@@ -380,7 +380,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtNtCskKLDkoKarTP_4core3num5error13ParseIntErrorEENtNtB1a_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11639 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplINtB5_12ContextErrorReNtNtNtCskKLDkoKarTP_4core3num5error13ParseIntErrorEENtNtB1a_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11639 {
 bb.a:
     #dbg_value(ptr poison, !11642, !DIExpression(), !11644)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11645
@@ -396,7 +396,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtCsB8MOEg02Qk_5quinn11recv_stream9ReadErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11659 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtCsB8MOEg02Qk_5quinn11recv_stream9ReadErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11659 {
 bb.a:
     #dbg_value(ptr poison, !11662, !DIExpression(), !11664)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11665
@@ -412,7 +412,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11679 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11679 {
 bb.a:
     #dbg_value(ptr poison, !11682, !DIExpression(), !11684)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11685
@@ -428,7 +428,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11699 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorENtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11699 {
 bb.a:
     #dbg_value(ptr poison, !11702, !DIExpression(), !11704)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11705
@@ -444,7 +444,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtNtCskKLDkoKarTP_4core2io5error5ErrorENtNtBO_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11719 {
+define internal noundef { ptr, i64 } @_RNvYINtNtCsbHiBx3jRrxb_6anyhow5error9ErrorImplNtNtNtCskKLDkoKarTP_4core2io5error5ErrorENtNtBO_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !11719 {
 bb.a:
     #dbg_value(ptr poison, !11722, !DIExpression(), !11724)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !11725
@@ -847,7 +847,7 @@ _RNvXs4_NtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufwriterINtB5_9BufWriterNtNtCsG2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsB8MOEg02Qk_5quinn11recv_stream14ReadExactErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12485 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsB8MOEg02Qk_5quinn11recv_stream14ReadExactErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12485 {
 bb.a:
     #dbg_value(ptr poison, !12488, !DIExpression(), !12490)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !12491
@@ -880,7 +880,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsB8MOEg02Qk_5quinn11recv_stream9ReadErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12521 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsB8MOEg02Qk_5quinn11recv_stream9ReadErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12521 {
 bb.a:
     #dbg_value(ptr poison, !12524, !DIExpression(), !12526)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !12527
@@ -920,7 +920,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12559 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsB8MOEg02Qk_5quinn11send_stream10WriteErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12559 {
 bb.a:
     #dbg_value(ptr poison, !12562, !DIExpression(), !12564)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !12565
@@ -945,7 +945,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCseEeXhZwqjpo_16rustls_pki_types3pem5ErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !12587 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCseEeXhZwqjpo_16rustls_pki_types3pem5ErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !12587 {
 bb.a:
     #dbg_value(ptr poison, !12590, !DIExpression(), !12592)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !12593
@@ -984,7 +984,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12625 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCshovLROGBtMy_11quinn_proto10connection15ConnectionErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 !dbg !12625 {
 bb.a:
     #dbg_value(ptr poison, !12628, !DIExpression(), !12630)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !12631
@@ -1030,7 +1030,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !12683 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #2 !dbg !12683 {
 bb.a:
     #dbg_value(ptr poison, !12686, !DIExpression(), !12688)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !12689
@@ -1055,7 +1055,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCskKLDkoKarTP_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly captures(none) %0) unnamed_addr #2 !dbg !12711 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCskKLDkoKarTP_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCs7OITKvp9Irj_4perf(ptr noalias nofree readonly captures(none) %0) unnamed_addr #2 !dbg !12711 {
 bb.a:
     #dbg_value(ptr poison, !12714, !DIExpression(), !12716)
   ret { ptr, i64 } { ptr @110, i64 40 }, !dbg !12717

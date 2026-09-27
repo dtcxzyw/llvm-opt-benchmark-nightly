@@ -201,7 +201,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw1__NtB6_10annotat
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw10annotationNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw10annotationNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @217, i64 12 }
 }
@@ -251,7 +251,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsl_1__NtB6_10rena
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw10rename_allNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw10rename_allNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @245, i64 12 }
 }
@@ -301,7 +301,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsw_1__NtB6_10unse
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw10unsendableNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw10unsendableNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @256, i64 12 }
 }
@@ -351,7 +351,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws1_1__NtB6_11cons
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw11constructorNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw11constructorNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @219, i64 13 }
 }
@@ -401,7 +401,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsk_1__NtB6_11pass
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw11pass_moduleNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw11pass_moduleNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @244, i64 13 }
 }
@@ -451,7 +451,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsv_1__NtB6_11tran
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw11transparentNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw11transparentNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @255, i64 13 }
 }
@@ -501,7 +501,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws7_1__NtB6_12from
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw12from_py_withNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw12from_py_withNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @225, i64 14 }
 }
@@ -551,7 +551,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsc_1__NtB6_12into
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw12into_py_withNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw12into_py_withNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @236, i64 14 }
 }
@@ -601,7 +601,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws0_1__NtB6_13canc
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw13cancel_handleNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw13cancel_handleNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @218, i64 15 }
 }
@@ -651,7 +651,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsf_1__NtB6_13from
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw13from_item_allNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw13from_item_allNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @239, i64 15 }
 }
@@ -701,7 +701,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsD_1__NtB6_14from
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw14from_py_objectNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw14from_py_objectNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @231, i64 16 }
 }
@@ -751,7 +751,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwse_1__NtB6_14immu
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw14immutable_typeNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw14immutable_typeNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @238, i64 16 }
 }
@@ -801,7 +801,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsu_1__NtB6_14text
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw14text_signatureNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw14text_signatureNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @254, i64 16 }
 }
@@ -851,7 +851,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsE_1__NtB6_19skip
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw19skip_from_py_objectNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw19skip_from_py_objectNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @232, i64 21 }
 }
@@ -901,7 +901,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws3_1__NtB6_2eqNtN
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw2eqNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw2eqNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @221, i64 4 }
 }
@@ -951,7 +951,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws9_1__NtB6_3getNt
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3getNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3getNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @227, i64 5 }
 }
@@ -1001,7 +1001,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsp_1__NtB6_3newNt
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3newNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3newNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @249, i64 5 }
 }
@@ -1051,7 +1051,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsj_1__NtB6_3ordNt
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3ordNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3ordNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @243, i64 5 }
 }
@@ -1101,7 +1101,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsn_1__NtB6_3setNt
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3setNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3setNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @247, i64 5 }
 }
@@ -1151,7 +1151,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsr_1__NtB6_3strNt
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3strNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw3strNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @251, i64 5 }
 }
@@ -1201,7 +1201,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws2_1__NtB6_4dictN
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4dictNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4dictNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @220, i64 6 }
 }
@@ -1251,7 +1251,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsb_1__NtB6_4hashN
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4hashNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4hashNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @235, i64 6 }
 }
@@ -1301,7 +1301,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsd_1__NtB6_4itemN
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4itemNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4itemNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @237, i64 6 }
 }
@@ -1351,7 +1351,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsi_1__NtB6_4nameN
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4nameNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4nameNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @242, i64 6 }
 }
@@ -1401,7 +1401,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsA_1__NtB6_4warnN
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4warnNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw4warnNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @228, i64 6 }
 }
@@ -1451,7 +1451,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws4_1__NtB6_6eq_in
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw6eq_intNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw6eq_intNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @222, i64 8 }
 }
@@ -1501,7 +1501,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws8_1__NtB6_6froze
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw6frozenNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw6frozenNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @226, i64 8 }
 }
@@ -1551,7 +1551,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsh_1__NtB6_6modul
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw6moduleNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw6moduleNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @241, i64 8 }
 }
@@ -1601,7 +1601,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws5_1__NtB6_7exten
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7extendsNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7extendsNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @223, i64 9 }
 }
@@ -1651,7 +1651,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsy_1__NtB6_7gener
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7genericNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7genericNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @258, i64 9 }
 }
@@ -1701,7 +1701,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsa_1__NtB6_7get_a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7get_allNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7get_allNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @234, i64 9 }
 }
@@ -1751,7 +1751,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsg_1__NtB6_7mappi
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7mappingNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7mappingNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @240, i64 9 }
 }
@@ -1801,7 +1801,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsB_1__NtB6_7messa
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7messageNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7messageNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @229, i64 9 }
 }
@@ -1851,7 +1851,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwso_1__NtB6_7set_a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7set_allNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7set_allNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @248, i64 9 }
 }
@@ -1901,7 +1901,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsx_1__NtB6_7weakr
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7weakrefNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw7weakrefNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @257, i64 9 }
 }
@@ -1951,7 +1951,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsC_1__NtB6_8categ
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8categoryNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8categoryNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @230, i64 10 }
 }
@@ -2001,7 +2001,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws6_1__NtB6_8freel
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8freelistNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8freelistNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @224, i64 10 }
 }
@@ -2051,7 +2051,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsz_1__NtB6_8gil_u
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8gil_usedNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8gil_usedNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @259, i64 10 }
 }
@@ -2101,7 +2101,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsm_1__NtB6_8seque
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8sequenceNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8sequenceNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @246, i64 10 }
 }
@@ -2151,7 +2151,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwss_1__NtB6_8subcl
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8subclassNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw8subclassNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @252, i64 10 }
 }
@@ -2201,7 +2201,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws_1__NtB6_9attrib
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw9attributeNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw9attributeNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @233, i64 11 }
 }
@@ -2251,7 +2251,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsq_1__NtB6_9signa
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw9signatureNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw9signatureNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @250, i64 11 }
 }
@@ -2301,7 +2301,7 @@ _RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwst_1__NtB6_9submo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw9submoduleNtB5_5Token7displayBB_() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs0_NtCs1QQTzni0HOp_3syn5tokenNtNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw9submoduleNtB5_5Token7displayBB_() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @253, i64 11 }
 }
@@ -2704,7 +2704,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw1__NtB6_10annotationNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kw1__NtB6_10annotationNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @217, i64 12 }
 }
@@ -2750,7 +2750,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws0_1__NtB6_13cancel_handleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws0_1__NtB6_13cancel_handleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @218, i64 15 }
 }
@@ -2796,7 +2796,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws1_1__NtB6_11constructorNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws1_1__NtB6_11constructorNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @219, i64 13 }
 }
@@ -2842,7 +2842,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws2_1__NtB6_4dictNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws2_1__NtB6_4dictNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @220, i64 6 }
 }
@@ -2888,7 +2888,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws3_1__NtB6_2eqNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws3_1__NtB6_2eqNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @221, i64 4 }
 }
@@ -2934,7 +2934,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws4_1__NtB6_6eq_intNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws4_1__NtB6_6eq_intNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @222, i64 8 }
 }
@@ -2980,7 +2980,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws5_1__NtB6_7extendsNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws5_1__NtB6_7extendsNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @223, i64 9 }
 }
@@ -3026,7 +3026,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws6_1__NtB6_8freelistNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws6_1__NtB6_8freelistNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @224, i64 10 }
 }
@@ -3072,7 +3072,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws7_1__NtB6_12from_py_withNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws7_1__NtB6_12from_py_withNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @225, i64 14 }
 }
@@ -3118,7 +3118,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws8_1__NtB6_6frozenNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws8_1__NtB6_6frozenNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @226, i64 8 }
 }
@@ -3164,7 +3164,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws9_1__NtB6_3getNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws9_1__NtB6_3getNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @227, i64 5 }
 }
@@ -3210,7 +3210,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsA_1__NtB6_4warnNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsA_1__NtB6_4warnNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @228, i64 6 }
 }
@@ -3256,7 +3256,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsB_1__NtB6_7messageNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsB_1__NtB6_7messageNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @229, i64 9 }
 }
@@ -3302,7 +3302,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsC_1__NtB6_8categoryNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsC_1__NtB6_8categoryNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @230, i64 10 }
 }
@@ -3348,7 +3348,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsD_1__NtB6_14from_py_objectNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsD_1__NtB6_14from_py_objectNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @231, i64 16 }
 }
@@ -3394,7 +3394,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsE_1__NtB6_19skip_from_py_objectNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsE_1__NtB6_19skip_from_py_objectNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @232, i64 21 }
 }
@@ -3440,7 +3440,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws_1__NtB6_9attributeNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kws_1__NtB6_9attributeNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @233, i64 11 }
 }
@@ -3486,7 +3486,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsa_1__NtB6_7get_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsa_1__NtB6_7get_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @234, i64 9 }
 }
@@ -3532,7 +3532,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsb_1__NtB6_4hashNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsb_1__NtB6_4hashNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @235, i64 6 }
 }
@@ -3578,7 +3578,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsc_1__NtB6_12into_py_withNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsc_1__NtB6_12into_py_withNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @236, i64 14 }
 }
@@ -3624,7 +3624,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsd_1__NtB6_4itemNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsd_1__NtB6_4itemNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @237, i64 6 }
 }
@@ -3670,7 +3670,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwse_1__NtB6_14immutable_typeNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwse_1__NtB6_14immutable_typeNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @238, i64 16 }
 }
@@ -3716,7 +3716,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsf_1__NtB6_13from_item_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsf_1__NtB6_13from_item_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @239, i64 15 }
 }
@@ -3762,7 +3762,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsg_1__NtB6_7mappingNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsg_1__NtB6_7mappingNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @240, i64 9 }
 }
@@ -3808,7 +3808,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsh_1__NtB6_6moduleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsh_1__NtB6_6moduleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @241, i64 8 }
 }
@@ -3854,7 +3854,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsi_1__NtB6_4nameNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsi_1__NtB6_4nameNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @242, i64 6 }
 }
@@ -3900,7 +3900,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsj_1__NtB6_3ordNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsj_1__NtB6_3ordNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @243, i64 5 }
 }
@@ -3946,7 +3946,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsk_1__NtB6_11pass_moduleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsk_1__NtB6_11pass_moduleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @244, i64 13 }
 }
@@ -3992,7 +3992,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsl_1__NtB6_10rename_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsl_1__NtB6_10rename_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @245, i64 12 }
 }
@@ -4038,7 +4038,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsm_1__NtB6_8sequenceNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsm_1__NtB6_8sequenceNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @246, i64 10 }
 }
@@ -4084,7 +4084,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsn_1__NtB6_3setNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsn_1__NtB6_3setNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @247, i64 5 }
 }
@@ -4130,7 +4130,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwso_1__NtB6_7set_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwso_1__NtB6_7set_allNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @248, i64 9 }
 }
@@ -4176,7 +4176,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsp_1__NtB6_3newNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsp_1__NtB6_3newNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @249, i64 5 }
 }
@@ -4222,7 +4222,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsq_1__NtB6_9signatureNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsq_1__NtB6_9signatureNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @250, i64 11 }
 }
@@ -4268,7 +4268,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsr_1__NtB6_3strNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsr_1__NtB6_3strNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @251, i64 5 }
 }
@@ -4314,7 +4314,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwss_1__NtB6_8subclassNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwss_1__NtB6_8subclassNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @252, i64 10 }
 }
@@ -4360,7 +4360,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwst_1__NtB6_9submoduleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwst_1__NtB6_9submoduleNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @253, i64 11 }
 }
@@ -4406,7 +4406,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsu_1__NtB6_14text_signatureNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsu_1__NtB6_14text_signatureNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @254, i64 16 }
 }
@@ -4452,7 +4452,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsv_1__NtB6_11transparentNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsv_1__NtB6_11transparentNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @255, i64 13 }
 }
@@ -4498,7 +4498,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsw_1__NtB6_10unsendableNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsw_1__NtB6_10unsendableNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @256, i64 12 }
 }
@@ -4544,7 +4544,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsx_1__NtB6_7weakrefNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsx_1__NtB6_7weakrefNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @257, i64 9 }
 }
@@ -4590,7 +4590,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsy_1__NtB6_7genericNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsy_1__NtB6_7genericNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @258, i64 9 }
 }
@@ -4636,7 +4636,7 @@ bb.g:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsz_1__NtB6_8gil_usedNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
+define noundef { ptr, i64 } @_RNvXs_NvNtNtCsbi23obv45GP_19pyo3_macros_backend10attributes2kwsz_1__NtB6_8gil_usedNtNtNtCs1QQTzni0HOp_3syn5token7private11CustomToken7display() unnamed_addr #5 {
 bb.a:
   ret { ptr, i64 } { ptr @259, i64 10 }
 }

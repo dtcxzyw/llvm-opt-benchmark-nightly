@@ -204,67 +204,67 @@ _ZN6hermes2vm10JSCallSite17getStackTraceInfoERNS0_7RuntimeENS0_6HandleIS1_EE.exi
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite7getThisERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite7getThisERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1688849860263936 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite11getTypeNameERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite11getTypeNameERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1548112371908608 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite11getFunctionERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite11getFunctionERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1688849860263936 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite13getMethodNameERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite13getMethodNameERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1548112371908608 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite13getEvalOriginERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite13getEvalOriginERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1548112371908608 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite10isToplevelERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite10isToplevelERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1548112371908608 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite6isEvalERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite6isEvalERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1548112371908608 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite13isConstructorERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite13isConstructorERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1548112371908608 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite7isAsyncERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite7isAsyncERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1407374883553280 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite12isPromiseAllERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite12isPromiseAllERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1407374883553280 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm10JSCallSite15getPromiseIndexERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef { i32, i64 } @_ZN6hermes2vm10JSCallSite15getPromiseIndexERNS0_7RuntimeENS0_6HandleIS1_EE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(9816) %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   ret { i32, i64 } { i32 1, i64 -1548112371908608 }
 }

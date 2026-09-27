@@ -140,13 +140,13 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i64, i8 } @_ZN4cvc58internal6theory5arith6linear11inferbounds19InferBoundAlgorithm8mkLookupEv() local_unnamed_addr #4 align 2 {
+define hidden noundef { i64, i8 } @_ZN4cvc58internal6theory5arith6linear11inferbounds19InferBoundAlgorithm8mkLookupEv() local_unnamed_addr #4 align 2 {
 bb.a:
   ret { i64, i8 } { i64 1, i8 0 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden { i64, i8 } @_ZN4cvc58internal6theory5arith6linear11inferbounds19InferBoundAlgorithm8mkRowSumEv() local_unnamed_addr #4 align 2 {
+define hidden noundef { i64, i8 } @_ZN4cvc58internal6theory5arith6linear11inferbounds19InferBoundAlgorithm8mkRowSumEv() local_unnamed_addr #4 align 2 {
 bb.a:
   ret { i64, i8 } { i64 2, i8 0 }
 }

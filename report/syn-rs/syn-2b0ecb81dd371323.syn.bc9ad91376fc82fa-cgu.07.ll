@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs1s_NtCsgbWeKYPjk8w_3syn5tokenNtB6_5ConstNtB6_5Token7display() unnamed_addr #3 {
+define internal noundef { ptr, i64 } @_RNvXs1s_NtCsgbWeKYPjk8w_3syn5tokenNtB6_5ConstNtB6_5Token7display() unnamed_addr #3 {
 bb.a:
   ret { ptr, i64 } { ptr @6, i64 7 }
 }
@@ -495,7 +495,7 @@ _RNvXsc_NtNtCsgbWeKYPjk8w_3syn2ty8printingNtB7_10ReturnTypeNtNtCs6p3UlaoheVH_5qu
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs3P_NtCsgbWeKYPjk8w_3syn5tokenNtB6_3MutNtB6_5Token7display() unnamed_addr #3 {
+define internal noundef { ptr, i64 } @_RNvXs3P_NtCsgbWeKYPjk8w_3syn5tokenNtB6_3MutNtB6_5Token7display() unnamed_addr #3 {
 bb.a:
   ret { ptr, i64 } { ptr @7, i64 5 }
 }
@@ -898,7 +898,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs7X_NtCsgbWeKYPjk8w_3syn5tokenNtB6_5MinusNtB6_5Token7display() unnamed_addr #3 {
+define internal noundef { ptr, i64 } @_RNvXs7X_NtCsgbWeKYPjk8w_3syn5tokenNtB6_5MinusNtB6_5Token7display() unnamed_addr #3 {
 bb.a:
   ret { ptr, i64 } { ptr @8, i64 3 }
 }
@@ -1301,7 +1301,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs89_NtCsgbWeKYPjk8w_3syn5tokenNtB6_3NotNtB6_5Token7display() unnamed_addr #3 {
+define internal noundef { ptr, i64 } @_RNvXs89_NtCsgbWeKYPjk8w_3syn5tokenNtB6_3NotNtB6_5Token7display() unnamed_addr #3 {
 bb.a:
   ret { ptr, i64 } { ptr @9, i64 3 }
 }
@@ -1450,7 +1450,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs9n_NtCsgbWeKYPjk8w_3syn5tokenNtB6_4StarNtB6_5Token7display() unnamed_addr #3 {
+define internal noundef { ptr, i64 } @_RNvXs9n_NtCsgbWeKYPjk8w_3syn5tokenNtB6_4StarNtB6_5Token7display() unnamed_addr #3 {
 bb.a:
   ret { ptr, i64 } { ptr @10, i64 3 }
 }

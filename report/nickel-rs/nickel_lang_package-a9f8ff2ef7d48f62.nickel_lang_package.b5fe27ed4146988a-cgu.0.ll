@@ -206,25 +206,25 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @"_ZN3gix6config4tree8sections5clone99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Clone$GT$4keys17h1a438fb41346ba00E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @"_ZN3gix6config4tree8sections5clone99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Clone$GT$4keys17h1a438fb41346ba00E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @972, i64 2 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @"_ZN3gix6config4tree8sections5clone99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Clone$GT$4name17ha41ccea89beaded2E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @"_ZN3gix6config4tree8sections5clone99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Clone$GT$4name17ha41ccea89beaded2E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @973, i64 5 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @"_ZN3gix6config4tree8sections5fetch99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Fetch$GT$4keys17h5a3d52ff18e467b0E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @"_ZN3gix6config4tree8sections5fetch99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Fetch$GT$4keys17h5a3d52ff18e467b0E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @981, i64 2 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @"_ZN3gix6config4tree8sections5fetch99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Fetch$GT$4name17hcaeec9f9671f0b56E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @"_ZN3gix6config4tree8sections5fetch99_$LT$impl$u20$gix..config..tree..traits..Section$u20$for$u20$gix..config..tree..sections..Fetch$GT$4name17hcaeec9f9671f0b56E"(ptr noalias nonnull readonly align 1 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @219, i64 5 }
 }
@@ -627,253 +627,253 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h6f991377d5eca976E.exit.i.
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h05d27d2e6cb3856aE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h05d27d2e6cb3856aE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h0aa0c7b7413aed32E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h0aa0c7b7413aed32E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h0c36ed495ed86366E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h0c36ed495ed86366E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h11fa44dcac534771E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h11fa44dcac534771E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h138845a568c6be27E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h138845a568c6be27E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h1a34fea046c31bbdE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h1a34fea046c31bbdE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h1fea32440f1722e3E(ptr noalias readonly align 1 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h1fea32440f1722e3E(ptr noalias readonly align 1 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h2184d77fd488fcaaE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h2184d77fd488fcaaE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h259b620c93584ef6E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h259b620c93584ef6E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h2868779652481b78E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h2868779652481b78E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h28f843db3aaeeca9E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h28f843db3aaeeca9E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h36b612dad176f5e3E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h36b612dad176f5e3E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h3d6e2f57f33c81eaE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h3d6e2f57f33c81eaE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h408b353d6259f71fE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h408b353d6259f71fE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h4097486954a1974cE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h4097486954a1974cE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h42e9f4be86d57290E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h42e9f4be86d57290E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h45195bbef738eba8E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h45195bbef738eba8E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h49fcde5c9c75371bE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h49fcde5c9c75371bE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h5289d719c5e8eac5E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h5289d719c5e8eac5E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h54664244bb6c6045E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h54664244bb6c6045E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h57a143e4cd15699aE(ptr noalias readonly align 1 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h57a143e4cd15699aE(ptr noalias readonly align 1 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h62a84efa3eb2e24cE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h62a84efa3eb2e24cE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h726096487f69a528E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h726096487f69a528E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h83972402fa6f95e5E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h83972402fa6f95e5E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h8ceeafbccaeaa672E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h8ceeafbccaeaa672E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h976dde6b9f218fe2E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h976dde6b9f218fe2E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17ha60ef284d8a2ea09E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17ha60ef284d8a2ea09E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17ha662046730f19a4aE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17ha662046730f19a4aE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17ha674cff31a90ac2aE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17ha674cff31a90ac2aE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17ha9a6ec5a91a72c58E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17ha9a6ec5a91a72c58E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hac7a39ef0e33c6cbE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hac7a39ef0e33c6cbE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hadaf5f9678717bedE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hadaf5f9678717bedE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hb28a20543da1ba82E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hb28a20543da1ba82E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hc28e20c85c1af3feE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hc28e20c85c1af3feE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hc7a7645d6b997938E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hc7a7645d6b997938E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hd21c2e9eb7f33029E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hd21c2e9eb7f33029E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hd313415734e63c81E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hd313415734e63c81E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hdca09d81159b9a69E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hdca09d81159b9a69E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hdf1cb7ab1178df8bE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hdf1cb7ab1178df8bE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hec14dd21f716b67fE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hec14dd21f716b67fE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hf29412f40399054cE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hf29412f40399054cE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hff1217022012cc3eE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hff1217022012cc3eE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #17 {
 bb.a:
   ret { ptr, i64 } { ptr @1140, i64 40 }
 }
@@ -1276,7 +1276,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i8, i64 } @"_ZN71_$LT$gix_pack..cache..Never$u20$as$u20$gix_pack..cache..DecodeEntry$GT$3get17ha6c9e9cb5f8d04afE"(ptr noalias nofree nonnull readnone align 1 captures(none) %0, i32 %1, i64 %2, ptr noalias nofree readnone align 8 captures(none) %3) unnamed_addr #17 {
+define internal noundef { i8, i64 } @"_ZN71_$LT$gix_pack..cache..Never$u20$as$u20$gix_pack..cache..DecodeEntry$GT$3get17ha6c9e9cb5f8d04afE"(ptr noalias nofree nonnull readnone align 1 captures(none) %0, i32 %1, i64 %2, ptr noalias nofree readnone align 8 captures(none) %3) unnamed_addr #17 {
 bb.a:
   ret { i8, i64 } { i8 4, i64 0 }
 }

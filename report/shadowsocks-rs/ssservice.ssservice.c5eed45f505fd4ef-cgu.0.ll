@@ -205,7 +205,7 @@ bb.do:                                            ; preds = %bb.dk
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define internal fastcc i64 @_RNCINvNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5utils29establish_tcp_tunnel_bypassedINtNtNtB6_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB6_3net3tcp17auto_proxy_stream21AutoProxyClientStreamE0CsgZAIVb0XKpv_9ssservice(ptr noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
+define internal fastcc noundef i64 @_RNCINvNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5utils29establish_tcp_tunnel_bypassedINtNtNtB6_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB6_3net3tcp17auto_proxy_stream21AutoProxyClientStreamE0CsgZAIVb0XKpv_9ssservice(ptr noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 3 uses
   %i.b = alloca [96 x i8], align 8                ; 16 uses
@@ -608,7 +608,7 @@ bb.co:                                            ; preds = %bb.ck
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define internal fastcc i64 @_RNCINvNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5utils29establish_tcp_tunnel_bypassedNtNtNtB6_3tun3tcp13TcpConnectionNtNtNtNtB6_3net3tcp17auto_proxy_stream21AutoProxyClientStreamE0CsgZAIVb0XKpv_9ssservice(ptr noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
+define internal fastcc noundef i64 @_RNCINvNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5utils29establish_tcp_tunnel_bypassedNtNtNtB6_3tun3tcp13TcpConnectionNtNtNtNtB6_3net3tcp17auto_proxy_stream21AutoProxyClientStreamE0CsgZAIVb0XKpv_9ssservice(ptr noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 3 uses
   %i.b = alloca [96 x i8], align 8                ; 16 uses
@@ -1011,7 +1011,7 @@ bb.co:                                            ; preds = %bb.ck
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define internal fastcc i64 @_RNCINvNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5utils29establish_tcp_tunnel_bypassedNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamNtNtNtNtB6_3net3tcp17auto_proxy_stream21AutoProxyClientStreamE0CsgZAIVb0XKpv_9ssservice(ptr noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
+define internal fastcc noundef i64 @_RNCINvNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5utils29establish_tcp_tunnel_bypassedNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamNtNtNtNtB6_3net3tcp17auto_proxy_stream21AutoProxyClientStreamE0CsgZAIVb0XKpv_9ssservice(ptr noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 3 uses
   %i.b = alloca [96 x i8], align 8                ; 16 uses
@@ -1414,7 +1414,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i64, ptr } @_RNvXs0_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rtINtB5_7TokioIoNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamENtNtNtCsaI3lGUjttVO_5hyper2rt2io5Write10poll_flushCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readnone align 8 captures(none) %0, ptr noalias nofree readnone align 8 captures(none) %1) unnamed_addr #6 {
+define internal noundef { i64, ptr } @_RNvXs0_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rtINtB5_7TokioIoNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamENtNtNtCsaI3lGUjttVO_5hyper2rt2io5Write10poll_flushCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readnone align 8 captures(none) %0, ptr noalias nofree readnone align 8 captures(none) %1) unnamed_addr #6 {
 bb.a:
   ret { i64, ptr } zeroinitializer
 }
@@ -1817,7 +1817,7 @@ _RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs1_NtCs7ewmRfXve8r_4http10extensionsNtNtCs2dlyTE5y14r_2h23ext8ProtocolNtB5_8AnyClone9type_nameCsgZAIVb0XKpv_9ssservice(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs1_NtCs7ewmRfXve8r_4http10extensionsNtNtCs2dlyTE5y14r_2h23ext8ProtocolNtB5_8AnyClone9type_nameCsgZAIVb0XKpv_9ssservice(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @2651, i64 17 }
 }
@@ -1880,7 +1880,7 @@ _RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvXsa_NtCsaI
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs1_NtCs7ewmRfXve8r_4http10extensionsNtNtCsaI3lGUjttVO_5hyper7upgrade9OnUpgradeNtB5_8AnyClone9type_nameCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvXs1_NtCs7ewmRfXve8r_4http10extensionsNtNtCsaI3lGUjttVO_5hyper7upgrade9OnUpgradeNtB5_8AnyClone9type_nameCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @2653, i64 25 }
 }
@@ -2283,7 +2283,7 @@ _RNvXs_NvNtNtCsf3Ta7LF998c_4core3fmt5Write9write_fmtQINtNvNtNtBa_2io5write17defa
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, ptr } @_RNvYNCNvNvNtNtCsaI3lGUjttVO_5hyper6common4task10noop_waker11NOOP_VTABLE0INtNtNtCsf3Ta7LF998c_4core3ops8function6FnOnceTPuEE9call_onceCsgZAIVb0XKpv_9ssservice(ptr nofree readnone captures(none) %0) unnamed_addr #27 {
+define internal noundef { ptr, ptr } @_RNvYNCNvNvNtNtCsaI3lGUjttVO_5hyper6common4task10noop_waker11NOOP_VTABLE0INtNtNtCsf3Ta7LF998c_4core3ops8function6FnOnceTPuEE9call_onceCsgZAIVb0XKpv_9ssservice(ptr nofree readnone captures(none) %0) unnamed_addr #27 {
 bb.a:
   ret { ptr, ptr } { ptr @467, ptr null }
 }
@@ -2307,7 +2307,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCs2dlyTE5y14r_2h25error5ErrorNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCs2dlyTE5y14r_2h25error5ErrorNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @3961, i64 40 }
 }
@@ -2363,7 +2363,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsaI3lGUjttVO_5hyper5error5ErrorNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsaI3lGUjttVO_5hyper5error5ErrorNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @3961, i64 40 }
 }
@@ -2410,7 +2410,7 @@ _RNvXs_NvNtNtCsf3Ta7LF998c_4core3fmt5Write9write_fmtQNtNtCsgCecv3eZDcN_5alloc6st
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCsf3Ta7LF998c_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCsf3Ta7LF998c_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @3961, i64 40 }
 }
@@ -2436,7 +2436,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtNtCsaI3lGUjttVO_5hyper5proto2h16encode6NotEofNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtNtCsaI3lGUjttVO_5hyper5proto2h16encode6NotEofNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @3961, i64 40 }
 }
@@ -2512,7 +2512,7 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRNtNtNtB5_2io8io_slice7IoSliceE6m
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCsgCecv3eZDcN_5alloc5boxed7convertINtBc_3BoxDNtNtCsf3Ta7LF998c_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCsgCecv3eZDcN_5alloc5boxed7convertINtBc_3BoxDNtNtCsf3Ta7LF998c_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCsgZAIVb0XKpv_9ssservice(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @3961, i64 40 }
 }
