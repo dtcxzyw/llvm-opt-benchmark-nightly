@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %.0145 = phi i32 [ %i.fc, %._crit_edge ], [ %i.di, %.preheader.preheader ] ; 4 uses
-  %3 = uitofp nneg i32 %.0145 to float
+  %3 = sitofp i32 %.0145 to float
   %i.fa = fadd nnan float %3, 5.000000e-01
   %i.fb = insertelement <2 x float> poison, float %i.fa, i64 1
   br label %bb.h
@@ -215,9 +215,9 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %bb.j
-  %i.fc = add nuw nsw i32 %.0145, 1
-  %.not47.not = icmp slt i32 %.0145, %i.es
-  br i1 %.not47.not, label %.preheader, label %._crit_edge146.split, !llvm.loop !89
+  %i.fc = add nuw i32 %.0145, 1
+  %exitcond148.not = icmp eq i32 %.0145, %i.es
+  br i1 %exitcond148.not, label %._crit_edge146.split, label %.preheader, !llvm.loop !89
 
 bb.h:                                             ; preds = %.preheader, %bb.j
   %.046143 = phi i32 [ %i.dg, %.preheader ], [ %i.hv, %bb.j ] ; 4 uses

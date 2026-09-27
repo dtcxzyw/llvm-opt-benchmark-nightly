@@ -204,19 +204,18 @@ bb.e:                                             ; preds = %.loopexit, %._crit_
   br i1 %.not5052, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e
-  %i.ap = sext i32 %.056 to i64                   ; 5 uses
+  %i.ap = sext i32 %.056 to i64                   ; 4 uses
   %i.aq = zext nneg i32 %i.ao to i64              ; 2 uses
   %i.ar = trunc i64 %indvars.iv64 to i32
   %i.as = add i32 %i.ar, -1                       ; 2 uses
-  %2 = tail call i64 @llvm.smax.i64(i64 %i.aq, i64 %i.ap)
-  %i.at = add nuw i64 %2, 1
-  %i.au = sub i64 %i.at, %i.ap                    ; 3 uses
+  %i.at = add nuw nsw i64 %i.aq, 1
+  %i.au = sub nsw i64 %i.at, %i.ap                ; 3 uses
   %min.iters.check = icmp ult i64 %i.au, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.au, -8                      ; 3 uses
-  %i.av = add i64 %n.vec, %i.ap                   ; 2 uses
+  %i.av = add nsw i64 %n.vec, %i.ap               ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.as, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.ac, i64 %i.ap
@@ -619,19 +618,18 @@ bb.af:                                            ; preds = %._crit_edge.i51, %.
   br i1 %.not5052.i, label %._crit_edge.i51, label %.lr.ph.i50
 
 .lr.ph.i50:                                       ; preds = %bb.af
-  %i.gk = sext i32 %.056.i to i64                 ; 5 uses
+  %i.gk = sext i32 %.056.i to i64                 ; 4 uses
   %i.gl = zext nneg i32 %i.gj to i64              ; 2 uses
   %i.gm = trunc i64 %indvars.iv64.i to i32
   %i.gn = add i32 %i.gm, -1                       ; 2 uses
-  %5 = tail call i64 @llvm.smax.i64(i64 %i.gl, i64 %i.gk)
-  %i.go = add nuw i64 %5, 1
-  %i.gp = sub i64 %i.go, %i.gk                    ; 3 uses
+  %i.go = add nuw nsw i64 %i.gl, 1
+  %i.gp = sub nsw i64 %i.go, %i.gk                ; 3 uses
   %min.iters.check = icmp ult i64 %i.gp, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i50
   %n.vec = and i64 %i.gp, -8                      ; 3 uses
-  %i.gq = add i64 %n.vec, %i.gk                   ; 2 uses
+  %i.gq = add nsw i64 %n.vec, %i.gk               ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.gn, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.t, i64 %i.gk
@@ -1016,19 +1014,18 @@ bb.w:                                             ; preds = %._crit_edge.i31, %.
   br i1 %.not5052.i, label %._crit_edge.i31, label %.lr.ph.i30
 
 .lr.ph.i30:                                       ; preds = %bb.w
-  %i.eq = sext i32 %.056.i to i64                 ; 5 uses
+  %i.eq = sext i32 %.056.i to i64                 ; 4 uses
   %i.er = zext nneg i32 %i.ep to i64              ; 2 uses
   %i.es = trunc i64 %indvars.iv64.i to i32
   %i.et = add i32 %i.es, -1                       ; 2 uses
-  %8 = tail call i64 @llvm.smax.i64(i64 %i.er, i64 %i.eq)
-  %i.eu = add nuw i64 %8, 1
-  %i.ev = sub i64 %i.eu, %i.eq                    ; 3 uses
+  %i.eu = add nuw nsw i64 %i.er, 1
+  %i.ev = sub nsw i64 %i.eu, %i.eq                ; 3 uses
   %min.iters.check = icmp ult i64 %i.ev, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i30
   %n.vec = and i64 %i.ev, -8                      ; 3 uses
-  %i.ew = add i64 %n.vec, %i.eq                   ; 2 uses
+  %i.ew = add nsw i64 %n.vec, %i.eq               ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.et, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.r, i64 %i.eq
@@ -1431,19 +1428,18 @@ bb.r:                                             ; preds = %._crit_edge.i99, %.
   br i1 %.not5052.i, label %._crit_edge.i99, label %.lr.ph.i98
 
 .lr.ph.i98:                                       ; preds = %bb.r
-  %i.dc = sext i32 %.056.i to i64                 ; 5 uses
+  %i.dc = sext i32 %.056.i to i64                 ; 4 uses
   %i.dd = zext nneg i32 %i.db to i64              ; 2 uses
   %i.de = trunc i64 %indvars.iv64.i to i32
   %i.df = add i32 %i.de, -1                       ; 2 uses
-  %6 = tail call i64 @llvm.smax.i64(i64 %i.dd, i64 %i.dc)
-  %i.dg = add nuw i64 %6, 1
-  %i.dh = sub i64 %i.dg, %i.dc                    ; 3 uses
+  %i.dg = add nuw nsw i64 %i.dd, 1
+  %i.dh = sub nsw i64 %i.dg, %i.dc                ; 3 uses
   %min.iters.check = icmp ult i64 %i.dh, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i98
   %n.vec = and i64 %i.dh, -8                      ; 3 uses
-  %i.di = add i64 %n.vec, %i.dc                   ; 2 uses
+  %i.di = add nsw i64 %n.vec, %i.dc               ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.df, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.gep194 = getelementptr [4 x i8], ptr %i.o, i64 %i.dc
@@ -1845,9 +1841,6 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #9
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

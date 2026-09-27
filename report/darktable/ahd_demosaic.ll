@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.f, %bb.d, %bb.g,
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.b
   %indvars.iv.next131 = add nsw i64 %indvars.iv130, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next131, %i.u
-  br i1 %4, label %bb.b, label %._crit_edge128, !llvm.loop !1
+  %exitcond.not = icmp eq i64 %indvars.iv.next131, %i.u
+  br i1 %exitcond.not, label %._crit_edge128, label %bb.b, !llvm.loop !1
 
 ._crit_edge128:                                   ; preds = %._crit_edge, %bb.a
   ret void
@@ -608,8 +608,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
 
 ._crit_edge.i:                                    ; preds = %bb.k, %bb.e
   %indvars.iv.next131.i = add nuw nsw i64 %indvars.iv130.i, 1 ; 2 uses
-  %1 = icmp slt i64 %indvars.iv.next131.i, %i.av
-  br i1 %1, label %bb.e, label %_ZN6LibRaw29ahd_interpolate_green_h_and_vEiiPA512_A512_A3_t.exit, !llvm.loop !1
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next131.i, %i.av
+  br i1 %exitcond.not.i, label %_ZN6LibRaw29ahd_interpolate_green_h_and_vEiiPA512_A512_A3_t.exit, label %bb.e, !llvm.loop !1
 
 _ZN6LibRaw29ahd_interpolate_green_h_and_vEiiPA512_A512_A3_t.exit: ; preds = %._crit_edge.i, %bb.d
   %.pre-phi = phi i32 [ %i.ap, %bb.d ], [ %i.aw, %._crit_edge.i ] ; 4 uses

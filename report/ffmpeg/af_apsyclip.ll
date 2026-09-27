@@ -205,8 +205,9 @@ define internal fastcc void @set_margin_curve(ptr nofree noundef readonly captur
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.d = load i32, ptr %i.c, align 4, !tbaa !51   ; 12 uses
   %i.e = sdiv i32 %i.d, 2                         ; 12 uses
-  %2 = sext i32 %i.e to i64                       ; 9 uses
-  %i.f = add nsw i32 %i.e, 1                      ; 3 uses
+  %2 = add nsw i32 %i.e, 1                        ; 3 uses
+  %i.f = add nsw i32 %i.e, 1
+  %3 = sext i32 %i.f to i64                       ; 9 uses
   %.not493 = icmp slt i32 %i.d, -1
   br i1 %.not493, label %.critedge, label %.lr.ph
 
@@ -243,7 +244,7 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph11
 
 .lr.ph:                                           ; preds = %.preheader2, %bb.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.a ], [ 0, %.preheader2 ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.a ], [ 0, %.preheader2 ] ; 4 uses
   %i.n = trunc i64 %indvars.iv to i32
   %i.o = mul i32 %1, %i.n
   %i.p = sdiv i32 %i.o, %i.d
@@ -253,8 +254,8 @@ middle.block:                                     ; preds = %vector.body
 bb.a:                                             ; preds = %.lr.ph
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   store float 1.400000e+01, ptr %i.r, align 4, !tbaa !50
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond.not = icmp eq i64 %indvars.iv, %2
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %3
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !84
 
 .critedge.loopexit:                               ; preds = %.lr.ph
@@ -271,7 +272,7 @@ bb.a:                                             ; preds = %.lr.ph
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.1
-  %indvars.iv.1 = phi i64 [ %i.t, %.lr.ph.1 ], [ %indvars.iv.next.1, %bb.c ] ; 5 uses
+  %indvars.iv.1 = phi i64 [ %i.t, %.lr.ph.1 ], [ %indvars.iv.next.1, %bb.c ] ; 4 uses
   %i.u = trunc i64 %indvars.iv.1 to i32
   %i.v = mul i32 %1, %i.u
   %i.w = sdiv i32 %i.v, %i.d                      ; 2 uses
@@ -286,8 +287,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ac = sitofp nsz i32 %i.ab to float
   %i.ad = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.1
   store float %i.ac, ptr %i.ad, align 4, !tbaa !50
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv.1, 1
-  %exitcond.1.not = icmp eq i64 %indvars.iv.1, %2
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv.1, 1 ; 2 uses
+  %exitcond.1.not = icmp eq i64 %indvars.iv.next.1, %3
   br i1 %exitcond.1.not, label %.preheader, label %bb.b, !llvm.loop !84
 
 .critedge.1.loopexit:                             ; preds = %bb.b
@@ -304,7 +305,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.2
-  %indvars.iv.2 = phi i64 [ %i.af, %.lr.ph.2 ], [ %indvars.iv.next.2, %bb.e ] ; 5 uses
+  %indvars.iv.2 = phi i64 [ %i.af, %.lr.ph.2 ], [ %indvars.iv.next.2, %bb.e ] ; 4 uses
   %i.ag = trunc i64 %indvars.iv.2 to i32
   %i.ah = mul i32 %1, %i.ag
   %i.ai = sdiv i32 %i.ah, %i.d                    ; 2 uses
@@ -319,8 +320,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ao = sitofp nsz i32 %i.an to float
   %i.ap = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.2
   store float %i.ao, ptr %i.ap, align 4, !tbaa !50
-  %indvars.iv.next.2 = add nsw i64 %indvars.iv.2, 1
-  %exitcond.2.not = icmp eq i64 %indvars.iv.2, %2
+  %indvars.iv.next.2 = add nsw i64 %indvars.iv.2, 1 ; 2 uses
+  %exitcond.2.not = icmp eq i64 %indvars.iv.next.2, %3
   br i1 %exitcond.2.not, label %.preheader, label %bb.d, !llvm.loop !84
 
 .critedge.2.loopexit:                             ; preds = %bb.d
@@ -337,7 +338,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %.lr.ph.3
-  %indvars.iv.3 = phi i64 [ %i.ar, %.lr.ph.3 ], [ %indvars.iv.next.3, %bb.g ] ; 5 uses
+  %indvars.iv.3 = phi i64 [ %i.ar, %.lr.ph.3 ], [ %indvars.iv.next.3, %bb.g ] ; 4 uses
   %i.as = trunc i64 %indvars.iv.3 to i32
   %i.at = mul i32 %1, %i.as
   %i.au = sdiv i32 %i.at, %i.d                    ; 2 uses
@@ -352,8 +353,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = sitofp nsz i32 %i.az to float
   %i.bb = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.3
   store float %i.ba, ptr %i.bb, align 4, !tbaa !50
-  %indvars.iv.next.3 = add nsw i64 %indvars.iv.3, 1
-  %exitcond.3.not = icmp eq i64 %indvars.iv.3, %2
+  %indvars.iv.next.3 = add nsw i64 %indvars.iv.3, 1 ; 2 uses
+  %exitcond.3.not = icmp eq i64 %indvars.iv.next.3, %3
   br i1 %exitcond.3.not, label %.preheader, label %bb.f, !llvm.loop !84
 
 .critedge.3.loopexit:                             ; preds = %bb.f
@@ -370,7 +371,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %.lr.ph.4
-  %indvars.iv.4 = phi i64 [ %i.bd, %.lr.ph.4 ], [ %indvars.iv.next.4, %bb.i ] ; 5 uses
+  %indvars.iv.4 = phi i64 [ %i.bd, %.lr.ph.4 ], [ %indvars.iv.next.4, %bb.i ] ; 4 uses
   %i.be = trunc i64 %indvars.iv.4 to i32
   %i.bf = mul i32 %1, %i.be
   %i.bg = sdiv i32 %i.bf, %i.d
@@ -380,8 +381,8 @@ bb.h:                                             ; preds = %bb.i, %.lr.ph.4
 bb.i:                                             ; preds = %bb.h
   %i.bi = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.4
   store float 2.000000e+01, ptr %i.bi, align 4, !tbaa !50
-  %indvars.iv.next.4 = add nsw i64 %indvars.iv.4, 1
-  %exitcond.4.not = icmp eq i64 %indvars.iv.4, %2
+  %indvars.iv.next.4 = add nsw i64 %indvars.iv.4, 1 ; 2 uses
+  %exitcond.4.not = icmp eq i64 %indvars.iv.next.4, %3
   br i1 %exitcond.4.not, label %.preheader, label %bb.h, !llvm.loop !84
 
 .critedge.4.loopexit:                             ; preds = %bb.h
@@ -398,7 +399,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %.lr.ph.5
-  %indvars.iv.5 = phi i64 [ %i.bk, %.lr.ph.5 ], [ %indvars.iv.next.5, %bb.k ] ; 5 uses
+  %indvars.iv.5 = phi i64 [ %i.bk, %.lr.ph.5 ], [ %indvars.iv.next.5, %bb.k ] ; 4 uses
   %i.bl = trunc i64 %indvars.iv.5 to i32
   %i.bm = mul i32 %1, %i.bl
   %i.bn = sdiv i32 %i.bm, %i.d
@@ -408,8 +409,8 @@ bb.j:                                             ; preds = %bb.k, %.lr.ph.5
 bb.k:                                             ; preds = %bb.j
   %i.bp = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.5
   store float 2.000000e+01, ptr %i.bp, align 4, !tbaa !50
-  %indvars.iv.next.5 = add nsw i64 %indvars.iv.5, 1
-  %exitcond.5.not = icmp eq i64 %indvars.iv.5, %2
+  %indvars.iv.next.5 = add nsw i64 %indvars.iv.5, 1 ; 2 uses
+  %exitcond.5.not = icmp eq i64 %indvars.iv.next.5, %3
   br i1 %exitcond.5.not, label %.preheader, label %bb.j, !llvm.loop !84
 
 .critedge.5.loopexit:                             ; preds = %bb.j
@@ -426,7 +427,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.m, %.lr.ph.6
-  %indvars.iv.6 = phi i64 [ %i.br, %.lr.ph.6 ], [ %indvars.iv.next.6, %bb.m ] ; 5 uses
+  %indvars.iv.6 = phi i64 [ %i.br, %.lr.ph.6 ], [ %indvars.iv.next.6, %bb.m ] ; 4 uses
   %i.bs = trunc i64 %indvars.iv.6 to i32
   %i.bt = mul i32 %1, %i.bs
   %i.bu = sdiv i32 %i.bt, %i.d                    ; 2 uses
@@ -441,8 +442,8 @@ bb.m:                                             ; preds = %bb.l
   %i.ca = uitofp nneg i32 %i.bz to float
   %i.cb = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.6
   store float %i.ca, ptr %i.cb, align 4, !tbaa !50
-  %indvars.iv.next.6 = add nsw i64 %indvars.iv.6, 1
-  %exitcond.6.not = icmp eq i64 %indvars.iv.6, %2
+  %indvars.iv.next.6 = add nsw i64 %indvars.iv.6, 1 ; 2 uses
+  %exitcond.6.not = icmp eq i64 %indvars.iv.next.6, %3
   br i1 %exitcond.6.not, label %.preheader, label %bb.l, !llvm.loop !84
 
 .critedge.6.loopexit:                             ; preds = %bb.l
@@ -459,7 +460,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.o, %.lr.ph.7
-  %indvars.iv.7 = phi i64 [ %i.cd, %.lr.ph.7 ], [ %indvars.iv.next.7, %bb.o ] ; 5 uses
+  %indvars.iv.7 = phi i64 [ %i.cd, %.lr.ph.7 ], [ %indvars.iv.next.7, %bb.o ] ; 4 uses
   %i.ce = trunc i64 %indvars.iv.7 to i32
   %i.cf = mul i32 %1, %i.ce
   %i.cg = sdiv i32 %i.cf, %i.d                    ; 2 uses
@@ -474,8 +475,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cm = uitofp nneg i32 %i.cl to float
   %i.cn = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.7
   store float %i.cm, ptr %i.cn, align 4, !tbaa !50
-  %indvars.iv.next.7 = add nsw i64 %indvars.iv.7, 1
-  %exitcond.7.not = icmp eq i64 %indvars.iv.7, %2
+  %indvars.iv.next.7 = add nsw i64 %indvars.iv.7, 1 ; 2 uses
+  %exitcond.7.not = icmp eq i64 %indvars.iv.next.7, %3
   br i1 %exitcond.7.not, label %.preheader, label %bb.n, !llvm.loop !84
 
 .critedge.7.loopexit:                             ; preds = %bb.n
@@ -492,7 +493,7 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.q, %.lr.ph.8
-  %indvars.iv.8 = phi i64 [ %i.cp, %.lr.ph.8 ], [ %indvars.iv.next.8, %bb.q ] ; 5 uses
+  %indvars.iv.8 = phi i64 [ %i.cp, %.lr.ph.8 ], [ %indvars.iv.next.8, %bb.q ] ; 4 uses
   %i.cq = trunc i64 %indvars.iv.8 to i32
   %i.cr = mul i32 %1, %i.cq
   %i.cs = sdiv i32 %i.cr, %i.d                    ; 2 uses
@@ -507,8 +508,8 @@ bb.q:                                             ; preds = %bb.p
   %i.cy = sitofp nsz i32 %i.cx to float
   %i.cz = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.8
   store float %i.cy, ptr %i.cz, align 4, !tbaa !50
-  %indvars.iv.next.8 = add nsw i64 %indvars.iv.8, 1
-  %exitcond.8.not = icmp eq i64 %indvars.iv.8, %2
+  %indvars.iv.next.8 = add nsw i64 %indvars.iv.8, 1 ; 2 uses
+  %exitcond.8.not = icmp eq i64 %indvars.iv.next.8, %3
   br i1 %exitcond.8.not, label %.preheader, label %bb.p, !llvm.loop !84
 
 .critedge.8.loopexit:                             ; preds = %bb.p
@@ -525,8 +526,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not4813, label %._crit_edge, label %.lr.ph15.preheader
 
 .lr.ph15.preheader:                               ; preds = %.preheader
-  %wide.trip.count = zext i32 %i.f to i64         ; 3 uses
-  %min.iters.check20 = icmp ult i32 %i.f, 4
+  %wide.trip.count = zext i32 %2 to i64           ; 3 uses
+  %min.iters.check20 = icmp ult i32 %2, 4
   br i1 %min.iters.check20, label %.lr.ph15.preheader29, label %vector.ph21
 
 vector.ph21:                                      ; preds = %.lr.ph15.preheader
@@ -558,7 +559,7 @@ middle.block26:                                   ; preds = %vector.body23
   store float -1.000000e+01, ptr %i.df, align 4, !tbaa !50
   %indvars.iv.next22 = add nsw i64 %indvars.iv21, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next22 to i32
-  %exitcond24.not = icmp eq i32 %i.f, %lftr.wideiv
+  %exitcond24.not = icmp eq i32 %2, %lftr.wideiv
   br i1 %exitcond24.not, label %.preheader, label %.lr.ph11, !llvm.loop !86
 
 .lr.ph15:                                         ; preds = %.lr.ph15.preheader29, %.lr.ph15

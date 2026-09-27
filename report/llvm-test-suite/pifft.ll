@@ -204,6 +204,7 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %.loopexit
   %i.ak = sext i32 %i.aj to i64
   %i.al = sext i32 %2 to i64
+  %5 = add nsw i64 %i.al, 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
@@ -216,8 +217,8 @@ bb.a:
   %i.ap = fmul double %i.f, %.0124                ; 2 uses
   %i.aq = fcmp olt double %i.ap, f0x3CB0000000000000
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
-  %.not = icmp sgt i64 %indvars.iv, %i.al
-  %or.cond = or i1 %i.aq, %.not
+  %exitcond = icmp eq i64 %indvars.iv, %5
+  %or.cond = select i1 %i.aq, i1 true, i1 %exitcond
   br i1 %or.cond, label %._crit_edge, label %.lr.ph, !llvm.loop !136
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.loopexit
