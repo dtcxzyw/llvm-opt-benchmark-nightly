@@ -1,0 +1,221 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 6a54ec8ecc5d6..baf8a9d6eef04 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -8158,7 +8158,7 @@ static bool isGuaranteedNotToBeUndefOrPoison(
+         isa<ConstantPointerNull>(C) || isa<Function>(C))
+       return true;
+ 
+-    if (C->getType()->isVectorTy()) {
++    if (C->getType()->isVectorTy() || C->getType()->isStructTy()) {
+       if (isa<ConstantExpr>(C)) {
+         // Scalable vectors can use a ConstantExpr to build a splat.
+         if (Constant *SplatC = C->getSplatValue())
+diff --git a/llvm/lib/IR/Constants.cpp b/llvm/lib/IR/Constants.cpp
+index b4d5e091bb416..0014677d09a53 100644
+--- a/llvm/lib/IR/Constants.cpp
++++ b/llvm/lib/IR/Constants.cpp
+@@ -309,19 +309,44 @@ bool Constant::isElementWiseEqual(Value *Y) const {
+   return CmpEq && (isa<PoisonValue>(CmpEq) || match(CmpEq, m_One()));
+ }
+ 
++static std::optional<unsigned> getNumWalkableElements(Type *Ty) {
++  if (auto *FVTy = dyn_cast<FixedVectorType>(Ty))
++    return FVTy->getNumElements();
++  if (auto *STy = dyn_cast<StructType>(Ty))
++    return STy->getNumElements();
++  if (auto *ATy = dyn_cast<ArrayType>(Ty))
++    return ATy->getNumElements();
++  return std::nullopt;
++}
++
++static bool
++containsMatchingElement(const Constant *C,
++                        function_ref<bool(const Constant *)> PredFn) {
++  std::optional<unsigned> NumElts = getNumWalkableElements(C->getType());
++  if (!NumElts)
++    return false;
++
++  for (unsigned I = 0; I != *NumElts; ++I) {
++    Constant *Elt = C->getAggregateElement(I);
++    if (Elt && (PredFn(Elt) || containsMatchingElement(Elt, PredFn)))
++      return true;
++  }
++  return false;
++}
++
+ static bool
+ containsUndefinedElement(const Constant *C,
+                          function_ref<bool(const Constant *)> HasFn) {
+-  if (C->getType()->isVectorTy()) {
+-    if (HasFn(C))
+-      return true;
+-    if (isa<ConstantAggregateZero>(C))
+-      return false;
++  Type *Ty = C->getType();
++  if (!Ty->isVectorTy() && !Ty->isStructTy())
++    return false;
+ 
+-    return C->containsMatchingVectorElement(HasFn);
+-  }
++  if (HasFn(C))
++    return true;
++  if (isa<ConstantAggregateZero>(C))
++    return false;
+ 
+-  return false;
++  return containsMatchingElement(C, HasFn);
+ }
+ 
+ bool Constant::containsUndefOrPoisonElement() const {
+@@ -344,7 +369,7 @@ bool Constant::containsConstantExpression() const {
+   if (isa<ConstantInt>(this) || isa<ConstantFP>(this))
+     return false;
+ 
+-  return containsMatchingVectorElement(IsaPred<ConstantExpr>);
++  return containsMatchingElement(this, IsaPred<ConstantExpr>);
+ }
+ 
+ bool Constant::containsMatchingVectorElement(
+diff --git a/llvm/test/Transforms/Attributor/nofpclass.ll b/llvm/test/Transforms/Attributor/nofpclass.ll
+index 24214e055cdff..d1743525989d4 100644
+--- a/llvm/test/Transforms/Attributor/nofpclass.ll
++++ b/llvm/test/Transforms/Attributor/nofpclass.ll
+@@ -2428,7 +2428,7 @@ define [2 x float] @constant_data_array_1() {
+ 
+ define { float, float } @constant_data_struct_0() {
+ ; CHECK: Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+-; CHECK-LABEL: define nofpclass(nan inf nzero sub nnorm) { float, float } @constant_data_struct_0
++; CHECK-LABEL: define noundef nofpclass(nan inf nzero sub nnorm) { float, float } @constant_data_struct_0
+ ; CHECK-SAME: () #[[ATTR3]] {
+ ; CHECK-NEXT:    ret { float, float } { float 0.000000e+00, float 1.000000e+00 }
+ ;
+@@ -2437,7 +2437,7 @@ define { float, float } @constant_data_struct_0() {
+ 
+ define { float, float } @constant_data_struct_1() {
+ ; CHECK: Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+-; CHECK-LABEL: define nofpclass(snan inf zero sub norm) { float, float } @constant_data_struct_1
++; CHECK-LABEL: define noundef nofpclass(snan inf zero sub norm) { float, float } @constant_data_struct_1
+ ; CHECK-SAME: () #[[ATTR3]] {
+ ; CHECK-NEXT:    ret { float, float } { float +qnan, float +qnan }
+ ;
+@@ -2446,7 +2446,7 @@ define { float, float } @constant_data_struct_1() {
+ 
+ define { float, { float, float } } @constant_data_nested_struct() {
+ ; CHECK: Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+-; CHECK-LABEL: define { float, { float, float } } @constant_data_nested_struct
++; CHECK-LABEL: define noundef { float, { float, float } } @constant_data_nested_struct
+ ; CHECK-SAME: () #[[ATTR3]] {
+ ; CHECK-NEXT:    ret { float, { float, float } } { float +qnan, { float, float } { float +qnan, float +qnan } }
+ ;
+@@ -2455,7 +2455,7 @@ define { float, { float, float } } @constant_data_nested_struct() {
+ 
+ define { float, double } @constant_data_struct_heterogeneous() {
+ ; CHECK: Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+-; CHECK-LABEL: define { float, double } @constant_data_struct_heterogeneous
++; CHECK-LABEL: define noundef { float, double } @constant_data_struct_heterogeneous
+ ; CHECK-SAME: () #[[ATTR3]] {
+ ; CHECK-NEXT:    ret { float, double } { float +qnan, double +qnan }
+ ;
+@@ -2464,7 +2464,7 @@ define { float, double } @constant_data_struct_heterogeneous() {
+ 
+ define { float, [2 x float] } @constant_data_struct_array() {
+ ; CHECK: Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+-; CHECK-LABEL: define { float, [2 x float] } @constant_data_struct_array
++; CHECK-LABEL: define noundef { float, [2 x float] } @constant_data_struct_array
+ ; CHECK-SAME: () #[[ATTR3]] {
+ ; CHECK-NEXT:    ret { float, [2 x float] } { float +qnan, [2 x float] [float +qnan, float +qnan] }
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/freeze.ll b/llvm/test/Transforms/InstCombine/freeze.ll
+index 7a542dc5cb67a..2714f1ee3a936 100644
+--- a/llvm/test/Transforms/InstCombine/freeze.ll
++++ b/llvm/test/Transforms/InstCombine/freeze.ll
+@@ -103,6 +103,88 @@ define <3 x i4> @partial_undef_vec() {
+   ret <3 x i4> %f
+ }
+ 
++@gv = external global i32
++
++define { i32, i32 } @freeze_const_struct() {
++; CHECK-LABEL: define { i32, i32 } @freeze_const_struct() {
++; CHECK-NEXT:    ret { i32, i32 } { i32 1, i32 2 }
++;
++  %f = freeze { i32, i32 } { i32 1, i32 2 }
++  ret { i32, i32 } %f
++}
++
++define { i32, i32 } @freeze_const_struct_poison_member() {
++; CHECK-LABEL: define { i32, i32 } @freeze_const_struct_poison_member() {
++; CHECK-NEXT:    [[F:%.*]] = freeze { i32, i32 } { i32 1, i32 poison }
++; CHECK-NEXT:    ret { i32, i32 } [[F]]
++;
++  %f = freeze { i32, i32 } { i32 1, i32 poison }
++  ret { i32, i32 } %f
++}
++
++define { i32, i32 } @freeze_const_struct_zeroinitializer() {
++; CHECK-LABEL: define { i32, i32 } @freeze_const_struct_zeroinitializer() {
++; CHECK-NEXT:    ret { i32, i32 } zeroinitializer
++;
++  %f = freeze { i32, i32 } zeroinitializer
++  ret { i32, i32 } %f
++}
++
++define { { i32, i32 }, i32 } @freeze_const_nested_struct() {
++; CHECK-LABEL: define { { i32, i32 }, i32 } @freeze_const_nested_struct() {
++; CHECK-NEXT:    ret { { i32, i32 }, i32 } { { i32, i32 } { i32 1, i32 2 }, i32 3 }
++;
++  %f = freeze { { i32, i32 }, i32 } { { i32, i32 } { i32 1, i32 2 }, i32 3 }
++  ret { { i32, i32 }, i32 } %f
++}
++
++define { { i32, i32 }, i32 } @freeze_const_nested_struct_poison_member() {
++; CHECK-LABEL: define { { i32, i32 }, i32 } @freeze_const_nested_struct_poison_member() {
++; CHECK-NEXT:    [[F:%.*]] = freeze { { i32, i32 }, i32 } { { i32, i32 } { i32 1, i32 poison }, i32 3 }
++; CHECK-NEXT:    ret { { i32, i32 }, i32 } [[F]]
++;
++  %f = freeze { { i32, i32 }, i32 } { { i32, i32 } { i32 1, i32 poison }, i32 3 }
++  ret { { i32, i32 }, i32 } %f
++}
++
++; The poison is buried in an array member, so the walk has to recurse through
++; array types as well as structs.
++define { [2 x i32] } @freeze_const_struct_of_array() {
++; CHECK-LABEL: define { [2 x i32] } @freeze_const_struct_of_array() {
++; CHECK-NEXT:    ret { [2 x i32] } { [2 x i32] [i32 1, i32 2] }
++;
++  %f = freeze { [2 x i32] } { [2 x i32] [i32 1, i32 2] }
++  ret { [2 x i32] } %f
++}
++
++define { [2 x i32] } @freeze_const_struct_of_array_poison_member() {
++; CHECK-LABEL: define { [2 x i32] } @freeze_const_struct_of_array_poison_member() {
++; CHECK-NEXT:    [[F:%.*]] = freeze { [2 x i32] } { [2 x i32] [i32 1, i32 poison] }
++; CHECK-NEXT:    ret { [2 x i32] } [[F]]
++;
++  %f = freeze { [2 x i32] } { [2 x i32] [i32 1, i32 poison] }
++  ret { [2 x i32] } %f
++}
++
++; A ConstantExpr member is handled conservatively.
++define { i64, i32 } @freeze_const_struct_constexpr_member() {
++; CHECK-LABEL: define { i64, i32 } @freeze_const_struct_constexpr_member() {
++; CHECK-NEXT:    [[F:%.*]] = freeze { i64, i32 } { i64 ptrtoint (ptr @gv to i64), i32 3 }
++; CHECK-NEXT:    ret { i64, i32 } [[F]]
++;
++  %f = freeze { i64, i32 } { i64 ptrtoint (ptr @gv to i64), i32 3 }
++  ret { i64, i32 } %f
++}
++
++; Non-integer members.
++define { float, ptr } @freeze_const_struct_float_ptr() {
++; CHECK-LABEL: define { float, ptr } @freeze_const_struct_float_ptr() {
++; CHECK-NEXT:    ret { float, ptr } { float 2.500000e+00, ptr null }
++;
++  %f = freeze { float, ptr } { float 2.5, ptr null }
++  ret { float, ptr } %f
++}
++
+ ; Move the freeze forward to prevent poison from spreading.
+ 
+ define i32 @early_freeze_test1(i32 %x, i32 %y) {
