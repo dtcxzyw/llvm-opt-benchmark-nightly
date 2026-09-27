@@ -206,9 +206,6 @@ bb.i:                                             ; preds = %bb.g
   %i.dc = lshr i64 %i.cy, 1
   %..i.i = call i64 @llvm.umax.i64(i64 %i.dc, i64 4)
   %..i137.i = call i64 @llvm.umin.i64(i64 %..i.i, i64 %i.cy) ; 3 uses
-  %.fr452.i = freeze { i64, i1 } zeroinitializer  ; 2 uses
-  %2 = extractvalue { i64, i1 } %.fr452.i, 1
-  %3 = extractvalue { i64, i1 } %.fr452.i, 0      ; 2 uses
   %.fr.i = freeze { i64, i1 } { i64 poison, i1 false }
   %i.dd = extractvalue { i64, i1 } %.fr.i, 1      ; 2 uses
   %.sroa.6.0..sroa_idx.i54 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
@@ -300,7 +297,7 @@ bb.i:                                             ; preds = %bb.g
   %.mux483.mux = select i1 %brmerge, i64 %i.ci, i64 1
   %spec.select = select i1 %i.db, i64 %i.cy, i64 %..i137.i
   %spec.select777 = select i1 %i.db, i64 %i.cy, i64 %..i137.i
-  %spec.select784 = select i1 %i.db, i64 %i.cy, i64 %..i137.i
+  %spec.select784 = select i1 %i.db, i64 %i.cy, i64 %..i137.i ; 2 uses
   %brmerge486.not = select i1 %i.cl, i1 %i.df, i1 false
   %invariant.op = sub i8 20, %.val.i143.i
   %.sroa.0.i.i.i.2.i.i.i.2.i.i.i.2.i.i.2.i.i.2.i.2.i.2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i.i, i64 2
@@ -400,7 +397,7 @@ bb.r:                                             ; preds = %.lr.ph.i.i
   store i64 1, ptr %i.aq, align 8
   store i64 0, ptr %i.ap, align 8
   store i64 0, ptr %i.at, align 8
-  br i1 %or.cond.i, label %.thread, label %.thread.i
+  br i1 %or.cond.i, label %.thread, label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i
 
 .loopexit177.thread:                              ; preds = %bb.q
   store i64 %.mux483.mux, ptr %i.at, align 8
@@ -413,42 +410,35 @@ _RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i: ; preds = %.loopexit177
   %.not.i.i52 = icmp ne i64 %i.ez, 0
   %i.fa = udiv i64 %i.cf, %.sroa.4.0481
   %..i138.i = zext i1 %.not.i.i52 to i64
-  %i.fb = add nuw nsw i64 %i.fa, %..i138.i        ; 5 uses
-  %i.fc = icmp ule i64 %i.fb, %spec.select778
+  %i.fb = add nuw nsw i64 %i.fa, %..i138.i
+  %.sroa.0.0.i207.fr677.i = freeze i64 %i.fb      ; 6 uses
+  %i.fc = icmp ule i64 %.sroa.0.0.i207.fr677.i, %spec.select778
   %or.cond4.not.i = select i1 %i.db, i1 true, i1 %i.fc
-  br i1 %or.cond4.not.i, label %.thread.i, label %bb.s
+  br i1 %or.cond4.not.i, label %bb.t, label %.thread.i
 
-.thread.i:                                        ; preds = %.loopexit177.thread780, %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i
-  %spec.select779 = phi i64 [ %spec.select778, %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i ], [ %spec.select784, %.loopexit177.thread780 ]
-  %.sroa.0.0.i208.i = phi i64 [ %i.fb, %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i ], [ 0, %.loopexit177.thread780 ]
-  store i64 0, ptr %i.aw, align 8, !alias.scope !2949, !noalias !2950
-  %.sroa.0.0.i207.fr678.i = freeze i64 %.sroa.0.0.i208.i
-  br label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i
+.thread.i:                                        ; preds = %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i
+  %2 = sub nuw nsw i64 %.sroa.0.0.i207.fr677.i, %spec.select778 ; 3 uses
+  store i64 %2, ptr %i.aw, align 8, !alias.scope !2949, !noalias !2950
+  %3 = icmp eq i64 %2, 1
+  br i1 %3, label %bb.s, label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i
 
-bb.s:                                             ; preds = %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i
-  %4 = sub nuw nsw i64 %i.fb, %spec.select778     ; 3 uses
-  store i64 %4, ptr %i.aw, align 8, !alias.scope !2949, !noalias !2950
-  %5 = icmp eq i64 %4, 1
-  br i1 %5, label %bb.t, label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i
+bb.s:                                             ; preds = %.thread.i
+  %4 = add nuw nsw i64 %spec.select778, 1
+  br label %bb.t
 
-bb.t:                                             ; preds = %bb.s
-  %6 = add nuw nsw i64 %spec.select778, 1
+bb.t:                                             ; preds = %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i, %bb.s
+  %.sroa.08.1.i814.ph = phi i64 [ %4, %bb.s ], [ %spec.select778, %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i ]
   store i64 0, ptr %i.aw, align 8, !alias.scope !2949, !noalias !2950
   br label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i
 
-_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i: ; preds = %bb.t, %bb.s, %.thread.i
-  %.sroa.0.0.i207.fr679.i = phi i64 [ %i.fb, %bb.t ], [ %i.fb, %bb.s ], [ %.sroa.0.0.i207.fr678.i, %.thread.i ] ; 38 uses
-  %7 = phi i64 [ 0, %bb.t ], [ %4, %bb.s ], [ 0, %.thread.i ]
-  %.sroa.08.1.i = phi i64 [ %6, %bb.t ], [ %spec.select778, %bb.s ], [ %spec.select779, %.thread.i ] ; 4 uses
-  %.not.i58 = icmp eq i64 %.sroa.0.0.i207.fr679.i, 0 ; 2 uses
-  br i1 %2, label %.outer.split.us.i, label %.outer.split.i.preheader
+_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i: ; preds = %bb.t, %.thread.i
+  %.sroa.08.1.i814 = phi i64 [ %spec.select778, %.thread.i ], [ %.sroa.08.1.i814.ph, %bb.t ] ; 2 uses
+  %5 = phi i64 [ %2, %.thread.i ], [ 0, %bb.t ]   ; 2 uses
+  br label %.outer.i
 
-.outer.split.i.preheader:                         ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i
-  br i1 %.not.i58, label %.split.i, label %.lr.ph
-
-.invoke:                                          ; preds = %bb.gj, %bb.go, %bb.gt, %bb.gy, %bb.hd, %bb.hi, %.split.i, %.split.1.i, %.split.2.i, %.split.3.i, %.split.4.i, %.split.5.i, %bb.u, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.1.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.2.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.3.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.4.i, %bb.hj, %bb.gn, %bb.gs, %bb.gx, %bb.hc, %bb.hh, %11, %bb.gl, %bb.gq, %bb.gv, %bb.ha, %bb.hf, %bb.ag, %bb.ae
-  %8 = phi ptr [ @2877, %bb.gs ], [ @3129, %bb.ae ], [ @2877, %bb.hj ], [ @2876, %bb.gq ], [ @2876, %bb.gv ], [ @2877, %bb.gn ], [ @2877, %bb.hc ], [ @2877, %bb.hh ], [ @2876, %11 ], [ @2876, %bb.gl ], [ @2877, %bb.gx ], [ @2876, %bb.ha ], [ @2876, %bb.hf ], [ @2856, %bb.ag ], [ @2874, %.split.i ], [ @2875, %bb.gj ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.4.i ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.3.i ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.2.i ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.1.i ], [ @2874, %.split.5.i ], [ @2874, %.split.4.i ], [ @2874, %.split.3.i ], [ @2874, %.split.2.i ], [ @2874, %.split.1.i ], [ @2875, %bb.hi ], [ @2875, %bb.hd ], [ @2875, %bb.gy ], [ @2875, %bb.gt ], [ @2875, %bb.go ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.i ], [ @2860, %bb.u ]
-  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %8) #37
+.invoke:                                          ; preds = %bb.gj, %bb.go, %bb.gt, %bb.gy, %bb.hd, %bb.hi, %.split.i, %.split.1.i, %.split.2.i, %.split.3.i, %.split.4.i, %.split.5.i, %bb.u, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.1.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.2.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.3.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.4.i, %.lr.ph, %bb.gn, %bb.gs, %bb.gx, %bb.hc, %bb.hh, %bb.gl, %bb.gq, %bb.gv, %bb.ha, %bb.hf, %bb.ag, %bb.ae
+  %6 = phi ptr [ @2877, %bb.gs ], [ @2876, %bb.hf ], [ @3129, %bb.ae ], [ @2876, %bb.gv ], [ @2876, %bb.ha ], [ @2877, %.lr.ph ], [ @2877, %bb.gn ], [ @2877, %bb.hc ], [ @2877, %bb.hh ], [ @2876, %bb.gl ], [ @2876, %bb.gq ], [ @2877, %bb.gx ], [ @2856, %bb.ag ], [ @2874, %.split.i ], [ @2875, %bb.gj ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.4.i ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.3.i ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.2.i ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.1.i ], [ @2874, %.split.5.i ], [ @2874, %.split.4.i ], [ @2874, %.split.3.i ], [ @2874, %.split.2.i ], [ @2874, %.split.1.i ], [ @2875, %bb.hi ], [ @2875, %bb.hd ], [ @2875, %bb.gy ], [ @2875, %bb.gt ], [ @2875, %bb.go ], [ @21, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.i ], [ @2860, %bb.u ]
+  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %6) #37
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -458,10 +448,10 @@ _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4f
   %..i199.5.i = call noundef i64 @llvm.umin.i64(i64 %i.ba, i64 %i.abv) ; 2 uses
   %i.fd = add nuw i64 %.sroa.022.0.ph429.5.i.lcssa, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag), !noalias !2951
-  store i64 %..i199689697703708.i, ptr %i.ag, align 8, !noalias !2951
-  store i64 %i.zi, ptr %.sroa.6.0..sroa_idx.i54, align 8, !noalias !2951
-  store i64 %..i199.1710.i, ptr %.sroa.7.0..sroa_idx.i, align 8, !noalias !2951
-  store i64 %i.zh, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2951
+  store i64 %..i199.i844, ptr %i.ag, align 8, !noalias !2951
+  store i64 %9, ptr %.sroa.6.0..sroa_idx.i54, align 8, !noalias !2951
+  store i64 %i.zi, ptr %.sroa.7.0..sroa_idx.i, align 8, !noalias !2951
+  store i64 %..i199689697703708.i, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2951
   store i64 %..i199.2.i, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !2951
   store i64 %i.zx, ptr %.sroa.10.0..sroa_idx.i, align 8, !noalias !2951
   store i64 %..i199.3.i, ptr %.sroa.11.0..sroa_idx.i, align 8, !noalias !2951
@@ -470,8 +460,8 @@ _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4f
   store i64 %i.abg, ptr %.sroa.14.0..sroa_idx.i, align 8, !noalias !2951
   store i64 %..i199.5.i, ptr %.sroa.15.0..sroa_idx.i, align 8, !noalias !2951
   store i64 %i.fd, ptr %.sroa.16.0..sroa_idx.i, align 8, !noalias !2951
-  %i.fe = add i64 %..i199689697703708.i, %..i199.1710.i ; 3 uses
-  %i.ff = icmp ult i64 %i.fe, %..i199689697703708.i
+  %i.fe = add i64 %i.zi, %..i199.i844             ; 3 uses
+  %i.ff = icmp ult i64 %i.fe, %..i199.i844
   br i1 %i.ff, label %.invoke, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.1.i
 
 _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.1.i: ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.i
@@ -504,9 +494,9 @@ bb.u:                                             ; preds = %_RNCINvNtNtNtCs3oUP
   %i.fr = icmp ult i64 %i.fq, %i.fm
   br i1 %i.fr, label %.invoke, label %bb.v
 
-.invoke992:                                       ; preds = %.outer.split.us.1.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i, %.outer.split.us.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.5.i, %bb.af
-  %9 = phi ptr [ @2856, %bb.af ], [ @2859, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.5.i ], [ @2876, %.outer.split.us.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ @2876, %.outer.split.us.1.i ]
-  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_mul_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %9) #37
+.invoke992:                                       ; preds = %.outer.split.us.1.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.5.i, %bb.af
+  %7 = phi ptr [ @2856, %bb.af ], [ @2859, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.5.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ @2876, %.outer.split.us.1.i ]
+  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_mul_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %7) #37
           to label %.cont993 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont993:                                         ; preds = %.invoke992
@@ -517,7 +507,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not898.i.not, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %.not114.i = icmp ugt i64 %.sroa.0.0.i207.fr679.i, %.sroa.08.1.i
+  %.not114.i = icmp ugt i64 %.sroa.0.0.i207.fr678.i810825832842, %i.zh
   br i1 %.not114.i, label %bb.y, label %.thread219.i
 
 bb.x:                                             ; preds = %bb.v
@@ -525,16 +515,16 @@ bb.x:                                             ; preds = %bb.v
   br i1 %.not132.i, label %bb.gi, label %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager20completion_try_print.exit, !prof !7
 
 bb.y:                                             ; preds = %bb.w
-  %i.fs = sub nuw nsw i64 %.sroa.0.0.i207.fr679.i, %.sroa.08.1.i
+  %i.fs = sub nuw nsw i64 %.sroa.0.0.i207.fr678.i810825832842, %i.zh
   %..i141.i = call noundef i64 @llvm.umin.i64(i64 %i.fs, i64 %i.cr) ; 2 uses
-  %i.ft = add nuw nsw i64 %..i141.i, %.sroa.08.1.i
+  %i.ft = add nuw nsw i64 %..i141.i, %i.zh
   br label %.thread219.i
 
 .thread219.i:                                     ; preds = %bb.y, %bb.w
   %.sroa.034.0217224.i = phi i64 [ %..i141.i, %bb.y ], [ 0, %bb.w ] ; 7 uses
-  %.sroa.028.0218223.i = phi i64 [ %i.ft, %bb.y ], [ %.sroa.0.0.i207.fr679.i, %bb.w ] ; 6 uses
+  %.sroa.028.0218223.i = phi i64 [ %i.ft, %bb.y ], [ %.sroa.0.0.i207.fr678.i810825832842, %bb.w ] ; 6 uses
   %i.fu = sub nuw nsw i64 %.sroa.028.0218223.i, %.sroa.034.0217224.i
-  %.not118.i = icmp ugt i64 %i.fu, %.sroa.08.1.i
+  %.not118.i = icmp ugt i64 %i.fu, %i.zh
   br i1 %.not118.i, label %bb.z, label %bb.aa, !prof !7
 
 bb.z:                                             ; preds = %.thread219.i
@@ -937,7 +927,7 @@ _RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager16completion_print.exit.loopexit.i:
   br label %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager16completion_print.exit.i
 
 _RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager16completion_print.exit.i: ; preds = %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager16completion_print.exit.loopexit.i, %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager32visual_selected_completion_index.exit.i.i
-  %i.pv = phi i64 [ %.pre.i, %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager16completion_print.exit.loopexit.i ], [ %7, %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager32visual_selected_completion_index.exit.i.i ]
+  %i.pv = phi i64 [ %.pre.i, %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager16completion_print.exit.loopexit.i ], [ %i.zg, %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager32visual_selected_completion_index.exit.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !2951
   store i64 0, ptr %i.af, align 8, !noalias !2951
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.466.0..sroa_idx.i, align 8, !noalias !2951
@@ -976,7 +966,7 @@ bb.ct:                                            ; preds = %bb.gf, %bb.fa, %bb.
 
 bb.cu:                                            ; preds = %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager16completion_print.exit.i
   %i.pw = icmp ne i64 %.sroa.034.0217224.i, 0
-  %i.px = icmp ult i64 %.sroa.028.0218223.i, %.sroa.0.0.i207.fr679.i
+  %i.px = icmp ult i64 %.sroa.028.0218223.i, %.sroa.0.0.i207.fr678.i810825832842
   %or.cond6.i = or i1 %i.pw, %i.px
   br i1 %or.cond6.i, label %bb.dl, label %bb.cw
 
@@ -1155,7 +1145,7 @@ bb.dn:                                            ; preds = %bb.dl
   store i64 4, ptr %i.dr, align 8, !noalias !2951
   store i64 %.sroa.028.0218223.i, ptr %.sroa.447.0..sroa_idx.i, align 8, !noalias !2951
   store i64 4, ptr %i.ds, align 8, !noalias !2951
-  store i64 %.sroa.0.0.i207.fr679.i, ptr %.sroa.450.0..sroa_idx.i, align 8, !noalias !2951
+  store i64 %.sroa.0.0.i207.fr678.i810825832842, ptr %.sroa.450.0..sroa_idx.i, align 8, !noalias !2951
   invoke void @_RINvNtCs1HV6ixfL8cZ_11fish_printf11printf_impl14sprintf_localeNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringRNtNtB12_6utfstr8Utf32StrECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.x, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.y, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %i.qu, i64 noundef %i.qt, ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(16) @40, ptr noalias nofree noundef nonnull align 8 %i.v, i64 noundef 3)
           to label %bb.dp unwind label %.loopexit189, !noalias !2950
 
@@ -1558,43 +1548,37 @@ bb.gi:                                            ; preds = %bb.x
 .noexc74:                                         ; preds = %bb.gi
   unreachable
 
-10:                                               ; preds = %14
-  %exitcond.not.i = icmp eq i64 %15, %umax.i1217
-  br i1 %exitcond.not.i, label %.split.i, label %11
-
-.split.i:                                         ; preds = %.outer.i, %10, %.outer.split.i.preheader
-  %.sroa.022.0.ph429.i.lcssa = phi i64 [ %.sroa.022.0.ph429.i1214, %10 ], [ 0, %.outer.split.i.preheader ], [ %..i200.i, %.outer.i ] ; 4 uses
-  %.sroa.025.0.ph428.i.lcssa = phi i64 [ %.sroa.025.0.ph428.i1215, %10 ], [ 0, %.outer.split.i.preheader ], [ %..i201.i, %.outer.i ]
-  %i.yk = add i64 %.sroa.025.0.ph428.i.lcssa, %.sroa.022.0.ph429.i.lcssa ; 2 uses
-  %i.yl = icmp ult i64 %i.yk, %.sroa.022.0.ph429.i.lcssa
+.split.i:                                         ; preds = %bb.hj, %.outer.i
+  %.us-phi = phi i64 [ %.sroa.022.0.ph429.i491, %.outer.i ], [ %..i200.i, %bb.hj ] ; 4 uses
+  %.us-phi477 = phi i64 [ %.sroa.025.0.ph428.i492, %.outer.i ], [ %..i201.i, %bb.hj ]
+  %i.yk = add i64 %.us-phi477, %.us-phi           ; 2 uses
+  %i.yl = icmp ult i64 %i.yk, %.us-phi
   br i1 %i.yl, label %.invoke, label %bb.gj
 
-11:                                               ; preds = %.lr.ph, %10
-  %.sroa.060.0.i1209 = phi i64 [ %.sroa.060.0.ph427.i1216, %.lr.ph ], [ %15, %10 ] ; 2 uses
-  %12 = add i64 %.sroa.060.0.i1209, %3            ; 3 uses
-  %13 = icmp ult i64 %12, %3
-  br i1 %13, label %.invoke, label %14
-
 bb.gj:                                            ; preds = %.split.i
-  %i.ym = icmp ugt i64 %.sroa.022.0.ph429.i.lcssa, -3
+  %i.ym = icmp ugt i64 %.us-phi, -3
   br i1 %i.ym, label %.invoke, label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i
 
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i: ; preds = %bb.gj
   %..i199.i = call noundef i64 @llvm.umin.i64(i64 %i.ba, i64 %i.yk) ; 2 uses
-  %i.yn = add nuw i64 %.sroa.022.0.ph429.i.lcssa, 2 ; 2 uses
+  %i.yn = add nuw i64 %.us-phi, 2                 ; 2 uses
   br i1 %i.dd, label %.outer.split.us.1.i, label %.outer.split.preheader.1.i
 
-_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i: ; preds = %.outer.split.us.i
+_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i: ; preds = %.loopexit177.thread780
+  store i64 0, ptr %i.aw, align 8, !alias.scope !2949, !noalias !2950
   br i1 %i.dd, label %.outer.split.preheader.2.i, label %.outer.split.preheader.1.i
 
 .outer.split.preheader.1.i:                       ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i
   %i.yo = phi i64 [ 2, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ], [ %i.yn, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i ]
   %..i199690.i = phi i64 [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ], [ %..i199.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i ]
-  %exitcond.1.not.i12201227 = icmp eq i64 %.sroa.0.0.i207.fr679.i, 0
+  %.sroa.0.0.i207.fr678.i810825832841 = phi i64 [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ], [ %.sroa.0.0.i207.fr677.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i ] ; 9 uses
+  %8 = phi i64 [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ], [ %5, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i ]
+  %.sroa.08.1.i812824833839 = phi i64 [ %spec.select784, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ], [ %.sroa.08.1.i814, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i ]
+  %exitcond.1.not.i12201227 = icmp eq i64 %.sroa.0.0.i207.fr678.i810825832841, 0
   br i1 %exitcond.1.not.i12201227, label %.split.1.i, label %.lr.ph1222
 
 .lr.ph1222:                                       ; preds = %.outer.split.preheader.1.i, %.outer.1.i
-  %umax.1.i1231 = phi i64 [ %umax.1.i, %.outer.1.i ], [ %.sroa.0.0.i207.fr679.i, %.outer.split.preheader.1.i ]
+  %umax.1.i1231 = phi i64 [ %umax.1.i, %.outer.1.i ], [ %.sroa.0.0.i207.fr678.i810825832841, %.outer.split.preheader.1.i ]
   %.sroa.060.0.ph427.1.i1230 = phi i64 [ %i.yr, %.outer.1.i ], [ 0, %.outer.split.preheader.1.i ]
   %.sroa.025.0.ph428.1.i1229 = phi i64 [ %..i201.1.i, %.outer.1.i ], [ 0, %.outer.split.preheader.1.i ] ; 2 uses
   %.sroa.022.0.ph429.1.i1228 = phi i64 [ %..i200.1.i, %.outer.1.i ], [ 0, %.outer.split.preheader.1.i ] ; 2 uses
@@ -1606,8 +1590,8 @@ bb.gk:                                            ; preds = %bb.gm
 
 bb.gl:                                            ; preds = %.lr.ph1222, %bb.gk
   %.sroa.060.0.1.i1221 = phi i64 [ %.sroa.060.0.ph427.1.i1230, %.lr.ph1222 ], [ %i.yr, %bb.gk ] ; 2 uses
-  %i.yp = add i64 %.sroa.060.0.1.i1221, %.sroa.0.0.i207.fr679.i ; 3 uses
-  %i.yq = icmp ult i64 %i.yp, %.sroa.0.0.i207.fr679.i
+  %i.yp = add i64 %.sroa.060.0.1.i1221, %.sroa.0.0.i207.fr678.i810825832841 ; 3 uses
+  %i.yq = icmp ult i64 %i.yp, %.sroa.0.0.i207.fr678.i810825832841
   br i1 %i.yq, label %.invoke, label %bb.gm
 
 bb.gm:                                            ; preds = %bb.gl
@@ -1630,12 +1614,12 @@ bb.gn:                                            ; preds = %bb.gm
   %i.yz = load i64, ptr %i.yy, align 8, !alias.scope !2948, !noalias !3000, !noundef !5
   %..i200.1.i = call noundef i64 @llvm.umax.i64(i64 %i.yz, i64 %.sroa.022.0.ph429.1.i1228) ; 2 uses
   %..i201.1.i = call noundef i64 @llvm.umax.i64(i64 %i.yw, i64 %.sroa.025.0.ph428.1.i1229) ; 2 uses
-  %umax.1.i = call i64 @llvm.umax.i64(i64 %i.yr, i64 %.sroa.0.0.i207.fr679.i)
-  %exitcond.1.not.i1220.not = icmp ult i64 %i.yr, %.sroa.0.0.i207.fr679.i
+  %umax.1.i = call i64 @llvm.umax.i64(i64 %i.yr, i64 %.sroa.0.0.i207.fr678.i810825832841)
+  %exitcond.1.not.i1220.not = icmp ult i64 %i.yr, %.sroa.0.0.i207.fr678.i810825832841
   br i1 %exitcond.1.not.i1220.not, label %.lr.ph1222, label %.split.1.i
 
 .outer.split.us.1.i:                              ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.i
-  %.not.1.i = icmp eq i64 %.sroa.0.0.i207.fr679.i, 0
+  %.not.1.i = icmp eq i64 %.sroa.0.0.i207.fr677.i, 0
   br i1 %.not.1.i, label %.outer.split.preheader.2.i, label %.invoke992
 
 .split.1.i:                                       ; preds = %.outer.1.i, %bb.gk, %.outer.split.preheader.1.i
@@ -1652,21 +1636,24 @@ bb.go:                                            ; preds = %.split.1.i
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i: ; preds = %bb.go
   %..i199.1.i = call noundef i64 @llvm.umin.i64(i64 %i.ba, i64 %i.za)
   %i.zd = add nuw i64 %.sroa.022.0.ph429.1.i.lcssa, 2
-  %i.ze = icmp slt i64 %.sroa.0.0.i207.fr679.i, 0
-  %i.zf = shl nuw i64 %.sroa.0.0.i207.fr679.i, 1
+  %i.ze = icmp slt i64 %.sroa.0.0.i207.fr678.i810825832841, 0
+  %i.zf = shl nuw i64 %.sroa.0.0.i207.fr678.i810825832841, 1
   br i1 %i.ze, label %.invoke992, label %.outer.split.preheader.2.i
 
-.outer.split.preheader.2.i:                       ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i, %.outer.split.us.1.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i
-  %i.zg = phi i64 [ %i.zf, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ 0, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 2 uses
-  %i.zh = phi i64 [ %i.zd, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ 2, %.outer.split.us.1.i ], [ 2, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ]
-  %..i199.1710.i = phi i64 [ %..i199.1.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ 0, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 2 uses
-  %..i199689697703708.i = phi i64 [ %..i199690.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ %..i199.i, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 3 uses
-  %i.zi = phi i64 [ %i.yo, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ %i.yn, %.outer.split.us.1.i ], [ 2, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ]
-  %exitcond.2.not.i12341241 = icmp eq i64 %.sroa.0.0.i207.fr679.i, 0
+.outer.split.preheader.2.i:                       ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i, %.outer.split.us.1.i
+  %9 = phi i64 [ %i.yo, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ %i.yn, %.outer.split.us.1.i ], [ 2, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ]
+  %..i199.i844 = phi i64 [ %..i199690.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ %..i199.i, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 3 uses
+  %.sroa.0.0.i207.fr678.i810825832842 = phi i64 [ %.sroa.0.0.i207.fr678.i810825832841, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ 0, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 25 uses
+  %i.zg = phi i64 [ %8, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ %5, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ]
+  %i.zh = phi i64 [ %.sroa.08.1.i812824833839, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ %.sroa.08.1.i814, %.outer.split.us.1.i ], [ %spec.select784, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 4 uses
+  %..i199.1710.i = phi i64 [ %i.zf, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ 0, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 2 uses
+  %..i199689697703708.i = phi i64 [ %i.zd, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ 2, %.outer.split.us.1.i ], [ 2, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ]
+  %i.zi = phi i64 [ %..i199.1.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ 0, %.outer.split.us.1.i ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i ] ; 2 uses
+  %exitcond.2.not.i12341241 = icmp eq i64 %.sroa.0.0.i207.fr678.i810825832842, 0
   br i1 %exitcond.2.not.i12341241, label %.split.2.i, label %.lr.ph1236
 
 .lr.ph1236:                                       ; preds = %.outer.split.preheader.2.i, %.outer.2.i
-  %umax.2.i1245 = phi i64 [ %umax.2.i, %.outer.2.i ], [ %.sroa.0.0.i207.fr679.i, %.outer.split.preheader.2.i ]
+  %umax.2.i1245 = phi i64 [ %umax.2.i, %.outer.2.i ], [ %.sroa.0.0.i207.fr678.i810825832842, %.outer.split.preheader.2.i ]
   %.sroa.060.0.ph427.2.i1244 = phi i64 [ %i.zl, %.outer.2.i ], [ 0, %.outer.split.preheader.2.i ]
   %.sroa.025.0.ph428.2.i1243 = phi i64 [ %..i201.2.i, %.outer.2.i ], [ 0, %.outer.split.preheader.2.i ] ; 2 uses
   %.sroa.022.0.ph429.2.i1242 = phi i64 [ %..i200.2.i, %.outer.2.i ], [ 0, %.outer.split.preheader.2.i ] ; 2 uses
@@ -1678,8 +1665,8 @@ bb.gp:                                            ; preds = %bb.gr
 
 bb.gq:                                            ; preds = %.lr.ph1236, %bb.gp
   %.sroa.060.0.2.i1235 = phi i64 [ %.sroa.060.0.ph427.2.i1244, %.lr.ph1236 ], [ %i.zl, %bb.gp ] ; 2 uses
-  %i.zj = add i64 %.sroa.060.0.2.i1235, %i.zg     ; 3 uses
-  %i.zk = icmp ult i64 %i.zj, %i.zg
+  %i.zj = add i64 %.sroa.060.0.2.i1235, %..i199.1710.i ; 3 uses
+  %i.zk = icmp ult i64 %i.zj, %..i199.1710.i
   br i1 %i.zk, label %.invoke, label %bb.gr
 
 bb.gr:                                            ; preds = %bb.gq
@@ -1702,8 +1689,8 @@ bb.gs:                                            ; preds = %bb.gr
   %i.zt = load i64, ptr %i.zs, align 8, !alias.scope !2948, !noalias !3000, !noundef !5
   %..i200.2.i = call noundef i64 @llvm.umax.i64(i64 %i.zt, i64 %.sroa.022.0.ph429.2.i1242) ; 2 uses
   %..i201.2.i = call noundef i64 @llvm.umax.i64(i64 %i.zq, i64 %.sroa.025.0.ph428.2.i1243) ; 2 uses
-  %umax.2.i = call i64 @llvm.umax.i64(i64 %i.zl, i64 %.sroa.0.0.i207.fr679.i)
-  %exitcond.2.not.i1234.not = icmp ult i64 %i.zl, %.sroa.0.0.i207.fr679.i
+  %umax.2.i = call i64 @llvm.umax.i64(i64 %i.zl, i64 %.sroa.0.0.i207.fr678.i810825832842)
+  %exitcond.2.not.i1234.not = icmp ult i64 %i.zl, %.sroa.0.0.i207.fr678.i810825832842
   br i1 %exitcond.2.not.i1234.not, label %.lr.ph1236, label %.split.2.i
 
 .split.2.i:                                       ; preds = %.outer.2.i, %bb.gp, %.outer.split.preheader.2.i
@@ -1720,17 +1707,17 @@ bb.gt:                                            ; preds = %.split.2.i
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i: ; preds = %bb.gt
   %..i199.2.i = call noundef i64 @llvm.umin.i64(i64 %i.ba, i64 %i.zu) ; 2 uses
   %i.zx = add nuw i64 %.sroa.022.0.ph429.2.i.lcssa, 2
-  %i.zy = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.0.0.i207.fr679.i, i64 3) ; 2 uses
+  %i.zy = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.0.0.i207.fr678.i810825832842, i64 3) ; 2 uses
   %i.zz = extractvalue { i64, i1 } %i.zy, 1
   %i.aaa = extractvalue { i64, i1 } %i.zy, 0      ; 2 uses
   br i1 %i.zz, label %.invoke992, label %.outer.split.3.i.preheader
 
 .outer.split.3.i.preheader:                       ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i
-  %exitcond.3.not.i12481255 = icmp eq i64 %.sroa.0.0.i207.fr679.i, 0
+  %exitcond.3.not.i12481255 = icmp eq i64 %.sroa.0.0.i207.fr678.i810825832842, 0
   br i1 %exitcond.3.not.i12481255, label %.split.3.i, label %.lr.ph1250
 
 .lr.ph1250:                                       ; preds = %.outer.split.3.i.preheader, %.outer.3.i
-  %umax.3.i1259 = phi i64 [ %umax.3.i, %.outer.3.i ], [ %.sroa.0.0.i207.fr679.i, %.outer.split.3.i.preheader ]
+  %umax.3.i1259 = phi i64 [ %umax.3.i, %.outer.3.i ], [ %.sroa.0.0.i207.fr678.i810825832842, %.outer.split.3.i.preheader ]
   %.sroa.060.0.ph427.3.i1258 = phi i64 [ %i.aad, %.outer.3.i ], [ 0, %.outer.split.3.i.preheader ]
   %.sroa.025.0.ph428.3.i1257 = phi i64 [ %..i201.3.i, %.outer.3.i ], [ 0, %.outer.split.3.i.preheader ] ; 2 uses
   %.sroa.022.0.ph429.3.i1256 = phi i64 [ %..i200.3.i, %.outer.3.i ], [ 0, %.outer.split.3.i.preheader ] ; 2 uses
@@ -1766,8 +1753,8 @@ bb.gx:                                            ; preds = %bb.gw
   %i.aal = load i64, ptr %i.aak, align 8, !alias.scope !2948, !noalias !3000, !noundef !5
   %..i200.3.i = call noundef i64 @llvm.umax.i64(i64 %i.aal, i64 %.sroa.022.0.ph429.3.i1256) ; 2 uses
   %..i201.3.i = call noundef i64 @llvm.umax.i64(i64 %i.aai, i64 %.sroa.025.0.ph428.3.i1257) ; 2 uses
-  %umax.3.i = call i64 @llvm.umax.i64(i64 %i.aad, i64 %.sroa.0.0.i207.fr679.i)
-  %exitcond.3.not.i1248.not = icmp ult i64 %i.aad, %.sroa.0.0.i207.fr679.i
+  %umax.3.i = call i64 @llvm.umax.i64(i64 %i.aad, i64 %.sroa.0.0.i207.fr678.i810825832842)
+  %exitcond.3.not.i1248.not = icmp ult i64 %i.aad, %.sroa.0.0.i207.fr678.i810825832842
   br i1 %exitcond.3.not.i1248.not, label %.lr.ph1250, label %.split.3.i
 
 .split.3.i:                                       ; preds = %.outer.3.i, %bb.gu, %.outer.split.3.i.preheader
@@ -1784,16 +1771,16 @@ bb.gy:                                            ; preds = %.split.3.i
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i: ; preds = %bb.gy
   %..i199.3.i = call noundef i64 @llvm.umin.i64(i64 %i.ba, i64 %i.aam) ; 2 uses
   %i.aap = add nuw i64 %.sroa.022.0.ph429.3.i.lcssa, 2
-  %i.aaq = icmp ugt i64 %.sroa.0.0.i207.fr679.i, 4611686018427387903
-  %i.aar = shl nuw i64 %.sroa.0.0.i207.fr679.i, 2 ; 2 uses
+  %i.aaq = icmp samesign ugt i64 %.sroa.0.0.i207.fr678.i810825832842, 4611686018427387903
+  %i.aar = shl nuw i64 %.sroa.0.0.i207.fr678.i810825832842, 2 ; 2 uses
   br i1 %i.aaq, label %.invoke992, label %.outer.split.4.i.preheader
 
 .outer.split.4.i.preheader:                       ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i
-  %exitcond.4.not.i12621269 = icmp eq i64 %.sroa.0.0.i207.fr679.i, 0
+  %exitcond.4.not.i12621269 = icmp eq i64 %.sroa.0.0.i207.fr678.i810825832842, 0
   br i1 %exitcond.4.not.i12621269, label %.split.4.i, label %.lr.ph1264
 
 .lr.ph1264:                                       ; preds = %.outer.split.4.i.preheader, %.outer.4.i
-  %umax.4.i1273 = phi i64 [ %umax.4.i, %.outer.4.i ], [ %.sroa.0.0.i207.fr679.i, %.outer.split.4.i.preheader ]
+  %umax.4.i1273 = phi i64 [ %umax.4.i, %.outer.4.i ], [ %.sroa.0.0.i207.fr678.i810825832842, %.outer.split.4.i.preheader ]
   %.sroa.060.0.ph427.4.i1272 = phi i64 [ %i.aau, %.outer.4.i ], [ 0, %.outer.split.4.i.preheader ]
   %.sroa.025.0.ph428.4.i1271 = phi i64 [ %..i201.4.i, %.outer.4.i ], [ 0, %.outer.split.4.i.preheader ] ; 2 uses
   %.sroa.022.0.ph429.4.i1270 = phi i64 [ %..i200.4.i, %.outer.4.i ], [ 0, %.outer.split.4.i.preheader ] ; 2 uses
@@ -1829,8 +1816,8 @@ bb.hc:                                            ; preds = %bb.hb
   %i.abc = load i64, ptr %i.abb, align 8, !alias.scope !2948, !noalias !3000, !noundef !5
   %..i200.4.i = call noundef i64 @llvm.umax.i64(i64 %i.abc, i64 %.sroa.022.0.ph429.4.i1270) ; 2 uses
   %..i201.4.i = call noundef i64 @llvm.umax.i64(i64 %i.aaz, i64 %.sroa.025.0.ph428.4.i1271) ; 2 uses
-  %umax.4.i = call i64 @llvm.umax.i64(i64 %i.aau, i64 %.sroa.0.0.i207.fr679.i)
-  %exitcond.4.not.i1262.not = icmp ult i64 %i.aau, %.sroa.0.0.i207.fr679.i
+  %umax.4.i = call i64 @llvm.umax.i64(i64 %i.aau, i64 %.sroa.0.0.i207.fr678.i810825832842)
+  %exitcond.4.not.i1262.not = icmp ult i64 %i.aau, %.sroa.0.0.i207.fr678.i810825832842
   br i1 %exitcond.4.not.i1262.not, label %.lr.ph1264, label %.split.4.i
 
 .split.4.i:                                       ; preds = %.outer.4.i, %bb.gz, %.outer.split.4.i.preheader
@@ -1847,17 +1834,17 @@ bb.hd:                                            ; preds = %.split.4.i
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i: ; preds = %bb.hd
   %..i199.4.i = call noundef i64 @llvm.umin.i64(i64 %i.ba, i64 %i.abd) ; 2 uses
   %i.abg = add nuw i64 %.sroa.022.0.ph429.4.i.lcssa, 2
-  %i.abh = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.0.0.i207.fr679.i, i64 5) ; 2 uses
+  %i.abh = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.0.0.i207.fr678.i810825832842, i64 5) ; 2 uses
   %i.abi = extractvalue { i64, i1 } %i.abh, 1
   %i.abj = extractvalue { i64, i1 } %i.abh, 0     ; 2 uses
   br i1 %i.abi, label %.invoke992, label %.outer.split.5.i.preheader
 
 .outer.split.5.i.preheader:                       ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i
-  %exitcond.5.not.i12761283 = icmp eq i64 %.sroa.0.0.i207.fr679.i, 0
+  %exitcond.5.not.i12761283 = icmp eq i64 %.sroa.0.0.i207.fr678.i810825832842, 0
   br i1 %exitcond.5.not.i12761283, label %.split.5.i, label %.lr.ph1278
 
 .lr.ph1278:                                       ; preds = %.outer.split.5.i.preheader, %.outer.5.i
-  %umax.5.i1287 = phi i64 [ %umax.5.i, %.outer.5.i ], [ %.sroa.0.0.i207.fr679.i, %.outer.split.5.i.preheader ]
+  %umax.5.i1287 = phi i64 [ %umax.5.i, %.outer.5.i ], [ %.sroa.0.0.i207.fr678.i810825832842, %.outer.split.5.i.preheader ]
   %.sroa.060.0.ph427.5.i1286 = phi i64 [ %i.abm, %.outer.5.i ], [ 0, %.outer.split.5.i.preheader ]
   %.sroa.025.0.ph428.5.i1285 = phi i64 [ %..i201.5.i, %.outer.5.i ], [ 0, %.outer.split.5.i.preheader ] ; 2 uses
   %.sroa.022.0.ph429.5.i1284 = phi i64 [ %..i200.5.i, %.outer.5.i ], [ 0, %.outer.split.5.i.preheader ] ; 2 uses
@@ -1893,8 +1880,8 @@ bb.hh:                                            ; preds = %bb.hg
   %i.abu = load i64, ptr %i.abt, align 8, !alias.scope !2948, !noalias !3000, !noundef !5
   %..i200.5.i = call noundef i64 @llvm.umax.i64(i64 %i.abu, i64 %.sroa.022.0.ph429.5.i1284) ; 2 uses
   %..i201.5.i = call noundef i64 @llvm.umax.i64(i64 %i.abr, i64 %.sroa.025.0.ph428.5.i1285) ; 2 uses
-  %umax.5.i = call i64 @llvm.umax.i64(i64 %i.abm, i64 %.sroa.0.0.i207.fr679.i)
-  %exitcond.5.not.i1276.not = icmp ult i64 %i.abm, %.sroa.0.0.i207.fr679.i
+  %umax.5.i = call i64 @llvm.umax.i64(i64 %i.abm, i64 %.sroa.0.0.i207.fr678.i810825832842)
+  %exitcond.5.not.i1276.not = icmp ult i64 %i.abm, %.sroa.0.0.i207.fr678.i810825832842
   br i1 %exitcond.5.not.i1276.not, label %.lr.ph1278, label %.split.5.i
 
 .split.5.i:                                       ; preds = %.outer.5.i, %bb.he, %.outer.split.5.i.preheader
@@ -1908,39 +1895,34 @@ bb.hi:                                            ; preds = %.split.5.i
   %i.abx = icmp ugt i64 %.sroa.022.0.ph429.5.i.lcssa, -3
   br i1 %i.abx, label %.invoke, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.i
 
-14:                                               ; preds = %11
-  %15 = add i64 %.sroa.060.0.i1209, 1             ; 5 uses
-  %.not133.i = icmp ult i64 %12, %i.cf
-  br i1 %.not133.i, label %bb.hj, label %10
+bb.hj:                                            ; preds = %.lr.ph
+  %10 = add i64 %.sroa.060.0.ph427.i493, 1        ; 3 uses
+  %i.aby = getelementptr inbounds nuw i8, ptr %11, i64 128
+  %i.abz = load i64, ptr %i.aby, align 8, !alias.scope !2948, !noalias !3000, !noundef !5
+  %..i200.i = call noundef i64 @llvm.umax.i64(i64 %i.abz, i64 %.sroa.022.0.ph429.i491) ; 2 uses
+  %..i201.i = call noundef i64 @llvm.umax.i64(i64 %15, i64 %.sroa.025.0.ph428.i492) ; 2 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %10, i64 %.sroa.0.0.i207.fr677.i)
+  %i.aca = icmp ult i64 %10, %i.cf
+  %.not133.i.fr = freeze i1 %i.aca
+  br i1 %.not133.i.fr, label %.outer.i, label %.split.i
 
-bb.hj:                                            ; preds = %14
-  %16 = getelementptr inbounds nuw [144 x i8], ptr %i.cp, i64 %12 ; 2 uses
-  %i.aby = getelementptr inbounds nuw i8, ptr %16, i64 136
-  %i.abz = load i64, ptr %i.aby, align 8, !alias.scope !2948, !noalias !3000, !noundef !5 ; 3 uses
-  %17 = icmp eq i64 %i.abz, 0
-  %..i53 = select i1 %17, i64 0, i64 4
-  %18 = add i64 %..i53, %i.abz                    ; 2 uses
-  %i.aca = icmp ult i64 %18, %i.abz
-  br i1 %i.aca, label %.invoke, label %.outer.i
+.outer.i:                                         ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i, %bb.hj
+  %umax.i494 = phi i64 [ %umax.i, %bb.hj ], [ %.sroa.0.0.i207.fr677.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i ]
+  %.sroa.060.0.ph427.i493 = phi i64 [ %10, %bb.hj ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i ] ; 3 uses
+  %.sroa.025.0.ph428.i492 = phi i64 [ %..i201.i, %bb.hj ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i ] ; 2 uses
+  %.sroa.022.0.ph429.i491 = phi i64 [ %..i200.i, %bb.hj ], [ 0, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i ] ; 2 uses
+  %exitcond.not.i.us = icmp eq i64 %.sroa.060.0.ph427.i493, %umax.i494
+  br i1 %exitcond.not.i.us, label %.split.i, label %.lr.ph
 
-.outer.i:                                         ; preds = %bb.hj
-  %19 = getelementptr inbounds nuw i8, ptr %16, i64 128
-  %20 = load i64, ptr %19, align 8, !alias.scope !2948, !noalias !3000, !noundef !5
-  %..i200.i = call noundef i64 @llvm.umax.i64(i64 %20, i64 %.sroa.022.0.ph429.i1214) ; 2 uses
-  %..i201.i = call noundef i64 @llvm.umax.i64(i64 %18, i64 %.sroa.025.0.ph428.i1215) ; 2 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %15, i64 %.sroa.0.0.i207.fr679.i)
-  %exitcond.not.i1208.not = icmp ult i64 %15, %.sroa.0.0.i207.fr679.i
-  br i1 %exitcond.not.i1208.not, label %.lr.ph, label %.split.i
-
-.outer.split.us.i:                                ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.i
-  br i1 %.not.i58, label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.1.thread.i, label %.invoke992
-
-.lr.ph:                                           ; preds = %.outer.split.i.preheader, %.outer.i
-  %umax.i1217 = phi i64 [ %umax.i, %.outer.i ], [ %.sroa.0.0.i207.fr679.i, %.outer.split.i.preheader ]
-  %.sroa.060.0.ph427.i1216 = phi i64 [ %15, %.outer.i ], [ 0, %.outer.split.i.preheader ]
-  %.sroa.025.0.ph428.i1215 = phi i64 [ %..i201.i, %.outer.i ], [ 0, %.outer.split.i.preheader ] ; 2 uses
-  %.sroa.022.0.ph429.i1214 = phi i64 [ %..i200.i, %.outer.i ], [ 0, %.outer.split.i.preheader ] ; 2 uses
-  br label %11
+.lr.ph:                                           ; preds = %.outer.i
+  %11 = getelementptr inbounds nuw [144 x i8], ptr %i.cp, i64 %.sroa.060.0.ph427.i493 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 136
+  %13 = load i64, ptr %12, align 8, !alias.scope !2948, !noalias !3000, !noundef !5 ; 3 uses
+  %14 = icmp eq i64 %13, 0
+  %..i53 = select i1 %14, i64 0, i64 4
+  %15 = add i64 %..i53, %13                       ; 2 uses
+  %16 = icmp ult i64 %15, %13
+  br i1 %16, label %.invoke, label %bb.hj
 
 _RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager20completion_try_print.exit: ; preds = %bb.x, %.noexc73
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !2951

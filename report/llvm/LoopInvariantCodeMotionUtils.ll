@@ -202,7 +202,7 @@ bb.r:                                             ; preds = %bb.q
 
 _ZN4llvm20ValueFromPointerCastIN4mlir17SubsetOpInterfaceENS1_9OperationENS_8CastInfoIS2_PS3_vEEE6doCastES5_.exit.i.i: ; preds = %bb.r, %bb.q
   %i.bx = phi ptr [ %i.bw, %bb.r ], [ null, %bb.q ]
-  %.fca.0.insert.i.i.i41 = insertvalue { ptr, ptr } poison, ptr %i.bu, 0
+  %.fca.0.insert.i.i.i41 = insertvalue { ptr, ptr } zeroinitializer, ptr %i.bu, 0
   %.fca.1.insert.i.i.i42 = insertvalue { ptr, ptr } %.fca.0.insert.i.i.i41, ptr %i.bx, 1
   br label %_ZN4llvm8dyn_castIN4mlir17SubsetOpInterfaceENS1_9OperationEEEDcPT0_.exit
 
@@ -249,10 +249,9 @@ _ZN4llvm20ValueFromPointerCastIN4mlir27SubsetExtractionOpInterfaceENS1_9Operatio
   br label %_ZN4llvm8dyn_castIN4mlir27SubsetExtractionOpInterfaceENS1_9OperationEEEDcPT0_.exit.i
 
 _ZN4llvm8dyn_castIN4mlir27SubsetExtractionOpInterfaceENS1_9OperationEEEDcPT0_.exit.i: ; preds = %_ZN4llvm20ValueFromPointerCastIN4mlir27SubsetExtractionOpInterfaceENS1_9OperationENS_8CastInfoIS2_PS3_vEEE6doCastES5_.exit.i.i.i, %bb.v
-  %.pn.i.i.i = phi { ptr, ptr } [ %.fca.1.insert.i.i.i.i, %_ZN4llvm20ValueFromPointerCastIN4mlir27SubsetExtractionOpInterfaceENS1_9OperationENS_8CastInfoIS2_PS3_vEEE6doCastES5_.exit.i.i.i ], [ zeroinitializer, %bb.v ]
-  %.pn.i.i.fr.i = freeze { ptr, ptr } %.pn.i.i.i  ; 2 uses
-  %i.cj = extractvalue { ptr, ptr } %.pn.i.i.fr.i, 0 ; 5 uses
-  %i.ck = extractvalue { ptr, ptr } %.pn.i.i.fr.i, 1 ; 4 uses
+  %.pn.i.i.i = phi { ptr, ptr } [ %.fca.1.insert.i.i.i.i, %_ZN4llvm20ValueFromPointerCastIN4mlir27SubsetExtractionOpInterfaceENS1_9OperationENS_8CastInfoIS2_PS3_vEEE6doCastES5_.exit.i.i.i ], [ zeroinitializer, %bb.v ] ; 2 uses
+  %i.cj = extractvalue { ptr, ptr } %.pn.i.i.i, 0 ; 5 uses
+  %i.ck = extractvalue { ptr, ptr } %.pn.i.i.i, 1 ; 4 uses
   %.not.i = icmp eq ptr %i.cj, null
   br i1 %.not.i, label %_ZN12_GLOBAL__N_115MatchingSubsets18insertExtractionOpEN4mlir27SubsetExtractionOpInterfaceE.exit.i, label %bb.w
 
@@ -357,10 +356,9 @@ _ZN4llvm20ValueFromPointerCastIN4mlir26SubsetInsertionOpInterfaceENS1_9Operation
   br label %_ZN4llvm8dyn_castIN4mlir26SubsetInsertionOpInterfaceENS1_9OperationEEEDcPT0_.exit.i
 
 _ZN4llvm8dyn_castIN4mlir26SubsetInsertionOpInterfaceENS1_9OperationEEEDcPT0_.exit.i: ; preds = %_ZN4llvm20ValueFromPointerCastIN4mlir26SubsetInsertionOpInterfaceENS1_9OperationENS_8CastInfoIS2_PS3_vEEE6doCastES5_.exit.i.i.i, %_ZN12_GLOBAL__N_115MatchingSubsets18insertExtractionOpEN4mlir27SubsetExtractionOpInterfaceE.exit.i
-  %.pn.i.i11.i = phi { ptr, ptr } [ %.fca.1.insert.i.i.i10.i, %_ZN4llvm20ValueFromPointerCastIN4mlir26SubsetInsertionOpInterfaceENS1_9OperationENS_8CastInfoIS2_PS3_vEEE6doCastES5_.exit.i.i.i ], [ zeroinitializer, %_ZN12_GLOBAL__N_115MatchingSubsets18insertExtractionOpEN4mlir27SubsetExtractionOpInterfaceE.exit.i ]
-  %.pn.i.i11.fr.i = freeze { ptr, ptr } %.pn.i.i11.i ; 2 uses
-  %i.do = extractvalue { ptr, ptr } %.pn.i.i11.fr.i, 0 ; 5 uses
-  %i.dp = extractvalue { ptr, ptr } %.pn.i.i11.fr.i, 1 ; 4 uses
+  %.pn.i.i11.i = phi { ptr, ptr } [ %.fca.1.insert.i.i.i10.i, %_ZN4llvm20ValueFromPointerCastIN4mlir26SubsetInsertionOpInterfaceENS1_9OperationENS_8CastInfoIS2_PS3_vEEE6doCastES5_.exit.i.i.i ], [ zeroinitializer, %_ZN12_GLOBAL__N_115MatchingSubsets18insertExtractionOpEN4mlir27SubsetExtractionOpInterfaceE.exit.i ] ; 2 uses
+  %i.do = extractvalue { ptr, ptr } %.pn.i.i11.i, 0 ; 5 uses
+  %i.dp = extractvalue { ptr, ptr } %.pn.i.i11.i, 1 ; 4 uses
   %.not42.i = icmp eq ptr %i.do, null
   br i1 %.not42.i, label %_ZN12_GLOBAL__N_115MatchingSubsets6insertEN4mlir17SubsetOpInterfaceEb.exit, label %bb.ac
 
