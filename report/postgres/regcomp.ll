@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph213, %bb.ar
   %.190211 = phi i32 [ %i.o, %.lr.ph213 ], [ %i.gy, %bb.ar ] ; 2 uses
   %.192210 = phi ptr [ %i.r, %.lr.ph213 ], [ %i.gx, %bb.ar ] ; 3 uses
-  %i.aa = load i32, ptr %.192210, align 4         ; 6 uses
+  %i.aa = load i32, ptr %.192210, align 4         ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.192210, i64 4
   %i.ac = load i32, ptr %i.ab, align 4            ; 13 uses
   %i.ad = icmp ult i32 %i.aa, 2048
@@ -219,8 +219,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph182.preheader:                              ; preds = %bb.e
   %i.ae = tail call i32 @llvm.umin.i32(i32 %i.ac, i32 2047)
   %i.af = zext nneg i32 %i.aa to i64
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.aa, i32 %i.ae)
-  %i.ag = add nuw nsw i32 %umax, 1                ; 2 uses
+  %i.ag = add nuw nsw i32 %i.ae, 1                ; 2 uses
   br label %.lr.ph182
 
 .lr.ph182:                                        ; preds = %.lr.ph182.preheader, %bb.x
