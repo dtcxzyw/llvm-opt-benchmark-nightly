@@ -205,8 +205,8 @@ _ZL14stbi__zreceiveP10stbi__zbufi.exit77.i.i:     ; preds = %_ZL11stbi__zget8P10
   store i32 %i.ih, ptr %i.y, align 4, !tbaa !513
   %i.ii = add nsw i32 %i.ie, -4                   ; 2 uses
   store i32 %i.ii, ptr %i.x, align 8, !tbaa !512
-  %6 = add nuw nsw i32 %i.ig, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(19) %i.b, i8 0, i64 19, i1 false)
+  %6 = add nuw nsw i32 %i.ig, 4
   %wide.trip.count.i.i = zext nneg i32 %6 to i64
   br label %bb.aq
 
@@ -609,7 +609,7 @@ bb.j:                                             ; preds = %bb.j, %bb.i
   br i1 %exitcond388.not, label %bb.k, label %bb.j, !llvm.loop !605
 
 bb.k:                                             ; preds = %bb.j
-  %i.aef = add nuw nsw i32 %.1317.us, 1           ; 2 uses
+  %i.aef = add nuw i32 %.1317.us, 1               ; 2 uses
   %exitcond391.not = icmp eq i32 %i.aef, %indvars.iv389
   br i1 %exitcond391.not, label %vector.ph432, label %bb.i, !llvm.loop !606
 

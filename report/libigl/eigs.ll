@@ -205,7 +205,7 @@ scalar.ph56:                                      ; preds = %scalar.ph56.prehead
   store double %i.ez, ptr %i.eo, align 8, !tbaa !56
   %i.fa = extractelement <2 x double> %i.ey, i64 0
   store double %i.fa, ptr %i.eq, align 8, !tbaa !56
-  %i.fb = add nuw nsw i64 %.041, 1                ; 2 uses
+  %i.fb = add nuw i64 %.041, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.fb, %indvars.iv
   br i1 %exitcond.not, label %.loopexit, label %scalar.ph56, !llvm.loop !1559
 }

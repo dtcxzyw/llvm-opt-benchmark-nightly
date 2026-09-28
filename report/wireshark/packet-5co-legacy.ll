@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.l, %bb.l
-  %i.cm = add nuw nsw i32 %i.bq, 6
+  %i.cm = add nuw nsw i32 %i.bq, 5
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.n
@@ -217,11 +217,11 @@ bb.n:                                             ; preds = %bb.m, %bb.n
   %i.cu = load i32, ptr @hf_fiveco_i2cwrite, align 4
   %i.cv = zext i8 %i.cq to i32                    ; 2 uses
   %i.cw = call ptr @proto_tree_add_item(ptr noundef %i.cj, i32 noundef %i.cu, ptr noundef %0, i32 noundef %i.ct, i32 noundef %i.cv, i32 noundef 0) ; 0 uses
-  %i.cx = add nuw nsw i32 %i.ct, %i.cv            ; 2 uses
+  %i.cx = add nuw nsw i32 %i.ct, %i.cv            ; 3 uses
   %i.cy = load i32, ptr @hf_fiveco_i2c2read, align 4
   %i.cz = call ptr @proto_tree_add_item(ptr noundef %i.cj, i32 noundef %i.cy, ptr noundef %0, i32 noundef %i.cx, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.da = add nuw nsw i32 %i.cx, 1                ; 3 uses
-  %i.db = icmp samesign ult i32 %i.da, %i.cm
+  %i.da = add nuw nsw i32 %i.cx, 1                ; 2 uses
+  %i.db = icmp samesign ult i32 %i.cx, %i.cm
   br i1 %i.db, label %bb.n, label %.loopexit, !llvm.loop !6
 
 bb.o:                                             ; preds = %.preheader, %bb.o

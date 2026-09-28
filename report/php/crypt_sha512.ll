@@ -204,13 +204,13 @@ bb.p:                                             ; preds = %._crit_edge547
   br label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge552, %bb.q
-  %.4478555 = phi i64 [ 0, %._crit_edge552 ], [ %i.cc, %bb.q ]
+  %.4478555 = phi i64 [ 0, %._crit_edge552 ], [ %i.cc, %bb.q ] ; 2 uses
   call fastcc void @sha512_process_bytes(ptr noundef nonnull %.4510, i64 noundef %spec.select536, ptr noundef %5)
-  %i.cc = add nuw nsw i64 %.4478555, 1            ; 2 uses
+  %i.cc = add nuw nsw i64 %.4478555, 1
   %i.cd = load i8, ptr %i.a, align 8, !tbaa !27
   %i.ce = zext i8 %i.cd to i64
-  %i.cf = add nuw nsw i64 %i.ce, 16
-  %i.cg = icmp samesign ult i64 %i.cc, %i.cf
+  %i.cf = add nuw nsw i64 %i.ce, 15
+  %i.cg = icmp samesign ult i64 %.4478555, %i.cf
   br i1 %i.cg, label %bb.q, label %bb.r, !llvm.loop !25
 
 bb.r:                                             ; preds = %bb.q

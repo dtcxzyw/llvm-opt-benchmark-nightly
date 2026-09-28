@@ -204,16 +204,16 @@ bb.q:                                             ; preds = %._crit_edge, %bb.p
   br i1 %i.cz, label %.preheader, label %bb.ab
 
 .preheader:                                       ; preds = %bb.q
-  %i.da = add nuw nsw i32 %i.n, 5
+  %i.da = add nuw nsw i32 %i.n, 3
   br label %bb.r
 
 bb.r:                                             ; preds = %.preheader, %bb.r
   %.0211 = phi i16 [ 0, %.preheader ], [ %i.dc, %bb.r ]
-  %.0185210 = phi i32 [ 0, %.preheader ], [ %i.dd, %bb.r ] ; 2 uses
+  %.0185210 = phi i32 [ 0, %.preheader ], [ %i.dd, %bb.r ] ; 3 uses
   %i.db = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.0185210)
   %i.dc = add i16 %i.db, %.0211                   ; 3 uses
-  %i.dd = add nuw nsw i32 %.0185210, 2            ; 2 uses
-  %i.de = icmp samesign ult i32 %i.dd, %i.da
+  %i.dd = add nuw nsw i32 %.0185210, 2
+  %i.de = icmp samesign ult i32 %.0185210, %i.da
   br i1 %i.de, label %bb.r, label %bb.s, !llvm.loop !6
 
 bb.s:                                             ; preds = %bb.r
