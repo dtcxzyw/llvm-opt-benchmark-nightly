@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  %.sroa.0.0.copyload.i = load volatile i64, ptr %i.d, align 8 ; 10 uses
+  %.sroa.0.0.copyload.i = load volatile i64, ptr %i.d, align 8 ; 9 uses
   store volatile i64 %.sroa.0.0.copyload.i, ptr %.sroa.0.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   %i.q = trunc i64 %.sroa.0.0.copyload.i to i32   ; 2 uses
@@ -309,12 +309,9 @@ bb.m:                                             ; preds = %can_follow_write_pt
   br i1 %.not65, label %bb.n, label %can_follow_write_pte.exit.thread
 
 bb.n:                                             ; preds = %bb.m
-  %.not.i.i.i = icmp ne i64 %.sroa.0.0.copyload.i, 0
   %i.bl = and i64 %.sroa.0.0.copyload.i, 1
-  %.not2.i.i.i = icmp eq i64 %i.bl, 0
-  %4 = and i1 %.not.i.i.i, %.not2.i.i.i
-  %5 = sext i1 %4 to i64
-  %i.bm = xor i64 %.sroa.0.0.copyload.i, %5
+  %sext = add nuw nsw i64 %i.bl, 4503599627370495
+  %i.bm = xor i64 %sext, %.sroa.0.0.copyload.i
   %i.bn = lshr i64 %i.bm, 12
   %i.bo = and i64 %i.bn, 1099511627775            ; 2 uses
   %i.bp = load i64, ptr @zero_page_pfn, align 8

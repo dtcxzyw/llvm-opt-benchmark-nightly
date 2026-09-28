@@ -205,14 +205,13 @@ bb.fn:                                            ; preds = %.lr.ph, %bb.fn
   %i.acp = call fastcc noundef i32 @_ZL22ComputeNumSignBitsImplPKN4llvm5ValueERKNS_5APIntERKNS_13SimplifyQueryEj(ptr noundef %i.aco, ptr noundef nonnull align 8 dereferenceable(12) %1, ptr noundef nonnull align 8 dereferenceable(59) %13, i32 noundef %i.acc), !inline_history !1
   %.sroa.speculated385 = call i32 @llvm.umin.i32(i32 %i.acp, i32 %.2482693) ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.not252 = icmp eq i64 %indvars.iv.next, %i.acd
-  %cond.fr = freeze i1 %.not252                   ; 2 uses
+  %.not252 = icmp eq i64 %indvars.iv.next, %i.acd ; 2 uses
   %i.acq = icmp eq i32 %.sroa.speculated385, 1
-  %or.cond268 = select i1 %cond.fr, i1 true, i1 %i.acq
+  %or.cond268 = select i1 %.not252, i1 true, i1 %i.acq
   br i1 %or.cond268, label %._crit_edge.a, label %bb.fn, !llvm.loop !1272
 
 ._crit_edge.a:                                    ; preds = %bb.fn
-  %spec.select = select i1 %cond.fr, i32 %.sroa.speculated385, i32 1
+  %spec.select = select i1 %.not252, i32 %.sroa.speculated385, i32 1
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %._crit_edge.a, %bb.fm

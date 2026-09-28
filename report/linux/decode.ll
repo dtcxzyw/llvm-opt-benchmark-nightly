@@ -205,12 +205,10 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %or.cond631, label %bb.aj, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.af
-  switch i8 %.2507660664, label %.critedge [
-    i8 5, label %bb.ai
-    i8 4, label %bb.ak
-  ]
+  %6 = icmp eq i8 %.2507660664, 5
+  br i1 %6, label %bb.ai, label %.critedge
 
-bb.ai:                                            ; preds = %bb.ah, %bb.ag
+bb.ai:                                            ; preds = %bb.ag, %bb.ah
   %i.ev = tail call noalias dereferenceable_or_null(32) ptr @calloc(i64 noundef 1, i64 noundef 32) #21 ; 6 uses
   %.not604 = icmp eq ptr %i.ev, null
   br i1 %.not604, label %bb.do, label %.split740.us.a
@@ -234,7 +232,7 @@ bb.aj:                                            ; preds = %bb.ag
   %or.cond35 = select i1 %i.fc, i1 %.0503, i1 false
   br i1 %or.cond35, label %bb.ak, label %.critedge
 
-bb.ak:                                            ; preds = %bb.ah, %bb.aj
+bb.ak:                                            ; preds = %bb.aj
   %i.fd = tail call noalias dereferenceable_or_null(32) ptr @calloc(i64 noundef 1, i64 noundef 32) #21 ; 6 uses
   %.not606 = icmp eq ptr %i.fd, null
   br i1 %.not606, label %bb.do, label %.split742.us.a
@@ -278,12 +276,10 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %or.cond632, label %bb.ar, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.an
-  switch i8 %.0505, label %.critedge [
-    i8 5, label %bb.aq
-    i8 4, label %bb.as
-  ]
+  %7 = icmp eq i8 %.0505, 5
+  br i1 %7, label %bb.aq, label %.critedge
 
-bb.aq:                                            ; preds = %bb.ap, %bb.ao
+bb.aq:                                            ; preds = %bb.ao, %bb.ap
   %i.fp = tail call noalias dereferenceable_or_null(32) ptr @calloc(i64 noundef 1, i64 noundef 32) #21 ; 6 uses
   %.not595 = icmp eq ptr %i.fp, null
   br i1 %.not595, label %bb.do, label %.split736.us.a
@@ -307,7 +303,7 @@ bb.ar:                                            ; preds = %bb.ao
   %or.cond59 = select i1 %i.fw, i1 %.0503, i1 false
   br i1 %or.cond59, label %bb.as, label %.critedge
 
-bb.as:                                            ; preds = %bb.ap, %bb.ar
+bb.as:                                            ; preds = %bb.ar
   %i.fx = tail call noalias dereferenceable_or_null(32) ptr @calloc(i64 noundef 1, i64 noundef 32) #21 ; 6 uses
   %.not597 = icmp eq ptr %i.fx, null
   br i1 %.not597, label %bb.do, label %.split738.us.a
@@ -710,7 +706,7 @@ bb.dk:                                            ; preds = %bb.dg
   store i32 3, ptr %i.ni, align 8, !tbaa !124
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.di, %bb.df, %.split.us, %.split714.us, %.split716.us, %.split722.us.a, %.split724.us.a, %.split726.us, %.split728.us.a, %.split730.us.a, %.split732.us.a, %.split734.us.a, %.split736.us.a, %.split738.us.a, %.split740.us.a, %.split742.us.a, %.split744.us.a, %.split746.us.a, %.split748.us.a, %.split750.us.a, %.split752.us.a, %.split754.us.a, %.split756.us.a, %.split758.us.a, %bb.ap, %bb.ah, %bb.bz, %bb.dh, %bb.de, %bb.cl, %bb.ck, %.thread670, %bb.cj, %bb.am, %.thread661, %bb.dg, %bb.bj, %bb.aw, %bb.ab, %bb.k, %has_notrack_prefix.exit, %bb.dj, %has_notrack_prefix.exit654, %bb.ci, %bb.ch, %bb.bk, %bb.bl, %bb.bh, %bb.bi, %bb.bp, %bb.br, %bb.bv, %bb.bu, %bb.bx, %bb.by, %bb.bs, %bb.bt, %bb.bq, %bb.bn, %bb.bb, %bb.av, %bb.ar, %bb.al, %bb.aj, %bb.ae, %bb.aa, %bb.x, %bb.t, %bb.s, %bb.r, %bb.l, %bb.dc, %bb.db, %bb.cz, %bb.cy, %bb.cx, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.bc, %bb.ay, %bb.au, %bb.q
+.critedge:                                        ; preds = %bb.di, %bb.df, %bb.ap, %bb.ah, %.split.us, %.split714.us, %.split716.us, %.split722.us.a, %.split724.us.a, %.split726.us, %.split728.us.a, %.split730.us.a, %.split732.us.a, %.split734.us.a, %.split736.us.a, %.split738.us.a, %.split740.us.a, %.split742.us.a, %.split744.us.a, %.split746.us.a, %.split748.us.a, %.split750.us.a, %.split752.us.a, %.split754.us.a, %.split756.us.a, %.split758.us.a, %bb.bz, %bb.dh, %bb.de, %bb.cl, %bb.ck, %.thread670, %bb.cj, %bb.am, %.thread661, %bb.dg, %bb.bj, %bb.aw, %bb.ab, %bb.k, %has_notrack_prefix.exit, %bb.dj, %has_notrack_prefix.exit654, %bb.ci, %bb.ch, %bb.bk, %bb.bl, %bb.bh, %bb.bi, %bb.bp, %bb.br, %bb.bv, %bb.bu, %bb.bx, %bb.by, %bb.bs, %bb.bt, %bb.bq, %bb.bn, %bb.bb, %bb.av, %bb.ar, %bb.al, %bb.aj, %bb.ae, %bb.aa, %bb.x, %bb.t, %bb.s, %bb.r, %bb.l, %bb.dc, %bb.db, %bb.cz, %bb.cy, %bb.cx, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.bc, %bb.ay, %bb.au, %bb.q
   %i.nj = getelementptr inbounds nuw i8, ptr %5, i64 61
   %i.nk = load i8, ptr %i.nj, align 1, !tbaa !27  ; 2 uses
   %.not627 = icmp eq i8 %i.nk, 0

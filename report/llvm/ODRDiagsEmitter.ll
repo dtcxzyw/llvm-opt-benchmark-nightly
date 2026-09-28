@@ -204,16 +204,12 @@ _ZNK5clang17DiagnosticBuilderlsIbEERKS0_RKT_.exit94: ; preds = %_ZNK5clang19Stre
   br label %.critedge62
 
 bb.f:                                             ; preds = %bb.d
-  %i.fs = and i32 %i.dl, 1                        ; 2 uses
+  %i.fs = and i32 %i.dl, 1
   %i.ft = and i32 %i.fs, %i.dp
   %or.cond.not = icmp eq i32 %i.ft, 0
-  br i1 %or.cond.not, label %.critedge, label %26
+  br i1 %or.cond.not, label %.critedge, label %bb.g
 
-26:                                               ; preds = %bb.f
-  %.not.i = icmp eq i32 %i.fs, 0
-  br i1 %.not.i, label %_ZNK5clang9FieldDecl11getBitWidthEv.exit, label %bb.g
-
-bb.g:                                             ; preds = %26
+bb.g:                                             ; preds = %bb.f
   %i.fu = lshr i32 %i.dl, 2
   %i.fv = and i32 %i.fu, 3
   %.off.i = add nsw i32 %i.fv, -1
@@ -223,18 +219,14 @@ bb.g:                                             ; preds = %26
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 8
   %.in.i = select i1 %switch.i, ptr %i.fy, ptr %i.fw
   %i.fz = load ptr, ptr %.in.i, align 8, !tbaa !17
-  br label %_ZNK5clang9FieldDecl11getBitWidthEv.exit
-
-_ZNK5clang9FieldDecl11getBitWidthEv.exit:         ; preds = %26, %bb.g
-  %.0.i = phi ptr [ %i.fz, %bb.g ], [ null, %26 ]
-  %27 = tail call fastcc noundef i32 @_ZL14computeODRHashPKN5clang4StmtE(ptr noundef %.0.i)
-  %28 = load i32, ptr %i.do, align 4              ; 2 uses
-  %29 = and i32 %28, 1
-  %.not.i95 = icmp eq i32 %29, 0
+  %26 = tail call fastcc noundef i32 @_ZL14computeODRHashPKN5clang4StmtE(ptr noundef %i.fz)
+  %27 = load i32, ptr %i.do, align 4              ; 2 uses
+  %28 = and i32 %27, 1
+  %.not.i95 = icmp eq i32 %28, 0
   br i1 %.not.i95, label %_ZNK5clang9FieldDecl11getBitWidthEv.exit100, label %bb.h
 
-bb.h:                                             ; preds = %_ZNK5clang9FieldDecl11getBitWidthEv.exit
-  %i.ga = lshr i32 %28, 2
+bb.h:                                             ; preds = %bb.g
+  %i.ga = lshr i32 %27, 2
   %i.gb = and i32 %i.ga, 3
   %.off.i96 = add nsw i32 %i.gb, -1
   %switch.i97 = icmp ult i32 %.off.i96, 2
@@ -245,10 +237,10 @@ bb.h:                                             ; preds = %_ZNK5clang9FieldDec
   %i.gf = load ptr, ptr %.in.i98, align 8, !tbaa !17
   br label %_ZNK5clang9FieldDecl11getBitWidthEv.exit100
 
-_ZNK5clang9FieldDecl11getBitWidthEv.exit100:      ; preds = %_ZNK5clang9FieldDecl11getBitWidthEv.exit, %bb.h
-  %.0.i99 = phi ptr [ %i.gf, %bb.h ], [ null, %_ZNK5clang9FieldDecl11getBitWidthEv.exit ]
+_ZNK5clang9FieldDecl11getBitWidthEv.exit100:      ; preds = %bb.g, %bb.h
+  %.0.i99 = phi ptr [ %i.gf, %bb.h ], [ null, %bb.g ]
   %i.gg = tail call fastcc noundef i32 @_ZL14computeODRHashPKN5clang4StmtE(ptr noundef %.0.i99)
-  %.not56 = icmp eq i32 %27, %i.gg
+  %.not56 = icmp eq i32 %26, %i.gg
   br i1 %.not56, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK5clang9FieldDecl11getBitWidthEv.exit100

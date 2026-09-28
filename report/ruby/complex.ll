@@ -202,7 +202,7 @@ INT_NEGATIVE_P.exit.i.i:                          ; preds = %bb.h, %bb.g
 rb_integer_type_p.exit.thread17.i.i:              ; preds = %rb_integer_type_p.exit.i.i, %bb.f
   %i.af = and i64 %0, 2
   %.not.i.i = icmp eq i64 %i.af, 0
-  br i1 %.not.i.i, label %bb.i, label %1
+  br i1 %.not.i.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %rb_integer_type_p.exit.thread17.i.i
   %i.ag = and i64 %0, 4
@@ -219,11 +219,7 @@ RB_FLOAT_TYPE_P.exit.i.i:                         ; preds = %bb.i
     i64 15, label %bb.l
   ]
 
-1:                                                ; preds = %rb_integer_type_p.exit.thread17.i.i
-  %.not.i.i12.i.i = icmp eq i64 %0, -9223372036854775806
-  br i1 %.not.i.i12.i.i, label %rb_float_value_inline.exit.i.i, label %bb.j
-
-bb.j:                                             ; preds = %1
+bb.j:                                             ; preds = %rb_integer_type_p.exit.thread17.i.i
   %.neg.i.i.i.i = ashr i64 %0, 63
   %i.am = add nsw i64 %.neg.i.i.i.i, 2
   %i.an = and i64 %0, -4
@@ -237,8 +233,8 @@ bb.k:                                             ; preds = %RB_FLOAT_TYPE_P.exi
   %i.as = load double, ptr %i.ar, align 8, !tbaa !22
   br label %rb_float_value_inline.exit.i.i
 
-rb_float_value_inline.exit.i.i:                   ; preds = %bb.k, %bb.j, %1
-  %.0.i11.i.i = phi double [ %i.as, %bb.k ], [ %i.aq, %bb.j ], [ 0.000000e+00, %1 ]
+rb_float_value_inline.exit.i.i:                   ; preds = %bb.k, %bb.j
+  %.0.i11.i.i = phi double [ %i.as, %bb.k ], [ %i.aq, %bb.j ]
   %i.at = fcmp uge double %.0.i11.i.i, 0.000000e+00
   br label %f_signbit.exit
 

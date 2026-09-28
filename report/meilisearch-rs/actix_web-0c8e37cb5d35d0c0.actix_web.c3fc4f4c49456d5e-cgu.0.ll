@@ -205,7 +205,7 @@ define void @_ZN9actix_web10middleware9normalize20build_byte_index_map17h98e0343
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.b = add i64 %2, 1                            ; 5 uses
+  %i.b = add i64 %2, 1                            ; 4 uses
   %i.c = shl i64 %i.b, 1                          ; 4 uses
   %i.d = icmp slt i64 %i.b, 0
   %i.e = icmp ugt i64 %i.c, 9223372036854775806
@@ -220,11 +220,12 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i: ; preds = %bb.
   %i.g = icmp eq i64 %i.b, 0
   tail call void @llvm.assume(i1 %i.g)
   store i64 0, ptr %i.a, align 8
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   store ptr inttoptr (i64 2 to ptr), ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store i64 0, ptr %i.i, align 8
-  br label %6
+  invoke void @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8grow_one17h39b12cf4a26519f3E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @659)
+          to label %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge" unwind label %.loopexit.split-lp
 
 bb.b:                                             ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !11113
@@ -239,27 +240,20 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 "_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit": ; preds = %bb.b
   store i64 %i.b, ptr %i.a, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store ptr %i.j, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store i64 0, ptr %i.m, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11114)
-  %5 = icmp eq i64 %i.b, 0
-  br i1 %5, label %6, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit"
-
-6:                                                ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit.thread", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit"
-  %7 = phi ptr [ %i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit.thread" ], [ %i.m, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit" ]
-  %8 = phi ptr [ %i.h, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit.thread" ], [ %i.l, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit" ] ; 3 uses
-  invoke void @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8grow_one17h39b12cf4a26519f3E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @659)
-          to label %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge" unwind label %.loopexit.split-lp
-
-"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge": ; preds = %6
-  %.pre = load ptr, ptr %8, align 8, !alias.scope !11114, !noalias !11115
   br label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit"
 
-"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit": ; preds = %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit"
-  %i.n = phi ptr [ %7, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge" ], [ %i.m, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit" ] ; 2 uses
-  %i.o = phi ptr [ %8, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge" ], [ %i.l, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit" ] ; 2 uses
+"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge": ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit.thread"
+  %.pre = load ptr, ptr %i.h, align 8, !alias.scope !11114, !noalias !11115
+  br label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit"
+
+"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit": ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit", %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge"
+  %i.n = phi ptr [ %i.i, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge" ], [ %i.m, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit" ] ; 2 uses
+  %i.o = phi ptr [ %i.h, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge" ], [ %i.l, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit" ] ; 2 uses
   %i.p = phi ptr [ %.pre, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0db8f7a612536041E.exit_crit_edge" ], [ %i.j, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit" ]
   store i16 0, ptr %i.p, align 2, !noalias !11114
   store i64 1, ptr %i.n, align 8, !noalias !25
@@ -271,13 +265,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
           cleanup
   br label %bb.d
 
-.loopexit.split-lp:                               ; preds = %6
+.loopexit.split-lp:                               ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit.thread"
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.d
 
 bb.d:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %i.q = phi ptr [ %i.o, %.loopexit ], [ %8, %.loopexit.split-lp ]
+  %i.q = phi ptr [ %i.o, %.loopexit ], [ %i.h, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.val = load i64, ptr %i.a, align 8             ; 2 uses
   %i.r = icmp eq i64 %.val, 0

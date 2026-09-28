@@ -205,7 +205,7 @@ bb.a:
   %i.h = load i32, ptr %i.g, align 1              ; 9 uses
   store i32 %i.h, ptr %1, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 3264
-  %i.j = load i32, ptr %i.i, align 1              ; 10 uses
+  %i.j = load i32, ptr %i.i, align 1              ; 9 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.j, ptr %i.k, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 3268
@@ -316,7 +316,7 @@ bb.k:                                             ; preds = %bb.j
   br label %trace_pvscsi_tx_rings_ppn.exit18.i
 
 trace_pvscsi_tx_rings_ppn.exit18.i:               ; preds = %bb.k, %bb.j, %bb.i, %.lr.ph.split.i
-  %i.ao = phi i32 [ %i.ag, %.lr.ph.split.i ], [ %i.ag, %bb.i ], [ %i.ag, %bb.j ], [ %.pre.i, %bb.k ] ; 2 uses
+  %i.ao = phi i32 [ %i.ag, %.lr.ph.split.i ], [ %i.ag, %bb.i ], [ %i.ag, %bb.j ], [ %.pre.i, %bb.k ] ; 4 uses
   %i.ap = phi i32 [ 0, %.lr.ph.split.i ], [ %i.ah, %bb.i ], [ %i.ah, %bb.j ], [ %.pre.i, %bb.k ]
   %i.aq = add nuw i32 %.030.i, 1                  ; 2 uses
   %exitcond.not = icmp eq i32 %i.aq, %i.h
@@ -324,33 +324,32 @@ trace_pvscsi_tx_rings_ppn.exit18.i:               ; preds = %bb.k, %bb.j, %bb.i,
 
 ._crit_edge.i:                                    ; preds = %trace_pvscsi_tx_rings_ppn.exit18.i
   %.not.i19.i = icmp eq i32 %i.ao, 0
-  br i1 %.not.i19.i, label %trace_pvscsi_tx_rings_num_pages.exit22.i, label %bb.l, !prof !34
+  br i1 %.not.i19.i, label %pvscsi_dbg_dump_tx_rings_config.exit, label %bb.l, !prof !34
 
 bb.l:                                             ; preds = %._crit_edge.i
   %i.ar = load i16, ptr @_TRACE_PVSCSI_TX_RINGS_NUM_PAGES_DSTATE, align 2
   %.not1.i20.i = icmp eq i16 %i.ar, 0
-  br i1 %.not1.i20.i, label %trace_pvscsi_tx_rings_num_pages.exit22.i, label %bb.m
+  br i1 %.not1.i20.i, label %.lr.ph32.split.i.preheader, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.as = load i32, ptr @qemu_loglevel, align 4
   %i.at = and i32 %i.as, 32768
   %.not2.i21.i = icmp eq i32 %i.at, 0
-  br i1 %.not2.i21.i, label %trace_pvscsi_tx_rings_num_pages.exit22.i, label %2
+  br i1 %.not2.i21.i, label %.lr.ph32.split.i.preheader, label %trace_pvscsi_tx_rings_num_pages.exit22.i
 
-2:                                                ; preds = %bb.m
+trace_pvscsi_tx_rings_num_pages.exit22.i:         ; preds = %bb.m
   tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.36, i32 noundef %i.j) #7
-  br label %trace_pvscsi_tx_rings_num_pages.exit22.i
-
-trace_pvscsi_tx_rings_num_pages.exit22.i:         ; preds = %2, %bb.m, %bb.l, %._crit_edge.i
-  %.not34.i = icmp eq i32 %i.j, 0
   %.pr.pre = load i32, ptr @trace_events_enabled_count, align 4 ; 2 uses
   %i.au = icmp eq i32 %.pr.pre, 0
-  %or.cond57 = select i1 %.not34.i, i1 true, i1 %i.au, !prof !35
-  br i1 %or.cond57, label %pvscsi_dbg_dump_tx_rings_config.exit, label %.lr.ph32.split.i, !prof !35
+  br i1 %i.au, label %pvscsi_dbg_dump_tx_rings_config.exit, label %.lr.ph32.split.i.preheader, !prof !32
 
-.lr.ph32.split.i:                                 ; preds = %trace_pvscsi_tx_rings_num_pages.exit22.i, %trace_pvscsi_tx_rings_ppn.exit26.i
-  %i.av = phi i32 [ %i.bc, %trace_pvscsi_tx_rings_ppn.exit26.i ], [ %.pr.pre, %trace_pvscsi_tx_rings_num_pages.exit22.i ] ; 3 uses
-  %.131.i = phi i32 [ %i.bd, %trace_pvscsi_tx_rings_ppn.exit26.i ], [ 0, %trace_pvscsi_tx_rings_num_pages.exit22.i ] ; 2 uses
+.lr.ph32.split.i.preheader:                       ; preds = %bb.m, %bb.l, %trace_pvscsi_tx_rings_num_pages.exit22.i
+  %.ph = phi i32 [ %i.ao, %bb.m ], [ %i.ao, %bb.l ], [ %.pr.pre, %trace_pvscsi_tx_rings_num_pages.exit22.i ]
+  br label %.lr.ph32.split.i
+
+.lr.ph32.split.i:                                 ; preds = %.lr.ph32.split.i.preheader, %trace_pvscsi_tx_rings_ppn.exit26.i
+  %i.av = phi i32 [ %i.bc, %trace_pvscsi_tx_rings_ppn.exit26.i ], [ %.ph, %.lr.ph32.split.i.preheader ] ; 3 uses
+  %.131.i = phi i32 [ %i.bd, %trace_pvscsi_tx_rings_ppn.exit26.i ], [ 0, %.lr.ph32.split.i.preheader ] ; 2 uses
   %i.aw = sext i32 %.131.i to i64
   %i.ax = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.aw
   %i.ay = load i64, ptr %i.ax, align 4
@@ -379,7 +378,7 @@ trace_pvscsi_tx_rings_ppn.exit26.i:               ; preds = %bb.p, %bb.o, %bb.n,
   %i.be = icmp ult i32 %i.bd, %i.j
   br i1 %i.be, label %.lr.ph32.split.i, label %pvscsi_dbg_dump_tx_rings_config.exit, !llvm.loop !25
 
-pvscsi_dbg_dump_tx_rings_config.exit:             ; preds = %trace_pvscsi_tx_rings_ppn.exit26.i, %.lr.ph.i, %trace_pvscsi_tx_rings_ppn.exit.i, %bb.e, %trace_pvscsi_tx_rings_num_pages.exit22.i
+pvscsi_dbg_dump_tx_rings_config.exit:             ; preds = %trace_pvscsi_tx_rings_ppn.exit26.i, %.lr.ph.i, %._crit_edge.i, %trace_pvscsi_tx_rings_ppn.exit.i, %bb.e, %trace_pvscsi_tx_rings_num_pages.exit22.i
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 3792 ; 7 uses
   %i.bg = shl i64 %i.m, 12
   store i64 %i.bg, ptr %i.bf, align 8
@@ -665,7 +664,7 @@ bb.s:                                             ; preds = %bb.r
   br label %pvscsi_ring_init_data.exit
 
 pvscsi_ring_init_data.exit:                       ; preds = %._crit_edge.i28, %bb.q, %bb.r, %bb.s
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !37
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !36
   fence release
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 3788
   store i8 1, ptr %i.fu, align 4
@@ -835,7 +834,7 @@ bb.e:                                             ; preds = %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %.023, i64 248
   %.0 = load ptr, ptr %i.m, align 8               ; 2 uses
   %.not = icmp eq ptr %.0, null
-  br i1 %.not, label %.critedge19, label %.lr.ph, !llvm.loop !38
+  br i1 %.not, label %.critedge19, label %.lr.ph, !llvm.loop !37
 
 .critedge:                                        ; preds = %.lr.ph
   %i.n = getelementptr inbounds nuw i8, ptr %.023, i64 17
@@ -1029,7 +1028,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i64 %i.ba, ptr %i.bb, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.i, label %scalar.ph, !llvm.loop !39
+  br i1 %exitcond.not, label %._crit_edge.i, label %scalar.ph, !llvm.loop !38
 
 ._crit_edge.i:                                    ; preds = %scalar.ph, %middle.block
   %i.bc = load i64, ptr %i.p, align 8
@@ -1077,7 +1076,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %._crit_edge.i
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !40
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !39
   fence release
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 3789
   store i8 1, ptr %i.bq, align 1
@@ -1480,7 +1479,7 @@ pvscsi_msg_ring_put.exit:                         ; preds = %bb.c, %bb.d, %bb.e,
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(114) %.sroa.9.4..sroa.3.0..sroa_idx.i.sroa_idx, i8 0, i64 114, i1 false)
   call void @physical_memory_write(i64 noundef %i.ao, ptr noundef nonnull %3, i64 noundef 128) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !41
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !40
   fence release
   %i.at = load i64, ptr %i.ab, align 8            ; 4 uses
   %i.au = load i32, ptr @trace_events_enabled_count, align 4
@@ -1518,7 +1517,7 @@ pvscsi_ring_flush_msg.exit:                       ; preds = %pvscsi_msg_ring_put
   %i.be = load i64, ptr %i.bd, align 8
   %i.bf = or i64 %i.be, 4
   store i64 %i.bf, ptr %i.bd, align 8
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !42
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !41
   fence release
   call fastcc void @pvscsi_update_irq_status(ptr noundef nonnull %0)
   br label %bb.j
@@ -1579,20 +1578,19 @@ attributes #9 = { nounwind allocsize(0) }
 !24 = distinct !{!24, !9, !33}
 !25 = distinct !{!25, !9, !33}
 !26 = distinct !{!26, !9, !12, !13}
-!27 = distinct !{!27, !36}
+!27 = distinct !{!27, !35}
 !28 = distinct !{!28, !9, !12, !13}
-!29 = distinct !{!29, !36}
+!29 = distinct !{!29, !35}
 !30 = distinct !{!30, !9, !12}
 !31 = distinct !{!31, !9, !12}
 !32 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
 !33 = !{!"llvm.loop.unswitch.partial.disable"}
 !34 = !{!"branch_weights", !"expected", i32 2144624150, i32 2859498}
-!35 = !{!"branch_weights", i32 -2147483648, i32 -2147483648}
-!36 = !{!"llvm.loop.unroll.disable"}
-!37 = !{i64 2153138541}
-!38 = distinct !{!38, !9}
-!39 = distinct !{!39, !9, !13, !12}
-!40 = !{i64 2153140435}
-!41 = !{i64 2153143960}
-!42 = !{i64 2153145404}
+!35 = !{!"llvm.loop.unroll.disable"}
+!36 = !{i64 2153138541}
+!37 = distinct !{!37, !9}
+!38 = distinct !{!38, !9, !13, !12}
+!39 = !{i64 2153140435}
+!40 = !{i64 2153143960}
+!41 = !{i64 2153145404}
 end_hunk_1

@@ -204,10 +204,10 @@ bb.f:                                             ; preds = %bb.d
   %i.x = getelementptr i8, ptr %i.w, i64 196      ; 2 uses
   %i.y = load i32, ptr %i.x, align 4              ; 2 uses
   %i.z = getelementptr i8, ptr %i.r, i64 12
-  %i.aa = load i32, ptr %i.z, align 4             ; 5 uses
+  %i.aa = load i32, ptr %i.z, align 4             ; 4 uses
   %i.ab = and i32 %i.aa, %i.y
   %.not22.i = icmp eq i32 %i.ab, 0
-  br i1 %.not22.i, label %bb.g, label %2
+  br i1 %.not22.i, label %bb.g, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = or i32 %i.aa, %i.y
@@ -219,12 +219,8 @@ bb.g:                                             ; preds = %bb.f
   tail call void @hrtimer_start_range_ns(ptr noundef %i.af, i64 noundef 1000000, i64 noundef 1000000, i32 noundef 1) #14
   br label %.backedge.i
 
-2:                                                ; preds = %bb.f
-  %.not14.i.i = icmp eq i32 %i.aa, 0
-  br i1 %.not14.i.i, label %fw_domains_put.exit.i, label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %2, %bb.i
-  %.015.i.i = phi i32 [ %i.al, %bb.i ], [ %i.aa, %2 ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %bb.f, %bb.i
+  %.015.i.i = phi i32 [ %i.al, %bb.i ], [ %i.aa, %bb.f ] ; 2 uses
   %i.ag = tail call i32 asm "bsfl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 1, 0) %.015.i.i, i32 -1) #16, !srcloc !23 ; 2 uses
   %i.ah = zext nneg i32 %i.ag to i64
   %i.ai = shl nuw i64 1, %i.ah
@@ -247,7 +243,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i.i
   %.not.i.i = icmp eq i32 %i.al, 0
   br i1 %.not.i.i, label %fw_domains_put.exit.i, label %.lr.ph.i.i, !llvm.loop !0
 
-fw_domains_put.exit.i:                            ; preds = %bb.i, %2
+fw_domains_put.exit.i:                            ; preds = %bb.i
   %i.aq = xor i32 %i.aa, -1
   %i.ar = load i32, ptr %i.i, align 8
   %i.as = and i32 %i.ar, %i.aq

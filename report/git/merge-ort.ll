@@ -204,8 +204,7 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 bb.t:                                             ; preds = %bb.r
-  %7 = add i64 %1, -1
-  %or.cond11 = icmp ult i64 %7, 7
+  %or.cond11 = icmp ult i64 %1, 8
   br i1 %or.cond11, label %.preheader, label %bb.u
 
 bb.u:                                             ; preds = %bb.t

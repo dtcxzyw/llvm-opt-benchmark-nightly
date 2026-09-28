@@ -205,7 +205,7 @@ CBB_len.exit:                                     ; preds = %bb.c, %bb.d
   br i1 %.not4673, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %CBB_len.exit, %bb.f
-  %.04274 = phi i64 [ %i.v, %bb.f ], [ 0, %CBB_len.exit ] ; 4 uses
+  %.04274 = phi i64 [ %i.v, %bb.f ], [ 0, %CBB_len.exit ] ; 3 uses
   %i.u = call i32 @CBS_get_any_asn1_element(ptr noundef nonnull %1, ptr noundef null, ptr noundef null, ptr noundef null) #11
   %.not48 = icmp eq i32 %i.u, 0
   br i1 %.not48, label %bb.e, label %bb.f
@@ -296,19 +296,15 @@ bb.m:                                             ; preds = %bb.l
   %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.bd
   br label %CBB_data.exit59
 
-CBB_data.exit59:                                  ; preds = %bb.l, %bb.m
+CBB_data.exit59:                                  ; preds = %bb.m, %bb.l
   %.0.i58 = phi ptr [ %i.be, %bb.m ], [ %i.aw, %bb.l ] ; 3 uses
-  %2 = icmp eq i64 %.04274, 0
-  br i1 %2, label %.epil.preheader, label %CBB_data.exit59.new
-
-CBB_data.exit59.new:                              ; preds = %CBB_data.exit59
   %unroll_iter = and i64 %i.v, -2
   br label %bb.n
 
-bb.n:                                             ; preds = %_ZL14OPENSSL_memcpyPvPKvm.exit.1, %CBB_data.exit59.new
-  %.077 = phi i64 [ 0, %CBB_data.exit59.new ], [ %i.bw, %_ZL14OPENSSL_memcpyPvPKvm.exit.1 ] ; 3 uses
-  %.03976 = phi i64 [ 0, %CBB_data.exit59.new ], [ %i.bv, %_ZL14OPENSSL_memcpyPvPKvm.exit.1 ] ; 2 uses
-  %niter = phi i64 [ 0, %CBB_data.exit59.new ], [ %niter.next.1, %_ZL14OPENSSL_memcpyPvPKvm.exit.1 ]
+bb.n:                                             ; preds = %_ZL14OPENSSL_memcpyPvPKvm.exit.1, %CBB_data.exit59
+  %.077 = phi i64 [ 0, %CBB_data.exit59 ], [ %i.bw, %_ZL14OPENSSL_memcpyPvPKvm.exit.1 ] ; 3 uses
+  %.03976 = phi i64 [ 0, %CBB_data.exit59 ], [ %i.bv, %_ZL14OPENSSL_memcpyPvPKvm.exit.1 ] ; 2 uses
+  %niter = phi i64 [ 0, %CBB_data.exit59 ], [ %niter.next.1, %_ZL14OPENSSL_memcpyPvPKvm.exit.1 ]
   %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %.077 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 2 uses
   %i.bh = load i64, ptr %i.bg, align 8, !tbaa !29 ; 2 uses
@@ -352,12 +348,10 @@ _ZL14OPENSSL_memcpyPvPKvm.exit.1:                 ; preds = %bb.p, %_ZL14OPENSSL
   %lcmp.mod.not.not = icmp eq i64 %i.bx, 0
   br i1 %lcmp.mod.not.not, label %.epil.preheader, label %.loopexit
 
-.epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %CBB_data.exit59
-  %.077.epil.init = phi i64 [ 0, %CBB_data.exit59 ], [ %i.bw, %.loopexit.loopexit.unr-lcssa ]
-  %.03976.epil.init = phi i64 [ 0, %CBB_data.exit59 ], [ %i.bv, %.loopexit.loopexit.unr-lcssa ]
+.epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa
   %lcmp.mod90 = trunc i64 %i.v to i1
   call void @llvm.assume(i1 %lcmp.mod90)
-  %i.by = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %.077.epil.init ; 2 uses
+  %i.by = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %i.bw ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !29 ; 2 uses
   %i.cb = icmp eq i64 %i.ca, 0
@@ -365,7 +359,7 @@ _ZL14OPENSSL_memcpyPvPKvm.exit.1:                 ; preds = %bb.p, %_ZL14OPENSSL
 
 bb.q:                                             ; preds = %.epil.preheader
   %i.cc = load ptr, ptr %i.by, align 8, !tbaa !28
-  %i.cd = getelementptr inbounds nuw i8, ptr %.0.i58, i64 %.03976.epil.init
+  %i.cd = getelementptr inbounds nuw i8, ptr %.0.i58, i64 %i.bv
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cd, ptr readonly align 1 %i.cc, i64 %i.ca, i1 false)
   br label %.loopexit
 

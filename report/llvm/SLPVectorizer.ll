@@ -205,7 +205,7 @@ _ZNK4llvm13slpvectorizer7BoUpSLP16findBestRootPairENS_8ArrayRefISt4pairIPNS_5Val
   %i.v = zext nneg i8 %.sroa.419.1.i to i64
   %i.w = shl nuw nsw i64 %i.v, 32
   %i.x = zext i32 %.sroa.018.1.i to i64
-  %i.y = or disjoint i64 %i.w, %i.x               ; 5 uses
+  %i.y = or disjoint i64 %i.w, %i.x               ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   store i32 %.1.i, ptr %3, align 4, !tbaa !380
@@ -237,8 +237,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %.idx = shl nuw nsw i64 %1, 4
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
-  %.not37 = icmp eq i64 %1, 0
-  br i1 %.not37, label %.loopexit, label %.lr.ph
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.g
   %.sroa.03.039 = phi ptr [ %i.ba, %bb.g ], [ %0, %bb.d ] ; 4 uses
@@ -279,8 +278,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.e, %bb.
   %.not = icmp eq ptr %i.ba, %i.ak
   br i1 %.not, label %.loopexit, label %.lr.ph
 
-.loopexit:                                        ; preds = %bb.g, %bb.d, %.critedge, %.thread, %bb.c
-  %.sroa.011.2 = phi i64 [ %.sroa.018.0.insert.insert.i34.ph, %.thread ], [ %i.y, %bb.c ], [ %.sroa.011.0.insert.insert, %.critedge ], [ %i.y, %bb.d ], [ %i.y, %bb.g ]
+.loopexit:                                        ; preds = %bb.g, %.critedge, %.thread, %bb.c
+  %.sroa.011.2 = phi i64 [ %.sroa.018.0.insert.insert.i34.ph, %.thread ], [ %i.y, %bb.c ], [ %.sroa.011.0.insert.insert, %.critedge ], [ %i.y, %bb.g ]
   ret i64 %.sroa.011.2
 }
 

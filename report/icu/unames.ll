@@ -205,19 +205,15 @@ bb.d:                                             ; preds = %.loopexit101
   %or.cond6.1 = select i1 %i.u, i1 %i.v, i1 false
   br i1 %or.cond6.1, label %.preheader.1, label %.loopexit101.1, !llvm.loop !114
 
-.loopexit101.1:                                   ; preds = %.preheader.1, %bb.d
-  %.280.1 = phi i16 [ 0, %bb.d ], [ %i.r, %.preheader.1 ] ; 3 uses
-  %.274.1 = phi ptr [ %.274, %bb.d ], [ %i.s, %.preheader.1 ] ; 3 uses
-  %.not = icmp eq i32 %3, 2
-  br i1 %.not, label %.loopexit102, label %6
+.loopexit101.1:                                   ; preds = %bb.d, %.preheader.1
+  %.280.1 = phi i16 [ 0, %bb.d ], [ %i.r, %.preheader.1 ] ; 2 uses
+  %.274.1 = phi ptr [ %.274, %bb.d ], [ %i.s, %.preheader.1 ] ; 2 uses
+  %.not = icmp eq i16 %.280.1, 0
+  br i1 %.not, label %.loopexit102, label %.preheader.2
 
-6:                                                ; preds = %.loopexit101.1
-  %.old5.not.2 = icmp eq i16 %.280.1, 0
-  br i1 %.old5.not.2, label %.loopexit102, label %.preheader.2
-
-.preheader.2:                                     ; preds = %6, %.preheader.2
-  %.179.2 = phi i16 [ %i.w, %.preheader.2 ], [ %.280.1, %6 ]
-  %.173.2 = phi ptr [ %i.x, %.preheader.2 ], [ %.274.1, %6 ] ; 2 uses
+.preheader.2:                                     ; preds = %.loopexit101.1, %.preheader.2
+  %.179.2 = phi i16 [ %i.w, %.preheader.2 ], [ %.280.1, %.loopexit101.1 ]
+  %.173.2 = phi ptr [ %i.x, %.preheader.2 ], [ %.274.1, %.loopexit101.1 ] ; 2 uses
   %i.w = add i16 %.179.2, -1                      ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.173.2, i64 1 ; 2 uses
   %i.y = load i8, ptr %.173.2, align 1, !tbaa !25
@@ -226,9 +222,9 @@ bb.d:                                             ; preds = %.loopexit101
   %or.cond6.2 = select i1 %i.z, i1 %i.aa, i1 false
   br i1 %or.cond6.2, label %.preheader.2, label %.loopexit102, !llvm.loop !114
 
-.loopexit102:                                     ; preds = %.loopexit101, %.loopexit101.1, %.preheader.2, %6, %bb.a
-  %.381 = phi i16 [ %2, %bb.a ], [ %.280, %.loopexit101 ], [ %.280.1, %.loopexit101.1 ], [ 0, %6 ], [ %i.w, %.preheader.2 ] ; 3 uses
-  %.375 = phi ptr [ %1, %bb.a ], [ %.274, %.loopexit101 ], [ %.274.1, %.loopexit101.1 ], [ %.274.1, %6 ], [ %i.x, %.preheader.2 ] ; 2 uses
+.loopexit102:                                     ; preds = %.loopexit101, %.preheader.2, %.loopexit101.1, %bb.a
+  %.381 = phi i16 [ %2, %bb.a ], [ %.280, %.loopexit101 ], [ 0, %.loopexit101.1 ], [ %i.w, %.preheader.2 ] ; 3 uses
+  %.375 = phi ptr [ %1, %bb.a ], [ %.274, %.loopexit101 ], [ %.274.1, %.loopexit101.1 ], [ %i.x, %.preheader.2 ] ; 2 uses
   %.not124179 = icmp eq i16 %.381, 0
   br i1 %.not124179, label %.loopexit99, label %.lr.ph.lr.ph
 
@@ -631,7 +627,6 @@ bb.o:                                             ; preds = %_ZN6icu_78L18expand
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.cd = icmp eq i32 %5, 2
   %i.ce = icmp sgt i32 %5, 1
-  %.not160 = icmp eq i32 %5, 2
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph33, %_ZN6icu_78L11compareNameEPNS_10UCharNamesEPKht15UCharNameChoicePKc.exit.thread
@@ -689,18 +684,15 @@ bb.s:                                             ; preds = %.loopexit89.i
   %or.cond6.i.1 = select i1 %i.cx, i1 %i.cy, i1 false
   br i1 %or.cond6.i.1, label %.preheader.i.1, label %.loopexit89.i.1, !llvm.loop !120
 
-.loopexit89.i.1:                                  ; preds = %.preheader.i.1, %bb.s
-  %.267.i.1 = phi ptr [ %.267.i, %bb.s ], [ %i.cv, %.preheader.i.1 ] ; 3 uses
-  %.263.i.1 = phi i16 [ 0, %bb.s ], [ %i.cu, %.preheader.i.1 ] ; 3 uses
-  br i1 %.not160, label %.loopexit90.i, label %6
-
-6:                                                ; preds = %.loopexit89.i.1
+.loopexit89.i.1:                                  ; preds = %bb.s, %.preheader.i.1
+  %.267.i.1 = phi ptr [ %.267.i, %bb.s ], [ %i.cv, %.preheader.i.1 ] ; 2 uses
+  %.263.i.1 = phi i16 [ 0, %bb.s ], [ %i.cu, %.preheader.i.1 ] ; 2 uses
   %.old5.not.i.2 = icmp eq i16 %.263.i.1, 0
   br i1 %.old5.not.i.2, label %.loopexit90.i, label %.preheader.i.2
 
-.preheader.i.2:                                   ; preds = %6, %.preheader.i.2
-  %.166.i.2 = phi ptr [ %i.da, %.preheader.i.2 ], [ %.267.i.1, %6 ] ; 2 uses
-  %.162.i.2 = phi i16 [ %i.cz, %.preheader.i.2 ], [ %.263.i.1, %6 ]
+.preheader.i.2:                                   ; preds = %.loopexit89.i.1, %.preheader.i.2
+  %.166.i.2 = phi ptr [ %i.da, %.preheader.i.2 ], [ %.267.i.1, %.loopexit89.i.1 ] ; 2 uses
+  %.162.i.2 = phi i16 [ %i.cz, %.preheader.i.2 ], [ %.263.i.1, %.loopexit89.i.1 ]
   %i.cz = add i16 %.162.i.2, -1                   ; 3 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.166.i.2, i64 1 ; 2 uses
   %i.db = load i8, ptr %.166.i.2, align 1, !tbaa !25
@@ -709,9 +701,9 @@ bb.s:                                             ; preds = %.loopexit89.i
   %or.cond6.i.2 = select i1 %i.dc, i1 %i.dd, i1 false
   br i1 %or.cond6.i.2, label %.preheader.i.2, label %.loopexit90.i, !llvm.loop !120
 
-.loopexit90.i:                                    ; preds = %.loopexit89.i, %.loopexit89.i.1, %.preheader.i.2, %6, %bb.p
-  %.368.i = phi ptr [ %i.ck, %bb.p ], [ %.267.i, %.loopexit89.i ], [ %.267.i.1, %.loopexit89.i.1 ], [ %.267.i.1, %6 ], [ %i.da, %.preheader.i.2 ]
-  %.364.i = phi i16 [ %i.cm, %bb.p ], [ %.263.i, %.loopexit89.i ], [ %.263.i.1, %.loopexit89.i.1 ], [ 0, %6 ], [ %i.cz, %.preheader.i.2 ] ; 2 uses
+.loopexit90.i:                                    ; preds = %.loopexit89.i, %.preheader.i.2, %.loopexit89.i.1, %bb.p
+  %.368.i = phi ptr [ %i.ck, %bb.p ], [ %.267.i, %.loopexit89.i ], [ %.267.i.1, %.loopexit89.i.1 ], [ %i.da, %.preheader.i.2 ]
+  %.364.i = phi i16 [ %i.cm, %bb.p ], [ %.263.i, %.loopexit89.i ], [ 0, %.loopexit89.i.1 ], [ %i.cz, %.preheader.i.2 ] ; 2 uses
   %.not109138.i = icmp eq i16 %.364.i, 0
   br i1 %.not109138.i, label %_ZN6icu_78L11compareNameEPNS_10UCharNamesEPKht15UCharNameChoicePKc.exit, label %.lr.ph.i
 

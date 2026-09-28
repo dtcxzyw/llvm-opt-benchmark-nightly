@@ -205,7 +205,6 @@ bb.a:
   %i.m = zext nneg i32 %2 to i64                  ; 6 uses
   %i.n = zext nneg i32 %i.k to i64
   %i.o = zext nneg i32 %i.l to i64
-  %.not263 = icmp eq i32 %2, 0
   %i.p = shl nuw nsw i64 %i.m, 1
   %i.q = mul nuw nsw i64 %i.m, 3
   %i.r = shl nuw nsw i64 %i.m, 2
@@ -295,26 +294,20 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.ba = icmp eq ptr %.086173, null
-  br i1 %i.ba, label %bb.m, label %.preheader113.preheader
+  br i1 %i.ba, label %bb.m, label %.lr.ph163
 
 bb.m:                                             ; preds = %bb.l
   %i.bb = tail call noalias ptr @malloc(i64 noundef %i.i) #16 ; 2 uses
   %i.bc = icmp eq ptr %i.bb, null
-  br i1 %i.bc, label %bb.n, label %.preheader113.preheader
-
-.preheader113.preheader:                          ; preds = %bb.l, %bb.m
-  %.187265 = phi ptr [ %i.bb, %bb.m ], [ %.086173, %bb.l ] ; 16 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.187265, i64 %i.m ; 2 uses
-  br i1 %.not263, label %.loopexit112, label %.lr.ph163
+  br i1 %i.bc, label %bb.n, label %.lr.ph163
 
 bb.n:                                             ; preds = %bb.m
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.15, ptr noundef nonnull @.str.9) #13
   br label %.critedge109
 
-.loopexit112:                                     ; preds = %.loopexit, %.preheader113.preheader
-  %.1.lcssa = phi ptr [ %.187265, %.preheader113.preheader ], [ %.3, %.loopexit ] ; 3 uses
+.loopexit112:                                     ; preds = %.loopexit
   %i.bd = getelementptr inbounds nuw i8, ptr %.187265, i64 %i.p ; 3 uses
-  %i.be = icmp ult ptr %.1.lcssa, %i.bd
+  %i.be = icmp ult ptr %.3, %i.bd
   br i1 %i.be, label %.lr.ph163.1, label %.loopexit112.1
 
 .lr.ph163.1:                                      ; preds = %.loopexit112
@@ -322,7 +315,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %.loopexit.1, %.lr.ph163.1
-  %.1162.1 = phi ptr [ %.1.lcssa, %.lr.ph163.1 ], [ %.3.1, %.loopexit.1 ] ; 6 uses
+  %.1162.1 = phi ptr [ %.3, %.lr.ph163.1 ], [ %.3.1, %.loopexit.1 ] ; 6 uses
   %i.bg = call i64 @fread(ptr noundef nonnull %i.b, i64 noundef 2, i64 noundef 1, ptr noundef %0)
   %i.bh = icmp eq i64 %i.bg, 0
   br i1 %i.bh, label %.loopexit215, label %bb.p
@@ -412,7 +405,7 @@ vec.epilog.middle.block568:                       ; preds = %vec.epilog.vector.b
   br i1 %i.ch, label %bb.o, label %.loopexit112.1
 
 .loopexit112.1:                                   ; preds = %.loopexit.1, %.loopexit112
-  %.1.lcssa.1 = phi ptr [ %.1.lcssa, %.loopexit112 ], [ %.3.1, %.loopexit.1 ] ; 3 uses
+  %.1.lcssa.1 = phi ptr [ %.3, %.loopexit112 ], [ %.3.1, %.loopexit.1 ] ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %.187265, i64 %i.q ; 3 uses
   %i.cj = icmp ult ptr %.1.lcssa.1, %i.ci
   br i1 %i.cj, label %.lr.ph163.2, label %.loopexit112.2
@@ -617,7 +610,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %invariant.gep384 = getelementptr inbounds nuw i8, ptr %.187265, i64 %i.o
   br label %.lr.ph169
 
-.lr.ph163:                                        ; preds = %.preheader113.preheader
+.lr.ph163:                                        ; preds = %bb.l, %bb.m
+  %.187265 = phi ptr [ %i.bb, %bb.m ], [ %.086173, %bb.l ] ; 15 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.187265, i64 %i.m ; 2 uses
   %i.es = ptrtoint ptr %4 to i64
   br label %bb.aj
 
@@ -733,7 +728,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %vec.epilog.middle.block598, %bb.an, %bb.ap
-  %.3 = phi ptr [ %i.fr, %bb.an ], [ %i.fz, %bb.ap ], [ %i.fg, %vec.epilog.middle.block598 ], [ %i.fl, %.lr.ph ] ; 3 uses
+  %.3 = phi ptr [ %i.fr, %bb.an ], [ %i.fz, %bb.ap ], [ %i.fg, %vec.epilog.middle.block598 ], [ %i.fl, %.lr.ph ] ; 5 uses
   %i.ga = icmp ult ptr %.3, %4
   br i1 %i.ga, label %bb.aj, label %.loopexit112
 

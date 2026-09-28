@@ -205,7 +205,7 @@ bb.fx:                                            ; preds = %bb.fw, %bb.fv
   br i1 %i.act, label %bb.fz, label %bb.fy
 
 bb.fy:                                            ; preds = %bb.fx
-  %i.acu = load i32, ptr %i.dk, align 4, !tbaa !99 ; 8 uses
+  %i.acu = load i32, ptr %i.dk, align 4, !tbaa !99 ; 6 uses
   %i.acv = add i32 %i.acu, -5
   %or.cond437 = icmp ult i32 %i.acv, -4
   br i1 %or.cond437, label %bb.fz, label %.lr.ph513
@@ -370,24 +370,18 @@ vector.body678:                                   ; preds = %vector.body678, %ve
   %i.aft = getelementptr inbounds nuw i8, ptr %i.afs, i64 56
   %i.afu = load double, ptr %i.aft, align 8, !tbaa !137 ; 4 uses
   %i.afv = fcmp reassoc nsz arcp contract afn olt double %.1..6, %i.afu
-  %.1..7 = select reassoc nsz arcp contract afn i1 %i.afv, double %.1..6, double %i.afu ; 3 uses
+  %.1..7 = select reassoc nsz arcp contract afn i1 %i.afv, double %.1..6, double %i.afu ; 2 uses
   %i.afw = fcmp reassoc nsz arcp contract afn ogt double %i.afr, %i.afu
-  %i.afx = select reassoc nsz arcp contract afn i1 %i.afw, double %i.afr, double %i.afu ; 3 uses
+  %i.afx = select reassoc nsz arcp contract afn i1 %i.afw, double %i.afr, double %i.afu ; 2 uses
   %indvars.iv.next593.7 = add nuw nsw i64 %indvars.iv592, 8 ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, 0
-  br i1 %niter.ncmp.7, label %._crit_edge534.unr-lcssa, label %.lr.ph533, !llvm.loop !159
+  br i1 %niter.ncmp.7, label %.lr.ph533.epil.preheader, label %.lr.ph533, !llvm.loop !159
 
-._crit_edge534.unr-lcssa:                         ; preds = %.lr.ph533
-  %lcmp.mod.not = icmp eq i32 %i.acu, 0
-  br i1 %lcmp.mod.not, label %._crit_edge534, label %.lr.ph533.epil.preheader
-
-.lr.ph533.epil.preheader:                         ; preds = %._crit_edge534.unr-lcssa, %.lr.ph533.preheader
-  %indvars.iv592.epil.init = phi i64 [ 0, %.lr.ph533.preheader ], [ %indvars.iv.next593.7, %._crit_edge534.unr-lcssa ]
-  %.0531.epil.init = phi double [ %.pre597, %.lr.ph533.preheader ], [ %i.afx, %._crit_edge534.unr-lcssa ]
-  %.1530.epil.init = phi double [ %.pre597, %.lr.ph533.preheader ], [ %.1..7, %._crit_edge534.unr-lcssa ]
-  %lcmp.mod696 = icmp ne i32 %i.acu, 0
-  call void @llvm.assume(i1 %lcmp.mod696)
+.lr.ph533.epil.preheader:                         ; preds = %.lr.ph533, %.lr.ph533.preheader
+  %indvars.iv592.epil.init = phi i64 [ 0, %.lr.ph533.preheader ], [ %indvars.iv.next593.7, %.lr.ph533 ]
+  %.0531.epil.init = phi double [ %.pre597, %.lr.ph533.preheader ], [ %i.afx, %.lr.ph533 ]
+  %.1530.epil.init = phi double [ %.pre597, %.lr.ph533.preheader ], [ %.1..7, %.lr.ph533 ]
   br label %.lr.ph533.epil
 
 .lr.ph533.epil:                                   ; preds = %.lr.ph533.epil, %.lr.ph533.epil.preheader
@@ -406,11 +400,9 @@ vector.body678:                                   ; preds = %vector.body678, %ve
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %wide.trip.count580
   br i1 %epil.iter.cmp.not, label %._crit_edge534, label %.lr.ph533.epil, !llvm.loop !160
 
-._crit_edge534:                                   ; preds = %.lr.ph533.epil, %._crit_edge534.unr-lcssa
-  %.1..lcssa = phi double [ %.1..7, %._crit_edge534.unr-lcssa ], [ %.1..epil, %.lr.ph533.epil ]
-  %.lcssa = phi double [ %i.afx, %._crit_edge534.unr-lcssa ], [ %i.agc, %.lr.ph533.epil ]
-  %i.agd = fcmp reassoc nsz arcp contract afn ole double %.1..lcssa, f0x3F847AE140000000
-  %i.age = fcmp reassoc nsz arcp contract afn ogt double %.lcssa, 1.000000e+02
+._crit_edge534:                                   ; preds = %.lr.ph533.epil
+  %i.agd = fcmp reassoc nsz arcp contract afn ole double %.1..epil, f0x3F847AE140000000
+  %i.age = fcmp reassoc nsz arcp contract afn ogt double %i.agc, 1.000000e+02
   %or.cond20 = select i1 %i.agd, i1 true, i1 %i.age
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #19
   br i1 %or.cond20, label %.critedge440, label %bb.ge

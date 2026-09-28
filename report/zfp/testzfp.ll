@@ -204,15 +204,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IfNS0_11BlockStore1IfNS_5codec4zfp1IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !449
-  %i.t = load i32, ptr %0, align 8, !tbaa !124    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !124    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !53   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IfNS0_11BlockStore1IfNS_5codec4zfp1IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -227,10 +226,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !446
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache1IfNS0_11BlockStore1IfNS_5codec4zfp1IfEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IfNS0_11BlockStore1IfNS_5codec4zfp1IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IfNS0_11BlockStore1IfNS_5codec4zfp1IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IfNS0_11BlockStore1IfNS_5codec4zfp1IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
@@ -633,15 +632,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !471
-  %i.t = load i32, ptr %0, align 8, !tbaa !136    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !136    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !59   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -656,10 +654,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !468
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
@@ -1062,15 +1060,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !491
-  %i.t = load i32, ptr %0, align 8, !tbaa !156    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !156    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !65   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1085,10 +1082,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !488
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
@@ -1491,15 +1488,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !523
-  %i.t = load i32, ptr %0, align 8, !tbaa !163    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !163    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !71   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1514,10 +1510,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !520
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
@@ -1920,15 +1916,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IdNS0_11BlockStore1IdNS_5codec4zfp1IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !683
-  %i.t = load i32, ptr %0, align 8, !tbaa !233    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !233    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !77   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IdNS0_11BlockStore1IdNS_5codec4zfp1IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1943,10 +1938,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !680
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache1IdNS0_11BlockStore1IdNS_5codec4zfp1IdEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IdNS0_11BlockStore1IdNS_5codec4zfp1IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IdNS0_11BlockStore1IdNS_5codec4zfp1IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache1IdNS0_11BlockStore1IdNS_5codec4zfp1IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
@@ -2349,15 +2344,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !705
-  %i.t = load i32, ptr %0, align 8, !tbaa !244    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !244    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !83   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2372,10 +2366,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !702
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
@@ -2778,15 +2772,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !725
-  %i.t = load i32, ptr %0, align 8, !tbaa !261    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !261    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !89   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2801,10 +2794,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !722
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
@@ -3207,15 +3200,14 @@ bb.g:                                             ; preds = %_ZN3zfp8internal18d
 
 _ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit: ; preds = %_ZN3zfp8internal18deallocate_alignedEPv.exit9.i.i4
   store ptr %i.r, ptr %i.l, align 8, !tbaa !757
-  %i.t = load i32, ptr %0, align 8, !tbaa !267    ; 3 uses
+  %i.t = load i32, ptr %0, align 8, !tbaa !267    ; 2 uses
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !95   ; 2 uses
-  %2 = add i32 %i.t, 1                            ; 2 uses
-  %.off = add i32 %i.t, -7
-  %switch = icmp ult i32 %.off, -8
-  br i1 %switch, label %vector.ph, label %scalar.ph.preheader
+  %.off = add i32 %i.t, 1                         ; 3 uses
+  %switch = icmp ult i32 %.off, 8
+  br i1 %switch, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
-  %n.vec = and i32 %2, -8                         ; 3 uses
+  %n.vec = and i32 %.off, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3230,10 +3222,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !754
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %.off, %n.vec
   br i1 %cmp.n, label %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE5clearEv.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %middle.block, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit
+scalar.ph.preheader:                              ; preds = %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit, %middle.block
   %.03.i.ph = phi i32 [ 0, %_ZN3zfp8internal18reallocate_alignedINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEEEvRPT_mmm.exit ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 

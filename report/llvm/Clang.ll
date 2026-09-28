@@ -205,14 +205,13 @@ begin_hunk_0_@_ZNK5clang6driver5tools5Clang12ConstructJobERNS0_11CompilationERKN
 
 bb.b:                                             ; preds = %bb.a
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bu = load i32, ptr %i.bt, align 8, !tbaa !285 ; 2 uses
+  %i.bu = load i32, ptr %i.bt, align 8, !tbaa !285
   %i.bv = and i32 %i.bu, %.fr7980
   %.not7921 = icmp eq i32 %i.bv, 0
   br i1 %.not7921, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %520 = icmp ne i32 %i.bu, 0
-  %i.bw = call noundef zeroext i1 @_ZNK4llvm3opt7ArgList7hasFlagENS0_12OptSpecifierES2_b(ptr noundef nonnull align 8 dereferenceable(176) %5, i32 3289, i32 3215, i1 noundef zeroext %520) #21
+  %i.bw = call noundef zeroext i1 @_ZNK4llvm3opt7ArgList7hasFlagENS0_12OptSpecifierES2_b(ptr noundef nonnull align 8 dereferenceable(176) %5, i32 3289, i32 3215, i1 noundef zeroext true) #21
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 _ZN7AstNode4castI11AstNodeStmtS_EEPT_PT0_.exit:   ; preds = %bb.e, %bb.d, %bb.b, %bb.a
   %.0.shrunk = phi i1 [ true, %bb.b ], [ false, %bb.a ], [ false, %bb.d ], [ false, %bb.e ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 3 uses
-  %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.v, align 8, !tbaa !155 ; 5 uses
+  %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.v, align 8, !tbaa !155 ; 4 uses
   %i.w = add i16 %.sroa.0.0.copyload.i.i.i, -484
   %spec.select.i.i = icmp ult i16 %i.w, -79
   br i1 %spec.select.i.i, label %_ZN7AstNode4castI9AstVarRefS_EEPT_PT0_.exit, label %bb.f
@@ -607,10 +607,8 @@ bb.au:                                            ; preds = %bb.at, %_ZNSt3setIP
 bb.av:                                            ; preds = %_ZN7AstNode4castI9AstVarRefS_EEPT_PT0_.exit
   %i.gt = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !304 ; 5 uses
-  %.not.i27 = icmp eq ptr %i.gu, null
-  %i.gv = icmp eq i16 %.sroa.0.0.copyload.i.i.i, 455
-  %or.cond = or i1 %.not.i27, %i.gv
-  br i1 %or.cond, label %_ZN12_GLOBAL__N_125CodeMotionAnalysisVisitor11analyzeNodeEP7AstNode.exit, label %bb.aw
+  %i.gv = icmp eq ptr %i.gu, null
+  br i1 %i.gv, label %_ZN12_GLOBAL__N_125CodeMotionAnalysisVisitor11analyzeNodeEP7AstNode.exit, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.gw = add i16 %.sroa.0.0.copyload.i.i.i, -287

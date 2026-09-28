@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %_RINvNtCskKLDkoKarT
   %i.ak = getelementptr inbounds nuw i8, ptr %i.g, i64 320 ; 2 uses
   %i.al = load ptr, ptr %i.ak, align 8, !noalias !75, !nonnull !5, !noundef !5 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.g, i64 328 ; 2 uses
-  %i.an = load i64, ptr %i.am, align 8, !noalias !75, !noundef !5 ; 3 uses
+  %i.an = load i64, ptr %i.am, align 8, !noalias !75, !noundef !5 ; 2 uses
   %.idx = mul nuw nsw i64 %i.an, 48
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !76)
@@ -236,15 +236,14 @@ bb.r:                                             ; preds = %bb.n
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !80
   %.sroa.512.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 0, ptr %.sroa.512.0..sroa_idx.i.i, align 8, !noalias !80
-  %2 = icmp eq i64 %i.an, 0
-  br i1 %2, label %.thread.i.i, label %.lr.ph
+  br label %.lr.ph
 
 bb.s:                                             ; preds = %bb.ae
   %i.av = icmp eq ptr %i.aw, %i.ao
   br i1 %i.av, label %.thread.i.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.r, %bb.s
-  %.sroa.025.0.i.i24 = phi ptr [ %i.aw, %bb.s ], [ %i.al, %bb.r ] ; 2 uses
+  %.sroa.025.0.i.i24 = phi ptr [ %i.al, %bb.r ], [ %i.aw, %bb.s ] ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.025.0.i.i24, i64 48 ; 2 uses
   %i.ax = invoke { ptr, i64 } @_RNvXNtNtCs7gfv9tzbXmh_6yara_x8compiler5atomsNtB2_4AtomINtNtCskKLDkoKarTP_4core7convert5AsRefShE6as_ref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.025.0.i.i24)
           to label %bb.u unwind label %bb.t, !noalias !80 ; 2 uses
@@ -264,7 +263,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bb = icmp eq i64 %i.ba, 0
   br i1 %i.bb, label %bb.af, label %bb.ae
 
-.thread.i.i:                                      ; preds = %bb.s, %bb.u, %bb.r
+.thread.i.i:                                      ; preds = %bb.s, %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !80
   invoke void @_RNvMNtCs7gfv9tzbXmh_6yara_x5teddyNtB2_7Builder5build(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.b)
           to label %bb.y unwind label %bb.x, !noalias !80

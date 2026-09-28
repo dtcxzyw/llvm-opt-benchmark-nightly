@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.w, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.x = load i64, ptr %i.i, align 8, !tbaa !248  ; 3 uses
+  %i.x = load i64, ptr %i.i, align 8, !tbaa !248  ; 2 uses
   %.not.i = icmp ult i64 %i.x, 4294967296
   br i1 %.not.i, label %bb.f, label %bb.e
 
@@ -243,7 +243,7 @@ bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #26
   %i.ah = add i32 %i.ag, -4
   %or.cond = icmp ult i32 %i.ah, -3
-  br i1 %or.cond, label %._crit_edge.i.i, label %32
+  br i1 %or.cond, label %._crit_edge.i.i, label %.lr.ph254
 
 ._crit_edge.i.i:                                  ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #26
@@ -295,12 +295,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #26
   br label %.thread215
 
-32:                                               ; preds = %bb.f
+.lr.ph254:                                        ; preds = %bb.f
   call void @_ZN4llvm13line_iterator7advanceEv(ptr noundef nonnull align 8 dereferenceable(64) %i.j) #26, !noalias !919
-  %.not255 = icmp eq i64 %i.x, 0
-  br i1 %.not255, label %._crit_edge, label %.lr.ph254
-
-.lr.ph254:                                        ; preds = %32
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %29, i64 8
@@ -703,7 +699,7 @@ _ZNSt6vectorI18InstrProfValueDataSaIS0_EED2Ev.exit: ; preds = %bb.ah, %.critedge
   %exitcond267.not = icmp eq i32 %i.ic, %i.ag
   br i1 %exitcond267.not, label %._crit_edge, label %bb.g, !llvm.loop !906
 
-._crit_edge:                                      ; preds = %.loopexit, %32
+._crit_edge:                                      ; preds = %.loopexit
   call void @llvm.experimental.noalias.scope.decl(metadata !944)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26, !noalias !944
   %i.id = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses

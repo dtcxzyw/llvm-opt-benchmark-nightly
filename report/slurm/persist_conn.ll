@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
   br label %.loopexit104.i
 
 bb.k:                                             ; preds = %bb.i
-  %i.ay = load i32, ptr %i.a, align 4             ; 2 uses
+  %i.ay = load i32, ptr %i.a, align 4
   %i.az = call noundef i32 @llvm.bswap.i32(i32 %i.ay) ; 4 uses
   %i.ba = add i32 %i.az, -1073741825
   %or.cond.i = icmp ult i32 %i.ba, -1073741823
@@ -218,15 +218,14 @@ bb.m:                                             ; preds = %bb.k
   %i.be = zext nneg i32 %i.az to i64              ; 4 uses
   %i.bf = call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef %i.be, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.3, i32 noundef 277, ptr noundef nonnull @__func__._process_service_connection) #12
   store ptr %i.bf, ptr %i.b, align 8
-  %.not123.i = icmp eq i32 %i.ay, 0
-  br i1 %.not123.i, label %.loopexit.i, label %.lr.ph.i
+  br label %.lr.ph.i
 
 bb.n:                                             ; preds = %bb.o
   %i.bg = add nuw nsw i64 %i.bn, %.083110.i       ; 3 uses
   %i.bh = icmp slt i64 %i.bg, %i.be
   br i1 %i.bh, label %.lr.ph.i, label %.loopexit.i, !llvm.loop !19
 
-.lr.ph.i:                                         ; preds = %bb.m, %bb.n
+.lr.ph.i:                                         ; preds = %bb.n, %bb.m
   %.083110.i = phi i64 [ %i.bg, %bb.n ], [ 0, %bb.m ] ; 5 uses
   %i.bi = call fastcc zeroext i1 @_conn_readable(ptr noundef nonnull %i.i)
   br i1 %i.bi, label %bb.o, label %.loopexit.i
@@ -244,8 +243,8 @@ bb.p:                                             ; preds = %bb.o
   %i.bp = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.39, i32 noundef %i.k) #12 ; 0 uses
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.lr.ph.i, %bb.n, %bb.p, %bb.m
-  %.083106.i = phi i64 [ %.083110.i, %bb.p ], [ 0, %bb.m ], [ %.083110.i, %.lr.ph.i ], [ %i.bg, %bb.n ]
+.loopexit.i:                                      ; preds = %.lr.ph.i, %bb.n, %bb.p
+  %.083106.i = phi i64 [ %.083110.i, %bb.p ], [ %.083110.i, %.lr.ph.i ], [ %i.bg, %bb.n ]
   %i.bq = icmp eq i64 %.083106.i, %i.be
   br i1 %i.bq, label %bb.q, label %bb.w
 
@@ -648,7 +647,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.z
 
 bb.o:                                             ; preds = %bb.k
-  %i.ad = load i32, ptr %i.a, align 4             ; 2 uses
+  %i.ad = load i32, ptr %i.a, align 4
   %i.ae = call noundef i32 @llvm.bswap.i32(i32 %i.ad) ; 6 uses
   %i.af = add i32 %i.ae, 2
   %or.cond3 = icmp ult i32 %i.af, 4
@@ -663,11 +662,7 @@ bb.q:                                             ; preds = %bb.o
   %i.ai = call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef %i.ah, i1 noundef zeroext true, i1 noundef zeroext true, ptr noundef nonnull @.str.3, i32 noundef 1098, ptr noundef nonnull @__func__._slurm_persist_recv_msg) #12 ; 4 uses
   store ptr %i.ai, ptr %i.b, align 8
   %.not52 = icmp eq ptr %i.ai, null
-  br i1 %.not52, label %bb.r, label %.preheader
-
-.preheader:                                       ; preds = %bb.q
-  %.not64 = icmp eq i32 %i.ad, 0
-  br i1 %.not64, label %.loopexit, label %.lr.ph
+  br i1 %.not52, label %bb.r, label %.lr.ph
 
 bb.r:                                             ; preds = %bb.q
   %i.aj = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.60, ptr noundef nonnull @__func__._slurm_persist_recv_msg, i32 noundef %i.ae) #12 ; 0 uses
@@ -678,8 +673,8 @@ bb.s:                                             ; preds = %bb.t
   %i.al = icmp slt i64 %i.ak, %i.ah
   br i1 %i.al, label %.lr.ph, label %.loopexit, !llvm.loop !22
 
-.lr.ph:                                           ; preds = %.preheader, %bb.s
-  %.061 = phi i64 [ %i.ak, %bb.s ], [ 0, %.preheader ] ; 5 uses
+.lr.ph:                                           ; preds = %bb.q, %bb.s
+  %.061 = phi i64 [ %i.ak, %bb.s ], [ 0, %bb.q ]  ; 5 uses
   %i.am = call fastcc zeroext i1 @_conn_readable(ptr noundef nonnull %0)
   br i1 %i.am, label %bb.t, label %.loopexit
 
@@ -697,8 +692,8 @@ bb.u:                                             ; preds = %bb.t
   %i.au = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.61, ptr noundef nonnull @__func__._slurm_persist_recv_msg, i32 noundef %i.at) #12 ; 0 uses
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.s, %.lr.ph, %.preheader, %bb.u
-  %.060 = phi i64 [ %.061, %bb.u ], [ 0, %.preheader ], [ %i.ak, %bb.s ], [ %.061, %.lr.ph ] ; 2 uses
+.loopexit:                                        ; preds = %bb.s, %.lr.ph, %bb.u
+  %.060 = phi i64 [ %.061, %bb.u ], [ %i.ak, %bb.s ], [ %.061, %.lr.ph ] ; 2 uses
   %.not53 = icmp eq i64 %.060, %i.ah
   br i1 %.not53, label %bb.y, label %bb.v
 

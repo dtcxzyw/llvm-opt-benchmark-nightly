@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.bt
   %i.hd = trunc i32 %.sroa.8.0.insert.insert.i to i1
   %.sroa.5295.0.extract.shift = lshr i32 %.sroa.8.0.insert.insert.i, 16
   %.sroa.5295.0.extract.trunc = trunc nuw i32 %.sroa.5295.0.extract.shift to i16
-  %.sroa.039.0 = select i1 %i.hd, i16 200, i16 %.sroa.5295.0.extract.trunc ; 3 uses
+  %.sroa.039.0 = select i1 %i.hd, i16 200, i16 %.sroa.5295.0.extract.trunc ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai)
   %i.he = getelementptr inbounds nuw i8, ptr %i.ai, i64 88
@@ -470,8 +470,6 @@ bb.be:                                            ; preds = %.thread676
           to label %bb.bl unwind label %bb.bz
 
 bb.bf:                                            ; preds = %.thread676
-  %3 = icmp ne i16 %.sroa.039.0, 0
-  call void @llvm.assume(i1 %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.080.sroa.0.sroa.0, ptr noundef nonnull align 8 dereferenceable(96) %i.au, i64 96, i1 false)
   %.sroa.080.sroa.0.sroa.0.96..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.080.sroa.0.sroa.0, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.080.sroa.0.sroa.0.96..sroa_idx, ptr noundef nonnull align 8 dereferenceable(96) %i.ai, i64 96, i1 false)

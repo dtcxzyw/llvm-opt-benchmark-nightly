@@ -123,11 +123,11 @@ bb.g:                                             ; preds = %._crit_edge171, %._
   %spec.select.i88.pre-phi = phi i64 [ %.pre172, %._crit_edge171 ], [ %spec.select.i87, %._crit_edge ]
   %.sroa.15.0 = phi i64 [ 0, %._crit_edge171 ], [ %i.al, %._crit_edge ] ; 2 uses
   %.sroa.11.0 = phi i64 [ 0, %._crit_edge171 ], [ %i.af, %._crit_edge ]
-  %.sroa.0133.0 = phi ptr [ null, %._crit_edge171 ], [ %i.ab, %._crit_edge ] ; 8 uses
+  %.sroa.0133.0 = phi ptr [ null, %._crit_edge171 ], [ %i.ab, %._crit_edge ] ; 7 uses
   %.062 = phi i64 [ 0, %._crit_edge171 ], [ %.sroa.speculated, %._crit_edge ] ; 3 uses
   %i.am = sub i64 %spec.select.i88.pre-phi, %.062 ; 2 uses
   %i.an = ptrtoint ptr %.sroa.0133.0 to i64       ; 3 uses
-  %i.ao = sub i64 %.sroa.11.0, %i.an              ; 5 uses
+  %i.ao = sub i64 %.sroa.11.0, %i.an              ; 4 uses
   %i.ap = lshr i64 %i.ao, 2                       ; 3 uses
   %i.aq = mul nuw i64 %i.ap, 3
   %i.ar = lshr i64 %i.am, 2                       ; 2 uses
@@ -142,36 +142,24 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.av = icmp ugt i64 %i.ao, 2
-  br i1 %i.av, label %bb.j, label %12
+  br i1 %i.av, label %bb.j, label %.thread.thread17.i
 
 bb.j:                                             ; preds = %bb.i
   %i.aw = getelementptr i8, ptr %.sroa.0133.0, i64 %i.ao ; 2 uses
   %i.ax = getelementptr i8, ptr %i.aw, i64 -1
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !25
   %i.az = icmp eq i8 %i.ay, 61
-  br i1 %i.az, label %8, label %.thread.thread17.i
+  br i1 %i.az, label %.thread.i, label %.thread.thread17.i
 
-8:                                                ; preds = %bb.j
-  %9 = getelementptr i8, ptr %i.aw, i64 -2
-  %10 = load i8, ptr %9, align 1, !tbaa !25
-  %11 = icmp eq i8 %10, 61
-  br i1 %11, label %.thread.thread17.i, label %.thread.thread.i
-
-12:                                               ; preds = %bb.i
-  %13 = icmp eq i64 %i.ao, 2
-  br i1 %13, label %.thread.i, label %.thread.thread17.i
-
-.thread.i:                                        ; preds = %12
-  %.phi.trans.insert15.i = getelementptr i8, ptr %.sroa.0133.0, i64 1
+.thread.i:                                        ; preds = %bb.j
+  %.phi.trans.insert15.i = getelementptr i8, ptr %i.aw, i64 -2
   %.pre.i = load i8, ptr %.phi.trans.insert15.i, align 1, !tbaa !25
   %i.ba = icmp eq i8 %.pre.i, 61
-  br i1 %i.ba, label %.thread.thread.i, label %.thread.thread17.i
-
-.thread.thread.i:                                 ; preds = %.thread.i, %8
+  %spec.select171 = select i1 %i.ba, i64 2, i64 1
   br label %.thread.thread17.i
 
-.thread.thread17.i:                               ; preds = %.thread.thread.i, %.thread.i, %12, %8, %bb.j
-  %.sink.i = phi i64 [ 1, %.thread.thread.i ], [ 2, %8 ], [ 0, %bb.j ], [ 0, %.thread.i ], [ 0, %12 ] ; 2 uses
+.thread.thread17.i:                               ; preds = %.thread.i, %bb.i, %bb.j
+  %.sink.i = phi i64 [ 0, %bb.i ], [ %spec.select171, %.thread.i ], [ 0, %bb.j ] ; 2 uses
   %sext.i = shl i64 %i.ao, 32
   %i.bb = ashr exact i64 %sext.i, 32
   %i.bc = invoke i64 @modp_b64_decode(ptr noundef nonnull %i.au, ptr noundef %.sroa.0133.0, i64 noundef %i.bb)

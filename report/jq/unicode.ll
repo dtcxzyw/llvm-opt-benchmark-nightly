@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c, %bb.c, %bb.c,
   br i1 %i.q, label %bb.b, label %._crit_edge, !llvm.loop !82
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.a
-  %.026.lcssa = phi i32 [ 0, %bb.a ], [ %.1, %bb.e ] ; 19 uses
+  %.026.lcssa = phi i32 [ 0, %bb.a ], [ %.1, %bb.e ] ; 18 uses
   %i.r = sext i32 %.026.lcssa to i64              ; 4 uses
   %i.s = getelementptr inbounds i8, ptr %i.a, i64 %i.r ; 3 uses
   store i8 0, ptr %i.s, align 1, !tbaa !24
@@ -352,11 +352,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ck = xor i8 %i.cj, %i.bo
   %i.cl = and i8 %i.ck, -33
   %i.cm = icmp eq i8 %i.cl, 0
-  br i1 %i.cm, label %.preheader.i.preheader, label %unicode_lookup_property_name.exit.thread
-
-.preheader.i.preheader:                           ; preds = %bb.q
-  %.not.i.i49 = icmp eq i32 %.026.lcssa, 0
-  br i1 %.not.i.i49, label %gperf_case_strncmp.exit.thread.i, label %.lr.ph53
+  br i1 %i.cm, label %.lr.ph53, label %unicode_lookup_property_name.exit.thread
 
 .preheader.i:                                     ; preds = %.lr.ph53
   %i.cn = add nsw i64 %.010.i.i52, -1             ; 2 uses
@@ -365,10 +361,10 @@ bb.q:                                             ; preds = %bb.p
   %.not.i.i = icmp eq i64 %i.cn, 0
   br i1 %.not.i.i, label %gperf_case_strncmp.exit.thread.i, label %.lr.ph53
 
-.lr.ph53:                                         ; preds = %.preheader.i.preheader, %.preheader.i
-  %.010.i.i52 = phi i64 [ %i.cn, %.preheader.i ], [ %i.r, %.preheader.i.preheader ]
-  %.011.i.i51 = phi ptr [ %i.co, %.preheader.i ], [ %i.ci, %.preheader.i.preheader ] ; 2 uses
-  %.012.i.i50 = phi ptr [ %i.cp, %.preheader.i ], [ %i.a, %.preheader.i.preheader ] ; 2 uses
+.lr.ph53:                                         ; preds = %bb.q, %.preheader.i
+  %.010.i.i52 = phi i64 [ %i.cn, %.preheader.i ], [ %i.r, %bb.q ]
+  %.011.i.i51 = phi ptr [ %i.co, %.preheader.i ], [ %i.ci, %bb.q ] ; 2 uses
+  %.012.i.i50 = phi ptr [ %i.cp, %.preheader.i ], [ %i.a, %bb.q ] ; 2 uses
   %i.cq = load i8, ptr %.012.i.i50, align 1, !tbaa !24 ; 2 uses
   %i.cr = zext i8 %i.cq to i64
   %i.cs = getelementptr inbounds nuw i8, ptr @gperf_downcase, i64 %i.cr
@@ -385,7 +381,7 @@ bb.q:                                             ; preds = %bb.p
 gperf_case_strncmp.exit.i:                        ; preds = %.lr.ph53
   br i1 %i.cy, label %gperf_case_strncmp.exit.thread.i, label %unicode_lookup_property_name.exit.thread
 
-gperf_case_strncmp.exit.thread.i:                 ; preds = %.preheader.i, %.preheader.i.preheader, %gperf_case_strncmp.exit.i
+gperf_case_strncmp.exit.thread.i:                 ; preds = %.preheader.i, %gperf_case_strncmp.exit.i
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.r
   %i.da = load i8, ptr %i.cz, align 1, !tbaa !24
   %i.db = icmp eq i8 %i.da, 0

@@ -205,7 +205,7 @@ define internal fastcc void @_RNvMNtNtCs4ytUTZt2Gw9_11arrow_array7builder21gener
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.b = add nsw i64 %1, 1                        ; 4 uses
+  %i.b = add nsw i64 %1, 1                        ; 3 uses
   %i.c = shl i64 %i.b, 3                          ; 4 uses
   %i.d = icmp sgt i64 %1, 2305843009213693950
   %.not.i = icmp ugt i64 %i.c, 9223372036854775800
@@ -220,15 +220,20 @@ bb.b:                                             ; preds = %bb.a
   %i.f = icmp eq i64 %i.b, 0
   tail call void @llvm.assume(i1 %i.f)
   store i64 0, ptr %i.a, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   store ptr inttoptr (i64 8 to ptr), ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store i64 0, ptr %i.h, align 8
-  br label %4
+  invoke void @_RNvMs3_NtCs40k4W9msRzi_5alloc7raw_vecINtB5_6RawVecxE8grow_oneCs56ggtDZRYpd_10arrow_data(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
+          to label %.thread._crit_edge unwind label %bb.e
+
+.thread._crit_edge:                               ; preds = %.thread
+  %.pre = load ptr, ptr %i.g, align 8, !alias.scope !6274
+  br label %bb.i
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #39, !noalias !6274
-  %i.i = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #39, !noalias !6274 ; 3 uses
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #39, !noalias !6275
+  %i.i = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #39, !noalias !6275 ; 3 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.d, label %bb.g
 
@@ -238,8 +243,8 @@ bb.d:                                             ; preds = %bb.a, %bb.c
   tail call void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %.sroa.10.0.ph) #36
   unreachable
 
-bb.e:                                             ; preds = %4, %bb.m
-  %i.k = phi ptr [ %6, %4 ], [ %i.s, %bb.m ]
+bb.e:                                             ; preds = %.thread, %bb.m
+  %i.k = phi ptr [ %i.g, %.thread ], [ %i.s, %bb.m ]
   %i.l = landingpad { ptr, i32 }
           cleanup
   %.val = load i64, ptr %i.a, align 8             ; 2 uses
@@ -254,32 +259,20 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store ptr %i.i, ptr %i.o, align 8
-  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
-  store i64 0, ptr %i.p, align 8
-  %3 = icmp eq i64 %i.b, 0
-  br i1 %3, label %4, label %bb.i
-
-4:                                                ; preds = %.thread, %bb.g
-  %5 = phi ptr [ %i.h, %.thread ], [ %i.p, %bb.g ]
-  %6 = phi ptr [ %i.g, %.thread ], [ %i.o, %bb.g ] ; 3 uses
-  invoke void @_RNvMs3_NtCs40k4W9msRzi_5alloc7raw_vecINtB5_6RawVecxE8grow_oneCs56ggtDZRYpd_10arrow_data(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
-          to label %._crit_edge unwind label %bb.e
-
-._crit_edge:                                      ; preds = %4
-  %.pre = load ptr, ptr %6, align 8, !alias.scope !6275
+  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.m
   unreachable
 
-bb.i:                                             ; preds = %._crit_edge, %bb.g
-  %i.q = phi ptr [ %i.i, %bb.g ], [ %.pre, %._crit_edge ]
-  %i.r = phi ptr [ %i.p, %bb.g ], [ %5, %._crit_edge ]
-  %i.s = phi ptr [ %i.o, %bb.g ], [ %6, %._crit_edge ]
+bb.i:                                             ; preds = %.thread._crit_edge, %bb.g
+  %i.q = phi ptr [ %i.i, %bb.g ], [ %.pre, %.thread._crit_edge ]
+  %i.r = phi ptr [ %i.p, %bb.g ], [ %i.h, %.thread._crit_edge ]
+  %i.s = phi ptr [ %i.o, %bb.g ], [ %i.g, %.thread._crit_edge ]
   store i64 0, ptr %i.q, align 8
-  store i64 1, ptr %i.r, align 8, !alias.scope !6275
+  store i64 1, ptr %i.r, align 8, !alias.scope !6274
   %.not.i13 = icmp slt i64 %2, 0
   br i1 %.not.i13, label %bb.m, label %bb.j, !prof !27
 
@@ -682,10 +675,10 @@ begin_hunk_1_@llvm.usub.sat.i128
 !6265 = !{!6258, !6256, !6254}
 !6266 = !{!6258, !6256}
 !6267 = !{!6260}
-!6268 = distinct !{!6268, !"_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow"}
-!6269 = distinct !{!6269, !6268, !"_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow: argument 0"}
-!6270 = distinct !{!6270, !"_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsc2V0exE7CWf_11lance_arrow"}
-!6271 = distinct !{!6271, !6270, !"_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsc2V0exE7CWf_11lance_arrow: argument 0"}
+!6268 = distinct !{!6268, !"_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsc2V0exE7CWf_11lance_arrow"}
+!6269 = distinct !{!6269, !6268, !"_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsc2V0exE7CWf_11lance_arrow: argument 0"}
+!6270 = distinct !{!6270, !"_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow"}
+!6271 = distinct !{!6271, !6270, !"_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow: argument 0"}
 !6272 = distinct !{!6272, !"_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow"}
 !6273 = distinct !{!6273, !6272, !"_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow: argument 0"}
 !6274 = !{!6269}

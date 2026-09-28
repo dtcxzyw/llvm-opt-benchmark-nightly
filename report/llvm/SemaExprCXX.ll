@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.d, label %_ZN5clang4Sema27MaybeCreateExprWithCleanupsENS_12ActionResultIPNS_4ExprELb1EEE.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  br i1 %3, label %bb.e, label %6
+  br i1 %3, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 216
@@ -257,13 +257,9 @@ bb.h:                                             ; preds = %.critedge
   tail call void @_ZN5clang4Sema24DiagnoseUnusedExprResultEPKNS_4StmtEj(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %i.z, i32 noundef 7794) #22
   br label %bb.i
 
-6:                                                ; preds = %bb.d
-  %7 = icmp eq ptr %1, inttoptr (i64 1 to ptr)
-  br i1 %7, label %_ZN5clang4Sema27MaybeCreateExprWithCleanupsENS_12ActionResultIPNS_4ExprELb1EEE.exit, label %bb.i
-
-bb.i:                                             ; preds = %.thread, %6
-  %.pre-phi49 = phi ptr [ %i.z, %.thread ], [ %i.c, %6 ] ; 2 uses
-  %.pre-phi = phi i64 [ %i.y, %.thread ], [ %i.b, %6 ]
+bb.i:                                             ; preds = %bb.d, %.thread
+  %.pre-phi49 = phi ptr [ %i.c, %bb.d ], [ %i.z, %.thread ] ; 2 uses
+  %.pre-phi = phi i64 [ %i.b, %bb.d ], [ %i.y, %.thread ]
   tail call void @_ZN5clang4Sema18CheckCompletedExprEPNS_4ExprENS_14SourceLocationEb(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %.pre-phi49, i32 %2, i1 noundef zeroext %4) #22
   %i.aa = tail call noundef ptr @_ZN5clang4Sema12getCurLambdaEb(ptr noundef nonnull align 8 dereferenceable(18640) %0, i1 noundef zeroext true) #22 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 616
@@ -400,8 +396,8 @@ bb.t:                                             ; preds = %_ZN5clang20isLambda
   %i.co = ptrtoint ptr %i.cn to i64
   br label %_ZN5clang4Sema27MaybeCreateExprWithCleanupsENS_12ActionResultIPNS_4ExprELb1EEE.exit
 
-_ZN5clang4Sema27MaybeCreateExprWithCleanupsENS_12ActionResultIPNS_4ExprELb1EEE.exit: ; preds = %bb.t, %_ZN5clang20isLambdaCallOperatorEPKNS_11DeclContextE.exit.thread, %6, %bb.h, %.critedge, %bb.g, %bb.c, %bb.a
-  %.sroa.016.0 = phi i64 [ 1, %bb.c ], [ 1, %bb.g ], [ 1, %.critedge ], [ 1, %bb.h ], [ 1, %6 ], [ 1, %bb.a ], [ %.pre-phi, %_ZN5clang20isLambdaCallOperatorEPKNS_11DeclContextE.exit.thread ], [ %i.co, %bb.t ]
+_ZN5clang4Sema27MaybeCreateExprWithCleanupsENS_12ActionResultIPNS_4ExprELb1EEE.exit: ; preds = %bb.t, %_ZN5clang20isLambdaCallOperatorEPKNS_11DeclContextE.exit.thread, %bb.h, %.critedge, %bb.g, %bb.c, %bb.a
+  %.sroa.016.0 = phi i64 [ 1, %bb.c ], [ 1, %bb.g ], [ 1, %.critedge ], [ 1, %bb.h ], [ %i.co, %bb.t ], [ 1, %bb.a ], [ %.pre-phi, %_ZN5clang20isLambdaCallOperatorEPKNS_11DeclContextE.exit.thread ]
   ret i64 %.sroa.016.0
 }
 

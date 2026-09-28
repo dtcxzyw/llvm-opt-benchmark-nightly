@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtB8_10filter_map9FilterMapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_like17OperandOrOperatorEENCNvMs1_B2f_NtB2f_25FlatBinaryExpressionSlice9operators0ENCNvB3I_17lowest_precedence0ENtNtNtBa_6traits8iterator8Iterator6reduceNCINvNvB52_6max_by4foldNtB2h_18OperatorPrecedenceNvYB64_NtNtBc_3cmp3Ord3cmpE0EB2j_.exit
 
 _RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtB8_10filter_map9FilterMapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_like17OperandOrOperatorEENCNvMs1_B2f_NtB2f_25FlatBinaryExpressionSlice9operators0ENCNvB3I_17lowest_precedence0ENtNtNtBa_6traits8iterator8Iterator6reduceNCINvNvB52_6max_by4foldNtB2h_18OperatorPrecedenceNvYB64_NtNtBc_3cmp3Ord3cmpE0EB2j_.exit: ; preds = %switch.lookup, %bb.c, %bb.d
-  %.sroa.0.0.i.ph.i = phi i8 [ %switch.load, %switch.lookup ], [ 10, %bb.c ], [ 11, %bb.d ]
+  %.sroa.0.0.i.ph.i = phi i8 [ %switch.load, %switch.lookup ], [ 11, %bb.d ], [ 10, %bb.c ]
   %i.u = call noundef i8 @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtB8_10filter_map9FilterMapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_like17OperandOrOperatorEENCNvMs1_B2l_NtB2l_25FlatBinaryExpressionSlice9operators0ENCNvB3O_17lowest_precedence0ENtNtNtBa_6traits8iterator8Iterator4foldNtB2n_18OperatorPrecedenceNCINvNvB58_6max_by4foldB5L_NvYB5L_NtNtBc_3cmp3Ord3cmpE0EB2p_(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b, i8 noundef %.sroa.0.0.i.ph.i)
   br label %.loopexit
 
@@ -364,15 +364,15 @@ bb.a:
   %i.b = and i64 %0, 1                            ; 2 uses
   store i64 %i.b, ptr %i.a, align 8
   %.not = icmp eq i64 %i.b, 0
-  br i1 %.not, label %bb.b, label %bb.c, !prof !17
+  br i1 %.not, label %bb.c, label %bb.b, !prof !17
 
 bb.b:                                             ; preds = %bb.a
-  call void @_RINvNtCs4NRVxsYgnAr_4core9panicking13assert_failedjjEB4_(i8 noundef 0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @27, ptr noundef nonnull @28, ptr nonnull inttoptr (i64 77 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #22
-  unreachable
-
-bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i64 %0
+
+bb.c:                                             ; preds = %bb.a
+  call void @_RINvNtCs4NRVxsYgnAr_4core9panicking13assert_failedjjEB4_(i8 noundef 0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @27, ptr noundef nonnull @28, ptr nonnull inttoptr (i64 77 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #22
+  unreachable
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -775,11 +775,7 @@ _RNCNCNvXs_NtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_likeNtB
 .thread.i.i.i.i.i.i:                              ; preds = %.noexc88.jt0, %.noexc88.jt3, %.noexc88.jt1, %.noexc88.jt2, %bb.aa, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %.lr.ph.i
   %i.eq = add i64 %.sroa.24.4, 1
   %i.er = icmp eq ptr %i.dt, %i.bw
-  br i1 %i.er, label %.loopexit263, label %.lr.ph.i
-
-.loopexit263:                                     ; preds = %.thread.i.i.i.i.i.i
-  %.not47 = icmp eq i64 %i.km, 0
-  br i1 %.not47, label %_RNvMs1_NtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_likeNtB5_25FlatBinaryExpressionSlice12get_operator.exit.thread, label %.loopexit263.thread
+  br i1 %i.er, label %.loopexit263.thread, label %.lr.ph.i
 
 bb.af:                                            ; preds = %.noexc88.jt0
   %.sroa.7.06.i.i.i.i.i.i.le = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i.i.i.i.i, i64 8 ; 2 uses
@@ -1182,7 +1178,7 @@ bb.bx:                                            ; preds = %bb.bz, %bb.bu
   %.sroa.10.0535 = phi i64 [ 0, %bb.bz ], [ %.sroa.10.0530, %bb.bu ] ; 2 uses
   %.sroa.16.1528 = phi ptr [ %.sroa.16.1525, %bb.bz ], [ %.sroa.16.1523, %bb.bu ] ; 2 uses
   %.sroa.24.1522 = phi i64 [ 1, %bb.bz ], [ %.sroa.24.1517, %bb.bu ]
-  %i.km = add i64 %.sroa.10.0535, 1               ; 8 uses
+  %i.km = add i64 %.sroa.10.0535, 1               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.kn = and i64 %i.km, 1                        ; 2 uses
   store i64 %i.kn, ptr %i.h, align 8
@@ -1497,11 +1493,11 @@ bb.dc:                                            ; preds = %bb.cy
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   br label %bb.z
 
-_RNvMs1_NtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_likeNtB5_25FlatBinaryExpressionSlice12get_operator.exit.thread: ; preds = %bb.cb, %bb.dg, %.loopexit263
+_RNvMs1_NtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_likeNtB5_25FlatBinaryExpressionSlice12get_operator.exit.thread: ; preds = %bb.cb, %bb.dg
   invoke void @_RNvNtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11parentheses39write_in_parentheses_only_group_end_tag(ptr noalias noundef nonnull align 8 dereferenceable(16) %2)
           to label %bb.v unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit263.thread:                              ; preds = %bb.z, %.loopexit263
+.loopexit263.thread:                              ; preds = %.thread.i.i.i.i.i.i, %bb.z
   %i.nf = load i64, ptr %i.bq, align 8, !alias.scope !1339, !noalias !1340, !noundef !4 ; 2 uses
   %i.ng = icmp ugt i64 %i.nf, 8                   ; 2 uses
   %i.nh = load i64, ptr %i.bu, align 8, !alias.scope !1339, !noalias !1340

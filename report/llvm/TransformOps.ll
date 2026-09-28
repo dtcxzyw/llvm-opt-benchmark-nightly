@@ -206,7 +206,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !92     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 44
   %i.c = load i32, ptr %i.b, align 4              ; 5 uses
-  %i.d = and i32 %i.c, 8388607                    ; 2 uses
+  %i.d = and i32 %i.c, 8388607
   %.off = add nsw i32 %i.d, -1
   %switch = icmp ult i32 %.off, 2
   br i1 %switch, label %bb.i, label %bb.b
@@ -284,8 +284,6 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.g, %bb.h
   br label %.thread74
 
 bb.i:                                             ; preds = %bb.a
-  %18 = icmp ne i32 %i.d, 0
-  tail call void @llvm.assume(i1 %18)
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.z = lshr i32 %i.c, 23
   %.lobit.i.i.i.i.i.i.i.i.i.i.i = and i32 %i.z, 1

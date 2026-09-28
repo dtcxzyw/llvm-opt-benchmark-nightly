@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %freq_to_channel.exit
-  %indvars.iv = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %freq_to_channel.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %freq_to_channel.exit ] ; 3 uses
   %i.n = getelementptr [4 x i8], ptr @wifi_freqs_2dot4_5ghz, i64 %indvars.iv
   %i.o = load i32, ptr %i.n, align 4              ; 5 uses
   %i.p = add i32 %i.o, -2412                      ; 2 uses
@@ -222,14 +222,8 @@ freq_to_band.exit:                                ; preds = %bb.f
 
 freq_to_band.exit.thread45:                       ; preds = %bb.g
   %i.s = add i32 %i.o, -5955                      ; 2 uses
-  %or.cond5.i = icmp ugt i32 %i.s, 1160           ; 2 uses
-  %1 = icmp eq i64 %indvars.iv, 13                ; 3 uses
-  %brmerge = or i1 %1, %or.cond5.i
-  %2 = xor i1 %or.cond5.i, true
-  %3 = and i1 %1, %2
-  %.str.103..i.mux = select i1 %3, ptr @.str.103, ptr null
-  %.mux = select i1 %1, i32 14, i32 0
-  br i1 %brmerge, label %freq_to_channel.exit, label %bb.j
+  %or.cond5.i = icmp ult i32 %i.s, 1161
+  br i1 %or.cond5.i, label %bb.j, label %freq_to_channel.exit
 
 bb.h:                                             ; preds = %freq_to_band.exit
   %.lhs.trunc.i = trunc nuw nsw i32 %i.p to i8
@@ -251,9 +245,9 @@ bb.j:                                             ; preds = %freq_to_band.exit.t
   %i.z = zext nneg i16 %narrow.i to i32
   br label %freq_to_channel.exit
 
-freq_to_channel.exit:                             ; preds = %freq_to_band.exit.thread45, %freq_to_band.exit, %bb.h, %bb.i, %bb.j
-  %.0.i42 = phi ptr [ @.str.101, %freq_to_band.exit ], [ @.str.101, %bb.h ], [ @.str.102, %bb.i ], [ @.str.103, %bb.j ], [ %.str.103..i.mux, %freq_to_band.exit.thread45 ]
-  %.0.i24 = phi i32 [ 14, %freq_to_band.exit ], [ %i.u, %bb.h ], [ %i.x, %bb.i ], [ %i.z, %bb.j ], [ %.mux, %freq_to_band.exit.thread45 ]
+freq_to_channel.exit:                             ; preds = %freq_to_band.exit, %bb.h, %bb.i, %freq_to_band.exit.thread45, %bb.j
+  %.0.i42 = phi ptr [ @.str.101, %freq_to_band.exit ], [ @.str.101, %bb.h ], [ @.str.102, %bb.i ], [ @.str.103, %bb.j ], [ null, %freq_to_band.exit.thread45 ]
+  %.0.i24 = phi i32 [ 14, %freq_to_band.exit ], [ %i.u, %bb.h ], [ %i.x, %bb.i ], [ %i.z, %bb.j ], [ 0, %freq_to_band.exit.thread45 ]
   %i.aa = tail call i32 (i32, ptr, ...) @__printf_chk(i32 noundef 2, ptr noundef nonnull @.str.90, i32 noundef 8, i32 noundef %i.o, ptr noundef %.0.i42, i32 noundef %.0.i24) ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not20 = icmp eq i64 %indvars.iv.next, 39

@@ -205,7 +205,7 @@ _ZNK10hb_array_tIjE9sub_arrayEjPj.exit:           ; preds = %_ZNR9hb_iter_tI10hb
   %.sroa.17.3 = phi ptr [ null, %bb.d ], [ %.sroa.17.2, %"_ZorI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj17face_table_info_tLb0EE6item_tEEMS6_KFbvERK3$_8LPv0EEMS6_FRjvEL24hb_function_sortedness_t0ELSD_0EERK3$_9LSI_0ELSD_0EE9hb_sink_tIR11hb_vector_tIjLb0EEETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSU_6item_tEEE5valueEvE4typeELSD_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISU_Efp_EEEOSU_OSZ_.exit" ], [ %.sroa.17.2, %bb.l ], [ %.sroa.17.2, %.critedge.i.loopexit.i.i ], [ null, %_ZNR9hb_iter_tI10hb_array_tIN12hb_hashmap_tIj17face_table_info_tLb0EE6item_tEERS4_EppEv.exit.i.us.i.i.i.i.i ] ; 2 uses
   %storemerge.i = tail call i32 @llvm.usub.sat.i32(i32 %.sroa.8.2, i32 %1)
   %i.ar = load i32, ptr %2, align 4, !tbaa !324
-  %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i, i32 %i.ar) ; 9 uses
+  %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i, i32 %i.ar) ; 8 uses
   store i32 %.sroa.speculated.i, ptr %2, align 4, !tbaa !324
   %.not18 = icmp eq ptr %3, null
   %.not5.i.i = icmp eq i32 %.sroa.speculated.i, 0
@@ -217,23 +217,13 @@ _ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.preheader: ; preds = %_ZNK10hb_arr
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %.sroa.17.3, i64 %i.as ; 3 uses
   %xtraiter = and i32 %.sroa.speculated.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol.loopexit, label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol
+  br i1 %lcmp.mod.not, label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol.loopexit, label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.prol
 
-_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol: ; preds = %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.preheader
+_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.prol: ; preds = %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.preheader
   %5 = load i32, ptr %i.at, align 4, !tbaa !324
-  %.not.i.i.i.i.i.prol = icmp eq i32 %.sroa.speculated.i, 0
-  br i1 %.not.i.i.i.i.i.prol, label %6, label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.prol, !prof !267
-
-6:                                                ; preds = %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol
-  store i32 0, ptr @_hb_CrapPool, align 16
-  br label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.prol
-
-_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.prol: ; preds = %6, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol
-  %.sroa.0.1.idx.prol = phi i64 [ 0, %6 ], [ 4, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol ]
-  %.0.i.i.i.i.i.prol = phi ptr [ @_hb_CrapPool, %6 ], [ %3, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol ]
-  store i32 %5, ptr %.0.i.i.i.i.i.prol, align 4, !tbaa !324
+  store i32 %5, ptr %3, align 4, !tbaa !324
   %.sroa.6.1.prol = add nsw i32 %.sroa.speculated.i, -1
-  %.sroa.0.1.prol = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0.1.idx.prol
+  %.sroa.0.1.prol = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.au = add nsw i32 %.sroa.speculated.i, -1
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 4
   br label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.prol.loopexit
@@ -636,7 +626,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN19hb_ot_map_builder_t11add_lookupsER11hb_ot_map_tjjjjbbbbj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(96) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i1 noundef zeroext %6, i1 noundef zeroext %7, i1 noundef zeroext %8, i1 noundef zeroext %9, i32 noundef %10) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [32 x i32], align 16              ; 7 uses
+  %i.a = alloca [32 x i32], align 16              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #63
   %i.b = load ptr, ptr %0, align 8, !tbaa !1304
   %i.c = zext i32 %2 to i64                       ; 2 uses
@@ -678,14 +668,14 @@ hb_ot_layout_table_get_lookup_count.exit:         ; preds = %bb.a, %bb.b
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %hb_ot_layout_table_get_lookup_count.exit
-  %.0 = phi i32 [ 0, %hb_ot_layout_table_get_lookup_count.exit ], [ %i.at, %._crit_edge ] ; 5 uses
+  %.0 = phi i32 [ 0, %hb_ot_layout_table_get_lookup_count.exit ], [ %i.at, %._crit_edge ] ; 4 uses
   %i.ab = load ptr, ptr %0, align 8, !tbaa !1304
   %i.ac = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %i.ab, i32 noundef %i.e)
   %i.ad = tail call noundef nonnull align 1 dereferenceable(6) ptr @_ZNK2OT8GSUBGPOS21get_feature_variationEjj(ptr noundef nonnull align 1 dereferenceable(14) %i.ac, i32 noundef %3, i32 noundef %4) ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 2
   %.pre28.i.i.i = load i16, ptr %i.ae, align 1, !tbaa !283
   %i.af = tail call noundef i16 @llvm.bswap.i16(i16 %.pre28.i.i.i)
-  %.sroa.5.8.extract.trunc.i.i.i = zext i16 %i.af to i32 ; 3 uses
+  %.sroa.5.8.extract.trunc.i.i.i = zext i16 %i.af to i32 ; 2 uses
   %storemerge.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %.sroa.5.8.extract.trunc.i.i.i, i32 %.0) ; 3 uses
   %.sroa.speculated.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i.i.i, i32 32) ; 7 uses
   %.not5.i.i.i.i.i.not = icmp ult i32 %.0, %.sroa.5.8.extract.trunc.i.i.i
@@ -697,23 +687,13 @@ bb.c:                                             ; preds = %._crit_edge, %hb_ot
   %i.ai = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.ah ; 3 uses
   %xtraiter = and i32 %.sroa.speculated.i.i.i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol
 
-.lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.i.i.preheader.i.i.i
+_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol: ; preds = %.lr.ph.i.i.preheader.i.i.i
   %.sroa.0.0.copyload.i.i.i.i.i.prol = load i16, ptr %i.ai, align 1
   %11 = tail call noundef i16 @llvm.bswap.i16(i16 %.sroa.0.0.copyload.i.i.i.i.i.prol)
   %12 = zext i16 %11 to i32
-  %.not.i.i.i.i.i.i.i.i.prol.not = icmp ult i32 %.0, %.sroa.5.8.extract.trunc.i.i.i
-  br i1 %.not.i.i.i.i.i.i.i.i.prol.not, label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol, label %13, !prof !268
-
-13:                                               ; preds = %.lr.ph.i.i.i.i.i.prol
-  store i32 0, ptr @_hb_CrapPool, align 16
-  br label %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol
-
-_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol: ; preds = %13, %.lr.ph.i.i.i.i.i.prol
-  %.sroa.018.1.idx.i.i.i.prol.sroa.phi = phi ptr [ %i.a, %13 ], [ %.sroa.018.1.idx.i.i.i.prol.sroa.gep54, %.lr.ph.i.i.i.i.i.prol ]
-  %.0.i.i.i.i.i.i.i.i.prol = phi ptr [ @_hb_CrapPool, %13 ], [ %i.a, %.lr.ph.i.i.i.i.i.prol ]
-  store i32 %12, ptr %.0.i.i.i.i.i.i.i.i.prol, align 16, !tbaa !324
+  store i32 %12, ptr %i.a, align 16, !tbaa !324
   %.sroa.6.1.i.i.i.prol = add nsw i32 %.sroa.speculated.i.i.i.i, -1
   %i.aj = add nsw i32 %.sroa.speculated.i.i.i.i, -1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 2
@@ -721,7 +701,7 @@ _ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol: ; preds = %13, %.lr.
 
 .lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol, %.lr.ph.i.i.preheader.i.i.i
   %.sroa.6.0.i.i.i.unr = phi i32 [ %.sroa.speculated.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i ], [ %.sroa.6.1.i.i.i.prol, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol ]
-  %.sroa.018.0.i.i.i.unr = phi ptr [ %i.a, %.lr.ph.i.i.preheader.i.i.i ], [ %.sroa.018.1.idx.i.i.i.prol.sroa.phi, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol ]
+  %.sroa.018.0.i.i.i.unr = phi ptr [ %i.a, %.lr.ph.i.i.preheader.i.i.i ], [ %.sroa.018.1.idx.i.i.i.prol.sroa.gep54, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol ]
   %.sroa.0.07.i.i.i.i.i.unr = phi ptr [ %i.ai, %.lr.ph.i.i.preheader.i.i.i ], [ %i.ak, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol ]
   %.sroa.4.06.i.i.i.i.i.unr = phi i32 [ %.sroa.speculated.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i ], [ %i.aj, %_ZN9hb_iter_tI10hb_array_tIjERjEdeEv.exit.i.i.i.i.i.i.prol ]
   %i.al = icmp eq i32 %storemerge.i.i.i.i, 1
@@ -1124,18 +1104,18 @@ bb.a:
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4448 ; 4 uses
-  %.sroa.0249.0.copyload = load double, ptr %i.i, align 8, !tbaa !712
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4456 ; 4 uses
-  %.sroa.15.0.copyload.a = load double, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !712 ; 3 uses
+  %.sroa.15.0.copyload = load double, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !712 ; 3 uses
+  %.sroa.15.0.copyload.a = load double, ptr %i.i, align 8, !tbaa !712
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.pre = load double, ptr %i.j, align 8, !tbaa !477
-  %i.k = fadd double %.sroa.0249.0.copyload, %.pre ; 3 uses
+  %i.k = fadd double %.sroa.15.0.copyload.a, %.pre ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.pre298 = load double, ptr %i.m, align 8, !tbaa !477
   %i.n = load double, ptr %i.l, align 8, !tbaa !477
   %i.o = fadd double %i.k, %i.n                   ; 2 uses
-  %i.p = fadd double %.sroa.15.0.copyload.a, %.pre298 ; 3 uses
+  %i.p = fadd double %.sroa.15.0.copyload, %.pre298 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre299 = load double, ptr %i.q, align 8, !tbaa !477
   %i.r = fadd double %i.p, %.pre299               ; 2 uses
@@ -1155,7 +1135,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN3CFF12i
   %.sroa.0238.0279 = phi double [ %i.o, %.lr.ph ], [ %i.eh, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ] ; 5 uses
   %.sroa.17.0278 = phi double [ %i.p, %.lr.ph ], [ %i.ei, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ] ; 2 uses
   %.sroa.0249.0277 = phi double [ %i.k, %.lr.ph ], [ %i.dy, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
-  %.sroa.15.0276 = phi double [ %.sroa.15.0.copyload.a, %.lr.ph ], [ %i.bz, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
+  %.sroa.15.0276 = phi double [ %.sroa.15.0.copyload, %.lr.ph ], [ %i.bz, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %i.w = load ptr, ptr %i.s, align 8, !tbaa !1159 ; 2 uses
   %.not.i = icmp eq ptr %i.w, null
   %i.x = insertelement <2 x double> poison, double %.sroa.0249.0277, i64 0
@@ -1444,7 +1424,7 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106: ; preds = %bb.y, %bb.z
   br i1 %.not73, label %._crit_edge, label %bb.b, !llvm.loop !3513
 
 ._crit_edge:                                      ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82
-  %.sroa.15.0.lcssa = phi double [ %.sroa.15.0.copyload.a, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.bz, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
+  %.sroa.15.0.lcssa = phi double [ %.sroa.15.0.copyload, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.bz, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %.sroa.0249.0.lcssa = phi double [ %i.k, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.dy, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %.sroa.17.0.lcssa = phi double [ %i.p, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.ei, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %.sroa.0238.0.lcssa = phi double [ %i.o, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.eh, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ] ; 3 uses
@@ -1847,18 +1827,18 @@ bb.a:
 
 _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit82: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4448 ; 4 uses
-  %.sroa.0196.0.copyload = load double, ptr %i.h, align 8, !tbaa !712
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4456 ; 4 uses
-  %.sroa.15.0.copyload.a = load double, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !712 ; 3 uses
+  %.sroa.15.0.copyload = load double, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !712 ; 3 uses
+  %.sroa.15.0.copyload.a = load double, ptr %i.h, align 8, !tbaa !712
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.pre = load double, ptr %i.i, align 8, !tbaa !477
-  %i.j = fadd double %.sroa.0196.0.copyload, %.pre ; 3 uses
+  %i.j = fadd double %.sroa.15.0.copyload.a, %.pre ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.pre263 = load double, ptr %i.l, align 8, !tbaa !477
   %i.m = load double, ptr %i.k, align 8, !tbaa !477
   %i.n = fadd double %i.j, %i.m                   ; 2 uses
-  %i.o = fadd double %.sroa.15.0.copyload.a, %.pre263 ; 3 uses
+  %i.o = fadd double %.sroa.15.0.copyload, %.pre263 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre264 = load double, ptr %i.p, align 8, !tbaa !477
   %i.q = fadd double %i.o, %.pre264               ; 2 uses
@@ -1877,7 +1857,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN3CFF20c
   %.sroa.0179.0244 = phi double [ %i.n, %.lr.ph ], [ %i.dk, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ] ; 3 uses
   %.sroa.17.0243 = phi double [ %i.o, %.lr.ph ], [ %i.dl, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
   %.sroa.0196.0242 = phi double [ %i.j, %.lr.ph ], [ %i.db, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
-  %.sroa.15.0241 = phi double [ %.sroa.15.0.copyload.a, %.lr.ph ], [ %i.bm, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
+  %.sroa.15.0241 = phi double [ %.sroa.15.0.copyload, %.lr.ph ], [ %i.bm, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
   %i.u = load ptr, ptr %1, align 8, !tbaa !459    ; 5 uses
   %i.v = load ptr, ptr %i.r, align 8, !tbaa !460  ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 80
@@ -2127,7 +2107,7 @@ _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110: ; preds = %bb.u
   br i1 %.not73, label %._crit_edge, label %bb.b, !llvm.loop !5874
 
 ._crit_edge:                                      ; preds = %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit82
-  %.sroa.15.0.lcssa = phi double [ %.sroa.15.0.copyload.a, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.bm, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
+  %.sroa.15.0.lcssa = phi double [ %.sroa.15.0.copyload, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.bm, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
   %.sroa.0196.0.lcssa = phi double [ %i.j, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.db, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
   %.sroa.17.0.lcssa = phi double [ %i.o, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.dl, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ]
   %.sroa.0179.0.lcssa = phi double [ %i.n, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.dk, %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit110 ] ; 3 uses

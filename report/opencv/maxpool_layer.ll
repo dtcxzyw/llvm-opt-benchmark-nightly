@@ -204,8 +204,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit82: ; preds = %bb.
 bb.m:                                             ; preds = %bb.g, %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !62   ; 2 uses
-  %i.w = load ptr, ptr %i.t, align 8, !tbaa !63   ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !62
+  %i.w = load ptr, ptr %i.t, align 8, !tbaa !63
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64
   %i.z = sub i64 %i.x, %i.y                       ; 2 uses
@@ -608,18 +608,14 @@ bb.bn:                                            ; preds = %bb.bo, %bb.bl, %bb.
 
 bb.bo:                                            ; preds = %bb.bl, %bb.bk
   invoke void @_ZN2cv3dnn16MaxPoolLayerImpl10runForwardERKNS_3MatERSt6vectorIS2_SaIS2_EERKNS_8MatShapeESB_(ptr noundef nonnull align 8 dereferenceable(268) %0, ptr noundef nonnull align 8 dereferenceable(208) %23, ptr noundef nonnull align 8 dereferenceable(24) %24, ptr noundef nonnull align 4 dereferenceable(52) %10, ptr noundef nonnull align 4 dereferenceable(52) %21)
-          to label %.preheader unwind label %bb.bn
+          to label %.lr.ph unwind label %bb.bn
 
-.preheader:                                       ; preds = %bb.bo
-  %.not113 = icmp eq ptr %i.v, %i.w
-  br i1 %.not113, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader
+.lr.ph:                                           ; preds = %bb.bo
   %i.ee = getelementptr inbounds nuw i8, ptr %25, i64 8
   %i.ef = getelementptr inbounds nuw i8, ptr %25, i64 16
   br label %bb.bq
 
-._crit_edge:                                      ; preds = %bb.br, %.preheader
+._crit_edge:                                      ; preds = %bb.br
   %i.eg = load ptr, ptr %24, align 8, !tbaa !70   ; 3 uses
   %i.eh = load ptr, ptr %i.dw, align 8, !tbaa !69 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.eg, %i.eh

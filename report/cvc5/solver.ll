@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.g
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !11  ; 2 uses
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !11
   %i.ab = and i32 %i.aa, 126
   %.not5 = icmp eq i32 %i.ab, 0
-  br i1 %.not5, label %bb.k, label %1
+  br i1 %.not5, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_ZN7CaDiCaL19fatal_message_startEv()
@@ -225,15 +225,8 @@ bb.l:                                             ; preds = %bb.k
   tail call void @abort() #28
   unreachable
 
-1:                                                ; preds = %bb.j
-  %2 = icmp eq i32 %i.aa, 128
-  br i1 %2, label %bb.m, label %3
-
-3:                                                ; preds = %1
+bb.m:                                             ; preds = %bb.j
   store i32 128, ptr %i.z, align 4, !tbaa !161
-  br label %bb.m
-
-bb.m:                                             ; preds = %1, %3
   store i1 false, ptr @_ZN7CaDiCaLL32tracing_nb_lidrup_env_var_methodE, align 1
   tail call void @_ZN7CaDiCaL8InternalD1Ev(ptr noundef nonnull align 8 dead_on_return(5704) dereferenceable(5704) %i.r) #23
   tail call void @_ZdlPv(ptr noundef nonnull %i.r) #25

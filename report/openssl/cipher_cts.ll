@@ -198,39 +198,25 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i64 @cts128_cs2_encrypt(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, i64 noundef range(i64 16, 0) %3) unnamed_addr #2 {
+define internal fastcc range(i64 16, 1) i64 @cts128_cs2_encrypt(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, i64 noundef range(i64 16, 0) %3) unnamed_addr #2 {
 bb.a:
   %4 = alloca %union.aligned_16bytes, align 8     ; 5 uses
   %i.a = and i64 %3, 15                           ; 5 uses
   %i.b = icmp eq i64 %i.a, 0
-  br i1 %i.b, label %5, label %11
+  br i1 %i.b, label %bb.b, label %bb.c
 
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %7 = load ptr, ptr %6, align 8, !tbaa !16
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %9 = load ptr, ptr %8, align 8, !tbaa !18
-  %10 = tail call i32 %9(ptr noundef %0, ptr noundef nonnull %2, ptr noundef %1, i64 noundef %3) #7
-  %.not = icmp eq i32 %10, 0
-  %. = select i1 %.not, i64 0, i64 %3
-  br label %bb.e
-
-11:                                               ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %12 = icmp eq i64 %3, 16
-  br i1 %12, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %11
+bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !18
-  %i.g = tail call i32 %i.f(ptr noundef %0, ptr noundef nonnull %2, ptr noundef %1, i64 noundef 16) #7, !inline_history !24
+  %i.g = tail call i32 %i.f(ptr noundef %0, ptr noundef nonnull %2, ptr noundef %1, i64 noundef %3) #7
   %.not33.i = icmp eq i32 %i.g, 0
-  %i.h = select i1 %.not33.i, i64 0, i64 16
-  br label %cts128_cs3_encrypt.exit
+  %i.h = select i1 %.not33.i, i64 0, i64 %3
+  br label %bb.e
 
-bb.c:                                             ; preds = %11
+bb.c:                                             ; preds = %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   %i.i = and i64 %3, -16                          ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !16
@@ -257,13 +243,13 @@ bb.d:                                             ; preds = %bb.c
   %..i = select i1 %.not32.i, i64 0, i64 %3
   br label %cts128_cs3_encrypt.exit
 
-cts128_cs3_encrypt.exit:                          ; preds = %bb.b, %bb.c, %bb.d
-  %.0.i = phi i64 [ %..i, %bb.d ], [ %i.h, %bb.b ], [ 0, %bb.c ]
+cts128_cs3_encrypt.exit:                          ; preds = %bb.c, %bb.d
+  %.0.i = phi i64 [ %..i, %bb.d ], [ 0, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   br label %bb.e
 
-bb.e:                                             ; preds = %5, %cts128_cs3_encrypt.exit
-  %.0 = phi i64 [ %.0.i, %cts128_cs3_encrypt.exit ], [ %., %5 ]
+bb.e:                                             ; preds = %bb.b, %cts128_cs3_encrypt.exit
+  %.0 = phi i64 [ %.0.i, %cts128_cs3_encrypt.exit ], [ %i.h, %bb.b ]
   ret i64 %.0
 }
 

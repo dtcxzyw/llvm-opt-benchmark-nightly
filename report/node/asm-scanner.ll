@@ -204,7 +204,6 @@ bb.a:                                             ; preds = %.lr.ph
     i32 46, label %.thread
     i32 120, label %bb.e
     i32 111, label %bb.e
-    i32 98, label %bb.e
     i32 65, label %.thread.fold.split
     i32 66, label %.thread.fold.split
     i32 67, label %.thread.fold.split
@@ -236,7 +235,7 @@ bb.d:                                             ; preds = %bb.c, %bb.c, %.lr.p
   %cond = icmp eq i32 %i.s, 98
   br i1 %cond, label %bb.e, label %.thread
 
-bb.e:                                             ; preds = %bb.d, %bb.a, %bb.a, %bb.a
+bb.e:                                             ; preds = %bb.d, %bb.a, %bb.a
   br label %.thread
 
 .thread.fold.split:                               ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a

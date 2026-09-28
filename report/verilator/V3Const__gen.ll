@@ -205,7 +205,7 @@ _ZNK7AstNode5widthEv.exit621:                     ; preds = %bb.il, %_ZN6AstAndC
 
 bb.im:                                            ; preds = %_ZNK7AstNode5widthEv.exit621
   %i.agi = invoke noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #30
-          to label %bb.in unwind label %bb.hu     ; 12 uses
+          to label %bb.in unwind label %bb.hu     ; 11 uses
 
 bb.in:                                            ; preds = %bb.im
   invoke void @_ZN7AstNodeC2E6VNTypeP8FileLine(ptr noundef nonnull align 8 dereferenceable(168) %i.agi, i16 311, ptr noundef %i.t)
@@ -236,14 +236,10 @@ _ZN12AstNodeUniopC2E6VNTypeP8FileLineP11AstNodeExpr.exit.i624: ; preds = %bb.ip,
   store ptr getelementptr inbounds nuw inrange(-16, 432) (i8, ptr @_ZTV8AstCCast, i64 16), ptr %i.agi, align 8, !tbaa !52
   %i.agp = getelementptr inbounds nuw i8, ptr %i.agi, i64 160
   store i32 %1, ptr %i.agp, align 8, !tbaa !296
-  %.not.i625 = icmp eq i32 %1, 0
-  br i1 %.not.i625, label %_ZN8AstCCastC2EP8FileLineP11AstNodeExprii.exit, label %.noexc.i626
-
-.noexc.i626:                                      ; preds = %.noexc629
   %42 = invoke noundef ptr @_ZNK7AstNode12findBitDTypeEii8VSigning(ptr noundef nonnull align 8 dereferenceable(168) %i.agi, i32 noundef %1, i32 noundef 1, i8 0)
           to label %.noexc630 unwind label %bb.ir ; 2 uses
 
-.noexc630:                                        ; preds = %.noexc.i626
+.noexc630:                                        ; preds = %.noexc629
   %i.agq = load ptr, ptr %i.agl, align 8, !tbaa !172
   %.not.i.i12.i = icmp eq ptr %i.agq, %42
   br i1 %.not.i.i12.i, label %_ZN8AstCCastC2EP8FileLineP11AstNodeExprii.exit, label %bb.iq
@@ -255,14 +251,14 @@ bb.iq:                                            ; preds = %.noexc630
   store i64 %i.ags, ptr @_ZN7AstNode12s_editCntGblE, align 8, !tbaa !50
   br label %_ZN8AstCCastC2EP8FileLineP11AstNodeExprii.exit
 
-bb.ir:                                            ; preds = %.noexc.i626, %_ZN12AstNodeUniopC2E6VNTypeP8FileLineP11AstNodeExpr.exit.i624, %bb.in
+bb.ir:                                            ; preds = %.noexc629, %_ZN12AstNodeUniopC2E6VNTypeP8FileLineP11AstNodeExpr.exit.i624, %bb.in
   %i.agt = landingpad { ptr, i32 }
           cleanup
   call void @_ZdlPvm(ptr noundef nonnull %i.agi, i64 noundef 168) #26
   br label %bb.it
 
-_ZN8AstCCastC2EP8FileLineP11AstNodeExprii.exit:   ; preds = %bb.iq, %.noexc630, %.noexc629, %_ZNK7AstNode5widthEv.exit621
-  %.4 = phi ptr [ %.3, %_ZNK7AstNode5widthEv.exit621 ], [ %i.agi, %.noexc629 ], [ %i.agi, %.noexc630 ], [ %i.agi, %bb.iq ] ; 2 uses
+_ZN8AstCCastC2EP8FileLineP11AstNodeExprii.exit:   ; preds = %bb.iq, %.noexc630, %_ZNK7AstNode5widthEv.exit621
+  %.4 = phi ptr [ %.3, %_ZNK7AstNode5widthEv.exit621 ], [ %i.agi, %bb.iq ], [ %i.agi, %.noexc630 ] ; 2 uses
   invoke void @_ZN7AstNode13dtypeChgWidthEii(ptr noundef nonnull align 8 dereferenceable(152) %.4, i32 noundef %1, i32 noundef 1)
           to label %bb.is unwind label %bb.hu
 

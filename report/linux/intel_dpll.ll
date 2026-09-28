@@ -204,24 +204,24 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %intel_pll_is_valid.exit.thread.1.i, %.preheader.i
-  %.276.i = phi i1 [ %.179.i, %.preheader.i ], [ %.4.1.i, %intel_pll_is_valid.exit.thread.1.i ] ; 7 uses
-  %.24375.i = phi i32 [ %.14278.i, %.preheader.i ], [ %.445.1.i, %intel_pll_is_valid.exit.thread.1.i ] ; 8 uses
+  %.276.i = phi i1 [ %.179.i, %.preheader.i ], [ %.4.1.i, %intel_pll_is_valid.exit.thread.1.i ] ; 6 uses
+  %.24375.i = phi i32 [ %.14278.i, %.preheader.i ], [ %.445.1.i, %intel_pll_is_valid.exit.thread.1.i ] ; 7 uses
   %storemerge4974.i = phi i32 [ 20, %.preheader.i ], [ %i.dn, %intel_pll_is_valid.exit.thread.1.i ] ; 5 uses
   %i.s = mul i32 %storemerge4974.i, %storemerge4877.i ; 2 uses
   %i.t = mul i32 %i.s, 5                          ; 12 uses
   %i.u = mul i32 %i.r, %i.t                       ; 3 uses
   %i.v = icmp sgt i32 %i.u, 0                     ; 2 uses
-  %i.w = icmp eq i32 %i.s, 0                      ; 4 uses
+  %i.w = icmp eq i32 %i.s, 0                      ; 2 uses
   %i.x = icmp slt i32 %i.t, 1                     ; 2 uses
   %.pn.p.i = select i1 %i.v, i32 100000, i32 -100000
-  %.pn.i = add i32 %.pn.p.i, %i.u                 ; 3 uses
+  %.pn.i = add i32 %.pn.p.i, %i.u                 ; 2 uses
   %i.y = sdiv i32 %.pn.i, 200000                  ; 4 uses
   %i.z = shl nuw nsw i32 %i.y, 1
   %i.aa = mul nsw i32 %i.y, 200000
   %i.ab = icmp sgt i32 %.pn.i, 199999
   %..neg.i.i = select i1 %i.ab, i32 %.neg.i83.i, i32 %.neg.i.i
   %.pn.i.i = add i32 %..neg.i.i, %i.aa
-  %i.ac = sdiv i32 %.pn.i.i, %storemerge80.i      ; 6 uses
+  %i.ac = sdiv i32 %.pn.i.i, %storemerge80.i      ; 4 uses
   br i1 %i.w, label %vlv_calc_dpll_params.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -235,37 +235,18 @@ bb.f:                                             ; preds = %bb.e
   br label %vlv_calc_dpll_params.exit.i
 
 vlv_calc_dpll_params.exit.i:                      ; preds = %bb.f, %bb.e
-  %i.ah = phi i32 [ %i.ag, %bb.f ], [ 0, %bb.e ]  ; 6 uses
+  %i.ah = phi i32 [ %i.ag, %bb.f ], [ 0, %bb.e ]  ; 4 uses
   %i.ai = add nsw i32 %i.y, -157
   %or.cond45.i = icmp ult i32 %i.ai, -146
   br i1 %or.cond45.i, label %intel_pll_is_valid.exit.thread.i, label %bb.g
 
 bb.g:                                             ; preds = %vlv_calc_dpll_params.exit.i
-  %i.aj = load i64, ptr %i.o, align 8             ; 3 uses
-  %i.ak = and i64 %i.aj, 36642492416
+  %i.aj = load i64, ptr %i.o, align 8             ; 2 uses
+  %i.ak = and i64 %i.aj, 36642488320
   %or.cond63.i.not.i = icmp eq i64 %i.ak, 0
-  br i1 %or.cond63.i.not.i, label %intel_pll_is_valid.exit.thread.i, label %2
+  br i1 %or.cond63.i.not.i, label %intel_pll_is_valid.exit.thread.i, label %bb.h
 
-2:                                                ; preds = %bb.g
-  %3 = and i64 %i.aj, 36642488320
-  %or.cond67.i.i = icmp eq i64 %3, 0
-  br i1 %or.cond67.i.i, label %4, label %bb.h
-
-4:                                                ; preds = %2
-  %.pn.off.i = add i32 %.pn.i, 199999
-  %5 = icmp ult i32 %.pn.off.i, 399999
-  %6 = icmp sgt i32 %i.ac, 3999999
-  %7 = and i1 %6, %5
-  %or.cond50.not66.i = and i1 %i.w, %7
-  %8 = icmp samesign ult i32 %i.ac, 6000001
-  %or.cond52.not64.i = select i1 %or.cond50.not66.i, i1 %8, i1 false
-  %.old54.i = icmp sgt i32 %i.ah, 24999
-  %or.cond56.not62.i = select i1 %or.cond52.not64.i, i1 %.old54.i, i1 false
-  %9 = icmp samesign ult i32 %i.ah, 270001
-  %or.cond58.i = select i1 %or.cond56.not62.i, i1 %9, i1 false
-  br i1 %or.cond58.i, label %bb.i, label %intel_pll_is_valid.exit.thread.i
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   %i.al = add i32 %i.ac, -4000000
   %or.cond53.i = icmp ult i32 %i.al, 2000001
   %i.am = icmp sgt i32 %i.ah, 24999
@@ -274,7 +255,7 @@ bb.h:                                             ; preds = %2
   %or.cond59.i = select i1 %or.cond55.not61.i, i1 %.old57.i, i1 false
   br i1 %or.cond59.i, label %bb.i, label %intel_pll_is_valid.exit.thread.i
 
-bb.i:                                             ; preds = %bb.h, %4
+bb.i:                                             ; preds = %bb.h
   %i.an = and i64 %i.aj, 134217728
   %.not.i.i = icmp eq i64 %i.an, 0
   br i1 %.not.i.i, label %bb.j, label %.split.i
@@ -372,18 +353,18 @@ vlv_PLL_is_optimal.exit.thread.i:                 ; preds = %vlv_PLL_is_optimal.
   store i32 %i.t, ptr %i.p, align 4
   br label %intel_pll_is_valid.exit.thread.i
 
-intel_pll_is_valid.exit.thread.i:                 ; preds = %vlv_PLL_is_optimal.exit.thread.i, %vlv_PLL_is_optimal.exit.i, %vlv_PLL_is_optimal.exit.thread39.i, %.split.i, %bb.h, %4, %bb.g, %vlv_calc_dpll_params.exit.i
-  %.445.i = phi i32 [ %.03438.i, %vlv_PLL_is_optimal.exit.thread.i ], [ %.24375.i, %bb.h ], [ %.24375.i, %vlv_PLL_is_optimal.exit.i ], [ %.24375.i, %.split.i ], [ %.24375.i, %vlv_PLL_is_optimal.exit.thread39.i ], [ %.24375.i, %bb.g ], [ %.24375.i, %vlv_calc_dpll_params.exit.i ], [ %.24375.i, %4 ] ; 8 uses
-  %.4.i = phi i1 [ true, %vlv_PLL_is_optimal.exit.thread.i ], [ %.276.i, %bb.h ], [ %.276.i, %vlv_PLL_is_optimal.exit.i ], [ %.276.i, %.split.i ], [ %.276.i, %vlv_PLL_is_optimal.exit.thread39.i ], [ %.276.i, %bb.g ], [ %.276.i, %vlv_calc_dpll_params.exit.i ], [ %.276.i, %4 ] ; 7 uses
+intel_pll_is_valid.exit.thread.i:                 ; preds = %vlv_PLL_is_optimal.exit.thread.i, %vlv_PLL_is_optimal.exit.i, %vlv_PLL_is_optimal.exit.thread39.i, %.split.i, %bb.h, %bb.g, %vlv_calc_dpll_params.exit.i
+  %.445.i = phi i32 [ %.03438.i, %vlv_PLL_is_optimal.exit.thread.i ], [ %.24375.i, %bb.h ], [ %.24375.i, %vlv_PLL_is_optimal.exit.i ], [ %.24375.i, %.split.i ], [ %.24375.i, %vlv_PLL_is_optimal.exit.thread39.i ], [ %.24375.i, %bb.g ], [ %.24375.i, %vlv_calc_dpll_params.exit.i ] ; 7 uses
+  %.4.i = phi i1 [ true, %vlv_PLL_is_optimal.exit.thread.i ], [ %.276.i, %bb.h ], [ %.276.i, %vlv_PLL_is_optimal.exit.i ], [ %.276.i, %.split.i ], [ %.276.i, %vlv_PLL_is_optimal.exit.thread39.i ], [ %.276.i, %bb.g ], [ %.276.i, %vlv_calc_dpll_params.exit.i ] ; 6 uses
   %.pn.p.1.i = select i1 %i.v, i32 150000, i32 -150000
-  %.pn.1.i = add i32 %.pn.p.1.i, %i.u             ; 3 uses
+  %.pn.1.i = add i32 %.pn.p.1.i, %i.u             ; 2 uses
   %i.bs = sdiv i32 %.pn.1.i, 300000               ; 4 uses
   %i.bt = mul nuw nsw i32 %i.bs, 3
   %i.bu = mul nsw i32 %i.bs, 300000
   %i.bv = icmp sgt i32 %.pn.1.i, 299999
   %..neg.i.1.i = select i1 %i.bv, i32 %.neg.i83.i, i32 %.neg.i.i
   %.pn.i.1.i = add i32 %..neg.i.1.i, %i.bu
-  %i.bw = sdiv i32 %.pn.i.1.i, %storemerge80.i    ; 6 uses
+  %i.bw = sdiv i32 %.pn.i.1.i, %storemerge80.i    ; 4 uses
   br i1 %i.w, label %vlv_calc_dpll_params.exit.1.i, label %bb.q
 
 bb.q:                                             ; preds = %intel_pll_is_valid.exit.thread.i
@@ -397,46 +378,27 @@ bb.q:                                             ; preds = %intel_pll_is_valid.
   br label %vlv_calc_dpll_params.exit.1.i
 
 vlv_calc_dpll_params.exit.1.i:                    ; preds = %bb.q, %intel_pll_is_valid.exit.thread.i
-  %i.cb = phi i32 [ %i.ca, %bb.q ], [ 0, %intel_pll_is_valid.exit.thread.i ] ; 6 uses
+  %i.cb = phi i32 [ %i.ca, %bb.q ], [ 0, %intel_pll_is_valid.exit.thread.i ] ; 4 uses
   %i.cc = add nsw i32 %i.bs, -157
   %or.cond45.1.i = icmp ult i32 %i.cc, -146
   br i1 %or.cond45.1.i, label %intel_pll_is_valid.exit.thread.1.i, label %bb.r
 
 bb.r:                                             ; preds = %vlv_calc_dpll_params.exit.1.i
-  %i.cd = load i64, ptr %i.o, align 8             ; 3 uses
-  %i.ce = and i64 %i.cd, 36642492416
+  %i.cd = load i64, ptr %i.o, align 8             ; 2 uses
+  %i.ce = and i64 %i.cd, 36642488320
   %or.cond63.i.not.1.i = icmp eq i64 %i.ce, 0
-  br i1 %or.cond63.i.not.1.i, label %intel_pll_is_valid.exit.thread.1.i, label %10
+  br i1 %or.cond63.i.not.1.i, label %intel_pll_is_valid.exit.thread.1.i, label %bb.s
 
-10:                                               ; preds = %bb.r
-  %11 = and i64 %i.cd, 36642488320
-  %or.cond67.i.1.i = icmp eq i64 %11, 0
-  br i1 %or.cond67.i.1.i, label %bb.s, label %12
-
-12:                                               ; preds = %10
-  %13 = add i32 %i.bw, -4000000
-  %or.cond53.1.i = icmp ult i32 %13, 2000001
-  %14 = icmp sgt i32 %i.cb, 24999
-  %or.cond55.not61.1.i = select i1 %or.cond53.1.i, i1 %14, i1 false
-  %.old57.1.i = icmp samesign ult i32 %i.cb, 270001
-  %or.cond59.1.i = select i1 %or.cond55.not61.1.i, i1 %.old57.1.i, i1 false
-  br i1 %or.cond59.1.i, label %bb.t, label %intel_pll_is_valid.exit.thread.1.i
-
-bb.s:                                             ; preds = %10
-  %.pn.1.off.i = add i32 %.pn.1.i, 299999
-  %15 = icmp ult i32 %.pn.1.off.i, 599999
-  %16 = icmp sgt i32 %i.bw, 3999999
-  %17 = and i1 %15, %16
-  %or.cond50.not66.1.i = and i1 %i.w, %17
-  %i.cf = icmp samesign ult i32 %i.bw, 6000001
-  %or.cond52.not64.1.i = select i1 %or.cond50.not66.1.i, i1 %i.cf, i1 false
+bb.s:                                             ; preds = %bb.r
+  %.pn.1.off.i = add i32 %i.bw, -4000000
+  %i.cf = icmp ult i32 %.pn.1.off.i, 2000001
   %.old54.1.i = icmp sgt i32 %i.cb, 24999
-  %or.cond56.not62.1.i = select i1 %or.cond52.not64.1.i, i1 %.old54.1.i, i1 false
+  %or.cond56.not62.1.i = select i1 %i.cf, i1 %.old54.1.i, i1 false
   %i.cg = icmp samesign ult i32 %i.cb, 270001
   %or.cond58.1.i = select i1 %or.cond56.not62.1.i, i1 %i.cg, i1 false
   br i1 %or.cond58.1.i, label %bb.t, label %intel_pll_is_valid.exit.thread.1.i
 
-bb.t:                                             ; preds = %bb.s, %12
+bb.t:                                             ; preds = %bb.s
   %i.ch = and i64 %i.cd, 134217728
   %.not.i.1.i = icmp eq i64 %i.ch, 0
   br i1 %.not.i.1.i, label %bb.u, label %.split.1.i
@@ -534,9 +496,9 @@ vlv_PLL_is_optimal.exit.thread39.1.i:             ; preds = %bb.aa, %__drm_to_de
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !16
   br label %intel_pll_is_valid.exit.thread.1.i
 
-intel_pll_is_valid.exit.thread.1.i:               ; preds = %vlv_PLL_is_optimal.exit.thread39.1.i, %vlv_PLL_is_optimal.exit.thread.1.i, %vlv_PLL_is_optimal.exit.1.i, %.split.1.i, %bb.s, %12, %bb.r, %vlv_calc_dpll_params.exit.1.i
-  %.445.1.i = phi i32 [ %.03438.1.i, %vlv_PLL_is_optimal.exit.thread.1.i ], [ %.445.i, %12 ], [ %.445.i, %vlv_PLL_is_optimal.exit.1.i ], [ %.445.i, %.split.1.i ], [ %.445.i, %vlv_PLL_is_optimal.exit.thread39.1.i ], [ %.445.i, %bb.r ], [ %.445.i, %vlv_calc_dpll_params.exit.1.i ], [ %.445.i, %bb.s ] ; 3 uses
-  %.4.1.i = phi i1 [ true, %vlv_PLL_is_optimal.exit.thread.1.i ], [ %.4.i, %12 ], [ %.4.i, %vlv_PLL_is_optimal.exit.1.i ], [ %.4.i, %.split.1.i ], [ %.4.i, %vlv_PLL_is_optimal.exit.thread39.1.i ], [ %.4.i, %bb.r ], [ %.4.i, %vlv_calc_dpll_params.exit.1.i ], [ %.4.i, %bb.s ] ; 4 uses
+intel_pll_is_valid.exit.thread.1.i:               ; preds = %vlv_PLL_is_optimal.exit.thread39.1.i, %vlv_PLL_is_optimal.exit.thread.1.i, %vlv_PLL_is_optimal.exit.1.i, %.split.1.i, %bb.s, %bb.r, %vlv_calc_dpll_params.exit.1.i
+  %.445.1.i = phi i32 [ %.03438.1.i, %vlv_PLL_is_optimal.exit.thread.1.i ], [ %.445.i, %bb.s ], [ %.445.i, %vlv_PLL_is_optimal.exit.1.i ], [ %.445.i, %.split.1.i ], [ %.445.i, %vlv_PLL_is_optimal.exit.thread39.1.i ], [ %.445.i, %bb.r ], [ %.445.i, %vlv_calc_dpll_params.exit.1.i ] ; 3 uses
+  %.4.1.i = phi i1 [ true, %vlv_PLL_is_optimal.exit.thread.1.i ], [ %.4.i, %bb.s ], [ %.4.i, %vlv_PLL_is_optimal.exit.1.i ], [ %.4.i, %.split.1.i ], [ %.4.i, %vlv_PLL_is_optimal.exit.thread39.1.i ], [ %.4.i, %bb.r ], [ %.4.i, %vlv_calc_dpll_params.exit.1.i ] ; 4 uses
   %i.dm = icmp samesign ugt i32 %storemerge4974.i, 10
   %.neg.i = select i1 %i.dm, i32 -2, i32 -1
   %i.dn = add nsw i32 %.neg.i, %storemerge4974.i  ; 2 uses

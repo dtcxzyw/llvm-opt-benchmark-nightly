@@ -204,7 +204,7 @@ _ZN4llvm6objectL6appendIA3_NS0_15coff_relocationEEEvRSt6vectorIhSaIhEERKT_.exit.
   store i32 4, ptr %.sroa.10.0..sroa_idx.i, align 1, !noalias !145
   %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 148
   store i16 %.0.i23132.i, ptr %.sroa.11.0..sroa_idx.i, align 1, !noalias !145
-  %i.ay = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !19, !noalias !145 ; 9 uses
+  %i.ay = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !19, !noalias !145 ; 8 uses
   %i.az = add i64 %i.ay, 1                        ; 6 uses
   %i.ba = icmp ult i64 %i.ay, -151
   br i1 %i.ba, label %bb.f, label %bb.l
@@ -243,19 +243,12 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170: ; preds = %bb.j
   %i.bh = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bg) #19, !noalias !145 ; 5 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 150 ; 2 uses
   store i8 0, ptr %i.bi, align 1, !tbaa !17, !noalias !145
-  %23 = icmp eq i64 %i.ay, 0
-  br i1 %23, label %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172, label %24
-
-24:                                               ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170
-  %25 = getelementptr inbounds nuw i8, ptr %i.bh, i64 151
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %25, i8 0, i64 %i.ay, i1 false), !noalias !145
-  br label %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172
-
-_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172: ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170, %24
+  %23 = getelementptr inbounds nuw i8, ptr %i.bh, i64 151
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %23, i8 0, i64 %i.ay, i1 false), !noalias !145
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(150) %i.bh, ptr noundef nonnull align 1 dereferenceable(150) %i.ar, i64 150, i1 false), !noalias !145
   call void @_ZdlPvm(ptr noundef nonnull %i.ar, i64 noundef 200) #18, !noalias !145
-  %26 = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.az
-  %27 = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bg
+  %24 = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.az
+  %25 = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bg
   %.pre158.i.pre = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !19, !noalias !145
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i
 
@@ -266,11 +259,11 @@ bb.l:                                             ; preds = %_ZN4llvm6objectL6ap
   %spec.select = select i1 %i.bk, ptr %i.bl, ptr %i.aw
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i
 
-_ZNSt6vectorIhSaIhEE6resizeEm.exit.i:             ; preds = %bb.l, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172, %bb.f, %bb.i, %bb.h
-  %.sroa.83.4 = phi ptr [ %27, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.at, %bb.l ], [ %i.at, %bb.h ], [ %i.at, %bb.i ], [ %i.at, %bb.f ] ; 3 uses
-  %.sroa.41.4 = phi ptr [ %26, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %spec.select, %bb.l ], [ %i.bb, %bb.h ], [ %i.bd, %bb.i ], [ %i.aw, %bb.f ] ; 6 uses
-  %.sroa.0307.4 = phi ptr [ %i.bh, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.ar, %bb.l ], [ %i.ar, %bb.h ], [ %i.ar, %bb.i ], [ %i.ar, %bb.f ] ; 8 uses
-  %i.bm = phi i64 [ %.pre158.i.pre, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.ay, %bb.l ], [ 0, %bb.h ], [ %i.ay, %bb.i ], [ -1, %bb.f ]
+_ZNSt6vectorIhSaIhEE6resizeEm.exit.i:             ; preds = %bb.l, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170, %bb.f, %bb.i, %bb.h
+  %.sroa.83.4 = phi ptr [ %25, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170 ], [ %i.at, %bb.l ], [ %i.at, %bb.h ], [ %i.at, %bb.i ], [ %i.at, %bb.f ] ; 3 uses
+  %.sroa.41.4 = phi ptr [ %24, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170 ], [ %spec.select, %bb.l ], [ %i.bb, %bb.h ], [ %i.bd, %bb.i ], [ %i.aw, %bb.f ] ; 6 uses
+  %.sroa.0307.4 = phi ptr [ %i.bh, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170 ], [ %i.ar, %bb.l ], [ %i.ar, %bb.h ], [ %i.ar, %bb.i ], [ %i.ar, %bb.f ] ; 8 uses
+  %i.bm = phi i64 [ %.pre158.i.pre, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i170 ], [ %i.ay, %bb.l ], [ 0, %bb.h ], [ %i.ay, %bb.i ], [ -1, %bb.f ]
   %.pre-phi387 = ptrtoint ptr %.sroa.0307.4 to i64 ; 4 uses
   %i.bn = getelementptr i8, ptr %.sroa.0307.4, i64 150 ; 2 uses
   %i.bo = load ptr, ptr %i.m, align 8, !tbaa !15, !noalias !145

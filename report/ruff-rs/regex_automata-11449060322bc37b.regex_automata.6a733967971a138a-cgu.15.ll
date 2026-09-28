@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bv = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.ad ; 2 uses
   %.sroa.02.0.copyload.i.i.i.i.i = load i16, ptr %i.bv, align 1, !alias.scope !306, !noalias !307 ; 2 uses
   %i.bw = icmp slt i16 %.sroa.02.0.copyload.i.i.i.i.i, 0 ; 4 uses
-  %i.bx = and i16 %.sroa.02.0.copyload.i.i.i.i.i, 32767 ; 3 uses
+  %i.bx = and i16 %.sroa.02.0.copyload.i.i.i.i.i, 32767 ; 2 uses
   %i.by = zext nneg i16 %i.bx to i64              ; 3 uses
   %i.bz = add nsw i64 %i.bt, -2                   ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bv, i64 2 ; 2 uses
@@ -234,8 +234,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i: ; preds = %bb.u
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cd ; 3 uses
   %i.cg = sub nuw nsw i64 %i.bz, %i.cd            ; 2 uses
-  %cond.i.i321 = icmp eq i16 %i.bx, 0
-  br i1 %cond.i.i321, label %._crit_edge, label %.lr.ph
+  br label %.lr.ph
 
 bb.v:                                             ; preds = %.lr.ph
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.04.0.i.i323, i64 2
@@ -243,7 +242,7 @@ bb.v:                                             ; preds = %.lr.ph
   %cond.i.i = icmp eq i64 %i.ci, 0
   br i1 %cond.i.i, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.v, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i
+._crit_edge:                                      ; preds = %bb.v
   %i.cj = shl nuw nsw i64 %i.by, 2                ; 8 uses
   %i.ck = icmp ult i64 %i.cg, %i.cj
   br i1 %i.ck, label %.loopexit338.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit671.i.i
@@ -401,8 +400,8 @@ bb.ao:                                            ; preds = %_RNvMNtCs4NRVxsYgnA
   br i1 %i.dx, label %.loopexit338.i, label %bb.w
 
 .lr.ph:                                           ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i, %bb.v
-  %.sroa.04.0.i.i323 = phi ptr [ %i.ch, %bb.v ], [ %i.ca, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i ] ; 3 uses
-  %.sroa.65.0.i.i322 = phi i64 [ %i.ci, %bb.v ], [ %i.cd, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i ]
+  %.sroa.04.0.i.i323 = phi ptr [ %i.ca, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i ], [ %i.ch, %bb.v ] ; 3 uses
+  %.sroa.65.0.i.i322 = phi i64 [ %i.cd, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i ], [ %i.ci, %bb.v ]
   %i.dy = load i8, ptr %.sroa.04.0.i.i323, align 1, !noalias !314, !noundef !3
   %i.dz = getelementptr inbounds nuw i8, ptr %.sroa.04.0.i.i323, i64 1
   %i.ea = load i8, ptr %i.dz, align 1, !noalias !314, !noundef !3

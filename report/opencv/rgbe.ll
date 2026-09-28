@@ -204,7 +204,6 @@ bb.a:
   %i.m = zext nneg i32 %2 to i64                  ; 6 uses
   %i.n = zext nneg i32 %i.k to i64
   %i.o = zext nneg i32 %i.l to i64
-  %.not272 = icmp eq i32 %2, 0
   %i.p = shl nuw nsw i64 %i.m, 1
   %i.q = mul nuw nsw i64 %i.m, 3
   %i.r = shl nuw nsw i64 %i.m, 2
@@ -292,26 +291,20 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.ba = icmp eq ptr %.081167, null
-  br i1 %i.ba, label %bb.l, label %.preheader107.preheader
+  br i1 %i.ba, label %bb.l, label %.lr.ph157
 
 bb.l:                                             ; preds = %bb.k
   %i.bb = tail call noalias ptr @malloc(i64 noundef %i.i) #20 ; 2 uses
   %i.bc = icmp eq ptr %i.bb, null
-  br i1 %i.bc, label %bb.m, label %.preheader107.preheader
-
-.preheader107.preheader:                          ; preds = %bb.k, %bb.l
-  %.182274 = phi ptr [ %i.bb, %bb.l ], [ %.081167, %bb.k ] ; 16 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.182274, i64 %i.m ; 2 uses
-  br i1 %.not272, label %.loopexit105, label %.lr.ph157
+  br i1 %i.bc, label %bb.m, label %.lr.ph157
 
 bb.m:                                             ; preds = %bb.l
   tail call fastcc void @_ZL10rgbe_erroriPKc(i32 noundef 3, ptr noundef nonnull @.str.15)
   unreachable
 
-.loopexit105:                                     ; preds = %.loopexit, %.preheader107.preheader
-  %.180.lcssa = phi ptr [ %.182274, %.preheader107.preheader ], [ %.3, %.loopexit ] ; 3 uses
+.loopexit105:                                     ; preds = %.loopexit
   %i.bd = getelementptr inbounds nuw i8, ptr %.182274, i64 %i.p ; 3 uses
-  %i.be = icmp ult ptr %.180.lcssa, %i.bd
+  %i.be = icmp ult ptr %.3, %i.bd
   br i1 %i.be, label %.lr.ph157.1, label %.loopexit105.1
 
 .lr.ph157.1:                                      ; preds = %.loopexit105
@@ -319,7 +312,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %.loopexit.1, %.lr.ph157.1
-  %.180156.1 = phi ptr [ %.180.lcssa, %.lr.ph157.1 ], [ %.3.1, %.loopexit.1 ] ; 13 uses
+  %.180156.1 = phi ptr [ %.3, %.lr.ph157.1 ], [ %.3.1, %.loopexit.1 ] ; 13 uses
   %i.bg = call i64 @fread(ptr noundef nonnull %i.b, i64 noundef 2, i64 noundef 1, ptr noundef %0)
   %i.bh = icmp eq i64 %i.bg, 0
   br i1 %i.bh, label %.loopexit218, label %bb.o
@@ -451,7 +444,7 @@ vec.epilog.middle.block580:                       ; preds = %vec.epilog.vector.b
   br i1 %i.cq, label %bb.n, label %.loopexit105.1, !llvm.loop !43
 
 .loopexit105.1:                                   ; preds = %.loopexit.1, %.loopexit105
-  %.180.lcssa.1 = phi ptr [ %.180.lcssa, %.loopexit105 ], [ %.3.1, %.loopexit.1 ] ; 3 uses
+  %.180.lcssa.1 = phi ptr [ %.3, %.loopexit105 ], [ %.3.1, %.loopexit.1 ] ; 3 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %.182274, i64 %i.q ; 3 uses
   %i.cs = icmp ult ptr %.180.lcssa.1, %i.cr
   br i1 %i.cs, label %.lr.ph157.2, label %.loopexit105.2
@@ -740,7 +733,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %invariant.gep393 = getelementptr inbounds nuw i8, ptr %.182274, i64 %i.o
   br label %.lr.ph163
 
-.lr.ph157:                                        ; preds = %.preheader107.preheader
+.lr.ph157:                                        ; preds = %bb.k, %bb.l
+  %.182274 = phi ptr [ %i.bb, %bb.l ], [ %.081167, %bb.k ] ; 15 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.182274, i64 %i.m ; 2 uses
   %i.ft = ptrtoint ptr %6 to i64
   br label %bb.ai
 
@@ -952,7 +947,7 @@ bb.as:                                            ; preds = %bb.ap
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %middle.block595, %vec.epilog.middle.block611, %bb.ao, %bb.as
-  %.3 = phi ptr [ %i.hg, %bb.ao ], [ %i.ht, %bb.as ], [ %i.gx, %vec.epilog.middle.block611 ], [ %i.gp, %middle.block595 ], [ %i.ha, %.lr.ph ] ; 3 uses
+  %.3 = phi ptr [ %i.hg, %bb.ao ], [ %i.ht, %bb.as ], [ %i.gx, %vec.epilog.middle.block611 ], [ %i.gp, %middle.block595 ], [ %i.ha, %.lr.ph ] ; 5 uses
   %i.hu = icmp ult ptr %.3, %6
   br i1 %i.hu, label %bb.ai, label %.loopexit105, !llvm.loop !43
 

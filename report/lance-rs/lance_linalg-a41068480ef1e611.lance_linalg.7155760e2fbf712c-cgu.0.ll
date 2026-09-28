@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #76, !noalias !3941
-  %i.d = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #76, !noalias !3941 ; 4 uses
+  %i.d = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #76, !noalias !3941 ; 3 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.d, label %bb.e
 
@@ -221,40 +221,31 @@ bb.d:                                             ; preds = %bb.a, %bb.c
 
 bb.e:                                             ; preds = %bb.c
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #76, !noalias !3942
-  %i.g = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #76, !noalias !3942 ; 4 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #76, !noalias !3942 ; 3 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit9, label %3
+  br i1 %i.h, label %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit9, label %bb.g
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14: ; preds = %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit9
   %i.i = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %2 = icmp eq i64 %1, 0
-  br i1 %2, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit, label %bb.f
+          cleanup
+  br label %bb.f
 
-bb.f:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14.thread59, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14
+bb.f:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14.thread59
   %.pn63 = phi { ptr, i32 } [ %i.m, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14.thread59 ], [ %i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14 ]
   %i.j = shl nuw i64 %1, 3
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.j, i64 noundef range(i64 1, -9223372036854775807) 8) #76
-  br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit
+  resume { ptr, i32 } %.pn63
 
 _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit9: ; preds = %bb.e
   invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.a) #74
           to label %bb.i unwind label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14
 
-3:                                                ; preds = %bb.e
-  %4 = shl nuw nsw i64 %1, 2                      ; 2 uses
-  %5 = icmp eq i64 %1, 0
-  br i1 %5, label %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit13, label %bb.g
-
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %bb.e
+  %2 = shl nuw nsw i64 %1, 2                      ; 2 uses
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #76, !noalias !3943
-  %i.k = tail call noundef align 4 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) 4) #76, !noalias !3943 ; 2 uses
+  %i.k = tail call noundef align 4 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %2, i64 noundef range(i64 1, -9223372036854775807) 4) #76, !noalias !3943 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
-  br i1 %i.l, label %bb.h, label %6
-
-6:                                                ; preds = %bb.g
-  %7 = ptrtoint ptr %i.k to i64
-  br label %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit13
+  br i1 %i.l, label %bb.h, label %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit13
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14.thread59: ; preds = %bb.h
   %i.m = landingpad { ptr, i32 }
@@ -264,15 +255,14 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9J
   br label %bb.f
 
 bb.h:                                             ; preds = %bb.g
-  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %4) #74
+  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %2) #74
           to label %bb.i unwind label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14.thread59
 
-_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit13: ; preds = %.thread, %3, %6
-  %.sroa.1024.0.ph69 = phi ptr [ %i.g, %6 ], [ %i.g, %3 ], [ inttoptr (i64 8 to ptr), %.thread ]
-  %.sroa.4.037.ph68 = phi i64 [ %1, %6 ], [ %1, %3 ], [ 0, %.thread ] ; 2 uses
-  %.ph67 = phi ptr [ %i.d, %6 ], [ %i.d, %3 ], [ inttoptr (i64 8 to ptr), %.thread ]
-  %.sroa.1028.0 = phi i64 [ %7, %6 ], [ 4, %3 ], [ 4, %.thread ]
-  %8 = inttoptr i64 %.sroa.1028.0 to ptr
+_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit13: ; preds = %bb.g, %.thread
+  %.sroa.1024.0.ph69 = phi ptr [ inttoptr (i64 8 to ptr), %.thread ], [ %i.g, %bb.g ]
+  %.sroa.4.037.ph68 = phi i64 [ 0, %.thread ], [ %1, %bb.g ] ; 2 uses
+  %.ph67 = phi ptr [ inttoptr (i64 8 to ptr), %.thread ], [ %i.d, %bb.g ]
+  %.sroa.1028.0 = phi ptr [ inttoptr (i64 4 to ptr), %.thread ], [ %i.k, %bb.g ]
   store i64 %.sroa.4.037.ph68, ptr %0, align 8
   %.sroa.5.0..sroa_idx15 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.ph67, ptr %.sroa.5.0..sroa_idx15, align 8
@@ -287,17 +277,13 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWG
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 %1, ptr %i.p, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr %8, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr %.sroa.1028.0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   ret void
 
 bb.i:                                             ; preds = %bb.h, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs9JgWGBoX3PY_12lance_linalg.exit9
   unreachable
-
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit: ; preds = %bb.f, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14
-  %.pn58 = phi { ptr, i32 } [ %i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecyEECs9JgWGBoX3PY_12lance_linalg.exit14 ], [ %.pn63, %bb.f ]
-  resume { ptr, i32 } %.pn58
 }
 
 ; Function Attrs: nonlazybind uwtable

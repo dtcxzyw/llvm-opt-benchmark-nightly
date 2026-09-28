@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %.not14.i, label %decode_gain_control.exit, label %.preheader.lr.ph.split.i
 
 .preheader.lr.ph.split.i:                         ; preds = %bb.ao
-  %.4.val.fr.i = freeze i32 %.val                 ; 3 uses
+  %.4.val.fr.i = freeze i32 %.val                 ; 2 uses
   %i.nq = sext i32 %.4.val.fr.i to i64
   %i.nr = getelementptr inbounds [3 x i8], ptr @decode_gain_control.gain_mode, i64 %i.nq ; 2 uses
   %i.ns = load i8, ptr %i.nr, align 1, !tbaa !33  ; 2 uses
@@ -213,11 +213,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.nu = and i32 %.4.val.fr.i, -3
   %.not.i101 = icmp eq i32 %i.nu, 0
   %umax37.i = tail call i8 @llvm.umax.i8(i8 %i.ns, i8 1) ; 3 uses
-  br i1 %.not.i101, label %.preheader.us.i, label %.preheader.i102.preheader
-
-.preheader.i102.preheader:                        ; preds = %.preheader.lr.ph.split.i
-  %exitcond28.not.i.peel = icmp eq i32 %.4.val.fr.i, 0
-  br label %.preheader.i102
+  br i1 %.not.i101, label %.preheader.us.i, label %.preheader.i102
 
 .preheader.us.i:                                  ; preds = %.preheader.lr.ph.split.i, %bb.av
   %.us-phi7.us.us.i = phi i32 [ %.us-phi6.us.us.i, %bb.av ], [ %i.np, %.preheader.lr.ph.split.i ] ; 3 uses
@@ -443,9 +439,9 @@ bb.bj:                                            ; preds = %._crit_edge.split.u
   %exitcond38.not.i.2 = icmp eq i8 %i.ra, %umax37.i
   br i1 %exitcond38.not.i.2, label %decode_gain_control.exit, label %.preheader.us.i.2, !llvm.loop !178
 
-.preheader.i102:                                  ; preds = %.preheader.i102.preheader, %._crit_edge4.split.i
-  %indvars.iv29.i = phi i32 [ %indvars.iv.next30.i, %._crit_edge4.split.i ], [ 0, %.preheader.i102.preheader ]
-  %.lcssa.us.us10.i = phi i32 [ %.us-phi6.i.lcssa, %._crit_edge4.split.i ], [ %i.np, %.preheader.i102.preheader ] ; 3 uses
+.preheader.i102:                                  ; preds = %.preheader.lr.ph.split.i, %._crit_edge4.split.i
+  %indvars.iv29.i = phi i32 [ %indvars.iv.next30.i, %._crit_edge4.split.i ], [ 0, %.preheader.lr.ph.split.i ]
+  %.lcssa.us.us10.i = phi i32 [ %.us-phi6.i, %._crit_edge4.split.i ], [ %i.np, %.preheader.lr.ph.split.i ] ; 3 uses
   %i.rb = lshr i32 %.lcssa.us.us10.i, 3
   %i.rc = zext nneg i32 %i.rb to i64
   %i.rd = getelementptr inbounds nuw i8, ptr %i.mu, i64 %i.rc
@@ -506,13 +502,13 @@ bb.bj:                                            ; preds = %._crit_edge.split.u
   store i32 %.lcssa179.peel, ptr %i.f, align 8, !tbaa !93
   br label %bb.bk
 
-bb.bk:                                            ; preds = %._crit_edge.i107.peel, %.preheader.i102
-  %.us-phi6.i.peel = phi i32 [ %.lcssa179.peel, %._crit_edge.i107.peel ], [ %i.rk, %.preheader.i102 ] ; 2 uses
-  br i1 %exitcond28.not.i.peel, label %._crit_edge4.split.i, label %.preheader.i102.peel.newph
+bb.bk:                                            ; preds = %.preheader.i102, %._crit_edge.i107.peel
+  %.us-phi6.i.peel = phi i32 [ %.lcssa179.peel, %._crit_edge.i107.peel ], [ %i.rk, %.preheader.i102 ]
+  br label %.preheader.i102.peel.newph
 
-.preheader.i102.peel.newph:                       ; preds = %bb.bk, %bb.br
-  %.us-phi7.i = phi i32 [ %.us-phi6.i, %bb.br ], [ %.us-phi6.i.peel, %bb.bk ] ; 3 uses
-  %.0152.i = phi i8 [ %i.ta, %bb.br ], [ 1, %bb.bk ]
+.preheader.i102.peel.newph:                       ; preds = %bb.br, %bb.bk
+  %.us-phi7.i = phi i32 [ %.us-phi6.i.peel, %bb.bk ], [ %.us-phi6.i, %bb.br ] ; 3 uses
+  %.0152.i = phi i8 [ 1, %bb.bk ], [ %i.ta, %bb.br ]
   %i.rz = lshr i32 %.us-phi7.i, 3
   %i.sa = zext nneg i32 %i.rz to i64
   %i.sb = getelementptr inbounds nuw i8, ptr %i.mu, i64 %i.sa
@@ -582,8 +578,7 @@ bb.br:                                            ; preds = %._crit_edge.i107, %
   %exitcond28.not.i = icmp eq i8 %i.ns, %i.ta
   br i1 %exitcond28.not.i, label %._crit_edge4.split.i, label %.preheader.i102.peel.newph, !llvm.loop !179
 
-._crit_edge4.split.i:                             ; preds = %bb.br, %bb.bk
-  %.us-phi6.i.lcssa = phi i32 [ %.us-phi6.i.peel, %bb.bk ], [ %.us-phi6.i, %bb.br ]
+._crit_edge4.split.i:                             ; preds = %bb.br
   %indvars.iv.next30.i = add nuw nsw i32 %indvars.iv29.i, 1 ; 2 uses
   %exitcond32.not.i = icmp eq i32 %indvars.iv.next30.i, %i.nn
   br i1 %exitcond32.not.i, label %decode_gain_control.exit, label %.preheader.i102, !llvm.loop !180

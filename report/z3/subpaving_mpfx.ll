@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.h = phi ptr [ %i.e, %bb.b ], [ %i.a, %bb.a ] ; 15 uses
-  %i.i = load i32, ptr %i.h, align 8              ; 3 uses
+  %i.h = phi ptr [ %i.e, %bb.b ], [ %i.a, %bb.a ] ; 14 uses
+  %i.i = load i32, ptr %i.h, align 8              ; 2 uses
   %i.j = icmp ugt i32 %i.i, -1073741825
   br i1 %i.j, label %bb.d, label %bb.l
 
@@ -367,20 +367,16 @@ _ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_conf
   %i.ca = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !40
   %i.cc = icmp ugt i32 %i.bz, %i.cb
-  br i1 %i.cc, label %3, label %bb.i
+  br i1 %i.cc, label %bb.f, label %bb.i
 
-3:                                                ; preds = %_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE4sizeERKNS5_3refE.exit
-  %or.cond.i = icmp eq i32 %i.i, -1073741823
-  br i1 %or.cond.i, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit, label %bb.f
-
-bb.f:                                             ; preds = %3
-  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+bb.f:                                             ; preds = %_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE4sizeERKNS5_3refE.exit
+  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !66, !nonnull !67, !align !68
-  %i.cf = tail call noundef ptr @_ZN22small_object_allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(520) %i.ce, i64 noundef 24) ; 5 uses
+  %i.cf = tail call noundef ptr @_ZN22small_object_allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(520) %i.ce, i64 noundef 24) ; 4 uses
   store i32 -1073741823, ptr %i.cf, align 8
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 4 ; 2 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 4 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.cg, i8 0, i64 20, i1 false)
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 16
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 16 ; 4 uses
   %i.ci = tail call noundef i32 @_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE10get_valuesEPNS5_4cellERPPNS3_5boundE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.ch)
   store i32 %i.ci, ptr %i.cg, align 4, !tbaa !40
   %i.cj = load i32, ptr %i.h, align 8             ; 2 uses
@@ -390,7 +386,7 @@ bb.f:                                             ; preds = %3
   %i.cn = or disjoint i32 %i.cl, %i.cm            ; 2 uses
   store i32 %i.cn, ptr %i.h, align 8
   %i.co = icmp eq i32 %i.cl, 0
-  br i1 %i.co, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit77
+  br i1 %i.co, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
 
 .preheader:                                       ; preds = %bb.f, %bb.h
   %i.cp = phi i32 [ %i.dg, %bb.h ], [ %i.cn, %bb.f ]
@@ -416,13 +412,13 @@ _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_confi
 _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.thread.i.i76: ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i.i75, %bb.g
   %i.cz = load ptr, ptr %i.cd, align 8, !tbaa !66, !nonnull !67, !align !68
   tail call void @_ZN22small_object_allocator10deallocateEmPv(ptr noundef nonnull align 8 dereferenceable(520) %i.cz, i64 noundef 24, ptr noundef nonnull %.014.i.i70)
-  br label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit77
+  br label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
 
 _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i71: ; preds = %.preheader
   %i.da = load ptr, ptr %i.cd, align 8, !tbaa !66, !nonnull !67, !align !68
   tail call void @_ZN22small_object_allocator10deallocateEmPv(ptr noundef nonnull align 8 dereferenceable(520) %i.da, i64 noundef 24, ptr noundef nonnull %.014.i.i70)
   %i.db = icmp eq ptr %i.cs, null
-  br i1 %i.db, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit77, label %bb.h
+  br i1 %i.db, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit, label %bb.h
 
 bb.h:                                             ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i71
   %i.dc = load i32, ptr %i.cs, align 8            ; 2 uses
@@ -432,19 +428,13 @@ bb.h:                                             ; preds = %_ZN14parray_manager
   %i.dg = or disjoint i32 %i.de, %i.df            ; 2 uses
   store i32 %i.dg, ptr %i.cs, align 8
   %.not.i.i74 = icmp eq i32 %i.de, 0
-  br i1 %.not.i.i74, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit77
+  br i1 %.not.i.i74, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
 
-_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit77: ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i71, %bb.h, %bb.f, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.thread.i.i76
+_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit: ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i71, %bb.h, %bb.f, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.thread.i.i76
   store ptr %i.cf, ptr %1, align 8, !tbaa !47
   store i32 0, ptr %i.by, align 8, !tbaa !48
-  br label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
-
-_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit: ; preds = %3, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit77
-  %4 = phi ptr [ %i.h, %3 ], [ %i.cf, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit77 ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %i.dh = load i32, ptr %6, align 4, !tbaa !57    ; 3 uses
-  %i.di = load ptr, ptr %5, align 8, !tbaa !73    ; 3 uses
+  %i.dh = load i32, ptr %i.cg, align 4, !tbaa !57 ; 3 uses
+  %i.di = load ptr, ptr %i.ch, align 8, !tbaa !73 ; 3 uses
   %i.dj = icmp eq ptr %i.di, null
   br i1 %i.dj, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i48, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.thread.i.i38
 
@@ -467,8 +457,7 @@ _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_confi
   %i.ds = add nuw nsw i64 %i.dr, 1
   %i.dt = lshr i64 %i.ds, 1
   %i.du = select i1 %i.dq, i64 2, i64 %i.dt       ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.dv = load ptr, ptr %7, align 8, !tbaa !66, !nonnull !67, !align !68
+  %i.dv = load ptr, ptr %i.cd, align 8, !tbaa !66, !nonnull !67, !align !68
   %i.dw = shl nuw nsw i64 %i.du, 3
   %i.dx = add nuw nsw i64 %i.dw, 8
   %i.dy = tail call noundef ptr @_ZN22small_object_allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(520) %i.dv, i64 noundef %i.dx) ; 3 uses
@@ -478,7 +467,7 @@ _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_confi
   br i1 %i.dq, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE6expandERPPNS3_5boundE.exit.i.i45, label %.preheader.i.i.i41
 
 .preheader.i.i.i41:                               ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i.i40
-  %i.eb = load ptr, ptr %5, align 8, !tbaa !73    ; 8 uses
+  %i.eb = load ptr, ptr %i.ch, align 8, !tbaa !73 ; 8 uses
   %min.iters.check125 = icmp samesign ult i64 %i.dp, 10
   br i1 %min.iters.check125, label %scalar.ph124.preheader, label %vector.memcheck122
 
@@ -538,7 +527,7 @@ scalar.ph124.prol.loopexit:                       ; preds = %scalar.ph124.prol, 
 _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i.i.i44: ; preds = %scalar.ph124.prol.loopexit, %scalar.ph124, %middle.block133
   %i.eq = getelementptr inbounds i8, ptr %i.eb, i64 -8 ; 2 uses
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !74
-  %i.es = load ptr, ptr %7, align 8, !tbaa !66, !nonnull !67, !align !68
+  %i.es = load ptr, ptr %i.cd, align 8, !tbaa !66, !nonnull !67, !align !68
   %i.et = shl i64 %i.er, 3
   %i.eu = add i64 %i.et, 8
   tail call void @_ZN22small_object_allocator10deallocateEmPv(ptr noundef nonnull align 8 dereferenceable(520) %i.es, i64 noundef %i.eu, ptr noundef nonnull %i.eq)
@@ -570,8 +559,8 @@ scalar.ph124:                                     ; preds = %scalar.ph124.prol.l
   br i1 %exitcond.not.i.i.i43.3, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i.i.i44, label %scalar.ph124, !llvm.loop !247
 
 _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE6expandERPPNS3_5boundE.exit.i.i45: ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i.i.i44, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i.i40
-  store ptr %i.ea, ptr %5, align 8, !tbaa !73
-  %.pre.i.i46 = load i32, ptr %6, align 4, !tbaa !57 ; 2 uses
+  store ptr %i.ea, ptr %i.ch, align 8, !tbaa !73
+  %.pre.i.i46 = load i32, ptr %i.cg, align 4, !tbaa !57 ; 2 uses
   %.pre.i47 = zext i32 %.pre.i.i46 to i64
   br label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE10rpush_backEPNS5_4cellERKPNS3_5boundE.exit49
 
@@ -583,7 +572,7 @@ _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_confi
   %i.fo = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %.pre-phi.i39
   store ptr %i.fn, ptr %i.fo, align 8, !tbaa !70
   %i.fp = add i32 %i.fl, 1
-  store i32 %i.fp, ptr %6, align 4, !tbaa !57
+  store i32 %i.fp, ptr %i.cg, align 4, !tbaa !57
   br label %bb.q
 
 bb.i:                                             ; preds = %_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE4sizeERKNS5_3refE.exit
@@ -986,8 +975,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE3setERNS5_3refEjRKPNS3_5boundE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(12) %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(8) %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !47     ; 15 uses
-  %i.b = load i32, ptr %i.a, align 8              ; 3 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !47     ; 14 uses
+  %i.b = load i32, ptr %i.a, align 8              ; 2 uses
   %i.c = icmp ugt i32 %i.b, -1073741825
   br i1 %i.c, label %bb.b, label %bb.j
 
@@ -1011,20 +1000,16 @@ _ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_conf
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.n = load i32, ptr %i.m, align 4, !tbaa !40
   %i.o = icmp ugt i32 %i.l, %i.n
-  br i1 %i.o, label %4, label %bb.g
+  br i1 %i.o, label %bb.d, label %bb.g
 
-4:                                                ; preds = %_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE4sizeERKNS5_3refE.exit
-  %or.cond.i = icmp eq i32 %i.b, -1073741823
-  br i1 %or.cond.i, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit, label %bb.d
-
-bb.d:                                             ; preds = %4
+bb.d:                                             ; preds = %_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE4sizeERKNS5_3refE.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !66, !nonnull !67, !align !68
-  %i.r = tail call noundef ptr @_ZN22small_object_allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(520) %i.q, i64 noundef 24) ; 5 uses
+  %i.r = tail call noundef ptr @_ZN22small_object_allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(520) %i.q, i64 noundef 24) ; 4 uses
   store i32 -1073741823, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.s, i8 0, i64 20, i1 false)
-  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 16
+  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
   %i.u = tail call noundef i32 @_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE10get_valuesEPNS5_4cellERPPNS3_5boundE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.a, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
   store i32 %i.u, ptr %i.s, align 4, !tbaa !40
   %i.v = load i32, ptr %i.a, align 8              ; 2 uses
@@ -1034,7 +1019,7 @@ bb.d:                                             ; preds = %4
   %i.z = or disjoint i32 %i.x, %i.y               ; 2 uses
   store i32 %i.z, ptr %i.a, align 8
   %i.aa = icmp eq i32 %i.x, 0
-  br i1 %i.aa, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit51
+  br i1 %i.aa, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
 
 .preheader:                                       ; preds = %bb.d, %bb.f
   %i.ab = phi i32 [ %i.as, %bb.f ], [ %i.z, %bb.d ]
@@ -1060,13 +1045,13 @@ _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_confi
 _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.thread.i.i50: ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE8capacityEPPNS3_5boundE.exit.i.i.i49, %bb.e
   %i.al = load ptr, ptr %i.p, align 8, !tbaa !66, !nonnull !67, !align !68
   tail call void @_ZN22small_object_allocator10deallocateEmPv(ptr noundef nonnull align 8 dereferenceable(520) %i.al, i64 noundef 24, ptr noundef nonnull %.014.i.i44)
-  br label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit51
+  br label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
 
 _ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i45: ; preds = %.preheader
   %i.am = load ptr, ptr %i.p, align 8, !tbaa !66, !nonnull !67, !align !68
   tail call void @_ZN22small_object_allocator10deallocateEmPv(ptr noundef nonnull align 8 dereferenceable(520) %i.am, i64 noundef 24, ptr noundef nonnull %.014.i.i44)
   %i.an = icmp eq ptr %i.ae, null
-  br i1 %i.an, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit51, label %bb.f
+  br i1 %i.an, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i45
   %i.ao = load i32, ptr %i.ae, align 8            ; 2 uses
@@ -1076,17 +1061,12 @@ bb.f:                                             ; preds = %_ZN14parray_manager
   %i.as = or disjoint i32 %i.aq, %i.ar            ; 2 uses
   store i32 %i.as, ptr %i.ae, align 8
   %.not.i.i48 = icmp eq i32 %i.aq, 0
-  br i1 %.not.i.i48, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit51
+  br i1 %.not.i.i48, label %.preheader, label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
 
-_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit51: ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i45, %bb.f, %bb.d, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.thread.i.i50
+_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit: ; preds = %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.i.i45, %bb.f, %bb.d, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE17deallocate_valuesEPPNS3_5boundE.exit.thread.i.i50
   store ptr %i.r, ptr %1, align 8, !tbaa !47
   store i32 0, ptr %i.k, align 8, !tbaa !48
-  br label %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit
-
-_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7unshareERNS5_3refE.exit: ; preds = %4, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit51
-  %5 = phi ptr [ %i.a, %4 ], [ %i.r, %_ZN14parray_managerIN9subpaving9context_tINS0_11config_mpfxEE18bound_array_configEE7dec_refEPNS5_4cellE.exit51 ]
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.at = load ptr, ptr %6, align 8, !tbaa !40
+  %i.at = load ptr, ptr %i.t, align 8, !tbaa !40
   %i.au = zext i32 %2 to i64
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.au
   %i.aw = load ptr, ptr %3, align 8, !tbaa !70

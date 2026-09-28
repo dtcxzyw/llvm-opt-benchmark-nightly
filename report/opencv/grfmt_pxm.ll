@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 1836
-  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !66 ; 6 uses
+  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !66 ; 5 uses
   %i.ai = add i32 %i.ah, -1
   %or.cond195 = icmp ult i32 %i.ai, 255
   br i1 %or.cond195, label %.lr.ph, label %bb.e
@@ -217,10 +217,6 @@ bb.d:                                             ; preds = %bb.c
   %i.am = add nuw nsw i32 %i.ah, 1                ; 2 uses
   %wide.trip.count = zext nneg i32 %i.am to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %14 = icmp eq i32 %i.ah, 0
-  br i1 %14, label %.epil.preheader, label %.lr.ph.new
-
-.lr.ph.new:                                       ; preds = %.lr.ph
   %unroll_iter = and i64 %wide.trip.count, 510
   br label %bb.j
 
@@ -266,16 +262,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
+.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa
   %lcmp.mod375 = trunc i32 %i.am to i1
   tail call void @llvm.assume(i1 %lcmp.mod375)
-  %i.au = trunc i64 %indvars.iv.epil.init to i32
+  %i.au = trunc i64 %indvars.iv.next.1 to i32
   %i.av = mul i32 %i.au, 255
   %i.aw = udiv i32 %i.av, %i.ah
   %i.ax = xor i32 %i.al, %i.aw
   %i.ay = trunc i32 %i.ax to i8
-  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.epil.init
+  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next.1
   store i8 %i.ay, ptr %i.az, align 1, !tbaa !76
   br label %._crit_edge
 
@@ -285,9 +280,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
   call void @_ZN2cv15FillGrayPaletteEPNS_12PaletteEntryEib(ptr noundef nonnull %2, i32 noundef %i.bb, i1 noundef zeroext %i.ba)
   br label %bb.k
 
-bb.j:                                             ; preds = %bb.j, %.lr.ph.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.j ] ; 4 uses
-  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.j ]
+bb.j:                                             ; preds = %bb.j, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %bb.j ] ; 4 uses
+  %niter = phi i64 [ 0, %.lr.ph ], [ %niter.next.1, %bb.j ]
   %i.bc = trunc i64 %indvars.iv to i32
   %i.bd = mul i32 %i.bc, 255
   %i.be = udiv i32 %i.bd, %i.ah
@@ -303,7 +298,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.new
   %i.bm = trunc i32 %i.bl to i8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
   store i8 %i.bm, ptr %i.bn, align 1, !tbaa !76
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.j, !llvm.loop !132

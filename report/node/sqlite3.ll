@@ -206,10 +206,10 @@ bb.bf:                                            ; preds = %.lr.ph.i229.2.i.i
 
 .lr.ph.i229.3.i.i:                                ; preds = %bb.bf
   %i.jm = getelementptr inbounds nuw i8, ptr %i.cq, i64 3
-  %i.jn = load i8, ptr %i.jm, align 1, !tbaa !741 ; 3 uses
+  %i.jn = load i8, ptr %i.jm, align 1, !tbaa !741 ; 2 uses
   %i.jo = and i8 %i.jn, -33
   %i.jp = icmp eq i8 %i.jo, 84
-  br i1 %i.jp, label %bb.bg, label %sqlite3_strnicmp.exit246.i.i.thread325
+  br i1 %i.jp, label %bb.bg, label %sqlite3_strnicmp.exit266.i.i
 
 bb.bg:                                            ; preds = %.lr.ph.i229.3.i.i
   %exitcond467.3.not.i.i = icmp eq i64 %i.cw, 3
@@ -217,10 +217,10 @@ bb.bg:                                            ; preds = %.lr.ph.i229.3.i.i
 
 .lr.ph.i229.4.i.i:                                ; preds = %bb.bg
   %i.jq = getelementptr inbounds nuw i8, ptr %i.cq, i64 4
-  %i.jr = load i8, ptr %i.jq, align 1, !tbaa !741 ; 3 uses
+  %i.jr = load i8, ptr %i.jq, align 1, !tbaa !741 ; 2 uses
   %i.js = and i8 %i.jr, -33
   %i.jt = icmp eq i8 %i.js, 69
-  br i1 %i.jt, label %bb.bh, label %sqlite3_strnicmp.exit236.i.i.thread323
+  br i1 %i.jt, label %bb.bh, label %sqlite3_strnicmp.exit246.i.i
 
 bb.bh:                                            ; preds = %.lr.ph.i229.4.i.i
   %exitcond467.4.not.i.i = icmp eq i64 %i.cw, 4
@@ -261,11 +261,6 @@ sqlite3_strnicmp.exit236.i.i:                     ; preds = %.sqlite3_strnicmp.e
   %i.kh = icmp eq i32 %i.kc, %i.kg
   br i1 %i.kh, label %sqlite3_strnicmp.exit236.thread.i.i, label %.lr.ph.i239.preheader.i.i
 
-sqlite3_strnicmp.exit236.i.i.thread323:           ; preds = %.lr.ph.i229.4.i.i
-  %9 = and i8 %i.jr, -33
-  %10 = icmp eq i8 %9, 69
-  br i1 %10, label %sqlite3_strnicmp.exit236.thread.i.i, label %sqlite3_strnicmp.exit246.i.i
-
 .lr.ph.i239.preheader.i.i:                        ; preds = %sqlite3_strnicmp.exit236.i.i
   %scevgep468.i.i = getelementptr i8, ptr %i.cq, i64 18
   %i.ki = getelementptr inbounds nuw i8, ptr %i.cq, i64 5
@@ -274,7 +269,7 @@ sqlite3_strnicmp.exit236.i.i.thread323:           ; preds = %.lr.ph.i229.4.i.i
   %i.kl = icmp eq i8 %i.kk, 78
   br i1 %i.kl, label %bb.bo, label %sqlite3_strnicmp.exit246.i.i
 
-sqlite3_strnicmp.exit236.thread.i.i:              ; preds = %sqlite3_strnicmp.exit236.i.i.thread323, %sqlite3_strnicmp.exit236.i.i, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd
+sqlite3_strnicmp.exit236.thread.i.i:              ; preds = %sqlite3_strnicmp.exit236.i.i, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd
   %i.km = load i32, ptr %i.br, align 8, !tbaa !3076
   %.not180.i.i = icmp eq i32 %i.km, 0
   br i1 %.not180.i.i, label %bb.bl, label %bb.bk
@@ -437,9 +432,9 @@ bb.ca:                                            ; preds = %.lr.ph.i239.17.i.i
   %.pre241.i = load i8, ptr %scevgep468.i.i, align 1, !tbaa !741
   br label %sqlite3_strnicmp.exit246.i.i
 
-sqlite3_strnicmp.exit246.i.i:                     ; preds = %sqlite3_strnicmp.exit236.i.i.thread323, %.sqlite3_strnicmp.exit246.i_crit_edge.i, %.lr.ph.i239.17.i.i, %.lr.ph.i239.16.i.i, %.lr.ph.i239.15.i.i, %.lr.ph.i239.14.i.i, %.lr.ph.i239.13.i.i, %.lr.ph.i239.12.i.i, %.lr.ph.i239.11.i.i, %.lr.ph.i239.10.i.i, %.lr.ph.i239.9.i.i, %.lr.ph.i239.8.i.i, %.lr.ph.i239.7.i.i, %.lr.ph.i239.6.i.i, %.lr.ph.i239.preheader.i.i
-  %i.mj = phi i8 [ %.pre241.i, %.sqlite3_strnicmp.exit246.i_crit_edge.i ], [ %i.mg, %.lr.ph.i239.17.i.i ], [ %i.mc, %.lr.ph.i239.16.i.i ], [ %i.ly, %.lr.ph.i239.15.i.i ], [ %i.lu, %.lr.ph.i239.14.i.i ], [ %i.jr, %sqlite3_strnicmp.exit236.i.i.thread323 ], [ %i.kj, %.lr.ph.i239.preheader.i.i ], [ %i.kr, %.lr.ph.i239.6.i.i ], [ %i.ku, %.lr.ph.i239.7.i.i ], [ %i.kx, %.lr.ph.i239.8.i.i ], [ %i.lb, %.lr.ph.i239.9.i.i ], [ %i.lf, %.lr.ph.i239.10.i.i ], [ %i.lj, %.lr.ph.i239.11.i.i ], [ %i.lm, %.lr.ph.i239.12.i.i ], [ %i.lq, %.lr.ph.i239.13.i.i ]
-  %i.mk = phi i32 [ 0, %.sqlite3_strnicmp.exit246.i_crit_edge.i ], [ 101, %.lr.ph.i239.17.i.i ], [ 116, %.lr.ph.i239.16.i.i ], [ 101, %.lr.ph.i239.15.i.i ], [ 108, %.lr.ph.i239.14.i.i ], [ 101, %sqlite3_strnicmp.exit236.i.i.thread323 ], [ 110, %.lr.ph.i239.preheader.i.i ], [ 116, %.lr.ph.i239.6.i.i ], [ 108, %.lr.ph.i239.7.i.i ], [ 101, %.lr.ph.i239.8.i.i ], [ 115, %.lr.ph.i239.9.i.i ], [ 115, %.lr.ph.i239.10.i.i ], [ 95, %.lr.ph.i239.11.i.i ], [ 100, %.lr.ph.i239.12.i.i ], [ 101, %.lr.ph.i239.13.i.i ]
+sqlite3_strnicmp.exit246.i.i:                     ; preds = %.lr.ph.i229.4.i.i, %.sqlite3_strnicmp.exit246.i_crit_edge.i, %.lr.ph.i239.17.i.i, %.lr.ph.i239.16.i.i, %.lr.ph.i239.15.i.i, %.lr.ph.i239.14.i.i, %.lr.ph.i239.13.i.i, %.lr.ph.i239.12.i.i, %.lr.ph.i239.11.i.i, %.lr.ph.i239.10.i.i, %.lr.ph.i239.9.i.i, %.lr.ph.i239.8.i.i, %.lr.ph.i239.7.i.i, %.lr.ph.i239.6.i.i, %.lr.ph.i239.preheader.i.i
+  %i.mj = phi i8 [ %.pre241.i, %.sqlite3_strnicmp.exit246.i_crit_edge.i ], [ %i.mg, %.lr.ph.i239.17.i.i ], [ %i.mc, %.lr.ph.i239.16.i.i ], [ %i.ly, %.lr.ph.i239.15.i.i ], [ %i.lu, %.lr.ph.i239.14.i.i ], [ %i.lq, %.lr.ph.i239.13.i.i ], [ %i.kj, %.lr.ph.i239.preheader.i.i ], [ %i.kr, %.lr.ph.i239.6.i.i ], [ %i.ku, %.lr.ph.i239.7.i.i ], [ %i.kx, %.lr.ph.i239.8.i.i ], [ %i.lb, %.lr.ph.i239.9.i.i ], [ %i.lf, %.lr.ph.i239.10.i.i ], [ %i.lj, %.lr.ph.i239.11.i.i ], [ %i.lm, %.lr.ph.i239.12.i.i ], [ %i.jr, %.lr.ph.i229.4.i.i ]
+  %i.mk = phi i32 [ 0, %.sqlite3_strnicmp.exit246.i_crit_edge.i ], [ 101, %.lr.ph.i239.17.i.i ], [ 116, %.lr.ph.i239.16.i.i ], [ 101, %.lr.ph.i239.15.i.i ], [ 108, %.lr.ph.i239.14.i.i ], [ 101, %.lr.ph.i239.13.i.i ], [ 110, %.lr.ph.i239.preheader.i.i ], [ 116, %.lr.ph.i239.6.i.i ], [ 108, %.lr.ph.i239.7.i.i ], [ 101, %.lr.ph.i239.8.i.i ], [ 115, %.lr.ph.i239.9.i.i ], [ 115, %.lr.ph.i239.10.i.i ], [ 95, %.lr.ph.i239.11.i.i ], [ 100, %.lr.ph.i239.12.i.i ], [ 101, %.lr.ph.i229.4.i.i ]
   %i.ml = zext i8 %i.mj to i64
   %i.mm = getelementptr inbounds nuw i8, ptr @sqlite3UpperToLower, i64 %i.ml
   %i.mn = load i8, ptr %i.mm, align 1, !tbaa !741
@@ -447,20 +442,15 @@ sqlite3_strnicmp.exit246.i.i:                     ; preds = %sqlite3_strnicmp.ex
   %i.mp = icmp eq i32 %i.mk, %i.mo
   br i1 %i.mp, label %sqlite3_strnicmp.exit246.thread.i.i, label %.lr.ph.i249.preheader.i.i
 
-sqlite3_strnicmp.exit246.i.i.thread325:           ; preds = %.lr.ph.i229.3.i.i
-  %11 = and i8 %i.jn, -33
-  %12 = icmp eq i8 %11, 84
-  br i1 %12, label %sqlite3_strnicmp.exit246.thread.i.i, label %sqlite3_strnicmp.exit266.i.i
-
 .lr.ph.i249.preheader.i.i:                        ; preds = %sqlite3_strnicmp.exit246.i.i
   %scevgep472.i.i = getelementptr i8, ptr %i.cq, i64 21
   %i.mq = getelementptr inbounds nuw i8, ptr %i.cq, i64 4
-  %i.mr = load i8, ptr %i.mq, align 1, !tbaa !741 ; 3 uses
+  %i.mr = load i8, ptr %i.mq, align 1, !tbaa !741 ; 2 uses
   %i.ms = and i8 %i.mr, -33
   %i.mt = icmp eq i8 %i.ms, 69
-  br i1 %i.mt, label %bb.ce, label %sqlite3_strnicmp.exit256.i.i.thread327
+  br i1 %i.mt, label %bb.ce, label %sqlite3_strnicmp.exit266.i.i
 
-sqlite3_strnicmp.exit246.thread.i.i:              ; preds = %sqlite3_strnicmp.exit246.i.i.thread325, %sqlite3_strnicmp.exit246.i.i, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo
+sqlite3_strnicmp.exit246.thread.i.i:              ; preds = %sqlite3_strnicmp.exit246.i.i, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo
   %i.mu = load i8, ptr %i.cr, align 1, !tbaa !741 ; 2 uses
   %i.mv = and i8 %i.mu, -2
   %switch.i.i = icmp eq i8 %i.mv, 48
@@ -673,11 +663,6 @@ sqlite3_strnicmp.exit256.i.i:                     ; preds = %.sqlite3_strnicmp.e
   %i.pp = icmp eq i32 %i.pk, %i.po
   br i1 %i.pp, label %sqlite3_strnicmp.exit256.thread.i.i, label %.lr.ph.i259.preheader.i.i
 
-sqlite3_strnicmp.exit256.i.i.thread327:           ; preds = %.lr.ph.i249.preheader.i.i
-  %13 = and i8 %i.mr, -33
-  %14 = icmp eq i8 %13, 69
-  br i1 %14, label %sqlite3_strnicmp.exit256.thread.i.i, label %sqlite3_strnicmp.exit266.i.i
-
 .lr.ph.i259.preheader.i.i:                        ; preds = %sqlite3_strnicmp.exit256.i.i
   %scevgep476.i.i = getelementptr i8, ptr %i.cq, i64 13
   %i.pq = getelementptr inbounds nuw i8, ptr %i.cq, i64 5
@@ -686,7 +671,7 @@ sqlite3_strnicmp.exit256.i.i.thread327:           ; preds = %.lr.ph.i249.prehead
   %i.pt = icmp eq i8 %i.ps, 78
   br i1 %i.pt, label %bb.cy, label %sqlite3_strnicmp.exit266.i.i
 
-sqlite3_strnicmp.exit256.thread.i.i:              ; preds = %sqlite3_strnicmp.exit256.i.i.thread327, %sqlite3_strnicmp.exit256.i.i, %bb.cu, %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce
+sqlite3_strnicmp.exit256.thread.i.i:              ; preds = %sqlite3_strnicmp.exit256.i.i, %bb.cu, %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce
   %i.pu = load i8, ptr %i.cr, align 1, !tbaa !741 ; 2 uses
   %i.pv = and i8 %i.pu, -2
   %switch191.i.i = icmp eq i8 %i.pv, 48
@@ -790,9 +775,9 @@ bb.df:                                            ; preds = %.lr.ph.i259.12.i.i
   %.pre243.i = load i8, ptr %scevgep476.i.i, align 1, !tbaa !741
   br label %sqlite3_strnicmp.exit266.i.i
 
-sqlite3_strnicmp.exit266.i.i:                     ; preds = %sqlite3_strnicmp.exit256.i.i.thread327, %sqlite3_strnicmp.exit246.i.i.thread325, %.lr.ph.i229.2.i.i, %.sqlite3_strnicmp.exit266.i_crit_edge.i, %.lr.ph.i259.12.i.i, %.lr.ph.i259.11.i.i, %.lr.ph.i259.10.i.i, %.lr.ph.i259.9.i.i, %.lr.ph.i259.8.i.i, %.lr.ph.i259.7.i.i, %.lr.ph.i259.6.i.i, %.lr.ph.i259.preheader.i.i
-  %i.qz = phi i8 [ %.pre243.i, %.sqlite3_strnicmp.exit266.i_crit_edge.i ], [ %i.qw, %.lr.ph.i259.12.i.i ], [ %i.qs, %.lr.ph.i259.11.i.i ], [ %i.qo, %.lr.ph.i259.10.i.i ], [ %i.jj, %.lr.ph.i229.2.i.i ], [ %i.mr, %sqlite3_strnicmp.exit256.i.i.thread327 ], [ %i.pr, %.lr.ph.i259.preheader.i.i ], [ %i.qb, %.lr.ph.i259.6.i.i ], [ %i.qe, %.lr.ph.i259.7.i.i ], [ %i.qg, %.lr.ph.i259.8.i.i ], [ %i.qk, %.lr.ph.i259.9.i.i ], [ %i.jn, %sqlite3_strnicmp.exit246.i.i.thread325 ]
-  %i.ra = phi i32 [ 0, %.sqlite3_strnicmp.exit266.i_crit_edge.i ], [ 100, %.lr.ph.i259.12.i.i ], [ 105, %.lr.ph.i259.11.i.i ], [ 119, %.lr.ph.i259.10.i.i ], [ 110, %.lr.ph.i229.2.i.i ], [ 101, %sqlite3_strnicmp.exit256.i.i.thread327 ], [ 110, %.lr.ph.i259.preheader.i.i ], [ 116, %.lr.ph.i259.6.i.i ], [ 95, %.lr.ph.i259.7.i.i ], [ 114, %.lr.ph.i259.8.i.i ], [ 111, %.lr.ph.i259.9.i.i ], [ 116, %sqlite3_strnicmp.exit246.i.i.thread325 ]
+sqlite3_strnicmp.exit266.i.i:                     ; preds = %.lr.ph.i249.preheader.i.i, %.lr.ph.i229.3.i.i, %.lr.ph.i229.2.i.i, %.sqlite3_strnicmp.exit266.i_crit_edge.i, %.lr.ph.i259.12.i.i, %.lr.ph.i259.11.i.i, %.lr.ph.i259.10.i.i, %.lr.ph.i259.9.i.i, %.lr.ph.i259.8.i.i, %.lr.ph.i259.7.i.i, %.lr.ph.i259.6.i.i, %.lr.ph.i259.preheader.i.i
+  %i.qz = phi i8 [ %.pre243.i, %.sqlite3_strnicmp.exit266.i_crit_edge.i ], [ %i.qw, %.lr.ph.i259.12.i.i ], [ %i.qs, %.lr.ph.i259.11.i.i ], [ %i.qo, %.lr.ph.i259.10.i.i ], [ %i.jj, %.lr.ph.i229.2.i.i ], [ %i.jn, %.lr.ph.i229.3.i.i ], [ %i.pr, %.lr.ph.i259.preheader.i.i ], [ %i.qb, %.lr.ph.i259.6.i.i ], [ %i.qe, %.lr.ph.i259.7.i.i ], [ %i.qg, %.lr.ph.i259.8.i.i ], [ %i.qk, %.lr.ph.i259.9.i.i ], [ %i.mr, %.lr.ph.i249.preheader.i.i ]
+  %i.ra = phi i32 [ 0, %.sqlite3_strnicmp.exit266.i_crit_edge.i ], [ 100, %.lr.ph.i259.12.i.i ], [ 105, %.lr.ph.i259.11.i.i ], [ 119, %.lr.ph.i259.10.i.i ], [ 110, %.lr.ph.i229.2.i.i ], [ 116, %.lr.ph.i229.3.i.i ], [ 110, %.lr.ph.i259.preheader.i.i ], [ 116, %.lr.ph.i259.6.i.i ], [ 95, %.lr.ph.i259.7.i.i ], [ 114, %.lr.ph.i259.8.i.i ], [ 111, %.lr.ph.i259.9.i.i ], [ 101, %.lr.ph.i249.preheader.i.i ]
   %i.rb = zext i8 %i.qz to i64
   %i.rc = getelementptr inbounds nuw i8, ptr @sqlite3UpperToLower, i64 %i.rb
   %i.rd = load i8, ptr %i.rc, align 1, !tbaa !741

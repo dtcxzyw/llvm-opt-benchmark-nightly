@@ -204,12 +204,12 @@ lean_dec_ref.exit17:                              ; preds = %bb.m, %bb.n, %bb.o
 define ptr @l___private_Lean_Meta_Constructions_CtorElim_0__Lean_maxLevels(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 lean_nat_lt.exit:
   %i.a = getelementptr i8, ptr %0, i64 8
-  %.val75 = load i64, ptr %i.a, align 8, !tbaa !15 ; 2 uses
+  %.val75 = load i64, ptr %i.a, align 8, !tbaa !15
   %i.b = shl i64 %.val75, 1                       ; 2 uses
   %i.c = or disjoint i64 %i.b, 1
   %i.d = inttoptr i64 %i.c to ptr
   %.not = icmp eq i64 %i.b, 0
-  br i1 %.not, label %bb.a, label %5
+  br i1 %.not, label %bb.a, label %lean_array_get_borrowed.exit
 
 bb.a:                                             ; preds = %lean_nat_lt.exit
   %i.e = load i32, ptr %0, align 8, !tbaa !12     ; 3 uses
@@ -332,59 +332,22 @@ l_panic___at___00__private_Lean_Meta_Constructions_CtorElim_0__Lean_maxLevels_sp
   %i.ac = tail call ptr @lean_apply_5(ptr noundef %i.l, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4, ptr noundef nonnull inttoptr (i64 1 to ptr)) #5
   br label %lean_dec_ref.exit71
 
-5:                                                ; preds = %lean_nat_lt.exit
-  %6 = load ptr, ptr @l_Lean_instInhabitedExpr, align 8, !tbaa !10 ; 5 uses
-  %.not97 = icmp eq i64 %.val75, 0
-  br i1 %.not97, label %.thread.i, label %7
-
-7:                                                ; preds = %5
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %9 = load ptr, ptr %8, align 8, !tbaa !10
-  br label %lean_array_get_borrowed.exit
-
-.thread.i:                                        ; preds = %5
-  %10 = ptrtoint ptr %6 to i64
-  %11 = and i64 %10, 1
-  %.not.i.i77 = icmp eq i64 %11, 0
-  br i1 %.not.i.i77, label %12, label %lean_inc.exit.i78
-
-12:                                               ; preds = %.thread.i
-  %.val.i.i.i79 = load i32, ptr %6, align 4, !tbaa !12 ; 3 uses
-  %13 = icmp sgt i32 %.val.i.i.i79, 0
-  br i1 %13, label %14, label %16, !prof !13
-
-14:                                               ; preds = %12
-  %15 = add nuw i32 %.val.i.i.i79, 1
-  store i32 %15, ptr %6, align 4, !tbaa !12
-  br label %lean_inc.exit.i78
-
-16:                                               ; preds = %12
-  %.not.i.i.i80 = icmp eq i32 %.val.i.i.i79, 0
-  br i1 %.not.i.i.i80, label %lean_inc.exit.i78, label %17
-
-17:                                               ; preds = %16
-  %18 = atomicrmw sub ptr %6, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc.exit.i78
-
-lean_inc.exit.i78:                                ; preds = %17, %16, %14, %.thread.i
-  %19 = tail call ptr @lean_array_get_panic(ptr noundef %6) #5
-  br label %lean_array_get_borrowed.exit
-
-lean_array_get_borrowed.exit:                     ; preds = %7, %lean_inc.exit.i78
-  %.1.i = phi ptr [ %19, %lean_inc.exit.i78 ], [ %9, %7 ] ; 5 uses
-  %i.ad = ptrtoint ptr %.1.i to i64
+lean_array_get_borrowed.exit:                     ; preds = %lean_nat_lt.exit
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %6 = load ptr, ptr %5, align 8, !tbaa !10       ; 5 uses
+  %i.ad = ptrtoint ptr %6 to i64
   %i.ae = and i64 %i.ad, 1
   %.not.i62 = icmp eq i64 %i.ae, 0
   br i1 %.not.i62, label %bb.u, label %lean_inc.exit63
 
 bb.u:                                             ; preds = %lean_array_get_borrowed.exit
-  %.val.i.i = load i32, ptr %.1.i, align 4, !tbaa !12 ; 3 uses
+  %.val.i.i = load i32, ptr %6, align 4, !tbaa !12 ; 3 uses
   %i.af = icmp sgt i32 %.val.i.i, 0
   br i1 %i.af, label %bb.v, label %bb.w, !prof !13
 
 bb.v:                                             ; preds = %bb.u
   %i.ag = add nuw i32 %.val.i.i, 1
-  store i32 %i.ag, ptr %.1.i, align 4, !tbaa !12
+  store i32 %i.ag, ptr %6, align 4, !tbaa !12
   br label %lean_inc.exit63
 
 bb.w:                                             ; preds = %bb.u
@@ -392,11 +355,11 @@ bb.w:                                             ; preds = %bb.u
   br i1 %.not.i.i81, label %lean_inc.exit63, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.ah = atomicrmw sub ptr %.1.i, i32 1 monotonic, align 4 ; 0 uses
+  %i.ah = atomicrmw sub ptr %6, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc.exit63
 
 lean_inc.exit63:                                  ; preds = %bb.x, %bb.w, %bb.v, %lean_array_get_borrowed.exit
-  %i.ai = tail call ptr @l_Lean_Meta_getLevel(ptr noundef %.1.i, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) #5 ; 10 uses
+  %i.ai = tail call ptr @l_Lean_Meta_getLevel(ptr noundef %6, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) #5 ; 10 uses
   %i.aj = ptrtoint ptr %i.ai to i64               ; 2 uses
   %i.ak = and i64 %i.aj, 1
   %.not.i82 = icmp eq i64 %i.ak, 0

@@ -205,7 +205,7 @@ _RINvMs4_NtCslssDYltVX0B_6memchr6memmemNtB6_13FinderBuilder13build_reverseShECs7
   %i.bd = or i64 %i.bc, %i.av
   %i.be = or i64 %i.bd, %i.as                     ; 4 uses
   %i.bf = icmp ult i64 %.sroa.0.2.i.i.i.i, %.sroa.0.2.us.i.i.i.i
-  %.6.i.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.0.2.i.i.i.i, i64 %.sroa.0.2.us.i.i.i.i) ; 25 uses
+  %.6.i.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.0.2.i.i.i.i, i64 %.sroa.0.2.us.i.i.i.i) ; 23 uses
   %.sroa.03.0.i.i.i = select i1 %i.bf, i64 %.sroa.5.2.i.i.i.i, i64 %.sroa.5.2.us.i.i.i.i
   %i.bg = tail call { i64, i64 } @_RNvMs0_NtNtNtCslssDYltVX0B_6memchr4arch3all6twowayNtB5_5Shift7reverse(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef range(i64 2, -9223372036854775808) 4, i64 noundef %.sroa.03.0.i.i.i, i64 noundef %.6.i.i.i), !noalias !4920 ; 2 uses
   %i.bh = extractvalue { i64, i64 } %i.bg, 1      ; 5 uses
@@ -255,7 +255,6 @@ bb.r:                                             ; preds = %_RINvMs4_NtCslssDYl
 .lr.ph69.i.split.us.i.preheader:                  ; preds = %.lr.ph69.i.i
   %i.bw = icmp eq i64 %.6.i.i.i, 4
   %i.bx = add nuw nsw i64 %.6.i.i.i, -4
-  %.not33.i.i.us.us.i67 = icmp eq i64 %.6.i.i.i, 0
   %i.by = add nsw i64 %.6.i.i.i, -1               ; 5 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 %i.by
   %.not33.i.i.us.us.i = icmp eq i64 %i.by, 0
@@ -297,7 +296,9 @@ bb.s:                                             ; preds = %.lr.ph69.i.split.us
 
 .split.us.us.i:                                   ; preds = %bb.s
   %i.cv = add i64 %.sroa.01.0.i67.i.us.i, -5      ; 4 uses
-  br i1 %.not33.i.i.us.us.i67, label %.critedge.i.i.split.us.us.i, label %.lr.ph69
+  %3 = add i64 %i.cv, %.6.i.i.i                   ; 3 uses
+  %4 = icmp ult i64 %3, %1
+  br i1 %4, label %bb.z, label %.split45.us.i
 
 bb.t:                                             ; preds = %bb.z
   br i1 %.not33.i.i.us.us.i, label %.critedge.i.i.split.us.us.i, label %.lr.ph69.1
@@ -344,25 +345,20 @@ bb.y:                                             ; preds = %.lr.ph69.3
   %i.dn = icmp eq i8 %i.dk, %i.dm
   br i1 %i.dn, label %.critedge.i.i.split.us.us.i, label %.loopexit.i.us.i
 
-.lr.ph69:                                         ; preds = %.split.us.us.i
-  %3 = add i64 %i.cv, %.6.i.i.i                   ; 3 uses
-  %4 = icmp ult i64 %3, %1
-  br i1 %4, label %bb.z, label %.split45.us.i
-
-bb.z:                                             ; preds = %.lr.ph69
+bb.z:                                             ; preds = %.split.us.us.i
   %i.do = load i8, ptr %i.bz, align 1, !alias.scope !4929, !noalias !4930, !noundef !5
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %i.dq = load i8, ptr %i.dp, align 1, !alias.scope !4927, !noalias !4928, !noundef !5
   %i.dr = icmp eq i8 %i.do, %i.dq
   br i1 %i.dr, label %bb.t, label %.loopexit.i.us.i
 
-.critedge.i.i.split.us.us.i:                      ; preds = %bb.t, %bb.v, %bb.x, %bb.y, %.split.us.us.i
-  %.sroa.012.0.i.i.us.us.i.lcssa = phi i64 [ %.6.i.i.i, %.split.us.us.i ], [ %i.by, %bb.t ], [ %i.ca, %bb.v ], [ %i.cc, %bb.x ], [ %i.ce, %bb.y ]
+.critedge.i.i.split.us.us.i:                      ; preds = %bb.y, %bb.x, %bb.v, %bb.t
+  %.lcssa80 = phi i64 [ %i.by, %bb.t ], [ %i.ca, %bb.v ], [ %i.cc, %bb.x ], [ %i.ce, %bb.y ]
   %.not34.i.i.us.i = icmp eq i8 %i.c, %i.cq
   br i1 %.not34.i.i.us.i, label %.preheader.i.us.i, label %.loopexit.i.us.i
 
 .loopexit.i.us.i:                                 ; preds = %bb.z, %bb.u, %bb.w, %bb.y, %.critedge.i.i.split.us.us.i
-  %.sroa.012.0.i.i.us.us.i15 = phi i64 [ %.sroa.012.0.i.i.us.us.i.lcssa, %.critedge.i.i.split.us.us.i ], [ %.6.i.i.i, %bb.z ], [ %i.by, %bb.u ], [ %i.ca, %bb.w ], [ %i.cc, %bb.y ]
+  %.sroa.012.0.i.i.us.us.i15 = phi i64 [ %.lcssa80, %.critedge.i.i.split.us.us.i ], [ %.6.i.i.i, %bb.z ], [ %i.by, %bb.u ], [ %i.ca, %bb.w ], [ %i.cc, %bb.y ]
   %.neg.i.i.us.i = add i64 %.sroa.01.0.i67.i.us.i, %i.bt
   %i.ds = add i64 %.neg.i.i.us.i, %.sroa.012.0.i.i.us.us.i15
   br label %.backedge.i.us.i
@@ -545,8 +541,8 @@ bb.al:                                            ; preds = %.lr.ph69.i.split.sp
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.bv, i64 noundef range(i64 0, -9223372036854775808) 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @439) #42
   unreachable
 
-.split45.us.i:                                    ; preds = %.lr.ph69.3, %.lr.ph69.2, %.lr.ph69.1, %.lr.ph69
-  %.lcssa74 = phi i64 [ %3, %.lr.ph69 ], [ %i.cw, %.lr.ph69.1 ], [ %i.dc, %.lr.ph69.2 ], [ %i.di, %.lr.ph69.3 ]
+.split45.us.i:                                    ; preds = %.lr.ph69.3, %.lr.ph69.2, %.lr.ph69.1, %.split.us.us.i
+  %.lcssa74 = phi i64 [ %3, %.split.us.us.i ], [ %i.cw, %.lr.ph69.1 ], [ %i.dc, %.lr.ph69.2 ], [ %i.di, %.lr.ph69.3 ]
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.lcssa74, i64 noundef range(i64 64, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @440) #42
   unreachable
 

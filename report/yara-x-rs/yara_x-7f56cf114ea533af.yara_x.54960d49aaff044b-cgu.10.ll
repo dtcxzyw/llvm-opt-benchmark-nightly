@@ -204,7 +204,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.m = load ptr, ptr %i.l, align 8, !nonnull !6, !noundef !6 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 328
-  %i.o = load i64, ptr %i.n, align 8, !noundef !6 ; 3 uses
+  %i.o = load i64, ptr %i.n, align 8, !noundef !6 ; 2 uses
   %.idx = mul nuw nsw i64 %i.o, 48
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !5523
@@ -321,15 +321,14 @@ bb.f:                                             ; preds = %_RNvMNtCskKLDkoKarT
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.4.0..sroa_idx.i10.i, align 8, !noalias !5532
   %.sroa.512.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 0, ptr %.sroa.512.0..sroa_idx.i.i, align 8, !noalias !5532
-  %1 = icmp eq i64 %i.o, 0
-  br i1 %1, label %.thread.i.i, label %.lr.ph
+  br label %.lr.ph
 
 bb.g:                                             ; preds = %bb.o
   %i.ac = icmp eq ptr %i.ad, %i.p
   br i1 %i.ac, label %.thread.i.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.f, %bb.g
-  %.sroa.025.0.i.i3 = phi ptr [ %i.ad, %bb.g ], [ %i.m, %bb.f ] ; 2 uses
+  %.sroa.025.0.i.i3 = phi ptr [ %i.m, %bb.f ], [ %i.ad, %bb.g ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.025.0.i.i3, i64 48 ; 2 uses
   %i.ae = invoke { ptr, i64 } @_RNvXNtNtCs7gfv9tzbXmh_6yara_x8compiler5atomsNtB2_4AtomINtNtCskKLDkoKarTP_4core7convert5AsRefShE6as_ref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.025.0.i.i3)
           to label %bb.i unwind label %bb.h, !noalias !5532 ; 2 uses
@@ -349,7 +348,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ai = icmp eq i64 %i.ah, 0
   br i1 %i.ai, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x5teddy8SearcherEEB11_.exit22.i.i, label %bb.o
 
-.thread.i.i:                                      ; preds = %bb.g, %bb.i, %bb.f
+.thread.i.i:                                      ; preds = %bb.g, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5532
   invoke void @_RNvMNtCs7gfv9tzbXmh_6yara_x5teddyNtB2_7Builder5build(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.b)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x5teddy8SearcherEEB11_.exit20.i.i unwind label %bb.l, !noalias !5532
