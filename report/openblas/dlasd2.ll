@@ -202,9 +202,9 @@ middle.block:                                     ; preds = %vector.body
 
 iter.check:                                       ; preds = %._crit_edge
   %i.ct = mul nsw i32 %i.av, %i.n
-  %i.cu = sext i32 %i.av to i64                   ; 10 uses
+  %i.cu = sext i32 %i.av to i64                   ; 9 uses
   %i.cv = sext i32 %i.ct to i64                   ; 3 uses
-  %i.cw = sext i32 %i.am to i64                   ; 3 uses
+  %i.cw = sext i32 %i.am to i64                   ; 4 uses
   %invariant.gep676 = getelementptr [8 x i8], ptr %i.p, i64 %i.cv ; 3 uses
   %i.cx = add nsw i64 %i.cw, 1
   %i.cy = sub nsw i64 %i.cx, %i.cu                ; 7 uses
@@ -215,16 +215,15 @@ vector.memcheck719:                               ; preds = %iter.check
   %i.cz = shl nsw i64 %i.cu, 3
   %i.da = getelementptr i8, ptr %5, i64 %i.cz
   %scevgep720 = getelementptr i8, ptr %i.da, i64 -8 ; 2 uses
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.cw, i64 %i.cu) ; 2 uses
-  %i.db = shl nsw i64 %smax, 3
+  %i.db = shl nsw i64 %i.cw, 3
   %scevgep721 = getelementptr i8, ptr %5, i64 %i.db ; 2 uses
   %scevgep722 = getelementptr i8, ptr %7, i64 8
   %i.dc = add nsw i64 %i.cv, %i.o
   %i.dd = add nsw i64 %i.dc, %i.cu
   %i.de = shl nsw i64 %i.dd, 3
   %scevgep723 = getelementptr i8, ptr %10, i64 %i.de
-  %i.df = add i64 %smax, %i.cv
-  %i.dg = add i64 %i.df, %i.o
+  %i.df = add nsw i64 %i.cv, %i.cw
+  %i.dg = add nsw i64 %i.df, %i.o
   %i.dh = shl nsw i64 %i.dg, 3
   %i.di = getelementptr i8, ptr %10, i64 %i.dh
   %scevgep724 = getelementptr i8, ptr %i.di, i64 8
@@ -626,9 +625,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5

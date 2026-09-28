@@ -170,7 +170,7 @@ bb.m:                                             ; preds = %.lr.ph384, %bb.u
   %.fr407 = freeze i32 %i.bq                      ; 2 uses
   %i.br = icmp sgt i32 %.fr407, 2
   %i.bs = add nsw i32 %.fr407, -2
-  %i.bt = sext i32 %i.bp to i64                   ; 8 uses
+  %i.bt = sext i32 %i.bp to i64                   ; 7 uses
   br i1 %i.br, label %.lr.ph.split.us, label %iter.check
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.o
@@ -206,9 +206,8 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.split
 
 iter.check:                                       ; preds = %.lr.ph
   %i.ci = sext i32 %i.bo to i64                   ; 2 uses
-  %smax = call i64 @llvm.smax.i64(i64 %i.ci, i64 %i.bt)
-  %i.cj = add i64 %smax, 1
-  %i.ck = sub i64 %i.cj, %i.bt                    ; 7 uses
+  %i.cj = add nsw i64 %i.ci, 1
+  %i.ck = sub nsw i64 %i.cj, %i.bt                ; 7 uses
   %min.iters.check = icmp ult i64 %i.ck, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -219,7 +218,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.cl = and i64 %i.ck, 24
   %n.vec = and i64 %i.ck, -32                     ; 4 uses
-  %i.cm = add i64 %n.vec, %i.bt
+  %i.cm = add nsw i64 %n.vec, %i.bt
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %.0334381, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
   %invariant.gep531 = getelementptr [4 x i8], ptr %i.l, i64 %i.bt
@@ -258,7 +257,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec487 = and i64 %i.ck, -8                   ; 3 uses
-  %i.cv = add i64 %n.vec487, %i.bt
+  %i.cv = add nsw i64 %n.vec487, %i.bt
   %broadcast.splatinsert488 = insertelement <8 x i32> poison, i32 %.0334381, i64 0
   %broadcast.splat489 = shufflevector <8 x i32> %broadcast.splatinsert488, <8 x i32> poison, <8 x i32> zeroinitializer
   %invariant.gep533 = getelementptr [4 x i8], ptr %i.l, i64 %i.bt
@@ -522,7 +521,7 @@ bb.w:                                             ; preds = %.lr.ph406, %bb.ae
   %.fr = freeze i32 %i.hl                         ; 2 uses
   %i.hm = icmp sgt i32 %.fr, 2
   %i.hn = add nsw i32 %.fr, -2
-  %i.ho = sext i32 %i.hk to i64                   ; 8 uses
+  %i.ho = sext i32 %i.hk to i64                   ; 7 uses
   br i1 %i.hm, label %.lr.ph388.split.us, label %iter.check513
 
 .lr.ph388.split.us:                               ; preds = %.lr.ph388, %bb.y
@@ -555,9 +554,8 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph388.sp
 
 iter.check513:                                    ; preds = %.lr.ph388
   %i.hz = sext i32 %i.hj to i64                   ; 2 uses
-  %smax495 = call i64 @llvm.smax.i64(i64 %i.hz, i64 %i.ho)
-  %i.ia = add i64 %smax495, 1
-  %i.ib = sub i64 %i.ia, %i.ho                    ; 7 uses
+  %i.ia = add nsw i64 %i.hz, 1
+  %i.ib = sub nsw i64 %i.ia, %i.ho                ; 7 uses
   %min.iters.check496 = icmp ult i64 %i.ib, 8
   br i1 %min.iters.check496, label %vec.epilog.scalar.ph514.preheader, label %vector.main.loop.iter.check497
 
@@ -568,7 +566,7 @@ vector.main.loop.iter.check497:                   ; preds = %iter.check513
 vector.ph499:                                     ; preds = %vector.main.loop.iter.check497
   %i.ic = and i64 %i.ib, 24
   %n.vec500 = and i64 %i.ib, -32                  ; 4 uses
-  %i.id = add i64 %n.vec500, %i.ho
+  %i.id = add nsw i64 %n.vec500, %i.ho
   %broadcast.splatinsert501 = insertelement <8 x i32> poison, i32 %.1335403, i64 0
   %broadcast.splat502 = shufflevector <8 x i32> %broadcast.splatinsert501, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
   %invariant.gep535 = getelementptr [4 x i8], ptr %i.l, i64 %i.ho
@@ -607,7 +605,7 @@ vec.epilog.iter.check515:                         ; preds = %middle.block510
 vec.epilog.ph517:                                 ; preds = %vector.main.loop.iter.check497, %vec.epilog.iter.check515
   %vec.epilog.resume.val512 = phi i64 [ %n.vec500, %vec.epilog.iter.check515 ], [ 0, %vector.main.loop.iter.check497 ]
   %n.vec518 = and i64 %i.ib, -8                   ; 3 uses
-  %i.im = add i64 %n.vec518, %i.ho
+  %i.im = add nsw i64 %n.vec518, %i.ho
   %broadcast.splatinsert519 = insertelement <8 x i32> poison, i32 %.1335403, i64 0
   %broadcast.splat520 = shufflevector <8 x i32> %broadcast.splatinsert519, <8 x i32> poison, <8 x i32> zeroinitializer
   %invariant.gep537 = getelementptr [4 x i8], ptr %i.l, i64 %i.ho
@@ -862,9 +860,6 @@ declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

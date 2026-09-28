@@ -53,7 +53,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   %.pre = load double, ptr %i.v, align 8, !tbaa !11
   %i.w = fmul double %.pre, %.pre64
   store double %i.w, ptr %i.s, align 8, !tbaa !11
-  %exitcond.peel.not = icmp samesign ult i64 %.05662, 2
+  %exitcond.peel.not = icmp eq i64 %.05662, 1
   br i1 %exitcond.peel.not, label %._crit_edge, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.e, %.peel.next
@@ -73,7 +73,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   %i.aj = fmul double %i.ah, %i.ai
   store double %i.aj, ptr %i.ac, align 8, !tbaa !11
   %i.ak = add nuw nsw i64 %.05761, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %umin, %i.ak
+  %exitcond.not = icmp eq i64 %i.ak, %umin
   br i1 %exitcond.not, label %.loopexit, label %.peel.next, !llvm.loop !8
 
 .loopexit:                                        ; preds = %.peel.next

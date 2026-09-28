@@ -205,11 +205,14 @@ bb.b:                                             ; preds = %bb.a
   %invariant.gep202.i = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.ab ; 2 uses
   %i.ad = zext nneg i32 %2 to i64
   %invariant.op.i = add nsw i32 %0, -2            ; 2 uses
-  %invariant.op212.i = add nsw i64 %i.z, -3
   %i.ae = getelementptr inbounds nuw i8, ptr %i.g, i64 3 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.g, i64 2 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.g, i64 1 ; 2 uses
-  br i1 %or.cond.i, label %.split.us, label %.preheader131.i
+  br i1 %or.cond.i, label %.split.us, label %.preheader131.i.preheader
+
+.preheader131.i.preheader:                        ; preds = %bb.b
+  %4 = add nsw i64 %i.z, -3
+  br label %.preheader131.i
 
 .split.us:                                        ; preds = %bb.b
   br i1 %switch.i, label %.preheader.i.us.us, label %.preheader.i.us
@@ -340,8 +343,8 @@ stbiw__write_hdr_scanline.exit.loopexit.us.split: ; preds = %stbiw__linear_to_rg
   %exitcond16.not = icmp eq i32 %i.cj, %1
   br i1 %exitcond16.not, label %.split8.us, label %.preheader.i.us
 
-.preheader131.i:                                  ; preds = %bb.b, %stbiw__write_hdr_scanline.exit.loopexit1
-  %.06 = phi i32 [ %i.fw, %stbiw__write_hdr_scanline.exit.loopexit1 ], [ 0, %bb.b ] ; 3 uses
+.preheader131.i:                                  ; preds = %.preheader131.i.preheader, %stbiw__write_hdr_scanline.exit.loopexit1
+  %.06 = phi i32 [ %i.fw, %stbiw__write_hdr_scanline.exit.loopexit1 ], [ 0, %.preheader131.i.preheader ] ; 3 uses
   %i.ck = load i32, ptr @stbi__flip_vertically_on_write, align 4
   %.not = icmp eq i32 %i.ck, 0
   %i.cl = xor i32 %.06, -1
@@ -463,11 +466,10 @@ bb.i:                                             ; preds = %bb.n, %.split.us.i
   br i1 %i.el, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader129.i
-  %i.em = sext i32 %.2152.i to i64                ; 4 uses
+  %i.em = sext i32 %.2152.i to i64                ; 3 uses
   %i.en = add nsw i64 %i.em, 2
   %.phi.trans.insert.i = getelementptr inbounds i8, ptr %i.ek, i64 %i.em
   %.pre.i = load i8, ptr %.phi.trans.insert.i, align 1
-  %smax = call i64 @llvm.smax.i64(i64 %invariant.op212.i, i64 %i.em)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.preheader.i
@@ -488,7 +490,7 @@ bb.j:                                             ; preds = %.lr.ph.i
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i
   %indvars.iv.next169.i = add nsw i64 %indvars.iv168.i, 1
-  %exitcond.not = icmp eq i64 %indvars.iv170.i, %smax
+  %exitcond.not = icmp eq i64 %indvars.iv170.i, %4
   br i1 %exitcond.not, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.loopexit.split.loop.exit.i:           ; preds = %bb.j
@@ -890,9 +892,6 @@ declare i32 @llvm.umin.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.bitreverse.i16(i16) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #50
