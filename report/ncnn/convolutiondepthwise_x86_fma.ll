@@ -205,17 +205,17 @@ _ZN4ncnn3MatD2Ev.exit171:                         ; preds = %_ZN4ncnn3Mat7channe
   %i.ci = getelementptr inbounds nuw i8, ptr %i.t, i64 %.reass249 ; 5 uses
   %i.cj = getelementptr inbounds [4 x i8], ptr %i.ci, i64 %i.aa ; 2 uses
   %i.ck = getelementptr inbounds [4 x i8], ptr %i.ci, i64 %i.ac ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 12 ; 2 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.ch, i64 24 ; 2 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 12 ; 3 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.ch, i64 24 ; 3 uses
   br i1 %i.ag, label %.lr.ph219, label %.preheader
 
 .lr.ph219:                                        ; preds = %_ZN4ncnn3MatD2Ev.exit171
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ch, i64 4 ; 2 uses
-  %i.co = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
-  %i.cp = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %i.co = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 2 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.ch, i64 16 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ch, i64 20 ; 2 uses
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.ch, i64 28
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.ch, i64 28 ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.ch, i64 32 ; 2 uses
   br i1 %i.ba, label %.lr.ph.us.preheader, label %.lr.ph219.split.preheader
 
 .lr.ph219.split.preheader:                        ; preds = %.lr.ph219
@@ -413,53 +413,78 @@ scalar.ph411.preheader:                           ; preds = %vector.memcheck360,
 
 scalar.ph411:                                     ; preds = %scalar.ph411.preheader, %scalar.ph411
   %.0149206.us = phi i32 [ %i.fp, %scalar.ph411 ], [ %.0149206.us.ph, %scalar.ph411.preheader ] ; 2 uses
-  %.1152205.us = phi ptr [ %i.fk, %scalar.ph411 ], [ %.1152205.us.ph, %scalar.ph411.preheader ] ; 3 uses
-  %.1154204.us = phi ptr [ %i.fj, %scalar.ph411 ], [ %.1154204.us.ph, %scalar.ph411.preheader ] ; 2 uses
-  %.1156203.us = phi ptr [ %i.fi, %scalar.ph411 ], [ %.1156203.us.ph, %scalar.ph411.preheader ] ; 2 uses
-  %.1160202.us = phi ptr [ %i.fh, %scalar.ph411 ], [ %.1160202.us.ph, %scalar.ph411.preheader ] ; 2 uses
+  %.1152205.us = phi ptr [ %i.fl, %scalar.ph411 ], [ %.1152205.us.ph, %scalar.ph411.preheader ] ; 3 uses
+  %.1154204.us = phi ptr [ %i.fk, %scalar.ph411 ], [ %.1154204.us.ph, %scalar.ph411.preheader ] ; 3 uses
+  %.1156203.us = phi ptr [ %23, %scalar.ph411 ], [ %.1156203.us.ph, %scalar.ph411.preheader ] ; 3 uses
+  %.1160202.us = phi ptr [ %i.fh, %scalar.ph411 ], [ %.1160202.us.ph, %scalar.ph411.preheader ] ; 3 uses
   %.1164201.us = phi ptr [ %i.fo, %scalar.ph411 ], [ %.1164201.us.ph, %scalar.ph411.preheader ] ; 2 uses
   %.1166200.us = phi ptr [ %i.fn, %scalar.ph411 ], [ %.1166200.us.ph, %scalar.ph411.preheader ] ; 2 uses
   %i.fe = load float, ptr %.1160202.us, align 4, !tbaa !45
   %i.ff = load float, ptr %i.ch, align 4, !tbaa !45 ; 2 uses
   %i.fg = fmul fast float %i.ff, %i.fe
+  %10 = fadd fast float %i.cg, %i.fg
   %i.fh = getelementptr inbounds nuw i8, ptr %.1160202.us, i64 4 ; 3 uses
-  %i.fi = getelementptr inbounds nuw i8, ptr %.1156203.us, i64 4 ; 3 uses
-  %10 = load <2 x float>, ptr %i.fh, align 4, !tbaa !45
-  %11 = load <2 x float>, ptr %.1156203.us, align 4, !tbaa !45 ; 2 uses
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %13 = load <4 x float>, ptr %i.cn, align 4, !tbaa !45 ; 2 uses
-  %14 = shufflevector <2 x float> %11, <2 x float> %10, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  %15 = fmul fast <4 x float> %13, %14
-  %i.fj = getelementptr inbounds nuw i8, ptr %.1154204.us, i64 4 ; 3 uses
-  %16 = load <2 x float>, ptr %.1154204.us, align 4, !tbaa !45 ; 2 uses
-  %17 = load <4 x float>, ptr %i.cq, align 4, !tbaa !45 ; 3 uses
-  %i.fk = getelementptr inbounds nuw i8, ptr %.1152205.us, i64 4 ; 2 uses
-  %18 = load <2 x float>, ptr %i.fi, align 4, !tbaa !45 ; 2 uses
-  %19 = load <2 x float>, ptr %i.fj, align 4, !tbaa !45 ; 2 uses
-  %20 = shufflevector <2 x float> %16, <2 x float> %19, <4 x i32> <i32 poison, i32 0, i32 1, i32 3>
-  %21 = shufflevector <2 x float> %18, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %22 = shufflevector <4 x float> %20, <4 x float> %21, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %23 = fmul fast <4 x float> %17, %22
-  %rdx.op = fadd fast <4 x float> %15, %23
-  %op.rdx466 = call fast float @llvm.vector.reduce.fadd.v4f32(float %i.fg, <4 x float> %rdx.op)
-  %op.rdx467 = fadd fast float %op.rdx466, %i.cg
-  %24 = load <2 x float>, ptr %.1152205.us, align 4, !tbaa !45
-  %25 = shufflevector <4 x float> %13, <4 x float> %17, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
-  %26 = shufflevector <8 x float> %12, <8 x float> %25, <8 x i32> <i32 0, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %27 = shufflevector <2 x float> %16, <2 x float> %18, <8 x i32> <i32 poison, i32 2, i32 3, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
-  %28 = insertelement <8 x float> %27, float %i.ff, i64 0
-  %29 = shufflevector <2 x float> %19, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %30 = shufflevector <8 x float> %28, <8 x float> %29, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 poison, i32 poison>
-  %31 = shufflevector <2 x float> %24, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %32 = shufflevector <8 x float> %30, <8 x float> %31, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %33 = fmul fast <8 x float> %26, %32
-  %i.fl = getelementptr inbounds nuw i8, ptr %.1152205.us, i64 8
+  %11 = load float, ptr %i.fh, align 4, !tbaa !45
+  %12 = load float, ptr %i.cn, align 4, !tbaa !45 ; 2 uses
+  %13 = fmul fast float %12, %11
+  %14 = fadd fast float %13, %10
+  %i.fi = getelementptr inbounds nuw i8, ptr %.1160202.us, i64 8
+  %15 = load float, ptr %i.fi, align 4, !tbaa !45
+  %16 = load float, ptr %i.co, align 4, !tbaa !45 ; 2 uses
+  %17 = fmul fast float %16, %15
+  %18 = fadd fast float %14, %17
+  %19 = load float, ptr %.1156203.us, align 4, !tbaa !45 ; 2 uses
+  %20 = load float, ptr %i.cl, align 4, !tbaa !45 ; 2 uses
+  %21 = fmul fast float %20, %19
+  %22 = fadd fast float %18, %21
+  %23 = getelementptr inbounds nuw i8, ptr %.1156203.us, i64 4 ; 3 uses
+  %24 = load float, ptr %23, align 4, !tbaa !45   ; 2 uses
+  %25 = load float, ptr %i.cp, align 4, !tbaa !45 ; 2 uses
+  %26 = fmul fast float %25, %24
+  %27 = fadd fast float %22, %26
+  %i.fj = getelementptr inbounds nuw i8, ptr %.1156203.us, i64 8
+  %28 = load float, ptr %i.fj, align 4, !tbaa !45 ; 2 uses
+  %29 = load float, ptr %i.cq, align 4, !tbaa !45 ; 2 uses
+  %30 = fmul fast float %29, %28
+  %31 = fadd fast float %27, %30
+  %32 = load float, ptr %.1154204.us, align 4, !tbaa !45 ; 2 uses
+  %33 = load float, ptr %i.cm, align 4, !tbaa !45 ; 2 uses
+  %34 = fmul fast float %33, %32
+  %35 = fadd fast float %31, %34
+  %i.fk = getelementptr inbounds nuw i8, ptr %.1154204.us, i64 4 ; 3 uses
+  %36 = load float, ptr %i.fk, align 4, !tbaa !45 ; 2 uses
+  %37 = load float, ptr %i.cr, align 4, !tbaa !45 ; 2 uses
+  %38 = fmul fast float %37, %36
+  %39 = fadd fast float %35, %38
+  %40 = getelementptr inbounds nuw i8, ptr %.1154204.us, i64 8
+  %41 = load float, ptr %40, align 4, !tbaa !45   ; 2 uses
+  %42 = load float, ptr %i.cs, align 4, !tbaa !45 ; 2 uses
+  %43 = fmul fast float %42, %41
+  %44 = fadd fast float %39, %43
+  %45 = fmul fast float %19, %i.ff
+  %46 = fadd fast float %i.cg, %45
+  %47 = fmul fast float %24, %12
+  %op.rdx467 = fadd fast float %47, %46
+  %48 = fmul fast float %28, %16
+  %49 = fadd fast float %op.rdx467, %48
+  %50 = fmul fast float %32, %20
+  %51 = fadd fast float %49, %50
+  %52 = fmul fast float %36, %25
+  %53 = fadd fast float %51, %52
+  %54 = fmul fast float %41, %29
+  %55 = fadd fast float %53, %54
+  %56 = load float, ptr %.1152205.us, align 4, !tbaa !45
+  %57 = fmul fast float %56, %33
+  %58 = fadd fast float %55, %57
+  %i.fl = getelementptr inbounds nuw i8, ptr %.1152205.us, i64 4 ; 3 uses
   %i.fm = load float, ptr %i.fl, align 4, !tbaa !45
-  %34 = extractelement <4 x float> %17, i64 3
-  %35 = fmul fast float %i.fm, %34
-  %op.rdx468 = call fast float @llvm.vector.reduce.fadd.v8f32(float %35, <8 x float> %33)
-  %op.rdx469 = fadd fast float %op.rdx468, %i.cg
-  store float %op.rdx467, ptr %.1166200.us, align 4, !tbaa !45
+  %59 = fmul fast float %i.fm, %37
+  %60 = fadd fast float %58, %59
+  %61 = getelementptr inbounds nuw i8, ptr %.1152205.us, i64 8
+  %62 = load float, ptr %61, align 4, !tbaa !45
+  %63 = fmul fast float %62, %42
+  %op.rdx469 = fadd fast float %60, %63
+  store float %44, ptr %.1166200.us, align 4, !tbaa !45
   store float %op.rdx469, ptr %.1164201.us, align 4, !tbaa !45
   %i.fn = getelementptr inbounds nuw i8, ptr %.1166200.us, i64 4 ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %.1164201.us, i64 4 ; 2 uses
@@ -469,9 +494,9 @@ scalar.ph411:                                     ; preds = %scalar.ph411.prehea
 
 ._crit_edge.us:                                   ; preds = %scalar.ph411, %middle.block456
   %.lcssa303 = phi ptr [ %i.cy, %middle.block456 ], [ %i.fh, %scalar.ph411 ]
-  %.lcssa302 = phi ptr [ %i.cx, %middle.block456 ], [ %i.fi, %scalar.ph411 ]
-  %.lcssa301 = phi ptr [ %i.cw, %middle.block456 ], [ %i.fj, %scalar.ph411 ]
-  %.lcssa300 = phi ptr [ %i.cv, %middle.block456 ], [ %i.fk, %scalar.ph411 ]
+  %.lcssa302 = phi ptr [ %i.cx, %middle.block456 ], [ %23, %scalar.ph411 ]
+  %.lcssa301 = phi ptr [ %i.cw, %middle.block456 ], [ %i.fk, %scalar.ph411 ]
+  %.lcssa300 = phi ptr [ %i.cv, %middle.block456 ], [ %i.fl, %scalar.ph411 ]
   %.lcssa299 = phi ptr [ %i.da, %middle.block456 ], [ %i.fn, %scalar.ph411 ]
   %.lcssa = phi ptr [ %i.cz, %middle.block456 ], [ %i.fo, %scalar.ph411 ]
   %i.fr = getelementptr inbounds [4 x i8], ptr %.lcssa303, i64 %i.ai ; 2 uses
@@ -872,9 +897,6 @@ declare i32 @llvm.umax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v8f32(float, <8 x float>) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.round.v4f32(<4 x float>) #15

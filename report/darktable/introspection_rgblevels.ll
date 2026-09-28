@@ -205,26 +205,30 @@ bb.p:                                             ; preds = %bb.c
   %i.ds = load float, ptr %0, align 4, !tbaa !39
   %i.dt = fmul reassoc nsz arcp contract afn float %i.ds, %i.dr
   %i.du = getelementptr inbounds nuw i8, ptr %2, i64 596
+  %3 = load float, ptr %i.du, align 4, !tbaa !39
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %3 = load <2 x float>, ptr %i.du, align 4, !tbaa !39
-  %4 = load <2 x float>, ptr %i.dv, align 4, !tbaa !39
-  %5 = fmul reassoc nsz arcp contract afn <2 x float> %4, %3 ; 2 uses
-  %6 = extractelement <2 x float> %5, i64 0
-  %7 = fadd reassoc nsz arcp contract afn float %6, %i.dt
-  %8 = extractelement <2 x float> %5, i64 1
-  %i.dw = fadd reassoc nsz arcp contract afn float %7, %8
+  %4 = load float, ptr %i.dv, align 4, !tbaa !39
+  %5 = fmul reassoc nsz arcp contract afn float %4, %3
+  %6 = fadd reassoc nsz arcp contract afn float %5, %i.dt
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 600
+  %8 = load float, ptr %7, align 4, !tbaa !39
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %10 = load float, ptr %9, align 4, !tbaa !39
+  %11 = fmul reassoc nsz arcp contract afn float %10, %8
+  %i.dw = fadd reassoc nsz arcp contract afn float %6, %11
   br label %dt_ioppr_get_rgb_matrix_luminance.exit
 
 bb.q:                                             ; preds = %bb.b
   %i.dx = load float, ptr %0, align 4, !tbaa !39
   %i.dy = fmul reassoc nsz arcp contract afn float %i.dx, f0x3E63D838
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %9 = load <2 x float>, ptr %i.dz, align 4, !tbaa !39
-  %10 = fmul reassoc nsz arcp contract afn <2 x float> %9, <float f0x3F37855B, float 6.061690e-02> ; 2 uses
-  %11 = extractelement <2 x float> %10, i64 0
-  %12 = fadd reassoc nsz arcp contract afn float %11, %i.dy
-  %13 = extractelement <2 x float> %10, i64 1
-  %i.ea = fadd reassoc nsz arcp contract afn float %12, %13
+  %12 = load float, ptr %i.dz, align 4, !tbaa !39
+  %13 = fmul reassoc nsz arcp contract afn float %12, f0x3F37855B
+  %14 = fadd reassoc nsz arcp contract afn float %13, %i.dy
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %16 = load float, ptr %15, align 4, !tbaa !39
+  %17 = fmul reassoc nsz arcp contract afn float %16, 6.061690e-02
+  %i.ea = fadd reassoc nsz arcp contract afn float %14, %17
   br label %dt_ioppr_get_rgb_matrix_luminance.exit
 
 bb.r:                                             ; preds = %bb.a
@@ -262,12 +266,13 @@ bb.u:                                             ; preds = %bb.a
   %i.ex = load float, ptr %0, align 4, !tbaa !39  ; 2 uses
   %i.ey = fmul reassoc nsz arcp contract afn float %i.ex, %i.ex
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %14 = load <2 x float>, ptr %i.ez, align 4, !tbaa !39 ; 2 uses
-  %15 = fmul reassoc nsz arcp contract afn <2 x float> %14, %14 ; 2 uses
-  %16 = extractelement <2 x float> %15, i64 0
-  %17 = fadd reassoc nsz arcp contract afn float %16, %i.ey
-  %18 = extractelement <2 x float> %15, i64 1
-  %i.fa = fadd reassoc nsz arcp contract afn float %17, %18
+  %18 = load float, ptr %i.ez, align 4, !tbaa !39 ; 2 uses
+  %19 = fmul reassoc nsz arcp contract afn float %18, %18
+  %20 = fadd reassoc nsz arcp contract afn float %19, %i.ey
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %22 = load float, ptr %21, align 4, !tbaa !39   ; 2 uses
+  %23 = fmul reassoc nsz arcp contract afn float %22, %22
+  %i.fa = fadd reassoc nsz arcp contract afn float %20, %23
   %i.fb = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.fa)
   br label %dt_ioppr_get_rgb_matrix_luminance.exit
 

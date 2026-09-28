@@ -204,7 +204,6 @@ _ZN4pbrt5SlerpEfNS_10QuaternionES0_.exit:         ; preds = %_ZN4pbrt9SinXOverXE
   %i.cd = fdiv float %i.cc, %.0.i15.i
   %i.ce = fmul float %i.bv, %.0.i36.i
   %i.cf = fdiv float %i.ce, %.0.i15.i
-  %9 = fadd float %i.cd, %i.cf                    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 324
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 356
@@ -286,7 +285,6 @@ _ZN4pbrt5SlerpEfNS_10QuaternionES0_.exit:         ; preds = %_ZN4pbrt9SinXOverXE
   %i.dj = getelementptr inbounds nuw i8, ptr %7, i64 124
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.di, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.dj, align 4, !tbaa !11
-  %10 = fmul float %9, %9                         ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %7, i64 72
   %i.dl = getelementptr inbounds nuw i8, ptr %7, i64 80
   %i.dm = getelementptr inbounds nuw i8, ptr %7, i64 96
@@ -304,8 +302,10 @@ _ZN4pbrt5SlerpEfNS_10QuaternionES0_.exit:         ; preds = %_ZN4pbrt9SinXOverXE
   %i.dy = fmul float %i.bq, %.0.i36.i
   %i.dz = fdiv <2 x float> %i.dx, %i.dt
   %i.ea = fdiv float %i.dy, %.0.i15.i
+  %9 = fadd float %i.cd, %i.cf                    ; 5 uses
   %i.eb = fadd <2 x float> %i.du, %i.dz           ; 6 uses
   %i.ec = fadd float %i.do, %i.ea                 ; 3 uses
+  %10 = fmul float %9, %9                         ; 2 uses
   %i.ed = extractelement <2 x float> %i.eb, i64 1 ; 4 uses
   %i.ee = fmul float %i.ed, %i.ed                 ; 2 uses
   %i.ef = extractelement <2 x float> %i.eb, i64 0

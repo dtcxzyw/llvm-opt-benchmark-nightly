@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.j = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #42, !noalias !3593 ; 5 uses
   store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN5folly12_GLOBAL__N_131StripedEDFPriorityBlockingQueueINS_21CPUThreadPoolExecutor7CPUTaskEEE, i64 16), ptr %i.j, align 8, !tbaa !119, !noalias !3593
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 10 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 9 uses
   %i.l = invoke noundef nonnull align 8 dereferenceable(40) ptr @_ZN5folly17LLCAccessSpreader3getEv()
           to label %.noexc.i unwind label %.loopexit.split-lp.i, !noalias !3593
 
@@ -244,7 +244,7 @@ _ZN6google12Check_GTImplImiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN6google12Check_GTImplImiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_RKT0_PKc.exit._crit_edge.i.i.i, %_ZN6google12Check_GTImplImiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_RKT0_PKc.exit.thread.i.i.i
-  %i.o = phi i64 [ %.pre.i.i.i, %_ZN6google12Check_GTImplImiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_RKT0_PKc.exit._crit_edge.i.i.i ], [ %i.m, %_ZN6google12Check_GTImplImiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_RKT0_PKc.exit.thread.i.i.i ]
+  %i.o = phi i64 [ %.pre.i.i.i, %_ZN6google12Check_GTImplImiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_RKT0_PKc.exit._crit_edge.i.i.i ], [ %i.m, %_ZN6google12Check_GTImplImiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_RKT0_PKc.exit.thread.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34, !noalias !3593
   %i.p = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.o, i64 384) ; 2 uses
   %i.q = extractvalue { i64, i1 } %i.p, 1
@@ -288,8 +288,7 @@ _ZN5folly14aligned_mallocEmm.exit.i.i.i.i.i:      ; preds = %bb.e
 _ZN5folly18checkedArrayMallocINS_23StripedThrottledLifoSemINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEEEE6StripeEEEPT_m.exit.i.i.i: ; preds = %_ZN5folly14aligned_mallocEmm.exit.i.i.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 4 uses
   store ptr %i.v, ptr %i.w, align 8, !tbaa !1673, !noalias !3593
-  %5 = load i64, ptr %i.k, align 8, !tbaa !1668, !noalias !3593
-  %.not4.i.i.i = icmp eq i64 %5, 0
+  %.not4.i.i.i = icmp eq i64 %i.o, 0
   br i1 %.not4.i.i.i, label %_ZN5folly23StripedThrottledLifoSemINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEEEEC2ISt5tupleIJEEEEmRKT_RKNS_16ThrottledLifoSem7OptionsE.exit.i.i, label %.lr.ph.i.i.i
 
 .noexc7.i.i:                                      ; preds = %.noexc3.i
@@ -692,8 +691,8 @@ declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #18
 ; Function Attrs: nounwind
 declare void @_ZNSt9bad_allocD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8)) unnamed_addr #3
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #19
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #19
 
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none)
 declare ptr @__errno_location() local_unnamed_addr #20
@@ -1096,7 +1095,7 @@ attributes #15 = { mustprogress noinline uwtable "min-legal-vector-width"="0" "n
 attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #17 = { cold mustprogress noinline noreturn optsize uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { cold noreturn }
-attributes #19 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #19 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #20 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #21 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #22 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

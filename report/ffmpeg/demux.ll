@@ -205,13 +205,13 @@ get_std_framerate.exit:                           ; preds = %bb.h, %bb.j, %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.az = sitofp nsz i32 %.0.i to double
   %i.ba = fmul nsz double %i.t, %i.az
-  %3 = fdiv nsz double %i.ba, 1.201200e+04        ; 3 uses
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv ; 2 uses
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !146
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %indvars.iv ; 2 uses
   %i.be = load double, ptr %i.bd, align 8, !tbaa !146
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv ; 2 uses
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !146
+  %3 = fdiv nsz double %i.ba, 1.201200e+04        ; 3 uses
   %i.bh = tail call i64 @llvm.llrint.i64.f64(double %3)
   %i.bi = sitofp nsz i64 %i.bh to double
   %i.bj = fadd nsz double %3, 5.000000e-01

@@ -204,17 +204,17 @@ bb.a:
   %i.o = bitcast float %i.i to i32
   %i.p = lshr i32 %i.o, 23
   %i.q = trunc nuw nsw i32 %i.p to i16
-  %7 = sub nsw i16 127, %i.q                      ; 2 uses
   %i.r = bitcast float %i.n to i32
   %sh.diff = lshr i32 %i.r, 15
   %tr.sh.diff = trunc i32 %sh.diff to i16
   %i.s = and i16 %tr.sh.diff, -256
-  %.sroa.0.0.insert.ext = and i16 %7, 255
-  %reass.sub.a = sub i16 %.sroa.0.0.insert.ext, %i.s
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.sroa.0.0.insert.insert = add i16 %reass.sub.a, 32512 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %reass.sub.a = sub nsw i16 127, %i.q            ; 2 uses
+  %.sroa.0.0.insert.ext = and i16 %reass.sub.a, 255
+  %reass.sub = sub i16 %.sroa.0.0.insert.ext, %i.s
+  %.sroa.0.0.insert.insert = add i16 %reass.sub, 32512 ; 2 uses
   store i16 %.sroa.0.0.insert.insert, ptr %1, align 8, !tbaa !34
-  %i.t = and i16 %7, 255
+  %i.t = and i16 %reass.sub.a, 255
   %i.u = zext nneg i16 %i.t to i32
   %i.v = shl nuw i32 1, %i.u
   %i.w = lshr i16 %.sroa.0.0.insert.insert, 8
@@ -228,7 +228,7 @@ bb.a:
   %i.ae = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ad, <2 x float> %i.ab, <2 x float> splat (float -5.000000e-01)) ; 2 uses
   %i.af = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.ae) ; 2 uses
   %i.ag = fptosi <2 x float> %i.af to <2 x i32>
-  store <2 x i32> %i.ag, ptr %8, align 4, !tbaa !25
+  store <2 x i32> %i.ag, ptr %7, align 4, !tbaa !25
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 2, ptr %i.ah, align 4, !tbaa !36
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 16

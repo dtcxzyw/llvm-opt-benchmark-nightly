@@ -202,7 +202,7 @@ _ZNSt6vectorIfSaIfEED2Ev.exit36:                  ; preds = %bb.aa, %_ZNSt6vecto
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN5faiss12AlignedTableIhLi32EE6resizeEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = icmp eq i64 %1, 0
   br i1 %i.b, label %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread9, label %bb.b
 
@@ -218,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit: ; preds = %.preheader.i
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !74
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !74   ; 2 uses
   %i.h = icmp eq i64 %i.g, %.0.i
   br i1 %i.h, label %_ZN5faiss22AlignedTableTightAllocIhLi32EE6resizeEm.exit, label %.thread
 
@@ -226,53 +226,52 @@ _ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread9: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.j = load i64, ptr %i.i, align 8, !tbaa !74
   %i.k = icmp eq i64 %i.j, 0
-  br i1 %i.k, label %_ZN5faiss22AlignedTableTightAllocIhLi32EE6resizeEm.exit, label %5
+  br i1 %i.k, label %_ZN5faiss22AlignedTableTightAllocIhLi32EE6resizeEm.exit, label %.thread14
+
+.thread14:                                        ; preds = %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  br label %bb.f
 
 _ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread: ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !74
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !74   ; 2 uses
   %i.n = icmp eq i64 %i.m, 256
   br i1 %i.n, label %_ZN5faiss22AlignedTableTightAllocIhLi32EE6resizeEm.exit, label %.thread
 
 .thread:                                          ; preds = %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread
   %.07.i36 = phi i64 [ 256, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread ], [ %.0.i, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit ] ; 4 uses
-  %i.o = phi ptr [ %i.l, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread ], [ %i.f, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit ] ; 3 uses
+  %i.o = phi ptr [ %i.l, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread ], [ %i.f, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit ] ; 2 uses
+  %2 = phi i64 [ %i.m, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread ], [ %i.g, %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   %i.p = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 32, i64 noundef %.07.i36) #19
   %.not1.i = icmp eq i32 %i.p, 0
   br i1 %.not1.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.thread
-  %2 = call ptr @__cxa_allocate_exception(i64 8) #19 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %2, align 8, !tbaa !10
-  call void @__cxa_throw(ptr nonnull %2, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #20
+  %3 = tail call ptr @__cxa_allocate_exception(i64 8) #19 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %3, align 8, !tbaa !10
+  tail call void @__cxa_throw(ptr nonnull %3, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #20
   unreachable
 
 bb.d:                                             ; preds = %.thread
-  %3 = load i64, ptr %i.o, align 8, !tbaa !74     ; 2 uses
-  %.not2.i = icmp eq i64 %3, 0
+  %.not2.i = icmp eq i64 %2, 0
+  %.pre.i = load ptr, ptr %i.a, align 8, !tbaa !75 ; 3 uses
   br i1 %.not2.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !75
   %i.q = load ptr, ptr %0, align 8, !tbaa !19
-  %.sroa.speculated.i = call i64 @llvm.umin.i64(i64 %.07.i36, i64 %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %4, ptr align 1 %i.q, i64 %.sroa.speculated.i, i1 false)
+  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %.07.i36, i64 %2)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.pre.i, ptr align 1 %i.q, i64 %.sroa.speculated.i, i1 false)
   br label %bb.f
 
-5:                                                ; preds = %_ZN5faiss12AlignedTableIhLi32EE14round_capacityEm.exit.thread9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  store ptr null, ptr %i.a, align 8, !tbaa !75
-  br label %bb.f
-
-bb.f:                                             ; preds = %5, %bb.e, %bb.d
-  %.07.i37 = phi i64 [ 0, %5 ], [ %.07.i36, %bb.e ], [ %.07.i36, %bb.d ]
-  %i.r = phi ptr [ %i.i, %5 ], [ %i.o, %bb.e ], [ %i.o, %bb.d ]
-  store i64 %.07.i37, ptr %i.r, align 8, !tbaa !74
+bb.f:                                             ; preds = %.thread14, %bb.e, %bb.d
+  %.07.i37 = phi i64 [ %.07.i36, %bb.d ], [ %.07.i36, %bb.e ], [ 0, %.thread14 ]
+  %4 = phi ptr [ %i.o, %bb.d ], [ %i.o, %bb.e ], [ %i.i, %.thread14 ]
+  %i.r = phi ptr [ %.pre.i, %bb.d ], [ %.pre.i, %bb.e ], [ null, %.thread14 ]
+  store i64 %.07.i37, ptr %4, align 8, !tbaa !74
   %i.s = load ptr, ptr %0, align 8, !tbaa !19
-  call void @free(ptr noundef %i.s) #19
-  %6 = load ptr, ptr %i.a, align 8, !tbaa !75
-  store ptr %6, ptr %0, align 8, !tbaa !19
+  tail call void @free(ptr noundef %i.s) #19
+  store ptr %i.r, ptr %0, align 8, !tbaa !19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %_ZN5faiss22AlignedTableTightAllocIhLi32EE6resizeEm.exit
 
@@ -323,8 +322,8 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #12
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #9
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #13
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #13
 
 declare ptr @__cxa_allocate_exception(i64) local_unnamed_addr
 
@@ -464,7 +463,7 @@ attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #10 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #11 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #13 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { cold noreturn }
 attributes #15 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

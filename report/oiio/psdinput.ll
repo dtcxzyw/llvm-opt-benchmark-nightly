@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.b
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
   %i.ax = shl nuw nsw <2 x i64> %broadcast.splat, splat (i64 1) ; 3 uses
   %i.ay = mul nuw nsw <2 x i64> %broadcast.splat, <i64 0, i64 1>
-  %invariant.op = add <2 x i64> %i.ax, %broadcast.splat
-  %invariant.op115 = add <2 x i64> %i.ax, %i.ax
+  %invariant.op = add nsw <2 x i64> %i.ax, %broadcast.splat
+  %invariant.op115 = add nsw <2 x i64> %i.ax, %i.ax
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph77, %bb.m
@@ -283,14 +283,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ %induction, %vector.ph ], [ %vec.ind.next.reass, %vector.body ] ; 3 uses
   %i.cc = add nsw <2 x i64> %vec.ind, %broadcast.splat
-  %.reass = add <2 x i64> %vec.ind, %invariant.op
+  %.reass = add nsw <2 x i64> %vec.ind, %invariant.op
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.bv, i64 %index ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 24
   store <2 x i64> %i.cc, ptr %i.ce, align 8, !tbaa !74
   store <2 x i64> %.reass, ptr %i.cf, align 8, !tbaa !74
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next.reass = add <2 x i64> %vec.ind, %invariant.op115
+  %vec.ind.next.reass = add nsw <2 x i64> %vec.ind, %invariant.op115
   %i.cg = icmp eq i64 %index.next, %n.vec
   br i1 %i.cg, label %middle.block, label %vector.body, !llvm.loop !472
 
@@ -693,22 +693,22 @@ vector.ph:                                        ; preds = %.lr.ph178
   %broadcast.splat206 = shufflevector <2 x i64> %broadcast.splatinsert205, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.bi = mul nuw nsw <2 x i64> %broadcast.splat, <i64 0, i64 1>
   %induction = add nsw <2 x i64> %broadcast.splat206, %i.bi
-  %invariant.op = add <2 x i64> %i.bh, %broadcast.splat
-  %invariant.op209 = add <2 x i64> %i.bh, %i.bh
+  %invariant.op = add nsw <2 x i64> %i.bh, %broadcast.splat
+  %invariant.op209 = add nsw <2 x i64> %i.bh, %i.bh
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ %induction, %vector.ph ], [ %vec.ind.next.reass, %vector.body ] ; 3 uses
   %i.bj = add nsw <2 x i64> %vec.ind, %broadcast.splat
-  %.reass = add <2 x i64> %vec.ind, %invariant.op
+  %.reass = add nsw <2 x i64> %vec.ind, %invariant.op
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %index ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
   store <2 x i64> %i.bj, ptr %i.bl, align 8, !tbaa !74
   store <2 x i64> %.reass, ptr %i.bm, align 8, !tbaa !74
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next.reass = add <2 x i64> %vec.ind, %invariant.op209
+  %vec.ind.next.reass = add nsw <2 x i64> %vec.ind, %invariant.op209
   %i.bn = icmp eq i64 %index.next, %n.vec
   br i1 %i.bn, label %middle.block, label %vector.body, !llvm.loop !612
 

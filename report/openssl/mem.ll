@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %.thread, %bb.e
   %.019 = phi i64 [ %spec.store.select, %.thread ], [ %1, %bb.e ]
-  %5 = call ptr @ossl_malloc_align(i64 noundef %0, i64 noundef %.019, ptr noundef nonnull %2, ptr noundef %3, i32 noundef %4) #11
+  %5 = tail call ptr @ossl_malloc_align(i64 noundef %0, i64 noundef %.019, ptr noundef nonnull %2, ptr noundef %3, i32 noundef %4) #11
   br label %ossl_report_alloc_err_inv.exit
 
 ossl_report_alloc_err_inv.exit:                   ; preds = %bb.g, %bb.d, %bb.c, %bb.h
@@ -210,8 +210,8 @@ ossl_report_alloc_err_inv.exit:                   ; preds = %bb.g, %bb.d, %bb.c,
   ret ptr %.1
 }
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #6
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #6
 
 declare ptr @ossl_malloc_align(i64 noundef, i64 noundef, ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #7
 
@@ -537,7 +537,7 @@ attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-mat
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #6 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nounwind willreturn allockind("realloc") allocsize(1) memory(argmem: readwrite, inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

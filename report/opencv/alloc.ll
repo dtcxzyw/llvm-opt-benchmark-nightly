@@ -58,7 +58,7 @@ declare ptr @llvm.invariant.start.p0(i64 immarg, ptr captures(none)) #2
 define noundef ptr @_ZN2cv10fastMallocEm(i64 noundef %0) local_unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = load atomic i8, ptr @_ZGVZN2cvL26isAlignedAllocationEnabledEvE11useMemalign acquire, align 8
   %i.c = icmp eq i8 %i.b, 0
   br i1 %i.c, label %bb.b, label %_ZN2cvL26isAlignedAllocationEnabledEv.exit, !prof !8
@@ -98,18 +98,14 @@ bb.e:                                             ; preds = %_ZN2cvL26isAlignedA
   store ptr null, ptr %i.a, align 8, !tbaa !21
   %i.j = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 64, i64 noundef %0) #14
   %.not11 = icmp eq i32 %i.j, 0
-  br i1 %.not11, label %bb.f, label %.thread
-
-.thread:                                          ; preds = %bb.e
-  store ptr null, ptr %i.a, align 8, !tbaa !21
-  br label %bb.g
+  br i1 %.not11, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %.pr = load ptr, ptr %i.a, align 8, !tbaa !21   ; 2 uses
   %.not12 = icmp eq ptr %.pr, null
   br i1 %.not12, label %bb.g, label %bb.j
 
-bb.g:                                             ; preds = %.thread, %bb.f
+bb.g:                                             ; preds = %bb.e, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
   call void (ptr, ptr, ...) @_ZN2cv6formatB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %1, ptr noundef nonnull @.str.2, i64 noundef %0)
   invoke void @_ZN2cv5errorENS_5Error4CodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcSB_i(i32 noundef -4, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @__func__._ZN2cvL16OutOfMemoryErrorEm, ptr noundef nonnull @.str.3, i32 noundef 73) #15
@@ -168,8 +164,8 @@ bb.n:                                             ; preds = %bb.m, %bb.j
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #4
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress noreturn uwtable
 define internal fastcc void @_ZN2cvL16OutOfMemoryErrorEm(i64 noundef %0) unnamed_addr #5 personality ptr @__gxx_personality_v0 {
@@ -372,7 +368,7 @@ attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #4 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress noreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

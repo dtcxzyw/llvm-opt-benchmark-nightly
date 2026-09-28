@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %bb.d
   call void @nvgFillPaint(ptr noundef %1, ptr noundef nonnull byval(%struct.NVGpaint) align 8 %2)
   call void @nvgFill(ptr noundef %1)
   %i.bi = fadd float %i.t, -6.000000e+00          ; 6 uses
-  %6 = fmul nnan float %i.bi, f0xBF5DB3D7         ; 3 uses
   call void @nvgBeginPath(ptr noundef %1)
   call void @nvgMoveTo(ptr noundef %1, float noundef %i.bi, float noundef 0.000000e+00)
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.bk = insertelement <2 x float> poison, float %i.bi, i64 0
   %i.bl = shufflevector <2 x float> %i.bk, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bm = fmul nnan <2 x float> %i.bl, <float f0x3F5DB3D7, float -5.000000e-01> ; 3 uses
+  %6 = fmul nnan float %i.bi, f0xBF5DB3D7         ; 3 uses
   %i.bn = extractelement <2 x float> %i.bm, i64 0 ; 3 uses
   %i.bo = extractelement <2 x float> %i.bm, i64 1 ; 6 uses
   call void @nvgLineTo(ptr noundef %1, float noundef %i.bo, float noundef %i.bn)

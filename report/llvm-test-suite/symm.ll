@@ -67,7 +67,7 @@ declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unna
 ; Function Attrs: mustprogress nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define dso_local void @polybench_free_data(ptr noundef captures(none) %0) local_unnamed_addr #6 {
 bb.a:
-  tail call void @free(ptr noundef %0) #11
+  tail call void @free(ptr noundef %0) #12
   ret void
 }
 
@@ -77,23 +77,23 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = sext i32 %1 to i64
   %i.c = mul i64 %0, %i.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store ptr null, ptr %i.a, align 8, !tbaa !11
-  %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 4096, i64 noundef %i.c) #11
+  %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 4096, i64 noundef %i.c) #12
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !11   ; 2 uses
   %i.f = icmp eq ptr %i.e, null
   %i.g = icmp ne i32 %i.d, 0
-  %or.cond.i = select i1 %i.f, i1 true, i1 %i.g
+  %or.cond.i = or i1 %i.g, %i.f
   br i1 %or.cond.i, label %bb.b, label %xmalloc.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr @stderr, align 8, !tbaa !13
-  %fwrite.i = call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.h) #12 ; 0 uses
-  call void @exit(i32 noundef 1) #13
+  %fwrite.i = tail call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.h) #13 ; 0 uses
+  tail call void @exit(i32 noundef 1) #14
   unreachable
 
 xmalloc.exit:                                     ; preds = %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret ptr %i.e
 }
 
@@ -103,59 +103,59 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   store ptr null, ptr %i.c, align 8, !tbaa !11
-  %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.c, i64 noundef 4096, i64 noundef 38400) #11
+  %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.c, i64 noundef 4096, i64 noundef 38400) #12
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !11   ; 9 uses
   %i.f = ptrtoaddr ptr %i.e to i64
   %i.g = icmp eq ptr %i.e, null
   %i.h = icmp ne i32 %i.d, 0
-  %or.cond.i.i = select i1 %i.g, i1 true, i1 %i.h
+  %or.cond.i.i = or i1 %i.h, %i.g
   br i1 %or.cond.i.i, label %bb.b, label %polybench_alloc_data.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr @stderr, align 8, !tbaa !13
-  %fwrite.i.i = call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.i) #12 ; 0 uses
-  call void @exit(i32 noundef 1) #13
+  %fwrite.i.i = tail call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.i) #13 ; 0 uses
+  tail call void @exit(i32 noundef 1) #14
   unreachable
 
 polybench_alloc_data.exit:                        ; preds = %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store ptr null, ptr %i.b, align 8, !tbaa !11
-  %i.j = call i32 @posix_memalign(ptr noundef nonnull %i.b, i64 noundef 4096, i64 noundef 28800) #11
+  %i.j = call i32 @posix_memalign(ptr noundef nonnull %i.b, i64 noundef 4096, i64 noundef 28800) #12
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !11   ; 5 uses
   %i.l = icmp eq ptr %i.k, null
   %i.m = icmp ne i32 %i.j, 0
-  %or.cond.i.i15 = select i1 %i.l, i1 true, i1 %i.m
+  %or.cond.i.i15 = or i1 %i.m, %i.l
   br i1 %or.cond.i.i15, label %bb.c, label %polybench_alloc_data.exit17
 
 bb.c:                                             ; preds = %polybench_alloc_data.exit
   %i.n = load ptr, ptr @stderr, align 8, !tbaa !13
-  %fwrite.i.i16 = call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.n) #12 ; 0 uses
-  call void @exit(i32 noundef 1) #13
+  %fwrite.i.i16 = tail call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.n) #13 ; 0 uses
+  tail call void @exit(i32 noundef 1) #14
   unreachable
 
 polybench_alloc_data.exit17:                      ; preds = %polybench_alloc_data.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store ptr null, ptr %i.a, align 8, !tbaa !11
-  %i.o = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 4096, i64 noundef 38400) #11
+  %i.o = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 4096, i64 noundef 38400) #12
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !11   ; 7 uses
   %i.q = icmp eq ptr %i.p, null
   %i.r = icmp ne i32 %i.o, 0
-  %or.cond.i.i18 = select i1 %i.q, i1 true, i1 %i.r
+  %or.cond.i.i18 = or i1 %i.r, %i.q
   br i1 %or.cond.i.i18, label %bb.d, label %polybench_alloc_data.exit20
 
 bb.d:                                             ; preds = %polybench_alloc_data.exit17
   %i.s = load ptr, ptr @stderr, align 8, !tbaa !13
-  %fwrite.i.i19 = call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.s) #12 ; 0 uses
-  call void @exit(i32 noundef 1) #13
+  %fwrite.i.i19 = tail call i64 @fwrite(ptr nonnull @.str.1, i64 50, i64 1, ptr %i.s) #13 ; 0 uses
+  tail call void @exit(i32 noundef 1) #14
   unreachable
 
 polybench_alloc_data.exit20:                      ; preds = %polybench_alloc_data.exit17
   %i.t = ptrtoaddr ptr %i.p to i64
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.u = sub i64 %i.f, %i.t
   %diff.check = icmp ugt i64 %i.u, -16
   br label %.preheader45.i
@@ -457,7 +457,7 @@ bb.e:                                             ; preds = %bb.e, %.preheader.u
   br i1 %exitcond64.not.i, label %kernel_symm.exit, label %.preheader44.i, !llvm.loop !30
 
 kernel_symm.exit:                                 ; preds = %.split.us.i
-  %2 = call noalias dereferenceable_or_null(1281) ptr @malloc(i64 noundef 1281) #14 ; 4 uses
+  %2 = tail call noalias dereferenceable_or_null(1281) ptr @malloc(i64 noundef 1281) #15 ; 4 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 1280
   store i8 0, ptr %i.ep, align 1, !tbaa !40
   br label %.preheader.i25
@@ -484,33 +484,33 @@ bb.f:                                             ; preds = %bb.f, %.preheader.i
 
 bb.g:                                             ; preds = %bb.f
   %i.ex = load ptr, ptr @stderr, align 8, !tbaa !13
-  %3 = call i32 @fputs(ptr noundef nonnull %2, ptr noundef %i.ex) #12 ; 0 uses
+  %3 = tail call i32 @fputs(ptr noundef nonnull %2, ptr noundef %i.ex) #13 ; 0 uses
   %indvars.iv.next20.i = add nuw nsw i64 %indvars.iv19.i, 1 ; 2 uses
   %exitcond22.not.i = icmp eq i64 %indvars.iv.next20.i, 60
   br i1 %exitcond22.not.i, label %print_array.exit, label %.preheader.i25, !llvm.loop !32
 
 print_array.exit:                                 ; preds = %bb.g
-  call void @free(ptr noundef nonnull %2) #11
-  call void @free(ptr noundef nonnull %i.e) #11
-  call void @free(ptr noundef %i.k) #11
-  call void @free(ptr noundef %i.p) #11
+  tail call void @free(ptr noundef nonnull %2) #12
+  tail call void @free(ptr noundef nonnull %i.e) #12
+  tail call void @free(ptr noundef %i.k) #12
+  tail call void @free(ptr noundef %i.p) #12
   ret i32 0
 }
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #5
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #8
 
 ; Function Attrs: nofree noreturn nounwind
-declare void @exit(i32 noundef) local_unnamed_addr #8
+declare void @exit(i32 noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write)
-declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #9
+declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #10
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @fputs(ptr noundef readonly captures(none), ptr noundef captures(none)) local_unnamed_addr #5
 
 ; Function Attrs: nofree nounwind
-declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #10
+declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #11
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -520,13 +520,14 @@ attributes #4 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapp
 attributes #5 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nofree nounwind }
-attributes #11 = { nounwind }
-attributes #12 = { cold }
-attributes #13 = { cold noreturn nounwind }
-attributes #14 = { nounwind allocsize(0) }
+attributes #8 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nofree nounwind }
+attributes #12 = { nounwind }
+attributes #13 = { cold }
+attributes #14 = { cold noreturn nounwind }
+attributes #15 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

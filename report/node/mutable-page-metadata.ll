@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not.i.i, label %bb.b, label %bb.c, !prof !13
 
 bb.b:                                             ; preds = %bb.a
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.3) #19
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.3) #19
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -214,7 +214,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not14.i.i, label %_ZN2v88internal7SlotSet8AllocateEm.exit, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.c
-  call void @llvm.memset.p0.i64(ptr align 8 %i.i, i8 0, i64 %i.f, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.i, i8 0, i64 %i.f, i1 false)
   br label %_ZN2v88internal7SlotSet8AllocateEm.exit
 
 _ZN2v88internal7SlotSet8AllocateEm.exit:          ; preds = %bb.c, %.lr.ph.preheader.i.i
@@ -238,7 +238,7 @@ bb.d:                                             ; preds = %_ZN2v88internal7Slo
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %_ZN4heap4base12BasicSlotSetILm8EE13ReleaseBucketILNS2_10AccessModeE0EEEvm.exit.i, %.preheader.i
-  call void @free(ptr noundef nonnull %.pre.i.i.i) #16
+  tail call void @free(ptr noundef nonnull %.pre.i.i.i) #16
   br label %_ZN4heap4base12BasicSlotSetILm8EE6DeleteEPS2_.exit
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %_ZN4heap4base12BasicSlotSetILm8EE13ReleaseBucketILNS2_10AccessModeE0EEEvm.exit.i
@@ -251,7 +251,7 @@ bb.d:                                             ; preds = %_ZN2v88internal7Slo
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.v = inttoptr i64 %i.t to ptr
-  call void @_ZdlPvm(ptr noundef nonnull %i.v, i64 noundef 128) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.v, i64 noundef 128) #18
   br label %_ZN4heap4base12BasicSlotSetILm8EE13ReleaseBucketILNS2_10AccessModeE0EEEvm.exit.i
 
 _ZN4heap4base12BasicSlotSetILm8EE13ReleaseBucketILNS2_10AccessModeE0EEEvm.exit.i: ; preds = %bb.e, %.lr.ph.i
@@ -593,8 +593,8 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #12
 
 declare void @_ZN2v88internal11AlignedFreeEPv(ptr noundef) local_unnamed_addr #1
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #13
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #13
 
 ; Function Attrs: nounwind
 declare void @_ZN2v88internal10TypedSlotsD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24)) unnamed_addr #2
@@ -625,7 +625,7 @@ attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #10 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { nofree nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #13 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { inlinehint mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { nounwind }

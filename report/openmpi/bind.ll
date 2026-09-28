@@ -202,8 +202,8 @@ bb.a:
   ret ptr %i.e
 }
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #4
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nounwind
 declare i64 @sysconf(i32 noundef) local_unnamed_addr #5
@@ -331,7 +331,7 @@ bb.h:                                             ; preds = %bb.c
 
 hwloc_alloc.exit:                                 ; preds = %bb.g, %bb.f, %bb.d, %bb.h
   %.0 = phi ptr [ %i.n, %bb.h ], [ null, %bb.d ], [ %i.i, %bb.f ], [ %i.m, %bb.g ]
-  call void @hwloc_bitmap_free(ptr noundef %i.d) #15
+  tail call void @hwloc_bitmap_free(ptr noundef %i.d) #15
   br label %bb.i
 
 bb.i:                                             ; preds = %hwloc_alloc.exit, %bb.b
@@ -423,7 +423,7 @@ hwloc_alloc.exit:                                 ; preds = %bb.k, %bb.j
 
 bb.l:                                             ; preds = %hwloc_alloc.exit
   %i.u = load ptr, ptr %i.m, align 8, !tbaa !65
-  %5 = call i32 %i.u(ptr noundef nonnull %0, ptr noundef nonnull %.0.i44, i64 noundef %1, ptr noundef nonnull %..i42, i32 noundef %3, i32 noundef %4) #15
+  %5 = tail call i32 %i.u(ptr noundef nonnull %0, ptr noundef nonnull %.0.i44, i64 noundef %1, ptr noundef nonnull %..i42, i32 noundef %3, i32 noundef %4) #15
   %.not39 = icmp eq i32 %5, 0
   %i.v = and i32 %4, 4
   %.not40 = icmp eq i32 %i.v, 0
@@ -433,7 +433,7 @@ bb.l:                                             ; preds = %hwloc_alloc.exit
 bb.m:                                             ; preds = %bb.l
   %i.w = tail call ptr @__errno_location() #13    ; 2 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !12
-  call void @free(ptr noundef nonnull %.0.i44) #15
+  tail call void @free(ptr noundef nonnull %.0.i44) #15
   store i32 %i.x, ptr %i.w, align 4, !tbaa !12
   br label %hwloc_alloc.exit49
 
@@ -836,7 +836,7 @@ attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-mat
 attributes #1 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

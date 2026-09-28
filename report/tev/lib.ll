@@ -204,12 +204,12 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.bk = getelementptr inbounds nuw i8, ptr %i.w, i64 832
   store ptr %i.bj, ptr %i.bk, align 64, !tbaa !50
   store i32 0, ptr %i.bj, align 8, !tbaa !18
-  %i.bl = getelementptr inbounds nuw i8, ptr %.0.i, i64 24 ; 8 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 6 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %.0.i, i64 24 ; 7 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 5 uses
   call fastcc void @get_num_threads(ptr noundef nonnull %i.w, ptr noundef %1, ptr noundef %i.bl, ptr noundef %i.bm) #16
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !51
   %i.bo = zext i32 %i.bn to i64
-  %i.bp = mul nuw nsw i64 %i.bo, 5408
+  %i.bp = mul nuw nsw i64 %i.bo, 5408             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   %i.bq = call i32 @posix_memalign(ptr noundef nonnull %i.b, i64 noundef 32, i64 noundef range(i64 0, 1111331377515841) %i.bp) #15
   %.not4.i178 = icmp eq i32 %i.bq, 0
@@ -221,13 +221,10 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   br i1 %.not163, label %.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %3 = load i32, ptr %i.bm, align 8, !tbaa !51
-  %4 = zext i32 %3 to i64
-  %5 = mul nuw nsw i64 %4, 5408
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.br, i8 0, i64 %5, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.br, i8 0, i64 %i.bp, i1 false)
   %i.bs = load i32, ptr %i.bl, align 8, !tbaa !53
   %i.bt = zext i32 %i.bs to i64
-  %i.bu = mul nuw nsw i64 %i.bt, 258752
+  %i.bu = mul nuw nsw i64 %i.bt, 258752           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.bv = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 64, i64 noundef range(i64 0, 1111331377515841) %i.bu) #15
   %.not4.i180 = icmp eq i32 %i.bv, 0
@@ -240,10 +237,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not164, label %.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %6 = load i32, ptr %i.bl, align 8, !tbaa !53
-  %7 = zext i32 %6 to i64
-  %8 = mul nuw nsw i64 %7, 258752
-  call void @llvm.memset.p0.i64(ptr nonnull align 64 %i.bw, i8 0, i64 %8, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 64 %i.bw, i8 0, i64 %i.bu, i1 false)
   %i.by = load i32, ptr %i.bl, align 8, !tbaa !53
   %i.bz = icmp ugt i32 %i.by, 1
   br i1 %i.bz, label %bb.y, label %bb.ac
@@ -646,8 +640,8 @@ declare ptr @dlsym(ptr noundef, ptr noundef) local_unnamed_addr #5
 ; Function Attrs: nounwind
 declare i64 @__sysconf(i32 noundef) local_unnamed_addr #5
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #10
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #10
 
 declare i64 @dav1d_parse_obus(ptr noundef, ptr noundef) local_unnamed_addr #2
 
@@ -693,7 +687,7 @@ attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 attributes #7 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
