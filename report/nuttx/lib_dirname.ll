@@ -25,9 +25,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call i64 @strlen(ptr noundef nonnull %0) #5 ; 2 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull %0) #5
   %sext = shl i64 %i.c, 32
-  %i.d = ashr exact i64 %sext, 32
+  %i.d = ashr exact i64 %sext, 32                 ; 3 uses
   %i.e = getelementptr i8, ptr %0, i64 %i.d
   %i.f = getelementptr i8, ptr %i.e, i64 -1       ; 2 uses
   %i.g = load i8, ptr %i.f, align 1
@@ -35,9 +35,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %sext26 = shl i64 %i.c, 32
-  %1 = ashr exact i64 %sext26, 32                 ; 2 uses
-  %i.i = icmp sgt i64 %1, 1
+  %i.i = icmp sgt i64 %i.d, 1
   br i1 %i.i, label %.lr.ph30, label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph30
@@ -46,7 +44,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph30:                                         ; preds = %.lr.ph.preheader, %.lr.ph
   %i.k = phi ptr [ %i.m, %.lr.ph ], [ %i.f, %.lr.ph.preheader ]
-  %indvars.iv29 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 2 uses
+  %indvars.iv29 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.d, %.lr.ph.preheader ] ; 2 uses
   store i8 0, ptr %i.k, align 1
   %indvars.iv.next = add nsw i64 %indvars.iv29, -1 ; 2 uses
   %i.l = getelementptr i8, ptr %0, i64 %indvars.iv.next

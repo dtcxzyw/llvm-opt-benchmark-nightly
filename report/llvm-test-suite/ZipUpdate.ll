@@ -205,7 +205,7 @@ bb.a:
   %10 = alloca %"struct.NArchive::NZip::CCompressingResult", align 8 ; 6 uses
   %11 = alloca %class.CMyComPtr.0, align 8        ; 10 uses
   %i.a = alloca i64, align 8                      ; 7 uses
-  %i.b = alloca i64, align 8                      ; 9 uses
+  %i.b = alloca i64, align 8                      ; 8 uses
   %12 = alloca %"class.NArchive::NZip::CItemEx", align 8 ; 16 uses
   %13 = alloca %"class.NArchive::NZip::CAddCommon", align 8 ; 6 uses
   %14 = alloca %"struct.NArchive::NZip::CCompressionMethodMode", align 8 ; 12 uses
@@ -608,7 +608,7 @@ bb.fk:                                            ; preds = %bb.fi
   br i1 %.not396.i, label %bb.ex, label %.thread575.i
 
 bb.fl:                                            ; preds = %bb.hf, %.lr.ph698.split.split.i
-  %indvars.iv828.i = phi i64 [ %i.vx, %.lr.ph698.split.split.i ], [ %indvars.iv.next829.i, %bb.hf ] ; 5 uses
+  %indvars.iv828.i = phi i64 [ %33, %.lr.ph698.split.split.i ], [ %indvars.iv.next829.i, %bb.hf ] ; 5 uses
   %i.vn = getelementptr inbounds [8 x i8], ptr %i.vw, i64 %indvars.iv828.i
   %i.vo = load ptr, ptr %i.vn, align 8, !tbaa !99
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vo, i64 73
@@ -617,7 +617,7 @@ bb.fl:                                            ; preds = %bb.hf, %.lr.ph698.s
   br i1 %i.vr, label %bb.hf, label %bb.hg
 
 .lr.ph.a:                                         ; preds = %.lr.ph.preheader, %.outer598.i
-  %indvars.iv823.i1062 = phi i64 [ %indvars.iv.next824.i, %.outer598.i ], [ %35, %.lr.ph.preheader ] ; 4 uses
+  %indvars.iv823.i1062 = phi i64 [ %34, %.lr.ph.preheader ], [ %indvars.iv.next824.i, %.outer598.i ] ; 4 uses
   %indvars.iv.next824.i = add nsw i64 %indvars.iv823.i1062, 1 ; 3 uses
   %i.vs = getelementptr inbounds [8 x i8], ptr %i.akq, i64 %indvars.iv823.i1062
   %i.vt = load ptr, ptr %i.vs, align 8, !tbaa !99 ; 6 uses
@@ -626,22 +626,15 @@ bb.fl:                                            ; preds = %bb.hf, %.lr.ph698.s
   br i1 %i.vv, label %bb.fn, label %.outer598.i, !llvm.loop !193
 
 .outer598.i:                                      ; preds = %.lr.ph.a
-  %exitcond826.not.i = icmp eq i64 %indvars.iv.next824.i, %smax.i
-  br i1 %exitcond826.not.i, label %.lr.ph698.split.split.loopexit.i, label %.lr.ph.a, !llvm.loop !193
+  %exitcond826.not.i = icmp eq i64 %indvars.iv.next824.i, %wide.trip.count.i
+  br i1 %exitcond826.not.i, label %.lr.ph698.split.split.i, label %.lr.ph.a, !llvm.loop !193
 
-.lr.ph698.split.split.loopexit.i:                 ; preds = %.outer598.preheader.i, %.outer598.i
+.lr.ph698.split.split.i:                          ; preds = %.outer.split.i, %.outer598.preheader.i, %.outer598.i
+  %.0264.ph599.lcssa706.split.i = phi i32 [ %smax.i, %.outer598.i ], [ %.0264.ph.i, %.outer.split.i ], [ %smax.i, %.outer598.preheader.i ]
   store i64 %i.akl, ptr %i.b, align 8
-  %33 = trunc nsw i64 %smax.i to i32
-  br label %.lr.ph698.split.split.i
-
-.lr.ph698.split.split.loopexit727.i:              ; preds = %.outer.split.i
-  store i64 %i.akl, ptr %i.b, align 8
-  br label %.lr.ph698.split.split.i
-
-.lr.ph698.split.split.i:                          ; preds = %.lr.ph698.split.split.loopexit727.i, %.lr.ph698.split.split.loopexit.i
-  %.0264.ph599.lcssa706.split.i = phi i32 [ %.0264.ph.i, %.lr.ph698.split.split.loopexit727.i ], [ %33, %.lr.ph698.split.split.loopexit.i ]
   %i.vw = load ptr, ptr %i.st, align 8
-  %i.vx = sext i32 %.0262.ph.ph.i to i64
+  %33 = sext i32 %.0262.ph.ph.i to i64
+  %i.vx = sext i32 %i.akm to i64
   br label %bb.fl
 
 bb.fm:                                            ; preds = %.outer598._crit_edge.i
@@ -1044,7 +1037,7 @@ bb.he:                                            ; preds = %bb.hd, %bb.fq
 
 bb.hf:                                            ; preds = %bb.fl
   %indvars.iv.next829.i = add nsw i64 %indvars.iv828.i, 1 ; 2 uses
-  %i.acm = icmp slt i64 %indvars.iv.next829.i, %34
+  %i.acm = icmp slt i64 %indvars.iv.next829.i, %i.vx
   br i1 %i.acm, label %bb.fl, label %.outer598._crit_edge.i, !llvm.loop !193
 
 bb.hg:                                            ; preds = %bb.fl
@@ -1447,10 +1440,10 @@ _ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i:        ; preds = %bb.jw, %_ZN8NArchiv
   br label %.outer.i
 
 .outer.i:                                         ; preds = %.outer.outer.i, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i
-  %i.akl = phi i64 [ %i.acd, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.promoted.i, %.outer.outer.i ] ; 12 uses
+  %i.akl = phi i64 [ %i.acd, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.promoted.i, %.outer.outer.i ] ; 11 uses
   %.11358.ph.i = phi i32 [ %.16363.i, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.11358.ph.ph.i, %.outer.outer.i ] ; 6 uses
-  %.0264.ph.i = phi i32 [ %i.wa, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.0264.ph.ph.i, %.outer.outer.i ] ; 3 uses
-  %i.akm = load i32, ptr %i.bz, align 4, !tbaa !97 ; 3 uses
+  %.0264.ph.i = phi i32 [ %i.wa, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.0264.ph.ph.i, %.outer.outer.i ] ; 4 uses
+  %i.akm = load i32, ptr %i.bz, align 4, !tbaa !97 ; 4 uses
   %i.akn = icmp slt i32 %.0262.ph.ph.i, %i.akm
   br i1 %i.akn, label %.outer.split.i, label %.outer598._crit_edge.i
 
@@ -1458,16 +1451,16 @@ _ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i:        ; preds = %bb.jw, %_ZN8NArchiv
   %i.ako = load i32, ptr %i.rz, align 4
   %i.akp = icmp ult i32 %i.ako, %.2276563.i
   %.fr.i = freeze i1 %i.akp
-  %34 = sext i32 %i.akm to i64                    ; 2 uses
-  br i1 %.fr.i, label %.outer598.preheader.i, label %.lr.ph698.split.split.loopexit727.i
+  br i1 %.fr.i, label %.outer598.preheader.i, label %.lr.ph698.split.split.i
 
 .outer598.preheader.i:                            ; preds = %.outer.split.i
-  %35 = sext i32 %.0264.ph.i to i64               ; 2 uses
-  %smax.i = call i64 @llvm.smax.i64(i64 %35, i64 %34) ; 2 uses
+  %smax.i = call i32 @llvm.smax.i32(i32 %.0264.ph.i, i32 %i.akm) ; 3 uses
+  %wide.trip.count.i = sext i32 %smax.i to i64
   %exitcond826.not.i1061.not = icmp slt i32 %.0264.ph.i, %i.akm
-  br i1 %exitcond826.not.i1061.not, label %.lr.ph.preheader, label %.lr.ph698.split.split.loopexit.i
+  br i1 %exitcond826.not.i1061.not, label %.lr.ph.preheader, label %.lr.ph698.split.split.i
 
 .lr.ph.preheader:                                 ; preds = %.outer598.preheader.i
+  %34 = sext i32 %.0264.ph.i to i64
   %i.akq = load ptr, ptr %i.sa, align 8, !tbaa !98
   br label %.lr.ph.a
 
@@ -1870,7 +1863,7 @@ declare i32 @llvm.umax.i32(i32, i32) #13
 declare i32 @llvm.smin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #13
+declare i32 @llvm.smax.i32(i32, i32) #13
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
