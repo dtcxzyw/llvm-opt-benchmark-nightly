@@ -205,7 +205,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.p = load i64, ptr %i.o, align 8, !noundef !4 ; 2 uses
+  %i.p = load i64, ptr %i.o, align 8, !noundef !4
   %i.q = lshr i64 %i.p, 3                         ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.s = load i64, ptr %i.r, align 8, !noundef !4 ; 2 uses
@@ -247,8 +247,6 @@ bb.b:                                             ; preds = %switch.lookup
   %i.ai = sub <2 x i64> %i.ag, %i.ah
   %i.aj = load ptr, ptr %1, align 8, !nonnull !4  ; 2 uses
   %i.ak = icmp eq i64 %i.s, 0
-  %3 = icmp eq i64 %i.p, 0
-  %or.cond.i27 = or i1 %i.ak, %3
   %i.al = extractelement <2 x i64> %i.ah, i64 0   ; 4 uses
   %i.am = sub i64 0, %i.al
   %i.an = extractelement <2 x i64> %i.ah, i64 1   ; 3 uses
@@ -342,7 +340,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.bv = shl nuw i64 %.sroa.09.0105, 3           ; 14 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1113)
-  br i1 %or.cond.i27, label %.noexc32, label %bb.e, !prof !11
+  br i1 %i.ak, label %.noexc32, label %bb.e, !prof !11
 
 .noexc32:                                         ; preds = %bb.d
   store ptr null, ptr %i.ap, align 8, !alias.scope !1114, !noalias !1115
@@ -614,7 +612,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.p = load i64, ptr %i.o, align 8, !noundef !4 ; 2 uses
+  %i.p = load i64, ptr %i.o, align 8, !noundef !4
   %i.q = lshr i64 %i.p, 3                         ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.s = load i64, ptr %i.r, align 8, !noundef !4 ; 2 uses
@@ -656,8 +654,6 @@ bb.b:                                             ; preds = %switch.lookup
   %i.ai = sub <2 x i64> %i.ag, %i.ah
   %i.aj = load ptr, ptr %1, align 8, !nonnull !4  ; 2 uses
   %i.ak = icmp eq i64 %i.s, 0
-  %3 = icmp eq i64 %i.p, 0
-  %or.cond.i27 = or i1 %i.ak, %3
   %i.al = extractelement <2 x i64> %i.ah, i64 0   ; 4 uses
   %i.am = sub i64 0, %i.al
   %i.an = extractelement <2 x i64> %i.ah, i64 1   ; 3 uses
@@ -751,7 +747,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.bv = shl nuw i64 %.sroa.09.0105, 3           ; 14 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1170)
-  br i1 %or.cond.i27, label %.noexc32, label %bb.e, !prof !11
+  br i1 %i.ak, label %.noexc32, label %bb.e, !prof !11
 
 .noexc32:                                         ; preds = %bb.d
   store ptr null, ptr %i.ap, align 8, !alias.scope !1171, !noalias !1172

@@ -202,7 +202,7 @@ _ZNK3gui14CGUISpriteBank10getFrameNrERjjjb.exit:  ; preds = %_ZNK4core5arrayIN3g
 ; Function Attrs: mustprogress uwtable
 define void @_ZN3gui14CGUISpriteBank17draw2DSpriteBatchERKN4core5arrayIjEERKNS2_INS1_8vector2dIiEEEEPKNS1_4rectIiEERKN5video6SColorEjjbb(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %2, ptr noundef %3, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %4, i32 noundef %5, i32 noundef %6, i1 noundef zeroext %7, i1 noundef zeroext %8) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %9 = alloca %"class.core::array.39", align 8    ; 24 uses
+  %9 = alloca %"class.core::array.39", align 8    ; 22 uses
   %10 = alloca %"struct.gui::CGUISpriteBank::SDrawBatch", align 8 ; 13 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !143
@@ -491,9 +491,9 @@ bb.r:                                             ; preds = %bb.g, %bb.f
   br label %bb.be
 
 .critedge.preheader:                              ; preds = %_ZNK3gui14CGUISpriteBank10getFrameNrERjjjb.exit, %.preheader
-  %i.dw = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
-  %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !97 ; 5 uses
-  %i.dy = load ptr, ptr %9, align 8, !tbaa !100   ; 9 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
+  %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !97 ; 3 uses
+  %i.dy = load ptr, ptr %9, align 8, !tbaa !100   ; 3 uses
   %i.dz = ptrtoint ptr %i.dx to i64
   %i.ea = ptrtoint ptr %i.dy to i64
   %i.eb = sub i64 %i.dz, %i.ea
@@ -503,63 +503,8 @@ bb.r:                                             ; preds = %bb.g, %bb.f
   br i1 %.not185, label %.loopexit, label %.lr.ph183
 
 .lr.ph183:                                        ; preds = %.critedge.preheader
-  %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %.not269 = icmp eq ptr %i.dx, %i.dy
-  br i1 %.not269, label %40, label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit136.peel
-
-_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit136.peel: ; preds = %.lr.ph183
-  %11 = load ptr, ptr %i.dy, align 8, !tbaa !101
-  %12 = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
-  %13 = load ptr, ptr %12, align 8, !tbaa !101
-  %14 = icmp eq ptr %11, %13
-  br i1 %14, label %.critedge.peel, label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137.peel
-
-_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137.peel: ; preds = %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit136.peel
-  %15 = getelementptr inbounds nuw i8, ptr %i.dy, i64 32
-  %16 = load ptr, ptr %15, align 8, !tbaa !102
-  %17 = getelementptr inbounds nuw i8, ptr %i.dy, i64 40
-  %18 = load ptr, ptr %17, align 8, !tbaa !102
-  %19 = icmp eq ptr %16, %18
-  br i1 %19, label %.critedge.peel, label %20
-
-20:                                               ; preds = %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137.peel
-  %21 = load ptr, ptr %i.ee, align 8, !tbaa !47   ; 2 uses
-  %22 = load ptr, ptr %0, align 8, !tbaa !17
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 24
-  %24 = load ptr, ptr %23, align 8
-  %25 = invoke noundef ptr %24(ptr noundef nonnull align 8 dereferenceable(120) %0, i32 noundef 0)
-          to label %26 unwind label %.loopexit.split-lp265
-
-26:                                               ; preds = %20
-  %27 = load ptr, ptr %i.dw, align 8, !tbaa !97
-  %28 = load ptr, ptr %9, align 8, !tbaa !100     ; 3 uses
-  %.not270 = icmp eq ptr %27, %28
-  br i1 %.not270, label %.loopexit268, label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139.peel
-
-_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139.peel: ; preds = %26
-  %29 = getelementptr inbounds nuw i8, ptr %28, i64 32
-  %.sroa.0.0.copyload.peel = load i32, ptr %4, align 4, !tbaa !67
-  %30 = load ptr, ptr %21, align 8, !tbaa !17
-  %31 = getelementptr inbounds nuw i8, ptr %30, i64 408
-  %32 = load ptr, ptr %31, align 8
-  invoke void %32(ptr noundef nonnull align 8 dereferenceable(8) %21, ptr noundef %25, ptr noundef nonnull align 8 dereferenceable(25) %28, ptr noundef nonnull align 8 dereferenceable(25) %29, ptr noundef %3, i32 %.sroa.0.0.copyload.peel, i1 noundef zeroext true)
-          to label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge.peel unwind label %.loopexit.split-lp265
-
-_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge.peel: ; preds = %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139.peel
-  %.pre.peel = load ptr, ptr %i.dw, align 8, !tbaa !97
-  %.pre197.peel = load ptr, ptr %9, align 8, !tbaa !100
-  br label %.critedge.peel
-
-.critedge.peel:                                   ; preds = %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge.peel, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137.peel, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit136.peel
-  %33 = phi ptr [ %.pre197.peel, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge.peel ], [ %i.dy, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit136.peel ], [ %i.dy, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137.peel ] ; 3 uses
-  %34 = phi ptr [ %.pre.peel, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge.peel ], [ %i.dx, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit136.peel ], [ %i.dx, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137.peel ] ; 3 uses
-  %35 = ptrtoint ptr %34 to i64
-  %36 = ptrtoint ptr %33 to i64
-  %37 = sub i64 %35, %36
-  %38 = sdiv exact i64 %37, 72
-  %39 = and i64 %38, 4294967294
-  %.not271 = icmp eq i64 %39, 0
-  br i1 %.not271, label %.loopexit, label %.lr.ph183.peel.newph
+  %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 112
+  br label %.lr.ph183.peel.newph
 
 bb.s:                                             ; preds = %.lr.ph181, %_ZNK3gui14CGUISpriteBank10getFrameNrERjjjb.exit
   %indvars.iv191 = phi i64 [ 0, %.lr.ph181 ], [ %indvars.iv.next192, %_ZNK3gui14CGUISpriteBank10getFrameNrERjjjb.exit ] ; 6 uses
@@ -962,30 +907,21 @@ _ZNK3gui14CGUISpriteBank10getFrameNrERjjjb.exit:  ; preds = %_ZNK3gui14CGUISprit
   %exitcond.not = icmp eq i64 %indvars.iv.next192, %wide.trip.count
   br i1 %exitcond.not, label %.critedge.preheader, label %bb.s, !llvm.loop !139
 
-.loopexit264:                                     ; preds = %bb.ay, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139
-  %lpad.loopexit266 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.be
-
-.loopexit.split-lp265:                            ; preds = %20, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139.peel
+.loopexit.split-lp265:                            ; preds = %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139, %bb.ay
   %lpad.loopexit.split-lp267 = landingpad { ptr, i32 }
           cleanup
   br label %bb.be
 
-.lr.ph183.peel.newph:                             ; preds = %.critedge.peel, %.critedge
-  %i.lq = phi ptr [ %i.mu, %.critedge ], [ %33, %.critedge.peel ] ; 3 uses
-  %i.lr = phi ptr [ %i.mv, %.critedge ], [ %34, %.critedge.peel ] ; 2 uses
-  %indvars.iv194 = phi i64 [ %indvars.iv.next195, %.critedge ], [ 1, %.critedge.peel ] ; 5 uses
+.lr.ph183.peel.newph:                             ; preds = %.critedge, %.lr.ph183
+  %i.lq = phi ptr [ %i.dy, %.lr.ph183 ], [ %i.mu, %.critedge ] ; 3 uses
+  %i.lr = phi ptr [ %i.dx, %.lr.ph183 ], [ %i.mv, %.critedge ] ; 2 uses
+  %indvars.iv194 = phi i64 [ 0, %.lr.ph183 ], [ %indvars.iv.next195, %.critedge ] ; 5 uses
   %i.ls = getelementptr inbounds nuw [72 x i8], ptr %i.lq, i64 %indvars.iv194 ; 4 uses
   %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !101
   %i.lu = getelementptr inbounds nuw i8, ptr %i.ls, i64 8
   %i.lv = load ptr, ptr %i.lu, align 8, !tbaa !101
   %i.lw = icmp eq ptr %i.lt, %i.lv
   br i1 %i.lw, label %.critedge, label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137
-
-40:                                               ; preds = %.lr.ph183
-  call void @__assert_fail(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj) #22
-  unreachable
 
 _ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit137: ; preds = %.lr.ph183.peel.newph
   %i.lx = getelementptr inbounds nuw i8, ptr %i.ls, i64 32
@@ -1002,7 +938,7 @@ bb.ay:                                            ; preds = %_ZN4core5arrayIN3gu
   %i.mf = load ptr, ptr %i.me, align 8
   %i.mg = trunc nuw i64 %indvars.iv194 to i32
   %i.mh = invoke noundef ptr %i.mf(ptr noundef nonnull align 8 dereferenceable(120) %0, i32 noundef %i.mg)
-          to label %bb.az unwind label %.loopexit264
+          to label %bb.az unwind label %.loopexit.split-lp265
 
 bb.az:                                            ; preds = %bb.ay
   %i.mi = load ptr, ptr %i.dw, align 8, !tbaa !97
@@ -1014,7 +950,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.mo = icmp ugt i64 %i.mn, %indvars.iv194
   br i1 %i.mo, label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139, label %.loopexit268
 
-.loopexit268:                                     ; preds = %bb.az, %26
+.loopexit268:                                     ; preds = %bb.az
   call void @__assert_fail(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj) #22
   unreachable
 
@@ -1026,7 +962,7 @@ _ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139: ; preds = %bb.az
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mr, i64 408
   %i.mt = load ptr, ptr %i.ms, align 8
   invoke void %i.mt(ptr noundef nonnull align 8 dereferenceable(8) %i.mc, ptr noundef %i.mh, ptr noundef nonnull align 8 dereferenceable(25) %i.mp, ptr noundef nonnull align 8 dereferenceable(25) %i.mq, ptr noundef %3, i32 %.sroa.0.0.copyload, i1 noundef zeroext true)
-          to label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge unwind label %.loopexit264
+          to label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge unwind label %.loopexit.split-lp265
 
 _ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_edge: ; preds = %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139
   %.pre = load ptr, ptr %i.dw, align 8, !tbaa !97
@@ -1050,14 +986,14 @@ _ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEEixEj.exit139..critedge_crit_ed
   %.pre199 = load ptr, ptr %i.av, align 8, !tbaa !97
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.critedge.peel, %.critedge, %.loopexit.loopexit186, %.critedge.preheader
-  %41 = phi ptr [ %.pre199, %.loopexit.loopexit186 ], [ %i.dx, %.critedge.preheader ], [ %34, %.critedge.peel ], [ %i.mv, %.critedge ] ; 2 uses
-  %42 = phi ptr [ %.pre198, %.loopexit.loopexit186 ], [ %i.dy, %.critedge.preheader ], [ %33, %.critedge.peel ], [ %i.mu, %.critedge ] ; 3 uses
-  %.not4.i.i.i.i = icmp eq ptr %42, %41
+.loopexit:                                        ; preds = %.critedge, %.loopexit.loopexit186, %.critedge.preheader
+  %11 = phi ptr [ %.pre199, %.loopexit.loopexit186 ], [ %i.dx, %.critedge.preheader ], [ %i.mv, %.critedge ] ; 2 uses
+  %12 = phi ptr [ %.pre198, %.loopexit.loopexit186 ], [ %i.dy, %.critedge.preheader ], [ %i.mu, %.critedge ] ; 3 uses
+  %.not4.i.i.i.i = icmp eq ptr %12, %11
   br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.loopexit, %_ZSt8_DestroyIN3gui14CGUISpriteBank10SDrawBatchEEvPT_.exit.i.i.i.i
-  %.05.i.i.i.i = phi ptr [ %i.np, %_ZSt8_DestroyIN3gui14CGUISpriteBank10SDrawBatchEEvPT_.exit.i.i.i.i ], [ %42, %.loopexit ] ; 5 uses
+  %.05.i.i.i.i = phi ptr [ %i.np, %_ZSt8_DestroyIN3gui14CGUISpriteBank10SDrawBatchEEvPT_.exit.i.i.i.i ], [ %12, %.loopexit ] ; 5 uses
   %i.nc = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 32
   %i.nd = load ptr, ptr %i.nc, align 8, !tbaa !52 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.nd, null
@@ -1088,7 +1024,7 @@ bb.bb:                                            ; preds = %_ZN4core5arrayINS_4
 
 _ZSt8_DestroyIN3gui14CGUISpriteBank10SDrawBatchEEvPT_.exit.i.i.i.i: ; preds = %bb.bb, %_ZN4core5arrayINS_4rectIiEEED2Ev.exit.i.i.i.i.i.i
   %i.np = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 72 ; 2 uses
-  %.not.i.i.i.i140 = icmp eq ptr %i.np, %41
+  %.not.i.i.i.i140 = icmp eq ptr %i.np, %11
   br i1 %.not.i.i.i.i140, label %_ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !3
 
 _ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i.i: ; preds = %_ZSt8_DestroyIN3gui14CGUISpriteBank10SDrawBatchEEvPT_.exit.i.i.i.i
@@ -1096,7 +1032,7 @@ _ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exitthread-p
   br label %_ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exit.i.i
 
 _ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exit.i.i: ; preds = %_ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i.i, %.loopexit
-  %i.nq = phi ptr [ %.pr.i.i, %_ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i.i ], [ %42, %.loopexit ] ; 3 uses
+  %i.nq = phi ptr [ %.pr.i.i, %_ZSt8_DestroyIPN3gui14CGUISpriteBank10SDrawBatchES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i.i ], [ %12, %.loopexit ] ; 3 uses
   %.not.i.i1.i.i = icmp eq ptr %i.nq, null
   br i1 %.not.i.i1.i.i, label %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEED2Ev.exit, label %bb.bc
 
@@ -1116,8 +1052,8 @@ _ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEED2Ev.exit: ; preds = %_ZSt8_De
 bb.bd:                                            ; preds = %bb.a, %_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEED2Ev.exit
   ret void
 
-bb.be:                                            ; preds = %.loopexit264, %.loopexit.split-lp265, %.loopexit170, %.loopexit.split-lp171, %.loopexit169, %.loopexit.split-lp, %bb.d, %bb.r
-  %.pn74.pn = phi { ptr, i32 } [ %i.dv, %bb.r ], [ %lpad.loopexit.split-lp173, %.loopexit.split-lp171 ], [ %i.ay, %bb.d ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit169 ], [ %lpad.loopexit172, %.loopexit170 ], [ %lpad.loopexit266, %.loopexit264 ], [ %lpad.loopexit.split-lp267, %.loopexit.split-lp265 ]
+bb.be:                                            ; preds = %.loopexit170, %.loopexit.split-lp171, %.loopexit169, %.loopexit.split-lp, %bb.d, %bb.r, %.loopexit.split-lp265
+  %.pn74.pn = phi { ptr, i32 } [ %i.dv, %bb.r ], [ %lpad.loopexit.split-lp267, %.loopexit.split-lp265 ], [ %i.ay, %bb.d ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit169 ], [ %lpad.loopexit172, %.loopexit170 ], [ %lpad.loopexit.split-lp173, %.loopexit.split-lp171 ]
   call void @_ZN4core5arrayIN3gui14CGUISpriteBank10SDrawBatchEED2Ev(ptr noundef nonnull align 8 dead_on_return(25) dereferenceable(25) %9) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
   br label %common.resume
@@ -1224,7 +1160,7 @@ _ZNSt12_Vector_baseIN4core4rectIiEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb
 .lr.ph.i.i.i.i:                                   ; preds = %_ZNSt12_Vector_baseIN4core4rectIiEESaIS2_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i
   %.012.i.i.i.i = phi ptr [ %i.ad, %.lr.ph.i.i.i.i ], [ %i.z, %_ZNSt12_Vector_baseIN4core4rectIiEESaIS2_EE11_M_allocateEm.exit.i ] ; 2 uses
   %.0911.i.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i.i ], [ %i.aa, %_ZNSt12_Vector_baseIN4core4rectIiEESaIS2_EE11_M_allocateEm.exit.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.012.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(16) %.0911.i.i.i.i, i64 16, i1 false), !tbaa.struct !68, !alias.scope !162
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.012.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(16) %.0911.i.i.i.i, i64 16, i1 false), !tbaa.struct !68, !alias.scope !161
   %i.ac = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 16
   %.not.i.i.i.i = icmp eq ptr %i.ac, %i.ab
@@ -1627,7 +1563,7 @@ _ZNSt15__new_allocatorIN3gui15SGUISpriteFrameEE8allocateEmPKv.exit.i.i.i.i.i.i.i
   %i.x = getelementptr inbounds nuw i8, ptr %.01219, i64 40 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.020, i64 40 ; 2 uses
   %.not = icmp eq ptr %i.x, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !163
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !162
 
 .loopexit14:                                      ; preds = %_ZNSt15__new_allocatorIN3gui15SGUISpriteFrameEE8allocateEmPKv.exit.i.i.i.i.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -2030,7 +1966,7 @@ attributes #24 = { builtin allocsize(0) }
 !137 = distinct !{!137, !136, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !138 = distinct !{!138, !136, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !139 = distinct !{!139, !60}
-!140 = distinct !{!140, !60, !158}
+!140 = distinct !{!140, !60}
 !141 = !{!"p1 int", !18, i64 0}
 !142 = !{!"_ZTSNSt12_Vector_baseIjSaIjEE17_Vector_impl_dataE", !141, i64 0, !141, i64 8, !141, i64 16}
 !143 = !{!142, !141, i64 8}
@@ -2048,10 +1984,9 @@ attributes #24 = { builtin allocsize(0) }
 !155 = !{!134}
 !156 = !{!135}
 !157 = !{!138, !137}
-!158 = !{!"llvm.loop.peeled.count", i32 1}
-!159 = distinct !{!159, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_"}
-!160 = distinct !{!160, !159, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
-!161 = distinct !{!161, !159, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!162 = !{!161, !160}
-!163 = distinct !{!163, !60}
+!158 = distinct !{!158, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_"}
+!159 = distinct !{!159, !158, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
+!160 = distinct !{!160, !158, !"_ZSt19__relocate_object_aIN4core4rectIiEES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
+!161 = !{!160, !159}
+!162 = distinct !{!162, !60}
 end_hunk_3

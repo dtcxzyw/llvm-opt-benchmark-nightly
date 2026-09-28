@@ -145,16 +145,10 @@ bb.i:                                             ; preds = %bb.h
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, 0
-  br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph.new, !llvm.loop !32
+  br i1 %niter.ncmp.3, label %.epil.preheader, label %.lr.ph.new, !llvm.loop !32
 
-._crit_edge.unr-lcssa:                            ; preds = %.lr.ph.new
-  %lcmp.mod.not = icmp eq i32 %3, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.3, %._crit_edge.unr-lcssa ]
-  %lcmp.mod562 = icmp ne i32 %3, 0
-  tail call void @llvm.assume(i1 %lcmp.mod562)
+.epil.preheader:                                  ; preds = %.lr.ph.new, %.lr.ph
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.3, %.lr.ph.new ]
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.j, %.epil.preheader
@@ -170,7 +164,7 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %wide.trip.count
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.j, !llvm.loop !33
 
-._crit_edge:                                      ; preds = %bb.j, %._crit_edge.unr-lcssa
+._crit_edge:                                      ; preds = %bb.j
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 9 uses
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !77
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 10 uses

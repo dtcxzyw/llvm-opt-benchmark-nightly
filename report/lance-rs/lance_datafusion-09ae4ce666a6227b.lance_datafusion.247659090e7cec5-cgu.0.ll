@@ -205,7 +205,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !nonnull !315, !noundef !315 ; 2 uses
-  %i.k = load i64, ptr %i.h, align 8, !noundef !315 ; 8 uses
+  %i.k = load i64, ptr %i.h, align 8, !noundef !315 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !117500
   %i.l = shl i64 %i.k, 5                          ; 4 uses
   %i.m = icmp ugt i64 %i.k, 576460752303423487
@@ -230,23 +230,19 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #71, !noalias !117501
   %i.r = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.l, i64 noundef range(i64 1, 17) 8) #71, !noalias !117501 ; 3 uses
   %i.s = icmp eq ptr %i.r, null
-  br i1 %i.s, label %bb.d, label %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit
+  br i1 %i.s, label %bb.d, label %.lr.ph
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   %.sroa.4.0.ph.i = phi i64 [ 8, %bb.c ], [ 0, %bb.a ]
   tail call void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i, i64 %i.l) #72, !noalias !117500
   unreachable
 
-_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %bb.c
+.lr.ph:                                           ; preds = %bb.c
   store i64 %i.k, ptr %i.g, align 8, !noalias !117500
   %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %i.r, ptr %2, align 8, !noalias !117500
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 3 uses
   %4 = getelementptr inbounds nuw [32 x i8], ptr %i.j, i64 %i.k
-  %5 = icmp eq i64 %i.k, 0
-  br i1 %5, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast6ActionNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit
   %.sroa.518.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.434.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -523,9 +519,9 @@ bb.ac:                                            ; preds = %bb.t, %bb.v, %bb.x,
 bb.ad:                                            ; preds = %bb.ac
   resume { ptr, i32 } %lpad.loopexit
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast6ActionNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %_RNvXshe_NtCs40MM8ukkVQd_9sqlparser3astNtB6_6ActionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit, %bb.e, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit
-  %6 = phi ptr [ %i.q, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread ], [ %3, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit ], [ %3, %bb.e ], [ %3, %_RNvXshe_NtCs40MM8ukkVQd_9sqlparser3astNtB6_6ActionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit ]
-  store i64 %i.k, ptr %6, align 8, !noalias !117500
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast6ActionNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %_RNvXshe_NtCs40MM8ukkVQd_9sqlparser3astNtB6_6ActionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit, %bb.e, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread
+  %5 = phi ptr [ %i.q, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread ], [ %3, %bb.e ], [ %3, %_RNvXshe_NtCs40MM8ukkVQd_9sqlparser3astNtB6_6ActionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit ]
+  store i64 %i.k, ptr %5, align 8, !noalias !117500
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !117515
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !117500
   ret void
@@ -928,7 +924,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !315, !noundef !315 ; 2 uses
-  %i.h = load i64, ptr %i.e, align 8, !noundef !315 ; 8 uses
+  %i.h = load i64, ptr %i.e, align 8, !noundef !315 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !117652
   %i.i = shl i64 %i.h, 4                          ; 4 uses
   %i.j = icmp ugt i64 %i.h, 1152921504606846975
@@ -964,10 +960,9 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D
   store i64 %i.h, ptr %i.d, align 8, !noalias !117652
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.o, ptr %i.q, align 8, !noalias !117652
-  %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %i.h
-  %2 = icmp eq i64 %i.h, 0
-  br i1 %2, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast8MapEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit, label %.lr.ph
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit, %bb.m
   %.sroa.07.030 = phi ptr [ %i.w, %bb.m ], [ %i.g, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit ] ; 4 uses
@@ -1084,9 +1079,9 @@ bb.o:                                             ; preds = %bb.e, %bb.h, %.body
 bb.p:                                             ; preds = %bb.o
   resume { ptr, i32 } %eh.lpad-body
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast8MapEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %bb.m, %.lr.ph, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit
-  %3 = phi ptr [ %i.n, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread ], [ %i.r, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit ], [ %i.r, %.lr.ph ], [ %i.r, %bb.m ]
-  store i64 %i.h, ptr %3, align 8, !noalias !117652
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast8MapEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %bb.m, %.lr.ph, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread
+  %2 = phi ptr [ %i.n, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.thread ], [ %i.r, %.lr.ph ], [ %i.r, %bb.m ]
+  store i64 %i.h, ptr %2, align 8, !noalias !117652
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !117665
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !117652
   ret void
@@ -1489,7 +1484,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !123099, !noalias !123100, !nonnull !315, !noundef !315 ; 2 uses
-  %i.f = load i64, ptr %i.c, align 8, !alias.scope !123099, !noalias !123100, !noundef !315 ; 8 uses
+  %i.f = load i64, ptr %i.c, align 8, !alias.scope !123099, !noalias !123100, !noundef !315 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !123101
   %i.g = shl i64 %i.f, 5                          ; 4 uses
   %i.h = icmp ugt i64 %i.f, 576460752303423487
@@ -1525,10 +1520,9 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D
   store i64 %i.f, ptr %i.b, align 8, !noalias !123101
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.m, ptr %i.o, align 8, !noalias !123101
-  %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
   %i.q = getelementptr inbounds nuw [32 x i8], ptr %i.e, i64 %i.f
-  %2 = icmp eq i64 %i.f, 0
-  br i1 %2, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast15LockTableTargetNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit, label %.lr.ph
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i, %_RNvXseE_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15LockTableTargetNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.i
   %.sroa.02.028 = phi ptr [ %i.y, %_RNvXseE_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15LockTableTargetNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.i ], [ %i.e, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i ] ; 6 uses
@@ -1584,9 +1578,9 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.e
   resume { ptr, i32 } %lpad.loopexit
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast15LockTableTargetNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %_RNvXseE_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15LockTableTargetNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.i, %.lr.ph, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i.thread, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i
-  %3 = phi ptr [ %i.l, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i.thread ], [ %i.p, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i ], [ %i.p, %.lr.ph ], [ %i.p, %_RNvXseE_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15LockTableTargetNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.i ]
-  store i64 %i.f, ptr %3, align 8, !noalias !123101
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs40MM8ukkVQd_9sqlparser3ast15LockTableTargetNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %_RNvXseE_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15LockTableTargetNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.i, %.lr.ph, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i.thread
+  %2 = phi ptr [ %i.l, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc85D0lJ81Z_16lance_datafusion.exit.i.thread ], [ %i.p, %.lr.ph ], [ %i.p, %_RNvXseE_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15LockTableTargetNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.i ]
+  store i64 %i.f, ptr %2, align 8, !noalias !123101
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !123101
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 25

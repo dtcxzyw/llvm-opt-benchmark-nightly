@@ -205,7 +205,7 @@ bb.gs:                                            ; preds = %bb.gp
   %i.td = getelementptr inbounds nuw i8, ptr %i.oc, i64 176
   %.val.i98.i = load ptr, ptr %i.td, align 8, !alias.scope !361, !noalias !362, !nonnull !17, !noundef !17 ; 11 uses
   %i.te = getelementptr inbounds nuw i8, ptr %i.oc, i64 184
-  %.val2.i.i = load i64, ptr %i.te, align 8, !alias.scope !361, !noalias !362, !noundef !17 ; 12 uses
+  %.val2.i.i = load i64, ptr %i.te, align 8, !alias.scope !361, !noalias !362, !noundef !17 ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !363)
   %i.tf = shl i64 %.val2.i.i, 1                   ; 5 uses
   %i.tg = or i64 %i.tf, %.val2.i.i
@@ -225,9 +225,9 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i: ; pred
 
 "_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i
   call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #51, !noalias !364
-  %i.tl = call noundef ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.tf, i64 noundef range(i64 1, 17) 1) #51, !noalias !364 ; 6 uses
+  %i.tl = call noundef ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.tf, i64 noundef range(i64 1, 17) 1) #51, !noalias !364 ; 5 uses
   %i.tm = icmp eq ptr %i.tl, null
-  br i1 %i.tm, label %bb.gt, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.i.i.i"
+  br i1 %i.tm, label %bb.gt, label %.lr.ph.i.i.i.i.preheader.a
 
 bb.gt:                                            ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i", %bb.gs
   %.sroa.4.0.ph.i.i.i.i.i = phi i64 [ 1, %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i" ], [ 0, %bb.gs ]
@@ -237,12 +237,8 @@ bb.gt:                                            ; preds = %"_ZN63_$LT$alloc..a
 .noexc102.i:                                      ; preds = %bb.gt
   unreachable
 
-"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.i.i.i": ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i"
+.lr.ph.i.i.i.i.preheader.a:                       ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i"
   %4 = getelementptr inbounds nuw [2 x i8], ptr %.val.i98.i, i64 %.val2.i.i
-  %5 = icmp eq i64 %.val2.i.i, 0
-  br i1 %5, label %"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h7f57ba00103f2100E.exit.i.i", label %.lr.ph.i.i.i.i.preheader.a
-
-.lr.ph.i.i.i.i.preheader.a:                       ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.i.i.i"
   %i.tn = and i64 %.val2.i.i, 9223372036854775807
   %i.to = add i64 %.val2.i.i, -1
   %i.tp = call i64 @llvm.umin.i64(i64 %i.tn, i64 %i.to) ; 2 uses
@@ -352,8 +348,8 @@ bb.gu:                                            ; preds = %.lr.ph.i.i.i.i
   %i.wc = icmp eq i64 %i.vw, 0
   br i1 %i.wc, label %"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h7f57ba00103f2100E.exit.i.i", label %.lr.ph.i.i.i.i, !llvm.loop !271
 
-"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h7f57ba00103f2100E.exit.i.i": ; preds = %bb.gu, %.lr.ph.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.i.i.i", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread.i.i.i.i"
-  %.sroa.10.0.i31.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread.i.i.i.i" ], [ %i.tl, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.i.i.i" ], [ %i.tl, %.lr.ph.i.i.i.i ], [ %i.tl, %bb.gu ] ; 2 uses
+"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h7f57ba00103f2100E.exit.i.i": ; preds = %bb.gu, %.lr.ph.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread.i.i.i.i"
+  %.sroa.10.0.i31.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread.i.i.i.i" ], [ %i.tl, %.lr.ph.i.i.i.i ], [ %i.tl, %bb.gu ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !367
   %i.wd = getelementptr inbounds nuw i8, ptr %i.oc, i64 200
   %.val5.i.i = load ptr, ptr %i.wd, align 8, !alias.scope !361, !noalias !362, !nonnull !17, !noundef !17
@@ -756,7 +752,7 @@ bb.aj:                                            ; preds = %bb.a
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ct = load ptr, ptr %i.cs, align 16, !alias.scope !20058, !noalias !20059, !nonnull !17, !noundef !17 ; 2 uses
-  %i.cu = load i64, ptr %i.cr, align 8, !alias.scope !20058, !noalias !20059, !noundef !17 ; 8 uses
+  %i.cu = load i64, ptr %i.cr, align 8, !alias.scope !20058, !noalias !20059, !noundef !17 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !20060
   %i.cv = shl i64 %i.cu, 7                        ; 4 uses
   %i.cw = icmp ugt i64 %i.cu, 144115188075855871
@@ -792,19 +788,15 @@ bb.ak:                                            ; preds = %"_ZN63_$LT$alloc..a
   store i64 %i.cu, ptr %i.b, align 8, !noalias !20060
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.dc, ptr %i.de, align 8, !noalias !20060
-  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
   %i.dg = getelementptr inbounds nuw [128 x i8], ptr %i.ct, i64 %i.cu
-  %2 = icmp eq i64 %i.cu, 0
-  br i1 %2, label %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hda774eb01b0ad5a1E.exit", label %.lr.ph
-
-.lr.ph:                                           ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i"
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   br label %bb.al
 
-bb.al:                                            ; preds = %.lr.ph, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i
-  %.sroa.016.031 = phi ptr [ %i.ct, %.lr.ph ], [ %i.dj, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ] ; 4 uses
-  %.sroa.7.030 = phi i64 [ 0, %.lr.ph ], [ %i.dk, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ] ; 3 uses
-  %.sroa.10.029 = phi i64 [ %i.cu, %.lr.ph ], [ %i.dh, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ]
+bb.al:                                            ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i", %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i
+  %.sroa.016.031 = phi ptr [ %i.ct, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i" ], [ %i.dj, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ] ; 4 uses
+  %.sroa.7.030 = phi i64 [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i" ], [ %i.dk, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ] ; 3 uses
+  %.sroa.10.029 = phi i64 [ %i.cu, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i" ], [ %i.dh, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ]
   %i.dh = add nsw i64 %.sroa.10.029, -1           ; 2 uses
   %i.di = icmp eq ptr %.sroa.016.031, %i.dg
   br i1 %i.di, label %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hda774eb01b0ad5a1E.exit", label %bb.am
@@ -829,7 +821,7 @@ bb.am:                                            ; preds = %bb.al
 
 .noexc.i:                                         ; preds = %bb.am
   %i.dl = getelementptr inbounds nuw i8, ptr %.sroa.016.031, i64 64
-  invoke fastcc void @"_ZN62_$LT$insta..content..Content$u20$as$u20$core..clone..Clone$GT$5clone17hb85a41ce83ea0756E"(ptr noalias noundef align 16 captures(address) dereferenceable(64) %3, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(64) %i.dl)
+  invoke fastcc void @"_ZN62_$LT$insta..content..Content$u20$as$u20$core..clone..Clone$GT$5clone17hb85a41ce83ea0756E"(ptr noalias noundef align 16 captures(address) dereferenceable(64) %2, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(64) %i.dl)
           to label %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i unwind label %bb.an, !noalias !20063, !inline_history !20032
 
 bb.an:                                            ; preds = %.noexc.i
@@ -857,9 +849,9 @@ bb.ap:                                            ; preds = %.body.i
   tail call void @_ZN4core9panicking16panic_in_cleanup17h5eff40bcc4481d72E() #56, !noalias !20063, !inline_history !20029
   unreachable
 
-"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hda774eb01b0ad5a1E.exit": ; preds = %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i, %bb.al, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.thread", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i"
-  %4 = phi ptr [ %i.db, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.thread" ], [ %i.df, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i" ], [ %i.df, %bb.al ], [ %i.df, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ]
-  store i64 %i.cu, ptr %4, align 8, !noalias !20060
+"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hda774eb01b0ad5a1E.exit": ; preds = %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i, %bb.al, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.thread"
+  %3 = phi ptr [ %i.db, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.thread" ], [ %i.df, %bb.al ], [ %i.df, %_ZN4core5clone5Clone5clone17he9611f6e5f08a33aE.exit.i ]
+  store i64 %i.cu, ptr %3, align 8, !noalias !20060
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dr, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !20060
@@ -1262,10 +1254,9 @@ bb.b:                                             ; preds = %"_ZN63_$LT$alloc..a
   store i64 %2, ptr %i.b, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.j, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
   %i.n = getelementptr inbounds nuw [64 x i8], ptr %1, i64 %2
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %.thread, label %.lr.ph
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit", %bb.d
   %.sroa.012.023 = phi ptr [ %i.r, %bb.d ], [ %1, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit" ] ; 3 uses
@@ -1275,9 +1266,9 @@ bb.b:                                             ; preds = %"_ZN63_$LT$alloc..a
   %i.p = icmp eq ptr %.sroa.012.023, %i.n
   br i1 %i.p, label %.thread, label %bb.c
 
-.thread:                                          ; preds = %bb.d, %.lr.ph, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit"
-  %4 = phi ptr [ %i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread" ], [ %i.m, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit" ], [ %i.m, %.lr.ph ], [ %i.m, %bb.d ]
-  store i64 %2, ptr %4, align 8
+.thread:                                          ; preds = %bb.d, %.lr.ph, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread"
+  %3 = phi ptr [ %i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.thread" ], [ %i.m, %.lr.ph ], [ %i.m, %bb.d ]
+  store i64 %2, ptr %3, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void

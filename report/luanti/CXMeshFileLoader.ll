@@ -205,8 +205,8 @@ _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i: ; preds = %.noexc321
 
 _ZN4core5arrayIjE8set_usedEj.exit258:             ; preds = %.noexc321, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i
   %i.wp = getelementptr inbounds nuw [4 x i8], ptr %i.wl, i64 %i.wj ; 4 uses
-  %.pre932 = load ptr, ptr %i.js, align 8, !tbaa !142 ; 2 uses
-  %.pre933 = load ptr, ptr %i.jr, align 8, !tbaa !143 ; 3 uses
+  %.pre932 = load ptr, ptr %i.js, align 8, !tbaa !142
+  %.pre933 = load ptr, ptr %i.jr, align 8, !tbaa !143 ; 2 uses
   %.pre957 = ptrtoint ptr %.pre932 to i64
   %.pre959 = ptrtoint ptr %.pre933 to i64
   %.pre961 = sub i64 %.pre957, %.pre959
@@ -221,11 +221,7 @@ _ZN4core5arrayIjE8set_usedEj.exit258:             ; preds = %.noexc321, %_ZSt6fi
   %i.wt = sub i64 %i.wr, %i.ws
   %i.wu = ashr exact i64 %i.wt, 1
   %exitcond902.not1483 = icmp eq ptr %.sroa.21.1.lcssa, %.sroa.0326.1.lcssa
-  br i1 %exitcond902.not1483, label %.lr.ph704._crit_edge, label %_ZN4core5arrayIsEixEj.exit259.lr.ph
-
-_ZN4core5arrayIsEixEj.exit259.lr.ph:              ; preds = %.lr.ph704
-  %3 = icmp ne ptr %.pre932, %.pre933
-  br label %_ZN4core5arrayIsEixEj.exit259
+  br i1 %exitcond902.not1483, label %.lr.ph704._crit_edge, label %_ZN4core5arrayIsEixEj.exit259
 
 bb.ca:                                            ; preds = %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE9push_backERKS1_.exit
   %exitcond902.not = icmp eq i64 %indvars.iv.next900, %i.wu
@@ -235,10 +231,9 @@ bb.ca:                                            ; preds = %_ZNSt6vectorIN5vide
   call void @__assert_fail(ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIsEixEj) #31
   unreachable
 
-_ZN4core5arrayIsEixEj.exit259:                    ; preds = %_ZN4core5arrayIsEixEj.exit259.lr.ph, %bb.ca
-  %i.wv = phi ptr [ %.pre933, %_ZN4core5arrayIsEixEj.exit259.lr.ph ], [ %i.aag, %bb.ca ] ; 2 uses
-  %4 = phi i1 [ %3, %_ZN4core5arrayIsEixEj.exit259.lr.ph ], [ true, %bb.ca ] ; 2 uses
-  %indvars.iv8991484 = phi i64 [ 0, %_ZN4core5arrayIsEixEj.exit259.lr.ph ], [ %indvars.iv.next900, %bb.ca ] ; 13 uses
+_ZN4core5arrayIsEixEj.exit259:                    ; preds = %.lr.ph704, %bb.ca
+  %i.wv = phi ptr [ %i.aag, %bb.ca ], [ %.pre933, %.lr.ph704 ] ; 2 uses
+  %indvars.iv8991484 = phi i64 [ %indvars.iv.next900, %bb.ca ], [ 0, %.lr.ph704 ] ; 13 uses
   %i.ww = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0326.1.lcssa, i64 %indvars.iv8991484
   %i.wx = load i16, ptr %i.ww, align 2, !tbaa !145 ; 2 uses
   %i.wy = icmp eq i16 %i.wx, -1
@@ -274,8 +269,6 @@ _ZN4core5arrayIPN5scene15SSkinMeshBufferEEixEj.exit261: ; preds = %_ZN4core5arra
 
 bb.cc:                                            ; preds = %_ZN4core5arrayIPN5scene15SSkinMeshBufferEEixEj.exit261
   %i.xq = getelementptr inbounds nuw i8, ptr %i.xj, i64 16 ; 2 uses
-  %5 = load ptr, ptr %i.xq, align 8, !tbaa !262   ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.xr = icmp samesign ugt i64 %i.wj, %indvars.iv8991484
   br i1 %i.xr, label %_ZN4core5arrayIjEixEj.exit262, label %bb.cd
 
@@ -284,28 +277,23 @@ bb.cd:                                            ; preds = %bb.cc
   unreachable
 
 _ZN4core5arrayIjEixEj.exit262:                    ; preds = %bb.cc
-  %i.xs = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %3 = load ptr, ptr %i.xq, align 8, !tbaa !262   ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
+  %i.xs = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.xt = load ptr, ptr %i.xs, align 8, !tbaa !156
   %i.xu = ptrtoint ptr %i.xt to i64
-  %i.xv = load ptr, ptr %6, align 8, !tbaa !155
+  %i.xv = load ptr, ptr %4, align 8, !tbaa !155
   %i.xw = ptrtoint ptr %i.xv to i64
   %i.xx = sub i64 %i.xu, %i.xw
   %i.xy = sdiv exact i64 %i.xx, 48
   %i.xz = trunc i64 %i.xy to i32
   %i.ya = getelementptr inbounds nuw [4 x i8], ptr %i.wl, i64 %indvars.iv8991484
   store i32 %i.xz, ptr %i.ya, align 4, !tbaa !137
-  br i1 %4, label %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit263, label %7
-
-7:                                                ; preds = %_ZN4core5arrayIjEixEj.exit262
-  call void @__assert_fail(ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN5video9S3DVertexEEixEj) #31
-  unreachable
-
-_ZN4core5arrayIN5video9S3DVertexEEixEj.exit263:   ; preds = %_ZN4core5arrayIjEixEj.exit262
-  %8 = getelementptr inbounds nuw [40 x i8], ptr %i.wv, i64 %indvars.iv8991484
-  %9 = invoke noundef nonnull align 4 dereferenceable(48) ptr @_ZNSt6vectorIN5video17S3DVertex2TCoordsESaIS1_EE12emplace_backIJRNS0_9S3DVertexEEEERS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 4 dereferenceable(38) %8)
+  %5 = getelementptr inbounds nuw [40 x i8], ptr %i.wv, i64 %indvars.iv8991484
+  %6 = invoke noundef nonnull align 4 dereferenceable(48) ptr @_ZNSt6vectorIN5video17S3DVertex2TCoordsESaIS1_EE12emplace_backIJRNS0_9S3DVertexEEEERS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 4 dereferenceable(38) %5)
           to label %bb.ce unwind label %.loopexit420 ; 0 uses
 
-bb.ce:                                            ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit263
+bb.ce:                                            ; preds = %_ZN4core5arrayIjEixEj.exit262
   %i.yb = load ptr, ptr %i.rx, align 8, !tbaa !149
   %i.yc = load ptr, ptr %i.rw, align 8, !tbaa !150 ; 2 uses
   %i.yd = ptrtoint ptr %i.yb to i64
@@ -358,7 +346,7 @@ bb.cj:                                            ; preds = %_ZN4core5arrayIN5vi
   store i64 %i.za, ptr %i.yz, align 4, !tbaa !90
   br label %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE9push_backERKS1_.exit
 
-.loopexit420:                                     ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit263, %_ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit.i.i
+.loopexit420:                                     ; preds = %_ZN4core5arrayIjEixEj.exit262, %_ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit422 = landingpad { ptr, i32 }
           cleanup
   br label %.thread
@@ -390,27 +378,20 @@ _ZN4core5arrayIjEixEj.exit265:                    ; preds = %bb.ck
   %i.zm = trunc i64 %i.zl to i32
   %i.zn = getelementptr inbounds nuw [4 x i8], ptr %i.wl, i64 %indvars.iv8991484
   store i32 %i.zm, ptr %i.zn, align 4, !tbaa !137
-  br i1 %4, label %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit266, label %10
-
-10:                                               ; preds = %_ZN4core5arrayIjEixEj.exit265
-  call void @__assert_fail(ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN5video9S3DVertexEEixEj) #31
-  unreachable
-
-_ZN4core5arrayIN5video9S3DVertexEEixEj.exit266:   ; preds = %_ZN4core5arrayIjEixEj.exit265
-  %11 = getelementptr inbounds nuw [40 x i8], ptr %i.wv, i64 %indvars.iv8991484 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.zc, i64 48 ; 3 uses
-  %13 = load ptr, ptr %12, align 8, !tbaa !146
-  %.not.i = icmp eq ptr %i.zi, %13
+  %7 = getelementptr inbounds nuw [40 x i8], ptr %i.wv, i64 %indvars.iv8991484 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.zc, i64 48 ; 3 uses
+  %9 = load ptr, ptr %8, align 8, !tbaa !146
+  %.not.i = icmp eq ptr %i.zi, %9
   br i1 %.not.i, label %bb.cn, label %bb.cm
 
-bb.cm:                                            ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit266
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.zi, ptr noundef nonnull align 4 dereferenceable(40) %11, i64 40, i1 false), !tbaa.struct !147
+bb.cm:                                            ; preds = %_ZN4core5arrayIjEixEj.exit265
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.zi, ptr noundef nonnull align 4 dereferenceable(40) %7, i64 40, i1 false), !tbaa.struct !147
   %i.zo = load ptr, ptr %i.zh, align 8, !tbaa !142
   %i.zp = getelementptr inbounds nuw i8, ptr %i.zo, i64 40
   store ptr %i.zp, ptr %i.zh, align 8, !tbaa !142
   br label %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE9push_backERKS1_.exit
 
-bb.cn:                                            ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit266
+bb.cn:                                            ; preds = %_ZN4core5arrayIjEixEj.exit265
   %i.zq = icmp eq i64 %i.zk, 9223372036854775800
   br i1 %i.zq, label %bb.co, label %_ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -435,7 +416,7 @@ _ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = 
 
 .noexc270:                                        ; preds = %_ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.zx = getelementptr inbounds nuw i8, ptr %i.zw, i64 %i.zk
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.zx, ptr noundef nonnull align 4 dereferenceable(40) %11, i64 40, i1 false), !tbaa.struct !147
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.zx, ptr noundef nonnull align 4 dereferenceable(40) %7, i64 40, i1 false), !tbaa.struct !147
   %.not10.i.i.i.i.i = icmp eq ptr %i.ze, %i.zi
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -455,7 +436,7 @@ _ZNSt6vectorIN5video9S3DVertexESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i: 
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.cp
 
 bb.cp:                                            ; preds = %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i
-  %i.aab = load ptr, ptr %12, align 8, !tbaa !146
+  %i.aab = load ptr, ptr %8, align 8, !tbaa !146
   %i.aac = ptrtoint ptr %i.aab to i64
   %i.aad = sub i64 %i.aac, %i.zf
   call void @_ZdlPvm(ptr noundef nonnull %i.ze, i64 noundef %i.aad) #29
@@ -465,7 +446,7 @@ _ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx
   store ptr %i.zw, ptr %i.zd, align 8, !tbaa !143
   store ptr %i.aaa, ptr %i.zh, align 8, !tbaa !142
   %i.aae = getelementptr inbounds nuw [40 x i8], ptr %i.zw, i64 %i.zu
-  store ptr %i.aae, ptr %12, align 8, !tbaa !146
+  store ptr %i.aae, ptr %8, align 8, !tbaa !146
   br label %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE9push_backERKS1_.exit
 
 _ZNSt6vectorIN5video9S3DVertexESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.cm, %bb.cj, %_ZN4core5arrayIsEixEj.exit259
@@ -868,8 +849,8 @@ bb.ek:                                            ; preds = %bb.ej
   br label %.loopexit.split-lp
 
 bb.el:                                            ; preds = %bb.ek, %bb.ej
-  %i.qg = load ptr, ptr %i.x, align 8, !tbaa !142 ; 4 uses
-  %i.qh = load ptr, ptr %i.v, align 8, !tbaa !143 ; 4 uses
+  %i.qg = load ptr, ptr %i.x, align 8, !tbaa !142 ; 3 uses
+  %i.qh = load ptr, ptr %i.v, align 8, !tbaa !143 ; 3 uses
   %i.qi = ptrtoint ptr %i.qg to i64
   %i.qj = ptrtoint ptr %i.qh to i64
   %i.qk = sub i64 %i.qi, %i.qj
@@ -886,7 +867,6 @@ bb.el:                                            ; preds = %bb.ek, %bb.ej
   %or.cond12 = select i1 %i.qp, i1 %.0176.lcssa, i1 false
   %i.qq = sext i16 %.0182.lcssa to i64
   %i.qr = sext i16 %.0180.lcssa to i64
-  %15 = icmp ne ptr %i.qg, %i.qh
   br label %bb.em
 
 bb.em:                                            ; preds = %.lr.ph591, %bb.eu
@@ -895,18 +875,10 @@ bb.em:                                            ; preds = %.lr.ph591, %bb.eu
   %i.qs = phi ptr [ %i.qh, %.lr.ph591 ], [ %i.sg, %bb.eu ] ; 3 uses
   %i.qt = phi ptr [ %i.qg, %.lr.ph591 ], [ %i.sh, %bb.eu ]
   %indvars.iv688 = phi i64 [ 0, %.lr.ph591 ], [ %indvars.iv.next689, %bb.eu ] ; 3 uses
-  %16 = phi i1 [ %15, %.lr.ph591 ], [ true, %bb.eu ] ; 2 uses
   %.0174589 = phi ptr [ %i.ox, %.lr.ph591 ], [ %i.si, %bb.eu ] ; 4 uses
-  br i1 %or.cond9, label %17, label %19
+  br i1 %or.cond9, label %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit357, label %bb.en
 
-17:                                               ; preds = %bb.em
-  br i1 %16, label %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit357, label %18
-
-18:                                               ; preds = %17
-  call void @__assert_fail(ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN5video9S3DVertexEEixEj) #31
-  unreachable
-
-_ZN4core5arrayIN5video9S3DVertexEEixEj.exit357:   ; preds = %17
+_ZN4core5arrayIN5video9S3DVertexEEixEj.exit357:   ; preds = %bb.em
   %i.qu = getelementptr inbounds nuw [40 x i8], ptr %i.qs, i64 %indvars.iv688 ; 2 uses
   %i.qv = getelementptr inbounds nuw i8, ptr %i.qu, i64 12
   %i.qw = getelementptr inbounds i8, ptr %.0174589, i64 %i.qo ; 2 uses
@@ -916,17 +888,10 @@ _ZN4core5arrayIN5video9S3DVertexEEixEj.exit357:   ; preds = %17
   %i.qz = load float, ptr %i.qy, align 4, !tbaa !182
   %i.ra = getelementptr inbounds nuw i8, ptr %i.qu, i64 20
   store float %i.qz, ptr %i.ra, align 4, !tbaa !182
-  br label %19
+  br label %bb.en
 
-19:                                               ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit357, %bb.em
-  br i1 %or.cond12, label %bb.en, label %bb.eo
-
-bb.en:                                            ; preds = %19
-  br i1 %16, label %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit358, label %20
-
-20:                                               ; preds = %bb.en
-  call void @__assert_fail(ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN5video9S3DVertexEEixEj) #31
-  unreachable
+bb.en:                                            ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit357, %bb.em
+  br i1 %or.cond12, label %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit358, label %bb.eo
 
 _ZN4core5arrayIN5video9S3DVertexEEixEj.exit358:   ; preds = %bb.en
   %i.rb = getelementptr inbounds nuw [40 x i8], ptr %i.qs, i64 %indvars.iv688
@@ -936,7 +901,7 @@ _ZN4core5arrayIN5video9S3DVertexEEixEj.exit358:   ; preds = %bb.en
   store <2 x float> %i.re, ptr %i.rc, align 4, !tbaa !90
   br label %bb.eo
 
-bb.eo:                                            ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit358, %19
+bb.eo:                                            ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit358, %bb.en
   br i1 %or.cond, label %bb.ep, label %bb.eu
 
 bb.ep:                                            ; preds = %bb.eo

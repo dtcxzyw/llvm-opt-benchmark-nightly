@@ -205,15 +205,15 @@ _ZN2cv10AutoBufferIiLm264EEC2Em.exit:             ; preds = %.noexc187, %bb.bp
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 1200
   %i.jb = load ptr, ptr %i.ja, align 8, !tbaa !81 ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
-  %i.jd = load ptr, ptr %i.jc, align 8, !tbaa !85 ; 2 uses
-  %i.je = load ptr, ptr %i.jb, align 8, !tbaa !84 ; 11 uses
+  %i.jd = load ptr, ptr %i.jc, align 8, !tbaa !85
+  %i.je = load ptr, ptr %i.jb, align 8, !tbaa !84 ; 10 uses
   %i.jf = ptrtoint ptr %i.jd to i64
   %i.jg = ptrtoint ptr %i.je to i64
   %i.jh = sub i64 %i.jf, %i.jg
-  %i.ji = sdiv exact i64 %i.jh, 20                ; 2 uses
+  %i.ji = sdiv exact i64 %i.jh, 20
   %i.jj = trunc i64 %i.ji to i32
   %i.jk = icmp sgt i32 %i.jj, 0
-  br i1 %i.jk, label %24, label %bb.br
+  br i1 %i.jk, label %bb.bu, label %bb.br
 
 bb.br:                                            ; preds = %_ZN2cv10AutoBufferIiLm264EEC2Em.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #29
@@ -247,18 +247,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #29
   br label %.body
 
-24:                                               ; preds = %_ZN2cv10AutoBufferIiLm264EEC2Em.exit
-  %.not.i.i.i188.not = icmp eq ptr %i.jd, %i.je
-  br i1 %.not.i.i.i188.not, label %25, label %bb.bu
-
-25:                                               ; preds = %24
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.76, i64 noundef 0, i64 noundef %i.ji) #30
-          to label %.noexc190 unwind label %bb.bw
-
-.noexc190:                                        ; preds = %25
-  unreachable
-
-bb.bu:                                            ; preds = %24
+bb.bu:                                            ; preds = %_ZN2cv10AutoBufferIiLm264EEC2Em.exit
   %.sroa.07.0.copyload = load i64, ptr %i.b, align 4, !tbaa !36 ; 2 uses
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.07.0.copyload to i32
   %i.jr = getelementptr inbounds nuw i8, ptr %i.je, i64 4
@@ -374,7 +363,7 @@ bb.bv:                                            ; preds = %bb.bq
           cleanup
   br label %_ZN2cv10AutoBufferIiLm264EED2Ev.exit212
 
-bb.bw:                                            ; preds = %25, %bb.br
+bb.bw:                                            ; preds = %bb.br
   %i.mb = landingpad { ptr, i32 }
           cleanup
   br label %.body

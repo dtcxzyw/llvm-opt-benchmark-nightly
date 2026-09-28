@@ -205,16 +205,19 @@ bb.b:                                             ; preds = %bb.a
   %.not89118 = icmp eq ptr %i.d, %i.e
   br i1 %.not89118, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread, %bb.b
-  %.sroa.12.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.12.2, %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread ] ; 2 uses
-  %.sroa.19.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.19.2, %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread ] ; 2 uses
-  %.sroa.063.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.063.3, %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread ] ; 8 uses
-  %.sroa.10.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.10.2, %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread ] ; 2 uses
-  %.sroa.15.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.15.3, %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread ] ; 2 uses
-  %.sroa.073.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.073.2, %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread ] ; 8 uses
-  %4 = ptrtoint ptr %.sroa.12.0.lcssa to i64
+._crit_edge.loopexit:                             ; preds = %_ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS4_EE.exit.thread
+  %4 = ptrtoint ptr %.sroa.12.2 to i64
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
+  %.sroa.12.0.lcssa = phi i64 [ 0, %bb.b ], [ %4, %._crit_edge.loopexit ]
+  %.sroa.19.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.19.2, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.063.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.063.3, %._crit_edge.loopexit ] ; 8 uses
+  %.sroa.10.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.10.2, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.15.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.15.3, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.073.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.073.2, %._crit_edge.loopexit ] ; 7 uses
   %i.f = ptrtoint ptr %.sroa.073.0.lcssa to i64   ; 2 uses
-  %i.g = sub i64 %4, %i.f                         ; 4 uses
+  %i.g = sub i64 %.sroa.12.0.lcssa, %i.f          ; 2 uses
   %i.h = ashr exact i64 %i.g, 3                   ; 3 uses
   %i.i = trunc i64 %i.h to i32                    ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -440,7 +443,7 @@ _ZNK6Assimp17Q3BSPFileImporter9countDataERKSt6vectorIPNS_5Q3BSP10sQ3BSPFaceESaIS
   %i.be = add i32 %.0126, 1
   %i.bf = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.060.0124) #24 ; 2 uses
   %.not89 = icmp eq ptr %i.bf, %i.e
-  br i1 %.not89, label %._crit_edge, label %.lr.ph, !llvm.loop !25
+  br i1 %.not89, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !25
 
 bb.s:                                             ; preds = %._crit_edge
   %i.bg = and i64 %i.g, 34359738360
@@ -450,15 +453,13 @@ bb.s:                                             ; preds = %._crit_edge
 bb.t:                                             ; preds = %bb.s
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
   store ptr %i.bh, ptr %i.bi, align 8
-  %.not140 = icmp eq ptr %.sroa.12.0.lcssa, %.sroa.073.0.lcssa
-  br i1 %.not140, label %.loopexit, label %.lr.ph134.preheader
-
-.lr.ph134.preheader:                              ; preds = %bb.t
-  %5 = icmp eq i64 %i.g, 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %5 = icmp ult i64 %i.h, 2
   br i1 %5, label %.lr.ph134.epil.preheader, label %.lr.ph134.preheader.new
 
-.lr.ph134.preheader.new:                          ; preds = %.lr.ph134.preheader
-  %unroll_iter = and i64 %i.h, -2
+.lr.ph134.preheader.new:                          ; preds = %bb.t
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph134
 
 bb.u:                                             ; preds = %.loopexit, %bb.s
@@ -500,13 +501,12 @@ bb.x:                                             ; preds = %bb.w, %.lr.ph134.1
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph134, !llvm.loop !26
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.x
-  %6 = and i64 %i.g, 8
-  %lcmp.mod.not = icmp eq i64 %6, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph134.epil.preheader
 
-.lr.ph134.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph134.preheader
-  %.035132.epil.init = phi i64 [ 0, %.lr.ph134.preheader ], [ %i.bt, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod220 = trunc i64 %i.h to i1
+.lr.ph134.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %bb.t
+  %.035132.epil.init = phi i64 [ 0, %bb.t ], [ %i.bt, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod220 = trunc i64 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod220)
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.073.0.lcssa, i64 %.035132.epil.init
   %i.bv = load ptr, ptr %i.bu, align 8            ; 2 uses
@@ -519,7 +519,7 @@ bb.y:                                             ; preds = %.lr.ph134.epil.preh
   store ptr %i.bv, ptr %i.bx, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %bb.y, %.lr.ph134.epil.preheader, %bb.t, %._crit_edge
+.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %bb.y, %.lr.ph134.epil.preheader, %._crit_edge
   %i.by = getelementptr inbounds nuw i8, ptr %3, i64 1104
   store i32 %i.i, ptr %i.by, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 8

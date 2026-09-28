@@ -202,18 +202,14 @@ bb.k:                                             ; preds = %bb.b
   %i.e = shufflevector <4 x i32> %i.d, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.f = add <4 x i32> %i.e, <i32 0, i32 -127, i32 -57344, i32 -983040>
   %i.g = icmp ult <4 x i32> %i.f, <i32 32, i32 33, i32 6400, i32 65534>
+  %2 = add i32 %1, -1048576
+  %or.cond5.i = icmp ult i32 %2, 65534
   %i.h = bitcast <4 x i1> %i.g to i4
-  %.not = icmp eq i4 %i.h, 0
-  br i1 %.not, label %2, label %bb.t
+  %3 = icmp ne i4 %i.h, 0
+  %op.rdx = or i1 %3, %or.cond5.i
+  br i1 %op.rdx, label %bb.t, label %bb.l
 
-2:                                                ; preds = %bb.k
-  %3 = add i32 %1, -1048576
-  %or.cond5.i = icmp ult i32 %3, 65534
-  %4 = icmp eq i32 %1, 32
-  %or.cond8.i = or i1 %4, %or.cond5.i
-  br i1 %or.cond8.i, label %bb.t, label %bb.l
-
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %bb.k
   %i.i = icmp ult i32 %1, 133
   br i1 %i.i, label %.thread110.i, label %bb.m
 
@@ -249,7 +245,7 @@ bb.s:                                             ; preds = %.thread110.i
   store i32 %1, ptr %0, align 4, !alias.scope !9
   br label %_RNvMNtNtCshzWfHUSfYae_4core4char7methodsc16escape_debug_extCs1K5DUQUZc67_11proc_macro2.exit
 
-bb.t:                                             ; preds = %bb.r, %bb.q, %.thread110.i, %bb.p, %bb.m, %2, %bb.k
+bb.t:                                             ; preds = %bb.r, %bb.q, %.thread110.i, %bb.p, %bb.m, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !9
   %i.q = or i32 %1, 1
   %i.r = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.q, i1 true)

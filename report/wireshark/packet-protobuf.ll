@@ -205,7 +205,7 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr, %bb.
 
 bb.cu:                                            ; preds = %bb.ct
   %i.it = load ptr, ptr %i.h, align 8             ; 2 uses
-  %i.iu = load i32, ptr %i.f, align 4             ; 3 uses
+  %i.iu = load i32, ptr %i.f, align 4             ; 2 uses
   %i.iv = zext i32 %i.iu to i64
   %i.iw = getelementptr [36 x i8], ptr @protobuf_wire_to_field_type, i64 %i.iv ; 3 uses
   %i.ix = load i64, ptr %i.g, align 8             ; 2 uses
@@ -216,18 +216,13 @@ bb.cu:                                            ; preds = %bb.ct
 .lr.ph268.preheader:                              ; preds = %bb.cu
   %i.iz = load i32, ptr %i.iw, align 4
   call fastcc void @protobuf_dissect_field_value(ptr noundef %i.gg, ptr noundef %0, i32 noundef %.2, i32 noundef %.0177.i, ptr noundef %3, ptr noundef %i.it, i32 noundef %i.iz, i64 noundef %i.ix, ptr noundef nonnull @.str.169, ptr noundef null, i1 noundef zeroext false, ptr noundef %.0110214), !inline_history !37
-  %12 = add i32 %i.iu, -3
-  %.not.i166.peel = icmp ult i32 %12, 2
-  br i1 %.not.i166.peel, label %.thread388, label %.lr.ph268.preheader418
-
-.lr.ph268.preheader418:                           ; preds = %.lr.ph268.preheader
-  %13 = getelementptr i8, ptr %i.iw, i64 4
-  %14 = load i32, ptr %13, align 4
+  %12 = getelementptr i8, ptr %i.iw, i64 4
+  %13 = load i32, ptr %12, align 4
   br label %.lr.ph268
 
-.lr.ph268:                                        ; preds = %.lr.ph268.preheader418, %.lr.ph268
-  %i.ja = phi i32 [ %i.je, %.lr.ph268 ], [ %14, %.lr.ph268.preheader418 ]
-  %.0.i165266 = phi i32 [ %i.jb, %.lr.ph268 ], [ 1, %.lr.ph268.preheader418 ]
+.lr.ph268:                                        ; preds = %.lr.ph268.preheader, %.lr.ph268
+  %i.ja = phi i32 [ %i.je, %.lr.ph268 ], [ %13, %.lr.ph268.preheader ]
+  %.0.i165266 = phi i32 [ %i.jb, %.lr.ph268 ], [ 1, %.lr.ph268.preheader ]
   call fastcc void @protobuf_dissect_field_value(ptr noundef %i.gg, ptr noundef %0, i32 noundef %.2, i32 noundef %.0177.i, ptr noundef %3, ptr noundef %i.it, i32 noundef %i.ja, i64 noundef %i.ix, ptr noundef nonnull @.str.185, ptr noundef null, i1 noundef zeroext false, ptr noundef %.0110214), !inline_history !37
   %i.jb = add i32 %.0.i165266, 1                  ; 2 uses
   %i.jc = sext i32 %i.jb to i64
@@ -260,7 +255,7 @@ bb.cx:                                            ; preds = %bb.cv
   call fastcc void @protobuf_dissect_field_value(ptr noundef %i.gg, ptr noundef %0, i32 noundef %.2, i32 noundef %.0177.i, ptr noundef %3, ptr noundef %i.jm, i32 noundef %.ph383, i64 noundef %.ph, ptr noundef nonnull @.str.169, ptr noundef null, i1 noundef zeroext false, ptr noundef %.0110214), !inline_history !37
   br label %.thread388
 
-.thread388:                                       ; preds = %.lr.ph268, %.lr.ph263.preheader, %bb.cw, %bb.cu, %.lr.ph268.preheader
+.thread388:                                       ; preds = %.lr.ph268, %.lr.ph263.preheader, %bb.cw, %bb.cu
   call void @decrement_dissection_depth(ptr noundef %3), !inline_history !32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #16

@@ -103,47 +103,44 @@ target triple = "x86_64-unknown-linux-gnu"
 @90 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @89, [16 x i8] c"O\00\00\00\00\00\00\00\F1\03\00\003\00\00\00" }>, align 8
 @91 = private unnamed_addr constant [46 x i8] c"assertion failed: decode_in_chunks_of_size > 0", align 1
 @92 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00\C7\02\00\00\09\00\00\00" }>, align 8
-@93 = private unnamed_addr constant [36 x i8] c"assertion failed: valid_multiple > 0", align 1
-@94 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00\C8\02\00\00\09\00\00\00" }>, align 8
-@95 = private unnamed_addr constant [20 x i8] c"error: invalid input", align 1
-@96 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00$\03\00\00\09\00\00\00" }>, align 8
-@97 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00%\03\00\00\09\00\00\00" }>, align 8
-@98 = private unnamed_addr constant [46 x i8] c"assertion failed: encode_in_chunks_of_size > 0", align 1
-@99 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00\A1\01\00\00\09\00\00\00" }>, align 8
-@100 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00\0F\02\00\00\09\00\00\00" }>, align 8
-@101 = private unnamed_addr constant [1 x i8] c"\0A", align 1
-@102 = private unnamed_addr constant [14 x i8] c"ignore-garbage", align 1
-@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options14IGNORE_GARBAGE = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @102, [8 x i8] c"\0E\00\00\00\00\00\00\00" }>, align 8
-@103 = private unnamed_addr constant [4 x i8] c"file", align 1
-@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options4FILE = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @103, [8 x i8] c"\04\00\00\00\00\00\00\00" }>, align 8
-@104 = private unnamed_addr constant [4 x i8] c"wrap", align 1
-@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options4WRAP = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @104, [8 x i8] c"\04\00\00\00\00\00\00\00" }>, align 8
-@105 = private unnamed_addr constant [6 x i8] c"decode", align 1
-@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options6DECODE = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @105, [8 x i8] c"\06\00\00\00\00\00\00\00" }>, align 8
-@106 = private unnamed_addr constant [58 x i8] c"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", align 1
-@107 = private unnamed_addr constant [85 x i8] c"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#", align 1
-@108 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECscxmO3cvmuC8_9uu_base32, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsZ_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringNtNtCs6JMX4GRUq9U_4core3fmt5Write9write_str, ptr @_RNvXsZ_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringNtNtCs6JMX4GRUq9U_4core3fmt5Write10write_char, ptr @_RNvYNtNtCs7tKScEop1B6_5alloc6string6StringNtNtCs6JMX4GRUq9U_4core3fmt5Write9write_fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
-@109 = private unnamed_addr constant [55 x i8] c"a Display implementation returned an error unexpectedly", align 1
-@110 = private unnamed_addr constant [76 x i8] c"/rustc/7608eb7b07eaf93f16d7cf5bcb2098eca87503df/library/alloc/src/string.rs\00", align 1
-@111 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @110, [16 x i8] c"K\00\00\00\00\00\00\00\89\0B\00\00\0E\00\00\00" }>, align 8
-@112 = private unnamed_addr constant [5 x i8] c"Error", align 1
-@113 = private unnamed_addr constant [4 x i8] c"None", align 1
-@114 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs6JMX4GRUq9U_4core3fmtRNtNtCs7tKScEop1B6_5alloc6string6StringNtB6_5Debug3fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
-@115 = private unnamed_addr constant [4 x i8] c"Some", align 1
-@116 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00", ptr @_RNvXsQ_NtNtCs6JMX4GRUq9U_4core3fmt3numlNtB7_5Debug3fmt }>, align 8
-@117 = private unnamed_addr constant [12 x i8] c"USimpleError", align 1
-@118 = private unnamed_addr constant [4 x i8] c"code", align 1
-@119 = private unnamed_addr constant [7 x i8] c"message", align 1
-@120 = private unnamed_addr constant [11 x i8] c"UUsageError", align 1
-@121 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7tKScEop1B6_5alloc6string6StringEECscxmO3cvmuC8_9uu_base32, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsR_NtCs6JMX4GRUq9U_4core6optionINtB5_6OptionNtNtCs7tKScEop1B6_5alloc6string6StringENtNtB7_3fmt5Debug3fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
-@122 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs6JMX4GRUq9U_4core3fmtRNtNtNtB8_2io5error5ErrorNtB6_5Debug3fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
-@123 = private unnamed_addr constant [8 x i8] c"UIoError", align 1
-@124 = private unnamed_addr constant [7 x i8] c"context", align 1
-@125 = private unnamed_addr constant [5 x i8] c"inner", align 1
-@126 = private unnamed_addr constant [40 x i8] c"description() is deprecated; use Display", align 1
-@127 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 8203884416791978196 to ptr), ptr inttoptr (i64 -4502996807296486835 to ptr) }>, align 8
-@128 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 8022765338115755166 to ptr), ptr inttoptr (i64 -4205221647133633730 to ptr) }>, align 8
-@129 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 7465031386275593344 to ptr), ptr inttoptr (i64 2227572798057049637 to ptr) }>, align 8
+@93 = private unnamed_addr constant [20 x i8] c"error: invalid input", align 1
+@94 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00$\03\00\00\09\00\00\00" }>, align 8
+@95 = private unnamed_addr constant [46 x i8] c"assertion failed: encode_in_chunks_of_size > 0", align 1
+@96 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00\A1\01\00\00\09\00\00\00" }>, align 8
+@97 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c" \00\00\00\00\00\00\00\0F\02\00\00\09\00\00\00" }>, align 8
+@98 = private unnamed_addr constant [1 x i8] c"\0A", align 1
+@99 = private unnamed_addr constant [14 x i8] c"ignore-garbage", align 1
+@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options14IGNORE_GARBAGE = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @99, [8 x i8] c"\0E\00\00\00\00\00\00\00" }>, align 8
+@100 = private unnamed_addr constant [4 x i8] c"file", align 1
+@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options4FILE = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @100, [8 x i8] c"\04\00\00\00\00\00\00\00" }>, align 8
+@101 = private unnamed_addr constant [4 x i8] c"wrap", align 1
+@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options4WRAP = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @101, [8 x i8] c"\04\00\00\00\00\00\00\00" }>, align 8
+@102 = private unnamed_addr constant [6 x i8] c"decode", align 1
+@_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common7options6DECODE = local_unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @102, [8 x i8] c"\06\00\00\00\00\00\00\00" }>, align 8
+@103 = private unnamed_addr constant [58 x i8] c"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", align 1
+@104 = private unnamed_addr constant [85 x i8] c"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#", align 1
+@105 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECscxmO3cvmuC8_9uu_base32, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsZ_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringNtNtCs6JMX4GRUq9U_4core3fmt5Write9write_str, ptr @_RNvXsZ_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringNtNtCs6JMX4GRUq9U_4core3fmt5Write10write_char, ptr @_RNvYNtNtCs7tKScEop1B6_5alloc6string6StringNtNtCs6JMX4GRUq9U_4core3fmt5Write9write_fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
+@106 = private unnamed_addr constant [55 x i8] c"a Display implementation returned an error unexpectedly", align 1
+@107 = private unnamed_addr constant [76 x i8] c"/rustc/7608eb7b07eaf93f16d7cf5bcb2098eca87503df/library/alloc/src/string.rs\00", align 1
+@108 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @107, [16 x i8] c"K\00\00\00\00\00\00\00\89\0B\00\00\0E\00\00\00" }>, align 8
+@109 = private unnamed_addr constant [5 x i8] c"Error", align 1
+@110 = private unnamed_addr constant [4 x i8] c"None", align 1
+@111 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs6JMX4GRUq9U_4core3fmtRNtNtCs7tKScEop1B6_5alloc6string6StringNtB6_5Debug3fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
+@112 = private unnamed_addr constant [4 x i8] c"Some", align 1
+@113 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00", ptr @_RNvXsQ_NtNtCs6JMX4GRUq9U_4core3fmt3numlNtB7_5Debug3fmt }>, align 8
+@114 = private unnamed_addr constant [12 x i8] c"USimpleError", align 1
+@115 = private unnamed_addr constant [4 x i8] c"code", align 1
+@116 = private unnamed_addr constant [7 x i8] c"message", align 1
+@117 = private unnamed_addr constant [11 x i8] c"UUsageError", align 1
+@118 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7tKScEop1B6_5alloc6string6StringEECscxmO3cvmuC8_9uu_base32, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsR_NtCs6JMX4GRUq9U_4core6optionINtB5_6OptionNtNtCs7tKScEop1B6_5alloc6string6StringENtNtB7_3fmt5Debug3fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
+@119 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs6JMX4GRUq9U_4core3fmtRNtNtNtB8_2io5error5ErrorNtB6_5Debug3fmtCscxmO3cvmuC8_9uu_base32 }>, align 8
+@120 = private unnamed_addr constant [8 x i8] c"UIoError", align 1
+@121 = private unnamed_addr constant [7 x i8] c"context", align 1
+@122 = private unnamed_addr constant [5 x i8] c"inner", align 1
+@123 = private unnamed_addr constant [40 x i8] c"description() is deprecated; use Display", align 1
+@124 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 8203884416791978196 to ptr), ptr inttoptr (i64 -4502996807296486835 to ptr) }>, align 8
+@125 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 8022765338115755166 to ptr), ptr inttoptr (i64 -4205221647133633730 to ptr) }>, align 8
+@126 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 7465031386275593344 to ptr), ptr inttoptr (i64 2227572798057049637 to ptr) }>, align 8
 @llvm.used = appending global [1 x ptr] [ptr @_RNvCscxmO3cvmuC8_9uu_base3221CAPTURE_STARTUP_STATE], section "llvm.metadata"
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -546,7 +543,7 @@ bb.e:                                             ; preds = %bb.d
   %i.be = inttoptr i64 %i.bd to ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !437
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
-  store ptr @103, ptr %i.v, align 8, !noalias !438
+  store ptr @100, ptr %i.v, align 8, !noalias !438
   %i.bf = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store i64 4, ptr %i.bf, align 8, !noalias !438
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !438
@@ -684,7 +681,7 @@ bb.m:                                             ; preds = %bb.i
   %i.cw = inttoptr i64 %i.cv to ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !448
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
-  store ptr @104, ptr %i.p, align 8, !noalias !450
+  store ptr @101, ptr %i.p, align 8, !noalias !450
   %i.cx = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i64 4, ptr %i.cx, align 8, !noalias !450
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !450
@@ -817,12 +814,12 @@ _RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_do
   store i64 1610612768, ptr %i.ei, align 8, !noalias !458
   store ptr %i.m, ptr %i.l, align 8, !noalias !458
   %i.ej = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  store ptr @108, ptr %i.ej, align 8, !noalias !458
+  store ptr @105, ptr %i.ej, align 8, !noalias !458
   %i.ek = call noundef zeroext i1 @_RNvXs_Cs46VsjAK4zfE_10os_displayNtB4_6QuotedNtNtCs6JMX4GRUq9U_4core3fmt7Display3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ad, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l) #23, !noalias !459
   br i1 %i.ek, label %bb.q, label %_RNvXsC_NtCs7tKScEop1B6_5alloc6stringNtCs46VsjAK4zfE_10os_display6QuotedNtB5_12SpecToString14spec_to_stringCscxmO3cvmuC8_9uu_base32.exit, !prof !21
 
 bb.q:                                             ; preds = %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringE5reifyCscxmO3cvmuC8_9uu_base32.exit270
-  call void @_RNvNtCs6JMX4GRUq9U_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @109, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @111) #24, !noalias !459
+  call void @_RNvNtCs6JMX4GRUq9U_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @106, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @108) #24, !noalias !459
   unreachable
 
 _RNvXsC_NtCs7tKScEop1B6_5alloc6stringNtCs46VsjAK4zfE_10os_display6QuotedNtB5_12SpecToString14spec_to_stringCscxmO3cvmuC8_9uu_base32.exit: ; preds = %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringE5reifyCscxmO3cvmuC8_9uu_base32.exit270
@@ -1176,12 +1173,12 @@ bb.ap:                                            ; preds = %.lr.ph.i.i
   store i64 1610612768, ptr %i.ib, align 8, !noalias !468
   store ptr %i.e, ptr %i.d, align 8, !noalias !468
   %i.ic = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store ptr @108, ptr %i.ic, align 8, !noalias !468
+  store ptr @105, ptr %i.ic, align 8, !noalias !468
   %i.id = call noundef zeroext i1 @_RNvXs_Cs46VsjAK4zfE_10os_displayNtB4_6QuotedNtNtCs6JMX4GRUq9U_4core3fmt7Display3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.j, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d) #23, !noalias !469
   br i1 %i.id, label %bb.aq, label %_RNvXsC_NtCs7tKScEop1B6_5alloc6stringNtCs46VsjAK4zfE_10os_display6QuotedNtB5_12SpecToString14spec_to_stringCscxmO3cvmuC8_9uu_base32.exit.i.i, !prof !21
 
 bb.aq:                                            ; preds = %.loopexit.i68
-  call void @_RNvNtCs6JMX4GRUq9U_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @109, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @111) #24, !noalias !469
+  call void @_RNvNtCs6JMX4GRUq9U_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @106, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @108) #24, !noalias !469
   unreachable
 
 _RNvXsC_NtCs7tKScEop1B6_5alloc6stringNtCs46VsjAK4zfE_10os_display6QuotedNtB5_12SpecToString14spec_to_stringCscxmO3cvmuC8_9uu_base32.exit.i.i: ; preds = %.loopexit.i68
@@ -1399,8 +1396,8 @@ _RNCNvMNtCscxmO3cvmuC8_9uu_base3211base_commonNtB4_6Config4from0B6_.exit.thread:
   %.sroa.9.0274 = phi i64 [ %.sroa.9.0, %.preheader56.i.i ], [ undef, %bb.a ], [ %.sroa.9.0, %.preheader.i.i ], [ %.sroa.9.0, %bb.j ], [ %.sroa.9.0, %bb.ap ], [ %.sroa.9.0, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i33 ]
   %.sroa.11.0 = phi i64 [ %i.hp, %.preheader56.i.i ], [ undef, %bb.a ], [ 0, %.preheader.i.i ], [ undef, %bb.j ], [ %i.hz, %bb.ap ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i33 ]
   %.sroa.6.0 = phi i64 [ 1, %.preheader56.i.i ], [ 0, %bb.a ], [ 1, %.preheader.i.i ], [ 0, %bb.j ], [ 1, %bb.ap ], [ 0, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i33 ]
-  %i.kl = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @105, i64 noundef 6) #23
-  %i.km = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @102, i64 noundef 14) #23
+  %i.kl = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @102, i64 noundef 6) #23
+  %i.km = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @99, i64 noundef 14) #23
   %i.kn = zext i1 %i.kl to i8
   %i.ko = zext i1 %i.km to i8
   store i64 %.sroa.6.0, ptr %0, align 8
@@ -1803,7 +1800,7 @@ begin_hunk_2_@_RNvNtCscxmO3cvmuC8_9uu_base3211base_common8base_app:_RINvMNtNtCsg
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.661.sroa.4.0..sroa.661.0..sroa_idx.sroa_idx.i, align 8
   %.sroa.661.sroa.5.0..sroa.661.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 480
   store i64 0, ptr %.sroa.661.sroa.5.0..sroa.661.0..sroa_idx.sroa_idx.i, align 8
-  store ptr @105, ptr %i.ag, align 8
+  store ptr @102, ptr %i.ag, align 8
   store i64 6, ptr %i.ah, align 8
   store i32 100, ptr %i.ao, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.o, i64 320
@@ -1843,7 +1840,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsgNwXemyrBW
   %.sroa.7171.sroa.0.sroa.5.0..sroa.7171.0..sroa_idx172.sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 512
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.7171.sroa.0.sroa.5.0..sroa.7171.0..sroa_idx172.sroa_idx, ptr noundef nonnull align 8 dereferenceable(80) %i.p, i64 80, i1 false)
   %.sroa.7171.sroa.5.0..sroa.7171.0..sroa_idx172.sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 592
-  store ptr @105, ptr %.sroa.7171.sroa.5.0..sroa.7171.0..sroa_idx172.sroa_idx, align 8
+  store ptr @102, ptr %.sroa.7171.sroa.5.0..sroa.7171.0..sroa_idx172.sroa_idx, align 8
   %.sroa.7171.sroa.6.0..sroa.7171.0..sroa_idx172.sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 600
   store i64 6, ptr %.sroa.7171.sroa.6.0..sroa.7171.0..sroa_idx172.sroa_idx, align 8
   %.sroa.7171.sroa.7.0..sroa.7171.0..sroa_idx172.sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 608
@@ -1867,7 +1864,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsgNwXemyrBW
   %i.bg = getelementptr inbounds nuw i8, ptr %i.r, i64 136
   %i.bh = load ptr, ptr %i.bg, align 8, !alias.scope !646, !noalias !647, !nonnull !9, !noundef !9
   %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.bh, i64 %i.bd ; 2 uses
-  store ptr @105, ptr %i.bi, align 8, !noalias !647
+  store ptr @102, ptr %i.bi, align 8, !noalias !647
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   store i64 6, ptr %i.bj, align 8, !noalias !645
   %i.bk = add i64 %i.bd, 1
@@ -1971,11 +1968,11 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsgNwXemyrBW
   %.sroa.7186.sroa.7.0..sroa.7186.0..sroa_idx187.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 552
   store i64 -2, ptr %.sroa.7186.sroa.7.0..sroa.7186.0..sroa_idx187.sroa_idx, align 8
   %.sroa.7186.sroa.9.0..sroa.7186.0..sroa_idx187.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 576
-  store ptr @102, ptr %.sroa.7186.sroa.9.0..sroa.7186.0..sroa_idx187.sroa_idx, align 8
+  store ptr @99, ptr %.sroa.7186.sroa.9.0..sroa.7186.0..sroa_idx187.sroa_idx, align 8
   %.sroa.7186.sroa.10.0..sroa.7186.0..sroa_idx187.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 584
   store i64 14, ptr %.sroa.7186.sroa.10.0..sroa.7186.0..sroa_idx187.sroa_idx, align 8
   %.sroa.7186.sroa.11.0..sroa.7186.0..sroa_idx187.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 592
-  store ptr @102, ptr %.sroa.7186.sroa.11.0..sroa.7186.0..sroa_idx187.sroa_idx, align 8
+  store ptr @99, ptr %.sroa.7186.sroa.11.0..sroa.7186.0..sroa_idx187.sroa_idx, align 8
   %.sroa.7186.sroa.12.0..sroa.7186.0..sroa_idx187.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 600
   store i64 14, ptr %.sroa.7186.sroa.12.0..sroa.7186.0..sroa_idx187.sroa_idx, align 8
   %.sroa.7186.sroa.13.0..sroa.7186.0..sroa_idx187.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 608
@@ -2003,7 +2000,7 @@ bb.c:                                             ; preds = %_RINvNtCs6JMX4GRUq9
 _RINvMs1_NtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB6_3Arg14overrides_withReECscxmO3cvmuC8_9uu_base32.exit52: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsgNwXemyrBWj_12clap_builder7builder10styled_str9StyledStrEECscxmO3cvmuC8_9uu_base32.exit51, %bb.c
   %i.bp = load ptr, ptr %.sroa.0179.sroa.16.0..sroa_idx, align 8, !alias.scope !651, !noalias !652, !nonnull !9, !noundef !9
   %i.bq = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %i.bm ; 2 uses
-  store ptr @102, ptr %i.bq, align 8, !noalias !652
+  store ptr @99, ptr %i.bq, align 8, !noalias !652
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   store i64 14, ptr %i.br, align 8, !noalias !650
   %i.bs = add i64 %i.bm, 1
@@ -2369,11 +2366,11 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsgNwXemyrBW
   %.sroa.7254.sroa.7.0..sroa.7254.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 552
   store i64 -2, ptr %.sroa.7254.sroa.7.0..sroa.7254.0..sroa_idx.sroa_idx, align 8
   %.sroa.7254.sroa.9.0..sroa.7254.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 576
-  store ptr @104, ptr %.sroa.7254.sroa.9.0..sroa.7254.0..sroa_idx.sroa_idx, align 8
+  store ptr @101, ptr %.sroa.7254.sroa.9.0..sroa.7254.0..sroa_idx.sroa_idx, align 8
   %.sroa.7254.sroa.10.0..sroa.7254.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 584
   store i64 4, ptr %.sroa.7254.sroa.10.0..sroa.7254.0..sroa_idx.sroa_idx, align 8
   %.sroa.7254.sroa.11.0..sroa.7254.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 592
-  store ptr @104, ptr %.sroa.7254.sroa.11.0..sroa.7254.0..sroa_idx.sroa_idx, align 8
+  store ptr @101, ptr %.sroa.7254.sroa.11.0..sroa.7254.0..sroa_idx.sroa_idx, align 8
   %.sroa.7254.sroa.12.0..sroa.7254.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 600
   store i64 4, ptr %.sroa.7254.sroa.12.0..sroa.7254.0..sroa_idx.sroa_idx, align 8
   %.sroa.7254.sroa.13.0..sroa.7254.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 608
@@ -2412,7 +2409,7 @@ bb.x:                                             ; preds = %_RINvNtCs6JMX4GRUq9
 _RINvMs_NtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB5_3Arg12value_parserNtNtB7_12value_parser11ValueParserECscxmO3cvmuC8_9uu_base32.exit: ; preds = %bb.x, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsgNwXemyrBWj_12clap_builder7builder10styled_str9StyledStrEECscxmO3cvmuC8_9uu_base32.exit93
   %i.el = load ptr, ptr %.sroa.0247.sroa.16.0..sroa_idx, align 8, !alias.scope !664, !noalias !665, !nonnull !9, !noundef !9
   %i.em = getelementptr inbounds nuw [16 x i8], ptr %i.el, i64 %i.ei ; 2 uses
-  store ptr @104, ptr %i.em, align 8, !noalias !665
+  store ptr @101, ptr %i.em, align 8, !noalias !665
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 8
   store i64 4, ptr %i.en, align 8, !noalias !663
   %i.eo = add i64 %i.ei, 1
@@ -2510,7 +2507,7 @@ _RINvMs_NtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB5_3Arg12value_parserNtNtB
   %.sroa.51376.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 552
   store i64 -2, ptr %.sroa.51376.0..sroa_idx, align 8, !alias.scope !668, !noalias !669
   %.sroa.52378.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 576
-  store ptr @103, ptr %.sroa.52378.0..sroa_idx, align 8, !alias.scope !668, !noalias !669
+  store ptr @100, ptr %.sroa.52378.0..sroa_idx, align 8, !alias.scope !668, !noalias !669
   %.sroa.54379.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 584
   store i64 4, ptr %.sroa.54379.0..sroa_idx, align 8, !alias.scope !668, !noalias !669
   %.sroa.56380.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 592
@@ -2678,12 +2675,12 @@ bb.c:                                             ; preds = %bb.b
   store i64 1610612768, ptr %i.q, align 8, !noalias !719
   store ptr %i.c, ptr %i.b, align 8, !noalias !719
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @108, ptr %i.r, align 8, !noalias !719
+  store ptr @105, ptr %i.r, align 8, !noalias !719
   %i.s = call noundef zeroext i1 @_RNvXs_Cs46VsjAK4zfE_10os_displayNtB4_6QuotedNtNtCs6JMX4GRUq9U_4core3fmt7Display3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b) #23, !noalias !720
   br i1 %i.s, label %bb.d, label %_RNCNvNtCscxmO3cvmuC8_9uu_base3211base_common9get_input0B5_.exit.i, !prof !21
 
 bb.d:                                             ; preds = %bb.c
-  call void @_RNvNtCs6JMX4GRUq9U_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @109, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @111) #24, !noalias !720
+  call void @_RNvNtCs6JMX4GRUq9U_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @106, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @108) #24, !noalias !720
   unreachable
 
 _RNCNvNtCscxmO3cvmuC8_9uu_base3211base_common9get_input0B5_.exit.i: ; preds = %bb.c
@@ -2888,24 +2885,16 @@ bb.a:
 _RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.a
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.ay = load ptr, ptr %i.ax, align 8, !invariant.load !9, !nonnull !9
-  %i.az = tail call noundef i64 %i.ay(ptr noundef nonnull %3) #25 ; 10 uses
+  %i.az = tail call noundef i64 %i.ay(ptr noundef nonnull %3) #25 ; 9 uses
   %i.ba = shl i64 %i.az, 10                       ; 9 uses
   %.not = icmp eq i64 %i.ba, 0
-  br i1 %.not, label %6, label %7, !prof !21
+  br i1 %.not, label %bb.b, label %bb.c, !prof !21
 
-6:                                                ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
+bb.b:                                             ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
   tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @91, i64 noundef 46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @92) #24
   unreachable
 
-7:                                                ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
-  %.not49 = icmp eq i64 %i.az, 0
-  br i1 %.not49, label %bb.b, label %bb.c, !prof !21
-
-bb.b:                                             ; preds = %7
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @93, i64 noundef 36, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @94) #24
-  unreachable
-
-bb.c:                                             ; preds = %7
+bb.c:                                             ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 0, ptr %i.c, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 7 uses
@@ -3103,7 +3092,7 @@ bb.q:                                             ; preds = %.split.us
   unreachable
 
 bb.r:                                             ; preds = %.split.us
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.di, ptr noundef nonnull align 1 dereferenceable(20) @95, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.di, ptr noundef nonnull align 1 dereferenceable(20) @93, i64 20, i1 false)
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23, !noalias !788
   %i.dk = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 32, i64 noundef range(i64 1, 9) 8) #23, !noalias !788 ; 6 uses
   %i.dl = icmp eq ptr %i.dk, null
@@ -3393,7 +3382,7 @@ bb.aq:                                            ; preds = %bb.ap
   unreachable
 
 bb.ar:                                            ; preds = %bb.ap
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.fw, ptr noundef nonnull align 1 dereferenceable(20) @95, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.fw, ptr noundef nonnull align 1 dereferenceable(20) @93, i64 20, i1 false)
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23, !noalias !801
   %i.fy = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 32, i64 noundef range(i64 1, 9) 8) #23, !noalias !801 ; 6 uses
   %i.fz = icmp eq ptr %i.fy, null
@@ -3533,24 +3522,16 @@ bb.a:
 _RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.a
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 56
   %i.bc = load ptr, ptr %i.bb, align 8, !invariant.load !9, !nonnull !9
-  %i.bd = tail call noundef i64 %i.bc(ptr noundef nonnull %4) #25 ; 14 uses
+  %i.bd = tail call noundef i64 %i.bc(ptr noundef nonnull %4) #25 ; 13 uses
   %i.be = shl i64 %i.bd, 10                       ; 18 uses
   %.not = icmp eq i64 %i.be, 0
-  br i1 %.not, label %7, label %8, !prof !21
+  br i1 %.not, label %bb.b, label %bb.c, !prof !21
 
-7:                                                ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @91, i64 noundef 46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @96) #24
+bb.b:                                             ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
+  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @91, i64 noundef 46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @94) #24
   unreachable
 
-8:                                                ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
-  %.not73 = icmp eq i64 %i.bd, 0
-  br i1 %.not73, label %bb.b, label %bb.c, !prof !21
-
-bb.b:                                             ; preds = %8
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @93, i64 noundef 36, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @97) #24
-  unreachable
-
-bb.c:                                             ; preds = %8
+bb.c:                                             ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode15alphabet_lookup.exit
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 64
   %i.bg = load ptr, ptr %i.bf, align 8, !invariant.load !9, !nonnull !9
   %i.bh = tail call noundef zeroext i1 %i.bg(ptr noundef nonnull %4) #25 ; 3 uses
@@ -3953,7 +3934,7 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 bb.af:                                            ; preds = %bb.ad
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.fi, ptr noundef nonnull align 1 dereferenceable(20) @95, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.fi, ptr noundef nonnull align 1 dereferenceable(20) @93, i64 20, i1 false)
   %i.fk = call fastcc noundef nonnull align 8 ptr @_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 32) #25, !noalias !902 ; 5 uses
   store i64 20, ptr %i.fk, align 8
   %.sroa.4183.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fk, i64 8
@@ -4201,7 +4182,7 @@ bb.aw:                                            ; preds = %_RNvNtNtCscxmO3cvmu
   unreachable
 
 bb.ax:                                            ; preds = %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_decode18flush_ready_chunks.exit138.thread
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.gz, ptr noundef nonnull align 1 dereferenceable(20) @95, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.gz, ptr noundef nonnull align 1 dereferenceable(20) @93, i64 20, i1 false)
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23, !noalias !918
   %i.hs = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 32, i64 noundef range(i64 1, 9) 8) #23, !noalias !918 ; 6 uses
   %i.ht = icmp eq ptr %i.hs, null
@@ -4399,7 +4380,7 @@ bb.h:                                             ; preds = %_RINvNtCs6JMX4GRUq9
   br i1 %.not17.i, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit.thread4
 
 _RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit: ; preds = %bb.h
-  %i.au = tail call noundef ptr %.56.val(ptr noundef nonnull %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @101, i64 noundef 1) #25, !noalias !942, !inline_history !927 ; 2 uses
+  %i.au = tail call noundef ptr %.56.val(ptr noundef nonnull %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @98, i64 noundef 1) #25, !noalias !942, !inline_history !927 ; 2 uses
   %.not8 = icmp eq ptr %i.au, null
   br i1 %.not8, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit.thread, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit.thread4
 
@@ -4434,7 +4415,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %4, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit.thread, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode25write_without_line_breaks.exit
 
 _RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode25write_without_line_breaks.exit: ; preds = %bb.l
-  %i.bd = tail call noundef ptr %.56.val(ptr noundef nonnull %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @101, i64 noundef 1) #25, !noalias !951, !inline_history !938 ; 2 uses
+  %i.bd = tail call noundef ptr %.56.val(ptr noundef nonnull %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @98, i64 noundef 1) #25, !noalias !951, !inline_history !938 ; 2 uses
   %.not7 = icmp eq ptr %i.bd, null
   br i1 %.not7, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit.thread, label %_RNvNtNtCscxmO3cvmuC8_9uu_base3211base_common11fast_encode22write_with_line_breaks.exit.thread4
 
@@ -4469,7 +4450,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c, !prof !21
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @98, i64 noundef 46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @99) #24
+  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @95, i64 noundef 46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @96) #24
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -4726,7 +4707,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c, !prof !21
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @98, i64 noundef 46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @100) #24
+  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @95, i64 noundef 46, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @97) #24
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -5129,7 +5110,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define internal { ptr, i64 } @_RNvXs1_NtNtCsh036I4OHgIr_6uucore8features8encodingNtB5_13Base58WrapperNtB5_27SupportsFastDecodeAndEncode8alphabet(ptr noalias nofree nonnull readonly captures(none) %0) unnamed_addr #7 {
 bb.a:
-  ret { ptr, i64 } { ptr @106, i64 58 }
+  ret { ptr, i64 } { ptr @103, i64 58 }
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -5185,7 +5166,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define internal { ptr, i64 } @_RNvXs2_NtNtCsh036I4OHgIr_6uucore8features8encodingNtB5_10Z85WrapperNtB5_27SupportsFastDecodeAndEncode8alphabet(ptr noalias nofree nonnull readonly captures(none) %0) unnamed_addr #7 {
 bb.a:
-  ret { ptr, i64 } { ptr @107, i64 85 }
+  ret { ptr, i64 } { ptr @104, i64 85 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
@@ -5588,7 +5569,7 @@ bb.a:
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvXsK_NtCs6JMX4GRUq9U_4core3fmtNtB5_5ErrorNtB5_5Debug3fmt(ptr noalias nofree nonnull readonly captures(none) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #3 {
 bb.a:
-  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @112, i64 noundef 5) #23
+  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @109, i64 noundef 5) #23
   ret i1 %i.a
 }
 
@@ -5634,12 +5615,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @115, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @114) #23
+  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @112, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @111) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @113, i64 noundef 4) #23
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @110, i64 noundef 4) #23
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -5829,7 +5810,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter26debug_struct_field2_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @117, i64 noundef 12, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @118, i64 noundef 4, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @116, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @119, i64 noundef 7, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @114) #23
+  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter26debug_struct_field2_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @114, i64 noundef 12, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @115, i64 noundef 4, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @113, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @116, i64 noundef 7, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @111) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.c
 }
@@ -5841,7 +5822,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter26debug_struct_field2_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @120, i64 noundef 11, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @118, i64 noundef 4, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @116, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @119, i64 noundef 7, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @114) #23
+  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter26debug_struct_field2_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @117, i64 noundef 11, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @115, i64 noundef 4, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @113, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @116, i64 noundef 7, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @111) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.c
 }
@@ -5853,7 +5834,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.b, ptr %i.a, align 8
-  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter26debug_struct_field2_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @123, i64 noundef 8, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @124, i64 noundef 7, ptr noundef nonnull %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @121, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @125, i64 noundef 5, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @122) #23
+  %i.c = call noundef zeroext i1 @_RNvMsa_NtCs6JMX4GRUq9U_4core3fmtNtB5_9Formatter26debug_struct_field2_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @120, i64 noundef 8, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @121, i64 noundef 7, ptr noundef nonnull %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @118, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @122, i64 noundef 5, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @119) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.c
 }
@@ -6256,14 +6237,14 @@ _RINvNtNtCs7tKScEop1B6_5alloc2io4read16append_to_stringNCNvYINtNtNtB4_8buffered9
 ; Function Attrs: nounwind nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvYNtNtCs7tKScEop1B6_5alloc6string6StringNtNtCs6JMX4GRUq9U_4core3fmt5Write9write_fmtCscxmO3cvmuC8_9uu_base32(ptr noalias nofree noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 {
 _RNvXs_NvNtNtCs6JMX4GRUq9U_4core3fmt5Write9write_fmtQNtNtCs7tKScEop1B6_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCscxmO3cvmuC8_9uu_base32.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCs6JMX4GRUq9U_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @108, ptr noundef nonnull %1, ptr noundef nonnull %2) #23, !inline_history !1491
+  %i.a = tail call noundef zeroext i1 @_RNvNtCs6JMX4GRUq9U_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @105, ptr noundef nonnull %1, ptr noundef nonnull %2) #23, !inline_history !1491
   ret i1 %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define internal { ptr, i64 } @_RNvYNtNtNtCsh036I4OHgIr_6uucore4mods5error11UUsageErrorNtNtCs6JMX4GRUq9U_4core5error5Error11descriptionCscxmO3cvmuC8_9uu_base32(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #7 {
 bb.a:
-  ret { ptr, i64 } { ptr @126, i64 40 }
+  ret { ptr, i64 } { ptr @123, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -6287,7 +6268,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal void @_RNvYNtNtNtCsh036I4OHgIr_6uucore4mods5error11UUsageErrorNtNtCs6JMX4GRUq9U_4core5error5Error7type_idCscxmO3cvmuC8_9uu_base32(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias nofree readonly align 8 captures(none) %1) unnamed_addr #6 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @127, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @124, i64 16, i1 false)
   ret void
 }
 
@@ -6300,7 +6281,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define internal { ptr, i64 } @_RNvYNtNtNtCsh036I4OHgIr_6uucore4mods5error12USimpleErrorNtNtCs6JMX4GRUq9U_4core5error5Error11descriptionCscxmO3cvmuC8_9uu_base32(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #7 {
 bb.a:
-  ret { ptr, i64 } { ptr @126, i64 40 }
+  ret { ptr, i64 } { ptr @123, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -6324,7 +6305,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal void @_RNvYNtNtNtCsh036I4OHgIr_6uucore4mods5error12USimpleErrorNtNtCs6JMX4GRUq9U_4core5error5Error7type_idCscxmO3cvmuC8_9uu_base32(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias nofree readonly align 8 captures(none) %1) unnamed_addr #6 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @128, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @125, i64 16, i1 false)
   ret void
 }
 
@@ -6343,7 +6324,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define internal { ptr, i64 } @_RNvYNtNtNtCsh036I4OHgIr_6uucore4mods5error8UIoErrorNtNtCs6JMX4GRUq9U_4core5error5Error11descriptionCscxmO3cvmuC8_9uu_base32(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #7 {
 bb.a:
-  ret { ptr, i64 } { ptr @126, i64 40 }
+  ret { ptr, i64 } { ptr @123, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -6367,7 +6348,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal void @_RNvYNtNtNtCsh036I4OHgIr_6uucore4mods5error8UIoErrorNtNtCs6JMX4GRUq9U_4core5error5Error7type_idCscxmO3cvmuC8_9uu_base32(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias nofree readonly align 8 captures(none) %1) unnamed_addr #6 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @129, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @126, i64 16, i1 false)
   ret void
 }
 

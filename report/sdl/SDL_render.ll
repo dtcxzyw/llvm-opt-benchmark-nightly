@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %bb.aj, %bb.an, %bb.
   br i1 %exitcond481.not, label %.thread407, label %bb.aj, !llvm.loop !37
 
 .thread407:                                       ; preds = %bb.o, %bb.m, %bb.u, %bb.w, %bb.ar, %bb.aq, %switch.edge, %bb.s
-  %.4 = phi i32 [ %i.bv, %bb.w ], [ %i.db, %bb.aq ], [ 372645892, %bb.m ], [ %i.bh, %bb.u ], [ %.pre, %bb.s ], [ %i.ci, %switch.edge ], [ %i.ci, %bb.ar ], [ 376840196, %bb.o ] ; 3 uses
+  %.4 = phi i32 [ %i.bh, %bb.u ], [ %i.bv, %bb.w ], [ 372645892, %bb.m ], [ %i.db, %bb.aq ], [ %.pre, %bb.s ], [ %i.ci, %switch.edge ], [ %i.ci, %bb.ar ], [ 376840196, %bb.o ] ; 3 uses
   %i.dr = call i32 @SDL_GetSurfaceColorspace_REAL(ptr noundef %1) #14 ; 6 uses
   %i.ds = icmp eq i32 %i.dr, 301991168
   %i.dt = and i32 %i.dr, 992

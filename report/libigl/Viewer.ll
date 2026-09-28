@@ -205,7 +205,6 @@ _ZN3igl6opengl4glfw6Viewer4initEv.exit:           ; preds = %.lr.ph.i.i52, %_ZNK
 .lr.ph72:                                         ; preds = %_ZN3igl6opengl4glfw6Viewer4initEv.exit
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.fu = load ptr, ptr %i.fs, align 8, !tbaa !31
   %i.fv = load ptr, ptr %i.ft, align 16, !tbaa !31
   %i.fw = icmp eq ptr %i.fu, %i.fv
@@ -234,49 +233,45 @@ _ZN3igl6opengl4glfw6Viewer4initEv.exit:           ; preds = %.lr.ph.i.i52, %_ZNK
   %.sroa.058.069 = phi ptr [ %i.gp, %bb.u ], [ %i.fx, %.lr.ph72.split ] ; 4 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %.sroa.058.069, i64 584
   %i.gb = load i32, ptr %i.ga, align 8, !tbaa !126
-  %i.gc = load i32, ptr %.sroa.062.071, align 16, !tbaa !133 ; 3 uses
+  %i.gc = load i32, ptr %.sroa.062.071, align 16, !tbaa !133 ; 2 uses
   %i.gd = and i32 %i.gc, %i.gb
   %.not41 = icmp eq i32 %i.gd, 0
-  br i1 %.not41, label %bb.u, label %6
+  br i1 %.not41, label %bb.u, label %bb.s
 
-6:                                                ; preds = %.lr.ph
-  %7 = icmp eq i32 %i.gc, 0
-  %.pre.i57 = load ptr, ptr %i.el, align 8, !tbaa !82 ; 4 uses
-  br i1 %7, label %8, label %bb.s
-
-8:                                                ; preds = %6
-  %9 = load i64, ptr %5, align 16, !tbaa !83
-  br label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit
-
-bb.s:                                             ; preds = %6
+bb.s:                                             ; preds = %.lr.ph
   %i.ge = load ptr, ptr %i.en, align 16, !tbaa !81 ; 2 uses
-  %.not.i.i53 = icmp eq ptr %i.ge, %.pre.i57
+  %5 = load ptr, ptr %i.el, align 8, !tbaa !82    ; 4 uses
+  %.not.i.i53 = icmp eq ptr %i.ge, %5
   br i1 %.not.i.i53, label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.s
   %i.gf = ptrtoint ptr %i.ge to i64
-  %i.gg = ptrtoint ptr %.pre.i57 to i64
+  %i.gg = ptrtoint ptr %5 to i64
   %i.gh = sub i64 %i.gf, %i.gg
   %i.gi = sdiv exact i64 %i.gh, 544
   br label %.lr.ph.i.i54
 
 .lr.ph.i.i54:                                     ; preds = %bb.t, %.lr.ph.preheader.i.i
   %.0710.i.i = phi i64 [ %i.gm, %bb.t ], [ 0, %.lr.ph.preheader.i.i ] ; 3 uses
-  %i.gj = getelementptr inbounds nuw [544 x i8], ptr %.pre.i57, i64 %.0710.i.i
+  %i.gj = getelementptr inbounds nuw [544 x i8], ptr %5, i64 %.0710.i.i
   %i.gk = load i32, ptr %i.gj, align 16, !tbaa !133
   %i.gl = icmp eq i32 %i.gk, %i.gc
-  br i1 %i.gl, label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit, label %bb.t
+  br i1 %i.gl, label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit.loopexit, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph.i.i54
   %i.gm = add nuw i64 %.0710.i.i, 1               ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.gm, %i.gi
-  br i1 %exitcond.not.i.i, label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit, label %.lr.ph.i.i54, !llvm.loop !3
+  br i1 %exitcond.not.i.i, label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit.loopexit, label %.lr.ph.i.i54, !llvm.loop !3
 
-_ZN3igl6opengl4glfw6Viewer4coreEj.exit:           ; preds = %.lr.ph.i.i54, %bb.t, %8, %bb.s
-  %.0.in.i = phi i64 [ %9, %8 ], [ 0, %bb.s ], [ 0, %bb.t ], [ %.0710.i.i, %.lr.ph.i.i54 ]
-  %sext.i55 = shl i64 %.0.in.i, 32
-  %10 = ashr exact i64 %sext.i55, 32
-  %i.gn = getelementptr inbounds nuw [544 x i8], ptr %.pre.i57, i64 %10
+_ZN3igl6opengl4glfw6Viewer4coreEj.exit.loopexit:  ; preds = %bb.t, %.lr.ph.i.i54
+  %.0.in.i.ph = phi i64 [ 0, %bb.t ], [ %.0710.i.i, %.lr.ph.i.i54 ]
+  %6 = shl i64 %.0.in.i.ph, 32
+  %7 = ashr exact i64 %6, 32
+  br label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit
+
+_ZN3igl6opengl4glfw6Viewer4coreEj.exit:           ; preds = %_ZN3igl6opengl4glfw6Viewer4coreEj.exit.loopexit, %bb.s
+  %.0.in.i = phi i64 [ 0, %bb.s ], [ %7, %_ZN3igl6opengl4glfw6Viewer4coreEj.exit.loopexit ]
+  %i.gn = getelementptr inbounds nuw [544 x i8], ptr %5, i64 %.0.in.i
   %i.go = getelementptr inbounds nuw i8, ptr %.sroa.058.069, i64 24
   call void @_ZN3igl6opengl10ViewerCore19align_camera_centerERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS3_IiLin1ELin1ELi0ELin1ELin1EEE(ptr noundef nonnull align 16 dereferenceable(544) %i.gn, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.058.069, ptr noundef nonnull align 8 dereferenceable(24) %i.go)
   br label %bb.u

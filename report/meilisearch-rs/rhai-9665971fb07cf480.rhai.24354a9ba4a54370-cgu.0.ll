@@ -205,10 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store i64 %2, ptr %i.b, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.j, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %2
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %.thread, label %.lr.ph
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit", %bb.e
   %.sroa.012.023 = phi ptr [ %i.r, %bb.e ], [ %1, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit" ] ; 3 uses
@@ -218,9 +217,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.p = icmp eq ptr %.sroa.012.023, %i.n
   br i1 %i.p, label %.thread, label %bb.d
 
-.thread:                                          ; preds = %bb.e, %.lr.ph, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit.thread", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit"
-  %4 = phi ptr [ %i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit.thread" ], [ %i.m, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit" ], [ %i.m, %.lr.ph ], [ %i.m, %bb.e ]
-  store i64 %2, ptr %4, align 8
+.thread:                                          ; preds = %bb.e, %.lr.ph, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit.thread"
+  %3 = phi ptr [ %i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd84698b22ed413ffE.exit.thread" ], [ %i.m, %.lr.ph ], [ %i.m, %bb.e ]
+  store i64 %2, ptr %3, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void

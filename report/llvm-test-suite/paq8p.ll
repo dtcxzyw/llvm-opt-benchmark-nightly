@@ -205,8 +205,8 @@ bb.bh:                                            ; preds = %bb.bg
   %i.fu = add i32 %i.ft, %i.fq
   %i.fv = shl nuw nsw i8 %i.eh, 2
   %i.fw = zext nneg i8 %i.fv to i64               ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 @_ZZ8wavModelR5MixerE7counter, i8 0, i64 %i.fw, i1 false), !tbaa !18
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 @_ZZ8wavModelR5MixerE1n, i8 0, i64 %i.fw, i1 false), !tbaa !18
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) @_ZZ8wavModelR5MixerE7counter, i8 0, i64 %i.fw, i1 false), !tbaa !18
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) @_ZZ8wavModelR5MixerE1n, i8 0, i64 %i.fw, i1 false), !tbaa !18
   %wide.trip.count654 = zext nneg i8 %i.eh to i64
   %wide.trip.count649 = zext i32 %i.fu to i64     ; 4 uses
   br label %.preheader510
@@ -214,8 +214,8 @@ bb.bh:                                            ; preds = %bb.bg
 .preheader510.us.preheader:                       ; preds = %.preheader510.lr.ph
   %i.fx = shl nuw nsw i8 %i.eh, 2
   %i.fy = zext nneg i8 %i.fx to i64               ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 @_ZZ8wavModelR5MixerE7counter, i8 0, i64 %i.fy, i1 false), !tbaa !18
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 @_ZZ8wavModelR5MixerE1n, i8 0, i64 %i.fy, i1 false), !tbaa !18
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) @_ZZ8wavModelR5MixerE7counter, i8 0, i64 %i.fy, i1 false), !tbaa !18
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) @_ZZ8wavModelR5MixerE1n, i8 0, i64 %i.fy, i1 false), !tbaa !18
   %wide.trip.count659 = zext nneg i8 %i.eh to i64
   %min.iters.check = icmp ult i8 %i.eh, 4
   br i1 %min.iters.check, label %.preheader510.us, label %vector.body

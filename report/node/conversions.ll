@@ -204,7 +204,7 @@ bb.a:
   %i.c = add i64 %0, -1
   %i.d = inttoptr i64 %i.c to ptr
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %i.f = load i32, ptr %i.e, align 4              ; 11 uses
+  %i.f = load i32, ptr %i.e, align 4              ; 12 uses
   %i.g = add i32 %i.f, -25
   %or.cond = icmp ult i32 %i.g, -24
   br i1 %or.cond, label %bb.n, label %bb.b
@@ -382,7 +382,7 @@ bb.k:                                             ; preds = %.critedge
   br label %.thread
 
 bb.l:                                             ; preds = %._crit_edge74, %._crit_edge
-  %.pre-phi76 = phi i64 [ %.pre75, %._crit_edge74 ], [ %wide.trip.count, %._crit_edge ] ; 3 uses
+  %.pre-phi76 = phi i64 [ %.pre75, %._crit_edge74 ], [ %wide.trip.count, %._crit_edge ] ; 2 uses
   %i.bm = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %.pre-phi76
   %i.bn = call noundef double @_ZN2v88internal22InternalStringToDoubleItEEdPKT_S4_NS0_14ConversionFlagEd(ptr noundef nonnull %i.a, ptr noundef nonnull %i.bm, i32 noundef 0, double noundef 0.000000e+00) ; 2 uses
   %i.bo = fcmp uno double %i.bn, 0.000000e+00
@@ -394,10 +394,14 @@ bb.m:                                             ; preds = %bb.l
   %i.bq = extractvalue { i64, ptr } %i.bp, 0
   %i.br = extractvalue { i64, ptr } %i.bp, 1
   %.not = icmp eq i64 %i.bq, %.pre-phi76
-  br i1 %.not, label %.lr.ph65, label %.loopexit
+  br i1 %.not, label %.lr.ph65.preheader, label %.loopexit
 
-.lr.ph65:                                         ; preds = %bb.m, %.lr.ph65
-  %indvars.iv69 = phi i64 [ %indvars.iv.next70, %.lr.ph65 ], [ 0, %bb.m ] ; 3 uses
+.lr.ph65.preheader:                               ; preds = %bb.m
+  %wide.trip.count72 = zext nneg i32 %i.f to i64
+  br label %.lr.ph65
+
+.lr.ph65:                                         ; preds = %.lr.ph65, %.lr.ph65.preheader
+  %indvars.iv69 = phi i64 [ 0, %.lr.ph65.preheader ], [ %indvars.iv.next70, %.lr.ph65 ] ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 %indvars.iv69
   %i.bt = load i8, ptr %i.bs, align 1
   %i.bu = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv69
@@ -405,7 +409,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bw = sext i8 %i.bt to i16
   %.not51 = icmp eq i16 %i.bv, %i.bw              ; 2 uses
   %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 1 ; 2 uses
-  %exitcond73.not = icmp ne i64 %indvars.iv.next70, %.pre-phi76
+  %exitcond73.not = icmp ne i64 %indvars.iv.next70, %wide.trip.count72
   %or.cond90.not = select i1 %.not51, i1 %exitcond73.not, i1 false
   br i1 %or.cond90.not, label %.lr.ph65, label %.loopexit, !llvm.loop !114
 

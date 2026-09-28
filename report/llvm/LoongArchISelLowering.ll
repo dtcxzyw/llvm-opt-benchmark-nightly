@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [4 x i32], align 16               ; 4 uses
   %11 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
   %12 = alloca %"class.llvm::ArrayRef.192", align 8 ; 3 uses
-  %i.c = trunc i64 %2 to i32                      ; 7 uses
+  %i.c = trunc i64 %2 to i32                      ; 6 uses
   %i.d = sdiv i32 %i.c, 2                         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   store i16 0, ptr %i.a, align 2
@@ -255,13 +255,13 @@ bb.e:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #28
   %i.r = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   store ptr %i.r, ptr %8, align 8, !tbaa !34
-  %i.s = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 6 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 12, ptr %i.t, align 4, !tbaa !545
   store i32 0, ptr %i.s, align 8, !tbaa !544
   %.idx = shl nuw nsw i64 %2, 2
   %i.u = icmp ugt i64 %2, 12
-  br i1 %i.u, label %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread, label %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i
+  br i1 %i.u, label %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread, label %_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit
 
 _ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread: ; preds = %bb.e
   call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull %i.r, i64 noundef %2, i64 noundef 4) #28
@@ -269,16 +269,8 @@ _ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread: ; preds = %bb.e
   %i.v = zext i32 %.pre8.pre.i.i to i64
   br label %_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit
 
-_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i:  ; preds = %bb.e
-  %.not.i.i.i = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i, label %_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit.thread, label %_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit
-
-_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit.thread: ; preds = %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i
-  store i32 %i.c, ptr %i.s, align 8, !tbaa !544
-  br label %._crit_edge19
-
-_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit: ; preds = %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread
-  %.pre8.i.i36 = phi i64 [ %i.v, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread ], [ 0, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i ]
+_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit: ; preds = %bb.e, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread
+  %.pre8.i.i36 = phi i64 [ %i.v, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread ], [ 0, %bb.e ]
   %i.w = load ptr, ptr %8, align 8, !tbaa !34
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %.pre8.i.i36
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.x, ptr nonnull align 4 %1, i64 %.idx, i1 false)
@@ -289,7 +281,7 @@ _ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit: ; preds = %_ZN4llvm15Smal
   %wide.trip.count24 = and i64 %2, 2147483647
   br label %bb.g
 
-._crit_edge19:                                    ; preds = %bb.j, %_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit.thread
+._crit_edge19:                                    ; preds = %bb.j
   %i.aa = call { ptr, i32 } @_ZN4llvm12SelectionDAG10getBitcastENS_3EVTENS_7SDValueE(ptr noundef nonnull align 8 dereferenceable(920) %6, i16 96, ptr null, ptr %4, i32 %5) #28 ; 2 uses
   %.fca.0.extract31 = extractvalue { ptr, i32 } %i.aa, 0
   %.fca.1.extract32 = extractvalue { ptr, i32 } %i.aa, 1

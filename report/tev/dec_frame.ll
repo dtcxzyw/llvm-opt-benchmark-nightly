@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 144 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 152
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !327  ; 2 uses
-  %i.u = load ptr, ptr %i.r, align 8, !tbaa !328  ; 2 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !327
+  %i.u = load ptr, ptr %i.r, align 8, !tbaa !328
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = sub i64 %i.v, %i.w                       ; 2 uses
@@ -235,10 +235,6 @@ bb.g:                                             ; preds = %bb.f
   %i.ah = load <2 x i64>, ptr %i.i, align 8, !tbaa !255
   %i.ai = trunc <2 x i64> %i.ah to <2 x i32>
   store <2 x i32> %i.ai, ptr %i.ag, align 8, !tbaa !247
-  %.not47 = icmp eq ptr %i.t, %i.u
-  br i1 %.not47, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.g
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 688
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 108
   %4 = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -246,8 +242,8 @@ bb.g:                                             ; preds = %bb.f
   %6 = getelementptr inbounds nuw i8, ptr %0, i64 109
   br label %bb.h
 
-bb.h:                                             ; preds = %.lr.ph, %_ZNSt3__16vectorIsNS_9allocatorIsEEE6resizeEm.exit
-  %.046 = phi i64 [ 0, %.lr.ph ], [ %i.cr, %_ZNSt3__16vectorIsNS_9allocatorIsEEE6resizeEm.exit ] ; 3 uses
+bb.h:                                             ; preds = %bb.g, %_ZNSt3__16vectorIsNS_9allocatorIsEEE6resizeEm.exit
+  %.046 = phi i64 [ 0, %bb.g ], [ %i.cr, %_ZNSt3__16vectorIsNS_9allocatorIsEEE6resizeEm.exit ] ; 3 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.046
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !247
   %i.al = sext i32 %i.ak to i64
@@ -330,7 +326,7 @@ _ZNSt3__16vectorIsNS_9allocatorIsEEE6resizeEm.exit: ; preds = %bb.i, %bb.j, %bb.
   %exitcond.not = icmp eq i64 %i.cr, %i.y
   br i1 %exitcond.not, label %._crit_edge, label %bb.h, !llvm.loop !509
 
-._crit_edge:                                      ; preds = %_ZNSt3__16vectorIsNS_9allocatorIsEEE6resizeEm.exit, %bb.g
+._crit_edge:                                      ; preds = %_ZNSt3__16vectorIsNS_9allocatorIsEEE6resizeEm.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   br label %bb.l
 

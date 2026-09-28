@@ -204,7 +204,7 @@ Hmac_HashUpdate.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
 
 bb.g:                                             ; preds = %Hmac_HashUpdate.exit
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 5 uses
-  %i.bk = zext nneg i32 %4 to i64                 ; 9 uses
+  %i.bk = zext nneg i32 %4 to i64                 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.bj, i8 0, i64 %i.bk, i1 false)
   %i.bl = icmp sgt i32 %i.v, 6
   br i1 %i.bl, label %bb.h, label %bb.r
@@ -290,14 +290,15 @@ bb.r:                                             ; preds = %bb.g
   %i.ce = zext nneg i32 %i.cd to i64
   %i.cf = zext nneg i32 %i.cd to i64
   %wide.trip.count = zext i8 %switch.load210 to i64
+  %wide.trip.count182 = zext nneg i32 %4 to i64   ; 6 uses
   %min.iters.check = icmp samesign ult i32 %4, 4
   %min.iters.check197 = icmp samesign ult i32 %4, 32
-  %i.cg = and i64 %i.bk, 28
-  %n.vec = and i64 %i.bk, 96                      ; 4 uses
-  %cmp.n = icmp eq i64 %n.vec, %i.bk
+  %i.cg = and i64 %wide.trip.count182, 28
+  %n.vec = and i64 %wide.trip.count182, 96        ; 4 uses
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count182
   %min.epilog.iters.check = icmp eq i64 %i.cg, 0
-  %n.vec201 = and i64 %i.bk, 124                  ; 3 uses
-  %cmp.n208 = icmp eq i64 %n.vec201, %i.bk
+  %n.vec201 = and i64 %wide.trip.count182, 124    ; 3 uses
+  %cmp.n208 = icmp eq i64 %n.vec201, %wide.trip.count182
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph175, %._crit_edge
@@ -519,7 +520,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ew = or i8 %i.ev, %i.et
   store i8 %i.ew, ptr %i.eu, align 1, !tbaa !63
   %indvars.iv.next180 = add nuw nsw i64 %indvars.iv179, 1 ; 2 uses
-  %exitcond183.not = icmp eq i64 %indvars.iv.next180, %i.bk
+  %exitcond183.not = icmp eq i64 %indvars.iv.next180, %wide.trip.count182
   br i1 %exitcond183.not, label %._crit_edge, label %.lr.ph, !llvm.loop !153
 
 .thread:                                          ; preds = %Hmac_HashFinalRaw.exit, %Hmac_HashUpdate.exit153, %bb.z, %bb.ae

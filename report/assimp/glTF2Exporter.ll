@@ -205,25 +205,17 @@ bb.a:
   %i.o = load ptr, ptr %i.n, align 8              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 288
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 296
-  %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
-  %i.s = load ptr, ptr %i.p, align 8              ; 4 uses
+  %i.r = load ptr, ptr %i.q, align 8
+  %i.s = load ptr, ptr %i.p, align 8              ; 3 uses
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = sub i64 %i.t, %i.u
-  %1 = ashr exact i64 %i.v, 4                     ; 2 uses
+  %1 = lshr exact i64 %i.v, 4
   %i.w = trunc i64 %1 to i32                      ; 2 uses
   %i.x = icmp ugt i32 %i.w, 1
-  br i1 %i.x, label %2, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN5glTF24Mesh9PrimitiveESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit
+  br i1 %i.x, label %.lr.ph, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN5glTF24Mesh9PrimitiveESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit
 
-2:                                                ; preds = %.lr.ph95
-  %.not.i.i.not = icmp eq ptr %i.r, %i.s
-  br i1 %.not.i.i.not, label %3, label %.lr.ph
-
-3:                                                ; preds = %2
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.249, i64 noundef 0, i64 noundef %1) #34
-  unreachable
-
-.lr.ph:                                           ; preds = %2
+.lr.ph:                                           ; preds = %.lr.ph95
   %.sroa.070.0.copyload = load ptr, ptr %i.s, align 8 ; 2 uses
   %.03789.a = add i32 %i.w, -1
   %.sroa.774.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8

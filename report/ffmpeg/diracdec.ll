@@ -205,7 +205,7 @@ bb.ho:                                            ; preds = %.preheader.i144.i23
 
 get_interleaved_ue_golomb.exit154.i219:           ; preds = %.loopexit.i152.i242, %bb.hm
   %i.cir = phi i32 [ %..i142.i218, %bb.hm ], [ %spec.select56.i150.i240, %.loopexit.i152.i242 ] ; 7 uses
-  %.045.i143.i220 = phi i32 [ %i.chn, %bb.hm ], [ %i.ciq, %.loopexit.i152.i242 ] ; 5 uses
+  %.045.i143.i220 = phi i32 [ %i.chn, %bb.hm ], [ %i.ciq, %.loopexit.i152.i242 ] ; 4 uses
   %i.cis = add i32 %.045.i143.i220, -6
   %or.cond.i221 = icmp ult i32 %i.cis, -5
   br i1 %or.cond.i221, label %bb.hp, label %bb.hq
@@ -240,7 +240,7 @@ bb.hr:                                            ; preds = %bb.hq
   %i.cjh = getelementptr inbounds nuw i8, ptr %0, i64 4716 ; 2 uses
   %i.cji = add nuw nsw i32 %.045.i143.i220, 1     ; 5 uses
   %wide.trip.count398.i = zext nneg i32 %i.cji to i64
-  br i1 %.not131.i232, label %.preheader.i233, label %.preheader228.i
+  br i1 %.not131.i232, label %.preheader.i233.1, label %.preheader228.i
 
 .preheader228.i:                                  ; preds = %bb.hr
   %.pre402.i = load ptr, ptr %0, align 16, !tbaa !52 ; 4 uses
@@ -460,14 +460,10 @@ bb.ih:                                            ; preds = %bb.if
   store i32 %i.cnl, ptr %i.cno, align 16, !tbaa !119
   br label %dirac_unpack_idwt_params.exit
 
-.preheader.i233:                                  ; preds = %bb.hr
+.preheader.i233.1:                                ; preds = %bb.hr
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 4720
   store i32 1, ptr %2, align 16, !tbaa !118
   store i32 1, ptr %i.cjh, align 4, !tbaa !117
-  %exitcond399.not.i = icmp eq i32 %.045.i143.i220, 0
-  br i1 %exitcond399.not.i, label %dirac_unpack_idwt_params.exit, label %.preheader.i233.1
-
-.preheader.i233.1:                                ; preds = %.preheader.i233
   %i.cnp = getelementptr inbounds nuw i8, ptr %0, i64 4724
   %i.cnq = getelementptr inbounds nuw i8, ptr %0, i64 4728
   store i32 1, ptr %i.cnq, align 8, !tbaa !118
@@ -870,7 +866,7 @@ bb.jr:                                            ; preds = %bb.jq
   store i8 %i.dfr, ptr %i.dfs, align 1, !tbaa !65
   br label %dirac_unpack_idwt_params.exit
 
-dirac_unpack_idwt_params.exit:                    ; preds = %bb.jp, %.preheader229.i, %.preheader229.i.1, %.preheader229.i.2, %.preheader229.i.3, %.preheader229.us.i, %.preheader229.us.i.1, %.preheader229.us.i.2, %.preheader229.us.i.3, %.preheader.i233, %.preheader.i233.1, %.preheader.i233.2, %.preheader.i233.3, %.preheader.i233.4, %.preheader.i233.5, %.preheader230.i, %bb.ja, %bb.ih, %bb.hf
+dirac_unpack_idwt_params.exit:                    ; preds = %bb.jp, %.preheader229.i, %.preheader229.i.1, %.preheader229.i.2, %.preheader229.i.3, %.preheader229.us.i, %.preheader229.us.i.1, %.preheader229.us.i.2, %.preheader229.us.i.3, %.preheader.i233.1, %.preheader.i233.2, %.preheader.i233.3, %.preheader.i233.4, %.preheader.i233.5, %.preheader230.i, %bb.ja, %bb.ih, %bb.hf
   %i.dft = getelementptr inbounds nuw i8, ptr %0, i64 576
   %i.dfu = getelementptr inbounds nuw i8, ptr %0, i64 480
   %i.dfv = load i32, ptr %i.dfu, align 16, !tbaa !75 ; 2 uses

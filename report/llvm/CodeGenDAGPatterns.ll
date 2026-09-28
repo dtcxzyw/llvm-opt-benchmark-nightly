@@ -205,11 +205,11 @@ bb.bs:                                            ; preds = %bb.br
 
 .lr.ph.split.i.i.i.i.i:                           ; preds = %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i
   %.sroa.5.016.i.i.i.i.i = phi i32 [ %i.la, %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i ], [ %i.ke, %.lr.ph.i.i.i.i.i ]
-  %.sroa.5.016.fr.i.i.i.i.i = freeze i32 %.sroa.5.016.i.i.i.i.i ; 3 uses
+  %.sroa.5.016.fr.i.i.i.i.i = freeze i32 %.sroa.5.016.i.i.i.i.i ; 2 uses
   %i.kf = trunc i32 %.sroa.5.016.fr.i.i.i.i.i to i16
   %i.kg = add i16 %i.kf, -19
   %spec.select.i.i711 = icmp ult i16 %i.kg, 197
-  br i1 %spec.select.i.i711, label %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit, label %bb.bt
+  br i1 %spec.select.i.i711, label %bb.bw, label %bb.bt
 
 bb.bt:                                            ; preds = %.lr.ph.split.i.i.i.i.i
   %i.kh = add i32 %.sroa.5.016.fr.i.i.i.i.i, 1    ; 2 uses
@@ -265,11 +265,7 @@ _ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i: 
   %.not34.i.i.i.i.i = icmp eq i32 %i.la, 512
   br i1 %.not34.i.i.i.i.i, label %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread, label %.lr.ph.split.i.i.i.i.i, !llvm.loop !597
 
-_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit: ; preds = %.lr.ph.split.i.i.i.i.i
-  %8 = icmp eq i32 %.sroa.5.016.fr.i.i.i.i.i, 512
-  br i1 %8, label %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread, label %bb.bw
-
-bb.bw:                                            ; preds = %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit
+bb.bw:                                            ; preds = %.lr.ph.split.i.i.i.i.i
   %i.lb = load i64, ptr %.0.i265.ptr.ptr.ptr, align 8, !tbaa !46 ; 2 uses
   %.not21.i.i.i.i400 = icmp eq i64 %i.lb, 0
   br i1 %.not21.i.i.i.i400, label %bb.bx, label %.lr.ph.i.i.i.i.i401
@@ -326,11 +322,11 @@ bb.cd:                                            ; preds = %bb.cc
 
 .lr.ph.split.i.i.i.i.i404:                        ; preds = %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i415, %.lr.ph.i.i.i.i.i401
   %.sroa.5.016.i.i.i.i.i405 = phi i32 [ %i.mo, %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i415 ], [ %i.ls, %.lr.ph.i.i.i.i.i401 ]
-  %.sroa.5.016.fr.i.i.i.i.i406 = freeze i32 %.sroa.5.016.i.i.i.i.i405 ; 3 uses
+  %.sroa.5.016.fr.i.i.i.i.i406 = freeze i32 %.sroa.5.016.i.i.i.i.i405 ; 2 uses
   %i.lt = trunc i32 %.sroa.5.016.fr.i.i.i.i.i406 to i16
   %i.lu = add i16 %i.lt, -19
   %spec.select.i.i712 = icmp ult i16 %i.lu, 197
-  br i1 %spec.select.i.i712, label %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit434, label %bb.ce
+  br i1 %spec.select.i.i712, label %bb.db, label %bb.ce
 
 bb.ce:                                            ; preds = %.lr.ph.split.i.i.i.i.i404
   %i.lv = add i32 %.sroa.5.016.fr.i.i.i.i.i406, 1 ; 2 uses
@@ -386,11 +382,7 @@ _ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i41
   %.not34.i.i.i.i.i418 = icmp eq i32 %i.mo, 512
   br i1 %.not34.i.i.i.i.i418, label %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread, label %.lr.ph.split.i.i.i.i.i404, !llvm.loop !597
 
-_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit434: ; preds = %.lr.ph.split.i.i.i.i.i404
-  %9 = icmp eq i32 %.sroa.5.016.fr.i.i.i.i.i406, 512
-  br i1 %9, label %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread, label %bb.db
-
-_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread: ; preds = %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i, %bb.bt, %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i415, %bb.ce, %bb.bv, %bb.bu, %bb.cg, %bb.cf, %bb.cd, %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit434, %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit
+_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread: ; preds = %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i, %bb.bt, %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i.i.i.i.i415, %bb.ce, %bb.bv, %bb.bu, %bb.cg, %bb.cf, %bb.cd
   br i1 %.not21.i.i.i.i388, label %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread.thread, label %_ZNK4llvm19MachineValueTypeSet14const_iterator13find_from_posEj.exit.i
 
 _ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread.thread: ; preds = %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit.thread
@@ -661,8 +653,8 @@ _ZL9berase_ifIPFbN4llvm3MVTEEEbRNS0_19MachineValueTypeSetET_.exit471: ; preds = 
   %i.qj = or i1 %i.qi, %.3166
   br label %bb.db
 
-bb.db:                                            ; preds = %_ZL9berase_ifIPFbN4llvm3MVTEEEbRNS0_19MachineValueTypeSetET_.exit471, %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit434
-  %.5.ph = phi i1 [ %.3166, %_ZN4llvm7none_ofIRNS_19MachineValueTypeSetEPFbNS_3MVTEEEEbOT_T0_.exit434 ], [ %i.qj, %_ZL9berase_ifIPFbN4llvm3MVTEEEbRNS0_19MachineValueTypeSetET_.exit471 ] ; 3 uses
+bb.db:                                            ; preds = %.lr.ph.split.i.i.i.i.i404, %_ZL9berase_ifIPFbN4llvm3MVTEEEbRNS0_19MachineValueTypeSetET_.exit471
+  %.5.ph = phi i1 [ %i.qj, %_ZL9berase_ifIPFbN4llvm3MVTEEEbRNS0_19MachineValueTypeSetET_.exit471 ], [ %.3166, %.lr.ph.split.i.i.i.i.i404 ] ; 3 uses
   %i.qk = getelementptr inbounds nuw i8, ptr %.01681010, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.qk, %i.z
   br i1 %.not, label %.thread826, label %bb.g

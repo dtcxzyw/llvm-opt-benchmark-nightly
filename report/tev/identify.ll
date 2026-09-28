@@ -205,7 +205,7 @@ bb.ee:                                            ; preds = %.thread510
   %i.acm = getelementptr inbounds nuw i8, ptr %0, i64 153088 ; 2 uses
   store i32 %i.acl, ptr %i.acm, align 8, !tbaa !91
   %i.acn = getelementptr inbounds nuw i8, ptr %0, i64 381832
-  %i.aco = load i32, ptr %i.acn, align 8, !tbaa !116 ; 5 uses
+  %i.aco = load i32, ptr %i.acn, align 8, !tbaa !116 ; 4 uses
   %i.acp = icmp eq i32 %i.aco, 2
   br i1 %i.acp, label %bb.ef, label %bb.ey
 
@@ -441,70 +441,62 @@ bb.fa:                                            ; preds = %bb.ez
   br i1 %or.cond809, label %.preheader525.thread, label %.preheader527.us.preheader
 
 .preheader527.us.preheader:                       ; preds = %bb.fa
-  %exitcond710.not = icmp eq i32 %i.aco, 1
   %exitcond710.not.2 = icmp eq i32 %i.aco, 3
   br label %.preheader527.us
 
 .preheader527.us:                                 ; preds = %.preheader527.us.preheader, %._crit_edge595.split.us.us
-  %.sroa.0853.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %i.agx, %._crit_edge595.split.us.us ]
-  %.sroa.6855.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %.sroa.6855.2, %._crit_edge595.split.us.us ]
-  %.sroa.9857.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %.sroa.9857.2, %._crit_edge595.split.us.us ]
+  %.sroa.0853.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %3, %._crit_edge595.split.us.us ]
+  %.sroa.6855.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %8, %._crit_edge595.split.us.us ]
+  %.sroa.9857.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %i.agx, %._crit_edge595.split.us.us ]
   %.sroa.12859.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %.sroa.12859.2, %._crit_edge595.split.us.us ]
-  %.sroa.0.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %i.agy, %._crit_edge595.split.us.us ]
-  %.sroa.6.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %.sroa.6.2, %._crit_edge595.split.us.us ]
-  %.sroa.9.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %.sroa.9.2, %._crit_edge595.split.us.us ]
+  %.sroa.0.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %4, %._crit_edge595.split.us.us ]
+  %.sroa.6.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %9, %._crit_edge595.split.us.us ]
+  %.sroa.9.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %i.agy, %._crit_edge595.split.us.us ]
   %.sroa.12.0 = phi i32 [ 0, %.preheader527.us.preheader ], [ %.sroa.12.2, %._crit_edge595.split.us.us ]
   %.0333598.us = phi i32 [ 0, %.preheader527.us.preheader ], [ %i.ahe, %._crit_edge595.split.us.us ]
   %.0334597.us = phi i64 [ 6, %.preheader527.us.preheader ], [ %indvars.iv.next705.lcssa, %._crit_edge595.split.us.us ]
   br label %.preheader526.us.us
 
 .preheader526.us.us:                              ; preds = %._crit_edge591.us.us, %.preheader527.us
-  %.sroa.0853.1 = phi i32 [ %.sroa.0853.0, %.preheader527.us ], [ %i.agx, %._crit_edge591.us.us ]
-  %.sroa.6855.1 = phi i32 [ %.sroa.6855.0, %.preheader527.us ], [ %.sroa.6855.2, %._crit_edge591.us.us ] ; 2 uses
-  %.sroa.9857.1 = phi i32 [ %.sroa.9857.0, %.preheader527.us ], [ %.sroa.9857.2, %._crit_edge591.us.us ] ; 2 uses
-  %.sroa.12859.1 = phi i32 [ %.sroa.12859.0, %.preheader527.us ], [ %.sroa.12859.2, %._crit_edge591.us.us ] ; 3 uses
-  %.sroa.0.1 = phi i32 [ %.sroa.0.0, %.preheader527.us ], [ %i.agy, %._crit_edge591.us.us ]
-  %.sroa.6.1 = phi i32 [ %.sroa.6.0, %.preheader527.us ], [ %.sroa.6.2, %._crit_edge591.us.us ] ; 2 uses
-  %.sroa.9.1 = phi i32 [ %.sroa.9.0, %.preheader527.us ], [ %.sroa.9.2, %._crit_edge591.us.us ] ; 2 uses
-  %.sroa.12.1 = phi i32 [ %.sroa.12.0, %.preheader527.us ], [ %.sroa.12.2, %._crit_edge591.us.us ] ; 3 uses
+  %.sroa.0853.1 = phi i32 [ %.sroa.0853.0, %.preheader527.us ], [ %3, %._crit_edge591.us.us ]
+  %.sroa.6855.1 = phi i32 [ %.sroa.6855.0, %.preheader527.us ], [ %8, %._crit_edge591.us.us ]
+  %.sroa.9857.1 = phi i32 [ %.sroa.9857.0, %.preheader527.us ], [ %i.agx, %._crit_edge591.us.us ]
+  %.sroa.12859.1 = phi i32 [ %.sroa.12859.0, %.preheader527.us ], [ %.sroa.12859.2, %._crit_edge591.us.us ] ; 2 uses
+  %.sroa.0.1 = phi i32 [ %.sroa.0.0, %.preheader527.us ], [ %4, %._crit_edge591.us.us ]
+  %.sroa.6.1 = phi i32 [ %.sroa.6.0, %.preheader527.us ], [ %9, %._crit_edge591.us.us ]
+  %.sroa.9.1 = phi i32 [ %.sroa.9.0, %.preheader527.us ], [ %i.agy, %._crit_edge591.us.us ]
+  %.sroa.12.1 = phi i32 [ %.sroa.12.0, %.preheader527.us ], [ %.sroa.12.2, %._crit_edge591.us.us ] ; 2 uses
   %.0332594.us.us = phi i32 [ 0, %.preheader527.us ], [ %i.ahd, %._crit_edge591.us.us ]
   %.1335593.us.us = phi i64 [ %.0334597.us, %.preheader527.us ], [ %indvars.iv.next705.lcssa, %._crit_edge591.us.us ] ; 5 uses
-  %i.agv = getelementptr inbounds [4 x i8], ptr %i.agl, i64 %.1335593.us.us
-  %i.agw = load i32, ptr %i.agv, align 4, !tbaa !77
-  %i.agx = add i32 %.sroa.0853.1, %i.agw          ; 3 uses
-  %i.agy = add nsw i32 %.sroa.0.1, 1              ; 4 uses
-  %indvars.iv.next705 = add nsw i64 %.1335593.us.us, 1 ; 2 uses
-  br i1 %exitcond710.not, label %._crit_edge591.us.us, label %1
-
-1:                                                ; preds = %.preheader526.us.us
-  %2 = getelementptr inbounds [4 x i8], ptr %i.agl, i64 %indvars.iv.next705
-  %3 = load i32, ptr %2, align 4, !tbaa !77
-  %4 = add i32 %.sroa.6855.1, %3                  ; 2 uses
-  %5 = add nsw i32 %.sroa.6.1, 1                  ; 2 uses
-  %6 = getelementptr [4 x i8], ptr %i.agl, i64 %.1335593.us.us
-  %7 = getelementptr i8, ptr %6, i64 8
-  %8 = load i32, ptr %7, align 4, !tbaa !77
-  %9 = add i32 %.sroa.9857.1, %8                  ; 2 uses
-  %10 = add nsw i32 %.sroa.9.1, 1                 ; 2 uses
-  %indvars.iv.next705.2 = add nsw i64 %.1335593.us.us, 3 ; 2 uses
+  %1 = getelementptr inbounds [4 x i8], ptr %i.agl, i64 %.1335593.us.us
+  %2 = load i32, ptr %1, align 4, !tbaa !77
+  %3 = add i32 %.sroa.0853.1, %2                  ; 3 uses
+  %4 = add nsw i32 %.sroa.0.1, 1                  ; 4 uses
+  %5 = getelementptr [4 x i8], ptr %i.agl, i64 %.1335593.us.us
+  %6 = getelementptr i8, ptr %5, i64 4
+  %7 = load i32, ptr %6, align 4, !tbaa !77
+  %8 = add i32 %.sroa.6855.1, %7                  ; 4 uses
+  %9 = add nsw i32 %.sroa.6.1, 1                  ; 4 uses
+  %i.agv = getelementptr [4 x i8], ptr %i.agl, i64 %.1335593.us.us
+  %10 = getelementptr i8, ptr %i.agv, i64 8
+  %i.agw = load i32, ptr %10, align 4, !tbaa !77
+  %i.agx = add i32 %.sroa.9857.1, %i.agw          ; 4 uses
+  %i.agy = add nsw i32 %.sroa.9.1, 1              ; 4 uses
+  %indvars.iv.next705 = add nsw i64 %.1335593.us.us, 3 ; 2 uses
   br i1 %exitcond710.not.2, label %._crit_edge591.us.us, label %bb.fb
 
-bb.fb:                                            ; preds = %1
-  %i.agz = getelementptr inbounds [4 x i8], ptr %i.agl, i64 %indvars.iv.next705.2
+bb.fb:                                            ; preds = %.preheader526.us.us
+  %i.agz = getelementptr inbounds [4 x i8], ptr %i.agl, i64 %indvars.iv.next705
   %i.aha = load i32, ptr %i.agz, align 4, !tbaa !77
   %i.ahb = add i32 %.sroa.12859.1, %i.aha
   %i.ahc = add nsw i32 %.sroa.12.1, 1
   %indvars.iv.next705.3 = add nsw i64 %.1335593.us.us, 4
   br label %._crit_edge591.us.us
 
-._crit_edge591.us.us:                             ; preds = %bb.fb, %1, %.preheader526.us.us
-  %.sroa.6855.2 = phi i32 [ %.sroa.6855.1, %.preheader526.us.us ], [ %4, %bb.fb ], [ %4, %1 ] ; 4 uses
-  %.sroa.9857.2 = phi i32 [ %.sroa.9857.1, %.preheader526.us.us ], [ %9, %bb.fb ], [ %9, %1 ] ; 4 uses
-  %.sroa.12859.2 = phi i32 [ %.sroa.12859.1, %.preheader526.us.us ], [ %i.ahb, %bb.fb ], [ %.sroa.12859.1, %1 ] ; 4 uses
-  %.sroa.6.2 = phi i32 [ %.sroa.6.1, %.preheader526.us.us ], [ %5, %bb.fb ], [ %5, %1 ] ; 4 uses
-  %.sroa.9.2 = phi i32 [ %.sroa.9.1, %.preheader526.us.us ], [ %10, %bb.fb ], [ %10, %1 ] ; 4 uses
-  %.sroa.12.2 = phi i32 [ %.sroa.12.1, %.preheader526.us.us ], [ %i.ahc, %bb.fb ], [ %.sroa.12.1, %1 ] ; 4 uses
-  %indvars.iv.next705.lcssa = phi i64 [ %indvars.iv.next705, %.preheader526.us.us ], [ %indvars.iv.next705.3, %bb.fb ], [ %indvars.iv.next705.2, %1 ] ; 2 uses
+._crit_edge591.us.us:                             ; preds = %bb.fb, %.preheader526.us.us
+  %.sroa.12859.2 = phi i32 [ %i.ahb, %bb.fb ], [ %.sroa.12859.1, %.preheader526.us.us ] ; 4 uses
+  %.sroa.12.2 = phi i32 [ %i.ahc, %bb.fb ], [ %.sroa.12.1, %.preheader526.us.us ] ; 4 uses
+  %indvars.iv.next705.lcssa = phi i64 [ %indvars.iv.next705.3, %bb.fb ], [ %indvars.iv.next705, %.preheader526.us.us ] ; 2 uses
   %i.ahd = add nuw i32 %.0332594.us.us, 1         ; 2 uses
   %exitcond711.not = icmp eq i32 %i.ahd, %i.agp
   br i1 %exitcond711.not, label %._crit_edge595.split.us.us, label %.preheader526.us.us, !llvm.loop !226
@@ -515,22 +507,22 @@ bb.fb:                                            ; preds = %1
   br i1 %exitcond712.not, label %.preheader525, label %.preheader527.us, !llvm.loop !227
 
 .preheader525:                                    ; preds = %._crit_edge595.split.us.us
-  %.not470 = icmp eq i32 %i.agy, 0
+  %.not470 = icmp eq i32 %4, 0
   br i1 %.not470, label %.preheader525.thread, label %bb.fc
 
 bb.fc:                                            ; preds = %.preheader525
-  %i.ahf = sdiv i32 %i.agx, %i.agy
+  %i.ahf = sdiv i32 %3, %4
   %i.ahg = load i32, ptr %i.agl, align 4, !tbaa !77
   %i.ahh = add i32 %i.ahg, %i.ahf
   store i32 %i.ahh, ptr %i.agl, align 4, !tbaa !77
   br label %.preheader525.thread
 
 .preheader525.thread:                             ; preds = %bb.fa, %.preheader525, %bb.fc
-  %.sroa.6855.3 = phi i32 [ 0, %bb.fa ], [ %.sroa.6855.2, %.preheader525 ], [ %.sroa.6855.2, %bb.fc ]
-  %.sroa.9857.3 = phi i32 [ 0, %bb.fa ], [ %.sroa.9857.2, %.preheader525 ], [ %.sroa.9857.2, %bb.fc ]
+  %.sroa.6855.3 = phi i32 [ 0, %bb.fa ], [ %8, %.preheader525 ], [ %8, %bb.fc ]
+  %.sroa.9857.3 = phi i32 [ 0, %bb.fa ], [ %i.agx, %.preheader525 ], [ %i.agx, %bb.fc ]
   %.sroa.12859.3 = phi i32 [ 0, %bb.fa ], [ %.sroa.12859.2, %.preheader525 ], [ %.sroa.12859.2, %bb.fc ]
-  %.sroa.6.3 = phi i32 [ 0, %bb.fa ], [ %.sroa.6.2, %.preheader525 ], [ %.sroa.6.2, %bb.fc ] ; 2 uses
-  %.sroa.9.3 = phi i32 [ 0, %bb.fa ], [ %.sroa.9.2, %.preheader525 ], [ %.sroa.9.2, %bb.fc ] ; 2 uses
+  %.sroa.6.3 = phi i32 [ 0, %bb.fa ], [ %9, %.preheader525 ], [ %9, %bb.fc ] ; 2 uses
+  %.sroa.9.3 = phi i32 [ 0, %bb.fa ], [ %i.agy, %.preheader525 ], [ %i.agy, %bb.fc ] ; 2 uses
   %.sroa.12.3 = phi i32 [ 0, %bb.fa ], [ %.sroa.12.2, %.preheader525 ], [ %.sroa.12.2, %bb.fc ] ; 2 uses
   %.not470.1 = icmp eq i32 %.sroa.6.3, 0
   br i1 %.not470.1, label %bb.fe, label %bb.fd

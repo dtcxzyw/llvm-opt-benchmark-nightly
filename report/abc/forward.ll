@@ -205,15 +205,15 @@ bb.a:
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %.val136, i64 %i.i ; 3 uses
   %.idx = shl nuw nsw i64 %i.g, 2                 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx ; 4 uses
-  %4 = add nuw nsw i64 %i.g, 31
-  %5 = lshr i64 %4, 5
-  %6 = add nuw nsw i64 %5, 1
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !61
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !69   ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 816
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !64
+  %4 = add nuw nsw i64 %i.g, 31
+  %5 = lshr i64 %4, 5
+  %6 = add nuw nsw i64 %5, 1
   br label %.lr.ph188
 
 .lr.ph188:                                        ; preds = %.lr.ph188.preheader, %.thread151

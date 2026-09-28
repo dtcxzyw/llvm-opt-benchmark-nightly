@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.aa, %._crit_edge
   store i16 %i.gm, ptr %i.dh, align 4
   store ptr null, ptr %i.di, align 8, !tbaa !309
   store i32 %i.gk, ptr %i.dj, align 4, !tbaa !51
-  %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !67 ; 54 uses
+  %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !67 ; 53 uses
   %.sroa.28.0.copyload.i = load i32, ptr %.sroa.28.0..sroa_idx.i, align 4, !tbaa !51 ; 7 uses
   %.not646.i = icmp eq i32 %.sroa.28.0.copyload.i, 1413563465
   br i1 %.not646.i, label %bb.ac, label %bb.ah
@@ -345,28 +345,24 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.ar
   %i.hw = load i8, ptr %i.eu, align 1, !tbaa !79
   %i.hx = icmp eq i8 %i.hw, 3
-  br i1 %i.hx, label %bb.at, label %check_plte.exit.i
+  br i1 %i.hx, label %bb.at, label %.lr.ph1009.i.preheader
 
 bb.at:                                            ; preds = %bb.as
   %i.hy = load i8, ptr %i.fy, align 4, !tbaa !53
   %i.hz = zext nneg i8 %i.hy to i32
   %i.ia = shl nuw i32 1, %i.hz
   %i.ib = icmp ugt i32 %i.hu, %i.ia
-  br i1 %i.ib, label %read_non_idat_chunks.exit.thread, label %check_plte.exit.i
+  br i1 %i.ib, label %read_non_idat_chunks.exit.thread, label %.lr.ph1009.i.preheader
 
-check_plte.exit.i:                                ; preds = %bb.at, %bb.as
-  %3 = zext nneg i32 %i.hu to i64                 ; 2 uses
-  %.not1292.i = icmp ult i32 %.sroa.4.0.copyload.i, 3
-  br i1 %.not1292.i, label %._crit_edge1010.i, label %.lr.ph1009.i.preheader
-
-.lr.ph1009.i.preheader:                           ; preds = %check_plte.exit.i
-  %xtraiter473 = and i64 %3, 1
+.lr.ph1009.i.preheader:                           ; preds = %bb.at, %bb.as
+  %umax.i = zext nneg i32 %i.hu to i64            ; 2 uses
+  %xtraiter473 = and i64 %umax.i, 1
   %.sroa.4.0.copyload.i.off = add i32 %.sroa.4.0.copyload.i, -3
   %i.ic = icmp ult i32 %.sroa.4.0.copyload.i.off, 3
   br i1 %i.ic, label %.lr.ph1009.i.epil.preheader, label %.lr.ph1009.i.preheader.new
 
 .lr.ph1009.i.preheader.new:                       ; preds = %.lr.ph1009.i.preheader
-  %unroll_iter = and i64 %3, 510
+  %unroll_iter = and i64 %umax.i, 510
   br label %.lr.ph1009.i
 
 .lr.ph1009.i:                                     ; preds = %.lr.ph1009.i, %.lr.ph1009.i.preheader.new
@@ -427,7 +423,7 @@ check_plte.exit.i:                                ; preds = %bb.at, %bb.as
   store i8 %i.jh, ptr %i.ji, align 2, !tbaa !83
   br label %._crit_edge1010.i
 
-._crit_edge1010.i:                                ; preds = %.lr.ph1009.i.epil.preheader, %._crit_edge1010.i.loopexit.unr-lcssa, %check_plte.exit.i
+._crit_edge1010.i:                                ; preds = %._crit_edge1010.i.loopexit.unr-lcssa, %.lr.ph1009.i.epil.preheader
   %i.jj = or i32 %i.hr, 2
   store i32 %i.jj, ptr %i.dt, align 8
   br label %.backedge.sink.split.i

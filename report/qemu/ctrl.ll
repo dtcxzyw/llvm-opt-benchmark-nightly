@@ -205,8 +205,8 @@ nvme_io_cmd.exit:                                 ; preds = %bb.hs, %bb.hr, %bb.
   %.not73 = icmp eq i16 %.in, -1
   br i1 %.not73, label %nvme_io_cmd.exit.thread118, label %nvme_io_cmd.exit.thread
 
-nvme_io_cmd.exit.thread:                          ; preds = %nvme_bulk_proc_zone.exit108.thread.i126.i.i.i, %nvme_bulk_proc_zone.exit108.thread.i.i.i.i, %bb.hb, %bb.gx, %bb.gw, %bb.gv, %bb.hq, %bb.gy, %bb.ho, %bb.hm, %bb.hk, %bb.hj, %bb.hi, %bb.hh, %bb.hg, %bb.hf, %bb.he, %bb.hd, %bb.hc, %bb.gz, %bb.ha, %bb.fi, %bb.fh, %bb.er, %bb.es, %bb.et, %bb.eu, %._crit_edge153.i.i.i, %bb.fe, %bb.fd, %bb.fc, %bb.ew, %nvme_get_mgmt_zone_slba_idx.exit.i19.i.i, %.critedge.i.i.i.i, %.critedge4.i119.i.i.i, %.critedge4.i.i.i.i, %bb.fk, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.eh, %bb.eg, %bb.ed, %bb.ea, %bb.ef, %bb.ee, %bb.ec, %bb.eb, %bb.ch, %bb.cg, %bb.cf, %bb.du, %bb.ci, %trace_pci_nvme_set_descriptor_extension.exit.i.i.i, %bb.dy, %bb.dw, %bb.ca, %bb.dz, %nvme_do_zone_op.exit.i.i.i, %bb.bp, %bb.bo, %bb.bn, %bb.bq, %bb.bj, %bb.bi, %bb.bh, %bb.bb, %bb.fj, %nvme_ns.exit.i85, %bb.bc, %bb.bk, %bb.be, %nvme_io_cmd.exit
-  %.in116 = phi i16 [ %.in, %nvme_io_cmd.exit ], [ 16386, %bb.hb ], [ 16385, %bb.gx ], [ 16385, %bb.gw ], [ 16385, %bb.gv ], [ %i.wz, %bb.hq ], [ 16385, %bb.gy ], [ %i.wx, %bb.ho ], [ %i.wv, %bb.hm ], [ %i.wt, %bb.hk ], [ %i.ws, %bb.hj ], [ %i.wr, %bb.hi ], [ %i.wq, %bb.hh ], [ %i.wp, %bb.hg ], [ %i.wo, %bb.hf ], [ %i.wm, %bb.he ], [ %i.wl, %bb.hd ], [ %i.wk, %bb.hc ], [ 16386, %bb.gz ], [ 2, %bb.ha ], [ 16386, %bb.fi ], [ 16386, %bb.fh ], [ 16385, %bb.er ], [ 16385, %bb.es ], [ 16385, %bb.et ], [ 16385, %bb.eu ], [ %i.vl, %._crit_edge153.i.i.i ], [ 16386, %bb.fe ], [ 16386, %bb.fd ], [ 16386, %bb.fc ], [ 16512, %bb.ew ], [ 16386, %nvme_get_mgmt_zone_slba_idx.exit.i19.i.i ], [ 0, %.critedge.i.i.i.i ], [ 0, %.critedge4.i119.i.i.i ], [ 0, %.critedge4.i.i.i.i ], [ 16386, %bb.fk ], [ 16385, %bb.bv ], [ 16385, %bb.bw ], [ 16385, %bb.bx ], [ 16385, %bb.by ], [ 0, %bb.eh ], [ 0, %bb.eg ], [ 16824, %bb.ed ], [ 16822, %bb.ea ], [ %i.nz, %bb.ef ], [ 16386, %bb.ee ], [ 16824, %bb.ec ], [ 16386, %bb.eb ], [ 16386, %bb.ch ], [ 16386, %bb.cg ], [ 16386, %bb.cf ], [ 16386, %bb.du ], [ 16386, %bb.ci ], [ 16386, %trace_pci_nvme_set_descriptor_extension.exit.i.i.i ], [ 0, %bb.dy ], [ %i.mz, %bb.dw ], [ 16512, %bb.ca ], [ 16386, %bb.dz ], [ %.079.i.i.i, %nvme_do_zone_op.exit.i.i.i ], [ 16385, %bb.bp ], [ 16385, %bb.bo ], [ 16385, %bb.bn ], [ 0, %nvme_bulk_proc_zone.exit108.thread.i.i.i.i ], [ 16385, %bb.bq ], [ 16385, %bb.bj ], [ 16385, %bb.bi ], [ 16385, %bb.bh ], [ %.0.i33.i, %bb.bb ], [ 16386, %bb.fj ], [ 16386, %nvme_ns.exit.i85 ], [ 16395, %bb.bc ], [ 16385, %bb.bk ], [ 2, %bb.be ], [ 0, %nvme_bulk_proc_zone.exit108.thread.i126.i.i.i ]
+nvme_io_cmd.exit.thread:                          ; preds = %nvme_bulk_proc_zone.exit108.thread.i126.i.i.i, %nvme_bulk_proc_zone.exit108.thread.i.i.i.i, %bb.hb, %bb.gx, %bb.gw, %bb.gv, %bb.hq, %bb.gy, %bb.ho, %bb.hm, %bb.hk, %bb.hj, %bb.hi, %bb.hh, %bb.hg, %bb.hf, %bb.he, %bb.hd, %bb.hc, %bb.gz, %bb.ha, %bb.fi, %bb.fh, %bb.er, %bb.es, %bb.et, %bb.eu, %._crit_edge153.i.i.i, %bb.fe, %bb.fd, %bb.fc, %bb.ew, %nvme_get_mgmt_zone_slba_idx.exit.i19.i.i, %.critedge.i.i.i.i, %.critedge4.i119.i.i.i, %.critedge4.i.i.i.i, %bb.fk, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.eh, %bb.eg, %bb.ed, %bb.ea, %bb.ef, %bb.ee, %bb.ec, %bb.eb, %bb.ch, %bb.cg, %bb.cf, %bb.du, %bb.ci, %trace_pci_nvme_set_descriptor_extension.exit.i.i.i, %bb.dy, %bb.dw, %bb.ca, %bb.dz, %nvme_do_zone_op.exit.i.i.i, %bb.bp, %bb.bo, %bb.bn, %bb.fj, %bb.bq, %bb.bj, %bb.bi, %bb.bh, %bb.bb, %nvme_ns.exit.i85, %bb.bc, %bb.bk, %bb.be, %nvme_io_cmd.exit
+  %.in116 = phi i16 [ %.in, %nvme_io_cmd.exit ], [ 16386, %bb.hb ], [ 16385, %bb.gx ], [ 16385, %bb.gw ], [ 16385, %bb.gv ], [ %i.wz, %bb.hq ], [ 16385, %bb.gy ], [ %i.wx, %bb.ho ], [ %i.wv, %bb.hm ], [ %i.wt, %bb.hk ], [ %i.ws, %bb.hj ], [ %i.wr, %bb.hi ], [ %i.wq, %bb.hh ], [ %i.wp, %bb.hg ], [ %i.wo, %bb.hf ], [ %i.wm, %bb.he ], [ %i.wl, %bb.hd ], [ %i.wk, %bb.hc ], [ 16386, %bb.gz ], [ 2, %bb.ha ], [ 16386, %bb.fi ], [ 16386, %bb.fh ], [ 16385, %bb.er ], [ 16385, %bb.es ], [ 16385, %bb.et ], [ 16385, %bb.eu ], [ %i.vl, %._crit_edge153.i.i.i ], [ 16386, %bb.fe ], [ 16386, %bb.fd ], [ 16386, %bb.fc ], [ 16512, %bb.ew ], [ 16386, %nvme_get_mgmt_zone_slba_idx.exit.i19.i.i ], [ 0, %.critedge.i.i.i.i ], [ 0, %.critedge4.i119.i.i.i ], [ 0, %.critedge4.i.i.i.i ], [ 16386, %bb.fk ], [ 16385, %bb.bv ], [ 16385, %bb.bw ], [ 16385, %bb.bx ], [ 16385, %bb.by ], [ 0, %bb.eh ], [ 0, %bb.eg ], [ 16824, %bb.ed ], [ 16822, %bb.ea ], [ %i.nz, %bb.ef ], [ 16386, %bb.ee ], [ 16824, %bb.ec ], [ 16386, %bb.eb ], [ 16386, %bb.ch ], [ 16386, %bb.cg ], [ 16386, %bb.cf ], [ 16386, %bb.du ], [ 16386, %bb.ci ], [ 16386, %trace_pci_nvme_set_descriptor_extension.exit.i.i.i ], [ 0, %bb.dy ], [ %i.mz, %bb.dw ], [ 16512, %bb.ca ], [ 16386, %bb.dz ], [ %.079.i.i.i, %nvme_do_zone_op.exit.i.i.i ], [ 16385, %bb.bp ], [ 16385, %bb.bo ], [ 16385, %bb.bn ], [ 16386, %bb.fj ], [ 16385, %bb.bq ], [ 16385, %bb.bj ], [ 16385, %bb.bi ], [ 16385, %bb.bh ], [ %.0.i33.i, %bb.bb ], [ 0, %nvme_bulk_proc_zone.exit108.thread.i.i.i.i ], [ 16386, %nvme_ns.exit.i85 ], [ 16395, %bb.bc ], [ 16385, %bb.bk ], [ 2, %bb.be ], [ 0, %nvme_bulk_proc_zone.exit108.thread.i126.i.i.i ]
   store i16 %.in116, ptr %i.fg, align 8
   call fastcc void @nvme_enqueue_req_completion(ptr noundef %i.i, ptr noundef %i.eu)
   br label %nvme_io_cmd.exit.thread118
@@ -609,7 +609,7 @@ bb.ai:                                            ; preds = %bb.ag
   br label %bb.ao
 
 nvme_copy_matching_ns_format.exit.thread:         ; preds = %bb.p, %bb.o, %bb.n, %nvme_copy_ns_format_match.exit.i, %nvme_check_bounds.exit, %trace_pci_nvme_copy_source_range.exit, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.k, %bb.f, %nvme_ns.exit, %bb.d, %bb.ad, %bb.ab
-  %.0 = phi i16 [ 16386, %nvme_ns.exit ], [ 16395, %bb.d ], [ 16775, %bb.f ], [ 16773, %bb.o ], [ 16773, %bb.v ], [ 16512, %nvme_check_bounds.exit ], [ %i.dh, %bb.ab ], [ %i.dl, %bb.ad ], [ 16773, %bb.u ], [ 16773, %bb.t ], [ 16773, %bb.s ], [ 16773, %bb.r ], [ 16773, %bb.q ], [ 16386, %bb.k ], [ 16773, %bb.p ], [ 16771, %trace_pci_nvme_copy_source_range.exit ], [ 16773, %nvme_copy_ns_format_match.exit.i ], [ 16773, %bb.n ]
+  %.0 = phi i16 [ 16386, %nvme_ns.exit ], [ 16395, %bb.d ], [ 16775, %bb.f ], [ 16773, %bb.p ], [ 16773, %bb.v ], [ 16512, %nvme_check_bounds.exit ], [ %i.dh, %bb.ab ], [ %i.dl, %bb.ad ], [ 16773, %bb.u ], [ 16773, %bb.t ], [ 16773, %bb.s ], [ 16773, %bb.r ], [ 16773, %bb.q ], [ 16386, %bb.k ], [ 16773, %bb.o ], [ 16771, %trace_pci_nvme_copy_source_range.exit ], [ 16773, %nvme_copy_ns_format_match.exit.i ], [ 16773, %bb.n ]
   %i.eo = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i16 %.0, ptr %i.eo, align 8
   store i32 -1, ptr %i.m, align 8
@@ -1012,7 +1012,7 @@ bb.as:                                            ; preds = %bb.k
   br label %nvme_smart_event.exit
 
 nvme_smart_event.exit:                            ; preds = %nvme_ns.exit149.thread, %nvme_ns.exit146.thread, %nvme_ns.exit146.thread.us, %nvme_ns.exit143.thread.1, %.split.i, %bb.s, %bb.ai, %bb.aj, %bb.m, %bb.r, %bb.ab, %bb.aa, %bb.ao, %bb.k, %bb.al, %bb.ag, %bb.ah, %bb.af, %bb.n, %bb.j, %bb.i, %nvme_ns.exit, %bb.g, %bb.d, %trace_pci_nvme_setfeat.exit, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ak
-  %.0 = phi i16 [ 16395, %bb.g ], [ 16654, %bb.as ], [ 16396, %bb.k ], [ 16654, %bb.j ], [ 16386, %bb.n ], [ 16396, %bb.af ], [ %i.cs, %bb.ak ], [ 16386, %bb.ag ], [ %i.cu, %bb.al ], [ 16683, %bb.ap ], [ 0, %nvme_ns.exit146.thread.us ], [ %i.dh, %bb.aq ], [ 0, %bb.ar ], [ 16653, %trace_pci_nvme_setfeat.exit ], [ 16386, %bb.d ], [ 16386, %nvme_ns.exit ], [ %., %bb.i ], [ 16386, %bb.ah ], [ 0, %bb.ao ], [ 0, %nvme_ns.exit143.thread.1 ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ 0, %nvme_ns.exit146.thread ], [ 0, %bb.r ], [ 0, %.split.i ], [ 0, %bb.m ], [ 0, %bb.aj ], [ 0, %bb.ai ], [ 0, %bb.s ], [ 0, %nvme_ns.exit149.thread ]
+  %.0 = phi i16 [ 16395, %bb.g ], [ 16654, %bb.as ], [ 16396, %bb.k ], [ 16654, %bb.j ], [ 16386, %bb.n ], [ 16396, %bb.af ], [ %i.cs, %bb.ak ], [ 16386, %bb.ag ], [ %i.cu, %bb.al ], [ 16683, %bb.ap ], [ 0, %nvme_ns.exit146.thread.us ], [ %i.dh, %bb.aq ], [ 0, %bb.ar ], [ 16653, %trace_pci_nvme_setfeat.exit ], [ 16386, %bb.d ], [ 16386, %nvme_ns.exit ], [ %., %bb.i ], [ 16386, %bb.ah ], [ 0, %bb.ao ], [ 0, %nvme_ns.exit146.thread ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ 0, %bb.s ], [ 0, %bb.r ], [ 0, %.split.i ], [ 0, %bb.m ], [ 0, %bb.aj ], [ 0, %bb.ai ], [ 0, %nvme_ns.exit143.thread.1 ], [ 0, %nvme_ns.exit149.thread ]
   ret i16 %.0
 }
 
@@ -1335,7 +1335,7 @@ trace_pci_nvme_getfeat_numq.exit:                 ; preds = %bb.ai, %bb.al, %bb.
   br label %nvme_ns.exit.thread
 
 nvme_ns.exit.thread:                              ; preds = %bb.ak, %bb.al, %bb.w, %bb.x, %bb.e, %bb.z, %bb.n, %bb.aj, %bb.ah, %bb.aa, %nvme_ns.exit124, %bb.y, %bb.v, %nvme_ns.exit115, %bb.m, %bb.j, %nvme_ns.exit, %trace_pci_nvme_getfeat.exit, %trace_pci_nvme_getfeat_numq.exit, %bb.u, %bb.t
-  %.082 = phi i16 [ 16386, %trace_pci_nvme_getfeat.exit ], [ 0, %trace_pci_nvme_getfeat_numq.exit ], [ %i.bu, %bb.aa ], [ 16386, %bb.ah ], [ 16386, %bb.w ], [ 16386, %nvme_ns.exit ], [ 16395, %bb.m ], [ 16386, %bb.j ], [ %i.be, %bb.t ], [ %i.bg, %bb.u ], [ 16386, %nvme_ns.exit115 ], [ 16386, %bb.z ], [ 16395, %bb.y ], [ 16386, %nvme_ns.exit124 ], [ 16386, %bb.v ], [ 16395, %bb.e ], [ 16386, %bb.aj ], [ 16386, %bb.n ], [ 16386, %bb.ak ], [ 16386, %bb.x ], [ 16386, %bb.al ]
+  %.082 = phi i16 [ 16386, %trace_pci_nvme_getfeat.exit ], [ 0, %trace_pci_nvme_getfeat_numq.exit ], [ %i.bu, %bb.aa ], [ 16386, %bb.ah ], [ 16386, %bb.w ], [ 16386, %nvme_ns.exit ], [ 16395, %bb.m ], [ 16386, %bb.j ], [ %i.be, %bb.t ], [ %i.bg, %bb.u ], [ 16386, %nvme_ns.exit115 ], [ 16386, %bb.z ], [ 16395, %bb.y ], [ 16386, %nvme_ns.exit124 ], [ 16386, %bb.v ], [ 16395, %bb.e ], [ 16386, %bb.aj ], [ 16386, %bb.n ], [ 16386, %bb.x ], [ 16386, %bb.al ], [ 16386, %bb.ak ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret i16 %.082
 }
@@ -1738,7 +1738,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.c = load i32, ptr %i.b, align 1
-  %.fr39 = freeze i32 %i.c                        ; 4 uses
+  %.fr39 = freeze i32 %i.c                        ; 3 uses
   %i.d = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %trace_pci_nvme_identify_ns.exit, label %bb.b, !prof !17
@@ -1765,7 +1765,7 @@ trace_pci_nvme_identify_ns.exit:                  ; preds = %bb.a, %bb.b, %bb.c,
 
 nvme_ns.exit:                                     ; preds = %trace_pci_nvme_identify_ns.exit
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24192
-  %i.j = zext nneg i32 %.fr39 to i64
+  %i.j = zext nneg i32 %.fr39 to i64              ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.j
   %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
   %.not = icmp eq ptr %i.l, null
@@ -1782,8 +1782,7 @@ bb.e:                                             ; preds = %nvme_ns.exit.thread
 
 nvme_subsys_ns.exit:                              ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 2584
-  %3 = zext nneg i32 %.fr39 to i64
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %3
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.j
   %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
   %.not27 = icmp eq ptr %i.r, null
   br i1 %.not27, label %nvme_subsys_ns.exit.thread, label %.thread
@@ -2183,7 +2182,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.d = load i32, ptr %i.c, align 1
-  %.fr50 = freeze i32 %i.d                        ; 4 uses
+  %.fr50 = freeze i32 %i.d                        ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 103 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1
   %i.g = load i32, ptr @trace_events_enabled_count, align 4
@@ -2213,7 +2212,7 @@ trace_pci_nvme_identify_ns_csi.exit:              ; preds = %bb.a, %bb.b, %bb.c,
 
 nvme_ns.exit:                                     ; preds = %trace_pci_nvme_identify_ns_csi.exit
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24192
-  %i.n = zext nneg i32 %.fr50 to i64
+  %i.n = zext nneg i32 %.fr50 to i64              ; 2 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8              ; 2 uses
   %.not = icmp eq ptr %i.p, null
@@ -2230,8 +2229,7 @@ bb.e:                                             ; preds = %nvme_ns.exit.thread
 
 nvme_subsys_ns.exit:                              ; preds = %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 2584
-  %3 = zext nneg i32 %.fr50 to i64
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %3
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.n
   %i.v = load ptr, ptr %i.u, align 8              ; 2 uses
   %.not33 = icmp eq ptr %i.v, null
   br i1 %.not33, label %nvme_subsys_ns.exit.thread, label %bb.g
@@ -2372,7 +2370,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.c = load i32, ptr %i.b, align 1
-  %.fr34 = freeze i32 %i.c                        ; 4 uses
+  %.fr34 = freeze i32 %i.c                        ; 3 uses
   %i.d = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %trace_pci_nvme_identify_ns_ind.exit, label %bb.b, !prof !17
@@ -2399,7 +2397,7 @@ trace_pci_nvme_identify_ns_ind.exit:              ; preds = %bb.a, %bb.b, %bb.c,
 
 nvme_ns.exit:                                     ; preds = %trace_pci_nvme_identify_ns_ind.exit
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24192
-  %i.j = zext nneg i32 %.fr34 to i64
+  %i.j = zext nneg i32 %.fr34 to i64              ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.j
   %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %.not = icmp eq ptr %i.l, null
@@ -2416,8 +2414,7 @@ bb.e:                                             ; preds = %nvme_ns.exit.thread
 
 nvme_subsys_ns.exit:                              ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 2584
-  %3 = zext nneg i32 %.fr34 to i64
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %3
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.j
   %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
   %.not25 = icmp eq ptr %i.r, null
   br i1 %.not25, label %nvme_subsys_ns.exit.thread, label %bb.g

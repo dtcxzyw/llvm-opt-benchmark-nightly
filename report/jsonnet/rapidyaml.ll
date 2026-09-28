@@ -205,17 +205,17 @@ bb.c:                                             ; preds = %_ZNK2c415basic_subs
   store i64 %i.n, ptr %.sroa.7143.0..sroa_idx, align 8, !tbaa !102
   br label %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread
 
-_ZNK2c415basic_substringIKcE5trimlEc.exit.thread: ; preds = %bb.b, %bb.c, %bb.a, %_ZNK2c415basic_substringIKcE5trimlEc.exit
-  %5 = phi i64 [ %i.n, %bb.c ], [ %.sroa.7143.0.copyload, %_ZNK2c415basic_substringIKcE5trimlEc.exit ], [ %.sroa.7143.0.copyload, %bb.a ], [ %.sroa.7143.0.copyload, %bb.b ] ; 9 uses
+_ZNK2c415basic_substringIKcE5trimlEc.exit.thread: ; preds = %bb.b, %bb.a, %bb.c, %_ZNK2c415basic_substringIKcE5trimlEc.exit
   %.sroa.0140.0 = phi ptr [ %i.m, %bb.c ], [ %.sroa.0140.0.copyload, %_ZNK2c415basic_substringIKcE5trimlEc.exit ], [ %.sroa.0140.0.copyload, %bb.a ], [ %.sroa.0140.0.copyload, %bb.b ] ; 5 uses
+  %.sroa.7143.0 = phi i64 [ %i.n, %bb.c ], [ %.sroa.7143.0.copyload, %_ZNK2c415basic_substringIKcE5trimlEc.exit ], [ %.sroa.7143.0.copyload, %bb.a ], [ %.sroa.7143.0.copyload, %bb.b ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #58
   store i64 -1, ptr %i.b, align 8, !tbaa !102
-  %i.u = icmp ugt i64 %5, 1
+  %i.u = icmp ugt i64 %.sroa.7143.0, 1
   br i1 %i.u, label %.preheader.lr.ph.i, label %_ZNK2c415basic_substringIKcE7left_ofEm.exit.thread
 
 .preheader.lr.ph.i:                               ; preds = %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0140.0, i64 1 ; 4 uses
-  %i.w = add i64 %5, -1                           ; 3 uses
+  %i.w = add i64 %.sroa.7143.0, -1                ; 3 uses
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.lr.ph.i
@@ -246,7 +246,7 @@ bb.d:                                             ; preds = %_ZNK2c415basic_subs
 
 bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0140.0, i64 2
-  %i.ad = add i64 %5, -2
+  %i.ad = add i64 %.sroa.7143.0, -2
   br label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread: ; preds = %bb.e, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit
@@ -325,17 +325,17 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 _ZNK2c415basic_substringIKcE7left_ofEm.exit.thread: ; preds = %_ZNK2c415basic_substringIKcE7left_ofEm.exit, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread, %bb.l, %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread
   %i.aq = phi i64 [ -1, %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread ], [ %i.ap, %bb.l ], [ -1, %_ZNK2c415basic_substringIKcE7left_ofEm.exit ], [ -1, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread ] ; 3 uses
-  %i.ar = phi i64 [ %5, %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread ], [ %.pre304, %bb.l ], [ %5, %_ZNK2c415basic_substringIKcE7left_ofEm.exit ], [ %5, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread ]
+  %i.ar = phi i64 [ %.sroa.7143.0, %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread ], [ %.pre304, %bb.l ], [ %.sroa.7143.0, %_ZNK2c415basic_substringIKcE7left_ofEm.exit ], [ %.sroa.7143.0, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread ]
   %i.as = phi ptr [ %.sroa.0140.0, %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread ], [ %.pre303, %bb.l ], [ %.sroa.0140.0, %_ZNK2c415basic_substringIKcE7left_ofEm.exit ], [ %.sroa.0140.0, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread ]
   %i.at = phi ptr [ %i.f, %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread ], [ %i.am, %bb.l ], [ %i.f, %_ZNK2c415basic_substringIKcE7left_ofEm.exit ], [ %i.f, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread ] ; 16 uses
   %.2 = phi i32 [ 0, %_ZNK2c415basic_substringIKcE5trimlEc.exit.thread ], [ %.1168, %bb.l ], [ %.1168, %_ZNK2c415basic_substringIKcE7left_ofEm.exit ], [ %.1, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread ]
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 56 ; 4 uses
   %i.av = load i64, ptr %i.au, align 8, !tbaa !210
-  %i.aw = add i64 %i.av, %5
+  %i.aw = add i64 %i.av, %.sroa.7143.0
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 72 ; 3 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 %5
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 %.sroa.7143.0
   %i.az = getelementptr inbounds nuw i8, ptr %i.at, i64 8 ; 5 uses
-  %i.ba = sub i64 %i.ar, %5
+  %i.ba = sub i64 %i.ar, %.sroa.7143.0
   store ptr %i.ay, ptr %i.at, align 8, !tbaa !101
   store i64 %i.ba, ptr %i.az, align 8, !tbaa !102
   %i.bb = getelementptr inbounds nuw i8, ptr %i.at, i64 32 ; 3 uses

@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %bb.a
 lean_nat_eq.exit:                                 ; preds = %bb.b, %bb.a
   %.1.i = phi ptr [ @l___private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_filterSkipDone___closed__0_value, %bb.a ], [ %i.b, %bb.b ] ; 16 uses
   %i.c = getelementptr i8, ptr %.1.i, i64 8
-  %.val = load i64, ptr %i.c, align 8, !tbaa !13  ; 2 uses
+  %.val = load i64, ptr %i.c, align 8, !tbaa !13
   %i.d = and i64 %.val, 9223372036854775807
   switch i64 %i.d, label %bb.c [
     i64 0, label %bb.at
-    i64 1, label %3
+    i64 1, label %bb.ak
   ]
 
 bb.c:                                             ; preds = %lean_nat_eq.exit
@@ -483,13 +483,9 @@ bb.aj:                                            ; preds = %lean_alloc_ctor.exi
   tail call void @lean_internal_panic_out_of_memory() #9
   unreachable
 
-3:                                                ; preds = %lean_nat_eq.exit
-  %.not165 = icmp eq i64 %.val, 0
-  br i1 %.not165, label %lean_array_uget.exit.i, label %bb.ak
-
-bb.ak:                                            ; preds = %3
+bb.ak:                                            ; preds = %lean_nat_eq.exit
   %i.ca = getelementptr inbounds nuw i8, ptr %.1.i, i64 24
-  %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !15 ; 8 uses
+  %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !15 ; 5 uses
   %i.cc = ptrtoint ptr %i.cb to i64
   %i.cd = and i64 %i.cc, 1
   %.not.i.i.i = icmp eq i64 %i.cd, 0
@@ -513,12 +509,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.cg = atomicrmw sub ptr %i.cb, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_array_get.exit
 
-lean_array_uget.exit.i:                           ; preds = %3
-  %4 = tail call ptr @lean_array_get_panic(ptr noundef nonnull inttoptr (i64 1 to ptr)) #10
-  br label %lean_array_get.exit
-
-lean_array_get.exit:                              ; preds = %bb.ak, %bb.am, %bb.an, %bb.ao, %lean_array_uget.exit.i
-  %.1.i154 = phi ptr [ %4, %lean_array_uget.exit.i ], [ %i.cb, %bb.ao ], [ %i.cb, %bb.an ], [ %i.cb, %bb.am ], [ %i.cb, %bb.ak ]
+lean_array_get.exit:                              ; preds = %bb.ak, %bb.am, %bb.an, %bb.ao
   %i.ch = load i32, ptr %.1.i, align 8, !tbaa !11 ; 3 uses
   %i.ci = icmp sgt i32 %i.ch, 1
   br i1 %i.ci, label %bb.ap, label %bb.aq, !prof !16
@@ -674,7 +665,7 @@ bb.bk:                                            ; preds = %lean_alloc_ctor.exi
 
 lean_alloc_ctor.exit143:                          ; preds = %lean_alloc_ctor.exit163, %lean_alloc_ctor.exit158, %lean_dec_ref.exit124, %lean_alloc_ctor.exit151, %lean_alloc_ctor.exit142
   %.sink194 = phi ptr [ %i.ck, %lean_dec_ref.exit124 ], [ %i.as, %lean_alloc_ctor.exit142 ], [ %i.by, %lean_alloc_ctor.exit151 ], [ %i.de, %lean_alloc_ctor.exit158 ], [ %i.dp, %lean_alloc_ctor.exit163 ] ; 4 uses
-  %.sink = phi ptr [ %.1.i154, %lean_dec_ref.exit124 ], [ %i.ar, %lean_alloc_ctor.exit142 ], [ %i.bx, %lean_alloc_ctor.exit151 ], [ %i.dd, %lean_alloc_ctor.exit158 ], [ %i.do, %lean_alloc_ctor.exit163 ]
+  %.sink = phi ptr [ %i.cb, %lean_dec_ref.exit124 ], [ %i.ar, %lean_alloc_ctor.exit142 ], [ %i.bx, %lean_alloc_ctor.exit151 ], [ %i.dd, %lean_alloc_ctor.exit158 ], [ %i.do, %lean_alloc_ctor.exit163 ]
   %i.dr = getelementptr inbounds nuw i8, ptr %.sink194, i64 4
   store i32 1, ptr %.sink194, align 4, !tbaa !11
   store i32 65552, ptr %i.dr, align 4
@@ -1077,42 +1068,30 @@ bb.a:
 
 lean_nat_eq.exit:                                 ; preds = %bb.a
   %i.f = getelementptr i8, ptr %0, i64 8
-  %.val144 = load i64, ptr %i.f, align 8, !tbaa !13 ; 3 uses
+  %.val144 = load i64, ptr %i.f, align 8, !tbaa !13 ; 2 uses
   %i.g = shl i64 %.val144, 1                      ; 2 uses
   %i.h = or disjoint i64 %i.g, 1
   %i.i = inttoptr i64 %i.h to ptr                 ; 3 uses
   %.not = icmp eq i64 %i.g, 0
-  br i1 %.not, label %lean_dec.exit.thread182, label %10
+  br i1 %.not, label %lean_dec.exit.thread182, label %lean_nat_lt.exit
 
-10:                                               ; preds = %lean_nat_eq.exit
-  %.not184 = icmp eq i64 %.val144, 0
-  br i1 %.not184, label %.thread.i, label %11
-
-11:                                               ; preds = %10
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %13 = load ptr, ptr %12, align 8, !tbaa !15
-  br label %lean_nat_lt.exit
-
-.thread.i:                                        ; preds = %10
-  %14 = tail call ptr @lean_array_get_panic(ptr noundef nonnull inttoptr (i64 1 to ptr)) #10
-  br label %lean_nat_lt.exit
-
-lean_nat_lt.exit:                                 ; preds = %11, %.thread.i
-  %.1.i = phi ptr [ %14, %.thread.i ], [ %13, %11 ] ; 10 uses
+lean_nat_lt.exit:                                 ; preds = %lean_nat_eq.exit
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %11 = load ptr, ptr %10, align 8, !tbaa !15     ; 10 uses
   %i.j = and i64 %.val144, 9223372036854775807    ; 2 uses
-  %i.k = ptrtoint ptr %.1.i to i64
+  %i.k = ptrtoint ptr %11 to i64
   %i.l = and i64 %i.k, 1
   %.not.i123 = icmp eq i64 %i.l, 0
   br i1 %.not.i123, label %bb.b, label %lean_inc.exit124.thread
 
 bb.b:                                             ; preds = %lean_nat_lt.exit
-  %.val.i.i = load i32, ptr %.1.i, align 4, !tbaa !11 ; 3 uses
+  %.val.i.i = load i32, ptr %11, align 4, !tbaa !11 ; 3 uses
   %i.m = icmp sgt i32 %.val.i.i, 0
   br i1 %i.m, label %bb.c, label %bb.d, !prof !16
 
 bb.c:                                             ; preds = %bb.b
   %i.n = add nuw i32 %.val.i.i, 1
-  store i32 %i.n, ptr %.1.i, align 4, !tbaa !11
+  store i32 %i.n, ptr %11, align 4, !tbaa !11
   br label %lean_inc.exit124
 
 bb.d:                                             ; preds = %bb.b
@@ -1120,16 +1099,16 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %lean_inc.exit124, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = atomicrmw sub ptr %.1.i, i32 1 monotonic, align 4 ; 0 uses
+  %i.o = atomicrmw sub ptr %11, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc.exit124
 
 lean_inc.exit124:                                 ; preds = %bb.e, %bb.d, %bb.c
-  %i.p = tail call zeroext i8 @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00__private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_mergeAll_x3f_spec__1(ptr noundef nonnull %.1.i, i8 noundef zeroext %i.d, ptr noundef nonnull %i.i, ptr noundef nonnull %0, i64 noundef 0, i64 noundef %i.j)
+  %i.p = tail call zeroext i8 @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00__private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_mergeAll_x3f_spec__1(ptr noundef nonnull %11, i8 noundef zeroext %i.d, ptr noundef nonnull %i.i, ptr noundef nonnull %0, i64 noundef 0, i64 noundef %i.j)
   %i.q = icmp eq i8 %i.p, 0
   br i1 %i.q, label %.thread, label %bb.f
 
 lean_inc.exit124.thread:                          ; preds = %lean_nat_lt.exit
-  %i.r = tail call zeroext i8 @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00__private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_mergeAll_x3f_spec__1(ptr noundef %.1.i, i8 noundef zeroext %i.d, ptr noundef nonnull %i.i, ptr noundef nonnull %0, i64 noundef 0, i64 noundef %i.j)
+  %i.r = tail call zeroext i8 @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00__private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_mergeAll_x3f_spec__1(ptr noundef %11, i8 noundef zeroext %i.d, ptr noundef nonnull %i.i, ptr noundef nonnull %0, i64 noundef 0, i64 noundef %i.j)
   %i.s = icmp eq i8 %i.r, 0
   br i1 %i.s, label %lean_inc.exit122, label %bb.f
 
@@ -1150,13 +1129,13 @@ bb.h:                                             ; preds = %bb.f
   br label %lean_dec.exit.thread180.sink.split
 
 .thread:                                          ; preds = %lean_inc.exit124
-  %.val.i.i146 = load i32, ptr %.1.i, align 4, !tbaa !11 ; 3 uses
+  %.val.i.i146 = load i32, ptr %11, align 4, !tbaa !11 ; 3 uses
   %i.w = icmp sgt i32 %.val.i.i146, 0
   br i1 %i.w, label %bb.i, label %bb.j, !prof !16
 
 bb.i:                                             ; preds = %.thread
   %i.x = add nuw i32 %.val.i.i146, 1
-  store i32 %i.x, ptr %.1.i, align 4, !tbaa !11
+  store i32 %i.x, ptr %11, align 4, !tbaa !11
   br label %lean_inc.exit122
 
 bb.j:                                             ; preds = %.thread
@@ -1164,7 +1143,7 @@ bb.j:                                             ; preds = %.thread
   br i1 %.not.i.i147, label %lean_inc.exit122, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.y = atomicrmw sub ptr %.1.i, i32 1 monotonic, align 4 ; 0 uses
+  %i.y = atomicrmw sub ptr %11, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc.exit122
 
 lean_inc.exit122:                                 ; preds = %lean_inc.exit124.thread, %bb.k, %bb.j, %bb.i
@@ -1184,7 +1163,7 @@ lean_alloc_ctor.exit149:                          ; preds = %lean_inc.exit122
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store ptr inttoptr (i64 1 to ptr), ptr %i.ac, align 8, !tbaa !15
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  store ptr %.1.i, ptr %i.ad, align 8, !tbaa !15
+  store ptr %11, ptr %i.ad, align 8, !tbaa !15
   %i.ae = tail call ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_mergeAll_x3f_spec__0___redArg(ptr noundef nonnull %i.i, ptr noundef nonnull %0, ptr noundef nonnull inttoptr (i64 3 to ptr), ptr noundef nonnull %i.z) ; 12 uses
   %i.af = ptrtoint ptr %i.ae to i64               ; 2 uses
   %i.ag = and i64 %i.af, 1
@@ -1587,41 +1566,29 @@ lean_dec_ref.exit15:                              ; preds = %bb.m, %bb.n, %bb.o
 define zeroext range(i8 0, 2) i8 @l___private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_isOnlyAndNonOnly(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #1 {
 lean_nat_eq.exit:
   %i.a = getelementptr i8, ptr %0, i64 8
-  %.val = load i64, ptr %i.a, align 8, !tbaa !13  ; 3 uses
+  %.val = load i64, ptr %i.a, align 8, !tbaa !13  ; 2 uses
   %i.b = shl i64 %.val, 1                         ; 2 uses
   %i.c = or disjoint i64 %i.b, 1
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   %.not = icmp eq i64 %i.b, 0
-  br i1 %.not, label %lean_dec.exit85, label %1
+  br i1 %.not, label %lean_dec.exit85, label %lean_array_get_borrowed.exit
 
-1:                                                ; preds = %lean_nat_eq.exit
-  %.not126 = icmp eq i64 %.val, 0
-  br i1 %.not126, label %.thread.i, label %2
-
-2:                                                ; preds = %1
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = load ptr, ptr %3, align 8, !tbaa !15
-  br label %lean_array_get_borrowed.exit
-
-.thread.i:                                        ; preds = %1
-  %5 = tail call ptr @lean_array_get_panic(ptr noundef nonnull inttoptr (i64 1 to ptr)) #10
-  br label %lean_array_get_borrowed.exit
-
-lean_array_get_borrowed.exit:                     ; preds = %2, %.thread.i
-  %.1.i = phi ptr [ %5, %.thread.i ], [ %4, %2 ]  ; 5 uses
-  %i.e = ptrtoint ptr %.1.i to i64
+lean_array_get_borrowed.exit:                     ; preds = %lean_nat_eq.exit
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = load ptr, ptr %1, align 8, !tbaa !15       ; 5 uses
+  %i.e = ptrtoint ptr %2 to i64
   %i.f = and i64 %i.e, 1
   %.not.i = icmp eq i64 %i.f, 0
   br i1 %.not.i, label %bb.a, label %lean_nat_lt.exit
 
 bb.a:                                             ; preds = %lean_array_get_borrowed.exit
-  %.val.i.i = load i32, ptr %.1.i, align 4, !tbaa !11 ; 3 uses
+  %.val.i.i = load i32, ptr %2, align 4, !tbaa !11 ; 3 uses
   %i.g = icmp sgt i32 %.val.i.i, 0
   br i1 %i.g, label %bb.b, label %bb.c, !prof !16
 
 bb.b:                                             ; preds = %bb.a
   %i.h = add nuw i32 %.val.i.i, 1
-  store i32 %i.h, ptr %.1.i, align 4, !tbaa !11
+  store i32 %i.h, ptr %2, align 4, !tbaa !11
   br label %lean_nat_lt.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -1629,11 +1596,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %lean_nat_lt.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = atomicrmw sub ptr %.1.i, i32 1 monotonic, align 4 ; 0 uses
+  %i.i = atomicrmw sub ptr %2, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_nat_lt.exit
 
 lean_nat_lt.exit:                                 ; preds = %lean_array_get_borrowed.exit, %bb.b, %bb.c, %bb.d
-  %i.j = tail call ptr @l_Lean_Syntax_getKind(ptr noundef %.1.i) #10 ; 15 uses
+  %i.j = tail call ptr @l_Lean_Syntax_getKind(ptr noundef %2) #10 ; 15 uses
   %i.k = and i64 %.val, 9223372036854775807       ; 7 uses
   %i.l = tail call zeroext i8 @l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00__private_Lean_Elab_Tactic_Try_0__Lean_Elab_Tactic_Try_isOnlyAndNonOnly_spec__4(ptr noundef %i.j, ptr noundef nonnull %i.d, ptr noundef nonnull %0, i64 noundef 0, i64 noundef %i.k)
   %i.m = icmp eq i8 %i.l, 0

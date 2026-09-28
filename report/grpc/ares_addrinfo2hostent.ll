@@ -40,7 +40,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.d, %bb.f, %bb.b
-  %.099 = phi i32 [ %1, %bb.b ], [ %i.j, %bb.f ], [ %i.f, %bb.d ] ; 8 uses
+  %.099 = phi i32 [ %1, %bb.b ], [ %i.j, %bb.f ], [ %i.f, %bb.d ] ; 7 uses
   %i.k = and i32 %.099, -9
   %or.cond3.not = icmp eq i32 %i.k, 2
   br i1 %or.cond3.not, label %bb.h, label %.thread
@@ -206,26 +206,13 @@ bb.u:                                             ; preds = %.lr.ph, %bb.t
 .thread139:                                       ; preds = %bb.u, %.preheader144, %bb.r
   %i.bl = phi ptr [ %.pre159, %bb.r ], [ %.pre159, %.preheader144 ], [ %i.bj, %bb.u ]
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.0711.i = load ptr, ptr %i.bm, align 8, !tbaa !17 ; 3 uses
+  %.0711.i = load ptr, ptr %i.bm, align 8, !tbaa !17 ; 2 uses
   %.not12.i = icmp eq ptr %.0711.i, null
-  br i1 %.not12.i, label %ai_naddr.exit, label %.lr.ph.i127
+  br i1 %.not12.i, label %ai_naddr.exit, label %.lr.ph.split.i128
 
-.lr.ph.i127:                                      ; preds = %.thread139
-  %.not9.i = icmp eq i32 %.099, 0
-  br i1 %.not9.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i128
-
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i127, %.lr.ph.split.us.i
-  %.0714.us.i = phi ptr [ %.07.us.i, %.lr.ph.split.us.i ], [ %.0711.i, %.lr.ph.i127 ]
-  %.013.us.i = phi i64 [ %3, %.lr.ph.split.us.i ], [ 0, %.lr.ph.i127 ]
-  %3 = add i64 %.013.us.i, 1                      ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0714.us.i, i64 32
-  %.07.us.i = load ptr, ptr %4, align 8, !tbaa !17 ; 2 uses
-  %.not.us.i = icmp eq ptr %.07.us.i, null
-  br i1 %.not.us.i, label %ai_naddr.exit, label %.lr.ph.split.us.i
-
-.lr.ph.split.i128:                                ; preds = %.lr.ph.i127, %.lr.ph.split.i128
-  %.0714.i = phi ptr [ %.07.i129, %.lr.ph.split.i128 ], [ %.0711.i, %.lr.ph.i127 ] ; 2 uses
-  %.013.i = phi i64 [ %spec.select.i, %.lr.ph.split.i128 ], [ 0, %.lr.ph.i127 ]
+.lr.ph.split.i128:                                ; preds = %.thread139, %.lr.ph.split.i128
+  %.0714.i = phi ptr [ %.07.i129, %.lr.ph.split.i128 ], [ %.0711.i, %.thread139 ] ; 2 uses
+  %.013.i = phi i64 [ %spec.select.i, %.lr.ph.split.i128 ], [ 0, %.thread139 ]
   %i.bn = getelementptr inbounds nuw i8, ptr %.0714.i, i64 8
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !14
   %.not10.i = icmp eq i32 %.099, %i.bo
@@ -236,8 +223,8 @@ bb.u:                                             ; preds = %.lr.ph, %bb.t
   %.not.i130 = icmp eq ptr %.07.i129, null
   br i1 %.not.i130, label %ai_naddr.exit, label %.lr.ph.split.i128
 
-ai_naddr.exit:                                    ; preds = %.lr.ph.split.i128, %.lr.ph.split.us.i, %.thread139
-  %.0.lcssa.i131 = phi i64 [ 0, %.thread139 ], [ %3, %.lr.ph.split.us.i ], [ %spec.select.i, %.lr.ph.split.i128 ] ; 2 uses
+ai_naddr.exit:                                    ; preds = %.lr.ph.split.i128, %.thread139
+  %.0.lcssa.i131 = phi i64 [ 0, %.thread139 ], [ %spec.select.i, %.lr.ph.split.i128 ] ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bl, i64 24
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !35 ; 3 uses
   %.not.i132 = icmp eq ptr %i.bs, null

@@ -205,10 +205,10 @@ bb.ad:                                            ; preds = %.split, %_ZNSt3__1e
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 28
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %13, ptr noundef nonnull align 4 dereferenceable(10) %i.fz, i64 10, i1 false), !tbaa.struct !68
   %i.ga = load i32, ptr %i.b, align 4, !tbaa !27  ; 2 uses
-  %14 = icmp slt i32 %i.ga, 1                     ; 4 uses
+  %14 = icmp sgt i32 %i.ga, 0
   %i.gb = call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %i.ga, i1 true)
   %i.gc = sub nuw nsw i32 32, %i.gb
-  %.0.lcssa.i = select i1 %14, i32 0, i32 %i.gc   ; 7 uses
+  %.0.lcssa.i = select i1 %14, i32 %i.gc, i32 0   ; 7 uses
   %or.cond = icmp eq i32 %.0.lcssa.i, 1
   br i1 %or.cond, label %bb.ae, label %bb.ag
 
@@ -240,13 +240,9 @@ bb.ag:                                            ; preds = %bb.ad
   %i.gi = getelementptr inbounds nuw i8, ptr %13, i64 2
   store i16 8, ptr %i.gi, align 2, !tbaa !38
   %i.gj = getelementptr inbounds nuw i8, ptr %13, i64 4
-  %i.gk = getelementptr inbounds nuw i8, ptr %13, i64 6 ; 2 uses
-  store i16 7, ptr %i.gk, align 2, !tbaa !63
+  %i.gk = getelementptr inbounds nuw i8, ptr %13, i64 6
   %15 = trunc nuw nsw i32 %.0.lcssa.i to i16      ; 2 uses
   store i16 %15, ptr %i.gj, align 2, !tbaa !83
-  br i1 %14, label %_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit, label %.sink.split.i.i
-
-.sink.split.i.i:                                  ; preds = %.thread.i.i
   %16 = add nsw i16 %15, -1
   store i16 %16, ptr %i.gk, align 2, !tbaa !84
   br label %_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit
@@ -260,13 +256,9 @@ bb.ah:                                            ; preds = %bb.ag
   %i.gm = getelementptr inbounds nuw i8, ptr %13, i64 2
   store i16 16, ptr %i.gm, align 2, !tbaa !38
   %i.gn = getelementptr inbounds nuw i8, ptr %13, i64 4
-  %i.go = getelementptr inbounds nuw i8, ptr %13, i64 6 ; 2 uses
-  store i16 15, ptr %i.go, align 2, !tbaa !63
+  %i.go = getelementptr inbounds nuw i8, ptr %13, i64 6
   %17 = trunc nuw nsw i32 %.0.lcssa.i to i16      ; 2 uses
   store i16 %17, ptr %i.gn, align 2, !tbaa !83
-  br i1 %14, label %_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit, label %.sink.split.i.i111
-
-.sink.split.i.i111:                               ; preds = %.thread.i.i109
   %18 = add nsw i16 %17, -1
   store i16 %18, ptr %i.go, align 2, !tbaa !84
   br label %_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit
@@ -279,13 +271,9 @@ bb.ai:                                            ; preds = %bb.ah
   %i.gq = getelementptr inbounds nuw i8, ptr %13, i64 2
   store i16 32, ptr %i.gq, align 2, !tbaa !38
   %i.gr = getelementptr inbounds nuw i8, ptr %13, i64 4
-  %i.gs = getelementptr inbounds nuw i8, ptr %13, i64 6 ; 2 uses
-  store i16 31, ptr %i.gs, align 2, !tbaa !63
+  %i.gs = getelementptr inbounds nuw i8, ptr %13, i64 6
   %19 = trunc nuw nsw i32 %.0.lcssa.i to i16      ; 2 uses
   store i16 %19, ptr %i.gr, align 2, !tbaa !83
-  br i1 %14, label %_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit, label %.sink.split.i.i118
-
-.sink.split.i.i118:                               ; preds = %.thread.i.i116
   %20 = add nsw i16 %19, -1
   store i16 %20, ptr %i.gs, align 2, !tbaa !84
   br label %_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit
@@ -336,8 +324,8 @@ _ZNKSt3__19basic_iosIcNS_11char_traitsIcEEE5widenB8ne180100Ec.exit.i159: ; preds
   %i.hh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.gv)
           to label %_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEElsB8ne180100EPFRS3_S4_E.exit123 unwind label %bb.af ; 0 uses
 
-_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit:      ; preds = %.sink.split.i.i118, %.thread.i.i116, %.sink.split.i.i111, %.thread.i.i109, %.sink.split.i.i, %.thread.i.i, %bb.ae
-  %. = phi i32 [ 1, %.sink.split.i.i118 ], [ 1, %.thread.i.i116 ], [ 1, %.sink.split.i.i111 ], [ 1, %.thread.i.i109 ], [ 2, %.sink.split.i.i ], [ 2, %.thread.i.i ], [ 2, %bb.ae ]
+_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit:      ; preds = %.thread.i.i116, %.thread.i.i109, %.thread.i.i, %bb.ae
+  %. = phi i32 [ 1, %.thread.i.i116 ], [ 1, %.thread.i.i109 ], [ 2, %.thread.i.i ], [ 2, %bb.ae ]
   br i1 %i.bn, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %_ZN4gdcm11PixelFormat13SetBitsStoredEt.exit

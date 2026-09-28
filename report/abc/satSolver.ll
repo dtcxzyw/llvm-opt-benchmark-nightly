@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %.lr.ph280, %._crit_
   %indvars.iv292 = phi i64 [ %indvars.iv.next293, %bb.v ], [ 0, %bb.s ] ; 2 uses
   %.3274 = phi i32 [ %.4, %bb.v ], [ 0, %bb.s ]   ; 3 uses
   %i.jh = getelementptr inbounds nuw [4 x i8], ptr %.val, i64 %indvars.iv292
-  %i.ji = load i32, ptr %i.jh, align 4, !tbaa !40 ; 7 uses
+  %i.ji = load i32, ptr %i.jh, align 4, !tbaa !40 ; 6 uses
   %i.jj = and i32 %i.ji, 1
   %.not152 = icmp eq i32 %i.jj, 0
   br i1 %.not152, label %bb.t, label %.sink.split
@@ -216,8 +216,6 @@ bb.t:                                             ; preds = %.lr.ph276
   br i1 %.not242, label %.sink.split, label %clause_read.exit179
 
 clause_read.exit179:                              ; preds = %bb.t
-  %.not.i.i175 = icmp ne i32 %i.ji, 0
-  call void @llvm.assume(i1 %.not.i.i175)
   %.val.i.i176 = load i32, ptr %i.fh, align 8, !tbaa !50
   %i.jl = ashr i32 %i.ji, %.val.i.i176
   %.val5.i.i177 = load i32, ptr %i.ig, align 4, !tbaa !51

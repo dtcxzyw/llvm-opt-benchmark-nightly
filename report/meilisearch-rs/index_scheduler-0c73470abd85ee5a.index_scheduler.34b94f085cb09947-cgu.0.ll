@@ -206,7 +206,7 @@ bb.q:                                             ; preds = %bb.e
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bq = load ptr, ptr %i.bp, align 8, !alias.scope !180430, !noalias !180431, !nonnull !57, !noundef !57 ; 2 uses
-  %i.br = load i64, ptr %i.bo, align 8, !alias.scope !180430, !noalias !180431, !noundef !57 ; 8 uses
+  %i.br = load i64, ptr %i.bo, align 8, !alias.scope !180430, !noalias !180431, !noundef !57 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !180432
   %i.bs = shl i64 %i.br, 7                        ; 5 uses
   %i.bt = icmp ugt i64 %i.br, 144115188075855871
@@ -247,10 +247,9 @@ bb.r:                                             ; preds = %_ZN4core5alloc6layo
   store i64 %i.br, ptr %i.d, align 8, !noalias !180432
   %i.ce = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.bz, ptr %i.ce, align 8, !noalias !180432
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 4 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   %i.cg = getelementptr inbounds nuw [128 x i8], ptr %i.bq, i64 %i.br
-  %2 = icmp eq i64 %i.br, 0
-  br i1 %2, label %.noexc13, label %.lr.ph
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.noexc18, %bb.t
   %.sroa.055.070 = phi ptr [ %i.ck, %bb.t ], [ %i.bq, %.noexc18 ] ; 3 uses
@@ -287,9 +286,9 @@ bb.v:                                             ; preds = %bb.s
   invoke fastcc void @"_ZN4core3ptr71drop_in_place$LT$alloc..vec..Vec$LT$geojson..geometry..Geometry$GT$$GT$17hec68bcf1c00fe9faE"(ptr noalias noundef align 8 dereferenceable(24) %i.d) #81
           to label %.body19 unwind label %bb.u, !noalias !180434, !inline_history !180400
 
-.noexc13:                                         ; preds = %bb.t, %.lr.ph, %.noexc18.thread, %.noexc18
-  %3 = phi ptr [ %i.by, %.noexc18.thread ], [ %i.cf, %.noexc18 ], [ %i.cf, %.lr.ph ], [ %i.cf, %bb.t ]
-  store i64 %i.br, ptr %3, align 8, !noalias !180432
+.noexc13:                                         ; preds = %bb.t, %.lr.ph, %.noexc18.thread
+  %2 = phi ptr [ %i.by, %.noexc18.thread ], [ %i.cf, %.lr.ph ], [ %i.cf, %bb.t ]
+  store i64 %i.br, ptr %2, align 8, !noalias !180432
   %i.co = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.co, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !57
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !180432

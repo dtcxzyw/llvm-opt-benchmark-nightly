@@ -205,7 +205,7 @@ bb.a:
   %11 = alloca %"class.clang::FixItHint", align 8 ; 6 uses
   store ptr %2, ptr %i.a, align 8, !tbaa !1379
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !1108 ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !1108
   %i.d = add i32 %i.c, -5
   %or.cond = icmp ult i32 %i.d, -2
   br i1 %or.cond, label %.thread, label %bb.b
@@ -331,13 +331,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !1313
   %i.bp = tail call i32 @_ZNK5clang4Stmt11getBeginLocEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bo) #32 ; 2 uses
   %i.bq = icmp eq i32 %i.bp, 0
-  br i1 %i.bq, label %12, label %_ZNK5clang8CallExpr11getBeginLocEv.exit
+  br i1 %i.bq, label %bb.m, label %_ZNK5clang8CallExpr11getBeginLocEv.exit
 
-12:                                               ; preds = %bb.l
-  %.not1.i = icmp eq i32 %i.c, 0
-  br i1 %.not1.i, label %_ZNK5clang8CallExpr11getBeginLocEv.exit, label %bb.m
-
-bb.m:                                             ; preds = %12
+bb.m:                                             ; preds = %bb.l
   %i.br = load ptr, ptr %i.j, align 8, !tbaa !1154 ; 2 uses
   %.not2.i = icmp eq ptr %i.br, null
   br i1 %.not2.i, label %_ZNK5clang8CallExpr11getBeginLocEv.exit, label %bb.n
@@ -346,8 +342,8 @@ bb.n:                                             ; preds = %bb.m
   %i.bs = tail call i32 @_ZNK5clang4Stmt11getBeginLocEv(ptr noundef nonnull align 8 dereferenceable(8) %i.br) #32
   br label %_ZNK5clang8CallExpr11getBeginLocEv.exit
 
-_ZNK5clang8CallExpr11getBeginLocEv.exit:          ; preds = %bb.i, %bb.k, %bb.l, %12, %bb.m, %bb.n
-  %.sroa.0.0.i = phi i32 [ %i.bm, %bb.k ], [ 0, %12 ], [ 0, %bb.m ], [ %i.bs, %bb.n ], [ %i.bp, %bb.l ], [ %i.bj, %bb.i ]
+_ZNK5clang8CallExpr11getBeginLocEv.exit:          ; preds = %bb.i, %bb.k, %bb.l, %bb.m, %bb.n
+  %.sroa.0.0.i = phi i32 [ %i.bm, %bb.k ], [ %i.bj, %bb.i ], [ 0, %bb.m ], [ %i.bs, %bb.n ], [ %i.bp, %bb.l ]
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 20
   %.sroa.0.0.copyload.i = load i32, ptr %i.bt, align 4, !tbaa !1103
   %i.bu = tail call fastcc noundef zeroext i1 @_ZL30CheckMemorySizeofForComparisonRN5clang4SemaEPKNS_4ExprEPKNS_14IdentifierInfoENS_14SourceLocationES8_(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef nonnull %.07.lcssa.i48, ptr noundef %2, i32 %.sroa.0.0.i, i32 %.sroa.0.0.copyload.i)

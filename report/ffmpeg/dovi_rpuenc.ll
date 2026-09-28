@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %.lr.ph
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 %indvars.iv198.i827
-  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !28  ; 3 uses
+  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !28  ; 2 uses
   %i.cc = add i8 %i.cb, -3
   %or.cond114.i = icmp ult i8 %i.cc, -2
   br i1 %or.cond114.i, label %.loopexit818, label %.preheader160.i
@@ -216,11 +216,7 @@ bb.y:                                             ; preds = %.lr.ph
   %i.cf = zext nneg i8 %.val117.i to i64          ; 3 uses
   br i1 %i.cd, label %.loopexit818, label %validate_se_coef.exit.i
 
-6:                                                ; preds = %validate_se_coef.exit.i
-  %exitcond197.not.i = icmp eq i8 %i.cb, 0
-  br i1 %exitcond197.not.i, label %.thread142.i, label %validate_se_coef.exit.i.11383
-
-validate_se_coef.exit.i.11383:                    ; preds = %6
+validate_se_coef.exit.i.11383:                    ; preds = %validate_se_coef.exit.i
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !27
   %i.ci = ashr i64 %i.ch, %i.cf
@@ -245,7 +241,7 @@ validate_se_coef.exit.i:                          ; preds = %.preheader160.i
   %i.cr = ashr i64 %i.cq, %i.cf
   %i.cs = add i64 %i.cr, -32768
   %i.ct = icmp ult i64 %i.cs, -65535
-  br i1 %i.ct, label %.loopexit818, label %6
+  br i1 %i.ct, label %.loopexit818, label %validate_se_coef.exit.i.11383
 
 bb.aa:                                            ; preds = %.lr.ph
   %i.cu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %indvars.iv198.i827
@@ -444,7 +440,7 @@ validate_se_coef.exit124.6.i.21379:               ; preds = %validate_se_coef.ex
   %i.he = icmp ult i64 %i.hd, -65535
   br i1 %i.he, label %.loopexit818, label %.thread142.i
 
-.thread142.i:                                     ; preds = %bb.ac, %bb.ad, %validate_se_coef.exit124.6.i.21379, %6, %bb.z, %validate_se_coef.exit.i.21387
+.thread142.i:                                     ; preds = %bb.ac, %bb.ad, %validate_se_coef.exit124.6.i.21379, %bb.z, %validate_se_coef.exit.i.21387
   %indvars.iv.next199.i = add nuw nsw i64 %indvars.iv198.i827, 1 ; 2 uses
   %exitcond202.not.i = icmp eq i64 %indvars.iv.next199.i, %smax.i
   br i1 %exitcond202.not.i, label %._crit_edge, label %.lr.ph, !llvm.loop !90
@@ -769,7 +765,7 @@ validate_se_coef.exit124.6.i.1.2:                 ; preds = %validate_se_coef.ex
 
 bb.aw:                                            ; preds = %.lr.ph.1
   %i.nr = getelementptr inbounds nuw i8, ptr %i.jc, i64 %indvars.iv198.i827.1
-  %i.ns = load i8, ptr %i.nr, align 1, !tbaa !28  ; 3 uses
+  %i.ns = load i8, ptr %i.nr, align 1, !tbaa !28  ; 2 uses
   %i.nt = add i8 %i.ns, -3
   %or.cond114.i.1 = icmp ult i8 %i.nt, -2
   br i1 %or.cond114.i.1, label %.loopexit818, label %.preheader160.i.1
@@ -786,13 +782,9 @@ validate_se_coef.exit.i.1:                        ; preds = %.preheader160.i.1
   %i.ny = ashr i64 %i.nx, %i.nw
   %i.nz = add i64 %i.ny, -32768
   %i.oa = icmp ult i64 %i.nz, -65535
-  br i1 %i.oa, label %.loopexit818, label %7
+  br i1 %i.oa, label %.loopexit818, label %validate_se_coef.exit.i.1.1
 
-7:                                                ; preds = %validate_se_coef.exit.i.1
-  %exitcond197.not.i.1 = icmp eq i8 %i.ns, 0
-  br i1 %exitcond197.not.i.1, label %.thread142.i.1, label %validate_se_coef.exit.i.1.1
-
-validate_se_coef.exit.i.1.1:                      ; preds = %7
+validate_se_coef.exit.i.1.1:                      ; preds = %validate_se_coef.exit.i.1
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nv, i64 8
   %i.oc = load i64, ptr %i.ob, align 8, !tbaa !27
   %i.od = ashr i64 %i.oc, %i.nw
@@ -812,7 +804,7 @@ validate_se_coef.exit.i.1.2:                      ; preds = %bb.ax
   %i.ok = icmp ult i64 %i.oj, -65535
   br i1 %i.ok, label %.loopexit818, label %.thread142.i.1
 
-.thread142.i.1:                                   ; preds = %bb.au, %bb.av, %validate_se_coef.exit124.6.i.1.2, %7, %bb.ax, %validate_se_coef.exit.i.1.2
+.thread142.i.1:                                   ; preds = %bb.au, %bb.av, %validate_se_coef.exit124.6.i.1.2, %bb.ax, %validate_se_coef.exit.i.1.2
   %indvars.iv.next199.i.1 = add nuw nsw i64 %indvars.iv198.i827.1, 1 ; 2 uses
   %exitcond202.not.i.1 = icmp eq i64 %indvars.iv.next199.i.1, %smax.i.1
   br i1 %exitcond202.not.i.1, label %._crit_edge.1, label %.lr.ph.1, !llvm.loop !90
@@ -1137,7 +1129,7 @@ validate_se_coef.exit124.6.i.2.2:                 ; preds = %validate_se_coef.ex
 
 bb.bq:                                            ; preds = %.lr.ph.2
   %i.ux = getelementptr inbounds nuw i8, ptr %i.qi, i64 %indvars.iv198.i827.2
-  %i.uy = load i8, ptr %i.ux, align 1, !tbaa !28  ; 3 uses
+  %i.uy = load i8, ptr %i.ux, align 1, !tbaa !28  ; 2 uses
   %i.uz = add i8 %i.uy, -3
   %or.cond114.i.2 = icmp ult i8 %i.uz, -2
   br i1 %or.cond114.i.2, label %.loopexit818, label %.preheader160.i.2
@@ -1154,13 +1146,9 @@ validate_se_coef.exit.i.2:                        ; preds = %.preheader160.i.2
   %i.ve = ashr i64 %i.vd, %i.vc
   %i.vf = add i64 %i.ve, -32768
   %i.vg = icmp ult i64 %i.vf, -65535
-  br i1 %i.vg, label %.loopexit818, label %8
+  br i1 %i.vg, label %.loopexit818, label %validate_se_coef.exit.i.2.1
 
-8:                                                ; preds = %validate_se_coef.exit.i.2
-  %exitcond197.not.i.2 = icmp eq i8 %i.uy, 0
-  br i1 %exitcond197.not.i.2, label %.thread142.i.2, label %validate_se_coef.exit.i.2.1
-
-validate_se_coef.exit.i.2.1:                      ; preds = %8
+validate_se_coef.exit.i.2.1:                      ; preds = %validate_se_coef.exit.i.2
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vb, i64 8
   %i.vi = load i64, ptr %i.vh, align 8, !tbaa !27
   %i.vj = ashr i64 %i.vi, %i.vc
@@ -1180,7 +1168,7 @@ validate_se_coef.exit.i.2.2:                      ; preds = %bb.br
   %i.vq = icmp ult i64 %i.vp, -65535
   br i1 %i.vq, label %.loopexit818, label %.thread142.i.2
 
-.thread142.i.2:                                   ; preds = %bb.bo, %bb.bp, %validate_se_coef.exit124.6.i.2.2, %8, %bb.br, %validate_se_coef.exit.i.2.2
+.thread142.i.2:                                   ; preds = %bb.bo, %bb.bp, %validate_se_coef.exit124.6.i.2.2, %bb.br, %validate_se_coef.exit.i.2.2
   %indvars.iv.next199.i.2 = add nuw nsw i64 %indvars.iv198.i827.2, 1 ; 2 uses
   %exitcond202.not.i.2 = icmp eq i64 %indvars.iv.next199.i.2, %smax.i.2
   br i1 %exitcond202.not.i.2, label %._crit_edge.2, label %.lr.ph.2, !llvm.loop !90

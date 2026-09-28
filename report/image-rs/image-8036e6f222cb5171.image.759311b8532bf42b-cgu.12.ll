@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %bb.b, %bb.d
 
 .lr.ph27.split.a:                                 ; preds = %bb.e
   %i.p = add i32 %.sroa.0.0, %2                   ; 2 uses
-  %5 = zext i32 %i.p to i64
-  %6 = zext i32 %2 to i64
-  %7 = udiv i8 8, %1
+  %5 = udiv i8 8, %1
   %.not.i22 = icmp ugt i8 %1, 8
+  %6 = zext i32 %i.p to i64
+  %7 = zext i32 %2 to i64
   br i1 %.not.i22, label %._crit_edge.split, label %.lr.ph27.split.split
 
 .lr.ph27.split.split:                             ; preds = %.lr.ph27.split.a
@@ -254,8 +254,8 @@ bb.h:                                             ; preds = %.lr.ph, %bb.l
   %.sroa.01.124 = phi i64 [ %.sroa.01.026, %.lr.ph ], [ %i.am, %bb.l ] ; 2 uses
   %.sroa.5.023 = phi i8 [ 1, %.lr.ph ], [ %i.v, %bb.l ] ; 3 uses
   %i.v = add nuw nsw i8 %.sroa.5.023, 1
-  %i.w = urem i64 %.sroa.01.124, %5
-  %i.x = icmp samesign ult i64 %i.w, %6
+  %i.w = urem i64 %.sroa.01.124, %6
+  %i.x = icmp samesign ult i64 %i.w, %7
   br i1 %i.x, label %bb.j, label %bb.l
 
 bb.i:                                             ; preds = %.lr.ph27.split.split
@@ -290,7 +290,7 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE8push_mutCsa5QsYiPB8Gl_5image.exit
 bb.l:                                             ; preds = %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE8push_mutCsa5QsYiPB8Gl_5image.exit, %bb.h
   %i.al = phi i64 [ %i.ak, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE8push_mutCsa5QsYiPB8Gl_5image.exit ], [ %i.u, %bb.h ] ; 2 uses
   %i.am = add i64 %.sroa.01.124, 1                ; 2 uses
-  %.not.i.not = icmp samesign ult i8 %.sroa.5.023, %7
+  %.not.i.not = icmp samesign ult i8 %.sroa.5.023, %5
   br i1 %.not.i.not, label %bb.h, label %..loopexit_crit_edge
 
 bb.m:                                             ; preds = %bb.f

@@ -204,7 +204,7 @@ bb.a:
   %i.e = add i64 %i.d, 133143986176
   %sext = ashr exact i64 %i.e, 32
   %i.f = and i64 %sext, -8
-  %i.g = add i64 %i.f, %.070103                   ; 11 uses
+  %i.g = add i64 %i.f, %.070103                   ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.069104, i64 48
   %.069 = load ptr, ptr %i.h, align 8             ; 2 uses
   %.not81 = icmp eq ptr %.069, null
@@ -339,13 +339,9 @@ check_dir_entry.exit.thread87:                    ; preds = %bb.k, %bb.j, %check
   %i.bm = getelementptr inbounds nuw i8, ptr %.1108, i64 48
   %.1 = load ptr, ptr %i.bm, align 8              ; 2 uses
   %.not83 = icmp eq ptr %.1, null
-  br i1 %.not83, label %._crit_edge110, label %bb.f, !llvm.loop !39
+  br i1 %.not83, label %.lr.ph.i.preheader, label %bb.f, !llvm.loop !39
 
-._crit_edge110:                                   ; preds = %check_dir_entry.exit.thread87
-  %.not.i85 = icmp eq i64 %i.g, 0
-  br i1 %.not.i85, label %bitmap_directory_to_be.exit, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %.preheader, %._crit_edge110
+.lr.ph.i.preheader:                               ; preds = %check_dir_entry.exit.thread87, %.preheader
   %i.bn = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.g
   br label %.lr.ph.i
 
@@ -379,7 +375,7 @@ check_dir_entry.exit.thread87:                    ; preds = %bb.k, %bb.j, %check
   %i.cg = icmp ult ptr %i.bv, %i.bn
   br i1 %i.cg, label %.lr.ph.i, label %bitmap_directory_to_be.exit, !llvm.loop !40
 
-bitmap_directory_to_be.exit:                      ; preds = %.lr.ph.i, %._crit_edge110
+bitmap_directory_to_be.exit:                      ; preds = %.lr.ph.i
   br i1 %4, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bitmap_directory_to_be.exit

@@ -204,7 +204,7 @@ _ZNSt3_V26rotateIPN3lld3elf10RelocationEEET_S5_S5_S5_.exit: ; preds = %._crit_ed
 define linkonce_odr hidden void @_ZN3lld3elf14checkAlignmentERNS0_3CtxEPhmiRKNS0_10RelocationE(ptr noundef nonnull align 8 dereferenceable(3472) %0, ptr noundef %1, i64 noundef %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(32) %4) local_unnamed_addr #3 comdat {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca [17 x i8], align 16               ; 4 uses
+  %i.b = alloca [17 x i8], align 16               ; 3 uses
   %5 = alloca %"struct.lld::elf::ErrorPlace", align 8 ; 10 uses
   %6 = alloca %"struct.lld::elf::ELFSyncStream", align 8 ; 8 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
@@ -333,23 +333,16 @@ _ZN3lld3elflsERKNS0_13ELFSyncStreamEPKc.exit6:    ; preds = %bb.f, %bb.g
   call void @llvm.experimental.noalias.scope.decl(metadata !923)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25, !noalias !923
   %i.be = getelementptr inbounds nuw i8, ptr %i.b, i64 17 ; 2 uses
-  %.not16 = icmp eq i64 %2, 0
-  br i1 %.not16, label %.thread, label %.lr.ph.i
+  br label %.lr.ph.i
 
-.thread:                                          ; preds = %_ZN3lld3elflsERKNS0_13ELFSyncStreamEPKc.exit6
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  store i8 48, ptr %9, align 16, !tbaa !592, !noalias !923
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %.thread
-  %.1.lcssa.i = phi ptr [ %9, %.thread ], [ %i.bs, %.lr.ph.i ] ; 3 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i
   %i.bf = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 5 uses
   store ptr %i.bf, ptr %8, align 8, !tbaa !589, !alias.scope !923
   %i.bg = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   store i64 0, ptr %i.bg, align 8, !tbaa !591, !alias.scope !923
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25, !noalias !923
   %i.bh = ptrtoint ptr %i.be to i64
-  %i.bi = ptrtoint ptr %.1.lcssa.i to i64
+  %i.bi = ptrtoint ptr %i.bs to i64
   %i.bj = sub i64 %i.bh, %i.bi                    ; 4 uses
   store i64 %i.bj, ptr %i.a, align 8, !tbaa !596, !noalias !923
   %i.bk = icmp ugt i64 %i.bj, 15
@@ -370,12 +363,12 @@ bb.h:                                             ; preds = %._crit_edge.i
   ]
 
 bb.i:                                             ; preds = %._crit_edge.i.i.i
-  %i.bo = load i8, ptr %.1.lcssa.i, align 1, !tbaa !592, !noalias !923
+  %i.bo = load i8, ptr %i.bs, align 1, !tbaa !592, !noalias !923
   store i8 %i.bo, ptr %i.bn, align 1, !tbaa !592
   br label %_ZN4llvm9utohexstrB5cxx11Embj.exit
 
 bb.j:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bn, ptr nonnull align 1 %.1.lcssa.i, i64 %i.bj, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bn, ptr noundef nonnull align 1 dereferenceable(1) %i.bs, i64 %i.bj, i1 false)
   br label %_ZN4llvm9utohexstrB5cxx11Embj.exit
 
 .lr.ph.i:                                         ; preds = %_ZN3lld3elflsERKNS0_13ELFSyncStreamEPKc.exit6, %.lr.ph.i
@@ -384,7 +377,7 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i
   %i.bp = and i64 %.020.i, 15
   %i.bq = getelementptr inbounds nuw i8, ptr @_ZZN4llvm8hexdigitEjbE3LUT, i64 %i.bp
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !592, !noalias !923
-  %i.bs = getelementptr inbounds i8, ptr %.118.i, i64 -1 ; 3 uses
+  %i.bs = getelementptr inbounds i8, ptr %.118.i, i64 -1 ; 5 uses
   store i8 %i.br, ptr %i.bs, align 1, !tbaa !592, !noalias !923
   %i.bt = lshr i64 %.020.i, 4                     ; 2 uses
   %i.bu = icmp eq i64 %i.bt, 0

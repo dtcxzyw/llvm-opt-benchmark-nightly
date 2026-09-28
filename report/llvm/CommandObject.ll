@@ -204,23 +204,19 @@ define dso_local void @_ZN12lldb_private13CommandObject24HandleArgumentCompletio
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !152  ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !153  ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !152
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !153  ; 4 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
   %i.h = sdiv exact i64 %i.g, 24
   %i.i = and i64 %i.h, 4294967295
-  %.not.a = icmp eq i64 %i.i, 1
-  br i1 %.not.a, label %3, label %_ZN12lldb_private13CommandObject22FindArgumentDataByTypeEN4lldb19CommandArgumentTypeE.exit.thread
+  %.not = icmp ne i64 %i.i, 1
+  %.not.a = icmp eq ptr %i.d, null
+  %or.cond = or i1 %.not.a, %.not
+  br i1 %or.cond, label %_ZN12lldb_private13CommandObject22FindArgumentDataByTypeEN4lldb19CommandArgumentTypeE.exit.thread, label %bb.b
 
-3:                                                ; preds = %bb.a
-  %.not16 = icmp eq ptr %i.c, %i.d
-  %.not1317 = icmp eq ptr %i.d, null
-  %.not13 = or i1 %.not16, %.not1317
-  br i1 %.not13, label %_ZN12lldb_private13CommandObject22FindArgumentDataByTypeEN4lldb19CommandArgumentTypeE.exit.thread, label %bb.b
-
-bb.b:                                             ; preds = %3
+bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !156
   %i.l = load ptr, ptr %i.d, align 8, !tbaa !157  ; 3 uses
@@ -307,7 +303,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.as = tail call noundef zeroext i1 @_ZN12lldb_private18CommandCompletions31InvokeCommonCompletionCallbacksERNS_18CommandInterpreterEjRNS_17CompletionRequestEPNS_12SearchFilterE(ptr noundef nonnull align 8 dereferenceable(840) %i.ar, i32 noundef %i.aj, ptr noundef nonnull align 8 dereferenceable(104) %1, ptr noundef null) #18 ; 0 uses
   br label %_ZN12lldb_private13CommandObject22FindArgumentDataByTypeEN4lldb19CommandArgumentTypeE.exit.thread
 
-_ZN12lldb_private13CommandObject22FindArgumentDataByTypeEN4lldb19CommandArgumentTypeE.exit.thread: ; preds = %bb.d, %3, %bb.l, %.split.loop.exit28, %bb.k, %bb.b, %bb.a
+_ZN12lldb_private13CommandObject22FindArgumentDataByTypeEN4lldb19CommandArgumentTypeE.exit.thread: ; preds = %bb.d, %bb.l, %.split.loop.exit28, %bb.k, %bb.b, %bb.a
   ret void
 }
 

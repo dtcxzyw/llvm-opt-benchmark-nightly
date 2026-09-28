@@ -33,45 +33,37 @@ bb.a:
   %i.f = fmul float %i.d, %i.e                    ; 28 uses
   %i.g = load <2 x float>, ptr %1, align 4        ; 5 uses
   %i.h = fcmp ogt <2 x float> %i.g, splat (float f0x7F7FFFFF)
-  %i.i = select <2 x i1> %i.h, <2 x float> splat (float f0x7F7FFFFF), <2 x float> %i.g ; 3 uses
+  %i.i = select <2 x i1> %i.h, <2 x float> splat (float f0x7F7FFFFF), <2 x float> %i.g ; 2 uses
   %i.j = fcmp olt <2 x float> %i.g, splat (float f0xFF7FFFFF)
-  %i.k = select <2 x i1> %i.j, <2 x float> splat (float f0xFF7FFFFF), <2 x float> %i.g ; 3 uses
+  %i.k = select <2 x i1> %i.j, <2 x float> splat (float f0xFF7FFFFF), <2 x float> %i.g ; 2 uses
   store <2 x float> %i.g, ptr %3, align 16, !tbaa !9
-  %exitcond276.not = icmp eq i32 %2, 1
-  br i1 %exitcond276.not, label %._crit_edge, label %.lr.ph232.1
-
-._crit_edge:                                      ; preds = %.critedge.loopexit.7, %.lr.ph.6.7, %.lr.ph.5.7, %.lr.ph.4.7, %.lr.ph.3.7, %.lr.ph.2.7, %.lr.ph.1.7, %.lr.ph232.7, %.loopexit.6, %.loopexit.5, %.loopexit.4, %.loopexit.3, %.loopexit.2, %.loopexit.1, %.lr.ph232.preheader
-  %.1128.lcssa = phi i32 [ 1, %.lr.ph232.preheader ], [ %.1128.1, %.loopexit.1 ], [ %.1128.2, %.loopexit.2 ], [ %.1128.3, %.loopexit.3 ], [ %.1128.4, %.loopexit.4 ], [ %.1128.5, %.loopexit.5 ], [ %.1128.6, %.loopexit.6 ], [ %i.gl, %.critedge.loopexit.7 ], [ %.1128.6, %.lr.ph.6.7 ], [ %.1128.6, %.lr.ph.5.7 ], [ %.1128.6, %.lr.ph.4.7 ], [ %.1128.6, %.lr.ph.3.7 ], [ %.1128.6, %.lr.ph.2.7 ], [ %.1128.6, %.lr.ph.1.7 ], [ %.1128.6, %.lr.ph232.7 ] ; 4 uses
-  %.lcssa359 = phi <2 x float> [ %i.i, %.lr.ph232.preheader ], [ %11, %.loopexit.1 ], [ %i.q, %.loopexit.2 ], [ %i.ai, %.loopexit.3 ], [ %i.bf, %.loopexit.4 ], [ %i.ch, %.loopexit.5 ], [ %i.do, %.loopexit.6 ], [ %i.fa, %.lr.ph232.7 ], [ %i.fa, %.lr.ph.1.7 ], [ %i.fa, %.lr.ph.2.7 ], [ %i.fa, %.lr.ph.3.7 ], [ %i.fa, %.lr.ph.4.7 ], [ %i.fa, %.lr.ph.5.7 ], [ %i.fa, %.lr.ph.6.7 ], [ %i.fa, %.critedge.loopexit.7 ]
-  %.lcssa358 = phi <2 x float> [ %i.k, %.lr.ph232.preheader ], [ %13, %.loopexit.1 ], [ %i.s, %.loopexit.2 ], [ %i.ak, %.loopexit.3 ], [ %i.bh, %.loopexit.4 ], [ %i.cj, %.loopexit.5 ], [ %i.dq, %.loopexit.6 ], [ %i.fc, %.lr.ph232.7 ], [ %i.fc, %.lr.ph.1.7 ], [ %i.fc, %.lr.ph.2.7 ], [ %i.fc, %.lr.ph.3.7 ], [ %i.fc, %.lr.ph.4.7 ], [ %i.fc, %.lr.ph.5.7 ], [ %i.fc, %.lr.ph.6.7 ], [ %i.fc, %.critedge.loopexit.7 ]
-  %i.l = icmp slt i32 %.1128.lcssa, 3
-  br i1 %i.l, label %bb.n, label %.new
-
-.lr.ph232.1:                                      ; preds = %.lr.ph232.preheader
   %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %9 = load <2 x float>, ptr %8, align 4          ; 6 uses
   %10 = fcmp olt <2 x float> %i.i, %9
-  %11 = select <2 x i1> %10, <2 x float> %i.i, <2 x float> %9 ; 3 uses
+  %11 = select <2 x i1> %10, <2 x float> %i.i, <2 x float> %9 ; 2 uses
   %12 = fcmp ogt <2 x float> %i.k, %9
-  %13 = select <2 x i1> %12, <2 x float> %i.k, <2 x float> %9 ; 3 uses
-  %.sroa.079.0.copyload.1360 = load <2 x float>, ptr %1, align 4, !tbaa !9
-  %14 = fsub <2 x float> %.sroa.079.0.copyload.1360, %9 ; 2 uses
+  %13 = select <2 x i1> %12, <2 x float> %i.k, <2 x float> %9 ; 2 uses
+  %.sroa.079.0.copyload.1363 = load <2 x float>, ptr %1, align 4, !tbaa !9
+  %14 = fsub <2 x float> %.sroa.079.0.copyload.1363, %9 ; 2 uses
   %15 = fmul <2 x float> %14, %14
   %16 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %15)
   %17 = fcmp uge float %16, %i.f
-  br i1 %17, label %.critedge.loopexit.1, label %.loopexit.1
+  br i1 %17, label %.critedge.loopexit.1, label %.lr.ph232.2
 
-.critedge.loopexit.1:                             ; preds = %.lr.ph232.1
+._crit_edge:                                      ; preds = %.critedge.loopexit.7, %.lr.ph.6.7, %.lr.ph.5.7, %.lr.ph.4.7, %.lr.ph.3.7, %.lr.ph.2.7, %.lr.ph.1.7, %.lr.ph232.7, %.loopexit.6, %.loopexit.5, %.loopexit.4, %.loopexit.3, %.loopexit.2
+  %.1128.lcssa = phi i32 [ %.1128.5, %.loopexit.5 ], [ %.1128.6, %.loopexit.6 ], [ %.1128.2, %.loopexit.2 ], [ %.1128.3, %.loopexit.3 ], [ %.1128.4, %.loopexit.4 ], [ %i.gl, %.critedge.loopexit.7 ], [ %.1128.6, %.lr.ph.6.7 ], [ %.1128.6, %.lr.ph.5.7 ], [ %.1128.6, %.lr.ph.4.7 ], [ %.1128.6, %.lr.ph.3.7 ], [ %.1128.6, %.lr.ph.2.7 ], [ %.1128.6, %.lr.ph.1.7 ], [ %.1128.6, %.lr.ph232.7 ] ; 4 uses
+  %.lcssa362 = phi <2 x float> [ %i.ch, %.loopexit.5 ], [ %i.do, %.loopexit.6 ], [ %i.q, %.loopexit.2 ], [ %i.ai, %.loopexit.3 ], [ %i.bf, %.loopexit.4 ], [ %i.fa, %.lr.ph232.7 ], [ %i.fa, %.lr.ph.1.7 ], [ %i.fa, %.lr.ph.2.7 ], [ %i.fa, %.lr.ph.3.7 ], [ %i.fa, %.lr.ph.4.7 ], [ %i.fa, %.lr.ph.5.7 ], [ %i.fa, %.lr.ph.6.7 ], [ %i.fa, %.critedge.loopexit.7 ]
+  %.lcssa361 = phi <2 x float> [ %i.cj, %.loopexit.5 ], [ %i.dq, %.loopexit.6 ], [ %i.s, %.loopexit.2 ], [ %i.ak, %.loopexit.3 ], [ %i.bh, %.loopexit.4 ], [ %i.fc, %.lr.ph232.7 ], [ %i.fc, %.lr.ph.1.7 ], [ %i.fc, %.lr.ph.2.7 ], [ %i.fc, %.lr.ph.3.7 ], [ %i.fc, %.lr.ph.4.7 ], [ %i.fc, %.lr.ph.5.7 ], [ %i.fc, %.lr.ph.6.7 ], [ %i.fc, %.critedge.loopexit.7 ]
+  %i.l = icmp slt i32 %.1128.lcssa, 3
+  br i1 %i.l, label %bb.n, label %.new
+
+.critedge.loopexit.1:                             ; preds = %.lr.ph232.preheader
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   store <2 x float> %9, ptr %i.m, align 8, !tbaa !9
-  br label %.loopexit.1
+  br label %.lr.ph232.2
 
-.loopexit.1:                                      ; preds = %.lr.ph232.1, %.critedge.loopexit.1
-  %.1128.1 = phi i32 [ 2, %.critedge.loopexit.1 ], [ 1, %.lr.ph232.1 ] ; 5 uses
-  %exitcond276.not.1 = icmp eq i32 %2, 2
-  br i1 %exitcond276.not.1, label %._crit_edge, label %.lr.ph232.2
-
-.lr.ph232.2:                                      ; preds = %.loopexit.1
+.lr.ph232.2:                                      ; preds = %.critedge.loopexit.1, %.lr.ph232.preheader
+  %.1128.1 = phi i32 [ 2, %.critedge.loopexit.1 ], [ 1, %.lr.ph232.preheader ] ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.o = load <2 x float>, ptr %i.n, align 4      ; 7 uses
   %i.p = fcmp olt <2 x float> %11, %i.o
@@ -412,7 +404,7 @@ bb.a:
   br label %._crit_edge
 
 .new:                                             ; preds = %._crit_edge
-  %i.go = fadd <2 x float> %.lcssa359, %.lcssa358
+  %i.go = fadd <2 x float> %.lcssa362, %.lcssa361
   %i.gp = fmul <2 x float> %i.go, splat (float 5.000000e-01) ; 4 uses
   %wide.trip.count = zext nneg i32 %.1128.lcssa to i64
   %i.gq = add nsw i64 %wide.trip.count, -1        ; 3 uses
@@ -815,7 +807,7 @@ bb.l:                                             ; preds = %bb.a, %bb.k
 define noundef zeroext i1 @b2ValidateHull(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !12   ; 17 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !12   ; 13 uses
   %i.c = add i32 %i.b, -9
   %or.cond = icmp ult i32 %i.c, -6
   br i1 %or.cond, label %.critedge, label %.lr.ph115
@@ -844,15 +836,11 @@ bb.b:                                             ; preds = %.lr.ph115
   %i.q = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   br label %b2Normalize.exit.us.peel
 
-b2Normalize.exit.us.peel:                         ; preds = %bb.b, %.lr.ph115
+b2Normalize.exit.us.peel:                         ; preds = %.lr.ph115, %bb.b
   %.sroa.012.0.i.us.peel = phi <2 x float> [ %i.q, %bb.b ], [ zeroinitializer, %.lr.ph115 ] ; 7 uses
-  %cond = icmp eq i32 %i.b, 1
-  br i1 %cond, label %._crit_edge, label %1
+  br i1 %.not, label %bb.d, label %bb.c
 
-1:                                                ; preds = %b2Normalize.exit.us.peel
-  br i1 %.not, label %2, label %bb.c
-
-bb.c:                                             ; preds = %1
+bb.c:                                             ; preds = %b2Normalize.exit.us.peel
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.s = load <2 x float>, ptr %i.r, align 4
   %i.t = fsub <2 x float> %i.s, %.sroa.028.0.copyload.us.peel
@@ -861,13 +849,9 @@ bb.c:                                             ; preds = %1
   %foldExtExtBinop.1.peel = fsub <2 x float> %i.u, %shift.1.peel
   %i.v = extractelement <2 x float> %foldExtExtBinop.1.peel, i64 0
   %i.w = fcmp ult float %i.v, 0.000000e+00
-  br i1 %i.w, label %2, label %.critedge
+  br i1 %i.w, label %bb.d, label %.critedge
 
-2:                                                ; preds = %bb.c, %1
-  %cond142 = icmp eq i32 %i.b, 2
-  br i1 %cond142, label %.lr.ph115.peel.newph, label %bb.d
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.c, %b2Normalize.exit.us.peel
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.y = load <2 x float>, ptr %i.x, align 4
   %i.z = fsub <2 x float> %i.y, %.sroa.028.0.copyload.us.peel
@@ -951,15 +935,10 @@ bb.n:                                             ; preds = %bb.m
   %foldExtExtBinop.7.peel = fsub <2 x float> %i.be, %shift.7.peel
   %i.bf = extractelement <2 x float> %foldExtExtBinop.7.peel, i64 0
   %i.bg = fcmp ult float %i.bf, 0.000000e+00
-  br i1 %i.bg, label %..loopexit_crit_edge.us.peel, label %.critedge
+  br i1 %i.bg, label %.lr.ph115.peel.newph, label %.critedge
 
-..loopexit_crit_edge.us.peel:                     ; preds = %bb.n
-  %exitcond122.not.peel = icmp eq i32 %i.b, 1
-  br i1 %exitcond122.not.peel, label %._crit_edge, label %.lr.ph115.peel.newph
-
-.lr.ph115.peel.newph:                             ; preds = %bb.m, %bb.k, %bb.i, %bb.g, %bb.e, %2, %..loopexit_crit_edge.us.peel
+.lr.ph115.peel.newph:                             ; preds = %bb.e, %bb.g, %bb.i, %bb.k, %bb.m, %bb.n
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %exitcond.not.1 = icmp eq i32 %i.b, 2
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 16
   %exitcond.not.2 = icmp eq i32 %i.b, 3
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1013,7 +992,7 @@ bb.q:                                             ; preds = %b2Normalize.exit.us
 
 bb.r:                                             ; preds = %b2Normalize.exit.us, %bb.q
   %i.cg = icmp eq i64 %indvars.iv118, 1
-  br i1 %i.cg, label %3, label %bb.s
+  br i1 %i.cg, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.ch = load <2 x float>, ptr %i.bh, align 4
@@ -1023,12 +1002,9 @@ bb.s:                                             ; preds = %bb.r
   %foldExtExtBinop.1 = fsub <2 x float> %i.cj, %shift.1
   %i.ck = extractelement <2 x float> %foldExtExtBinop.1, i64 0
   %i.cl = fcmp ult float %i.ck, 0.000000e+00
-  br i1 %i.cl, label %3, label %.critedge
+  br i1 %i.cl, label %bb.t, label %.critedge
 
-3:                                                ; preds = %bb.s, %bb.r
-  br i1 %exitcond.not.1, label %..loopexit_crit_edge.us, label %bb.t
-
-bb.t:                                             ; preds = %3
+bb.t:                                             ; preds = %bb.r, %bb.s
   %i.cm = icmp eq i64 %indvars.iv118, 2
   %i.cn = icmp eq i64 %i.bp, 2
   %or.cond72.us.2 = or i1 %i.cm, %i.cn
@@ -1139,11 +1115,11 @@ bb.aj:                                            ; preds = %bb.ai
   %i.eb = fcmp ult float %i.ea, 0.000000e+00
   br i1 %i.eb, label %..loopexit_crit_edge.us, label %.critedge
 
-..loopexit_crit_edge.us:                          ; preds = %bb.ai, %bb.aj, %bb.ah, %bb.ae, %bb.ab, %bb.y, %bb.v, %3
+..loopexit_crit_edge.us:                          ; preds = %bb.ai, %bb.aj, %bb.ah, %bb.ae, %bb.ab, %bb.y, %bb.v
   %exitcond122.not = icmp eq i64 %indvars.iv.next119, %wide.trip.count121
   br i1 %exitcond122.not, label %._crit_edge, label %bb.o, !llvm.loop !18
 
-._crit_edge:                                      ; preds = %b2Normalize.exit.us.peel, %..loopexit_crit_edge.us, %..loopexit_crit_edge.us.peel
+._crit_edge:                                      ; preds = %..loopexit_crit_edge.us
   %i.ec = tail call float @b2GetLengthUnitsPerMeter() #6
   %i.ed = fmul float %i.ec, 5.000000e-03
   %i.ee = load i32, ptr %i.a, align 4, !tbaa !12  ; 4 uses

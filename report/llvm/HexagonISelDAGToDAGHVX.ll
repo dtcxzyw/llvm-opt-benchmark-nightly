@@ -205,7 +205,7 @@ bb.a:
   %.sroa.0120 = alloca [64 x i8], align 8         ; 6 uses
   %16 = alloca %"struct.(anonymous namespace)::OpRef", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !302  ; 7 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !302  ; 6 uses
   %i.c = trunc i64 %i.b to i32                    ; 3 uses
   %.sroa.023.0.copyload = load ptr, ptr %2, align 8, !tbaa !286 ; 12 uses
   %i.d = and i64 %i.b, 4294967295                 ; 3 uses
@@ -234,8 +234,7 @@ bb.b:                                             ; preds = %.lr.ph.i
 _ZL10isIdentityN4llvm8ArrayRefIiEE.exit:          ; preds = %.lr.ph.i
   %.idx.i = shl nuw nsw i64 %i.b, 2
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.023.0.copyload, i64 %.idx.i ; 2 uses
-  %.not14.i63 = icmp eq i64 %i.b, 0
-  br i1 %.not14.i63, label %.loopexit, label %.lr.ph.i64
+  br label %.lr.ph.i64
 
 bb.c:                                             ; preds = %.lr.ph.i64
   %i.j = getelementptr inbounds nuw i8, ptr %.0915.i, i64 4 ; 2 uses
@@ -248,7 +247,7 @@ bb.c:                                             ; preds = %.lr.ph.i64
   %.not12.i = icmp eq i32 %i.k, -1
   br i1 %.not12.i, label %bb.c, label %.lr.ph.i68
 
-.loopexit:                                        ; preds = %bb.c, %_ZL10isIdentityN4llvm8ArrayRefIiEE.exit
+.loopexit:                                        ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.m = load i32, ptr %i.l, align 8, !tbaa !243
   switch i32 %i.m, label %bb.d [
@@ -651,7 +650,7 @@ bb.a:
   %20 = alloca %"struct.(anonymous namespace)::OpRef", align 8 ; 3 uses
   %21 = alloca %"struct.(anonymous namespace)::OpRef", align 8 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !302  ; 11 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !302  ; 10 uses
   %.sroa.04.0.copyload = load ptr, ptr %2, align 8, !tbaa !286 ; 9 uses
   %i.c = and i64 %i.b, 4294967295                 ; 2 uses
   %.not14.i = icmp eq i64 %i.c, 0
@@ -679,8 +678,7 @@ bb.b:                                             ; preds = %.lr.ph.i
 _ZL10isIdentityN4llvm8ArrayRefIiEE.exit:          ; preds = %.lr.ph.i
   %.idx.i = shl nuw nsw i64 %i.b, 2
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.04.0.copyload, i64 %.idx.i
-  %.not14.i50 = icmp eq i64 %i.b, 0
-  br i1 %.not14.i50, label %.loopexit, label %.lr.ph.i51
+  br label %.lr.ph.i51
 
 bb.c:                                             ; preds = %.lr.ph.i51
   %i.i = getelementptr inbounds nuw i8, ptr %.0915.i, i64 4 ; 2 uses
@@ -693,7 +691,7 @@ bb.c:                                             ; preds = %.lr.ph.i51
   %.not12.i = icmp eq i32 %i.j, -1
   br i1 %.not12.i, label %bb.c, label %_ZL7isUndefN4llvm8ArrayRefIiEE.exit
 
-.loopexit:                                        ; preds = %bb.c, %_ZL10isIdentityN4llvm8ArrayRefIiEE.exit
+.loopexit:                                        ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.l = load i32, ptr %i.k, align 8, !tbaa !243
   %i.m = and i32 %i.l, 2147483647

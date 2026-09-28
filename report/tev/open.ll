@@ -205,7 +205,7 @@ bb.fk:                                            ; preds = %.critedge570
 
 bb.fl:                                            ; preds = %bb.fk
   %i.afs = getelementptr inbounds nuw i8, ptr %0, i64 540
-  %i.aft = load i32, ptr %i.afs, align 4, !tbaa !84 ; 7 uses
+  %i.aft = load i32, ptr %i.afs, align 4, !tbaa !84 ; 6 uses
   %i.afu = add i32 %i.aft, -2
   %or.cond573 = icmp ult i32 %i.afu, 3
   br i1 %or.cond573, label %.lr.ph719, label %.thread599
@@ -222,15 +222,22 @@ bb.fl:                                            ; preds = %bb.fk
   %i.agb = add <4 x i32> %i.afy, %i.aga           ; 4 uses
   %wide.trip.count799 = zext nneg i32 %i.aft to i64 ; 3 uses
   %i.agc = getelementptr inbounds nuw i8, ptr %0, i64 187092
-  %i.agd = load i32, ptr %i.agc, align 4, !tbaa !134
-  %.sroa.0.0.vec.extract.a = extractelement <4 x i32> %i.agb, i64 0
+  %2 = load i32, ptr %i.agc, align 4, !tbaa !134
+  %.sroa.0.0.vec.extract = extractelement <4 x i32> %i.agb, i64 0
+  %3 = sub i32 %2, %.sroa.0.0.vec.extract
+  %4 = uitofp i32 %3 to float
+  store float %4, ptr %i.a, align 16, !tbaa !93
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 187096
+  %i.agd = load i32, ptr %5, align 8, !tbaa !134
+  %.sroa.0.0.vec.extract.a = extractelement <4 x i32> %i.agb, i64 1
   %i.age = sub i32 %i.agd, %.sroa.0.0.vec.extract.a
   %i.agf = uitofp i32 %i.age to float
-  store float %i.agf, ptr %i.a, align 16, !tbaa !93
-  %exitcond800.not = icmp eq i32 %i.aft, 1
-  br i1 %exitcond800.not, label %.lr.ph725.preheader, label %2
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  store float %i.agf, ptr %6, align 4, !tbaa !93
+  %exitcond800.not = icmp eq i32 %i.aft, 2
+  br i1 %exitcond800.not, label %.lr.ph725.preheader, label %bb.fm
 
-.lr.ph725.preheader:                              ; preds = %bb.fn, %bb.fm, %2, %.lr.ph719
+.lr.ph725.preheader:                              ; preds = %bb.fn, %bb.fm, %.lr.ph719
   %.pre870 = load float, ptr %i.a, align 16, !tbaa !93 ; 4 uses
   %i.agg = add nsw i64 %wide.trip.count799, -1    ; 4 uses
   %xtraiter958 = and i64 %i.agg, 1
@@ -241,18 +248,7 @@ bb.fl:                                            ; preds = %bb.fk
   %unroll_iter963 = and i64 %i.agg, -2
   br label %.lr.ph725
 
-2:                                                ; preds = %.lr.ph719
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 187096
-  %4 = load i32, ptr %3, align 8, !tbaa !134
-  %.sroa.0.4.vec.extract = extractelement <4 x i32> %i.agb, i64 1
-  %5 = sub i32 %4, %.sroa.0.4.vec.extract
-  %6 = uitofp i32 %5 to float
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store float %6, ptr %7, align 4, !tbaa !93
-  %exitcond800.not.1 = icmp eq i32 %i.aft, 2
-  br i1 %exitcond800.not.1, label %.lr.ph725.preheader, label %bb.fm
-
-bb.fm:                                            ; preds = %2
+bb.fm:                                            ; preds = %.lr.ph719
   %i.agi = getelementptr inbounds nuw i8, ptr %0, i64 187100
   %i.agj = load i32, ptr %i.agi, align 4, !tbaa !134
   %.sroa.0.8.vec.extract = extractelement <4 x i32> %i.agb, i64 2

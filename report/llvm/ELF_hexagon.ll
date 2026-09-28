@@ -204,7 +204,7 @@ define linkonce_odr hidden void @_ZN4llvm7jitlink7hexagon10findMaskR6Ej(ptr dead
 bb.a:
   %2 = alloca %"class.llvm::Twine", align 8       ; 6 uses
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca [17 x i8], align 16               ; 4 uses
+  %i.b = alloca [17 x i8], align 16               ; 3 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.c = and i32 %1, 49152
@@ -255,11 +255,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
+  %5 = zext i32 %1 to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1501)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19, !noalias !1501
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 17 ; 2 uses
-  %.not20 = icmp eq i32 %1, 0
-  br i1 %.not20, label %.thread18, label %.lr.ph.i.preheader
+  br label %.lr.ph.i
 
 .fold.split:                                      ; preds = %.preheader
   br label %bb.d
@@ -347,24 +347,14 @@ bb.d:                                             ; preds = %.preheader, %.fold.
   store i32 %i.o, ptr %0, align 8, !tbaa !41
   br label %bb.i
 
-.lr.ph.i.preheader:                               ; preds = %bb.c
-  %5 = zext i32 %1 to i64
-  br label %.lr.ph.i
-
-.thread18:                                        ; preds = %bb.c
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  store i8 48, ptr %6, align 16, !tbaa !35, !noalias !1501
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %.thread18
-  %.1.lcssa.i = phi ptr [ %6, %.thread18 ], [ %i.ac, %.lr.ph.i ] ; 3 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   store ptr %i.p, ptr %4, align 8, !tbaa !30, !alias.scope !1501
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 0, ptr %i.q, align 8, !tbaa !34, !alias.scope !1501
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19, !noalias !1501
   %i.r = ptrtoint ptr %i.j to i64
-  %i.s = ptrtoint ptr %.1.lcssa.i to i64
+  %i.s = ptrtoint ptr %i.ac to i64
   %i.t = sub i64 %i.r, %i.s                       ; 4 uses
   store i64 %i.t, ptr %i.a, align 8, !tbaa !37, !noalias !1501
   %i.u = icmp ugt i64 %i.t, 15
@@ -385,21 +375,21 @@ bb.e:                                             ; preds = %._crit_edge.i
   ]
 
 bb.f:                                             ; preds = %._crit_edge.i.i.i
-  %i.y = load i8, ptr %.1.lcssa.i, align 1, !tbaa !35, !noalias !1501
+  %i.y = load i8, ptr %i.ac, align 1, !tbaa !35, !noalias !1501
   store i8 %i.y, ptr %i.x, align 1, !tbaa !35
   br label %_ZN4llvm9utohexstrB5cxx11Embj.exit
 
 bb.g:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.x, ptr nonnull align 1 %.1.lcssa.i, i64 %i.t, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.ac, i64 %i.t, i1 false)
   br label %_ZN4llvm9utohexstrB5cxx11Embj.exit
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.020.i = phi i64 [ %i.ad, %.lr.ph.i ], [ %5, %.lr.ph.i.preheader ] ; 2 uses
-  %.118.i = phi ptr [ %i.ac, %.lr.ph.i ], [ %i.j, %.lr.ph.i.preheader ]
+.lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
+  %.020.i = phi i64 [ %i.ad, %.lr.ph.i ], [ %5, %bb.c ] ; 2 uses
+  %.118.i = phi ptr [ %i.ac, %.lr.ph.i ], [ %i.j, %bb.c ]
   %i.z = and i64 %.020.i, 15
   %i.aa = getelementptr inbounds nuw i8, ptr @_ZZN4llvm8hexdigitEjbE3LUT, i64 %i.z
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !35, !noalias !1501
-  %i.ac = getelementptr inbounds i8, ptr %.118.i, i64 -1 ; 3 uses
+  %i.ac = getelementptr inbounds i8, ptr %.118.i, i64 -1 ; 5 uses
   store i8 %i.ab, ptr %i.ac, align 1, !tbaa !35, !noalias !1501
   %i.ad = lshr i64 %.020.i, 4                     ; 2 uses
   %i.ae = icmp eq i64 %i.ad, 0

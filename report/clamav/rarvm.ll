@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.a
 bb.v:                                             ; preds = %bb.a
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.eo = load i32, ptr %i.en, align 8, !tbaa !15 ; 6 uses
+  %i.eo = load i32, ptr %i.en, align 8, !tbaa !15 ; 5 uses
   %i.ep = load i32, ptr %i.em, align 8, !tbaa !15 ; 2 uses
   %i.eq = add i32 %i.ep, -3                       ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -279,16 +279,12 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph328.1
   store i8 %i.fv, ptr %i.fx, align 1, !tbaa !16
   %indvars.iv.next374.1 = add nuw nsw i64 %indvars.iv373.1, 3 ; 2 uses
   %i.fy = icmp samesign ult i64 %indvars.iv.next374.1, %i.ex
-  br i1 %i.fy, label %.lr.ph328.1, label %._crit_edge329.1, !llvm.loop !24
+  br i1 %i.fy, label %.lr.ph328.1, label %.lr.ph328.2, !llvm.loop !24
 
-._crit_edge329.1:                                 ; preds = %bb.y
-  %.not419 = icmp eq i32 %i.eo, 2
-  br i1 %.not419, label %._crit_edge329.2, label %.lr.ph328.2
-
-.lr.ph328.2:                                      ; preds = %._crit_edge329.1, %bb.aa
-  %indvars.iv373.2 = phi i64 [ %indvars.iv.next374.2, %bb.aa ], [ 2, %._crit_edge329.1 ] ; 4 uses
-  %.0242326.2 = phi i32 [ %i.gq, %bb.aa ], [ 0, %._crit_edge329.1 ] ; 4 uses
-  %.1245325.2 = phi ptr [ %i.gm, %bb.aa ], [ %i.fs, %._crit_edge329.1 ] ; 2 uses
+.lr.ph328.2:                                      ; preds = %bb.y, %bb.aa
+  %indvars.iv373.2 = phi i64 [ %indvars.iv.next374.2, %bb.aa ], [ 2, %bb.y ] ; 4 uses
+  %.0242326.2 = phi i32 [ %i.gq, %bb.aa ], [ 0, %bb.y ] ; 4 uses
+  %.1245325.2 = phi ptr [ %i.gm, %bb.aa ], [ %i.fs, %bb.y ] ; 2 uses
   %.not.2 = icmp samesign ult i64 %indvars.iv373.2, %i.fb
   br i1 %.not.2, label %bb.aa, label %bb.z
 
@@ -328,7 +324,7 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph328.2
   %i.gs = icmp samesign ult i64 %indvars.iv.next374.2, %i.ex
   br i1 %i.gs, label %.lr.ph328.2, label %._crit_edge329.2, !llvm.loop !24
 
-._crit_edge329.2:                                 ; preds = %bb.aa, %._crit_edge329, %._crit_edge329.1
+._crit_edge329.2:                                 ; preds = %bb.aa, %._crit_edge329
   %i.gt = add nsw i32 %i.eo, -2                   ; 2 uses
   %i.gu = icmp ult i32 %i.es, %i.gt
   br i1 %i.gu, label %.lr.ph335.preheader, label %.thread

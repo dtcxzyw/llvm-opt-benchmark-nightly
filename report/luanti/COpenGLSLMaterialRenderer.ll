@@ -205,8 +205,8 @@ define noundef i32 @_ZN5video25COpenGLSLMaterialRenderer24getPixelShaderConstant
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !51   ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !50   ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !51
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !50   ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
@@ -217,17 +217,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %.not.i = icmp eq ptr %1, null
-  br i1 %.not.i, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
+  br i1 %.not.i, label %.lr.ph.split.us.preheader.split, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %wide.trip.count = and i64 %i.h, 4294967295
   br label %.lr.ph.split
 
-.lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %.not21.not.not = icmp eq ptr %i.c, %i.d
-  br i1 %.not21.not.not, label %.split.us, label %.lr.ph.split.us.preheader.split
-
-.lr.ph.split.us.preheader.split:                  ; preds = %.lr.ph.split.us.preheader
+.lr.ph.split.us.preheader.split:                  ; preds = %.lr.ph
   %i.j = add nsw i64 %i.h, 4294967295
   %i.k = and i64 %i.j, 4294967295
   %.not22.not = icmp ule i64 %i.k, %i.h
@@ -239,7 +235,7 @@ bb.a:
   %exitcond.not = icmp eq i64 %indvars.iv, %i.h
   br i1 %exitcond.not, label %.split.us, label %_ZN4core5arrayIN5video25COpenGLSLMaterialRenderer12SUniformInfoEEixEj.exit
 
-.split.us:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us.preheader
+.split.us:                                        ; preds = %.lr.ph.split
   tail call void @__assert_fail(ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.18, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN5video25COpenGLSLMaterialRenderer12SUniformInfoEEixEj) #25
   unreachable
 
@@ -292,8 +288,8 @@ define noundef i32 @_ZThn8_N5video25COpenGLSLMaterialRenderer24getPixelShaderCon
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !51   ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !50   ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !51
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !50   ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
@@ -304,13 +300,9 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %.not.i.i = icmp eq ptr %1, null
-  br i1 %.not.i.i, label %.lr.ph.split.us.preheader.i, label %.lr.ph.split.i
+  br i1 %.not.i.i, label %.lr.ph.split.us.preheader.split.i, label %.lr.ph.split.i
 
-.lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i
-  %.not21.not.not.i = icmp eq ptr %i.c, %i.d
-  br i1 %.not21.not.not.i, label %.split.us.i, label %.lr.ph.split.us.preheader.split.i
-
-.lr.ph.split.us.preheader.split.i:                ; preds = %.lr.ph.split.us.preheader.i
+.lr.ph.split.us.preheader.split.i:                ; preds = %.lr.ph.i
   %i.j = add nsw i64 %i.h, 4294967295
   %i.k = and i64 %i.j, 4294967295
   %.not22.not.i = icmp ule i64 %i.k, %i.h
@@ -322,7 +314,7 @@ bb.a:
   %exitcond.not.i = icmp eq i64 %indvars.iv.i, %i.h
   br i1 %exitcond.not.i, label %.split.us.i, label %_ZN4core5arrayIN5video25COpenGLSLMaterialRenderer12SUniformInfoEEixEj.exit.i
 
-.split.us.i:                                      ; preds = %.lr.ph.split.i, %.lr.ph.split.us.preheader.i
+.split.us.i:                                      ; preds = %.lr.ph.split.i
   tail call void @__assert_fail(ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.18, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIN5video25COpenGLSLMaterialRenderer12SUniformInfoEEixEj) #25
   unreachable
 

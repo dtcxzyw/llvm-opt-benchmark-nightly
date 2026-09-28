@@ -205,7 +205,7 @@ _ZN2cv3RNG7uniformEii.exit10.i:                   ; preds = %bb.gs, %_ZN2cv3RNG7
 _ZN2cvL17makeRandomPatternEiPNS_6Point_IiEEi.exit: ; preds = %_ZN2cv3RNG7uniformEii.exit10.i, %vector.body1015, %bb.gr
   %.0155 = phi ptr [ @_ZN2cvL15bit_pattern_31_E, %bb.gr ], [ %68, %vector.body1015 ], [ %68, %_ZN2cv3RNG7uniformEii.exit10.i ] ; 5 uses
   %i.aqi = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %i.aqj = load i32, ptr %i.aqi, align 4, !tbaa !34 ; 6 uses
+  %i.aqj = load i32, ptr %i.aqi, align 4, !tbaa !34 ; 5 uses
   %.off = add i32 %i.aqj, -2
   %switch = icmp ult i32 %.off, 3
   br i1 %switch, label %bb.gy, label %bb.gt
@@ -357,7 +357,6 @@ bb.hf:                                            ; preds = %bb.gy
 _ZNSt6vectorIN2cv6Point_IiEESaIS2_EE6resizeEm.exit.split.split.i: ; preds = %bb.hf
   %.pre793 = load ptr, ptr %67, align 8, !tbaa !71
   %i.asc = zext nneg i32 %i.aqj to i64
-  %exitcond57.not.i = icmp eq i32 %i.aqj, 1
   %exitcond57.not.i.2 = icmp eq i32 %i.aqj, 3
   br label %.preheader33.i
 
@@ -369,21 +368,18 @@ _ZNSt6vectorIN2cv6Point_IiEESaIS2_EE6resizeEm.exit.split.split.i: ; preds = %bb.
   %i.ase = and i64 %.sroa.031.049.i, 4294967295
   %i.asf = mul nuw i64 %i.ase, 4164903690
   %i.asg = lshr i64 %.sroa.031.049.i, 32
-  %i.ash = add nuw i64 %i.asf, %i.asg             ; 3 uses
+  %i.ash = add nuw i64 %i.asf, %i.asg             ; 2 uses
   %i.asi = and i64 %i.ash, 511
   %i.asj = getelementptr inbounds nuw [8 x i8], ptr %.0155, i64 %i.asi
   %i.ask = load i64, ptr %i.asj, align 8, !tbaa !12
   store i64 %i.ask, ptr %invariant.gep.i, align 4, !tbaa !12
-  br i1 %exitcond57.not.i, label %._crit_edge.i314, label %.lr.ph.us.i.preheader.1
-
-.lr.ph.us.i.preheader.1:                          ; preds = %.preheader33.i
   %.val.us.i.11090 = load i32, ptr %invariant.gep.i, align 4, !tbaa !179
   %75 = getelementptr i8, ptr %invariant.gep.i, i64 4
   %.val28.us.i.11091 = load i32, ptr %75, align 4
   br label %.lr.ph.us.i.1
 
-.lr.ph.us.i.1:                                    ; preds = %.lr.ph.us.i.1, %.lr.ph.us.i.preheader.1
-  %.sroa.031.2.us.i.1 = phi i64 [ %i.ash, %.lr.ph.us.i.preheader.1 ], [ %i.aso, %.lr.ph.us.i.1 ] ; 2 uses
+.lr.ph.us.i.1:                                    ; preds = %.lr.ph.us.i.1, %.preheader33.i
+  %.sroa.031.2.us.i.1 = phi i64 [ %i.ash, %.preheader33.i ], [ %i.aso, %.lr.ph.us.i.1 ] ; 2 uses
   %i.asl = and i64 %.sroa.031.2.us.i.1, 4294967295
   %i.asm = mul nuw i64 %i.asl, 4164903690
   %i.asn = lshr i64 %.sroa.031.2.us.i.1, 32
@@ -492,8 +488,8 @@ bb.hg:                                            ; preds = %.lr.ph.us.i.3
   store i64 %i.att, ptr %gep68.i.3, align 4, !tbaa !12
   br label %._crit_edge.i314
 
-._crit_edge.i314:                                 ; preds = %.split.us.i.3, %.split.us.i.2, %.preheader33.i
-  %.us-phi.i.lcssa = phi i64 [ %i.ash, %.preheader33.i ], [ %i.atq, %.split.us.i.3 ], [ %i.ata, %.split.us.i.2 ]
+._crit_edge.i314:                                 ; preds = %.split.us.i.3, %.split.us.i.2
+  %.us-phi.i.lcssa = phi i64 [ %i.atq, %.split.us.i.3 ], [ %i.ata, %.split.us.i.2 ]
   %indvars.iv.next59.i = add nuw nsw i64 %indvars.iv58.i, 1 ; 2 uses
   %exitcond61.not.i = icmp eq i64 %indvars.iv.next59.i, 128
   br i1 %exitcond61.not.i, label %_ZSt4copyIPKN2cv6Point_IiEESt20back_insert_iteratorISt6vectorIS2_SaIS2_EEEET0_T_SB_SA_.exit, label %.preheader33.i, !llvm.loop !131

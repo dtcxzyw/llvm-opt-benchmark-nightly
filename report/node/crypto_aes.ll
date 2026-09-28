@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
-  %i.d = load i64, ptr %i.a, align 8, !noalias !75 ; 4 uses
+  %i.d = load i64, ptr %i.a, align 8, !noalias !75 ; 3 uses
   %i.e = trunc i64 %i.d to i32
   %i.f = and i32 %i.e, 7                          ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
@@ -224,28 +224,26 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN4node6crypto12_GLOBAL__N_110GetCounterERKNS0_15AESCipherConfigE.exit
 
 _ZN4node6crypto12_GLOBAL__N_17CeilDivImEET_S3_S3_.exit.i: ; preds = %bb.b
-  %15 = icmp eq i64 %i.d, 0
   %i.q = add i64 %i.d, 34359738367
   %i.r = lshr i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 1
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.u = load i64, ptr %i.t, align 8, !noalias !75
   %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.u
-  %i.w = and i64 %i.s, 4294967295
-  %16 = select i1 %15, i64 0, i64 %i.w            ; 6 uses
-  %i.x = sub nsw i64 0, %16
+  %i.w = and i64 %i.s, 4294967295                 ; 6 uses
+  %i.x = sub nsw i64 0, %i.w
   %i.y = getelementptr inbounds i8, ptr %i.v, i64 %i.x ; 2 uses
-  %.not.i.i.i.i = icmp eq i64 %16, 0
+  %.not.i.i.i.i = icmp eq i64 %i.w, 0
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIhSaIhEED2Ev.exit.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
 
 _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i: ; preds = %_ZN4node6crypto12_GLOBAL__N_17CeilDivImEET_S3_S3_.exit.i
-  %i.z = call noalias noundef nonnull ptr @_Znwm(i64 noundef %16) #27, !noalias !75 ; 5 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %16 ; 2 uses
-  %.not.i = icmp eq i64 %16, 1
+  %i.z = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #27, !noalias !75 ; 5 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.w ; 2 uses
+  %.not.i = icmp eq i64 %i.w, 1
   br i1 %.not.i, label %bb.e, label %bb.d, !prof !34
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.z, ptr nonnull align 1 %i.y, i64 %16, i1 false), !noalias !75
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.z, ptr nonnull align 1 %i.y, i64 %i.w, i1 false), !noalias !75
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit.i
 
 bb.e:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i

@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   tail call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.au) #25, !noalias !398
   unreachable
 
-.lr.ph.i:                                         ; preds = %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i, %.backedge.i
+.lr.ph.i:                                         ; preds = %.backedge.i, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i
   %i.ay = phi ptr [ %i.db, %.backedge.i ], [ %i.am, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i ]
   %i.az = phi i64 [ %i.dc, %.backedge.i ], [ 0, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i ] ; 18 uses
   %.sroa.01.080.i = phi i64 [ %.sroa.01.0.be.i, %.backedge.i ], [ 0, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i ] ; 5 uses

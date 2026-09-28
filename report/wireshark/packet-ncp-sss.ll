@@ -202,19 +202,15 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %bb.g
-  %.0126.i = phi i32 [ 1, %bb.g ], [ %i.ap, %bb.i ] ; 4 uses
+  %.0126.i = phi i32 [ 1, %bb.g ], [ %i.ap, %bb.i ] ; 3 uses
   %.0116125.i = phi i32 [ 0, %bb.g ], [ %i.aq, %bb.i ]
   %.0118124.i = phi ptr [ @.str.103, %bb.g ], [ %.1119.i, %bb.i ] ; 2 uses
   %i.al = and i32 %.0126.i, %i.ak
   %.not121.i = icmp eq i32 %i.al, 0
-  br i1 %.not121.i, label %bb.i, label %4
+  br i1 %.not121.i, label %bb.i, label %.split.i
 
-4:                                                ; preds = %bb.h
-  %5 = call i64 @g_strlcat(ptr noundef nonnull %i.a, ptr noundef %.0118124.i, i64 noundef 1024) ; 0 uses
-  %.not122.i = icmp eq i32 %.0126.i, 0
-  br i1 %.not122.i, label %bb.i, label %.split.i
-
-.split.i:                                         ; preds = %4
+.split.i:                                         ; preds = %bb.h
+  %4 = call i64 @g_strlcat(ptr noundef nonnull %i.a, ptr noundef %.0118124.i, i64 noundef 1024) ; 0 uses
   %i.am = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0126.i, i1 true)
   %i.an = zext nneg i32 %i.am to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_sss_request, i64 %i.an
@@ -222,8 +218,8 @@ bb.h:                                             ; preds = %bb.i, %bb.g
   %i.ao = call i64 @g_strlcat(ptr noundef nonnull %i.a, ptr noundef nonnull %switch.load, i64 noundef 1024) ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %.split.i, %4, %bb.h
-  %.1119.i = phi ptr [ %.0118124.i, %bb.h ], [ @.str.104, %4 ], [ @.str.104, %.split.i ]
+bb.i:                                             ; preds = %.split.i, %bb.h
+  %.1119.i = phi ptr [ %.0118124.i, %bb.h ], [ @.str.104, %.split.i ]
   %i.ap = shl i32 %.0126.i, 1
   %i.aq = add nuw nsw i32 %.0116125.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.aq, 256

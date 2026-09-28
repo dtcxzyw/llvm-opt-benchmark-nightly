@@ -205,7 +205,7 @@ bb.a:
   %9 = alloca %"class.boost::system::error_code", align 8 ; 6 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !239  ; 7 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !239  ; 4 uses
   %i.c = and i64 %i.b, 1
   %.not.i.i = icmp eq i64 %i.c, 0
   br i1 %.not.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread128, label %bb.b
@@ -418,13 +418,11 @@ _ZN5boost6system10error_codeC2INS_4asio5error12basic_errorsEEET_PNSt9enable_ifIX
   br i1 %or.cond152, label %_ZNK5boost6system10error_code8categoryEv.exit.i49, label %_ZN5boost6systemeqERKNS0_10error_codeES3_.exit53.thread
 
 _ZNK5boost6system10error_code8categoryEv.exit.i49: ; preds = %_ZN5boost6system10error_codeC2INS_4asio5error12basic_errorsEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit42.thread
-  %cond143 = icmp eq i64 %i.b, 0
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.cj = load ptr, ptr %i.ci, align 8
-  %.0.i18.i50 = select i1 %cond143, ptr @_ZN5boost6system6detail17system_cat_holderIvE8instanceE, ptr %i.cj ; 2 uses
+  %i.cj = load ptr, ptr %i.ci, align 8            ; 2 uses
   %i.ck = icmp eq i64 %.pre158, 0
-  %i.cl = icmp eq ptr %.0.i18.i50, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
-  %i.cm = getelementptr inbounds nuw i8, ptr %.0.i18.i50, i64 8
+  %i.cl = icmp eq ptr %i.cj, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
   %i.cn = load i64, ptr %i.cm, align 8
   %i.co = icmp eq i64 %i.cn, %.pre158
   %i.cp = select i1 %i.ck, i1 %i.cl, i1 %i.co
@@ -450,13 +448,11 @@ _ZN5boost6system10error_codeC2INS_4asio5error12basic_errorsEEET_PNSt9enable_ifIX
   br i1 %or.cond154, label %_ZNK5boost6system10error_code8categoryEv.exit.i64, label %_ZN5boost6systemeqERKNS0_10error_codeES3_.exit68.thread
 
 _ZNK5boost6system10error_code8categoryEv.exit.i64: ; preds = %_ZN5boost6system10error_codeC2INS_4asio5error12basic_errorsEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit57.thread
-  %cond142 = icmp eq i64 %i.b, 0
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.cx = load ptr, ptr %i.cw, align 8
-  %.0.i18.i65 = select i1 %cond142, ptr @_ZN5boost6system6detail17system_cat_holderIvE8instanceE, ptr %i.cx ; 2 uses
+  %i.cx = load ptr, ptr %i.cw, align 8            ; 2 uses
   %i.cy = icmp eq i64 %.pre159, 0
-  %i.cz = icmp eq ptr %.0.i18.i65, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
-  %i.da = getelementptr inbounds nuw i8, ptr %.0.i18.i65, i64 8
+  %i.cz = icmp eq ptr %i.cx, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
+  %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.db = load i64, ptr %i.da, align 8
   %i.dc = icmp eq i64 %i.db, %.pre159
   %i.dd = select i1 %i.cy, i1 %i.cz, i1 %i.dc
@@ -482,13 +478,11 @@ _ZN5boost6system10error_codeC2INS_4asio5error12basic_errorsEEET_PNSt9enable_ifIX
   br i1 %or.cond156, label %_ZNK5boost6system10error_code8categoryEv.exit.i79, label %_ZN5boost6systemeqERKNS0_10error_codeES3_.exit83.thread
 
 _ZNK5boost6system10error_code8categoryEv.exit.i79: ; preds = %_ZN5boost6system10error_codeC2INS_4asio5error12basic_errorsEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit72.thread
-  %cond = icmp eq i64 %i.b, 0
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.dl = load ptr, ptr %i.dk, align 8
-  %.0.i18.i80 = select i1 %cond, ptr @_ZN5boost6system6detail17system_cat_holderIvE8instanceE, ptr %i.dl ; 2 uses
+  %i.dl = load ptr, ptr %i.dk, align 8            ; 2 uses
   %i.dm = icmp eq i64 %.pre160, 0
-  %i.dn = icmp eq ptr %.0.i18.i80, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
-  %i.do = getelementptr inbounds nuw i8, ptr %.0.i18.i80, i64 8
+  %i.dn = icmp eq ptr %i.dl, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
+  %i.do = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
   %i.dp = load i64, ptr %i.do, align 8
   %i.dq = icmp eq i64 %i.dp, %.pre160
   %i.dr = select i1 %i.dm, i1 %i.dn, i1 %i.dq

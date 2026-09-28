@@ -204,18 +204,18 @@ bb.a:
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82: ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 4448 ; 4 uses
-  %.sroa.0249.0.copyload = load double, ptr %i.q, align 8, !tbaa !113
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4456 ; 4 uses
-  %.sroa.15.0.copyload.a = load double, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !113 ; 3 uses
+  %.sroa.15.0.copyload = load double, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !113 ; 3 uses
+  %.sroa.15.0.copyload.a = load double, ptr %i.q, align 8, !tbaa !113
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.pre = load double, ptr %i.r, align 8, !tbaa !25
-  %i.s = fadd double %.sroa.0249.0.copyload, %.pre ; 3 uses
+  %i.s = fadd double %.sroa.15.0.copyload.a, %.pre ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.pre298 = load double, ptr %i.u, align 8, !tbaa !25
   %i.v = load double, ptr %i.t, align 8, !tbaa !25
   %i.w = fadd double %i.s, %i.v                   ; 2 uses
-  %i.x = fadd double %.sroa.15.0.copyload.a, %.pre298 ; 3 uses
+  %i.x = fadd double %.sroa.15.0.copyload, %.pre298 ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre299 = load double, ptr %i.y, align 8, !tbaa !25
   %i.z = fadd double %i.x, %.pre299               ; 2 uses
@@ -242,7 +242,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN3CFF12i
   %.sroa.0238.0279 = phi double [ %i.w, %.lr.ph ], [ %i.ew, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ] ; 5 uses
   %.sroa.17.0278 = phi double [ %i.x, %.lr.ph ], [ %i.ex, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ] ; 2 uses
   %.sroa.0249.0277 = phi double [ %i.s, %.lr.ph ], [ %i.en, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
-  %.sroa.15.0276 = phi double [ %.sroa.15.0.copyload.a, %.lr.ph ], [ %i.co, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
+  %.sroa.15.0276 = phi double [ %.sroa.15.0.copyload, %.lr.ph ], [ %i.co, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %i.al = load ptr, ptr %i.aa, align 8, !tbaa !126 ; 2 uses
   %.not.i = icmp eq ptr %i.al, null
   %i.am = insertelement <2 x double> poison, double %.sroa.0249.0277, i64 0
@@ -531,7 +531,7 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106: ; preds = %bb.y, %bb.z
   br i1 %.not73, label %._crit_edge, label %bb.b, !llvm.loop !238
 
 ._crit_edge:                                      ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82
-  %.sroa.15.0.lcssa = phi double [ %.sroa.15.0.copyload.a, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.co, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
+  %.sroa.15.0.lcssa = phi double [ %.sroa.15.0.copyload, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.co, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %.sroa.0249.0.lcssa = phi double [ %i.s, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.en, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %.sroa.17.0.lcssa = phi double [ %i.x, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.ex, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ]
   %.sroa.0238.0.lcssa = phi double [ %i.w, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit82 ], [ %i.ew, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit106 ] ; 3 uses

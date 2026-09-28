@@ -205,9 +205,9 @@ define void @Cnf_AddCardinConstrGeneral(ptr noundef %0, ptr nofree noundef reado
   br label %._crit_edge99
 
 .lr.ph98:                                         ; preds = %.critedge
-  %i.k = getelementptr i8, ptr %1, i64 8          ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.m = getelementptr i8, ptr %1, i64 8          ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 12
@@ -224,7 +224,7 @@ define void @Cnf_AddCardinConstrGeneral(ptr noundef %0, ptr nofree noundef reado
   br label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph98, %bb.m
-  %indvars.iv103 = phi i64 [ 0, %.lr.ph98 ], [ %indvars.iv.next104, %bb.m ] ; 7 uses
+  %indvars.iv103 = phi i64 [ 0, %.lr.ph98 ], [ %indvars.iv.next104, %bb.m ] ; 6 uses
   %.197 = phi i32 [ 0, %.lr.ph98 ], [ %i.dg, %bb.m ] ; 2 uses
   %i.z = and i32 %.197, 1
   %i.aa = zext nneg i32 %i.z to i64
@@ -236,28 +236,18 @@ bb.a:                                             ; preds = %.lr.ph98, %bb.m
   %i.ag = trunc nuw nsw i64 %indvars.iv103 to i32
   %i.ah = and i32 %i.ag, 1                        ; 3 uses
   %.not75 = icmp eq i32 %i.ah, 0
-  br i1 %.not75, label %bb.c, label %4
+  br i1 %.not75, label %bb.c, label %Cnf_AddCardinVar.exit
 
-4:                                                ; preds = %bb.a
-  %.not.i = icmp eq i64 %indvars.iv103, 0
-  %5 = trunc nsw i64 %i.ad to i32
-  br i1 %.not.i, label %6, label %Cnf_AddCardinVar.exit
-
-6:                                                ; preds = %4
-  %.val.i = load ptr, ptr %i.k, align 8, !tbaa !42
-  %7 = load i32, ptr %.val.i, align 4, !tbaa !40
-  br label %Cnf_AddCardinVar.exit
-
-Cnf_AddCardinVar.exit:                            ; preds = %4, %6
-  %8 = phi i32 [ %7, %6 ], [ %5, %4 ]
+Cnf_AddCardinVar.exit:                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #25
   %i.ai = shl nsw i64 %i.af, 1                    ; 2 uses
   %i.aj = trunc nsw i64 %i.ai to i32
   store i32 %i.aj, ptr %i.d, align 4, !tbaa !40
-  %9 = shl nsw i32 %8, 1                          ; 2 uses
-  %i.ak = or disjoint i32 %9, 1
-  store i32 %i.ak, ptr %i.l, align 4, !tbaa !40
-  %i.al = call i32 @sat_solver_addclause(ptr noundef %0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.m) #25
+  %4 = shl nsw i64 %i.ad, 1                       ; 2 uses
+  %5 = trunc i64 %4 to i32
+  %i.ak = or disjoint i32 %5, 1
+  store i32 %i.ak, ptr %i.k, align 4, !tbaa !40
+  %i.al = call i32 @sat_solver_addclause(ptr noundef %0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.l) #25
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %sat_solver_add_buffer.exit, label %bb.b
 
@@ -265,8 +255,9 @@ bb.b:                                             ; preds = %Cnf_AddCardinVar.ex
   %i.an = trunc i64 %i.ai to i32
   %i.ao = or disjoint i32 %i.an, 1
   store i32 %i.ao, ptr %i.d, align 4, !tbaa !40
-  store i32 %9, ptr %i.l, align 4, !tbaa !40
-  %i.ap = call i32 @sat_solver_addclause(ptr noundef %0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.m) #25 ; 0 uses
+  %6 = trunc nsw i64 %4 to i32
+  store i32 %6, ptr %i.k, align 4, !tbaa !40
+  %i.ap = call i32 @sat_solver_addclause(ptr noundef %0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.l) #25 ; 0 uses
   br label %sat_solver_add_buffer.exit
 
 sat_solver_add_buffer.exit:                       ; preds = %Cnf_AddCardinVar.exit, %bb.b
@@ -297,7 +288,7 @@ bb.e:                                             ; preds = %bb.d
   br label %Cnf_AddCardinVar.exit83
 
 bb.f:                                             ; preds = %bb.d
-  %.val.i79 = load ptr, ptr %i.k, align 8, !tbaa !42 ; 2 uses
+  %.val.i79 = load ptr, ptr %i.m, align 8, !tbaa !42 ; 2 uses
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %.val.i79, i64 %indvars.iv100
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !40
   %i.bb = zext nneg i32 %i.au to i64
@@ -337,7 +328,7 @@ bb.g:                                             ; preds = %Cnf_AddCardinVar.ex
   br label %Cnf_AddCardinVar.exit89
 
 bb.h:                                             ; preds = %Cnf_AddCardinVar.exit83
-  %.val.i85 = load ptr, ptr %i.k, align 8, !tbaa !42 ; 2 uses
+  %.val.i85 = load ptr, ptr %i.m, align 8, !tbaa !42 ; 2 uses
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %.val.i85, i64 %indvars.iv100
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !40
   %i.bw = zext nneg i32 %i.au to i64
@@ -393,7 +384,7 @@ bb.j:                                             ; preds = %bb.i
   br label %Cnf_AddCardinVar.exit92
 
 bb.k:                                             ; preds = %bb.i
-  %.val.i91 = load ptr, ptr %i.k, align 8, !tbaa !42
+  %.val.i91 = load ptr, ptr %i.m, align 8, !tbaa !42
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %.val.i91, i64 %i.u
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !40
   br label %Cnf_AddCardinVar.exit92

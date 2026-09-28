@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %xdr_set_scratch_fol
   %.val.i = load i64, ptr %i.v, align 1           ; 2 uses
   %i.w = call i64 @llvm.bswap.i64(i64 %.val.i)
   %i.x = getelementptr i8, ptr %i.v, i64 8
-  %i.y = load i32, ptr %i.x, align 4              ; 2 uses
+  %i.y = load i32, ptr %i.x, align 4
   %i.z = call i32 @llvm.bswap.i32(i32 %i.y)       ; 3 uses
   %i.aa = add i32 %i.z, -4097
   %or.cond = icmp ult i32 %i.aa, -4096
@@ -217,17 +217,13 @@ _kzalloc_noprof.exit:                             ; preds = %bb.d
   %i.ad = zext nneg i32 %narrow to i64
   %i.ae = call noalias align 8 ptr @__kmalloc_noprof(i64 noundef %i.ad, i32 noundef range(i32 256, 0) %i.ab) #22 ; 10 uses
   %.not202 = icmp eq ptr %i.ae, null
-  br i1 %.not202, label %_ff_layout_free_lseg.exit, label %5
+  br i1 %.not202, label %_ff_layout_free_lseg.exit, label %.lr.ph299
 
-5:                                                ; preds = %_kzalloc_noprof.exit
-  %6 = getelementptr i8, ptr %i.ae, i64 108       ; 7 uses
-  store i32 %i.z, ptr %6, align 4
-  %7 = getelementptr i8, ptr %i.ae, i64 96
-  store i64 %i.w, ptr %7, align 8
-  %.not304 = icmp eq i32 %i.y, 0
-  br i1 %.not304, label %._crit_edge300, label %.lr.ph299
-
-.lr.ph299:                                        ; preds = %5
+.lr.ph299:                                        ; preds = %_kzalloc_noprof.exit
+  %5 = getelementptr i8, ptr %i.ae, i64 108       ; 7 uses
+  store i32 %i.z, ptr %5, align 4
+  %6 = getelementptr i8, ptr %i.ae, i64 96
+  store i64 %i.w, ptr %6, align 8
   %i.af = icmp eq i64 %.val.i, 0
   %i.ag = and i32 %2, 17
   %i.ah = icmp eq i32 %i.ag, 0
@@ -552,11 +548,11 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
 bb.ai:                                            ; preds = %._crit_edge295, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   %i.ex = add nuw i32 %.0173297, 1                ; 2 uses
-  %i.ey = load i32, ptr %6, align 4
+  %i.ey = load i32, ptr %5, align 4
   %i.ez = icmp ult i32 %i.ex, %i.ey
   br i1 %i.ez, label %bb.e, label %._crit_edge300, !llvm.loop !45
 
-._crit_edge300:                                   ; preds = %bb.ai, %5
+._crit_edge300:                                   ; preds = %bb.ai
   %i.fa = call ptr @xdr_inline_decode(ptr noundef nonnull %3, i64 noundef 4) #19 ; 2 uses
   %.not203 = icmp eq ptr %i.fa, null
   br i1 %.not203, label %thread-pre-split, label %bb.aj
@@ -581,7 +577,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %.not205, label %thread-pre-split, label %.preheader
 
 .preheader:                                       ; preds = %bb.al
-  %i.fh = load i32, ptr %6, align 4               ; 6 uses
+  %i.fh = load i32, ptr %5, align 4               ; 6 uses
   %.not307 = icmp eq i32 %i.fh, 0
   br i1 %.not307, label %.lr.ph32.i, label %.lr.ph302
 
@@ -635,7 +631,7 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph302.n
   br i1 %niter.ncmp.3.not, label %.loopexit.loopexit.unr-lcssa, label %bb.am, !llvm.loop !46
 
 thread-pre-split:                                 ; preds = %._crit_edge300, %bb.al
-  %.pr = load i32, ptr %6, align 4
+  %.pr = load i32, ptr %5, align 4
   br label %.loopexit
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.am
@@ -841,7 +837,7 @@ ff_mirror_efficiency_sum.exit28.i:                ; preds = %bb.at, %ff_mirror_e
 bb.au:                                            ; preds = %ff_mirror_efficiency_sum.exit28.i
   store ptr %i.ii, ptr %i.hd, align 8
   store ptr %i.hg, ptr %i.ih, align 8
-  %.pre.i = load i32, ptr %6, align 4             ; 2 uses
+  %.pre.i = load i32, ptr %5, align 4             ; 2 uses
   br label %ff_mirror_efficiency_sum.exit28.thread.i
 
 ff_mirror_efficiency_sum.exit28.thread.i:         ; preds = %bb.au, %ff_mirror_efficiency_sum.exit28.i, %ff_mirror_efficiency_sum.exit.i
@@ -867,7 +863,7 @@ bb.av:                                            ; preds = %ff_layout_sort_mirr
 .critedge:                                        ; preds = %bb.g, %bb.h, %bb.e, %bb.z, %bb.y, %bb.x, %decode_name.exit, %bb.w, %bb.v, %bb.u, %bb.t, %bb.l, %bb.n, %bb.o, %_kzalloc_noprof.exit231, %.lr.ph, %bb.ac, %bb.m, %bb.r, %.preheader271, %bb.q, %ff_layout_alloc_mirror.exit.thread
   %.1175.ph = phi i64 [ -12, %ff_layout_alloc_mirror.exit.thread ], [ -105, %bb.m ], [ -75, %bb.q ], [ -105, %bb.r ], [ -105, %.preheader271 ], [ -105, %bb.y ], [ -105, %decode_name.exit ], [ -22, %bb.u ], [ -105, %bb.v ], [ -105, %bb.t ], [ -22, %bb.z ], [ -22, %bb.x ], [ -5, %bb.l ], [ -5, %bb.n ], [ -22, %bb.o ], [ -12, %_kzalloc_noprof.exit231 ], [ -22, %bb.w ], [ -105, %.lr.ph ], [ -12, %bb.ac ], [ -5, %bb.e ], [ -5, %bb.h ], [ -5, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
-  %i.jq = load i32, ptr %6, align 4
+  %i.jq = load i32, ptr %5, align 4
   %.not.i.i245 = icmp eq i32 %i.jq, 0
   br i1 %.not.i.i245, label %ff_layout_free_mirror_array.exit.i, label %.lr.ph.i.i246
 
@@ -899,7 +895,7 @@ bb.az:                                            ; preds = %bb.aw
 
 ff_layout_put_mirror.exit.i.i:                    ; preds = %bb.az, %bb.ay, %bb.ax, %.lr.ph.i.i246
   %indvars.iv.next.i.i249 = add nuw nsw i64 %indvars.iv.i.i247, 1 ; 2 uses
-  %i.jx = load i32, ptr %6, align 4
+  %i.jx = load i32, ptr %5, align 4
   %i.jy = zext i32 %i.jx to i64
   %i.jz = icmp samesign ult i64 %indvars.iv.next.i.i249, %i.jy
   br i1 %i.jz, label %.lr.ph.i.i246, label %ff_layout_free_mirror_array.exit.i, !llvm.loop !0

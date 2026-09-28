@@ -200,7 +200,7 @@ define hidden void @_ZN8rawspeed17NikonDecompressor11createCurveERNS_10ByteStrea
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.h, align 8
   %i.i = shl nuw nsw i64 %i.g, 1
-  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #23 ; 32 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #23 ; 27 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !15
   %i.k = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.g
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -603,11 +603,7 @@ bb.n:                                             ; preds = %.thread
 bb.o:                                             ; preds = %bb.n
   %i.hg = sub nuw nsw i64 %i.he, %i.u
   invoke void @_ZNSt6vectorItSaItEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.hg)
-          to label %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge unwind label %bb.d
-
-._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge:    ; preds = %bb.o
-  %.pre127.pre = load ptr, ptr %0, align 8
-  br label %.lr.ph102
+          to label %.lr.ph102 unwind label %bb.d
 
 bb.p:                                             ; preds = %bb.n
   %i.hh = icmp samesign ugt i64 %i.u, %i.he
@@ -622,11 +618,11 @@ _ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.q
   store ptr %i.hi, ptr %i.v, align 8, !tbaa !19
   br label %.lr.ph102
 
-.lr.ph102:                                        ; preds = %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i, %bb.q, %bb.p, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge
-  %.pre126 = phi ptr [ %.pre127.pre, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.j, %bb.p ], [ %i.j, %bb.q ], [ %i.j, %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i ] ; 2 uses
+.lr.ph102:                                        ; preds = %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i, %bb.q, %bb.p, %bb.o
   %i.hj = load i32, ptr %i.aj, align 8, !tbaa !30 ; 3 uses
   %i.hk = zext i32 %i.hj to i64
   %i.hl = icmp sgt i32 %i.hj, -1
+  %6 = load ptr, ptr %0, align 8
   %wide.trip.count = zext nneg i16 %spec.select.i.i.i.i.i.i to i64
   %.pre = load i32, ptr %i.af, align 8, !tbaa !29
   br label %bb.r
@@ -659,7 +655,7 @@ bb.t:                                             ; preds = %bb.r
   %i.hv = tail call i16 @llvm.bswap.i16(i16 %.0.copyload.i.i.i.i.i.i90)
   %spec.select.i.i.i.i.i.i91 = select i1 %i.hq, i16 %.0.copyload.i.i.i.i.i.i90, i16 %i.hv
   store i32 %i.hs, ptr %i.af, align 8, !tbaa !29
-  %i.hw = getelementptr inbounds nuw [2 x i8], ptr %.pre126, i64 %indvars.iv
+  %i.hw = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv
   store i16 %spec.select.i.i.i.i.i.i91, ptr %i.hw, align 2, !tbaa !18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond116.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -671,9 +667,9 @@ bb.u:                                             ; preds = %bb.s
   br label %bb.x
 
 .loopexit:                                        ; preds = %bb.t, %bb.m, %bb.l
-  %6 = phi ptr [ %i.j, %bb.m ], [ %i.j, %bb.l ], [ %.pre126, %bb.t ] ; 3 uses
-  %i.hy = load ptr, ptr %i.v, align 8, !tbaa !19  ; 3 uses
-  %i.hz = icmp eq ptr %i.hy, %6
+  %7 = load ptr, ptr %i.v, align 8, !tbaa !19     ; 3 uses
+  %i.hy = load ptr, ptr %0, align 8, !tbaa !15    ; 3 uses
+  %i.hz = icmp eq ptr %7, %i.hy
   br i1 %i.hz, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.loopexit
@@ -681,12 +677,12 @@ bb.v:                                             ; preds = %.loopexit
           to label %_ZNSt6vectorItSaItEE6resizeEm.exit97 unwind label %bb.d
 
 bb.w:                                             ; preds = %.loopexit
-  %i.ia = ptrtoint ptr %i.hy to i64
-  %i.ib = ptrtoint ptr %6 to i64
+  %i.ia = ptrtoint ptr %7 to i64
+  %i.ib = ptrtoint ptr %i.hy to i64
   %i.ic = sub i64 %i.ia, %i.ib
-  %i.id = getelementptr i8, ptr %6, i64 %i.ic
+  %i.id = getelementptr i8, ptr %i.hy, i64 %i.ic
   %i.ie = getelementptr i8, ptr %i.id, i64 -2     ; 2 uses
-  %.not.i.i94 = icmp eq ptr %i.hy, %i.ie
+  %.not.i.i94 = icmp eq ptr %7, %i.ie
   br i1 %.not.i.i94, label %_ZNSt6vectorItSaItEE6resizeEm.exit97, label %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i95
 
 _ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i95:      ; preds = %bb.w

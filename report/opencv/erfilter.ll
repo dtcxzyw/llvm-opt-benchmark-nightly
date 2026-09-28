@@ -205,25 +205,17 @@ bb.ck:                                            ; preds = %.loopexit795, %.loo
 
 ._crit_edge945:                                   ; preds = %_ZN2cv4text8HClusterD2Ev.exit, %bb.a
   %i.rl = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.rm = load ptr, ptr %i.rl, align 8, !tbaa !264 ; 2 uses
-  %i.rn = load ptr, ptr %6, align 8, !tbaa !263   ; 2 uses
+  %i.rm = load ptr, ptr %i.rl, align 8, !tbaa !264
+  %i.rn = load ptr, ptr %6, align 8, !tbaa !263
   %i.ro = ptrtoint ptr %i.rm to i64
   %i.rp = ptrtoint ptr %i.rn to i64
   %i.rq = sub i64 %i.ro, %i.rp
-  %i.rr = sdiv exact i64 %i.rq, 160               ; 2 uses
+  %i.rr = sdiv exact i64 %i.rq, 160
   %i.rs = trunc i64 %i.rr to i32
   %i.rt = icmp sgt i32 %i.rs, 0
-  br i1 %i.rt, label %13, label %._crit_edge958
+  br i1 %i.rt, label %_ZNSt6vectorIN2cv4text8HClusterESaIS2_EE2atEm.exit458, label %._crit_edge958
 
-13:                                               ; preds = %._crit_edge945
-  %.not.i.i455.not = icmp eq ptr %i.rm, %i.rn
-  br i1 %.not.i.i455.not, label %14, label %_ZNSt6vectorIN2cv4text8HClusterESaIS2_EE2atEm.exit458
-
-14:                                               ; preds = %13
-  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.47, i64 noundef 0, i64 noundef %i.rr) #35
-  unreachable
-
-_ZNSt6vectorIN2cv4text8HClusterESaIS2_EE2atEm.exit458: ; preds = %13
+_ZNSt6vectorIN2cv4text8HClusterESaIS2_EE2atEm.exit458: ; preds = %._crit_edge945
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #34
   %i.ru = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   store ptr %i.ru, ptr %8, align 8, !tbaa !132

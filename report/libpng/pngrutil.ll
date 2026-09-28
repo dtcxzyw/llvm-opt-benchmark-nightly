@@ -205,15 +205,12 @@ png_crc_read.exit:                                ; preds = %bb.a, %bb.b
   %i.h = sub nuw i32 %2, %spec.select             ; 3 uses
   store i32 %i.h, ptr %i.a, align 4, !tbaa !45
   %i.i = icmp ult i32 %i.h, 11
-  br i1 %i.i, label %.thread146, label %.preheader
+  br i1 %i.i, label %.thread146, label %.lr.ph.preheader
 
-.preheader:                                       ; preds = %png_crc_read.exit
-  %invariant.umin = call i32 @llvm.umin.i32(i32 %2, i32 80) ; 3 uses
-  %or.cond123171.not = icmp eq i32 %2, 0
-  br i1 %or.cond123171.not, label %.thread155, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %invariant.umin to i64 ; 3 uses
+.lr.ph.preheader:                                 ; preds = %png_crc_read.exit
+  %3 = call i32 @llvm.umax.i32(i32 %2, i32 1)
+  %umax = call i32 @llvm.umin.i32(i32 %3, i32 80) ; 3 uses
+  %wide.trip.count = zext nneg i32 %umax to i64   ; 3 uses
   %min.iters.check = icmp ult i32 %2, 16
   br i1 %min.iters.check, label %.lr.ph.preheader187, label %vector.ph
 
@@ -317,7 +314,7 @@ bb.c:                                             ; preds = %.lr.ph
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %middle.block, %.critedge.split.loop.exit
-  %.084.lcssa = phi i32 [ %i.ag, %.critedge.split.loop.exit ], [ %invariant.umin, %middle.block ], [ %invariant.umin, %bb.c ] ; 3 uses
+  %.084.lcssa = phi i32 [ %i.ag, %.critedge.split.loop.exit ], [ %umax, %middle.block ], [ %umax, %bb.c ] ; 3 uses
   %i.ah = add nsw i32 %.084.lcssa, -1
   %or.cond = icmp ult i32 %i.ah, 79
   br i1 %or.cond, label %bb.d, label %.thread155
@@ -522,8 +519,8 @@ bb.u:                                             ; preds = %bb.q, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   br label %bb.v
 
-.thread155:                                       ; preds = %.critedge, %bb.d, %bb.e, %bb.t, %.preheader, %.thread160, %.thread164
-  %.9144159 = phi ptr [ %i.dd, %.thread160 ], [ %.595.ph.ph, %.thread164 ], [ @.str.36, %.critedge ], [ @.str.35, %bb.e ], [ @.str.35, %bb.d ], [ %i.dg, %bb.t ], [ @.str.36, %.preheader ] ; 2 uses
+.thread155:                                       ; preds = %.critedge, %bb.d, %bb.e, %bb.t, %.thread160, %.thread164
+  %.9144159 = phi ptr [ %i.dd, %.thread160 ], [ %.595.ph.ph, %.thread164 ], [ @.str.36, %.critedge ], [ @.str.35, %bb.e ], [ @.str.35, %bb.d ], [ %i.dg, %bb.t ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   %i.dm = load i32, ptr %i.a, align 4, !tbaa !45
   %i.dn = call fastcc range(i32 0, 2) i32 @png_crc_finish_critical(ptr noundef %0, i32 noundef %i.dm, i32 noundef 0) ; 0 uses

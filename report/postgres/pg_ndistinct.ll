@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.f
 
 list_length.exit:                                 ; preds = %bb.i
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
-  %i.ac = load i32, ptr %i.ab, align 4            ; 10 uses
+  %i.ac = load i32, ptr %i.ab, align 4            ; 9 uses
   %i.ad = add i32 %i.ac, -9
   %or.cond = icmp ult i32 %i.ad, -7
   br i1 %or.cond, label %list_length.exit.thread, label %.lr.ph.preheader
@@ -236,17 +236,26 @@ bb.j:                                             ; preds = %list_length.exit.th
   %i.as = load i32, ptr %i.ar, align 8
   %i.at = sitofp i32 %i.as to double
   store double %i.at, ptr %i.al, align 8
+  %1 = load ptr, ptr %i.z, align 8
+  %2 = getelementptr i8, ptr %1, i64 16
+  %.val = load ptr, ptr %2, align 8
+  %3 = load i32, ptr %.val, align 8
+  %4 = trunc i32 %3 to i16
+  %5 = load ptr, ptr %i.aq, align 8
+  store i16 %4, ptr %5, align 2
   %i.au = load ptr, ptr %i.z, align 8
   %i.av = getelementptr i8, ptr %i.au, i64 16
   %.val.a = load ptr, ptr %i.av, align 8
-  %i.aw = load i32, ptr %.val.a, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %.val.a, i64 8
+  %i.aw = load i32, ptr %6, align 8
   %i.ax = trunc i32 %i.aw to i16
   %i.ay = load ptr, ptr %i.aq, align 8
-  store i16 %i.ax, ptr %i.ay, align 2
-  %exitcond.not = icmp eq i32 %i.ac, 1
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.1
+  %7 = getelementptr inbounds nuw i8, ptr %i.ay, i64 2
+  store i16 %i.ax, ptr %7, align 2
+  %exitcond.not = icmp eq i32 %i.ac, 2
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.2
 
-._crit_edge:                                      ; preds = %.lr.ph.7, %.lr.ph.6, %.lr.ph.5, %.lr.ph.4, %.lr.ph.3, %.lr.ph.2, %.lr.ph.1, %.lr.ph.preheader
+._crit_edge:                                      ; preds = %.lr.ph.7, %.lr.ph.6, %.lr.ph.5, %.lr.ph.4, %.lr.ph.3, %.lr.ph.2, %.lr.ph.preheader
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ba = load ptr, ptr %i.az, align 8
   %i.bb = tail call ptr @lappend(ptr noundef %i.ba, ptr noundef nonnull %i.al) #7
@@ -260,20 +269,7 @@ bb.j:                                             ; preds = %list_length.exit.th
   store i32 1, ptr %i.a, align 8
   br label %bb.k
 
-.lr.ph.1:                                         ; preds = %.lr.ph.preheader
-  %1 = load ptr, ptr %i.z, align 8
-  %2 = getelementptr i8, ptr %1, i64 16
-  %.val.1 = load ptr, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %.val.1, i64 8
-  %4 = load i32, ptr %3, align 8
-  %5 = trunc i32 %4 to i16
-  %6 = load ptr, ptr %i.aq, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 2
-  store i16 %5, ptr %7, align 2
-  %exitcond.not.1 = icmp eq i32 %i.ac, 2
-  br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.2
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
+.lr.ph.2:                                         ; preds = %.lr.ph.preheader
   %i.bd = load ptr, ptr %i.z, align 8
   %i.be = getelementptr i8, ptr %i.bd, i64 16
   %.val.2 = load ptr, ptr %i.be, align 8

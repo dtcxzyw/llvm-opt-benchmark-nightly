@@ -205,27 +205,23 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store i64 %2, ptr %i.e, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.m, ptr %i.o, align 8
-  %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
   %i.q = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %2
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit"
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.9.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.9, i64 7 ; 3 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit"
-  %.sroa.016.043 = phi ptr [ %1, %.lr.ph ], [ %i.t, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ] ; 11 uses
-  %.sroa.7.041 = phi i64 [ 0, %.lr.ph ], [ %i.u, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ] ; 3 uses
-  %.sroa.10.040 = phi i64 [ %2, %.lr.ph ], [ %i.r, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ]
+bb.d:                                             ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit", %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit"
+  %.sroa.016.043 = phi ptr [ %1, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit" ], [ %i.t, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ] ; 11 uses
+  %.sroa.7.041 = phi i64 [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit" ], [ %i.u, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ] ; 3 uses
+  %.sroa.10.040 = phi i64 [ %2, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit" ], [ %i.r, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ]
   %i.r = add nsw i64 %.sroa.10.040, -1            ; 2 uses
   %i.s = icmp eq ptr %.sroa.016.043, %i.q
   br i1 %i.s, label %.thread, label %bb.e
 
-.thread:                                          ; preds = %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit", %bb.d, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.thread", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit"
-  %5 = phi ptr [ %i.l, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.thread" ], [ %i.p, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit" ], [ %i.p, %bb.d ], [ %i.p, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ]
-  store i64 %2, ptr %5, align 8
+.thread:                                          ; preds = %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit", %bb.d, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.thread"
+  %4 = phi ptr [ %i.l, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.thread" ], [ %i.p, %bb.d ], [ %i.p, %"_ZN63_$LT$serde_json..value..Value$u20$as$u20$core..clone..Clone$GT$5clone17h627f2ce74479242dE.exit" ]
+  store i64 %2, ptr %4, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   ret void
@@ -296,7 +292,7 @@ bb.j:                                             ; preds = %bb.e
 
 bb.k:                                             ; preds = %bb.j
   store ptr null, ptr %i.a, align 8, !alias.scope !111162, !noalias !111163
-  store i64 0, ptr %4, align 8, !alias.scope !111162, !noalias !111163
+  store i64 0, ptr %3, align 8, !alias.scope !111162, !noalias !111163
   br label %.noexc13
 
 bb.l:                                             ; preds = %bb.j

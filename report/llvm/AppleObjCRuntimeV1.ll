@@ -202,7 +202,7 @@ _ZNSt12__shared_ptrIN12lldb_private19ObjCLanguageRuntime15ClassDescriptorELN9__g
   %.0138 = phi i32 [ %i.ib, %bb.bb ], [ 0, %bb.l ]
   %.056137 = phi i64 [ %i.ic, %bb.bb ], [ %i.cd, %bb.l ] ; 2 uses
   %i.fb = load ptr, ptr %i.d, align 8, !tbaa !44
-  %i.fc = call noundef i64 @_ZN12lldb_private7Process21ReadPointerFromMemoryEmRNS_6StatusE(ptr noundef nonnull align 8 dereferenceable(3224) %i.fb, i64 noundef %.056137, ptr noundef nonnull align 8 dereferenceable(40) %4) #23 ; 7 uses
+  %i.fc = call noundef i64 @_ZN12lldb_private7Process21ReadPointerFromMemoryEmRNS_6StatusE(ptr noundef nonnull align 8 dereferenceable(3224) %i.fb, i64 noundef %.056137, ptr noundef nonnull align 8 dereferenceable(40) %4) #23 ; 6 uses
   %i.fd = add i64 %i.fc, -1
   %or.cond = icmp ult i64 %i.fd, -2
   br i1 %or.cond, label %bb.ah, label %bb.bb
@@ -347,29 +347,22 @@ bb.as:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit91
 
 _ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit91: ; preds = %_ZNSt10shared_ptrIN12lldb_private7ProcessEEC2ERKS2_.exit86, %bb.ao, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i89, %bb.as
-  br i1 %.not68, label %11, label %bb.at
+  br i1 %.not68, label %_ZN12lldb_private19ObjCLanguageRuntime8AddClassEmRKSt10shared_ptrINS0_15ClassDescriptorEE.exit93, label %bb.at
 
 bb.at:                                            ; preds = %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit91
   %i.hk = call noundef zeroext i1 @_ZNK12lldb_private3Log10GetVerboseEv(ptr noundef nonnull align 8 dereferenceable(104) %.0.i.i) #23
-  br i1 %i.hk, label %bb.au, label %11
+  br i1 %i.hk, label %bb.au, label %_ZN12lldb_private19ObjCLanguageRuntime8AddClassEmRKSt10shared_ptrINS0_15ClassDescriptorEE.exit93
 
 bb.au:                                            ; preds = %bb.at
   call void (ptr, ptr, i64, ptr, i64, ptr, ...) @_ZN12lldb_private3Log7FormatfEN4llvm9StringRefES2_PKcz(ptr noundef nonnull align 8 dereferenceable(104) %.0.i.i, ptr nonnull @.str.3, i64 114, ptr nonnull @__func__._ZN12lldb_private18AppleObjCRuntimeV132UpdateISAToDescriptorMapIfNeededEv, i64 32, ptr noundef nonnull @.str.4, i64 noundef %i.fc) #23
-  br label %11
+  br label %_ZN12lldb_private19ObjCLanguageRuntime8AddClassEmRKSt10shared_ptrINS0_15ClassDescriptorEE.exit93
 
-11:                                               ; preds = %bb.au, %bb.at, %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit91
+_ZN12lldb_private19ObjCLanguageRuntime8AddClassEmRKSt10shared_ptrINS0_15ClassDescriptorEE.exit93: ; preds = %bb.au, %bb.at, %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit91
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.fc, ptr %i.a, align 8, !tbaa !51
-  %.not.i92.not = icmp eq i64 %i.fc, 0
-  br i1 %.not.i92.not, label %_ZN12lldb_private19ObjCLanguageRuntime8AddClassEmRKSt10shared_ptrINS0_15ClassDescriptorEE.exit93, label %12
-
-12:                                               ; preds = %11
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   call void @_ZN4llvm12DenseMapBaseINS_8DenseMapImSt10shared_ptrIN12lldb_private19ObjCLanguageRuntime15ClassDescriptorEENS_12DenseMapInfoImvEENS_6detail12DenseMapPairImS6_EEEEmS6_S8_SB_E16insert_or_assignIRKS6_EESt4pairINS_16DenseMapIteratorImS6_S8_SB_Lb0EEEbERKmOT_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.662") align 8 %1, ptr noundef nonnull align 1 dereferenceable(1) %i.bu, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23
-  br label %_ZN12lldb_private19ObjCLanguageRuntime8AddClassEmRKSt10shared_ptrINS0_15ClassDescriptorEE.exit93
-
-_ZN12lldb_private19ObjCLanguageRuntime8AddClassEmRKSt10shared_ptrINS0_15ClassDescriptorEE.exit93: ; preds = %11, %12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.hl = load ptr, ptr %i.ca, align 8, !tbaa !31 ; 8 uses
   %.not.i.i94 = icmp eq ptr %i.hl, null

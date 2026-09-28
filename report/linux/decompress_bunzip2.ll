@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br i1 %exitcond498.not, label %bb.k, label %bb.f, !llvm.loop !18
 
 bb.k:                                             ; preds = %.loopexit370
-  %i.ai = tail call fastcc i32 @get_bits(ptr noundef %0, i8 noundef zeroext 3) #11, !srcloc !44 ; 5 uses
+  %i.ai = tail call fastcc i32 @get_bits(ptr noundef %0, i8 noundef zeroext 3) #11, !srcloc !44 ; 4 uses
   %i.aj = add i32 %i.ai, -7
   %or.cond5 = icmp ult i32 %i.aj, -5
   br i1 %or.cond5, label %.loopexit358, label %bb.l
@@ -222,7 +222,6 @@ bb.l:                                             ; preds = %bb.k
 
 .preheader366.preheader:                          ; preds = %.preheader368
   %wide.trip.count511 = zext nneg i32 %i.ak to i64
-  %exitcond501.not657 = icmp eq i32 %i.ai, 0
   br label %.preheader366
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -238,10 +237,7 @@ bb.l:                                             ; preds = %bb.k
   %indvars.iv508 = phi i64 [ 0, %.preheader366.preheader ], [ %indvars.iv.next509, %._crit_edge402 ] ; 2 uses
   %i.ao = tail call fastcc i32 @get_bits(ptr noundef %0, i8 noundef zeroext 1) #11, !srcloc !46
   %.not349395 = icmp eq i32 %i.ao, 0
-  br i1 %.not349395, label %._crit_edge.thread, label %.lr.ph397.preheader
-
-.lr.ph397.preheader:                              ; preds = %.preheader366
-  br i1 %exitcond501.not657, label %.loopexit358, label %.lr.ph659
+  br i1 %.not349395, label %._crit_edge.thread, label %.lr.ph659
 
 ._crit_edge.thread:                               ; preds = %.preheader366
   %i.ap = load i8, ptr %i.j, align 8
@@ -251,8 +247,8 @@ bb.l:                                             ; preds = %bb.k
   %exitcond501.not = icmp eq i32 %i.aq, %i.ai
   br i1 %exitcond501.not, label %.loopexit358, label %.lr.ph659, !llvm.loop !20
 
-.lr.ph659:                                        ; preds = %.lr.ph397.preheader, %.lr.ph397
-  %.1284396658 = phi i32 [ %i.aq, %.lr.ph397 ], [ 0, %.lr.ph397.preheader ]
+.lr.ph659:                                        ; preds = %.preheader366, %.lr.ph397
+  %.1284396658 = phi i32 [ %i.aq, %.lr.ph397 ], [ 0, %.preheader366 ]
   %i.aq = add nuw i32 %.1284396658, 1             ; 4 uses
   %i.ar = tail call fastcc i32 @get_bits(ptr noundef %0, i8 noundef zeroext 1) #11, !srcloc !46
   %.not349 = icmp eq i32 %i.ar, 0
@@ -655,8 +651,8 @@ bb.an:                                            ; preds = %bb.am, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %.loopexit358
 
-.loopexit358:                                     ; preds = %.lr.ph397.preheader, %.lr.ph397, %bb.ai, %bb.af, %bb.aa, %bb.ab, %bb.u, %.loopexit358.loopexit476, %._crit_edge473.thread, %bb.l, %bb.k, %bb.d, %bb.c, %bb.b, %bb.a, %bb.an
-  %.2318 = phi i32 [ -5, %bb.k ], [ -1, %bb.a ], [ -2, %bb.b ], [ -7, %bb.c ], [ -5, %bb.d ], [ -5, %bb.l ], [ -5, %bb.ai ], [ 0, %bb.an ], [ -5, %._crit_edge473.thread ], [ -5, %.loopexit358.loopexit476 ], [ -5, %.lr.ph397 ], [ -5, %bb.aa ], [ -5, %bb.u ], [ -5, %bb.ab ], [ -5, %bb.af ], [ -5, %.lr.ph397.preheader ]
+.loopexit358:                                     ; preds = %.lr.ph397, %bb.ai, %bb.af, %bb.aa, %bb.ab, %bb.u, %.loopexit358.loopexit476, %._crit_edge473.thread, %bb.l, %bb.k, %bb.d, %bb.c, %bb.b, %bb.a, %bb.an
+  %.2318 = phi i32 [ -5, %bb.k ], [ -1, %bb.a ], [ -2, %bb.b ], [ -7, %bb.c ], [ -5, %bb.d ], [ -5, %bb.l ], [ -5, %bb.aa ], [ 0, %bb.an ], [ -5, %._crit_edge473.thread ], [ -5, %.loopexit358.loopexit476 ], [ -5, %bb.ai ], [ -5, %bb.u ], [ -5, %bb.ab ], [ -5, %bb.af ], [ -5, %.lr.ph397 ]
   ret i32 %.2318
 }
 

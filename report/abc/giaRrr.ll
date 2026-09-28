@@ -205,7 +205,7 @@ bb.a:
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = ashr exact i64 %i.j, 2                   ; 4 uses
+  %i.k = ashr exact i64 %i.j, 2                   ; 3 uses
   %i.l = trunc i64 %i.k to i32                    ; 2 uses
   %i.m = shl i32 %i.l, 1                          ; 4 uses
   %.not = icmp eq i32 %i.m, 0
@@ -295,41 +295,38 @@ bb.h:                                             ; preds = %._crit_edge62, %_ZS
 bb.i:                                             ; preds = %bb.h
   %i.au = sub nuw nsw i64 %.pre-phi64, %.pre-phi61
   tail call void @_ZNSt6vectorIiSaIiEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ar, i64 noundef %i.au)
-  br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
+  br label %.lr.ph48
 
 bb.j:                                             ; preds = %bb.h
   %i.av = icmp ugt i64 %.pre-phi61, %.pre-phi64
-  br i1 %i.av, label %bb.k, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
+  br i1 %i.av, label %bb.k, label %.lr.ph48
 
 bb.k:                                             ; preds = %bb.j
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %.pre-phi64 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ap, %i.aw
-  br i1 %.not.i.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit, label %bb.l
+  br i1 %.not.i.i, label %.lr.ph48, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   store ptr %i.aw, ptr %i.as, align 8, !tbaa !223
-  br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
+  br label %.lr.ph48
 
-_ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.i, %bb.j, %bb.k, %bb.l
+.lr.ph48:                                         ; preds = %bb.l, %bb.k, %bb.j, %bb.i
   %2 = add i32 %i.m, -1
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 288
   %4 = load ptr, ptr %3, align 8, !tbaa !237
   %5 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.b ; 2 uses
   store i32 %2, ptr %5, align 4, !tbaa !220
-  %.not50 = icmp eq i32 %i.l, 0
-  br i1 %.not50, label %._crit_edge49, label %.lr.ph48
-
-.lr.ph48:                                         ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit
   %i.ax = load ptr, ptr %i.a, align 8, !tbaa !228
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %i.ax, i64 %i.b
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !219
   %i.ba = and i64 %i.k, 4294967295
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %wide.trip.count = and i64 %i.k, 4294967295
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.l, i32 1)
+  %wide.trip.count = zext i32 %umax to i64
   br label %bb.m
 
-._crit_edge49:                                    ; preds = %._crit_edge, %_ZNSt6vectorIiSaIiEE6resizeEm.exit
+._crit_edge49:                                    ; preds = %._crit_edge
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !224
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %i.b ; 2 uses
@@ -732,10 +729,10 @@ declare double @ldexp(double, i32) local_unnamed_addr #24
 declare i32 @llvm.umin.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #16
+declare i32 @llvm.umax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #16
+declare i32 @llvm.smax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #25
