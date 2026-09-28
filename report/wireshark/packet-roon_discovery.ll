@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %bb.n
   %i.ck = tail call ptr @proto_tree_add_string(ptr noundef %i.p, i32 noundef %i.cj, ptr noundef %0, i32 noundef %.090170, i32 noundef %i.al, ptr noundef %i.aj) ; 0 uses
   br label %roon_map_name.exit136.thread
 
-.lr.ph.i.i128:                                    ; preds = %bb.i, %bsearch.exit.i, %roon_map_name.exit
+.lr.ph.i.i128:                                    ; preds = %bb.i, %roon_map_name.exit, %bsearch.exit.i
   %i.cl = tail call i32 @strcmp(ptr noundef readonly %i.ac, ptr noundef nonnull dereferenceable(7) @.str.109) #6
   %.not.i5.i131 = icmp eq i32 %i.cl, 0
   br i1 %.not.i5.i131, label %.lr.ph.i.i141, label %roon_map_name.exit136.thread

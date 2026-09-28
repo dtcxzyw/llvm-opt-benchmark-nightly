@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %._crit_edge199
   unreachable
 
 bb.t:                                             ; preds = %bb.s
-  %or.cond.i.i.i = icmp ult i32 %i.aa, 2
-  br i1 %or.cond.i.i.i, label %_ZNSt3__111max_elementB8ne180100INS_11__wrap_iterIPjEEEET_S4_S4_.exit, label %.lr.ph.preheader.i.i.i
+  %.not78.i.i.i = icmp eq i32 %i.aa, 1
+  br i1 %.not78.i.i.i, label %_ZNSt3__111max_elementB8ne180100INS_11__wrap_iterIPjEEEET_S4_S4_.exit, label %.lr.ph.preheader.i.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.t
   %i.cj = getelementptr inbounds nuw i8, ptr %i.au, i64 4 ; 2 uses

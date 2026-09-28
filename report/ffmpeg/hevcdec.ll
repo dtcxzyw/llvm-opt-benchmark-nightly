@@ -205,11 +205,11 @@ bb.fa:                                            ; preds = %bb.ez
   br i1 %i.aqu, label %.lr.ph743.split.i.i.i, label %.loopexit731.i.i.i
 
 .lr.ph743.split.i.i.i:                            ; preds = %.preheader730.i.i.i
+  %4 = icmp samesign ult i32 %.0.i.i662.i.i.i, 26
+  %5 = load ptr, ptr %3, align 8, !tbaa !221      ; 3 uses
   %i.aqv = add nsw i32 %.0.i.i662.i.i.i, -16      ; 2 uses
   %i.aqw = sub nuw nsw i32 48, %.0.i.i662.i.i.i
   %i.aqx = sub nuw nsw i32 32, %.0.i.i662.i.i.i
-  %4 = icmp samesign ult i32 %.0.i.i662.i.i.i, 26
-  %5 = load ptr, ptr %3, align 8, !tbaa !221      ; 3 uses
   br i1 %4, label %get_bits_long.exit.us745.i.i.i, label %get_bits_long.exit.i.i.i
 
 get_bits_long.exit.us745.i.i.i:                   ; preds = %.lr.ph743.split.i.i.i, %get_bits_long.exit.us745.i.i.i

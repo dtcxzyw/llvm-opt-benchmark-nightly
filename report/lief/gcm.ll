@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b
 .preheader53:                                     ; preds = %mbedtls_xor.exit49
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 400
   %.0.copyload.i52.1.pre = load i64, ptr %.phi.trans.insert, align 8
-  %4 = xor i64 %i.j, %.0.copyload.i52.1.pre
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 400
-  store i64 %4, ptr %5, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 400
+  %5 = xor i64 %i.j, %.0.copyload.i52.1.pre
+  store i64 %5, ptr %4, align 8
   tail call fastcc void @gcm_mult(ptr noundef nonnull %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.c)
   br label %bb.d
 

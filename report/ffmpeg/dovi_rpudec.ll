@@ -204,12 +204,12 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not599, label %.thread670, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %.pre.a = load ptr, ptr %i.cc, align 8, !tbaa !60
+  %.pre.a = load ptr, ptr %4, align 8, !tbaa !30
   %.pre842 = load i32, ptr %i.q, align 8, !tbaa !34 ; 2 uses
-  %.pre844 = load ptr, ptr %4, align 8, !tbaa !30
+  %.pre844 = load ptr, ptr %i.cc, align 8, !tbaa !60
   %i.cg = lshr i32 %.pre842, 3
   %i.ch = zext nneg i32 %i.cg to i64
-  %i.ci = getelementptr inbounds nuw i8, ptr %.pre844, i64 %i.ch
+  %i.ci = getelementptr inbounds nuw i8, ptr %.pre.a, i64 %i.ch
   %i.cj = load i32, ptr %i.ci, align 1, !tbaa !32
   %i.ck = tail call i32 @llvm.bswap.i32(i32 %i.cj)
   %i.cl = and i32 %.pre842, 7
@@ -272,7 +272,7 @@ bb.n:                                             ; preds = %._crit_edge, %bb.m
   %.pre-phi = phi i32 [ %i.bz, %._crit_edge ], [ %.pre850, %bb.m ]
   %i.dm = phi i1 [ %i.f, %._crit_edge ], [ %i.df, %bb.m ] ; 3 uses
   %.1533 = phi i32 [ %.010.lcssa.i, %._crit_edge ], [ %i.dl, %bb.m ]
-  %.1528 = phi ptr [ %.pre.a, %._crit_edge ], [ %i.dj, %bb.m ] ; 10 uses
+  %.1528 = phi ptr [ %.pre844, %._crit_edge ], [ %i.dj, %bb.m ] ; 10 uses
   %or.cond.i639 = icmp ugt i32 %.1533, 268435455
   %i.dn = select i1 %or.cond.i639, i32 -8, i32 %.pre-phi ; 2 uses
   %or.cond.i.i640 = icmp ult i32 %i.dn, 2147483135 ; 2 uses

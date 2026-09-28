@@ -204,10 +204,10 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.x = and i8 %i.r, 127                         ; 5 uses
-  %i.y = zext nneg i8 %i.x to i64                 ; 4 uses
+  %i.y = zext nneg i8 %i.x to i64                 ; 3 uses
   %i.z = and i32 %i.s, 32
   %i.aa = icmp ne i32 %i.z, 0
-  %i.ab = icmp eq i8 %i.x, 0                      ; 2 uses
+  %i.ab = icmp eq i8 %i.x, 0
   %or.cond = select i1 %i.aa, i1 %i.ab, i1 false
   br i1 %or.cond, label %bb.j, label %bb.s
 
@@ -352,24 +352,21 @@ bb.v:                                             ; preds = %.lr.ph.i75
   %i.bv = getelementptr inbounds nuw i8, ptr %.02133.i77, i64 %i.bu
   %i.bw = sub i64 %.01734.i76, %i.bu              ; 2 uses
   %.not.i81 = icmp eq i64 %i.bw, 0
-  br i1 %.not.i81, label %bio_read_full.exit82, label %.lr.ph.i75, !llvm.loop !51
+  br i1 %.not.i81, label %.lr.ph.preheader, label %.lr.ph.i75, !llvm.loop !51
 
 .loopexit:                                        ; preds = %.lr.ph.i75, %.lr.ph.preheader.i
   call void @ERR_put_error(i32 noundef 12, i32 noundef 0, i32 noundef 162, ptr noundef nonnull @.str, i32 noundef 785) #15
   br label %.thread
 
-bio_read_full.exit82:                             ; preds = %bb.v
-  br i1 %i.ab, label %._crit_edge.thread, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.u, %bio_read_full.exit82
+.lr.ph.preheader:                                 ; preds = %bb.v, %bb.u
   %i.bx = add nuw nsw i64 %i.y, 2
-  %xtraiter = and i64 %i.y, 3                     ; 3 uses
-  %4 = add nsw i8 %i.x, -1
-  %i.by = icmp ult i8 %4, 3
+  %umax = call i64 @llvm.umax.i64(i64 %i.y, i64 1) ; 2 uses
+  %xtraiter = and i64 %umax, 3                    ; 3 uses
+  %i.by = icmp samesign ult i8 %i.x, 4
   br i1 %i.by, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.y, 4
+  %unroll_iter = and i64 %umax, 4
   br label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
@@ -433,7 +430,7 @@ bio_read_full.exit82:                             ; preds = %bb.v
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !53
 
-._crit_edge.thread:                               ; preds = %bio_read_full.exit82, %._crit_edge
+._crit_edge.thread:                               ; preds = %._crit_edge
   call void @ERR_put_error(i32 noundef 12, i32 noundef 0, i32 noundef 109, ptr noundef nonnull @.str, i32 noundef 798) #15
   br label %.thread
 
@@ -835,6 +832,9 @@ declare i32 @llvm.smax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

@@ -204,12 +204,12 @@ bb.cf:                                            ; preds = %bb.ce
   %.155531129.i = add i32 %.14552.i, -4
   br label %.lr.ph1136.i
 
-.lr.ph1136.i:                                     ; preds = %.lr.ph1136.i.preheader, %bb.cn
-  %indvars.iv1207.i = phi i64 [ %indvars.iv.next1208.i, %bb.cn ], [ 0, %.lr.ph1136.i.preheader ] ; 2 uses
-  %.155531134.i = phi i32 [ %.15553.i, %bb.cn ], [ %.155531129.i, %.lr.ph1136.i.preheader ] ; 4 uses
-  %.154991132.i = phi i64 [ %.17501.i, %bb.cn ], [ %.14498.i, %.lr.ph1136.i.preheader ] ; 6 uses
-  %.155181131.i = phi i32 [ %.17520.i, %bb.cn ], [ %.14517.i, %.lr.ph1136.i.preheader ] ; 2 uses
-  %.15553.in1130.i = phi i32 [ %.17555.i, %bb.cn ], [ %.14552.i, %.lr.ph1136.i.preheader ]
+.lr.ph1136.i:                                     ; preds = %bb.cn, %.lr.ph1136.i.preheader
+  %indvars.iv1207.i = phi i64 [ 0, %.lr.ph1136.i.preheader ], [ %indvars.iv.next1208.i, %bb.cn ] ; 2 uses
+  %.155531134.i = phi i32 [ %.155531129.i, %.lr.ph1136.i.preheader ], [ %.15553.i, %bb.cn ] ; 4 uses
+  %.154991132.i = phi i64 [ %.14498.i, %.lr.ph1136.i.preheader ], [ %.17501.i, %bb.cn ] ; 6 uses
+  %.155181131.i = phi i32 [ %.14517.i, %.lr.ph1136.i.preheader ], [ %.17520.i, %bb.cn ] ; 2 uses
+  %.15553.in1130.i = phi i32 [ %.14552.i, %.lr.ph1136.i.preheader ], [ %.17555.i, %bb.cn ]
   %i.hw = icmp ult i32 %.155531134.i, 4
   br i1 %i.hw, label %bb.cg, label %bb.cn
 
@@ -433,9 +433,9 @@ bb.de:                                            ; preds = %._crit_edge1152.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
   br label %bb.ee
 
-.lr.ph1159.i:                                     ; preds = %bb.de, %bb.ed
-  %indvars.iv1222.i = phi i64 [ %indvars.iv.next1223.i, %bb.ed ], [ 0, %bb.de ] ; 5 uses
-  %.15741156.i = phi i32 [ %.2575.ph.i, %bb.ed ], [ %.05731163.i, %bb.de ] ; 8 uses
+.lr.ph1159.i:                                     ; preds = %bb.ed, %bb.de
+  %indvars.iv1222.i = phi i64 [ 0, %bb.de ], [ %indvars.iv.next1223.i, %bb.ed ] ; 5 uses
+  %.15741156.i = phi i32 [ %.05731163.i, %bb.de ], [ %.2575.ph.i, %bb.ed ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
   %i.kp = getelementptr inbounds nuw [4 x i8], ptr %i.hu, i64 %indvars.iv1222.i ; 7 uses
   %i.kq = load i32, ptr %i.kp, align 4, !tbaa !20 ; 2 uses

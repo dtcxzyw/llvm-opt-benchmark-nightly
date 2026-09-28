@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/faiss/original/ScalarQuantizer?download=true
-inline.NumInlined: 2990
+inline.NumInlined: 2986
 inline.NumDeleted: 733
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 160
@@ -205,7 +205,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i:      ; preds = %bb.as
   br label %_ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit
 
 _ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit: ; preds = %bb.aq, %bb.ar, %bb.as, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i
-  %i.cw = phi ptr [ %.pre.i, %bb.aq ], [ %i.co, %bb.ar ], [ %i.co, %bb.as ], [ %i.co, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i ]
+  %i.cw = phi ptr [ %i.co, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i ], [ %i.co, %bb.as ], [ %i.co, %bb.ar ], [ %.pre.i, %bb.aq ]
   store i64 4561093273984975402, ptr %i.cw, align 4
   %.pre43.i = load ptr, ptr %i.cl, align 8, !tbaa !88
   %i.cx = getelementptr inbounds nuw i8, ptr %.pre43.i, i64 8
@@ -244,7 +244,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i62:    ; preds = %bb.aw
   br label %_ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit64
 
 _ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit64: ; preds = %bb.au, %bb.av, %bb.aw, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i62
-  %i.dj = phi ptr [ %.pre.i63, %bb.au ], [ %i.db, %bb.av ], [ %i.db, %bb.aw ], [ %i.db, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i62 ]
+  %i.dj = phi ptr [ %i.db, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i62 ], [ %i.db, %bb.aw ], [ %i.db, %bb.av ], [ %.pre.i63, %bb.au ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.dj, ptr noundef nonnull align 16 dereferenceable(16) @_ZN5faiss12_GLOBAL__N_119kLloydMaxCentroids2E, i64 16, i1 false)
   %.pre43.i60 = load ptr, ptr %i.cy, align 8, !tbaa !88
   %i.dk = getelementptr inbounds nuw i8, ptr %.pre43.i60, i64 16
@@ -283,7 +283,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i67:    ; preds = %bb.ba
   br label %_ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit69
 
 _ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit69: ; preds = %bb.ay, %bb.az, %bb.ba, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i67
-  %i.dw = phi ptr [ %.pre.i68, %bb.ay ], [ %i.do, %bb.az ], [ %i.do, %bb.ba ], [ %i.do, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i67 ]
+  %i.dw = phi ptr [ %i.do, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i67 ], [ %i.do, %bb.ba ], [ %i.do, %bb.az ], [ %.pre.i68, %bb.ay ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.dw, ptr noundef nonnull align 16 dereferenceable(32) @_ZN5faiss12_GLOBAL__N_119kLloydMaxCentroids3E, i64 32, i1 false)
   %.pre43.i65 = load ptr, ptr %i.dl, align 8, !tbaa !88
   %i.dx = getelementptr inbounds nuw i8, ptr %.pre43.i65, i64 32
@@ -322,7 +322,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i72:    ; preds = %bb.be
   br label %_ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit74
 
 _ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit74: ; preds = %bb.bc, %bb.bd, %bb.be, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i72
-  %i.ej = phi ptr [ %.pre.i73, %bb.bc ], [ %i.eb, %bb.bd ], [ %i.eb, %bb.be ], [ %i.eb, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i72 ]
+  %i.ej = phi ptr [ %i.eb, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i72 ], [ %i.eb, %bb.be ], [ %i.eb, %bb.bd ], [ %.pre.i73, %bb.bc ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.ej, ptr noundef nonnull align 16 dereferenceable(64) @_ZN5faiss12_GLOBAL__N_119kLloydMaxCentroids4E, i64 64, i1 false)
   %.pre43.i70 = load ptr, ptr %i.dy, align 8, !tbaa !88
   %i.ek = getelementptr inbounds nuw i8, ptr %.pre43.i70, i64 64
@@ -361,7 +361,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i77:    ; preds = %bb.bi
   br label %_ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit79
 
 _ZN5faiss12_GLOBAL__N_126populate_lloyd_max_trainedEmRSt6vectorIfSaIfEE.exit79: ; preds = %bb.bg, %bb.bh, %bb.bi, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i77
-  %i.ew = phi ptr [ %.pre.i78, %bb.bg ], [ %i.eo, %bb.bh ], [ %i.eo, %bb.bi ], [ %i.eo, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i77 ]
+  %i.ew = phi ptr [ %i.eo, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i77 ], [ %i.eo, %bb.bi ], [ %i.eo, %bb.bh ], [ %.pre.i78, %bb.bg ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %i.ew, ptr noundef nonnull align 16 dereferenceable(1024) @_ZN5faiss12_GLOBAL__N_119kLloydMaxCentroids8E, i64 1024, i1 false)
   %.pre43.i75 = load ptr, ptr %i.el, align 8, !tbaa !88
   %i.ex = getelementptr inbounds nuw i8, ptr %.pre43.i75, i64 1024
@@ -764,13 +764,17 @@ bb.i:                                             ; preds = %bb.h, %bb.e
   %.pn = phi { ptr, i32 } [ %i.k, %bb.e ], [ %i.m, %bb.h ]
   %i.n = load ptr, ptr %2, align 8, !tbaa !81     ; 2 uses
   %i.o = icmp eq ptr %i.n, %i.b
-  br i1 %i.o, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  br i1 %i.o, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.i
   %i.p = load i64, ptr %i.b, align 8, !tbaa !80
   %i.q = add i64 %i.p, 1
   call void @_ZdlPvm(ptr noundef %i.n, i64 noundef %i.q) #24
-  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
+  resume { ptr, i32 } %.pn
 
 bb.j:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw [16 x i8], ptr @_ZN5faiss12_GLOBAL__N_115kLloydMaxTablesE, i64 %0 ; 2 uses
@@ -806,38 +810,34 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.m
   store ptr %i.ae, ptr %i.u, align 8, !tbaa !86
   br label %_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit
 
-_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit: ; preds = %bb.k, %bb.l, %bb.m, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i
-  %i.af = phi ptr [ %.pre, %bb.k ], [ %i.w, %bb.l ], [ %i.w, %bb.m ], [ %i.w, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ]
+_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit: ; preds = %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, %bb.m, %bb.l, %bb.k
+  %i.af = phi ptr [ %i.w, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ], [ %i.w, %bb.m ], [ %i.w, %bb.l ], [ %.pre, %bb.k ]
   %i.ag = load ptr, ptr %i.r, align 16, !tbaa !1377
   %.idx = shl nuw nsw i64 4, %0                   ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.af, ptr noundef nonnull align 4 dereferenceable(1) %i.ag, i64 %.idx, i1 false)
-  %.pre43 = load ptr, ptr %1, align 8, !tbaa !88
-  %3 = add nsw i64 %.idx, -4                      ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  %5 = load ptr, ptr %4, align 8, !tbaa !1378     ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %.pre43, i64 %i.s ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.r, i64 8
+  %4 = load ptr, ptr %3, align 8, !tbaa !1378     ; 2 uses
+  %5 = load ptr, ptr %1, align 8, !tbaa !88
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.s ; 2 uses
+  %7 = add nsw i64 %.idx, -4                      ; 2 uses
   %i.ah = icmp samesign ugt i64 %0, 1
   br i1 %i.ah, label %bb.n, label %bb.o, !prof !305
 
 bb.n:                                             ; preds = %_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %6, ptr align 4 %5, i64 %3, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %6, ptr align 4 %4, i64 %7, i1 false)
   br label %_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit41
 
 bb.o:                                             ; preds = %_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit
-  %i.ai = icmp eq i64 %3, 4
+  %i.ai = icmp eq i64 %7, 4
   br i1 %i.ai, label %bb.p, label %_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit41
 
 bb.p:                                             ; preds = %bb.o
-  %i.aj = load float, ptr %5, align 4, !tbaa !89
+  %i.aj = load float, ptr %4, align 4, !tbaa !89
   store float %i.aj, ptr %6, align 4, !tbaa !89
   br label %_ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit41
 
 _ZSt4copyIPKfN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEET0_T_SA_S9_.exit41: ; preds = %bb.n, %bb.o, %bb.p
   ret void
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
-  resume { ptr, i32 } %.pn
 
 bb.q:                                             ; preds = %bb.g
   unreachable

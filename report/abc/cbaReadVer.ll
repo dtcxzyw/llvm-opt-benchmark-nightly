@@ -204,9 +204,9 @@ bb.bc:                                            ; preds = %bb.bb
 bb.bd:                                            ; preds = %bb.bb
   switch i32 %i.gj, label %bb.bw [
     i32 10, label %bb.be
-    i32 9, label %bb.bv
     i32 7, label %bb.bf
     i32 8, label %bb.bu
+    i32 9, label %bb.bv
   ]
 
 bb.be:                                            ; preds = %bb.bd
