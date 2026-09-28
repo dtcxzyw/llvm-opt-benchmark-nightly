@@ -20,7 +20,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local ptr @qemu_try_memalign(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = icmp ult i64 %0, 8
   br i1 %i.b, label %bb.d, label %bb.b
@@ -49,11 +49,10 @@ bb.d:                                             ; preds = %bb.a, %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.e = tail call ptr @__errno_location() #12
   store i32 %i.d, ptr %i.e, align 4
-  store ptr null, ptr %i.a, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %bb.e
-  %i.f = phi ptr [ %.pre, %._crit_edge ], [ null, %bb.e ] ; 4 uses
+  %i.f = phi ptr [ %.pre, %._crit_edge ], [ null, %bb.e ] ; 2 uses
   %i.g = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i17 = icmp eq i32 %i.g, 0
   br i1 %.not.i17, label %trace_qemu_memalign.exit, label %bb.g, !prof !7
@@ -70,14 +69,12 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not3.i, label %trace_qemu_memalign.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.3, i64 noundef range(i64 8, 0) %.0, i64 noundef range(i64 1, 0) %spec.select, ptr noundef %i.f) #10
-  %.pre18 = load ptr, ptr %i.a, align 8
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.3, i64 noundef range(i64 8, 0) %.0, i64 noundef range(i64 1, 0) %spec.select, ptr noundef %i.f) #10
   br label %trace_qemu_memalign.exit
 
 trace_qemu_memalign.exit:                         ; preds = %bb.f, %bb.g, %bb.h, %bb.i
-  %2 = phi ptr [ %i.f, %bb.f ], [ %i.f, %bb.g ], [ %i.f, %bb.h ], [ %.pre18, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  ret ptr %2
+  ret ptr %i.f
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -89,8 +86,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: noreturn
 declare void @g_assertion_message_expr(ptr noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #3
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none)
 declare ptr @__errno_location() local_unnamed_addr #4
@@ -164,7 +161,7 @@ declare i64 @llvm.umax.i64(i64, i64) #9
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #3 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #3 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #4 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #6 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }

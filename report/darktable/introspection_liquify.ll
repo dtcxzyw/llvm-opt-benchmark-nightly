@@ -205,9 +205,9 @@ bb.aa:                                            ; preds = %bb.z, %bb.x
   %.sroa.25300.1.i.i = select nsz i1 %i.eb, <2 x float> <float 1.000000e+00, float 8.000000e-01>, <2 x float> %spec.select555.i.i ; 32 uses
   call void @cairo_new_path(ptr noundef %1) #30
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dh, i64 20
-  %i.ee = load <2 x float>, ptr %i.ed, align 4    ; 15 uses
-  %i.ef = extractelement <2 x float> %i.ee, i64 1 ; 13 uses
-  %i.eg = extractelement <2 x float> %i.ee, i64 0 ; 13 uses
+  %i.ee = load <2 x float>, ptr %i.ed, align 4    ; 16 uses
+  %i.ef = extractelement <2 x float> %i.ee, i64 1 ; 12 uses
+  %i.eg = extractelement <2 x float> %i.ee, i64 0 ; 12 uses
   %i.eh = icmp eq i32 %i.di, 1
   br i1 %i.eh, label %bb.ab, label %bb.ac
 
@@ -610,22 +610,21 @@ bb.bk:                                            ; preds = %bb.bj
   %i.aem = fmul reassoc nsz arcp contract afn double %i.aei, %i.cl
   %i.aen = fmul reassoc nsz arcp contract afn double %i.aem, %i.ael
   %i.aeo = fptrunc reassoc nsz arcp contract afn double %i.aen to float
-  %i.aep = fsub reassoc nsz arcp contract afn <2 x float> %i.aeg, %i.ee ; 3 uses
+  %i.aep = fsub reassoc nsz arcp contract afn <2 x float> %i.aeg, %i.ee ; 2 uses
   %i.aeq = call reassoc nsz arcp contract afn float @cabsf(<2 x float> noundef %i.aep) #31
   %i.aer = fdiv reassoc nsz arcp contract afn float %i.aeo, %i.aeq
   %i.aes = fpext reassoc nsz arcp contract afn float %i.aer to double
   %i.aet = fmul reassoc nsz arcp contract afn double %i.aes, 5.000000e-01
   %i.aeu = fsub reassoc nsz arcp contract afn double 1.000000e+00, %i.aet
-  %i.aev = fptrunc reassoc nsz arcp contract afn double %i.aeu to float ; 2 uses
-  %9 = extractelement <2 x float> %i.aep, i64 0
-  %10 = fmul reassoc nsz arcp contract afn float %9, %i.aev
-  %11 = extractelement <2 x float> %i.aep, i64 1
-  %12 = fmul reassoc nsz arcp contract afn float %11, %i.aev
-  %13 = fadd reassoc nsz arcp contract afn float %10, %i.eg
-  %14 = fadd reassoc nsz arcp contract afn float %12, %i.ef
-  %15 = fpext reassoc nsz arcp contract afn float %13 to double
-  %16 = fpext reassoc nsz arcp contract afn float %14 to double
-  call void @cairo_line_to(ptr noundef %1, double noundef %15, double noundef %16) #30
+  %i.aev = fptrunc reassoc nsz arcp contract afn double %i.aeu to float
+  %9 = insertelement <2 x float> poison, float %i.aev, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = fmul reassoc nsz arcp contract afn <2 x float> %i.aep, %10
+  %12 = fadd reassoc nsz arcp contract afn <2 x float> %11, %i.ee
+  %13 = fpext <2 x float> %12 to <2 x double>     ; 2 uses
+  %14 = extractelement <2 x double> %13, i64 0
+  %15 = extractelement <2 x double> %13, i64 1
+  call void @cairo_line_to(ptr noundef %1, double noundef %14, double noundef %15) #30
   br label %bb.bm
 
 bb.bl:                                            ; preds = %bb.bj

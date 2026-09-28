@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_115SystemAllocatorEE8AllocateEllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, ptr noundef %4) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_115SystemAllocatorEE8AllocateEllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef writeonly captures(none) %4) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %i.a = icmp slt i64 %2, 0
@@ -252,9 +252,9 @@ bb.d:                                             ; preds = %_ZN5arrow6StatusD2E
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_115SystemAllocatorEE10ReallocateElllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef %5) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_115SystemAllocatorEE10ReallocateElllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr nofree noundef captures(none) %5) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %6 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %7 = alloca %"class.arrow::Status", align 8     ; 5 uses
   %i.b = icmp slt i64 %3, 0
@@ -297,14 +297,13 @@ _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %bb.e
   br i1 %i.g, label %_ZN5arrow6StatusD2Ev.exit19.i, label %.critedge.i
 
 _ZN5arrow6StatusD2Ev.exit19.i:                    ; preds = %_ZN5arrow6StatusD2Ev.exit.i
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !78, !noalias !196
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !78, !noalias !196 ; 2 uses
   %i.i = load ptr, ptr %5, align 8, !tbaa !78, !noalias !196
   %.sroa.speculated.i = call i64 @llvm.smin.i64(i64 %2, i64 %3)
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.h, ptr align 1 %i.i, i64 %.sroa.speculated.i, i1 false), !noalias !196
   %i.j = load ptr, ptr %5, align 8, !tbaa !78, !noalias !196
   call void @free(ptr noundef %i.j) #30, !noalias !196
-  %8 = load ptr, ptr %i.a, align 8, !tbaa !78, !noalias !196
-  store ptr %8, ptr %5, align 8, !tbaa !78, !noalias !196
+  store ptr %i.h, ptr %5, align 8, !tbaa !78, !noalias !196
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit19.i, %_ZN5arrow6StatusD2Ev.exit.i
@@ -442,7 +441,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_114DebugAllocatorINS1_15SystemAllocatorEEEE8AllocateEllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, ptr noundef %4) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_114DebugAllocatorINS1_15SystemAllocatorEEEE8AllocateEllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef captures(none) %4) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %i.a = icmp slt i64 %2, 0
@@ -492,9 +491,9 @@ bb.d:                                             ; preds = %_ZN5arrow6StatusD2E
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_114DebugAllocatorINS1_15SystemAllocatorEEEE10ReallocateElllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef %5) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5arrow18BaseMemoryPoolImplINS_12_GLOBAL__N_114DebugAllocatorINS1_15SystemAllocatorEEEE10ReallocateElllPPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull align 64 captures(none) dereferenceable(128) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr nofree noundef captures(none) %5) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %6 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %7 = alloca %"class.arrow::Status", align 8     ; 6 uses
   %8 = alloca %"class.arrow::Result", align 8     ; 13 uses
@@ -622,14 +621,13 @@ _ZN5arrow6StatusD2Ev.exit.i36.i:                  ; preds = %bb.n, %.thread59.i
   br i1 %i.v, label %_ZN5arrow6StatusD2Ev.exit19.i.i, label %.critedge.i.i
 
 _ZN5arrow6StatusD2Ev.exit19.i.i:                  ; preds = %.noexc37.i
-  %i.w = load ptr, ptr %i.a, align 8, !tbaa !78, !noalias !214
+  %i.w = load ptr, ptr %i.a, align 8, !tbaa !78, !noalias !214 ; 2 uses
   %i.x = load ptr, ptr %5, align 8, !tbaa !78, !noalias !214
   %.sroa.speculated.i.i = call i64 @llvm.smin.i64(i64 %i.t, i64 %i.s)
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.w, ptr align 1 %i.x, i64 %.sroa.speculated.i.i, i1 false), !noalias !214
   %i.y = load ptr, ptr %5, align 8, !tbaa !78, !noalias !214
   call void @free(ptr noundef %i.y) #30, !noalias !214
-  %11 = load ptr, ptr %i.a, align 8, !tbaa !78, !noalias !214
-  store ptr %11, ptr %5, align 8, !tbaa !78, !noalias !214
+  store ptr %i.w, ptr %5, align 8, !tbaa !78, !noalias !214
   br label %.critedge.i.i
 
 .critedge.i.i:                                    ; preds = %_ZN5arrow6StatusD2Ev.exit19.i.i, %.noexc37.i
@@ -1032,7 +1030,7 @@ bb.h:                                             ; preds = %bb.a, %bb.e, %bb.d,
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN5arrow12_GLOBAL__N_115SystemAllocator15AllocateAlignedEllPPh(ptr dead_on_unwind noalias nonnull writable align 8 %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN5arrow12_GLOBAL__N_115SystemAllocator15AllocateAlignedEllPPh(ptr dead_on_unwind noalias nonnull writable align 8 %0, i64 noundef %1, i64 noundef %2, ptr nofree noundef writeonly captures(none) %3) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -1228,8 +1226,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5: ; preds = %bb.f
   br label %common.resume
 }
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #23
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #23
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN5arrow8internal12JoinToStringIJRA16_KcRlRA8_S2_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEDpOT_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 1 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 1 dereferenceable(8) %3) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
@@ -1431,7 +1429,7 @@ declare i32 @malloc_trim(i64 noundef) local_unnamed_addr #5
 declare void @malloc_stats() local_unnamed_addr #5
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE15AllocateAlignedEllPPh(ptr dead_on_unwind noalias nonnull writable align 8 %0, i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef %2, ptr noundef %3) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE15AllocateAlignedEllPPh(ptr dead_on_unwind noalias nonnull writable align 8 %0, i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef %2, ptr nofree noundef captures(none) %3) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.arrow::Status", align 8     ; 6 uses
   %5 = alloca %"class.arrow::Result", align 8     ; 13 uses
@@ -1834,7 +1832,7 @@ attributes #19 = { mustprogress noreturn uwtable "min-legal-vector-width"="0" "n
 attributes #20 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #21 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #22 = { cold "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
-attributes #23 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
+attributes #23 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #24 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #25 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #26 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
