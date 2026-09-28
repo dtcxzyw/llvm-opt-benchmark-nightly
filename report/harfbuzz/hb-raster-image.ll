@@ -1,0 +1,793 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/harfbuzz/original/hb-raster-image?download=true
+inline.NumInlined: 282
+inline.NumDeleted: 140
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
+begin_hunk_0_@_ZN17hb_raster_image_t14composite_fromEPKS_25hb_paint_composite_mode_t:bb.a
+  %.sroa.speculated266.i = tail call i32 @llvm.umin.i32(i32 %i.jw, i32 255)
+  %i.jx = lshr i32 %.0.i114.i, 16
+  %i.jy = and i32 %i.jx, 255
+  %i.jz = lshr i32 %.0.i112.i, 16
+  %i.ka = and i32 %i.jz, 255
+  %i.kb = add nuw nsw i32 %i.ka, %i.jy
+  %.sroa.speculated261.i = tail call i32 @llvm.umin.i32(i32 %i.kb, i32 255)
+  %i.kc = lshr i32 %.0.i114.i, 24
+  %i.kd = lshr i32 %.0.i112.i, 24
+  %i.ke = add nuw nsw i32 %i.kd, %i.kc
+  %.sroa.speculated256.i = tail call i32 @llvm.umin.i32(i32 %i.ke, i32 255)
+  %i.kf = shl nuw nsw i32 %.sroa.speculated266.i, 8
+  %i.kg = or disjoint i32 %i.kf, %.sroa.speculated271.i
+  %i.kh = shl nuw nsw i32 %.sroa.speculated261.i, 16
+  %i.ki = or disjoint i32 %i.kg, %i.kh
+  %i.kj = shl nuw i32 %.sroa.speculated256.i, 24
+  %i.kk = or disjoint i32 %i.ki, %i.kj
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.aa:                                            ; preds = %bb.b
+  %i.kl = xor i32 %i.u, 255                       ; 5 uses
+  %trunc.i = trunc nuw i32 %i.kl to i8
+  switch i8 %trunc.i, label %bb.ac [
+    i8 -1, label %_ZL19hb_raster_alpha_muljj.exit111.i
+    i8 0, label %bb.ab
+  ]
+
+bb.ab:                                            ; preds = %bb.aa
+  br label %_ZL19hb_raster_alpha_muljj.exit111.i
+
+bb.ac:                                            ; preds = %bb.aa
+  %i.km = and i32 %i.q, 255
+  %i.kn = mul nuw nsw i32 %i.kl, %i.km
+  %i.ko = add nuw nsw i32 %i.kn, 255
+  %i.kp = lshr i32 %i.ko, 8
+  %i.kq = lshr i32 %i.q, 8                        ; 2 uses
+  %i.kr = and i32 %i.kq, 255
+  %i.ks = mul nuw nsw i32 %i.kl, %i.kr
+  %i.kt = add nuw nsw i32 %i.ks, 255
+  %i.ku = and i32 %i.kt, 130816
+  %i.kv = or disjoint i32 %i.ku, %i.kp
+  %i.kw = and i32 %i.kq, 65280
+  %i.kx = mul nuw nsw i32 %i.kl, %i.kw
+  %i.ky = add nuw nsw i32 %i.kx, 65280
+  %i.kz = and i32 %i.ky, 33488896
+  %i.la = or disjoint i32 %i.kv, %i.kz
+  %i.lb = shl nuw nsw i32 %i.t, 16
+  %i.lc = mul nuw i32 %i.lb, %i.kl
+  %i.ld = add nuw i32 %i.lc, 16711680
+  %i.le = and i32 %i.ld, -16777216
+  %i.lf = or disjoint i32 %i.la, %i.le
+  br label %_ZL19hb_raster_alpha_muljj.exit111.i
+
+_ZL19hb_raster_alpha_muljj.exit111.i:             ; preds = %bb.ac, %bb.ab, %bb.aa
+  %.0.i110.i = phi i32 [ %i.lf, %bb.ac ], [ 0, %bb.ab ], [ %i.q, %bb.aa ] ; 4 uses
+  %i.lg = xor i32 %i.t, 255                       ; 5 uses
+  %trunc296.i = trunc nuw i32 %i.lg to i8
+  switch i8 %trunc296.i, label %bb.ae [
+    i8 -1, label %_ZL19hb_raster_alpha_muljj.exit.i
+    i8 0, label %bb.ad
+  ]
+
+bb.ad:                                            ; preds = %_ZL19hb_raster_alpha_muljj.exit111.i
+  br label %_ZL19hb_raster_alpha_muljj.exit.i
+
+bb.ae:                                            ; preds = %_ZL19hb_raster_alpha_muljj.exit111.i
+  %i.lh = and i32 %i.s, 255
+  %i.li = mul nuw nsw i32 %i.lh, %i.lg
+  %i.lj = add nuw nsw i32 %i.li, 255
+  %i.lk = lshr i32 %i.lj, 8
+  %i.ll = lshr i32 %i.s, 8
+  %i.lm = and i32 %i.ll, 255
+  %i.ln = mul nuw nsw i32 %i.lm, %i.lg
+  %i.lo = add nuw nsw i32 %i.ln, 255
+  %i.lp = and i32 %i.lo, 130816
+  %i.lq = lshr i32 %i.s, 16
+  %i.lr = and i32 %i.lq, 255
+  %i.ls = or disjoint i32 %i.lp, %i.lk
+  %i.lt = shl nuw nsw i32 %i.lg, 8
+  %i.lu = mul nuw nsw i32 %i.lt, %i.lr
+  %i.lv = add nuw nsw i32 %i.lu, 65280
+  %i.lw = and i32 %i.lv, 33488896
+  %i.lx = or disjoint i32 %i.ls, %i.lw
+  %i.ly = shl nuw nsw i32 %i.lg, 16
+  %i.lz = mul nuw i32 %i.ly, %i.u
+  %i.ma = add nuw i32 %i.lz, 16711680
+  %i.mb = and i32 %i.ma, -16777216
+  %i.mc = or disjoint i32 %i.lx, %i.mb
+  br label %_ZL19hb_raster_alpha_muljj.exit.i
+
+_ZL19hb_raster_alpha_muljj.exit.i:                ; preds = %bb.ae, %bb.ad, %_ZL19hb_raster_alpha_muljj.exit111.i
+  %.0.i109.i = phi i32 [ %i.mc, %bb.ae ], [ 0, %bb.ad ], [ %i.s, %_ZL19hb_raster_alpha_muljj.exit111.i ] ; 4 uses
+  %i.md = and i32 %.0.i110.i, 255
+  %i.me = and i32 %.0.i109.i, 255
+  %i.mf = add nuw nsw i32 %i.me, %i.md
+  %.sroa.speculated251.i = tail call i32 @llvm.umin.i32(i32 %i.mf, i32 255)
+  %i.mg = lshr i32 %.0.i110.i, 8
+  %i.mh = and i32 %i.mg, 255
+  %i.mi = lshr i32 %.0.i109.i, 8
+  %i.mj = and i32 %i.mi, 255
+  %i.mk = add nuw nsw i32 %i.mj, %i.mh
+  %.sroa.speculated246.i = tail call i32 @llvm.umin.i32(i32 %i.mk, i32 255)
+  %i.ml = lshr i32 %.0.i110.i, 16
+  %i.mm = and i32 %i.ml, 255
+  %i.mn = lshr i32 %.0.i109.i, 16
+  %i.mo = and i32 %i.mn, 255
+  %i.mp = add nuw nsw i32 %i.mo, %i.mm
+  %.sroa.speculated241.i = tail call i32 @llvm.umin.i32(i32 %i.mp, i32 255)
+  %i.mq = lshr i32 %.0.i110.i, 24
+  %i.mr = lshr i32 %.0.i109.i, 24
+  %i.ms = add nuw nsw i32 %i.mr, %i.mq
+  %.sroa.speculated236.i = tail call i32 @llvm.umin.i32(i32 %i.ms, i32 255)
+  %i.mt = shl nuw nsw i32 %.sroa.speculated246.i, 8
+  %i.mu = or disjoint i32 %i.mt, %.sroa.speculated251.i
+  %i.mv = shl nuw nsw i32 %.sroa.speculated241.i, 16
+  %i.mw = or disjoint i32 %i.mu, %i.mv
+  %i.mx = shl nuw i32 %.sroa.speculated236.i, 24
+  %i.my = or disjoint i32 %i.mw, %i.mx
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.af:                                            ; preds = %bb.b
+  %i.mz = and i32 %i.q, 255
+  %i.na = and i32 %i.s, 255
+  %i.nb = add nuw nsw i32 %i.na, %i.mz
+  %.sroa.speculated231.i = tail call i32 @llvm.umin.i32(i32 %i.nb, i32 255)
+  %i.nc = lshr i32 %i.q, 8
+  %i.nd = and i32 %i.nc, 255
+  %i.ne = lshr i32 %i.s, 8
+  %i.nf = and i32 %i.ne, 255
+  %i.ng = add nuw nsw i32 %i.nf, %i.nd
+  %.sroa.speculated226.i = tail call i32 @llvm.umin.i32(i32 %i.ng, i32 255)
+  %i.nh = lshr i32 %i.q, 16
+  %i.ni = and i32 %i.nh, 255
+  %i.nj = lshr i32 %i.s, 16
+  %i.nk = and i32 %i.nj, 255
+  %i.nl = add nuw nsw i32 %i.nk, %i.ni
+  %.sroa.speculated221.i = tail call i32 @llvm.umin.i32(i32 %i.nl, i32 255)
+  %i.nm = add nuw nsw i32 %i.u, %i.t
+  %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %i.nm, i32 255)
+  %i.nn = shl nuw nsw i32 %.sroa.speculated226.i, 8
+  %i.no = or disjoint i32 %i.nn, %.sroa.speculated231.i
+  %i.np = shl nuw nsw i32 %.sroa.speculated221.i, 16
+  %i.nq = or disjoint i32 %i.no, %i.np
+  %i.nr = shl nuw i32 %.sroa.speculated.i, 24
+  %i.ns = or disjoint i32 %i.nq, %i.nr
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.ag:                                            ; preds = %bb.b
+  %i.nt = and i32 %i.q, 255
+  %i.nu = insertelement <2 x i32> poison, i32 %i.q, i64 0
+  %i.nv = insertelement <2 x i32> %i.nu, i32 %i.s, i64 1
+  %i.nw = lshr <2 x i32> %i.nv, splat (i32 8)
+  %i.nx = lshr i32 %i.q, 16
+  %i.ny = uitofp nneg i32 %i.t to float
+  %i.nz = and i32 %i.s, 255
+  %i.oa = lshr i32 %i.s, 16
+  %i.ob = uitofp nneg i32 %i.u to float
+  %i.oc = insertelement <2 x float> poison, float %i.ny, i64 0
+  %i.od = insertelement <2 x float> %i.oc, float %i.ob, i64 1
+  %i.oe = fdiv <2 x float> %i.od, splat (float 2.550000e+02) ; 10 uses
+  %i.of = extractelement <2 x float> %i.oe, i64 1 ; 3 uses
+  %i.og = extractelement <2 x float> %i.oe, i64 0 ; 2 uses
+  %i.oh = and <2 x i32> %i.nw, splat (i32 255)
+  %i.oi = uitofp nneg <2 x i32> %i.oh to <2 x float>
+  %i.oj = fdiv <2 x float> %i.oi, splat (float 2.550000e+02)
+  %i.ok = fcmp ogt <2 x float> %i.oe, zeroinitializer ; 3 uses
+  %i.ol = and i32 %i.nx, 255
+  %i.om = uitofp nneg i32 %i.ol to float
+  %i.on = and i32 %i.oa, 255
+  %i.oo = uitofp nneg i32 %i.on to float
+  %i.op = insertelement <2 x float> poison, float %i.om, i64 0
+  %i.oq = insertelement <2 x float> %i.op, float %i.oo, i64 1
+  %i.or = fdiv <2 x float> %i.oq, splat (float 2.550000e+02)
+  %i.os = fdiv <2 x float> %i.or, %i.oe
+  %i.ot = select <2 x i1> %i.ok, <2 x float> %i.os, <2 x float> zeroinitializer ; 4 uses
+  %i.ou = fdiv <2 x float> %i.oj, %i.oe
+  %i.ov = select <2 x i1> %i.ok, <2 x float> %i.ou, <2 x float> zeroinitializer ; 3 uses
+  %i.ow = uitofp nneg i32 %i.nt to float
+  %i.ox = uitofp nneg i32 %i.nz to float
+  %i.oy = insertelement <2 x float> poison, float %i.ow, i64 0
+  %i.oz = insertelement <2 x float> %i.oy, float %i.ox, i64 1
+  %i.pa = fdiv <2 x float> %i.oz, splat (float 2.550000e+02)
+  %i.pb = fdiv <2 x float> %i.pa, %i.oe
+  %i.pc = select <2 x i1> %i.ok, <2 x float> %i.pb, <2 x float> zeroinitializer ; 3 uses
+  %shift = shufflevector <2 x float> %i.ot, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x float> %i.ot, %shift
+  %i.pd = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.pe = extractelement <2 x float> %i.ov, i64 0
+  %i.pf = extractelement <2 x float> %i.ov, i64 1 ; 2 uses
+  %i.pg = fmul float %i.pe, %i.pf
+  %i.ph = extractelement <2 x float> %i.pc, i64 0
+  %i.pi = extractelement <2 x float> %i.pc, i64 1 ; 2 uses
+  %i.pj = fmul float %i.ph, %i.pi
+  %i.pk = fadd float %i.og, %i.of
+  %i.pl = fmul float %i.og, %i.of                 ; 3 uses
+  %i.pm = fsub nnan <2 x float> splat (float 1.000000e+00), %i.oe ; 2 uses
+  %shift96 = shufflevector <2 x float> %i.pm, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop97 = fmul <2 x float> %i.oe, %shift96 ; 3 uses
+  %foldExtExtBinop99 = fmul <2 x float> %foldExtExtBinop97, %i.ot
+  %i.pn = extractelement <2 x float> %foldExtExtBinop99, i64 0
+  %3 = extractelement <2 x float> %i.pm, i64 0
+  %4 = fmul float %3, %i.of                       ; 3 uses
+  %5 = tail call float @llvm.fmuladd.f32(float %i.pl, float %i.pd, float %i.pn)
+  %i.po = insertelement <2 x float> %i.oe, float %4, i64 0
+  %i.pp = fneg <2 x float> %i.oe
+  %i.pq = shufflevector <2 x float> %i.ot, <2 x float> %i.pp, <2 x i32> <i32 1, i32 2>
+  %i.pr = insertelement <2 x float> poison, float %5, i64 0
+  %i.ps = insertelement <2 x float> %i.pr, float %i.pk, i64 1
+  %i.pt = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.po, <2 x float> %i.pq, <2 x float> %i.ps)
+  %foldExtExtBinop101 = fmul <2 x float> %foldExtExtBinop97, %i.ov
+  %i.pu = extractelement <2 x float> %foldExtExtBinop101, i64 0
+  %i.pv = tail call float @llvm.fmuladd.f32(float %i.pl, float %i.pg, float %i.pu)
+  %i.pw = tail call float @llvm.fmuladd.f32(float %4, float %i.pf, float %i.pv)
+  %foldExtExtBinop103 = fmul <2 x float> %i.pc, %foldExtExtBinop97
+  %i.px = extractelement <2 x float> %foldExtExtBinop103, i64 0
+  %i.py = tail call float @llvm.fmuladd.f32(float %i.pl, float %i.pj, float %i.px)
+  %i.pz = tail call float @llvm.fmuladd.f32(float %4, float %i.pi, float %i.py)
+  %i.qa = insertelement <4 x float> poison, float %i.pz, i64 0
+  %i.qb = insertelement <4 x float> %i.qa, float %i.pw, i64 1
+  %i.qc = shufflevector <2 x float> %i.pt, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.qd = shufflevector <4 x float> %i.qb, <4 x float> %i.qc, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %i.qe = fcmp oge <4 x float> %i.qd, zeroinitializer
+  %i.qf = select <4 x i1> %i.qe, <4 x float> %i.qd, <4 x float> zeroinitializer ; 2 uses
+  %i.qg = fcmp ole <4 x float> %i.qf, splat (float 1.000000e+00)
+  %i.qh = select <4 x i1> %i.qg, <4 x float> %i.qf, <4 x float> splat (float 1.000000e+00)
+  %i.qi = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.qh, <4 x float> splat (float 2.550000e+02), <4 x float> splat (float 5.000000e-01))
+  %i.qj = fptoui <4 x float> %i.qi to <4 x i8>
+  %i.qk = bitcast <4 x i8> %i.qj to i32
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.ah:                                            ; preds = %bb.b
+  %i.ql = and i32 %i.q, 255
+  %i.qm = lshr i32 %i.q, 8
+  %i.qn = insertelement <2 x i32> poison, i32 %i.q, i64 0
+  %i.qo = insertelement <2 x i32> %i.qn, i32 %i.s, i64 1
+  %i.qp = lshr <2 x i32> %i.qo, splat (i32 16)
+  %i.qq = uitofp nneg i32 %i.t to float
+  %i.qr = and i32 %i.s, 255
+  %i.qs = lshr i32 %i.s, 8
+  %i.qt = uitofp nneg i32 %i.u to float
+  %i.qu = insertelement <2 x float> poison, float %i.qq, i64 0
+  %i.qv = insertelement <2 x float> %i.qu, float %i.qt, i64 1
+  %i.qw = fdiv <2 x float> %i.qv, splat (float 2.550000e+02) ; 9 uses
+  %i.qx = extractelement <2 x float> %i.qw, i64 1 ; 3 uses
+  %i.qy = extractelement <2 x float> %i.qw, i64 0 ; 2 uses
+  %i.qz = and <2 x i32> %i.qp, splat (i32 255)
+  %i.ra = uitofp nneg <2 x i32> %i.qz to <2 x float>
+  %i.rb = fdiv <2 x float> %i.ra, splat (float 2.550000e+02)
+  %i.rc = fcmp ogt <2 x float> %i.qw, zeroinitializer ; 3 uses
+  %i.rd = fdiv <2 x float> %i.rb, %i.qw
+  %i.re = select <2 x i1> %i.rc, <2 x float> %i.rd, <2 x float> zeroinitializer ; 4 uses
+  %i.rf = and i32 %i.qm, 255
+  %i.rg = uitofp nneg i32 %i.rf to float
+  %i.rh = and i32 %i.qs, 255
+  %i.ri = uitofp nneg i32 %i.rh to float
+  %i.rj = insertelement <2 x float> poison, float %i.rg, i64 0
+  %i.rk = insertelement <2 x float> %i.rj, float %i.ri, i64 1
+  %i.rl = fdiv <2 x float> %i.rk, splat (float 2.550000e+02)
+  %i.rm = fdiv <2 x float> %i.rl, %i.qw
+  %i.rn = select <2 x i1> %i.rc, <2 x float> %i.rm, <2 x float> zeroinitializer ; 4 uses
+  %i.ro = uitofp nneg i32 %i.ql to float
+  %i.rp = uitofp nneg i32 %i.qr to float
+  %i.rq = insertelement <2 x float> poison, float %i.ro, i64 0
+  %i.rr = insertelement <2 x float> %i.rq, float %i.rp, i64 1
+  %i.rs = fdiv <2 x float> %i.rr, splat (float 2.550000e+02)
+  %i.rt = fdiv <2 x float> %i.rs, %i.qw
+  %i.ru = select <2 x i1> %i.rc, <2 x float> %i.rt, <2 x float> zeroinitializer ; 4 uses
+  %i.rv = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.re)
+  %i.rw = extractelement <2 x float> %i.re, i64 0
+  %i.rx = fneg float %i.rw
+  %i.ry = extractelement <2 x float> %i.re, i64 1 ; 2 uses
+  %i.rz = tail call noundef float @llvm.fmuladd.f32(float %i.rx, float %i.ry, float %i.rv)
+  %i.sa = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.rn)
+  %i.sb = extractelement <2 x float> %i.rn, i64 0
+  %i.sc = fneg float %i.sb
+  %i.sd = extractelement <2 x float> %i.rn, i64 1 ; 2 uses
+  %i.se = tail call noundef float @llvm.fmuladd.f32(float %i.sc, float %i.sd, float %i.sa)
+  %i.sf = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ru)
+  %i.sg = extractelement <2 x float> %i.ru, i64 0
+  %i.sh = fneg float %i.sg
+  %i.si = extractelement <2 x float> %i.ru, i64 1 ; 2 uses
+  %i.sj = tail call noundef float @llvm.fmuladd.f32(float %i.sh, float %i.si, float %i.sf)
+  %i.sk = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.qw)
+  %i.sl = fneg float %i.qy
+  %i.sm = tail call float @llvm.fmuladd.f32(float %i.sl, float %i.qx, float %i.sk)
+  %i.sn = fmul float %i.qy, %i.qx                 ; 3 uses
+  %i.so = fsub nnan <2 x float> splat (float 1.000000e+00), %i.qw ; 2 uses
+  %shift105 = shufflevector <2 x float> %i.so, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop106 = fmul <2 x float> %i.qw, %shift105 ; 3 uses
+  %foldExtExtBinop108 = fmul <2 x float> %foldExtExtBinop106, %i.re
+  %i.sp = extractelement <2 x float> %foldExtExtBinop108, i64 0
+  %i.sq = tail call float @llvm.fmuladd.f32(float %i.sn, float %i.rz, float %i.sp)
+  %i.sr = extractelement <2 x float> %i.so, i64 0
+  %i.ss = fmul float %i.sr, %i.qx                 ; 3 uses
+  %i.st = tail call float @llvm.fmuladd.f32(float %i.ss, float %i.ry, float %i.sq)
+  %foldExtExtBinop110 = fmul <2 x float> %foldExtExtBinop106, %i.rn
+  %i.su = extractelement <2 x float> %foldExtExtBinop110, i64 0
+  %i.sv = tail call float @llvm.fmuladd.f32(float %i.sn, float %i.se, float %i.su)
+  %i.sw = tail call float @llvm.fmuladd.f32(float %i.ss, float %i.sd, float %i.sv)
+  %foldExtExtBinop112 = fmul <2 x float> %i.ru, %foldExtExtBinop106
+  %i.sx = extractelement <2 x float> %foldExtExtBinop112, i64 0
+  %i.sy = tail call float @llvm.fmuladd.f32(float %i.sn, float %i.sj, float %i.sx)
+  %i.sz = tail call float @llvm.fmuladd.f32(float %i.ss, float %i.si, float %i.sy)
+  %i.ta = insertelement <4 x float> poison, float %i.sz, i64 0
+  %i.tb = insertelement <4 x float> %i.ta, float %i.sw, i64 1
+  %i.tc = insertelement <4 x float> %i.tb, float %i.st, i64 2
+  %i.td = insertelement <4 x float> %i.tc, float %i.sm, i64 3 ; 2 uses
+  %i.te = fcmp oge <4 x float> %i.td, zeroinitializer
+  %i.tf = select <4 x i1> %i.te, <4 x float> %i.td, <4 x float> zeroinitializer ; 2 uses
+  %i.tg = fcmp ole <4 x float> %i.tf, splat (float 1.000000e+00)
+  %i.th = select <4 x i1> %i.tg, <4 x float> %i.tf, <4 x float> splat (float 1.000000e+00)
+  %i.ti = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.th, <4 x float> splat (float 2.550000e+02), <4 x float> splat (float 5.000000e-01))
+  %i.tj = fptoui <4 x float> %i.ti to <4 x i8>
+  %i.tk = bitcast <4 x i8> %i.tj to i32
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.ai:                                            ; preds = %bb.b
+  %i.tl = and i32 %i.q, 255
+  %i.tm = lshr i32 %i.q, 8
+  %i.tn = lshr i32 %i.q, 16
+  %i.to = uitofp nneg i32 %i.t to float
+  %i.tp = and i32 %i.s, 255
+  %i.tq = lshr i32 %i.s, 8
+  %i.tr = lshr i32 %i.s, 16
+  %i.ts = uitofp nneg i32 %i.u to float
+  %i.tt = insertelement <2 x float> poison, float %i.to, i64 0
+  %i.tu = insertelement <2 x float> %i.tt, float %i.ts, i64 1
+  %i.tv = fdiv <2 x float> %i.tu, splat (float 2.550000e+02) ; 9 uses
+  %i.tw = shufflevector <2 x float> %i.tv, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.tx = fcmp ogt <2 x float> %i.tv, zeroinitializer ; 3 uses
+  %i.ty = shufflevector <2 x i1> %i.tx, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.tz = insertelement <4 x i32> poison, i32 %i.tm, i64 0
+  %i.ua = insertelement <4 x i32> %i.tz, i32 %i.tq, i64 1
+  %i.ub = insertelement <4 x i32> %i.ua, i32 %i.tn, i64 2
+  %i.uc = insertelement <4 x i32> %i.ub, i32 %i.tr, i64 3
+  %i.ud = and <4 x i32> %i.uc, splat (i32 255)
+  %i.ue = uitofp nneg <4 x i32> %i.ud to <4 x float> ; 2 uses
+  %i.uf = shufflevector <4 x float> %i.ue, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  %i.ug = fdiv <2 x float> %i.uf, splat (float 2.550000e+02)
+  %i.uh = fdiv <2 x float> %i.ug, %i.tw
+  %i.ui = select <2 x i1> %i.ty, <2 x float> %i.uh, <2 x float> zeroinitializer ; 5 uses
+  %i.uj = shufflevector <4 x float> %i.ue, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %i.uk = fdiv <2 x float> %i.uj, splat (float 2.550000e+02)
+  %i.ul = shufflevector <2 x float> %i.tv, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.um = fdiv <2 x float> %i.uk, %i.ul
+  %i.un = shufflevector <2 x i1> %i.tx, <2 x i1> poison, <2 x i32> <i32 1, i32 1>
+  %i.uo = select <2 x i1> %i.un, <2 x float> %i.um, <2 x float> zeroinitializer ; 4 uses
+  %i.up = uitofp nneg i32 %i.tl to float
+  %i.uq = uitofp nneg i32 %i.tp to float
+  %i.ur = insertelement <2 x float> poison, float %i.up, i64 0
+  %i.us = insertelement <2 x float> %i.ur, float %i.uq, i64 1
+  %i.ut = fdiv <2 x float> %i.us, splat (float 2.550000e+02)
+  %i.uu = fdiv <2 x float> %i.ut, %i.tv
+  %i.uv = select <2 x i1> %i.tx, <2 x float> %i.uu, <2 x float> zeroinitializer ; 5 uses
+  %i.uw = extractelement <2 x float> %i.uo, i64 1 ; 2 uses
+  %i.ux = fcmp ugt float %i.uw, 5.000000e-01
+  br i1 %i.ux, label %bb.ak, label %bb.aj
+
+bb.aj:                                            ; preds = %bb.ai
+  %i.uy = extractelement <2 x float> %i.ui, i64 1
+  %i.uz = fmul float %i.uy, 2.000000e+00
+  %i.va = fmul float %i.uz, %i.uw
+  br label %_ZL13blend_overlayff.exit189.i
+
+bb.ak:                                            ; preds = %bb.ai
+  %i.vb = shufflevector <2 x float> %i.ui, <2 x float> %i.uo, <2 x i32> <i32 1, i32 3>
+  %i.vc = fsub <2 x float> splat (float 1.000000e+00), %i.vb ; 2 uses
+  %i.vd = extractelement <2 x float> %i.vc, i64 0
+  %i.ve = fmul float %i.vd, -2.000000e+00
+  %i.vf = extractelement <2 x float> %i.vc, i64 1
+  %i.vg = tail call float @llvm.fmuladd.f32(float %i.ve, float %i.vf, float 1.000000e+00)
+  br label %_ZL13blend_overlayff.exit189.i
+
+_ZL13blend_overlayff.exit189.i:                   ; preds = %bb.ak, %bb.aj
+  %i.vh = phi float [ %i.va, %bb.aj ], [ %i.vg, %bb.ak ]
+  %i.vi = extractelement <2 x float> %i.uo, i64 0 ; 3 uses
+  %i.vj = fcmp ugt float %i.vi, 5.000000e-01
+  br i1 %i.vj, label %bb.am, label %bb.al
+
+bb.al:                                            ; preds = %_ZL13blend_overlayff.exit189.i
+  %i.vk = extractelement <2 x float> %i.ui, i64 0
+  %i.vl = fmul float %i.vk, 2.000000e+00
+  %i.vm = fmul float %i.vl, %i.vi
+  br label %_ZL13blend_overlayff.exit188.i
+
+bb.am:                                            ; preds = %_ZL13blend_overlayff.exit189.i
+  %i.vn = extractelement <2 x float> %i.ui, i64 0
+  %i.vo = fsub float 1.000000e+00, %i.vn
+  %i.vp = fsub float 1.000000e+00, %i.vi
+  %i.vq = fmul float %i.vo, -2.000000e+00
+  %i.vr = tail call float @llvm.fmuladd.f32(float %i.vq, float %i.vp, float 1.000000e+00)
+  br label %_ZL13blend_overlayff.exit188.i
+
+_ZL13blend_overlayff.exit188.i:                   ; preds = %bb.am, %bb.al
+  %i.vs = phi float [ %i.vm, %bb.al ], [ %i.vr, %bb.am ]
+  %i.vt = extractelement <2 x float> %i.uv, i64 1 ; 2 uses
+  %i.vu = fcmp ugt float %i.vt, 5.000000e-01
+  br i1 %i.vu, label %bb.ao, label %bb.an
+
+bb.an:                                            ; preds = %_ZL13blend_overlayff.exit188.i
+  %i.vv = extractelement <2 x float> %i.uv, i64 0
+  %i.vw = fmul float %i.vv, 2.000000e+00
+  %i.vx = fmul float %i.vw, %i.vt
+  br label %_ZL13blend_overlayff.exit.i
+
+bb.ao:                                            ; preds = %_ZL13blend_overlayff.exit188.i
+  %i.vy = fsub <2 x float> splat (float 1.000000e+00), %i.uv ; 2 uses
+  %i.vz = extractelement <2 x float> %i.vy, i64 0
+  %i.wa = fmul float %i.vz, -2.000000e+00
+  %i.wb = extractelement <2 x float> %i.vy, i64 1
+  %i.wc = tail call float @llvm.fmuladd.f32(float %i.wa, float %i.wb, float 1.000000e+00)
+  br label %_ZL13blend_overlayff.exit.i
+
+_ZL13blend_overlayff.exit.i:                      ; preds = %bb.ao, %bb.an
+  %i.wd = phi float [ %i.vx, %bb.an ], [ %i.wc, %bb.ao ]
+  %i.we = extractelement <2 x float> %i.tv, i64 0 ; 2 uses
+  %i.wf = fneg float %i.we
+  %i.wg = extractelement <2 x float> %i.tv, i64 1 ; 2 uses
+  %i.wh = fsub nnan <2 x float> splat (float 1.000000e+00), %i.tv ; 2 uses
+  %i.wi = fmul float %i.we, %i.wg
+  %i.wj = shufflevector <2 x float> %i.tv, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.wk = shufflevector <2 x float> <float poison, float 1.000000e+00>, <2 x float> %i.wh, <4 x i32> <i32 3, i32 3, i32 3, i32 1>
+  %i.wl = fmul <4 x float> %i.wj, %i.wk
+  %i.wm = extractelement <2 x float> %i.wh, i64 0
+  %i.wn = fmul float %i.wm, %i.wg
+  %i.wo = shufflevector <2 x float> %i.uv, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %i.wp = insertelement <4 x float> %i.wo, float 1.000000e+00, i64 3
+  %i.wq = shufflevector <2 x float> %i.ui, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.wr = shufflevector <4 x float> %i.wp, <4 x float> %i.wq, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
+  %i.ws = fmul <4 x float> %i.wl, %i.wr
+  %i.wt = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %i.wi, i64 0
+  %i.wu = shufflevector <4 x float> %i.wt, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.wv = insertelement <4 x float> poison, float %i.wd, i64 0
+  %i.ww = insertelement <4 x float> %i.wv, float %i.vs, i64 1
+  %i.wx = insertelement <4 x float> %i.ww, float %i.vh, i64 2
+  %i.wy = shufflevector <2 x float> %i.tv, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %i.wz = shufflevector <4 x float> %i.wx, <4 x float> %i.wy, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %i.xa = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.wu, <4 x float> %i.wz, <4 x float> %i.ws)
+  %i.xb = insertelement <4 x float> poison, float %i.wn, i64 0
+  %i.xc = insertelement <4 x float> %i.xb, float %i.wf, i64 1
+  %i.xd = shufflevector <4 x float> %i.xc, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.xe = shufflevector <2 x float> %i.uv, <2 x float> %i.uo, <4 x i32> <i32 1, i32 2, i32 3, i32 poison>
+  %i.xf = shufflevector <4 x float> %i.xe, <4 x float> %i.wy, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %i.xg = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.xd, <4 x float> %i.xf, <4 x float> %i.xa) ; 2 uses
+  %i.xh = fcmp oge <4 x float> %i.xg, zeroinitializer
+  %i.xi = select <4 x i1> %i.xh, <4 x float> %i.xg, <4 x float> zeroinitializer ; 2 uses
+  %i.xj = fcmp ole <4 x float> %i.xi, splat (float 1.000000e+00)
+  %i.xk = select <4 x i1> %i.xj, <4 x float> %i.xi, <4 x float> splat (float 1.000000e+00)
+  %i.xl = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.xk, <4 x float> splat (float 2.550000e+02), <4 x float> splat (float 5.000000e-01))
+  %i.xm = fptoui <4 x float> %i.xl to <4 x i8>
+  %i.xn = bitcast <4 x i8> %i.xm to i32
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.ap:                                            ; preds = %bb.b
+  %i.xo = lshr i32 %i.q, 8
+  %i.xp = lshr i32 %i.q, 16
+  %i.xq = uitofp nneg i32 %i.t to float
+  %i.xr = lshr i32 %i.s, 8
+  %i.xs = lshr i32 %i.s, 16
+  %i.xt = uitofp nneg i32 %i.u to float
+  %i.xu = insertelement <4 x i32> poison, i32 %i.q, i64 0
+  %i.xv = insertelement <4 x i32> %i.xu, i32 %i.xo, i64 1
+  %i.xw = insertelement <4 x i32> %i.xv, i32 %i.s, i64 2
+  %i.xx = insertelement <4 x i32> %i.xw, i32 %i.xr, i64 3
+  %i.xy = and <4 x i32> %i.xx, splat (i32 255)
+  %i.xz = uitofp nneg <4 x i32> %i.xy to <4 x float> ; 2 uses
+  %i.ya = shufflevector <4 x float> %i.xz, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %i.yb = fdiv <2 x float> %i.ya, splat (float 2.550000e+02)
+  %i.yc = shufflevector <4 x float> %i.xz, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %i.yd = fdiv <2 x float> %i.yc, splat (float 2.550000e+02)
+  %i.ye = insertelement <2 x float> poison, float %i.xt, i64 0
+  %i.yf = insertelement <2 x float> %i.ye, float %i.xq, i64 1
+  %i.yg = fdiv <2 x float> %i.yf, splat (float 2.550000e+02) ; 10 uses
+  %i.yh = extractelement <2 x float> %i.yg, i64 1 ; 3 uses
+  %i.yi = fcmp ogt <2 x float> %i.yg, zeroinitializer ; 3 uses
+  %i.yj = shufflevector <2 x float> %i.yg, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.yk = fdiv <2 x float> %i.yb, %i.yj
+  %i.yl = shufflevector <2 x i1> %i.yi, <2 x i1> poison, <2 x i32> <i32 1, i32 1>
+  %i.ym = select <2 x i1> %i.yl, <2 x float> %i.yk, <2 x float> zeroinitializer ; 3 uses
+  %i.yn = extractelement <2 x float> %i.yg, i64 0 ; 2 uses
+  %i.yo = and i32 %i.xp, 255
+  %i.yp = uitofp nneg i32 %i.yo to float
+  %i.yq = and i32 %i.xs, 255
+  %i.yr = uitofp nneg i32 %i.yq to float
+  %i.ys = insertelement <2 x float> poison, float %i.yr, i64 0
+  %i.yt = insertelement <2 x float> %i.ys, float %i.yp, i64 1
+  %i.yu = fdiv <2 x float> %i.yt, splat (float 2.550000e+02)
+  %i.yv = fdiv <2 x float> %i.yu, %i.yg
+  %i.yw = select <2 x i1> %i.yi, <2 x float> %i.yv, <2 x float> zeroinitializer ; 3 uses
+  %i.yx = shufflevector <2 x float> %i.yg, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.yy = fdiv <2 x float> %i.yd, %i.yx
+  %i.yz = shufflevector <2 x i1> %i.yi, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.za = select <2 x i1> %i.yz, <2 x float> %i.yy, <2 x float> zeroinitializer ; 3 uses
+  %i.zb = extractelement <2 x float> %i.yw, i64 0 ; 2 uses
+  %i.zc = extractelement <2 x float> %i.yw, i64 1 ; 3 uses
+  %i.zd = fcmp ole float %i.zc, %i.zb
+  %.sroa.speculated.i191.i = select i1 %i.zd, float %i.zc, float %i.zb
+  %i.ze = fcmp ole <2 x float> %i.ym, %i.za
+  %i.zf = select <2 x i1> %i.ze, <2 x float> %i.ym, <2 x float> %i.za
+  %i.zg = fadd float %i.yh, %i.yn
+  %i.zh = fmul float %i.yh, %i.yn                 ; 2 uses
+  %i.zi = fsub nnan <2 x float> splat (float 1.000000e+00), %i.yg ; 2 uses
+  %i.zj = extractelement <2 x float> %i.zi, i64 0
+  %i.zk = fmul float %i.yh, %i.zj                 ; 2 uses
+  %i.zl = fmul float %i.zk, %i.zc
+  %shift114 = shufflevector <2 x float> %i.zi, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop115 = fmul <2 x float> %shift114, %i.yg
+  %6 = tail call float @llvm.fmuladd.f32(float %i.zh, float %.sroa.speculated.i191.i, float %i.zl)
+  %i.zm = fneg <2 x float> %i.yg
+  %i.zn = shufflevector <2 x float> %i.yw, <2 x float> %i.zm, <2 x i32> <i32 0, i32 3>
+  %i.zo = insertelement <2 x float> poison, float %6, i64 0
+  %i.zp = insertelement <2 x float> %i.zo, float %i.zg, i64 1
+  %i.zq = insertelement <2 x float> poison, float %i.zk, i64 0
+  %i.zr = shufflevector <2 x float> %i.zq, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.zs = fmul <2 x float> %i.ym, %i.zr
+  %i.zt = insertelement <2 x float> poison, float %i.zh, i64 0
+  %i.zu = shufflevector <2 x float> %i.zt, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.zv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.zu, <2 x float> %i.zf, <2 x float> %i.zs)
+  %i.zw = shufflevector <2 x float> %foldExtExtBinop115, <2 x float> %i.yg, <4 x i32> <i32 0, i32 0, i32 0, i32 2>
+  %i.zx = shufflevector <2 x float> %i.za, <2 x float> %i.zn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.zy = shufflevector <2 x float> %i.zv, <2 x float> %i.zp, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.zz = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.zw, <4 x float> %i.zx, <4 x float> %i.zy) ; 2 uses
+  %i.aaa = fcmp oge <4 x float> %i.zz, zeroinitializer
+  %i.aab = select <4 x i1> %i.aaa, <4 x float> %i.zz, <4 x float> zeroinitializer ; 2 uses
+  %i.aac = fcmp ole <4 x float> %i.aab, splat (float 1.000000e+00)
+  %i.aad = select <4 x i1> %i.aac, <4 x float> %i.aab, <4 x float> splat (float 1.000000e+00)
+  %i.aae = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aad, <4 x float> splat (float 2.550000e+02), <4 x float> splat (float 5.000000e-01))
+  %i.aaf = fptoui <4 x float> %i.aae to <4 x i8>
+  %i.aag = bitcast <4 x i8> %i.aaf to i32
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.aq:                                            ; preds = %bb.b
+  %i.aah = lshr i32 %i.q, 8
+  %i.aai = lshr i32 %i.q, 16
+  %i.aaj = uitofp nneg i32 %i.t to float
+  %i.aak = lshr i32 %i.s, 8
+  %i.aal = lshr i32 %i.s, 16
+  %i.aam = uitofp nneg i32 %i.u to float
+  %i.aan = insertelement <4 x i32> poison, i32 %i.q, i64 0
+  %i.aao = insertelement <4 x i32> %i.aan, i32 %i.aah, i64 1
+  %i.aap = insertelement <4 x i32> %i.aao, i32 %i.s, i64 2
+  %i.aaq = insertelement <4 x i32> %i.aap, i32 %i.aak, i64 3
+  %i.aar = and <4 x i32> %i.aaq, splat (i32 255)
+  %i.aas = uitofp nneg <4 x i32> %i.aar to <4 x float> ; 2 uses
+  %i.aat = shufflevector <4 x float> %i.aas, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %i.aau = fdiv <2 x float> %i.aat, splat (float 2.550000e+02)
+  %i.aav = shufflevector <4 x float> %i.aas, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %i.aaw = fdiv <2 x float> %i.aav, splat (float 2.550000e+02)
+  %i.aax = insertelement <2 x float> poison, float %i.aam, i64 0
+  %i.aay = insertelement <2 x float> %i.aax, float %i.aaj, i64 1
+  %i.aaz = fdiv <2 x float> %i.aay, splat (float 2.550000e+02) ; 10 uses
+  %i.aba = extractelement <2 x float> %i.aaz, i64 1 ; 3 uses
+  %i.abb = fcmp ogt <2 x float> %i.aaz, zeroinitializer ; 3 uses
+  %i.abc = shufflevector <2 x float> %i.aaz, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.abd = fdiv <2 x float> %i.aau, %i.abc
+  %i.abe = shufflevector <2 x i1> %i.abb, <2 x i1> poison, <2 x i32> <i32 1, i32 1>
+  %i.abf = select <2 x i1> %i.abe, <2 x float> %i.abd, <2 x float> zeroinitializer ; 3 uses
+  %i.abg = extractelement <2 x float> %i.aaz, i64 0 ; 2 uses
+  %i.abh = and i32 %i.aai, 255
+  %i.abi = uitofp nneg i32 %i.abh to float
+  %i.abj = and i32 %i.aal, 255
+  %i.abk = uitofp nneg i32 %i.abj to float
+  %i.abl = insertelement <2 x float> poison, float %i.abk, i64 0
+  %i.abm = insertelement <2 x float> %i.abl, float %i.abi, i64 1
+  %i.abn = fdiv <2 x float> %i.abm, splat (float 2.550000e+02)
+  %i.abo = fdiv <2 x float> %i.abn, %i.aaz
+  %i.abp = select <2 x i1> %i.abb, <2 x float> %i.abo, <2 x float> zeroinitializer ; 3 uses
+  %i.abq = shufflevector <2 x float> %i.aaz, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.abr = fdiv <2 x float> %i.aaw, %i.abq
+  %i.abs = shufflevector <2 x i1> %i.abb, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.abt = select <2 x i1> %i.abs, <2 x float> %i.abr, <2 x float> zeroinitializer ; 3 uses
+  %i.abu = extractelement <2 x float> %i.abp, i64 0 ; 2 uses
+  %i.abv = extractelement <2 x float> %i.abp, i64 1 ; 3 uses
+  %i.abw = fcmp oge float %i.abv, %i.abu
+  %.sroa.speculated.i194.i = select i1 %i.abw, float %i.abv, float %i.abu
+  %i.abx = fcmp oge <2 x float> %i.abf, %i.abt
+  %i.aby = select <2 x i1> %i.abx, <2 x float> %i.abf, <2 x float> %i.abt
+  %i.abz = fadd float %i.aba, %i.abg
+  %i.aca = fmul float %i.aba, %i.abg              ; 2 uses
+  %i.acb = fsub nnan <2 x float> splat (float 1.000000e+00), %i.aaz ; 2 uses
+  %i.acc = extractelement <2 x float> %i.acb, i64 0
+  %i.acd = fmul float %i.aba, %i.acc              ; 2 uses
+  %i.ace = fmul float %i.acd, %i.abv
+  %shift117 = shufflevector <2 x float> %i.acb, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop118 = fmul <2 x float> %shift117, %i.aaz
+  %7 = tail call float @llvm.fmuladd.f32(float %i.aca, float %.sroa.speculated.i194.i, float %i.ace)
+  %i.acf = fneg <2 x float> %i.aaz
+  %i.acg = shufflevector <2 x float> %i.abp, <2 x float> %i.acf, <2 x i32> <i32 0, i32 3>
+  %i.ach = insertelement <2 x float> poison, float %7, i64 0
+  %i.aci = insertelement <2 x float> %i.ach, float %i.abz, i64 1
+  %i.acj = insertelement <2 x float> poison, float %i.acd, i64 0
+  %i.ack = shufflevector <2 x float> %i.acj, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.acl = fmul <2 x float> %i.abf, %i.ack
+  %i.acm = insertelement <2 x float> poison, float %i.aca, i64 0
+  %i.acn = shufflevector <2 x float> %i.acm, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.aco = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.acn, <2 x float> %i.aby, <2 x float> %i.acl)
+  %i.acp = shufflevector <2 x float> %foldExtExtBinop118, <2 x float> %i.aaz, <4 x i32> <i32 0, i32 0, i32 0, i32 2>
+  %i.acq = shufflevector <2 x float> %i.abt, <2 x float> %i.acg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.acr = shufflevector <2 x float> %i.aco, <2 x float> %i.aci, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.acs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.acp, <4 x float> %i.acq, <4 x float> %i.acr) ; 2 uses
+  %i.act = fcmp oge <4 x float> %i.acs, zeroinitializer
+  %i.acu = select <4 x i1> %i.act, <4 x float> %i.acs, <4 x float> zeroinitializer ; 2 uses
+  %i.acv = fcmp ole <4 x float> %i.acu, splat (float 1.000000e+00)
+  %i.acw = select <4 x i1> %i.acv, <4 x float> %i.acu, <4 x float> splat (float 1.000000e+00)
+  %i.acx = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.acw, <4 x float> splat (float 2.550000e+02), <4 x float> splat (float 5.000000e-01))
+  %i.acy = fptoui <4 x float> %i.acx to <4 x i8>
+  %i.acz = bitcast <4 x i8> %i.acy to i32
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.ar:                                            ; preds = %bb.b
+  %i.ada = and i32 %i.q, 255
+  %i.adb = lshr i32 %i.q, 8
+  %i.adc = lshr i32 %i.q, 16
+  %i.add = uitofp nneg i32 %i.t to float
+  %i.ade = and i32 %i.s, 255
+  %i.adf = lshr i32 %i.s, 8
+  %i.adg = lshr i32 %i.s, 16
+  %i.adh = uitofp nneg i32 %i.u to float
+  %i.adi = insertelement <2 x float> poison, float %i.add, i64 0
+  %i.adj = insertelement <2 x float> %i.adi, float %i.adh, i64 1
+  %i.adk = fdiv <2 x float> %i.adj, splat (float 2.550000e+02) ; 8 uses
+  %i.adl = extractelement <2 x float> %i.adk, i64 0 ; 3 uses
+  %i.adm = fcmp ogt float %i.adl, 0.000000e+00    ; 2 uses
+  %i.adn = shufflevector <2 x float> %i.adk, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ado = insertelement <2 x i1> poison, i1 %i.adm, i64 0
+  %i.adp = shufflevector <2 x i1> %i.ado, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.adq = extractelement <2 x float> %i.adk, i64 1 ; 3 uses
+  %i.adr = fcmp ogt float %i.adq, 0.000000e+00    ; 2 uses
+  %i.ads = insertelement <4 x i32> poison, i32 %i.adb, i64 0
+  %i.adt = insertelement <4 x i32> %i.ads, i32 %i.adf, i64 1
+  %i.adu = insertelement <4 x i32> %i.adt, i32 %i.adc, i64 2
+  %i.adv = insertelement <4 x i32> %i.adu, i32 %i.adg, i64 3
+  %i.adw = and <4 x i32> %i.adv, splat (i32 255)
+  %i.adx = uitofp nneg <4 x i32> %i.adw to <4 x float> ; 2 uses
+  %i.ady = shufflevector <4 x float> %i.adx, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  %i.adz = fdiv <2 x float> %i.ady, splat (float 2.550000e+02)
+  %i.aea = fdiv <2 x float> %i.adz, %i.adn
+  %i.aeb = select <2 x i1> %i.adp, <2 x float> %i.aea, <2 x float> zeroinitializer ; 3 uses
+  %i.aec = shufflevector <4 x float> %i.adx, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %i.aed = fdiv <2 x float> %i.aec, splat (float 2.550000e+02)
+  %i.aee = shufflevector <2 x float> %i.adk, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.aef = fdiv <2 x float> %i.aed, %i.aee
+  %i.aeg = insertelement <2 x i1> poison, i1 %i.adr, i64 0
+  %i.aeh = shufflevector <2 x i1> %i.aeg, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.aei = select <2 x i1> %i.aeh, <2 x float> %i.aef, <2 x float> zeroinitializer ; 3 uses
+  %i.aej = uitofp nneg i32 %i.ada to float
+  %i.aek = uitofp nneg i32 %i.ade to float
+  %i.ael = insertelement <2 x float> poison, float %i.aej, i64 0
+  %i.aem = insertelement <2 x float> %i.ael, float %i.aek, i64 1
+  %i.aen = fdiv <2 x float> %i.aem, splat (float 2.550000e+02)
+  %i.aeo = fdiv <2 x float> %i.aen, %i.adk        ; 2 uses
+  %i.aep = extractelement <2 x float> %i.aeo, i64 0
+  %i.aeq = select i1 %i.adm, float %i.aep, float 0.000000e+00 ; 3 uses
+  %i.aer = extractelement <2 x float> %i.aeo, i64 1
+  %i.aes = select i1 %i.adr, float %i.aer, float 0.000000e+00 ; 3 uses
+  %i.aet = extractelement <2 x float> %i.aei, i64 1 ; 2 uses
+  %i.aeu = fcmp ugt float %i.aet, 0.000000e+00
+  br i1 %i.aeu, label %bb.as, label %_ZL17blend_color_dodgeff.exit202.i
+
+bb.as:                                            ; preds = %bb.ar
+  %i.aev = extractelement <2 x float> %i.aeb, i64 1 ; 2 uses
+  %i.aew = fcmp ult float %i.aev, 1.000000e+00
+  br i1 %i.aew, label %bb.at, label %_ZL17blend_color_dodgeff.exit202.i
+
+bb.at:                                            ; preds = %bb.as
+  %i.aex = fsub float 1.000000e+00, %i.aev
+  %i.aey = fdiv float %i.aet, %i.aex              ; 2 uses
+  %i.aez = fcmp oge float %i.aey, 1.000000e+00
+  %.sroa.speculated.i201.i = select i1 %i.aez, float 1.000000e+00, float %i.aey
+  br label %_ZL17blend_color_dodgeff.exit202.i
+
+_ZL17blend_color_dodgeff.exit202.i:               ; preds = %bb.at, %bb.as, %bb.ar
+  %.0.i200.i = phi float [ %.sroa.speculated.i201.i, %bb.at ], [ 0.000000e+00, %bb.ar ], [ 1.000000e+00, %bb.as ]
+  %i.afa = extractelement <2 x float> %i.aei, i64 0 ; 2 uses
+  %i.afb = fcmp ugt float %i.afa, 0.000000e+00
+  br i1 %i.afb, label %bb.au, label %_ZL17blend_color_dodgeff.exit199.i
+
+bb.au:                                            ; preds = %_ZL17blend_color_dodgeff.exit202.i
+  %i.afc = extractelement <2 x float> %i.aeb, i64 0 ; 2 uses
+  %i.afd = fcmp ult float %i.afc, 1.000000e+00
+  br i1 %i.afd, label %bb.av, label %_ZL17blend_color_dodgeff.exit199.i
+
+bb.av:                                            ; preds = %bb.au
+  %i.afe = fsub float 1.000000e+00, %i.afc
+  %i.aff = fdiv float %i.afa, %i.afe              ; 2 uses
+  %i.afg = fcmp oge float %i.aff, 1.000000e+00
+  %.sroa.speculated.i198.i = select i1 %i.afg, float 1.000000e+00, float %i.aff
+  br label %_ZL17blend_color_dodgeff.exit199.i
+
+_ZL17blend_color_dodgeff.exit199.i:               ; preds = %bb.av, %bb.au, %_ZL17blend_color_dodgeff.exit202.i
+  %.0.i197.i = phi float [ %.sroa.speculated.i198.i, %bb.av ], [ 0.000000e+00, %_ZL17blend_color_dodgeff.exit202.i ], [ 1.000000e+00, %bb.au ]
+  %i.afh = fcmp ugt float %i.aes, 0.000000e+00
+  br i1 %i.afh, label %bb.aw, label %_ZL17blend_color_dodgeff.exit.i
+
+bb.aw:                                            ; preds = %_ZL17blend_color_dodgeff.exit199.i
+  %i.afi = fcmp ult float %i.aeq, 1.000000e+00
+  br i1 %i.afi, label %bb.ax, label %_ZL17blend_color_dodgeff.exit.i
+
+bb.ax:                                            ; preds = %bb.aw
+  %i.afj = fsub float 1.000000e+00, %i.aeq
+  %i.afk = fdiv float %i.aes, %i.afj              ; 2 uses
+  %i.afl = fcmp oge float %i.afk, 1.000000e+00
+  %.sroa.speculated.i196.i = select i1 %i.afl, float 1.000000e+00, float %i.afk
+  br label %_ZL17blend_color_dodgeff.exit.i
+
+_ZL17blend_color_dodgeff.exit.i:                  ; preds = %bb.ax, %bb.aw, %_ZL17blend_color_dodgeff.exit199.i
+  %.0.i195.i = phi float [ %.sroa.speculated.i196.i, %bb.ax ], [ 0.000000e+00, %_ZL17blend_color_dodgeff.exit199.i ], [ 1.000000e+00, %bb.aw ]
+  %i.afm = fneg float %i.adl
+  %i.afn = fsub nnan <2 x float> splat (float 1.000000e+00), %i.adk ; 2 uses
+  %i.afo = fmul float %i.adl, %i.adq
+  %i.afp = shufflevector <2 x float> %i.adk, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.afq = shufflevector <2 x float> <float poison, float 1.000000e+00>, <2 x float> %i.afn, <4 x i32> <i32 3, i32 3, i32 3, i32 1>
+  %i.afr = fmul <4 x float> %i.afp, %i.afq
+  %i.afs = extractelement <2 x float> %i.afn, i64 0
+  %i.aft = fmul float %i.afs, %i.adq
+  %i.afu = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.aeq, i64 0
+  %i.afv = shufflevector <2 x float> %i.aeb, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.afw = shufflevector <4 x float> %i.afu, <4 x float> %i.afv, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
+  %i.afx = fmul <4 x float> %i.afr, %i.afw
+  %i.afy = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %i.afo, i64 0
+  %i.afz = shufflevector <4 x float> %i.afy, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.aga = insertelement <4 x float> poison, float %.0.i195.i, i64 0
+  %i.agb = insertelement <4 x float> %i.aga, float %.0.i197.i, i64 1
+  %i.agc = insertelement <4 x float> %i.agb, float %.0.i200.i, i64 2
+  %i.agd = shufflevector <2 x float> %i.adk, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %i.age = shufflevector <4 x float> %i.agc, <4 x float> %i.agd, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %i.agf = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.afz, <4 x float> %i.age, <4 x float> %i.afx)
+  %i.agg = insertelement <4 x float> poison, float %i.aft, i64 0
+  %i.agh = insertelement <4 x float> %i.agg, float %i.afm, i64 1
+  %i.agi = shufflevector <4 x float> %i.agh, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.agj = insertelement <4 x float> poison, float %i.aes, i64 0
+  %i.agk = shufflevector <2 x float> %i.aei, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.agl = shufflevector <4 x float> %i.agj, <4 x float> %i.agk, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.agm = shufflevector <4 x float> %i.agl, <4 x float> %i.agd, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %i.agn = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.agi, <4 x float> %i.agm, <4 x float> %i.agf) ; 2 uses
+  %i.ago = fcmp oge <4 x float> %i.agn, zeroinitializer
+  %i.agp = select <4 x i1> %i.ago, <4 x float> %i.agn, <4 x float> zeroinitializer ; 2 uses
+  %i.agq = fcmp ole <4 x float> %i.agp, splat (float 1.000000e+00)
+  %i.agr = select <4 x i1> %i.agq, <4 x float> %i.agp, <4 x float> splat (float 1.000000e+00)
+  %i.ags = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.agr, <4 x float> splat (float 2.550000e+02), <4 x float> splat (float 5.000000e-01))
+  %i.agt = fptoui <4 x float> %i.ags to <4 x i8>
+  %i.agu = bitcast <4 x i8> %i.agt to i32
+  br label %_ZL15composite_pixeljj25hb_paint_composite_mode_t.exit
+
+bb.ay:                                            ; preds = %bb.b
+  %i.agv = and i32 %i.q, 255
+  %i.agw = lshr i32 %i.q, 8
+  %i.agx = lshr i32 %i.q, 16
+  %i.agy = uitofp nneg i32 %i.t to float
+  %i.agz = and i32 %i.s, 255
+  %i.aha = lshr i32 %i.s, 8
+  %i.ahb = lshr i32 %i.s, 16
+  %i.ahc = uitofp nneg i32 %i.u to float
+  %i.ahd = insertelement <2 x float> poison, float %i.agy, i64 0
+  %i.ahe = insertelement <2 x float> %i.ahd, float %i.ahc, i64 1
+  %i.ahf = fdiv <2 x float> %i.ahe, splat (float 2.550000e+02) ; 8 uses
+  %i.ahg = extractelement <2 x float> %i.ahf, i64 0 ; 3 uses
+  %i.ahh = fcmp ogt float %i.ahg, 0.000000e+00    ; 2 uses
+  %i.ahi = shufflevector <2 x float> %i.ahf, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ahj = insertelement <2 x i1> poison, i1 %i.ahh, i64 0
+  %i.ahk = shufflevector <2 x i1> %i.ahj, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.ahl = extractelement <2 x float> %i.ahf, i64 1 ; 3 uses
+  %i.ahm = fcmp ogt float %i.ahl, 0.000000e+00    ; 2 uses
+  %i.ahn = insertelement <4 x i32> poison, i32 %i.agw, i64 0
+  %i.aho = insertelement <4 x i32> %i.ahn, i32 %i.aha, i64 1
+  %i.ahp = insertelement <4 x i32> %i.aho, i32 %i.agx, i64 2
+  %i.ahq = insertelement <4 x i32> %i.ahp, i32 %i.ahb, i64 3
+  %i.ahr = and <4 x i32> %i.ahq, splat (i32 255)
+  %i.ahs = uitofp nneg <4 x i32> %i.ahr to <4 x float> ; 2 uses
+  %i.aht = shufflevector <4 x float> %i.ahs, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  %i.ahu = fdiv <2 x float> %i.aht, splat (float 2.550000e+02)
+  %i.ahv = fdiv <2 x float> %i.ahu, %i.ahi
+  %i.ahw = select <2 x i1> %i.ahk, <2 x float> %i.ahv, <2 x float> zeroinitializer ; 3 uses
+  %i.ahx = shufflevector <4 x float> %i.ahs, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %i.ahy = fdiv <2 x float> %i.ahx, splat (float 2.550000e+02)
+  %i.ahz = shufflevector <2 x float> %i.ahf, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.aia = fdiv <2 x float> %i.ahy, %i.ahz
+  %i.aib = insertelement <2 x i1> poison, i1 %i.ahm, i64 0
+  %i.aic = shufflevector <2 x i1> %i.aib, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.aid = select <2 x i1> %i.aic, <2 x float> %i.aia, <2 x float> zeroinitializer ; 3 uses
+  %i.aie = uitofp nneg i32 %i.agv to float
+  %i.aif = uitofp nneg i32 %i.agz to float
+  %i.aig = insertelement <2 x float> poison, float %i.aie, i64 0
+  %i.aih = insertelement <2 x float> %i.aig, float %i.aif, i64 1
+  %i.aii = fdiv <2 x float> %i.aih, splat (float 2.550000e+02)
+  %i.aij = fdiv <2 x float> %i.aii, %i.ahf        ; 2 uses
+end_hunk_0
