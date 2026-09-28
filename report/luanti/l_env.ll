@@ -204,7 +204,7 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit.i:             ; preds = %_ZSt6fill_nIPjmjET_
   %i.ca = add nsw i32 %i.bz, -15
   %i.cb = icmp slt i48 %.sroa.03.0.copyload.i.i, 0
   %i.cc = select i1 %i.cb, i32 %i.ca, i32 %i.bz
-  %i.cd = sdiv i32 %i.cc, 16                      ; 4 uses
+  %i.cd = sdiv i32 %i.cc, 16                      ; 3 uses
   %.sroa.054.0.extract.trunc.i.i.i = trunc nsw i32 %i.bs to i16
   %.sroa.455.0.extract.trunc.i.i.i = trunc nsw i32 %i.bx to i16
   %.sroa.556.0.extract.trunc.i.i.i = trunc nsw i32 %i.cd to i16
@@ -243,7 +243,6 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit.i:             ; preds = %_ZSt6fill_nIPjmjET_
 .preheader137.preheader.i.i.i:                    ; preds = %.preheader137.lr.ph.i.i.i
   %i.cw = shl nsw i16 %.sroa.556.0.extract.trunc.i.i.i, 4
   %i.cx = add i32 %i.aw, 1
-  %smax65 = call i32 @llvm.smax.i32(i32 %i.cd, i32 %i.ct)
   br label %.preheader137.i.i.i
 
 .preheader137.i.i.i:                              ; preds = %._crit_edge163.i.i.i, %.preheader137.preheader.i.i.i
@@ -548,7 +547,7 @@ bb.y:                                             ; preds = %_ZSt4findIN9__gnu_c
 ._crit_edge163.i.i.i:                             ; preds = %._crit_edge160.split.i.i.i, %._crit_edge160.split.us.us.i.i.i
   %indvars.iv.next321.i = add nsw i32 %indvars.iv320.i, 1
   %indvars.iv.next.i.i.i = add i16 %indvars.iv.i.i.i, 16
-  %exitcond66.not = icmp eq i32 %indvars.iv320.i, %smax65
+  %exitcond66.not = icmp eq i32 %indvars.iv320.i, %i.ct
   br i1 %exitcond66.not, label %"_ZZN9ModApiEnv20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSG_.exit.loopexit.i", label %.preheader137.i.i.i, !llvm.loop !404
 
 .lr.ph291.i:                                      ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i, %bb.z
@@ -748,7 +747,7 @@ bb.aj:                                            ; preds = %_ZNSt6vectorIjSaIjE
   %i.jt = add nsw i32 %i.js, -15
   %i.ju = icmp slt i48 %.sroa.03.0.copyload.i54.i, 0
   %i.jv = select i1 %i.ju, i32 %i.jt, i32 %i.js
-  %i.jw = sdiv i32 %i.jv, 16                      ; 4 uses
+  %i.jw = sdiv i32 %i.jv, 16                      ; 3 uses
   %.sroa.054.0.extract.trunc.i.i69.i = trunc nsw i32 %i.jl to i16
   %.sroa.455.0.extract.trunc.i.i70.i = trunc nsw i32 %i.jq to i16
   %.sroa.556.0.extract.trunc.i.i71.i = trunc nsw i32 %i.jw to i16
@@ -786,7 +785,6 @@ bb.aj:                                            ; preds = %_ZNSt6vectorIjSaIjE
 
 .preheader137.preheader.i.i82.i:                  ; preds = %.preheader137.lr.ph.i.i78.i
   %i.kp = shl nsw i16 %.sroa.556.0.extract.trunc.i.i71.i, 4
-  %smax = call i32 @llvm.smax.i32(i32 %i.jw, i32 %i.km)
   br label %.preheader137.i.i83.i
 
 .preheader137.i.i83.i:                            ; preds = %._crit_edge163.i.i139.i, %.preheader137.preheader.i.i82.i
@@ -1105,7 +1103,7 @@ bb.av:                                            ; preds = %_ZSt4findIN9__gnu_c
   %.9.i = phi i32 [ %.0236.i, %._crit_edge160.split.us.us.i.i167.i ], [ %.8.i, %._crit_edge160.split.i.i136.i ]
   %indvars.iv.next.i = add nsw i32 %indvars.iv.i, 1
   %indvars.iv.next.i.i141.i = add i16 %indvars.iv.i.i84.i, 16
-  %exitcond.not = icmp eq i32 %indvars.iv.i, %smax
+  %exitcond.not = icmp eq i32 %indvars.iv.i, %i.km
   br i1 %exitcond.not, label %"_ZZN9ModApiEnv20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE0_EEDaSG_.exit.i", label %.preheader137.i.i83.i, !llvm.loop !412
 
 "_ZZN9ModApiEnv20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE0_EEDaSG_.exit.i": ; preds = %._crit_edge163.i.i139.i, %.preheader137.lr.ph.i.i78.i, %bb.aj
