@@ -205,11 +205,12 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br i1 %.not73, label %._crit_edge77, label %.lr.ph76.preheader
 
 .lr.ph76.preheader:                               ; preds = %._crit_edge
-  %i.as = zext i32 %.0.lcssa to i64
+  %3 = add nuw nsw i32 %.0.lcssa, 1
+  %i.as = zext i32 %3 to i64
   br label %.lr.ph76
 
 .lr.ph76:                                         ; preds = %.lr.ph76.preheader, %bb.t
-  %indvars.iv87 = phi i64 [ %indvars.iv, %.lr.ph76.preheader ], [ %indvars.iv.next88, %bb.t ] ; 3 uses
+  %indvars.iv87 = phi i64 [ %indvars.iv, %.lr.ph76.preheader ], [ %indvars.iv.next88, %bb.t ] ; 2 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv87
   %i.au = load i32, ptr %i.at, align 4, !tbaa !26 ; 3 uses
   %i.av = lshr i32 %i.au, 24
@@ -243,9 +244,9 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s, %bb.q
-  %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 1
-  %.not.not = icmp samesign ult i64 %indvars.iv87, %i.as
-  br i1 %.not.not, label %.lr.ph76, label %._crit_edge77, !llvm.loop !195
+  %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next88, %i.as
+  br i1 %exitcond.not, label %._crit_edge77, label %.lr.ph76, !llvm.loop !195
 
 ._crit_edge77:                                    ; preds = %bb.t, %._crit_edge, %bb.h
   ret void
