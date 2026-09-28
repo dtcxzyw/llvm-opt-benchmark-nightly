@@ -202,9 +202,8 @@ bb.e:                                             ; preds = %bb.c
   %i.p = load i32, ptr %i.o, align 4
   %i.q = tail call i32 @llvm.bswap.i32(i32 %i.p)
   %i.r = zext i32 %i.q to i64                     ; 6 uses
-  %2 = add nuw nsw i64 %i.n, 1024
-  %i.s = add nuw nsw i64 %i.r, 1
-  %i.t = icmp samesign ugt i64 %2, %i.s
+  %i.s = add nuw nsw i64 %i.n, 1023
+  %i.t = icmp samesign ugt i64 %i.s, %i.r
   br i1 %i.t, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e

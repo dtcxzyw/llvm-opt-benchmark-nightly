@@ -204,12 +204,10 @@ bb.j:                                             ; preds = %bb.i
   br label %.body57
 
 bb.k:                                             ; preds = %.noexc56
-  %2 = add nuw i64 %i.b, 144
-  %i.by = add nuw i64 %i.b, 234
-  %3 = add nuw i64 %i.a, 160
-  %i.bz = add nuw i64 %i.a, 234
-  %rt.bound0 = icmp ult i64 %2, %i.bz
-  %rt.bound1 = icmp ult i64 %3, %i.by
+  %i.by = add nuw i64 %i.a, 90
+  %rt.bound0 = icmp ugt i64 %i.by, %i.b
+  %i.bz = add nuw i64 %i.b, 74
+  %rt.bound1 = icmp ugt i64 %i.bz, %i.a
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
   br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !223
@@ -612,12 +610,10 @@ bb.e:                                             ; preds = %_ZSt8_DestroyIPNSt7
   br label %_ZN3dap8optionalISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEEaSEOSA_.exit51
 
 _ZN3dap8optionalISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEEaSEOSA_.exit51: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i.i48, %bb.e
-  %4 = add nuw i64 %i.b, 160
-  %i.cr = add nuw i64 %i.b, 234
-  %5 = add nuw i64 %i.a, 160
-  %i.cs = add nuw i64 %i.a, 234
-  %rt.bound0 = icmp ult i64 %5, %i.cr
-  %rt.bound1 = icmp ult i64 %4, %i.cs
+  %i.cr = add nuw i64 %i.b, 74
+  %rt.bound0 = icmp ugt i64 %i.cr, %i.a
+  %i.cs = add nuw i64 %i.a, 74
+  %rt.bound1 = icmp ugt i64 %i.cs, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
   br i1 %rt.guard, label %_ZN3dap8optionalISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEEaSEOSA_.exit51.rtscalar, label %_ZN3dap8optionalISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEEaSEOSA_.exit51.rtvec, !prof !223
