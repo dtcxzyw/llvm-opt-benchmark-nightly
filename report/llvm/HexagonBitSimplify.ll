@@ -205,9 +205,9 @@ bb.x:                                             ; preds = %._crit_edge.i15.i.i
   br label %_ZN4llvm9BitVector3setEjj.exit.sink.split.i.i.i
 
 bb.y:                                             ; preds = %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p
-  %i.jc = zext i16 %.0.ph to i32                  ; 4 uses
+  %i.jc = zext i16 %.0.ph to i32                  ; 5 uses
   %i.jd = add nuw nsw i32 %i.jc, 16               ; 3 uses
-  %i.je = add nuw nsw i32 %i.jc, 32               ; 5 uses
+  %i.je = add nuw nsw i32 %i.jc, 32               ; 4 uses
   %i.jf = lshr i32 %i.jd, 6                       ; 3 uses
   %i.jg = lshr i32 %i.je, 6
   %i.jh = icmp eq i32 %i.jf, %i.jg
@@ -234,8 +234,8 @@ bb.aa:                                            ; preds = %bb.y
   store i64 %i.ju, ptr %i.js, align 8, !tbaa !45
   %i.jv = add nuw nsw i32 %i.jc, 79
   %i.jw = and i32 %i.jv, 131008                   ; 3 uses
-  %6 = add nuw nsw i32 %i.jw, 64
-  %.not29.i21.i.i.i = icmp samesign ugt i32 %6, %i.je
+  %6 = or disjoint i32 %i.jw, 32
+  %.not29.i21.i.i.i = icmp samesign ugt i32 %6, %i.jc
   br i1 %.not29.i21.i.i.i, label %._crit_edge.i25.i.i.i, label %.lr.ph.i22.preheader.i.i.i
 
 .lr.ph.i22.preheader.i.i.i:                       ; preds = %bb.aa
@@ -251,10 +251,13 @@ bb.aa:                                            ; preds = %bb.y
   %narrow.i.i.i = add nuw nsw i32 %i.ke, 8
   %i.kf = zext nneg i32 %narrow.i.i.i to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i, i8 -1, i64 %i.kf, i1 false), !tbaa !45
-  %i.kg = and i64 %i.jy, 131008                   ; 2 uses
-  %i.kh = add nuw nsw i64 %i.jx, 4294967264
-  %i.ki = sub nuw nsw i64 %i.kh, %i.kg
-  %i.kj = and i64 %i.ki, 4294967232
+  %i.kg = and i64 %i.jy, 131008                   ; 3 uses
+  %7 = add nuw nsw i64 %i.kg, 128
+  %i.kh = add nuw nsw i64 %i.jx, 33
+  %umax.i.i = call i64 @llvm.umax.i64(i64 %7, i64 %i.kh)
+  %i.ki = sub nsw i64 %umax.i.i, %i.kg
+  %8 = add nsw i64 %i.ki, 4294967231
+  %i.kj = and i64 %8, 4294967232
   %i.kk = add nuw nsw i64 %i.kj, %i.kg
   %i.kl = trunc i64 %i.kk to i32
   %i.km = add i32 %i.kl, 64
@@ -657,9 +660,9 @@ bb.an:                                            ; preds = %bb.ac
   br i1 %i.pq, label %bb.ao, label %_ZN12_GLOBAL__N_118HexagonBitSimplify11getUsedBitsEjjRN4llvm9BitVectorEtRKNS1_16HexagonInstrInfoE.exit.i
 
 bb.ao:                                            ; preds = %bb.an
-  %i.pr = zext i16 %.0.ph to i32                  ; 4 uses
+  %i.pr = zext i16 %.0.ph to i32                  ; 5 uses
   %i.ps = add nuw nsw i32 %i.pr, 16               ; 3 uses
-  %i.pt = add nuw nsw i32 %i.pr, 32               ; 6 uses
+  %i.pt = add nuw nsw i32 %i.pr, 32               ; 5 uses
   %i.pu = lshr i32 %i.ps, 6                       ; 3 uses
   %i.pv = lshr i32 %i.pt, 6
   %i.pw = icmp eq i32 %i.pu, %i.pv
@@ -693,8 +696,8 @@ bb.aq:                                            ; preds = %bb.ao
   store i64 %i.qp, ptr %i.qn, align 8, !tbaa !45
   %i.qq = add nuw nsw i32 %i.pr, 79
   %i.qr = and i32 %i.qq, 131008                   ; 3 uses
-  %7 = add nuw nsw i32 %i.qr, 64
-  %.not29.i54 = icmp samesign ugt i32 %7, %i.pt
+  %9 = or disjoint i32 %i.qr, 32
+  %.not29.i54 = icmp samesign ugt i32 %9, %i.pr
   br i1 %.not29.i54, label %._crit_edge.i58, label %.lr.ph.i55.preheader
 
 .lr.ph.i55.preheader:                             ; preds = %bb.aq
@@ -1097,9 +1100,9 @@ bb.bg:                                            ; preds = %._crit_edge.i60.i.i
   br label %_ZN12_GLOBAL__N_118HexagonBitSimplify11getUsedBitsEjjRN4llvm9BitVectorEtRKNS1_16HexagonInstrInfoE.exit.i
 
 bb.bh:                                            ; preds = %bb.bc
-  %i.yr = zext i16 %.0.ph to i32                  ; 4 uses
+  %i.yr = zext i16 %.0.ph to i32                  ; 5 uses
   %i.ys = add nuw nsw i32 %i.yr, 16               ; 3 uses
-  %i.yt = add nuw nsw i32 %i.yr, 32               ; 5 uses
+  %i.yt = add nuw nsw i32 %i.yr, 32               ; 4 uses
   %i.yu = lshr i32 %i.ys, 6                       ; 3 uses
   %i.yv = lshr i32 %i.yt, 6
   %i.yw = icmp eq i32 %i.yu, %i.yv
@@ -1133,8 +1136,8 @@ bb.bj:                                            ; preds = %bb.bh
   store i64 %i.zp, ptr %i.zn, align 8, !tbaa !45
   %i.zq = add nuw nsw i32 %i.yr, 79
   %i.zr = and i32 %i.zq, 131008                   ; 3 uses
-  %8 = add nuw nsw i32 %i.zr, 64
-  %.not29.i66.i.i = icmp samesign ugt i32 %8, %i.yt
+  %10 = or disjoint i32 %i.zr, 32
+  %.not29.i66.i.i = icmp samesign ugt i32 %10, %i.yr
   br i1 %.not29.i66.i.i, label %._crit_edge.i70.i.i, label %.lr.ph.i67.preheader.i.i
 
 .lr.ph.i67.preheader.i.i:                         ; preds = %bb.bj
@@ -1150,10 +1153,13 @@ bb.bj:                                            ; preds = %bb.bh
   %narrow67.i.i.a = add nuw nsw i32 %i.zz, 8
   %i.aaa = zext nneg i32 %narrow67.i.i.a to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep22.i.i, i8 -1, i64 %i.aaa, i1 false), !tbaa !45
-  %i.aab = and i64 %i.zt, 131008                  ; 2 uses
-  %i.aac = add nuw nsw i64 %i.zs, 4294967264
-  %i.aad = sub nuw nsw i64 %i.aac, %i.aab
-  %i.aae = and i64 %i.aad, 4294967232
+  %i.aab = and i64 %i.zt, 131008                  ; 3 uses
+  %11 = add nuw nsw i64 %i.aab, 128
+  %i.aac = add nuw nsw i64 %i.zs, 33
+  %umax79.i = call i64 @llvm.umax.i64(i64 %11, i64 %i.aac)
+  %i.aad = sub nsw i64 %umax79.i, %i.aab
+  %12 = add nsw i64 %i.aad, 4294967231
+  %i.aae = and i64 %12, 4294967232
   %i.aaf = add nuw nsw i64 %i.aae, %i.aab
   %i.aag = trunc i64 %i.aaf to i32
   %i.aah = add i32 %i.aag, 64
@@ -1184,9 +1190,9 @@ bb.bl:                                            ; preds = %bb.ac, %bb.ac, %bb.
   ]
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.aar = zext i16 %.0.ph to i32                 ; 4 uses
+  %i.aar = zext i16 %.0.ph to i32                 ; 5 uses
   %i.aas = add nuw nsw i32 %i.aar, 16             ; 3 uses
-  %i.aat = add nuw nsw i32 %i.aar, 32             ; 5 uses
+  %i.aat = add nuw nsw i32 %i.aar, 32             ; 4 uses
   %i.aau = lshr i32 %i.aas, 6                     ; 3 uses
   %i.aav = lshr i32 %i.aat, 6
   %i.aaw = icmp eq i32 %i.aau, %i.aav
@@ -1220,8 +1226,8 @@ bb.bo:                                            ; preds = %bb.bm
   store i64 %i.abp, ptr %i.abn, align 8, !tbaa !45
   %i.abq = add nuw nsw i32 %i.aar, 79
   %i.abr = and i32 %i.abq, 131008                 ; 3 uses
-  %9 = add nuw nsw i32 %i.abr, 64
-  %.not29.i76.i.i = icmp samesign ugt i32 %9, %i.aat
+  %13 = or disjoint i32 %i.abr, 32
+  %.not29.i76.i.i = icmp samesign ugt i32 %13, %i.aar
   br i1 %.not29.i76.i.i, label %._crit_edge.i80.i.i, label %.lr.ph.i77.preheader.i.i
 
 .lr.ph.i77.preheader.i.i:                         ; preds = %bb.bo
@@ -1237,10 +1243,13 @@ bb.bo:                                            ; preds = %bb.bm
   %narrow66.i.i = add nuw nsw i32 %i.abz, 8
   %i.aca = zext nneg i32 %narrow66.i.i to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep17.i.i, i8 -1, i64 %i.aca, i1 false), !tbaa !45
-  %i.acb = and i64 %i.abt, 131008                 ; 2 uses
-  %i.acc = add nuw nsw i64 %i.abs, 4294967264
-  %i.acd = sub nuw nsw i64 %i.acc, %i.acb
-  %i.ace = and i64 %i.acd, 4294967232
+  %i.acb = and i64 %i.abt, 131008                 ; 3 uses
+  %14 = add nuw nsw i64 %i.acb, 128
+  %i.acc = add nuw nsw i64 %i.abs, 33
+  %umax78.i = call i64 @llvm.umax.i64(i64 %14, i64 %i.acc)
+  %i.acd = sub nsw i64 %umax78.i, %i.acb
+  %15 = add nsw i64 %i.acd, 4294967231
+  %i.ace = and i64 %15, 4294967232
   %i.acf = add nuw nsw i64 %i.ace, %i.acb
   %i.acg = trunc i64 %i.acf to i32
   %i.ach = add i32 %i.acg, 64
@@ -1388,9 +1397,9 @@ bb.bu:                                            ; preds = %bb.ac, %bb.ac, %bb.
   br i1 %or.cond3.i.i, label %bb.bv, label %_ZN12_GLOBAL__N_118HexagonBitSimplify11getUsedBitsEjjRN4llvm9BitVectorEtRKNS1_16HexagonInstrInfoE.exit.i
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.afb = zext i16 %.0.ph to i32                 ; 4 uses
+  %i.afb = zext i16 %.0.ph to i32                 ; 5 uses
   %i.afc = add nuw nsw i32 %i.afb, 16             ; 3 uses
-  %i.afd = add nuw nsw i32 %i.afb, 32             ; 5 uses
+  %i.afd = add nuw nsw i32 %i.afb, 32             ; 4 uses
   %i.afe = lshr i32 %i.afc, 6                     ; 3 uses
   %i.aff = lshr i32 %i.afd, 6
   %i.afg = icmp eq i32 %i.afe, %i.aff
@@ -1424,8 +1433,8 @@ bb.bx:                                            ; preds = %bb.bv
   store i64 %i.afz, ptr %i.afx, align 8, !tbaa !45
   %i.aga = add nuw nsw i32 %i.afb, 79
   %i.agb = and i32 %i.aga, 131008                 ; 3 uses
-  %10 = add nuw nsw i32 %i.agb, 64
-  %.not29.i96.i.i = icmp samesign ugt i32 %10, %i.afd
+  %16 = or disjoint i32 %i.agb, 32
+  %.not29.i96.i.i = icmp samesign ugt i32 %16, %i.afb
   br i1 %.not29.i96.i.i, label %._crit_edge.i100.i.i, label %.lr.ph.i97.preheader.i.i
 
 .lr.ph.i97.preheader.i.i:                         ; preds = %bb.bx
@@ -1441,10 +1450,13 @@ bb.bx:                                            ; preds = %bb.bv
   %narrow.i.i = add nuw nsw i32 %i.agj, 8
   %i.agk = zext nneg i32 %narrow.i.i to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i, i8 -1, i64 %i.agk, i1 false), !tbaa !45
-  %i.agl = and i64 %i.agd, 131008                 ; 2 uses
-  %i.agm = add nuw nsw i64 %i.agc, 4294967264
-  %i.agn = sub nuw nsw i64 %i.agm, %i.agl
-  %i.ago = and i64 %i.agn, 4294967232
+  %i.agl = and i64 %i.agd, 131008                 ; 3 uses
+  %17 = add nuw nsw i64 %i.agl, 128
+  %i.agm = add nuw nsw i64 %i.agc, 33
+  %umax.i = call i64 @llvm.umax.i64(i64 %17, i64 %i.agm)
+  %i.agn = sub nsw i64 %umax.i, %i.agl
+  %18 = add nsw i64 %i.agn, 4294967231
+  %i.ago = and i64 %18, 4294967232
   %i.agp = add nuw nsw i64 %i.ago, %i.agl
   %i.agq = trunc i64 %i.agp to i32
   %i.agr = add i32 %i.agq, 64

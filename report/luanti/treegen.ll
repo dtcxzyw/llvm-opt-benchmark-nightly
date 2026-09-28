@@ -204,8 +204,7 @@ bb.ac:                                            ; preds = %_ZNK9VoxelArea8cont
   %i.ft = getelementptr inbounds [4 x i8], ptr %i.ez, i64 %i.fs
   store i32 %.sroa.0389.0.insert.ext399, ptr %i.ft, align 4
   %i.fu = load i32, ptr %8, align 4, !tbaa !79
-  %.fr = freeze i32 %i.fu
-  %i.fv = mul i32 %.fr, 1103515245
+  %i.fv = mul i32 %i.fu, 1103515245
   %i.fw = add i32 %i.fv, 12345                    ; 2 uses
   store i32 %i.fw, ptr %8, align 4, !tbaa !79
   %i.fx = sdiv i32 %i.fw, 65536
@@ -542,8 +541,8 @@ bb.au:                                            ; preds = %_ZNK9VoxelArea8cont
 _ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259.thread: ; preds = %bb.as, %bb.at, %bb.au, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259
   %i.li = add i16 %.sroa.8367.0466, 1
   %i.lj = add nuw nsw i16 %.0158467, 1
-  %exitcond483.not = icmp eq i16 %.0158467, %i.ga
-  br i1 %exitcond483.not, label %_ZN6BufferIhEC2Em.exit, label %bb.as, !llvm.loop !198
+  %9 = icmp samesign ugt i16 %i.ga, %.0158467
+  br i1 %9, label %bb.as, label %_ZN6BufferIhEC2Em.exit, !llvm.loop !198
 
 .preheader456:                                    ; preds = %.preheader458
   %i.lk = add i16 %.sroa.0437.0.extract.trunc, -3 ; 3 uses
@@ -946,8 +945,8 @@ bb.ag:                                            ; preds = %_ZNK9VoxelArea8cont
 _ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit.thread: ; preds = %bb.ae, %bb.af, %bb.ag, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit
   %i.gb = add i16 %.sroa.8475.0518, 1
   %i.gc = add nuw nsw i16 %.0179519, 1
-  %exitcond.not = icmp eq i16 %.0179519, %i.fd
-  br i1 %exitcond.not, label %.lr.ph.preheader, label %bb.ae, !llvm.loop !203
+  %9 = icmp samesign ugt i16 %i.fd, %.0179519
+  br i1 %9, label %bb.ae, label %.lr.ph.preheader, !llvm.loop !203
 
 .lr.ph.preheader:                                 ; preds = %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit.thread
   %i.gd = call noalias noundef nonnull dereferenceable(490) ptr @_Znam(i64 noundef 490) #25 ; 54 uses

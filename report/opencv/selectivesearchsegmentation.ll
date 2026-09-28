@@ -205,7 +205,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i: ; preds = %.noexc373
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
 
 bb.ey:                                            ; preds = %.preheader453, %bb.fc
-  %indvars.iv474 = phi i64 [ 0, %.preheader453 ], [ %indvars.iv.next475, %bb.fc ] ; 4 uses
+  %indvars.iv474 = phi i64 [ 0, %.preheader453 ], [ %indvars.iv.next475, %bb.fc ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %89) #26
@@ -253,13 +253,13 @@ bb.fc:                                            ; preds = %bb.fb
   call void @llvm.lifetime.end.p0(ptr nonnull %90) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
-  %indvars.iv.next475 = add nuw nsw i64 %indvars.iv474, 1 ; 2 uses
+  %indvars.iv.next475 = add nuw nsw i64 %indvars.iv474, 1
   %i.oo = load i32, ptr %21, align 8, !tbaa !56
   %i.op = lshr i32 %i.oo, 2
   %i.oq = and i32 %i.op, 1016
-  %96 = add nuw nsw i32 %i.oq, 8
+  %96 = or disjoint i32 %i.oq, 7
   %i.or = zext nneg i32 %96 to i64
-  %i.os = icmp samesign ult i64 %indvars.iv.next475, %i.or
+  %i.os = icmp samesign ult i64 %indvars.iv474, %i.or
   br i1 %i.os, label %bb.ey, label %bb.ev, !llvm.loop !308
 
 bb.fd:                                            ; preds = %bb.ez, %bb.ey

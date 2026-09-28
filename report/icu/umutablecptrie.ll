@@ -205,181 +205,14 @@ bb.ek:                                            ; preds = %bb.eu, %.lr.ph413.i
 bb.el:                                            ; preds = %bb.ek
   %i.afd = load i32, ptr %i.yn, align 8, !tbaa !25
   %i.afe = icmp slt i32 %i.afd, 65536
-  br i1 %i.afe, label %.thread362.i.i.i, label %.thread.i108.i.i
+  br i1 %i.afe, label %.thread.i101.i.i, label %.thread.i108.i.i
 
 bb.em:                                            ; preds = %bb.ek
   switch i8 %i.afa, label %.thread.i108.i.i [
     i8 0, label %bb.es
     i8 1, label %7
-    i8 2, label %.thread362.i.i.i
+    i8 2, label %.thread.i101.i.i
   ]
-
-7:                                                ; preds = %bb.em
-  %8 = load ptr, ptr %0, align 8, !tbaa !22
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv460.i.i.i
-  %10 = load i32, ptr %9, align 4, !tbaa !34
-  br label %bb.es
-
-.thread362.i.i.i:                                 ; preds = %bb.em, %bb.el
-  %.5289365.i.i.i = phi i32 [ %.4288406.i.i.i, %bb.em ], [ 0, %bb.el ] ; 3 uses
-  %11 = load ptr, ptr %i.add, align 8, !tbaa !31  ; 6 uses
-  %12 = load ptr, ptr %0, align 8, !tbaa !22      ; 3 uses
-  %13 = trunc nuw nsw i64 %indvars.iv460.i.i.i to i32
-  %14 = call fastcc noundef i32 @_ZNK6icu_7812_GLOBAL__N_111MixedBlocks9findBlockItjEEiPKT_PKT0_i(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef %11, ptr noundef %12, i32 noundef %13) ; 2 uses
-  %15 = icmp sgt i32 %14, -1
-  br i1 %15, label %bb.es, label %16
-
-16:                                               ; preds = %.thread362.i.i.i
-  %17 = icmp eq i32 %.0250408.i.i.i, %i.acw
-  br i1 %17, label %.lr.ph403.preheader.i.i.i, label %18
-
-18:                                               ; preds = %16
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %indvars.iv460.i.i.i ; 2 uses
-  %20 = sext i32 %.0250408.i.i.i to i64           ; 4 uses
-  br label %21
-
-21:                                               ; preds = %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1, %18
-  %indvars.iv.i.i101.i.i = phi i64 [ 31, %18 ], [ %indvars.iv.next.i.i106.i.i.1, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1 ] ; 6 uses
-  %22 = sub nsw i64 %20, %indvars.iv.i.i101.i.i
-  %23 = getelementptr inbounds [2 x i8], ptr %11, i64 %22
-  %24 = trunc nuw nsw i64 %indvars.iv.i.i101.i.i to i32 ; 2 uses
-  br label %.lr.ph.i.i.i102.i.i
-
-.lr.ph.i.i.i102.i.i:                              ; preds = %29, %21
-  %.010.i.i.i103.i.i = phi i32 [ %32, %29 ], [ %24, %21 ] ; 2 uses
-  %.069.i.i.i104.i.i = phi ptr [ %31, %29 ], [ %19, %21 ] ; 2 uses
-  %.078.i.i.i105.i.i = phi ptr [ %30, %29 ], [ %23, %21 ] ; 2 uses
-  %25 = load i16, ptr %.078.i.i.i105.i.i, align 2, !tbaa !42
-  %26 = zext i16 %25 to i32
-  %27 = load i32, ptr %.069.i.i.i104.i.i, align 4, !tbaa !34
-  %28 = icmp eq i32 %27, %26
-  br i1 %28, label %29, label %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i
-
-29:                                               ; preds = %.lr.ph.i.i.i102.i.i
-  %30 = getelementptr inbounds nuw i8, ptr %.078.i.i.i105.i.i, i64 2
-  %31 = getelementptr inbounds nuw i8, ptr %.069.i.i.i104.i.i, i64 4
-  %32 = add nsw i32 %.010.i.i.i103.i.i, -1
-  %33 = icmp sgt i32 %.010.i.i.i103.i.i, 1
-  br i1 %33, label %.lr.ph.i.i.i102.i.i, label %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, !llvm.loop !4
-
-_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i102.i.i
-  %indvars.iv.next.i.i106.i.i = add nsw i64 %indvars.iv.i.i101.i.i, -1 ; 3 uses
-  %34 = icmp samesign ugt i64 %indvars.iv.i.i101.i.i, 1
-  br i1 %34, label %35, label %.lr.ph403.preheader.i.i.i
-
-35:                                               ; preds = %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i
-  %36 = sub nsw i64 %20, %indvars.iv.next.i.i106.i.i
-  %37 = getelementptr inbounds [2 x i8], ptr %11, i64 %36
-  %38 = trunc nuw nsw i64 %indvars.iv.next.i.i106.i.i to i32 ; 2 uses
-  br label %.lr.ph.i.i.i102.i.i.1
-
-.lr.ph.i.i.i102.i.i.1:                            ; preds = %43, %35
-  %.010.i.i.i103.i.i.1 = phi i32 [ %46, %43 ], [ %38, %35 ] ; 2 uses
-  %.069.i.i.i104.i.i.1 = phi ptr [ %45, %43 ], [ %19, %35 ] ; 2 uses
-  %.078.i.i.i105.i.i.1 = phi ptr [ %44, %43 ], [ %37, %35 ] ; 2 uses
-  %39 = load i16, ptr %.078.i.i.i105.i.i.1, align 2, !tbaa !42
-  %40 = zext i16 %39 to i32
-  %41 = load i32, ptr %.069.i.i.i104.i.i.1, align 4, !tbaa !34
-  %42 = icmp eq i32 %41, %40
-  br i1 %42, label %43, label %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1
-
-_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1: ; preds = %.lr.ph.i.i.i102.i.i.1
-  %indvars.iv.next.i.i106.i.i.1 = add nsw i64 %indvars.iv.i.i101.i.i, -2
-  br label %21
-
-43:                                               ; preds = %.lr.ph.i.i.i102.i.i.1
-  %44 = getelementptr inbounds nuw i8, ptr %.078.i.i.i105.i.i.1, i64 2
-  %45 = getelementptr inbounds nuw i8, ptr %.069.i.i.i104.i.i.1, i64 4
-  %46 = add nsw i32 %.010.i.i.i103.i.i.1, -1
-  %47 = icmp sgt i32 %.010.i.i.i103.i.i.1, 1
-  br i1 %47, label %.lr.ph.i.i.i102.i.i.1, label %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, !llvm.loop !4
-
-_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i: ; preds = %29, %43
-  %indvars.iv.i.i101.i.i.lcssa = phi i64 [ %indvars.iv.next.i.i106.i.i, %43 ], [ %indvars.iv.i.i101.i.i, %29 ]
-  %.lcssa339 = phi i32 [ %38, %43 ], [ %24, %29 ]
-  %48 = sub nsw i32 %.0250408.i.i.i, %.lcssa339
-  br label %.lr.ph403.preheader.i.i.i
-
-.lr.ph403.preheader.i.i.i:                        ; preds = %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, %16
-  %.pre-phi.i.i = phi i64 [ %.pre246.i.i, %16 ], [ %20, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %20, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ] ; 4 uses
-  %49 = phi i32 [ %i.acw, %16 ], [ %48, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %.0250408.i.i.i, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ] ; 2 uses
-  %.0243521.i.i.i = phi i64 [ 0, %16 ], [ %indvars.iv.i.i101.i.i.lcssa, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ 0, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ] ; 7 uses
-  %invariant.gep534.i.i.i = getelementptr [4 x i8], ptr %12, i64 %indvars.iv460.i.i.i ; 2 uses
-  %50 = add i64 %.0243521.i.i.i, 1
-  %51 = and i64 %50, 4294967295
-  %52 = sub nsw i64 33, %51                       ; 3 uses
-  %min.iters.check256 = icmp ult i64 %52, 12
-  br i1 %min.iters.check256, label %.lr.ph403.i.i.i.preheader, label %vector.scevcheck
-
-vector.scevcheck:                                 ; preds = %.lr.ph403.preheader.i.i.i
-  %53 = trunc i64 %.0243521.i.i.i to i32
-  %54 = add i64 %.0243521.i.i.i, 1
-  %55 = and i64 %54, 4294967295
-  %56 = sub nsw i64 32, %55                       ; 2 uses
-  %57 = trunc i64 %56 to i32
-  %58 = sub i32 -2, %53
-  %59 = icmp ult i32 %58, %57
-  %60 = icmp ugt i64 %56, 4294967295
-  %61 = or i1 %59, %60
-  br i1 %61, label %.lr.ph403.i.i.i.preheader, label %vector.ph257
-
-vector.ph257:                                     ; preds = %vector.scevcheck
-  %n.vec258 = and i64 %52, -8                     ; 4 uses
-  %62 = add nsw i64 %.pre-phi.i.i, %n.vec258      ; 2 uses
-  %63 = add i64 %.0243521.i.i.i, %n.vec258
-  %64 = getelementptr [4 x i8], ptr %invariant.gep534.i.i.i, i64 %.0243521.i.i.i
-  %65 = getelementptr [2 x i8], ptr %11, i64 %.pre-phi.i.i
-  br label %vector.body259
-
-vector.body259:                                   ; preds = %vector.body259, %vector.ph257
-  %index260 = phi i64 [ 0, %vector.ph257 ], [ %index.next263, %vector.body259 ] ; 3 uses
-  %66 = getelementptr [4 x i8], ptr %64, i64 %index260 ; 2 uses
-  %67 = getelementptr i8, ptr %66, i64 16
-  %wide.load261 = load <4 x i32>, ptr %66, align 4, !tbaa !34
-  %wide.load262 = load <4 x i32>, ptr %67, align 4, !tbaa !34
-  %68 = trunc <4 x i32> %wide.load261 to <4 x i16>
-  %69 = trunc <4 x i32> %wide.load262 to <4 x i16>
-  %70 = getelementptr [2 x i8], ptr %65, i64 %index260 ; 2 uses
-  %71 = getelementptr inbounds nuw i8, ptr %70, i64 8
-  store <4 x i16> %68, ptr %70, align 2, !tbaa !42
-  store <4 x i16> %69, ptr %71, align 2, !tbaa !42
-  %index.next263 = add nuw i64 %index260, 8       ; 2 uses
-  %72 = icmp eq i64 %index.next263, %n.vec258
-  br i1 %72, label %middle.block264, label %vector.body259, !llvm.loop !98
-
-middle.block264:                                  ; preds = %vector.body259
-  %cmp.n265 = icmp eq i64 %52, %n.vec258
-  br i1 %cmp.n265, label %._crit_edge404.loopexit.i.i.i, label %.lr.ph403.i.i.i.preheader
-
-.lr.ph403.i.i.i.preheader:                        ; preds = %vector.scevcheck, %.lr.ph403.preheader.i.i.i, %middle.block264
-  %indvars.iv481.i.i.i.ph = phi i64 [ %.pre-phi.i.i, %vector.scevcheck ], [ %.pre-phi.i.i, %.lr.ph403.preheader.i.i.i ], [ %62, %middle.block264 ]
-  %indvars.iv479.i.i.i.ph = phi i64 [ %.0243521.i.i.i, %vector.scevcheck ], [ %.0243521.i.i.i, %.lr.ph403.preheader.i.i.i ], [ %63, %middle.block264 ]
-  br label %.lr.ph403.i.i.i
-
-.lr.ph403.i.i.i:                                  ; preds = %.lr.ph403.i.i.i.preheader, %.lr.ph403.i.i.i
-  %indvars.iv481.i.i.i = phi i64 [ %indvars.iv.next482.i.i.i, %.lr.ph403.i.i.i ], [ %indvars.iv481.i.i.i.ph, %.lr.ph403.i.i.i.preheader ] ; 2 uses
-  %indvars.iv479.i.i.i = phi i64 [ %indvars.iv.next480.i.i.i, %.lr.ph403.i.i.i ], [ %indvars.iv479.i.i.i.ph, %.lr.ph403.i.i.i.preheader ] ; 2 uses
-  %indvars.iv.next480.i.i.i = add nsw i64 %indvars.iv479.i.i.i, 1 ; 2 uses
-  %gep535.i.i.i = getelementptr [4 x i8], ptr %invariant.gep534.i.i.i, i64 %indvars.iv479.i.i.i
-  %73 = load i32, ptr %gep535.i.i.i, align 4, !tbaa !34
-  %74 = trunc i32 %73 to i16
-  %indvars.iv.next482.i.i.i = add nsw i64 %indvars.iv481.i.i.i, 1 ; 2 uses
-  %75 = getelementptr inbounds [2 x i8], ptr %11, i64 %indvars.iv481.i.i.i
-  store i16 %74, ptr %75, align 2, !tbaa !42
-  %76 = and i64 %indvars.iv.next480.i.i.i, 4294967295
-  %exitcond486.not.i.i.i = icmp eq i64 %76, 32
-  br i1 %exitcond486.not.i.i.i, label %._crit_edge404.loopexit.i.i.i, label %.lr.ph403.i.i.i, !llvm.loop !99
-
-._crit_edge404.loopexit.i.i.i:                    ; preds = %.lr.ph403.i.i.i, %middle.block264
-  %indvars.iv.next482.i.i.i.lcssa = phi i64 [ %62, %middle.block264 ], [ %indvars.iv.next482.i.i.i, %.lr.ph403.i.i.i ]
-  %77 = trunc nsw i64 %indvars.iv.next482.i.i.i.lcssa to i32 ; 4 uses
-  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef nonnull %11, i32 noundef %i.acw, i32 noundef %.0250408.i.i.i, i32 noundef %77)
-  br i1 %.0273.lcssa.i.i.i, label %78, label %bb.es
-
-78:                                               ; preds = %._crit_edge404.loopexit.i.i.i
-  %79 = load ptr, ptr %i.add, align 8, !tbaa !31
-  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %4, ptr noundef %79, i32 noundef %i.acw, i32 noundef %.0250408.i.i.i, i32 noundef %77)
-  br label %bb.es
 
 .thread.i108.i.i:                                 ; preds = %bb.em, %bb.el
   %.5289361.i.i.i.a = phi i32 [ %.4288406.i.i.i, %bb.em ], [ 0, %bb.el ]
@@ -654,6 +487,173 @@ middle.block264:                                  ; preds = %vector.body259
   %i.aod = icmp sgt i32 %i.aoc, -1
   br i1 %i.aod, label %bb.er, label %bb.en
 
+7:                                                ; preds = %bb.em
+  %8 = load ptr, ptr %0, align 8, !tbaa !22
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv460.i.i.i
+  %10 = load i32, ptr %9, align 4, !tbaa !34
+  br label %bb.es
+
+.thread.i101.i.i:                                 ; preds = %bb.em, %bb.el
+  %.5289361.i.i.i = phi i32 [ %.4288406.i.i.i, %bb.em ], [ 0, %bb.el ] ; 3 uses
+  %11 = load ptr, ptr %i.add, align 8, !tbaa !31  ; 6 uses
+  %12 = load ptr, ptr %0, align 8, !tbaa !22      ; 3 uses
+  %13 = trunc nuw nsw i64 %indvars.iv460.i.i.i to i32
+  %14 = call fastcc noundef i32 @_ZNK6icu_7812_GLOBAL__N_111MixedBlocks9findBlockItjEEiPKT_PKT0_i(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef %11, ptr noundef %12, i32 noundef %13) ; 2 uses
+  %15 = icmp sgt i32 %14, -1
+  br i1 %15, label %bb.es, label %16
+
+16:                                               ; preds = %.thread.i101.i.i
+  %17 = icmp eq i32 %.0250408.i.i.i, %i.acw
+  br i1 %17, label %.lr.ph400.preheader.i.i.i, label %18
+
+18:                                               ; preds = %16
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %indvars.iv460.i.i.i ; 2 uses
+  %20 = sext i32 %.0250408.i.i.i to i64           ; 4 uses
+  br label %21
+
+21:                                               ; preds = %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1, %18
+  %indvars.iv.i.i102.i.i = phi i64 [ 31, %18 ], [ %indvars.iv.next.i.i107.i.i.1, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1 ] ; 6 uses
+  %22 = sub nsw i64 %20, %indvars.iv.i.i102.i.i
+  %23 = getelementptr inbounds [2 x i8], ptr %11, i64 %22
+  %24 = trunc nuw nsw i64 %indvars.iv.i.i102.i.i to i32 ; 2 uses
+  br label %.lr.ph.i.i.i103.i.i
+
+.lr.ph.i.i.i103.i.i:                              ; preds = %29, %21
+  %.010.i.i.i104.i.i = phi i32 [ %32, %29 ], [ %24, %21 ] ; 2 uses
+  %.069.i.i.i105.i.i = phi ptr [ %31, %29 ], [ %19, %21 ] ; 2 uses
+  %.078.i.i.i106.i.i = phi ptr [ %30, %29 ], [ %23, %21 ] ; 2 uses
+  %25 = load i16, ptr %.078.i.i.i106.i.i, align 2, !tbaa !42
+  %26 = zext i16 %25 to i32
+  %27 = load i32, ptr %.069.i.i.i105.i.i, align 4, !tbaa !34
+  %28 = icmp eq i32 %27, %26
+  br i1 %28, label %29, label %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i
+
+29:                                               ; preds = %.lr.ph.i.i.i103.i.i
+  %30 = getelementptr inbounds nuw i8, ptr %.078.i.i.i106.i.i, i64 2
+  %31 = getelementptr inbounds nuw i8, ptr %.069.i.i.i105.i.i, i64 4
+  %32 = add nsw i32 %.010.i.i.i104.i.i, -1
+  %33 = icmp sgt i32 %.010.i.i.i104.i.i, 1
+  br i1 %33, label %.lr.ph.i.i.i103.i.i, label %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, !llvm.loop !4
+
+_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i103.i.i
+  %indvars.iv.next.i.i107.i.i = add nsw i64 %indvars.iv.i.i102.i.i, -1 ; 3 uses
+  %34 = icmp samesign ugt i64 %indvars.iv.i.i102.i.i, 1
+  br i1 %34, label %35, label %.lr.ph400.preheader.i.i.i
+
+35:                                               ; preds = %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i
+  %36 = sub nsw i64 %20, %indvars.iv.next.i.i107.i.i
+  %37 = getelementptr inbounds [2 x i8], ptr %11, i64 %36
+  %38 = trunc nuw nsw i64 %indvars.iv.next.i.i107.i.i to i32 ; 2 uses
+  br label %.lr.ph.i.i.i103.i.i.1
+
+.lr.ph.i.i.i103.i.i.1:                            ; preds = %43, %35
+  %.010.i.i.i104.i.i.1 = phi i32 [ %46, %43 ], [ %38, %35 ] ; 2 uses
+  %.069.i.i.i105.i.i.1 = phi ptr [ %45, %43 ], [ %19, %35 ] ; 2 uses
+  %.078.i.i.i106.i.i.1 = phi ptr [ %44, %43 ], [ %37, %35 ] ; 2 uses
+  %39 = load i16, ptr %.078.i.i.i106.i.i.1, align 2, !tbaa !42
+  %40 = zext i16 %39 to i32
+  %41 = load i32, ptr %.069.i.i.i105.i.i.1, align 4, !tbaa !34
+  %42 = icmp eq i32 %41, %40
+  br i1 %42, label %43, label %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1
+
+_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i.1: ; preds = %.lr.ph.i.i.i103.i.i.1
+  %indvars.iv.next.i.i107.i.i.1 = add nsw i64 %indvars.iv.i.i102.i.i, -2
+  br label %21
+
+43:                                               ; preds = %.lr.ph.i.i.i103.i.i.1
+  %44 = getelementptr inbounds nuw i8, ptr %.078.i.i.i106.i.i.1, i64 2
+  %45 = getelementptr inbounds nuw i8, ptr %.069.i.i.i105.i.i.1, i64 4
+  %46 = add nsw i32 %.010.i.i.i104.i.i.1, -1
+  %47 = icmp sgt i32 %.010.i.i.i104.i.i.1, 1
+  br i1 %47, label %.lr.ph.i.i.i103.i.i.1, label %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, !llvm.loop !4
+
+_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i: ; preds = %29, %43
+  %indvars.iv.i.i102.i.i.lcssa = phi i64 [ %indvars.iv.next.i.i107.i.i, %43 ], [ %indvars.iv.i.i102.i.i, %29 ]
+  %.lcssa339 = phi i32 [ %38, %43 ], [ %24, %29 ]
+  %48 = sub nsw i32 %.0250408.i.i.i, %.lcssa339
+  br label %.lr.ph400.preheader.i.i.i
+
+.lr.ph400.preheader.i.i.i:                        ; preds = %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, %16
+  %.pre-phi.i.i = phi i64 [ %.pre246.i.i, %16 ], [ %20, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %20, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ] ; 4 uses
+  %49 = phi i32 [ %i.acw, %16 ], [ %48, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %.0250408.i.i.i, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ] ; 2 uses
+  %.0243522.i.i.i = phi i64 [ 0, %16 ], [ %indvars.iv.i.i102.i.i.lcssa, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ 0, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ] ; 7 uses
+  %invariant.gep535.i.i.i = getelementptr [4 x i8], ptr %12, i64 %indvars.iv460.i.i.i ; 2 uses
+  %50 = add i64 %.0243522.i.i.i, 1
+  %51 = and i64 %50, 4294967295
+  %52 = sub nsw i64 33, %51                       ; 3 uses
+  %min.iters.check256 = icmp ult i64 %52, 12
+  br i1 %min.iters.check256, label %.lr.ph400.i.i.i.preheader, label %vector.scevcheck
+
+vector.scevcheck:                                 ; preds = %.lr.ph400.preheader.i.i.i
+  %53 = trunc i64 %.0243522.i.i.i to i32
+  %54 = add i64 %.0243522.i.i.i, 1
+  %55 = and i64 %54, 4294967295
+  %56 = sub nsw i64 32, %55                       ; 2 uses
+  %57 = trunc i64 %56 to i32
+  %58 = sub i32 -2, %53
+  %59 = icmp ult i32 %58, %57
+  %60 = icmp ugt i64 %56, 4294967295
+  %61 = or i1 %59, %60
+  br i1 %61, label %.lr.ph400.i.i.i.preheader, label %vector.ph257
+
+vector.ph257:                                     ; preds = %vector.scevcheck
+  %n.vec258 = and i64 %52, -8                     ; 4 uses
+  %62 = add nsw i64 %.pre-phi.i.i, %n.vec258      ; 2 uses
+  %63 = add i64 %.0243522.i.i.i, %n.vec258
+  %64 = getelementptr [4 x i8], ptr %invariant.gep535.i.i.i, i64 %.0243522.i.i.i
+  %65 = getelementptr [2 x i8], ptr %11, i64 %.pre-phi.i.i
+  br label %vector.body259
+
+vector.body259:                                   ; preds = %vector.body259, %vector.ph257
+  %index260 = phi i64 [ 0, %vector.ph257 ], [ %index.next263, %vector.body259 ] ; 3 uses
+  %66 = getelementptr [4 x i8], ptr %64, i64 %index260 ; 2 uses
+  %67 = getelementptr i8, ptr %66, i64 16
+  %wide.load261 = load <4 x i32>, ptr %66, align 4, !tbaa !34
+  %wide.load262 = load <4 x i32>, ptr %67, align 4, !tbaa !34
+  %68 = trunc <4 x i32> %wide.load261 to <4 x i16>
+  %69 = trunc <4 x i32> %wide.load262 to <4 x i16>
+  %70 = getelementptr [2 x i8], ptr %65, i64 %index260 ; 2 uses
+  %71 = getelementptr inbounds nuw i8, ptr %70, i64 8
+  store <4 x i16> %68, ptr %70, align 2, !tbaa !42
+  store <4 x i16> %69, ptr %71, align 2, !tbaa !42
+  %index.next263 = add nuw i64 %index260, 8       ; 2 uses
+  %72 = icmp eq i64 %index.next263, %n.vec258
+  br i1 %72, label %middle.block264, label %vector.body259, !llvm.loop !98
+
+middle.block264:                                  ; preds = %vector.body259
+  %cmp.n265 = icmp eq i64 %52, %n.vec258
+  br i1 %cmp.n265, label %._crit_edge401.loopexit.i.i.i, label %.lr.ph400.i.i.i.preheader
+
+.lr.ph400.i.i.i.preheader:                        ; preds = %vector.scevcheck, %.lr.ph400.preheader.i.i.i, %middle.block264
+  %indvars.iv478.i.i.i.ph = phi i64 [ %.pre-phi.i.i, %vector.scevcheck ], [ %.pre-phi.i.i, %.lr.ph400.preheader.i.i.i ], [ %62, %middle.block264 ]
+  %indvars.iv476.i.i.i.ph = phi i64 [ %.0243522.i.i.i, %vector.scevcheck ], [ %.0243522.i.i.i, %.lr.ph400.preheader.i.i.i ], [ %63, %middle.block264 ]
+  br label %.lr.ph400.i.i.i
+
+.lr.ph400.i.i.i:                                  ; preds = %.lr.ph400.i.i.i.preheader, %.lr.ph400.i.i.i
+  %indvars.iv478.i.i.i = phi i64 [ %indvars.iv.next479.i.i.i, %.lr.ph400.i.i.i ], [ %indvars.iv478.i.i.i.ph, %.lr.ph400.i.i.i.preheader ] ; 2 uses
+  %indvars.iv476.i.i.i = phi i64 [ %indvars.iv.next477.i.i.i, %.lr.ph400.i.i.i ], [ %indvars.iv476.i.i.i.ph, %.lr.ph400.i.i.i.preheader ] ; 2 uses
+  %indvars.iv.next477.i.i.i = add nsw i64 %indvars.iv476.i.i.i, 1 ; 2 uses
+  %gep536.i.i.i = getelementptr [4 x i8], ptr %invariant.gep535.i.i.i, i64 %indvars.iv476.i.i.i
+  %73 = load i32, ptr %gep536.i.i.i, align 4, !tbaa !34
+  %74 = trunc i32 %73 to i16
+  %indvars.iv.next479.i.i.i = add nsw i64 %indvars.iv478.i.i.i, 1 ; 2 uses
+  %75 = getelementptr inbounds [2 x i8], ptr %11, i64 %indvars.iv478.i.i.i
+  store i16 %74, ptr %75, align 2, !tbaa !42
+  %76 = and i64 %indvars.iv.next477.i.i.i, 4294967295
+  %exitcond483.not.i.i.i = icmp eq i64 %76, 32
+  br i1 %exitcond483.not.i.i.i, label %._crit_edge401.loopexit.i.i.i, label %.lr.ph400.i.i.i, !llvm.loop !99
+
+._crit_edge401.loopexit.i.i.i:                    ; preds = %.lr.ph400.i.i.i, %middle.block264
+  %indvars.iv.next479.i.i.i.lcssa = phi i64 [ %62, %middle.block264 ], [ %indvars.iv.next479.i.i.i, %.lr.ph400.i.i.i ]
+  %77 = trunc nsw i64 %indvars.iv.next479.i.i.i.lcssa to i32 ; 4 uses
+  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef nonnull %11, i32 noundef %i.acw, i32 noundef %.0250408.i.i.i, i32 noundef %77)
+  br i1 %.0273.lcssa.i.i.i, label %78, label %bb.es
+
+78:                                               ; preds = %._crit_edge401.loopexit.i.i.i
+  %79 = load ptr, ptr %i.add, align 8, !tbaa !31
+  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %4, ptr noundef %79, i32 noundef %i.acw, i32 noundef %.0250408.i.i.i, i32 noundef %77)
+  br label %bb.es
+
 bb.en:                                            ; preds = %.thread.i108.i.i
   %i.aoe = icmp eq i32 %.0250408.i.i.i, %i.acw
   br i1 %i.aoe, label %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i, label %.lr.ph.i.i109.i.i
@@ -843,10 +843,10 @@ bb.er:                                            ; preds = %bb.eq, %.loopexit37
   %.1247.i.i.i = or i32 %.1247.in.i.i.i, 32768
   br label %bb.es
 
-bb.es:                                            ; preds = %bb.er, %78, %._crit_edge404.loopexit.i.i.i, %.thread362.i.i.i, %7, %bb.em
-  %.5289360.i.i.i = phi i32 [ %.5289365.i.i.i, %._crit_edge404.loopexit.i.i.i ], [ %.4288406.i.i.i, %7 ], [ %.5289361.i.i.i.a, %bb.er ], [ %.5289365.i.i.i, %.thread362.i.i.i ], [ %.5289365.i.i.i, %78 ], [ %.4288406.i.i.i, %bb.em ] ; 2 uses
-  %.6.i107.i.i = phi i32 [ %77, %._crit_edge404.loopexit.i.i.i ], [ %.0250408.i.i.i, %7 ], [ %.5.i.i.i, %bb.er ], [ %.0250408.i.i.i, %.thread362.i.i.i ], [ %77, %78 ], [ %.0250408.i.i.i, %bb.em ] ; 2 uses
-  %.2248.i.i.i = phi i32 [ %49, %._crit_edge404.loopexit.i.i.i ], [ %10, %7 ], [ %.1247.i.i.i, %bb.er ], [ %14, %.thread362.i.i.i ], [ %49, %78 ], [ %i.aey, %bb.em ] ; 3 uses
+bb.es:                                            ; preds = %bb.er, %78, %._crit_edge401.loopexit.i.i.i, %.thread.i101.i.i, %7, %bb.em
+  %.5289360.i.i.i = phi i32 [ %.5289361.i.i.i, %._crit_edge401.loopexit.i.i.i ], [ %.4288406.i.i.i, %7 ], [ %.5289361.i.i.i.a, %bb.er ], [ %.5289361.i.i.i, %.thread.i101.i.i ], [ %.5289361.i.i.i, %78 ], [ %.4288406.i.i.i, %bb.em ] ; 2 uses
+  %.6.i107.i.i = phi i32 [ %77, %._crit_edge401.loopexit.i.i.i ], [ %.0250408.i.i.i, %7 ], [ %.5.i.i.i, %bb.er ], [ %.0250408.i.i.i, %.thread.i101.i.i ], [ %77, %78 ], [ %.0250408.i.i.i, %bb.em ] ; 2 uses
+  %.2248.i.i.i = phi i32 [ %49, %._crit_edge401.loopexit.i.i.i ], [ %10, %7 ], [ %.1247.i.i.i, %bb.er ], [ %14, %.thread.i101.i.i ], [ %49, %78 ], [ %i.aey, %bb.em ] ; 3 uses
   %i.aqd = load i32, ptr %i.yt, align 4, !tbaa !24 ; 2 uses
   %i.aqe = icmp slt i32 %i.aqd, 0
   %i.aqf = icmp sgt i32 %.5289360.i.i.i, -1

@@ -205,7 +205,7 @@ bb.cr:                                            ; preds = %.lr.ph268, %.loopex
   call void @_ZN5ImGui13PopStyleColorEi(i32 noundef 3)
   call void @_ZN5ImGui5PopIDEv()
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #30
-  %exitcond294.peel.not = icmp ult i32 %i.nu, 2
+  %exitcond294.peel.not = icmp eq i32 %i.nu, 1
   br i1 %exitcond294.peel.not, label %.loopexit298, label %.peel.next296.preheader
 
 .peel.next296.preheader:                          ; preds = %bb.cr
@@ -312,7 +312,7 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs, %.pe
   call void @_ZN5ImGui5PopIDEv()
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #30
   %i.pn = add nuw i32 %.0169266, 1                ; 2 uses
-  %exitcond294.not = icmp eq i32 %i.nu, %i.pn
+  %exitcond294.not = icmp eq i32 %i.pn, %i.nu
   br i1 %exitcond294.not, label %.loopexit298, label %.peel.next296, !llvm.loop !396
 
 bb.cv:                                            ; preds = %._crit_edge
