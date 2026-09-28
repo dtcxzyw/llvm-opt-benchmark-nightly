@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.i, %.lr.ph84.i
 
 ._crit_edge.i:                                    ; preds = %bb.d
   %i.cd = add nuw nsw i64 %.06078.i, 1            ; 2 uses
-  %3 = icmp samesign ult i64 %i.cd, %.sroa.speculated72.i
-  br i1 %3, label %.preheader.lr.ph.i, label %.preheader75.i.preheader, !llvm.loop !1291
+  %exitcond86.not.i = icmp eq i64 %i.cd, %.sroa.speculated72.i
+  br i1 %exitcond86.not.i, label %.preheader75.i.preheader, label %.preheader.lr.ph.i, !llvm.loop !1291
 
 bb.d:                                             ; preds = %bb.h
   %i.ce = add nuw nsw i64 %.05977.i, 1            ; 2 uses
