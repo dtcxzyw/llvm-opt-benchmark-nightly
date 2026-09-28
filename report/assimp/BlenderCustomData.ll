@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender11createMEdgeEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender11createMEdgeEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = icmp ugt i64 %0, 576460752303423487
   %i.b = shl nuw i64 %0, 5
@@ -407,7 +407,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender11createMFaceEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender11createMFaceEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 40) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
@@ -574,7 +574,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender12createMTFaceEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender12createMTFaceEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 56) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
@@ -741,7 +741,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender14createMTexPolyEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender14createMTexPolyEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = icmp ugt i64 %0, 576460752303423487
   %i.b = shl nuw i64 %0, 5
@@ -944,7 +944,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender13createMLoopUVEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender13createMLoopUVEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = icmp ugt i64 %0, 576460752303423487
   %i.b = shl nuw i64 %0, 5
@@ -1148,7 +1148,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender14createMLoopColEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender14createMLoopColEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 24) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
@@ -1307,7 +1307,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender11createMPolyEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender11createMPolyEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = icmp ugt i64 %0, 576460752303423487
   %i.b = shl nuw i64 %0, 5
@@ -1511,7 +1511,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp7Blender11createMLoopEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp7Blender11createMLoopEm(i64 noundef %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 24) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1

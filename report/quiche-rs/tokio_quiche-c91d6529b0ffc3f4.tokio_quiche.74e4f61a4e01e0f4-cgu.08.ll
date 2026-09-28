@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic12write_errorsENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17165 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic12write_errorsENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17165 {
 bb.a:
     #dbg_declare(ptr @18, !17212, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17230)
     #dbg_declare(ptr @18, !17231, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17241)
@@ -290,7 +290,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic17failed_handshakesENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17282 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic17failed_handshakesENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17282 {
 bb.a:
     #dbg_declare(ptr @18, !17329, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17347)
     #dbg_declare(ptr @18, !17348, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17358)
@@ -378,7 +378,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic22handshake_time_secondsENtNtB3c_9histogram13TimeHistogramEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17399 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic22handshake_time_secondsENtNtB3c_9histogram13TimeHistogramEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17399 {
 bb.a:
     #dbg_declare(ptr @18, !17446, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17464)
     #dbg_declare(ptr @18, !17465, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17475)
@@ -466,7 +466,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic24invalid_cid_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17516 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic24invalid_cid_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17516 {
 bb.a:
     #dbg_declare(ptr @18, !17563, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17581)
     #dbg_declare(ptr @18, !17582, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17592)
@@ -554,7 +554,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic29rejected_initial_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17633 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic29rejected_initial_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17633 {
 bb.a:
     #dbg_declare(ptr @18, !17680, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17698)
     #dbg_declare(ptr @18, !17699, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17709)
@@ -642,7 +642,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic30peer_h3_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17750 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic30peer_h3_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17750 {
 bb.a:
     #dbg_declare(ptr @18, !17797, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17815)
     #dbg_declare(ptr @18, !17816, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17826)
@@ -730,7 +730,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic31local_h3_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17867 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic31local_h3_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17867 {
 bb.a:
     #dbg_declare(ptr @18, !17914, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17932)
     #dbg_declare(ptr @18, !17933, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !17943)
@@ -818,7 +818,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic32peer_quic_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17984 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic32peer_quic_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !17984 {
 bb.a:
     #dbg_declare(ptr @18, !18031, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18049)
     #dbg_declare(ptr @18, !18050, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18060)
@@ -906,7 +906,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic33local_quic_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18101 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic33local_quic_conn_close_error_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18101 {
 bb.a:
     #dbg_declare(ptr @18, !18148, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18166)
     #dbg_declare(ptr @18, !18167, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18177)
@@ -994,7 +994,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic39expensive_accepted_initial_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18218 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic39expensive_accepted_initial_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18218 {
 bb.a:
     #dbg_declare(ptr @18, !18265, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18283)
     #dbg_declare(ptr @18, !18284, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18294)
@@ -1082,7 +1082,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic39expensive_rejected_initial_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18335 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics4quic39expensive_rejected_initial_packet_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18335 {
 bb.a:
     #dbg_declare(ptr @18, !18382, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18400)
     #dbg_declare(ptr @18, !18401, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18411)
@@ -1170,7 +1170,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics5tokio35runtime_task_total_poll_time_microsENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18452 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics5tokio35runtime_task_total_poll_time_microsENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18452 {
 bb.a:
     #dbg_declare(ptr @18, !18499, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18517)
     #dbg_declare(ptr @18, !18518, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18528)
@@ -1258,7 +1258,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics5tokio36runtime_task_poll_duration_histogramENtNtB3c_9histogram13TimeHistogramEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18569 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics5tokio36runtime_task_poll_duration_histogramENtNtB3c_9histogram13TimeHistogramEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18569 {
 bb.a:
     #dbg_declare(ptr @18, !18616, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18634)
     #dbg_declare(ptr @18, !18635, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18645)
@@ -1346,7 +1346,7 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics5tokio37runtime_task_schedule_delay_histogramENtNtB3c_9histogram13TimeHistogramEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18686 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtNtCsfj33toqT4A8_8lock_api6rwlock6RwLockNtNtCscY3bQ1mWWb1_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapINtNtCs168gOGDjq8U_10prometools5serde6BridgeNtNtNtCsa2e0UnRrdBM_12tokio_quiche7metrics5tokio37runtime_task_schedule_delay_histogramENtNtB3c_9histogram13TimeHistogramEEENtNtCskKLDkoKarTP_4core7default7Default7defaultB3V_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !18686 {
 bb.a:
     #dbg_declare(ptr @18, !18733, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18751)
     #dbg_declare(ptr @18, !18752, !DIExpression(DW_OP_LLVM_fragment, 192, 256), !18762)
