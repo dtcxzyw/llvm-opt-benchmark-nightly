@@ -80,8 +80,6 @@ bb.a:
   %i.bd = shl nuw nsw i32 %i.bc, 8                ; 2 uses
   store i32 %i.bd, ptr %i.t, align 4, !tbaa !10
   %i.be = load i8, ptr %i.s, align 1, !tbaa !11
-  %2 = load i32, ptr %1, align 4, !tbaa !10       ; 2 uses
-  %3 = lshr i32 %2, 7
   %i.bf = insertelement <2 x i32> poison, i32 %i.at, i64 0
   %i.bg = insertelement <2 x i32> %i.bf, i32 %i.az, i64 1
   %i.bh = shl nuw nsw <2 x i32> %i.bg, splat (i32 9)
@@ -130,8 +128,6 @@ bb.a:
   %i.cq = zext i8 %i.cp to i32                    ; 2 uses
   %i.cr = or disjoint i32 %i.co, %i.cq            ; 2 uses
   store i32 %i.cr, ptr %i.af, align 4, !tbaa !10
-  %4 = shl nuw nsw i32 %i.cq, 9
-  %5 = or i32 %3, %4
   store <2 x i32> %i.by, ptr %.070, align 4, !tbaa !10
   %i.cs = insertelement <2 x i32> %i.cc, i32 %i.cf, i64 1
   %i.ct = lshr <2 x i32> %i.cs, splat (i32 7)     ; 2 uses
@@ -146,6 +142,10 @@ bb.a:
   %i.db = and <2 x i32> %i.cx, splat (i32 65024)
   %i.dc = or disjoint <2 x i32> %i.da, %i.db      ; 2 uses
   store <2 x i32> %i.dc, ptr %i.ah, align 4, !tbaa !10
+  %2 = load i32, ptr %1, align 4, !tbaa !10       ; 2 uses
+  %3 = shl nuw nsw i32 %i.cq, 9
+  %4 = lshr i32 %2, 7
+  %5 = or i32 %4, %3
   %i.dd = and i32 %5, 65535                       ; 2 uses
   store i32 %i.dd, ptr %i.ai, align 4, !tbaa !10
   %i.de = shl i32 %2, 9

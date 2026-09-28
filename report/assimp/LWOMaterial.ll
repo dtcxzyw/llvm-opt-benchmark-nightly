@@ -204,19 +204,19 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.eh = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 24 ; 2 uses
   store ptr %i.ei, ptr %i.a, align 8
-  %4 = load i64, ptr %i.ei, align 1
   %i.ej = getelementptr inbounds nuw i8, ptr %i.eh, i64 32 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.eh, i64 40 ; 2 uses
+  %i.ek = load i64, ptr %i.ei, align 1
   store ptr %i.ej, ptr %i.a, align 8
-  %i.ek = load i64, ptr %i.ej, align 1
-  %5 = getelementptr inbounds nuw i8, ptr %i.eh, i64 40 ; 2 uses
-  store ptr %5, ptr %i.a, align 8
-  %.4.insert.insert.i89 = call i64 @llvm.bswap.i64(i64 %4)
-  %.4.insert.insert.i90 = call i64 @llvm.bswap.i64(i64 %i.ek)
+  %.4.insert.insert.i89 = call i64 @llvm.bswap.i64(i64 %i.ek)
+  %5 = load i64, ptr %i.ej, align 1
+  %.4.insert.insert.i90 = call i64 @llvm.bswap.i64(i64 %5)
   %i.el = insertelement <2 x i64> poison, i64 %.4.insert.insert.i89, i64 0
   %i.em = insertelement <2 x i64> %i.el, i64 %.4.insert.insert.i90, i64 1
   %i.en = bitcast <2 x i64> %i.em to <2 x double>
+  store ptr %4, ptr %i.a, align 8
   %i.eo = fptrunc <2 x double> %i.en to <2 x float>
-  %i.ep = load i64, ptr %5, align 1
+  %i.ep = load i64, ptr %4, align 1
   %i.eq = getelementptr inbounds nuw i8, ptr %i.eh, i64 48
   store ptr %i.eq, ptr %i.a, align 8
   %.4.insert.insert.i91 = call i64 @llvm.bswap.i64(i64 %i.ep)

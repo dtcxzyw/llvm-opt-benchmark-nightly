@@ -205,18 +205,18 @@ bb.df:                                            ; preds = %bb.df, %.lr.ph.i485
   %i.aww = insertelement <4 x float> poison, float %i.awr, i64 0
   %i.awx = shufflevector <4 x float> %i.aww, <4 x float> poison, <4 x i32> zeroinitializer
   %i.awy = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.avx, <4 x float> %i.awx, <4 x float> %i.awv) ; 9 uses
-  %18 = extractelement <4 x float> %i.awy, i64 0
-  %19 = extractelement <4 x float> %i.awy, i64 1
-  %i.awz = extractelement <4 x float> %i.awy, i64 2
+  %i.awz = extractelement <4 x float> %i.awy, i64 0
   %i.axa = shufflevector <4 x float> %i.awy, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.axb = fmul <4 x float> %i.awy, %i.axa
   %i.axc = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.awf, <4 x float> %i.axb, <4 x float> %i.awi) ; 4 uses
   %i.axd = shufflevector <4 x float> %i.awy, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 0, i32 1>
   %i.axe = shufflevector <4 x float> %i.awy, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.axf = getelementptr inbounds nuw [16 x i8], ptr %15, i64 %.0210.i.i
-  %i.axg = call float @llvm.fmuladd.f32(float %i.awa, float %18, float %i.awm)
+  %18 = extractelement <4 x float> %i.awy, i64 2
+  %19 = extractelement <4 x float> %i.awy, i64 1
+  %i.axg = call float @llvm.fmuladd.f32(float %i.awa, float %i.awz, float %i.awm)
   %i.axh = call float @llvm.fmuladd.f32(float %i.awb, float %19, float %i.axg)
-  %i.axi = call float @llvm.fmuladd.f32(float %i.awd, float %i.awz, float %i.axh) ; 4 uses
+  %i.axi = call float @llvm.fmuladd.f32(float %i.awd, float %18, float %i.axh) ; 4 uses
   %i.axj = insertelement <4 x float> poison, float %i.axi, i64 0
   %i.axk = shufflevector <4 x float> %i.awy, <4 x float> %i.axj, <4 x i32> <i32 2, i32 1, i32 4, i32 4>
   %i.axl = fmul <4 x float> %i.axd, %i.axk
@@ -619,12 +619,12 @@ bb.hs:                                            ; preds = %bb.hr, %bb.hq, %bb.
   %i.deh = fcmp ogt float %i.deg, %i.dcd
   %i.dei = fdiv float %i.def, %i.ddz
   %i.dej = select i1 %i.deh, float %i.dei, float 0.000000e+00 ; 3 uses
-  %20 = call float @llvm.fmuladd.f32(float %i.dee, float %i.dej, float %i.ddr) ; 8 uses
-  %i.dek = call float @llvm.fmuladd.f32(float %i.ddb, float %20, float %i.dcq)
-  %i.del = call float @llvm.fmuladd.f32(float %i.dec, float %i.dej, float %i.dek) ; 7 uses
-  %21 = fdiv float %i.dby, %i.dcf
-  %i.dem = call float @llvm.fmuladd.f32(float %i.dco, float %i.del, float %21)
-  %i.den = call float @llvm.fmuladd.f32(float %i.dcy, float %20, float %i.dem)
+  %20 = fdiv float %i.dby, %i.dcf
+  %i.dek = call float @llvm.fmuladd.f32(float %i.dee, float %i.dej, float %i.ddr) ; 8 uses
+  %i.del = call float @llvm.fmuladd.f32(float %i.ddb, float %i.dek, float %i.dcq)
+  %21 = call float @llvm.fmuladd.f32(float %i.dec, float %i.dej, float %i.del) ; 7 uses
+  %i.dem = call float @llvm.fmuladd.f32(float %i.dco, float %21, float %20)
+  %i.den = call float @llvm.fmuladd.f32(float %i.dcy, float %i.dek, float %i.dem)
   %i.deo = call float @llvm.fmuladd.f32(float %i.dea, float %i.dej, float %i.den) ; 6 uses
   %i.dep = call float @llvm.fabs.f32(float %i.dcf)
   %i.deq = fcmp ogt float %i.dep, %i.dcd
@@ -695,10 +695,10 @@ _ZN7meshoptL21getNeighborhoodRadiusERKNS_13EdgeAdjacencyEPKNS_7Vector3Ej.exit.i:
   %.0.lcssa.i.i = phi float [ 0.000000e+00, %bb.ht ], [ %i.dgn, %.lr.ph.i.i590 ]
   %i.dgp = call noundef float @sqrtf(float noundef %.0.lcssa.i.i) #14 ; 2 uses
   %i.dgq = fsub float %i.deo, %i.cyy              ; 2 uses
-  %i.dgr = fsub float %i.del, %i.cyu              ; 2 uses
+  %i.dgr = fsub float %21, %i.cyu                 ; 2 uses
   %i.dgs = fmul float %i.dgr, %i.dgr
   %i.dgt = call float @llvm.fmuladd.f32(float %i.dgq, float %i.dgq, float %i.dgs)
-  %i.dgu = fsub float %20, %i.cyw                 ; 2 uses
+  %i.dgu = fsub float %i.dek, %i.cyw              ; 2 uses
   %i.dgv = call float @llvm.fmuladd.f32(float %i.dgu, float %i.dgu, float %i.dgt)
   %i.dgw = fmul float %i.dgp, %i.dgp
   %i.dgx = fcmp ogt float %i.dgv, %i.dgw
@@ -717,8 +717,8 @@ bb.hu:                                            ; preds = %_ZN7meshoptL21getNe
 .lr.ph.i75.i.preheader:                           ; preds = %bb.hu
   %i.dhe = shufflevector <2 x float> %i.cyt, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.dhf = insertelement <4 x float> %i.dhe, float %i.cyw, i64 2
-  %i.dhg = insertelement <4 x float> %i.dhf, float %i.del, i64 3 ; 2 uses
-  %i.dhh = insertelement <4 x float> %i.dhg, float %20, i64 3
+  %i.dhg = insertelement <4 x float> %i.dhf, float %21, i64 3 ; 2 uses
+  %i.dhh = insertelement <4 x float> %i.dhg, float %i.dek, i64 3
   %i.dhi = shufflevector <4 x float> %i.dhh, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
   br label %.lr.ph.i75.i
 
@@ -786,8 +786,8 @@ bb.hv:                                            ; preds = %.lr.ph.i75.i
   %i.djj = fdiv float 1.000000e+00, %.sroa.50.0.copyload.i
   %i.djk = select i1 %i.dji, float 0.000000e+00, float %i.djj ; 2 uses
   %i.djl = extractelement <2 x float> %i.czc, i64 0
-  %i.djm = call float @llvm.fmuladd.f32(float %i.djl, float %i.del, float %.sroa.33.0.copyload.i)
-  %i.djn = call float @llvm.fmuladd.f32(float %.sroa.28.0.copyload.i, float %20, float %.sroa.38.0.copyload.i)
+  %i.djm = call float @llvm.fmuladd.f32(float %i.djl, float %21, float %.sroa.33.0.copyload.i)
+  %i.djn = call float @llvm.fmuladd.f32(float %.sroa.28.0.copyload.i, float %i.dek, float %.sroa.38.0.copyload.i)
   %i.djo = call float @llvm.fmuladd.f32(float %.sroa.23.0.copyload.i, float %i.deo, float %.sroa.43.0.copyload.i)
   %i.djp = fmul float %i.djm, 2.000000e+00
   %i.djq = insertelement <4 x float> poison, float %.sroa.48.0.copyload.i, i64 0
@@ -800,16 +800,16 @@ bb.hv:                                            ; preds = %.lr.ph.i75.i
   %i.djx = shufflevector <4 x float> %i.djw, <4 x float> %i.czn, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
   %i.djy = shufflevector <4 x float> %i.djx, <4 x float> %i.czd, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
   %i.djz = insertelement <4 x float> poison, float %i.deo, i64 0
-  %i.dka = insertelement <4 x float> %i.djz, float %i.del, i64 1
-  %i.dkb = insertelement <4 x float> %i.dka, float %20, i64 2
+  %i.dka = insertelement <4 x float> %i.djz, float %21, i64 1
+  %i.dkb = insertelement <4 x float> %i.dka, float %i.dek, i64 2
   %i.dkc = shufflevector <2 x float> %i.cyt, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.dkd = shufflevector <4 x float> %i.dkb, <4 x float> %i.dkc, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   %i.dke = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.djy, <4 x float> %i.dkd, <4 x float> %i.dju) ; 4 uses
   %i.dkf = extractelement <4 x float> %i.dke, i64 0
   %i.dkg = extractelement <4 x float> %i.dke, i64 1
-  %i.dkh = call float @llvm.fmuladd.f32(float %i.dkg, float %i.del, float %i.dkf)
+  %i.dkh = call float @llvm.fmuladd.f32(float %i.dkg, float %21, float %i.dkf)
   %i.dki = extractelement <4 x float> %i.dke, i64 2
-  %i.dkj = call noundef float @llvm.fmuladd.f32(float %i.dki, float %20, float %i.dkh)
+  %i.dkj = call noundef float @llvm.fmuladd.f32(float %i.dki, float %i.dek, float %i.dkh)
   %i.dkk = call float @llvm.fabs.f32(float %i.dkj)
   %i.dkl = fmul float %i.djk, %i.dkk
   %i.dkm = call float @llvm.fmuladd.f32(float %.sroa.28.0.copyload.i, float %i.cyw, float %.sroa.38.0.copyload.i)
@@ -833,8 +833,8 @@ bb.hv:                                            ; preds = %.lr.ph.i75.i
 
 bb.hw:                                            ; preds = %.loopexit.i592
   store float %i.deo, ptr %i.cyq, align 4, !tbaa !44
-  store float %i.del, ptr %i.cys, align 4, !tbaa !44
-  store float %20, ptr %i.cyv, align 4, !tbaa !44
+  store float %21, ptr %i.cys, align 4, !tbaa !44
+  store float %i.dek, ptr %i.cyv, align 4, !tbaa !44
   br label %_ZN7meshoptL16hasTriangleFlipsERKNS_13EdgeAdjacencyEPKNS_7Vector3EjRS4_.exit.i
 
 _ZN7meshoptL16hasTriangleFlipsERKNS_13EdgeAdjacencyEPKNS_7Vector3EjRS4_.exit.i: ; preds = %.lr.ph.i75.i, %bb.hw, %.loopexit.i592, %_ZN7meshoptL21getNeighborhoodRadiusERKNS_13EdgeAdjacencyEPKNS_7Vector3Ej.exit.i, %bb.hs, %bb.hl, %bb.hj, %bb.hj, %bb.hj, %bb.hi

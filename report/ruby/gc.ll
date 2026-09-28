@@ -205,17 +205,17 @@ heap_page_body_allocate.exit.i:                   ; preds = %bb.j, %bb.h, %bb.g
   br i1 %i.z, label %heap_page_body_allocate.exit.thread.i, label %bb.k
 
 heap_page_body_allocate.exit.thread.i:            ; preds = %heap_page_body_allocate.exit.i, %bb.j, %bb.d
-  call void @rb_memerror() #62
+  tail call void @rb_memerror() #62
   unreachable
 
 bb.k:                                             ; preds = %heap_page_body_allocate.exit.i
-  %2 = call noalias noundef dereferenceable_or_null(1736) ptr @calloc(i64 noundef 1, i64 noundef 1736) #64 ; 5 uses
+  %2 = tail call noalias noundef dereferenceable_or_null(1736) ptr @calloc(i64 noundef 1, i64 noundef 1736) #64 ; 5 uses
   %i.aa = icmp eq ptr %2, null
   br i1 %i.aa, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  call fastcc void @heap_page_body_free(ptr noundef nonnull %.121.i.i)
-  call void @rb_memerror() #62
+  tail call fastcc void @heap_page_body_free(ptr noundef nonnull %.121.i.i)
+  tail call void @rb_memerror() #62
   unreachable
 
 bb.m:                                             ; preds = %bb.k
@@ -257,7 +257,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.aq, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.147, ptr noundef nonnull %.121.i.i, i64 noundef %i.aj) #61
+  tail call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.147, ptr noundef nonnull %.121.i.i, i64 noundef %i.aj) #61
   unreachable
 
 bb.r:                                             ; preds = %bb.p, %bb.o
@@ -289,29 +289,29 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.az, label %bb.u, label %rbimpl_size_mul_or_raise.exit.i.i.i.i, !prof !277
 
 bb.u:                                             ; preds = %bb.t
-  call void @ruby_malloc_size_overflow(i64 noundef %i.ay, i64 noundef 8) #63
+  tail call void @ruby_malloc_size_overflow(i64 noundef %i.ay, i64 noundef 8) #63
   unreachable
 
 rbimpl_size_mul_or_raise.exit.i.i.i.i:            ; preds = %bb.m, %bb.s, %bb.t
   %.0.lcssa79.i = phi i64 [ %.0.lcssa.ph.i, %bb.t ], [ %.0.lcssa.ph.i, %bb.s ], [ 0, %bb.m ] ; 2 uses
   %i.ba = phi i64 [ %i.ay, %bb.t ], [ 1, %bb.s ], [ 1, %bb.m ] ; 2 uses
   %i.bb = shl nuw i64 %i.ba, 3                    ; 2 uses
-  %3 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.bb, i64 16) ; 2 uses
+  %3 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.bb, i64 16) ; 2 uses
   %i.bc = extractvalue { i64, i1 } %3, 1
   br i1 %i.bc, label %bb.v, label %rbimpl_size_add_or_raise.exit.i.i.i.i, !prof !76
 
 bb.v:                                             ; preds = %rbimpl_size_mul_or_raise.exit.i.i.i.i
-  call void @ruby_malloc_add_size_overflow(i64 noundef %i.bb, i64 noundef 16) #63
+  tail call void @ruby_malloc_add_size_overflow(i64 noundef %i.bb, i64 noundef 16) #63
   unreachable
 
 rbimpl_size_add_or_raise.exit.i.i.i.i:            ; preds = %rbimpl_size_mul_or_raise.exit.i.i.i.i
   %i.bd = extractvalue { i64, i1 } %3, 0
-  %4 = call ptr @realloc(ptr noundef %i.af, i64 noundef %i.bd) #69 ; 6 uses
+  %4 = tail call ptr @realloc(ptr noundef %i.af, i64 noundef %i.bd) #69 ; 6 uses
   %i.be = icmp eq ptr %4, null
   br i1 %i.be, label %bb.w, label %rb_darray_realloc_mul_add_without_gc.exit.i.i.i
 
 bb.w:                                             ; preds = %rbimpl_size_add_or_raise.exit.i.i.i.i
-  call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.119) #61
+  tail call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.119) #61
   unreachable
 
 rb_darray_realloc_mul_add_without_gc.exit.i.i.i:  ; preds = %rbimpl_size_add_or_raise.exit.i.i.i.i
@@ -340,13 +340,13 @@ rb_darray_size.exit56.i:                          ; preds = %rb_darray_ensure_sp
   br i1 %i.bm, label %bb.y, label %rbimpl_size_mul_or_raise.exit.i, !prof !76
 
 bb.y:                                             ; preds = %rb_darray_size.exit56.i
-  call void @ruby_malloc_size_overflow(i64 noundef 8, i64 noundef %i.bl) #63
+  tail call void @ruby_malloc_size_overflow(i64 noundef 8, i64 noundef %i.bl) #63
   unreachable
 
 rbimpl_size_mul_or_raise.exit.i:                  ; preds = %rb_darray_size.exit56.i
   %i.bn = getelementptr i8, ptr %i.bj, i64 8
   %i.bo = shl nuw i64 %i.bl, 3
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.bn, ptr noundef nonnull align 1 %i.bj, i64 noundef %i.bo, i1 noundef false) #46
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.bn, ptr noundef nonnull align 1 %i.bj, i64 noundef %i.bo, i1 noundef false) #46
   %i.bp = load ptr, ptr %i.ae, align 8, !tbaa !111 ; 3 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 16
   %i.br = getelementptr [8 x i8], ptr %i.bq, i64 %.0.lcssa8086.i
@@ -482,7 +482,7 @@ heap_add_page.exit:                               ; preds = %bb.af, %._crit_edge
 .sink.split:                                      ; preds = %heap_add_page.exit
   %i.dv = getelementptr i8, ptr %0, i64 920       ; 2 uses
   %i.dw = load i64, ptr %i.dv, align 8, !tbaa !292
-  %.sink = call i64 @llvm.usub.sat.i64(i64 %i.dw, i64 %i.do)
+  %.sink = tail call i64 @llvm.usub.sat.i64(i64 %i.dw, i64 %i.do)
   store i64 %.sink, ptr %i.dv, align 8, !tbaa !292
   br label %bb.ag
 
@@ -494,8 +494,8 @@ bb.ag:                                            ; preds = %.sink.split, %bb.b,
 ; Function Attrs: nounwind
 declare ptr @mmap(ptr noundef, i64 noundef, i32 noundef, i32 noundef, i32 noundef, i64 noundef) local_unnamed_addr #36
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #52
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #52
 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @gc_start(ptr noundef %0, i32 noundef %1) unnamed_addr #2 {
@@ -898,7 +898,7 @@ attributes #48 = { nocallback nofree nosync nounwind willreturn memory(inaccessi
 attributes #49 = { mustprogress nounwind willreturn allockind("realloc") allocsize(1) memory(argmem: readwrite, inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #50 = { norecurse nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #51 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #52 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #52 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #53 = { inlinehint nounwind sspstrong memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #54 = { mustprogress nounwind sspstrong willreturn memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #55 = { nofree nounwind memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

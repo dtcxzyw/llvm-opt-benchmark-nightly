@@ -204,13 +204,13 @@ bb.r:                                             ; preds = %bb.q
 
 _ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i: ; preds = %bb.q
   %i.bq = ashr exact i64 %i.bo, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.bq, i64 1)
+  %.sroa.speculated.i.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.bq, i64 1)
   %i.br = add nsw i64 %.sroa.speculated.i.i.i.i.i.i.i, %i.bq ; 2 uses
   %i.bs = icmp ult i64 %i.br, %i.bq
-  %3 = call i64 @llvm.umin.i64(i64 %i.br, i64 1152921504606846975)
+  %3 = tail call i64 @llvm.umin.i64(i64 %i.br, i64 1152921504606846975)
   %i.bt = select i1 %i.bs, i64 1152921504606846975, i64 %3 ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp ne i64 %i.bt, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i.i.i.i)
+  tail call void @llvm.assume(i1 %.not.i.i.i.i.i.i.i)
   %i.bu = shl nuw nsw i64 %i.bt, 3
   %i.bv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bu) #36
           to label %.noexc11.i.i unwind label %bb.u ; 4 uses
@@ -222,7 +222,7 @@ _ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i: ; preds = %bb.q
   br i1 %i.bx, label %bb.s, label %_ZNSt6vectorIPvSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i.i.i.i.i
 
 bb.s:                                             ; preds = %.noexc11.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bv, ptr align 8 %i.bl, i64 %i.bo, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bv, ptr align 8 %i.bl, i64 %i.bo, i1 false)
   br label %_ZNSt6vectorIPvSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i.i.i.i.i
 
 _ZNSt6vectorIPvSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i.i.i.i.i: ; preds = %bb.s, %.noexc11.i.i
@@ -234,7 +234,7 @@ bb.t:                                             ; preds = %_ZNSt6vectorIPvSaIS
   %i.bz = load ptr, ptr %i.bh, align 8, !tbaa !293
   %i.ca = ptrtoint ptr %i.bz to i64
   %i.cb = sub i64 %i.ca, %i.bn
-  call void @_ZdlPvm(ptr noundef nonnull %i.bl, i64 noundef %i.cb) #37
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bl, i64 noundef %i.cb) #37
   br label %_ZNSt6vectorIPvSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i.i.i.i.i
 
 _ZNSt6vectorIPvSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i.i.i.i.i: ; preds = %bb.t, %_ZNSt6vectorIPvSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i.i.i.i.i
@@ -249,7 +249,7 @@ _ZN5folly12_GLOBAL__N_115SimpleAllocator12allocateHardEv.exit.i.i: ; preds = %_Z
   store ptr %i.ag, ptr %i.cd, align 8, !tbaa !107
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ag, i64 64
   %i.cf = load i64, ptr %i.ce, align 16, !tbaa !46 ; 2 uses
-  %4 = call i64 @llvm.umin.i64(i64 %i.cf, i64 16)
+  %4 = tail call i64 @llvm.umin.i64(i64 %i.cf, i64 16)
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cd, i64 %4 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.cf
   store ptr %i.ch, ptr %i.al, align 8, !tbaa !290
@@ -258,12 +258,12 @@ _ZN5folly12_GLOBAL__N_115SimpleAllocator12allocateHardEv.exit.i.i: ; preds = %_Z
 bb.u:                                             ; preds = %_ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.r, %bb.n
   %i.ci = landingpad { ptr, i32 }
           cleanup
-  %5 = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(96) %i.ag) #34 ; 0 uses
+  %5 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(96) %i.ag) #34 ; 0 uses
   resume { ptr, i32 } %i.ci
 
 bb.v:                                             ; preds = %_ZN5folly12_GLOBAL__N_115SimpleAllocator12allocateHardEv.exit.i.i, %bb.l, %bb.h
   %.0.i.i = phi ptr [ %i.aj, %bb.h ], [ %i.au, %bb.l ], [ %i.cg, %_ZN5folly12_GLOBAL__N_115SimpleAllocator12allocateHardEv.exit.i.i ]
-  %6 = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(96) %i.ag) #34 ; 0 uses
+  %6 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(96) %i.ag) #34 ; 0 uses
   br label %_ZN5folly12_GLOBAL__N_19Allocator8allocateEm.exit
 
 bb.w:                                             ; preds = %_ZN5folly12_GLOBAL__N_19Allocator9sizeClassEm.exit.i
@@ -289,7 +289,7 @@ _ZN5folly14aligned_mallocEmm.exit.i:              ; preds = %bb.w
   br i1 %.not.i, label %bb.x, label %_ZN5folly12_GLOBAL__N_19Allocator8allocateEm.exit
 
 bb.x:                                             ; preds = %_ZN5folly14aligned_mallocEmm.exit.i, %_ZN5folly14aligned_mallocEmm.exit.thread.i
-  call void @_ZN5folly6detail16throw_exception_ISt9bad_allocJEEEvDpT0_() #17
+  tail call void @_ZN5folly6detail16throw_exception_ISt9bad_allocJEEEvDpT0_() #17
   unreachable
 
 _ZN5folly12_GLOBAL__N_19Allocator8allocateEm.exit: ; preds = %bb.v, %_ZN5folly14aligned_mallocEmm.exit.i
@@ -309,8 +309,8 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #26
 ; Function Attrs: nounwind
 declare i32 @pthread_mutex_unlock(ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #27
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #27
 
 ; Function Attrs: cold mustprogress noinline noreturn optsize uwtable
 define linkonce_odr void @_ZN5folly6detail16throw_exception_ISt9bad_allocJEEEvDpT0_() local_unnamed_addr #21 comdat personality ptr @__gxx_personality_v0 {
@@ -543,7 +543,7 @@ attributes #23 = { mustprogress nofree norecurse nosync nounwind willreturn memo
 attributes #24 = { nofree nounwind }
 attributes #25 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #26 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #27 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #27 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #28 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #29 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #30 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load i8, ptr %i.j, align 8, !range !28, !noundef !5 ; 2 uses
   %i.l = load i64, ptr %i.g, align 8, !noundef !5
   %i.m = trunc nuw i8 %i.i to i1
-  %..i.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %1, i64 %i.l) ; 2 uses
+  %..i.i.i = tail call range(i64 0, -9223372036854775808) i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %1, i64 %i.l) ; 2 uses
   %i.n = sub nuw nsw i64 %1, %..i.i.i             ; 2 uses
-  %..i7.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.n, i64 range(i64 1, -9223372036854775808) 2) ; 4 uses
+  %..i7.i.i = tail call i64 @llvm.umin.i64(i64 %i.n, i64 range(i64 1, -9223372036854775808) 2) ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %..i.i.i ; 2 uses
   %i.p = icmp samesign ugt i64 %i.n, 1            ; 2 uses
   br i1 %i.m, label %bb.c, label %bb.h

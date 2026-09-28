@@ -204,10 +204,10 @@ cost_memoize_rescan.exit.i:                       ; preds = %.critedge.loopexit.
   store double %i.fl, ptr %i.fm, align 8
   %i.fn = fsub double 1.000000e+00, %i.fl         ; 2 uses
   %i.fo = load double, ptr @cpu_operator_cost, align 8 ; 3 uses
-  %8 = load double, ptr @cpu_tuple_cost, align 8  ; 3 uses
   %i.fp = fdiv double %i.fo, 1.000000e+01
   %i.fq = fmul double %i.fp, %i.fg
   %i.fr = call double @llvm.fmuladd.f64(double %i.ca, double %i.fn, double %i.fo)
+  %8 = load double, ptr @cpu_tuple_cost, align 8  ; 3 uses
   %i.fs = call double @llvm.fmuladd.f64(double %8, double %i.fg, double %i.fr)
   %i.ft = insertelement <2 x double> poison, double %i.fo, i64 0
   %i.fu = insertelement <2 x double> %i.ft, double %i.fq, i64 1

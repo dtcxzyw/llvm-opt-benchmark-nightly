@@ -205,8 +205,6 @@ bb.aa:                                            ; preds = %bb.z
   %i.cc = load <2 x float>, ptr %7, align 8       ; 3 uses
   %i.cd = load <2 x float>, ptr %i.ad, align 8
   %i.ce = fadd <2 x float> %i.cc, %i.cd           ; 2 uses
-  %10 = load float, ptr %.0133, align 4           ; 3 uses
-  %11 = load float, ptr %.0133.sroa.phi159, align 4 ; 3 uses
   %i.cf = insertelement <2 x i32> poison, i32 %6, i64 0
   %i.cg = shufflevector <2 x i32> %i.cf, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.ch = and <2 x i32> %i.cg, <i32 1, i32 2>
@@ -229,6 +227,8 @@ bb.aa:                                            ; preds = %bb.z
   %i.cv = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   %i.cw = extractelement <2 x float> %i.cs, i64 1
   store float %i.cw, ptr %i.cv, align 4
+  %10 = load float, ptr %.0133, align 4           ; 3 uses
+  %11 = load float, ptr %.0133.sroa.phi159, align 4 ; 3 uses
   %i.cx = insertelement <2 x float> poison, float %10, i64 0
   %i.cy = insertelement <2 x float> %i.cx, float %11, i64 1
   %i.cz = fadd <2 x float> %i.bl, %i.cy           ; 2 uses

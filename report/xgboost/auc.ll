@@ -205,10 +205,10 @@ bb.l:                                             ; preds = %._crit_edge.i
   %i.el = fsub double %.015.lcssa.i, %.032.lcssa.i
   %i.em = fsub double %.0.lcssa.i, %.034.lcssa.i
   %i.en = fdiv double %i.el, %i.em                ; 2 uses
+  %9 = fadd double %i.en, 1.000000e+00            ; 4 uses
   %i.eo = fneg double %i.en
   %i.ep = call double @llvm.fmuladd.f64(double %i.eo, double %.034.lcssa.i, double %.032.lcssa.i)
   %i.eq = fdiv double %i.ep, %i.bl                ; 3 uses
-  %9 = fadd double %i.en, 1.000000e+00            ; 4 uses
   %i.er = fcmp une double %i.eq, 0.000000e+00
   br i1 %i.er, label %bb.m, label %.thread.i.i.i
 
@@ -267,10 +267,10 @@ bb.o:                                             ; preds = %bb.n
   %i.fu = fsub double %.01533.i, %.03237.i
   %i.fv = fsub double %.035.i, %.03436.i
   %i.fw = fdiv double %i.fu, %i.fv                ; 2 uses
+  %10 = fadd double %i.fw, 1.000000e+00           ; 4 uses
   %i.fx = fneg double %i.fw
   %i.fy = call double @llvm.fmuladd.f64(double %i.fx, double %.03436.i, double %.03237.i)
   %i.fz = fdiv double %i.fy, %i.bl                ; 3 uses
-  %10 = fadd double %i.fw, 1.000000e+00           ; 4 uses
   %i.ga = fcmp une double %i.fz, 0.000000e+00
   br i1 %i.ga, label %bb.p, label %.thread.i.i71.i
 

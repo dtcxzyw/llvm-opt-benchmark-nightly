@@ -202,7 +202,6 @@ bb.m:                                             ; preds = %bb.k
   %i.fm = extractelement <2 x float> %i.be, i64 1 ; 7 uses
   %i.fn = tail call nsz float @llvm.fmuladd.f32(float %i.fm, float %i.fm, float %i.fl)
   %i.fo = tail call nsz noundef float @llvm.sqrt.f32(float %i.fn)
-  %4 = fdiv nsz float %i.fk, %i.fo                ; 2 uses
   %i.fp = fneg nsz float %i.fm
   %i.fq = fmul nsz float %i.fm, %i.fp
   %i.fr = tail call nsz float @llvm.fmuladd.f32(float %.1309312, float %.1309312, float %i.fq)
@@ -210,12 +209,13 @@ bb.m:                                             ; preds = %bb.k
   %i.ft = tail call nsz float @llvm.fmuladd.f32(float %i.fs, float %i.ew, float %i.fr)
   %i.fu = fadd nsz float %.0288, %i.ft
   %i.fv = fneg nsz float %i.fl
-  %5 = fmul nsz float %4, 2.000000e+00
-  %i.fw = fmul nsz float %i.fm, %5
-  %6 = tail call nsz float @llvm.fmuladd.f32(float %i.fm, float %i.fm, float %i.fv)
-  %i.fx = insertelement <2 x float> poison, float %i.fw, i64 0
+  %4 = fdiv nsz float %i.fk, %i.fo                ; 2 uses
+  %5 = tail call nsz float @llvm.fmuladd.f32(float %i.fm, float %i.fm, float %i.fv)
+  %i.fw = fmul nsz float %4, 2.000000e+00
+  %6 = fmul nsz float %i.fm, %i.fw
+  %i.fx = insertelement <2 x float> poison, float %6, i64 0
   %i.fy = insertelement <2 x float> %i.fx, float %4, i64 1
-  %i.fz = insertelement <2 x float> %i.be, float %6, i64 1
+  %i.fz = insertelement <2 x float> %i.be, float %5, i64 1
   %i.ga = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fy, <2 x float> %i.fz, <2 x float> %i.ax)
   br label %bb.w
 

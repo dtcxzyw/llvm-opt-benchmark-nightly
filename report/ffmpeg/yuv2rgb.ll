@@ -202,7 +202,6 @@ bb.e:                                             ; preds = %switch.edge448, %bb
   %.0410 = phi i64 [ 65536, %bb.d ], [ 76309, %switch.edge448 ]
   %.0409 = phi i64 [ 0, %bb.d ], [ 1048576, %switch.edge448 ]
   %i.ad = phi <4 x i64> [ %i.ac, %bb.d ], [ %i.n, %switch.edge448 ] ; 4 uses
-  %6 = sext i32 %4 to i64                         ; 2 uses
   %i.ae = sext i32 %5 to i64
   %i.af = sext i32 %3 to i64
   %i.ag = shl nsw i64 %i.af, 8
@@ -237,6 +236,7 @@ bb.e:                                             ; preds = %switch.edge448, %bb
   %i.bg = select i1 %.inv, i32 %i.bf, i32 -32768
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 40348
   store i32 %i.bg, ptr %i.bh, align 4, !tbaa !116
+  %6 = sext i32 %4 to i64                         ; 2 uses
   %i.bi = mul nsw i64 %.0410, %6
   %i.bj = ashr i64 %i.bi, 16                      ; 21 uses
   %i.bk = mul nsw i64 %i.ae, %6                   ; 4 uses

@@ -147,9 +147,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.bh, label %._crit_edge, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.ad
-  %invariant.op292 = add i64 2, %i.ad
-  %invariant.op294 = add i64 3, %i.ad
+  %invariant.op = add nsw i64 1, %i.ad
+  %invariant.op292 = add nsw i64 2, %i.ad
+  %invariant.op294 = add nsw i64 3, %i.ad
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
@@ -162,7 +162,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.bl = load double, ptr %gep189, align 8, !tbaa !34
   store double %i.bl, ptr %gep, align 8, !tbaa !34
   store double %i.bk, ptr %gep189, align 8, !tbaa !34
-  %.reass = add i64 %indvars.iv, %invariant.op    ; 2 uses
+  %.reass = add nsw i64 %indvars.iv, %invariant.op ; 2 uses
   %i.bm = mul nsw i64 %.reass, %i.ae
   %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.bm ; 2 uses
   %i.bn = load double, ptr %gep.1, align 8, !tbaa !34
@@ -170,7 +170,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.bo = load double, ptr %gep189.1, align 8, !tbaa !34
   store double %i.bo, ptr %gep.1, align 8, !tbaa !34
   store double %i.bn, ptr %gep189.1, align 8, !tbaa !34
-  %.reass293 = add i64 %indvars.iv, %invariant.op292 ; 2 uses
+  %.reass293 = add nsw i64 %indvars.iv, %invariant.op292 ; 2 uses
   %i.bp = mul nsw i64 %.reass293, %i.ae
   %gep.2 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.bp ; 2 uses
   %i.bq = load double, ptr %gep.2, align 8, !tbaa !34
@@ -178,7 +178,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.br = load double, ptr %gep189.2, align 8, !tbaa !34
   store double %i.br, ptr %gep.2, align 8, !tbaa !34
   store double %i.bq, ptr %gep189.2, align 8, !tbaa !34
-  %.reass295 = add i64 %indvars.iv, %invariant.op294 ; 2 uses
+  %.reass295 = add nsw i64 %indvars.iv, %invariant.op294 ; 2 uses
   %i.bs = mul nsw i64 %.reass295, %i.ae
   %gep.3 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.bs ; 2 uses
   %i.bt = load double, ptr %gep.3, align 8, !tbaa !34
@@ -444,9 +444,9 @@ scalar.ph243.prol.loopexit:                       ; preds = %scalar.ph243.prol, 
   br i1 %i.fh, label %._crit_edge162, label %scalar.ph243.preheader.new
 
 scalar.ph243.preheader.new:                       ; preds = %scalar.ph243.prol.loopexit
-  %invariant.op298 = add i64 1, %i.ed
-  %invariant.op300 = add i64 2, %i.ed
-  %invariant.op302 = add i64 3, %i.ed
+  %invariant.op298 = add nsw i64 1, %i.ed
+  %invariant.op300 = add nsw i64 2, %i.ed
+  %invariant.op302 = add nsw i64 3, %i.ed
   br label %scalar.ph243
 
 scalar.ph243:                                     ; preds = %scalar.ph243, %scalar.ph243.preheader.new
@@ -459,7 +459,7 @@ scalar.ph243:                                     ; preds = %scalar.ph243, %scal
   %i.fl = load double, ptr %gep197, align 8, !tbaa !34
   store double %i.fl, ptr %gep195, align 8, !tbaa !34
   store double %i.fj, ptr %gep197, align 8, !tbaa !34
-  %.reass299 = add i64 %indvars.iv174, %invariant.op298 ; 2 uses
+  %.reass299 = add nsw i64 %indvars.iv174, %invariant.op298 ; 2 uses
   %gep195.1 = getelementptr [8 x i8], ptr %invariant.gep194, i64 %.reass299 ; 2 uses
   %i.fm = load double, ptr %gep195.1, align 8, !tbaa !34
   %i.fn = mul nsw i64 %.reass299, %i.ef
@@ -467,7 +467,7 @@ scalar.ph243:                                     ; preds = %scalar.ph243, %scal
   %i.fo = load double, ptr %gep197.1, align 8, !tbaa !34
   store double %i.fo, ptr %gep195.1, align 8, !tbaa !34
   store double %i.fm, ptr %gep197.1, align 8, !tbaa !34
-  %.reass301 = add i64 %indvars.iv174, %invariant.op300 ; 2 uses
+  %.reass301 = add nsw i64 %indvars.iv174, %invariant.op300 ; 2 uses
   %gep195.2 = getelementptr [8 x i8], ptr %invariant.gep194, i64 %.reass301 ; 2 uses
   %i.fp = load double, ptr %gep195.2, align 8, !tbaa !34
   %i.fq = mul nsw i64 %.reass301, %i.ef
@@ -475,7 +475,7 @@ scalar.ph243:                                     ; preds = %scalar.ph243, %scal
   %i.fr = load double, ptr %gep197.2, align 8, !tbaa !34
   store double %i.fr, ptr %gep195.2, align 8, !tbaa !34
   store double %i.fp, ptr %gep197.2, align 8, !tbaa !34
-  %.reass303 = add i64 %indvars.iv174, %invariant.op302 ; 2 uses
+  %.reass303 = add nsw i64 %indvars.iv174, %invariant.op302 ; 2 uses
   %gep195.3 = getelementptr [8 x i8], ptr %invariant.gep194, i64 %.reass303 ; 2 uses
   %i.fs = load double, ptr %gep195.3, align 8, !tbaa !34
   %i.ft = mul nsw i64 %.reass303, %i.ef

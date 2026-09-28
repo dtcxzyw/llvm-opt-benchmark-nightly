@@ -204,9 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 52
   store float %5, ptr %i.d, align 4, !tbaa !87
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %6 = load float, ptr %3, align 4, !tbaa !51     ; 2 uses
   %i.f = load float, ptr %i.e, align 4, !tbaa !51
-  %7 = fsub float %6, %i.f                        ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.i = load float, ptr %i.h, align 4, !tbaa !51
@@ -233,13 +231,14 @@ bb.a:
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !51
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 412
   %i.af = load float, ptr %i.ae, align 4, !tbaa !51
-  %8 = fneg float %7
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 452
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !79
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 60
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %i.al = load float, ptr %i.ak, align 4, !tbaa !51
+  %6 = load float, ptr %i.ak, align 4, !tbaa !51
+  %i.al = load float, ptr %3, align 4, !tbaa !51  ; 2 uses
+  %7 = fsub float %i.al, %i.f                     ; 4 uses
   %i.am = load float, ptr %i.g, align 4, !tbaa !51 ; 2 uses
   %i.an = fsub float %i.am, %i.i                  ; 4 uses
   %i.ao = load float, ptr %i.j, align 4, !tbaa !51 ; 2 uses
@@ -271,13 +270,14 @@ bb.a:
   %i.bo = fneg float %i.ap
   %i.bp = fmul float %i.be, %i.bo
   %i.bq = tail call float @llvm.fmuladd.f32(float %i.bk, float %7, float %i.bp)
+  %8 = fneg float %7
   %i.br = fmul float %i.bh, %8
   %i.bs = tail call float @llvm.fmuladd.f32(float %i.be, float %i.an, float %i.br)
   %i.bt = load float, ptr %i.ai, align 4, !tbaa !51
-  %i.bu = fsub float %6, %i.bt                    ; 3 uses
+  %i.bu = fsub float %i.al, %i.bt                 ; 3 uses
   %i.bv = load float, ptr %i.aj, align 4, !tbaa !51
   %i.bw = fsub float %i.am, %i.bv                 ; 3 uses
-  %i.bx = fsub float %i.ao, %i.al                 ; 3 uses
+  %i.bx = fsub float %i.ao, %6                    ; 3 uses
   %i.by = insertelement <4 x float> poison, float %i.ar, i64 0
   %i.bz = insertelement <4 x float> %i.by, float %i.bx, i64 1
   %i.ca = insertelement <4 x float> %i.bz, float %i.bu, i64 2

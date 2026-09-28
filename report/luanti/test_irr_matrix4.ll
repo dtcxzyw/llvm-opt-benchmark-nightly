@@ -204,7 +204,7 @@ _ZNK4core8CMatrix4IfE18getRotationRadiansEv.exit: ; preds = %bb.b, %bb.c
   %i.fd = fcmp nsz olt float %i.fc, f0x3C23D70A
   %i.fe = extractelement <2 x float> %i.k, i64 0
   %i.ff = fsub nsz float %i.fe, %i.ec
-  %i.fg = tail call nsz noundef float @llvm.fabs.f32(float %i.ff) ; 2 uses
+  %i.fg = tail call nsz float @llvm.fabs.f32(float %i.ff) ; 2 uses
   br i1 %i.fd, label %bb.d, label %bb.w
 
 bb.d:                                             ; preds = %_ZNK4core8CMatrix4IfE18getRotationRadiansEv.exit

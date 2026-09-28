@@ -205,24 +205,24 @@ bb.r:                                             ; preds = %_RNvXsC_NtNtCs68Jln
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.s, %.lr.ph.i.i.i.i.i.i.i.i
-  %i.dt = phi i128 [ %.promoted.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.dx, %bb.s ]
+  %i.dt = phi i128 [ %.promoted.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %18, %bb.s ]
   %i.du = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.dv, %bb.s ] ; 3 uses
   %i.dv = add nuw nsw i64 %i.du, 1
   %i.dw = mul i128 %i.dt, 47026247687942121848144207491837523525
-  %16 = add i128 %i.dw, %i.ds                     ; 4 uses
-  %17 = mul i128 %16, 47026247687942121848144207491837523525
-  %i.dx = add i128 %17, %i.ds                     ; 5 uses
-  %18 = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %i.du
-  %i.dy = lshr i128 %16, 122
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %i.du
+  %i.dx = add i128 %i.dw, %i.ds                   ; 4 uses
+  %i.dy = lshr i128 %i.dx, 122
   %i.dz = trunc nuw nsw i128 %i.dy to i64
-  %i.ea = lshr i128 %16, 64
-  %i.eb = xor i128 %i.ea, %16
+  %i.ea = lshr i128 %i.dx, 64
+  %i.eb = xor i128 %i.ea, %i.dx
   %i.ec = trunc i128 %i.eb to i64                 ; 2 uses
   %i.ed = call noundef i64 @llvm.fshr.i64(i64 %i.ec, i64 %i.ec, i64 %i.dz)
-  %i.ee = lshr i128 %i.dx, 122
+  %17 = mul i128 %i.dx, 47026247687942121848144207491837523525
+  %18 = add i128 %17, %i.ds                       ; 5 uses
+  %i.ee = lshr i128 %18, 122
   %i.ef = trunc nuw nsw i128 %i.ee to i64
-  %i.eg = lshr i128 %i.dx, 64
-  %i.eh = xor i128 %i.eg, %i.dx
+  %i.eg = lshr i128 %18, 64
+  %i.eh = xor i128 %i.eg, %18
   %i.ei = trunc i128 %i.eh to i64                 ; 2 uses
   %i.ej = call noundef i64 @llvm.fshr.i64(i64 %i.ei, i64 %i.ei, i64 %i.ef)
   %i.ek = insertelement <2 x i64> poison, i64 %i.ed, i64 0
@@ -231,12 +231,12 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph.i.i.i
   %i.en = or disjoint <2 x i64> %i.em, splat (i64 4607182418800017408)
   %i.eo = bitcast <2 x i64> %i.en to <2 x double>
   %i.ep = fadd nnan <2 x double> %i.eo, splat (double -1.000000e+00)
-  store <2 x double> %i.ep, ptr %18, align 8, !noalias !136923
+  store <2 x double> %i.ep, ptr %16, align 8, !noalias !136923
   %exitcond.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.du, %i.dm
   br i1 %exitcond.not.i.i.i.i.i.i.i.i, label %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph10UndirectedEs_0EE9from_iterB2N_.exit.loopexit.i, label %bb.s
 
 _RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph10UndirectedEs_0EE9from_iterB2N_.exit.loopexit.i: ; preds = %bb.s
-  store i128 %i.dx, ptr %i.n, align 16, !noalias !136922
+  store i128 %18, ptr %i.n, align 16, !noalias !136922
   br label %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph10UndirectedEs_0EE9from_iterB2N_.exit.i
 
 _RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph10UndirectedEs_0EE9from_iterB2N_.exit.i: ; preds = %bb.q, %_RNvXs7_NtCs3sCKvcUjPpt_9hashbrown3mapINtB5_7HashMapjAdj2_ENtNtCslwFuT2d6ECx_4core7default7Default7defaultCskcxRuJ53GpR_9rustworkx.exit.i, %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph10UndirectedEs_0EE9from_iterB2N_.exit.loopexit.i
@@ -639,24 +639,24 @@ bb.r:                                             ; preds = %_RNvXsC_NtNtCs68Jln
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.s, %.lr.ph.i.i.i.i.i.i.i.i
-  %i.dt = phi i128 [ %.promoted.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.dx, %bb.s ]
+  %i.dt = phi i128 [ %.promoted.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %19, %bb.s ]
   %i.du = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.dv, %bb.s ] ; 3 uses
   %i.dv = add nuw nsw i64 %i.du, 1
   %i.dw = mul i128 %i.dt, 47026247687942121848144207491837523525
-  %17 = add i128 %i.dw, %i.ds                     ; 4 uses
-  %18 = mul i128 %17, 47026247687942121848144207491837523525
-  %i.dx = add i128 %18, %i.ds                     ; 5 uses
-  %19 = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %i.du
-  %i.dy = lshr i128 %17, 122
+  %17 = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %i.du
+  %i.dx = add i128 %i.dw, %i.ds                   ; 4 uses
+  %i.dy = lshr i128 %i.dx, 122
   %i.dz = trunc nuw nsw i128 %i.dy to i64
-  %i.ea = lshr i128 %17, 64
-  %i.eb = xor i128 %i.ea, %17
+  %i.ea = lshr i128 %i.dx, 64
+  %i.eb = xor i128 %i.ea, %i.dx
   %i.ec = trunc i128 %i.eb to i64                 ; 2 uses
   %i.ed = call noundef i64 @llvm.fshr.i64(i64 %i.ec, i64 %i.ec, i64 %i.dz)
-  %i.ee = lshr i128 %i.dx, 122
+  %18 = mul i128 %i.dx, 47026247687942121848144207491837523525
+  %19 = add i128 %18, %i.ds                       ; 5 uses
+  %i.ee = lshr i128 %19, 122
   %i.ef = trunc nuw nsw i128 %i.ee to i64
-  %i.eg = lshr i128 %i.dx, 64
-  %i.eh = xor i128 %i.eg, %i.dx
+  %i.eg = lshr i128 %19, 64
+  %i.eh = xor i128 %i.eg, %19
   %i.ei = trunc i128 %i.eh to i64                 ; 2 uses
   %i.ej = call noundef i64 @llvm.fshr.i64(i64 %i.ei, i64 %i.ei, i64 %i.ef)
   %i.ek = insertelement <2 x i64> poison, i64 %i.ed, i64 0
@@ -665,12 +665,12 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph.i.i.i
   %i.en = or disjoint <2 x i64> %i.em, splat (i64 4607182418800017408)
   %i.eo = bitcast <2 x i64> %i.en to <2 x double>
   %i.ep = fadd nnan <2 x double> %i.eo, splat (double -1.000000e+00)
-  store <2 x double> %i.ep, ptr %19, align 8, !noalias !137528
+  store <2 x double> %i.ep, ptr %17, align 8, !noalias !137528
   %exitcond.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.du, %i.dm
   br i1 %exitcond.not.i.i.i.i.i.i.i.i, label %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph8DirectedEs_0EE9from_iterB2N_.exit.loopexit.i, label %bb.s
 
 _RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph8DirectedEs_0EE9from_iterB2N_.exit.loopexit.i: ; preds = %bb.s
-  store i128 %i.dx, ptr %i.n, align 16, !noalias !137527
+  store i128 %19, ptr %i.n, align 16, !noalias !137527
   br label %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph8DirectedEs_0EE9from_iterB2N_.exit.i
 
 _RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph8DirectedEs_0EE9from_iterB2N_.exit.i: ; preds = %bb.q, %_RNvXs7_NtCs3sCKvcUjPpt_9hashbrown3mapINtB5_7HashMapjAdj2_ENtNtCslwFuT2d6ECx_4core7default7Default7defaultCskcxRuJ53GpR_9rustworkx.exit.i, %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph8DirectedEs_0EE9from_iterB2N_.exit.loopexit.i
@@ -1073,7 +1073,7 @@ _RNvXs0_NtCs1X8ypyHYXIB_8foldhash4fastNtB5_11RandomStateNtNtCslwFuT2d6ECx_4core7
   br label %bb.r
 
 bb.r:                                             ; preds = %.noexc3.i.i.i, %.noexc.i.i.i
-  %i.fc = phi i128 [ %i.fl, %.noexc3.i.i.i ], [ %.promoted.i.i, %.noexc.i.i.i ]
+  %i.fc = phi i128 [ %6, %.noexc3.i.i.i ], [ %.promoted.i.i, %.noexc.i.i.i ]
   %i.fd = phi i64 [ %i.fj, %.noexc3.i.i.i ], [ 0, %.noexc.i.i.i ]
   %i.fe = phi ptr [ %i.fi, %.noexc3.i.i.i ], [ %.val41138, %.noexc.i.i.i ]
   br label %bb.s
@@ -1094,21 +1094,21 @@ bb.t:                                             ; preds = %bb.s
 _RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map8map_foldNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexTjAdj2_EuNCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6random13random_layoutNtBY_10UndirectedE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1H_NCINvXsb_NtCsfztDQZkQYYe_8indexmap3mapINtB4f_8IndexMapjB1J_NtNtCs1X8ypyHYXIB_8foldhash4fast11RandomStateEINtNtB3k_7collect6ExtendB1H_E6extendINtB4_3MapINtNtBW_12stable_graph11NodeIndicesINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB7b_5types3any5PyAnyEEB1Q_EE0E0E0B1Z_.exit.i.i.i.i.i.i.i: ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !138908
   %i.fk = mul i128 %i.fc, 47026247687942121848144207491837523525
-  %5 = add i128 %i.fk, %i.ex                      ; 4 uses
-  %6 = mul i128 %5, 47026247687942121848144207491837523525
-  %i.fl = add i128 %6, %i.ex                      ; 4 uses
   %.sink2.i.i.i.i.i.i.i.i.i = and i64 %i.ff, 4294967295 ; 2 uses
   store i64 %.sink2.i.i.i.i.i.i.i.i.i, ptr %i.d, align 8, !noalias !138908
-  %i.fm = lshr i128 %5, 122
+  %i.fl = add i128 %i.fk, %i.ex                   ; 4 uses
+  %i.fm = lshr i128 %i.fl, 122
   %i.fn = trunc nuw nsw i128 %i.fm to i64
-  %i.fo = lshr i128 %5, 64
-  %i.fp = xor i128 %i.fo, %5
+  %i.fo = lshr i128 %i.fl, 64
+  %i.fp = xor i128 %i.fo, %i.fl
   %i.fq = trunc i128 %i.fp to i64                 ; 2 uses
   %i.fr = call noundef i64 @llvm.fshr.i64(i64 %i.fq, i64 %i.fq, i64 %i.fn)
-  %i.fs = lshr i128 %i.fl, 122
+  %5 = mul i128 %i.fl, 47026247687942121848144207491837523525
+  %6 = add i128 %5, %i.ex                         ; 4 uses
+  %i.fs = lshr i128 %6, 122
   %i.ft = trunc nuw nsw i128 %i.fs to i64
-  %i.fu = lshr i128 %i.fl, 64
-  %i.fv = xor i128 %i.fu, %i.fl
+  %i.fu = lshr i128 %6, 64
+  %i.fv = xor i128 %i.fu, %6
   %i.fw = trunc i128 %i.fv to i64                 ; 2 uses
   %i.fx = call noundef i64 @llvm.fshr.i64(i64 %i.fw, i64 %i.fw, i64 %i.ft)
   %i.fy = insertelement <2 x i64> poison, i64 %i.fr, i64 0
@@ -1511,7 +1511,7 @@ _RNvXs0_NtCs1X8ypyHYXIB_8foldhash4fastNtB5_11RandomStateNtNtCslwFuT2d6ECx_4core7
   br label %bb.r
 
 bb.r:                                             ; preds = %.noexc3.i.i.i, %.noexc.i.i.i
-  %i.fc = phi i128 [ %i.fl, %.noexc3.i.i.i ], [ %.promoted.i.i, %.noexc.i.i.i ]
+  %i.fc = phi i128 [ %6, %.noexc3.i.i.i ], [ %.promoted.i.i, %.noexc.i.i.i ]
   %i.fd = phi i64 [ %i.fj, %.noexc3.i.i.i ], [ 0, %.noexc.i.i.i ]
   %i.fe = phi ptr [ %i.fi, %.noexc3.i.i.i ], [ %.val41138, %.noexc.i.i.i ]
   br label %bb.s
@@ -1532,21 +1532,21 @@ bb.t:                                             ; preds = %bb.s
 _RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map8map_foldNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexTjAdj2_EuNCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6random13random_layoutNtBY_8DirectedE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1H_NCINvXsb_NtCsfztDQZkQYYe_8indexmap3mapINtB4c_8IndexMapjB1J_NtNtCs1X8ypyHYXIB_8foldhash4fast11RandomStateEINtNtB3h_7collect6ExtendB1H_E6extendINtB4_3MapINtNtBW_12stable_graph11NodeIndicesINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB78_5types3any5PyAnyEEB1Q_EE0E0E0B1Z_.exit.i.i.i.i.i.i.i: ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !139372
   %i.fk = mul i128 %i.fc, 47026247687942121848144207491837523525
-  %5 = add i128 %i.fk, %i.ex                      ; 4 uses
-  %6 = mul i128 %5, 47026247687942121848144207491837523525
-  %i.fl = add i128 %6, %i.ex                      ; 4 uses
   %.sink2.i.i.i.i.i.i.i.i.i = and i64 %i.ff, 4294967295 ; 2 uses
   store i64 %.sink2.i.i.i.i.i.i.i.i.i, ptr %i.d, align 8, !noalias !139372
-  %i.fm = lshr i128 %5, 122
+  %i.fl = add i128 %i.fk, %i.ex                   ; 4 uses
+  %i.fm = lshr i128 %i.fl, 122
   %i.fn = trunc nuw nsw i128 %i.fm to i64
-  %i.fo = lshr i128 %5, 64
-  %i.fp = xor i128 %i.fo, %5
+  %i.fo = lshr i128 %i.fl, 64
+  %i.fp = xor i128 %i.fo, %i.fl
   %i.fq = trunc i128 %i.fp to i64                 ; 2 uses
   %i.fr = call noundef i64 @llvm.fshr.i64(i64 %i.fq, i64 %i.fq, i64 %i.fn)
-  %i.fs = lshr i128 %i.fl, 122
+  %5 = mul i128 %i.fl, 47026247687942121848144207491837523525
+  %6 = add i128 %5, %i.ex                         ; 4 uses
+  %i.fs = lshr i128 %6, 122
   %i.ft = trunc nuw nsw i128 %i.fs to i64
-  %i.fu = lshr i128 %i.fl, 64
-  %i.fv = xor i128 %i.fu, %i.fl
+  %i.fu = lshr i128 %6, 64
+  %i.fv = xor i128 %i.fu, %6
   %i.fw = trunc i128 %i.fv to i64                 ; 2 uses
   %i.fx = call noundef i64 @llvm.fshr.i64(i64 %i.fw, i64 %i.fw, i64 %i.ft)
   %i.fy = insertelement <2 x i64> poison, i64 %i.fr, i64 0

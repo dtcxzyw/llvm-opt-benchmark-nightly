@@ -204,7 +204,6 @@ begin_hunk_0_@compress_color:bb.a
   %i.pt = load i32, ptr %i.c, align 4, !tbaa !15
   %i.pu = load i32, ptr %i.b, align 4, !tbaa !15
   %i.pv = sub nsw i32 %i.pt, %i.pu
-  %3 = sitofp nsz i32 %i.pv to float              ; 3 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.px = load i32, ptr %i.pw, align 4, !tbaa !15
   %i.py = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -225,6 +224,7 @@ begin_hunk_0_@compress_color:bb.a
   %i.qn = fmul nsz float %i.qm, %i.qb
   %i.qo = extractelement <2 x float> %i.ps, i64 0 ; 4 uses
   %i.qp = extractelement <2 x float> %i.ps, i64 1 ; 4 uses
+  %3 = sitofp nsz i32 %i.pv to float              ; 3 uses
   %i.qq = tail call nsz float @llvm.fmuladd.f32(float %3, float %i.qk, float %i.qj)
   %i.qr = tail call nsz float @llvm.fmuladd.f32(float %i.qh, float %i.ql, float %i.qq)
   %i.qs = tail call nsz float @llvm.fmuladd.f32(float %3, float %i.qi, float %i.qn)
