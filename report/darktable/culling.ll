@@ -204,15 +204,15 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.ac = sub nsw i32 %i.r, %i.m
-  %5 = sub nsw i32 %i.t, %i.o
   %.neg = sdiv i32 %i.ac, -2
-  %6 = add i32 %.neg, %1
-  %.neg66 = sdiv i32 %5, -2
+  %5 = add i32 %.neg, %1
+  %6 = sub nsw i32 %i.t, %i.o
+  %.neg66 = sdiv i32 %6, -2
   %i.ad = add i32 %.neg66, %2
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %.058 = phi i32 [ %6, %bb.e ], [ %1, %bb.d ]    ; 2 uses
+  %.058 = phi i32 [ %5, %bb.e ], [ %1, %bb.d ]    ; 2 uses
   %.0 = phi i32 [ %i.ad, %bb.e ], [ %2, %bb.d ]   ; 2 uses
   %i.ae = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !66
   %i.af = and i32 %i.ae, 16384
@@ -232,24 +232,25 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.pre-phi = phi i1 [ %i.ak, %bb.g ], [ true, %bb.f ]
-  %7 = insertelement <2 x i32> poison, i32 %.058, i64 0
-  %8 = insertelement <2 x i32> %7, i32 %.0, i64 1
-  %9 = sitofp <2 x i32> %8 to <2 x double>        ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
-  %i.al = fpext reassoc nsz arcp contract afn float %i.j to double
-  %11 = load <2 x double>, ptr %10, align 8, !tbaa !80
-  %12 = fsub reassoc nsz arcp contract afn <2 x double> %9, %11
-  %13 = insertelement <2 x double> poison, double %i.al, i64 0
-  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
-  %15 = fmul reassoc nsz arcp contract afn <2 x double> %12, %14
-  %16 = fsub reassoc nsz arcp contract afn <2 x double> %9, %15 ; 3 uses
-  store <2 x double> %16, ptr %10, align 8, !tbaa !80
+  %7 = sitofp reassoc nsz arcp contract afn i32 %.058 to double ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
+  %9 = load double, ptr %8, align 8, !tbaa !104
+  %10 = fsub reassoc nsz arcp contract afn double %7, %9
+  %i.al = fpext reassoc nsz arcp contract afn float %i.j to double ; 2 uses
+  %11 = fmul reassoc nsz arcp contract afn double %10, %i.al
+  %12 = fsub reassoc nsz arcp contract afn double %7, %11 ; 2 uses
+  store double %12, ptr %8, align 8, !tbaa !104
+  %13 = sitofp reassoc nsz arcp contract afn i32 %.0 to double ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
+  %15 = load double, ptr %14, align 8, !tbaa !105
+  %16 = fsub reassoc nsz arcp contract afn double %13, %15
+  %17 = fmul reassoc nsz arcp contract afn double %16, %i.al
+  %18 = fsub reassoc nsz arcp contract afn double %13, %17 ; 2 uses
+  store double %18, ptr %14, align 8, !tbaa !105
   br i1 %.pre-phi, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %17 = extractelement <2 x double> %16, i64 0
-  %18 = extractelement <2 x double> %16, i64 1
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.59, double noundef %17, double noundef %18) #13
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.59, double noundef %12, double noundef %18) #13
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h

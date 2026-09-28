@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.j, label %bb.y, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = tail call ptr @dt_ioppr_get_pipe_input_profile_info(ptr noundef %1) #22 ; 3 uses
+  %i.k = tail call ptr @dt_ioppr_get_pipe_input_profile_info(ptr noundef %1) #22 ; 4 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.y, label %bb.c
 
@@ -213,18 +213,21 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 512
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 516
-  %i.o = load float, ptr %i.m, align 16, !tbaa !13
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 520
+  %3 = load float, ptr %i.m, align 16, !tbaa !13
+  %4 = load float, ptr %i.n, align 4, !tbaa !13
+  %i.o = load float, ptr %2, align 8, !tbaa !13
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 592
   %i.q = load float, ptr %i.p, align 4, !tbaa !13
-  %i.r = fmul reassoc nsz arcp contract afn float %i.q, %i.o
+  %i.r = fmul reassoc nsz arcp contract afn float %i.q, %3
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 596
-  %2 = load <2 x float>, ptr %i.n, align 4, !tbaa !13
-  %3 = load <2 x float>, ptr %i.s, align 4, !tbaa !13
-  %4 = fmul reassoc nsz arcp contract afn <2 x float> %3, %2 ; 2 uses
-  %5 = extractelement <2 x float> %4, i64 0
-  %6 = fadd reassoc nsz arcp contract afn float %5, %i.r
-  %7 = extractelement <2 x float> %4, i64 1
-  %i.t = fadd reassoc nsz arcp contract afn float %6, %7 ; 3 uses
+  %5 = load float, ptr %i.s, align 4, !tbaa !13
+  %6 = fmul reassoc nsz arcp contract afn float %5, %4
+  %7 = fadd reassoc nsz arcp contract afn float %6, %i.r
+  %8 = getelementptr inbounds nuw i8, ptr %i.k, i64 600
+  %9 = load float, ptr %8, align 4, !tbaa !13
+  %10 = fmul reassoc nsz arcp contract afn float %9, %i.o
+  %i.t = fadd reassoc nsz arcp contract afn float %7, %10 ; 3 uses
   %i.u = fcmp reassoc nsz arcp contract afn ogt float %i.t, f0x3C111AA7
   br i1 %i.u, label %bb.e, label %bb.d
 

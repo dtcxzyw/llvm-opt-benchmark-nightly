@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 7 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
-  %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 128), align 8, !tbaa !67 ; 25 uses
+  %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 128), align 8, !tbaa !67 ; 26 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
   %i.f = load ptr, ptr %i.d, align 8, !tbaa !89
   %.not = icmp eq ptr %i.f, null
@@ -450,18 +450,19 @@ bb.w:                                             ; preds = %bb.v
 _widget_get_quad_width.exit:                      ; preds = %bb.v, %bb.w
   %.0.i = phi nsz float [ %i.de, %bb.w ], [ 0.000000e+00, %bb.v ]
   %i.df = fsub reassoc nsz arcp contract afn float %i.cw, %.0.i
-  %1 = load i32, ptr %i.b, align 4, !tbaa !80
-  %2 = sitofp reassoc nsz arcp contract afn i32 %1 to float
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 312
-  %4 = load float, ptr %3, align 8, !tbaa !81
-  %5 = insertelement <2 x float> poison, float %i.df, i64 0
-  %6 = insertelement <2 x float> %5, float %4, i64 1
-  %7 = fmul reassoc nsz arcp contract afn <2 x float> %6, splat (float 5.000000e-01)
-  %8 = insertelement <2 x float> poison, float %i.cv, i64 0
-  %9 = insertelement <2 x float> %8, float %2, i64 1
-  %10 = fsub reassoc nsz arcp contract afn <2 x float> %9, %7
-  %11 = fptosi <2 x float> %10 to <2 x i32>
-  store <2 x i32> %11, ptr %i.ag, align 8, !tbaa !80
+  %1 = fmul reassoc nsz arcp contract afn float %i.df, 5.000000e-01
+  %2 = fsub reassoc nsz arcp contract afn float %i.cv, %1
+  %3 = fptosi float %2 to i32
+  store i32 %3, ptr %i.ag, align 8, !tbaa !305
+  %4 = load i32, ptr %i.b, align 4, !tbaa !80
+  %5 = sitofp reassoc nsz arcp contract afn i32 %4 to float
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 312
+  %7 = load float, ptr %6, align 8, !tbaa !81
+  %8 = fmul reassoc nsz arcp contract afn float %7, 5.000000e-01
+  %9 = fsub reassoc nsz arcp contract afn float %5, %8
+  %10 = fptosi float %9 to i32
+  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 36
+  store i32 %10, ptr %11, align 4, !tbaa !96
   br label %bb.aa
 
 bb.x:                                             ; preds = %bb.u

@@ -205,8 +205,9 @@ bb.a:
 
 .preheader60:                                     ; preds = %.preheader60.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.preheader60.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %indvars.iv ; 3 uses
+  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %indvars.iv ; 4 uses
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 4 ; 2 uses
   br label %.preheader
 
@@ -232,13 +233,13 @@ bb.a:
   %i.br = load float, ptr %i.bk, align 4, !tbaa !82
   %i.bs = load float, ptr %i.bl, align 4, !tbaa !82
   %i.bt = fmul reassoc nsz arcp contract afn float %i.bs, %i.bm
-  %5 = load <2 x float>, ptr %i.bj, align 4, !tbaa !82 ; 2 uses
-  %6 = insertelement <2 x float> poison, float %i.br, i64 0
-  %7 = insertelement <2 x float> %6, float %i.bt, i64 1 ; 2 uses
-  %8 = fsub reassoc nsz arcp contract afn <2 x float> %5, %7
-  %9 = fadd reassoc nsz arcp contract afn <2 x float> %5, %7
-  %10 = shufflevector <2 x float> %8, <2 x float> %9, <2 x i32> <i32 0, i32 3>
-  %i.bu = fpext <2 x float> %10 to <2 x double>
+  %6 = load float, ptr %i.bj, align 4, !tbaa !82
+  %7 = fsub reassoc nsz arcp contract afn float %6, %i.br
+  %8 = load float, ptr %5, align 4, !tbaa !82
+  %9 = fadd reassoc nsz arcp contract afn float %i.bt, %8
+  %10 = insertelement <2 x float> poison, float %7, i64 0
+  %11 = insertelement <2 x float> %10, float %9, i64 1
+  %i.bu = fpext <2 x float> %11 to <2 x double>
   store <2 x double> %i.bu, ptr %i.at, align 8, !tbaa !193
   %i.bv = load ptr, ptr %i.au, align 8, !tbaa !97
   call void @cmsDoTransform(ptr noundef %i.bv, ptr noundef nonnull %4, ptr noundef nonnull %i.a, i32 noundef 1) #21

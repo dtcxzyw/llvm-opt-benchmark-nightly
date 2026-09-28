@@ -15,12 +15,12 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  %i.c = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 16, i64 noundef 16384) #6 ; 0 uses
-  %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.b, i64 noundef 16, i64 noundef 16384) #6 ; 0 uses
-  %2 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, i32 noundef 131072) ; 0 uses
-  %3 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.1, i32 noundef 2048) ; 0 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
+  %i.c = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 16, i64 noundef 16384) #7 ; 0 uses
+  %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.b, i64 noundef 16, i64 noundef 16384) #7 ; 0 uses
+  %2 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, i32 noundef 131072) ; 0 uses
+  %3 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.1, i32 noundef 2048) ; 0 uses
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !16   ; 6 uses
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !16   ; 5 uses
   br label %bb.b
@@ -29,15 +29,15 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %.06 = phi i64 [ 0, %bb.a ], [ %i.o, %bb.b ]    ; 5 uses
   %i.g = sub nuw nsw i64 2048, %.06
   %i.h = uitofp nneg i64 %i.g to float
-  %4 = call float @cosf(float noundef %i.h) #6, !tbaa !7
+  %4 = tail call float @cosf(float noundef %i.h) #7, !tbaa !7
   %i.i = fpext float %4 to double
   %i.j = fmul double %i.i, f0x3FF000001AD7F29B
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.06
   store double %i.j, ptr %i.k, align 8, !tbaa !18
   %i.l = uitofp nneg i64 %.06 to float
-  %5 = call float @sinf(float noundef %i.l) #6, !tbaa !7
+  %5 = tail call float @sinf(float noundef %i.l) #7, !tbaa !7
   %i.m = fpext float %5 to double
-  %6 = call double @llvm.fmuladd.f64(double %i.m, double 1.000000e-10, double 1.000000e+00)
+  %6 = tail call double @llvm.fmuladd.f64(double %i.m, double 1.000000e-10, double 1.000000e+00)
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.06
   store double %6, ptr %i.n, align 8, !tbaa !18
   %i.o = add nuw nsw i64 %.06, 1                  ; 2 uses
@@ -45,8 +45,8 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !8
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.experimental.noalias.scope.decl(metadata !20)
-  call void @llvm.experimental.noalias.scope.decl(metadata !21)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !20)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !21)
   br label %vector.ph
 
 vector.ph:                                        ; preds = %bb.c, %middle.block
@@ -93,43 +93,44 @@ middle.block:                                     ; preds = %vector.body
 
 double_array_divs_variable.exit:                  ; preds = %middle.block
   %i.ad = load double, ptr %i.e, align 8, !tbaa !18
-  %7 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, double noundef %i.ad) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  %7 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, double noundef %i.ad) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 0
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
-; Function Attrs: nofree nounwind
-declare i32 @posix_memalign(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #2
+; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unnamed_addr #2
+declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #3
+declare float @cosf(float noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #3
+declare float @sinf(float noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #4
+declare double @llvm.fmuladd.f64(double, double, double) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #5
+declare void @llvm.experimental.noalias.scope.decl(metadata) #6
 
 attributes #0 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #6 = { nounwind }
+attributes #2 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
