@@ -204,10 +204,8 @@ _RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtCsheqz6YZvxwl_
 
 bb.q:                                             ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtCsheqz6YZvxwl_8smallvec8IntoIterANtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingj2_EEINtB5_8FuseImplBY_E4nextB1E_.exit17.i
   %i.br = and i32 %.sroa.519.i.sroa.0.0, 2147483647
-  %4 = add nuw i32 %i.br, 1
   %i.bs = and i32 %.sroa.4.i.sroa.0.0, 2147483647
-  %5 = add nuw i32 %i.bs, 1
-  %i.bt = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i32(i32 %4, i32 %5)
+  %i.bt = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i32(i32 %i.br, i32 %i.bs)
   switch i8 %i.bt, label %bb.r [
     i8 -1, label %bb.t
     i8 0, label %bb.w

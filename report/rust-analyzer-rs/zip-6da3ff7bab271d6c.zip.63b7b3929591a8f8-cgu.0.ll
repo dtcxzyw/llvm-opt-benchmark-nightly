@@ -204,10 +204,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 2
   %.val3 = load i16, ptr %i.b, align 2            ; 3 uses
   %i.c = lshr i16 %.val, 9                        ; 2 uses
-  %2 = add nuw nsw i16 %i.c, 1980
   %i.d = lshr i16 %.val2, 9                       ; 2 uses
-  %3 = add nuw nsw i16 %i.d, 1980
-  %i.e = tail call i8 @llvm.ucmp.i8.i16(i16 %2, i16 %3)
+  %i.e = tail call i8 @llvm.ucmp.i8.i16(i16 %i.c, i16 %i.d)
   %i.f = icmp eq i16 %i.c, %i.d
   br i1 %i.f, label %bb.b, label %_RNvXs1_NtCs8yNfvVM1dno_3zip5typesNtB5_8DateTimeNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit
 
