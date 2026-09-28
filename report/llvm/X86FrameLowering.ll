@@ -205,10 +205,10 @@ bb.ab:                                            ; preds = %bb.ab, %_ZN4llvm23S
   br i1 %.not32.i107.not, label %_ZN4llvm13encodeSLEB128ElPhj.exit112, label %bb.ab, !llvm.loop !12
 
 _ZN4llvm13encodeSLEB128ElPhj.exit112:             ; preds = %bb.ab
-  %i.kx = ptrtoint ptr %i.kw to i64
+  %i.kx = ptrtoint ptr %i.kw to i64               ; 2 uses
   %i.ky = ptrtoint ptr %i.b to i64                ; 6 uses
   %i.kz = sub i64 %i.kx, %i.ky
-  %i.la = and i64 %i.kz, 4294967295               ; 3 uses
+  %i.la = and i64 %i.kz, 4294967295               ; 4 uses
   %i.lb = load i64, ptr %i.jr, align 8, !tbaa !655 ; 2 uses
   %i.lc = add i64 %i.lb, %i.la                    ; 2 uses
   %i.ld = load i64, ptr %i.js, align 8, !tbaa !654
@@ -229,7 +229,7 @@ iter.check282:                                    ; preds = %_ZN4llvm15SmallVect
   %i.lg = load ptr, ptr %10, align 8, !tbaa !653  ; 2 uses
   %i.lh = getelementptr inbounds nuw i8, ptr %i.lg, i64 %i.lf ; 6 uses
   %scevgep196 = getelementptr i8, ptr %i.b, i64 -1
-  %i.li = zext i32 %indvars.iv197 to i64          ; 8 uses
+  %i.li = zext i32 %indvars.iv197 to i64          ; 6 uses
   %scevgep199 = getelementptr i8, ptr %scevgep196, i64 %i.li
   %min.iters.check266 = icmp ult i32 %indvars.iv197, 8
   br i1 %min.iters.check266, label %.lr.ph.i.i.i.i.i.i.i.i.i115.preheader, label %vector.memcheck264
@@ -299,7 +299,7 @@ vec.epilog.middle.block294:                       ; preds = %vec.epilog.vector.b
   %.0811.i.i.i.i.i.i.i.i.i117.ph = phi ptr [ %i.lh, %iter.check282 ], [ %i.lh, %vector.memcheck264 ], [ %i.ln, %vec.epilog.iter.check284 ], [ %i.ls, %vec.epilog.middle.block294 ] ; 2 uses
   %.0910.i.i.i.i.i.i.i.i.i118.ph = phi ptr [ %i.b, %iter.check282 ], [ %i.b, %vector.memcheck264 ], [ %i.lo, %vec.epilog.iter.check284 ], [ %i.lt, %vec.epilog.middle.block294 ] ; 3 uses
   %.0910.i.i.i.i.i.i.i.i.i118.ph341 = ptrtoaddr ptr %.0910.i.i.i.i.i.i.i.i.i118.ph to i64 ; 2 uses
-  %i.lv = sub i64 %i.li, %.0910.i.i.i.i.i.i.i.i.i118.ph341
+  %i.lv = sub i64 %i.kx, %.0910.i.i.i.i.i.i.i.i.i118.ph341
   %xtraiter342 = and i64 %i.lv, 7                 ; 2 uses
   %lcmp.mod343.not = icmp eq i64 %xtraiter342, 0
   br i1 %lcmp.mod343.not, label %.lr.ph.i.i.i.i.i.i.i.i.i115.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i115.prol
@@ -319,7 +319,7 @@ vec.epilog.middle.block294:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.i.i.i.i.i115.prol.loopexit:        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i115.prol, %.lr.ph.i.i.i.i.i.i.i.i.i115.preheader
   %.0811.i.i.i.i.i.i.i.i.i117.unr = phi ptr [ %.0811.i.i.i.i.i.i.i.i.i117.ph, %.lr.ph.i.i.i.i.i.i.i.i.i115.preheader ], [ %i.ly, %.lr.ph.i.i.i.i.i.i.i.i.i115.prol ]
   %.0910.i.i.i.i.i.i.i.i.i118.unr = phi ptr [ %.0910.i.i.i.i.i.i.i.i.i118.ph, %.lr.ph.i.i.i.i.i.i.i.i.i115.preheader ], [ %i.lx, %.lr.ph.i.i.i.i.i.i.i.i.i115.prol ]
-  %i.lz = add i64 %i.ky, %i.li
+  %i.lz = add i64 %i.la, %i.ky
   %i.ma = sub i64 %.0910.i.i.i.i.i.i.i.i.i118.ph341, %i.lz
   %i.mb = icmp ugt i64 %i.ma, -8
   br i1 %i.mb, label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE18uninitialized_copyIPhPcEEvT_S5_T0_.exit.loopexit.i119, label %.lr.ph.i.i.i.i.i.i.i.i.i115
@@ -722,9 +722,9 @@ bb.y:                                             ; preds = %bb.y, %_ZN4llvm23Sm
   br i1 %.not32.i73.not, label %_ZN4llvm13encodeSLEB128ElPhj.exit78, label %bb.y, !llvm.loop !12
 
 _ZN4llvm13encodeSLEB128ElPhj.exit78:              ; preds = %bb.y
-  %i.jm = ptrtoint ptr %i.jl to i64
+  %i.jm = ptrtoint ptr %i.jl to i64               ; 2 uses
   %i.jn = sub i64 %i.jm, %i.go
-  %i.jo = and i64 %i.jn, 4294967295               ; 3 uses
+  %i.jo = and i64 %i.jn, 4294967295               ; 4 uses
   %i.jp = load i64, ptr %i.di, align 8, !tbaa !655 ; 2 uses
   %i.jq = add i64 %i.jp, %i.jo                    ; 2 uses
   %i.jr = load i64, ptr %i.dj, align 8, !tbaa !654
@@ -745,7 +745,7 @@ iter.check248:                                    ; preds = %_ZN4llvm15SmallVect
   %i.ju = load ptr, ptr %12, align 8, !tbaa !653  ; 2 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 %i.jt ; 6 uses
   %scevgep173 = getelementptr i8, ptr %i.a, i64 -1
-  %i.jw = zext i32 %indvars.iv174 to i64          ; 8 uses
+  %i.jw = zext i32 %indvars.iv174 to i64          ; 6 uses
   %scevgep176 = getelementptr i8, ptr %scevgep173, i64 %i.jw
   %min.iters.check232 = icmp ult i32 %indvars.iv174, 8
   br i1 %min.iters.check232, label %.lr.ph.i.i.i.i.i.i.i.i.i81.preheader, label %vector.memcheck230
@@ -815,7 +815,7 @@ vec.epilog.middle.block260:                       ; preds = %vec.epilog.vector.b
   %.0811.i.i.i.i.i.i.i.i.i83.ph = phi ptr [ %i.jv, %iter.check248 ], [ %i.jv, %vector.memcheck230 ], [ %i.kb, %vec.epilog.iter.check250 ], [ %i.kg, %vec.epilog.middle.block260 ] ; 2 uses
   %.0910.i.i.i.i.i.i.i.i.i84.ph = phi ptr [ %i.a, %iter.check248 ], [ %i.a, %vector.memcheck230 ], [ %i.kc, %vec.epilog.iter.check250 ], [ %i.kh, %vec.epilog.middle.block260 ] ; 3 uses
   %.0910.i.i.i.i.i.i.i.i.i84.ph302 = ptrtoaddr ptr %.0910.i.i.i.i.i.i.i.i.i84.ph to i64 ; 2 uses
-  %i.kj = sub i64 %i.jw, %.0910.i.i.i.i.i.i.i.i.i84.ph302
+  %i.kj = sub i64 %i.jm, %.0910.i.i.i.i.i.i.i.i.i84.ph302
   %xtraiter303 = and i64 %i.kj, 7                 ; 2 uses
   %lcmp.mod304.not = icmp eq i64 %xtraiter303, 0
   br i1 %lcmp.mod304.not, label %.lr.ph.i.i.i.i.i.i.i.i.i81.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i81.prol
@@ -835,7 +835,7 @@ vec.epilog.middle.block260:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.i.i.i.i.i81.prol.loopexit:         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i81.prol, %.lr.ph.i.i.i.i.i.i.i.i.i81.preheader
   %.0811.i.i.i.i.i.i.i.i.i83.unr = phi ptr [ %.0811.i.i.i.i.i.i.i.i.i83.ph, %.lr.ph.i.i.i.i.i.i.i.i.i81.preheader ], [ %i.km, %.lr.ph.i.i.i.i.i.i.i.i.i81.prol ]
   %.0910.i.i.i.i.i.i.i.i.i84.unr = phi ptr [ %.0910.i.i.i.i.i.i.i.i.i84.ph, %.lr.ph.i.i.i.i.i.i.i.i.i81.preheader ], [ %i.kl, %.lr.ph.i.i.i.i.i.i.i.i.i81.prol ]
-  %i.kn = add i64 %i.go, %i.jw
+  %i.kn = add i64 %i.jo, %i.go
   %i.ko = sub i64 %.0910.i.i.i.i.i.i.i.i.i84.ph302, %i.kn
   %i.kp = icmp ugt i64 %i.ko, -8
   br i1 %i.kp, label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE18uninitialized_copyIPhPcEEvT_S5_T0_.exit.loopexit.i85, label %.lr.ph.i.i.i.i.i.i.i.i.i81
