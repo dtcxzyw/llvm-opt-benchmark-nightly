@@ -202,17 +202,17 @@ _ZNK4llvm8codeview8CVRecordINS0_10SymbolKindEE4kindEv.exit253.preheader: ; preds
   %i.ss = shufflevector <2 x ptr> %i.sr, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.st = insertelement <2 x ptr> poison, ptr %i.qd, i64 0
   %i.su = shufflevector <2 x ptr> %i.st, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %i.sv = insertelement <2 x ptr> poison, ptr %i.pn, i64 0
+  %i.sv = insertelement <2 x ptr> poison, ptr %i.nv, i64 0
   %i.sw = shufflevector <2 x ptr> %i.sv, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %i.sx = insertelement <2 x ptr> poison, ptr %i.pe, i64 0
+  %i.sx = insertelement <2 x ptr> poison, ptr %i.oe, i64 0
   %i.sy = shufflevector <2 x ptr> %i.sx, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.sz = insertelement <2 x ptr> poison, ptr %i.on, i64 0
   %i.ta = shufflevector <2 x ptr> %i.sz, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.tb = insertelement <2 x ptr> poison, ptr %i.ou, i64 0
   %i.tc = shufflevector <2 x ptr> %i.tb, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %i.td = insertelement <2 x ptr> poison, ptr %i.oe, i64 0
+  %i.td = insertelement <2 x ptr> poison, ptr %i.pe, i64 0
   %i.te = shufflevector <2 x ptr> %i.td, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %i.tf = insertelement <2 x ptr> poison, ptr %i.nv, i64 0
+  %i.tf = insertelement <2 x ptr> poison, ptr %i.pn, i64 0
   %i.tg = shufflevector <2 x ptr> %i.tf, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %_ZNK4llvm8codeview8CVRecordINS0_10SymbolKindEE4kindEv.exit253
 
@@ -615,7 +615,7 @@ _ZNK12lldb_private15RangeDataVectorImmN12_GLOBAL__N_115MemberLocationsELj0ENS2_1
   %i.agc = ptrtoint ptr %.09.lcssa.i.i.i to i64
   %i.agd = ptrtoint ptr %.val96.i to i64
   %i.age = sub i64 %i.agc, %i.agd
-  %i.agf = sdiv exact i64 %i.age, 136             ; 3 uses
+  %i.agf = sdiv exact i64 %i.age, 136             ; 2 uses
   %i.agg = trunc i64 %i.agf to i32
   %i.agh = icmp ugt i32 %.val97.i, %i.agg
   %.not881250.i = icmp ne ptr %.val96.i, null
@@ -625,15 +625,11 @@ _ZNK12lldb_private15RangeDataVectorImmN12_GLOBAL__N_115MemberLocationsELj0ENS2_1
   br i1 %or.cond14.i, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %_ZNK12lldb_private15RangeDataVectorImmN12_GLOBAL__N_115MemberLocationsELj0ENS2_10ComparatorEE35FindEntryIndexThatContainsOrFollowsEm.exit.i
-  %i.agi = and i64 %i.agf, 4294967295
+  %i.agi = and i64 %i.agf, 4294967295             ; 2 uses
   %i.agj = getelementptr inbounds nuw [136 x i8], ptr %.val96.i, i64 %i.agi ; 2 uses
   %i.agk = load i64, ptr %i.agj, align 8, !tbaa !230 ; 2 uses
   %.not90.i662 = icmp ult i64 %i.agk, %i.afk
-  br i1 %.not90.i662, label %.lr.ph666, label %._crit_edge.i
-
-.lr.ph666:                                        ; preds = %.lr.ph.i.preheader
-  %103 = and i64 %i.agf, 4294967295
-  br label %bb.gy
+  br i1 %.not90.i662, label %bb.gy, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.hz
   %i.agl = getelementptr inbounds nuw [136 x i8], ptr %.val94.i, i64 %indvars.iv.next ; 2 uses
@@ -641,11 +637,11 @@ _ZNK12lldb_private15RangeDataVectorImmN12_GLOBAL__N_115MemberLocationsELj0ENS2_1
   %.not90.i = icmp ult i64 %i.agm, %i.afk
   br i1 %.not90.i, label %bb.gy, label %._crit_edge.i
 
-bb.gy:                                            ; preds = %.lr.ph666, %.lr.ph.i
-  %i.agn = phi i64 [ %i.agk, %.lr.ph666 ], [ %i.agm, %.lr.ph.i ] ; 3 uses
-  %.07715.i665 = phi i64 [ %i.afh, %.lr.ph666 ], [ %.178.i, %.lr.ph.i ] ; 6 uses
-  %spec.select.i17.i664 = phi ptr [ %i.agj, %.lr.ph666 ], [ %i.agl, %.lr.ph.i ] ; 19 uses
-  %indvars.iv663 = phi i64 [ %103, %.lr.ph666 ], [ %indvars.iv.next, %.lr.ph.i ]
+bb.gy:                                            ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %i.agn = phi i64 [ %i.agm, %.lr.ph.i ], [ %i.agk, %.lr.ph.i.preheader ] ; 3 uses
+  %.07715.i665 = phi i64 [ %.178.i, %.lr.ph.i ], [ %i.afh, %.lr.ph.i.preheader ] ; 6 uses
+  %spec.select.i17.i664 = phi ptr [ %i.agl, %.lr.ph.i ], [ %i.agj, %.lr.ph.i.preheader ] ; 19 uses
+  %indvars.iv663 = phi i64 [ %indvars.iv.next, %.lr.ph.i ], [ %i.agi, %.lr.ph.i.preheader ]
   %i.ago = getelementptr inbounds nuw i8, ptr %spec.select.i17.i664, i64 16 ; 2 uses
   %i.agp = getelementptr inbounds nuw i8, ptr %spec.select.i17.i664, i64 120 ; 3 uses
   %i.agq = load i8, ptr %i.agp, align 8, !tbaa !382, !range !123, !noundef !124
@@ -668,7 +664,7 @@ bb.hb:                                            ; preds = %bb.ha
   %i.agx = sub nuw i64 %i.agu, %i.afk
   store i32 0, ptr %i.pe, align 8, !tbaa !213
   store ptr null, ptr %i.pf, align 8, !tbaa !214
-  store <2 x ptr> %i.sy, ptr %i.pg, align 8, !tbaa !239
+  store <2 x ptr> %i.te, ptr %i.pg, align 8, !tbaa !239
   store i64 0, ptr %i.pi, align 8, !tbaa !217
   %i.agy = getelementptr inbounds nuw i8, ptr %spec.select.i17.i664, i64 32
   %i.agz = load ptr, ptr %i.agy, align 8, !tbaa !214 ; 2 uses
@@ -720,7 +716,7 @@ _ZN12_GLOBAL__N_115MemberLocationsC2ERKS0_.exit.i: ; preds = %_ZNSt8_Rb_treeImSt
   store i64 %i.agx, ptr %i.pm, align 8, !tbaa !231
   store i32 0, ptr %i.pn, align 8, !tbaa !213
   store ptr null, ptr %i.po, align 8, !tbaa !214
-  store <2 x ptr> %i.sw, ptr %i.pp, align 8, !tbaa !239
+  store <2 x ptr> %i.tg, ptr %i.pp, align 8, !tbaa !239
   store i64 0, ptr %i.pr, align 8, !tbaa !217
   %i.ahl = load ptr, ptr %i.pf, align 8, !tbaa !214 ; 2 uses
   %.not.i.i.i.i.i372 = icmp eq ptr %i.ahl, null
@@ -889,7 +885,7 @@ bb.hr:                                            ; preds = %bb.hq
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #21
   store i32 0, ptr %i.nv, align 8, !tbaa !213
   store ptr null, ptr %i.nw, align 8, !tbaa !214
-  store <2 x ptr> %i.tg, ptr %i.nx, align 8, !tbaa !239
+  store <2 x ptr> %i.sw, ptr %i.nx, align 8, !tbaa !239
   store i64 0, ptr %i.nz, align 8, !tbaa !217
   %i.aix = getelementptr inbounds nuw i8, ptr %spec.select.i17.i664, i64 32
   %i.aiy = load ptr, ptr %i.aix, align 8, !tbaa !214 ; 2 uses
@@ -941,7 +937,7 @@ _ZN12_GLOBAL__N_115MemberLocationsC2ERKS0_.exit116.i: ; preds = %_ZNSt8_Rb_treeI
   store i64 %i.agu, ptr %i.od, align 8, !tbaa !231
   store i32 0, ptr %i.oe, align 8, !tbaa !213
   store ptr null, ptr %i.of, align 8, !tbaa !214
-  store <2 x ptr> %i.te, ptr %i.og, align 8, !tbaa !239
+  store <2 x ptr> %i.sy, ptr %i.og, align 8, !tbaa !239
   store i64 0, ptr %i.oi, align 8, !tbaa !217
   %i.ajk = load ptr, ptr %i.nw, align 8, !tbaa !214 ; 2 uses
   %.not.i.i.i.i117.i = icmp eq ptr %i.ajk, null
