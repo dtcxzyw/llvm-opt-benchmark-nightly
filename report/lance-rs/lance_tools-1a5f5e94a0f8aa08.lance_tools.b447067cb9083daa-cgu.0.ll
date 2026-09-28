@@ -53,7 +53,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @43 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -5395094624057330451 to ptr), ptr inttoptr (i64 -8304404071318327760 to ptr) }>, align 8
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RINvMNtCsdRkAOB6wJ8u_12clap_builder5errorNtB3_5Error3rawNtNtCs40k4W9msRzi_5alloc6string6StringECsftBYP88YJaE_11lance_tools(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RINvMNtCsdRkAOB6wJ8u_12clap_builder5errorNtB3_5Error3rawNtNtCs40k4W9msRzi_5alloc6string6StringECsftBYP88YJaE_11lance_tools(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [256 x i8], align 8               ; 46 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -261,7 +261,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringEC
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RINvMNtCsdRkAOB6wJ8u_12clap_builder5errorNtB3_5Error3rawReECsftBYP88YJaE_11lance_tools(i8 noundef range(i8 9, 11) %0, ptr noalias noundef nonnull readonly captures(none) %1, i64 noundef range(i64 49, 57) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RINvMNtCsdRkAOB6wJ8u_12clap_builder5errorNtB3_5Error3rawReECsftBYP88YJaE_11lance_tools(i8 noundef range(i8 9, 11) %0, ptr noalias noundef nonnull readonly captures(none) %1, i64 noundef range(i64 49, 57) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [256 x i8], align 8               ; 49 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -664,7 +664,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef align 8 ptr @_RNvXsf_NtCsftBYP88YJaE_11lance_tools3cliNtB5_17LanceFileMetaArgsNtNtCsdRkAOB6wJ8u_12clap_builder6derive14FromArgMatches23update_from_arg_matches(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define noalias noundef align 8 ptr @_RNvXsf_NtCsftBYP88YJaE_11lance_tools3cliNtB5_17LanceFileMetaArgsNtNtCsdRkAOB6wJ8u_12clap_builder6derive14FromArgMatches23update_from_arg_matches(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -694,7 +694,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef align 8 ptr @_RNvXsf_NtCsftBYP88YJaE_11lance_tools3cliNtB5_17LanceFileMetaArgsNtNtCsdRkAOB6wJ8u_12clap_builder6derive14FromArgMatches27update_from_arg_matches_mut(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define noalias noundef align 8 ptr @_RNvXsf_NtCsftBYP88YJaE_11lance_tools3cliNtB5_17LanceFileMetaArgsNtNtCsdRkAOB6wJ8u_12clap_builder6derive14FromArgMatches27update_from_arg_matches_mut(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [40 x i8], align 8                ; 4 uses

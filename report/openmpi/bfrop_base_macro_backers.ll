@@ -204,14 +204,14 @@ pmix_bfrops_base_tma_argv_free.exit:              ; preds = %bb.a, %._crit_edge.
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define ptr @PMIx_Argv_split_inter(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #5 {
+define noalias ptr @PMIx_Argv_split_inter(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc ptr @pmix_bfrops_base_tma_argv_split_inter(ptr noundef %0, i32 noundef %1, i1 noundef zeroext %2)
   ret ptr %i.a
 }
 
 ; Function Attrs: inlinehint nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc ptr @pmix_bfrops_base_tma_argv_split_inter(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, i1 noundef zeroext %2) unnamed_addr #6 {
+define internal fastcc noalias ptr @pmix_bfrops_base_tma_argv_split_inter(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, i1 noundef zeroext %2) unnamed_addr #6 {
 bb.a:
   %i.a = alloca [512 x i8], align 16              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
@@ -521,16 +521,16 @@ bb.t:                                             ; preds = %pmix_bfrops_base_tm
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define ptr @PMIx_Argv_split_with_empty(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #5 {
+define noalias ptr @PMIx_Argv_split_with_empty(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
-  %i.a = tail call fastcc ptr @pmix_bfrops_base_tma_argv_split_inter(ptr noundef readonly %0, i32 noundef %1, i1 noundef zeroext true)
+  %i.a = tail call fastcc noalias ptr @pmix_bfrops_base_tma_argv_split_inter(ptr noundef readonly %0, i32 noundef %1, i1 noundef zeroext true)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define ptr @PMIx_Argv_split(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #5 {
+define noalias ptr @PMIx_Argv_split(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
-  %i.a = tail call fastcc ptr @pmix_bfrops_base_tma_argv_split_inter(ptr noundef readonly %0, i32 noundef %1, i1 noundef zeroext false)
+  %i.a = tail call fastcc noalias ptr @pmix_bfrops_base_tma_argv_split_inter(ptr noundef readonly %0, i32 noundef %1, i1 noundef zeroext false)
   ret ptr %i.a
 }
 

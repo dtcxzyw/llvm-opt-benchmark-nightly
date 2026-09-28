@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCsgZ49sUHp3tW_5alloc5boxedINtB5_3BoxNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl9file_scan10FileScanIRENtNtCscgRAwXFJnXP_4core5clone5Clone5cloneCseyIfFeUOWMb_17polars_mem_engine(ptr nofree readonly captures(address, read_provenance) %.0.val) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !51965 {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvXsd_NtCsgZ49sUHp3tW_5alloc5boxedINtB5_3BoxNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl9file_scan10FileScanIRENtNtCscgRAwXFJnXP_4core5clone5Clone5cloneCseyIfFeUOWMb_17polars_mem_engine(ptr nofree readonly captures(address, read_provenance) %.0.val) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !51965 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
