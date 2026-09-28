@@ -65,14 +65,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call i32 @avio_rl32(ptr noundef %i.d) #6 ; 3 uses
+  %i.k = tail call i32 @avio_rl32(ptr noundef %i.d) #6 ; 4 uses
   %i.l = add i32 %i.k, -4097
   %or.cond = icmp ult i32 %i.l, -4096
   br i1 %or.cond, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %wide.trip.count = zext nneg i32 %i.k to i64    ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.k to i64    ; 3 uses
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %bb.m
@@ -158,7 +158,7 @@ switch.lookup:                                    ; preds = %._crit_edge
   store i32 %switch.ext, ptr %i.al, align 4, !tbaa !36
   %i.am = zext i8 %switch.load to i64             ; 2 uses
   %i.an = zext i32 %i.n to i64
-  %i.ao = mul nuw nsw i64 %wide.trip.count, %i.an
+  %i.ao = mul nuw nsw i64 %i.an, %wide.trip.count
   %i.ap = mul nuw nsw i64 %i.ao, %i.am
   %i.aq = icmp samesign ugt i64 %i.ap, 2147483646
   %i.ar = icmp eq i32 %i.n, 0
@@ -175,6 +175,8 @@ bb.n:                                             ; preds = %switch.lookup
 
 .lr.ph134:                                        ; preds = %bb.n
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.k, i32 1)
+  %wide.trip.count140 = zext nneg i32 %umax to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph134, %bb.p
@@ -203,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bh = load i32, ptr %i.bg, align 8, !tbaa !46
   tail call void @avpriv_set_pts_info(ptr noundef nonnull %i.aw, i32 noundef 64, i32 noundef 1, i32 noundef %i.bh) #6
   %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 1 ; 2 uses
-  %exitcond141.not = icmp eq i64 %indvars.iv.next138, %wide.trip.count
+  %exitcond141.not = icmp eq i64 %indvars.iv.next138, %wide.trip.count140
   br i1 %exitcond141.not, label %.critedge126, label %bb.o, !llvm.loop !53
 
 .critedge126:                                     ; preds = %bb.p

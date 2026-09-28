@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.c, %bb.b
   %i.h = getelementptr i8, ptr %i.a, i64 %.sink
   %.0123 = load ptr, ptr %i.a, align 8            ; 2 uses
   %.0130 = load ptr, ptr %i.h, align 8            ; 2 uses
-  %i.i = tail call i64 @strlen(ptr noundef %.0130) #22 ; 4 uses
-  %i.j = tail call i64 @strlen(ptr noundef %.0123) #22 ; 4 uses
+  %i.i = tail call i64 @strlen(ptr noundef %.0130) #22 ; 3 uses
+  %i.j = tail call i64 @strlen(ptr noundef %.0123) #22 ; 3 uses
   %i.k = and i64 %i.i, 1
   %.not = icmp eq i64 %i.k, 0
   br i1 %.not, label %bb.g, label %bb.f
@@ -266,16 +266,16 @@ ssh_kex_make_bignum.exit151:                      ; preds = %bb.j
   br i1 %i.af, label %ssh_kex_make_bignum.exit151.thread, label %.preheader
 
 .preheader:                                       ; preds = %ssh_kex_make_bignum.exit151
-  %.not141155.not = icmp eq i64 %i.i, 0
-  br i1 %.not141155.not, label %.critedge.preheader, label %.lr.ph
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.w, i64 1)
+  br label %.lr.ph
 
 ssh_kex_make_bignum.exit151.thread:               ; preds = %bb.j, %ssh_kex_make_bignum.exit151
   tail call void (ptr, i32, ptr, i64, ptr, ptr, ...) @ws_log_full(ptr noundef nonnull @.str.663, i32 noundef 3, ptr noundef null, i64 noundef -1, ptr noundef null, ptr noundef nonnull @.str.668, i64 noundef %i.i)
   br label %.loopexit
 
-.critedge.preheader:                              ; preds = %bb.k, %.preheader
-  %.not146157.not = icmp eq i64 %i.j, 0
-  br i1 %.not146157.not, label %.critedge148, label %.lr.ph159
+.critedge.preheader:                              ; preds = %bb.k
+  %umax160 = tail call i64 @llvm.umax.i64(i64 %i.m, i64 1)
+  br label %.lr.ph159
 
 .lr.ph:                                           ; preds = %.preheader, %bb.k
   %.0128156 = phi i64 [ %i.at, %bb.k ], [ 0, %.preheader ] ; 3 uses
@@ -300,7 +300,7 @@ bb.k:                                             ; preds = %.lr.ph
   %i.as = getelementptr i8, ptr %i.ad, i64 %.0128156
   store i8 %i.ar, ptr %i.as, align 1
   %i.at = add nuw nsw i64 %.0128156, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.at, %i.w
+  %exitcond.not = icmp eq i64 %i.at, %umax
   br i1 %exitcond.not, label %.critedge.preheader, label %.lr.ph, !llvm.loop !18
 
 .lr.ph159:                                        ; preds = %.critedge.preheader, %.critedge
@@ -326,10 +326,10 @@ bb.k:                                             ; preds = %.lr.ph
   %i.bg = getelementptr i8, ptr %i.t, i64 %.0127158
   store i8 %i.bf, ptr %i.bg, align 1
   %i.bh = add nuw nsw i64 %.0127158, 1            ; 2 uses
-  %exitcond160.not = icmp eq i64 %i.bh, %i.m
+  %exitcond160.not = icmp eq i64 %i.bh, %umax160
   br i1 %exitcond160.not, label %.critedge148, label %.lr.ph159, !llvm.loop !19
 
-.critedge148:                                     ; preds = %.critedge, %.critedge.preheader
+.critedge148:                                     ; preds = %.critedge
   %i.bi = tail call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #27 ; 3 uses
   %i.bj = getelementptr i8, ptr %i.bi, i64 8
   store i32 %i.x, ptr %i.bj, align 8
@@ -730,6 +730,9 @@ declare void @llvm.assume(i1 noundef) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #17

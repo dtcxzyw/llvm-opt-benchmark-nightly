@@ -205,7 +205,7 @@ bb.bd:                                            ; preds = %bb.bc
 .critedge._crit_edge:                             ; preds = %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit93
   %i.jc = add nsw i32 %.071206, -1
   %i.jd = icmp sgt i32 %.071206, 1
-  br i1 %i.jd, label %bb.d, label %.loopexit115, !llvm.loop !296
+  br i1 %i.jd, label %bb.d, label %bb.bh, !llvm.loop !296
 
 bb.be:                                            ; preds = %.lr.ph196, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit93
   %.0195 = phi i64 [ 0, %.lr.ph196 ], [ %i.jw, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit93 ] ; 5 uses
@@ -252,22 +252,25 @@ _ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit93: ; preds = %bb.bf, %bb.bg
   %exitcond.not = icmp eq i64 %i.jw, %3
   br i1 %exitcond.not, label %.critedge._crit_edge, label %bb.be, !llvm.loop !297
 
-.loopexit115:                                     ; preds = %.critedge._crit_edge, %.loopexit273.invoke, %.invoke, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit
-  %.sroa.0.2 = phi ptr [ %.sroa.0.0202, %.invoke ], [ %.sroa.0.0202, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit ], [ %.sroa.0.4, %.loopexit273.invoke ], [ %.sroa.0.4, %.critedge._crit_edge ] ; 3 uses
-  %.sroa.20.2 = phi ptr [ %.sroa.20.0204, %.invoke ], [ %.sroa.20.0204, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit ], [ %.sroa.20.4, %.loopexit273.invoke ], [ %.sroa.20.4, %.critedge._crit_edge ]
-  %.274 = phi i1 [ false, %.invoke ], [ %i.av, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit ], [ false, %.loopexit273.invoke ], [ true, %.critedge._crit_edge ] ; 2 uses
+.loopexit115:                                     ; preds = %.loopexit273.invoke, %.invoke, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit
+  %.sroa.0.2 = phi ptr [ %.sroa.0.0202, %.invoke ], [ %.sroa.0.0202, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit ], [ %.sroa.0.4, %.loopexit273.invoke ] ; 2 uses
+  %.sroa.20.2 = phi ptr [ %.sroa.20.0204, %.invoke ], [ %.sroa.20.0204, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit ], [ %.sroa.20.4, %.loopexit273.invoke ]
+  %.274 = phi i1 [ false, %.invoke ], [ %i.av, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit ], [ false, %.loopexit273.invoke ] ; 2 uses
   %.not.i.i.i = icmp eq ptr %.sroa.0.2, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIhSaIhEED2Ev.exit, label %bb.bh
 
-bb.bh:                                            ; preds = %.loopexit115
-  %i.jx = ptrtoint ptr %.sroa.20.2 to i64
-  %i.jy = ptrtoint ptr %.sroa.0.2 to i64
+bb.bh:                                            ; preds = %.critedge._crit_edge, %.loopexit115
+  %.274366 = phi i1 [ %.274, %.loopexit115 ], [ true, %.critedge._crit_edge ]
+  %.sroa.20.2365 = phi ptr [ %.sroa.20.2, %.loopexit115 ], [ %.sroa.20.4, %.critedge._crit_edge ]
+  %.sroa.0.2364 = phi ptr [ %.sroa.0.2, %.loopexit115 ], [ %.sroa.0.4, %.critedge._crit_edge ] ; 2 uses
+  %i.jx = ptrtoint ptr %.sroa.20.2365 to i64
+  %i.jy = ptrtoint ptr %.sroa.0.2364 to i64
   %i.jz = sub i64 %i.jx, %i.jy
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.2, i64 noundef %i.jz) #27
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.2364, i64 noundef %i.jz) #27
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit
 
 _ZNSt6vectorIhSaIhEED2Ev.exit:                    ; preds = %.preheader114, %.loopexit115, %bb.bh
-  %.274358 = phi i1 [ %.274, %bb.bh ], [ %.274, %.loopexit115 ], [ true, %.preheader114 ]
+  %.274358 = phi i1 [ %.274366, %bb.bh ], [ %.274, %.loopexit115 ], [ true, %.preheader114 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
   br label %bb.bj

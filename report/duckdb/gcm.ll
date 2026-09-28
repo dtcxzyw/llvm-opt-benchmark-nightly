@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph80:                                         ; preds = %bb.b
   %i.i = shl nuw i64 %3, 3
-  %i.j = tail call i64 @llvm.bswap.i64(i64 %i.i)
+  %i.j = tail call i64 @llvm.bswap.i64(i64 %i.i)  ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 409
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 391
@@ -215,19 +215,18 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
   br label %bb.d
 
-.preheader68:                                     ; preds = %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a
+.preheader68:                                     ; preds = %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 384
   %.0.copyload.i52.1.pre = load i64, ptr %.phi.trans.insert, align 8
-  %4 = xor i64 %i.j, %.0.copyload.i52.1.pre       ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %4 = xor i64 %i.j, %.0.copyload.i52.1.pre
   store i64 %4, ptr %i.p, align 8
-  %cond.i53 = icmp eq i8 %i.bk, 0
-  br i1 %cond.i53, label %bb.f, label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67
+  br label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67
 
-bb.d:                                             ; preds = %.lr.ph80, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a
-  %.079 = phi ptr [ %2, %.lr.ph80 ], [ %8, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a ] ; 11 uses
-  %.04078 = phi i64 [ %3, %.lr.ph80 ], [ %7, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a ] ; 4 uses
-  %i.q = tail call i64 @llvm.umin.i64(i64 %.04078, i64 16) ; 10 uses
+bb.d:                                             ; preds = %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i, %.lr.ph80
+  %.079 = phi ptr [ %2, %.lr.ph80 ], [ %.079.be, %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i ] ; 11 uses
+  %.04078 = phi i64 [ %3, %.lr.ph80 ], [ %.04078.be, %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i ] ; 5 uses
+  %i.q = tail call i64 @llvm.umin.i64(i64 %.04078, i64 16) ; 11 uses
   %.not.i4773 = icmp ult i64 %.04078, 8
   br i1 %.not.i4773, label %.preheader69, label %.lr.ph
 
@@ -351,9 +350,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.3, label %_ZL11mbedtls_xorPhPKhS1_m.exit49, label %.lr.ph76, !llvm.loop !31
 
 _ZL11mbedtls_xorPhPKhS1_m.exit49:                 ; preds = %.lr.ph76.prol.loopexit, %.lr.ph76, %vec.epilog.middle.block, %.preheader69
-  %i.bk = load i8, ptr %i.k, align 1, !tbaa !15   ; 2 uses
+  %i.bk = load i8, ptr %i.k, align 1, !tbaa !15
   %cond.i = icmp eq i8 %i.bk, 0
-  br i1 %cond.i, label %bb.e, label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a
+  br i1 %cond.i, label %bb.e, label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit
 
 bb.e:                                             ; preds = %_ZL11mbedtls_xorPhPKhS1_m.exit49
   %i.bl = load i8, ptr %i.m, align 1, !tbaa !16   ; 2 uses
@@ -421,25 +420,36 @@ _ZL19mbedtls_xor_no_simdPhPKhS1_m.exit.i.i:       ; preds = %_ZL19mbedtls_xor_no
   %i.dj = xor i64 %.0.copyload.i39.1.i.i, %i.cy   ; 2 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   %.not.i.i = icmp eq i64 %indvars.iv.i.i, 0
-  br i1 %.not.i.i, label %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i, label %_ZL19mbedtls_xor_no_simdPhPKhS1_m.exit.i.i, !llvm.loop !0
+  br i1 %.not.i.i, label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a, label %_ZL19mbedtls_xor_no_simdPhPKhS1_m.exit.i.i, !llvm.loop !0
 
-_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i:        ; preds = %_ZL19mbedtls_xor_no_simdPhPKhS1_m.exit.i.i
-  %5 = tail call i64 @llvm.bswap.i64(i64 %i.dh)
-  store i64 %5, ptr %i.c, align 8
-  %6 = tail call i64 @llvm.bswap.i64(i64 %i.dj)
-  store i64 %6, ptr %i.n, align 8
-  br label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a
+_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit:     ; preds = %_ZL11mbedtls_xorPhPKhS1_m.exit49
+  %5 = sub nuw i64 %.04078, %i.q                  ; 2 uses
+  %.not44 = icmp eq i64 %5, 0
+  br i1 %.not44, label %.preheader68, label %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i
 
-_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a:   ; preds = %_ZL11mbedtls_xorPhPKhS1_m.exit49, %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i
-  %7 = sub nuw i64 %.04078, %i.q                  ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.079, i64 %i.q
-  %.not44.a = icmp eq i64 %7, 0
-  br i1 %.not44.a, label %.preheader68, label %bb.d, !llvm.loop !32
+_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i:        ; preds = %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a
+  %.04078.be = phi i64 [ %5, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit ], [ %8, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a ]
+  %.079.be = getelementptr inbounds nuw i8, ptr %.079, i64 %i.q
+  br label %bb.d, !llvm.loop !32
 
-bb.f:                                             ; preds = %.preheader68
-  %i.dk = lshr i64 %4, 56
+_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a:   ; preds = %_ZL19mbedtls_xor_no_simdPhPKhS1_m.exit.i.i
+  %6 = tail call i64 @llvm.bswap.i64(i64 %i.dh)
+  store i64 %6, ptr %i.c, align 8
+  %7 = tail call i64 @llvm.bswap.i64(i64 %i.dj)
+  store i64 %7, ptr %i.n, align 8
+  %8 = sub nuw i64 %.04078, %i.q                  ; 2 uses
+  %.not44.a = icmp eq i64 %8, 0
+  br i1 %.not44.a, label %bb.f, label %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i
+
+bb.f:                                             ; preds = %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit.a
+  %.phi.trans.insert94 = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %.0.copyload.i52.1.pre95 = load i64, ptr %.phi.trans.insert94, align 8
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %10 = xor i64 %i.j, %.0.copyload.i52.1.pre95    ; 3 uses
+  store i64 %10, ptr %9, align 8
+  %i.dk = lshr i64 %10, 56
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
-  %i.dm = lshr i64 %4, 60
+  %i.dm = lshr i64 %10, 60
   %i.dn = getelementptr inbounds nuw [16 x i8], ptr %i.dl, i64 %i.dm ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
   %.0.copyload.i.1.i.i54 = load i64, ptr %i.do, align 1
@@ -511,7 +521,7 @@ _ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i66:      ; preds = %_ZL19mbedtls_xor_no
   store i64 %i.fk, ptr %i.fj, align 8
   br label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67
 
-_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67:   ; preds = %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i66, %.preheader68, %bb.c
+_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67:   ; preds = %.preheader68, %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i66, %bb.c
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.fm = call i32 @mbedtls_cipher_update(ptr noundef nonnull %0, ptr noundef nonnull %i.c, i64 noundef 16, ptr noundef nonnull %i.fl, ptr noundef nonnull %i.a)
   br label %bb.g

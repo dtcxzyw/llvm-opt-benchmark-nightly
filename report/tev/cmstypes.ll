@@ -205,7 +205,8 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph58:                                         ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 280
-  %wide.trip.count78 = zext nneg i32 %3 to i64
+  %umax = tail call i32 @llvm.umax.i32(i32 %3, i32 1)
+  %wide.trip.count78 = zext nneg i32 %umax to i64
   %scevgep94 = getelementptr i8, ptr %i.c, i64 256
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -510,7 +511,8 @@ middle.block:                                     ; preds = %scalar.ph, %vector.
   br i1 %.not, label %.lr.ph63.preheader, label %.lr.ph60.preheader
 
 .lr.ph60.preheader:                               ; preds = %._crit_edge
-  %wide.trip.count83 = zext nneg i32 %3 to i64
+  %umax83 = call i32 @llvm.umax.i32(i32 %3, i32 1)
+  %wide.trip.count83 = zext nneg i32 %umax83 to i64
   br label %.lr.ph60
 
 .lr.ph60:                                         ; preds = %.lr.ph60.preheader, %.lr.ph60
@@ -524,7 +526,8 @@ middle.block:                                     ; preds = %scalar.ph, %vector.
 
 .lr.ph63.preheader:                               ; preds = %.lr.ph, %bb.d, %._crit_edge
   %.042 = phi ptr [ %i.c, %bb.d ], [ null, %._crit_edge ], [ %i.c, %.lr.ph ] ; 2 uses
-  %wide.trip.count88 = zext nneg i32 %3 to i64
+  %umax89 = call i32 @llvm.umax.i32(i32 %3, i32 1)
+  %wide.trip.count88 = zext nneg i32 %umax89 to i64
   br label %.lr.ph63
 
 .lr.ph63:                                         ; preds = %.lr.ph63.preheader, %bb.f
