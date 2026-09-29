@@ -205,14 +205,15 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bj
   %i.acb = lshr i32 %i.y, 5
+  %15 = add nuw nsw i32 %i.acb, 1
   %i.acc = shl nuw nsw i32 %i.y, 2
   %i.acd = and i32 %i.acc, 124
   %i.ace = zext nneg i32 %i.acd to i64
   %i.acf = lshr i64 1275511473185297, %i.ace
   %i.acg = trunc i64 %i.acf to i32
   %i.ach = and i32 %i.acg, 15
-  %15 = shl nuw nsw i32 %i.ach, %i.acb
-  %i.aci = zext nneg i32 %15 to i64
+  %16 = mul nuw nsw i32 %i.ach, %15
+  %i.aci = zext nneg i32 %16 to i64
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bj, %bb.bk
@@ -266,27 +267,28 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bn
   %i.add = and i32 %.0, 2
   %i.ade = lshr i32 %i.y, 5
+  %17 = add nuw nsw i32 %i.ade, 1
   %i.adf = and i32 %i.x, 31                       ; 2 uses
   %i.adg = shl nuw nsw i32 %i.adf, 2
   %i.adh = zext nneg i32 %i.adg to i64
   %i.adi = lshr i64 1275511473185297, %i.adh
   %i.adj = trunc i64 %i.adi to i32
   %i.adk = and i32 %i.adj, 15
-  %16 = shl nuw nsw i32 %i.adk, %i.ade            ; 8 uses
+  %18 = mul nuw nsw i32 %i.adk, %17               ; 8 uses
   %i.adl = icmp eq i32 %i.adf, 5
   %i.adm = zext i1 %i.adl to i32
-  %i.adn = shl nuw nsw i32 %16, %i.adm            ; 2 uses
+  %i.adn = shl nuw nsw i32 %18, %i.adm            ; 2 uses
   %i.ado = trunc i32 %.0 to i1                    ; 4 uses
   br i1 %i.ado, label %bb.bs, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.adp = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.adq = load i64, ptr %i.adp, align 8, !tbaa !38
-  %i.adr = zext nneg i32 %16 to i64               ; 2 uses
+  %i.adr = zext nneg i32 %18 to i64               ; 2 uses
   br label %bb.bt
 
 bb.bs:                                            ; preds = %bb.bq
-  %i.ads = zext nneg i32 %16 to i64               ; 2 uses
+  %i.ads = zext nneg i32 %18 to i64               ; 2 uses
   %i.adt = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.adu = load i64, ptr %i.adt, align 8, !tbaa !38
   br label %bb.bt
@@ -450,7 +452,7 @@ _ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit:     ; preds = %.noexc1090, %_ZN2cv
   %i.aga = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.agb = shl nuw nsw i32 %.01253, 3
   %.not1277 = icmp eq ptr %i.afo, null
-  %i.agc = lshr i32 %16, 2
+  %i.agc = lshr i32 %18, 2
   %i.agd = mul nsw i64 %i.aeq, %i.aer
   %i.age = mul i64 %i.agd, %i.aeu                 ; 2 uses
   %scevgep = getelementptr i8, ptr %i.afo, i64 %i.age
@@ -502,7 +504,7 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl
   %i.agt = load i64, ptr %i.afv, align 8, !tbaa !38 ; 2 uses
   %i.agu = mul i64 %i.agt, %i.agk
   %i.agv = getelementptr inbounds nuw i8, ptr %i.ags, i64 %i.agu
-  %i.agw = mul nsw i32 %.09021364.us, %16
+  %i.agw = mul nsw i32 %.09021364.us, %18
   %i.agx = sext i32 %i.agw to i64                 ; 2 uses
   %i.agy = getelementptr inbounds i8, ptr %i.agv, i64 %i.agx
   %i.agz = sext i32 %.09021364.us to i64          ; 2 uses
@@ -567,14 +569,14 @@ bb.ct:                                            ; preds = %bb.cs
   br i1 %.not1277, label %_ZN2cv12cpu_baselineL19GEMM_TransposeBlockEPKhmPhmNS_5Size_IiEEm.exit.us, label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.aia = mul nsw i32 %.0898.us, %16
+  %i.aia = mul nsw i32 %.0898.us, %18
   %i.aib = sext i32 %i.aia to i64                 ; 12 uses
   %.sroa.11.0.insert.ext1126.us = zext i32 %.0898.us to i64 ; 4 uses
   br i1 %i.ago, label %.lr.ph77.i.us, label %_ZN2cv12cpu_baselineL19GEMM_TransposeBlockEPKhmPhmNS_5Size_IiEEm.exit.us
 
 .lr.ph77.i.us:                                    ; preds = %bb.cu
   %i.aic = shl nuw nsw i64 %.sroa.11.0.insert.ext1126.us, 2
-  switch i32 %16, label %.split.us [
+  switch i32 %18, label %.split.us [
     i32 4, label %.lr.ph77.split.split.us.i.us
     i32 8, label %.lr.ph77.split.split.us78.i.us
     i32 16, label %.lr.ph77.split.split.i.us
@@ -823,16 +825,16 @@ _ZN2cv12cpu_baselineL19GEMM_TransposeBlockEPKhmPhmNS_5Size_IiEEm.exit.us: ; pred
 bb.da:                                            ; preds = %_ZN2cv12cpu_baselineL19GEMM_TransposeBlockEPKhmPhmNS_5Size_IiEEm.exit.us
   %spec.select1262.us = select i1 %.not1050, i32 %.0898.us, i32 %.0899.us ; 3 uses
   %spec.select1263.us = select i1 %.not1050, i32 %.0899.us, i32 %.0898.us ; 2 uses
-  %i.alb = mul i32 %spec.select1263.us, %16       ; 2 uses
+  %i.alb = mul i32 %spec.select1263.us, %18       ; 2 uses
   %i.alc = sext i32 %i.alb to i64                 ; 4 uses
-  %i.ald = mul i32 %spec.select1263.us, %i.agc    ; 3 uses
+  %i.ald = mul i32 %spec.select1263.us, %i.agc    ; 4 uses
   %.not14.i.us = icmp ne i32 %spec.select1262.us, 0
   %i.ale = icmp sgt i32 %i.ald, 0
   %or.cond.i.us = select i1 %.not14.i.us, i1 %i.ale, i1 false
   br i1 %or.cond.i.us, label %.preheader.preheader.i.us, label %_ZN2cv12cpu_baselineL14GEMM_CopyBlockEPKhmPhmNS_5Size_IiEEm.exit.us
 
 .preheader.preheader.i.us:                        ; preds = %bb.da
-  %wide.trip.count.i.us = zext nneg i32 %i.ald to i64 ; 6 uses
+  %wide.trip.count.i.us = zext nneg i32 %i.ald to i64 ; 4 uses
   %i.alf = add i32 %spec.select1262.us, -1
   %i.alg = zext i32 %i.alf to i64                 ; 2 uses
   %i.alh = mul nsw i64 %i.alc, %i.alg
@@ -844,6 +846,7 @@ bb.da:                                            ; preds = %_ZN2cv12cpu_baselin
   %i.all = getelementptr i8, ptr %scevgep1500, i64 %i.ahs
   %i.alm = getelementptr i8, ptr %i.all, i64 %i.alk
   %scevgep1501 = getelementptr i8, ptr %i.alm, i64 %i.ali
+  %19 = zext nneg i32 %i.ald to i64               ; 2 uses
   %min.iters.check = icmp ult i32 %i.ald, 8
   %bound0 = icmp ult ptr %scevgep, %scevgep1501
   %bound1 = icmp ult ptr %i.ahu, %scevgep1499
@@ -853,7 +856,7 @@ bb.da:                                            ; preds = %_ZN2cv12cpu_baselin
   %i.alo = or i1 %i.aln, %stride.check1502
   %n.vec = and i64 %wide.trip.count.i.us, 2147483640 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.us
-  %xtraiter1535 = and i64 %wide.trip.count.i.us, 3 ; 2 uses
+  %xtraiter1535 = and i64 %19, 3                  ; 2 uses
   %lcmp.mod1536.not = icmp eq i64 %xtraiter1535, 0
   br label %.preheader.i.us
 
@@ -899,7 +902,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %indvars.iv.i1098.us.unr = phi i64 [ %indvars.iv.i1098.us.ph, %scalar.ph.preheader ], [ %indvars.iv.next.i1099.us.prol, %scalar.ph.prol ]
-  %i.alx = sub nsw i64 %indvars.iv.i1098.us.ph, %wide.trip.count.i.us
+  %i.alx = sub nsw i64 %indvars.iv.i1098.us.ph, %19
   %i.aly = icmp ugt i64 %i.alx, -4
   br i1 %i.aly, label %._crit_edge.i.us, label %scalar.ph
 

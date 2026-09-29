@@ -95,8 +95,9 @@ bb.g:                                             ; preds = %bb.d
   %i.h = load i8, ptr %i.g, align 1, !tbaa !8
   %i.i = zext i8 %i.h to i64
   %i.j = xor i64 %.0, %i.i
-  %6 = icmp samesign ult i64 %i.j, 128
-  br i1 %6, label %bb.h, label %.lr.ph.preheader
+  %6 = and i64 %i.j, 128
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %bb.h, label %.lr.ph.preheader
 
 bb.h:                                             ; preds = %bb.g
   tail call void @ERR_new() #6

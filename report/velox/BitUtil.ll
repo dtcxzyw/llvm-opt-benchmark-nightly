@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZN8facebook5velox4
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.o, %.peel.next
-  %.061 = phi i32 [ %.162.peel, %.peel.next ], [ %.162, %bb.o ] ; 3 uses
+  %.061 = phi i32 [ %.162.peel, %.peel.next ], [ %.162, %bb.o ] ; 4 uses
   %.043.in = phi i32 [ %i.dn, %.peel.next ], [ %i.fm, %bb.o ]
   %.040 = phi i32 [ %.sroa.speculated53, %.peel.next ], [ %.043, %bb.o ]
   %.043 = add nsw i32 %.043.in, -8                ; 6 uses
@@ -266,26 +266,50 @@ _ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48.a: ; preds = %b
   %i.fa = load i64, ptr %i.ez, align 8, !tbaa !10
   %i.fb = and i64 %i.fa, %i.ex                    ; 2 uses
   %i.fc = tail call range(i64 0, 57) i64 @llvm.ctpop.i64(i64 %i.fb)
-  %i.fd = trunc nuw nsw i64 %i.fc to i32
+  %i.fd = trunc nuw nsw i64 %i.fc to i32          ; 2 uses
   %i.fe = sub nsw i32 %.061, %i.fd                ; 3 uses
   %i.ff = sdiv i32 %i.fe, 8
-  %i.fg = and i32 %i.fe, 7
+  %i.fg = and i32 %i.fe, 7                        ; 3 uses
   %i.fh = sext i32 %i.ff to i64
   %i.fi = getelementptr inbounds i8, ptr %2, i64 %i.fh
   %i.fj = load i64, ptr %i.fi, align 8, !tbaa !10
   %i.fk = zext nneg i32 %i.fg to i64
-  %i.fl = lshr i64 %i.fj, %i.fk
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.ey ; 2 uses
-  %6 = tail call noundef i64 @llvm.pdep.i64(i64 %i.fl, i64 %i.fb)
-  %7 = load i64, ptr %5, align 8, !tbaa !10
-  %8 = and i64 %7, %notmask.i
-  %9 = and i64 %6, %i.ex
-  %10 = or disjoint i64 %8, %9
-  store i64 %10, ptr %5, align 8, !tbaa !10
+  %i.fl = lshr i64 %i.fj, %i.fk                   ; 2 uses
+  %5 = add nuw nsw i32 %i.fg, %i.fd               ; 2 uses
+  %6 = icmp samesign ugt i32 %5, 64
+  br i1 %6, label %7, label %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48
+
+7:                                                ; preds = %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48.a
+  %8 = sdiv i32 %.061, 8
+  %9 = add nsw i32 %5, -64
+  %10 = sext i32 %8 to i64
+  %11 = getelementptr inbounds i8, ptr %2, i64 %10
+  %12 = load i8, ptr %11, align 1, !tbaa !11
+  %13 = zext nneg i32 %9 to i64
+  %notmask.i.i47 = shl nsw i64 -1, %13
+  %14 = trunc nsw i64 %notmask.i.i47 to i8
+  %15 = xor i8 %14, -1
+  %16 = and i8 %12, %15
+  %17 = zext nneg i8 %16 to i64
+  %18 = sub nuw nsw i32 64, %i.fg
+  %19 = zext nneg i32 %18 to i64
+  %20 = shl i64 %17, %19
+  %21 = or i64 %20, %i.fl
+  br label %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48
+
+_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48: ; preds = %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48.a, %7
+  %.0.i46 = phi i64 [ %21, %7 ], [ %i.fl, %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48.a ]
+  %22 = getelementptr inbounds nuw i8, ptr %4, i64 %i.ey ; 2 uses
+  %23 = tail call noundef i64 @llvm.pdep.i64(i64 %.0.i46, i64 %i.fb)
+  %24 = load i64, ptr %22, align 8, !tbaa !10
+  %25 = and i64 %24, %notmask.i
+  %26 = and i64 %23, %i.ex
+  %27 = or disjoint i64 %25, %26
+  store i64 %27, ptr %22, align 8, !tbaa !10
   br label %bb.n
 
-bb.n:                                             ; preds = %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit, %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48.a
-  %.162 = phi i32 [ %i.dv, %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit ], [ %i.fe, %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48.a ]
+bb.n:                                             ; preds = %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit, %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48
+  %.162 = phi i32 [ %i.dv, %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit ], [ %i.fe, %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48 ]
   %.not = icmp eq i32 %.043, 0
   br i1 %.not, label %_ZN8facebook5velox4bits12_GLOBAL__N_117scatterBitsSimpleEiiPKcPKmPc.exit, label %bb.o
 
