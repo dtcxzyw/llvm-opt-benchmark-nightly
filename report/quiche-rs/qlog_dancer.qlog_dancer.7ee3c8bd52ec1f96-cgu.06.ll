@@ -204,7 +204,7 @@ _RINvXs6_NtCsenfyI6F4F2A_10serde_json3serINtB6_8CompoundQINtNtCsexYYUdYSQU6_5all
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef align 8 ptr @_RINvYINtNtNtCsbmN5fM2HLz5_5serde7private3ser17FlatMapSerializerINtNtCsenfyI6F4F2A_10serde_json3ser8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB12_16CompactFormatterEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_mapRNtNtB1N_6string6StringRNtNtB14_5value5ValueRINtNtNtNtB1N_11collections5btree3map8BTreeMapB3F_B42_EECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !50180 {
+define hidden noalias noundef align 8 ptr @_RINvYINtNtNtCsbmN5fM2HLz5_5serde7private3ser17FlatMapSerializerINtNtCsenfyI6F4F2A_10serde_json3ser8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB12_16CompactFormatterEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_mapRNtNtB1N_6string6StringRNtNtB14_5value5ValueRINtNtNtNtB1N_11collections5btree3map8BTreeMapB3F_B42_EECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !50180 {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 13 uses
     #dbg_value(ptr %0, !50297, !DIExpression(), !50310)
@@ -607,7 +607,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef align 8 ptr @_RINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBR_NtNtB9_5value5ValueEECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !1116 {
+define hidden noalias noundef align 8 ptr @_RINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBR_NtNtB9_5value5ValueEECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !1116 {
 bb.a:
     #dbg_value(ptr poison, !6049, !DIExpression(), !51005)
     #dbg_value(ptr poison, !6058, !DIExpression(), !51006)
@@ -644,7 +644,7 @@ bb.a:
     #dbg_value(i64 %.val16, !6214, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !51027)
     #dbg_value(ptr %0, !6213, !DIExpression(), !51027)
     #dbg_value(ptr poison, !6196, !DIExpression(), !51028)
-  %.val.i = load ptr, ptr %0, align 8, !dbg !51080, !alias.scope !51070, !noalias !51071, !nonnull !2067, !align !2511, !noundef !2067 ; 3 uses
+  %.val.i = load ptr, ptr %0, align 8, !dbg !51080, !alias.scope !51070, !noalias !51071, !nonnull !2067, !align !2511, !noundef !2067 ; 2 uses
     #dbg_value(ptr poison, !6220, !DIExpression(), !51031)
     #dbg_value(ptr poison, !6221, !DIExpression(), !51031)
     #dbg_value(ptr poison, !2518, !DIExpression(), !51033)
@@ -668,10 +668,12 @@ _RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin
 
 _RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit.preheader: ; preds = %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i.peel
   %i.e = icmp eq i64 %.val16, 1, !dbg !51086
+  %.val1950 = load ptr, ptr %0, align 8, !dbg !51073, !nonnull !2067, !noundef !2067 ; 2 uses
   br i1 %i.e, label %_RNvXs2_NtCsenfyI6F4F2A_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeSeq3endCsaTqK2fWTXJW_11qlog_dancer.exit.sink.split, label %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i.lr.ph, !dbg !51087
 
 _RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i.lr.ph: ; preds = %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit.preheader
   %.sroa.0.02649 = getelementptr inbounds nuw i8, ptr %.val, i64 72, !dbg !51088
+  %.val19 = load ptr, ptr %0, align 8, !nonnull !2067 ; 2 uses
   br label %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i, !dbg !51087
 
 _RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit: ; preds = %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i
@@ -689,6 +691,7 @@ _RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5all
   br i1 %i.f, label %_RNvXs2_NtCsenfyI6F4F2A_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeSeq3endCsaTqK2fWTXJW_11qlog_dancer.exit.sink.split, label %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i, !dbg !51087, !llvm.loop !51052
 
 _RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i: ; preds = %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i.lr.ph, %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit
+  %.val1952 = phi ptr [ %.val1950, %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i.lr.ph ], [ %.val19, %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit ]
   %.sroa.0.02650 = phi ptr [ %.sroa.0.02649, %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i.lr.ph ], [ %.sroa.0.026, %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit ] ; 2 uses
     #dbg_value(ptr %.sroa.0.02650, !6142, !DIExpression(DW_OP_plus_uconst, 72, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !51069)
     #dbg_value(ptr %.sroa.0.02650, !6112, !DIExpression(), !51053)
@@ -707,10 +710,10 @@ _RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin
     #dbg_value(ptr poison, !2518, !DIExpression(), !51061)
     #dbg_value(ptr @58, !2523, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !51061)
     #dbg_value(i64 1, !2523, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !51061)
-    #dbg_value(ptr %.val.i, !2528, !DIExpression(), !51063)
+    #dbg_value(ptr %.val1952, !2528, !DIExpression(), !51063)
     #dbg_value(ptr @58, !2534, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !51063)
     #dbg_value(i64 1, !2534, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !51063)
-  tail call void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @58, i64 noundef range(i64 0, -9223372036854775808) 1), !dbg !51089, !noalias !51076, !inline_history !51065
+  tail call void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val1952, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @58, i64 noundef range(i64 0, -9223372036854775808) 1), !dbg !51089, !noalias !51076, !inline_history !51065
     #dbg_value(i8 2, !6143, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !51073)
     #dbg_value(ptr undef, !6049, !DIExpression(), !51005)
     #dbg_value(ptr %0, !6052, !DIExpression(), !51005)
@@ -719,7 +722,8 @@ _RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin
   br i1 %.not.i.i, label %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit, label %_RNvXs2_NtCsenfyI6F4F2A_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeSeq3endCsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !51085, !llvm.loop !51052
 
 _RNvXs2_NtCsenfyI6F4F2A_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeSeq3endCsaTqK2fWTXJW_11qlog_dancer.exit.sink.split: ; preds = %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit, %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit.preheader, %bb.a
-  tail call void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @60, i64 noundef range(i64 0, -9223372036854775808) 1), !dbg !51069
+  %.val.i.sink = phi ptr [ %.val.i, %bb.a ], [ %.val1950, %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit.preheader ], [ %.val19, %_RNCINvYQINtNtCsenfyI6F4F2A_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIBT_NtNtBb_5value5ValueEE0CsaTqK2fWTXJW_11qlog_dancer.exit ]
+  tail call void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i.sink, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @60, i64 noundef range(i64 0, -9223372036854775808) 1), !dbg !51069
   br label %_RNvXs2_NtCsenfyI6F4F2A_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeSeq3endCsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !51090
 
 _RNvXs2_NtCsenfyI6F4F2A_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeSeq3endCsaTqK2fWTXJW_11qlog_dancer.exit: ; preds = %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i, %_RNvXs2_NtCsenfyI6F4F2A_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeSeq3endCsaTqK2fWTXJW_11qlog_dancer.exit.sink.split, %_RINvYNtNtCsenfyI6F4F2A_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueQINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i.peel
