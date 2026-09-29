@@ -205,7 +205,7 @@ vector.memcheck70:                                ; preds = %_RNvXs3_NtNtNtCsj6e
   %scevgep71 = getelementptr i8, ptr %.sroa.0150.0.copyload.us, i64 %i.ed ; 2 uses
   %scevgep72 = getelementptr i8, ptr %.sroa.4152.0.copyload.us, i64 %i.eb
   %scevgep73 = getelementptr i8, ptr %.sroa.4152.0.copyload.us, i64 %i.ed
-  %i.ee = shl i64 %.sroa.7158.0.copyload.us, 2
+  %i.ee = shl nuw i64 %.sroa.7158.0.copyload.us, 2
   %scevgep74 = getelementptr i8, ptr %.sroa.6156.0.copyload.us, i64 %i.ee
   %i.ef = shl i64 %.sroa.9.0.copyload.us, 2
   %scevgep75 = getelementptr i8, ptr %.sroa.6156.0.copyload.us, i64 %i.ef
@@ -608,7 +608,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %min.iters.check205, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck196
 
 vector.memcheck196:                               ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us
-  %i.gu = shl i64 %.sroa.5271.0.copyload.us, 2
+  %i.gu = shl nuw i64 %.sroa.5271.0.copyload.us, 2
   %scevgep197 = getelementptr i8, ptr %.sroa.0268.0.copyload.us, i64 %i.gu
   %i.gv = shl i64 %.sroa.7272.0.copyload.us, 2
   %scevgep198 = getelementptr i8, ptr %.sroa.0268.0.copyload.us, i64 %i.gv
@@ -682,7 +682,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %min.iters.check183, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit212.us.preheader, label %vector.memcheck174
 
 vector.memcheck174:                               ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit212.lr.ph.us
-  %i.hr = shl i64 %.sroa.5277.0.copyload.us, 2
+  %i.hr = shl nuw i64 %.sroa.5277.0.copyload.us, 2
   %scevgep175 = getelementptr i8, ptr %.sroa.0273.0.copyload.us, i64 %i.hr
   %i.hs = shl i64 %.sroa.7278.0.copyload.us, 2
   %scevgep176 = getelementptr i8, ptr %.sroa.0273.0.copyload.us, i64 %i.hs
@@ -938,7 +938,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 vector.memcheck99:                                ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us
   %scevgep100 = getelementptr i8, ptr %.sroa.4312.0.copyload.us, i64 %.sroa.5314.0.copyload.us
   %scevgep101 = getelementptr i8, ptr %.sroa.4312.0.copyload.us, i64 %.sroa.7315.0.copyload.us
-  %i.lc = shl i64 %.sroa.5314.0.copyload.us, 2
+  %i.lc = shl nuw i64 %.sroa.5314.0.copyload.us, 2
   %scevgep102 = getelementptr i8, ptr %.sroa.0310.0.copyload.us, i64 %i.lc
   %i.ld = shl i64 %.sroa.7315.0.copyload.us, 2
   %scevgep103 = getelementptr i8, ptr %.sroa.0310.0.copyload.us, i64 %i.ld
@@ -1014,7 +1014,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 vector.memcheck:                                  ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit222.lr.ph.us
   %scevgep = getelementptr i8, ptr %.sroa.4318.0.copyload.us, i64 %.sroa.5320.0.copyload.us
   %scevgep95 = getelementptr i8, ptr %.sroa.4318.0.copyload.us, i64 %.sroa.7321.0.copyload.us
-  %i.md = shl i64 %.sroa.5320.0.copyload.us, 2
+  %i.md = shl nuw i64 %.sroa.5320.0.copyload.us, 2
   %scevgep96 = getelementptr i8, ptr %.sroa.0316.0.copyload.us, i64 %i.md
   %i.me = shl i64 %.sroa.7321.0.copyload.us, 2
   %scevgep97 = getelementptr i8, ptr %.sroa.0316.0.copyload.us, i64 %i.me
@@ -1353,7 +1353,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %min.iters.check276, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit236.us.preheader, label %vector.memcheck267
 
 vector.memcheck267:                               ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit236.lr.ph.us
-  %i.rf = shl i64 %.sroa.5333.0.copyload.us, 2
+  %i.rf = shl nuw i64 %.sroa.5333.0.copyload.us, 2
   %scevgep268 = getelementptr i8, ptr %.sroa.0329.0.copyload.us, i64 %i.rf
   %i.rg = shl i64 %.sroa.7334.0.copyload.us, 2
   %scevgep269 = getelementptr i8, ptr %.sroa.0329.0.copyload.us, i64 %i.rg
@@ -1519,7 +1519,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 vector.memcheck218:                               ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit244.lr.ph.us
   %scevgep219 = getelementptr i8, ptr %.sroa.4354.0.copyload.us, i64 %.sroa.5356.0.copyload.us
   %scevgep220 = getelementptr i8, ptr %.sroa.4354.0.copyload.us, i64 %.sroa.7357.0.copyload.us
-  %i.tj = shl i64 %.sroa.5356.0.copyload.us, 2
+  %i.tj = shl nuw i64 %.sroa.5356.0.copyload.us, 2
   %scevgep221 = getelementptr i8, ptr %.sroa.0352.0.copyload.us, i64 %i.tj
   %i.tk = shl i64 %.sroa.7357.0.copyload.us, 2
   %scevgep222 = getelementptr i8, ptr %.sroa.0352.0.copyload.us, i64 %i.tk
@@ -1922,11 +1922,11 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %min.iters.check104, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItertEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck95
 
 vector.memcheck95:                                ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItertEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us
-  %i.dn = shl i64 %.sroa.5150.0.copyload.us, 2
+  %i.dn = shl nuw i64 %.sroa.5150.0.copyload.us, 2
   %scevgep96 = getelementptr i8, ptr %.sroa.0147.0.copyload.us, i64 %i.dn
   %i.do = shl i64 %.sroa.7151.0.copyload.us, 2
   %scevgep97 = getelementptr i8, ptr %.sroa.0147.0.copyload.us, i64 %i.do
-  %i.dp = shl i64 %.sroa.5150.0.copyload.us, 1
+  %i.dp = shl nuw i64 %.sroa.5150.0.copyload.us, 1
   %scevgep98 = getelementptr i8, ptr %.sroa.4149.0.copyload.us, i64 %i.dp
   %i.dq = shl i64 %.sroa.7151.0.copyload.us, 1
   %scevgep99 = getelementptr i8, ptr %.sroa.4149.0.copyload.us, i64 %i.dq
@@ -2009,7 +2009,7 @@ vector.memcheck66:                                ; preds = %_RNvXs3_NtNtNtCsj6e
   %scevgep69 = getelementptr i8, ptr %.sroa.4157.0.copyload.us, i64 %i.eq
   %i.er = shl i64 %i.eo, 1
   %scevgep70 = getelementptr i8, ptr %.sroa.4157.0.copyload.us, i64 %i.er
-  %i.es = shl i64 %.sroa.7163.0.copyload.us, 1
+  %i.es = shl nuw i64 %.sroa.7163.0.copyload.us, 1
   %scevgep71 = getelementptr i8, ptr %.sroa.6161.0.copyload.us, i64 %i.es
   %i.et = shl i64 %.sroa.9.0.copyload.us, 1
   %scevgep72 = getelementptr i8, ptr %.sroa.6161.0.copyload.us, i64 %i.et
@@ -2103,11 +2103,11 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %min.iters.check, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuttEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuttEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us
-  %i.ge = shl i64 %.sroa.5171.0.copyload.us, 1
+  %i.ge = shl nuw i64 %.sroa.5171.0.copyload.us, 1
   %scevgep = getelementptr i8, ptr %.sroa.4169.0.copyload.us, i64 %i.ge
   %i.gf = shl i64 %.sroa.7172.0.copyload.us, 1
   %scevgep62 = getelementptr i8, ptr %.sroa.4169.0.copyload.us, i64 %i.gf
-  %i.gg = shl i64 %.sroa.5171.0.copyload.us, 2
+  %i.gg = shl nuw i64 %.sroa.5171.0.copyload.us, 2
   %scevgep63 = getelementptr i8, ptr %.sroa.0167.0.copyload.us, i64 %i.gg
   %i.gh = shl i64 %.sroa.7172.0.copyload.us, 2
   %scevgep64 = getelementptr i8, ptr %.sroa.0167.0.copyload.us, i64 %i.gh

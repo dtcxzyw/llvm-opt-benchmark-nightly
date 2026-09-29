@@ -205,7 +205,7 @@ bb.a:
   %i.ah = add nsw i64 %i.v, %.neg
   %i.ai = add i64 %i.ah, %i.x
   %i.aj = sub i64 %i.ai, %.050.lcssa              ; 3 uses
-  %min.iters.check = icmp ult i64 %i.aj, 8
+  %min.iters.check = icmp ult i64 %i.aj, 12
   br i1 %min.iters.check, label %.lr.ph61.preheader137, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph61.preheader
@@ -608,7 +608,7 @@ _vorbis_block_alloc.exit377:                      ; preds = %bb.k, %bb.n
   %.neg.i = sdiv i64 %i.fi, -4                    ; 2 uses
   %i.fm = add nsw i64 %.neg.i, %i.fl              ; 4 uses
   %i.fn = sdiv i64 %i.fi, 2                       ; 2 uses
-  %i.fo = add i64 %i.fm, %i.fn                    ; 3 uses
+  %i.fo = add i64 %i.fm, %i.fn                    ; 4 uses
   %i.fp = sdiv i64 %i.fg, 2                       ; 3 uses
   %i.fq = add nsw i64 %i.fp, %i.fl
   %.neg56.i = sdiv i64 %i.fk, -4                  ; 3 uses
@@ -624,7 +624,7 @@ _vorbis_block_alloc.exit377:                      ; preds = %bb.k, %bb.n
   br label %.preheader57.i
 
 .preheader57.i:                                   ; preds = %.lr.ph.preheader.i, %_vorbis_block_alloc.exit377
-  %.050.lcssa.i = phi i64 [ 0, %_vorbis_block_alloc.exit377 ], [ %i.fm, %.lr.ph.preheader.i ] ; 7 uses
+  %.050.lcssa.i = phi i64 [ 0, %_vorbis_block_alloc.exit377 ], [ %i.fm, %.lr.ph.preheader.i ] ; 8 uses
   %i.fw = icmp sgt i64 %i.fo, %.050.lcssa.i
   br i1 %i.fw, label %.lr.ph61.i.preheader, label %._crit_edge.i
 
@@ -636,12 +636,13 @@ _vorbis_block_alloc.exit377:                      ; preds = %bb.k, %bb.n
   br i1 %min.iters.check619, label %.lr.ph61.i.preheader752, label %vector.memcheck611
 
 vector.memcheck611:                               ; preds = %.lr.ph61.i.preheader
-  %i.ga = shl i64 %.050.lcssa.i, 2                ; 2 uses
+  %i.ga = shl nuw i64 %.050.lcssa.i, 2
   %scevgep612 = getelementptr i8, ptr %i.dt, i64 %i.ga
-  %i.gb = shl i64 %i.fo, 2                        ; 2 uses
+  %i.gb = shl i64 %i.fo, 2
   %scevgep613 = getelementptr i8, ptr %i.dt, i64 %i.gb
-  %i.gc = sub i64 %i.gb, %i.ga
-  %scevgep614 = getelementptr i8, ptr %i.ev, i64 %i.gc
+  %i.gc = sub i64 %i.fo, %.050.lcssa.i
+  %1 = shl i64 %i.gc, 2
+  %scevgep614 = getelementptr i8, ptr %i.ev, i64 %1
   %bound0615 = icmp ult ptr %scevgep612, %scevgep614
   %bound1616 = icmp ult ptr %i.ev, %scevgep613
   %found.conflict617 = and i1 %bound0615, %bound1616
