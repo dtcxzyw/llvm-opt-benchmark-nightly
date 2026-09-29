@@ -202,17 +202,14 @@ define internal void @simple_upscale(ptr nofree noundef readonly captures(none) 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 7 uses
   %i.b = add i32 %3, -1                           ; 2 uses
-  %i.c = zext i32 %i.b to i64
-  %i.d = add nuw nsw i64 %i.c, 1                  ; 2 uses
+  %i.c = zext i32 %i.b to i64                     ; 2 uses
+  %i.d = add nuw nsw i64 %i.c, 1                  ; 3 uses
   %min.iters.check = icmp ult i32 %i.b, 19
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %4 = add i32 %3, -1
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %6 = getelementptr i8, ptr %2, i64 %5
-  %scevgep = getelementptr i8, ptr %6, i64 1      ; 2 uses
-  %i.e = shl nuw nsw i64 %5, 2
+  %scevgep = getelementptr i8, ptr %2, i64 %i.d   ; 2 uses
+  %i.e = shl nuw nsw i64 %i.c, 2
   %i.f = getelementptr i8, ptr %1, i64 %i.e
   %scevgep5 = getelementptr i8, ptr %i.f, i64 4
   %scevgep6 = getelementptr i8, ptr %0, i64 540
@@ -337,17 +334,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 define internal void @noscale(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) #1 {
 bb.a:
   %i.a = add i32 %3, -1                           ; 2 uses
-  %i.b = zext i32 %i.a to i64
-  %i.c = add nuw nsw i64 %i.b, 1                  ; 2 uses
+  %i.b = zext i32 %i.a to i64                     ; 2 uses
+  %i.c = add nuw nsw i64 %i.b, 1                  ; 3 uses
   %min.iters.check = icmp ult i32 %i.a, 19
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %4 = add i32 %3, -1
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %6 = getelementptr i8, ptr %2, i64 %5
-  %scevgep = getelementptr i8, ptr %6, i64 1
-  %i.d = shl nuw nsw i64 %5, 2
+  %scevgep = getelementptr i8, ptr %2, i64 %i.c
+  %i.d = shl nuw nsw i64 %i.b, 2
   %i.e = getelementptr i8, ptr %1, i64 %i.d
   %scevgep4 = getelementptr i8, ptr %i.e, i64 4
   %bound0 = icmp ult ptr %2, %scevgep4

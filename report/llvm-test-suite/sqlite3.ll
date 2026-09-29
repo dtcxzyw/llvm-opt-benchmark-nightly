@@ -205,20 +205,19 @@ sqlite3DbMallocRaw.exit.i:                        ; preds = %sqlite3ValueNew.exi
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
   %i.dk = add nsw i32 %i.cx, -4                   ; 2 uses
-  %i.dl = zext i32 %i.dk to i64                   ; 3 uses
+  %i.dl = zext i32 %i.dk to i64                   ; 2 uses
   %i.dm = tail call i64 @llvm.umax.i64(i64 %i.dl, i64 2)
-  %i.dn = add nsw i64 %i.dm, -1
+  %i.dn = add nsw i64 %i.dm, -1                   ; 3 uses
   %i.do = lshr i64 %i.dn, 1
   %i.dp = add nuw nsw i64 %i.do, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.dk, 127
   br i1 %min.iters.check, label %.lr.ph.i61.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
-  %5 = add nsw i64 %i.dl, -1                      ; 2 uses
-  %i.dq = lshr i64 %5, 1
+  %i.dq = lshr i64 %i.dn, 1
   %i.dr = getelementptr i8, ptr %.0.i32.i, i64 %i.dq
   %scevgep = getelementptr i8, ptr %i.dr, i64 1
-  %i.ds = and i64 %5, -2
+  %i.ds = and i64 %i.dn, -2
   %i.dt = getelementptr i8, ptr %i.cz, i64 %i.ds
   %scevgep117 = getelementptr i8, ptr %i.dt, i64 4
   %bound0 = icmp ult ptr %.0.i32.i, %scevgep117

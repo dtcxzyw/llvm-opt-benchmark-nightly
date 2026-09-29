@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i32, ptr %0, align 4, !tbaa !69     ; 2 uses
   call void @__kmpc_for_static_init_4(ptr nonnull @1, i32 %i.h, i32 34, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i32 1, i32 1)
   %i.i = load i32, ptr %i.b, align 4, !tbaa !69
-  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 7 uses
+  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 6 uses
   store i32 %i.j, ptr %i.b, align 4, !tbaa !69
-  %i.k = load i32, ptr %i.a, align 4, !tbaa !69   ; 4 uses
+  %i.k = load i32, ptr %i.a, align 4, !tbaa !69   ; 3 uses
   %.not16 = icmp sgt i32 %i.k, %i.j
   br i1 %.not16, label %._crit_edge, label %.lr.ph
 
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = sext i32 %i.k to i64                     ; 6 uses
   %i.n = add nsw i32 %i.j, 1
   %i.o = sub i32 %i.j, %i.k                       ; 2 uses
-  %i.p = zext i32 %i.o to i64
+  %i.p = zext i32 %i.o to i64                     ; 2 uses
   %i.q = add nuw nsw i64 %i.p, 1                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.o, 11
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -223,9 +223,7 @@ bb.b:                                             ; preds = %bb.a
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.r = shl nsw i64 %i.m, 2
   %scevgep = getelementptr nuw i8, ptr %i.l, i64 %i.r
-  %5 = sub i32 %i.j, %i.k
-  %6 = zext i32 %5 to i64
-  %i.s = add nsw i64 %i.m, %6
+  %i.s = add nsw i64 %i.m, %i.p
   %i.t = shl nsw i64 %i.s, 2
   %i.u = getelementptr i8, ptr %i.l, i64 %i.t
   %scevgep21 = getelementptr i8, ptr %i.u, i64 4

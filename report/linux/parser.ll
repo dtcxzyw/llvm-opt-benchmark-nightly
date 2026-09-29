@@ -202,14 +202,13 @@ bb.a:
   %i.c = load ptr, ptr %1, align 8                ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 3 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.not12 = icmp ult i64 %i.f, %2
   %i.g = add i64 %2, -1
-  %3 = select i1 %.not12, i64 %i.f, i64 %i.g      ; 2 uses
+  %3 = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %i.g) ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr align 1 %i.c, i64 %3, i1 false)
   %i.h = getelementptr i8, ptr %0, i64 %3
   store i8 0, ptr %i.h, align 1

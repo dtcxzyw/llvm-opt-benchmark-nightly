@@ -101,10 +101,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not191, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %i.an = zext nneg i16 %i.aa to i64              ; 9 uses
-  %i.ao = zext nneg i32 %i.af to i64              ; 3 uses
+  %i.an = zext nneg i16 %i.aa to i64              ; 8 uses
+  %i.ao = zext nneg i32 %i.af to i64              ; 2 uses
   %i.ap = add nuw nsw i64 %i.an, 1
-  %i.aq = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 %i.ao)
+  %i.aq = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 %i.ao) ; 3 uses
   %i.ar = sub nsw i64 %i.aq, %i.an                ; 3 uses
   %min.iters.check = icmp ult i64 %i.ar, 12
   br i1 %min.iters.check, label %.lr.ph.preheader324, label %vector.memcheck
@@ -112,11 +112,9 @@ bb.f:                                             ; preds = %bb.e
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.as = shl nuw nsw i64 %i.an, 2
   %scevgep = getelementptr i8, ptr %i.z, i64 %i.as
-  %4 = add nuw nsw i64 %i.an, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.ao) ; 2 uses
-  %i.at = shl nuw nsw i64 %umax, 2
+  %i.at = shl nuw nsw i64 %i.aq, 2
   %scevgep312 = getelementptr i8, ptr %i.z, i64 %i.at
-  %i.au = mul nuw nsw i64 %umax, 3
+  %i.au = mul nuw nsw i64 %i.aq, 3
   %.neg = mul nsw i64 %i.an, -3
   %i.av = getelementptr i8, ptr %i.b, i64 %.neg
   %i.aw = getelementptr i8, ptr %i.av, i64 %i.au

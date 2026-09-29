@@ -204,24 +204,22 @@ _ZNSt6vectorIdSaIdEE6resizeEmRKd.exit:            ; preds = %bb.a, %bb.b
   %i.r = phi ptr [ %i.d, %bb.a ], [ %.pre14, %bb.b ] ; 10 uses
   %i.s = phi ptr [ %i.j, %bb.a ], [ %.pre13, %bb.b ] ; 3 uses
   %i.t = phi ptr [ %i.k, %bb.a ], [ %.pre, %bb.b ] ; 8 uses
-  %2 = ptrtoaddr ptr %i.s to i64                  ; 2 uses
-  %3 = ptrtoaddr ptr %i.t to i64                  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %.not8.i = icmp eq ptr %i.t, %i.s
   br i1 %.not8.i, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKdSt6vectorIdSaIdEEEENS1_IPdS6_EES9_St4plusIdEET1_T_SD_T0_SC_T2_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorIdSaIdEE6resizeEmRKd.exit
+  %2 = ptrtoaddr ptr %i.s to i64
+  %3 = ptrtoaddr ptr %i.t to i64
   %i.u = add i64 %2, -8
-  %i.v = sub i64 %i.u, %3                         ; 2 uses
+  %i.v = sub i64 %i.u, %3                         ; 3 uses
   %i.w = lshr i64 %i.v, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.v, 88
   br i1 %min.iters.check, label %.lr.ph.i.preheader29, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %4 = add i64 %2, -8
-  %5 = sub i64 %4, %3
-  %i.y = and i64 %5, -8
+  %i.y = and i64 %i.v, -8
   %i.z = add i64 %i.y, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %i.r, i64 %i.z
   %scevgep23 = getelementptr i8, ptr %i.t, i64 %i.z
@@ -575,7 +573,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIdSaIdEE6resizeEmRKd.exit
 
 _ZNSt6vectorIdSaIdEE6resizeEmRKd.exit:            ; preds = %bb.a, %bb.b
-  %.pre-phi19 = phi i64 [ %i.n, %bb.a ], [ %.pre18, %bb.b ] ; 3 uses
+  %.pre-phi19 = phi i64 [ %i.n, %bb.a ], [ %.pre18, %bb.b ] ; 2 uses
   %i.r = phi ptr [ %i.k, %bb.a ], [ %.pre14, %bb.b ] ; 7 uses
   %i.s = phi ptr [ %i.j, %bb.a ], [ %.pre13, %bb.b ]
   %i.t = phi ptr [ %i.d, %bb.a ], [ %.pre, %bb.b ] ; 11 uses
@@ -585,16 +583,17 @@ _ZNSt6vectorIdSaIdEE6resizeEmRKd.exit:            ; preds = %bb.a, %bb.b
   br i1 %.not8.i, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEENS1_IPKdS5_EES6_St5minusIdEET1_T_SD_T0_SC_T2_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorIdSaIdEE6resizeEmRKd.exit
-  %i.v = add i64 %.pre-phi19, -8                  ; 2 uses
+  %i.v = add i64 %.pre-phi19, -8                  ; 3 uses
   %i.w = lshr i64 %i.v, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.v, 72
   br i1 %min.iters.check, label %.lr.ph.i.preheader33, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %i.y = and i64 %.pre-phi19, -8                  ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.t, i64 %i.y
-  %scevgep27 = getelementptr i8, ptr %i.r, i64 %i.y
+  %i.y = and i64 %i.v, -8
+  %2 = add i64 %i.y, 8                            ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.t, i64 %2
+  %scevgep27 = getelementptr i8, ptr %i.r, i64 %2
   %bound0 = icmp ult ptr %i.t, %scevgep27
   %bound1 = icmp ult ptr %i.r, %scevgep
   %found.conflict = and i1 %bound0, %bound1

@@ -205,11 +205,11 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %.sink.split.i, %bb.v
   %.1558.i = phi ptr [ %i.dg, %bb.v ], [ %.1558.ph.i, %.sink.split.i ] ; 7 uses
-  %.1550.i = phi i32 [ %i.de, %bb.v ], [ %.1550.ph.i, %.sink.split.i ] ; 5 uses
+  %.1550.i = phi i32 [ %i.de, %bb.v ], [ %.1550.ph.i, %.sink.split.i ] ; 4 uses
   %.2529.i = phi i8 [ %spec.select642.i, %bb.v ], [ %.2529.ph.i, %.sink.split.i ] ; 2 uses
   %i.ef = icmp eq i8 %.2529.i, 2
   %spec.select643.i = select i1 %i.ef, i8 4, i8 %.2529.i ; 2 uses
-  %i.eg = zext i8 %spec.select643.i to i32        ; 3 uses
+  %i.eg = zext i8 %spec.select643.i to i32        ; 2 uses
   %.not834.i = icmp eq i8 %spec.select643.i, 0
   br i1 %.not834.i, label %.loopexit.i, label %.lr.ph824.i.preheader
 
@@ -217,19 +217,15 @@ bb.aa:                                            ; preds = %.sink.split.i, %bb.
   %i.eh = add nsw i32 %i.eg, -1
   %i.ei = tail call i32 @llvm.umin.i32(i32 %.1550.i, i32 %i.eh) ; 2 uses
   %i.ej = zext i32 %i.ei to i64
-  %i.ek = add nuw nsw i64 %i.ej, 1                ; 2 uses
+  %i.ek = add nuw nsw i64 %i.ej, 1                ; 3 uses
   %min.iters.check507 = icmp ult i32 %i.ei, 8
   br i1 %min.iters.check507, label %.lr.ph824.i.preheader619, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph824.i.preheader
-  %scevgep = getelementptr inbounds nuw i8, ptr %4, i64 56
-  %5 = add nsw i32 %i.eg, -1
-  %6 = tail call i32 @llvm.umin.i32(i32 %.1550.i, i32 %5)
-  %umin = zext i32 %6 to i64
-  %i.el = getelementptr i8, ptr %.1558.i, i64 %umin
-  %scevgep505 = getelementptr i8, ptr %i.el, i64 1
+  %i.el = getelementptr inbounds nuw i8, ptr %4, i64 56
+  %scevgep505 = getelementptr i8, ptr %.1558.i, i64 %i.ek
   %bound0 = icmp ult ptr %i.q, %scevgep505
-  %bound1 = icmp ult ptr %.1558.i, %scevgep
+  %bound1 = icmp ult ptr %.1558.i, %i.el
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph824.i.preheader619, label %vector.ph508
 
@@ -632,7 +628,7 @@ bb.cr:                                            ; preds = %bb.b
   unreachable
 
 ._crit_edge781.i:                                 ; preds = %bb.cq, %bb.bn, %bb.cp, %bb.ci, %bb.ch, %bb.br, %._crit_edge810.i, %bb.an
-  %.0549948.i = phi i32 [ %i.jr, %bb.bn ], [ %.6555.lcssa.i, %._crit_edge810.i ], [ %i.ax, %bb.an ], [ %.11.i, %bb.ci ], [ %i.jr, %bb.br ], [ %.11.i, %bb.ch ], [ %i.ax, %bb.cp ], [ %i.tc, %bb.cq ] ; 6 uses
+  %.0549948.i = phi i32 [ %i.jr, %bb.bn ], [ %.6555.lcssa.i, %._crit_edge810.i ], [ %i.ax, %bb.an ], [ %.11.i, %bb.ci ], [ %i.jr, %bb.br ], [ %.11.i, %bb.ch ], [ %i.ax, %bb.cp ], [ %i.tc, %bb.cq ] ; 5 uses
   %.0557943.i = phi ptr [ %i.jt, %bb.bn ], [ %.6563.lcssa.i, %._crit_edge810.i ], [ %i.az, %bb.an ], [ %.10567.i, %bb.ci ], [ %i.jt, %bb.br ], [ %.10567.i, %bb.ch ], [ %i.az, %bb.cp ], [ %i.te, %bb.cq ] ; 12 uses
   %i.tk = phi i16 [ %i.bg, %bb.bn ], [ %i.bg, %._crit_edge810.i ], [ %i.bg, %bb.an ], [ %i.bg, %bb.ci ], [ %i.lp, %bb.br ], [ %i.rl, %bb.ch ], [ %i.bg, %bb.cp ], [ %i.bg, %bb.cq ] ; 6 uses
   %i.tl = phi i8 [ 2, %bb.bn ], [ 1, %._crit_edge810.i ], [ 1, %bb.an ], [ 2, %bb.ci ], [ 1, %bb.br ], [ 1, %bb.ch ], [ 1, %bb.cp ], [ 1, %bb.cq ] ; 4 uses
@@ -775,7 +771,7 @@ bb.dc:                                            ; preds = %bb.da, %bb.da
   %i.vo = zext nneg i32 %i.tm to i64
   %i.vp = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @sizemap, i64 10), i64 %i.vo
   %i.vq = load i8, ptr %i.vp, align 1, !tbaa !8   ; 3 uses
-  %i.vr = zext i8 %i.vq to i32                    ; 3 uses
+  %i.vr = zext i8 %i.vq to i32                    ; 2 uses
   %.not.i = icmp eq i8 %i.vq, -1
   br i1 %.not.i, label %bb.dd, label %bb.de
 
@@ -810,19 +806,15 @@ bb.dg:                                            ; preds = %bb.de
   %i.vz = add nsw i32 %i.vr, -1
   %i.wa = tail call i32 @llvm.umin.i32(i32 %.0549948.i, i32 %i.vz) ; 2 uses
   %i.wb = zext i32 %i.wa to i64
-  %i.wc = add nuw nsw i64 %i.wb, 1                ; 2 uses
+  %i.wc = add nuw nsw i64 %i.wb, 1                ; 3 uses
   %min.iters.check577 = icmp ult i32 %i.wa, 8
   br i1 %min.iters.check577, label %.lr.ph.i.preheader598, label %vector.memcheck569
 
 vector.memcheck569:                               ; preds = %.lr.ph.i.preheader
-  %scevgep570 = getelementptr inbounds nuw i8, ptr %4, i64 88
-  %7 = add nsw i32 %i.vr, -1
-  %8 = tail call i32 @llvm.umin.i32(i32 %.0549948.i, i32 %7)
-  %umin571 = zext i32 %8 to i64
-  %i.wd = getelementptr i8, ptr %.0557943.i, i64 %umin571
-  %scevgep572 = getelementptr i8, ptr %i.wd, i64 1
+  %i.wd = getelementptr inbounds nuw i8, ptr %4, i64 88
+  %scevgep572 = getelementptr i8, ptr %.0557943.i, i64 %i.wc
   %bound0573 = icmp ult ptr %i.l, %scevgep572
-  %bound1574 = icmp ult ptr %.0557943.i, %scevgep570
+  %bound1574 = icmp ult ptr %.0557943.i, %i.wd
   %found.conflict575 = and i1 %bound0573, %bound1574
   br i1 %found.conflict575, label %.lr.ph.i.preheader598, label %vector.ph578
 

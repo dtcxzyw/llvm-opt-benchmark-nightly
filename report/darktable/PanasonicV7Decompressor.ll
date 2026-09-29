@@ -204,10 +204,10 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
   %i.aj = zext nneg i32 %i.h to i64
-  %wide.trip.count = zext nneg i32 %i.u to i64    ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.u to i64    ; 3 uses
   %wide.trip.count69 = zext nneg i32 %i.u to i64
   %i.ak = add nsw i64 %wide.trip.count, -1
-  %i.al = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %i.ak) ; 2 uses
+  %i.al = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %i.ak) ; 4 uses
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.al, 8
   br i1 %min.iters.check, label %.lr.ph.preheader86, label %vector.memcheck
@@ -218,14 +218,12 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   br label %.lr.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %2 = add nsw i64 %wide.trip.count, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %2) ; 2 uses
-  %i.an = mul nuw nsw i64 %umin, 18
+  %i.an = mul nuw nsw i64 %i.al, 18
   %i.ao = shl nuw nsw i64 %i.s, 1
   %i.ap = getelementptr i8, ptr %i.c, i64 %i.an
   %i.aq = getelementptr i8, ptr %i.ap, i64 %i.ao
   %scevgep = getelementptr i8, ptr %i.aq, i64 18
-  %i.ar = shl nuw nsw i64 %umin, 4
+  %i.ar = shl nuw nsw i64 %i.al, 4
   %i.as = getelementptr i8, ptr %i.ae, i64 %i.ar
   %i.at = getelementptr i8, ptr %i.as, i64 %i.x
   %scevgep75 = getelementptr i8, ptr %i.at, i64 16

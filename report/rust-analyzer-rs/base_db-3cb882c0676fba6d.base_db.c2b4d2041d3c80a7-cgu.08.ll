@@ -182,19 +182,19 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned7JarImplNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdEEB1l_() unnamed_addr #2 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameINtNtCsd9Lm8bEdjjY_5salsa8interned7JarImplNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdEEB1l_() unnamed_addr #2 {
 bb.a:
   ret { ptr, i64 } { ptr @1, i64 69 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtBJ_15EditionedFileId12parse_errors13parse_errors_EBL_() unnamed_addr #2 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtBJ_15EditionedFileId12parse_errors13parse_errors_EBL_() unnamed_addr #2 {
 bb.a:
   ret { ptr, i64 } { ptr @7, i64 72 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtBJ_15EditionedFileId5parse6parse_EBL_() unnamed_addr #2 {
+define internal noundef { ptr, i64 } @_RINvNtCshzWfHUSfYae_4core3any9type_nameNtNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtBJ_15EditionedFileId5parse6parse_EBL_() unnamed_addr #2 {
 bb.a:
   ret { ptr, i64 } { ptr @8, i64 58 }
 }
@@ -597,8 +597,7 @@ vector.memcheck:                                  ; preds = %bb.b
   %i.h = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %scevgep2 = getelementptr i8, ptr %i.h, i64 %i.g
   %scevgep3 = getelementptr i8, ptr %0, i64 8
-  %3 = and i64 %i.d, -16
-  %i.i = getelementptr i8, ptr %0, i64 %3
+  %i.i = getelementptr i8, ptr %0, i64 %i.d
   %scevgep4 = getelementptr i8, ptr %i.i, i64 -4
   %bound0 = icmp ult ptr %scevgep, %scevgep4
   %bound1 = icmp ult ptr %scevgep3, %scevgep2
@@ -1001,7 +1000,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtB15_15EditionedFileId12parse_errors1__28parse_errors__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB17_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtB15_15EditionedFileId12parse_errors1__28parse_errors__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB17_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 {
 bb.a:
   ret { ptr, i64 } { ptr @92, i64 30 }
 }
@@ -1045,7 +1044,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtB15_15EditionedFileId5parse1__21parse__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB17_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 {
+define internal noundef { ptr, i64 } @_RNvXs_NtCsd9Lm8bEdjjY_5salsa8functionINtB4_14IngredientImplNtNvNvMs8_NtCsgIpRO4v45SJ_7base_db17editioned_file_idNtB15_15EditionedFileId5parse1__21parse__Configuration_ENtNtB6_10ingredient10Ingredient10debug_nameB17_(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 {
 bb.a:
   ret { ptr, i64 } { ptr @94, i64 23 }
 }
@@ -1089,7 +1088,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db10LocalRootsENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
+define internal noundef { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db10LocalRootsENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !4   ; 2 uses
   %i.b = icmp eq i64 %i.a, 0
@@ -1136,7 +1135,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db12LibraryRootsENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
+define internal noundef { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db12LibraryRootsENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !4   ; 2 uses
   %i.b = icmp eq i64 %i.a, 0
@@ -1183,7 +1182,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db15SourceRootInputENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
+define internal noundef { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db15SourceRootInputENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !4   ; 2 uses
   %i.b = icmp eq i64 %i.a, 0
@@ -1230,7 +1229,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db19FileSourceRootInputENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
+define internal noundef { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db19FileSourceRootInputENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !4   ; 2 uses
   %i.b = icmp eq i64 %i.a, 0
@@ -1330,7 +1329,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db9AllCratesENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
+define internal noundef { ptr, i64 } @_RNvXs_NtNtCsd9Lm8bEdjjY_5salsa5input11input_fieldINtB4_19FieldIngredientImplNtCsgIpRO4v45SJ_7base_db9AllCratesENtNtB8_10ingredient10Ingredient10debug_nameB1e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !4   ; 2 uses
   %i.b = icmp eq i64 %i.a, 0

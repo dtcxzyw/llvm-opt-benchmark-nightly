@@ -205,14 +205,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.b
-  %3 = and i64 %i.d, -4                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %0, i64 %3
   %i.f = shl i64 %.sroa.5.0.copyload, 2           ; 2 uses
   %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %i.g = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %scevgep3 = getelementptr i8, ptr %i.g, i64 %3
+  %scevgep3 = getelementptr i8, ptr %i.g, i64 %i.d
   %bound0 = icmp ult ptr %0, %scevgep3
-  %bound1 = icmp ult ptr %scevgep2, %scevgep
+  %bound1 = icmp ult ptr %scevgep2, %1
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -615,7 +613,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 4 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
   %i.e = lshr i64 %i.d, 3                         ; 5 uses
   %min.iters.check = icmp ult i64 %i.d, 112
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -624,12 +622,10 @@ vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.5.0.copyload, 2           ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %i.g = lshr exact i64 %i.d, 1
-  %3 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %scevgep2 = getelementptr i8, ptr %3, i64 %i.g
-  %4 = and i64 %i.d, -8
-  %scevgep3 = getelementptr i8, ptr %0, i64 %4
-  %bound0 = icmp ult ptr %scevgep, %scevgep3
-  %bound1 = icmp ult ptr %0, %scevgep2
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.g
+  %bound0 = icmp ult ptr %scevgep, %1
+  %bound1 = icmp ult ptr %0, %scevgep3
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -1032,7 +1028,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 4 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
   %i.e = lshr i64 %i.d, 3                         ; 5 uses
   %min.iters.check = icmp ult i64 %i.d, 112
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -1041,12 +1037,10 @@ vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.5.0.copyload, 2           ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %i.g = lshr exact i64 %i.d, 1
-  %3 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %scevgep2 = getelementptr i8, ptr %3, i64 %i.g
-  %4 = and i64 %i.d, -8
-  %scevgep3 = getelementptr i8, ptr %0, i64 %4
-  %bound0 = icmp ult ptr %scevgep, %scevgep3
-  %bound1 = icmp ult ptr %0, %scevgep2
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.g
+  %bound0 = icmp ult ptr %scevgep, %1
+  %bound1 = icmp ult ptr %0, %scevgep3
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -1449,7 +1443,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden { i8, i32 } @"_ZN121_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..unchecked_iterator..UncheckedIterator$GT$14next_unchecked17heb542b5df68a0897E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #15 personality ptr @rust_eh_personality {
+define hidden noundef { i8, i32 } @"_ZN121_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..unchecked_iterator..UncheckedIterator$GT$14next_unchecked17heb542b5df68a0897E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #15 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !alias.scope !3068, !noundef !3

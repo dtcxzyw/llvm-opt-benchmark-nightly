@@ -20,7 +20,7 @@ bb.a:
   %i.g = sext i32 %5 to i64                       ; 6 uses
   %i.h = add i32 %6, 1
   %i.i = sub i32 %6, %5                           ; 2 uses
-  %i.j = zext i32 %i.i to i64
+  %i.j = zext i32 %i.i to i64                     ; 2 uses
   %i.k = add nuw nsw i64 %i.j, 1                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.i, 5
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -28,9 +28,7 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.l = shl nsw i64 %i.g, 3                      ; 2 uses
   %scevgep = getelementptr i8, ptr %i.c, i64 %i.l
-  %7 = sub i32 %6, %5
-  %8 = zext i32 %7 to i64
-  %i.m = add nsw i64 %i.g, %8
+  %i.m = add nsw i64 %i.g, %i.j
   %i.n = shl nsw i64 %i.m, 3
   %i.o = add nsw i64 %i.n, 8                      ; 2 uses
   %scevgep62 = getelementptr i8, ptr %i.c, i64 %i.o

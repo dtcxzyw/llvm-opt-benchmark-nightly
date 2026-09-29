@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %_ZN5boost14multipre
 define linkonce_odr dso_local void @_ZN5boost14multiprecision8backends18left_shift_genericINS1_15cpp_int_backendILm512ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEEEEvRT_o(ptr noundef nonnull align 16 dereferenceable(75) %0, i128 noundef %1) local_unnamed_addr #13 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = lshr i128 %1, 6
-  %i.b = trunc i128 %i.a to i64                   ; 14 uses
+  %i.b = trunc i128 %i.a to i64                   ; 13 uses
   %i.c = trunc i128 %1 to i64
   %i.d = and i64 %i.c, 63                         ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 7 uses
@@ -415,8 +415,8 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.u, %bb.s, %bb.q
-  %.187 = phi i64 [ %i.x, %bb.q ], [ %i.bz, %bb.s ], [ %i.x, %bb.u ], [ %i.x, %bb.t ] ; 12 uses
-  %.0 = phi i64 [ %i.bo, %bb.q ], [ 0, %bb.s ], [ 1, %bb.u ], [ 1, %bb.t ] ; 11 uses
+  %.187 = phi i64 [ %i.x, %bb.q ], [ %i.bz, %bb.s ], [ %i.x, %bb.u ], [ %i.x, %bb.t ] ; 11 uses
+  %.0 = phi i64 [ %i.bo, %bb.q ], [ 0, %bb.s ], [ 1, %bb.u ], [ 1, %bb.t ] ; 10 uses
   %i.cj = add nsw i64 %i.b, 2                     ; 2 uses
   %i.ck = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.ck, %i.cj
@@ -428,18 +428,14 @@ bb.v:                                             ; preds = %bb.t, %bb.u, %bb.s,
   %i.cm = xor i64 %.0, -1
   %i.cn = add i64 %.187, %i.cm                    ; 2 uses
   %i.co = add i64 %i.b, 1
-  %i.cp = tail call i64 @llvm.smin.i64(i64 %i.cn, i64 %i.co)
+  %i.cp = tail call i64 @llvm.smin.i64(i64 %i.cn, i64 %i.co) ; 2 uses
   %i.cq = add i64 %.0, %i.cp
   %i.cr = sub i64 %.187, %i.cq                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.cr, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %2 = xor i64 %.0, -1
-  %3 = add i64 %.187, %2
-  %4 = add i64 %i.b, 1
-  %smin = tail call i64 @llvm.smin.i64(i64 %3, i64 %4)
-  %i.cs = shl i64 %smin, 3                        ; 3 uses
+  %i.cs = shl i64 %i.cp, 3                        ; 3 uses
   %scevgep = getelementptr i8, ptr %i.av, i64 %i.cs ; 2 uses
   %i.ct = shl i64 %.187, 3                        ; 2 uses
   %i.cu = sub i64 %.187, %.0

@@ -204,20 +204,19 @@ bb.l:                                             ; preds = %bb.k
   br i1 %or.cond, label %.preheader522, label %bb.m
 
 .preheader522:                                    ; preds = %bb.l
-  %i.di = and i64 %1, 9223372036854775804         ; 2 uses
+  %i.di = and i64 %1, 9223372036854775804         ; 4 uses
   %.not633 = icmp eq i64 %i.di, 0
   br i1 %.not633, label %.preheader, label %.lr.ph619.preheader
 
 .lr.ph619.preheader:                              ; preds = %.preheader522
-  %i.dj = add nsw i64 %1, -4                      ; 2 uses
+  %i.dj = add nsw i64 %i.di, -1                   ; 2 uses
   %i.dk = lshr i64 %i.dj, 2
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
-  %min.iters.check914 = icmp ult i64 %i.dj, 12
+  %min.iters.check914 = icmp samesign ult i64 %i.di, 13
   br i1 %min.iters.check914, label %.lr.ph619.preheader997, label %vector.memcheck907
 
 vector.memcheck907:                               ; preds = %.lr.ph619.preheader
-  %11 = add nsw i64 %1, -4
-  %i.dm = lshr i64 %11, 2                         ; 2 uses
+  %i.dm = lshr i64 %i.dj, 2                       ; 2 uses
   %i.dn = shl i64 %i.dm, 5
   %i.do = getelementptr i8, ptr %8, i64 %i.dn
   %scevgep908 = getelementptr i8, ptr %i.do, i64 32
@@ -620,20 +619,19 @@ bb.o:                                             ; preds = %bb.k
   br i1 %or.cond3, label %.preheader530, label %bb.p
 
 .preheader530:                                    ; preds = %bb.o
-  %i.ql = and i64 %1, 9223372036854775804         ; 2 uses
+  %i.ql = and i64 %1, 9223372036854775804         ; 4 uses
   %.not631 = icmp eq i64 %i.ql, 0
   br i1 %.not631, label %.preheader528, label %.lr.ph599.preheader
 
 .lr.ph599.preheader:                              ; preds = %.preheader530
-  %i.qm = add nsw i64 %1, -4                      ; 2 uses
+  %i.qm = add nsw i64 %i.ql, -1                   ; 2 uses
   %i.qn = lshr i64 %i.qm, 2
   %i.qo = add nuw nsw i64 %i.qn, 1                ; 2 uses
-  %min.iters.check804 = icmp ult i64 %i.qm, 28
+  %min.iters.check804 = icmp samesign ult i64 %i.ql, 29
   br i1 %min.iters.check804, label %.lr.ph599.preheader1004, label %vector.memcheck797
 
 vector.memcheck797:                               ; preds = %.lr.ph599.preheader
-  %12 = add nsw i64 %1, -4
-  %i.qp = lshr i64 %12, 2                         ; 2 uses
+  %i.qp = lshr i64 %i.qm, 2                       ; 2 uses
   %i.qq = shl i64 %i.qp, 5
   %i.qr = getelementptr i8, ptr %8, i64 %i.qq
   %scevgep798 = getelementptr i8, ptr %i.qr, i64 32
@@ -1036,22 +1034,23 @@ bb.r:                                             ; preds = %bb.k
   br i1 %or.cond5, label %.preheader538, label %bb.s
 
 .preheader538:                                    ; preds = %bb.r
-  %i.abs = and i64 %1, 9223372036854775804        ; 2 uses
+  %i.abs = and i64 %1, 9223372036854775804        ; 4 uses
   %.not629 = icmp eq i64 %i.abs, 0
   br i1 %.not629, label %.preheader536, label %.lr.ph581.preheader
 
 .lr.ph581.preheader:                              ; preds = %.preheader538
-  %i.abt = add nsw i64 %1, -4                     ; 2 uses
+  %i.abt = add nsw i64 %i.abs, -1                 ; 2 uses
   %i.abu = lshr i64 %i.abt, 2
   %i.abv = add nuw nsw i64 %i.abu, 1              ; 2 uses
-  %min.iters.check = icmp ult i64 %i.abt, 28
+  %min.iters.check = icmp samesign ult i64 %i.abs, 29
   br i1 %min.iters.check, label %.lr.ph581.preheader1012, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph581.preheader
-  %i.abw = shl i64 %1, 3
-  %i.abx = and i64 %i.abw, -32                    ; 2 uses
-  %scevgep744 = getelementptr i8, ptr %8, i64 %i.abx
-  %scevgep745 = getelementptr i8, ptr %.0490.lcssa, i64 %i.abx
+  %i.abw = shl i64 %i.abt, 3
+  %i.abx = and i64 %i.abw, -32
+  %11 = add i64 %i.abx, 32                        ; 2 uses
+  %scevgep744 = getelementptr i8, ptr %8, i64 %11
+  %scevgep745 = getelementptr i8, ptr %.0490.lcssa, i64 %11
   %bound0 = icmp ult ptr %8, %scevgep745
   %bound1 = icmp ult ptr %.0490.lcssa, %scevgep744
   %found.conflict = and i1 %bound0, %bound1

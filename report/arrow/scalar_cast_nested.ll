@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %_ZNSt12__shared_ptr
   %i.cu = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !153, !noalias !509 ; 3 uses
   %i.cw = load ptr, ptr %i.bf, align 8, !tbaa !142, !noalias !509 ; 3 uses
-  %i.cx = getelementptr [4 x i8], ptr %i.cw, i64 %i.cv ; 16 uses
+  %i.cx = getelementptr [4 x i8], ptr %i.cw, i64 %i.cv ; 15 uses
   %.not.i65 = icmp eq i64 %i.cv, 0
   br i1 %.not.i65, label %_ZN5arrow6StatusD2Ev.exit.thread, label %bb.af
 
@@ -326,21 +326,19 @@ _ZN5arrow9ArrayData16GetMutableValuesIiEEPT_i.exit.i: ; preds = %bb.ap, %_ZNSt12
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.es = shl i64 %i.eq, 2                        ; 2 uses
   %i.et = getelementptr i8, ptr %.0.i.i.i, i64 %i.es
-  %scevgep = getelementptr i8, ptr %i.et, i64 4   ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.et, i64 4
   %i.eu = shl i64 %i.cv, 2                        ; 2 uses
   %i.ev = getelementptr i8, ptr %i.cw, i64 %i.eu
   %scevgep149 = getelementptr i8, ptr %i.ev, i64 4
-  %i.ew = getelementptr i8, ptr %i.cw, i64 %i.es
-  %i.ex = getelementptr i8, ptr %i.ew, i64 %i.eu
+  %i.ew = getelementptr i8, ptr %i.cw, i64 %i.eu
+  %i.ex = getelementptr i8, ptr %i.ew, i64 %i.es
   %scevgep150 = getelementptr i8, ptr %i.ex, i64 4
   %bound0 = icmp ult ptr %.0.i.i.i, %scevgep149
   %bound1 = icmp ult ptr %i.cx, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
   %bound0151 = icmp ult ptr %.0.i.i.i, %scevgep150
-  %bound1152 = icmp ult ptr %i.cx, %scevgep
-  %found.conflict153 = and i1 %bound0151, %bound1152
-  %conflict.rdx = or i1 %found.conflict, %found.conflict153
-  br i1 %conflict.rdx, label %.lr.ph.i.preheader155, label %vector.ph
+  %found.conflict157 = or i1 %bound0, %bound0151
+  %found.conflict153 = and i1 %found.conflict157, %bound1
+  br i1 %found.conflict153, label %.lr.ph.i.preheader155, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.er, -8                      ; 3 uses
@@ -743,7 +741,7 @@ bb.ae:                                            ; preds = %_ZNSt12__shared_ptr
   %i.cu = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !153, !noalias !610 ; 3 uses
   %i.cw = load ptr, ptr %i.bf, align 8, !tbaa !142, !noalias !610 ; 3 uses
-  %i.cx = getelementptr [4 x i8], ptr %i.cw, i64 %i.cv ; 16 uses
+  %i.cx = getelementptr [4 x i8], ptr %i.cw, i64 %i.cv ; 15 uses
   %.not.i65 = icmp eq i64 %i.cv, 0
   br i1 %.not.i65, label %_ZN5arrow6StatusD2Ev.exit.thread, label %bb.af
 
@@ -864,21 +862,19 @@ _ZN5arrow9ArrayData16GetMutableValuesIiEEPT_i.exit.i: ; preds = %bb.ap, %_ZNSt12
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.es = shl i64 %i.eq, 2                        ; 2 uses
   %i.et = getelementptr i8, ptr %.0.i.i.i, i64 %i.es
-  %scevgep = getelementptr i8, ptr %i.et, i64 4   ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.et, i64 4
   %i.eu = shl i64 %i.cv, 2                        ; 2 uses
   %i.ev = getelementptr i8, ptr %i.cw, i64 %i.eu
   %scevgep149 = getelementptr i8, ptr %i.ev, i64 4
-  %i.ew = getelementptr i8, ptr %i.cw, i64 %i.es
-  %i.ex = getelementptr i8, ptr %i.ew, i64 %i.eu
+  %i.ew = getelementptr i8, ptr %i.cw, i64 %i.eu
+  %i.ex = getelementptr i8, ptr %i.ew, i64 %i.es
   %scevgep150 = getelementptr i8, ptr %i.ex, i64 4
   %bound0 = icmp ult ptr %.0.i.i.i, %scevgep149
   %bound1 = icmp ult ptr %i.cx, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
   %bound0151 = icmp ult ptr %.0.i.i.i, %scevgep150
-  %bound1152 = icmp ult ptr %i.cx, %scevgep
-  %found.conflict153 = and i1 %bound0151, %bound1152
-  %conflict.rdx = or i1 %found.conflict, %found.conflict153
-  br i1 %conflict.rdx, label %.lr.ph.i.preheader155, label %vector.ph
+  %found.conflict157 = or i1 %bound0, %bound0151
+  %found.conflict153 = and i1 %found.conflict157, %bound1
+  br i1 %found.conflict153, label %.lr.ph.i.preheader155, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.er, -8                      ; 3 uses
@@ -1281,7 +1277,7 @@ bb.bn:                                            ; preds = %_ZN5arrow6ResultISt
   br i1 %.not.i136, label %_ZN5arrow6StatusD2Ev.exit.thread, label %bb.bo
 
 bb.bo:                                            ; preds = %.thread306, %bb.bn
-  %i.hd = phi ptr [ %i.ex, %.thread306 ], [ %i.hc, %bb.bn ] ; 18 uses
+  %i.hd = phi ptr [ %i.ex, %.thread306 ], [ %i.hc, %bb.bn ] ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20, !noalias !971
   %i.he = getelementptr inbounds nuw i8, ptr %i.bm, i64 8 ; 2 uses
   %i.hf = load i64, ptr %i.he, align 8, !tbaa !154, !noalias !971
@@ -1398,17 +1394,15 @@ _ZN5arrow9ArrayData16GetMutableValuesIiEEPT_i.exit.i: ; preds = %bb.by, %_ZNSt12
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.iy = shl i64 %i.iw, 2
   %i.iz = add i64 %i.iy, 4                        ; 2 uses
-  %scevgep = getelementptr i8, ptr %.0.i.i.i, i64 %i.iz ; 2 uses
+  %scevgep = getelementptr i8, ptr %.0.i.i.i, i64 %i.iz
   %scevgep389 = getelementptr i8, ptr %i.hd, i64 4
   %scevgep390 = getelementptr i8, ptr %i.hd, i64 %i.iz
   %bound0 = icmp ult ptr %.0.i.i.i, %scevgep389
   %bound1 = icmp ult ptr %i.hd, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
   %bound0391 = icmp ult ptr %.0.i.i.i, %scevgep390
-  %bound1392 = icmp ult ptr %i.hd, %scevgep
-  %found.conflict393 = and i1 %bound0391, %bound1392
-  %conflict.rdx = or i1 %found.conflict, %found.conflict393
-  br i1 %conflict.rdx, label %.lr.ph.i.preheader395, label %vector.ph
+  %found.conflict397 = or i1 %bound0, %bound0391
+  %found.conflict393 = and i1 %found.conflict397, %bound1
+  br i1 %found.conflict393, label %.lr.ph.i.preheader395, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ix, -8                      ; 3 uses
@@ -1811,7 +1805,7 @@ bb.bn:                                            ; preds = %_ZN5arrow6ResultISt
   br i1 %.not.i136, label %_ZN5arrow6StatusD2Ev.exit.thread, label %bb.bo
 
 bb.bo:                                            ; preds = %.thread306, %bb.bn
-  %i.hd = phi ptr [ %i.ex, %.thread306 ], [ %i.hc, %bb.bn ] ; 18 uses
+  %i.hd = phi ptr [ %i.ex, %.thread306 ], [ %i.hc, %bb.bn ] ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20, !noalias !1035
   %i.he = getelementptr inbounds nuw i8, ptr %i.bm, i64 8 ; 2 uses
   %i.hf = load i64, ptr %i.he, align 8, !tbaa !154, !noalias !1035
@@ -1928,17 +1922,15 @@ _ZN5arrow9ArrayData16GetMutableValuesIiEEPT_i.exit.i: ; preds = %bb.by, %_ZNSt12
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.iy = shl i64 %i.iw, 2
   %i.iz = add i64 %i.iy, 4                        ; 2 uses
-  %scevgep = getelementptr i8, ptr %.0.i.i.i, i64 %i.iz ; 2 uses
+  %scevgep = getelementptr i8, ptr %.0.i.i.i, i64 %i.iz
   %scevgep389 = getelementptr i8, ptr %i.hd, i64 4
   %scevgep390 = getelementptr i8, ptr %i.hd, i64 %i.iz
   %bound0 = icmp ult ptr %.0.i.i.i, %scevgep389
   %bound1 = icmp ult ptr %i.hd, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
   %bound0391 = icmp ult ptr %.0.i.i.i, %scevgep390
-  %bound1392 = icmp ult ptr %i.hd, %scevgep
-  %found.conflict393 = and i1 %bound0391, %bound1392
-  %conflict.rdx = or i1 %found.conflict, %found.conflict393
-  br i1 %conflict.rdx, label %.lr.ph.i.preheader395, label %vector.ph
+  %found.conflict397 = or i1 %bound0, %bound0391
+  %found.conflict393 = and i1 %found.conflict397, %bound1
+  br i1 %found.conflict393, label %.lr.ph.i.preheader395, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ix, -8                      ; 3 uses

@@ -204,8 +204,8 @@ _ZNSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14defaul
 
 bb.o:                                             ; preds = %bb.n
   %i.bf = load ptr, ptr %i.z, align 8             ; 10 uses
-  %i.bg = ptrtoint ptr %i.az to i64               ; 3 uses
-  %i.bh = ptrtoint ptr %i.bf to i64               ; 4 uses
+  %i.bg = ptrtoint ptr %i.az to i64               ; 2 uses
+  %i.bh = ptrtoint ptr %i.bf to i64               ; 3 uses
   %i.bi = sub i64 %i.bg, %i.bh                    ; 3 uses
   %i.bj = icmp eq i64 %i.bi, 9223372036854775800
   br i1 %i.bj, label %bb.p, label %_ZNKSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
@@ -238,16 +238,14 @@ _ZNKSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14defau
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc16
   %i.bs = add i64 %i.bg, -8
-  %i.bt = sub i64 %i.bs, %i.bh                    ; 2 uses
+  %i.bt = sub i64 %i.bs, %i.bh                    ; 3 uses
   %i.bu = lshr i64 %i.bt, 3
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bt, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader46, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %5 = add i64 %i.bg, -8
-  %6 = sub i64 %5, %i.bh
-  %i.bw = and i64 %6, -8
+  %i.bw = and i64 %i.bt, -8
   %i.bx = add i64 %i.bw, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.bq, i64 %i.bx
   %scevgep42 = getelementptr i8, ptr %i.bf, i64 %i.bx
@@ -546,8 +544,8 @@ _ZNSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14defaul
 
 bb.m:                                             ; preds = %bb.l
   %i.ap = load ptr, ptr %i.j, align 8             ; 10 uses
-  %i.aq = ptrtoint ptr %i.aj to i64               ; 3 uses
-  %i.ar = ptrtoint ptr %i.ap to i64               ; 4 uses
+  %i.aq = ptrtoint ptr %i.aj to i64               ; 2 uses
+  %i.ar = ptrtoint ptr %i.ap to i64               ; 3 uses
   %i.as = sub i64 %i.aq, %i.ar                    ; 3 uses
   %i.at = icmp eq i64 %i.as, 9223372036854775800
   br i1 %i.at, label %bb.n, label %_ZNKSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
@@ -580,16 +578,14 @@ _ZNKSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14defau
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc15
   %i.bc = add i64 %i.aq, -8
-  %i.bd = sub i64 %i.bc, %i.ar                    ; 2 uses
+  %i.bd = sub i64 %i.bc, %i.ar                    ; 3 uses
   %i.be = lshr i64 %i.bd, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bd, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader46, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %5 = add i64 %i.aq, -8
-  %6 = sub i64 %5, %i.ar
-  %i.bg = and i64 %6, -8
+  %i.bg = and i64 %i.bd, -8
   %i.bh = add i64 %i.bg, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.ba, i64 %i.bh
   %scevgep42 = getelementptr i8, ptr %i.ap, i64 %i.bh
@@ -992,8 +988,8 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
   %i.k = load ptr, ptr %i.j, align 8              ; 5 uses
   %i.l = load ptr, ptr %i.i, align 8              ; 10 uses
-  %i.m = ptrtoint ptr %i.k to i64                 ; 3 uses
-  %i.n = ptrtoint ptr %i.l to i64                 ; 4 uses
+  %i.m = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.n = ptrtoint ptr %i.l to i64                 ; 3 uses
   %i.o = sub i64 %i.m, %i.n                       ; 3 uses
   %i.p = ashr exact i64 %i.o, 3                   ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
@@ -1034,16 +1030,14 @@ _ZNKSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE12_M_check_l
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %i.ad = add i64 %i.m, -8
-  %i.ae = sub i64 %i.ad, %i.n                     ; 2 uses
+  %i.ae = sub i64 %i.ad, %i.n                     ; 3 uses
   %i.af = lshr i64 %i.ae, 3
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ae, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader56, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %5 = add i64 %i.m, -8
-  %6 = sub i64 %5, %i.n
-  %i.ah = and i64 %6, -8
+  %i.ah = and i64 %i.ae, -8
   %i.ai = add i64 %i.ah, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.aa, i64 %i.ai
   %scevgep52 = getelementptr i8, ptr %i.l, i64 %i.ai

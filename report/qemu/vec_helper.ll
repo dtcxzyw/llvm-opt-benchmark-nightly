@@ -205,17 +205,16 @@ bb.a:
   %i.h = sext i32 %i.g to i64                     ; 2 uses
   %i.i = getelementptr inbounds [2 x i8], ptr %2, i64 %i.h ; 10 uses
   %i.j = lshr exact i32 %.v.i, 1
-  %i.k = zext nneg i32 %i.j to i64                ; 3 uses
-  %i.l = add nsw i64 %i.k, -1
+  %i.k = zext nneg i32 %i.j to i64                ; 2 uses
+  %i.l = add nsw i64 %i.k, -1                     ; 2 uses
   %i.m = lshr i64 %i.l, 3
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp samesign ult i32 %.v.v.i, 122
   br i1 %min.iters.check, label %do_sqrdmlah_h.exit.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.o = shl nuw nsw i64 %i.k, 1
-  %4 = add nsw i64 %i.o, -2
-  %i.p = and i64 %4, -16                          ; 2 uses
+  %i.o = shl nuw nsw i64 %i.l, 1
+  %i.p = and i64 %i.o, 9223372036854775792        ; 2 uses
   %i.q = add nuw nsw i64 %i.p, 16                 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 %i.q   ; 2 uses
   %i.r = shl nsw i64 %i.h, 1

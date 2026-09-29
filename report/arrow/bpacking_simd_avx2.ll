@@ -205,26 +205,24 @@ _ZN5arrow8internal12unpack_exactILi4ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.j, 
   %i.xe = sub nsw i32 %i.vn, %i.xd                ; 2 uses
   %i.xf = icmp samesign ult i32 %i.xe, 32
   tail call void @llvm.assume(i1 %i.xf)
-  %i.xg = shl nuw nsw i32 %i.xe, 2                ; 3 uses
+  %i.xg = shl nuw nsw i32 %i.xe, 2                ; 2 uses
   %.not.i168 = icmp eq i32 %i.vn, %i.xd
   br i1 %.not.i168, label %_ZN5arrow8internal12unpack_widthILi1ENS0_12_GLOBAL__N_123Simd256UnpackerForWidthEjEEvPKhPT1_ii.exit, label %.lr.ph.i28.i169.preheader
 
 .lr.ph.i28.i169.preheader:                        ; preds = %._crit_edge.i165
   %i.xh = tail call i32 @llvm.usub.sat.i32(i32 %i.xg, i32 4) ; 2 uses
-  %5 = lshr exact i32 %i.xh, 2
-  %narrow = add nuw nsw i32 %5, 1
-  %6 = zext nneg i32 %narrow to i64               ; 2 uses
+  %5 = or disjoint i32 %i.xh, 3
+  %6 = zext nneg i32 %5 to i64                    ; 3 uses
+  %7 = lshr i64 %6, 2
+  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
   %min.iters.check1221 = icmp samesign ult i32 %i.xh, 60
   br i1 %min.iters.check1221, label %.lr.ph.i28.i169.preheader1466, label %vector.memcheck1215
 
 vector.memcheck1215:                              ; preds = %.lr.ph.i28.i169.preheader
-  %7 = tail call i32 @llvm.usub.sat.i32(i32 %i.xg, i32 4)
-  %8 = or disjoint i32 %7, 3
-  %9 = zext nneg i32 %8 to i64                    ; 2 uses
-  %i.xi = and i64 %9, 124
+  %i.xi = and i64 %6, 124
   %i.xj = getelementptr i8, ptr %.026.lcssa.i166, i64 %i.xi
   %scevgep1216 = getelementptr i8, ptr %i.xj, i64 4
-  %i.xk = lshr i64 %9, 3
+  %i.xk = lshr i64 %6, 3
   %i.xl = getelementptr i8, ptr %.025.lcssa.i167, i64 %i.xk
   %scevgep1217 = getelementptr i8, ptr %i.xl, i64 1
   %bound01218 = icmp ult ptr %.026.lcssa.i166, %scevgep1217
@@ -233,7 +231,7 @@ vector.memcheck1215:                              ; preds = %.lr.ph.i28.i169.pre
   br i1 %found.conflict1220, label %.lr.ph.i28.i169.preheader1466, label %vector.ph1222
 
 vector.ph1222:                                    ; preds = %vector.memcheck1215
-  %n.vec1223 = and i64 %6, 1073741816             ; 4 uses
+  %n.vec1223 = and i64 %8, 1073741816             ; 4 uses
   %i.xm = shl nuw nsw i64 %n.vec1223, 2
   %i.xn = getelementptr i8, ptr %.026.lcssa.i166, i64 %i.xm
   %i.xo = trunc nuw nsw i64 %n.vec1223 to i32
@@ -302,7 +300,7 @@ vector.body1224:                                  ; preds = %vector.body1224, %v
   br i1 %i.zp, label %middle.block1228, label %vector.body1224, !llvm.loop !169
 
 middle.block1228:                                 ; preds = %vector.body1224
-  %cmp.n1229 = icmp eq i64 %n.vec1223, %6
+  %cmp.n1229 = icmp eq i64 %8, %n.vec1223
   br i1 %cmp.n1229, label %_ZN5arrow8internal12unpack_widthILi1ENS0_12_GLOBAL__N_123Simd256UnpackerForWidthEjEEvPKhPT1_ii.exit, label %.lr.ph.i28.i169.preheader1466
 
 .lr.ph.i28.i169.preheader1466:                    ; preds = %vector.memcheck1215, %.lr.ph.i28.i169.preheader, %middle.block1228
@@ -705,27 +703,25 @@ _ZN5arrow8internal12unpack_exactILi4ELb1EmEEiPKhPT1_ii.exit: ; preds = %.lr.ph.i
   %i.ah = sub nsw i32 %i.y, %i.ag                 ; 2 uses
   %i.ai = icmp samesign ult i32 %i.ah, 64
   tail call void @llvm.assume(i1 %i.ai)
-  %i.aj = shl nuw nsw i32 %i.ah, 2                ; 3 uses
+  %i.aj = shl nuw nsw i32 %i.ah, 2                ; 2 uses
   %.not = icmp eq i32 %i.y, %i.ag
   br i1 %.not, label %_ZN5arrow8internal12unpack_exactILi4ELb0EmEEiPKhPT1_ii.exit, label %.lr.ph.i28.preheader
 
 .lr.ph.i28.preheader:                             ; preds = %._crit_edge
   %i.ak = tail call i32 @llvm.usub.sat.i32(i32 %i.aj, i32 4) ; 2 uses
-  %4 = lshr exact i32 %i.ak, 2
-  %narrow = add nuw nsw i32 %4, 1
-  %5 = zext nneg i32 %narrow to i64               ; 2 uses
+  %4 = or disjoint i32 %i.ak, 3
+  %5 = zext nneg i32 %4 to i64                    ; 3 uses
+  %6 = lshr i64 %5, 2
+  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
   %min.iters.check = icmp samesign ult i32 %i.ak, 60
   br i1 %min.iters.check, label %.lr.ph.i28.preheader40, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i28.preheader
-  %6 = tail call i32 @llvm.usub.sat.i32(i32 %i.aj, i32 4)
-  %7 = or disjoint i32 %6, 3
-  %8 = zext nneg i32 %7 to i64                    ; 2 uses
-  %i.al = shl nuw nsw i64 %8, 1
+  %i.al = shl nuw nsw i64 %5, 1
   %i.am = and i64 %i.al, 4294967288
   %i.an = getelementptr i8, ptr %.026.lcssa, i64 %i.am
   %scevgep = getelementptr i8, ptr %i.an, i64 8
-  %i.ao = lshr i64 %8, 3
+  %i.ao = lshr i64 %5, 3
   %i.ap = getelementptr i8, ptr %.025.lcssa, i64 %i.ao
   %scevgep38 = getelementptr i8, ptr %i.ap, i64 1
   %bound0 = icmp ult ptr %.026.lcssa, %scevgep38
@@ -734,7 +730,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i28.preheade
   br i1 %found.conflict, label %.lr.ph.i28.preheader40, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %5, 1073741820                 ; 4 uses
+  %n.vec = and i64 %7, 1073741820                 ; 4 uses
   %i.aq = shl nuw nsw i64 %n.vec, 3
   %i.ar = getelementptr i8, ptr %.026.lcssa, i64 %i.aq
   %i.as = trunc nuw nsw i64 %n.vec to i32
@@ -780,7 +776,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bw, label %middle.block, label %vector.body, !llvm.loop !299
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %5
+  %cmp.n = icmp eq i64 %7, %n.vec
   br i1 %cmp.n, label %_ZN5arrow8internal12unpack_exactILi4ELb0EmEEiPKhPT1_ii.exit, label %.lr.ph.i28.preheader40
 
 .lr.ph.i28.preheader40:                           ; preds = %vector.memcheck, %.lr.ph.i28.preheader, %middle.block

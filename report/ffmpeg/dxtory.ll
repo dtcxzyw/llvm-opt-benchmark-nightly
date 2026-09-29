@@ -205,19 +205,18 @@ bb.k:                                             ; preds = %._crit_edge.us.i, %
   br i1 %i.jb, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.jc = zext nneg i32 %i.al to i64              ; 3 uses
-  %i.jd = add nsw i64 %i.jc, -2                   ; 2 uses
-  %i.je = lshr exact i64 %i.jd, 1
+  %i.jc = zext nneg i32 %i.al to i64              ; 2 uses
+  %i.jd = add nsw i64 %i.jc, -1                   ; 4 uses
+  %i.je = lshr i64 %i.jd, 1
   %i.jf = add nuw i64 %i.je, 1                    ; 2 uses
   %min.iters.check317 = icmp ult i64 %i.jd, 64
   br i1 %min.iters.check317, label %.lr.ph.i.preheader, label %vector.memcheck288
 
 vector.memcheck288:                               ; preds = %.lr.ph.preheader.i
-  %4 = add nsw i64 %i.jc, -1                      ; 2 uses
-  %i.jg = and i64 %4, -2
+  %i.jg = and i64 %i.jd, -2
   %i.jh = getelementptr i8, ptr %.094.lcssa.i, i64 %i.jg
   %scevgep289 = getelementptr i8, ptr %i.jh, i64 2 ; 3 uses
-  %i.ji = lshr i64 %4, 1                          ; 2 uses
+  %i.ji = lshr i64 %i.jd, 1                       ; 2 uses
   %i.jj = add nuw i64 %i.ji, 1                    ; 2 uses
   %scevgep290 = getelementptr i8, ptr %.092.lcssa.i, i64 %i.jj ; 3 uses
   %scevgep291 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.jj ; 3 uses

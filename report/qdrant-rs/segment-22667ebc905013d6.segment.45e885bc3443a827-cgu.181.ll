@@ -202,11 +202,11 @@ bb.d:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !nonnull !4, !noundef !4 ; 10 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.s = load i64, ptr %i.r, align 8, !noundef !4 ; 9 uses
+  %i.s = load i64, ptr %i.r, align 8, !noundef !4 ; 8 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !4, !noundef !4 ; 7 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.w = load i64, ptr %i.v, align 8, !noundef !4 ; 5 uses
+  %i.w = load i64, ptr %i.v, align 8, !noundef !4 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !522)
   call void @llvm.experimental.noalias.scope.decl(metadata !523)
   %i.x = icmp ugt i64 %i.s, 1
@@ -266,7 +266,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.noex
   %i.al = load i64, ptr %i.e, align 8, !range !10, !noalias !528, !noundef !4
   %i.am = icmp ult i64 %i.ai, 576460752303423488
   call void @llvm.assume(i1 %i.am)
-  %.idx.i = shl nuw nsw i64 %i.ai, 4              ; 3 uses
+  %.idx.i = shl nuw nsw i64 %i.ai, 4              ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.idx.i ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !528
   store ptr %i.ag, ptr %i.c, align 8, !noalias !528
@@ -282,9 +282,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.noex
   br i1 %i.ao, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTyfEEENtNtNtB8_6traits8iterator8Iterator4nextCs607s0NAIaWN_7segment.exit.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.j
-  %i.ap = add nsw i64 %.idx.i, -16
+  %i.ap = add nsw i64 %.idx.i, -16                ; 2 uses
   %i.aq = lshr exact i64 %i.ap, 4
-  %i.ar = call i64 @llvm.umin.i64(i64 %i.w, i64 %i.s)
+  %i.ar = call i64 @llvm.umin.i64(i64 %i.w, i64 %i.s) ; 2 uses
   %i.as = call i64 @llvm.umin.i64(i64 %i.ar, i64 %i.aq) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.as, 28
   br i1 %min.iters.check, label %.lr.ph.i.preheader36, label %vector.memcheck
@@ -295,10 +295,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.noex
   br label %.lr.ph.i
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %umin = call i64 @llvm.umin.i64(i64 %i.w, i64 %i.s)
-  %2 = add nsw i64 %.idx.i, -16
-  %i.at = lshr exact i64 %2, 4
-  %umin24 = call i64 @llvm.umin.i64(i64 %umin, i64 %i.at) ; 3 uses
+  %i.at = lshr exact i64 %i.ap, 4
+  %umin24 = call i64 @llvm.umin.i64(i64 %i.ar, i64 %i.at) ; 3 uses
   %i.au = shl nuw nsw i64 %umin24, 3
   %i.av = getelementptr i8, ptr %i.q, i64 %i.au
   %scevgep = getelementptr i8, ptr %i.av, i64 8   ; 2 uses

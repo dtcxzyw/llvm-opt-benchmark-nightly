@@ -202,12 +202,12 @@ _RNvMsd_Cs5kGgRUzsVpH_8smallvecINtB5_8SmallVecATyyEj4_E11try_reserveCs3f36owOmep
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.a, %.thread.i
   %i.t = phi ptr [ %spec.select14, %.thread.i ], [ %i.i, %bb.a ] ; 2 uses
-  %.sink.i.pre-phi.i1519.i22 = phi i64 [ %.pre80.i.i, %.thread.i ], [ 4, %bb.a ] ; 4 uses
+  %.sink.i.pre-phi.i1519.i22 = phi i64 [ %.pre80.i.i, %.thread.i ], [ 4, %bb.a ] ; 3 uses
   %i.u = phi ptr [ %spec.select, %.thread.i ], [ %i.a, %bb.a ] ; 5 uses
-  %i.v = phi i64 [ %.pre, %.thread.i ], [ 0, %bb.a ] ; 7 uses
+  %i.v = phi i64 [ %.pre, %.thread.i ], [ 0, %bb.a ] ; 6 uses
   %i.w = and i64 %.sink21.i, 1152921504606846975, !dbg !10424
   %i.x = xor i64 %i.v, -1, !dbg !10424
-  %i.y = add i64 %.sink.i.pre-phi.i1519.i22, %i.x, !dbg !10424
+  %i.y = add i64 %.sink.i.pre-phi.i1519.i22, %i.x, !dbg !10424 ; 2 uses
   %i.z = tail call i64 @llvm.umin.i64(i64 %i.w, i64 %i.y), !dbg !10424 ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.z, 20, !dbg !10424
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader30, label %vector.memcheck, !dbg !10424
@@ -221,9 +221,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheade
   %i.aa = shl i64 %i.v, 4, !dbg !10424            ; 2 uses
   %scevgep = getelementptr i8, ptr %i.u, i64 %i.aa, !dbg !10424
   %i.ab = and i64 %.sink21.i, 1152921504606846975, !dbg !10424
-  %2 = xor i64 %i.v, -1, !dbg !10424
-  %3 = add i64 %.sink.i.pre-phi.i1519.i22, %2, !dbg !10424
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 %3), !dbg !10424
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 %i.y), !dbg !10424
   %i.ac = shl nuw i64 %umin, 4, !dbg !10424       ; 2 uses
   %i.ad = getelementptr i8, ptr %i.u, i64 %i.aa, !dbg !10424
   %i.ae = getelementptr i8, ptr %i.ad, i64 %i.ac, !dbg !10424

@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64, !dbg !85212
   %i.c = ptrtoint ptr %0 to i64, !dbg !85212
-  %i.d = sub nuw i64 %i.b, %i.c, !dbg !85212      ; 5 uses
+  %i.d = sub nuw i64 %i.b, %i.c, !dbg !85212      ; 4 uses
   %i.e = lshr i64 %i.d, 2, !dbg !85212            ; 4 uses
   %min.iters.check = icmp ult i64 %i.d, 40, !dbg !85213
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !85213
@@ -213,12 +213,10 @@ vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.5.0.copyload, 3, !dbg !85213 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !85213
   %i.g = shl i64 %i.d, 1, !dbg !85213
-  %3 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !85213
-  %scevgep2 = getelementptr i8, ptr %3, i64 %i.g, !dbg !85213
-  %4 = and i64 %i.d, -4, !dbg !85213
-  %scevgep3 = getelementptr i8, ptr %0, i64 %4, !dbg !85213
-  %bound0 = icmp ult ptr %scevgep, %scevgep3, !dbg !85213
-  %bound1 = icmp ult ptr %0, %scevgep2, !dbg !85213
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !85213
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.g, !dbg !85213
+  %bound0 = icmp ult ptr %scevgep, %1, !dbg !85213
+  %bound1 = icmp ult ptr %0, %scevgep3, !dbg !85213
   %found.conflict = and i1 %bound0, %bound1, !dbg !85213
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph, !dbg !85214
 

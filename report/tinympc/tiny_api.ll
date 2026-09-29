@@ -205,7 +205,7 @@ bb.a:
   call void @_ZN5Eigen8internal17product_evaluatorINS_7ProductINS2_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEES4_Li0EEES4_Li1EEELi8ENS_10DenseShapeES7_ddEC2ERKS6_(ptr noundef nonnull align 8 dereferenceable(72) %3, ptr noundef nonnull align 8 dereferenceable(24) %1)
   %i.a = load ptr, ptr %1, align 8, !tbaa !240, !nonnull !88, !align !89
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !38   ; 12 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !38   ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !259, !nonnull !88, !align !89
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
@@ -309,7 +309,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   br label %.lr.ph.i.i.i.i.i.i35.i.preheader.us
 
 _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEENS2_INS_7ProductINS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEES7_Li0EEES7_Li1EEEEENS0_9assign_opIddEELi1EE23assignCoeffByOuterInnerEll.exit39.i.preheader: ; preds = %.lr.ph55.split.i
-  %i.ap = or i64 %i.c, 1
+  %i.ap = or i64 %i.c, 1                          ; 2 uses
   %i.aq = sub i64 %i.ap, %i.s                     ; 2 uses
   %min.iters.check = icmp ult i64 %i.aq, 18
   br i1 %min.iters.check, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEENS2_INS_7ProductINS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEES7_Li0EEES7_Li1EEEEENS0_9assign_opIddEELi1EE23assignCoeffByOuterInnerEll.exit39.i.preheader39, label %vector.memcheck
@@ -322,11 +322,10 @@ vector.memcheck:                                  ; preds = %_ZN5Eigen8internal3
   %i.ar = shl i64 %i.c, 3
   %i.as = and i64 %i.ar, -16                      ; 2 uses
   %scevgep = getelementptr i8, ptr %i.r, i64 %i.as ; 2 uses
-  %i.at = shl i64 %i.c, 3
-  %4 = or i64 %i.at, 8                            ; 2 uses
-  %scevgep31 = getelementptr i8, ptr %i.r, i64 %4 ; 2 uses
+  %i.at = shl i64 %i.ap, 3                        ; 2 uses
+  %scevgep31 = getelementptr i8, ptr %i.r, i64 %i.at ; 2 uses
   %scevgep32 = getelementptr i8, ptr %i.y, i64 %i.as
-  %scevgep33 = getelementptr i8, ptr %i.y, i64 %4
+  %scevgep33 = getelementptr i8, ptr %i.y, i64 %i.at
   %scevgep34 = getelementptr i8, ptr %i.ab, i64 8
   %bound0 = icmp ult ptr %scevgep, %scevgep33
   %bound1 = icmp ult ptr %scevgep32, %scevgep31
@@ -729,7 +728,7 @@ _ZN5Eigen8internal9evaluatorINS_7ProductINS2_INS_9TransposeINS_6MatrixIdLin1ELin
   store i64 %i.t, ptr %i.p, align 8, !tbaa !176
   %i.u = load ptr, ptr %1, align 8, !tbaa !159, !nonnull !88, !align !89
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %i.w = load i64, ptr %i.v, align 8, !tbaa !39   ; 12 uses
+  %i.w = load i64, ptr %i.v, align 8, !tbaa !39   ; 11 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.y = load i64, ptr %i.x, align 8, !tbaa !39   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -822,7 +821,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   br label %.lr.ph.i.i.i.i.i.i35.i.preheader.us
 
 _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEENS2_INS_7ProductINS6_INS_9TransposeINS3_IdLin1ELin1ELi0ELin1ELin1EEEEES8_Li0EEES8_Li1EEEEENS0_9assign_opIddEELi1EE23assignCoeffByOuterInnerEll.exit39.i.preheader: ; preds = %.lr.ph55.split.i
-  %i.bb = or i64 %i.w, 1
+  %i.bb = or i64 %i.w, 1                          ; 2 uses
   %i.bc = sub i64 %i.bb, %i.ak                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.bc, 18
   br i1 %min.iters.check, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEENS2_INS_7ProductINS6_INS_9TransposeINS3_IdLin1ELin1ELi0ELin1ELin1EEEEES8_Li0EEES8_Li1EEEEENS0_9assign_opIddEELi1EE23assignCoeffByOuterInnerEll.exit39.i.preheader39, label %vector.memcheck
@@ -835,11 +834,10 @@ vector.memcheck:                                  ; preds = %_ZN5Eigen8internal3
   %i.bd = shl i64 %i.w, 3
   %i.be = and i64 %i.bd, -16                      ; 2 uses
   %scevgep = getelementptr i8, ptr %i.aj, i64 %i.be ; 2 uses
-  %i.bf = shl i64 %i.w, 3
-  %5 = or i64 %i.bf, 8                            ; 2 uses
-  %scevgep31 = getelementptr i8, ptr %i.aj, i64 %5 ; 2 uses
+  %i.bf = shl i64 %i.bb, 3                        ; 2 uses
+  %scevgep31 = getelementptr i8, ptr %i.aj, i64 %i.bf ; 2 uses
   %scevgep32 = getelementptr i8, ptr %i.am, i64 %i.be
-  %scevgep33 = getelementptr i8, ptr %i.am, i64 %5
+  %scevgep33 = getelementptr i8, ptr %i.am, i64 %i.bf
   %scevgep34 = getelementptr i8, ptr %i.ao, i64 8
   %bound0 = icmp ult ptr %scevgep, %scevgep33
   %bound1 = icmp ult ptr %scevgep32, %scevgep31

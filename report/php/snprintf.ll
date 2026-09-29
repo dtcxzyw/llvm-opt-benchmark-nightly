@@ -140,22 +140,21 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.g
   %i.ac = call i32 @llvm.usub.sat.i32(i32 %i.q, i32 319) ; 3 uses
-  %i.ad = sub nsw i32 %i.q, %i.ac                 ; 6 uses
+  %i.ad = sub nsw i32 %i.q, %i.ac                 ; 5 uses
   %i.ae = add nsw i32 %i.ad, -1                   ; 4 uses
   store i32 %i.ae, ptr %i.a, align 4, !tbaa !25
   %.not126 = icmp eq i32 %i.q, %i.ac
   br i1 %.not126, label %.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m
-  %i.af = zext i32 %i.ad to i64                   ; 2 uses
+  %i.af = zext i32 %i.ad to i64                   ; 4 uses
   %min.iters.check = icmp ult i32 %i.ad, 24
   br i1 %min.iters.check, label %.lr.ph.preheader178, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %8 = zext i32 %i.ad to i64                      ; 2 uses
-  %scevgep133 = getelementptr i8, ptr %6, i64 %8  ; 2 uses
+  %scevgep133 = getelementptr i8, ptr %6, i64 %i.af ; 2 uses
   %scevgep134 = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  %scevgep135 = getelementptr i8, ptr %.064, i64 %8 ; 2 uses
+  %scevgep135 = getelementptr i8, ptr %.064, i64 %i.af ; 2 uses
   %bound0 = icmp ult ptr %6, %scevgep134
   %bound1 = icmp ult ptr %i.a, %scevgep133
   %found.conflict = and i1 %bound0, %bound1

@@ -204,9 +204,9 @@ _RINvXs2_NtNtCscgRAwXFJnXP_4core5array4iterINtB6_8IntoIterNtNtCs2mZqlW55729_12po
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define hidden void @_RINvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterAmj2_ENCNCNvMs1_NtNtCs2Aa799EbAFJ_11polars_time8group_by7dynamicINtB1D_4WrapRNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE12impl_rolling00ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB3R_8for_each4callB1n_NCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB57_3VecB1n_E14extend_trustedBN_E0E0EB1H_(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !25280 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !dbg !25351, !nonnull !641, !noundef !641 ; 9 uses
+  %i.a = load ptr, ptr %0, align 8, !dbg !25351, !nonnull !641, !noundef !641 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25351
-  %i.c = load ptr, ptr %i.b, align 8, !dbg !25351, !nonnull !641, !noundef !641 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !dbg !25351, !nonnull !641, !noundef !641 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25352
   %i.e = load ptr, ptr %i.d, align 8, !dbg !25352, !nonnull !641, !align !948, !noundef !641 ; 6 uses
   %.sroa.0.0.copyload = load ptr, ptr %1, align 8, !dbg !25353 ; 2 uses
@@ -227,17 +227,15 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.k = shl i64 %.sroa.5.0.copyload, 3, !dbg !25357 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25357 ; 2 uses
-  %2 = and i64 %i.i, -8, !dbg !25357              ; 2 uses
-  %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25357
-  %scevgep2 = getelementptr i8, ptr %i.l, i64 %2, !dbg !25357 ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %i.a, i64 %2, !dbg !25357
+  %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25357 ; 2 uses
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25357
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.i, !dbg !25357 ; 2 uses
   %scevgep4 = getelementptr i8, ptr %i.e, i64 4, !dbg !25357
-  %bound0 = icmp ult ptr %scevgep, %scevgep3, !dbg !25357
-  %bound1 = icmp ult ptr %i.a, %scevgep2, !dbg !25357
+  %bound0 = icmp ult ptr %i.l, %i.c, !dbg !25357
+  %bound1 = icmp ult ptr %i.a, %scevgep3, !dbg !25357
   %found.conflict = and i1 %bound0, %bound1, !dbg !25357
-  %bound05 = icmp ult ptr %scevgep, %scevgep4, !dbg !25357
-  %bound16 = icmp ult ptr %i.e, %scevgep2, !dbg !25357
+  %bound05 = icmp ult ptr %i.l, %scevgep4, !dbg !25357
+  %bound16 = icmp ult ptr %i.e, %scevgep3, !dbg !25357
   %found.conflict7 = and i1 %bound05, %bound16, !dbg !25357
   %conflict.rdx = or i1 %found.conflict, %found.conflict7, !dbg !25357
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph, !dbg !25358
@@ -360,9 +358,9 @@ _RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterAmj2_ENtNtNtNtBb_4iter6tr
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define hidden void @_RINvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterAmj2_ENCNCNvMs1_NtNtCs2Aa799EbAFJ_11polars_time8group_by7dynamicINtB1D_4WrapRNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE21impl_group_by_dynamics0_00ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB43_8for_each4callB1n_NCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5j_3VecB1n_E14extend_trustedBN_E0E0EB1H_(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !25371 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !dbg !25441, !nonnull !641, !noundef !641 ; 9 uses
+  %i.a = load ptr, ptr %0, align 8, !dbg !25441, !nonnull !641, !noundef !641 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25441
-  %i.c = load ptr, ptr %i.b, align 8, !dbg !25441, !nonnull !641, !noundef !641 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !dbg !25441, !nonnull !641, !noundef !641 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25442
   %i.e = load ptr, ptr %i.d, align 8, !dbg !25442, !nonnull !641, !align !948, !noundef !641 ; 6 uses
   %.sroa.0.0.copyload = load ptr, ptr %1, align 8, !dbg !25443 ; 2 uses
@@ -383,17 +381,15 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.k = shl i64 %.sroa.5.0.copyload, 3, !dbg !25447 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25447 ; 2 uses
-  %2 = and i64 %i.i, -8, !dbg !25447              ; 2 uses
-  %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25447
-  %scevgep2 = getelementptr i8, ptr %i.l, i64 %2, !dbg !25447 ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %i.a, i64 %2, !dbg !25447
+  %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25447 ; 2 uses
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !25447
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.i, !dbg !25447 ; 2 uses
   %scevgep4 = getelementptr i8, ptr %i.e, i64 4, !dbg !25447
-  %bound0 = icmp ult ptr %scevgep, %scevgep3, !dbg !25447
-  %bound1 = icmp ult ptr %i.a, %scevgep2, !dbg !25447
+  %bound0 = icmp ult ptr %i.l, %i.c, !dbg !25447
+  %bound1 = icmp ult ptr %i.a, %scevgep3, !dbg !25447
   %found.conflict = and i1 %bound0, %bound1, !dbg !25447
-  %bound05 = icmp ult ptr %scevgep, %scevgep4, !dbg !25447
-  %bound16 = icmp ult ptr %i.e, %scevgep2, !dbg !25447
+  %bound05 = icmp ult ptr %i.l, %scevgep4, !dbg !25447
+  %bound16 = icmp ult ptr %i.e, %scevgep3, !dbg !25447
   %found.conflict7 = and i1 %bound05, %bound16, !dbg !25447
   %conflict.rdx = or i1 %found.conflict, %found.conflict7, !dbg !25447
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph, !dbg !25448

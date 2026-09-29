@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.f, %bb.e, %bb.c,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN4ncnnL9layernormEPfPKfS2_fii(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef readonly captures(address_is_null) %2, float noundef nofpclass(nan inf) %3, i32 noundef %4, i32 noundef %5) unnamed_addr #5 {
 bb.a:
-  %i.a = mul nsw i32 %5, %4                       ; 27 uses
+  %i.a = mul nsw i32 %5, %4                       ; 26 uses
   %i.b = icmp sgt i32 %i.a, 3                     ; 4 uses
   br i1 %i.b, label %.lr.ph.preheader, label %.preheader175
 
@@ -606,23 +606,20 @@ bb.i:                                             ; preds = %bb.h
   %.3117 = phi ptr [ %.1115, %.loopexit170 ], [ %i.gs, %.lr.ph221 ] ; 6 uses
   %.3112 = phi ptr [ %.1110, %.loopexit170 ], [ %i.gr, %.lr.ph221 ] ; 6 uses
   %.3107 = phi ptr [ %.1105, %.loopexit170 ], [ %i.gq, %.lr.ph221 ] ; 7 uses
-  %.3 = phi i32 [ %.1103, %.loopexit170 ], [ %i.gt, %.lr.ph221 ] ; 6 uses
+  %.3 = phi i32 [ %.1103, %.loopexit170 ], [ %i.gt, %.lr.ph221 ] ; 5 uses
   %i.gw = icmp slt i32 %.3, %i.a
   br i1 %i.gw, label %.lr.ph231.preheader, label %.loopexit
 
 .lr.ph231.preheader:                              ; preds = %.loopexit168
   %i.gx = xor i32 %.3, -1
   %i.gy = add i32 %i.a, %i.gx                     ; 2 uses
-  %i.gz = zext i32 %i.gy to i64
+  %i.gz = zext i32 %i.gy to i64                   ; 2 uses
   %i.ha = add nuw nsw i64 %i.gz, 1                ; 2 uses
   %min.iters.check333 = icmp ult i32 %i.gy, 7
   br i1 %min.iters.check333, label %.lr.ph231.preheader358, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph231.preheader
-  %6 = xor i32 %.3, -1
-  %7 = add i32 %i.a, %6
-  %8 = zext i32 %7 to i64
-  %i.hb = shl nuw nsw i64 %8, 2
+  %i.hb = shl nuw nsw i64 %i.gz, 2
   %i.hc = add nuw nsw i64 %i.hb, 4                ; 3 uses
   %scevgep = getelementptr i8, ptr %.3107, i64 %i.hc ; 2 uses
   %scevgep327 = getelementptr i8, ptr %.3112, i64 %i.hc

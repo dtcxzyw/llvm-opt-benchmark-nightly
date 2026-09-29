@@ -204,14 +204,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.b
-  %3 = and i64 %i.d, -4                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %0, i64 %3
   %i.f = shl i64 %.sroa.5.0.copyload, 2           ; 2 uses
   %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %i.g = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %scevgep3 = getelementptr i8, ptr %i.g, i64 %3
+  %scevgep3 = getelementptr i8, ptr %i.g, i64 %i.d
   %bound0 = icmp ult ptr %0, %scevgep3
-  %bound1 = icmp ult ptr %scevgep2, %scevgep
+  %bound1 = icmp ult ptr %scevgep2, %1
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

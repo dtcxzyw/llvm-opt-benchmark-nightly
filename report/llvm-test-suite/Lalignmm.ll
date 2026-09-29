@@ -34,7 +34,7 @@ bb.a:
   %i.i = trunc i64 %i.h to i32                    ; 16 uses
   %i.j = load ptr, ptr %1, align 8, !tbaa !10
   %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #13 ; 8 uses
-  %i.l = trunc i64 %i.k to i32                    ; 23 uses
+  %i.l = trunc i64 %i.k to i32                    ; 22 uses
   %i.m = add i32 %i.i, 200
   %i.n = add i32 %i.m, %i.l                       ; 2 uses
   %i.o = tail call ptr @AllocateCharMtx(i32 noundef %4, i32 noundef %i.n) #12 ; 9 uses
@@ -296,7 +296,7 @@ scalar.ph278:                                     ; preds = %scalar.ph278.prehea
   %i.dd = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store ptr %i.y, ptr %i.dd, align 8, !tbaa !19
   %i.de = add i32 %i.i, -1                        ; 9 uses
-  %i.df = add i32 %i.l, -1                        ; 8 uses
+  %i.df = add i32 %i.l, -1                        ; 7 uses
   %i.dg = load i32, ptr @reccycle, align 4, !tbaa !7
   %i.dh = add nsw i32 %i.dg, 1
   store i32 %i.dh, ptr @reccycle, align 4, !tbaa !7
@@ -699,23 +699,19 @@ scalar.ph481.prol.loopexit:                       ; preds = %scalar.ph481.prol, 
   %i.xi = tail call i32 @llvm.smin.i32(i32 %i.df, i32 1)
   %i.xj = xor i32 %i.xi, -1
   %i.xk = add i32 %i.xj, %i.l                     ; 2 uses
-  %i.xl = zext i32 %i.xk to i64
+  %i.xl = zext i32 %i.xk to i64                   ; 2 uses
   %i.xm = add nuw nsw i64 %i.xl, 1                ; 2 uses
   %min.iters.check510 = icmp ult i32 %i.xk, 19
   br i1 %min.iters.check510, label %scalar.ph509.preheader, label %vector.memcheck497
 
 vector.memcheck497:                               ; preds = %.lr.ph64.i
   %i.xn = shl nuw nsw i64 %i.oq, 2                ; 4 uses
-  %12 = add nsw i64 %i.xn, -4
-  %smin = tail call i32 @llvm.smin.i32(i32 %i.df, i32 1)
-  %13 = xor i32 %smin, -1
-  %14 = add i32 %13, %i.l
-  %15 = zext i32 %14 to i64
-  %16 = shl nuw nsw i64 %15, 2                    ; 2 uses
-  %i.xo = sub nsw i64 %12, %16
+  %12 = shl nuw nsw i64 %i.xl, 2                  ; 2 uses
+  %13 = add nsw i64 %i.xn, -4
+  %i.xo = sub nsw i64 %13, %12
   %scevgep498 = getelementptr i8, ptr %i.hj, i64 %i.xo ; 2 uses
   %scevgep499 = getelementptr i8, ptr %i.hj, i64 %i.xn ; 2 uses
-  %i.xp = sub nsw i64 %i.xn, %16
+  %i.xp = sub nsw i64 %i.xn, %12
   %scevgep500 = getelementptr i8, ptr %.057648.i, i64 %i.xp
   %i.xq = getelementptr i8, ptr %.057648.i, i64 %i.xn
   %scevgep501 = getelementptr i8, ptr %i.xq, i64 4
@@ -1118,7 +1114,7 @@ bb.a:
   %i.i = trunc i64 %i.h to i32                    ; 16 uses
   %i.j = load ptr, ptr %1, align 8, !tbaa !10
   %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #13 ; 8 uses
-  %i.l = trunc i64 %i.k to i32                    ; 23 uses
+  %i.l = trunc i64 %i.k to i32                    ; 22 uses
   %i.m = add i32 %i.i, 200
   %i.n = add i32 %i.m, %i.l                       ; 2 uses
   %i.o = tail call ptr @AllocateCharMtx(i32 noundef %8, i32 noundef %i.n) #12 ; 9 uses
@@ -1380,7 +1376,7 @@ scalar.ph282:                                     ; preds = %scalar.ph282.prehea
   %i.dd = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store ptr %i.y, ptr %i.dd, align 8, !tbaa !19
   %i.de = add i32 %i.i, -1                        ; 9 uses
-  %i.df = add i32 %i.l, -1                        ; 8 uses
+  %i.df = add i32 %i.l, -1                        ; 7 uses
   %i.dg = load i32, ptr @reccycle, align 4, !tbaa !7
   %i.dh = add nsw i32 %i.dg, 1
   store i32 %i.dh, ptr @reccycle, align 4, !tbaa !7
@@ -1783,23 +1779,19 @@ scalar.ph485.prol.loopexit:                       ; preds = %scalar.ph485.prol, 
   %i.xi = tail call i32 @llvm.smin.i32(i32 %i.df, i32 1)
   %i.xj = xor i32 %i.xi, -1
   %i.xk = add i32 %i.xj, %i.l                     ; 2 uses
-  %i.xl = zext i32 %i.xk to i64
+  %i.xl = zext i32 %i.xk to i64                   ; 2 uses
   %i.xm = add nuw nsw i64 %i.xl, 1                ; 2 uses
   %min.iters.check514 = icmp ult i32 %i.xk, 19
   br i1 %min.iters.check514, label %scalar.ph513.preheader, label %vector.memcheck501
 
 vector.memcheck501:                               ; preds = %.lr.ph64.i
   %i.xn = shl nuw nsw i64 %i.oq, 2                ; 4 uses
-  %16 = add nsw i64 %i.xn, -4
-  %smin = tail call i32 @llvm.smin.i32(i32 %i.df, i32 1)
-  %17 = xor i32 %smin, -1
-  %18 = add i32 %17, %i.l
-  %19 = zext i32 %18 to i64
-  %20 = shl nuw nsw i64 %19, 2                    ; 2 uses
-  %i.xo = sub nsw i64 %16, %20
+  %16 = shl nuw nsw i64 %i.xl, 2                  ; 2 uses
+  %17 = add nsw i64 %i.xn, -4
+  %i.xo = sub nsw i64 %17, %16
   %scevgep502 = getelementptr i8, ptr %i.hj, i64 %i.xo ; 2 uses
   %scevgep503 = getelementptr i8, ptr %i.hj, i64 %i.xn ; 2 uses
-  %i.xp = sub nsw i64 %i.xn, %20
+  %i.xp = sub nsw i64 %i.xn, %16
   %scevgep504 = getelementptr i8, ptr %.057648.i, i64 %i.xp
   %i.xq = getelementptr i8, ptr %.057648.i, i64 %i.xn
   %scevgep505 = getelementptr i8, ptr %i.xq, i64 4

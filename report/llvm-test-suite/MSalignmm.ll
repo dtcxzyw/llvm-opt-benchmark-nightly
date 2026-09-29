@@ -205,7 +205,7 @@ bb.a:
   store i32 %i.r, ptr @reccycle, align 4, !tbaa !7
   %i.s = sub i32 %7, %6                           ; 22 uses
   %i.t = add i32 %i.s, 1                          ; 8 uses
-  %i.u = sub nsw i32 %9, %8                       ; 23 uses
+  %i.u = sub nsw i32 %9, %8                       ; 22 uses
   %i.v = add nuw nsw i32 %i.u, 1                  ; 11 uses
   %i.w = icmp slt i32 %i.u, 0
   br i1 %i.w, label %.preheader1, label %bb.d
@@ -608,23 +608,19 @@ scalar.ph124:                                     ; preds = %scalar.ph124.prol.l
   %i.act = tail call i32 @llvm.smin.i32(i32 %i.u, i32 1)
   %i.acu = add i32 %8, %i.act
   %i.acv = sub i32 %9, %i.acu                     ; 2 uses
-  %i.acw = zext i32 %i.acv to i64
+  %i.acw = zext i32 %i.acv to i64                 ; 2 uses
   %i.acx = add nuw nsw i64 %i.acw, 1              ; 2 uses
   %min.iters.check181 = icmp ult i32 %i.acv, 19
   br i1 %min.iters.check181, label %scalar.ph180.preheader, label %vector.memcheck168
 
 vector.memcheck168:                               ; preds = %.lr.ph62
   %i.acy = shl nuw nsw i64 %i.xa, 2               ; 4 uses
-  %14 = add nsw i64 %i.acy, -4
-  %smin = tail call i32 @llvm.smin.i32(i32 %i.u, i32 1)
-  %15 = add i32 %8, %smin
-  %16 = sub i32 %9, %15
-  %17 = zext i32 %16 to i64
-  %18 = shl nuw nsw i64 %17, 2                    ; 2 uses
-  %i.acz = sub nsw i64 %14, %18
+  %14 = shl nuw nsw i64 %i.acw, 2                 ; 2 uses
+  %15 = add nsw i64 %i.acy, -4
+  %i.acz = sub nsw i64 %15, %14
   %scevgep169 = getelementptr i8, ptr %i.rj, i64 %i.acz ; 2 uses
   %scevgep170 = getelementptr i8, ptr %i.rj, i64 %i.acy ; 2 uses
-  %i.ada = sub nsw i64 %i.acy, %18
+  %i.ada = sub nsw i64 %i.acy, %14
   %scevgep171 = getelementptr i8, ptr %.0653.lcssa, i64 %i.ada
   %i.adb = getelementptr i8, ptr %.0653.lcssa, i64 %i.acy
   %scevgep172 = getelementptr i8, ptr %i.adb, i64 4

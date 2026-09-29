@@ -204,7 +204,7 @@ define hidden void @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3M
 bb.a:
   %.sroa.0.0.copyload = load ptr, ptr %0, align 8 ; 3 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8 ; 5 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -218,7 +218,7 @@ bb.a:
   br i1 %.not.i, label %._crit_edge.i, label %bb.c
 
 ._crit_edge.i:                                    ; preds = %bb.a, %bb.c
-  %i.c = phi ptr [ %i.aw, %bb.c ], [ %.sroa.0.0.copyload, %bb.a ] ; 8 uses
+  %i.c = phi ptr [ %i.aw, %bb.c ], [ %.sroa.0.0.copyload, %bb.a ] ; 7 uses
   %i.d = icmp eq ptr %i.c, %.sroa.4.0.copyload
   br i1 %i.d, label %_RINvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4ItermEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldRmmuNCNvNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object17xorb_chunk_format20append_chunk_segment0NCINvNvB1r_8for_each4callmNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB4F_3VecmE14extend_trustedINtB2a_3MapBN_B2w_EE0E0E0EB2E_.exit, label %bb.b
 
@@ -232,17 +232,15 @@ bb.b:                                             ; preds = %._crit_edge.i
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.i = shl i64 %.sroa.5.0.copyload, 2           ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.i ; 2 uses
-  %2 = and i64 %i.g, -4                           ; 2 uses
-  %i.j = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.i
-  %scevgep2 = getelementptr i8, ptr %i.j, i64 %2  ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %i.c, i64 %2
+  %i.j = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.i ; 2 uses
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.i
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.g ; 2 uses
   %scevgep4 = getelementptr i8, ptr %i.b, i64 4
-  %bound0 = icmp ult ptr %scevgep, %scevgep3
-  %bound1 = icmp ult ptr %i.c, %scevgep2
+  %bound0 = icmp ult ptr %i.j, %.sroa.4.0.copyload
+  %bound1 = icmp ult ptr %i.c, %scevgep3
   %found.conflict = and i1 %bound0, %bound1
-  %bound05 = icmp ult ptr %scevgep, %scevgep4
-  %bound16 = icmp ult ptr %i.b, %scevgep2
+  %bound05 = icmp ult ptr %i.j, %scevgep4
+  %bound16 = icmp ult ptr %i.b, %scevgep3
   %found.conflict7 = and i1 %bound05, %bound16
   %conflict.rdx = or i1 %found.conflict, %found.conflict7
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph

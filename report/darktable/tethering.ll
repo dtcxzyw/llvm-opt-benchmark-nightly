@@ -204,10 +204,10 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.q
-  %i.cp = add i64 %i.cl, -4                       ; 2 uses
-  %i.cq = lshr exact i64 %i.cp, 2
+  %i.cp = add i64 %i.cl, -1                       ; 3 uses
+  %i.cq = lshr i64 %i.cp, 2
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cp, 32
+  %min.iters.check = icmp ult i64 %i.cl, 33
   br i1 %min.iters.check, label %.lr.ph.i.preheader44, label %vector.memcheck
 
 .lr.ph.i.preheader44:                             ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.preheader
@@ -215,10 +215,9 @@ bb.q:                                             ; preds = %bb.p
   br label %.lr.ph.i
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %8 = add i64 %i.cl, -1                          ; 2 uses
-  %i.cs = shl i64 %8, 2
+  %i.cs = shl i64 %i.cp, 2
   %scevgep = getelementptr i8, ptr %i.cn, i64 %i.cs
-  %scevgep39 = getelementptr i8, ptr %i.v, i64 %8
+  %scevgep39 = getelementptr i8, ptr %i.v, i64 %i.cp
   %bound0 = icmp ult ptr %i.cn, %scevgep39
   %bound1 = icmp ult ptr %i.v, %scevgep
   %found.conflict = and i1 %bound0, %bound1

@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 4 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
   %i.e = lshr i64 %i.d, 4                         ; 5 uses
   %min.iters.check = icmp ult i64 %i.d, 272
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -216,9 +216,7 @@ vector.memcheck:                                  ; preds = %bb.b
   %i.h = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %scevgep2 = getelementptr i8, ptr %i.h, i64 %i.g
   %scevgep3 = getelementptr i8, ptr %0, i64 12
-  %3 = and i64 %i.d, -16
-  %scevgep4 = getelementptr i8, ptr %0, i64 %3
-  %bound0 = icmp ult ptr %scevgep, %scevgep4
+  %bound0 = icmp ult ptr %scevgep, %1
   %bound1 = icmp ult ptr %scevgep3, %scevgep2
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph

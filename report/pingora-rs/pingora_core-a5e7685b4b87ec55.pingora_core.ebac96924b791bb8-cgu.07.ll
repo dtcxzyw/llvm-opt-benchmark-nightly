@@ -205,15 +205,15 @@ _RINvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter15SplitByteVectorNtNtB4_9histo
   call void @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatorhE9free_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %0, ptr noalias noundef nonnull %i.bg, i64 noundef %i.bh)
   %i.amw = call { ptr, i64 } @_RNvXNtCsc389t4z7aPt_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCsLfzX5BYWvK_15alloc_no_stdlib15stack_allocator9AllocatortE10alloc_cellCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %0, i64 noundef %3) ; 2 uses
   %i.amx = extractvalue { ptr, i64 } %i.amw, 0    ; 18 uses
-  %i.amy = extractvalue { ptr, i64 } %i.amw, 1    ; 28 uses
-  %..i50 = call noundef i64 @llvm.umin.i64(i64 %2, i64 %3) ; 4 uses
+  %i.amy = extractvalue { ptr, i64 } %i.amw, 1    ; 27 uses
+  %..i50 = call noundef i64 @llvm.umin.i64(i64 %2, i64 %3) ; 3 uses
   %.not2184 = icmp eq i64 %..i50, 0
   br i1 %.not2184, label %._crit_edge2178, label %.lr.ph2177
 
 .lr.ph2177:                                       ; preds = %_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter15SplitByteVectorNtNtB4_9histogram16HistogramLiteralNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllochECskeugdADtBsi_12pingora_core.exit
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.amx) ]
   %i.amz = add nsw i64 %..i50, -1
-  %i.ana = call i64 @llvm.umin.i64(i64 %i.amy, i64 %i.amz)
+  %i.ana = call i64 @llvm.umin.i64(i64 %i.amy, i64 %i.amz) ; 3 uses
   %i.anb = add i64 %i.ana, 1                      ; 3 uses
   %min.iters.check5907 = icmp ult i64 %i.anb, 25
   br i1 %min.iters.check5907, label %scalar.ph5906.preheader, label %vector.memcheck5900
@@ -223,13 +223,11 @@ scalar.ph5906.preheader:                          ; preds = %vector.body5910, %v
   br label %scalar.ph5906
 
 vector.memcheck5900:                              ; preds = %.lr.ph2177
-  %15 = add nsw i64 %..i50, -1
-  %umin = call i64 @llvm.umin.i64(i64 %i.amy, i64 %15) ; 2 uses
-  %i.anc = shl i64 %umin, 1
+  %i.anc = shl i64 %i.ana, 1
   %i.and = getelementptr i8, ptr %i.amx, i64 %i.anc
   %scevgep = getelementptr i8, ptr %i.and, i64 2
   %scevgep5901 = getelementptr i8, ptr %1, i64 12
-  %i.ane = shl i64 %umin, 4
+  %i.ane = shl i64 %i.ana, 4
   %i.anf = getelementptr i8, ptr %1, i64 %i.ane
   %scevgep5902 = getelementptr i8, ptr %i.anf, i64 14
   %bound05903 = icmp ult ptr %i.amx, %scevgep5902

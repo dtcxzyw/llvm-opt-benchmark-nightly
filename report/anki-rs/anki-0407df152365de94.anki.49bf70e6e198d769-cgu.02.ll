@@ -205,10 +205,8 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !14, !noundef !14 ; 3 uses
-  %2 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.promoted = load ptr, ptr %i.d, align 8        ; 8 uses
-  %.promoted17 = ptrtoaddr ptr %.promoted to i64  ; 2 uses
   %.not10 = icmp eq ptr %.promoted, %i.c
   br i1 %.not10, label %._crit_edge14, label %.lr.ph
 
@@ -222,8 +220,10 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !451, !noundef !14 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted11 = load i64, ptr %i.g, align 8, !alias.scope !451 ; 5 uses
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %.promoted to i64
   %i.h = add i64 %2, -4
-  %i.i = sub i64 %i.h, %.promoted17               ; 2 uses
+  %i.i = sub i64 %i.h, %3                         ; 4 uses
   %i.j = lshr i64 %i.i, 2
   %i.k = add nuw nsw i64 %i.j, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 124
@@ -232,14 +232,12 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.l = shl i64 %.promoted11, 1                  ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.f, i64 %i.l
-  %3 = add i64 %2, -4
-  %4 = sub i64 %3, %.promoted17                   ; 2 uses
-  %i.m = lshr i64 %4, 1
+  %i.m = lshr i64 %i.i, 1
   %i.n = and i64 %i.m, 9223372036854775806
   %i.o = getelementptr i8, ptr %i.f, i64 %i.l
   %i.p = getelementptr i8, ptr %i.o, i64 %i.n
   %scevgep18 = getelementptr i8, ptr %i.p, i64 2
-  %i.q = and i64 %4, -4
+  %i.q = and i64 %i.i, -4
   %i.r = getelementptr i8, ptr %.promoted, i64 %i.q
   %scevgep19 = getelementptr i8, ptr %i.r, i64 4
   %bound0 = icmp ult ptr %scevgep, %scevgep19
@@ -642,10 +640,8 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !14, !noundef !14 ; 3 uses
-  %2 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.promoted = load ptr, ptr %i.d, align 8        ; 8 uses
-  %.promoted17 = ptrtoaddr ptr %.promoted to i64  ; 2 uses
   %.not10 = icmp eq ptr %.promoted, %i.c
   br i1 %.not10, label %._crit_edge14, label %.lr.ph
 
@@ -659,8 +655,10 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !689, !noundef !14 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted11 = load i64, ptr %i.g, align 8, !alias.scope !689 ; 5 uses
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %.promoted to i64
   %i.h = add i64 %2, -2
-  %i.i = sub i64 %i.h, %.promoted17               ; 2 uses
+  %i.i = sub i64 %i.h, %3                         ; 4 uses
   %i.j = lshr i64 %i.i, 1
   %i.k = add nuw i64 %i.j, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 62
@@ -669,14 +667,12 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.l = shl i64 %.promoted11, 2                  ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.f, i64 %i.l
-  %3 = add i64 %2, -2
-  %4 = sub i64 %3, %.promoted17                   ; 2 uses
-  %i.m = shl i64 %4, 1
+  %i.m = shl i64 %i.i, 1
   %i.n = and i64 %i.m, -4
   %i.o = getelementptr i8, ptr %i.f, i64 %i.l
   %i.p = getelementptr i8, ptr %i.o, i64 %i.n
   %scevgep18 = getelementptr i8, ptr %i.p, i64 4
-  %i.q = and i64 %4, -2
+  %i.q = and i64 %i.i, -2
   %i.r = getelementptr i8, ptr %.promoted, i64 %i.q
   %scevgep19 = getelementptr i8, ptr %i.r, i64 2
   %bound0 = icmp ult ptr %scevgep, %scevgep19

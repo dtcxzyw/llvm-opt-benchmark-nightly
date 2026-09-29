@@ -30,11 +30,11 @@ bb.a:
 define void @ucnv_fromUWriteBytes_78(ptr nofree noundef writeonly captures(address_is_null) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readnone captures(address) %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6, ptr nofree noundef writeonly captures(none) %7) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
-  %i.c = ptrtoaddr ptr %4 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %4 to i64
+  %i.c = ptrtoaddr ptr %1 to i64
   %i.d = load ptr, ptr %3, align 8, !tbaa !42
-  %.fr = freeze ptr %i.d                          ; 17 uses
-  %i.e = ptrtoaddr ptr %.fr to i64                ; 4 uses
+  %.fr = freeze ptr %i.d                          ; 18 uses
+  %i.e = ptrtoaddr ptr %.fr to i64                ; 2 uses
   %i.f = icmp eq ptr %5, null
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -50,27 +50,23 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.l = xor i64 %i.e, -1
-  %i.m = add i64 %i.l, %i.c
+  %8 = ptrtoaddr ptr %4 to i64
+  %9 = ptrtoaddr ptr %.fr to i64
+  %i.l = xor i64 %9, -1
+  %i.m = add i64 %i.l, %8
   %i.n = add nsw i32 %2, -1
   %i.o = zext i32 %i.n to i64
-  %i.p = tail call i64 @llvm.umin.i64(i64 %i.m, i64 %i.o) ; 2 uses
-  %i.q = add nuw nsw i64 %i.p, 1                  ; 2 uses
+  %i.p = tail call i64 @llvm.umin.i64(i64 %i.m, i64 %i.o) ; 3 uses
+  %i.q = add nuw nsw i64 %i.p, 1                  ; 4 uses
   %min.iters.check = icmp samesign ult i64 %i.p, 27
   br i1 %min.iters.check, label %.lr.ph.preheader168, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %8 = xor i64 %i.e, -1
-  %9 = add i64 %8, %i.c
-  %10 = add nsw i32 %2, -1
-  %11 = zext i32 %10 to i64
-  %umin = tail call i64 @llvm.umin.i64(i64 %9, i64 %11) ; 2 uses
-  %12 = add nuw nsw i64 %umin, 1                  ; 2 uses
-  %scevgep = getelementptr i8, ptr %.fr, i64 %12  ; 2 uses
-  %i.r = shl nuw nsw i64 %umin, 2
+  %scevgep = getelementptr i8, ptr %.fr, i64 %i.q ; 2 uses
+  %i.r = shl nuw nsw i64 %i.p, 2
   %i.s = getelementptr i8, ptr %i.g, i64 %i.r
   %scevgep82 = getelementptr i8, ptr %i.s, i64 4  ; 2 uses
-  %scevgep83 = getelementptr i8, ptr %1, i64 %12  ; 2 uses
+  %scevgep83 = getelementptr i8, ptr %1, i64 %i.q ; 2 uses
   %bound0 = icmp ult ptr %.fr, %scevgep82
   %bound1 = icmp ult ptr %i.g, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -134,13 +130,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 iter.check:                                       ; preds = %bb.c
   %i.ah = xor i64 %i.e, -1
-  %i.ai = add i64 %i.ah, %i.c
+  %i.ai = add i64 %i.ah, %i.b
   %i.aj = add nsw i32 %2, -1
   %i.ak = zext i32 %i.aj to i64
   %umin98 = tail call i64 @llvm.umin.i64(i64 %i.ai, i64 %i.ak) ; 3 uses
   %i.al = add nuw nsw i64 %umin98, 1              ; 5 uses
   %min.iters.check100 = icmp samesign ult i64 %umin98, 3
-  %i.am = sub i64 %i.b, %i.e
+  %i.am = sub i64 %i.c, %i.e
   %diff.check = icmp ugt i64 %i.am, -32
   %or.cond = or i1 %min.iters.check100, %diff.check
   br i1 %or.cond, label %.lr.ph53.preheader, label %vector.main.loop.iter.check

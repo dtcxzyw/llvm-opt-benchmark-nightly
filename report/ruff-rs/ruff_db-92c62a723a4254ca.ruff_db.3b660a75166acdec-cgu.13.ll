@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 4 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
   %i.e = lshr i64 %i.d, 4                         ; 5 uses
   %min.iters.check = icmp ult i64 %i.d, 240
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -217,9 +217,7 @@ vector.memcheck:                                  ; preds = %bb.b
   %i.h = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %scevgep2 = getelementptr i8, ptr %i.h, i64 %i.g
   %scevgep3 = getelementptr i8, ptr %0, i64 8
-  %3 = and i64 %i.d, -16
-  %scevgep4 = getelementptr i8, ptr %0, i64 %3
-  %bound0 = icmp ult ptr %scevgep, %scevgep4
+  %bound0 = icmp ult ptr %scevgep, %1
   %bound1 = icmp ult ptr %scevgep3, %scevgep2
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
@@ -622,7 +620,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6resultINtB3_6ResultNtNtCs56aZGHL6Dc6_7ruff_db6system
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertINtBc_3BoxDNtNtCs4NRVxsYgnAr_4core5error5ErrorNtNtB10_6marker4SendNtB1x_4SyncEL_EINtNtB10_7convert4FromNtNtBe_6string6StringE4from11StringErrorBW_11descriptionCs56aZGHL6Dc6_7ruff_db(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #12 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertINtBc_3BoxDNtNtCs4NRVxsYgnAr_4core5error5ErrorNtNtB10_6marker4SendNtB1x_4SyncEL_EINtNtB10_7convert4FromNtNtBe_6string6StringE4from11StringErrorBW_11descriptionCs56aZGHL6Dc6_7ruff_db(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #12 {
 bb.a:
   ret { ptr, i64 } { ptr @184, i64 40 }
 }

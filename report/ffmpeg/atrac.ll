@@ -203,16 +203,15 @@ bb.a:
   br i1 %.not67, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %2 to i64                       ; 3 uses
-  %i.c = add nsw i64 %i.b, -1
+  %i.b = zext i32 %2 to i64                       ; 2 uses
+  %i.c = add nsw i64 %i.b, -1                     ; 2 uses
   %i.d = lshr i64 %i.c, 1
   %i.e = add nuw i64 %i.d, 1                      ; 2 uses
   %min.iters.check = icmp ult i32 %2, 15
   br i1 %min.iters.check, label %.lr.ph.preheader275, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %6 = add nsw i64 %i.b, -1
-  %i.f = lshr i64 %6, 1                           ; 2 uses
+  %i.f = lshr i64 %i.c, 1                         ; 2 uses
   %i.g = shl i64 %i.f, 4
   %i.h = getelementptr i8, ptr %5, i64 %i.g
   %scevgep = getelementptr i8, ptr %i.h, i64 200  ; 2 uses

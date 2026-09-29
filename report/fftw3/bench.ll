@@ -204,10 +204,10 @@ bb.aq:                                            ; preds = %bb.ap, %mkn.exit77.
   br i1 %i.hu, label %.lr.ph.i79.i.i, label %mknembed_many.exit.i.i
 
 .lr.ph.i79.i.i:                                   ; preds = %bb.aq
-  %i.hv = add nsw i32 %i.ht, -1                   ; 3 uses
+  %i.hv = add nsw i32 %i.ht, -1                   ; 2 uses
   %i.hw = load ptr, ptr %i.dq, align 8, !tbaa !58 ; 7 uses
   %i.hx = zext i32 %i.hv to i64                   ; 6 uses
-  %i.hy = icmp ne i32 %i.hv, 0
+  %i.hy = icmp ne i32 %i.hv, 0                    ; 3 uses
   %.neg201 = sext i1 %i.hy to i64
   %i.hz = zext nneg i32 %i.ht to i64
   %i.ia = add nsw i64 %.neg201, %i.hz             ; 3 uses
@@ -215,15 +215,14 @@ bb.aq:                                            ; preds = %bb.ap, %mkn.exit77.
   br i1 %min.iters.check186, label %scalar.ph185.preheader, label %vector.memcheck166
 
 vector.memcheck166:                               ; preds = %.lr.ph.i79.i.i
-  %.not202 = icmp eq i32 %i.hv, 0                 ; 2 uses
-  %i.ib = select i1 %.not202, i64 0, i64 4        ; 2 uses
+  %i.ib = select i1 %i.hy, i64 4, i64 0           ; 2 uses
   %scevgep168 = getelementptr i8, ptr %i.hn, i64 %i.ib ; 2 uses
   %i.ic = shl nuw nsw i64 %i.hx, 2
   %i.id = add nuw nsw i64 %i.ic, 4                ; 2 uses
   %scevgep169 = getelementptr i8, ptr %i.hn, i64 %i.id ; 2 uses
   %scevgep170 = getelementptr i8, ptr %i.hr, i64 %i.ib ; 2 uses
   %scevgep171 = getelementptr i8, ptr %i.hr, i64 %i.id ; 2 uses
-  %i.ie = select i1 %.not202, i64 -8, i64 4
+  %i.ie = select i1 %i.hy, i64 4, i64 -8
   %scevgep172 = getelementptr i8, ptr %i.hw, i64 %i.ie ; 2 uses
   %i.if = mul nuw nsw i64 %i.hx, 12
   %i.ig = getelementptr i8, ptr %i.hw, i64 %i.if
@@ -626,10 +625,10 @@ bb.dr:                                            ; preds = %bb.dq, %mkn.exit129
   br i1 %i.aaq, label %.lr.ph.i131.i.i, label %mknembed_many.exit.i.i23
 
 .lr.ph.i131.i.i:                                  ; preds = %bb.dr
-  %i.aar = add nsw i32 %i.aap, -1                 ; 3 uses
+  %i.aar = add nsw i32 %i.aap, -1                 ; 2 uses
   %i.aas = load ptr, ptr %i.vc, align 8, !tbaa !58 ; 7 uses
   %i.aat = zext i32 %i.aar to i64                 ; 6 uses
-  %i.aau = icmp ne i32 %i.aar, 0
+  %i.aau = icmp ne i32 %i.aar, 0                  ; 3 uses
   %.neg198 = sext i1 %i.aau to i64
   %i.aav = zext nneg i32 %i.aap to i64
   %i.aaw = add nsw i64 %.neg198, %i.aav           ; 3 uses
@@ -637,15 +636,14 @@ bb.dr:                                            ; preds = %bb.dq, %mkn.exit129
   br i1 %min.iters.check155, label %scalar.ph154.preheader, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph.i131.i.i
-  %.not199 = icmp eq i32 %i.aar, 0                ; 2 uses
-  %i.aax = select i1 %.not199, i64 0, i64 4       ; 2 uses
+  %i.aax = select i1 %i.aau, i64 4, i64 0         ; 2 uses
   %scevgep137 = getelementptr i8, ptr %i.aaj, i64 %i.aax ; 2 uses
   %i.aay = shl nuw nsw i64 %i.aat, 2
   %i.aaz = add nuw nsw i64 %i.aay, 4              ; 2 uses
   %scevgep138 = getelementptr i8, ptr %i.aaj, i64 %i.aaz ; 2 uses
   %scevgep139 = getelementptr i8, ptr %i.aan, i64 %i.aax ; 2 uses
   %scevgep140 = getelementptr i8, ptr %i.aan, i64 %i.aaz ; 2 uses
-  %i.aba = select i1 %.not199, i64 -8, i64 4
+  %i.aba = select i1 %i.aau, i64 4, i64 -8
   %scevgep141 = getelementptr i8, ptr %i.aas, i64 %i.aba ; 2 uses
   %i.abb = mul nuw nsw i64 %i.aat, 12
   %i.abc = getelementptr i8, ptr %i.aas, i64 %i.abb
@@ -1048,10 +1046,10 @@ bb.gq:                                            ; preds = %bb.gp, %mkn.exit114
   br i1 %i.asn, label %.lr.ph.i116.i, label %mknembed_many.exit.i
 
 .lr.ph.i116.i:                                    ; preds = %bb.gq
-  %i.aso = add nsw i32 %i.asm, -1                 ; 3 uses
+  %i.aso = add nsw i32 %i.asm, -1                 ; 2 uses
   %i.asp = load ptr, ptr %i.aoi, align 8, !tbaa !58 ; 7 uses
   %i.asq = zext i32 %i.aso to i64                 ; 6 uses
-  %i.asr = icmp ne i32 %i.aso, 0
+  %i.asr = icmp ne i32 %i.aso, 0                  ; 3 uses
   %.neg = sext i1 %i.asr to i64
   %i.ass = zext nneg i32 %i.asm to i64
   %i.ast = add nsw i64 %.neg, %i.ass              ; 3 uses
@@ -1059,15 +1057,14 @@ bb.gq:                                            ; preds = %bb.gp, %mkn.exit114
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i116.i
-  %.not = icmp eq i32 %i.aso, 0                   ; 2 uses
-  %i.asu = select i1 %.not, i64 0, i64 4          ; 2 uses
+  %i.asu = select i1 %i.asr, i64 4, i64 0         ; 2 uses
   %scevgep = getelementptr i8, ptr %i.asg, i64 %i.asu ; 2 uses
   %i.asv = shl nuw nsw i64 %i.asq, 2
   %i.asw = add nuw nsw i64 %i.asv, 4              ; 2 uses
   %scevgep122 = getelementptr i8, ptr %i.asg, i64 %i.asw ; 2 uses
   %scevgep123 = getelementptr i8, ptr %i.ask, i64 %i.asu ; 2 uses
   %scevgep124 = getelementptr i8, ptr %i.ask, i64 %i.asw ; 2 uses
-  %i.asx = select i1 %.not, i64 -8, i64 4
+  %i.asx = select i1 %i.asr, i64 4, i64 -8
   %scevgep125 = getelementptr i8, ptr %i.asp, i64 %i.asx ; 2 uses
   %i.asy = mul nuw nsw i64 %i.asq, 12
   %i.asz = getelementptr i8, ptr %i.asp, i64 %i.asy

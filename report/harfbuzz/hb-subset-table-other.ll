@@ -205,7 +205,6 @@ _ZN2OT18TupleVariationDataINS_7NumTypeILb1EtLj2EEEE18get_tuple_iteratorE10hb_arr
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK2OT9glyf_impl20CompositeGlyphRecord16transform_pointsE10hb_array_tI15contour_point_tERA4_KfRKS3_(ptr noundef nonnull align 1 dereferenceable(5) %0, ptr %1, i64 %2, ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 4 dereferenceable(12) %4) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %.fr102 = freeze i64 %2                         ; 8 uses
   %i.a = load i16, ptr %0, align 1, !tbaa !180
   %i.b = and i16 %i.a, 24
   %i.c = icmp eq i16 %i.b, 8
@@ -221,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = and i64 %.fr102, 4294967295              ; 2 uses
+  %i.i = and i64 %2, 4294967295                   ; 2 uses
   %.idx52.i = mul nuw nsw i64 %i.i, 12
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 %.idx52.i
   %.not3148.i = icmp eq i64 %i.i, 0
@@ -241,7 +240,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.e, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = and i64 %.fr102, 4294967295              ; 2 uses
+  %i.o = and i64 %2, 4294967295                   ; 2 uses
   %.idx51.i = mul nuw nsw i64 %i.o, 12
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %.idx51.i
   %.not3045.i = icmp eq i64 %i.o, 0
@@ -261,7 +260,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.h, label %bb.g, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9translateERK15contour_point_t10hb_array_tIS2_E.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = and i64 %.fr102, 4294967295              ; 2 uses
+  %i.u = and i64 %2, 4294967295                   ; 2 uses
   %.idx.i = mul nuw nsw i64 %i.u, 12
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i
   %.not43.i = icmp eq i64 %i.u, 0
@@ -290,24 +289,22 @@ _ZN2OT9glyf_impl20CompositeGlyphRecord9translateERK15contour_point_t10hb_array_t
   br i1 %.not104, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_point_tE.exit, label %bb.h
 
 bb.h:                                             ; preds = %_ZN2OT9glyf_impl20CompositeGlyphRecord9translateERK15contour_point_t10hb_array_tIS2_E.exit
-  %i.ah = and i64 %.fr102, 4294967295             ; 2 uses
-  %.idx.i16 = mul nuw nsw i64 %i.ah, 12           ; 3 uses
+  %i.ah = and i64 %2, 4294967295                  ; 2 uses
+  %.idx.i16 = mul nuw nsw i64 %i.ah, 12           ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i16
   %.not21.i = icmp eq i64 %i.ah, 0
   br i1 %.not21.i, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_point_tE.exit, label %.lr.ph.i17.preheader
 
 .lr.ph.i17.preheader:                             ; preds = %bb.h
   %i.aj = add nsw i64 %.idx.i16, -12              ; 2 uses
-  %i.ak = udiv i64 %i.aj, 12
+  %i.ak = udiv i64 %i.aj, 12                      ; 2 uses
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check82 = icmp ult i64 %i.aj, 96
   br i1 %min.iters.check82, label %.lr.ph.i17.preheader105, label %vector.memcheck75
 
 vector.memcheck75:                                ; preds = %.lr.ph.i17.preheader
-  %5 = add nsw i64 %.idx.i16, -12                 ; 2 uses
-  %6 = urem i64 %5, 12
-  %7 = sub nuw nsw i64 %5, %6
-  %i.am = getelementptr i8, ptr %1, i64 %7
+  %5 = mul nuw i64 %i.ak, 12
+  %i.am = getelementptr i8, ptr %1, i64 %5
   %scevgep76 = getelementptr i8, ptr %i.am, i64 8
   %scevgep77 = getelementptr inbounds nuw i8, ptr %3, i64 16
   %bound078 = icmp ult ptr %1, %scevgep77
@@ -414,24 +411,22 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_point_tE.exit27, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.cs = and i64 %.fr102, 4294967295             ; 2 uses
-  %.idx.i22 = mul nuw nsw i64 %i.cs, 12           ; 3 uses
+  %i.cs = and i64 %2, 4294967295                  ; 2 uses
+  %.idx.i22 = mul nuw nsw i64 %i.cs, 12           ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i22
   %.not21.i23 = icmp eq i64 %i.cs, 0
   br i1 %.not21.i23, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_point_tE.exit27, label %.lr.ph.i24.preheader
 
 .lr.ph.i24.preheader:                             ; preds = %bb.j
   %i.cu = add nsw i64 %.idx.i22, -12              ; 2 uses
-  %i.cv = udiv i64 %i.cu, 12
+  %i.cv = udiv i64 %i.cu, 12                      ; 2 uses
   %i.cw = add nuw nsw i64 %i.cv, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.cu, 96
   br i1 %min.iters.check, label %.lr.ph.i24.preheader111, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i24.preheader
-  %8 = add nsw i64 %.idx.i22, -12                 ; 2 uses
-  %9 = urem i64 %8, 12
-  %10 = sub nuw nsw i64 %8, %9
-  %i.cx = getelementptr i8, ptr %1, i64 %10
+  %6 = mul nuw i64 %i.cv, 12
+  %i.cx = getelementptr i8, ptr %1, i64 %6
   %scevgep = getelementptr i8, ptr %i.cx, i64 8
   %scevgep65 = getelementptr inbounds nuw i8, ptr %3, i64 16
   %bound0 = icmp ult ptr %1, %scevgep65
@@ -536,7 +531,7 @@ _ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_po
   br i1 %or.cond.i28, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %_ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_point_tE.exit27
-  %i.fc = and i64 %.fr102, 4294967295             ; 2 uses
+  %i.fc = and i64 %2, 4294967295                  ; 2 uses
   %.idx52.i39 = mul nuw nsw i64 %i.fc, 12
   %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 %.idx52.i39
   %.not3148.i40 = icmp eq i64 %i.fc, 0
@@ -556,7 +551,7 @@ bb.l:                                             ; preds = %_ZN2OT9glyf_impl20C
   br i1 %i.ey, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.fi = and i64 %.fr102, 4294967295             ; 2 uses
+  %i.fi = and i64 %2, 4294967295                  ; 2 uses
   %.idx51.i34 = mul nuw nsw i64 %i.fi, 12
   %i.fj = getelementptr inbounds nuw i8, ptr %1, i64 %.idx51.i34
   %.not3045.i35 = icmp eq i64 %i.fi, 0
@@ -576,7 +571,7 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.fb, label %bb.o, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_point_tE.exit
 
 bb.o:                                             ; preds = %bb.n
-  %i.fo = and i64 %.fr102, 4294967295             ; 2 uses
+  %i.fo = and i64 %2, 4294967295                  ; 2 uses
   %.idx.i29 = mul nuw nsw i64 %i.fo, 12
   %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i29
   %.not43.i30 = icmp eq i64 %i.fo, 0

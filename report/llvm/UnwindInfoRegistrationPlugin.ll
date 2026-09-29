@@ -202,13 +202,13 @@ bb.b:                                             ; preds = %.lr.ph.preheader.i.
   %i.p = load ptr, ptr %2, align 8, !tbaa !52     ; 8 uses
   %i.q = load i32, ptr %i.d, align 8, !tbaa !53   ; 2 uses
   %i.r = zext i32 %i.q to i64
-  %.idx.i.i3 = shl nuw nsw i64 %i.r, 4            ; 3 uses
+  %.idx.i.i3 = shl nuw nsw i64 %i.r, 4            ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i.i3
   %.not16.i.i = icmp eq i32 %i.q, 0
   br i1 %.not16.i.i, label %.loopexit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.b
-  %i.t = add nsw i64 %.idx.i.i3, -16
+  %i.t = add nsw i64 %.idx.i.i3, -16              ; 2 uses
   %i.u = lshr exact i64 %i.t, 4
   %i.v = call i64 @llvm.umin.i64(i64 %i.u, i64 %i.f) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.v, 14
@@ -216,8 +216,7 @@ bb.b:                                             ; preds = %.lr.ph.preheader.i.
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %scevgep = getelementptr i8, ptr %i.m, i64 8
-  %7 = add nsw i64 %.idx.i.i3, -16
-  %i.w = lshr exact i64 %7, 4
+  %i.w = lshr exact i64 %i.t, 4
   %umin = call i64 @llvm.umin.i64(i64 %i.w, i64 %i.f)
   %i.x = shl nuw nsw i64 %umin, 4                 ; 2 uses
   %i.y = getelementptr i8, ptr %i.m, i64 %i.x

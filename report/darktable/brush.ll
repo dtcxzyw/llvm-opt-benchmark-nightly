@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = fsub reassoc nsz arcp contract afn float %spec.select, %.082
   %.sink = select i1 %i.r, float %i.u, float %i.t
   %i.v = fmul reassoc nsz arcp contract afn float %i.s, %.sink
-  %.080 = fptosi float %i.v to i32                ; 8 uses
+  %.080 = fptosi float %i.v to i32                ; 7 uses
   %i.w = icmp slt i32 %.080, 2
   br i1 %i.w, label %dt_masks_dynbuf_reserve_n.exit97.thread, label %bb.c
 
@@ -301,15 +301,13 @@ dt_masks_dynbuf_reserve_n.exit97:                 ; preds = %dt_masks_dynbuf_res
 .lr.ph.preheader:                                 ; preds = %dt_masks_dynbuf_reserve_n.exit97
   %i.bg = getelementptr [4 x i8], ptr %i.bd, i64 %i.bc ; 6 uses
   %i.bh = add nsw i32 %.080, -2                   ; 2 uses
-  %i.bi = zext i32 %i.bh to i64
+  %i.bi = zext i32 %i.bh to i64                   ; 2 uses
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.bh, 7
   br i1 %min.iters.check, label %.lr.ph.preheader55, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %4 = add nsw i32 %.080, -2
-  %5 = zext i32 %4 to i64
-  %i.bk = shl nuw nsw i64 %5, 3                   ; 2 uses
+  %i.bk = shl nuw nsw i64 %i.bi, 3                ; 2 uses
   %i.bl = getelementptr i8, ptr %.1.i, i64 %i.bk
   %scevgep = getelementptr i8, ptr %i.bl, i64 8   ; 2 uses
   %i.bm = shl i64 %i.bc, 2
@@ -712,7 +710,7 @@ bb.z:                                             ; preds = %bb.y
   %i.iy = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %.065.i)
   %i.iz = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.ir, float %i.is)
   %i.ja = fmul reassoc nsz arcp contract afn float %i.iz, %i.iy
-  %i.jb = fptosi float %i.ja to i32               ; 8 uses
+  %i.jb = fptosi float %i.ja to i32               ; 7 uses
   %i.jc = icmp slt i32 %i.jb, 2
   br i1 %i.jc, label %_brush_points_recurs_border_small_gaps.exit, label %bb.aa
 
@@ -801,15 +799,13 @@ dt_masks_dynbuf_reserve_n.exit82.i:               ; preds = %._crit_edge.i77.i, 
 .lr.ph.preheader.i:                               ; preds = %dt_masks_dynbuf_reserve_n.exit82.i
   %i.kf = getelementptr [4 x i8], ptr %i.kc, i64 %i.kb ; 6 uses
   %i.kg = add nsw i32 %i.jb, -2                   ; 2 uses
-  %i.kh = zext i32 %i.kg to i64
+  %i.kh = zext i32 %i.kg to i64                   ; 2 uses
   %i.ki = add nuw nsw i64 %i.kh, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.kg, 7
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
-  %14 = add nsw i32 %i.jb, -2
-  %15 = zext i32 %14 to i64
-  %i.kj = shl nuw nsw i64 %15, 3                  ; 2 uses
+  %i.kj = shl nuw nsw i64 %i.kh, 3                ; 2 uses
   %i.kk = getelementptr i8, ptr %.1.i.i, i64 %i.kj
   %scevgep = getelementptr i8, ptr %i.kk, i64 8   ; 2 uses
   %i.kl = shl i64 %i.kb, 2

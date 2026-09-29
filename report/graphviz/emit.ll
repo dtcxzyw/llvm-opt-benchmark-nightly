@@ -205,25 +205,24 @@ vector.scevcheck:                                 ; preds = %gv_calloc.exit196.p
   br i1 %i.hr, label %gv_calloc.exit196.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.hs = shl nuw i64 %spec.select190.i, 4        ; 4 uses
+  %i.hs = shl nuw i64 %spec.select190.i, 4        ; 3 uses
   %i.ht = getelementptr i8, ptr %i.hm, i64 %i.hs
   %scevgep = getelementptr i8, ptr %i.ht, i64 -8
   %i.hu = mul i64 %i.fe, %i.go
-  %i.hv = shl i64 %i.hu, 4                        ; 3 uses
-  %2 = getelementptr i8, ptr %i.eg, i64 %i.hv
-  %i.hw = getelementptr i8, ptr %2, i64 %i.hs
+  %i.hv = shl i64 %i.hu, 4                        ; 2 uses
+  %2 = add i64 %i.hv, %i.hs                       ; 2 uses
+  %i.hw = getelementptr i8, ptr %i.eg, i64 %2
   %scevgep64 = getelementptr i8, ptr %i.hw, i64 -8
   %scevgep65 = getelementptr i8, ptr %i.hm, i64 8
-  %scevgep66 = getelementptr i8, ptr %i.hm, i64 %i.hs
-  %i.hx = getelementptr i8, ptr %i.eg, i64 %i.hv
-  %scevgep67 = getelementptr i8, ptr %i.hx, i64 8
-  %i.hy = getelementptr i8, ptr %i.eg, i64 %i.hv
-  %scevgep68 = getelementptr i8, ptr %i.hy, i64 %i.hs
+  %i.hx = getelementptr i8, ptr %i.hm, i64 %i.hs
+  %scevgep67 = getelementptr i8, ptr %i.eg, i64 %i.hv
+  %i.hy = getelementptr i8, ptr %scevgep67, i64 8
+  %scevgep68 = getelementptr i8, ptr %i.eg, i64 %2
   %bound0 = icmp ult ptr %i.hm, %scevgep64
   %bound1 = icmp ult ptr %invariant.gep208.i, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   %bound069 = icmp ult ptr %scevgep65, %scevgep68
-  %bound170 = icmp ult ptr %scevgep67, %scevgep66
+  %bound170 = icmp ult ptr %i.hy, %i.hx
   %found.conflict71 = and i1 %bound069, %bound170
   %conflict.rdx = or i1 %found.conflict, %found.conflict71
   br i1 %conflict.rdx, label %gv_calloc.exit196.i.preheader, label %vector.ph

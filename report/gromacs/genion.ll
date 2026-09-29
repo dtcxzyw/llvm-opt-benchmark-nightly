@@ -205,10 +205,10 @@ bb.o:                                             ; preds = %.lr.ph149, %bb.o
   br i1 %i.hk, label %.lr.ph153.preheader, label %._crit_edge154
 
 .lr.ph153.preheader:                              ; preds = %._crit_edge150
-  %i.hl = sext i32 %i.hj to i64                   ; 8 uses
-  %i.hm = sext i32 %i.hi to i64                   ; 3 uses
+  %i.hl = sext i32 %i.hj to i64                   ; 7 uses
+  %i.hm = sext i32 %i.hi to i64                   ; 2 uses
   %i.hn = add nsw i64 %i.hl, 1
-  %i.ho = tail call i64 @llvm.smax.i64(i64 %i.hm, i64 %i.hn)
+  %i.ho = tail call i64 @llvm.smax.i64(i64 %i.hm, i64 %i.hn) ; 2 uses
   %i.hp = sub i64 %i.ho, %i.hl                    ; 3 uses
   %min.iters.check41 = icmp ult i64 %i.hp, 16
   br i1 %min.iters.check41, label %.lr.ph153.preheader52, label %vector.memcheck
@@ -216,9 +216,7 @@ bb.o:                                             ; preds = %.lr.ph149, %bb.o
 vector.memcheck:                                  ; preds = %.lr.ph153.preheader
   %i.hq = mul nsw i64 %i.hl, 12                   ; 2 uses
   %scevgep = getelementptr i8, ptr %5, i64 %i.hq
-  %10 = add nsw i64 %i.hl, 1
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.hm, i64 %10)
-  %i.hr = mul nsw i64 %smax, 12                   ; 2 uses
+  %i.hr = mul nsw i64 %i.ho, 12                   ; 2 uses
   %scevgep38 = getelementptr i8, ptr %5, i64 %i.hr
   %scevgep39 = getelementptr i8, ptr %i.c, i64 %i.hq
   %scevgep40 = getelementptr i8, ptr %i.c, i64 %i.hr

@@ -205,9 +205,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.d = icmp eq i64 %3, -1
-  %.not = icmp ult i64 %3, %1
   %i.e = add i64 %1, -1
-  %.027 = select i1 %.not, i64 %3, i64 %i.e       ; 3 uses
+  %.027 = tail call i64 @llvm.umin.i64(i64 %3, i64 %i.e) ; 3 uses
   %.not40 = icmp eq i64 %.027, 0
   br i1 %.not40, label %.critedge, label %.lr.ph
 
@@ -610,7 +609,7 @@ bb.l:                                             ; preds = %ma_zero_memory_defa
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define { i64, i32 } @ma_device_job_thread_config_init() local_unnamed_addr #1 {
+define noundef { i64, i32 } @ma_device_job_thread_config_init() local_unnamed_addr #1 {
 bb.a:
   ret { i64, i32 } { i64 137438953472, i32 0 }
 }

@@ -204,20 +204,20 @@ bb.e:                                             ; preds = %_ZSt9__reverseIN9__
   br i1 %i.y, label %bb.f, label %_ZSt9__reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_St26random_access_iterator_tag.exit.i.i, !llvm.loop !72
 
 bb.f:                                             ; preds = %bb.e
-  %2 = ptrtoaddr ptr %i.n to i64                  ; 2 uses
-  %3 = ptrtoaddr ptr %i.o to i64                  ; 6 uses
   %.not11.i13.i.i = icmp ult ptr %i.o, %.ptr35.i.i
   br i1 %.not11.i13.i.i, label %.lr.ph.i15.i.i.preheader, label %_ZSt16next_permutationIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEbT_S7_.exit.thread
 
 .lr.ph.i15.i.i.preheader:                         ; preds = %bb.f
+  %2 = ptrtoaddr ptr %i.n to i64
   %i.z = add i64 %2, -8
+  %3 = ptrtoaddr ptr %i.o to i64                  ; 3 uses
   %i.aa = add i64 %3, 4
   %i.ab = tail call i64 @llvm.umax.i64(i64 %i.z, i64 %i.aa)
   %i.ac = add i64 %i.ab, -4                       ; 2 uses
   %i.ad = icmp ne i64 %i.ac, %3
-  %i.ae = zext i1 %i.ad to i64                    ; 2 uses
+  %i.ae = zext i1 %i.ad to i64                    ; 3 uses
   %i.af = add i64 %3, %i.ae
-  %i.ag = sub i64 %i.ac, %i.af
+  %i.ag = sub i64 %i.ac, %i.af                    ; 2 uses
   %i.ah = lshr i64 %i.ag, 3
   %i.ai = add nuw nsw i64 %i.ah, %i.ae            ; 2 uses
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
@@ -225,24 +225,15 @@ bb.f:                                             ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i15.i.i.preheader88, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i15.i.i.preheader
-  %scevgep = getelementptr i8, ptr %i.o, i64 4
-  %4 = add i64 %2, -8
-  %5 = add i64 %3, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 %5)
-  %6 = add i64 %umax, -4                          ; 2 uses
-  %7 = icmp ne i64 %6, %3
-  %umin = zext i1 %7 to i64                       ; 2 uses
-  %8 = add i64 %3, %umin
-  %9 = sub i64 %6, %8
-  %i.ak = lshr i64 %9, 3
-  %i.al = add nuw nsw i64 %i.ak, %umin            ; 2 uses
-  %i.am = shl nuw i64 %i.al, 2
-  %scevgep81 = getelementptr i8, ptr %scevgep, i64 %i.am
-  %scevgep82 = getelementptr i8, ptr %i.n, i64 -4
-  %10 = mul nsw i64 %i.al, -4
-  %scevgep83 = getelementptr i8, ptr %scevgep82, i64 %10
+  %i.ak = lshr i64 %i.ag, 3
+  %i.al = add nuw nsw i64 %i.ak, %i.ae
+  %i.am = shl nuw i64 %i.al, 2                    ; 2 uses
+  %scevgep81 = getelementptr i8, ptr %i.o, i64 %i.am
+  %scevgep82 = getelementptr i8, ptr %scevgep81, i64 4
+  %4 = sub nuw nsw i64 -4, %i.am
+  %scevgep83 = getelementptr i8, ptr %i.n, i64 %4
   %bound0 = icmp ult ptr %i.o, %i.n
-  %bound1 = icmp ult ptr %scevgep83, %scevgep81
+  %bound1 = icmp ult ptr %scevgep83, %scevgep82
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i15.i.i.preheader88, label %vector.ph
 

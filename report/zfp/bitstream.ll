@@ -202,9 +202,9 @@ bb.d:                                             ; preds = %stream_skip.exit, %
 ; Function Attrs: nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define range(i64 0, 64) i64 @stream_flush(ptr nofree noundef captures(none) %0) local_unnamed_addr #5 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !16     ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !16     ; 3 uses
   %i.b = sub i64 0, %i.a
-  %i.c = and i64 %i.b, 63                         ; 5 uses
+  %i.c = and i64 %i.b, 63                         ; 4 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -227,16 +227,14 @@ bb.b:                                             ; preds = %bb.a
 
 .peel.next.preheader:                             ; preds = %.lr.ph.i
   %i.k = add i64 %i.a, %i.c
-  %i.l = add i64 %i.k, -128                       ; 2 uses
+  %i.l = add i64 %i.k, -128                       ; 3 uses
   %i.m = lshr i64 %i.l, 6
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.l, 1216
   br i1 %min.iters.check, label %.peel.next.preheader17, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.peel.next.preheader
-  %1 = add i64 %i.a, %i.c
-  %2 = add i64 %1, -128
-  %i.o = lshr i64 %2, 3
+  %i.o = lshr i64 %i.l, 3
   %i.p = and i64 %i.o, 2305843009213693944
   %i.q = getelementptr i8, ptr %.promoted.i, i64 %i.p
   %scevgep = getelementptr i8, ptr %i.q, i64 16

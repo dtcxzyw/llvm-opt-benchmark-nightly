@@ -204,9 +204,9 @@ _RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define hidden void @_RINvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterjENCNvMs_NtCs4PheDXcg4wa_10polars_row6widthsNtB1w_9RowWidths4push0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB2s_8for_each4calljNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB3F_3VecjE14extend_trustedBN_E0E0EB1y_(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !10387 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !dbg !10456, !nonnull !402, !noundef !402 ; 8 uses
+  %i.a = load ptr, ptr %0, align 8, !dbg !10456, !nonnull !402, !noundef !402 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !10456
-  %i.c = load ptr, ptr %i.b, align 8, !dbg !10456, !nonnull !402, !noundef !402 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !dbg !10456, !nonnull !402, !noundef !402 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !10457
   %i.e = load ptr, ptr %i.d, align 8, !dbg !10457, !nonnull !402, !align !410, !noundef !402 ; 6 uses
   %.sroa.0.0.copyload = load ptr, ptr %1, align 8, !dbg !10458 ; 2 uses
@@ -227,17 +227,15 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.k = shl i64 %.sroa.5.0.copyload, 3, !dbg !10462 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !10462 ; 2 uses
-  %2 = and i64 %i.i, -8, !dbg !10462              ; 2 uses
-  %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !10462
-  %scevgep2 = getelementptr i8, ptr %i.l, i64 %2, !dbg !10462 ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %i.a, i64 %2, !dbg !10462
+  %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !10462 ; 2 uses
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.k, !dbg !10462
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.i, !dbg !10462 ; 2 uses
   %scevgep4 = getelementptr i8, ptr %i.e, i64 8, !dbg !10462
-  %bound0 = icmp ult ptr %scevgep, %scevgep3, !dbg !10462
-  %bound1 = icmp ult ptr %i.a, %scevgep2, !dbg !10462
+  %bound0 = icmp ult ptr %i.l, %i.c, !dbg !10462
+  %bound1 = icmp ult ptr %i.a, %scevgep3, !dbg !10462
   %found.conflict = and i1 %bound0, %bound1, !dbg !10462
-  %bound05 = icmp ult ptr %scevgep, %scevgep4, !dbg !10462
-  %bound16 = icmp ult ptr %i.e, %scevgep2, !dbg !10462
+  %bound05 = icmp ult ptr %i.l, %scevgep4, !dbg !10462
+  %bound16 = icmp ult ptr %i.e, %scevgep3, !dbg !10462
   %found.conflict7 = and i1 %bound05, %bound16, !dbg !10462
   %conflict.rdx = or i1 %found.conflict, %found.conflict7, !dbg !10462
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph, !dbg !10463

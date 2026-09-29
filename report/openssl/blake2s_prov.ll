@@ -154,10 +154,10 @@ ossl_blake2s_update.exit:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %3 = alloca [64 x i8], align 16                 ; 12 uses
   br i1 %rt.conflict, label %ossl_blake2s_update.exit.rtscalar, label %ossl_blake2s_update.exit.rtvec, !prof !10
 
 ossl_blake2s_update.exit.rtvec:                   ; preds = %ossl_blake2s_update.exit
-  %3 = alloca [64 x i8], align 16                 ; 6 uses
   %i.e = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.e, i8 0, i64 96, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !11
@@ -189,7 +189,6 @@ ossl_blake2s_update.exit.rtvec:                   ; preds = %ossl_blake2s_update
   br label %ossl_blake2s_update.exit.rtcont
 
 ossl_blake2s_update.exit.rtscalar:                ; preds = %ossl_blake2s_update.exit
-  %4 = alloca [64 x i8], align 16                 ; 6 uses
   %i.t = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.t, i8 0, i64 96, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !11
@@ -235,18 +234,18 @@ ossl_blake2s_update.exit.rtscalar:                ; preds = %ossl_blake2s_update
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.as = xor i32 %.val.7.i.scalar, 1541459225
   store i32 %i.as, ptr %i.ar, align 4, !tbaa !11
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %4, i8 0, i64 64, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %3, i8 0, i64 64, i1 false)
   %i.at = lshr i32 %.val.i.scalar, 8
   %i.au = and i32 %i.at, 255
   %i.av = zext nneg i32 %i.au to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %4, ptr align 1 %2, i64 %i.av, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %3, ptr align 1 %2, i64 %i.av, i1 false)
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ax, ptr noundef nonnull align 16 dereferenceable(64) %4, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ax, ptr noundef nonnull align 16 dereferenceable(64) %3, i64 64, i1 false)
   store i64 64, ptr %i.aw, align 8, !tbaa !15
-  call void @OPENSSL_cleanse(ptr noundef nonnull %4, i64 noundef 64) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  call void @OPENSSL_cleanse(ptr noundef nonnull %3, i64 noundef 64) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   br label %ossl_blake2s_update.exit.rtcont
 
 ossl_blake2s_update.exit.rtcont:                  ; preds = %ossl_blake2s_update.exit.rtscalar, %ossl_blake2s_update.exit.rtvec

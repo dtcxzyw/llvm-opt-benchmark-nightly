@@ -204,21 +204,20 @@ cpyr1.exit201:                                    ; preds = %.lr.ph.i197, %.lr.p
   br i1 %or.cond800, label %vector.memcheck761, label %.lr.ph.i204.preheader
 
 vector.memcheck761:                               ; preds = %.lr.ph.preheader.i202
-  %i.fs = shl nsw i64 %i.fg, 3                    ; 2 uses
-  %3 = add nsw i64 %i.fs, 8
+  %i.fs = shl nsw i64 %i.fg, 3
   %i.ft = shl nuw nsw i64 %wide.trip.count.i203, 3
+  %3 = add nsw i64 %i.fs, 8                       ; 2 uses
   %4 = sub nsw i64 %3, %i.ft
-  %scevgep762 = getelementptr i8, ptr %i.m, i64 %4
-  %i.fu = getelementptr i8, ptr %i.m, i64 %i.fs
-  %scevgep763 = getelementptr i8, ptr %i.fu, i64 8
+  %i.fu = getelementptr i8, ptr %i.m, i64 %4
+  %scevgep763 = getelementptr i8, ptr %i.m, i64 %3
   %i.fv = shl nsw i64 %i.fg, 4                    ; 2 uses
-  %5 = add nsw i64 %i.fv, 24
-  %6 = shl nuw nsw i64 %wide.trip.count.i203, 4
-  %i.fw = sub nsw i64 %5, %6
+  %5 = shl nuw nsw i64 %wide.trip.count.i203, 4
+  %6 = add nsw i64 %i.fv, 24
+  %i.fw = sub nsw i64 %6, %5
   %scevgep764 = getelementptr i8, ptr %1, i64 %i.fw
   %i.fx = getelementptr i8, ptr %1, i64 %i.fv
   %scevgep765 = getelementptr i8, ptr %i.fx, i64 16
-  %bound0766 = icmp ult ptr %scevgep762, %scevgep765
+  %bound0766 = icmp ult ptr %i.fu, %scevgep765
   %bound1767 = icmp ult ptr %scevgep764, %scevgep763
   %found.conflict768 = and i1 %bound0766, %bound1767
   br i1 %found.conflict768, label %.lr.ph.i204.preheader, label %vector.ph771

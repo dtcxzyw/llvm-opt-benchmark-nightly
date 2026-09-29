@@ -204,8 +204,6 @@ bb.a:
     #dbg_declare(ptr poison, !6418, !DIExpression(), !6437)
     #dbg_value(ptr %0, !6430, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6438)
     #dbg_value(ptr %1, !6430, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6438)
-  %3 = ptrtoaddr ptr %0 to i64, !dbg !6519        ; 2 uses
-  %4 = ptrtoaddr ptr %1 to i64, !dbg !6519        ; 2 uses
   %.sroa.07.0.copyload = load ptr, ptr %2, align 8, !dbg !6519 ; 2 uses
     #dbg_value(ptr %.sroa.07.0.copyload, !6431, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6438)
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !6519
@@ -239,8 +237,10 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %.lr.ph.i.i.preheader, !dbg !6521
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.a
-  %i.b = add i64 %4, -4, !dbg !6521
-  %i.c = sub i64 %i.b, %3, !dbg !6521             ; 2 uses
+  %3 = ptrtoaddr ptr %1 to i64, !dbg !6521
+  %4 = ptrtoaddr ptr %0 to i64, !dbg !6521
+  %i.b = add i64 %3, -4, !dbg !6521
+  %i.c = sub i64 %i.b, %4, !dbg !6521             ; 3 uses
   %i.d = lshr i64 %i.c, 2, !dbg !6521
   %i.e = add nuw nsw i64 %i.d, 1, !dbg !6521      ; 2 uses
   %min.iters.check = icmp ult i64 %i.c, 108, !dbg !6521
@@ -249,9 +249,7 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.f = shl i64 %.sroa.48.0.copyload, 2, !dbg !6521 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.5.0.copyload, i64 %i.f, !dbg !6521
-  %5 = add i64 %4, -4, !dbg !6521
-  %6 = sub i64 %5, %3, !dbg !6521
-  %i.g = and i64 %6, -4, !dbg !6521               ; 2 uses
+  %i.g = and i64 %i.c, -4, !dbg !6521             ; 2 uses
   %i.h = getelementptr i8, ptr %.sroa.5.0.copyload, i64 %i.f, !dbg !6521
   %i.i = getelementptr i8, ptr %i.h, i64 %i.g, !dbg !6521
   %scevgep10 = getelementptr i8, ptr %i.i, i64 4, !dbg !6521
@@ -654,7 +652,7 @@ _RNvNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid6search12find_rev_imp.exit73: ; pre
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i64, i64 } @_RNvNtNtCsdnbpgXzNiEQ_6memchr6memmem8searcher19searcher_kind_empty(ptr noalias nofree readonly align 32 captures(none) %0, ptr noalias nofree readnone align 4 captures(none) %1, ptr noalias nofree nonnull readonly captures(none) %2, i64 range(i64 0, -9223372036854775808) %3, ptr noalias nofree nonnull readonly captures(none) %4, i64 range(i64 0, -9223372036854775808) %5) unnamed_addr #9 !dbg !19503 {
+define internal noundef { i64, i64 } @_RNvNtNtCsdnbpgXzNiEQ_6memchr6memmem8searcher19searcher_kind_empty(ptr noalias nofree readonly align 32 captures(none) %0, ptr noalias nofree readnone align 4 captures(none) %1, ptr noalias nofree nonnull readonly captures(none) %2, i64 range(i64 0, -9223372036854775808) %3, ptr noalias nofree nonnull readonly captures(none) %4, i64 range(i64 0, -9223372036854775808) %5) unnamed_addr #9 !dbg !19503 {
 bb.a:
     #dbg_value(ptr poison, !19504, !DIExpression(), !19509)
     #dbg_value(ptr poison, !19505, !DIExpression(), !19509)

@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 
 .loopexit:                                        ; preds = %.lr.ph, %middle.block, %..loopexit_crit_edge
   %i.gd = phi i32 [ %.pre79, %..loopexit_crit_edge ], [ %i.fm, %middle.block ], [ %i.fm, %.lr.ph ] ; 3 uses
-  %i.ge = lshr i32 %i.gd, 2                       ; 5 uses
+  %i.ge = lshr i32 %i.gd, 2                       ; 4 uses
   %i.gf = icmp sgt i32 %i.gd, 3
   br i1 %i.gf, label %.lr.ph68, label %_ZNK4ncnn3Mat5emptyEv.exit.thread
 
@@ -220,15 +220,13 @@ middle.block:                                     ; preds = %vector.body
   %i.go = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 4 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %0, i64 436 ; 4 uses
   %i.gq = add nsw i32 %i.ge, -1                   ; 2 uses
-  %i.gr = zext i32 %i.gq to i64
+  %i.gr = zext i32 %i.gq to i64                   ; 2 uses
   %i.gs = add nuw nsw i64 %i.gr, 1                ; 2 uses
   %min.iters.check90 = icmp ult i32 %i.gq, 7
   br i1 %min.iters.check90, label %scalar.ph89.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph68
-  %4 = add nsw i32 %i.ge, -1
-  %5 = zext i32 %4 to i64
-  %i.gt = shl nuw nsw i64 %5, 4
+  %i.gt = shl nuw nsw i64 %i.gr, 4
   %i.gu = getelementptr i8, ptr %i.gg, i64 %i.gk
   %i.gv = getelementptr i8, ptr %i.gu, i64 %i.gt
   %scevgep = getelementptr i8, ptr %i.gv, i64 16

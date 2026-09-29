@@ -205,24 +205,22 @@ _ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb16BlobFileMetaDataEESaIS3_EE11_M_all
   %i.ac = shl nuw nsw i64 %i.n, 4
   %i.ad = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ac) #29 ; 11 uses
   %i.ae = load ptr, ptr %i.o, align 8, !tbaa !1055 ; 13 uses
-  %3 = ptrtoaddr ptr %i.ae to i64                 ; 2 uses
   %i.af = load ptr, ptr %i.y, align 8, !tbaa !1054 ; 3 uses
-  %4 = ptrtoaddr ptr %i.af to i64                 ; 2 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.ae, %i.af
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10shared_ptrIN7rocksdb16BlobFileMetaDataEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb16BlobFileMetaDataEESaIS3_EE11_M_allocateEm.exit.i.i
-  %i.ag = add i64 %4, -16
-  %i.ah = sub i64 %i.ag, %3                       ; 2 uses
+  %3 = ptrtoaddr ptr %i.af to i64
+  %4 = ptrtoaddr ptr %i.ae to i64
+  %i.ag = add i64 %3, -16
+  %i.ah = sub i64 %i.ag, %4                       ; 3 uses
   %i.ai = lshr i64 %i.ah, 4
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ah, 304
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader27, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %5 = add i64 %4, -16
-  %6 = sub i64 %5, %3
-  %i.ak = and i64 %6, -16                         ; 2 uses
+  %i.ak = and i64 %i.ah, -16                      ; 2 uses
   %i.al = or disjoint i64 %i.ak, 8                ; 2 uses
   %scevgep = getelementptr i8, ptr %i.ad, i64 %i.al
   %scevgep16 = getelementptr i8, ptr %i.ae, i64 %i.al

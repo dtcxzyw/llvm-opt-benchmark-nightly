@@ -202,18 +202,17 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.s = and i64 %i.g, 2147483647                 ; 4 uses
+  %i.s = and i64 %i.g, 2147483647                 ; 3 uses
   %i.t = tail call i64 @llvm.umax.i64(i64 %i.s, i64 2)
-  %i.u = add nsw i64 %i.t, -1
+  %i.u = add nsw i64 %i.t, -1                     ; 2 uses
   %i.v = lshr i64 %i.u, 1
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.s, 7
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.x = shl nuw nsw i64 %i.s, 2
-  %2 = add nsw i64 %i.x, -4
-  %i.y = and i64 %2, -8
+  %i.x = shl nuw nsw i64 %i.u, 2
+  %i.y = and i64 %i.x, 9223372036854775800
   %i.z = getelementptr i8, ptr %spec.select, i64 %i.y
   %scevgep = getelementptr i8, ptr %i.z, i64 8
   %scevgep26 = getelementptr inbounds nuw i8, ptr %0, i64 48
