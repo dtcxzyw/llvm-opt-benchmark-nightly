@@ -204,27 +204,23 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 -4294967295, 4294967296) i64 @helper_neon_abdl_u64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, 4294967296) i64 @helper_neon_abdl_u64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = zext i32 %0 to i64                       ; 2 uses
-  %i.b = zext i32 %1 to i64                       ; 2 uses
-  %2 = icmp ugt i32 %0, %1
-  %3 = sub nsw i64 %i.a, %i.b
-  %i.c = sub nsw i64 %i.b, %i.a
-  %4 = select i1 %2, i64 %3, i64 %i.c
-  ret i64 %4
+  %i.a = zext i32 %0 to i64
+  %i.b = zext i32 %1 to i64
+  %i.c = sub nsw i64 %i.a, %i.b
+  %2 = tail call i64 @llvm.abs.i64(i64 %i.c, i1 true)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 -4294967295, 4294967296) i64 @helper_neon_abdl_s64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, 4294967296) i64 @helper_neon_abdl_s64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = sext i32 %0 to i64                       ; 2 uses
-  %i.b = sext i32 %1 to i64                       ; 2 uses
-  %2 = icmp sgt i32 %0, %1
-  %3 = sub nsw i64 %i.a, %i.b
-  %i.c = sub nsw i64 %i.b, %i.a
-  %4 = select i1 %2, i64 %3, i64 %i.c
-  ret i64 %4
+  %i.a = sext i32 %0 to i64
+  %i.b = sext i32 %1 to i64
+  %i.c = sub nsw i64 %i.a, %i.b
+  %2 = tail call i64 @llvm.abs.i64(i64 %i.c, i1 true)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable

@@ -205,7 +205,7 @@ bb.a:
   %8 = alloca %"class.clang::interp::Pointer", align 8 ; 6 uses
   %9 = alloca %"class.clang::interp::Pointer", align 8 ; 6 uses
   %10 = alloca %"class.llvm::SmallVector.972", align 8 ; 39 uses
-  %i.b = alloca [4 x i32], align 16               ; 7 uses
+  %i.b = alloca [4 x i32], align 16               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.d = load i32, ptr %1, align 8
@@ -356,11 +356,8 @@ _ZN4llvm15SmallVectorImplIhE7reserveEm.exit.i.i.i: ; preds = %bb.f, %bb.e
   br i1 %.not242, label %._crit_edge241, label %.lr.ph
 
 .lr.ph:                                           ; preds = %._crit_edge
-  %11 = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
-  %12 = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 3 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %i.cb = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.y, i64 16 ; 10 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.y, i64 24 ; 10 uses
   %i.cf = zext nneg i32 %i.ca to i64
@@ -763,21 +760,15 @@ bb.by:                                            ; preds = %.lr.ph, %bb.cy
   br label %bb.bz
 
 .preheader:                                       ; preds = %bb.cx
-  store i32 %40, ptr %13, align 4
-  store i32 %45, ptr %i.cb, align 8
-  store i32 %51, ptr %i.cc, align 4
-  store i32 %34, ptr %i.b, align 16
+  store <4 x i32> %19, ptr %i.b, align 16
   br label %bb.cz
 
 bb.bz:                                            ; preds = %bb.by, %bb.cx
   %indvars.iv269 = phi i64 [ 0, %bb.by ], [ %indvars.iv.next270, %bb.cx ] ; 2 uses
-  %14 = phi i32 [ 0, %bb.by ], [ %51, %bb.cx ]
-  %15 = phi i32 [ 0, %bb.by ], [ %45, %bb.cx ]
-  %16 = phi i32 [ 0, %bb.by ], [ %40, %bb.cx ]
-  %17 = phi i32 [ 0, %bb.by ], [ %34, %bb.cx ]
-  %i.anc = add nuw nsw i64 %indvars.iv269, %i.anb ; 24 uses
-  %i.and = load ptr, ptr %11, align 8, !tbaa !33, !noalias !34 ; 29 uses
-  %i.ane = load i32, ptr %12, align 8, !tbaa !33, !noalias !34 ; 21 uses
+  %11 = phi <4 x i32> [ zeroinitializer, %bb.by ], [ %19, %bb.cx ]
+  %i.anc = add nuw nsw i64 %indvars.iv269, %i.anb ; 21 uses
+  %i.and = load ptr, ptr %i.cb, align 8, !tbaa !33, !noalias !34 ; 29 uses
+  %i.ane = load i32, ptr %i.cc, align 8, !tbaa !33, !noalias !34 ; 21 uses
   %i.anf = load ptr, ptr %i.and, align 8, !tbaa !35 ; 11 uses
   %i.ang = getelementptr inbounds nuw i8, ptr %i.anf, i64 24
   %i.anh = load i32, ptr %i.ang, align 8, !tbaa !45
@@ -1085,8 +1076,8 @@ _ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb0EEEEERT_j.exit332: ; preds = 
   %i.auo = zext i32 %i.aum to i64
   %i.aup = getelementptr inbounds nuw i8, ptr %i.aun, i64 %i.auo
   %i.auq = call noundef zeroext i8 @_ZNK5clang6interp10IntegralAPILb0EEcvT_IhvEEv(ptr noundef nonnull align 8 dereferenceable(16) %i.aup)
-  %i.aur = load ptr, ptr %11, align 8, !tbaa !33, !noalias !3690 ; 3 uses
-  %i.aus = load i32, ptr %12, align 8, !tbaa !33, !noalias !3690 ; 3 uses
+  %i.aur = load ptr, ptr %i.cb, align 8, !tbaa !33, !noalias !3690 ; 3 uses
+  %i.aus = load i32, ptr %i.cc, align 8, !tbaa !33, !noalias !3690 ; 3 uses
   %i.aut = load ptr, ptr %i.aur, align 8, !tbaa !35 ; 2 uses
   %i.auu = getelementptr inbounds nuw i8, ptr %i.aut, i64 24
   %i.auv = load i32, ptr %i.auu, align 8, !tbaa !45
@@ -1137,8 +1128,8 @@ _ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb1EEEEERT_j.exit336: ; preds = 
   %i.avx = zext i32 %i.avv to i64
   %i.avy = getelementptr inbounds nuw i8, ptr %i.avw, i64 %i.avx
   %i.avz = call noundef zeroext i8 @_ZNK5clang6interp10IntegralAPILb1EEcvT_IhvEEv(ptr noundef nonnull align 8 dereferenceable(16) %i.avy)
-  %i.awa = load ptr, ptr %11, align 8, !tbaa !33, !noalias !3691 ; 3 uses
-  %i.awb = load i32, ptr %12, align 8, !tbaa !33, !noalias !3691 ; 3 uses
+  %i.awa = load ptr, ptr %i.cb, align 8, !tbaa !33, !noalias !3691 ; 3 uses
+  %i.awb = load i32, ptr %i.cc, align 8, !tbaa !33, !noalias !3691 ; 3 uses
   %i.awc = load ptr, ptr %i.awa, align 8, !tbaa !35 ; 2 uses
   %i.awd = getelementptr inbounds nuw i8, ptr %i.awc, i64 24
   %i.awe = load i32, ptr %i.awd, align 8, !tbaa !45
@@ -1171,46 +1162,20 @@ bb.cw:                                            ; preds = %bb.bz
   unreachable
 
 bb.cx:                                            ; preds = %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb1EEEEERT_j.exit338, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb0EEEEERT_j.exit334, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit330, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit326, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit322, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit318, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit314, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit310, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit306, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit302
-  %.0249 = phi i8 [ %i.avz, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb1EEEEERT_j.exit338 ], [ %i.auq, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb0EEEEERT_j.exit334 ], [ %i.att, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit330 ], [ %i.asx, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit326 ], [ %i.asb, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit322 ], [ %i.arf, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit318 ], [ %i.aqj, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit314 ], [ %i.apn, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit310 ], [ %i.aot, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit306 ], [ %i.anx, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit302 ] ; 3 uses
-  %.0248 = phi i8 [ %i.awu, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb1EEEEERT_j.exit338 ], [ %i.avl, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb0EEEEERT_j.exit334 ], [ %i.auc, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit330 ], [ %i.atg, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit326 ], [ %i.ask, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit322 ], [ %i.aro, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit318 ], [ %i.aqs, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit314 ], [ %i.apw, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit310 ], [ %i.apa, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit306 ], [ %i.aoe, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit302 ] ; 3 uses
-  %i.awv = load ptr, ptr %10, align 8, !tbaa !640 ; 4 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.awv, i64 %i.anc
-  %19 = load i8, ptr %18, align 1, !tbaa !33      ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.awv, i64 %i.anc
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 1
-  %22 = load i8, ptr %21, align 1, !tbaa !33      ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %i.awv, i64 %i.anc
-  %24 = getelementptr inbounds nuw i8, ptr %23, i64 2
-  %25 = load i8, ptr %24, align 1, !tbaa !33      ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %i.awv, i64 %i.anc
-  %i.aww = getelementptr inbounds nuw i8, ptr %26, i64 3
-  %27 = load i8, ptr %i.aww, align 1, !tbaa !33   ; 2 uses
-  %28 = zext i8 %.0249 to i32                     ; 4 uses
-  %29 = zext i8 %19 to i32                        ; 2 uses
-  %30 = icmp ugt i8 %.0249, %19
-  %31 = sub nsw i32 %28, %29
-  %32 = sub nsw i32 %29, %28
-  %33 = select i1 %30, i32 %31, i32 %32
-  %34 = add i32 %17, %33                          ; 2 uses
-  %35 = zext i8 %22 to i32                        ; 2 uses
-  %36 = icmp ugt i8 %.0249, %22
-  %37 = sub nsw i32 %28, %35
-  %38 = sub nsw i32 %35, %28
-  %39 = select i1 %36, i32 %37, i32 %38
-  %40 = add i32 %16, %39                          ; 2 uses
-  %i.awx = zext i8 %.0248 to i32                  ; 4 uses
-  %i.awy = zext i8 %25 to i32                     ; 2 uses
-  %41 = icmp ugt i8 %.0248, %25
-  %42 = sub nsw i32 %i.awx, %i.awy
-  %43 = sub nsw i32 %i.awy, %i.awx
-  %44 = select i1 %41, i32 %42, i32 %43
-  %45 = add i32 %15, %44                          ; 2 uses
-  %46 = zext i8 %27 to i32                        ; 2 uses
-  %47 = icmp ugt i8 %.0248, %27
-  %48 = sub nsw i32 %i.awx, %46
-  %49 = sub nsw i32 %46, %i.awx
-  %50 = select i1 %47, i32 %48, i32 %49
-  %51 = add i32 %14, %50                          ; 2 uses
+  %.0249 = phi i8 [ %i.avz, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb1EEEEERT_j.exit338 ], [ %i.auq, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb0EEEEERT_j.exit334 ], [ %i.att, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit330 ], [ %i.asx, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit326 ], [ %i.asb, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit322 ], [ %i.arf, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit318 ], [ %i.aqj, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit314 ], [ %i.apn, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit310 ], [ %i.aot, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit306 ], [ %i.anx, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit302 ]
+  %.0248 = phi i8 [ %i.awu, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb1EEEEERT_j.exit338 ], [ %i.avl, %_ZNK5clang6interp7Pointer4elemINS0_10IntegralAPILb0EEEEERT_j.exit334 ], [ %i.auc, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit330 ], [ %i.atg, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit326 ], [ %i.ask, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit322 ], [ %i.aro, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit318 ], [ %i.aqs, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit314 ], [ %i.apw, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit310 ], [ %i.apa, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit306 ], [ %i.aoe, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit302 ]
+  %i.awv = load ptr, ptr %10, align 8, !tbaa !640
+  %i.aww = getelementptr inbounds nuw i8, ptr %i.awv, i64 %i.anc
+  %i.awx = zext i8 %.0249 to i32
+  %i.awy = zext i8 %.0248 to i32
+  %12 = load <4 x i8>, ptr %i.aww, align 1, !tbaa !33
+  %13 = zext <4 x i8> %12 to <4 x i32>
+  %14 = insertelement <4 x i32> poison, i32 %i.awx, i64 0
+  %15 = insertelement <4 x i32> %14, i32 %i.awy, i64 1
+  %16 = shufflevector <4 x i32> %15, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %17 = sub nsw <4 x i32> %16, %13
+  %18 = call <4 x i32> @llvm.abs.v4i32(<4 x i32> %17, i1 true)
+  %19 = add <4 x i32> %11, %18                    ; 2 uses
   %indvars.iv.next270 = add nuw nsw i64 %indvars.iv269, 1 ; 2 uses
   %exitcond272.not = icmp eq i64 %indvars.iv.next270, 4
   br i1 %exitcond272.not, label %.preheader, label %bb.bz, !llvm.loop !3650
@@ -1613,15 +1578,13 @@ bb.bk:                                            ; preds = %bb.h
   unreachable
 
 bb.bl:                                            ; preds = %_ZNK5clang6interp10IntegralAPILb1EEcvT_IhvEEv.exit264, %_ZNK5clang6interp10IntegralAPILb0EEcvT_IhvEEv.exit235, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit218, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit215, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit212, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit209, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit206, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit203, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit200, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit197
-  %.0176 = phi i8 [ %i.dj, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit197 ], [ %i.eq, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit200 ], [ %i.fy, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit203 ], [ %i.hh, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit206 ], [ %i.iq, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit209 ], [ %i.jz, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit212 ], [ %i.li, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit215 ], [ %i.mr, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit218 ], [ %.0.i.i, %_ZNK5clang6interp10IntegralAPILb0EEcvT_IhvEEv.exit235 ], [ %.0.i.i244, %_ZNK5clang6interp10IntegralAPILb1EEcvT_IhvEEv.exit264 ] ; 2 uses
-  %.0 = phi i8 [ %i.ed, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit197 ], [ %i.fk, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit200 ], [ %i.gt, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit203 ], [ %i.ic, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit206 ], [ %i.jl, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit209 ], [ %i.ku, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit212 ], [ %i.md, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit215 ], [ %i.nm, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit218 ], [ %.0.i.i231, %_ZNK5clang6interp10IntegralAPILb0EEcvT_IhvEEv.exit235 ], [ %.0.i.i259, %_ZNK5clang6interp10IntegralAPILb1EEcvT_IhvEEv.exit264 ] ; 2 uses
-  %i.tt = zext i8 %.0176 to i16                   ; 2 uses
-  %i.tu = zext i8 %.0 to i16                      ; 2 uses
-  %16 = icmp ugt i8 %.0176, %.0
-  %17 = sub nsw i16 %i.tt, %i.tu
-  %i.tv = sub nsw i16 %i.tu, %i.tt
-  %18 = select i1 %16, i16 %17, i16 %i.tv
-  %i.tw = add i16 %18, %.0178199                  ; 15 uses
+  %.0176 = phi i8 [ %i.dj, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit197 ], [ %i.eq, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit200 ], [ %i.fy, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit203 ], [ %i.hh, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit206 ], [ %i.iq, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit209 ], [ %i.jz, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit212 ], [ %i.li, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit215 ], [ %i.mr, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit218 ], [ %.0.i.i, %_ZNK5clang6interp10IntegralAPILb0EEcvT_IhvEEv.exit235 ], [ %.0.i.i244, %_ZNK5clang6interp10IntegralAPILb1EEcvT_IhvEEv.exit264 ]
+  %.0 = phi i8 [ %i.ed, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb1EEEEERT_j.exit197 ], [ %i.fk, %_ZNK5clang6interp7Pointer4elemINS0_4CharILb0EEEEERT_j.exit200 ], [ %i.gt, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb1EEEEERT_j.exit203 ], [ %i.ic, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj16ELb0EEEEERT_j.exit206 ], [ %i.jl, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb1EEEEERT_j.exit209 ], [ %i.ku, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj32ELb0EEEEERT_j.exit212 ], [ %i.md, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb1EEEEERT_j.exit215 ], [ %i.nm, %_ZNK5clang6interp7Pointer4elemINS0_8IntegralILj64ELb0EEEEERT_j.exit218 ], [ %.0.i.i231, %_ZNK5clang6interp10IntegralAPILb0EEcvT_IhvEEv.exit235 ], [ %.0.i.i259, %_ZNK5clang6interp10IntegralAPILb1EEcvT_IhvEEv.exit264 ]
+  %i.tt = zext i8 %.0176 to i16
+  %i.tu = zext i8 %.0 to i16
+  %i.tv = sub nsw i16 %i.tt, %i.tu
+  %16 = call i16 @llvm.abs.i16(i16 %i.tv, i1 true)
+  %i.tw = add i16 %16, %.0178199                  ; 15 uses
   %i.tx = add nuw nsw i32 %.0177200, 1            ; 2 uses
   %.not186 = icmp eq i32 %i.tx, 4
   br i1 %.not186, label %bb.g, label %bb.h, !llvm.loop !3735
@@ -2023,6 +1986,12 @@ declare i16 @llvm.umax.i16(i16, i16) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #16
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.abs.i16(i16, i1 immarg) #7
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.xor.v16i32(<16 x i32>) #16
