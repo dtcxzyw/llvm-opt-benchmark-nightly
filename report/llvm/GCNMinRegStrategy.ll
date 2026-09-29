@@ -202,13 +202,14 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit.i.i:           ; preds = %bb.c, %_ZNSt12_Vect
   %i.bk = phi ptr [ %i.x, %bb.l ], [ %i.x, %bb.j ], [ %i.x, %bb.k ], [ %i.x, %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit.i ], [ %i.x, %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i ], [ null, %bb.c ]
   %i.bl = phi ptr [ %i.w, %bb.l ], [ %i.w, %bb.j ], [ %i.w, %bb.k ], [ %i.w, %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit.i ], [ %i.w, %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i ], [ null, %bb.c ]
   %i.bm = phi ptr [ %i.aa, %bb.l ], [ %i.aa, %bb.j ], [ %i.aa, %bb.k ], [ %i.aa, %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit.i ], [ %i.ax, %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i ], [ null, %bb.c ] ; 4 uses
-  %.pre-phi17.i.i = phi i64 [ %.pre108.i, %bb.l ], [ %.pre108.i, %bb.j ], [ %.pre108.i, %bb.k ], [ %.pre108.i, %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit.i ], [ %.pre55, %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i ], [ 0, %bb.c ] ; 7 uses
+  %.pre-phi17.i.i = phi i64 [ %.pre108.i, %bb.l ], [ %.pre108.i, %bb.j ], [ %.pre108.i, %bb.k ], [ %.pre108.i, %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit.i ], [ %.pre55, %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i ], [ 0, %bb.c ] ; 5 uses
   %i.bn = phi ptr [ %.pre98.i, %bb.l ], [ %.pre98.i, %bb.j ], [ %.pre98.i, %bb.k ], [ %.pre98.i, %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit.i ], [ %.pre10.i.i.pre, %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i ], [ %i.n, %bb.c ] ; 12 uses
   %i.bo = phi ptr [ %.pre.i, %bb.l ], [ %.pre.i, %bb.j ], [ %.pre.i, %bb.k ], [ %.pre.i, %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit.i ], [ %.pre.i.i.pre, %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i ], [ %i.m, %bb.c ]
   %.not.i.i = icmp eq ptr %i.bo, %i.bn
   br i1 %.not.i.i, label %_ZN12_GLOBAL__N_118GCNMinRegScheduler12initNumPredsERKSt6vectorIN4llvm5SUnitESaIS3_EE.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i.i
+  %7 = call i64 @llvm.umax.i64(i64 %.pre-phi17.i.i, i64 1) ; 3 uses
   %min.iters.check = icmp ult i64 %.pre-phi17.i.i, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader167, label %vector.scevcheck
 
@@ -221,10 +222,10 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.preheade
   br i1 %i.bt, label %.lr.ph.i.i.preheader167, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.bu = shl nuw nsw i64 %.pre-phi17.i.i, 2
+  %i.bu = shl nuw nsw i64 %7, 2
   %scevgep = getelementptr i8, ptr %i.bm, i64 %i.bu
   %scevgep153 = getelementptr i8, ptr %i.bn, i64 216
-  %i.bv = mul nuw nsw i64 %.pre-phi17.i.i, 264
+  %i.bv = mul nuw nsw i64 %7, 264
   %i.bw = getelementptr i8, ptr %i.bn, i64 %i.bv
   %scevgep154 = getelementptr i8, ptr %i.bw, i64 -44
   %bound0 = icmp ult ptr %i.bm, %scevgep154
@@ -233,7 +234,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %.lr.ph.i.i.preheader167, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %.pre-phi17.i.i, 8589934584    ; 3 uses
+  %n.vec = and i64 %7, 8589934584                 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

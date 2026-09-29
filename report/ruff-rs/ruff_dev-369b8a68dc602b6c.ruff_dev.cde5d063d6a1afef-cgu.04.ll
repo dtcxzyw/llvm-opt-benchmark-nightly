@@ -205,8 +205,7 @@ vector.memcheck:                                  ; preds = %bb.b
   %i.g = lshr exact i64 %i.d, 1
   %i.h = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
   %scevgep2 = getelementptr i8, ptr %i.h, i64 %i.g
-  %3 = and i64 %i.d, -8
-  %i.i = getelementptr i8, ptr %0, i64 %3
+  %i.i = getelementptr i8, ptr %0, i64 %i.d
   %scevgep3 = getelementptr i8, ptr %i.i, i64 -4
   %bound0 = icmp ult ptr %scevgep, %scevgep3
   %bound1 = icmp ult ptr %0, %scevgep2
@@ -609,7 +608,7 @@ _RNvXs_NvNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_fmtQNtNtCs6nZeqdiIoCH_10serde_c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs4NRVxsYgnAr_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCshFZivb7RUAJ_8ruff_dev(ptr noalias readonly captures(none) %0) unnamed_addr #13 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs4NRVxsYgnAr_4core3num5error13ParseIntErrorNtNtB8_5error5Error11descriptionCshFZivb7RUAJ_8ruff_dev(ptr noalias readonly captures(none) %0) unnamed_addr #13 {
 bb.a:
   ret { ptr, i64 } { ptr @96, i64 40 }
 }
@@ -634,7 +633,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs4NRVxsYgnAr_4core3num5error15TryFromIntErrorNtNtB8_5error5Error11descriptionCshFZivb7RUAJ_8ruff_dev(ptr noalias readonly captures(none) %0) unnamed_addr #13 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs4NRVxsYgnAr_4core3num5error15TryFromIntErrorNtNtB8_5error5Error11descriptionCshFZivb7RUAJ_8ruff_dev(ptr noalias readonly captures(none) %0) unnamed_addr #13 {
 bb.a:
   ret { ptr, i64 } { ptr @96, i64 40 }
 }
@@ -659,7 +658,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertINtBc_3BoxDNtNtCs4NRVxsYgnAr_4core5error5ErrorNtNtB10_6marker4SendNtB1x_4SyncEL_EINtNtB10_7convert4FromNtNtBe_6string6StringE4from11StringErrorBW_11descriptionCshFZivb7RUAJ_8ruff_dev(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #13 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertINtBc_3BoxDNtNtCs4NRVxsYgnAr_4core5error5ErrorNtNtB10_6marker4SendNtB1x_4SyncEL_EINtNtB10_7convert4FromNtNtBe_6string6StringE4from11StringErrorBW_11descriptionCshFZivb7RUAJ_8ruff_dev(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #13 {
 bb.a:
   ret { ptr, i64 } { ptr @96, i64 40 }
 }

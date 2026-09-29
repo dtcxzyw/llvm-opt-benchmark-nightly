@@ -205,7 +205,6 @@ _ZN4entt9dense_mapIiiSt4hashIiESt8equal_toIvENSt3pmr21polymorphic_allocatorISt4p
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 4 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !270  ; 3 uses
   %i.p = load ptr, ptr %i.k, align 8, !tbaa !271  ; 9 uses
-  %13 = ptrtoaddr ptr %i.p to i64                 ; 2 uses
   %i.q = icmp eq ptr %i.o, %i.p
   br i1 %i.q, label %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_allocatorIS3_EEE11_M_allocateEm.exit.i.i, label %.noexc
 
@@ -213,7 +212,7 @@ _ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_all
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !272  ; 3 uses
-  %i.u = ptrtoint ptr %i.t to i64                 ; 3 uses
+  %i.u = ptrtoint ptr %i.t to i64                 ; 2 uses
   %i.v = sub i64 %i.u, %i.r
   %i.w = load ptr, ptr %i.j, align 8, !tbaa !273  ; 2 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !50
@@ -227,17 +226,16 @@ _ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_all
   br i1 %i.ab, label %_ZNSt6vectorIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_allocatorIS3_EEE20_M_allocate_and_copyISt13move_iteratorIPS3_EEESA_mT_SC_.exit.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.noexc84
+  %13 = ptrtoaddr ptr %i.p to i64
   %i.ac = add i64 %i.u, -16
-  %i.ad = sub i64 %i.ac, %13                      ; 2 uses
+  %i.ad = sub i64 %i.ac, %13                      ; 3 uses
   %i.ae = lshr i64 %i.ad, 4
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ad, 208
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader122, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %14 = add i64 %i.u, -16
-  %15 = sub i64 %14, %13
-  %i.ag = and i64 %15, -16
+  %i.ag = and i64 %i.ad, -16
   %i.ah = add i64 %i.ag, 16                       ; 2 uses
   %scevgep = getelementptr i8, ptr %i.aa, i64 %i.ah
   %scevgep116 = getelementptr i8, ptr %i.p, i64 %i.ah
@@ -640,8 +638,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !272  ; 3 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !271  ; 11 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 5 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775792
   br i1 %i.h, label %bb.b, label %_ZNKSt6vectorIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_allocatorIS3_EEE12_M_check_lenEmPKc.exit
@@ -657,7 +655,7 @@ _ZNKSt6vectorIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_allocator
   %i.k = icmp ult i64 %i.j, %i.i
   %i.l = tail call i64 @llvm.umin.i64(i64 %i.j, i64 576460752303423487)
   %i.m = select i1 %i.k, i64 576460752303423487, i64 %i.l ; 3 uses
-  %i.n = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.n = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.o = sub i64 %i.n, %i.f
   %.not.i = icmp ne i64 %i.m, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -685,16 +683,14 @@ _ZNKSt6vectorIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_allocator
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNKSt6vectorIN4entt8internal14dense_map_nodeIiiEENSt3pmr21polymorphic_allocatorIS3_EEE12_M_check_lenEmPKc.exit
   %i.ad = add i64 %i.n, -16
-  %i.ae = sub i64 %i.ad, %i.f                     ; 2 uses
+  %i.ae = sub i64 %i.ad, %i.f                     ; 3 uses
   %i.af = lshr i64 %i.ae, 4
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ae, 208
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader78, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %6 = add i64 %i.n, -16
-  %7 = sub i64 %6, %i.f
-  %i.ah = and i64 %7, -16
+  %i.ah = and i64 %i.ae, -16
   %i.ai = add i64 %i.ah, 16                       ; 2 uses
   %scevgep = getelementptr i8, ptr %i.u, i64 %i.ai
   %scevgep48 = getelementptr i8, ptr %i.d, i64 %i.ai
@@ -757,16 +753,14 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN4entt8internal14dense_map_nodeIiiEES4
 
 .lr.ph.i.i31.preheader:                           ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN4entt8internal14dense_map_nodeIiiEES4_NSt3pmr21polymorphic_allocatorIS3_EEET0_T_S9_S8_RT1_.exit
   %i.ay = add i64 %i.e, -16
-  %i.az = sub i64 %i.ay, %i.n                     ; 2 uses
+  %i.az = sub i64 %i.ay, %i.n                     ; 3 uses
   %i.ba = lshr i64 %i.az, 4
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check61 = icmp ult i64 %i.az, 240
   br i1 %min.iters.check61, label %.lr.ph.i.i31.preheader77, label %vector.memcheck54
 
 vector.memcheck54:                                ; preds = %.lr.ph.i.i31.preheader
-  %8 = add i64 %i.e, -16
-  %9 = sub i64 %8, %i.n
-  %i.bc = and i64 %9, -16                         ; 2 uses
+  %i.bc = and i64 %i.az, -16                      ; 2 uses
   %i.bd = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.bc
   %scevgep55 = getelementptr i8, ptr %i.bd, i64 32
   %i.be = getelementptr i8, ptr %1, i64 %i.bc

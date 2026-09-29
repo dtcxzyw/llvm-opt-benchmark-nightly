@@ -103,7 +103,7 @@ bb.a:
   call void %i.e(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %4, ptr noundef nonnull %5) #16, !inline_history !0
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
-  %i.f = shl i64 %3, 1                            ; 3 uses
+  %i.f = shl i64 %3, 1                            ; 4 uses
   %.not = icmp eq i64 %i.f, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -112,15 +112,17 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 16, !tbaa !43  ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 4 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  %i.k = add i64 %i.f, -2                         ; 2 uses
-  %i.l = lshr exact i64 %i.k, 1
+  %i.k = add i64 %i.f, -1                         ; 2 uses
+  %i.l = lshr i64 %i.k, 1
   %i.m = add nuw i64 %i.l, 1                      ; 2 uses
-  %min.iters.check = icmp ult i64 %i.k, 14
+  %min.iters.check = icmp ult i64 %i.f, 15
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.n = shl i64 %3, 3
-  %scevgep = getelementptr i8, ptr %2, i64 %i.n
+  %i.n = shl i64 %i.k, 2
+  %6 = and i64 %i.n, -8
+  %7 = getelementptr i8, ptr %2, i64 %6
+  %scevgep = getelementptr i8, ptr %7, i64 8
   %scevgep12 = getelementptr i8, ptr %i.h, i64 12
   %bound0 = icmp ult ptr %2, %scevgep12
   %bound1 = icmp ult ptr %i.i, %scevgep

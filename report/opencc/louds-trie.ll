@@ -205,10 +205,8 @@ _ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit: ;
   br i1 %.not38, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit
-  %i.fi = load ptr, ptr %i.g, align 8, !tbaa !51  ; 12 uses
-  %2 = ptrtoaddr ptr %i.fi to i64                 ; 4 uses
-  %i.fj = load ptr, ptr %i.ag, align 8, !tbaa !51 ; 6 uses
-  %3 = ptrtoaddr ptr %i.fj to i64                 ; 2 uses
+  %i.fi = load ptr, ptr %i.g, align 8, !tbaa !51  ; 13 uses
+  %i.fj = load ptr, ptr %i.ag, align 8, !tbaa !51 ; 7 uses
   %i.fk = icmp ne ptr %i.fi, %i.fj
   %.sroa.0.08.i.i39 = getelementptr inbounds i8, ptr %i.fj, i64 -1 ; 7 uses
   %i.fl = icmp ult ptr %i.fi, %.sroa.0.08.i.i39
@@ -216,10 +214,12 @@ bb.u:                                             ; preds = %_ZSt7reverseIN9__gn
   br i1 %or.cond.i.i40, label %iter.check117, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit45
 
 iter.check117:                                    ; preds = %bb.u
-  %i.fm = add i64 %3, -2
-  %i.fn = add i64 %2, 1
+  %2 = ptrtoaddr ptr %i.fj to i64
+  %3 = ptrtoaddr ptr %i.fi to i64                 ; 2 uses
+  %i.fm = add i64 %2, -2
+  %i.fn = add i64 %3, 1
   %umax97 = tail call i64 @llvm.umax.i64(i64 %i.fm, i64 %i.fn)
-  %i.fo = xor i64 %2, -1
+  %i.fo = xor i64 %3, -1
   %i.fp = add i64 %umax97, %i.fo                  ; 2 uses
   %i.fq = icmp ne i64 %i.fp, 0
   %umin98 = zext i1 %i.fq to i64                  ; 2 uses
@@ -231,10 +231,12 @@ iter.check117:                                    ; preds = %bb.u
   br i1 %min.iters.check99, label %.lr.ph.i.i41.preheader, label %vector.memcheck89
 
 vector.memcheck89:                                ; preds = %iter.check117
-  %i.fv = add i64 %3, -2
-  %i.fw = add i64 %2, 1
+  %4 = ptrtoaddr ptr %i.fj to i64
+  %i.fv = add i64 %4, -2
+  %5 = ptrtoaddr ptr %i.fi to i64                 ; 2 uses
+  %i.fw = add i64 %5, 1
   %umax90 = tail call i64 @llvm.umax.i64(i64 %i.fv, i64 %i.fw)
-  %i.fx = xor i64 %2, -1
+  %i.fx = xor i64 %5, -1
   %i.fy = add i64 %umax90, %i.fx                  ; 2 uses
   %i.fz = icmp ne i64 %i.fy, 0
   %umin91 = zext i1 %i.fz to i64                  ; 2 uses

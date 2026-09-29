@@ -204,10 +204,10 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %2 = alloca [10 x i32], align 16                ; 26 uses
   br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
-  %2 = alloca [10 x i32], align 16                ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   tail call fastcc void @fe_sq(ptr noundef %0, ptr noundef %1)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
@@ -610,8 +610,7 @@ begin_hunk_1_@ge_p2_dbl:bb.a
   br label %.rtcont
 
 .rtscalar:                                        ; preds = %bb.a
-  %3 = alloca [10 x i32], align 16                ; 13 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   tail call fastcc void @fe_sq(ptr noundef %0, ptr noundef %1)
   %i.nj = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   %i.nk = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
@@ -941,7 +940,7 @@ begin_hunk_1_@ge_p2_dbl:bb.a
   %i.zc = add nsw i32 %i.zb, %i.yz
   %i.zd = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
   store i32 %i.zc, ptr %i.zd, align 4, !tbaa !9
-  call fastcc void @fe_sq(ptr noundef %3, ptr noundef %i.wy)
+  call fastcc void @fe_sq(ptr noundef %2, ptr noundef %i.wy)
   %i.ze = load i32, ptr %i.nj, align 4, !tbaa !9  ; 2 uses
   %i.zf = load i32, ptr %0, align 4, !tbaa !9     ; 2 uses
   %i.zg = add nsw i32 %i.zf, %i.ze                ; 2 uses
@@ -1020,42 +1019,42 @@ begin_hunk_1_@ge_p2_dbl:bb.a
   store i32 %i.abi, ptr %i.aaq, align 4, !tbaa !9
   %i.abj = sub nsw i32 %i.aaw, %i.aay             ; 2 uses
   store i32 %i.abj, ptr %i.aav, align 4, !tbaa !9
-  %i.abk = load i32, ptr %3, align 16, !tbaa !9
+  %i.abk = load i32, ptr %2, align 16, !tbaa !9
   %i.abl = sub nsw i32 %i.abk, %i.zg
   store i32 %i.abl, ptr %0, align 4, !tbaa !9
-  %i.abm = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.abm = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.abn = load i32, ptr %i.abm, align 4, !tbaa !9
   %i.abo = sub nsw i32 %i.abn, %i.zl
   store i32 %i.abo, ptr %i.zj, align 4, !tbaa !9
-  %i.abp = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.abp = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.abq = load i32, ptr %i.abp, align 8, !tbaa !9
   %i.abr = sub nsw i32 %i.abq, %i.zq
   store i32 %i.abr, ptr %i.zo, align 4, !tbaa !9
-  %i.abs = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %i.abs = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.abt = load i32, ptr %i.abs, align 4, !tbaa !9
   %i.abu = sub nsw i32 %i.abt, %i.zv
   store i32 %i.abu, ptr %i.zt, align 4, !tbaa !9
-  %i.abv = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.abv = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.abw = load i32, ptr %i.abv, align 16, !tbaa !9
   %i.abx = sub nsw i32 %i.abw, %i.aaa
   store i32 %i.abx, ptr %i.zy, align 4, !tbaa !9
-  %i.aby = getelementptr inbounds nuw i8, ptr %3, i64 20
+  %i.aby = getelementptr inbounds nuw i8, ptr %2, i64 20
   %i.abz = load i32, ptr %i.aby, align 4, !tbaa !9
   %i.aca = sub nsw i32 %i.abz, %i.aaf
   store i32 %i.aca, ptr %i.aad, align 4, !tbaa !9
-  %i.acb = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.acb = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.acc = load i32, ptr %i.acb, align 8, !tbaa !9
   %i.acd = sub nsw i32 %i.acc, %i.aak
   store i32 %i.acd, ptr %i.aai, align 4, !tbaa !9
-  %i.ace = getelementptr inbounds nuw i8, ptr %3, i64 28
+  %i.ace = getelementptr inbounds nuw i8, ptr %2, i64 28
   %i.acf = load i32, ptr %i.ace, align 4, !tbaa !9
   %i.acg = sub nsw i32 %i.acf, %i.aap
   store i32 %i.acg, ptr %i.aan, align 4, !tbaa !9
-  %i.ach = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.ach = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.aci = load i32, ptr %i.ach, align 16, !tbaa !9
   %i.acj = sub nsw i32 %i.aci, %i.aau
   store i32 %i.acj, ptr %i.aas, align 4, !tbaa !9
-  %i.ack = getelementptr inbounds nuw i8, ptr %3, i64 36
+  %i.ack = getelementptr inbounds nuw i8, ptr %2, i64 36
   %i.acl = load i32, ptr %i.ack, align 4, !tbaa !9
   %i.acm = sub nsw i32 %i.acl, %i.aaz
   store i32 %i.acm, ptr %i.aax, align 4, !tbaa !9
@@ -1079,7 +1078,7 @@ begin_hunk_1_@ge_p2_dbl:bb.a
   store i32 %i.acv, ptr %i.wv, align 4, !tbaa !9
   %i.acw = sub nsw i32 %i.ww, %i.abj
   store i32 %i.acw, ptr %i.wx, align 4, !tbaa !9
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
   br label %.rtcont
 
 .rtcont:                                          ; preds = %.rtscalar, %.rtvec

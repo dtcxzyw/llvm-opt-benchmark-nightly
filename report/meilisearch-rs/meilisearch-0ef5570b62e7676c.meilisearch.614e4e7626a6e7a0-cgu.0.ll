@@ -205,43 +205,43 @@ bb.y:                                             ; preds = %.body.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h06e5b8fa3ba3b0fcE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h06e5b8fa3ba3b0fcE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret { ptr, i64 } { ptr @1056, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h28ba3578b33c102fE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h28ba3578b33c102fE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret { ptr, i64 } { ptr @1056, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h2cf73a70063c66d7E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #9 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h2cf73a70063c66d7E(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret { ptr, i64 } { ptr @1056, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17h84d7e70e621e54ebE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #9 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17h84d7e70e621e54ebE(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret { ptr, i64 } { ptr @1056, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17haa6e6d2b686b7c46E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17haa6e6d2b686b7c46E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret { ptr, i64 } { ptr @1056, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17hc9d445f1f052d69bE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17hc9d445f1f052d69bE(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret { ptr, i64 } { ptr @1056, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_ZN4core5error5Error11description17he4f09d22a00b02d1E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
+define internal noundef { ptr, i64 } @_ZN4core5error5Error11description17he4f09d22a00b02d1E(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret { ptr, i64 } { ptr @1056, i64 40 }
 }
@@ -644,21 +644,20 @@ bb.s:                                             ; preds = %_ZN4core4iter6trait
 bb.t:                                             ; preds = %bb.s
   %i.mf = getelementptr inbounds nuw i8, ptr %9, i64 40
   %i.mg = load ptr, ptr %i.mf, align 8, !nonnull !45, !align !70, !noundef !45 ; 6 uses
-  %.idx = shl nuw nsw i64 %i.ma, 2                ; 3 uses
+  %.idx = shl nuw nsw i64 %i.ma, 2                ; 2 uses
   %i.mh = getelementptr i8, ptr %i.mg, i64 %.idx  ; 2 uses
   %i.mi = icmp eq i64 %i.ma, 0
   br i1 %i.mi, label %.loopexit353, label %.lr.ph.preheader.preheader
 
 .lr.ph.preheader.preheader:                       ; preds = %bb.t
-  %i.mj = add nsw i64 %.idx, -4                   ; 2 uses
+  %i.mj = add nsw i64 %.idx, -4                   ; 3 uses
   %i.mk = lshr exact i64 %i.mj, 2
   %i.ml = add nuw nsw i64 %i.mk, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.mj, 60
   br i1 %min.iters.check, label %.lr.ph.preheader.preheader1135, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.preheader
-  %12 = add nsw i64 %.idx, -4
-  %i.mm = lshr exact i64 %12, 2
+  %i.mm = lshr exact i64 %i.mj, 2
   %i.mn = getelementptr i8, ptr %i.hv, i64 %i.mm
   %scevgep986 = getelementptr i8, ptr %i.mn, i64 1
   %bound0 = icmp ult ptr %i.hv, %i.mh
@@ -705,13 +704,13 @@ middle.block:                                     ; preds = %vector.body
 bb.u:                                             ; preds = %.loopexit353
   %i.mx = getelementptr inbounds nuw i8, ptr %9, i64 136
   %i.my = load ptr, ptr %i.mx, align 8, !nonnull !45, !align !70, !noundef !45 ; 6 uses
-  %.idx460 = shl nuw nsw i64 %i.md, 2             ; 3 uses
+  %.idx460 = shl nuw nsw i64 %i.md, 2             ; 2 uses
   %i.mz = getelementptr i8, ptr %i.my, i64 %.idx460 ; 2 uses
   %i.na = icmp eq i64 %i.md, 0
   br i1 %i.na, label %.loopexit352, label %.lr.ph458.preheader.preheader
 
 .lr.ph458.preheader.preheader:                    ; preds = %bb.u
-  %i.nb = add nsw i64 %.idx460, -4                ; 2 uses
+  %i.nb = add nsw i64 %.idx460, -4                ; 3 uses
   %i.nc = lshr exact i64 %i.nb, 2
   %i.nd = add nuw nsw i64 %i.nc, 1                ; 2 uses
   %min.iters.check996 = icmp ult i64 %i.nb, 60
@@ -719,8 +718,7 @@ bb.u:                                             ; preds = %.loopexit353
 
 vector.memcheck989:                               ; preds = %.lr.ph458.preheader.preheader
   %scevgep990 = getelementptr inbounds nuw i8, ptr %i.hu, i64 8208
-  %13 = add nsw i64 %.idx460, -4
-  %i.ne = lshr exact i64 %13, 2
+  %i.ne = lshr exact i64 %i.nb, 2
   %i.nf = getelementptr i8, ptr %i.hu, i64 %i.ne
   %scevgep991 = getelementptr i8, ptr %i.nf, i64 8209
   %bound0992 = icmp ult ptr %scevgep990, %i.mz

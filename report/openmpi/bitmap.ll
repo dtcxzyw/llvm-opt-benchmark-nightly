@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load i32, ptr %0, align 8, !tbaa !17
-  %i.e = shl i32 %i.d, 6                          ; 3 uses
+  %i.e = shl i32 %i.d, 6                          ; 2 uses
   %.not54 = icmp ult i32 %1, %i.e
   br i1 %.not54, label %.thread, label %.loopexit
 
@@ -257,9 +257,8 @@ bb.f:                                             ; preds = %bb.e
   br label %.loopexit
 
 bb.g:                                             ; preds = %.thread
-  %.not56 = icmp ult i32 %2, %i.e
   %i.af = add i32 %i.e, -1
-  %spec.select = select i1 %.not56, i32 %2, i32 %i.af
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %2, i32 %i.af)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.d, %bb.g
@@ -662,7 +661,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load i32, ptr %0, align 8, !tbaa !17
-  %i.e = shl i32 %i.d, 6                          ; 3 uses
+  %i.e = shl i32 %i.d, 6                          ; 2 uses
   %.not54 = icmp ult i32 %1, %i.e
   br i1 %.not54, label %bb.d, label %.loopexit
 
@@ -716,9 +715,8 @@ bb.f:                                             ; preds = %bb.e
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.d
-  %.not56 = icmp ult i32 %2, %i.e
   %i.ag = add i32 %i.e, -1
-  %spec.select = select i1 %.not56, i32 %2, i32 %i.ag
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %2, i32 %i.ag)
   br label %.thread57
 
 .thread57:                                        ; preds = %.thread, %bb.g

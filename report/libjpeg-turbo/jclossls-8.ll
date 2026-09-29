@@ -106,16 +106,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 7 uses
   %i.b = add i32 %3, -1                           ; 2 uses
   %i.c = zext i32 %i.b to i64
-  %i.d = add nuw nsw i64 %i.c, 1                  ; 2 uses
+  %i.d = add nuw nsw i64 %i.c, 1                  ; 4 uses
   %min.iters.check = icmp ult i32 %i.b, 15
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %4 = add i32 %3, -1
-  %5 = zext i32 %4 to i64
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
-  %scevgep = getelementptr i8, ptr %2, i64 %6     ; 2 uses
-  %scevgep5 = getelementptr i8, ptr %1, i64 %6
+  %scevgep = getelementptr i8, ptr %2, i64 %i.d   ; 2 uses
+  %scevgep5 = getelementptr i8, ptr %1, i64 %i.d
   %scevgep6 = getelementptr i8, ptr %0, i64 428
   %bound0 = icmp ult ptr %2, %scevgep5
   %bound1 = icmp ult ptr %1, %scevgep

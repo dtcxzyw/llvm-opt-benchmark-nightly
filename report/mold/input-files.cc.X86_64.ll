@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !89   ; 5 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !88   ; 8 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = ashr exact i64 %i.g, 2                   ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -263,16 +263,14 @@ _ZNSt16allocator_traitsIN4mold14ArenaAllocatorINS0_8ArenaPtrINS0_6SymbolINS0_6X8
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt16allocator_traitsIN4mold14ArenaAllocatorINS0_8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEEEEE8allocateERS7_m.exit.i
   %i.ad = add i64 %i.e, -4
-  %i.ae = sub i64 %i.ad, %i.f                     ; 2 uses
+  %i.ae = sub i64 %i.ad, %i.f                     ; 3 uses
   %i.af = lshr i64 %i.ae, 2
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ae, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader40, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %2 = add i64 %i.e, -4
-  %3 = sub i64 %2, %i.f
-  %i.ah = and i64 %3, -4
+  %i.ah = and i64 %i.ae, -4
   %i.ai = add i64 %i.ah, 4                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.aa, i64 %i.ai
   %scevgep35 = getelementptr i8, ptr %i.d, i64 %i.ai
@@ -675,8 +673,6 @@ _ZNSt12_Vector_baseIN4mold9FdeRecordINS0_6X86_64EEESaIS3_EE13_M_deallocateEPS3_m
 ; Function Attrs: mustprogress nounwind
 define linkonce_odr dso_local noundef ptr @_ZNSt6vectorIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE20_M_allocate_and_copyIPKS5_EEPS5_mT_SD_(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %.not.i = icmp eq i64 %1, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE11_M_allocateEm.exit, label %bb.b
 
@@ -703,17 +699,17 @@ _ZNSt12_Vector_baseIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAlloc
   br i1 %.not10.i, label %_ZSt22__uninitialized_copy_aIPKN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEEPS5_NS0_14ArenaAllocatorIS5_EEET0_T_SC_SB_RT1_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt12_Vector_baseIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE11_M_allocateEm.exit
-  %i.i = add i64 %5, -4
-  %i.j = sub i64 %i.i, %4                         ; 2 uses
+  %4 = ptrtoaddr ptr %3 to i64
+  %5 = ptrtoaddr ptr %2 to i64
+  %i.i = add i64 %4, -4
+  %i.j = sub i64 %i.i, %5                         ; 3 uses
   %i.k = lshr i64 %i.j, 2
   %i.l = add nuw nsw i64 %i.k, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.j, 28
   br i1 %min.iters.check, label %.lr.ph.i.preheader13, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %6 = add i64 %5, -4
-  %7 = sub i64 %6, %4
-  %i.m = and i64 %7, -4
+  %i.m = and i64 %i.j, -4
   %i.n = add i64 %i.m, 4                          ; 2 uses
   %scevgep = getelementptr i8, ptr %i.h, i64 %i.n
   %scevgep8 = getelementptr i8, ptr %2, i64 %i.n
@@ -801,8 +797,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !89   ; 3 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !88   ; 8 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775804
   br i1 %i.h, label %bb.b, label %_ZNKSt6vectorIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE12_M_check_lenEmPKc.exit
@@ -818,7 +814,7 @@ _ZNKSt6vectorIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS
   %i.k = icmp ult i64 %i.j, %i.i
   %i.l = tail call i64 @llvm.umin.i64(i64 %i.j, i64 2305843009213693951)
   %i.m = select i1 %i.k, i64 2305843009213693951, i64 %i.l ; 4 uses
-  %i.n = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.n = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.o = sub i64 %i.n, %i.f
   %.not.i = icmp eq i64 %i.m, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE11_M_allocateEm.exit, label %bb.c
@@ -863,16 +859,14 @@ _ZNSt16allocator_traitsIN4mold14ArenaAllocatorINS0_8ArenaPtrINS0_6SymbolINS0_6X8
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt16allocator_traitsIN4mold14ArenaAllocatorINS0_8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEEEEE9constructIS6_JPS5_EEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS7_PT_DpOSB_.exit
   %i.ae = add i64 %i.n, -4
-  %i.af = sub i64 %i.ae, %i.f                     ; 2 uses
+  %i.af = sub i64 %i.ae, %i.f                     ; 3 uses
   %i.ag = lshr i64 %i.af, 2
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.af, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader71, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %3 = add i64 %i.n, -4
-  %4 = sub i64 %3, %i.f
-  %i.ai = and i64 %4, -4
+  %i.ai = and i64 %i.af, -4
   %i.aj = add i64 %i.ai, 4                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.w, i64 %i.aj
   %scevgep41 = getelementptr i8, ptr %i.d, i64 %i.aj
@@ -957,16 +951,14 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN4mold8ArenaPtrINS0_6SymbolINS0_6X86_6
 
 .lr.ph.i.i19.preheader:                           ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEES6_NS0_14ArenaAllocatorIS5_EEET0_T_SA_S9_RT1_.exit
   %i.bo = add i64 %i.e, -4
-  %i.bp = sub i64 %i.bo, %i.n                     ; 2 uses
+  %i.bp = sub i64 %i.bo, %i.n                     ; 3 uses
   %i.bq = lshr i64 %i.bp, 2
   %i.br = add nuw nsw i64 %i.bq, 1                ; 2 uses
   %min.iters.check53 = icmp ult i64 %i.bp, 28
   br i1 %min.iters.check53, label %.lr.ph.i.i19.preheader70, label %vector.memcheck46
 
 vector.memcheck46:                                ; preds = %.lr.ph.i.i19.preheader
-  %5 = add i64 %i.e, -4
-  %6 = sub i64 %5, %i.n
-  %i.bs = and i64 %6, -4                          ; 2 uses
+  %i.bs = and i64 %i.bp, -4                       ; 2 uses
   %i.bt = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.bs
   %scevgep47 = getelementptr i8, ptr %i.bt, i64 8
   %i.bu = getelementptr i8, ptr %1, i64 %i.bs

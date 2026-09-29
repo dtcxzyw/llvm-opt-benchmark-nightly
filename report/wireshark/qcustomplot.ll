@@ -204,7 +204,7 @@ _ZN17QArrayDataPointerI6QLineFED2Ev.exit:         ; preds = %bb.a, %_ZN17QArrayD
 }
 
 ; Function Attrs: mustprogress null_pointer_is_valid sspstrong uwtable
-define { double, double } @_ZNK15QCPAbstractItem19anchorPixelPositionEi(ptr nofree readnone align 8 captures(none) %0, i32 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define noundef { double, double } @_ZNK15QCPAbstractItem19anchorPixelPositionEi(ptr nofree readnone align 8 captures(none) %0, i32 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %class.QString, align 8             ; 9 uses
   %3 = alloca %class.QString, align 8             ; 9 uses
@@ -607,10 +607,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 5 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
   %i.e = sub i64 %i.c, %i.d
   %i.f = ashr exact i64 %i.e, 3                   ; 2 uses
-  %i.g = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.g = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.h = sub i64 %i.g, %i.d
   %i.i = ashr exact i64 %i.h, 3                   ; 3 uses
   %i.j = sub nsw i64 %i.f, %i.i
@@ -619,7 +619,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.l = add i64 %i.g, -8
-  %i.m = sub i64 %i.l, %i.d                       ; 2 uses
+  %i.m = sub i64 %i.l, %i.d                       ; 3 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check186 = icmp ult i64 %i.m, 360
@@ -637,9 +637,7 @@ vector.scevcheck175:                              ; preds = %.lr.ph.i.preheader
   br i1 %i.v, label %.lr.ph.i.preheader202, label %vector.memcheck179
 
 vector.memcheck179:                               ; preds = %vector.scevcheck175
-  %3 = add i64 %i.g, -8
-  %4 = sub i64 %3, %i.d
-  %i.w = and i64 %4, -8
+  %i.w = and i64 %i.m, -8
   %i.x = add i64 %i.w, 8                          ; 2 uses
   %scevgep180 = getelementptr i8, ptr %0, i64 %i.x
   %scevgep181 = getelementptr i8, ptr %1, i64 %i.x
@@ -1042,10 +1040,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 5 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
   %i.e = sub i64 %i.c, %i.d
   %i.f = ashr exact i64 %i.e, 3                   ; 2 uses
-  %i.g = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.g = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.h = sub i64 %i.g, %i.d
   %i.i = ashr exact i64 %i.h, 3                   ; 3 uses
   %i.j = sub nsw i64 %i.f, %i.i
@@ -1054,7 +1052,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.l = add i64 %i.g, -8
-  %i.m = sub i64 %i.l, %i.d                       ; 2 uses
+  %i.m = sub i64 %i.l, %i.d                       ; 3 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check186 = icmp ult i64 %i.m, 360
@@ -1072,9 +1070,7 @@ vector.scevcheck175:                              ; preds = %.lr.ph.i.preheader
   br i1 %i.v, label %.lr.ph.i.preheader202, label %vector.memcheck179
 
 vector.memcheck179:                               ; preds = %vector.scevcheck175
-  %3 = add i64 %i.g, -8
-  %4 = sub i64 %3, %i.d
-  %i.w = and i64 %4, -8
+  %i.w = and i64 %i.m, -8
   %i.x = add i64 %i.w, 8                          ; 2 uses
   %scevgep180 = getelementptr i8, ptr %0, i64 %i.x
   %scevgep181 = getelementptr i8, ptr %1, i64 %i.x

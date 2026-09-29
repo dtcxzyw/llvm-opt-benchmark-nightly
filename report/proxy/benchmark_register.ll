@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %_ZN9benchmark9Mutex
   br label %_ZNSt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS1_EED2Ev.exit
 
 bb.f:                                             ; preds = %_ZN9benchmark9MutexLockC2ERNS_5MutexE.exit.i
-  %i.m = ptrtoint ptr %i.i to i64                 ; 3 uses
-  %i.n = ptrtoint ptr %i.j to i64                 ; 4 uses
+  %i.m = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.n = ptrtoint ptr %i.j to i64                 ; 3 uses
   %i.o = sub i64 %i.m, %i.n                       ; 3 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775800
   br i1 %i.p, label %bb.g, label %_ZNKSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
@@ -239,16 +239,14 @@ _ZNKSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
   %i.y = add i64 %i.m, -8
-  %i.z = sub i64 %i.y, %i.n                       ; 2 uses
+  %i.z = sub i64 %i.y, %i.n                       ; 3 uses
   %i.aa = lshr i64 %i.z, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.z, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader18, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %1 = add i64 %i.m, -8
-  %2 = sub i64 %1, %i.n
-  %i.ac = and i64 %2, -8
+  %i.ac = and i64 %i.z, -8
   %i.ad = add i64 %i.ac, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.w, i64 %i.ad
   %scevgep14 = getelementptr i8, ptr %i.j, i64 %i.ad
@@ -651,8 +649,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !46   ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !45     ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 5 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
@@ -668,7 +666,7 @@ _ZNKSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.m = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -683,16 +681,14 @@ _ZNKSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
   %i.s = add i64 %i.m, -8
-  %i.t = sub i64 %i.s, %i.e                       ; 2 uses
+  %i.t = sub i64 %i.s, %i.e                       ; 3 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.t, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader61, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %3 = add i64 %i.m, -8
-  %4 = sub i64 %3, %i.e
-  %i.w = and i64 %4, -8
+  %i.w = and i64 %i.t, -8
   %i.x = add i64 %i.w, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %i.p, i64 %i.x
   %scevgep35 = getelementptr i8, ptr %i.c, i64 %i.x
@@ -758,16 +754,14 @@ _ZNSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5_
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit
   %i.ak = add i64 %i.d, -8
-  %i.al = sub i64 %i.ak, %i.m                     ; 2 uses
+  %i.al = sub i64 %i.ak, %i.m                     ; 3 uses
   %i.am = lshr i64 %i.al, 3
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %i.al, 152
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader60, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
-  %5 = add i64 %i.d, -8
-  %6 = sub i64 %5, %i.m
-  %i.ao = and i64 %6, -8                          ; 2 uses
+  %i.ao = and i64 %i.al, -8                       ; 2 uses
   %i.ap = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.ao
   %scevgep40 = getelementptr i8, ptr %i.ap, i64 16
   %i.aq = getelementptr i8, ptr %1, i64 %i.ao
@@ -853,8 +847,8 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !84     ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !84   ; 3 uses
-  %i.d = ptrtoint ptr %i.c to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.a to i64                 ; 3 uses
+  %i.d = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
   %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i
@@ -884,16 +878,14 @@ _ZNSt6vectorISt10unique_ptrIN9benchmark9BenchmarkESt14default_deleteIS2_EESaIS5_
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   %i.l = add i64 %i.d, -8
-  %i.m = sub i64 %i.l, %i.e                       ; 2 uses
+  %i.m = sub i64 %i.l, %i.e                       ; 3 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.m, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader35, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %1 = add i64 %i.d, -8
-  %2 = sub i64 %1, %i.e
-  %i.p = and i64 %2, -8
+  %i.p = and i64 %i.m, -8
   %i.q = add i64 %i.p, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %i.k, i64 %i.q
   %scevgep31 = getelementptr i8, ptr %i.a, i64 %i.q
@@ -1296,10 +1288,8 @@ _ZN9benchmark8internal18GetNullLogInstanceEv.exit16: ; preds = %_ZN9benchmark8in
   %i.m = sub nsw i32 0, %1
   %i.n = sub nsw i32 0, %2
   %i.o = tail call ptr @_ZN9benchmark8internal9AddPowersIiEENSt6vectorIT_SaIS3_EE8iteratorEPS5_S3_S3_i(ptr noundef %0, i32 noundef %i.n, i32 noundef %i.m, i32 noundef %3) ; 14 uses
-  %4 = ptrtoaddr ptr %i.o to i64                  ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !98   ; 8 uses
-  %5 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
   %.not4.i = icmp eq ptr %i.o, %i.q
   br i1 %.not4.i, label %_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8internal16AddNegatedPowersIiEEvPS3_IT_SaISA_EESA_SA_iEUlRiE_ET0_SA_SA_SG_.exit, label %.lr.ph.i.preheader
 
@@ -1359,14 +1349,16 @@ _ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8i
   br i1 %or.cond.i.i, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8internal16AddNegatedPowersIiEEvPS3_IT_SaISA_EESA_SA_iEUlRiE_ET0_SA_SA_SG_.exit
-  %i.aj = add i64 %5, -8
-  %i.ak = add i64 %4, 4
+  %4 = ptrtoaddr ptr %i.q to i64
+  %i.aj = add i64 %4, -8
+  %5 = ptrtoaddr ptr %i.o to i64                  ; 3 uses
+  %i.ak = add i64 %5, 4
   %i.al = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.ak)
   %i.am = add i64 %i.al, -4                       ; 2 uses
-  %i.an = icmp ne i64 %i.am, %4
-  %i.ao = zext i1 %i.an to i64                    ; 2 uses
-  %i.ap = add i64 %4, %i.ao
-  %i.aq = sub i64 %i.am, %i.ap
+  %i.an = icmp ne i64 %i.am, %5
+  %i.ao = zext i1 %i.an to i64                    ; 3 uses
+  %i.ap = add i64 %5, %i.ao
+  %i.aq = sub i64 %i.am, %i.ap                    ; 2 uses
   %i.ar = lshr i64 %i.aq, 3
   %i.as = add nuw nsw i64 %i.ar, %i.ao            ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
@@ -1374,16 +1366,8 @@ _ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8i
   br i1 %min.iters.check22, label %.lr.ph.i.i.preheader37, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %6 = add i64 %5, -8
-  %7 = add i64 %4, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %6, i64 %7)
-  %8 = add i64 %umax, -4                          ; 2 uses
-  %9 = icmp ne i64 %8, %4
-  %umin = zext i1 %9 to i64                       ; 2 uses
-  %10 = add i64 %4, %umin
-  %11 = sub i64 %8, %10
-  %i.au = lshr i64 %11, 3
-  %i.av = add nuw nsw i64 %i.au, %umin
+  %i.au = lshr i64 %i.aq, 3
+  %i.av = add nuw nsw i64 %i.au, %i.ao
   %i.aw = shl nuw i64 %i.av, 2                    ; 2 uses
   %i.ax = getelementptr i8, ptr %i.o, i64 %i.aw
   %scevgep = getelementptr i8, ptr %i.ax, i64 4

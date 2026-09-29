@@ -205,7 +205,7 @@ define internal fastcc void @decSetCoeff(ptr nofree noundef captures(address) %0
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64
   %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.c = load i32, ptr %1, align 4, !tbaa !27     ; 5 uses
+  %i.c = load i32, ptr %1, align 4, !tbaa !27     ; 4 uses
   %i.d = sub nsw i32 %3, %i.c                     ; 5 uses
   %i.e = icmp slt i32 %i.d, 1
   br i1 %i.e, label %bb.b, label %bb.e
@@ -360,19 +360,15 @@ bb.f:                                             ; preds = %bb.e
   %i.aw = add i32 %3, -4
   %i.ax = sub i32 %i.aw, %i.c                     ; 2 uses
   %i.ay = udiv i32 %i.ax, 3
-  %narrow = add nuw nsw i32 %i.ay, 1
-  %6 = zext nneg i32 %narrow to i64               ; 2 uses
+  %6 = zext nneg i32 %i.ay to i64                 ; 2 uses
+  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
   %min.iters.check = icmp ult i32 %i.ax, 153
   br i1 %min.iters.check, label %.lr.ph.preheader283, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %scevgep = getelementptr i8, ptr %4, i64 4
-  %7 = add i32 %3, -4
-  %8 = sub i32 %7, %i.c
-  %9 = udiv i32 %8, 3
-  %10 = shl nuw i32 %9, 1
-  %11 = zext i32 %10 to i64
-  %i.az = getelementptr i8, ptr %2, i64 %11
+  %8 = shl nuw nsw i64 %6, 1
+  %i.az = getelementptr i8, ptr %2, i64 %8
   %scevgep203 = getelementptr i8, ptr %i.az, i64 2
   %bound0 = icmp ult ptr %4, %scevgep203
   %bound1 = icmp ult ptr %2, %scevgep
@@ -380,8 +376,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader283, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %6, 2147483644                 ; 4 uses
-  %i.ba = trunc nuw nsw i64 %n.vec to i32
+  %n.vec = and i64 %7, 4294967292                 ; 4 uses
+  %i.ba = trunc nuw i64 %n.vec to i32
   %i.bb = mul i32 %i.ba, 3                        ; 2 uses
   %i.bc = or disjoint i32 %i.bb, 3
   %i.bd = shl nuw nsw i64 %n.vec, 1
@@ -418,7 +414,7 @@ bb.h:                                             ; preds = %vector.body, %bb.g
 
 middle.block:                                     ; preds = %bb.h
   %i.bn = tail call i32 @llvm.experimental.vector.extract.last.active.v4i32(<4 x i32> %i.bl, <4 x i1> %i.bk, i32 %.pr190) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %6
+  %cmp.n = icmp eq i64 %7, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader283
 
 .lr.ph.preheader283:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block

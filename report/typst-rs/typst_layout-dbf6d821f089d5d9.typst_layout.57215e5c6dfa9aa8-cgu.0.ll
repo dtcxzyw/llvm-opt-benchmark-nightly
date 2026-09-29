@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bq = load ptr, ptr %i.bp, align 8, !alias.scope !18993, !noalias !18994, !nonnull !41, !noundef !41
   %i.br = sub nuw i64 %i.bm, %i.bn                ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bn ; 5 uses
-  %i.bt = zext i16 %i.ag to i32                   ; 2 uses
+  %i.bt = zext i16 %i.ag to i32
   %switch.i.i.i.i.i = icmp ult i64 %i.br, 2
   br i1 %switch.i.i.i.i.i, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4hvarNtB2_5Table14advance_offset.exit.i.i.i, label %bb.s
 
@@ -233,7 +233,7 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.x, %bb.v
   %.sroa.16.4.i.i.i.i.i = phi i64 [ 4, %bb.v ], [ 6, %bb.x ]
-  %.sroa.018.0.i.i.i.i.i = phi i32 [ %i.ca, %bb.v ], [ %i.cd, %bb.x ] ; 3 uses
+  %.sroa.018.0.i.i.i.i.i = phi i32 [ %i.ca, %bb.v ], [ %i.cd, %bb.x ] ; 2 uses
   %i.cb = icmp eq i32 %.sroa.018.0.i.i.i.i.i, 0
   br i1 %i.cb, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4hvarNtB2_5Table14advance_offset.exit.i.i.i, label %bb.y
 
@@ -244,9 +244,8 @@ bb.x:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.y:                                             ; preds = %bb.w
-  %.not71.i.i.i.i.i = icmp ugt i32 %.sroa.018.0.i.i.i.i.i, %i.bt
-  %i.ce = add nsw i32 %.sroa.018.0.i.i.i.i.i, -1
-  %spec.select.i.i.i.i.i = select i1 %.not71.i.i.i.i.i, i32 %i.bt, i32 %i.ce
+  %i.ce = add i32 %.sroa.018.0.i.i.i.i.i, -1
+  %spec.select.i.i.i.i.i = call i32 @llvm.umin.i32(i32 range(i32 0, 65536) %i.bt, i32 %i.ce)
   %i.cf = lshr i8 %i.bw, 4
   %i.cg = and i8 %i.cf, 3                         ; 2 uses
   %i.ch = add nuw nsw i8 %i.cg, 1                 ; 3 uses
@@ -647,6 +646,9 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #44
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #44
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #44
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #44

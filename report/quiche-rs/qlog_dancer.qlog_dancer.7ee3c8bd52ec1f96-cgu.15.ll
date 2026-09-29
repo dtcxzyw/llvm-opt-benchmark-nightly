@@ -205,7 +205,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i
   %scevgep7 = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.f, !dbg !26201
   %i.g = shl i64 %.sroa.7.0.copyload, 2, !dbg !26201
   %scevgep8 = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.g, !dbg !26201
-  %i.h = add i64 %.sroa.52.0.copyload, %.sroa.6.0.copyload, !dbg !26201
+  %i.h = add i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload, !dbg !26201
   %i.i = shl i64 %i.h, 2, !dbg !26201
   %scevgep9 = getelementptr i8, ptr %.sroa.41.0.copyload, i64 %i.i, !dbg !26201
   %i.j = add i64 %.sroa.52.0.copyload, %.sroa.7.0.copyload, !dbg !26201
@@ -495,7 +495,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i
   %scevgep7 = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.f, !dbg !26438
   %i.g = shl i64 %.sroa.7.0.copyload, 2, !dbg !26438
   %scevgep8 = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.g, !dbg !26438
-  %i.h = add i64 %.sroa.52.0.copyload, %.sroa.6.0.copyload, !dbg !26438
+  %i.h = add i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload, !dbg !26438
   %i.i = shl i64 %i.h, 2, !dbg !26438
   %scevgep9 = getelementptr i8, ptr %.sroa.41.0.copyload, i64 %i.i, !dbg !26438
   %i.j = add i64 %.sroa.52.0.copyload, %.sroa.7.0.copyload, !dbg !26438
@@ -898,13 +898,11 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.5.0.copyload, 3, !dbg !32114 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !32114
-  %3 = and i64 %i.d, -8, !dbg !32114              ; 2 uses
   %i.g = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !32114
-  %scevgep2 = getelementptr i8, ptr %i.g, i64 %3, !dbg !32114
-  %scevgep3 = getelementptr i8, ptr %0, i64 %3, !dbg !32114
-  %bound0 = icmp ult ptr %scevgep, %scevgep3, !dbg !32114
-  %bound1 = icmp ult ptr %0, %scevgep2, !dbg !32114
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !32114
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.d, !dbg !32114
+  %bound0 = icmp ult ptr %i.g, %1, !dbg !32114
+  %bound1 = icmp ult ptr %0, %scevgep3, !dbg !32114
   %found.conflict = and i1 %bound0, %bound1, !dbg !32114
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph, !dbg !32115
 
@@ -1118,13 +1116,11 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.5.0.copyload, 4, !dbg !32344 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !32344
-  %3 = and i64 %i.d, -16, !dbg !32344             ; 2 uses
   %i.g = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !32344
-  %scevgep2 = getelementptr i8, ptr %i.g, i64 %3, !dbg !32344
-  %scevgep3 = getelementptr i8, ptr %0, i64 %3, !dbg !32344
-  %bound0 = icmp ult ptr %scevgep, %scevgep3, !dbg !32344
-  %bound1 = icmp ult ptr %0, %scevgep2, !dbg !32344
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f, !dbg !32344
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.d, !dbg !32344
+  %bound0 = icmp ult ptr %i.g, %1, !dbg !32344
+  %bound1 = icmp ult ptr %0, %scevgep3, !dbg !32344
   %found.conflict = and i1 %bound0, %bound1, !dbg !32344
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph, !dbg !32345
 
@@ -1527,7 +1523,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtNtCs4bweDUTR8gt_8plotters5style4font3ttf9FontErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #13 !dbg !51629 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtNtCs4bweDUTR8gt_8plotters5style4font3ttf9FontErrorNtNtCskKLDkoKarTP_4core5error5Error11descriptionCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #13 !dbg !51629 {
 bb.a:
     #dbg_value(ptr poison, !51632, !DIExpression(), !51634)
   ret { ptr, i64 } { ptr @74, i64 40 }, !dbg !51635

@@ -73,19 +73,20 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.z, label %.lr.ph.i.i, label %usb_desc_msos_prop_str.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e
-  %i.aa = getelementptr i8, ptr %i.a, i64 36      ; 5 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 36 ; 5 uses
   %wide.trip.count.i.i = zext i32 %i.w to i64     ; 8 uses
   %min.iters.check = icmp ult i32 %i.w, 32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i
   %i.ab = add nsw i64 %wide.trip.count.i.i, -1    ; 2 uses
-  %5 = icmp ugt i64 %i.ab, 1073741823
+  %5 = and i64 %i.ab, -3221225472
+  %6 = icmp ne i64 %5, 0
   %scevgep = getelementptr nuw i8, ptr %i.a, i64 37 ; 2 uses
   %mul.result19 = shl nsw i64 %i.ab, 1
   %i.ac = getelementptr i8, ptr %scevgep, i64 %mul.result19
   %i.ad = icmp ult ptr %i.ac, %scevgep
-  %i.ae = or i1 %5, %i.ad
+  %i.ae = or i1 %6, %i.ad
   br i1 %i.ae, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

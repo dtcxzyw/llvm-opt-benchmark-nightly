@@ -202,16 +202,16 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !72)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !73, !noalias !74, !nonnull !6, !noundef !6 ; 3 uses
-  %2 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.promoted.i.i = load ptr, ptr %i.c, align 8, !alias.scope !73, !noalias !74 ; 9 uses
-  %.promoted.i.i6 = ptrtoaddr ptr %.promoted.i.i to i64 ; 2 uses
   %.not6.i.i = icmp eq ptr %.promoted.i.i, %i.b
   br i1 %.not6.i.i, label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTjjEENtB6_15IteratorRefSpec9spec_folduNCINvNvNtB6_8Iterator8for_each4callB1E_NCINvMsj_BW_INtBW_3VecB1E_E14extend_trustedBQ_E0E0ECs2JiOgHzbbc7_10tokenizers.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.a
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %.promoted.i.i to i64
   %i.d = add i64 %2, -16
-  %i.e = sub i64 %i.d, %.promoted.i.i6            ; 2 uses
+  %i.e = sub i64 %i.d, %3                         ; 3 uses
   %i.f = lshr i64 %i.e, 4
   %i.g = add nuw nsw i64 %i.f, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.e, 272
@@ -220,9 +220,7 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.h = shl i64 %.sroa.4.0.copyload.i, 4         ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.6.0.copyload.i, i64 %i.h
-  %3 = add i64 %2, -16
-  %4 = sub i64 %3, %.promoted.i.i6
-  %i.i = and i64 %4, -16                          ; 2 uses
+  %i.i = and i64 %i.e, -16                        ; 2 uses
   %i.j = getelementptr i8, ptr %.sroa.6.0.copyload.i, i64 %i.h
   %i.k = getelementptr i8, ptr %i.j, i64 %i.i
   %scevgep7 = getelementptr i8, ptr %i.k, i64 16
@@ -625,7 +623,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionCs2JiOgHzbbc7_10tokenizers(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionCs2JiOgHzbbc7_10tokenizers(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @66, i64 40 }
 }
@@ -644,7 +642,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionCs2JiOgHzbbc7_10tokenizers(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionCs2JiOgHzbbc7_10tokenizers(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @66, i64 40 }
 }
@@ -663,7 +661,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5ErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionB8_(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #6 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5ErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionB8_(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   ret { ptr, i64 } { ptr @66, i64 40 }
 }

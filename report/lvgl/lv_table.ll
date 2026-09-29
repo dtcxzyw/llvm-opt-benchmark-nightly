@@ -204,20 +204,20 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !20   ; 3 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !20   ; 2 uses
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !21   ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !21   ; 2 uses
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !29
-  %i.i = zext i16 %2 to i32                       ; 3 uses
+  %i.i = zext i16 %2 to i32                       ; 2 uses
   %.not24 = icmp eq i32 %i.h, %i.i
   br i1 %.not24, label %bb.e, label %._crit_edge
 
@@ -233,14 +233,12 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not25, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %bb.e
-  %.pre-phi = phi i32 [ %.pre, %._crit_edge ], [ %i.l, %bb.e ] ; 2 uses
-  %.not26 = icmp ugt i32 %i.b, %i.i
-  %i.m = add nsw i32 %i.b, -1
-  %3 = select i1 %.not26, i32 %i.i, i32 %i.m
+  %.pre-phi = phi i32 [ %.pre, %._crit_edge ], [ %i.l, %bb.e ]
+  %i.m = add i32 %i.b, -1
+  %3 = tail call i32 @llvm.umin.i32(i32 %i.i, i32 %i.m)
   store i32 %3, ptr %i.g, align 8, !tbaa !29
-  %.not27 = icmp ugt i32 %i.e, %.pre-phi
-  %i.n = add nsw i32 %i.e, -1
-  %4 = select i1 %.not27, i32 %.pre-phi, i32 %i.n
+  %i.n = add i32 %i.e, -1
+  %4 = tail call i32 @llvm.umin.i32(i32 %.pre-phi, i32 %i.n)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 108
   store i32 %4, ptr %i.o, align 4, !tbaa !28
   %i.p = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #8 ; 0 uses

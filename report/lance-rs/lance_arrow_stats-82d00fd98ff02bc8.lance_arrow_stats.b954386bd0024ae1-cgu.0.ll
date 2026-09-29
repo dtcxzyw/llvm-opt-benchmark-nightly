@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 _RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types11Float16TypeECsfUv75jb5FCv_17lance_arrow_stats.exit: ; preds = %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   %i.ae = load i64, ptr %i.ad, align 8, !noundef !6
-  %i.af = lshr i64 %i.ae, 1                       ; 13 uses
+  %i.af = lshr i64 %i.ae, 1                       ; 11 uses
   %.not75 = icmp eq i64 %i.af, 0
   br i1 %.not75, label %.loopexit, label %.lr.ph68
 
@@ -221,16 +221,14 @@ _RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5A
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float16TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader: ; preds = %.lr.ph68
   %.val22.us.pre = load ptr, ptr %i.ak, align 8   ; 6 uses
   %i.an = add nsw i64 %i.af, -1
-  %i.ao = call i64 @llvm.umin.i64(i64 %i.af, i64 %i.an) ; 2 uses
+  %i.ao = call i64 @llvm.umin.i64(i64 %i.af, i64 %i.an) ; 3 uses
   %i.ap = add nuw i64 %i.ao, 1                    ; 2 uses
   %min.iters.check157 = icmp samesign ult i64 %i.ao, 8
   br i1 %min.iters.check157, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float16TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader171, label %vector.memcheck149
 
 vector.memcheck149:                               ; preds = %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float16TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader
   %scevgep150 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %1 = add nsw i64 %i.af, -1
-  %umin151 = call i64 @llvm.umin.i64(i64 %i.af, i64 %1)
-  %i.aq = shl nuw i64 %umin151, 1
+  %i.aq = shl nuw i64 %i.ao, 1
   %i.ar = getelementptr i8, ptr %.val22.us.pre, i64 %i.aq
   %scevgep152 = getelementptr i8, ptr %i.ar, i64 2
   %bound0153 = icmp ult ptr %i.i, %scevgep152
@@ -379,7 +377,7 @@ bb.e:                                             ; preds = %bb.d
 _RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types11Float32TypeECsfUv75jb5FCv_17lance_arrow_stats.exit: ; preds = %bb.d
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cp, i64 40
   %i.cw = load i64, ptr %i.cv, align 8, !noundef !6
-  %i.cx = lshr i64 %i.cw, 2                       ; 13 uses
+  %i.cx = lshr i64 %i.cw, 2                       ; 11 uses
   %.not74 = icmp eq i64 %i.cx, 0
   br i1 %.not74, label %.loopexit, label %.lr.ph60
 
@@ -396,16 +394,14 @@ _RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5A
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader: ; preds = %.lr.ph60
   %.val24.us.pre = load ptr, ptr %i.dc, align 8   ; 6 uses
   %i.df = add nsw i64 %i.cx, -1
-  %i.dg = call i64 @llvm.umin.i64(i64 %i.cx, i64 %i.df) ; 2 uses
+  %i.dg = call i64 @llvm.umin.i64(i64 %i.cx, i64 %i.df) ; 3 uses
   %i.dh = add nuw nsw i64 %i.dg, 1                ; 2 uses
   %min.iters.check135 = icmp samesign ult i64 %i.dg, 10
   br i1 %min.iters.check135, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader175, label %vector.memcheck127
 
 vector.memcheck127:                               ; preds = %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader
   %scevgep128 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %2 = add nsw i64 %i.cx, -1
-  %umin129 = call i64 @llvm.umin.i64(i64 %i.cx, i64 %2)
-  %i.di = shl nuw i64 %umin129, 2
+  %i.di = shl nuw i64 %i.dg, 2
   %i.dj = getelementptr i8, ptr %.val24.us.pre, i64 %i.di
   %scevgep130 = getelementptr i8, ptr %i.dj, i64 4
   %bound0131 = icmp ult ptr %i.f, %scevgep130
@@ -549,7 +545,7 @@ bb.g:                                             ; preds = %bb.f
 _RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types11Float64TypeECsfUv75jb5FCv_17lance_arrow_stats.exit: ; preds = %bb.f
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fc, i64 40
   %i.fj = load i64, ptr %i.fi, align 8, !noundef !6
-  %i.fk = lshr i64 %i.fj, 3                       ; 13 uses
+  %i.fk = lshr i64 %i.fj, 3                       ; 11 uses
   %.not = icmp eq i64 %i.fk, 0
   br i1 %.not, label %.loopexit, label %.lr.ph
 
@@ -566,16 +562,14 @@ _RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5A
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader: ; preds = %.lr.ph
   %.val26.us.pre = load ptr, ptr %i.fp, align 8   ; 6 uses
   %i.fs = add nsw i64 %i.fk, -1
-  %i.ft = call i64 @llvm.umin.i64(i64 %i.fk, i64 %i.fs) ; 2 uses
+  %i.ft = call i64 @llvm.umin.i64(i64 %i.fk, i64 %i.fs) ; 3 uses
   %i.fu = add nuw nsw i64 %i.ft, 1                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.ft, 10
   br i1 %min.iters.check, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader181, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader
   %scevgep = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = add nsw i64 %i.fk, -1
-  %umin = call i64 @llvm.umin.i64(i64 %i.fk, i64 %3)
-  %i.fv = shl nuw i64 %umin, 3
+  %i.fv = shl nuw i64 %i.ft, 3
   %i.fw = getelementptr i8, ptr %.val26.us.pre, i64 %i.fv
   %scevgep124 = getelementptr i8, ptr %i.fw, i64 8
   %bound0 = icmp ult ptr %i.c, %scevgep124

@@ -205,7 +205,7 @@ bb.a:
 declare i32 @GDParams_getParameter(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define { i32, i64 } @ZL_DCtx_resetParameters(ptr noundef %0) local_unnamed_addr #0 {
+define noundef { i32, i64 } @ZL_DCtx_resetParameters(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1752
   tail call void @ZL_zeroes(ptr noundef nonnull %i.a, i64 noundef 16) #16
@@ -608,21 +608,20 @@ vector.scevcheck530:                              ; preds = %.lr.ph.i305
 vector.memcheck531:                               ; preds = %vector.scevcheck530
   %i.gu = add i32 %i.gh, -1
   %i.gv = zext i32 %i.gu to i64
-  %i.gw = shl nuw nsw i64 %i.gv, 3                ; 2 uses
-  %16 = add nuw nsw i64 %i.gw, 8
+  %i.gw = shl nuw nsw i64 %i.gv, 3
   %i.gx = shl nuw nsw i64 %wide.trip.count.i306, 3
+  %16 = add nuw nsw i64 %i.gw, 8                  ; 2 uses
   %17 = sub nsw i64 %16, %i.gx
-  %scevgep532 = getelementptr i8, ptr %i.gf, i64 %17
-  %i.gy = getelementptr i8, ptr %i.gf, i64 %i.gw
-  %scevgep533 = getelementptr i8, ptr %i.gy, i64 8
+  %i.gy = getelementptr i8, ptr %i.gf, i64 %17
+  %scevgep533 = getelementptr i8, ptr %i.gf, i64 %16
   %i.gz = zext i32 %i.gi to i64                   ; 2 uses
   %i.ha = mul nuw nsw i64 %i.gz, 24
   %scevgep534 = getelementptr i8, ptr %i.gk, i64 %i.ha
-  %i.hb = add nuw nsw i64 %wide.trip.count.i306, %i.gz
+  %i.hb = add nuw nsw i64 %i.gz, %wide.trip.count.i306
   %i.hc = mul nuw nsw i64 %i.hb, 24
   %i.hd = getelementptr i8, ptr %i.gk, i64 %i.hc
   %scevgep535 = getelementptr i8, ptr %i.hd, i64 -16
-  %bound0536 = icmp ult ptr %scevgep532, %scevgep535
+  %bound0536 = icmp ult ptr %i.gy, %scevgep535
   %bound1537 = icmp ult ptr %scevgep534, %scevgep533
   %found.conflict538 = and i1 %bound0536, %bound1537
   br i1 %found.conflict538, label %scalar.ph539.preheader, label %vector.ph541
@@ -1025,21 +1024,20 @@ vector.scevcheck550:                              ; preds = %.lr.ph.i260
 vector.memcheck551:                               ; preds = %vector.scevcheck550
   %i.tt = add i32 %i.tg, -1
   %i.tu = zext i32 %i.tt to i64
-  %i.tv = shl nuw nsw i64 %i.tu, 3                ; 2 uses
-  %18 = add nuw nsw i64 %i.tv, 8
+  %i.tv = shl nuw nsw i64 %i.tu, 3
   %i.tw = shl nuw nsw i64 %wide.trip.count.i, 3
+  %18 = add nuw nsw i64 %i.tv, 8                  ; 2 uses
   %19 = sub nsw i64 %18, %i.tw
-  %scevgep552 = getelementptr i8, ptr %i.te, i64 %19
-  %i.tx = getelementptr i8, ptr %i.te, i64 %i.tv
-  %scevgep553 = getelementptr i8, ptr %i.tx, i64 8
+  %i.tx = getelementptr i8, ptr %i.te, i64 %19
+  %scevgep553 = getelementptr i8, ptr %i.te, i64 %18
   %i.ty = zext i32 %i.th to i64                   ; 2 uses
   %i.tz = mul nuw nsw i64 %i.ty, 24
   %scevgep554 = getelementptr i8, ptr %i.tj, i64 %i.tz
-  %i.ua = add nuw nsw i64 %wide.trip.count.i, %i.ty
+  %i.ua = add nuw nsw i64 %i.ty, %wide.trip.count.i
   %i.ub = mul nuw nsw i64 %i.ua, 24
   %i.uc = getelementptr i8, ptr %i.tj, i64 %i.ub
   %scevgep555 = getelementptr i8, ptr %i.uc, i64 -16
-  %bound0556 = icmp ult ptr %scevgep552, %scevgep555
+  %bound0556 = icmp ult ptr %i.tx, %scevgep555
   %bound1557 = icmp ult ptr %scevgep554, %scevgep553
   %found.conflict558 = and i1 %bound0556, %bound1557
   br i1 %found.conflict558, label %scalar.ph559.preheader, label %vector.ph561
@@ -1442,7 +1440,7 @@ bb.c:                                             ; preds = %.thread, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define { i32, i64 } @ZL_DCtx_detachAllDecompressIntrospectionHooks(ptr noundef %0) local_unnamed_addr #0 {
+define noundef { i32, i64 } @ZL_DCtx_detachAllDecompressIntrospectionHooks(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1680
   tail call void @ZL_zeroes(ptr noundef nonnull %i.a, i64 noundef 64) #16

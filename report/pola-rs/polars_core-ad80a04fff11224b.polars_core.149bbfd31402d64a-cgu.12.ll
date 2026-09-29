@@ -206,8 +206,8 @@ bb.a:
   store i64 0, ptr %i.o, align 8, !dbg !75180, !noalias !75154
   tail call void @llvm.experimental.noalias.scope.decl(metadata !75155), !dbg !75181
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
-  %i.p = ptrtoint ptr %2 to i64, !dbg !75182      ; 3 uses
-  %i.q = ptrtoint ptr %1 to i64, !dbg !75182      ; 3 uses
+  %i.p = ptrtoint ptr %2 to i64, !dbg !75182      ; 2 uses
+  %i.q = ptrtoint ptr %1 to i64, !dbg !75182      ; 2 uses
   %i.r = sub nuw i64 %i.p, %i.q, !dbg !75182
   %i.s = lshr exact i64 %i.r, 3, !dbg !75182      ; 2 uses
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecmE7reserveCs1LHh8CLbVkQ_11polars_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.s)
@@ -224,7 +224,7 @@ bb.a:
   %i.w = load ptr, ptr %i.n, align 8, !dbg !75189, !alias.scope !75155, !noalias !75154, !nonnull !4867, !noundef !4867 ; 2 uses
   %i.x = getelementptr [4 x i8], ptr %i.w, i64 %i.t, !dbg !75190 ; 5 uses
   %i.y = add i64 %i.p, -8, !dbg !75188
-  %i.z = sub i64 %i.y, %i.q, !dbg !75188          ; 2 uses
+  %i.z = sub i64 %i.y, %i.q, !dbg !75188          ; 4 uses
   %i.aa = lshr i64 %i.z, 3, !dbg !75188
   %i.ab = add nuw nsw i64 %i.aa, 1, !dbg !75188   ; 2 uses
   %min.iters.check = icmp ult i64 %i.z, 320, !dbg !75188
@@ -232,15 +232,13 @@ bb.a:
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.i
   %i.ac = shl nuw nsw i64 %i.t, 2, !dbg !75188
-  %3 = add i64 %i.p, -8, !dbg !75188
-  %4 = sub i64 %3, %i.q, !dbg !75188              ; 2 uses
-  %i.ad = lshr i64 %4, 1, !dbg !75188
+  %i.ad = lshr i64 %i.z, 1, !dbg !75188
   %i.ae = and i64 %i.ad, 9223372036854775804, !dbg !75188
   %i.af = getelementptr i8, ptr %i.w, i64 %i.ac, !dbg !75188
   %i.ag = getelementptr i8, ptr %i.af, i64 %i.ae, !dbg !75188
   %scevgep = getelementptr i8, ptr %i.ag, i64 4, !dbg !75188
   %scevgep18 = getelementptr i8, ptr %1, i64 4, !dbg !75188
-  %i.ah = and i64 %4, -8, !dbg !75188
+  %i.ah = and i64 %i.z, -8, !dbg !75188
   %i.ai = getelementptr i8, ptr %1, i64 %i.ah, !dbg !75188
   %scevgep19 = getelementptr i8, ptr %i.ai, i64 8, !dbg !75188
   %bound0 = icmp ult ptr %i.x, %scevgep19, !dbg !75188
@@ -643,43 +641,43 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i16, i16 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumNtNtB6_7float164pf16ENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243017 {
+define hidden noundef { i16, i16 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumNtNtB6_7float164pf16ENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243017 {
 bb.a:
   ret { i16, i16 } zeroinitializer, !dbg !243018
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i8, i8 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumaENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243019 {
+define hidden noundef { i8, i8 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumaENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243019 {
 bb.a:
   ret { i8, i8 } zeroinitializer, !dbg !243020
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { double, double } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumdENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243021 {
+define hidden noundef { double, double } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumdENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243021 {
 bb.a:
   ret { double, double } zeroinitializer, !dbg !243022
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { float, float } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumfENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243023 {
+define hidden noundef { float, float } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumfENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243023 {
 bb.a:
   ret { float, float } zeroinitializer, !dbg !243024
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i8, i8 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumhENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243025 {
+define hidden noundef { i8, i8 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumhENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243025 {
 bb.a:
   ret { i8, i8 } zeroinitializer, !dbg !243026
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i32, i32 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumlENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243027 {
+define hidden noundef { i32, i32 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumlENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243027 {
 bb.a:
   ret { i32, i32 } zeroinitializer, !dbg !243028
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i32, i32 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSummENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243029 {
+define hidden noundef { i32, i32 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSummENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243029 {
 bb.a:
   ret { i32, i32 } zeroinitializer, !dbg !243030
 }
@@ -699,25 +697,25 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i16, i16 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumsENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243037 {
+define hidden noundef { i16, i16 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumsENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243037 {
 bb.a:
   ret { i16, i16 } zeroinitializer, !dbg !243038
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i16, i16 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumtENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243039 {
+define hidden noundef { i16, i16 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumtENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243039 {
 bb.a:
   ret { i16, i16 } zeroinitializer, !dbg !243040
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i64, i64 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumxENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243041 {
+define hidden noundef { i64, i64 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumxENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243041 {
 bb.a:
   ret { i64, i64 } zeroinitializer, !dbg !243042
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i64, i64 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumyENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243043 {
+define hidden noundef { i64, i64 } @_RNvXs_NtCs2mZqlW55729_12polars_utils9kahan_sumINtB4_8KahanSumyENtNtCscgRAwXFJnXP_4core7default7Default7defaultCs1LHh8CLbVkQ_11polars_core() unnamed_addr #28 personality ptr @rust_eh_personality !dbg !243043 {
 bb.a:
   ret { i64, i64 } zeroinitializer, !dbg !243044
 }

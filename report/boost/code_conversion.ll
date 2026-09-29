@@ -204,8 +204,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   store i64 0, ptr %i.c, align 8, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  %i.d = ptrtoint ptr %4 to i64                   ; 3 uses
-  %i.e = ptrtoint ptr %3 to i64                   ; 3 uses
+  %i.d = ptrtoint ptr %4 to i64                   ; 2 uses
+  %i.e = ptrtoint ptr %3 to i64                   ; 2 uses
   %i.f = sub i64 %i.d, %i.e
   %i.g = ashr exact i64 %i.f, 2                   ; 3 uses
   store i64 %i.g, ptr %i.a, align 8, !tbaa !48
@@ -227,19 +227,17 @@ bb.a:
 
 .lr.ph.i.i.i.preheader:                           ; preds = %._crit_edge.i.i
   %i.m = add i64 %i.d, -4
-  %i.n = sub i64 %i.m, %i.e                       ; 2 uses
+  %i.n = sub i64 %i.m, %i.e                       ; 4 uses
   %i.o = lshr i64 %i.n, 2
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.n, 124
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader23, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %6 = add i64 %i.d, -4
-  %7 = sub i64 %6, %i.e                           ; 2 uses
-  %i.q = lshr i64 %7, 2
+  %i.q = lshr i64 %i.n, 2
   %i.r = getelementptr i8, ptr %i.l, i64 %i.q
   %scevgep = getelementptr i8, ptr %i.r, i64 1
-  %i.s = and i64 %7, -4
+  %i.s = and i64 %i.n, -4
   %i.t = getelementptr i8, ptr %3, i64 %i.s
   %scevgep19 = getelementptr i8, ptr %i.t, i64 4
   %bound0 = icmp ult ptr %i.l, %scevgep19
@@ -642,8 +640,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   store i64 0, ptr %i.c, align 8, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  %i.d = ptrtoint ptr %4 to i64                   ; 3 uses
-  %i.e = ptrtoint ptr %3 to i64                   ; 3 uses
+  %i.d = ptrtoint ptr %4 to i64                   ; 2 uses
+  %i.e = ptrtoint ptr %3 to i64                   ; 2 uses
   %i.f = sub i64 %i.d, %i.e
   %i.g = ashr exact i64 %i.f, 2                   ; 3 uses
   store i64 %i.g, ptr %i.a, align 8, !tbaa !48
@@ -665,19 +663,17 @@ bb.a:
 
 .lr.ph.i.i.i.preheader:                           ; preds = %._crit_edge.i.i
   %i.m = add i64 %i.d, -4
-  %i.n = sub i64 %i.m, %i.e                       ; 2 uses
+  %i.n = sub i64 %i.m, %i.e                       ; 4 uses
   %i.o = lshr i64 %i.n, 2
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.n, 124
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader23, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %6 = add i64 %i.d, -4
-  %7 = sub i64 %6, %i.e                           ; 2 uses
-  %i.q = lshr i64 %7, 2
+  %i.q = lshr i64 %i.n, 2
   %i.r = getelementptr i8, ptr %i.l, i64 %i.q
   %scevgep = getelementptr i8, ptr %i.r, i64 1
-  %i.s = and i64 %7, -4
+  %i.s = and i64 %i.n, -4
   %i.t = getelementptr i8, ptr %3, i64 %i.s
   %scevgep19 = getelementptr i8, ptr %i.t, i64 4
   %bound0 = icmp ult ptr %i.l, %scevgep19

@@ -205,14 +205,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !noundef !5 ; 10 uses
-  %2 = ptrtoaddr ptr %i.h to i64                  ; 2 uses
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !nonnull !5, !noundef !5 ; 3 uses
-  %.sroa.4.0.copyload13 = ptrtoaddr ptr %.sroa.4.0.copyload to i64 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -228,8 +226,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.i, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.d
-  %i.j = add i64 %.sroa.4.0.copyload13, -8
-  %i.k = sub i64 %i.j, %2                         ; 2 uses
+  %2 = ptrtoaddr ptr %.sroa.4.0.copyload to i64
+  %3 = ptrtoaddr ptr %i.h to i64
+  %i.j = add i64 %2, -8
+  %i.k = sub i64 %i.j, %3                         ; 3 uses
   %i.l = lshr i64 %i.k, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 136
@@ -238,9 +238,7 @@ bb.d:                                             ; preds = %bb.c
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.n = shl i64 %.sroa.49.0.copyload, 3          ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.610.0.copyload, i64 %i.n
-  %3 = add i64 %.sroa.4.0.copyload13, -8
-  %4 = sub i64 %3, %2
-  %i.o = and i64 %4, -8                           ; 2 uses
+  %i.o = and i64 %i.k, -8                         ; 2 uses
   %i.p = getelementptr i8, ptr %.sroa.610.0.copyload, i64 %i.n
   %i.q = getelementptr i8, ptr %i.p, i64 %i.o
   %scevgep14 = getelementptr i8, ptr %i.q, i64 8
@@ -643,14 +641,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !noundef !5 ; 10 uses
-  %2 = ptrtoaddr ptr %i.h to i64                  ; 2 uses
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !nonnull !5, !noundef !5 ; 3 uses
-  %.sroa.4.0.copyload13 = ptrtoaddr ptr %.sroa.4.0.copyload to i64 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -666,8 +662,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.i, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.d
-  %i.j = add i64 %.sroa.4.0.copyload13, -16
-  %i.k = sub i64 %i.j, %2                         ; 2 uses
+  %2 = ptrtoaddr ptr %.sroa.4.0.copyload to i64
+  %3 = ptrtoaddr ptr %i.h to i64
+  %i.j = add i64 %2, -16
+  %i.k = sub i64 %i.j, %3                         ; 3 uses
   %i.l = lshr i64 %i.k, 4
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 272
@@ -676,9 +674,7 @@ bb.d:                                             ; preds = %bb.c
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.n = shl i64 %.sroa.49.0.copyload, 4          ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.610.0.copyload, i64 %i.n
-  %3 = add i64 %.sroa.4.0.copyload13, -16
-  %4 = sub i64 %3, %2
-  %i.o = and i64 %4, -16                          ; 2 uses
+  %i.o = and i64 %i.k, -16                        ; 2 uses
   %i.p = getelementptr i8, ptr %.sroa.610.0.copyload, i64 %i.n
   %i.q = getelementptr i8, ptr %i.p, i64 %i.o
   %scevgep14 = getelementptr i8, ptr %i.q, i64 16
@@ -1081,7 +1077,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainer19UnigramTrainerErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionBa_(ptr noalias nonnull readonly captures(none) %0) unnamed_addr #14 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainer19UnigramTrainerErrorNtNtCs4NRVxsYgnAr_4core5error5Error11descriptionBa_(ptr noalias nonnull readonly captures(none) %0) unnamed_addr #14 {
 bb.a:
   ret { ptr, i64 } { ptr @144, i64 40 }
 }
@@ -1112,7 +1108,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertINtBc_3BoxDNtNtCs4NRVxsYgnAr_4core5error5ErrorNtNtB10_6marker4SendNtB1x_4SyncEL_EINtNtB10_7convert4FromNtNtBe_6string6StringE4from11StringErrorBW_11descriptionCs2JiOgHzbbc7_10tokenizers(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #14 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertINtBc_3BoxDNtNtCs4NRVxsYgnAr_4core5error5ErrorNtNtB10_6marker4SendNtB1x_4SyncEL_EINtNtB10_7convert4FromNtNtBe_6string6StringE4from11StringErrorBW_11descriptionCs2JiOgHzbbc7_10tokenizers(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   ret { ptr, i64 } { ptr @144, i64 40 }
 }

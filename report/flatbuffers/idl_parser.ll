@@ -205,10 +205,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ft = ptrtoint ptr %.065 to i64               ; 2 uses
-  %i.fu = ptrtoint ptr %.064 to i64               ; 4 uses
+  %i.fu = ptrtoint ptr %.064 to i64               ; 3 uses
   %i.fv = sub i64 %i.ft, %i.fu
   %i.fw = ashr exact i64 %i.fv, 2                 ; 2 uses
-  %i.fx = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.fx = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.fy = sub i64 %i.fx, %i.fu
   %i.fz = ashr exact i64 %i.fy, 2                 ; 3 uses
   %i.ga = sub nsw i64 %i.fw, %i.fz
@@ -217,16 +217,14 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.h
   %i.gc = add i64 %i.fx, -4
-  %i.gd = sub i64 %i.gc, %i.fu                    ; 2 uses
+  %i.gd = sub i64 %i.gc, %i.fu                    ; 3 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check120 = icmp ult i64 %i.gd, 60
   br i1 %min.iters.check120, label %.lr.ph.i.i.i.preheader136, label %vector.memcheck113
 
 vector.memcheck113:                               ; preds = %.lr.ph.i.i.i.preheader
-  %8 = add i64 %i.fx, -4
-  %9 = sub i64 %8, %i.fu
-  %i.gg = and i64 %9, -4
+  %i.gg = and i64 %i.gd, -4
   %i.gh = add i64 %i.gg, 4                        ; 2 uses
   %scevgep114 = getelementptr i8, ptr %.064, i64 %i.gh
   %scevgep115 = getelementptr i8, ptr %1, i64 %i.gh
@@ -629,10 +627,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ap = ptrtoint ptr %2 to i64                  ; 2 uses
-  %i.aq = ptrtoint ptr %0 to i64                  ; 4 uses
+  %i.aq = ptrtoint ptr %0 to i64                  ; 3 uses
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = ashr exact i64 %i.ar, 2                 ; 2 uses
-  %i.at = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.at = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.au = sub i64 %i.at, %i.aq
   %i.av = ashr exact i64 %i.au, 2                 ; 3 uses
   %i.aw = sub nsw i64 %i.as, %i.av
@@ -641,16 +639,14 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.aa
   %i.ay = add i64 %i.at, -4
-  %i.az = sub i64 %i.ay, %i.aq                    ; 2 uses
+  %i.az = sub i64 %i.ay, %i.aq                    ; 3 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check98 = icmp ult i64 %i.az, 60
   br i1 %min.iters.check98, label %.lr.ph.i.i.i.preheader114, label %vector.memcheck91
 
 vector.memcheck91:                                ; preds = %.lr.ph.i.i.i.preheader
-  %7 = add i64 %i.at, -4
-  %8 = sub i64 %7, %i.aq
-  %i.bc = and i64 %8, -4
+  %i.bc = and i64 %i.az, -4
   %i.bd = add i64 %i.bc, 4                        ; 2 uses
   %scevgep92 = getelementptr i8, ptr %0, i64 %i.bd
   %scevgep93 = getelementptr i8, ptr %1, i64 %i.bd
@@ -1053,10 +1049,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ft = ptrtoint ptr %.065 to i64               ; 2 uses
-  %i.fu = ptrtoint ptr %.064 to i64               ; 4 uses
+  %i.fu = ptrtoint ptr %.064 to i64               ; 3 uses
   %i.fv = sub i64 %i.ft, %i.fu
   %i.fw = ashr exact i64 %i.fv, 2                 ; 2 uses
-  %i.fx = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.fx = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.fy = sub i64 %i.fx, %i.fu
   %i.fz = ashr exact i64 %i.fy, 2                 ; 3 uses
   %i.ga = sub nsw i64 %i.fw, %i.fz
@@ -1065,16 +1061,14 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.h
   %i.gc = add i64 %i.fx, -4
-  %i.gd = sub i64 %i.gc, %i.fu                    ; 2 uses
+  %i.gd = sub i64 %i.gc, %i.fu                    ; 3 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check120 = icmp ult i64 %i.gd, 60
   br i1 %min.iters.check120, label %.lr.ph.i.i.i.preheader136, label %vector.memcheck113
 
 vector.memcheck113:                               ; preds = %.lr.ph.i.i.i.preheader
-  %8 = add i64 %i.fx, -4
-  %9 = sub i64 %8, %i.fu
-  %i.gg = and i64 %9, -4
+  %i.gg = and i64 %i.gd, -4
   %i.gh = add i64 %i.gg, 4                        ; 2 uses
   %scevgep114 = getelementptr i8, ptr %.064, i64 %i.gh
   %scevgep115 = getelementptr i8, ptr %1, i64 %i.gh
@@ -1477,10 +1471,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ap = ptrtoint ptr %2 to i64                  ; 2 uses
-  %i.aq = ptrtoint ptr %0 to i64                  ; 4 uses
+  %i.aq = ptrtoint ptr %0 to i64                  ; 3 uses
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = ashr exact i64 %i.ar, 2                 ; 2 uses
-  %i.at = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.at = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.au = sub i64 %i.at, %i.aq
   %i.av = ashr exact i64 %i.au, 2                 ; 3 uses
   %i.aw = sub nsw i64 %i.as, %i.av
@@ -1489,16 +1483,14 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.aa
   %i.ay = add i64 %i.at, -4
-  %i.az = sub i64 %i.ay, %i.aq                    ; 2 uses
+  %i.az = sub i64 %i.ay, %i.aq                    ; 3 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check98 = icmp ult i64 %i.az, 60
   br i1 %min.iters.check98, label %.lr.ph.i.i.i.preheader114, label %vector.memcheck91
 
 vector.memcheck91:                                ; preds = %.lr.ph.i.i.i.preheader
-  %7 = add i64 %i.at, -4
-  %8 = sub i64 %7, %i.aq
-  %i.bc = and i64 %8, -4
+  %i.bc = and i64 %i.az, -4
   %i.bd = add i64 %i.bc, 4                        ; 2 uses
   %scevgep92 = getelementptr i8, ptr %0, i64 %i.bd
   %scevgep93 = getelementptr i8, ptr %1, i64 %i.bd
@@ -1901,10 +1893,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ft = ptrtoint ptr %.065 to i64               ; 2 uses
-  %i.fu = ptrtoint ptr %.064 to i64               ; 4 uses
+  %i.fu = ptrtoint ptr %.064 to i64               ; 3 uses
   %i.fv = sub i64 %i.ft, %i.fu
   %i.fw = ashr exact i64 %i.fv, 2                 ; 2 uses
-  %i.fx = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.fx = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.fy = sub i64 %i.fx, %i.fu
   %i.fz = ashr exact i64 %i.fy, 2                 ; 3 uses
   %i.ga = sub nsw i64 %i.fw, %i.fz
@@ -1913,16 +1905,14 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.h
   %i.gc = add i64 %i.fx, -4
-  %i.gd = sub i64 %i.gc, %i.fu                    ; 2 uses
+  %i.gd = sub i64 %i.gc, %i.fu                    ; 3 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check120 = icmp ult i64 %i.gd, 60
   br i1 %min.iters.check120, label %.lr.ph.i.i.i.preheader136, label %vector.memcheck113
 
 vector.memcheck113:                               ; preds = %.lr.ph.i.i.i.preheader
-  %8 = add i64 %i.fx, -4
-  %9 = sub i64 %8, %i.fu
-  %i.gg = and i64 %9, -4
+  %i.gg = and i64 %i.gd, -4
   %i.gh = add i64 %i.gg, 4                        ; 2 uses
   %scevgep114 = getelementptr i8, ptr %.064, i64 %i.gh
   %scevgep115 = getelementptr i8, ptr %1, i64 %i.gh
@@ -2325,10 +2315,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ap = ptrtoint ptr %2 to i64                  ; 2 uses
-  %i.aq = ptrtoint ptr %0 to i64                  ; 4 uses
+  %i.aq = ptrtoint ptr %0 to i64                  ; 3 uses
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = ashr exact i64 %i.ar, 2                 ; 2 uses
-  %i.at = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.at = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.au = sub i64 %i.at, %i.aq
   %i.av = ashr exact i64 %i.au, 2                 ; 3 uses
   %i.aw = sub nsw i64 %i.as, %i.av
@@ -2337,16 +2327,14 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.aa
   %i.ay = add i64 %i.at, -4
-  %i.az = sub i64 %i.ay, %i.aq                    ; 2 uses
+  %i.az = sub i64 %i.ay, %i.aq                    ; 3 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check98 = icmp ult i64 %i.az, 60
   br i1 %min.iters.check98, label %.lr.ph.i.i.i.preheader114, label %vector.memcheck91
 
 vector.memcheck91:                                ; preds = %.lr.ph.i.i.i.preheader
-  %7 = add i64 %i.at, -4
-  %8 = sub i64 %7, %i.aq
-  %i.bc = and i64 %8, -4
+  %i.bc = and i64 %i.az, -4
   %i.bd = add i64 %i.bc, 4                        ; 2 uses
   %scevgep92 = getelementptr i8, ptr %0, i64 %i.bd
   %scevgep93 = getelementptr i8, ptr %1, i64 %i.bd
@@ -2749,10 +2737,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ft = ptrtoint ptr %.065 to i64               ; 2 uses
-  %i.fu = ptrtoint ptr %.064 to i64               ; 4 uses
+  %i.fu = ptrtoint ptr %.064 to i64               ; 3 uses
   %i.fv = sub i64 %i.ft, %i.fu
   %i.fw = ashr exact i64 %i.fv, 2                 ; 2 uses
-  %i.fx = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.fx = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.fy = sub i64 %i.fx, %i.fu
   %i.fz = ashr exact i64 %i.fy, 2                 ; 3 uses
   %i.ga = sub nsw i64 %i.fw, %i.fz
@@ -2761,16 +2749,14 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.h
   %i.gc = add i64 %i.fx, -4
-  %i.gd = sub i64 %i.gc, %i.fu                    ; 2 uses
+  %i.gd = sub i64 %i.gc, %i.fu                    ; 3 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check120 = icmp ult i64 %i.gd, 60
   br i1 %min.iters.check120, label %.lr.ph.i.i.i.preheader136, label %vector.memcheck113
 
 vector.memcheck113:                               ; preds = %.lr.ph.i.i.i.preheader
-  %8 = add i64 %i.fx, -4
-  %9 = sub i64 %8, %i.fu
-  %i.gg = and i64 %9, -4
+  %i.gg = and i64 %i.gd, -4
   %i.gh = add i64 %i.gg, 4                        ; 2 uses
   %scevgep114 = getelementptr i8, ptr %.064, i64 %i.gh
   %scevgep115 = getelementptr i8, ptr %1, i64 %i.gh
@@ -3173,10 +3159,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ap = ptrtoint ptr %2 to i64                  ; 2 uses
-  %i.aq = ptrtoint ptr %0 to i64                  ; 4 uses
+  %i.aq = ptrtoint ptr %0 to i64                  ; 3 uses
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = ashr exact i64 %i.ar, 2                 ; 2 uses
-  %i.at = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.at = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.au = sub i64 %i.at, %i.aq
   %i.av = ashr exact i64 %i.au, 2                 ; 3 uses
   %i.aw = sub nsw i64 %i.as, %i.av
@@ -3185,16 +3171,14 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.aa
   %i.ay = add i64 %i.at, -4
-  %i.az = sub i64 %i.ay, %i.aq                    ; 2 uses
+  %i.az = sub i64 %i.ay, %i.aq                    ; 3 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check98 = icmp ult i64 %i.az, 60
   br i1 %min.iters.check98, label %.lr.ph.i.i.i.preheader114, label %vector.memcheck91
 
 vector.memcheck91:                                ; preds = %.lr.ph.i.i.i.preheader
-  %7 = add i64 %i.at, -4
-  %8 = sub i64 %7, %i.aq
-  %i.bc = and i64 %8, -4
+  %i.bc = and i64 %i.az, -4
   %i.bd = add i64 %i.bc, 4                        ; 2 uses
   %scevgep92 = getelementptr i8, ptr %0, i64 %i.bd
   %scevgep93 = getelementptr i8, ptr %1, i64 %i.bd
@@ -3597,10 +3581,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ft = ptrtoint ptr %.065 to i64               ; 2 uses
-  %i.fu = ptrtoint ptr %.064 to i64               ; 4 uses
+  %i.fu = ptrtoint ptr %.064 to i64               ; 3 uses
   %i.fv = sub i64 %i.ft, %i.fu
   %i.fw = ashr exact i64 %i.fv, 2                 ; 2 uses
-  %i.fx = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.fx = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.fy = sub i64 %i.fx, %i.fu
   %i.fz = ashr exact i64 %i.fy, 2                 ; 3 uses
   %i.ga = sub nsw i64 %i.fw, %i.fz
@@ -3609,16 +3593,14 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.h
   %i.gc = add i64 %i.fx, -4
-  %i.gd = sub i64 %i.gc, %i.fu                    ; 2 uses
+  %i.gd = sub i64 %i.gc, %i.fu                    ; 3 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check120 = icmp ult i64 %i.gd, 60
   br i1 %min.iters.check120, label %.lr.ph.i.i.i.preheader136, label %vector.memcheck113
 
 vector.memcheck113:                               ; preds = %.lr.ph.i.i.i.preheader
-  %8 = add i64 %i.fx, -4
-  %9 = sub i64 %8, %i.fu
-  %i.gg = and i64 %9, -4
+  %i.gg = and i64 %i.gd, -4
   %i.gh = add i64 %i.gg, 4                        ; 2 uses
   %scevgep114 = getelementptr i8, ptr %.064, i64 %i.gh
   %scevgep115 = getelementptr i8, ptr %1, i64 %i.gh
@@ -4021,10 +4003,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ap = ptrtoint ptr %2 to i64                  ; 2 uses
-  %i.aq = ptrtoint ptr %0 to i64                  ; 4 uses
+  %i.aq = ptrtoint ptr %0 to i64                  ; 3 uses
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = ashr exact i64 %i.ar, 2                 ; 2 uses
-  %i.at = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.at = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.au = sub i64 %i.at, %i.aq
   %i.av = ashr exact i64 %i.au, 2                 ; 3 uses
   %i.aw = sub nsw i64 %i.as, %i.av
@@ -4033,16 +4015,14 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.aa
   %i.ay = add i64 %i.at, -4
-  %i.az = sub i64 %i.ay, %i.aq                    ; 2 uses
+  %i.az = sub i64 %i.ay, %i.aq                    ; 3 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check98 = icmp ult i64 %i.az, 60
   br i1 %min.iters.check98, label %.lr.ph.i.i.i.preheader114, label %vector.memcheck91
 
 vector.memcheck91:                                ; preds = %.lr.ph.i.i.i.preheader
-  %7 = add i64 %i.at, -4
-  %8 = sub i64 %7, %i.aq
-  %i.bc = and i64 %8, -4
+  %i.bc = and i64 %i.az, -4
   %i.bd = add i64 %i.bc, 4                        ; 2 uses
   %scevgep92 = getelementptr i8, ptr %0, i64 %i.bd
   %scevgep93 = getelementptr i8, ptr %1, i64 %i.bd
@@ -4445,10 +4425,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ft = ptrtoint ptr %.065 to i64               ; 2 uses
-  %i.fu = ptrtoint ptr %.064 to i64               ; 4 uses
+  %i.fu = ptrtoint ptr %.064 to i64               ; 3 uses
   %i.fv = sub i64 %i.ft, %i.fu
   %i.fw = ashr exact i64 %i.fv, 2                 ; 2 uses
-  %i.fx = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.fx = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.fy = sub i64 %i.fx, %i.fu
   %i.fz = ashr exact i64 %i.fy, 2                 ; 3 uses
   %i.ga = sub nsw i64 %i.fw, %i.fz
@@ -4457,16 +4437,14 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.h
   %i.gc = add i64 %i.fx, -4
-  %i.gd = sub i64 %i.gc, %i.fu                    ; 2 uses
+  %i.gd = sub i64 %i.gc, %i.fu                    ; 3 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check120 = icmp ult i64 %i.gd, 60
   br i1 %min.iters.check120, label %.lr.ph.i.i.i.preheader136, label %vector.memcheck113
 
 vector.memcheck113:                               ; preds = %.lr.ph.i.i.i.preheader
-  %8 = add i64 %i.fx, -4
-  %9 = sub i64 %8, %i.fu
-  %i.gg = and i64 %9, -4
+  %i.gg = and i64 %i.gd, -4
   %i.gh = add i64 %i.gg, 4                        ; 2 uses
   %scevgep114 = getelementptr i8, ptr %.064, i64 %i.gh
   %scevgep115 = getelementptr i8, ptr %1, i64 %i.gh
@@ -4869,10 +4847,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ap = ptrtoint ptr %2 to i64                  ; 2 uses
-  %i.aq = ptrtoint ptr %0 to i64                  ; 4 uses
+  %i.aq = ptrtoint ptr %0 to i64                  ; 3 uses
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = ashr exact i64 %i.ar, 2                 ; 2 uses
-  %i.at = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.at = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.au = sub i64 %i.at, %i.aq
   %i.av = ashr exact i64 %i.au, 2                 ; 3 uses
   %i.aw = sub nsw i64 %i.as, %i.av
@@ -4881,16 +4859,14 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.aa
   %i.ay = add i64 %i.at, -4
-  %i.az = sub i64 %i.ay, %i.aq                    ; 2 uses
+  %i.az = sub i64 %i.ay, %i.aq                    ; 3 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check98 = icmp ult i64 %i.az, 60
   br i1 %min.iters.check98, label %.lr.ph.i.i.i.preheader114, label %vector.memcheck91
 
 vector.memcheck91:                                ; preds = %.lr.ph.i.i.i.preheader
-  %7 = add i64 %i.at, -4
-  %8 = sub i64 %7, %i.aq
-  %i.bc = and i64 %8, -4
+  %i.bc = and i64 %i.az, -4
   %i.bd = add i64 %i.bc, 4                        ; 2 uses
   %scevgep92 = getelementptr i8, ptr %0, i64 %i.bd
   %scevgep93 = getelementptr i8, ptr %1, i64 %i.bd

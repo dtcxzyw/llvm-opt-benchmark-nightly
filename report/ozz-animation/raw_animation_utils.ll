@@ -204,10 +204,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.g
-  %.pre = load ptr, ptr %4, align 8, !tbaa !93    ; 15 uses
-  %.pre190 = ptrtoaddr ptr %.pre to i64           ; 6 uses
-  %.pre152 = load ptr, ptr %i.s, align 8, !tbaa !93 ; 9 uses
-  %.pre152189 = ptrtoaddr ptr %.pre152 to i64     ; 2 uses
+  %.pre = load ptr, ptr %4, align 8, !tbaa !93    ; 16 uses
+  %.pre152 = load ptr, ptr %i.s, align 8, !tbaa !93 ; 10 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.w = icmp ne ptr %.pre, %.pre152
@@ -217,13 +215,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond.i.i, label %iter.check, label %.loopexit119
 
 iter.check:                                       ; preds = %._crit_edge
-  %i.y = add i64 %.pre152189, -4
-  %i.z = add i64 %.pre190, 2
+  %.pre152192 = ptrtoaddr ptr %.pre152 to i64
+  %.pre193 = ptrtoaddr ptr %.pre to i64           ; 3 uses
+  %i.y = add i64 %.pre152192, -4
+  %i.z = add i64 %.pre193, 2
   %umax192 = call i64 @llvm.umax.i64(i64 %i.y, i64 %i.z)
   %i.aa = add i64 %umax192, -2                    ; 2 uses
-  %i.ab = icmp ne i64 %i.aa, %.pre190
+  %i.ab = icmp ne i64 %i.aa, %.pre193
   %umin193 = zext i1 %i.ab to i64                 ; 2 uses
-  %i.ac = add i64 %.pre190, %umin193
+  %i.ac = add i64 %.pre193, %umin193
   %i.ad = sub i64 %i.aa, %i.ac
   %i.ae = lshr i64 %i.ad, 2
   %i.af = add nuw nsw i64 %i.ae, %umin193         ; 3 uses
@@ -232,13 +232,15 @@ iter.check:                                       ; preds = %._crit_edge
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ah = add i64 %.pre152189, -4
-  %i.ai = add i64 %.pre190, 2
+  %10 = ptrtoaddr ptr %.pre152 to i64
+  %i.ah = add i64 %10, -4
+  %11 = ptrtoaddr ptr %.pre to i64                ; 3 uses
+  %i.ai = add i64 %11, 2
   %umax = call i64 @llvm.umax.i64(i64 %i.ah, i64 %i.ai)
   %i.aj = add i64 %umax, -2                       ; 2 uses
-  %i.ak = icmp ne i64 %i.aj, %.pre190
+  %i.ak = icmp ne i64 %i.aj, %11
   %umin = zext i1 %i.ak to i64                    ; 2 uses
-  %i.al = add i64 %.pre190, %umin
+  %i.al = add i64 %11, %umin
   %i.am = sub i64 %i.aj, %i.al
   %i.an = lshr i64 %i.am, 2
   %i.ao = add nuw nsw i64 %i.an, %umin

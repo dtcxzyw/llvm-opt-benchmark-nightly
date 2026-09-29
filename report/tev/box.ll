@@ -205,7 +205,7 @@ declare void @_ZNSt3__15mutex6unlockEv(ptr noundef nonnull align 8 dereferenceab
 ; Function Attrs: mustprogress uwtable
 define internal fastcc ptr @"_ZNSt3__123__stable_partition_implINS_17_ClassicAlgPolicyERZN8Box_ipma15sort_propertiesERKNS_10shared_ptrI8Box_ipcoEEE3$_0NS_11__wrap_iterIPNS2_19PropertyAssociationEEElNS_4pairISC_lEEEET1_SG_SG_T0_T2_T3_NS_26bidirectional_iterator_tagE"(ptr %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef %3, ptr %4, i64 %5) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 6 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 5 uses
   %i.b = ptrtoaddr ptr %4 to i64                  ; 3 uses
   switch i64 %3, label %bb.f [
     i64 2, label %bb.b
@@ -560,7 +560,7 @@ bb.w:                                             ; preds = %bb.t
   %i.ey = ptrtoint ptr %.sroa.016.0 to i64        ; 4 uses
   %i.ez = sub i64 %i.ch, %i.ey                    ; 7 uses
   %i.fa = ashr exact i64 %i.ez, 2                 ; 8 uses
-  %i.fb = ptrtoint ptr %.sroa.0.0 to i64          ; 7 uses
+  %i.fb = ptrtoint ptr %.sroa.0.0 to i64          ; 6 uses
   %i.fc = sub i64 %i.fb, %i.ch                    ; 2 uses
   %i.fd = ashr exact i64 %i.fc, 2                 ; 2 uses
   %i.fe = icmp eq i64 %i.fa, %i.fd
@@ -569,8 +569,8 @@ bb.w:                                             ; preds = %bb.t
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.w
   %i.ff = shl nsw i64 %i.cf, 2                    ; 2 uses
   %i.fg = add i64 %i.fb, -4
-  %6 = add i64 %i.ff, %i.a
-  %i.fh = sub i64 %i.fg, %6
+  %6 = sub i64 %i.fg, %i.a                        ; 2 uses
+  %i.fh = sub i64 %6, %i.ff
   %.fr = freeze i64 %i.fh
   %i.fi = lshr i64 %.fr, 2
   %i.fj = add i64 %i.ff, %i.a
@@ -591,10 +591,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.preh
   br i1 %.not203, label %vector.memcheck184, label %.lr.ph.i.i.i.i.preheader206
 
 vector.memcheck184:                               ; preds = %vector.scevcheck
-  %7 = add i64 %i.fb, -4
   %i.ft = shl nsw i64 %i.cf, 2                    ; 3 uses
-  %8 = add i64 %i.ft, %i.a
-  %i.fu = sub i64 %7, %8
+  %i.fu = sub i64 %6, %i.ft
   %.fr204 = freeze i64 %i.fu
   %i.fv = lshr i64 %.fr204, 2
   %i.fw = add i64 %i.ft, %i.a

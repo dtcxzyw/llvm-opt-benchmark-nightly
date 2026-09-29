@@ -202,14 +202,13 @@ bb.o:                                             ; preds = %bb.n
 
 bytestream2_get_be16.exit.i:                      ; preds = %bb.n, %bb.o
   %i.bv = phi ptr [ %i.br, %bb.o ], [ %i.ac, %bb.n ] ; 2 uses
-  %.0.i60.i = phi i32 [ %i.bu, %bb.o ], [ 0, %bb.n ] ; 2 uses
+  %.0.i60.i = phi i32 [ %i.bu, %bb.o ], [ 0, %bb.n ]
   %i.bw = icmp slt i32 %4, 1
   br i1 %i.bw, label %amf_get_field_value2.exit, label %bb.p
 
 bb.p:                                             ; preds = %bytestream2_get_be16.exit.i
-  %.not51.i = icmp samesign ugt i32 %4, %.0.i60.i
   %i.bx = add nsw i32 %4, -1
-  %spec.select.i = select i1 %.not51.i, i32 %.0.i60.i, i32 %i.bx
+  %spec.select.i = tail call i32 @llvm.umin.i32(i32 %.0.i60.i, i32 %i.bx)
   %i.by = ptrtoint ptr %i.bv to i64
   %i.bz = sub i64 %i.ad, %i.by
   %i.ca = zext nneg i32 %spec.select.i to i64     ; 2 uses

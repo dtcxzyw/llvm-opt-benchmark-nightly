@@ -204,7 +204,7 @@ declare void @_ZN3gmx23NeighborSearchSignallerC1ESt6vectorISt8functionIFvldEESaI
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt10unique_ptrIN3gmx17ISimulatorElementESt14default_deleteIS2_EESaIS5_EE15_M_range_insertISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS5_S7_EEEEEvSD_T_SF_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %.not116 = icmp eq ptr %2, %3
   br i1 %.not116, label %_ZSt4copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN3gmx17ISimulatorElementESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEEESD_ET0_T_SG_SF_.exit, label %bb.b
 
@@ -607,7 +607,8 @@ iter.check270:                                    ; preds = %_ZNSt12_Vector_base
   br i1 %min.iters.check252, label %.lr.ph.i.i.i.i.i73.preheader, label %vector.memcheck246
 
 vector.memcheck246:                               ; preds = %iter.check270
-  %i.fx = add i64 %i.a, -8
+  %4 = ptrtoaddr ptr %1 to i64
+  %i.fx = add i64 %4, -8
   %i.fy = sub i64 %i.fx, %i.fh
   %i.fz = and i64 %i.fy, -8
   %i.ga = add i64 %i.fz, 8                        ; 2 uses

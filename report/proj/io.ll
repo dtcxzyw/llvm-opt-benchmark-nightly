@@ -206,8 +206,8 @@ _ZNSt6vectorISt10unique_ptrIN5osgeo4proj4util11PropertyMapESt14default_deleteIS4
 
 bb.g:                                             ; preds = %_ZSt11make_uniqueIN5osgeo4proj4util11PropertyMapEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
   %i.u = load ptr, ptr %i.d, align 8, !tbaa !281  ; 10 uses
-  %i.v = ptrtoint ptr %i.p to i64                 ; 3 uses
-  %i.w = ptrtoint ptr %i.u to i64                 ; 4 uses
+  %i.v = ptrtoint ptr %i.p to i64                 ; 2 uses
+  %i.w = ptrtoint ptr %i.u to i64                 ; 3 uses
   %i.x = sub i64 %i.v, %i.w                       ; 3 uses
   %i.y = icmp eq i64 %i.x, 9223372036854775800
   br i1 %i.y, label %bb.h, label %_ZNKSt6vectorISt10unique_ptrIN5osgeo4proj4util11PropertyMapESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
@@ -240,16 +240,14 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj4util11PropertyMapESt14default_deleteIS
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc332
   %i.ah = add i64 %i.v, -8
-  %i.ai = sub i64 %i.ah, %i.w                     ; 2 uses
+  %i.ai = sub i64 %i.ah, %i.w                     ; 3 uses
   %i.aj = lshr i64 %i.ai, 3
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ai, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader537, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %43 = add i64 %i.v, -8
-  %44 = sub i64 %43, %i.w
-  %i.al = and i64 %44, -8
+  %i.al = and i64 %i.ai, -8
   %i.am = add i64 %i.al, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.af, i64 %i.am
   %scevgep528 = getelementptr i8, ptr %i.u, i64 %i.am
@@ -652,8 +650,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !252  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !251    ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 5 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE12_M_check_lenEmPKc.exit
@@ -669,7 +667,7 @@ _ZNKSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14def
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.m = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -684,16 +682,14 @@ _ZNKSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14def
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE12_M_check_lenEmPKc.exit
   %i.s = add i64 %i.m, -8
-  %i.t = sub i64 %i.s, %i.e                       ; 2 uses
+  %i.t = sub i64 %i.s, %i.e                       ; 3 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.t, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader61, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %3 = add i64 %i.m, -8
-  %4 = sub i64 %3, %i.e
-  %i.w = and i64 %4, -8
+  %i.w = and i64 %i.t, -8
   %i.x = add i64 %i.w, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %i.p, i64 %i.x
   %scevgep35 = getelementptr i8, ptr %i.c, i64 %i.x
@@ -759,16 +755,14 @@ _ZNSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14defa
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit
   %i.ak = add i64 %i.d, -8
-  %i.al = sub i64 %i.ak, %i.m                     ; 2 uses
+  %i.al = sub i64 %i.ak, %i.m                     ; 3 uses
   %i.am = lshr i64 %i.al, 3
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %i.al, 152
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader60, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
-  %5 = add i64 %i.d, -8
-  %6 = sub i64 %5, %i.m
-  %i.ao = and i64 %6, -8                          ; 2 uses
+  %i.ao = and i64 %i.al, -8                       ; 2 uses
   %i.ap = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.ao
   %scevgep40 = getelementptr i8, ptr %i.ap, i64 16
   %i.aq = getelementptr i8, ptr %1, i64 %i.ao

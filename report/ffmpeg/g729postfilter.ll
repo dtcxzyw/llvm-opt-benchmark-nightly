@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.yg = ashr exact i32 %sext.i66, 16
   %i.yh = select i1 %i.ye, i32 32767, i32 %i.yg
   %i.yi = sdiv i32 %i.yc, %i.yh                   ; 3 uses
-  %i.yj = add nsw i32 %9, -1                      ; 4 uses
+  %i.yj = add nsw i32 %9, -1                      ; 3 uses
   %i.yk = sext i32 %i.yj to i64
   %i.yl = getelementptr inbounds [2 x i8], ptr %i.xr, i64 %i.yk
   %i.ym = load i16, ptr %i.yl, align 2, !tbaa !10
@@ -214,7 +214,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
 .lr.ph.i68:                                       ; preds = %bb.x
   %i.yo = and i32 %.037.i, -2                     ; 2 uses
   %i.yp = zext i32 %i.yj to i64                   ; 5 uses
-  %i.yq = icmp ne i32 %i.yj, 0
+  %i.yq = icmp ne i32 %i.yj, 0                    ; 2 uses
   %.neg = sext i1 %i.yq to i64
   %i.yr = zext nneg i32 %9 to i64
   %i.ys = add nsw i64 %.neg, %i.yr                ; 3 uses
@@ -222,8 +222,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br i1 %min.iters.check286, label %scalar.ph285.preheader, label %vector.memcheck277
 
 vector.memcheck277:                               ; preds = %.lr.ph.i68
-  %.not = icmp eq i32 %i.yj, 0
-  %i.yt = select i1 %.not, i64 0, i64 2           ; 2 uses
+  %i.yt = select i1 %i.yq, i64 2, i64 0           ; 2 uses
   %scevgep278 = getelementptr i8, ptr %8, i64 %i.yt
   %i.yu = shl nuw nsw i64 %i.yp, 1                ; 2 uses
   %i.yv = getelementptr i8, ptr %8, i64 %i.yu

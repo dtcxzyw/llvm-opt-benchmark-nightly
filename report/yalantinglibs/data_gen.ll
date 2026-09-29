@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %_ZSt11make_uniqueIN
 
 bb.d:                                             ; preds = %_ZSt11make_uniqueIN7coro_io19tcp_server_acceptorEJRSt17basic_string_viewIcSt11char_traitsIcEERtEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
   %i.l = load ptr, ptr %i.e, align 8, !tbaa !424  ; 10 uses
-  %i.m = ptrtoint ptr %i.g to i64                 ; 3 uses
-  %i.n = ptrtoint ptr %i.l to i64                 ; 3 uses
+  %i.m = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.n = ptrtoint ptr %i.l to i64                 ; 2 uses
   %i.o = sub i64 %i.m, %i.n                       ; 4 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775800
   br i1 %i.p, label %bb.e, label %_ZNKSt6vectorISt10unique_ptrIN7coro_io20server_acceptor_baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
@@ -240,16 +240,14 @@ _ZNKSt6vectorISt10unique_ptrIN7coro_io20server_acceptor_baseESt14default_deleteI
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc12
   %i.z = add i64 %i.m, -8
-  %i.aa = sub i64 %i.z, %i.n                      ; 2 uses
+  %i.aa = sub i64 %i.z, %i.n                      ; 3 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aa, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader26, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %5 = add i64 %i.m, -8
-  %6 = sub i64 %5, %i.n
-  %i.ad = and i64 %6, -8
+  %i.ad = and i64 %i.aa, -8
   %i.ae = add i64 %i.ad, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.w, i64 %i.ae
   %scevgep22 = getelementptr i8, ptr %i.l, i64 %i.ae

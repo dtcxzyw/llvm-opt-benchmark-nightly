@@ -202,10 +202,10 @@ bb.d:                                             ; preds = %.critedge
 
 bb.e:                                             ; preds = %bb.d, %.critedge
   %.025 = phi i64 [ 0, %.critedge ], [ %spec.select, %bb.d ] ; 3 uses
-  %.not30 = icmp samesign ult i64 %.025, %2       ; 2 uses
+  %.not30 = icmp samesign ult i64 %.025, %2
   %i.k = add nsw i64 %2, -1
   %.027 = select i1 %.not30, i64 %.025, i64 -7
-  %.026 = select i1 %.not30, i64 %.025, i64 %i.k  ; 3 uses
+  %.026 = tail call i64 @llvm.umin.i64(i64 %.025, i64 %i.k) ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr align 2 %i.c, i64 %.026, i1 false)
   %i.l = getelementptr i8, ptr %0, i64 %.026
   %i.m = sub nsw i64 %2, %.026
@@ -607,6 +607,9 @@ declare i32 @llvm.umin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #9
 
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

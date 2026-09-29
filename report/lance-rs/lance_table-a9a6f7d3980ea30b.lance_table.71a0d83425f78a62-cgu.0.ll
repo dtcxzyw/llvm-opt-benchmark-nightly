@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.d
   %.sroa.8.sroa.7.0..sroa.8.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.8.sroa.7.0.copyload = load ptr, ptr %.sroa.8.sroa.7.0..sroa.8.0..sroa_idx.sroa_idx, align 8 ; 28 uses
   %.sroa.8.sroa.8.0..sroa.8.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %.sroa.8.sroa.8.0.copyload = load i64, ptr %.sroa.8.sroa.8.0..sroa.8.0..sroa_idx.sroa_idx, align 8 ; 26 uses
+  %.sroa.8.sroa.8.0.copyload = load i64, ptr %.sroa.8.sroa.8.0..sroa.8.0..sroa_idx.sroa_idx, align 8 ; 24 uses
   switch i64 %.sroa.083.0.copyload, label %bb.k [
     i64 0, label %bb.di
     i64 1, label %bb.dj
@@ -222,7 +222,7 @@ bb.al:                                            ; preds = %bb.d
   %.sroa.8131.sroa.7.0..sroa.8131.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.8131.sroa.7.0.copyload = load ptr, ptr %.sroa.8131.sroa.7.0..sroa.8131.0..sroa_idx.sroa_idx, align 8 ; 28 uses
   %.sroa.8131.sroa.8.0..sroa.8131.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %.sroa.8131.sroa.8.0.copyload = load i64, ptr %.sroa.8131.sroa.8.0..sroa.8131.0..sroa_idx.sroa_idx, align 8 ; 26 uses
+  %.sroa.8131.sroa.8.0.copyload = load i64, ptr %.sroa.8131.sroa.8.0..sroa.8131.0..sroa_idx.sroa_idx, align 8 ; 24 uses
   switch i64 %.sroa.0128.0.copyload, label %bb.k [
     i64 0, label %bb.fl
     i64 1, label %bb.fm
@@ -625,15 +625,16 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCs9KQ7US1M400_11lance_table
   br i1 %.not.not12.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCs9KQ7US1M400_11lance_table.exit.i.i.i327
-  %i.pt = add nsw i64 %.idx554, -2                ; 2 uses
+  %i.pt = add nsw i64 %.idx554, -2                ; 3 uses
   %i.pu = lshr exact i64 %i.pt, 1
   %i.pv = add nuw i64 %i.pu, 1                    ; 2 uses
   %min.iters.check748 = icmp ult i64 %i.pt, 26
   br i1 %min.iters.check748, label %.lr.ph.i.i.i.i.i.i.preheader809, label %vector.memcheck742
 
 vector.memcheck742:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.pw = shl nuw i64 %.sroa.8.sroa.8.0.copyload, 3
-  %scevgep743 = getelementptr i8, ptr %.sroa.10.0.i.i328, i64 %i.pw
+  %i.pw = shl i64 %i.pt, 2
+  %3 = getelementptr i8, ptr %.sroa.10.0.i.i328, i64 %i.pw
+  %scevgep743 = getelementptr i8, ptr %3, i64 8
   %bound0744 = icmp ult ptr %.sroa.10.0.i.i328, %i.pm
   %bound1745 = icmp ult ptr %.sroa.8.sroa.7.0.copyload, %scevgep743
   %found.conflict746 = and i1 %bound0744, %bound1745
@@ -902,15 +903,16 @@ bb.eu:                                            ; preds = %bb.et, %bb.er
   unreachable
 
 .lr.ph.i.i.i.i.i.i356.preheader:                  ; preds = %bb.et
-  %i.sk = add nsw i64 %.idx552, -4                ; 2 uses
+  %i.sk = add nsw i64 %.idx552, -4                ; 3 uses
   %i.sl = lshr exact i64 %i.sk, 2
   %i.sm = add nuw nsw i64 %i.sl, 1                ; 2 uses
   %min.iters.check727 = icmp ult i64 %i.sk, 52
   br i1 %min.iters.check727, label %.lr.ph.i.i.i.i.i.i356.preheader813, label %vector.memcheck721
 
 vector.memcheck721:                               ; preds = %.lr.ph.i.i.i.i.i.i356.preheader
-  %i.sn = shl nuw nsw i64 %.sroa.8.sroa.8.0.copyload, 3
-  %scevgep722 = getelementptr i8, ptr %i.si, i64 %i.sn
+  %i.sn = shl i64 %i.sk, 1
+  %4 = getelementptr i8, ptr %i.si, i64 %i.sn
+  %scevgep722 = getelementptr i8, ptr %4, i64 8
   %bound0723 = icmp ult ptr %i.si, %i.sf
   %bound1724 = icmp ult ptr %.sroa.8.sroa.7.0.copyload, %scevgep722
   %found.conflict725 = and i1 %bound0723, %bound1724
@@ -1227,15 +1229,16 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCs9KQ7US1M400_11lance_table
   br i1 %.not.not12.i.i.i.i.i.i389, label %._crit_edge.i.i.i.i.i.i392, label %.lr.ph.i.i.i.i.i.i390.preheader
 
 .lr.ph.i.i.i.i.i.i390.preheader:                  ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCs9KQ7US1M400_11lance_table.exit.i.i.i381
-  %i.vb = add nsw i64 %.idx549, -2                ; 2 uses
+  %i.vb = add nsw i64 %.idx549, -2                ; 3 uses
   %i.vc = lshr exact i64 %i.vb, 1
   %i.vd = add nuw i64 %i.vc, 1                    ; 2 uses
   %min.iters.check706 = icmp ult i64 %i.vb, 26
   br i1 %min.iters.check706, label %.lr.ph.i.i.i.i.i.i390.preheader817, label %vector.memcheck700
 
 vector.memcheck700:                               ; preds = %.lr.ph.i.i.i.i.i.i390.preheader
-  %i.ve = shl nuw i64 %.sroa.8131.sroa.8.0.copyload, 3
-  %scevgep701 = getelementptr i8, ptr %.sroa.10.0.i.i382, i64 %i.ve
+  %i.ve = shl i64 %i.vb, 2
+  %5 = getelementptr i8, ptr %.sroa.10.0.i.i382, i64 %i.ve
+  %scevgep701 = getelementptr i8, ptr %5, i64 8
   %bound0702 = icmp ult ptr %.sroa.10.0.i.i382, %i.uu
   %bound1703 = icmp ult ptr %.sroa.8131.sroa.7.0.copyload, %scevgep701
   %found.conflict704 = and i1 %bound0702, %bound1703
@@ -1504,15 +1507,16 @@ bb.gx:                                            ; preds = %bb.gw, %bb.gu
   unreachable
 
 .lr.ph.i.i.i.i.i.i424.preheader:                  ; preds = %bb.gw
-  %i.xs = add nsw i64 %.idx, -4                   ; 2 uses
+  %i.xs = add nsw i64 %.idx, -4                   ; 3 uses
   %i.xt = lshr exact i64 %i.xs, 2
   %i.xu = add nuw nsw i64 %i.xt, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.xs, 52
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i424.preheader821, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i424.preheader
-  %i.xv = shl nuw nsw i64 %.sroa.8131.sroa.8.0.copyload, 3
-  %scevgep = getelementptr i8, ptr %i.xq, i64 %i.xv
+  %i.xv = shl i64 %i.xs, 1
+  %6 = getelementptr i8, ptr %i.xq, i64 %i.xv
+  %scevgep = getelementptr i8, ptr %6, i64 8
   %bound0 = icmp ult ptr %i.xq, %i.xn
   %bound1 = icmp ult ptr %.sroa.8131.sroa.7.0.copyload, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -1915,7 +1919,7 @@ bb.d:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !nonnull !68, !noundef !68 ; 9 uses
   %i.w = load i64, ptr %1, align 8, !range !72, !noundef !68 ; 4 uses
-  %.idx = shl nuw nsw i64 %i.n, 4                 ; 3 uses
+  %.idx = shl nuw nsw i64 %i.n, 4                 ; 2 uses
   %i.x = getelementptr i8, ptr %i.v, i64 %.idx    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !65320
   store i64 0, ptr %i.g, align 8, !alias.scope !65321, !noalias !65320
@@ -1952,7 +1956,7 @@ bb.e:                                             ; preds = %_RNvXsi_NtCs40k4W9m
   %i.ad = load ptr, ptr %.sroa.5.0..sroa_idx3.i.i, align 8, !alias.scope !65327, !noalias !65326, !nonnull !68, !noundef !68 ; 7 uses
   %i.ae = load ptr, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !alias.scope !65325, !noalias !65326, !nonnull !68, !noundef !68 ; 8 uses
   %.promoted10.i.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx5.i.i, align 8, !alias.scope !65327, !noalias !65326 ; 5 uses
-  %i.af = add nsw i64 %.idx, -16                  ; 2 uses
+  %i.af = add nsw i64 %.idx, -16                  ; 3 uses
   %i.ag = lshr exact i64 %i.af, 4
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.af, 624
@@ -1961,8 +1965,7 @@ bb.e:                                             ; preds = %_RNvXsi_NtCs40k4W9m
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i
   %i.ai = shl i64 %.promoted10.i.i.i.i, 3         ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.ad, i64 %i.ai ; 2 uses
-  %2 = add nsw i64 %.idx, -16
-  %i.aj = lshr exact i64 %2, 1                    ; 2 uses
+  %i.aj = lshr exact i64 %i.af, 1                 ; 2 uses
   %i.ak = getelementptr i8, ptr %i.ad, i64 %i.aj
   %i.al = getelementptr i8, ptr %i.ak, i64 %i.ai
   %scevgep72 = getelementptr i8, ptr %i.al, i64 8 ; 2 uses
@@ -2365,8 +2368,8 @@ bb.a:
   %.val4 = load ptr, ptr %i.a, align 8, !nonnull !68, !noundef !68 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val5 = load ptr, ptr %i.b, align 8, !nonnull !68, !noundef !68 ; 3 uses
-  %i.c = ptrtoint ptr %.val5 to i64               ; 3 uses
-  %i.d = ptrtoint ptr %.val4 to i64               ; 3 uses
+  %i.c = ptrtoint ptr %.val5 to i64               ; 2 uses
+  %i.d = ptrtoint ptr %.val4 to i64               ; 2 uses
   %i.e = sub nuw i64 %i.c, %i.d                   ; 3 uses
   %i.f = lshr exact i64 %i.e, 1                   ; 2 uses
   %i.g = shl i64 %i.e, 1                          ; 4 uses
@@ -2406,20 +2409,18 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecmE7reserveCs9KQ7US1M400_11lance_table
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecmE7reserveCs9KQ7US1M400_11lance_table.exit.i.i
   %i.m = add i64 %i.c, -2
-  %i.n = sub i64 %i.m, %i.d                       ; 2 uses
+  %i.n = sub i64 %i.m, %i.d                       ; 4 uses
   %i.o = lshr i64 %i.n, 1
   %i.p = add nuw i64 %i.o, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.n, 54
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader20, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %2 = add i64 %i.c, -2
-  %3 = sub i64 %2, %i.d                           ; 2 uses
-  %i.q = shl i64 %3, 1
+  %i.q = shl i64 %i.n, 1
   %i.r = and i64 %i.q, -4
   %i.s = getelementptr i8, ptr %.sroa.10.0.i, i64 %i.r
   %scevgep = getelementptr i8, ptr %i.s, i64 4
-  %i.t = and i64 %3, -2
+  %i.t = and i64 %i.n, -2
   %i.u = getelementptr i8, ptr %.val4, i64 %i.t
   %scevgep17 = getelementptr i8, ptr %i.u, i64 2
   %bound0 = icmp ult ptr %.sroa.10.0.i, %scevgep17
@@ -2515,8 +2516,8 @@ bb.a:
   %.val4 = load ptr, ptr %i.a, align 8, !nonnull !68, !noundef !68 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val5 = load ptr, ptr %i.b, align 8, !nonnull !68, !noundef !68 ; 3 uses
-  %i.c = ptrtoint ptr %.val5 to i64               ; 3 uses
-  %i.d = ptrtoint ptr %.val4 to i64               ; 3 uses
+  %i.c = ptrtoint ptr %.val5 to i64               ; 2 uses
+  %i.d = ptrtoint ptr %.val4 to i64               ; 2 uses
   %i.e = sub nuw i64 %i.c, %i.d                   ; 3 uses
   %i.f = lshr exact i64 %i.e, 1                   ; 2 uses
   %i.g = shl i64 %i.e, 1                          ; 4 uses
@@ -2556,20 +2557,18 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecmE7reserveCs9KQ7US1M400_11lance_table
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecmE7reserveCs9KQ7US1M400_11lance_table.exit.i.i
   %i.m = add i64 %i.c, -2
-  %i.n = sub i64 %i.m, %i.d                       ; 2 uses
+  %i.n = sub i64 %i.m, %i.d                       ; 4 uses
   %i.o = lshr i64 %i.n, 1
   %i.p = add nuw i64 %i.o, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.n, 54
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader20, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %2 = add i64 %i.c, -2
-  %3 = sub i64 %2, %i.d                           ; 2 uses
-  %i.q = shl i64 %3, 1
+  %i.q = shl i64 %i.n, 1
   %i.r = and i64 %i.q, -4
   %i.s = getelementptr i8, ptr %.sroa.10.0.i, i64 %i.r
   %scevgep = getelementptr i8, ptr %i.s, i64 4
-  %i.t = and i64 %3, -2
+  %i.t = and i64 %i.n, -2
   %i.u = getelementptr i8, ptr %.val4, i64 %i.t
   %scevgep17 = getelementptr i8, ptr %i.u, i64 2
   %bound0 = icmp ult ptr %.sroa.10.0.i, %scevgep17
@@ -2972,7 +2971,7 @@ _RNCNvNtNtCs9KQ7US1M400_11lance_table2io8deletion21DELETION_ARROW_SCHEMA0B7_.exi
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCs3PfUT229lOd_12object_store4path5ErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCs3PfUT229lOd_12object_store4path5ErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2127, i64 40 }
 }
@@ -3089,7 +3088,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCs63DIHKhvmTb_10lance_core5error5ErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCs63DIHKhvmTb_10lance_core5error5ErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2127, i64 40 }
 }
@@ -3276,7 +3275,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs63DIHKhvmTb_10lance_core8deepsize7
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs3PfUT229lOd_12object_store4path5parts11InvalidPartNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs3PfUT229lOd_12object_store4path5parts11InvalidPartNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2127, i64 40 }
 }
@@ -3314,7 +3313,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCs9KQ7US1M400_11lance_table5utils6stream15SharedReadErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionB8_(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCs9KQ7US1M400_11lance_table5utils6stream15SharedReadErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionB8_(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2127, i64 40 }
 }
@@ -3717,7 +3716,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs9K
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCscI6d9CVNmLh_4core3str5error9Utf8ErrorNtNtB8_5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCscI6d9CVNmLh_4core3str5error9Utf8ErrorNtNtB8_5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2127, i64 40 }
 }
@@ -3748,7 +3747,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCsgczF5crJ4sT_3std2io5error5ErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCsgczF5crJ4sT_3std2io5error5ErrorNtNtCscI6d9CVNmLh_4core5error5Error11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2127, i64 40 }
 }
@@ -4134,7 +4133,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNvXsf_NtNtCs40k4W9msRzi_5alloc5boxed7convertINtBc_3BoxDNtNtCscI6d9CVNmLh_4core5error5ErrorNtNtB11_6marker4SyncNtB1y_4SendEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
+define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCs40k4W9msRzi_5alloc5boxed7convertINtBc_3BoxDNtNtCscI6d9CVNmLh_4core5error5ErrorNtNtB11_6marker4SyncNtB1y_4SendEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCs9KQ7US1M400_11lance_table(ptr noalias readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
   ret { ptr, i64 } { ptr @2127, i64 40 }
 }

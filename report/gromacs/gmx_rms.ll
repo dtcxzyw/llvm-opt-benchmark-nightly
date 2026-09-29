@@ -205,7 +205,7 @@ _ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit981:      ; preds = %_ZL13gmx_snew_implI
   %.pre-phi1992 = phi i64 [ %.pre1991, %_ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit979._ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit981_crit_edge ], [ %i.axv, %bb.gq ] ; 3 uses
   %.01420 = phi ptr [ null, %_ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit979._ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit981_crit_edge ], [ %i.axw, %bb.gq ] ; 4 uses
   %i.axx = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.151, ptr noundef nonnull @.str.105, i32 noundef 811, i64 noundef range(i64 -2147483648, 2147483648) %.pre-phi1992, i64 noundef 4)
-          to label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit983 unwind label %.loopexit.split-lp1448.loopexit.split-lp ; 29 uses
+          to label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit983 unwind label %.loopexit.split-lp1448.loopexit.split-lp ; 28 uses
 
 _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit983:       ; preds = %_ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit981
   %i.axy = sext i32 %.2 to i64                    ; 4 uses
@@ -608,17 +608,15 @@ iter.check2546:                                   ; preds = %_ZL13gmx_snew_implI
 
 vector.memcheck2518:                              ; preds = %iter.check2546
   %i.brf = shl nuw nsw i64 %wide.trip.count1942, 2 ; 2 uses
-  %scevgep2519 = getelementptr i8, ptr %i.bqa, i64 %i.brf ; 2 uses
+  %scevgep2519 = getelementptr i8, ptr %i.bqa, i64 %i.brf
   %scevgep2520 = getelementptr i8, ptr %i.axx, i64 4
   %scevgep2521 = getelementptr i8, ptr %i.axx, i64 %i.brf
   %bound02522 = icmp ult ptr %i.bqa, %scevgep2520
   %bound12523 = icmp ult ptr %i.axx, %scevgep2519
-  %found.conflict2524 = and i1 %bound02522, %bound12523
   %bound02525 = icmp ult ptr %i.bqa, %scevgep2521
-  %bound12526 = icmp ult ptr %i.axx, %scevgep2519
-  %found.conflict2527 = and i1 %bound02525, %bound12526
-  %conflict.rdx = or i1 %found.conflict2524, %found.conflict2527
-  br i1 %conflict.rdx, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit1027.preheader2607, label %vector.main.loop.iter.check2530
+  %found.conflict25322611 = or i1 %bound02522, %bound02525
+  %found.conflict2527 = and i1 %found.conflict25322611, %bound12523
+  br i1 %found.conflict2527, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit1027.preheader2607, label %vector.main.loop.iter.check2530
 
 vector.main.loop.iter.check2530:                  ; preds = %vector.memcheck2518
   %min.iters.check2531 = icmp ult i32 %.1748, 32

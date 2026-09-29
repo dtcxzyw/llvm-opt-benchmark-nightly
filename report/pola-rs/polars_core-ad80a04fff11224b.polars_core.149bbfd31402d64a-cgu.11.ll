@@ -205,10 +205,8 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !3448, !noundef !3448 ; 3 uses
-  %2 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.promoted = load ptr, ptr %i.d, align 8        ; 8 uses
-  %.promoted17 = ptrtoaddr ptr %.promoted to i64, !dbg !195312 ; 2 uses
   %.not10 = icmp eq ptr %.promoted, %i.c, !dbg !195312
   br i1 %.not10, label %._crit_edge14, label %.lr.ph, !dbg !195296
 
@@ -222,8 +220,10 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !195298, !noundef !3448 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted11 = load i64, ptr %i.g, align 8, !alias.scope !195298 ; 5 uses
+  %2 = ptrtoaddr ptr %i.c to i64, !dbg !195296
+  %3 = ptrtoaddr ptr %.promoted to i64, !dbg !195296
   %i.h = add i64 %2, -16, !dbg !195296
-  %i.i = sub i64 %i.h, %.promoted17, !dbg !195296 ; 2 uses
+  %i.i = sub i64 %i.h, %3, !dbg !195296           ; 4 uses
   %i.j = lshr i64 %i.i, 4, !dbg !195296
   %i.k = add nuw nsw i64 %i.j, 1, !dbg !195296    ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 208, !dbg !195296
@@ -232,14 +232,12 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.l = shl i64 %.promoted11, 3, !dbg !195296    ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.f, i64 %i.l, !dbg !195296
-  %3 = add i64 %2, -16, !dbg !195296
-  %4 = sub i64 %3, %.promoted17, !dbg !195296     ; 2 uses
-  %i.m = lshr i64 %4, 1, !dbg !195296
+  %i.m = lshr i64 %i.i, 1, !dbg !195296
   %i.n = and i64 %i.m, 9223372036854775800, !dbg !195296
   %i.o = getelementptr i8, ptr %i.f, i64 %i.l, !dbg !195296
   %i.p = getelementptr i8, ptr %i.o, i64 %i.n, !dbg !195296
   %scevgep18 = getelementptr i8, ptr %i.p, i64 8, !dbg !195296
-  %i.q = and i64 %4, -16, !dbg !195296
+  %i.q = and i64 %i.i, -16, !dbg !195296
   %i.r = getelementptr i8, ptr %.promoted, i64 %i.q, !dbg !195296
   %scevgep19 = getelementptr i8, ptr %i.r, i64 16, !dbg !195296
   %bound0 = icmp ult ptr %scevgep, %scevgep19, !dbg !195296
@@ -642,10 +640,8 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !3448, !noundef !3448 ; 3 uses
-  %2 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.promoted = load ptr, ptr %i.d, align 8        ; 8 uses
-  %.promoted17 = ptrtoaddr ptr %.promoted to i64, !dbg !197523 ; 2 uses
   %.not10 = icmp eq ptr %.promoted, %i.c, !dbg !197523
   br i1 %.not10, label %._crit_edge14, label %.lr.ph, !dbg !197505
 
@@ -659,8 +655,10 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !197507, !noundef !3448 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted11 = load i64, ptr %i.g, align 8, !alias.scope !197507 ; 5 uses
+  %2 = ptrtoaddr ptr %i.c to i64, !dbg !197505
+  %3 = ptrtoaddr ptr %.promoted to i64, !dbg !197505
   %i.h = add i64 %2, -8, !dbg !197505
-  %i.i = sub i64 %i.h, %.promoted17, !dbg !197505 ; 2 uses
+  %i.i = sub i64 %i.h, %3, !dbg !197505           ; 4 uses
   %i.j = lshr i64 %i.i, 3, !dbg !197505
   %i.k = add nuw nsw i64 %i.j, 1, !dbg !197505    ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 232, !dbg !197505
@@ -669,14 +667,12 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.l = shl i64 %.promoted11, 2, !dbg !197505    ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.f, i64 %i.l, !dbg !197505
-  %3 = add i64 %2, -8, !dbg !197505
-  %4 = sub i64 %3, %.promoted17, !dbg !197505     ; 2 uses
-  %i.m = lshr i64 %4, 1, !dbg !197505
+  %i.m = lshr i64 %i.i, 1, !dbg !197505
   %i.n = and i64 %i.m, 9223372036854775804, !dbg !197505
   %i.o = getelementptr i8, ptr %i.f, i64 %i.l, !dbg !197505
   %i.p = getelementptr i8, ptr %i.o, i64 %i.n, !dbg !197505
   %scevgep18 = getelementptr i8, ptr %i.p, i64 4, !dbg !197505
-  %i.q = and i64 %4, -8, !dbg !197505
+  %i.q = and i64 %i.i, -8, !dbg !197505
   %i.r = getelementptr i8, ptr %.promoted, i64 %i.q, !dbg !197505
   %scevgep19 = getelementptr i8, ptr %i.r, i64 8, !dbg !197505
   %bound0 = icmp ult ptr %scevgep, %scevgep19, !dbg !197505

@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define void @zfp_promote_int8_to_int32(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #18 {
 bb.a:
   %i.a = shl i32 %2, 1                            ; 4 uses
-  %i.b = shl nuw i32 1, %i.a                      ; 6 uses
+  %i.b = shl nuw i32 1, %i.a                      ; 5 uses
+  %3 = zext nneg i32 %i.b to i64                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.a, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -242,7 +243,6 @@ vector.memcheck:                                  ; preds = %bb.a
   %i.l = shl nuw nsw i64 %i.k, 2
   %i.m = getelementptr i8, ptr %0, i64 %i.l
   %scevgep = getelementptr i8, ptr %i.m, i64 4
-  %3 = zext nneg i32 %i.b to i64
   %scevgep8 = getelementptr i8, ptr %1, i64 %3
   %bound0 = icmp ult ptr %0, %scevgep8
   %bound1 = icmp ult ptr %1, %scevgep
@@ -250,8 +250,7 @@ vector.memcheck:                                  ; preds = %bb.a
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %4 = and i32 %i.b, 1431655760
-  %n.vec = zext nneg i32 %4 to i64
+  %n.vec = and i64 %3, 1431655760
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -313,7 +312,8 @@ middle.block:                                     ; preds = %vector.body, %scala
 define void @zfp_promote_uint8_to_int32(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #18 {
 bb.a:
   %i.a = shl i32 %2, 1                            ; 4 uses
-  %i.b = shl nuw i32 1, %i.a                      ; 6 uses
+  %i.b = shl nuw i32 1, %i.a                      ; 5 uses
+  %3 = zext nneg i32 %i.b to i64                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.a, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -352,7 +352,6 @@ vector.memcheck:                                  ; preds = %bb.a
   %i.m = shl nuw nsw i64 %i.l, 2
   %i.n = getelementptr i8, ptr %0, i64 %i.m
   %scevgep = getelementptr i8, ptr %i.n, i64 4
-  %3 = zext nneg i32 %i.b to i64
   %scevgep8 = getelementptr i8, ptr %1, i64 %3
   %bound0 = icmp ult ptr %0, %scevgep8
   %bound1 = icmp ult ptr %1, %scevgep
@@ -360,8 +359,7 @@ vector.memcheck:                                  ; preds = %bb.a
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %4 = and i32 %i.b, 1431655760
-  %n.vec = zext nneg i32 %4 to i64
+  %n.vec = and i64 %3, 1431655760
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -534,7 +532,8 @@ middle.block:                                     ; preds = %vector.body, %scala
 define void @zfp_demote_int32_to_int8(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #18 {
 bb.a:
   %i.a = shl i32 %2, 1                            ; 4 uses
-  %i.b = shl nuw i32 1, %i.a                      ; 5 uses
+  %i.b = shl nuw i32 1, %i.a                      ; 4 uses
+  %3 = zext nneg i32 %i.b to i64                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.a, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -563,10 +562,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 vector.memcheck:                                  ; preds = %bb.a
   %i.l = add nsw i32 %i.b, -1
-  %3 = zext i32 %i.l to i64
-  %i.m = zext nneg i32 %i.b to i64
-  %scevgep = getelementptr i8, ptr %0, i64 %i.m
-  %i.n = shl nuw nsw i64 %3, 2
+  %i.m = zext i32 %i.l to i64
+  %scevgep = getelementptr i8, ptr %0, i64 %3
+  %i.n = shl nuw nsw i64 %i.m, 2
   %i.o = getelementptr i8, ptr %1, i64 %i.n
   %scevgep12 = getelementptr i8, ptr %i.o, i64 4
   %bound0 = icmp ult ptr %0, %scevgep12
@@ -575,8 +573,7 @@ vector.memcheck:                                  ; preds = %bb.a
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %4 = and i32 %i.b, 1431655760
-  %n.vec = zext nneg i32 %4 to i64
+  %n.vec = and i64 %3, 1431655760
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -634,7 +631,8 @@ middle.block:                                     ; preds = %vector.body, %scala
 define void @zfp_demote_int32_to_uint8(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #18 {
 bb.a:
   %i.a = shl i32 %2, 1                            ; 4 uses
-  %i.b = shl nuw i32 1, %i.a                      ; 5 uses
+  %i.b = shl nuw i32 1, %i.a                      ; 4 uses
+  %3 = zext nneg i32 %i.b to i64                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.a, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -664,10 +662,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 vector.memcheck:                                  ; preds = %bb.a
   %i.m = add nsw i32 %i.b, -1
-  %3 = zext i32 %i.m to i64
-  %i.n = zext nneg i32 %i.b to i64
-  %scevgep = getelementptr i8, ptr %0, i64 %i.n
-  %i.o = shl nuw nsw i64 %3, 2
+  %i.n = zext i32 %i.m to i64
+  %scevgep = getelementptr i8, ptr %0, i64 %3
+  %i.o = shl nuw nsw i64 %i.n, 2
   %i.p = getelementptr i8, ptr %1, i64 %i.o
   %scevgep12 = getelementptr i8, ptr %i.p, i64 4
   %bound0 = icmp ult ptr %0, %scevgep12
@@ -676,8 +673,7 @@ vector.memcheck:                                  ; preds = %bb.a
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %4 = and i32 %i.b, 1431655760
-  %n.vec = zext nneg i32 %4 to i64
+  %n.vec = and i64 %3, 1431655760
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

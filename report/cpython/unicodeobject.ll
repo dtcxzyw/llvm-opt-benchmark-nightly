@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %_PyUnicode_DATA.exi
   br label %_PyUnicode_DATA.exit297
 
 _PyUnicode_DATA.exit297:                          ; preds = %bb.q, %bb.r
-  %.0.i.i286.pn = phi ptr [ %.0.i.i286, %bb.q ], [ %.val4.i288, %bb.r ] ; 2 uses
-  %.0.i.i286.pn687 = ptrtoaddr ptr %.0.i.i286.pn to i64 ; 2 uses
+  %.0.i.i286.pn = phi ptr [ %.0.i.i286, %bb.q ], [ %.val4.i288, %bb.r ] ; 3 uses
+  %.0.i.i286.pn687 = ptrtoaddr ptr %.0.i.i286.pn to i64
   %i.ap = getelementptr i8, ptr %.0.i.i286.pn, i64 %3 ; 10 uses
   %i.aq = getelementptr i8, ptr %i.ap, i64 %4     ; 2 uses
   %i.ar = and i64 %4, -4
@@ -253,25 +253,27 @@ _PyUnicode_DATA.exit297:                          ; preds = %bb.q, %bb.r
 
 .preheader:                                       ; preds = %.lr.ph489.prol.loopexit, %.lr.ph489, %_PyUnicode_DATA.exit297
   %.0247.lcssa = phi ptr [ %i.am, %_PyUnicode_DATA.exit297 ], [ %.lcssa.unr, %.lr.ph489.prol.loopexit ], [ %i.dr, %.lr.ph489 ] ; 8 uses
-  %.0245.lcssa = phi ptr [ %i.ap, %_PyUnicode_DATA.exit297 ], [ %.lcssa731.unr, %.lr.ph489.prol.loopexit ], [ %i.dq, %.lr.ph489 ] ; 10 uses
-  %.0245.lcssa688 = ptrtoaddr ptr %.0245.lcssa to i64 ; 3 uses
+  %.0245.lcssa = phi ptr [ %i.ap, %_PyUnicode_DATA.exit297 ], [ %.lcssa731.unr, %.lr.ph489.prol.loopexit ], [ %i.dq, %.lr.ph489 ] ; 11 uses
   %i.bn = icmp ult ptr %.0245.lcssa, %i.aq
   br i1 %i.bn, label %iter.check712, label %ucs1lib_find_max_char.exit
 
 iter.check712:                                    ; preds = %.preheader
+  %.0245.lcssa702 = ptrtoaddr ptr %.0245.lcssa to i64
   %i.bo = add i64 %4, %3
   %i.bp = add i64 %i.bo, %.0.i.i286.pn687
-  %i.bq = sub i64 %i.bp, %.0245.lcssa688          ; 7 uses
+  %i.bq = sub i64 %i.bp, %.0245.lcssa702          ; 7 uses
   %min.iters.check695 = icmp ult i64 %i.bq, 4
   br i1 %min.iters.check695, label %.lr.ph494.preheader, label %vector.memcheck686
 
 vector.memcheck686:                               ; preds = %iter.check712
+  %6 = ptrtoaddr ptr %.0.i.i286.pn to i64
   %i.br = add i64 %4, %3
-  %i.bs = add i64 %i.br, %.0.i.i286.pn687         ; 2 uses
-  %i.bt = sub i64 %i.bs, %.0245.lcssa688
+  %i.bs = add i64 %i.br, %6                       ; 2 uses
+  %7 = ptrtoaddr ptr %.0245.lcssa to i64          ; 2 uses
+  %i.bt = sub i64 %i.bs, %7
   %i.bu = shl i64 %i.bt, 1
   %scevgep689 = getelementptr i8, ptr %.0247.lcssa, i64 %i.bu
-  %i.bv = sub i64 %i.bs, %.0245.lcssa688
+  %i.bv = sub i64 %i.bs, %7
   %scevgep690 = getelementptr i8, ptr %.0245.lcssa, i64 %i.bv
   %bound0691 = icmp ult ptr %.0247.lcssa, %scevgep690
   %bound1692 = icmp ult ptr %.0245.lcssa, %scevgep689
@@ -440,7 +442,6 @@ bb.x:                                             ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit321:                          ; preds = %bb.w, %bb.x
   %.0.i.i310.pn = phi ptr [ %.0.i.i310, %bb.w ], [ %.val4.i312, %bb.x ] ; 2 uses
-  %.0.i.i310.pn664 = ptrtoaddr ptr %.0.i.i310.pn to i64 ; 2 uses
   %i.ee = getelementptr i8, ptr %.0.i.i310.pn, i64 %3 ; 10 uses
   %i.ef = getelementptr i8, ptr %i.ee, i64 %4     ; 2 uses
   %i.eg = and i64 %4, -4
@@ -488,25 +489,23 @@ _PyUnicode_DATA.exit321:                          ; preds = %bb.w, %bb.x
 .preheader432:                                    ; preds = %.lr.ph481.prol.loopexit, %.lr.ph481, %_PyUnicode_DATA.exit321
   %.0243.lcssa = phi ptr [ %i.eb, %_PyUnicode_DATA.exit321 ], [ %.lcssa734.unr, %.lr.ph481.prol.loopexit ], [ %i.gw, %.lr.ph481 ] ; 6 uses
   %.0241.lcssa = phi ptr [ %i.ee, %_PyUnicode_DATA.exit321 ], [ %.lcssa735.unr, %.lr.ph481.prol.loopexit ], [ %i.gv, %.lr.ph481 ] ; 8 uses
-  %.0241.lcssa665 = ptrtoaddr ptr %.0241.lcssa to i64 ; 3 uses
   %i.fc = icmp ult ptr %.0241.lcssa, %i.ef
   br i1 %i.fc, label %.lr.ph486.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph486.preheader:                              ; preds = %.preheader432
+  %8 = ptrtoaddr ptr %.0.i.i310.pn to i64
+  %9 = ptrtoaddr ptr %.0241.lcssa to i64          ; 2 uses
   %i.fd = add i64 %4, %3
-  %i.fe = add i64 %i.fd, %.0.i.i310.pn664
-  %i.ff = sub i64 %i.fe, %.0241.lcssa665          ; 3 uses
+  %i.fe = add i64 %i.fd, %8                       ; 2 uses
+  %i.ff = sub i64 %i.fe, %9                       ; 4 uses
   %min.iters.check672 = icmp ult i64 %i.ff, 32
   br i1 %min.iters.check672, label %.lr.ph486.preheader732, label %vector.memcheck663
 
 vector.memcheck663:                               ; preds = %.lr.ph486.preheader
-  %6 = add i64 %4, %3
-  %7 = add i64 %6, %.0.i.i310.pn664               ; 2 uses
-  %i.fg = sub i64 %7, %.0241.lcssa665
+  %i.fg = sub i64 %i.fe, %9
   %i.fh = shl i64 %i.fg, 2
   %scevgep666 = getelementptr i8, ptr %.0243.lcssa, i64 %i.fh
-  %8 = sub i64 %7, %.0241.lcssa665
-  %scevgep667 = getelementptr i8, ptr %.0241.lcssa, i64 %8
+  %scevgep667 = getelementptr i8, ptr %.0241.lcssa, i64 %i.ff
   %bound0668 = icmp ult ptr %.0243.lcssa, %scevgep667
   %bound1669 = icmp ult ptr %.0241.lcssa, %scevgep666
   %found.conflict670 = and i1 %bound0668, %bound1669
@@ -768,8 +767,8 @@ bb.ak:                                            ; preds = %_PyUnicode_DATA.exi
   br label %_PyUnicode_DATA.exit369
 
 _PyUnicode_DATA.exit369:                          ; preds = %bb.aj, %bb.ak
-  %.0.i.i358.pn = phi ptr [ %.0.i.i358, %bb.aj ], [ %.val4.i360, %bb.ak ] ; 2 uses
-  %.0.i.i358.pn616 = ptrtoaddr ptr %.0.i.i358.pn to i64 ; 2 uses
+  %.0.i.i358.pn = phi ptr [ %.0.i.i358, %bb.aj ], [ %.val4.i360, %bb.ak ] ; 3 uses
+  %.0.i.i358.pn616 = ptrtoaddr ptr %.0.i.i358.pn to i64
   %i.ja = getelementptr [2 x i8], ptr %.0.i.i358.pn, i64 %3 ; 5 uses
   %i.jb = getelementptr [2 x i8], ptr %i.ja, i64 %4 ; 2 uses
   %.idx552 = shl i64 %4, 1                        ; 3 uses
@@ -781,16 +780,16 @@ _PyUnicode_DATA.exit369:                          ; preds = %bb.aj, %bb.ak
 
 .preheader436:                                    ; preds = %.lr.ph465, %_PyUnicode_DATA.exit369
   %.0235.lcssa = phi ptr [ %i.ix, %_PyUnicode_DATA.exit369 ], [ %i.lb, %.lr.ph465 ] ; 8 uses
-  %.0233.lcssa = phi ptr [ %i.ja, %_PyUnicode_DATA.exit369 ], [ %i.la, %.lr.ph465 ] ; 10 uses
-  %.0233.lcssa617 = ptrtoaddr ptr %.0233.lcssa to i64 ; 2 uses
+  %.0233.lcssa = phi ptr [ %i.ja, %_PyUnicode_DATA.exit369 ], [ %i.la, %.lr.ph465 ] ; 11 uses
   %i.jg = icmp ult ptr %.0233.lcssa, %i.jb
   br i1 %i.jg, label %iter.check, label %ucs1lib_find_max_char.exit
 
 iter.check:                                       ; preds = %.preheader436
+  %.0233.lcssa623 = ptrtoaddr ptr %.0233.lcssa to i64
   %i.jh = add i64 %.idx552, %.0.i.i358.pn616
   %i.ji = shl i64 %3, 1
   %i.jj = add i64 %i.jh, %i.ji
-  %i.jk = xor i64 %.0233.lcssa617, -1
+  %i.jk = xor i64 %.0233.lcssa623, -1
   %i.jl = add i64 %i.jj, %i.jk                    ; 3 uses
   %i.jm = lshr i64 %i.jl, 1
   %i.jn = add nuw i64 %i.jm, 1                    ; 5 uses
@@ -798,10 +797,12 @@ iter.check:                                       ; preds = %.preheader436
   br i1 %min.iters.check624, label %.lr.ph470.preheader, label %vector.memcheck615
 
 vector.memcheck615:                               ; preds = %iter.check
-  %9 = add i64 %.idx552, %.0.i.i358.pn616
+  %10 = ptrtoaddr ptr %.0.i.i358.pn to i64
   %i.jo = shl i64 %3, 1
-  %i.jp = add i64 %9, %i.jo
-  %i.jq = xor i64 %.0233.lcssa617, -1
+  %11 = ptrtoaddr ptr %.0233.lcssa to i64
+  %12 = add i64 %.idx552, %10
+  %i.jp = add i64 %12, %i.jo
+  %i.jq = xor i64 %11, -1
   %i.jr = add i64 %i.jp, %i.jq                    ; 2 uses
   %i.js = lshr i64 %i.jr, 1
   %i.jt = getelementptr i8, ptr %.0235.lcssa, i64 %i.js
@@ -956,10 +957,9 @@ bb.aq:                                            ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit393:                          ; preds = %bb.ap, %bb.aq
   %.0.i.i382.pn = phi ptr [ %.0.i.i382, %bb.ap ], [ %.val4.i384, %bb.aq ] ; 2 uses
-  %.0.i.i382.pn597 = ptrtoaddr ptr %.0.i.i382.pn to i64 ; 2 uses
   %i.lo = getelementptr [4 x i8], ptr %.0.i.i382.pn, i64 %3 ; 5 uses
   %i.lp = getelementptr [4 x i8], ptr %i.lo, i64 %4 ; 2 uses
-  %.idx551 = shl i64 %4, 2                        ; 3 uses
+  %.idx551 = shl i64 %4, 2                        ; 2 uses
   %i.lq = ashr exact i64 %.idx551, 2
   %i.lr = and i64 %i.lq, -4
   %i.ls = getelementptr [4 x i8], ptr %i.lo, i64 %i.lr ; 2 uses
@@ -969,15 +969,16 @@ _PyUnicode_DATA.exit393:                          ; preds = %bb.ap, %bb.aq
 .preheader438:                                    ; preds = %.lr.ph457, %_PyUnicode_DATA.exit393
   %.0231.lcssa = phi ptr [ %i.ll, %_PyUnicode_DATA.exit393 ], [ %i.ni, %.lr.ph457 ] ; 6 uses
   %.0229.lcssa = phi ptr [ %i.lo, %_PyUnicode_DATA.exit393 ], [ %i.nh, %.lr.ph457 ] ; 8 uses
-  %.0229.lcssa598 = ptrtoaddr ptr %.0229.lcssa to i64 ; 2 uses
   %i.lu = icmp ult ptr %.0229.lcssa, %i.lp
   br i1 %i.lu, label %.lr.ph462.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph462.preheader:                              ; preds = %.preheader438
+  %13 = ptrtoaddr ptr %.0.i.i382.pn to i64
   %i.lv = shl i64 %3, 2
-  %i.lw = add i64 %.idx551, %.0.i.i382.pn597
+  %14 = ptrtoaddr ptr %.0229.lcssa to i64         ; 2 uses
+  %i.lw = add i64 %.idx551, %13                   ; 2 uses
   %i.lx = add i64 %i.lw, %i.lv
-  %i.ly = xor i64 %.0229.lcssa598, -1
+  %i.ly = xor i64 %14, -1
   %i.lz = add i64 %i.lx, %i.ly                    ; 2 uses
   %i.ma = lshr i64 %i.lz, 2
   %i.mb = add nuw nsw i64 %i.ma, 1                ; 2 uses
@@ -985,10 +986,9 @@ _PyUnicode_DATA.exit393:                          ; preds = %bb.ap, %bb.aq
   br i1 %min.iters.check601, label %.lr.ph462.preheader743, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph462.preheader
-  %10 = add i64 %.idx551, %.0.i.i382.pn597
   %i.mc = shl i64 %3, 2
-  %i.md = add i64 %10, %i.mc
-  %i.me = xor i64 %.0229.lcssa598, -1
+  %i.md = add i64 %i.lw, %i.mc
+  %i.me = xor i64 %14, -1
   %i.mf = add i64 %i.md, %i.me                    ; 2 uses
   %i.mg = lshr i64 %i.mf, 2
   %i.mh = getelementptr i8, ptr %.0231.lcssa, i64 %i.mg
@@ -1391,7 +1391,6 @@ Py_DECREF.exit32:                                 ; preds = %PyUnicode_MAX_CHAR_
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @PyUnicode_FromWideChar(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) local_unnamed_addr #1 {
 bb.a:
-  %2 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = icmp eq ptr %0, null
   %i.b = icmp ne i64 %1, 0
   %or.cond = and i1 %i.a, %i.b
@@ -1488,7 +1487,7 @@ bb.m:                                             ; preds = %bb.k
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.l, %bb.m
   %.0.i = phi ptr [ %.0.i.i, %bb.l ], [ %.val4.i, %bb.m ] ; 5 uses
-  %.idx57.i = shl i64 %.0, 2                      ; 6 uses
+  %.idx57.i = shl i64 %.0, 2                      ; 5 uses
   switch i32 %i.aa, label %bb.q [
     i32 1, label %bb.n
     i32 2, label %bb.o
@@ -1505,27 +1504,25 @@ bb.n:                                             ; preds = %_PyUnicode_DATA.exi
 .preheader.i:                                     ; preds = %.lr.ph68.i, %bb.n
   %.055.lcssa.i = phi ptr [ %.0.i, %bb.n ], [ %i.bq, %.lr.ph68.i ] ; 6 uses
   %.053.lcssa.i = phi ptr [ %0, %bb.n ], [ %i.bp, %.lr.ph68.i ] ; 8 uses
-  %.053.lcssa.i81 = ptrtoaddr ptr %.053.lcssa.i to i64 ; 2 uses
   %i.ai = icmp ult ptr %.053.lcssa.i, %i.l
   br i1 %i.ai, label %.lr.ph73.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph73.i.preheader:                             ; preds = %.preheader.i
+  %2 = ptrtoaddr ptr %0 to i64
+  %3 = ptrtoaddr ptr %.053.lcssa.i to i64
   %i.aj = add i64 %.idx57.i, %2
-  %i.ak = xor i64 %.053.lcssa.i81, -1
-  %i.al = add i64 %i.aj, %i.ak                    ; 2 uses
+  %i.ak = xor i64 %3, -1
+  %i.al = add i64 %i.aj, %i.ak                    ; 4 uses
   %i.am = lshr i64 %i.al, 2
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
   %min.iters.check84 = icmp ult i64 %i.al, 140
   br i1 %min.iters.check84, label %.lr.ph73.i.preheader98, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph73.i.preheader
-  %3 = add i64 %.idx57.i, %2
-  %4 = xor i64 %.053.lcssa.i81, -1
-  %5 = add i64 %3, %4                             ; 2 uses
-  %i.ao = lshr i64 %5, 2
+  %i.ao = lshr i64 %i.al, 2
   %i.ap = getelementptr i8, ptr %.055.lcssa.i, i64 %i.ao
   %scevgep = getelementptr i8, ptr %i.ap, i64 1
-  %i.aq = and i64 %5, -4
+  %i.aq = and i64 %i.al, -4
   %i.ar = getelementptr i8, ptr %.053.lcssa.i, i64 %i.aq
   %scevgep82 = getelementptr i8, ptr %i.ar, i64 4
   %bound0 = icmp ult ptr %.055.lcssa.i, %scevgep82
@@ -1776,7 +1773,6 @@ declare i64 @wcslen(ptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @PyUnicodeWriter_WriteWideChar(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = icmp slt i64 %2, 0
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -1855,7 +1851,7 @@ bb.h:                                             ; preds = %bb.g, %.thread
   %i.ad = sext i32 %i.z to i64
   %i.ae = mul i64 %i.x, %i.ad
   %i.af = getelementptr i8, ptr %i.ab, i64 %i.ae  ; 5 uses
-  %.idx57.i = shl i64 %.024, 2                    ; 6 uses
+  %.idx57.i = shl i64 %.024, 2                    ; 5 uses
   switch i32 %i.z, label %bb.l [
     i32 1, label %bb.i
     i32 2, label %bb.j
@@ -1872,27 +1868,25 @@ bb.i:                                             ; preds = %.critedge
 .preheader.i:                                     ; preds = %.lr.ph68.i, %bb.i
   %.055.lcssa.i = phi ptr [ %i.af, %bb.i ], [ %i.bs, %.lr.ph68.i ] ; 6 uses
   %.053.lcssa.i = phi ptr [ %1, %bb.i ], [ %i.br, %.lr.ph68.i ] ; 8 uses
-  %.053.lcssa.i82 = ptrtoaddr ptr %.053.lcssa.i to i64 ; 2 uses
   %i.ak = icmp ult ptr %.053.lcssa.i, %i.d
   br i1 %i.ak, label %.lr.ph73.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph73.i.preheader:                             ; preds = %.preheader.i
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %.053.lcssa.i to i64
   %i.al = add i64 %.idx57.i, %3
-  %i.am = xor i64 %.053.lcssa.i82, -1
-  %i.an = add i64 %i.al, %i.am                    ; 2 uses
+  %i.am = xor i64 %4, -1
+  %i.an = add i64 %i.al, %i.am                    ; 4 uses
   %i.ao = lshr i64 %i.an, 2
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %min.iters.check85 = icmp ult i64 %i.an, 140
   br i1 %min.iters.check85, label %.lr.ph73.i.preheader99, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph73.i.preheader
-  %4 = add i64 %.idx57.i, %3
-  %5 = xor i64 %.053.lcssa.i82, -1
-  %6 = add i64 %4, %5                             ; 2 uses
-  %i.aq = lshr i64 %6, 2
+  %i.aq = lshr i64 %i.an, 2
   %i.ar = getelementptr i8, ptr %.055.lcssa.i, i64 %i.aq
   %scevgep = getelementptr i8, ptr %i.ar, i64 1
-  %i.as = and i64 %6, -4
+  %i.as = and i64 %i.an, -4
   %i.at = getelementptr i8, ptr %.053.lcssa.i, i64 %i.as
   %scevgep83 = getelementptr i8, ptr %i.at, i64 4
   %bound0 = icmp ult ptr %.055.lcssa.i, %scevgep83
@@ -2295,7 +2289,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @PyUnicodeWriter_WriteUCS4(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = icmp slt i64 %2, 0
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -2310,7 +2303,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr [4 x i8], ptr %1, i64 %2   ; 7 uses
-  %.idx88 = shl i64 %2, 2                         ; 5 uses
+  %.idx88 = shl i64 %2, 2                         ; 4 uses
   %i.e = ashr exact i64 %.idx88, 2
   %i.f = and i64 %i.e, -4
   %i.g = getelementptr [4 x i8], ptr %1, i64 %i.f ; 6 uses
@@ -2460,27 +2453,25 @@ bb.o:                                             ; preds = %.critedge
 .preheader:                                       ; preds = %.lr.ph103, %bb.o
   %.080.lcssa = phi ptr [ %i.at, %bb.o ], [ %i.cc, %.lr.ph103 ] ; 6 uses
   %.078.lcssa = phi ptr [ %1, %bb.o ], [ %i.cb, %.lr.ph103 ] ; 8 uses
-  %.078.lcssa152 = ptrtoaddr ptr %.078.lcssa to i64 ; 2 uses
   %i.au = icmp ult ptr %.078.lcssa, %i.d
   br i1 %i.au, label %.lr.ph108.preheader, label %.loopexit
 
 .lr.ph108.preheader:                              ; preds = %.preheader
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %.078.lcssa to i64
   %i.av = add i64 %.idx88, %3
-  %i.aw = xor i64 %.078.lcssa152, -1
-  %i.ax = add i64 %i.av, %i.aw                    ; 2 uses
+  %i.aw = xor i64 %4, -1
+  %i.ax = add i64 %i.av, %i.aw                    ; 4 uses
   %i.ay = lshr i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses
   %min.iters.check155 = icmp ult i64 %i.ax, 140
   br i1 %min.iters.check155, label %.lr.ph108.preheader169, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph108.preheader
-  %4 = add i64 %.idx88, %3
-  %5 = xor i64 %.078.lcssa152, -1
-  %6 = add i64 %4, %5                             ; 2 uses
-  %i.ba = lshr i64 %6, 2
+  %i.ba = lshr i64 %i.ax, 2
   %i.bb = getelementptr i8, ptr %.080.lcssa, i64 %i.ba
   %scevgep = getelementptr i8, ptr %i.bb, i64 1
-  %i.bc = and i64 %6, -4
+  %i.bc = and i64 %i.ax, -4
   %i.bd = getelementptr i8, ptr %.078.lcssa, i64 %i.bc
   %scevgep153 = getelementptr i8, ptr %i.bd, i64 4
   %bound0 = icmp ult ptr %.080.lcssa, %scevgep153
@@ -2773,7 +2764,7 @@ _PyUnicode_FromUCS1.exit:                         ; preds = %_PyUnicode_DATA.exi
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @_PyUnicode_FromUCS2(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   switch i64 %1, label %bb.l [
     i64 0, label %unicode_char.exit
     i64 1, label %bb.b
@@ -2999,14 +2990,14 @@ _PyUnicode_DATA.exit55:                           ; preds = %bb.w, %bb.x
 
 .preheader:                                       ; preds = %.lr.ph, %_PyUnicode_DATA.exit55
   %.038.lcssa = phi ptr [ %.0.i53, %_PyUnicode_DATA.exit55 ], [ %i.ct, %.lr.ph ] ; 8 uses
-  %.0.lcssa = phi ptr [ %0, %_PyUnicode_DATA.exit55 ], [ %i.cs, %.lr.ph ] ; 10 uses
-  %.0.lcssa101 = ptrtoaddr ptr %.0.lcssa to i64   ; 2 uses
+  %.0.lcssa = phi ptr [ %0, %_PyUnicode_DATA.exit55 ], [ %i.cs, %.lr.ph ] ; 11 uses
   %i.bb = icmp ult ptr %.0.lcssa, %i.u
   br i1 %i.bb, label %iter.check, label %unicode_char.exit
 
 iter.check:                                       ; preds = %.preheader
+  %.0.lcssa103 = ptrtoaddr ptr %.0.lcssa to i64
   %i.bc = add i64 %.idx56, %i.a
-  %i.bd = xor i64 %.0.lcssa101, -1
+  %i.bd = xor i64 %.0.lcssa103, -1
   %i.be = add i64 %i.bc, %i.bd                    ; 3 uses
   %i.bf = lshr i64 %i.be, 1
   %i.bg = add nuw i64 %i.bf, 1                    ; 5 uses
@@ -3014,8 +3005,10 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.lr.ph66.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bh = add i64 %.idx56, %i.a
-  %i.bi = xor i64 %.0.lcssa101, -1
+  %2 = ptrtoaddr ptr %0 to i64
+  %3 = ptrtoaddr ptr %.0.lcssa to i64
+  %i.bh = add i64 %.idx56, %2
+  %i.bi = xor i64 %3, -1
   %i.bj = add i64 %i.bh, %i.bi                    ; 2 uses
   %i.bk = lshr i64 %i.bj, 1
   %i.bl = getelementptr i8, ptr %.038.lcssa, i64 %i.bk
@@ -3139,7 +3132,6 @@ unicode_char.exit:                                ; preds = %.lr.ph66, %middle.b
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @_PyUnicode_FromUCS4(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) unnamed_addr #1 {
 bb.a:
-  %2 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   switch i64 %1, label %bb.l [
     i64 0, label %unicode_char.exit
     i64 1, label %bb.b
@@ -3218,7 +3210,7 @@ _PyUnicode_DATA.exit19.i:                         ; preds = %bb.k, %bb.j
 
 bb.l:                                             ; preds = %bb.a
   %i.u = getelementptr [4 x i8], ptr %0, i64 %1   ; 7 uses
-  %.idx95 = shl i64 %1, 2                         ; 5 uses
+  %.idx95 = shl i64 %1, 2                         ; 4 uses
   %i.v = ashr exact i64 %.idx95, 2
   %i.w = and i64 %i.v, -4
   %i.x = getelementptr [4 x i8], ptr %0, i64 %i.w ; 6 uses
@@ -3357,27 +3349,25 @@ _PyUnicode_DATA.exit:                             ; preds = %bb.w, %bb.x
 .preheader:                                       ; preds = %.lr.ph110, %_PyUnicode_DATA.exit
   %.067.lcssa = phi ptr [ %.0.i78, %_PyUnicode_DATA.exit ], [ %i.ch, %.lr.ph110 ] ; 6 uses
   %.065.lcssa = phi ptr [ %0, %_PyUnicode_DATA.exit ], [ %i.cg, %.lr.ph110 ] ; 8 uses
-  %.065.lcssa162 = ptrtoaddr ptr %.065.lcssa to i64 ; 2 uses
   %i.az = icmp ult ptr %.065.lcssa, %i.u
   br i1 %i.az, label %.lr.ph115.preheader, label %unicode_char.exit
 
 .lr.ph115.preheader:                              ; preds = %.preheader
+  %2 = ptrtoaddr ptr %0 to i64
+  %3 = ptrtoaddr ptr %.065.lcssa to i64
   %i.ba = add i64 %.idx95, %2
-  %i.bb = xor i64 %.065.lcssa162, -1
-  %i.bc = add i64 %i.ba, %i.bb                    ; 2 uses
+  %i.bb = xor i64 %3, -1
+  %i.bc = add i64 %i.ba, %i.bb                    ; 4 uses
   %i.bd = lshr i64 %i.bc, 2
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check165 = icmp ult i64 %i.bc, 140
   br i1 %min.iters.check165, label %.lr.ph115.preheader179, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph115.preheader
-  %3 = add i64 %.idx95, %2
-  %4 = xor i64 %.065.lcssa162, -1
-  %5 = add i64 %3, %4                             ; 2 uses
-  %i.bf = lshr i64 %5, 2
+  %i.bf = lshr i64 %i.bc, 2
   %i.bg = getelementptr i8, ptr %.067.lcssa, i64 %i.bf
   %scevgep = getelementptr i8, ptr %i.bg, i64 1
-  %i.bh = and i64 %5, -4
+  %i.bh = and i64 %i.bc, -4
   %i.bi = getelementptr i8, ptr %.065.lcssa, i64 %i.bh
   %scevgep163 = getelementptr i8, ptr %i.bi, i64 4
   %bound0 = icmp ult ptr %.067.lcssa, %scevgep163
@@ -3780,13 +3770,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cb = shl nuw <2 x i64> splat (i64 1), %i.ca
   %i.cc = or <2 x i64> %i.cb, %vec.phi            ; 2 uses
   %i.cd = icmp eq <2 x i16> %wide.load, %broadcast.splat144
-  %6 = freeze <2 x i1> %i.cd                      ; 2 uses
-  %7 = xor <2 x i64> %vec.ind, splat (i64 -1)
-  %8 = add nsw <2 x i64> %broadcast.splat, %7
-  %i.ce = bitcast <2 x i1> %6 to i2
+  %6 = xor <2 x i64> %vec.ind, splat (i64 -1)
+  %7 = add nsw <2 x i64> %broadcast.splat, %6
+  %8 = freeze <2 x i1> %i.cd                      ; 2 uses
+  %i.ce = bitcast <2 x i1> %8 to i2
   %.not193 = icmp eq i2 %i.ce, 0                  ; 2 uses
-  %i.cf = select i1 %.not193, <2 x i1> %i.bx, <2 x i1> %6 ; 2 uses
-  %i.cg = select i1 %.not193, <2 x i64> %vec.phi145, <2 x i64> %8 ; 2 uses
+  %i.cf = select i1 %.not193, <2 x i1> %i.bx, <2 x i1> %8 ; 2 uses
+  %i.cg = select i1 %.not193, <2 x i64> %vec.phi145, <2 x i64> %7 ; 2 uses
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
   %i.ch = icmp eq i64 %index.next, %n.vec
@@ -4189,7 +4179,6 @@ bb.d:                                             ; preds = %_PyUnicode_DATA.exi
 bb.e:                                             ; preds = %_PyUnicode_DATA.exit
   %i.l = mul nuw nsw i64 %.val, 12
   %i.m = tail call ptr @PyMem_Malloc(i64 noundef %i.l) #33 ; 15 uses
-  %2 = ptrtoaddr ptr %i.m to i64                  ; 2 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.f, label %bb.g
 
@@ -4228,7 +4217,7 @@ _PyUnicode_DATA.exit87:                           ; preds = %bb.i, %bb.j
   %.0.i85 = phi ptr [ %.0.i.i84, %bb.i ], [ %.val4.i86, %bb.j ] ; 5 uses
   %i.y = lshr i32 %.val.i80, 2
   %i.z = and i32 %i.y, 7
-  %.idx79 = shl i64 %i.p, 2                       ; 6 uses
+  %.idx79 = shl i64 %i.p, 2                       ; 5 uses
   switch i32 %i.z, label %bb.n [
     i32 1, label %bb.k
     i32 2, label %bb.l
@@ -4245,27 +4234,25 @@ bb.k:                                             ; preds = %_PyUnicode_DATA.exi
 .preheader:                                       ; preds = %.lr.ph98, %bb.k
   %.073.lcssa = phi ptr [ %.0.i85, %bb.k ], [ %i.bm, %.lr.ph98 ] ; 6 uses
   %.071.lcssa = phi ptr [ %i.m, %bb.k ], [ %i.bl, %.lr.ph98 ] ; 8 uses
-  %.071.lcssa125 = ptrtoaddr ptr %.071.lcssa to i64 ; 2 uses
   %i.ae = icmp ult ptr %.071.lcssa, %i.t
   br i1 %i.ae, label %.lr.ph103.preheader, label %.loopexit
 
 .lr.ph103.preheader:                              ; preds = %.preheader
+  %2 = ptrtoaddr ptr %i.m to i64
+  %3 = ptrtoaddr ptr %.071.lcssa to i64
   %i.af = add i64 %.idx79, %2
-  %i.ag = xor i64 %.071.lcssa125, -1
-  %i.ah = add i64 %i.af, %i.ag                    ; 2 uses
+  %i.ag = xor i64 %3, -1
+  %i.ah = add i64 %i.af, %i.ag                    ; 4 uses
   %i.ai = lshr i64 %i.ah, 2
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check128 = icmp ult i64 %i.ah, 140
   br i1 %min.iters.check128, label %.lr.ph103.preheader142, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph103.preheader
-  %3 = add i64 %.idx79, %2
-  %4 = xor i64 %.071.lcssa125, -1
-  %5 = add i64 %3, %4                             ; 2 uses
-  %i.ak = lshr i64 %5, 2
+  %i.ak = lshr i64 %i.ah, 2
   %i.al = getelementptr i8, ptr %.073.lcssa, i64 %i.ak
   %scevgep = getelementptr i8, ptr %i.al, i64 1
-  %i.am = and i64 %5, -4
+  %i.am = and i64 %i.ah, -4
   %i.an = getelementptr i8, ptr %.071.lcssa, i64 %i.am
   %scevgep126 = getelementptr i8, ptr %i.an, i64 4
   %bound0 = icmp ult ptr %.073.lcssa, %scevgep126

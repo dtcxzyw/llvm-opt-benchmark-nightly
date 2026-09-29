@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ju, label %.preheader, label %.lr.ph
 
 .preheader:                                       ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %construct_BWT.exit
-  %.0.lcssa = phi i32 [ 0, %construct_BWT.exit ], [ %.068, %middle.block ], [ %.068, %.lr.ph ], [ %.068, %.lr.ph.prol.loopexit ] ; 5 uses
+  %.0.lcssa = phi i32 [ 0, %construct_BWT.exit ], [ %.068, %middle.block ], [ %.068, %.lr.ph ], [ %.068, %.lr.ph.prol.loopexit ] ; 4 uses
   %.195 = add nuw nsw i32 %.0.lcssa, 1
   %i.jv = icmp slt i32 %.195, %3
   br i1 %i.jv, label %.lr.ph97.preheader, label %._crit_edge
@@ -214,7 +214,7 @@ middle.block:                                     ; preds = %vector.body
   %i.jw = zext i32 %narrow to i64                 ; 5 uses
   %i.jx = add nsw i32 %3, -2
   %i.jy = sub i32 %i.jx, %.0.lcssa                ; 2 uses
-  %i.jz = zext i32 %i.jy to i64
+  %i.jz = zext i32 %i.jy to i64                   ; 3 uses
   %i.ka = add nuw nsw i64 %i.jz, 1                ; 2 uses
   %min.iters.check140 = icmp ult i32 %i.jy, 31
   br i1 %min.iters.check140, label %.lr.ph97.preheader151, label %vector.memcheck131
@@ -222,16 +222,13 @@ middle.block:                                     ; preds = %vector.body
 vector.memcheck131:                               ; preds = %.lr.ph97.preheader
   %scevgep132 = getelementptr i8, ptr %1, i64 %i.jw
   %i.kb = zext nneg i32 %.0.lcssa to i64          ; 3 uses
-  %7 = add nsw i32 %3, -2
-  %8 = sub i32 %7, %.0.lcssa
-  %9 = zext i32 %8 to i64                         ; 2 uses
   %i.kc = getelementptr i8, ptr %1, i64 %i.kb
-  %i.kd = getelementptr i8, ptr %i.kc, i64 %9
+  %i.kd = getelementptr i8, ptr %i.kc, i64 %i.jz
   %scevgep133 = getelementptr i8, ptr %i.kd, i64 2
   %i.ke = shl nuw nsw i64 %i.kb, 2
   %i.kf = getelementptr i8, ptr %.070, i64 %i.ke
   %scevgep134 = getelementptr i8, ptr %i.kf, i64 4
-  %i.kg = add nuw nsw i64 %i.kb, %9
+  %i.kg = add nuw nsw i64 %i.kb, %i.jz
   %i.kh = shl nuw nsw i64 %i.kg, 2
   %i.ki = getelementptr i8, ptr %.070, i64 %i.kh
   %scevgep135 = getelementptr i8, ptr %i.ki, i64 8

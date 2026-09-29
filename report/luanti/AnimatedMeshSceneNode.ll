@@ -205,24 +205,22 @@ _ZNSt12_Vector_baseI7irr_ptrIN5scene13BoneSceneNodeEESaIS3_EE11_M_allocateEm.exi
   %i.aq = sub i64 %i.ap, %i.am
   %i.ar = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #34 ; 9 uses
   %i.as = load ptr, ptr %i.d, align 8, !tbaa !115 ; 11 uses
-  %4 = ptrtoaddr ptr %i.as to i64                 ; 2 uses
   %i.at = load ptr, ptr %i.n, align 8, !tbaa !114 ; 3 uses
-  %5 = ptrtoaddr ptr %i.at to i64                 ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.as, %i.at
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorI7irr_ptrIN5scene13BoneSceneNodeEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i, label %.lr.ph.i.i.i.i31.preheader
 
 .lr.ph.i.i.i.i31.preheader:                       ; preds = %_ZNSt12_Vector_baseI7irr_ptrIN5scene13BoneSceneNodeEESaIS3_EE11_M_allocateEm.exit.i
-  %i.au = add i64 %5, -8
-  %i.av = sub i64 %i.au, %4                       ; 2 uses
+  %4 = ptrtoaddr ptr %i.at to i64
+  %5 = ptrtoaddr ptr %i.as to i64
+  %i.au = add i64 %4, -8
+  %i.av = sub i64 %i.au, %5                       ; 3 uses
   %i.aw = lshr i64 %i.av, 3
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.av, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i31.preheader166, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i31.preheader
-  %6 = add i64 %5, -8
-  %7 = sub i64 %6, %4
-  %i.ay = and i64 %7, -8
+  %i.ay = and i64 %i.av, -8
   %i.az = add i64 %i.ay, 8                        ; 2 uses
   %scevgep.a = getelementptr i8, ptr %i.as, i64 %i.az
   %scevgep127 = getelementptr i8, ptr %i.ar, i64 %i.az
@@ -625,8 +623,8 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !114  ; 5 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !115    ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 4 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -671,16 +669,14 @@ _ZNKSt6vectorI7irr_ptrIN5scene13BoneSceneNodeEESaIS3_EE12_M_check_lenEmPKc.exit:
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorI7irr_ptrIN5scene13BoneSceneNodeEESaIS3_EE12_M_check_lenEmPKc.exit
   %i.x = add i64 %i.d, -8
-  %i.y = sub i64 %i.x, %i.e                       ; 2 uses
+  %i.y = sub i64 %i.x, %i.e                       ; 3 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
   %min.iters.check = icmp ult i64 %i.y, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader44, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %2 = add i64 %i.d, -8
-  %3 = sub i64 %2, %i.e
-  %i.ab = and i64 %3, -8
+  %i.ab = and i64 %i.y, -8
   %i.ac = add i64 %i.ab, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.c, i64 %i.ac
   %scevgep40 = getelementptr i8, ptr %i.u, i64 %i.ac

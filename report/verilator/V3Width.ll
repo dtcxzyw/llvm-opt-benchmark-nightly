@@ -205,14 +205,13 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load i32, ptr %i.e, align 8, !tbaa !328
-  %.fr = freeze i32 %i.f                          ; 4 uses
+  %.fr = freeze i32 %i.f                          ; 3 uses
   %i.g = icmp slt i32 %.fr, 1
   br i1 %i.g, label %.loopexit, label %tailrecurse.preheader
 
 tailrecurse.preheader:                            ; preds = %.lr.ph
   %i.h = add nsw i32 %.fr, -1
-  %.not.peel = icmp samesign ult i32 %1, %.fr
-  %spec.select = select i1 %.not.peel, i32 %1, i32 %i.h ; 2 uses
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %1, i32 %i.h) ; 2 uses
   %i.i = icmp samesign ult i32 %.fr, 129
   %i.j = load ptr, ptr %0, align 8
   %spec.select.i7 = select i1 %i.i, ptr %0, ptr %i.j
@@ -613,6 +612,9 @@ declare i64 @llvm.umax.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #22

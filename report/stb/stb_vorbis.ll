@@ -205,29 +205,28 @@ setup_temp_malloc.exit:                           ; preds = %bb.c, %bb.b, %bb.d
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !64   ; 19 uses
   %i.y = sext i32 %i.a to i64                     ; 5 uses
   %i.z = getelementptr [4 x i8], ptr %i.t, i64 %i.y ; 10 uses
-  %.idx = shl nsw i64 %i.y, 2                     ; 4 uses
+  %.idx = shl nsw i64 %i.y, 2                     ; 3 uses
   %i.aa = getelementptr inbounds i8, ptr %0, i64 %.idx ; 3 uses
   %.0388423 = getelementptr i8, ptr %i.z, i64 -8  ; 5 uses
   %.not409424 = icmp eq i32 %i.a, 0
   br i1 %.not409424, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %setup_temp_malloc.exit
-  %i.ab = add nsw i64 %.idx, -16                  ; 2 uses
+  %i.ab = add nsw i64 %.idx, -16                  ; 4 uses
   %i.ac = lshr i64 %i.ab, 4
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ab, 128
   br i1 %min.iters.check, label %.lr.ph.preheader534, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %4 = add nsw i64 %.idx, -8
-  %5 = add nsw i64 %.idx, -16                     ; 2 uses
-  %6 = lshr exact i64 %5, 1
-  %7 = and i64 %6, 9223372036854775800            ; 2 uses
-  %i.ae = sub i64 %4, %7
+  %4 = lshr exact i64 %i.ab, 1
+  %5 = and i64 %4, 9223372036854775800            ; 2 uses
+  %6 = add nsw i64 %.idx, -8
+  %i.ae = sub i64 %6, %5
   %scevgep = getelementptr i8, ptr %i.t, i64 %i.ae ; 2 uses
-  %i.af = or i64 %5, 12
+  %i.af = or i64 %i.ab, 12
   %scevgep513 = getelementptr i8, ptr %0, i64 %i.af
-  %i.ag = getelementptr i8, ptr %i.x, i64 %7
+  %i.ag = getelementptr i8, ptr %i.x, i64 %5
   %scevgep514 = getelementptr i8, ptr %i.ag, i64 8
   %bound0 = icmp ult ptr %scevgep, %scevgep513
   %bound1 = icmp ult ptr %0, %i.z

@@ -205,10 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %i.b, align 8              ; 9 uses
-  %2 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
-  %3 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
   %.not8.i = icmp eq ptr %i.c, %i.e
   br i1 %.not8.i, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit, label %.lr.ph.i
 
@@ -224,20 +222,18 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %i.q = add i64 %3, -24
-  %i.r = sub i64 %i.q, %2                         ; 2 uses
-  %i.s = udiv i64 %i.r, 24
+  %2 = ptrtoaddr ptr %i.e to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.q = add i64 %2, -24
+  %i.r = sub i64 %i.q, %3                         ; 2 uses
+  %i.s = udiv i64 %i.r, 24                        ; 2 uses
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.r, 72
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
-  %4 = add i64 %3, -24
-  %5 = sub i64 %4, %2
-  %.fr = freeze i64 %5                            ; 2 uses
-  %6 = urem i64 %.fr, 24
-  %7 = sub nuw i64 %.fr, %6
-  %i.u = getelementptr i8, ptr %i.c, i64 %7
+  %4 = mul nuw i64 %i.s, 24
+  %i.u = getelementptr i8, ptr %i.c, i64 %4
   %scevgep = getelementptr i8, ptr %i.u, i64 24
   %scevgep15 = getelementptr inbounds nuw i8, ptr %1, i64 96
   %bound0 = icmp ult ptr %i.c, %scevgep15
@@ -367,10 +363,8 @@ _ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit: ; preds = %scalar.ph
 
 bb.c:                                             ; preds = %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit
   %i.cv = load ptr, ptr %i.cu, align 8            ; 9 uses
-  %8 = ptrtoaddr ptr %i.cv to i64                 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.cx = load ptr, ptr %i.cw, align 8            ; 3 uses
-  %9 = ptrtoaddr ptr %i.cx to i64                 ; 2 uses
   %.not8.i4 = icmp eq ptr %i.cv, %i.cx
   br i1 %.not8.i4, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit8, label %.lr.ph.i5
 
@@ -386,20 +380,18 @@ bb.c:                                             ; preds = %_ZN6Assimp3IFC8Temp
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %i.dj = add i64 %9, -24
-  %i.dk = sub i64 %i.dj, %8                       ; 2 uses
-  %i.dl = udiv i64 %i.dk, 24
+  %5 = ptrtoaddr ptr %i.cx to i64
+  %6 = ptrtoaddr ptr %i.cv to i64
+  %i.dj = add i64 %5, -24
+  %i.dk = sub i64 %i.dj, %6                       ; 2 uses
+  %i.dl = udiv i64 %i.dk, 24                      ; 2 uses
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %i.dk, 72
   br i1 %min.iters.check46, label %scalar.ph45.preheader, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i5
-  %10 = add i64 %9, -24
-  %11 = sub i64 %10, %8
-  %.fr82 = freeze i64 %11                         ; 2 uses
-  %12 = urem i64 %.fr82, 24
-  %13 = sub nuw i64 %.fr82, %12
-  %i.dn = getelementptr i8, ptr %i.cv, i64 %13
+  %7 = mul nuw i64 %i.dl, 24
+  %i.dn = getelementptr i8, ptr %i.cv, i64 %7
   %scevgep40 = getelementptr i8, ptr %i.dn, i64 24
   %scevgep41 = getelementptr inbounds nuw i8, ptr %1, i64 96
   %bound042 = icmp ult ptr %i.cv, %scevgep41
@@ -565,10 +557,8 @@ _ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit8: ; preds = %scalar.p
 define hidden void @_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 9 uses
-  %2 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
-  %3 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %.not8 = icmp eq ptr %i.a, %i.c
   br i1 %.not8, label %._crit_edge, label %.lr.ph
 
@@ -584,20 +574,18 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %i.o = add i64 %3, -24
-  %i.p = sub i64 %i.o, %2                         ; 2 uses
-  %i.q = udiv i64 %i.p, 24
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.a to i64
+  %i.o = add i64 %2, -24
+  %i.p = sub i64 %i.o, %3                         ; 2 uses
+  %i.q = udiv i64 %i.p, 24                        ; 2 uses
   %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.p, 72
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %4 = add i64 %3, -24
-  %5 = sub i64 %4, %2
-  %.fr = freeze i64 %5                            ; 2 uses
-  %6 = urem i64 %.fr, 24
-  %7 = sub nuw i64 %.fr, %6
-  %i.s = getelementptr i8, ptr %i.a, i64 %7
+  %4 = mul nuw i64 %i.q, 24
+  %i.s = getelementptr i8, ptr %i.a, i64 %4
   %scevgep = getelementptr i8, ptr %i.s, i64 24
   %scevgep11 = getelementptr inbounds nuw i8, ptr %1, i64 96
   %bound0 = icmp ult ptr %i.a, %scevgep11

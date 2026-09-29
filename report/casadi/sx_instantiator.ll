@@ -205,16 +205,16 @@ _ZNSt6vectorIPN6casadi6SXElemESaIS2_EEC2EmRKS3_.exit: ; preds = %_ZSt6fill_nIPPN
   %i.ez = ptrtoint ptr %i.ex to i64
   %i.fa = sub i64 %i.ey, %i.ez
   %.fr907 = freeze i64 %i.fa
-  %i.fb = sdiv i64 %.fr907, 40                    ; 3 uses
+  %i.fb = sdiv i64 %.fr907, 40                    ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !123
   %i.fe = load ptr, ptr %0, align 8, !tbaa !125   ; 8 uses
   %i.ff = ptrtoint ptr %i.fd to i64
   %i.fg = ptrtoint ptr %i.fe to i64
   %i.fh = sub i64 %i.ff, %i.fg
-  %i.fi = sdiv exact i64 %i.fh, 40                ; 5 uses
+  %i.fi = sdiv exact i64 %i.fh, 40                ; 4 uses
   %i.fj = add nsw i64 %i.fb, -1
-  %i.fk = call i64 @llvm.umin.i64(i64 %i.fj, i64 %i.fi)
+  %i.fk = call i64 @llvm.umin.i64(i64 %i.fj, i64 %i.fi) ; 3 uses
   %i.fl = add nsw i64 %i.fk, 1                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.fl, 15
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -224,13 +224,11 @@ scalar.ph.preheader:                              ; preds = %vector.body, %vecto
   br label %scalar.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph666
-  %90 = add nsw i64 %i.fb, -1
-  %umin = call i64 @llvm.umin.i64(i64 %90, i64 %i.fi) ; 2 uses
-  %i.fm = shl nsw i64 %umin, 3
+  %i.fm = shl nsw i64 %i.fk, 3
   %i.fn = getelementptr i8, ptr %.sroa.0591.0, i64 %i.fm
   %scevgep = getelementptr i8, ptr %i.fn, i64 8
   %scevgep905 = getelementptr i8, ptr %i.fe, i64 16
-  %i.fo = mul i64 %umin, 40
+  %i.fo = mul i64 %i.fk, 40
   %i.fp = getelementptr i8, ptr %i.fe, i64 %i.fo
   %scevgep906 = getelementptr i8, ptr %i.fp, i64 32
   %bound0 = icmp ult ptr %.sroa.0591.0, %scevgep906

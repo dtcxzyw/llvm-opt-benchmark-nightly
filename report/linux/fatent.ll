@@ -202,12 +202,12 @@ bb.a:
   %i.t = load i64, ptr %i.s, align 8              ; 2 uses
   %i.u = lshr i64 %i.t, %i.p
   %i.v = add i64 %i.u, -1
-  %i.w = add i64 %i.v, %i.r                       ; 2 uses
+  %i.w = add i64 %i.v, %i.r
   %i.x = getelementptr i8, ptr %1, i64 16
   %i.y = load i64, ptr %i.x, align 8
   %i.z = lshr i64 %i.y, %i.p                      ; 2 uses
   %i.aa = getelementptr i8, ptr %.val, i64 48     ; 2 uses
-  %i.ab = load i64, ptr %i.aa, align 8            ; 3 uses
+  %i.ab = load i64, ptr %i.aa, align 8            ; 2 uses
   %.not = icmp ult i64 %i.r, %i.ab
   br i1 %.not, label %bb.b, label %bb.z
 
@@ -219,9 +219,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.af, label %bb.z, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not93 = icmp ult i64 %i.w, %i.ab
   %i.ag = add i64 %i.ab, -1
-  %spec.select = select i1 %.not93, i64 %i.w, i64 %i.ag ; 4 uses
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.w, i64 %i.ag) ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 9 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 7 uses

@@ -202,8 +202,8 @@ _ZNSt6vectorISt10unique_ptrIN4YAML12EmitterState5GroupESt14default_deleteIS3_EES
   br label %_ZNSt10unique_ptrIN4YAML12EmitterState5GroupESt14default_deleteIS2_EED2Ev.exit
 
 bb.h:                                             ; preds = %bb.g
-  %i.bc = ptrtoint ptr %i.ak to i64               ; 3 uses
-  %i.bd = ptrtoint ptr %i.aj to i64               ; 4 uses
+  %i.bc = ptrtoint ptr %i.ak to i64               ; 2 uses
+  %i.bd = ptrtoint ptr %i.aj to i64               ; 3 uses
   %i.be = sub i64 %i.bc, %i.bd                    ; 3 uses
   %i.bf = icmp eq i64 %i.be, 9223372036854775800
   br i1 %i.bf, label %bb.i, label %_ZNKSt6vectorISt10unique_ptrIN4YAML12EmitterState5GroupESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
@@ -235,16 +235,14 @@ _ZNKSt6vectorISt10unique_ptrIN4YAML12EmitterState5GroupESt14default_deleteIS3_EE
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc11
   %i.bo = add i64 %i.bc, -8
-  %i.bp = sub i64 %i.bo, %i.bd                    ; 2 uses
+  %i.bp = sub i64 %i.bo, %i.bd                    ; 3 uses
   %i.bq = lshr i64 %i.bp, 3
   %i.br = add nuw nsw i64 %i.bq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bp, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader24, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %3 = add i64 %i.bc, -8
-  %4 = sub i64 %3, %i.bd
-  %i.bs = and i64 %4, -8
+  %i.bs = and i64 %i.bp, -8
   %i.bt = add i64 %i.bs, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.bm, i64 %i.bt
   %scevgep20 = getelementptr i8, ptr %i.aj, i64 %i.bt
@@ -647,8 +645,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !45   ; 10 uses
-  %i.m = ptrtoint ptr %i.g to i64                 ; 3 uses
-  %i.n = ptrtoint ptr %i.l to i64                 ; 4 uses
+  %i.m = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.n = ptrtoint ptr %i.l to i64                 ; 3 uses
   %i.o = sub i64 %i.m, %i.n                       ; 3 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775800
   br i1 %i.p, label %bb.e, label %_ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
@@ -682,16 +680,14 @@ _ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EES
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc24
   %i.z = add i64 %i.m, -8
-  %i.aa = sub i64 %i.z, %i.n                      ; 2 uses
+  %i.aa = sub i64 %i.z, %i.n                      ; 3 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check90 = icmp ult i64 %i.aa, 136
   br i1 %min.iters.check90, label %.lr.ph.i.i.i.i.preheader104, label %vector.memcheck83
 
 vector.memcheck83:                                ; preds = %.lr.ph.i.i.i.i.preheader
-  %4 = add i64 %i.m, -8
-  %5 = sub i64 %4, %i.n
-  %i.ad = and i64 %5, -8
+  %i.ad = and i64 %i.aa, -8
   %i.ae = add i64 %i.ad, 8                        ; 2 uses
   %scevgep84 = getelementptr i8, ptr %i.w, i64 %i.ae
   %scevgep85 = getelementptr i8, ptr %i.l, i64 %i.ae
@@ -801,8 +797,8 @@ bb.g:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.h:                                             ; preds = %_ZNSt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS1_EED2Ev.exit13
   %i.bh = load ptr, ptr %i.aw, align 8, !tbaa !45 ; 10 uses
-  %i.bi = ptrtoint ptr %i.bc to i64               ; 3 uses
-  %i.bj = ptrtoint ptr %i.bh to i64               ; 4 uses
+  %i.bi = ptrtoint ptr %i.bc to i64               ; 2 uses
+  %i.bj = ptrtoint ptr %i.bh to i64               ; 3 uses
   %i.bk = sub i64 %i.bi, %i.bj                    ; 3 uses
   %i.bl = icmp eq i64 %i.bk, 9223372036854775800
   br i1 %i.bl, label %bb.i, label %_ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i25
@@ -836,16 +832,14 @@ _ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EES
 
 .lr.ph.i.i.i.i29.preheader:                       ; preds = %.noexc44
   %i.bv = add i64 %i.bi, -8
-  %i.bw = sub i64 %i.bv, %i.bj                    ; 2 uses
+  %i.bw = sub i64 %i.bv, %i.bj                    ; 3 uses
   %i.bx = lshr i64 %i.bw, 3
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bw, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i29.preheader105, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i29.preheader
-  %6 = add i64 %i.bi, -8
-  %7 = sub i64 %6, %i.bj
-  %i.bz = and i64 %7, -8
+  %i.bz = and i64 %i.bw, -8
   %i.ca = add i64 %i.bz, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.bs, i64 %i.ca
   %scevgep79 = getelementptr i8, ptr %i.bh, i64 %i.ca
@@ -990,8 +984,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !45   ; 10 uses
-  %i.m = ptrtoint ptr %i.g to i64                 ; 3 uses
-  %i.n = ptrtoint ptr %i.l to i64                 ; 4 uses
+  %i.m = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.n = ptrtoint ptr %i.l to i64                 ; 3 uses
   %i.o = sub i64 %i.m, %i.n                       ; 3 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775800
   br i1 %i.p, label %bb.e, label %_ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
@@ -1025,16 +1019,14 @@ _ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EES
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc24
   %i.z = add i64 %i.m, -8
-  %i.aa = sub i64 %i.z, %i.n                      ; 2 uses
+  %i.aa = sub i64 %i.z, %i.n                      ; 3 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check90 = icmp ult i64 %i.aa, 136
   br i1 %min.iters.check90, label %.lr.ph.i.i.i.i.preheader104, label %vector.memcheck83
 
 vector.memcheck83:                                ; preds = %.lr.ph.i.i.i.i.preheader
-  %4 = add i64 %i.m, -8
-  %5 = sub i64 %4, %i.n
-  %i.ad = and i64 %5, -8
+  %i.ad = and i64 %i.aa, -8
   %i.ae = add i64 %i.ad, 8                        ; 2 uses
   %scevgep84 = getelementptr i8, ptr %i.w, i64 %i.ae
   %scevgep85 = getelementptr i8, ptr %i.l, i64 %i.ae
@@ -1144,8 +1136,8 @@ bb.g:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.h:                                             ; preds = %_ZNSt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS1_EED2Ev.exit13
   %i.bh = load ptr, ptr %i.aw, align 8, !tbaa !45 ; 10 uses
-  %i.bi = ptrtoint ptr %i.bc to i64               ; 3 uses
-  %i.bj = ptrtoint ptr %i.bh to i64               ; 4 uses
+  %i.bi = ptrtoint ptr %i.bc to i64               ; 2 uses
+  %i.bj = ptrtoint ptr %i.bh to i64               ; 3 uses
   %i.bk = sub i64 %i.bi, %i.bj                    ; 3 uses
   %i.bl = icmp eq i64 %i.bk, 9223372036854775800
   br i1 %i.bl, label %bb.i, label %_ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i25
@@ -1179,16 +1171,14 @@ _ZNKSt6vectorISt10unique_ptrIN4YAML17SettingChangeBaseESt14default_deleteIS2_EES
 
 .lr.ph.i.i.i.i29.preheader:                       ; preds = %.noexc44
   %i.bv = add i64 %i.bi, -8
-  %i.bw = sub i64 %i.bv, %i.bj                    ; 2 uses
+  %i.bw = sub i64 %i.bv, %i.bj                    ; 3 uses
   %i.bx = lshr i64 %i.bw, 3
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bw, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i29.preheader105, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i29.preheader
-  %6 = add i64 %i.bi, -8
-  %7 = sub i64 %6, %i.bj
-  %i.bz = and i64 %7, -8
+  %i.bz = and i64 %i.bw, -8
   %i.ca = add i64 %i.bz, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.bs, i64 %i.ca
   %scevgep79 = getelementptr i8, ptr %i.bh, i64 %i.ca

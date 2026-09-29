@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %iter.check, label %.loopexit141
 
 iter.check:                                       ; preds = %.preheader140
-  %i.q = sext i32 %i.e to i64                     ; 8 uses
+  %i.q = sext i32 %i.e to i64                     ; 7 uses
   %i.r = add i32 %i.e, -1
   %i.s = add nsw i32 %2, -1
   %umin = tail call i32 @llvm.umin.i32(i32 %i.r, i32 %i.s) ; 3 uses
@@ -216,13 +216,12 @@ iter.check:                                       ; preds = %.preheader140
 
 vector.memcheck:                                  ; preds = %iter.check
   %scevgep.a = getelementptr i8, ptr %1, i64 %wide.trip.count
-  %i.u = add nsw i64 %i.q, 344
+  %i.u = add nsw i64 %i.q, 344                    ; 2 uses
   %i.v = sub nsw i64 %i.u, %wide.trip.count
-  %scevgep236 = getelementptr i8, ptr %i.c, i64 %i.v
-  %i.w = getelementptr i8, ptr %i.c, i64 %i.q
-  %scevgep237 = getelementptr i8, ptr %i.w, i64 344
+  %i.w = getelementptr i8, ptr %i.c, i64 %i.v
+  %scevgep237 = getelementptr i8, ptr %i.c, i64 %i.u
   %bound0 = icmp ult ptr %1, %scevgep237
-  %bound1 = icmp ult ptr %scevgep236, %scevgep.a
+  %bound1 = icmp ult ptr %i.w, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 

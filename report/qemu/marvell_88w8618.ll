@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.168 = shl i32 %spec.select, %i.i              ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1116
   %i.k = load i32, ptr %i.j, align 4              ; 7 uses
-  %i.l = lshr i32 %i.k, 1                         ; 13 uses
+  %i.l = lshr i32 %i.k, 1                         ; 12 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1124 ; 2 uses
   %i.n = load i32, ptr %i.m, align 4
   %i.o = sub i32 %.168, %i.n
@@ -242,20 +242,18 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.preheader:                                 ; preds = %bb.e
   %i.af = add nsw i32 %i.l, -1
-  %3 = lshr i32 %i.af, 1
-  %narrow = add nuw i32 %3, 1
-  %4 = zext i32 %narrow to i64                    ; 2 uses
+  %3 = zext i32 %i.af to i64                      ; 3 uses
+  %4 = lshr i64 %3, 1
+  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
   %min.iters.check = icmp ult i32 %i.k, 78
   br i1 %min.iters.check, label %.lr.ph.preheader131, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %5 = add nsw i32 %i.l, -1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.ag = shl nuw nsw i64 %6, 1
+  %i.ag = shl nuw nsw i64 %3, 1
   %i.ah = and i64 %i.ag, 8589934588
   %i.ai = getelementptr i8, ptr %i.ae, i64 %i.ah
   %scevgep101 = getelementptr i8, ptr %i.ai, i64 4
-  %i.aj = and i64 %6, 4294967294
+  %i.aj = and i64 %3, 4294967294
   %i.ak = getelementptr i8, ptr %i.a, i64 %i.aj
   %scevgep102 = getelementptr i8, ptr %i.ak, i64 2
   %bound0 = icmp ult ptr %i.ae, %scevgep102
@@ -264,7 +262,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader131, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %4, 4294967288                 ; 5 uses
+  %n.vec = and i64 %5, 4294967288                 ; 5 uses
   %i.al = trunc nuw i64 %n.vec to i32
   %i.am = shl i32 %i.al, 1
   %i.an = shl nuw nsw i64 %n.vec, 1
@@ -293,7 +291,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.av, label %middle.block, label %vector.body, !llvm.loop !10
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %4
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %.loopexit, label %.lr.ph.preheader131
 
 .lr.ph.preheader131:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block

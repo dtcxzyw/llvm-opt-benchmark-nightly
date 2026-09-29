@@ -205,13 +205,14 @@ bb.bd:                                            ; preds = %bb.bb
   br i1 %8, label %bb.be, label %.thread
 
 bb.be:                                            ; preds = %bb.bd
-  %i.us = getelementptr inbounds nuw i8, ptr %i.qv, i64 8
+  %i.us = getelementptr inbounds nuw i8, ptr %i.qv, i64 8 ; 2 uses
   %i.ut = load i8, ptr %i.us, align 4, !tbaa !121
   %i.uu = icmp eq i8 %i.ut, 4
   br i1 %i.uu, label %bb.bf, label %.thread
 
 bb.bf:                                            ; preds = %bb.be
-  store i64 0, ptr %i.tk, align 4
+  store i32 0, ptr %i.tk, align 4
+  store i32 0, ptr %i.us, align 4
   br label %.thread
 
 .thread:                                          ; preds = %bb.bd, %bb.be, %bb.bf

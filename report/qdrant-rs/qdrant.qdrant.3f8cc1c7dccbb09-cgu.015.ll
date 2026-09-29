@@ -204,13 +204,11 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.5.0.copyload, 4           ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %3 = and i64 %i.d, -16                          ; 2 uses
   %i.g = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %scevgep2 = getelementptr i8, ptr %i.g, i64 %3
-  %scevgep3 = getelementptr i8, ptr %0, i64 %3
-  %bound0 = icmp ult ptr %scevgep, %scevgep3
-  %bound1 = icmp ult ptr %0, %scevgep2
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.d
+  %bound0 = icmp ult ptr %i.g, %1
+  %bound1 = icmp ult ptr %0, %scevgep3
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -613,13 +611,11 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.5.0.copyload, 4           ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %3 = and i64 %i.d, -16                          ; 2 uses
   %i.g = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
-  %scevgep2 = getelementptr i8, ptr %i.g, i64 %3
-  %scevgep3 = getelementptr i8, ptr %0, i64 %3
-  %bound0 = icmp ult ptr %scevgep, %scevgep3
-  %bound1 = icmp ult ptr %0, %scevgep2
+  %scevgep2 = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %i.f
+  %scevgep3 = getelementptr i8, ptr %scevgep2, i64 %i.d
+  %bound0 = icmp ult ptr %i.g, %1
+  %bound1 = icmp ult ptr %0, %scevgep3
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

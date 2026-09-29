@@ -205,21 +205,19 @@ bb.s:                                             ; preds = %bb.p
 
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !97
-  %.sroa.01.0.copyload.i.i.i = load ptr, ptr %i.j, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 12 uses
-  %.sroa.01.0.copyload.i.i.i84 = ptrtoaddr ptr %.sroa.01.0.copyload.i.i.i to i64 ; 4 uses
+  %.sroa.01.0.copyload.i.i.i = load ptr, ptr %i.j, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 13 uses
+  %.sroa.01.0.copyload.i.i.i84 = ptrtoaddr ptr %.sroa.01.0.copyload.i.i.i to i64 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 4 uses
-  %.sroa.5.0.copyload.i.i.i83 = ptrtoaddr ptr %.sroa.5.0.copyload.i.i.i to i64 ; 4 uses
+  %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 5 uses
+  %.sroa.5.0.copyload.i.i.i83 = ptrtoaddr ptr %.sroa.5.0.copyload.i.i.i to i64 ; 2 uses
   %.sroa.62.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %.sroa.62.0.copyload.i.i.i = load ptr, ptr %.sroa.62.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 5 uses
   %.sroa.7.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %.sroa.7.0.copyload.i.i.i = load ptr, ptr %.sroa.7.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 4 uses
   %.sroa.8.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %.sroa.8.0.copyload.i.i.i = load ptr, ptr %.sroa.8.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 11 uses
-  %.sroa.8.0.copyload.i.i.i86 = ptrtoaddr ptr %.sroa.8.0.copyload.i.i.i to i64 ; 2 uses
   %.sroa.11.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %.sroa.11.0.copyload.i.i.i = load ptr, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 7 uses
-  %.sroa.11.0.copyload.i.i.i85 = ptrtoaddr ptr %.sroa.11.0.copyload.i.i.i to i64 ; 2 uses
   %i.bj = icmp eq ptr %.sroa.01.0.copyload.i.i.i, %.sroa.5.0.copyload.i.i.i
   br i1 %i.bj, label %select.unfold.i.i.i, label %.lr.ph.i.i.i
 
@@ -258,22 +256,21 @@ bb.t:                                             ; preds = %bb.s
 
 .lr.ph.split.us.i.i.i:                            ; preds = %.lr.ph.i.i.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload.i.i.i) ]
-  %i.bu = xor i64 %.sroa.01.0.copyload.i.i.i84, -1
-  %i.bv = add i64 %i.bu, %.sroa.5.0.copyload.i.i.i83
-  %i.bw = sub i64 %.sroa.11.0.copyload.i.i.i85, %.sroa.8.0.copyload.i.i.i86
+  %3 = ptrtoaddr ptr %.sroa.5.0.copyload.i.i.i to i64
+  %4 = ptrtoaddr ptr %.sroa.01.0.copyload.i.i.i to i64
+  %i.bu = xor i64 %4, -1
+  %i.bv = add i64 %i.bu, %3
+  %5 = ptrtoaddr ptr %.sroa.11.0.copyload.i.i.i to i64
+  %6 = ptrtoaddr ptr %.sroa.8.0.copyload.i.i.i to i64
+  %i.bw = sub i64 %5, %6
   %i.bx = call i64 @llvm.umin.i64(i64 %i.bv, i64 %i.bw)
-  %i.by = add i64 %i.bx, 1                        ; 3 uses
+  %i.by = add i64 %i.bx, 1                        ; 5 uses
   %min.iters.check = icmp ult i64 %i.by, 33
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.i.i.i
-  %3 = xor i64 %.sroa.01.0.copyload.i.i.i84, -1
-  %4 = add i64 %3, %.sroa.5.0.copyload.i.i.i83
-  %5 = sub i64 %.sroa.11.0.copyload.i.i.i85, %.sroa.8.0.copyload.i.i.i86
-  %umin = call i64 @llvm.umin.i64(i64 %4, i64 %5)
-  %6 = add i64 %umin, 1                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.01.0.copyload.i.i.i, i64 %6
-  %scevgep87 = getelementptr i8, ptr %.sroa.8.0.copyload.i.i.i, i64 %6
+  %scevgep = getelementptr i8, ptr %.sroa.01.0.copyload.i.i.i, i64 %i.by
+  %scevgep87 = getelementptr i8, ptr %.sroa.8.0.copyload.i.i.i, i64 %i.by
   %bound0 = icmp ult ptr %.sroa.01.0.copyload.i.i.i, %scevgep87
   %bound1 = icmp ult ptr %.sroa.8.0.copyload.i.i.i, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -676,7 +673,7 @@ _RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { i64, i64 } @_RNvNtNtCslssDYltVX0B_6memchr6memmem8searcher19searcher_kind_empty(ptr noalias nofree readonly align 32 captures(none) %0, ptr noalias nofree readnone align 4 captures(none) %1, ptr noalias nofree nonnull readonly captures(none) %2, i64 range(i64 0, -9223372036854775808) %3, ptr noalias nofree nonnull readonly captures(none) %4, i64 range(i64 0, -9223372036854775808) %5) unnamed_addr #17 {
+define internal noundef { i64, i64 } @_RNvNtNtCslssDYltVX0B_6memchr6memmem8searcher19searcher_kind_empty(ptr noalias nofree readonly align 32 captures(none) %0, ptr noalias nofree readnone align 4 captures(none) %1, ptr noalias nofree nonnull readonly captures(none) %2, i64 range(i64 0, -9223372036854775808) %3, ptr noalias nofree nonnull readonly captures(none) %4, i64 range(i64 0, -9223372036854775808) %5) unnamed_addr #17 {
 bb.a:
   ret { i64, i64 } { i64 1, i64 0 }
 }

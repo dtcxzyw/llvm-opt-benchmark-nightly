@@ -205,7 +205,7 @@ reverse_blame.exit96:                             ; preds = %.lr.ph.i91, %bb.a, 
   br i1 %.not85, label %bb.u, label %bb.j
 
 bb.j:                                             ; preds = %reverse_blame.exit96
-  %i.as = sub nsw i32 %4, %2                      ; 6 uses
+  %i.as = sub nsw i32 %4, %2                      ; 5 uses
   %i.at = icmp sgt i32 %i.as, 0
   br i1 %i.at, label %bb.k, label %bb.u
 
@@ -233,41 +233,45 @@ bb.k:                                             ; preds = %bb.j
   br label %.lr.ph.i97
 
 .preheader.i.i:                                   ; preds = %bb.k
-  %11 = tail call i32 @llvm.umin.i32(i32 %5, i32 11) ; 2 uses
-  %spec.select.i.i = add nsw i32 %11, -1          ; 2 uses
+  %11 = add nsw i32 %5, -1
+  %spec.select.i.i = tail call i32 @llvm.umin.i32(i32 %11, i32 10) ; 2 uses
   %i.bd = shl nuw nsw i32 %spec.select.i.i, 1
   %i.be = or disjoint i32 %i.bd, 1
-  %i.bf = mul nuw nsw i32 %i.be, %i.as            ; 2 uses
+  %i.bf = mul i32 %i.be, %i.as                    ; 4 uses
   %i.bg = add nsw i32 %i.bf, -1
-  %12 = udiv i32 %i.bg, %5
+  %12 = sdiv i32 %i.bg, %5
   %i.bh = tail call ptr @xcalloc(i64 noundef %i.au, i64 noundef 4) #20 ; 3 uses
   %i.bi = tail call ptr @xcalloc(i64 noundef %i.au, i64 noundef 4) #20 ; 3 uses
   %i.bj = tail call ptr @xcalloc(i64 noundef %i.au, i64 noundef 4) #20 ; 3 uses
-  %13 = zext nneg i32 %i.bf to i64
+  %13 = sext i32 %i.bf to i64
   %i.bk = tail call ptr @xcalloc(i64 noundef %13, i64 noundef 4) #20 ; 3 uses
   %i.bl = shl nuw nsw i64 %i.au, 2                ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.bh, i8 -1, i64 %i.bl, i1 false), !tbaa !43
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.bi, i8 -1, i64 %i.bl, i1 false), !tbaa !43
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.bj, i8 -1, i64 %i.bl, i1 false), !tbaa !43
-  %14 = shl nuw nsw i32 %11, 1
-  %15 = add nsw i32 %14, -1
-  %16 = mul i32 %15, %i.as
-  %17 = zext i32 %16 to i64
-  %18 = shl nuw nsw i64 %17, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.bk, i8 -1, i64 %18, i1 false), !tbaa !43
-  %19 = sext i32 %i.aw to i64
-  %20 = getelementptr inbounds [56 x i8], ptr %.val.i, i64 %19
-  %21 = sext i32 %2 to i64                        ; 2 uses
-  %22 = getelementptr inbounds [56 x i8], ptr %.val37.i, i64 %21
-  call fastcc void @fuzzy_find_matching_lines_recurse(i32 noundef %i.aw, i32 noundef %2, i32 noundef %5, i32 noundef %i.as, ptr noundef %20, ptr noundef %22, ptr noundef %i.bk, ptr noundef %i.bj, ptr noundef %i.bi, ptr noundef %i.bh, i32 noundef %spec.select.i.i, i32 noundef %12, ptr noundef %10)
+  %14 = icmp sgt i32 %i.bf, 0
+  br i1 %14, label %.lr.ph5.preheader.i.i, label %._crit_edge.i.i
+
+.lr.ph5.preheader.i.i:                            ; preds = %.preheader.i.i
+  %15 = zext nneg i32 %i.bf to i64
+  %16 = shl nuw nsw i64 %15, 2
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.bk, i8 -1, i64 %16, i1 false), !tbaa !43
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %.lr.ph5.preheader.i.i, %.preheader.i.i
+  %17 = sext i32 %i.aw to i64
+  %18 = getelementptr inbounds [56 x i8], ptr %.val.i, i64 %17
+  %19 = sext i32 %2 to i64                        ; 2 uses
+  %20 = getelementptr inbounds [56 x i8], ptr %.val37.i, i64 %19
+  call fastcc void @fuzzy_find_matching_lines_recurse(i32 noundef %i.aw, i32 noundef %2, i32 noundef %5, i32 noundef %i.as, ptr noundef %18, ptr noundef %20, ptr noundef %i.bk, ptr noundef %i.bj, ptr noundef %i.bi, ptr noundef %i.bh, i32 noundef %spec.select.i.i, i32 noundef %12, ptr noundef %10)
   call void @free(ptr noundef %i.bk) #20
   call void @free(ptr noundef %i.bj) #20
   call void @free(ptr noundef %i.bi) #20
   br label %.lr.ph.i97
 
-.lr.ph.i97:                                       ; preds = %..lr.ph.i97_crit_edge, %.preheader.i.i
-  %.pre-phi = phi i64 [ %.pre, %..lr.ph.i97_crit_edge ], [ %21, %.preheader.i.i ]
-  %.058.i.i = phi ptr [ null, %..lr.ph.i97_crit_edge ], [ %i.bh, %.preheader.i.i ] ; 3 uses
+.lr.ph.i97:                                       ; preds = %..lr.ph.i97_crit_edge, %._crit_edge.i.i
+  %.pre-phi = phi i64 [ %.pre, %..lr.ph.i97_crit_edge ], [ %19, %._crit_edge.i.i ]
+  %.058.i.i = phi ptr [ null, %..lr.ph.i97_crit_edge ], [ %i.bh, %._crit_edge.i.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #20
   %.not.i98 = icmp eq ptr %.058.i.i, null
   %i.bm = getelementptr inbounds nuw i8, ptr %6, i64 56

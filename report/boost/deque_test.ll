@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %_ZN5boost20adl_move_swap_rangesIPPNS_9container4test11movable_intES5_EET0_T_S7_S6_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.e = sub i64 %i.c, %i.d                       ; 8 uses
   %i.f = ashr exact i64 %i.e, 3                   ; 10 uses
   %i.g = sub nsw i64 0, %i.f
@@ -216,16 +216,14 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.j = add i64 %i.c, -8
-  %i.k = sub i64 %i.j, %i.d                       ; 2 uses
+  %i.k = sub i64 %i.j, %i.d                       ; 3 uses
   %i.l = lshr i64 %i.k, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 104
   br i1 %min.iters.check, label %.lr.ph.i.preheader82, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %3 = add i64 %i.c, -8
-  %4 = sub i64 %3, %i.d
-  %i.n = and i64 %4, -8
+  %i.n = and i64 %i.k, -8
   %i.o = add i64 %i.n, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 %i.o
   %scevgep76 = getelementptr i8, ptr %1, i64 %i.o
@@ -628,8 +626,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %_ZN5boost20adl_move_swap_rangesIPPNS_9container4test12copyable_intES5_EET0_T_S7_S6_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.e = sub i64 %i.c, %i.d                       ; 8 uses
   %i.f = ashr exact i64 %i.e, 3                   ; 10 uses
   %i.g = sub nsw i64 0, %i.f
@@ -639,16 +637,14 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.j = add i64 %i.c, -8
-  %i.k = sub i64 %i.j, %i.d                       ; 2 uses
+  %i.k = sub i64 %i.j, %i.d                       ; 3 uses
   %i.l = lshr i64 %i.k, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 104
   br i1 %min.iters.check, label %.lr.ph.i.preheader82, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %3 = add i64 %i.c, -8
-  %4 = sub i64 %3, %i.d
-  %i.n = and i64 %4, -8
+  %i.n = and i64 %i.k, -8
   %i.o = add i64 %i.n, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 %i.o
   %scevgep76 = getelementptr i8, ptr %1, i64 %i.o
@@ -1051,8 +1047,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %_ZN5boost20adl_move_swap_rangesIPPiS2_EET0_T_S4_S3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.e = sub i64 %i.c, %i.d                       ; 8 uses
   %i.f = ashr exact i64 %i.e, 3                   ; 10 uses
   %i.g = sub nsw i64 0, %i.f
@@ -1062,16 +1058,14 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.j = add i64 %i.c, -8
-  %i.k = sub i64 %i.j, %i.d                       ; 2 uses
+  %i.k = sub i64 %i.j, %i.d                       ; 3 uses
   %i.l = lshr i64 %i.k, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 104
   br i1 %min.iters.check, label %.lr.ph.i.preheader82, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %3 = add i64 %i.c, -8
-  %4 = sub i64 %3, %i.d
-  %i.n = and i64 %4, -8
+  %i.n = and i64 %i.k, -8
   %i.o = add i64 %i.n, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 %i.o
   %scevgep76 = getelementptr i8, ptr %1, i64 %i.o
@@ -1474,8 +1468,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %_ZN5boost20adl_move_swap_rangesIPPNS_9container4test24movable_and_copyable_intES5_EET0_T_S7_S6_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.e = sub i64 %i.c, %i.d                       ; 8 uses
   %i.f = ashr exact i64 %i.e, 3                   ; 10 uses
   %i.g = sub nsw i64 0, %i.f
@@ -1485,16 +1479,14 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.j = add i64 %i.c, -8
-  %i.k = sub i64 %i.j, %i.d                       ; 2 uses
+  %i.k = sub i64 %i.j, %i.d                       ; 3 uses
   %i.l = lshr i64 %i.k, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 104
   br i1 %min.iters.check, label %.lr.ph.i.preheader82, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %3 = add i64 %i.c, -8
-  %4 = sub i64 %3, %i.d
-  %i.n = and i64 %4, -8
+  %i.n = and i64 %i.k, -8
   %i.o = add i64 %i.n, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 %i.o
   %scevgep76 = getelementptr i8, ptr %1, i64 %i.o

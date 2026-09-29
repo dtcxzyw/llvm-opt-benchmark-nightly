@@ -204,8 +204,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !46   ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !45     ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 5 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN4lean5levelESaIS1_EE12_M_check_lenEmPKc.exit
@@ -221,7 +221,7 @@ _ZNKSt6vectorIN4lean5levelESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.m = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -259,16 +259,14 @@ _ZNSt16allocator_traitsISaIN4lean5levelEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt16allocator_traitsISaIN4lean5levelEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit
   %i.x = add i64 %i.m, -8
-  %i.y = sub i64 %i.x, %i.e                       ; 2 uses
+  %i.y = sub i64 %i.x, %i.e                       ; 3 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
   %min.iters.check = icmp ult i64 %i.y, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader73, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %3 = add i64 %i.m, -8
-  %4 = sub i64 %3, %i.e
-  %i.ab = and i64 %4, -8
+  %i.ab = and i64 %i.y, -8
   %i.ac = add i64 %i.ab, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.p, i64 %i.ac
   %scevgep47 = getelementptr i8, ptr %i.c, i64 %i.ac
@@ -333,16 +331,14 @@ _ZNSt6vectorIN4lean5levelESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %
 
 .lr.ph.i.i.i27.preheader:                         ; preds = %_ZNSt6vectorIN4lean5levelESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
   %i.ao = add i64 %i.d, -8
-  %i.ap = sub i64 %i.ao, %i.m                     ; 2 uses
+  %i.ap = sub i64 %i.ao, %i.m                     ; 3 uses
   %i.aq = lshr i64 %i.ap, 3
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
   %min.iters.check58 = icmp ult i64 %i.ap, 152
   br i1 %min.iters.check58, label %.lr.ph.i.i.i27.preheader72, label %vector.memcheck51
 
 vector.memcheck51:                                ; preds = %.lr.ph.i.i.i27.preheader
-  %5 = add i64 %i.d, -8
-  %6 = sub i64 %5, %i.m
-  %i.as = and i64 %6, -8                          ; 2 uses
+  %i.as = and i64 %i.ap, -8                       ; 2 uses
   %i.at = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.as
   %scevgep52 = getelementptr i8, ptr %i.at, i64 16
   %i.au = getelementptr i8, ptr %1, i64 %i.as
@@ -745,8 +741,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !135  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !134    ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 5 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN4lean4exprESaIS1_EE12_M_check_lenEmPKc.exit
@@ -762,7 +758,7 @@ _ZNKSt6vectorIN4lean4exprESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.m = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -800,16 +796,14 @@ _ZNSt16allocator_traitsISaIN4lean4exprEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.e
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt16allocator_traitsISaIN4lean4exprEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit
   %i.x = add i64 %i.m, -8
-  %i.y = sub i64 %i.x, %i.e                       ; 2 uses
+  %i.y = sub i64 %i.x, %i.e                       ; 3 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
   %min.iters.check = icmp ult i64 %i.y, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader73, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %3 = add i64 %i.m, -8
-  %4 = sub i64 %3, %i.e
-  %i.ab = and i64 %4, -8
+  %i.ab = and i64 %i.y, -8
   %i.ac = add i64 %i.ab, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.p, i64 %i.ac
   %scevgep47 = getelementptr i8, ptr %i.c, i64 %i.ac
@@ -874,16 +868,14 @@ _ZNSt6vectorIN4lean4exprESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %.
 
 .lr.ph.i.i.i27.preheader:                         ; preds = %_ZNSt6vectorIN4lean4exprESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
   %i.ao = add i64 %i.d, -8
-  %i.ap = sub i64 %i.ao, %i.m                     ; 2 uses
+  %i.ap = sub i64 %i.ao, %i.m                     ; 3 uses
   %i.aq = lshr i64 %i.ap, 3
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
   %min.iters.check58 = icmp ult i64 %i.ap, 152
   br i1 %min.iters.check58, label %.lr.ph.i.i.i27.preheader72, label %vector.memcheck51
 
 vector.memcheck51:                                ; preds = %.lr.ph.i.i.i27.preheader
-  %5 = add i64 %i.d, -8
-  %6 = sub i64 %5, %i.m
-  %i.as = and i64 %6, -8                          ; 2 uses
+  %i.as = and i64 %i.ap, -8                       ; 2 uses
   %i.at = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.as
   %scevgep52 = getelementptr i8, ptr %i.at, i64 16
   %i.au = getelementptr i8, ptr %1, i64 %i.as

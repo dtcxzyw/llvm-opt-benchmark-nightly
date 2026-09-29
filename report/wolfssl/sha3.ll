@@ -205,23 +205,19 @@ bb.e:                                             ; preds = %bb.c
 
 ._crit_edge.i.thread:                             ; preds = %bb.e
   %i.bz = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx.i30.i149 ; 2 uses
-  %i.ca = ptrtoaddr ptr %i.bz to i64              ; 2 uses
-  %.0.lcssa.i15421 = ptrtoaddr ptr %i.g to i64    ; 4 uses
+  %i.ca = ptrtoaddr ptr %i.bz to i64
+  %.0.lcssa.i15421 = ptrtoaddr ptr %i.g to i64    ; 2 uses
   %i.cb = add nuw i64 %.0.lcssa.i15421, 8
   %i.cc = tail call i64 @llvm.umax.i64(i64 %i.ca, i64 %i.cb)
   %i.cd = xor i64 %.0.lcssa.i15421, -1
-  %i.ce = add i64 %i.cc, %i.cd                    ; 2 uses
+  %i.ce = add i64 %i.cc, %i.cd                    ; 3 uses
   %i.cf = lshr i64 %i.ce, 3
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 2 uses
   %min.iters.check23 = icmp ult i64 %i.ce, 136
   br i1 %min.iters.check23, label %.lr.ph.i32.i.preheader, label %vector.memcheck20
 
 vector.memcheck20:                                ; preds = %._crit_edge.i.thread
-  %4 = add nuw i64 %.0.lcssa.i15421, 8
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ca, i64 %4)
-  %5 = xor i64 %.0.lcssa.i15421, -1
-  %6 = add i64 %umax, %5
-  %i.ch = and i64 %6, -8
+  %i.ch = and i64 %i.ce, -8
   %i.ci = add i64 %i.ch, 8                        ; 2 uses
   %scevgep.a = getelementptr i8, ptr %0, i64 %i.ci
   %scevgep22 = getelementptr i8, ptr %i.g, i64 %i.ci
@@ -624,31 +620,26 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.an, label %._crit_edge.i, label %bb.d
 
 ._crit_edge.i:                                    ; preds = %bb.c
-  %.0.lcssa.i10 = ptrtoaddr ptr %i.c to i64       ; 6 uses
   %i.ao = and i32 %i.f, 248
-  %.idx.i30.i = zext nneg i32 %i.ao to i64        ; 3 uses
+  %.idx.i30.i = zext nneg i32 %i.ao to i64        ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i30.i
   %.not.i31.i = icmp ult i8 %i.e, 8
   br i1 %.not.i31.i, label %XorWords.exit33.i, label %.lr.ph.i32.i.preheader
 
 .lr.ph.i32.i.preheader:                           ; preds = %._crit_edge.i
-  %i.aq = add i64 %.0.lcssa.i10, %.idx.i30.i
-  %i.ar = add i64 %.0.lcssa.i10, 8
+  %5 = ptrtoaddr ptr %i.c to i64                  ; 3 uses
+  %i.aq = add i64 %5, %.idx.i30.i
+  %i.ar = add i64 %5, 8
   %i.as = tail call i64 @llvm.umax.i64(i64 %i.aq, i64 %i.ar)
-  %i.at = xor i64 %.0.lcssa.i10, -1
-  %i.au = add i64 %i.as, %i.at                    ; 2 uses
+  %i.at = xor i64 %5, -1
+  %i.au = add i64 %i.as, %i.at                    ; 3 uses
   %i.av = lshr i64 %i.au, 3
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.au, 152
   br i1 %min.iters.check, label %.lr.ph.i32.i.preheader75, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i32.i.preheader
-  %5 = add i64 %.0.lcssa.i10, %.idx.i30.i
-  %6 = add i64 %.0.lcssa.i10, 8
-  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 %6)
-  %7 = xor i64 %.0.lcssa.i10, -1
-  %8 = add i64 %umax, %7
-  %i.ax = and i64 %8, -8
+  %i.ax = and i64 %i.au, -8
   %i.ay = add i64 %i.ax, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 %i.ay
   %scevgep11 = getelementptr i8, ptr %i.c, i64 %i.ay

@@ -176,22 +176,23 @@ bb.c:                                             ; preds = %._crit_edge.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 0, i64 128, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  %i.ek = shl nsw i32 %i.p, 2                     ; 2 uses
+  %i.ek = shl nsw i32 %i.p, 2                     ; 4 uses
   %i.el = icmp sgt i32 %i.p, 0                    ; 2 uses
   br i1 %i.el, label %.lr.ph128.preheader.i, label %._crit_edge129.i
 
 .lr.ph128.preheader.i:                            ; preds = %bb.c
-  %i.em = zext nneg i32 %i.ek to i64              ; 3 uses
-  %i.en = tail call i64 @llvm.usub.sat.i64(i64 %i.em, i64 4) ; 2 uses
-  %i.eo = lshr exact i64 %i.en, 2
+  %i.em = zext nneg i32 %i.ek to i64              ; 2 uses
+  %i.en = tail call i64 @llvm.umax.i64(i64 %i.em, i64 4)
+  %5 = add nsw i64 %i.en, -1                      ; 2 uses
+  %i.eo = lshr i64 %5, 2
   %i.ep = add nuw nsw i64 %i.eo, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.en, 28
+  %min.iters.check = icmp ult i32 %i.ek, 29
   br i1 %min.iters.check, label %.lr.ph128.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph128.preheader.i
-  %5 = tail call i64 @llvm.usub.sat.i64(i64 %i.em, i64 4)
   %6 = shl nuw nsw i64 %5, 2
-  %i.eq = add nuw nsw i64 %6, 16                  ; 2 uses
+  %7 = and i64 %6, 9223372036854775792
+  %i.eq = add nuw nsw i64 %7, 16                  ; 2 uses
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.eq
   %scevgep8 = getelementptr i8, ptr %.069.lcssa.i, i64 %i.eq
   %bound0 = icmp ult ptr %i.a, %scevgep8
@@ -200,9 +201,9 @@ vector.memcheck:                                  ; preds = %.lr.ph128.preheader
   br i1 %found.conflict, label %.lr.ph128.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.ep, 1073741820              ; 4 uses
-  %i.er = shl nuw nsw i64 %n.vec, 2
-  %i.es = shl nuw nsw i64 %n.vec, 4
+  %n.vec = and i64 %i.ep, 9223372036854775804     ; 4 uses
+  %i.er = shl i64 %n.vec, 2
+  %i.es = shl i64 %n.vec, 4
   %i.et = getelementptr i8, ptr %.069.lcssa.i, i64 %i.es
   br label %vector.body
 
@@ -354,17 +355,18 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.el, label %.lr.ph134.preheader.i, label %._crit_edge135.i
 
 .lr.ph134.preheader.i:                            ; preds = %._crit_edge129.i
-  %i.jm = zext nneg i32 %i.ek to i64              ; 3 uses
-  %i.jn = call i64 @llvm.usub.sat.i64(i64 %i.jm, i64 4) ; 2 uses
-  %i.jo = lshr exact i64 %i.jn, 2
+  %i.jm = zext nneg i32 %i.ek to i64              ; 2 uses
+  %i.jn = call i64 @llvm.umax.i64(i64 %i.jm, i64 4)
+  %8 = add nsw i64 %i.jn, -1                      ; 2 uses
+  %i.jo = lshr i64 %8, 2
   %i.jp = add nuw nsw i64 %i.jo, 1                ; 2 uses
-  %min.iters.check21 = icmp samesign ult i64 %i.jn, 28
+  %min.iters.check21 = icmp ult i32 %i.ek, 29
   br i1 %min.iters.check21, label %.lr.ph134.i.preheader, label %vector.memcheck13
 
 vector.memcheck13:                                ; preds = %.lr.ph134.preheader.i
-  %7 = call i64 @llvm.usub.sat.i64(i64 %i.jm, i64 4)
-  %8 = shl nuw nsw i64 %7, 2
-  %i.jq = add nuw nsw i64 %8, 16                  ; 2 uses
+  %9 = shl nuw nsw i64 %8, 2
+  %10 = and i64 %9, 9223372036854775792
+  %i.jq = add nuw nsw i64 %10, 16                 ; 2 uses
   %scevgep15 = getelementptr i8, ptr %.068.lcssa.i, i64 %i.jq
   %scevgep16 = getelementptr i8, ptr %i.b, i64 %i.jq
   %bound017 = icmp ult ptr %.068.lcssa.i, %scevgep16
@@ -373,9 +375,9 @@ vector.memcheck13:                                ; preds = %.lr.ph134.preheader
   br i1 %found.conflict19, label %.lr.ph134.i.preheader, label %vector.ph22
 
 vector.ph22:                                      ; preds = %vector.memcheck13
-  %n.vec23 = and i64 %i.jp, 1073741820            ; 4 uses
-  %i.jr = shl nuw nsw i64 %n.vec23, 2
-  %i.js = shl nuw nsw i64 %n.vec23, 4
+  %n.vec23 = and i64 %i.jp, 9223372036854775804   ; 4 uses
+  %i.jr = shl i64 %n.vec23, 2
+  %i.js = shl i64 %n.vec23, 4
   %i.jt = getelementptr i8, ptr %.068.lcssa.i, i64 %i.js
   br label %vector.body24
 
@@ -486,7 +488,7 @@ declare <8 x i32> @llvm.x86.avx.cvtt.ps2dq.256(<8 x float>) #4
 declare <8 x float> @llvm.fma.v8f32(<8 x float>, <8 x float>, <8 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #5
+declare i64 @llvm.umax.i64(i64, i64) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

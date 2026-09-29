@@ -205,20 +205,19 @@ iter.check130:                                    ; preds = %.preheader
   br i1 %min.iters.check113, label %.lr.ph68.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check130
-  %scevgep107 = getelementptr i8, ptr %.242.lcssa, i64 1
-  %i.at = add i32 %.137.lcssa, -1                 ; 2 uses
-  %i.au = add nsw i32 %spec.select, -1
-  %i.av = tail call i32 @llvm.usub.sat.i32(i32 %i.at, i32 %i.au)
+  %i.at = add nsw i32 %spec.select, -1
+  %i.au = add i32 %.137.lcssa, -1                 ; 2 uses
+  %i.av = tail call i32 @llvm.usub.sat.i32(i32 %i.au, i32 %i.at)
   %i.aw = zext i32 %i.av to i64                   ; 2 uses
-  %scevgep108 = getelementptr i8, ptr %scevgep107, i64 %i.aw
-  %4 = zext i32 %i.at to i64                      ; 2 uses
-  %scevgep109 = getelementptr i8, ptr %i.a, i64 %4
-  %i.ax = sub nsw i64 0, %i.aw
-  %scevgep110 = getelementptr i8, ptr %scevgep109, i64 %i.ax
-  %i.ay = getelementptr i8, ptr %i.a, i64 %4
+  %scevgep108 = getelementptr i8, ptr %.242.lcssa, i64 %i.aw
+  %4 = getelementptr i8, ptr %scevgep108, i64 1
+  %5 = zext i32 %i.au to i64                      ; 2 uses
+  %i.ax = sub nsw i64 %5, %i.aw
+  %scevgep110 = getelementptr i8, ptr %i.a, i64 %i.ax
+  %i.ay = getelementptr i8, ptr %i.a, i64 %5
   %scevgep111 = getelementptr i8, ptr %i.ay, i64 1
   %bound0 = icmp ult ptr %.242.lcssa, %scevgep111
-  %bound1 = icmp ult ptr %scevgep110, %scevgep108
+  %bound1 = icmp ult ptr %scevgep110, %4
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph68.preheader, label %vector.main.loop.iter.check114
 

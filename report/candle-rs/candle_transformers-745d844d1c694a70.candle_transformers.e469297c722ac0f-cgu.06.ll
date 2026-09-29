@@ -205,10 +205,8 @@ define hidden void @_RINvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB6_8IntoIt
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4 ; 3 uses
-  %2 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.promoted = load ptr, ptr %i.c, align 8        ; 8 uses
-  %.promoted18 = ptrtoaddr ptr %.promoted to i64  ; 2 uses
   %.not.not12 = icmp eq ptr %.promoted, %i.b
   br i1 %.not.not12, label %bb.b, label %.lr.ph
 
@@ -217,8 +215,10 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !6586, !noundef !4 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.promoted13 = load i64, ptr %i.f, align 8, !alias.scope !6586 ; 5 uses
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %.promoted to i64
   %i.g = add i64 %2, -4
-  %i.h = sub i64 %i.g, %.promoted18               ; 2 uses
+  %i.h = sub i64 %i.g, %3                         ; 4 uses
   %i.i = lshr i64 %i.h, 2
   %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.h, 116
@@ -227,14 +227,12 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.k = shl i64 %.promoted13, 3                  ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.e, i64 %i.k
-  %3 = add i64 %2, -4
-  %4 = sub i64 %3, %.promoted18                   ; 2 uses
-  %i.l = shl i64 %4, 1
+  %i.l = shl i64 %i.h, 1
   %i.m = and i64 %i.l, -8
   %i.n = getelementptr i8, ptr %i.e, i64 %i.k
   %i.o = getelementptr i8, ptr %i.n, i64 %i.m
   %scevgep19 = getelementptr i8, ptr %i.o, i64 8
-  %i.p = and i64 %4, -4
+  %i.p = and i64 %i.h, -4
   %i.q = getelementptr i8, ptr %.promoted, i64 %i.p
   %scevgep20 = getelementptr i8, ptr %i.q, i64 4
   %bound0 = icmp ult ptr %scevgep, %scevgep20

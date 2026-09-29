@@ -202,11 +202,10 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.z = load i32, ptr @sortFinal, align 4, !tbaa !9 ; 2 uses
   %.not58 = icmp slt i32 %i.z, %i.k
-  %i.aa = add i64 %1, -1
-  %i.ab = zext nneg i32 %i.z to i64               ; 2 uses
-  %.not59 = icmp ule i64 %1, %i.ab
-  %2 = select i1 %.not58, i1 true, i1 %.not59
-  %.0 = select i1 %2, i64 %i.aa, i64 %i.ab        ; 2 uses
+  %i.aa = add i64 %1, -1                          ; 2 uses
+  %i.ab = zext nneg i32 %i.z to i64
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 %i.aa)
+  %.0 = select i1 %.not58, i64 %i.aa, i64 %spec.select ; 2 uses
   %.not6073 = icmp ult i64 %.0, %i.v
   br i1 %.not6073, label %.loopexit, label %.lr.ph76
 
@@ -608,6 +607,9 @@ declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #21
 
 attributes #0 = { noreturn nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,13 +205,11 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %bb.b
   %i.f = shl i64 %.sroa.4.0.copyload, 4, !dbg !9040 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.58.0.copyload, i64 %i.f, !dbg !9040
-  %3 = and i64 %i.d, -16, !dbg !9040              ; 2 uses
   %i.g = getelementptr i8, ptr %.sroa.58.0.copyload, i64 %i.f, !dbg !9040
-  %scevgep10 = getelementptr i8, ptr %i.g, i64 %3, !dbg !9040
-  %scevgep11 = getelementptr i8, ptr %0, i64 %3, !dbg !9040
-  %bound0 = icmp ult ptr %scevgep, %scevgep11, !dbg !9040
-  %bound1 = icmp ult ptr %0, %scevgep10, !dbg !9040
+  %scevgep10 = getelementptr i8, ptr %.sroa.58.0.copyload, i64 %i.f, !dbg !9040
+  %scevgep11 = getelementptr i8, ptr %scevgep10, i64 %i.d, !dbg !9040
+  %bound0 = icmp ult ptr %i.g, %1, !dbg !9040
+  %bound1 = icmp ult ptr %0, %scevgep11, !dbg !9040
   %found.conflict = and i1 %bound0, %bound1, !dbg !9040
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph, !dbg !9041
 
@@ -614,7 +612,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { i64, float } @_RNvXs1_NtNtCshovLROGBtMy_11quinn_proto10congestion8new_renoNtB5_13NewRenoConfigNtNtCskKLDkoKarTP_4core7default7Default7default() unnamed_addr #10 !dbg !22128 {
+define noundef { i64, float } @_RNvXs1_NtNtCshovLROGBtMy_11quinn_proto10congestion8new_renoNtB5_13NewRenoConfigNtNtCskKLDkoKarTP_4core7default7Default7default() unnamed_addr #10 !dbg !22128 {
 bb.a:
   ret { i64, float } { i64 12000, float 5.000000e-01 }, !dbg !22132
 }

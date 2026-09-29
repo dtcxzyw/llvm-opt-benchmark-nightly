@@ -204,8 +204,6 @@ bb.a:
     #dbg_value(ptr %1, !6455, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6461)
     #dbg_declare(ptr poison, !6456, !DIExpression(), !6462)
     #dbg_declare(ptr %2, !6457, !DIExpression(), !6463)
-  %3 = ptrtoaddr ptr %0 to i64, !dbg !6555        ; 4 uses
-  %4 = ptrtoaddr ptr %1 to i64, !dbg !6555        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6464), !dbg !6555
     #dbg_value(ptr poison, !2456, !DIExpression(), !6359)
     #dbg_value(ptr %0, !6467, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6360)
@@ -229,18 +227,22 @@ bb.a:
   br label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfolduNCINvNtNtBR_8adapters6copied9copy_foldhuNCINvNvNtNtBP_8iterator8Iterator8for_each4callhNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB3m_3VechE14extend_trustedINtB1T_6CopiedINtNtB1V_3rev3RevB3_EEE0E0E0ECs5yXxDE1DkoT_4tera.exit, !dbg !6557
 
 iter.check:                                       ; preds = %bb.a
+  %3 = ptrtoaddr ptr %1 to i64, !dbg !6555
+  %4 = ptrtoaddr ptr %0 to i64, !dbg !6555        ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !6474, !noundef !975 ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.promoted.i = load i64, ptr %i.d, align 8, !alias.scope !6474 ; 8 uses
-  %i.e = sub i64 %4, %3, !dbg !6557               ; 7 uses
+  %i.e = sub i64 %3, %4, !dbg !6557               ; 7 uses
   %min.iters.check = icmp ult i64 %i.e, 8, !dbg !6557
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck, !dbg !6557
 
 vector.memcheck:                                  ; preds = %iter.check
   %scevgep = getelementptr nuw i8, ptr %i.c, i64 %.promoted.i, !dbg !6557
-  %i.f = add i64 %.promoted.i, %4, !dbg !6557
-  %i.g = sub i64 %i.f, %3, !dbg !6557
+  %5 = ptrtoaddr ptr %1 to i64, !dbg !6557
+  %6 = ptrtoaddr ptr %0 to i64, !dbg !6557
+  %i.f = add i64 %.promoted.i, %5, !dbg !6557
+  %i.g = sub i64 %i.f, %6, !dbg !6557
   %scevgep2 = getelementptr i8, ptr %i.c, i64 %i.g, !dbg !6557
   %bound0 = icmp ult ptr %scevgep, %1, !dbg !6557
   %bound1 = icmp ult ptr %0, %scevgep2, !dbg !6557
@@ -322,7 +324,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector
   %.ph = phi i64 [ %.promoted.i, %iter.check ], [ %.promoted.i, %vector.memcheck ], [ %i.i, %vec.epilog.iter.check ], [ %i.s, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.2.012.i.ph = phi ptr [ %1, %iter.check ], [ %1, %vector.memcheck ], [ %i.k, %vec.epilog.iter.check ], [ %i.u, %vec.epilog.middle.block ] ; 3 uses
   %.sroa.2.012.i.ph17 = ptrtoaddr ptr %.sroa.2.012.i.ph to i64, !dbg !6557 ; 2 uses
-  %i.aa = sub i64 %.sroa.2.012.i.ph17, %3, !dbg !6557
+  %i.aa = sub i64 %.sroa.2.012.i.ph17, %4, !dbg !6557
   %xtraiter = and i64 %i.aa, 3, !dbg !6557        ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !6557
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol, !dbg !6557
@@ -374,7 +376,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %.lcssa.unr = phi i64 [ poison, %vec.epilog.scalar.ph.preheader ], [ %i.ae, %vec.epilog.scalar.ph.prol ]
   %.unr = phi i64 [ %.ph, %vec.epilog.scalar.ph.preheader ], [ %i.ae, %vec.epilog.scalar.ph.prol ]
   %.sroa.2.012.i.unr = phi ptr [ %.sroa.2.012.i.ph, %vec.epilog.scalar.ph.preheader ], [ %i.ac, %vec.epilog.scalar.ph.prol ]
-  %i.af = sub i64 %3, %.sroa.2.012.i.ph17, !dbg !6557
+  %i.af = sub i64 %4, %.sroa.2.012.i.ph17, !dbg !6557
   %i.ag = icmp ugt i64 %i.af, -4, !dbg !6557
   br i1 %i.ag, label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfolduNCINvNtNtBR_8adapters6copied9copy_foldhuNCINvNvNtNtBP_8iterator8Iterator8for_each4callhNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB3m_3VechE14extend_trustedINtB1T_6CopiedINtNtB1V_3rev3RevB3_EEE0E0E0ECs5yXxDE1DkoT_4tera.exit, label %vec.epilog.scalar.ph, !dbg !6557
 
@@ -777,7 +779,7 @@ _RNvXs_NvNtNtCsf3Ta7LF998c_4core3fmt5Write9write_fmtQNtNtCs5DvQZ7uvHZH_10serde_c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtCsgCecv3eZDcN_5alloc6string13FromUtf8ErrorNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCs5yXxDE1DkoT_4tera(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #7 !dbg !23169 {
+define internal noundef { ptr, i64 } @_RNvYNtNtCsgCecv3eZDcN_5alloc6string13FromUtf8ErrorNtNtCsf3Ta7LF998c_4core5error5Error11descriptionCs5yXxDE1DkoT_4tera(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #7 !dbg !23169 {
 bb.a:
     #dbg_value(ptr poison, !23172, !DIExpression(), !23174)
   ret { ptr, i64 } { ptr @67, i64 40 }, !dbg !23175
@@ -845,7 +847,7 @@ _RINvXs3_NtNtCs5yXxDE1DkoT_4tera5value5utilsNtB6_21DeserializationFailedNtNtCs5D
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, i64 } @_RNvYNtNtNtCsf3Ta7LF998c_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCs5yXxDE1DkoT_4tera(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #7 !dbg !23349 {
+define internal noundef { ptr, i64 } @_RNvYNtNtNtCsf3Ta7LF998c_4core2io5error5ErrorNtNtB8_5error5Error11descriptionCs5yXxDE1DkoT_4tera(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #7 !dbg !23349 {
 bb.a:
     #dbg_value(ptr poison, !23352, !DIExpression(), !23354)
   ret { ptr, i64 } { ptr @67, i64 40 }, !dbg !23355

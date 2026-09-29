@@ -205,21 +205,20 @@ bb.s:                                             ; preds = %_RINvYINtNtNtCskKLD
 bb.t:                                             ; preds = %bb.s
   %i.fb = getelementptr inbounds nuw i8, ptr %9, i64 40
   %i.fc = load ptr, ptr %i.fb, align 8, !nonnull !4, !align !19, !noundef !4 ; 6 uses
-  %.idx = shl nuw nsw i64 %i.ew, 2                ; 3 uses
+  %.idx = shl nuw nsw i64 %i.ew, 2                ; 2 uses
   %i.fd = getelementptr i8, ptr %i.fc, i64 %.idx  ; 2 uses
   %i.fe = icmp eq i64 %i.ew, 0
   br i1 %i.fe, label %.loopexit73, label %.lr.ph.preheader.preheader
 
 .lr.ph.preheader.preheader:                       ; preds = %bb.t
-  %i.ff = add nsw i64 %.idx, -4                   ; 2 uses
+  %i.ff = add nsw i64 %.idx, -4                   ; 3 uses
   %i.fg = lshr exact i64 %i.ff, 2
   %i.fh = add nuw nsw i64 %i.fg, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ff, 60
   br i1 %min.iters.check, label %.lr.ph.preheader.preheader127, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.preheader
-  %12 = add nsw i64 %.idx, -4
-  %i.fi = lshr exact i64 %12, 2
+  %i.fi = lshr exact i64 %i.ff, 2
   %i.fj = getelementptr i8, ptr %i.w, i64 %i.fi
   %scevgep = getelementptr i8, ptr %i.fj, i64 1
   %bound0 = icmp ult ptr %i.w, %i.fd
@@ -322,13 +321,13 @@ _RNvMs1_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapN
 bb.x:                                             ; preds = %.loopexit73
   %i.gc = getelementptr inbounds nuw i8, ptr %9, i64 136
   %i.gd = load ptr, ptr %i.gc, align 8, !nonnull !4, !align !19, !noundef !4 ; 6 uses
-  %.idx81 = shl nuw nsw i64 %i.ez, 2              ; 3 uses
+  %.idx81 = shl nuw nsw i64 %i.ez, 2              ; 2 uses
   %i.ge = getelementptr i8, ptr %i.gd, i64 %.idx81 ; 2 uses
   %i.gf = icmp eq i64 %i.ez, 0
   br i1 %i.gf, label %.loopexit, label %.lr.ph79.preheader.preheader
 
 .lr.ph79.preheader.preheader:                     ; preds = %bb.x
-  %i.gg = add nsw i64 %.idx81, -4                 ; 2 uses
+  %i.gg = add nsw i64 %.idx81, -4                 ; 3 uses
   %i.gh = lshr exact i64 %i.gg, 2
   %i.gi = add nuw nsw i64 %i.gh, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %i.gg, 60
@@ -336,8 +335,7 @@ bb.x:                                             ; preds = %.loopexit73
 
 vector.memcheck106:                               ; preds = %.lr.ph79.preheader.preheader
   %scevgep107 = getelementptr inbounds nuw i8, ptr %i.v, i64 8208
-  %13 = add nsw i64 %.idx81, -4
-  %i.gj = lshr exact i64 %13, 2
+  %i.gj = lshr exact i64 %i.gg, 2
   %i.gk = getelementptr i8, ptr %i.v, i64 %i.gj
   %scevgep108 = getelementptr i8, ptr %i.gk, i64 8209
   %bound0109 = icmp ult ptr %scevgep107, %i.ge
@@ -740,21 +738,20 @@ bb.s:                                             ; preds = %_RINvYINtNtNtCskKLD
 bb.t:                                             ; preds = %bb.s
   %i.fb = getelementptr inbounds nuw i8, ptr %9, i64 40
   %i.fc = load ptr, ptr %i.fb, align 8, !nonnull !4, !align !19, !noundef !4 ; 6 uses
-  %.idx = shl nuw nsw i64 %i.ew, 2                ; 3 uses
+  %.idx = shl nuw nsw i64 %i.ew, 2                ; 2 uses
   %i.fd = getelementptr i8, ptr %i.fc, i64 %.idx  ; 2 uses
   %i.fe = icmp eq i64 %i.ew, 0
   br i1 %i.fe, label %.loopexit73, label %.lr.ph.preheader.preheader
 
 .lr.ph.preheader.preheader:                       ; preds = %bb.t
-  %i.ff = add nsw i64 %.idx, -4                   ; 2 uses
+  %i.ff = add nsw i64 %.idx, -4                   ; 3 uses
   %i.fg = lshr exact i64 %i.ff, 2
   %i.fh = add nuw nsw i64 %i.fg, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ff, 60
   br i1 %min.iters.check, label %.lr.ph.preheader.preheader127, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.preheader
-  %12 = add nsw i64 %.idx, -4
-  %i.fi = lshr exact i64 %12, 2
+  %i.fi = lshr exact i64 %i.ff, 2
   %i.fj = getelementptr i8, ptr %i.w, i64 %i.fi
   %scevgep = getelementptr i8, ptr %i.fj, i64 1
   %bound0 = icmp ult ptr %i.w, %i.fd
@@ -857,13 +854,13 @@ _RNvMs1_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapN
 bb.x:                                             ; preds = %.loopexit73
   %i.gc = getelementptr inbounds nuw i8, ptr %9, i64 136
   %i.gd = load ptr, ptr %i.gc, align 8, !nonnull !4, !align !19, !noundef !4 ; 6 uses
-  %.idx81 = shl nuw nsw i64 %i.ez, 2              ; 3 uses
+  %.idx81 = shl nuw nsw i64 %i.ez, 2              ; 2 uses
   %i.ge = getelementptr i8, ptr %i.gd, i64 %.idx81 ; 2 uses
   %i.gf = icmp eq i64 %i.ez, 0
   br i1 %i.gf, label %.loopexit, label %.lr.ph79.preheader.preheader
 
 .lr.ph79.preheader.preheader:                     ; preds = %bb.x
-  %i.gg = add nsw i64 %.idx81, -4                 ; 2 uses
+  %i.gg = add nsw i64 %.idx81, -4                 ; 3 uses
   %i.gh = lshr exact i64 %i.gg, 2
   %i.gi = add nuw nsw i64 %i.gh, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %i.gg, 60
@@ -871,8 +868,7 @@ bb.x:                                             ; preds = %.loopexit73
 
 vector.memcheck106:                               ; preds = %.lr.ph79.preheader.preheader
   %scevgep107 = getelementptr inbounds nuw i8, ptr %i.v, i64 8208
-  %13 = add nsw i64 %.idx81, -4
-  %i.gj = lshr exact i64 %13, 2
+  %i.gj = lshr exact i64 %i.gg, 2
   %i.gk = getelementptr i8, ptr %i.v, i64 %i.gj
   %scevgep108 = getelementptr i8, ptr %i.gk, i64 8209
   %bound0109 = icmp ult ptr %scevgep107, %i.ge

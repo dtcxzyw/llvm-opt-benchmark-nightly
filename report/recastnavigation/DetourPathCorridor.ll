@@ -170,14 +170,13 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep = getelementptr i8, ptr %0, i64 %i.bi
   %i.bj = add nsw i32 %4, -1
   %i.bk = sext i32 %i.bj to i64
-  %i.bl = shl nsw i64 %i.bk, 2                    ; 2 uses
-  %i.bm = add nsw i64 %i.bl, 4
+  %i.bl = shl nsw i64 %i.bk, 2
+  %i.bm = add nsw i64 %i.bl, 4                    ; 2 uses
   %i.bn = sub nsw i64 %i.bm, %i.bi
-  %scevgep97 = getelementptr i8, ptr %3, i64 %i.bn
-  %i.bo = getelementptr i8, ptr %3, i64 %i.bl
-  %scevgep98 = getelementptr i8, ptr %i.bo, i64 4
+  %i.bo = getelementptr i8, ptr %3, i64 %i.bn
+  %scevgep98 = getelementptr i8, ptr %3, i64 %i.bm
   %bound0 = icmp ult ptr %0, %scevgep98
-  %bound1 = icmp ult ptr %scevgep97, %scevgep
+  %bound1 = icmp ult ptr %i.bo, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader119, label %vector.ph101
 
@@ -580,14 +579,13 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep = getelementptr i8, ptr %i.k, i64 %i.by
   %i.bz = add nsw i32 %i.p, -1
   %i.ca = sext i32 %i.bz to i64
-  %i.cb = shl nsw i64 %i.ca, 2                    ; 2 uses
-  %i.cc = add nsw i64 %i.cb, 4
+  %i.cb = shl nsw i64 %i.ca, 2
+  %i.cc = add nsw i64 %i.cb, 4                    ; 2 uses
   %i.cd = sub nsw i64 %i.cc, %i.by
-  %scevgep22 = getelementptr i8, ptr %i.b, i64 %i.cd
-  %i.ce = getelementptr i8, ptr %i.b, i64 %i.cb
-  %scevgep23 = getelementptr i8, ptr %i.ce, i64 4
+  %i.ce = getelementptr i8, ptr %i.b, i64 %i.cd
+  %scevgep23 = getelementptr i8, ptr %i.b, i64 %i.cc
   %bound0 = icmp ult ptr %i.k, %scevgep23
-  %bound1 = icmp ult ptr %scevgep22, %scevgep
+  %bound1 = icmp ult ptr %i.ce, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.preheader, label %vector.ph26
 

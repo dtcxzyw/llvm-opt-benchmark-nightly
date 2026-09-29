@@ -120,8 +120,8 @@ bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !alias.scope !125, !noalias !126, !nonnull !4, !noundef !4 ; 6 uses
   %i.u = load ptr, ptr %i.r, align 8, !alias.scope !125, !noalias !126, !nonnull !4, !noundef !4 ; 11 uses
-  %i.v = ptrtoint ptr %i.t to i64                 ; 4 uses
-  %i.w = ptrtoint ptr %i.u to i64                 ; 4 uses
+  %i.v = ptrtoint ptr %i.t to i64                 ; 3 uses
+  %i.w = ptrtoint ptr %i.u to i64                 ; 3 uses
   %i.x = sub nuw i64 %i.v, %i.w                   ; 2 uses
   br i1 %i.q, label %bb.c, label %bb.d
 
@@ -139,7 +139,7 @@ bb.d:                                             ; preds = %bb.b
   br label %.thread113.i
 
 _RNvXsp_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_13QueryEdgeIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits10exact_size17ExactSizeIterator3len.exit.i: ; preds = %bb.d, %bb.c
-  %.sroa.0.0.i.i = phi i64 [ %i.y, %bb.c ], [ %i.z, %bb.d ] ; 22 uses
+  %.sroa.0.0.i.i = phi i64 [ %i.y, %bb.c ], [ %i.z, %bb.d ] ; 21 uses
   %i.ab = icmp samesign ugt i64 %.sroa.0.0.i.i, 4294967295
   %i.ac = shl nuw i64 %.sroa.0.0.i.i, 32
   %.sroa.016.0.insert.insert.i = select i1 %i.ab, i64 513, i64 %i.ac ; 2 uses
@@ -238,9 +238,9 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph:                                           ; preds = %.lr.ph.i.preheader
   %i.az = add i64 %i.v, -8
-  %i.ba = sub i64 %i.az, %i.w
+  %i.ba = sub i64 %i.az, %i.w                     ; 2 uses
   %i.bb = lshr i64 %i.ba, 3
-  %i.bc = add nsw i64 %.sroa.0.0.i.i, -1
+  %i.bc = add nsw i64 %.sroa.0.0.i.i, -1          ; 2 uses
   %i.bd = tail call i64 @llvm.umin.i64(i64 %i.bb, i64 %i.bc) ; 2 uses
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.bd, 20
@@ -258,11 +258,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph
   br i1 %ident.check.not, label %vector.memcheck, label %scalar.ph.preheader, !prof !131
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %4 = add i64 %i.v, -8
-  %5 = sub i64 %4, %i.w
-  %i.bh = lshr i64 %5, 3
-  %6 = add nsw i64 %.sroa.0.0.i.i, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.bh, i64 %6)
+  %i.bh = lshr i64 %i.ba, 3
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.bh, i64 %i.bc)
   %i.bi = shl nuw i64 %umin, 3                    ; 2 uses
   %i.bj = getelementptr i8, ptr %i.ak, i64 %i.bi
   %scevgep = getelementptr i8, ptr %i.bj, i64 64
@@ -618,8 +615,8 @@ bb.ad:                                            ; preds = %bb.a
   %i.ec = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ed = load ptr, ptr %i.ec, align 8, !alias.scope !159, !noalias !160, !nonnull !4, !noundef !4 ; 6 uses
   %i.ee = load ptr, ptr %i.eb, align 8, !alias.scope !159, !noalias !160, !nonnull !4, !noundef !4 ; 11 uses
-  %i.ef = ptrtoint ptr %i.ed to i64               ; 4 uses
-  %i.eg = ptrtoint ptr %i.ee to i64               ; 4 uses
+  %i.ef = ptrtoint ptr %i.ed to i64               ; 3 uses
+  %i.eg = ptrtoint ptr %i.ee to i64               ; 3 uses
   %i.eh = sub nuw i64 %i.ef, %i.eg                ; 2 uses
   br i1 %i.ea, label %bb.ae, label %bb.af
 
@@ -632,7 +629,7 @@ bb.af:                                            ; preds = %bb.ad
   br label %_RNvXsp_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_13QueryEdgeIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits10exact_size17ExactSizeIterator3len.exit.i2
 
 _RNvXsp_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_13QueryEdgeIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits10exact_size17ExactSizeIterator3len.exit.i2: ; preds = %bb.af, %bb.ae
-  %.sroa.0.0.i.i3 = phi i64 [ %i.ei, %bb.ae ], [ %i.ej, %bb.af ] ; 21 uses
+  %.sroa.0.0.i.i3 = phi i64 [ %i.ei, %bb.ae ], [ %i.ej, %bb.af ] ; 20 uses
   %i.ek = icmp samesign ugt i64 %.sroa.0.0.i.i3, 4294967295
   %i.el = shl nuw i64 %.sroa.0.0.i.i3, 32
   %.sroa.016.0.insert.insert.i4 = select i1 %i.ek, i64 513, i64 %i.el ; 2 uses
@@ -718,9 +715,9 @@ _RNvMse_NtCsC8CapfvpQ1_5salsa11zalsa_localINtB5_15SliceWithHeaderuNtB5_15PackedQ
 
 .lr.ph218:                                        ; preds = %.lr.ph.i5.preheader
   %i.fe = add i64 %i.ef, -8
-  %i.ff = sub i64 %i.fe, %i.eg
+  %i.ff = sub i64 %i.fe, %i.eg                    ; 2 uses
   %i.fg = lshr i64 %i.ff, 3
-  %i.fh = add nsw i64 %.sroa.0.0.i.i3, -1
+  %i.fh = add nsw i64 %.sroa.0.0.i.i3, -1         ; 2 uses
   %i.fi = tail call i64 @llvm.umin.i64(i64 %i.fg, i64 %i.fh) ; 2 uses
   %i.fj = add nuw nsw i64 %i.fi, 1                ; 2 uses
   %min.iters.check243 = icmp samesign ult i64 %i.fi, 20
@@ -738,11 +735,8 @@ vector.scevcheck233:                              ; preds = %.lr.ph218
   br i1 %ident.check234.not, label %vector.memcheck235, label %scalar.ph242.preheader, !prof !131
 
 vector.memcheck235:                               ; preds = %vector.scevcheck233
-  %7 = add i64 %i.ef, -8
-  %8 = sub i64 %7, %i.eg
-  %i.fm = lshr i64 %8, 3
-  %9 = add nsw i64 %.sroa.0.0.i.i3, -1
-  %umin236 = tail call i64 @llvm.umin.i64(i64 %i.fm, i64 %9)
+  %i.fm = lshr i64 %i.ff, 3
+  %umin236 = tail call i64 @llvm.umin.i64(i64 %i.fm, i64 %i.fh)
   %i.fn = shl nuw i64 %umin236, 3
   %i.fo = add i64 %i.fn, 8                        ; 2 uses
   %scevgep237 = getelementptr i8, ptr %.sroa.0.0.i24.i, i64 %i.fo

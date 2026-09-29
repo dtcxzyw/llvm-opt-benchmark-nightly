@@ -204,8 +204,6 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
 define hidden void @_RINvYINtNtCs87O7Q65ve1k_7bitcode3int10IntEncodertEINtNtB8_5coder7EncodertE15encode_vectoredINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB1A_5slice4iter4IterNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog6format7records5types21FieldFamilyDefinitionENCINvXs0_NvB2I_sz_1__NtB4d_28FieldFamilyDefinitionEncoderIBN_B2G_E15encode_vectoredB2f_E0EEB2O_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly captures(address) %1, ptr nofree noundef readnone captures(address) %2) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.a = icmp eq ptr %1, %2
   br i1 %i.a, label %bb.b, label %.lr.ph
@@ -213,22 +211,22 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.promoted = load ptr, ptr %i.b, align 8, !alias.scope !3676, !noalias !3677 ; 6 uses
-  %i.c = add i64 %4, -32
-  %i.d = sub i64 %i.c, %3                         ; 2 uses
+  %3 = ptrtoaddr ptr %2 to i64
+  %4 = ptrtoaddr ptr %1 to i64
+  %i.c = add i64 %3, -32
+  %i.d = sub i64 %i.c, %4                         ; 4 uses
   %i.e = lshr i64 %i.d, 5
   %i.f = add nuw nsw i64 %i.e, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.d, 1504
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %5 = add i64 %4, -32
-  %6 = sub i64 %5, %3                             ; 2 uses
-  %i.g = lshr i64 %6, 4
+  %i.g = lshr i64 %i.d, 4
   %i.h = and i64 %i.g, 1152921504606846974
   %i.i = getelementptr i8, ptr %.promoted, i64 %i.h
   %scevgep = getelementptr i8, ptr %i.i, i64 2
   %scevgep8 = getelementptr i8, ptr %1, i64 24
-  %i.j = and i64 %6, -32
+  %i.j = and i64 %i.d, -32
   %i.k = getelementptr i8, ptr %1, i64 %i.j
   %scevgep9 = getelementptr i8, ptr %i.k, i64 26
   %bound0 = icmp ult ptr %.promoted, %scevgep9

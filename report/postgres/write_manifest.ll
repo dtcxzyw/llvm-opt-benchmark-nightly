@@ -76,8 +76,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define dso_local void @add_file_to_manifest(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef readonly captures(address) %6) local_unnamed_addr #0 {
 bb.a:
-  %7 = ptrtoaddr ptr %6 to i64                    ; 7 uses
-  %8 = ptrtoaddr ptr %1 to i64                    ; 7 uses
   %i.a = alloca i64, align 8                      ; 2 uses
   store i64 %3, ptr %i.a, align 8
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #9 ; 2 uses
@@ -247,7 +245,7 @@ bb.x:                                             ; preds = %bb.d
   %i.az = shl i32 %i.c, 1
   tail call void @enlargeStringInfo(ptr noundef nonnull %i.j, i32 noundef %i.az) #8
   %sext = shl i64 %i.b, 32                        ; 3 uses
-  %i.ba = ashr exact i64 %sext, 32                ; 3 uses
+  %i.ba = ashr exact i64 %sext, 32                ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 3 uses
   %i.bc = load i32, ptr %i.bb, align 8            ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 %i.ba
@@ -258,24 +256,21 @@ bb.x:                                             ; preds = %bb.d
   %i.be = load ptr, ptr %i.j, align 8             ; 2 uses
   %i.bf = sext i32 %i.bc to i64                   ; 2 uses
   %i.bg = getelementptr i8, ptr %i.be, i64 %i.bf  ; 5 uses
-  %i.bh = add i64 %i.ba, %8
-  %i.bi = add i64 %8, 1
-  %i.bj = tail call i64 @llvm.umax.i64(i64 %i.bh, i64 %i.bi)
-  %i.bk = sub i64 %i.bj, %8                       ; 3 uses
+  %7 = ptrtoaddr ptr %1 to i64                    ; 4 uses
+  %i.bh = add i64 %i.ba, %7
+  %i.bi = add i64 %7, 1
+  %i.bj = tail call i64 @llvm.umax.i64(i64 %i.bh, i64 %i.bi) ; 2 uses
+  %i.bk = sub i64 %i.bj, %7                       ; 4 uses
   %min.iters.check = icmp ult i64 %i.bk, 8
   br i1 %min.iters.check, label %.lr.ph.i46.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i46.preheader
-  %9 = add i64 %i.ba, %8
-  %10 = add i64 %8, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %9, i64 %10) ; 2 uses
-  %i.bl = shl i64 %umax, 1
-  %i.bm = add i64 %i.bl, %i.bf
-  %11 = shl i64 %8, 1
-  %i.bn = sub i64 %i.bm, %11
+  %8 = shl i64 %i.bj, 1
+  %i.bl = shl i64 %7, 1
+  %i.bm = add i64 %8, %i.bf
+  %i.bn = sub i64 %i.bm, %i.bl
   %scevgep = getelementptr i8, ptr %i.be, i64 %i.bn
-  %12 = sub i64 %umax, %8
-  %scevgep58 = getelementptr i8, ptr %1, i64 %12
+  %scevgep58 = getelementptr i8, ptr %1, i64 %i.bk
   %bound0 = icmp ult ptr %i.bg, %scevgep58
   %bound1 = icmp ult ptr %1, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -389,30 +384,27 @@ bb.aa:                                            ; preds = %bb.z
   call void (ptr, ptr, ...) @appendStringInfo(ptr noundef nonnull %i.cw, ptr noundef nonnull @.str.10, ptr noundef %i.dk) #8
   %i.dl = shl nuw i32 %5, 1                       ; 2 uses
   call void @enlargeStringInfo(ptr noundef nonnull %i.cw, i32 noundef %i.dl) #8
-  %i.dm = zext nneg i32 %5 to i64                 ; 3 uses
+  %i.dm = zext nneg i32 %5 to i64                 ; 2 uses
   %i.dn = load ptr, ptr %i.cw, align 8            ; 2 uses
   %i.do = load i32, ptr %i.cy, align 8
   %i.dp = sext i32 %i.do to i64                   ; 2 uses
   %i.dq = getelementptr i8, ptr %i.dn, i64 %i.dp  ; 5 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %6, i64 %i.dm
-  %i.ds = add i64 %7, %i.dm
-  %i.dt = add i64 %7, 1
-  %i.du = call i64 @llvm.umax.i64(i64 %i.ds, i64 %i.dt)
-  %i.dv = sub i64 %i.du, %7                       ; 3 uses
+  %9 = ptrtoaddr ptr %6 to i64                    ; 4 uses
+  %i.ds = add i64 %9, %i.dm
+  %i.dt = add i64 %9, 1
+  %i.du = call i64 @llvm.umax.i64(i64 %i.ds, i64 %i.dt) ; 2 uses
+  %i.dv = sub i64 %i.du, %9                       ; 4 uses
   %min.iters.check69 = icmp ult i64 %i.dv, 8
   br i1 %min.iters.check69, label %.lr.ph.i49.preheader, label %vector.memcheck61
 
 vector.memcheck61:                                ; preds = %bb.aa
-  %13 = add i64 %7, %i.dm
-  %14 = add i64 %7, 1
-  %umax62 = call i64 @llvm.umax.i64(i64 %13, i64 %14) ; 2 uses
-  %i.dw = shl i64 %umax62, 1
-  %i.dx = add i64 %i.dw, %i.dp
-  %15 = shl i64 %7, 1
-  %i.dy = sub i64 %i.dx, %15
+  %10 = shl i64 %i.du, 1
+  %i.dw = shl i64 %9, 1
+  %i.dx = add i64 %10, %i.dp
+  %i.dy = sub i64 %i.dx, %i.dw
   %scevgep63 = getelementptr i8, ptr %i.dn, i64 %i.dy
-  %16 = sub i64 %umax62, %7
-  %scevgep64 = getelementptr i8, ptr %6, i64 %16
+  %scevgep64 = getelementptr i8, ptr %6, i64 %i.dv
   %bound065 = icmp ult ptr %i.dq, %scevgep64
   %bound166 = icmp ult ptr %6, %scevgep63
   %found.conflict67 = and i1 %bound065, %bound166
@@ -599,7 +591,6 @@ declare ptr @pg_checksum_type_name(i32 noundef) local_unnamed_addr #2
 define dso_local void @finalize_manifest(ptr noundef %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 11 uses
-  %2 = ptrtoaddr ptr %i.a to i64                  ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1032 ; 8 uses
   tail call void @appendStringInfoString(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.12) #8
@@ -637,7 +628,7 @@ bb.a:
   tail call void @enlargeStringInfo(ptr noundef nonnull %i.b, i32 noundef 130) #8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1064
   %i.t = call i32 @pg_checksum_final(ptr noundef nonnull %i.s, ptr noundef nonnull %i.a) #8 ; 3 uses
-  %i.u = sext i32 %i.t to i64                     ; 3 uses
+  %i.u = sext i32 %i.t to i64                     ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 3 uses
   %i.w = load i32, ptr %i.v, align 8              ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.u
@@ -648,24 +639,21 @@ bb.a:
   %i.y = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.z = sext i32 %i.w to i64                     ; 2 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 %i.z    ; 5 uses
+  %2 = ptrtoaddr ptr %i.a to i64                  ; 4 uses
   %i.ab = add i64 %2, %i.u
   %i.ac = or disjoint i64 %2, 1
-  %i.ad = call i64 @llvm.umax.i64(i64 %i.ab, i64 %i.ac) ; 2 uses
-  %i.ae = sub i64 %i.ad, %2                       ; 2 uses
+  %i.ad = call i64 @llvm.umax.i64(i64 %i.ab, i64 %i.ac) ; 3 uses
+  %i.ae = sub i64 %i.ad, %2                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.ae, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader33, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %3 = add i64 %2, %i.u
-  %4 = or disjoint i64 %2, 1
-  %umax = call i64 @llvm.umax.i64(i64 %3, i64 %4) ; 2 uses
-  %i.af = shl i64 %umax, 1
-  %i.ag = add i64 %i.af, %i.z
-  %5 = shl i64 %2, 1
-  %i.ah = sub i64 %i.ag, %5
+  %3 = shl i64 %i.ad, 1
+  %i.af = shl i64 %2, 1
+  %i.ag = add i64 %3, %i.z
+  %i.ah = sub i64 %i.ag, %i.af
   %scevgep = getelementptr i8, ptr %i.y, i64 %i.ah
-  %6 = sub i64 %umax, %2
-  %scevgep30 = getelementptr i8, ptr %i.a, i64 %6
+  %scevgep30 = getelementptr i8, ptr %i.a, i64 %i.ae
   %bound0 = icmp ult ptr %i.aa, %scevgep30
   %bound1 = icmp ult ptr %i.a, %scevgep
   %found.conflict = and i1 %bound0, %bound1

@@ -205,7 +205,7 @@ bits_read_bit_le.exit226:                         ; preds = %.bits_read_bit_le.e
   %.0.i215373 = phi i1 [ %.0.i215374, %bb.p ], [ %.0.i215375, %.bits_read_bit_le.exit226_crit_edge ]
   %.0.i201239352370 = phi i32 [ %.0.i201239352371, %bb.p ], [ %.0.i201239352372, %.bits_read_bit_le.exit226_crit_edge ] ; 7 uses
   %.0.i209355367 = phi i32 [ %.0.i209355368, %bb.p ], [ %.0.i209355369, %.bits_read_bit_le.exit226_crit_edge ] ; 2 uses
-  %i.fc = phi i32 [ %i.ey, %bb.p ], [ %i.er, %.bits_read_bit_le.exit226_crit_edge ] ; 8 uses
+  %i.fc = phi i32 [ %i.ey, %bb.p ], [ %i.er, %.bits_read_bit_le.exit226_crit_edge ] ; 7 uses
   %.promoted249 = phi i64 [ %i.fa, %bb.p ], [ %.promoted249.pre, %.bits_read_bit_le.exit226_crit_edge ]
   %.promoted = phi i32 [ %i.ez, %bb.p ], [ 0, %.bits_read_bit_le.exit226_crit_edge ]
   %.0.i223 = phi i1 [ %i.fb, %bb.p ], [ false, %.bits_read_bit_le.exit226_crit_edge ]
@@ -305,7 +305,7 @@ bits_read_signed_nz_le.exit236:                   ; preds = %bb.t, %bb.u, %bits_
   br i1 %exitcond.not, label %bb.v, label %bb.q, !llvm.loop !120
 
 bb.v:                                             ; preds = %bits_read_signed_nz_le.exit236
-  %i.gx = lshr i32 %i.fc, 1                       ; 5 uses
+  %i.gx = lshr i32 %i.fc, 1                       ; 4 uses
   %.neg245 = add nuw i32 %i.s, 1
   %i.gy = sub i32 %.neg245, %i.fc                 ; 2 uses
   br i1 %.0.i215373, label %.loopexit248, label %.preheader247.preheader
@@ -419,7 +419,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ik = sext i32 %i.ii to i64                   ; 6 uses
   %i.il = add nsw i32 %i.fc, -2
   %i.im = sub i32 %i.il, %i.gx                    ; 2 uses
-  %i.in = zext i32 %i.im to i64
+  %i.in = zext i32 %i.im to i64                   ; 2 uses
   %i.io = add nuw nsw i64 %i.in, 1                ; 2 uses
   %min.iters.check404 = icmp ult i32 %i.im, 15
   br i1 %min.iters.check404, label %.lr.ph.preheader490, label %vector.memcheck395
@@ -427,10 +427,7 @@ middle.block:                                     ; preds = %vector.body
 vector.memcheck395:                               ; preds = %.lr.ph.preheader
   %i.ip = shl nsw i64 %i.ik, 2                    ; 2 uses
   %scevgep396 = getelementptr i8, ptr %.1164, i64 %i.ip
-  %4 = add nsw i32 %i.fc, -2
-  %5 = sub i32 %4, %i.gx
-  %6 = zext i32 %5 to i64
-  %i.iq = add nsw i64 %i.ik, %6
+  %i.iq = add nsw i64 %i.ik, %i.in
   %i.ir = shl nsw i64 %i.iq, 2
   %i.is = add nsw i64 %i.ir, 4                    ; 2 uses
   %scevgep397 = getelementptr i8, ptr %.1164, i64 %i.is

@@ -204,7 +204,7 @@ bb.a:
   store i32 3, ptr %i.a, align 8
   %i.b = getelementptr i8, ptr %1, i64 72
   store i32 1, ptr %i.b, align 8
-  %i.c = load i32, ptr %0, align 4                ; 4 uses
+  %i.c = load i32, ptr %0, align 4                ; 3 uses
   %i.d = getelementptr i8, ptr %1, i64 80
   store i32 %i.c, ptr %i.d, align 8
   %.not = icmp eq i32 %i.c, 0
@@ -212,10 +212,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %1, i64 84
-  %i.f = load i32, ptr %i.e, align 4              ; 2 uses
-  %.not15 = icmp ult i32 %i.f, %i.c
+  %i.f = load i32, ptr %i.e, align 4
   %i.g = add i32 %i.c, -1
-  %spec.select = select i1 %.not15, i32 %i.f, i32 %i.g
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %i.f, i32 %i.g)
   %i.h = getelementptr i8, ptr %1, i64 88
   %i.i = getelementptr i8, ptr %0, i64 4
   %i.j = zext i32 %spec.select to i64
@@ -233,16 +232,15 @@ declare dso_local i64 @sized_strscpy(ptr noundef, ptr noundef, i64 noundef) loca
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i32 0, 2) i32 @snd_hda_input_mux_put(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i16 noundef zeroext %3, ptr nofree noundef captures(none) %4) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = load i32, ptr %1, align 4                ; 3 uses
+  %i.a = load i32, ptr %1, align 4                ; 2 uses
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %2, i64 72
-  %i.c = load i32, ptr %i.b, align 8              ; 2 uses
-  %.not16 = icmp ult i32 %i.c, %i.a
+  %i.c = load i32, ptr %i.b, align 8
   %i.d = add i32 %i.a, -1
-  %spec.select = select i1 %.not16, i32 %i.c, i32 %i.d ; 3 uses
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %i.c, i32 %i.d) ; 3 uses
   %i.e = load i32, ptr %4, align 4
   %i.f = icmp eq i32 %i.e, %spec.select
   br i1 %i.f, label %bb.d, label %bb.c

@@ -205,7 +205,6 @@ declare void @__cxa_guard_release(ptr) local_unnamed_addr #17
 define internal fastcc noundef ptr @_ZN6snappy12_GLOBAL__N_115IncrementalCopyEPKcPcS3_S3_(ptr noundef %0, ptr noundef %1, ptr nofree noundef readnone returned captures(address, ret: address, provenance) %2, ptr nofree noundef readnone captures(address) %3) unnamed_addr #18 {
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %4 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %0 to i64
   %i.d = sub i64 %i.b, %i.c                       ; 3 uses
@@ -310,7 +309,6 @@ vec.epilog.middle.block172:                       ; preds = %vec.epilog.vector.b
 
 bb.d:                                             ; preds = %._crit_edge, %bb.a
   %.157 = phi ptr [ %i.g, %._crit_edge ], [ %1, %bb.a ] ; 16 uses
-  %.157110 = ptrtoaddr ptr %.157 to i64           ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %3, i64 -15
   %.not68 = icmp ugt ptr %2, %i.w
   br i1 %.not68, label %bb.k, label %bb.e, !prof !29
@@ -372,8 +370,10 @@ bb.k:                                             ; preds = %bb.d
   br i1 %i.ap, label %.lr.ph90.preheader, label %._crit_edge91
 
 .lr.ph90.preheader:                               ; preds = %bb.k
+  %4 = ptrtoaddr ptr %3 to i64
+  %5 = ptrtoaddr ptr %.157 to i64
   %i.aq = add i64 %4, -17
-  %i.ar = sub i64 %i.aq, %.157110                 ; 3 uses
+  %i.ar = sub i64 %i.aq, %5                       ; 4 uses
   %i.as = lshr i64 %i.ar, 4
   %min.iters.check = icmp ult i64 %i.ar, 208
   br i1 %min.iters.check, label %.lr.ph90.preheader178, label %vector.memcheck
@@ -382,9 +382,7 @@ bb.k:                                             ; preds = %bb.d
   br label %.lr.ph90
 
 vector.memcheck:                                  ; preds = %.lr.ph90.preheader
-  %5 = add i64 %4, -17
-  %6 = sub i64 %5, %.157110
-  %i.at = and i64 %6, -16
+  %i.at = and i64 %i.ar, -16
   %i.au = add i64 %i.at, 16                       ; 2 uses
   %scevgep = getelementptr i8, ptr %.157, i64 %i.au
   %scevgep111 = getelementptr i8, ptr %0, i64 %i.au

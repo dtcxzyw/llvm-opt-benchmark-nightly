@@ -204,15 +204,14 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %i.k = add i64 %3, -64                          ; 2 uses
+  %i.k = add i64 %3, -64                          ; 3 uses
   %i.l = lshr i64 %i.k, 6
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 576
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %4 = add i64 %3, -64
-  %i.n = lshr i64 %4, 3
+  %i.n = lshr i64 %i.k, 3
   %i.o = and i64 %i.n, 2305843009213693944        ; 2 uses
   %i.p = getelementptr i8, ptr %0, i64 %i.o
   %scevgep = getelementptr i8, ptr %i.p, i64 8

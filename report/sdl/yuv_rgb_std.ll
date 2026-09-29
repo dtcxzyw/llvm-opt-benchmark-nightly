@@ -202,21 +202,19 @@ bb.c:                                             ; preds = %._crit_edge.thread,
   %i.ol = load i16, ptr %i.ok, align 2
   %i.om = sext i16 %i.ol to i32                   ; 3 uses
   %i.on = add i32 %0, -2                          ; 2 uses
-  %10 = lshr i32 %i.on, 1
-  %narrow566 = add nuw i32 %10, 1
-  %11 = zext i32 %narrow566 to i64                ; 2 uses
+  %10 = zext i32 %i.on to i64                     ; 2 uses
+  %11 = lshr i64 %10, 1
+  %12 = add nuw nsw i64 %11, 1                    ; 2 uses
   %min.iters.check530 = icmp ult i32 %i.on, 8
   br i1 %min.iters.check530, label %scalar.ph529.preheader, label %vector.memcheck513
 
 vector.memcheck513:                               ; preds = %.lr.ph313
-  %12 = add i32 %0, -2
-  %13 = lshr i32 %12, 1
-  %14 = zext nneg i32 %13 to i64                  ; 2 uses
-  %i.oo = shl nuw nsw i64 %14, 3
+  %13 = lshr i64 %10, 1                           ; 2 uses
+  %i.oo = shl nuw nsw i64 %13, 3
   %i.op = getelementptr i8, ptr %7, i64 %i.oo
   %i.oq = getelementptr i8, ptr %i.op, i64 %i.nt
   %scevgep514 = getelementptr i8, ptr %i.oq, i64 8 ; 3 uses
-  %i.or = shl nuw nsw i64 %14, 2                  ; 2 uses
+  %i.or = shl nuw nsw i64 %13, 2                  ; 2 uses
   %i.os = shl nuw nsw i64 %i.np, 1
   %i.ot = add nuw nsw i64 %i.or, %i.os
   %i.ou = add nuw nsw i64 %i.ot, 2                ; 2 uses
@@ -240,10 +238,10 @@ vector.memcheck513:                               ; preds = %.lr.ph313
   br i1 %conflict.rdx528, label %scalar.ph529.preheader, label %vector.ph531
 
 vector.ph531:                                     ; preds = %vector.memcheck513
-  %i.oy = and i64 %11, 3                          ; 2 uses
+  %i.oy = and i64 %12, 3                          ; 2 uses
   %i.oz = icmp eq i64 %i.oy, 0
   %i.pa = select i1 %i.oz, i64 4, i64 %i.oy
-  %n.vec532 = sub nsw i64 %11, %i.pa              ; 4 uses
+  %n.vec532 = sub nsw i64 %12, %i.pa              ; 4 uses
   %i.pb = trunc i64 %n.vec532 to i32
   %i.pc = shl i32 %i.pb, 1
   %i.pd = shl nsw i64 %n.vec532, 2                ; 3 uses

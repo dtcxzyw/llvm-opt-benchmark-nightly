@@ -206,7 +206,7 @@ bb.a:
   %13 = alloca %"class.boost::static_strings::basic_static_string.30", align 8 ; 12 uses
   %14 = alloca %"class.boost::static_strings::basic_static_string.30", align 8 ; 12 uses
   %15 = alloca %"class.boost::static_strings::basic_static_string.21", align 8 ; 6 uses
-  %16 = alloca %"class.boost::static_strings::basic_static_string.30", align 1 ; 8 uses
+  %16 = alloca %"class.boost::static_strings::basic_static_string.30", align 1 ; 7 uses
   %17 = alloca %"class.boost::static_strings::basic_static_string.11", align 1 ; 6 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %19 = alloca %"class.boost::static_strings::basic_static_string.11", align 1 ; 6 uses
@@ -244,13 +244,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
   store i8 1, ptr %16, align 1
   %.sroa_idx444 = getelementptr inbounds nuw i8, ptr %16, i64 1 ; 3 uses
-  store i8 48, ptr %.sroa_idx444, align 1
-  %.sroa_idx445 = getelementptr inbounds nuw i8, ptr %16, i64 2
-  %.sroa.2.0..sroa_idx.i.sroa_idx.a = getelementptr inbounds nuw i8, ptr %16, i64 11
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa_idx445, i8 0, i64 9, i1 false)
-  store i8 48, ptr %.sroa.2.0..sroa_idx.i.sroa_idx.a, align 1
-  %.sroa.2.0..sroa_idx.i.sroa_idx451 = getelementptr inbounds nuw i8, ptr %16, i64 12
-  store i8 0, ptr %.sroa.2.0..sroa_idx.i.sroa_idx451, align 1
+  store i56 48, ptr %.sroa_idx444, align 1
+  %.sroa.2.0..sroa_idx.i.sroa_idx.a = getelementptr inbounds nuw i8, ptr %16, i64 8
+  store i24 0, ptr %.sroa.2.0..sroa_idx.i.sroa_idx.a, align 1
+  %.sroa.2.0..sroa_idx.i.sroa_idx451 = getelementptr inbounds nuw i8, ptr %16, i64 11
+  store i16 48, ptr %.sroa.2.0..sroa_idx.i.sroa_idx451, align 1
   %i.a = call i64 @__isoc23_strtoll(ptr noundef nonnull %.sroa_idx444, ptr noundef null, i32 noundef 10) #32
   %i.b = and i64 %i.a, 4294967295
   %i.c = icmp eq i64 %i.b, 0

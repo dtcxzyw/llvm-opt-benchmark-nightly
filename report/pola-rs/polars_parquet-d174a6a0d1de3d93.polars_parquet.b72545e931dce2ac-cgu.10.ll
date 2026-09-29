@@ -205,15 +205,15 @@ _RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee
   %i.bbc = call { ptr, i64 } @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VectE16into_boxed_sliceCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.cp), !dbg !12827 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cp), !dbg !12828
   %i.bbd = extractvalue { ptr, i64 } %i.bbc, 0, !dbg !12829 ; 17 uses
-  %i.bbe = extractvalue { ptr, i64 } %i.bbc, 1, !dbg !12829 ; 26 uses
-  %.sroa.0.0.i = call noundef i64 @llvm.umin.i64(i64 %2, i64 %3), !dbg !12830 ; 4 uses
+  %i.bbe = extractvalue { ptr, i64 } %i.bbc, 1, !dbg !12829 ; 25 uses
+  %.sroa.0.0.i = call noundef i64 @llvm.umin.i64(i64 %2, i64 %3), !dbg !12830 ; 3 uses
   %.not1029 = icmp eq i64 %.sroa.0.0.i, 0, !dbg !12831
   br i1 %.not1029, label %._crit_edge1023, label %.lr.ph1022, !dbg !12832
 
 .lr.ph1022:                                       ; preds = %_RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee3ib_15alloc_no_stdlib15stack_allocator9AllocatortE10alloc_cellCsfISxE4fmY1Y_14polars_parquet.exit
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bbd) ]
   %i.bbf = add nsw i64 %.sroa.0.0.i, -1, !dbg !12832
-  %i.bbg = call i64 @llvm.umin.i64(i64 %i.bbe, i64 %i.bbf), !dbg !12832
+  %i.bbg = call i64 @llvm.umin.i64(i64 %i.bbe, i64 %i.bbf), !dbg !12832 ; 3 uses
   %i.bbh = add i64 %i.bbg, 1, !dbg !12832         ; 3 uses
   %min.iters.check4590 = icmp ult i64 %i.bbh, 25, !dbg !12832
   br i1 %min.iters.check4590, label %scalar.ph4589.preheader, label %vector.memcheck4583, !dbg !12832
@@ -223,13 +223,11 @@ scalar.ph4589.preheader:                          ; preds = %vector.body4593, %v
   br label %scalar.ph4589, !dbg !12833
 
 vector.memcheck4583:                              ; preds = %.lr.ph1022
-  %14 = add nsw i64 %.sroa.0.0.i, -1, !dbg !12832
-  %umin = call i64 @llvm.umin.i64(i64 %i.bbe, i64 %14), !dbg !12832 ; 2 uses
-  %i.bbi = shl i64 %umin, 1, !dbg !12832
+  %i.bbi = shl i64 %i.bbg, 1, !dbg !12832
   %i.bbj = getelementptr i8, ptr %i.bbd, i64 %i.bbi, !dbg !12832
   %scevgep = getelementptr i8, ptr %i.bbj, i64 2, !dbg !12832
   %scevgep4584 = getelementptr i8, ptr %1, i64 12, !dbg !12832
-  %i.bbk = shl i64 %umin, 4, !dbg !12832
+  %i.bbk = shl i64 %i.bbg, 4, !dbg !12832
   %i.bbl = getelementptr i8, ptr %1, i64 %i.bbk, !dbg !12832
   %scevgep4585 = getelementptr i8, ptr %i.bbl, i64 14, !dbg !12832
   %bound04586 = icmp ult ptr %i.bbd, %scevgep4585, !dbg !12832
@@ -632,21 +630,20 @@ bb.m:                                             ; preds = %_RINvYINtNtNtCscgRA
 bb.n:                                             ; preds = %bb.m
   %i.cu = getelementptr inbounds nuw i8, ptr %9, i64 40, !dbg !15274
   %i.cv = load ptr, ptr %i.cu, align 8, !dbg !15274, !nonnull !664, !align !741, !noundef !664 ; 6 uses
-  %.idx = shl nuw nsw i64 %i.cp, 2, !dbg !15276   ; 3 uses
+  %.idx = shl nuw nsw i64 %i.cp, 2, !dbg !15276   ; 2 uses
   %i.cw = getelementptr i8, ptr %i.cv, i64 %.idx, !dbg !15276 ; 2 uses
   %i.cx = icmp eq i64 %i.cp, 0, !dbg !15277
   br i1 %i.cx, label %.loopexit73, label %.lr.ph.preheader.preheader, !dbg !15278
 
 .lr.ph.preheader.preheader:                       ; preds = %bb.n
-  %i.cy = add nsw i64 %.idx, -4, !dbg !15278      ; 2 uses
+  %i.cy = add nsw i64 %.idx, -4, !dbg !15278      ; 3 uses
   %i.cz = lshr exact i64 %i.cy, 2, !dbg !15278
   %i.da = add nuw nsw i64 %i.cz, 1, !dbg !15278   ; 2 uses
   %min.iters.check = icmp ult i64 %i.cy, 60, !dbg !15278
   br i1 %min.iters.check, label %.lr.ph.preheader.preheader133, label %vector.memcheck, !dbg !15278
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.preheader
-  %12 = add nsw i64 %.idx, -4, !dbg !15278
-  %i.db = lshr exact i64 %12, 2, !dbg !15278
+  %i.db = lshr exact i64 %i.cy, 2, !dbg !15278
   %i.dc = getelementptr i8, ptr %i.aj, i64 %i.db, !dbg !15278
   %scevgep = getelementptr i8, ptr %i.dc, i64 1, !dbg !15278
   %bound0 = icmp ult ptr %i.aj, %i.cw, !dbg !15278
@@ -750,13 +747,13 @@ _RNvMs1_NtNtCsk4ZPsEfLtLH_6brotli3enc9interfaceINtB5_24PredictionModeContextMapN
 bb.r:                                             ; preds = %.loopexit73
   %i.dv = getelementptr inbounds nuw i8, ptr %9, i64 136, !dbg !15275
   %i.dw = load ptr, ptr %i.dv, align 8, !dbg !15275, !nonnull !664, !align !741, !noundef !664 ; 6 uses
-  %.idx83 = shl nuw nsw i64 %i.cs, 2, !dbg !15304 ; 3 uses
+  %.idx83 = shl nuw nsw i64 %i.cs, 2, !dbg !15304 ; 2 uses
   %i.dx = getelementptr i8, ptr %i.dw, i64 %.idx83, !dbg !15304 ; 2 uses
   %i.dy = icmp eq i64 %i.cs, 0, !dbg !15305
   br i1 %i.dy, label %.loopexit, label %.lr.ph81.preheader.preheader, !dbg !15306
 
 .lr.ph81.preheader.preheader:                     ; preds = %bb.r
-  %i.dz = add nsw i64 %.idx83, -4, !dbg !15306    ; 2 uses
+  %i.dz = add nsw i64 %.idx83, -4, !dbg !15306    ; 3 uses
   %i.ea = lshr exact i64 %i.dz, 2, !dbg !15306
   %i.eb = add nuw nsw i64 %i.ea, 1, !dbg !15306   ; 2 uses
   %min.iters.check119 = icmp ult i64 %i.dz, 60, !dbg !15306
@@ -764,8 +761,7 @@ bb.r:                                             ; preds = %.loopexit73
 
 vector.memcheck112:                               ; preds = %.lr.ph81.preheader.preheader
   %scevgep113 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8208, !dbg !15306
-  %13 = add nsw i64 %.idx83, -4, !dbg !15306
-  %i.ec = lshr exact i64 %13, 2, !dbg !15306
+  %i.ec = lshr exact i64 %i.dz, 2, !dbg !15306
   %i.ed = getelementptr i8, ptr %i.ai, i64 %i.ec, !dbg !15306
   %scevgep114 = getelementptr i8, ptr %i.ed, i64 8209, !dbg !15306
   %bound0115 = icmp ult ptr %scevgep113, %i.dx, !dbg !15306
@@ -1168,21 +1164,20 @@ bb.m:                                             ; preds = %_RINvYINtNtNtCscgRA
 bb.n:                                             ; preds = %bb.m
   %i.cu = getelementptr inbounds nuw i8, ptr %9, i64 40, !dbg !15880
   %i.cv = load ptr, ptr %i.cu, align 8, !dbg !15880, !nonnull !664, !align !741, !noundef !664 ; 6 uses
-  %.idx = shl nuw nsw i64 %i.cp, 2, !dbg !15882   ; 3 uses
+  %.idx = shl nuw nsw i64 %i.cp, 2, !dbg !15882   ; 2 uses
   %i.cw = getelementptr i8, ptr %i.cv, i64 %.idx, !dbg !15882 ; 2 uses
   %i.cx = icmp eq i64 %i.cp, 0, !dbg !15883
   br i1 %i.cx, label %.loopexit73, label %.lr.ph.preheader.preheader, !dbg !15884
 
 .lr.ph.preheader.preheader:                       ; preds = %bb.n
-  %i.cy = add nsw i64 %.idx, -4, !dbg !15884      ; 2 uses
+  %i.cy = add nsw i64 %.idx, -4, !dbg !15884      ; 3 uses
   %i.cz = lshr exact i64 %i.cy, 2, !dbg !15884
   %i.da = add nuw nsw i64 %i.cz, 1, !dbg !15884   ; 2 uses
   %min.iters.check = icmp ult i64 %i.cy, 60, !dbg !15884
   br i1 %min.iters.check, label %.lr.ph.preheader.preheader133, label %vector.memcheck, !dbg !15884
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.preheader
-  %12 = add nsw i64 %.idx, -4, !dbg !15884
-  %i.db = lshr exact i64 %12, 2, !dbg !15884
+  %i.db = lshr exact i64 %i.cy, 2, !dbg !15884
   %i.dc = getelementptr i8, ptr %i.aj, i64 %i.db, !dbg !15884
   %scevgep = getelementptr i8, ptr %i.dc, i64 1, !dbg !15884
   %bound0 = icmp ult ptr %i.aj, %i.cw, !dbg !15884
@@ -1286,13 +1281,13 @@ _RNvMs1_NtNtCsk4ZPsEfLtLH_6brotli3enc9interfaceINtB5_24PredictionModeContextMapN
 bb.r:                                             ; preds = %.loopexit73
   %i.dv = getelementptr inbounds nuw i8, ptr %9, i64 136, !dbg !15881
   %i.dw = load ptr, ptr %i.dv, align 8, !dbg !15881, !nonnull !664, !align !741, !noundef !664 ; 6 uses
-  %.idx83 = shl nuw nsw i64 %i.cs, 2, !dbg !15910 ; 3 uses
+  %.idx83 = shl nuw nsw i64 %i.cs, 2, !dbg !15910 ; 2 uses
   %i.dx = getelementptr i8, ptr %i.dw, i64 %.idx83, !dbg !15910 ; 2 uses
   %i.dy = icmp eq i64 %i.cs, 0, !dbg !15911
   br i1 %i.dy, label %.loopexit, label %.lr.ph81.preheader.preheader, !dbg !15912
 
 .lr.ph81.preheader.preheader:                     ; preds = %bb.r
-  %i.dz = add nsw i64 %.idx83, -4, !dbg !15912    ; 2 uses
+  %i.dz = add nsw i64 %.idx83, -4, !dbg !15912    ; 3 uses
   %i.ea = lshr exact i64 %i.dz, 2, !dbg !15912
   %i.eb = add nuw nsw i64 %i.ea, 1, !dbg !15912   ; 2 uses
   %min.iters.check119 = icmp ult i64 %i.dz, 60, !dbg !15912
@@ -1300,8 +1295,7 @@ bb.r:                                             ; preds = %.loopexit73
 
 vector.memcheck112:                               ; preds = %.lr.ph81.preheader.preheader
   %scevgep113 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8208, !dbg !15912
-  %13 = add nsw i64 %.idx83, -4, !dbg !15912
-  %i.ec = lshr exact i64 %13, 2, !dbg !15912
+  %i.ec = lshr exact i64 %i.dz, 2, !dbg !15912
   %i.ed = getelementptr i8, ptr %i.ai, i64 %i.ec, !dbg !15912
   %scevgep114 = getelementptr i8, ptr %i.ed, i64 8209, !dbg !15912
   %bound0115 = icmp ult ptr %scevgep113, %i.dx, !dbg !15912

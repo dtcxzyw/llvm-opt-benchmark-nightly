@@ -205,17 +205,18 @@ mbedtls_xor.exit41:                               ; preds = %bb.f
   br i1 %.not.i48, label %.preheader, label %.lr.ph50.preheader
 
 .lr.ph50.preheader:                               ; preds = %mbedtls_xor.exit41
-  %i.u = add nsw i64 %5, -8                       ; 2 uses
+  %i.u = add nsw i64 %5, -8                       ; 3 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.u, 88
   br i1 %min.iters.check, label %.lr.ph50.preheader89, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph50.preheader
-  %i.x = and i64 %5, 24                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %4, i64 %i.x
+  %i.x = and i64 %i.u, -8                         ; 2 uses
+  %6 = getelementptr i8, ptr %4, i64 %i.x
+  %scevgep = getelementptr i8, ptr %6, i64 8
   %i.y = getelementptr i8, ptr %0, i64 %i.x
-  %scevgep54 = getelementptr i8, ptr %i.y, i64 408
+  %scevgep54 = getelementptr i8, ptr %i.y, i64 416
   %bound0 = icmp ult ptr %4, %scevgep54
   %bound1 = icmp ult ptr %i.q, %scevgep
   %found.conflict = and i1 %bound0, %bound1

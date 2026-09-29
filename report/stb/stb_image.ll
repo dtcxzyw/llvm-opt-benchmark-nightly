@@ -204,19 +204,18 @@ bb.a:
   br i1 %i.b, label %.lr.ph32.preheader, label %.loopexit
 
 .lr.ph32.preheader:                               ; preds = %.preheader
-  %i.r = zext nneg i32 %.030 to i64               ; 7 uses
-  %i.s = add nuw nsw i64 %i.r, 1                  ; 2 uses
+  %i.r = zext nneg i32 %.030 to i64               ; 6 uses
+  %i.s = add nuw nsw i64 %i.r, 1                  ; 3 uses
   %min.iters.check = icmp ult i32 %.030, 15
   br i1 %min.iters.check, label %.lr.ph32.preheader43, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph32.preheader
   %i.t = shl nuw nsw i64 %i.r, 1
-  %4 = getelementptr i8, ptr %0, i64 %i.t
-  %scevgep = getelementptr i8, ptr %4, i64 2
-  %i.u = getelementptr i8, ptr %1, i64 %i.r
-  %scevgep41 = getelementptr i8, ptr %i.u, i64 1
+  %scevgep = getelementptr i8, ptr %0, i64 %i.t
+  %i.u = getelementptr i8, ptr %scevgep, i64 2
+  %scevgep41 = getelementptr i8, ptr %1, i64 %i.s
   %bound0 = icmp ult ptr %0, %scevgep41
-  %bound1 = icmp ult ptr %1, %scevgep
+  %bound1 = icmp ult ptr %1, %i.u
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph32.preheader43, label %vector.ph
 
