@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.n, %bb.l
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZZN7xgboost6linalg8cpu_impl17ElementWiseKernelIKfLi2EZNS_3obj8HingeObj11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS0_6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmmE_EEvNS0_10TensorViewIT_XT0_EEEiOT1_ENKUlOSL_E_clINS_6common7Range1dEEEDaSP_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !tbaa !95     ; 9 uses
+  %i.a = load i64, ptr %1, align 8, !tbaa !95     ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !96   ; 5 uses
   %i.d = icmp ult i64 %i.a, %i.c
@@ -238,7 +238,6 @@ bb.a:
   %umax = tail call i64 @llvm.umax.i64(i64 %i.t, i64 %i.a)
   %i.v = add i64 %i.f, -1                         ; 2 uses
   %i.w = shl i64 %i.f, 3
-  %2 = shl i64 %i.a, 2                            ; 2 uses
   %i.x = shl i64 %i.f, 2                          ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 10
   %mul.result = shl i64 %i.v, 3
@@ -408,12 +407,14 @@ _ZZN7xgboost3obj8HingeObj11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfo
   br i1 %exitcond19.not, label %._crit_edge12.split, label %.preheader.us, !llvm.loop !229
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge.split
-  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge.split ] ; 3 uses
+  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge.split ] ; 4 uses
   %.0810 = phi i64 [ %i.a, %.preheader.preheader ], [ %i.fb, %._crit_edge.split ] ; 6 uses
   %i.de = add i64 %i.a, %indvar
   %i.df = shl i64 %i.de, 3
-  %i.dg = shl i64 %indvar, 2                      ; 2 uses
-  %i.dh = add i64 %2, %i.dg                       ; 2 uses
+  %2 = add i64 %i.a, %indvar
+  %i.dg = shl i64 %2, 2
+  %i.dh = add i64 %i.a, %indvar
+  %3 = shl i64 %i.dh, 2                           ; 2 uses
   %exitcond16.not = icmp eq i64 %.0810, %umax
   br i1 %exitcond16.not, label %bb.b, label %.lr.ph.split.split, !prof !246
 
@@ -452,25 +453,24 @@ vector.scevcheck:                                 ; preds = %.lr.ph.split.split
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep = getelementptr i8, ptr %i.dx, i64 %i.w
   %i.ef = mul i64 %i.du, %i.df
-  %scevgep29 = getelementptr i8, ptr %scevgep, i64 %i.ef ; 3 uses
-  %i.eg = getelementptr i8, ptr %i.di, i64 %2
-  %i.eh = getelementptr i8, ptr %i.eg, i64 4
-  %scevgep30 = getelementptr i8, ptr %i.eh, i64 %i.dg
+  %i.eg = getelementptr i8, ptr %scevgep, i64 %i.ef ; 3 uses
+  %i.eh = getelementptr i8, ptr %i.di, i64 %i.dg
+  %scevgep30 = getelementptr i8, ptr %i.eh, i64 4
   %scevgep31 = getelementptr i8, ptr %i.dn, i64 %i.x
-  %i.ei = mul i64 %i.dk, %i.dh
+  %i.ei = mul i64 %i.dk, %3
   %scevgep32 = getelementptr i8, ptr %scevgep31, i64 %i.ei
   %scevgep33 = getelementptr i8, ptr %i.ds, i64 %i.x
-  %i.ej = mul i64 %i.dp, %i.dh
+  %i.ej = mul i64 %i.dp, %3
   %scevgep34 = getelementptr i8, ptr %scevgep33, i64 %i.ej
   %bound0 = icmp ult ptr %i.dy, %scevgep30
-  %bound1 = icmp ult ptr %i.dj, %scevgep29
+  %bound1 = icmp ult ptr %i.dj, %i.eg
   %found.conflict = and i1 %bound0, %bound1
   %bound035 = icmp ult ptr %i.dy, %scevgep32
-  %bound136 = icmp ult ptr %i.do, %scevgep29
+  %bound136 = icmp ult ptr %i.do, %i.eg
   %found.conflict37 = and i1 %bound035, %bound136
   %conflict.rdx = or i1 %found.conflict, %found.conflict37
   %bound038 = icmp ult ptr %i.dy, %scevgep34
-  %bound139 = icmp ult ptr %i.dt, %scevgep29
+  %bound139 = icmp ult ptr %i.dt, %i.eg
   %found.conflict40 = and i1 %bound038, %bound139
   %conflict.rdx41 = or i1 %conflict.rdx, %found.conflict40
   br i1 %conflict.rdx41, label %_ZNK7xgboost6common4SpanIKfLm18446744073709551615EEixEm.exit.i.i.preheader, label %vector.ph

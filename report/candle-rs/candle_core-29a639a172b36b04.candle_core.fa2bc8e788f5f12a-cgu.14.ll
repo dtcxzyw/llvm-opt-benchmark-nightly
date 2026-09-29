@@ -205,7 +205,7 @@ _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 vector.memcheck:                                  ; preds = %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutaEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsltEA4u8Pgfu_11candle_core.exit.lr.ph
   %scevgep = getelementptr i8, ptr %.sroa.022.0.copyload, i64 %.sroa.525.0.copyload
   %scevgep58 = getelementptr i8, ptr %.sroa.022.0.copyload, i64 %.sroa.726.0.copyload
-  %i.fa = shl i64 %.sroa.525.0.copyload, 2
+  %i.fa = shl nuw i64 %.sroa.525.0.copyload, 2
   %scevgep59 = getelementptr i8, ptr %.sroa.423.0.copyload, i64 %i.fa
   %i.fb = shl i64 %.sroa.726.0.copyload, 2
   %scevgep60 = getelementptr i8, ptr %.sroa.423.0.copyload, i64 %i.fb
@@ -608,7 +608,7 @@ _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %min.iters.check, label %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IteraEEINtB5_7ZipImplBW_B1r_E4nextCsltEA4u8Pgfu_11candle_core.exit.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IteraEEINtB5_7ZipImplBW_B1r_E4nextCsltEA4u8Pgfu_11candle_core.exit.lr.ph
-  %i.bp = shl i64 %.sroa.514.0.copyload, 2
+  %i.bp = shl nuw i64 %.sroa.514.0.copyload, 2
   %scevgep = getelementptr i8, ptr %.sroa.010.0.copyload, i64 %i.bp
   %i.bq = shl i64 %.sroa.715.0.copyload, 2
   %scevgep30 = getelementptr i8, ptr %.sroa.010.0.copyload, i64 %i.bq
@@ -1011,7 +1011,7 @@ _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 vector.memcheck:                                  ; preds = %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutaEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsltEA4u8Pgfu_11candle_core.exit.lr.ph
   %scevgep = getelementptr i8, ptr %.sroa.056.0.copyload, i64 %.sroa.559.0.copyload
   %scevgep121 = getelementptr i8, ptr %.sroa.056.0.copyload, i64 %.sroa.760.0.copyload
-  %i.cj = shl i64 %.sroa.559.0.copyload, 2
+  %i.cj = shl nuw i64 %.sroa.559.0.copyload, 2
   %scevgep122 = getelementptr i8, ptr %.sroa.457.0.copyload, i64 %i.cj
   %i.ck = shl i64 %.sroa.760.0.copyload, 2
   %scevgep123 = getelementptr i8, ptr %.sroa.457.0.copyload, i64 %i.ck
@@ -1414,7 +1414,7 @@ _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %min.iters.check, label %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsltEA4u8Pgfu_11candle_core.exit.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsltEA4u8Pgfu_11candle_core.exit.lr.ph
-  %i.fq = shl i64 %.sroa.579.0.copyload, 2        ; 2 uses
+  %i.fq = shl nuw i64 %.sroa.579.0.copyload, 2    ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.075.0.copyload, i64 %i.fq
   %i.fr = shl i64 %.sroa.780.0.copyload, 2        ; 2 uses
   %scevgep294 = getelementptr i8, ptr %.sroa.075.0.copyload, i64 %i.fr
@@ -1769,7 +1769,7 @@ _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 vector.memcheck:                                  ; preds = %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutaEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsltEA4u8Pgfu_11candle_core.exit.lr.ph
   %scevgep = getelementptr i8, ptr %.sroa.067.0.copyload, i64 %.sroa.570.0.copyload
   %scevgep143 = getelementptr i8, ptr %.sroa.067.0.copyload, i64 %.sroa.771.0.copyload
-  %i.cp = shl i64 %.sroa.570.0.copyload, 2
+  %i.cp = shl nuw i64 %.sroa.570.0.copyload, 2
   %scevgep144 = getelementptr i8, ptr %.sroa.468.0.copyload, i64 %i.cp
   %i.cq = shl i64 %.sroa.771.0.copyload, 2
   %scevgep145 = getelementptr i8, ptr %.sroa.468.0.copyload, i64 %i.cq
