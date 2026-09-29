@@ -24,8 +24,8 @@ target triple = "x86_64-unknown-linux-gnu"
 define void @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList13with_capacity(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = mul nuw nsw i64 %1, 24                   ; 2 uses
-  %or.cond.not.i.i = icmp ugt i64 %1, 384307168202282325
-  br i1 %or.cond.not.i.i, label %bb.d, label %bb.b, !prof !4
+  %or.cond.i.i = icmp ult i64 %1, 384307168202282326
+  br i1 %or.cond.i.i, label %bb.b, label %bb.d, !prof !14
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp eq i64 %1, 0
@@ -76,7 +76,7 @@ _RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes13with_capacity.exit: 
 define internal fastcc noundef i64 @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList4lift(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(96) %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %switch = icmp ult i64 %1, 2
-  br i1 %switch, label %bb.b, label %bb.c, !prof !5
+  br i1 %switch, label %bb.b, label %bb.c, !prof !4
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 48, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #16
@@ -85,25 +85,25 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.a = add i64 %1, -2                           ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 4 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 4 uses
   %i.d = icmp ult i64 %i.a, %i.c
   br i1 %i.d, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !nonnull !6, !noundef !6 ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %i.a ; 4 uses
-  %i.h = load i64, ptr %i.g, align 8, !noundef !6 ; 4 uses
+  %i.h = load i64, ptr %i.g, align 8, !noundef !5 ; 4 uses
   store i64 -1, ptr %i.g, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.j = load i64, ptr %i.i, align 8, !noundef !6 ; 4 uses
+  %i.j = load i64, ptr %i.i, align 8, !noundef !5 ; 4 uses
   store i64 -1, ptr %i.i, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.l = load i64, ptr %i.k, align 8, !noundef !6
+  %i.l = load i64, ptr %i.k, align 8, !noundef !5
   %i.m = icmp eq i64 %i.h, -1
   %i.n = icmp eq i64 %i.j, -1
   %or.cond = or i1 %i.m, %i.n
-  br i1 %or.cond, label %bb.f, label %bb.g, !prof !5
+  br i1 %or.cond, label %bb.f, label %bb.g, !prof !4
 
 bb.e:                                             ; preds = %bb.c
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.a, i64 noundef %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #16
@@ -151,7 +151,7 @@ bb.m:                                             ; preds = %bb.h
 
 bb.n:                                             ; preds = %bb.k
   %i.u = add i64 %i.j, -2                         ; 3 uses
-  %i.v = load i64, ptr %i.b, align 8, !noundef !6 ; 2 uses
+  %i.v = load i64, ptr %i.b, align 8, !noundef !5 ; 2 uses
   %i.w = icmp ult i64 %i.u, %i.v
   br i1 %i.w, label %bb.r, label %bb.s
 
@@ -183,8 +183,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !alias.scope !19, !noundef !6 ; 3 uses
-  %i.d = load i64, ptr %i.a, align 8, !range !7, !alias.scope !19, !noundef !6
+  %i.c = load i64, ptr %i.b, align 8, !alias.scope !19, !noundef !5 ; 3 uses
+  %i.d = load i64, ptr %i.a, align 8, !range !6, !alias.scope !19, !noundef !5
   %i.e = icmp eq i64 %i.c, %i.d
   br i1 %i.e, label %bb.b, label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecjE8push_mutCskIWv9cQVR22_11pingora_lru.exit
 
@@ -194,7 +194,7 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecjE8push_mutCskIWv9cQVR22_11pingora_lru.exit: ; preds = %bb.a, %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.g = load ptr, ptr %i.f, align 8, !alias.scope !19, !nonnull !6, !noundef !6
+  %i.g = load ptr, ptr %i.f, align 8, !alias.scope !19, !nonnull !5, !noundef !5
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.c
   store i64 %1, ptr %i.h, align 8, !noalias !19
   %i.i = add i64 %i.c, 1
@@ -207,7 +207,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecjE8push_mutCskIWv9cQVR22_11pingora_l
 define void @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList7promote(ptr noalias nofree noundef align 8 captures(none) dereferenceable(96) %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !6
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5
   %i.c = icmp eq i64 %i.b, %1
   br i1 %i.c, label %bb.n, label %bb.b
 
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call fastcc noundef i64 @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList4lift(ptr noalias nofree noundef align 8 dereferenceable(96) %0, i64 noundef %1) ; 0 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22)
   %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %bb.c, label %bb.d, !prof !5
+  br i1 %.not, label %bb.c, label %bb.d, !prof !4
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 48, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #16, !noalias !22
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.f = load i64, ptr %i.a, align 8, !noundef !6 ; 3 uses
+  %i.f = load i64, ptr %i.a, align 8, !noundef !5 ; 3 uses
   store i64 %1, ptr %i.a, align 8
   %cond = icmp eq i64 %1, 1
   br i1 %cond, label %bb.f, label %bb.e
@@ -231,7 +231,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.g = add i64 %1, -2                           ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = load i64, ptr %i.h, align 8, !alias.scope !22, !noundef !6 ; 2 uses
+  %i.i = load i64, ptr %i.h, align 8, !alias.scope !22, !noundef !5 ; 2 uses
   %i.j = icmp ult i64 %i.g, %i.i
   br i1 %i.j, label %bb.h, label %bb.i
 
@@ -251,7 +251,7 @@ bb.g:                                             ; preds = %bb.h, %bb.f
 
 bb.h:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !alias.scope !22, !nonnull !6, !noundef !6
+  %i.n = load ptr, ptr %i.m, align 8, !alias.scope !22, !nonnull !5, !noundef !5
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %i.g
   br label %bb.g
 
@@ -262,7 +262,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.g
   %i.p = add i64 %i.f, -2                         ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.r = load i64, ptr %i.q, align 8, !alias.scope !22, !noundef !6 ; 2 uses
+  %i.r = load i64, ptr %i.q, align 8, !alias.scope !22, !noundef !5 ; 2 uses
   %i.s = icmp ult i64 %i.p, %i.r
   br i1 %i.s, label %bb.l, label %bb.m
 
@@ -272,7 +272,7 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.j
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.v = load ptr, ptr %i.u, align 8, !alias.scope !22, !nonnull !6, !noundef !6
+  %i.v = load ptr, ptr %i.u, align 8, !alias.scope !22, !nonnull !5, !noundef !5
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.v, i64 %i.p
   br label %_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList12insert_after.exit
 
@@ -293,19 +293,19 @@ bb.n:                                             ; preds = %bb.a, %_RNvMs1_NtCs
 define internal fastcc noundef i64 @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList8new_node(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(96) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !6 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 3 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !32)
-  %i.d = load i64, ptr %0, align 8, !range !7, !alias.scope !32, !noundef !6 ; 5 uses
+  %i.d = load i64, ptr %0, align 8, !range !6, !alias.scope !32, !noundef !5 ; 5 uses
   %i.e = icmp samesign ugt i64 %i.d, 65536
   br i1 %i.e, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = load i64, ptr %i.f, align 8, !alias.scope !32, !noundef !6 ; 4 uses
+  %i.g = load i64, ptr %i.f, align 8, !alias.scope !32, !noundef !5 ; 4 uses
   %i.h = icmp ult i64 %i.g, 384307168202282326
   tail call void @llvm.assume(i1 %i.h)
   %i.i = sub nsw i64 %i.d, %i.g
@@ -316,7 +316,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i, 
   %i.k = phi i64 [ %i.d, %bb.c ], [ %i.d, %bb.b ], [ %.pre.i.i.i, %._crit_edge.i.i.i ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !33)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.m = load i64, ptr %i.l, align 8, !alias.scope !34, !noalias !35, !noundef !6 ; 5 uses
+  %i.m = load i64, ptr %i.l, align 8, !alias.scope !34, !noalias !35, !noundef !5 ; 5 uses
   %i.n = icmp eq i64 %i.m, %i.k
   br i1 %i.n, label %bb.e, label %_RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes8new_node.exit
 
@@ -333,7 +333,7 @@ bb.f:                                             ; preds = %bb.c
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %bb.g
 
 ._crit_edge.i.i.i:                                ; preds = %bb.f
-  %.pre.i.i.i = load i64, ptr %0, align 8, !range !7, !alias.scope !37 ; 2 uses
+  %.pre.i.i.i = load i64, ptr %0, align 8, !range !6, !alias.scope !37 ; 2 uses
   %.pre7.i.i.i = sub nsw i64 %.pre.i.i.i, %i.g
   %i.r = icmp ule i64 %i.o, %.pre7.i.i.i
   tail call void @llvm.assume(i1 %i.r)
@@ -346,7 +346,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes8new_node.exit: ; preds = %bb.d, %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.u = load ptr, ptr %i.t, align 8, !alias.scope !34, !noalias !35, !nonnull !6, !noundef !6
+  %i.u = load ptr, ptr %i.t, align 8, !alias.scope !34, !noalias !35, !nonnull !5, !noundef !5
   %i.v = getelementptr inbounds nuw [24 x i8], ptr %i.u, i64 %i.m ; 2 uses
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, i8 -1, i64 16, i1 false), !noalias !32
@@ -362,15 +362,15 @@ bb.h:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.aa = add nsw i64 %i.b, -1                    ; 3 uses
   store i64 %i.aa, ptr %i.a, align 8
-  %i.ab = load i64, ptr %i.z, align 8, !range !7, !noundef !6
+  %i.ab = load i64, ptr %i.z, align 8, !range !6, !noundef !5
   %i.ac = icmp samesign ult i64 %i.aa, %i.ab
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !6, !noundef !6
+  %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !5, !noundef !5
   %i.af = icmp ult i64 %i.b, 1152921504606846977
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.aa
-  %i.ah = load i64, ptr %i.ag, align 8, !noundef !6 ; 3 uses
+  %i.ah = load i64, ptr %i.ag, align 8, !noundef !5 ; 3 uses
   switch i64 %i.ah, label %bb.j [
     i64 0, label %bb.k
     i64 1, label %bb.l
@@ -383,7 +383,7 @@ bb.i:                                             ; preds = %bb.m, %_RNvMNtCskIW
 bb.j:                                             ; preds = %bb.h
   %i.ai = add i64 %i.ah, -2                       ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ak = load i64, ptr %i.aj, align 8, !noundef !6 ; 2 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !noundef !5 ; 2 uses
   %i.al = icmp ult i64 %i.ai, %i.ak
   br i1 %i.al, label %bb.n, label %bb.o
 
@@ -403,7 +403,7 @@ bb.m:                                             ; preds = %bb.n, %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.j
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.aq = load ptr, ptr %i.ap, align 8, !nonnull !6, !noundef !6
+  %i.aq = load ptr, ptr %i.ap, align 8, !nonnull !5, !noundef !5
   %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.aq, i64 %i.ai
   br label %bb.m
 
@@ -416,7 +416,7 @@ bb.o:                                             ; preds = %bb.j
 define { i64, i64 } @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList8pop_tail(ptr noalias nofree noundef align 8 captures(none) dereferenceable(96) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.b = load i64, ptr %i.a, align 8, !noundef !6 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 3 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.d, label %bb.b
 
@@ -425,8 +425,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !44)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !45, !noundef !6 ; 3 uses
-  %i.g = load i64, ptr %i.d, align 8, !range !7, !alias.scope !45, !noundef !6
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !45, !noundef !5 ; 3 uses
+  %i.g = load i64, ptr %i.d, align 8, !range !6, !alias.scope !45, !noundef !5
   %i.h = icmp eq i64 %i.f, %i.g
   br i1 %i.h, label %bb.c, label %_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList6remove.exit
 
@@ -436,7 +436,7 @@ bb.c:                                             ; preds = %bb.b
 
 _RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList6remove.exit: ; preds = %bb.b, %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.j = load ptr, ptr %i.i, align 8, !alias.scope !45, !nonnull !6, !noundef !6
+  %i.j = load ptr, ptr %i.i, align 8, !alias.scope !45, !nonnull !5, !noundef !5
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.f
   store i64 %i.b, ptr %i.k, align 8, !noalias !45
   %i.l = add i64 %i.f, 1
@@ -458,7 +458,7 @@ bb.a:
   %i.a = tail call fastcc noundef i64 @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList8new_node(ptr noalias nofree noundef align 8 dereferenceable(96) %0, i64 noundef %1) ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
   %.not = icmp eq i64 %i.a, 0
-  br i1 %.not, label %bb.b, label %bb.c, !prof !5
+  br i1 %.not, label %bb.b, label %bb.c, !prof !4
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 48, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #16, !noalias !48
@@ -467,7 +467,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !6 ; 3 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 3 uses
   store i64 %i.a, ptr %i.c, align 8
   %cond = icmp eq i64 %i.a, 1
   br i1 %cond, label %bb.e, label %bb.d
@@ -475,7 +475,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.e = add i64 %i.a, -2                         ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = load i64, ptr %i.f, align 8, !alias.scope !48, !noundef !6 ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !alias.scope !48, !noundef !5 ; 2 uses
   %i.h = icmp ult i64 %i.e, %i.g
   br i1 %i.h, label %bb.g, label %bb.h
 
@@ -495,7 +495,7 @@ bb.f:                                             ; preds = %bb.g, %bb.e
 
 bb.g:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.l = load ptr, ptr %i.k, align 8, !alias.scope !48, !nonnull !6, !noundef !6
+  %i.l = load ptr, ptr %i.k, align 8, !alias.scope !48, !nonnull !5, !noundef !5
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %i.e
   br label %bb.f
 
@@ -506,7 +506,7 @@ bb.h:                                             ; preds = %bb.d
 bb.i:                                             ; preds = %bb.f
   %i.n = add i64 %i.d, -2                         ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.p = load i64, ptr %i.o, align 8, !alias.scope !48, !noundef !6 ; 2 uses
+  %i.p = load i64, ptr %i.o, align 8, !alias.scope !48, !noundef !5 ; 2 uses
   %i.q = icmp ult i64 %i.n, %i.p
   br i1 %i.q, label %bb.k, label %bb.l
 
@@ -516,7 +516,7 @@ bb.j:                                             ; preds = %bb.f
 
 bb.k:                                             ; preds = %bb.i
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.t = load ptr, ptr %i.s, align 8, !alias.scope !48, !nonnull !6, !noundef !6
+  %i.t = load ptr, ptr %i.s, align 8, !alias.scope !48, !nonnull !5, !noundef !5
   %i.u = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %i.n
   br label %_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList12insert_after.exit
 
@@ -535,7 +535,7 @@ define noundef i64 @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10Lin
 bb.a:
   %i.a = tail call fastcc noundef i64 @_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList8new_node(ptr noalias nofree noundef align 8 dereferenceable(96) %0, i64 noundef %1) ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !51)
   %i.d = icmp ne i64 %i.c, 1
   %i.e = icmp ne i64 %i.c, %i.a
@@ -553,7 +553,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = add i64 %i.c, -2                         ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.h = load i64, ptr %i.g, align 8, !alias.scope !51, !noundef !6 ; 2 uses
+  %i.h = load i64, ptr %i.g, align 8, !alias.scope !51, !noundef !5 ; 2 uses
   %i.i = icmp ult i64 %i.f, %i.h
   br i1 %i.i, label %bb.g, label %bb.h
 
@@ -564,7 +564,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.g, %bb.e
   %.sroa.0.0.i = phi ptr [ %i.o, %bb.g ], [ %i.j, %bb.e ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !noundef !6 ; 3 uses
+  %i.l = load i64, ptr %i.k, align 8, !noundef !5 ; 3 uses
   store i64 %i.a, ptr %i.k, align 8
   switch i64 %i.a, label %bb.i [
     i64 0, label %bb.j
@@ -573,7 +573,7 @@ bb.f:                                             ; preds = %bb.g, %bb.e
 
 bb.g:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !alias.scope !51, !nonnull !6, !noundef !6
+  %i.n = load ptr, ptr %i.m, align 8, !alias.scope !51, !nonnull !5, !noundef !5
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %i.f
   br label %bb.f
 
@@ -584,7 +584,7 @@ bb.h:                                             ; preds = %bb.d
 bb.i:                                             ; preds = %bb.f
   %i.p = add i64 %i.a, -2                         ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.r = load i64, ptr %i.q, align 8, !alias.scope !51, !noundef !6 ; 2 uses
+  %i.r = load i64, ptr %i.q, align 8, !alias.scope !51, !noundef !5 ; 2 uses
   %i.s = icmp ult i64 %i.p, %i.r
   br i1 %i.s, label %bb.l, label %bb.m
 
@@ -604,7 +604,7 @@ bb.k:                                             ; preds = %bb.f, %bb.l, %bb.j
 
 bb.l:                                             ; preds = %bb.i
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.w = load ptr, ptr %i.v, align 8, !alias.scope !51, !nonnull !6, !noundef !6
+  %i.w = load ptr, ptr %i.v, align 8, !alias.scope !51, !nonnull !5, !noundef !5
   %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %i.p
   br label %bb.k
 
@@ -615,7 +615,7 @@ bb.m:                                             ; preds = %bb.i
 bb.n:                                             ; preds = %bb.k
   %i.y = add i64 %i.l, -2                         ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.aa = load i64, ptr %i.z, align 8, !alias.scope !51, !noundef !6 ; 2 uses
+  %i.aa = load i64, ptr %i.z, align 8, !alias.scope !51, !noundef !5 ; 2 uses
   %i.ab = icmp ult i64 %i.y, %i.aa
   br i1 %i.ab, label %bb.p, label %bb.q
 
@@ -625,7 +625,7 @@ bb.o:                                             ; preds = %bb.k
 
 bb.p:                                             ; preds = %bb.n
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !51, !nonnull !6, !noundef !6
+  %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !51, !nonnull !5, !noundef !5
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %i.y
   br label %_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList12insert_after.exit
 
@@ -649,7 +649,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val12 = load ptr, ptr %i.c, align 8
   call fastcc void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCskIWv9cQVR22_11pingora_lru(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.a, i64 %.val, ptr %.val12, i64 noundef %i.b, i64 noundef 24)
-  %i.d = load i64, ptr %i.a, align 8, !range !8, !noundef !6
+  %i.d = load i64, ptr %i.a, align 8, !range !7, !noundef !5
   %i.e = trunc nuw i64 %i.d to i1
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br i1 %i.e, label %bb.c, label %bb.d
@@ -662,14 +662,14 @@ bb.b:                                             ; preds = %bb.c, %bb.d
   ret { i64, i64 } %i.h
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = load i64, ptr %i.f, align 8, !range !9, !noundef !6
+  %i.i = load i64, ptr %i.f, align 8, !range !8, !noundef !5
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.a
-  %i.l = load ptr, ptr %i.f, align 8, !nonnull !6, !noundef !6
+  %i.l = load ptr, ptr %i.f, align 8, !nonnull !5, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %i.l, ptr %i.c, align 8
   store i64 %i.b, ptr %0, align 8
@@ -679,11 +679,11 @@ bb.d:                                             ; preds = %bb.a
 ; Function Attrs: cold noinline nonlazybind uwtable
 define void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtCskIWv9cQVR22_11pingora_lru11linked_list4NodeE8grow_oneBQ_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !7, !noundef !6
+  %i.a = load i64, ptr %0, align 8, !range !6, !noundef !5
   %i.b = tail call fastcc { i64, i64 } @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCskIWv9cQVR22_11pingora_lru(ptr noalias nofree noundef align 8 dereferenceable(16) %0, i64 noundef %i.a, i64 noundef 24) ; 2 uses
   %i.c = extractvalue { i64, i64 } %i.b, 0        ; 2 uses
   %.not = icmp eq i64 %i.c, -1
-  br i1 %.not, label %bb.c, label %bb.b, !prof !10
+  br i1 %.not, label %bb.c, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   %i.d = extractvalue { i64, i64 } %i.b, 1
@@ -697,11 +697,11 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: cold noinline nonlazybind uwtable
 define void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecjE8grow_oneCskIWv9cQVR22_11pingora_lru(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !7, !noundef !6
+  %i.a = load i64, ptr %0, align 8, !range !6, !noundef !5
   %i.b = tail call fastcc { i64, i64 } @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCskIWv9cQVR22_11pingora_lru(ptr noalias nofree noundef align 8 dereferenceable(16) %0, i64 noundef %i.a, i64 noundef 8) ; 2 uses
   %i.c = extractvalue { i64, i64 } %i.b, 0        ; 2 uses
   %.not = icmp eq i64 %i.c, -1
-  br i1 %.not, label %bb.c, label %bb.b, !prof !10
+  br i1 %.not, label %bb.c, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   %i.d = extractvalue { i64, i64 } %i.b, 1
@@ -720,7 +720,7 @@ bb.a:
   %i.c = extractvalue { i64, i1 } %i.a, 1
   %i.d = icmp ugt i64 %i.b, 9223372036854775800
   %or.cond.not = or i1 %i.c, %i.d
-  br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !4
+  br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !53
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i64 %.0.val, 0
@@ -774,7 +774,7 @@ define internal fastcc { i64, i64 } @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = add nuw i64 %1, 1
-  %i.c = load i64, ptr %0, align 8, !range !7, !noundef !6 ; 2 uses
+  %i.c = load i64, ptr %0, align 8, !range !6, !noundef !5 ; 2 uses
   %i.d = shl nuw i64 %i.c, 1
   %..i = tail call noundef range(i64 0, -1) i64 @llvm.umax.i64(i64 range(i64 0, -1) %i.b, i64 range(i64 0, -1) %i.d)
   %..i14 = tail call noundef range(i64 0, -1) i64 @llvm.umax.i64(i64 range(i64 0, -1) %..i, i64 4) ; 3 uses
@@ -782,7 +782,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13 = load ptr, ptr %i.e, align 8
   call fastcc void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCskIWv9cQVR22_11pingora_lru(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.a, i64 %i.c, ptr %.val13, i64 noundef %..i14, i64 noundef %2)
-  %i.f = load i64, ptr %i.a, align 8, !range !8, !noundef !6
+  %i.f = load i64, ptr %i.a, align 8, !range !7, !noundef !5
   %i.g = trunc nuw i64 %i.f to i1
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br i1 %i.g, label %bb.c, label %bb.d
@@ -795,14 +795,14 @@ bb.b:                                             ; preds = %bb.c, %bb.d
   ret { i64, i64 } %i.j
 
 bb.c:                                             ; preds = %bb.a
-  %i.k = load i64, ptr %i.h, align 8, !range !9, !noundef !6
+  %i.k = load i64, ptr %i.h, align 8, !range !8, !noundef !5
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.m = load i64, ptr %i.l, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.a
-  %i.n = load ptr, ptr %i.h, align 8, !nonnull !6, !noundef !6
+  %i.n = load ptr, ptr %i.h, align 8, !nonnull !5, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %i.n, ptr %i.e, align 8
   %i.o = icmp sgt i64 %..i14, -1
@@ -879,19 +879,19 @@ attributes #17 = { noinline }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
-!4 = !{!"branch_weights", i32 2002, i32 2000}
-!5 = !{!"branch_weights", i32 4001, i32 4000000}
-!6 = !{}
-!7 = !{i64 0, i64 -9223372036854775808}
-!8 = !{i64 0, i64 2}
-!9 = !{i64 0, i64 -9223372036854775807}
-!10 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!11 = distinct !{!11, !"_RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes13with_capacity"}
-!12 = distinct !{!12, !11, !"_RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes13with_capacity: argument 0"}
-!13 = distinct !{!13, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskIWv9cQVR22_11pingora_lru"}
-!14 = distinct !{!14, !13, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskIWv9cQVR22_11pingora_lru: argument 0"}
-!15 = !{!14, !12}
-!16 = !{!12}
+!4 = !{!"branch_weights", i32 4001, i32 4000000}
+!5 = !{}
+!6 = !{i64 0, i64 -9223372036854775808}
+!7 = !{i64 0, i64 2}
+!8 = !{i64 0, i64 -9223372036854775807}
+!9 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!10 = distinct !{!10, !"_RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes13with_capacity"}
+!11 = distinct !{!11, !10, !"_RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes13with_capacity: argument 0"}
+!12 = distinct !{!12, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskIWv9cQVR22_11pingora_lru"}
+!13 = distinct !{!13, !12, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskIWv9cQVR22_11pingora_lru: argument 0"}
+!14 = !{!"branch_weights", i32 2000, i32 2002}
+!15 = !{!13, !11}
+!16 = !{!11}
 !17 = distinct !{!17, !"_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecjE8push_mutCskIWv9cQVR22_11pingora_lru"}
 !18 = distinct !{!18, !17, !"_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecjE8push_mutCskIWv9cQVR22_11pingora_lru: argument 0"}
 !19 = !{!18}
@@ -928,4 +928,5 @@ attributes #17 = { noinline }
 !50 = distinct !{!50, !49, !"_RNvMs1_NtCskIWv9cQVR22_11pingora_lru11linked_listNtB5_10LinkedList12insert_after: argument 0"}
 !51 = !{!50}
 !52 = !{!"branch_weights", i32 4000000, i32 4001}
+!53 = !{!"branch_weights", i32 2002, i32 2000}
 end_hunk_0

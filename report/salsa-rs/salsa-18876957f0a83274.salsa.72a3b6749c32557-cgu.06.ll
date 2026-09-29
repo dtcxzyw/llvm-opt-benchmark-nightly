@@ -202,15 +202,15 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.g
   %i.t = mul nuw nsw i64 %i.l, 12                 ; 3 uses
-  %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 768614336404564649
-  br i1 %or.cond.not.i, label %bb.q, label %_RINvCsi1wr4QBDb3z_8smallvec12layout_arrayNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBH_.exit.i, !prof !9
+  %or.cond.i = icmp ult i64 %.sroa.02.0, 768614336404564650
+  br i1 %or.cond.i, label %_RINvCsi1wr4QBDb3z_8smallvec12layout_arrayNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBH_.exit.i, label %bb.q, !prof !11
 
 _RINvCsi1wr4QBDb3z_8smallvec12layout_arrayNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBH_.exit.i: ; preds = %bb.i
   br i1 %i.m, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %_RINvCsi1wr4QBDb3z_8smallvec12layout_arrayNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBH_.exit.i
-  %or.cond67.not.i = icmp ugt i64 %.sink.i.i, 768614336404564650
-  br i1 %or.cond67.not.i, label %bb.q, label %_RINvCsi1wr4QBDb3z_8smallvec12layout_arrayNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBH_.exit50.i, !prof !9
+  %or.cond67.i = icmp ult i64 %.sink.i.i, 768614336404564651
+  br i1 %or.cond67.i, label %_RINvCsi1wr4QBDb3z_8smallvec12layout_arrayNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBH_.exit50.i, label %bb.q, !prof !11
 
 bb.k:                                             ; preds = %_RINvCsi1wr4QBDb3z_8smallvec12layout_arrayNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBH_.exit.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #27, !noalias !211
@@ -246,8 +246,8 @@ bb.n:                                             ; preds = %bb.h
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.4.0..sroa_idx.i, ptr nonnull align 4 %.sink11.i.i, i64 %i.aa, i1 false)
   store i64 %i.r, ptr %i.b, align 8, !alias.scope !211
   %i.ab = mul i64 %.sink.i.i, 12                  ; 2 uses
-  %or.cond.not.i.i = icmp ugt i64 %.sink.i.i, 768614336404564650
-  br i1 %or.cond.not.i.i, label %bb.o, label %_RINvCsi1wr4QBDb3z_8smallvec10deallocateNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBF_.exit.i, !prof !9
+  %or.cond.i.i = icmp ult i64 %.sink.i.i, 768614336404564651
+  br i1 %or.cond.i.i, label %_RINvCsi1wr4QBDb3z_8smallvec10deallocateNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexEBF_.exit.i, label %bb.o, !prof !11
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !214

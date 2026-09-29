@@ -204,16 +204,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.k = mul i64 %1, 24                           ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 384307168202282325
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond = icmp ult i64 %1, 384307168202282326
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.l, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit
   %i.l = mul i64 %.sink.i, 24                     ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit48, !prof !31
+  %or.cond65 = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond65, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit48, label %bb.l, !prof !34
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29
@@ -246,8 +246,8 @@ bb.j:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 24                     ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond.i = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.k, !prof !34
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2939
@@ -502,16 +502,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.k = mul i64 %1, 40                           ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 230584300921369395
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond = icmp ult i64 %1, 230584300921369396
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.l, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit
   %i.l = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit48, !prof !31
+  %or.cond65 = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond65, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit48, label %bb.l, !prof !34
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29
@@ -544,8 +544,8 @@ bb.j:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond.i = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.k, !prof !34
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2955
@@ -652,16 +652,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.k = mul i64 %1, 120                          ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 76861433640456465
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond = icmp ult i64 %1, 76861433640456466
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.l, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit
   %i.l = mul i64 %.sink.i, 120                    ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 76861433640456465
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit48, !prof !31
+  %or.cond65 = icmp ult i64 %i.c, 76861433640456466
+  br i1 %or.cond65, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit48, label %bb.l, !prof !34
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29
@@ -694,8 +694,8 @@ bb.j:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 120                    ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 76861433640456465
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond.i = icmp ult i64 %i.c, 76861433640456466
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.k, !prof !34
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2963
@@ -802,16 +802,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.k = mul i64 %1, 328                          ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 28120036697727975
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1k_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1m_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond = icmp ult i64 %1, 28120036697727976
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1k_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1m_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.l, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1k_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1m_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1k_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1m_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit
   %i.l = mul i64 %.sink.i, 328                    ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 28120036697727975
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1k_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1m_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit48, !prof !31
+  %or.cond65 = icmp ult i64 %i.c, 28120036697727976
+  br i1 %or.cond65, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1k_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1m_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit48, label %bb.l, !prof !34
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1k_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1m_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29
@@ -844,8 +844,8 @@ bb.j:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 328                    ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 28120036697727975
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1i_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1k_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond.i = icmp ult i64 %i.c, 28120036697727976
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1i_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1k_9addresses9AddressesEEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.k, !prof !34
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2969
@@ -1248,15 +1248,15 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw nsw i64 %i.l, 24                 ; 3 uses
-  %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 384307168202282324
-  br i1 %or.cond.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit.i, !prof !31
+  %or.cond.i = icmp ult i64 %.sroa.02.0, 384307168202282325
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit.i, label %bb.n, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit.i: ; preds = %bb.f
   br i1 %i.m, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit.i
-  %or.cond65.not.i = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond65.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit48.i, !prof !31
+  %or.cond65.i = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond65.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit48.i, label %bb.n, !prof !34
 
 bb.h:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit.i
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !3008
@@ -1290,8 +1290,8 @@ bb.k:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink12.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !3008
   %i.aa = mul i64 %.sink.i.i, 24                  ; 2 uses
-  %or.cond.not.i.i = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond.not.i.i, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec10deallocateNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit.i, !prof !31
+  %or.cond.i.i = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond.i.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateNtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangeECs4w110Okq5IC_16ipfs_kad_example.exit.i, label %bb.l, !prof !34
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !3009
@@ -1546,16 +1546,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.k = mul i64 %1, 48                           ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 192153584101141162
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond = icmp ult i64 %1, 192153584101141163
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.l, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit
   %i.l = mul i64 %.sink.i, 48                     ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 192153584101141162
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit48, !prof !31
+  %or.cond65 = icmp ult i64 %i.c, 192153584101141163
+  br i1 %or.cond65, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit48, label %bb.l, !prof !34
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29
@@ -1588,8 +1588,8 @@ bb.j:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 48                     ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 192153584101141162
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond.i = icmp ult i64 %i.c, 192153584101141163
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateTINtCscu2bAJ62uie_6either6EitherNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolReENtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.k, !prof !34
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !3028
@@ -1666,15 +1666,15 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw nsw i64 %i.l, 272                ; 3 uses
-  %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 33909456017848439
-  br i1 %or.cond.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit.i, !prof !31
+  %or.cond.i = icmp ult i64 %.sroa.02.0, 33909456017848440
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit.i, label %bb.n, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit.i: ; preds = %bb.f
   br i1 %i.m, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit.i
-  %or.cond65.not.i = icmp ugt i64 %i.c, 33909456017848440
-  br i1 %or.cond65.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit48.i, !prof !31
+  %or.cond65.i = icmp ult i64 %i.c, 33909456017848441
+  br i1 %or.cond65.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit48.i, label %bb.n, !prof !34
 
 bb.h:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit.i
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !3036
@@ -1708,8 +1708,8 @@ bb.k:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink12.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !3036
   %i.aa = mul i64 %.sink.i.i, 272                 ; 2 uses
-  %or.cond.not.i.i = icmp ugt i64 %i.c, 33909456017848440
-  br i1 %or.cond.not.i.i, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec10deallocateTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit.i, !prof !31
+  %or.cond.i.i = icmp ult i64 %i.c, 33909456017848441
+  br i1 %or.cond.i.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskC4O4hr3vz7_10libp2p_kad7handler9HandlerInEECs4w110Okq5IC_16ipfs_kad_example.exit.i, label %bb.l, !prof !34
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !3037
@@ -1856,16 +1856,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.k = mul i64 %1, 40                           ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 230584300921369395
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond = icmp ult i64 %1, 230584300921369396
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.l, !prof !34
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit
   %i.l = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit48, !prof !31
+  %or.cond65 = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond65, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit48, label %bb.l, !prof !34
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29
@@ -1898,8 +1898,8 @@ bb.j:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, !prof !31
+  %or.cond.i = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateTReNtNtCsbVDXp34Q3tF_18multistream_select8protocol8ProtocolEECs4w110Okq5IC_16ipfs_kad_example.exit, label %bb.k, !prof !34
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !3050

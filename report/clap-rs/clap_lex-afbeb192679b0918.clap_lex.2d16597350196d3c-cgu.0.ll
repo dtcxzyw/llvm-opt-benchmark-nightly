@@ -197,8 +197,8 @@ bb.b:                                             ; preds = %_RNvXsi_NtCsaKJjC64
   %i.h = udiv exact i64 %i.g, 24
   %i.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 3)
   %..i.i.i.i = add nuw nsw i64 %i.i, 1            ; 2 uses
-  %or.cond.not.i.i.i.i.i = icmp ugt i64 %i.g, 9223372036854775776
-  br i1 %or.cond.not.i.i.i.i.i, label %bb.d, label %bb.c, !prof !8
+  %or.cond.i.i.i.i.i = icmp ult i64 %i.g, 9223372036854775800
+  br i1 %or.cond.i.i.i.i.i, label %bb.c, label %bb.d, !prof !8
 
 bb.c:                                             ; preds = %bb.b
   %i.j = mul nuw nsw i64 %..i.i.i.i, 24           ; 2 uses
@@ -601,8 +601,8 @@ bb.g:                                             ; preds = %bb.e
 define internal fastcc void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs3RZUOUhPFQ6_8clap_lex(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1) unnamed_addr #1 {
 bb.a:
   %i.a = mul nuw nsw i64 %1, 24                   ; 4 uses
-  %or.cond.not = icmp ugt i64 %1, 384307168202282325
-  br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !8
+  %or.cond = icmp ult i64 %1, 384307168202282326
+  br i1 %or.cond, label %bb.b, label %bb.f, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp eq i64 %.0.val, 0
@@ -1005,7 +1005,7 @@ attributes #24 = { noreturn nounwind }
 !5 = !{i64 0, i64 -9223372036854775808}
 !6 = !{}
 !7 = !{i64 0, i64 2}
-!8 = !{!"branch_weights", i32 2002, i32 2000}
+!8 = !{!"branch_weights", i32 2000, i32 2002}
 !9 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !10 = !{!"llvm.loop.peeled.count", i32 1}
 !11 = !{!"branch_weights", i32 4001, i32 4000000}

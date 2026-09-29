@@ -205,16 +205,18 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.f = getelementptr i8, ptr %.0.val, i64 -8
   %.val.i.i = load i64, ptr %i.f, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i.i = icmp ugt i64 %.val.i.i, 384307168202282324
-  br i1 %narrow.i.not.i.i, label %bb.b, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit.i, !prof !23
+  %0 = mul i64 %.val.i.i, 24
+  %1 = add i64 %0, 16                             ; 2 uses
+  %narrow.i.i = icmp ult i64 %.val.i.i, 768614336404564650
+  %2 = icmp ult i64 %1, 9223372036854775799
+  %narrow.i.i.i = and i1 %narrow.i.i, %2
+  br i1 %narrow.i.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit.i, label %bb.b, !prof !22
 
 bb.b:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringIBw_NtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE8capacity0EB2i_.exit.i
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #58
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringIBw_NtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE8capacity0EB2i_.exit.i
-  %0 = mul nuw nsw i64 %.val.i.i, 24
-  %1 = add nuw nsw i64 %0, 16
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store ptr %i.d, ptr %i.g, align 8
   store i64 8, ptr %i.c, align 8
@@ -617,16 +619,18 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %narrow.i.not.i = icmp samesign ugt i64 %1, 384307168202282324
-  br i1 %narrow.i.not.i, label %bb.d, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit, !prof !23
+  %2 = mul i64 %1, 24
+  %3 = add i64 %2, 16                             ; 4 uses
+  %narrow.i = icmp samesign ult i64 %1, 768614336404564650
+  %4 = icmp ult i64 %3, 9223372036854775799
+  %narrow.i.i = and i1 %narrow.i, %4
+  br i1 %narrow.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #58
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit: ; preds = %bb.c
-  %2 = mul nuw nsw i64 %1, 24
-  %3 = add nuw nsw i64 %2, 16                     ; 3 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !19, !noundef !19 ; 3 uses
   %.not = icmp eq ptr %i.b, inttoptr (i64 16 to ptr)
   br i1 %.not, label %bb.e, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringIBw_NtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE8capacity0EB2i_.exit
@@ -640,8 +644,12 @@ bb.e:                                             ; preds = %_RNvMs0_NtCsakL8LGk
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringIBw_NtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE8capacity0EB2i_.exit: ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit
   %i.e = getelementptr i8, ptr %i.b, i64 -8
   %.val.i = load i64, ptr %i.e, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i34 = icmp ugt i64 %.val.i, 384307168202282324
-  br i1 %narrow.i.not.i34, label %bb.f, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit37, !prof !23
+  %5 = mul i64 %.val.i, 24
+  %6 = add i64 %5, 16                             ; 2 uses
+  %narrow.i34 = icmp ult i64 %.val.i, 768614336404564650
+  %7 = icmp ult i64 %6, 9223372036854775799
+  %narrow.i.i35 = and i1 %narrow.i34, %7
+  br i1 %narrow.i.i35, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit37, label %bb.f, !prof !22
 
 bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringIBw_NtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE8capacity0EB2i_.exit
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #58
@@ -649,9 +657,7 @@ bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnL
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE4sizeB1M_.exit37: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringIBw_NtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEEE8capacity0EB2i_.exit
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 -16
-  %4 = mul nuw nsw i64 %.val.i, 24
-  %5 = add nuw nsw i64 %4, 16
-  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %5, i64 noundef 8, i64 noundef %3) #60 ; 2 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %6, i64 noundef 8, i64 noundef %3) #60 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.g, label %bb.h, !prof !23
 

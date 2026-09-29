@@ -12,7 +12,7 @@ bb.a:
   %i.b = tail call fastcc { i64, i64 } @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCshSgCEy9XT4y_21ruff_options_metadata(ptr noalias noundef align 8 dereferenceable(16) %0, i64 noundef %i.a) ; 2 uses
   %i.c = extractvalue { i64, i64 } %i.b, 0        ; 2 uses
   %.not = icmp eq i64 %i.c, -1
-  br i1 %.not, label %bb.c, label %bb.b, !prof !6
+  br i1 %.not, label %bb.c, label %bb.b, !prof !5
 
 bb.b:                                             ; preds = %bb.a
   %i.d = extractvalue { i64, i64 } %i.b, 1
@@ -27,8 +27,8 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner11finish_growCshSgCEy9XT4y_21ruff_options_metadata(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef range(i64 0, -1) %1) unnamed_addr #1 {
 bb.a:
   %i.a = mul nuw nsw i64 %1, 144                  ; 4 uses
-  %or.cond.not = icmp ugt i64 %1, 64051194700380387
-  br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !5
+  %or.cond = icmp ult i64 %1, 64051194700380388
+  br i1 %or.cond, label %bb.b, label %bb.f, !prof !6
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp eq i64 %.0.val, 0
@@ -127,8 +127,8 @@ bb.a:
   %i.c = extractvalue { i64, i1 } %i.a, 1
   %i.d = sub nuw i64 -9223372036854775808, %3
   %.not = icmp ugt i64 %i.b, %i.d
-  %or.cond = select i1 %i.c, i1 true, i1 %.not, !prof !5
-  br i1 %or.cond, label %bb.c, label %bb.b, !prof !5
+  %or.cond = select i1 %i.c, i1 true, i1 %.not, !prof !9
+  br i1 %or.cond, label %bb.c, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i64 %i.b, 0
@@ -279,8 +279,9 @@ attributes #12 = { nounwind }
 !2 = !{!"rustc version 1.97.1 (8bab26f4f 2026-07-14)"}
 !3 = !{i64 0, i64 -9223372036854775808}
 !4 = !{}
-!5 = !{!"branch_weights", i32 2002, i32 2000}
-!6 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!5 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!6 = !{!"branch_weights", i32 2000, i32 2002}
 !7 = !{i64 0, i64 2}
 !8 = !{i64 0, i64 -9223372036854775807}
+!9 = !{!"branch_weights", i32 2002, i32 2000}
 end_hunk_0
