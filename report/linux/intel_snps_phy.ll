@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %__drm_to_dev.exit, 
 declare dso_local void @_dev_err(ptr noundef, ptr noundef, ...) local_unnamed_addr #4
 
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: read)
-define dso_local range(i32 0, 20646618) i32 @intel_mpllb_calc_port_clock(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 align 16 prefalign(16) {
+define dso_local range(i32 19, 20646618) i32 @intel_mpllb_calc_port_clock(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
@@ -227,8 +227,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi i32 [ %i.g, %bb.b ], [ 0, %bb.a ]
   %i.j = lshr i32 %i.b, 12
   %i.k = and i32 %i.j, 7
-  %2 = add nsw i32 %i.k, -1
-  %i.l = lshr i32 100000, %2                      ; 2 uses
+  %i.l = lshr i32 200000, %i.k                    ; 2 uses
   %i.m = getelementptr i8, ptr %1, i64 12
   %i.n = load i32, ptr %i.m, align 4
   %i.o = lshr i32 %i.n, 5

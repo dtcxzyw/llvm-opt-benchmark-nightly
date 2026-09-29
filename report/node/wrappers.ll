@@ -205,10 +205,10 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i: ; preds = %bb.ad
-  %switch.idx.cast.i.i = trunc nuw nsw i32 %i.he to i8
-  %switch.tableidx = add nsw i8 %switch.idx.cast.i.i, -1 ; 2 uses
+  %switch.idx.cast.i.i = trunc nuw nsw i32 %i.he to i8 ; 2 uses
+  %switch.tableidx = add nsw i8 %switch.idx.cast.i.i, -1
   %i.hg = icmp ult i8 %switch.tableidx, 7
-  %switch.shifted = lshr i8 121, %switch.tableidx
+  %switch.shifted = lshr i8 -14, %switch.idx.cast.i.i
   %switch.lobit = trunc i8 %switch.shifted to i1
   %or.cond = select i1 %i.hg, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %_ZN2v88internal4wasm25WasmWrapperTSGraphBuilderINS0_8compiler10turboshaft11TSAssemblerIJNS4_21SelectLoweringReducerENS4_23DataViewLoweringReducerENS4_15VariableReducerEEEEE25QualifiesForFastTransformEv.exit, label %.critedge.i
