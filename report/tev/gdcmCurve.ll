@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.a
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = sub i64 %i.p, %i.q                       ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.t = load i16, ptr %i.s, align 4, !tbaa !33   ; 26 uses
-  %i.u = zext i16 %i.t to i64                     ; 23 uses
+  %i.t = load i16, ptr %i.s, align 4, !tbaa !33   ; 33 uses
+  %i.u = zext i16 %i.t to i64                     ; 3 uses
   br i1 %i.k, label %switch.lookup, label %switch.lookup325
 
 switch.lookup:                                    ; preds = %bb.d
@@ -468,12 +468,13 @@ bb.aq:                                            ; preds = %bb.am, %bb.ai
 .lr.ph178:                                        ; preds = %.preheader172
   %i.ce = icmp samesign ugt i16 %i.bz, 1          ; 3 uses
   %i.cf = zext nneg i32 %i.ca to i64              ; 3 uses
-  %xtraiter342 = and i64 %i.u, 1
+  %wide.trip.count219 = zext i16 %i.t to i64      ; 2 uses
+  %xtraiter342 = and i64 %wide.trip.count219, 1
   %i.cg = icmp eq i16 %i.t, 1
   br i1 %i.cg, label %.epil.preheader341, label %.lr.ph178.new
 
 .lr.ph178.new:                                    ; preds = %.lr.ph178
-  %unroll_iter345 = and i64 %i.u, 65534
+  %unroll_iter345 = and i64 %wide.trip.count219, 65534
   br label %bb.bk
 
 .preheader170:                                    ; preds = %bb.aq
@@ -482,12 +483,13 @@ bb.aq:                                            ; preds = %bb.am, %bb.ai
 .lr.ph180:                                        ; preds = %.preheader170
   %i.ch = icmp samesign ugt i16 %i.bz, 1          ; 3 uses
   %i.ci = zext nneg i32 %i.ca to i64              ; 3 uses
-  %xtraiter348 = and i64 %i.u, 1
+  %wide.trip.count224 = zext i16 %i.t to i64      ; 2 uses
+  %xtraiter348 = and i64 %wide.trip.count224, 1
   %i.cj = icmp eq i16 %i.t, 1
   br i1 %i.cj, label %.epil.preheader347, label %.lr.ph180.new
 
 .lr.ph180.new:                                    ; preds = %.lr.ph180
-  %unroll_iter351 = and i64 %i.u, 65534
+  %unroll_iter351 = and i64 %wide.trip.count224, 65534
   br label %bb.bf
 
 .preheader168:                                    ; preds = %bb.aq
@@ -496,12 +498,13 @@ bb.aq:                                            ; preds = %bb.am, %bb.ai
 .lr.ph182:                                        ; preds = %.preheader168
   %i.ck = icmp samesign ugt i16 %i.bz, 1          ; 3 uses
   %i.cl = zext nneg i32 %i.ca to i64              ; 3 uses
-  %xtraiter354 = and i64 %i.u, 1
+  %wide.trip.count229 = zext i16 %i.t to i64      ; 2 uses
+  %xtraiter354 = and i64 %wide.trip.count229, 1
   %i.cm = icmp eq i16 %i.t, 1
   br i1 %i.cm, label %.epil.preheader353, label %.lr.ph182.new
 
 .lr.ph182.new:                                    ; preds = %.lr.ph182
-  %unroll_iter357 = and i64 %i.u, 65534
+  %unroll_iter357 = and i64 %wide.trip.count229, 65534
   br label %bb.ba
 
 bb.ar:                                            ; preds = %bb.aq
@@ -511,12 +514,12 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.not201, label %.loopexit165, label %.lr.ph184.preheader
 
 .lr.ph184.preheader:                              ; preds = %.preheader166
-  %wide.trip.count234 = zext i16 %i.t to i64
+  %wide.trip.count234 = zext i16 %i.t to i64      ; 3 uses
   %min.iters.check = icmp ult i16 %i.t, 4
   br i1 %min.iters.check, label %.lr.ph184.preheader334, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph184.preheader
-  %n.vec = and i64 %i.u, 65532                    ; 3 uses
+  %n.vec = and i64 %wide.trip.count234, 65532     ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -548,7 +551,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.de, label %middle.block, label %vector.body, !llvm.loop !98
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %i.u
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count234
   br i1 %cmp.n, label %.loopexit165, label %.lr.ph184.preheader334
 
 .lr.ph184.preheader334:                           ; preds = %.lr.ph184.preheader, %middle.block
@@ -566,29 +569,30 @@ middle.block:                                     ; preds = %vector.body
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.dh = load i16, ptr %i.dg, align 8, !tbaa !69
   %i.di = load i16, ptr %i.df, align 2, !tbaa !73
-  %i.dj = zext i16 %i.di to i64                   ; 3 uses
-  %i.dk = zext i16 %i.dh to i64                   ; 3 uses
-  %xtraiter359 = and i64 %i.u, 1
+  %2 = zext i16 %i.di to i64                      ; 3 uses
+  %i.dj = zext i16 %i.dh to i64                   ; 3 uses
+  %i.dk = zext i16 %i.t to i64                    ; 2 uses
+  %xtraiter359 = and i64 %i.dk, 1
   %i.dl = icmp eq i16 %i.t, 1
   br i1 %i.dl, label %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit.epil.preheader, label %.lr.ph186.split.new
 
 .lr.ph186.split.new:                              ; preds = %.lr.ph186.split
-  %unroll_iter362 = and i64 %i.u, 65534
+  %unroll_iter362 = and i64 %i.dk, 65534
   br label %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit
 
 _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit: ; preds = %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit, %.lr.ph186.split.new
   %indvars.iv236 = phi i64 [ 0, %.lr.ph186.split.new ], [ %indvars.iv.next237.1, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit ] ; 4 uses
   %niter363 = phi i64 [ 0, %.lr.ph186.split.new ], [ %niter363.next.1, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit ]
-  %i.dm = mul nuw nsw i64 %indvars.iv236, %i.dj
-  %i.dn = add nuw nsw i64 %i.dm, %i.dk
+  %i.dm = mul nuw nsw i64 %indvars.iv236, %2
+  %i.dn = add nuw nsw i64 %i.dm, %i.dj
   %i.do = trunc nuw i64 %i.dn to i32
   %i.dp = uitofp i32 %i.do to float
   %.idx279 = mul nuw nsw i64 %indvars.iv236, 12
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 %.idx279
   store float %i.dp, ptr %i.dq, align 4, !tbaa !116
   %indvars.iv.next237 = or disjoint i64 %indvars.iv236, 1 ; 2 uses
-  %i.dr = mul nuw nsw i64 %indvars.iv.next237, %i.dj
-  %i.ds = add nuw nsw i64 %i.dr, %i.dk
+  %i.dr = mul nuw nsw i64 %indvars.iv.next237, %2
+  %i.ds = add nuw nsw i64 %i.dr, %i.dj
   %i.dt = trunc nuw i64 %i.ds to i32
   %i.du = uitofp i32 %i.dt to float
   %.idx279.1 = mul nuw nsw i64 %indvars.iv.next237, 12
@@ -639,8 +643,8 @@ _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit.epil.preheader: ; preds = %
   %indvars.iv236.epil.init = phi i64 [ 0, %.lr.ph186.split ], [ %indvars.iv.next237.1, %.loopexit165.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod361 = trunc i16 %i.t to i1
   tail call void @llvm.assume(i1 %lcmp.mod361)
-  %i.ec = mul nuw nsw i64 %indvars.iv236.epil.init, %i.dj
-  %i.ed = add nuw nsw i64 %i.ec, %i.dk
+  %i.ec = mul nuw nsw i64 %indvars.iv236.epil.init, %2
+  %i.ed = add nuw nsw i64 %i.ec, %i.dj
   %i.ee = trunc nuw i64 %i.ed to i32
   %i.ef = uitofp i32 %i.ee to float
   %.idx279.epil = mul nuw nsw i64 %indvars.iv236.epil.init, 12
@@ -663,21 +667,22 @@ _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit.epil.preheader: ; preds = %
   %i.ei = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.ej = load i16, ptr %i.ei, align 8, !tbaa !69
   %i.ek = load i16, ptr %i.eh, align 2, !tbaa !73
-  %i.el = zext i16 %i.ek to i64                   ; 5 uses
-  %i.em = zext i16 %i.ej to i64                   ; 5 uses
-  %xtraiter369 = and i64 %i.u, 3                  ; 3 uses
+  %3 = zext i16 %i.ek to i64                      ; 5 uses
+  %i.el = zext i16 %i.ej to i64                   ; 5 uses
+  %i.em = zext i16 %i.t to i64                    ; 2 uses
+  %xtraiter369 = and i64 %i.em, 3                 ; 3 uses
   %i.en = icmp ult i16 %i.t, 4
   br i1 %i.en, label %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil.preheader, label %.lr.ph194.split.new
 
 .lr.ph194.split.new:                              ; preds = %.lr.ph194.split
-  %unroll_iter373 = and i64 %i.u, 65532
+  %unroll_iter373 = and i64 %i.em, 65532
   br label %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146
 
 _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146: ; preds = %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146, %.lr.ph194.split.new
   %indvars.iv256 = phi i64 [ 0, %.lr.ph194.split.new ], [ %indvars.iv.next257.3, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146 ] ; 6 uses
   %niter374 = phi i64 [ 0, %.lr.ph194.split.new ], [ %niter374.next.3, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146 ]
-  %i.eo = mul nuw nsw i64 %indvars.iv256, %i.el
-  %i.ep = add nuw nsw i64 %i.eo, %i.em
+  %i.eo = mul nuw nsw i64 %indvars.iv256, %3
+  %i.ep = add nuw nsw i64 %i.eo, %i.el
   %i.eq = trunc nuw i64 %i.ep to i32
   %i.er = uitofp i32 %i.eq to float
   %.idx283 = mul nuw nsw i64 %indvars.iv256, 12
@@ -685,8 +690,8 @@ _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146: ; preds = %_ZNK4gdcm5Cu
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 4
   store float %i.er, ptr %i.et, align 4, !tbaa !116
   %indvars.iv.next257 = or disjoint i64 %indvars.iv256, 1 ; 2 uses
-  %i.eu = mul nuw nsw i64 %indvars.iv.next257, %i.el
-  %i.ev = add nuw nsw i64 %i.eu, %i.em
+  %i.eu = mul nuw nsw i64 %indvars.iv.next257, %3
+  %i.ev = add nuw nsw i64 %i.eu, %i.el
   %i.ew = trunc nuw i64 %i.ev to i32
   %i.ex = uitofp i32 %i.ew to float
   %.idx283.1 = mul nuw nsw i64 %indvars.iv.next257, 12
@@ -694,8 +699,8 @@ _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146: ; preds = %_ZNK4gdcm5Cu
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 4
   store float %i.ex, ptr %i.ez, align 4, !tbaa !116
   %indvars.iv.next257.1 = or disjoint i64 %indvars.iv256, 2 ; 2 uses
-  %i.fa = mul nuw nsw i64 %indvars.iv.next257.1, %i.el
-  %i.fb = add nuw nsw i64 %i.fa, %i.em
+  %i.fa = mul nuw nsw i64 %indvars.iv.next257.1, %3
+  %i.fb = add nuw nsw i64 %i.fa, %i.el
   %i.fc = trunc nuw i64 %i.fb to i32
   %i.fd = uitofp i32 %i.fc to float
   %.idx283.2 = mul nuw nsw i64 %indvars.iv.next257.1, 12
@@ -703,8 +708,8 @@ _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146: ; preds = %_ZNK4gdcm5Cu
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 4
   store float %i.fd, ptr %i.ff, align 4, !tbaa !116
   %indvars.iv.next257.2 = or disjoint i64 %indvars.iv256, 3 ; 2 uses
-  %i.fg = mul nuw nsw i64 %indvars.iv.next257.2, %i.el
-  %i.fh = add nuw nsw i64 %i.fg, %i.em
+  %i.fg = mul nuw nsw i64 %indvars.iv.next257.2, %3
+  %i.fh = add nuw nsw i64 %i.fg, %i.el
   %i.fi = trunc nuw i64 %i.fh to i32
   %i.fj = uitofp i32 %i.fi to float
   %.idx283.3 = mul nuw nsw i64 %indvars.iv.next257.2, 12
@@ -740,12 +745,12 @@ bb.ay:                                            ; preds = %.loopexit165
   br i1 %.not204, label %.loopexit, label %.lr.ph192.preheader
 
 .lr.ph192.preheader:                              ; preds = %.preheader158
-  %wide.trip.count254 = zext i16 %i.t to i64
+  %wide.trip.count254 = zext i16 %i.t to i64      ; 3 uses
   %min.iters.check315 = icmp ult i16 %i.t, 4
   br i1 %min.iters.check315, label %.lr.ph192.preheader329, label %vector.ph316
 
 vector.ph316:                                     ; preds = %.lr.ph192.preheader
-  %n.vec317 = and i64 %i.u, 65532                 ; 3 uses
+  %n.vec317 = and i64 %wide.trip.count254, 65532  ; 3 uses
   br label %vector.body318
 
 vector.body318:                                   ; preds = %vector.body318, %vector.ph316
@@ -779,7 +784,7 @@ vector.body318:                                   ; preds = %vector.body318, %ve
   br i1 %i.gi, label %middle.block322, label %vector.body318, !llvm.loop !102
 
 middle.block322:                                  ; preds = %vector.body318
-  %cmp.n323 = icmp eq i64 %n.vec317, %i.u
+  %cmp.n323 = icmp eq i64 %n.vec317, %wide.trip.count254
   br i1 %cmp.n323, label %.lr.ph196.preheader, label %.lr.ph192.preheader329
 
 .lr.ph192.preheader329:                           ; preds = %.lr.ph192.preheader, %middle.block322
@@ -808,24 +813,25 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %.not203, label %.loopexit, label %.lr.ph188.preheader
 
 .lr.ph188.preheader:                              ; preds = %.preheader162
-  %xtraiter364 = and i64 %i.u, 7                  ; 3 uses
+  %wide.trip.count244 = zext i16 %i.t to i64      ; 2 uses
+  %xtraiter364 = and i64 %wide.trip.count244, 7   ; 3 uses
   %i.go = icmp ult i16 %i.t, 8
   br i1 %i.go, label %.lr.ph188.epil.preheader, label %.lr.ph188.preheader.new
 
 .lr.ph188.preheader.new:                          ; preds = %.lr.ph188.preheader
-  %unroll_iter367 = and i64 %i.u, 65528
+  %unroll_iter367 = and i64 %wide.trip.count244, 65528
   br label %.lr.ph188
 
 .preheader160:                                    ; preds = %bb.az
   br i1 %.not203, label %.loopexit, label %.lr.ph190.preheader
 
 .lr.ph190.preheader:                              ; preds = %.preheader160
-  %wide.trip.count249 = zext i16 %i.t to i64
+  %wide.trip.count249 = zext i16 %i.t to i64      ; 3 uses
   %min.iters.check304 = icmp ult i16 %i.t, 4
   br i1 %min.iters.check304, label %.lr.ph190.preheader331, label %vector.ph305
 
 vector.ph305:                                     ; preds = %.lr.ph190.preheader
-  %n.vec306 = and i64 %i.u, 65532                 ; 3 uses
+  %n.vec306 = and i64 %wide.trip.count249, 65532  ; 3 uses
   br label %vector.body307
 
 vector.body307:                                   ; preds = %vector.body307, %vector.ph305
@@ -858,7 +864,7 @@ vector.body307:                                   ; preds = %vector.body307, %ve
   br i1 %i.hh, label %middle.block311, label %vector.body307, !llvm.loop !104
 
 middle.block311:                                  ; preds = %vector.body307
-  %cmp.n312 = icmp eq i64 %n.vec306, %i.u
+  %cmp.n312 = icmp eq i64 %n.vec306, %wide.trip.count249
   br i1 %cmp.n312, label %.lr.ph196.preheader, label %.lr.ph190.preheader331
 
 .lr.ph190.preheader331:                           ; preds = %.lr.ph190.preheader, %middle.block311
@@ -931,8 +937,8 @@ _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil.preheader: ; preds 
 _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil: ; preds = %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil.preheader
   %indvars.iv256.epil = phi i64 [ %indvars.iv256.epil.init, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil.preheader ], [ %indvars.iv.next257.epil, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil ] ; 3 uses
   %epil.iter370 = phi i64 [ 0, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil.preheader ], [ %epil.iter370.next, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil ]
-  %i.ik = mul nuw nsw i64 %indvars.iv256.epil, %i.el
-  %i.il = add nuw nsw i64 %i.ik, %i.em
+  %i.ik = mul nuw nsw i64 %indvars.iv256.epil, %3
+  %i.il = add nuw nsw i64 %i.ik, %i.el
   %i.im = trunc nuw i64 %i.il to i32
   %i.in = uitofp i32 %i.im to float
   %.idx283.epil = mul nuw nsw i64 %indvars.iv256.epil, 12
@@ -967,13 +973,14 @@ _ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil: ; preds = %_ZNK4gd
   br i1 %epil.iter.cmp.not, label %.lr.ph196.preheader, label %.lr.ph188.epil, !llvm.loop !108
 
 .lr.ph196.preheader:                              ; preds = %.lr.ph196.preheader.loopexit333.unr-lcssa, %.lr.ph188.epil, %.lr.ph190, %.lr.ph192, %.lr.ph196.preheader.loopexit.unr-lcssa, %_ZNK4gdcm5Curve28ComputeValueFromStartAndStepEj.exit146.epil, %middle.block311, %middle.block322
-  %xtraiter375 = and i64 %i.u, 7                  ; 3 uses
+  %wide.trip.count264 = zext i16 %i.t to i64      ; 2 uses
+  %xtraiter375 = and i64 %wide.trip.count264, 7   ; 3 uses
   %i.is = add i16 %i.t, -1
   %i.it = icmp ult i16 %i.is, 7
   br i1 %i.it, label %.lr.ph196.epil.preheader, label %.lr.ph196.preheader.new
 
 .lr.ph196.preheader.new:                          ; preds = %.lr.ph196.preheader
-  %unroll_iter379 = and i64 %i.u, 65528
+  %unroll_iter379 = and i64 %wide.trip.count264, 65528
   br label %.lr.ph196
 
 .lr.ph196:                                        ; preds = %.lr.ph196, %.lr.ph196.preheader.new
